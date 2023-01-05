@@ -1,0 +1,87 @@
+.el-table tr {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.el-table {
+  background: var(--whiteColor);
+}
+
+.table_header {
+  text-align: center;
+  color: #303133;
+  font-size: 14px;
+  font-weight: 600;
+  background: linear-gradient(to bottom, #F0F2F5, #F0F2F5);
+  // height: 40px;
+}
+
+.el-table tbody tr:hover>td {
+  background: var(--opacityBlueBg);
+}
+
+.el-table td.el-table__cell,
+.el-table th.el-table__cell.is-leaf {
+  // border-bottom: 1px solid #B3BDCA;
+}
+
+.el-table tbody tr:last-child {
+  border: 0px;
+}
+
+// 滚动条的宽度
+.el-table__body-wrapper::-webkit-scrollbar {
+  width: 6px; // 横向滚动条
+  height: 6px; // 纵向滚动条 必写
+}
+
+// 滚动条的滑块
+.el-table__body-wrapper::-webkit-scrollbar-thumb {
+  background: #8FA4CC;
+  border-radius: 3px;
+}
+
+.el-table .el-table__cell.gutter {
+  background: transparent;
+}
+
+//表头
+.el-table__header-wrapper {
+  .cell{
+    background: #FAFAFA;
+      color: #333;
+      height: 44px;
+      line-height: 44px;
+      
+  }
+
+  .el-table__cell {
+    background-color: transparent;
+  }
+}
+
+.el-table::before {
+  display: none;
+}
+.headerStyle {
+  height: 32px;
+  width: 100%;
+  line-height: 32px;
+  font-size: 14px;
+  color: var(--whiteColor);
+  padding: 0 0 0 20px;
+  background: linear-gradient(to right, rgba(0, 96, 166, 1), rgba(0, 96, 166, 0.2));
+}
+
+.footerBox {
+  border: 1px solid var(--lightBlueColor);
+  width: 100%;
+  margin: 20px 0 0 0;
+  height: calc(100% - 125px);
+  position: relative;
+  padding: 14px 14px 0;
+}
+.right{
+  height: calc(100vh - 145px);
+}

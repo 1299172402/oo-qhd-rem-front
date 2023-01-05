@@ -1,0 +1,29 @@
+.t-table .t-table__body tr:hover {
+    background: var(--topBottom-light); // 深色模式——table滑过行颜色
+}
+.t-layout__sider{
+    border-right: 1px solid var(--leftTab);
+}
+.t-card--bordered {
+    border: 1px solid var(--cardColor);
+}
+.t-menu__item.t-is-active {
+    background: var(--td-brand-color-1);
+}
+.t-head-menu .t-menu__item {
+    color: var(--whiteColor);
+}
+.t-menu__item.t-is-active {
+    color: var(--lightBlueColor);
+}
+.t-notification {
+    background: var(--whiteColor);
+}
+// 解决左侧菜单过长显示不全问题
+.t-default-menu__inner {
+    height: 94%;
+}
+// 解决顶部菜单过长显示不全问题
+.t-head-menu .t-menu,.header-menu {
+    overflow: auto;
+}
