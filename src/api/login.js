@@ -59,3 +59,12 @@ export function getCodeImg() {
     timeout: 20000
   })
 }
+
+// 登出保存上次登录系统位置（门户/后台）
+export function updateLastLogout(data) {
+  return request({
+    url: 'system/user/updateLastLogout',
+    method: 'post',
+    data
+  })
+}

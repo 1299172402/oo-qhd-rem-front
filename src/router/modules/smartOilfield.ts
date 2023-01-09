@@ -1,5 +1,5 @@
 // 智能油田一级页面
-import { LayersIcon } from 'tdesign-icons-vue';
+// import { LayersIcon } from 'tdesign-icons-vue';
 import Layout from '@/layouts/index.vue';
 
 export default [
@@ -65,31 +65,6 @@ export default [
       },
     ],
   },
-  {
-    path: '/portal',
-    component: Layout,
-    redirect: '/portal/projectionMode',
-    name: 'portal',
-    hidden: true,
-    meta: {
-      title: '门户',
-      icon: LayersIcon,
-    },
-    children: [
-      {
-        path: 'projectionMode',
-        name: 'projectionMode',
-        component: () => import('@/pages/intelligentOilfield/portal/projectionMode/index.vue'),
-        meta: { title: '投影模式' },
-      },
-      {
-        path: 'officeMode',
-        name: 'officeMode',
-        component: () => import('@/pages/intelligentOilfield/portal/officeMode/index.vue'),
-        meta: { title: '办公模式' },
-      },
-    ],
-  },
   // 详情页路由注册——不显示在左侧菜单
   {
     path: '/userManagementDetail',
@@ -120,6 +95,22 @@ export default [
         name: 'rolesDetail',
         component: () => import('@/pages/intelligentOilfield/rolesManagement/components/detail.vue'),
         meta: { title: '分配用户' },
+      },
+    ],
+  },
+  {
+    path: '/codeGeneration',
+    name: 'codeGeneration',
+    component: Layout,
+    hidden: true,
+    redirect: '/codeGeneration/editTable',
+    meta: { title: '修改生成配置', icon: '', single: true },
+    children: [
+      {
+        path: 'editTable',
+        name: 'editTable',
+        component: () => import('@/pages/intelligentOilfield/codeGeneration/components/editTable.vue'),
+        meta: { title: '修改生成配置' },
       },
     ],
   },

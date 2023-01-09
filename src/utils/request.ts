@@ -113,9 +113,9 @@ instance.interceptors.response.use(
         type: 'warning'
       }
       ).then(() => {
+        router.replace({ path: `/`})
         store.dispatch('user/logout')
         store.dispatch('permission/restore');
-        router.replace({ path: `/`})
         // router.push(`/login`)
         if (response.config.headers.showLoading !== false) {
           hideLoading();

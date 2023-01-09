@@ -162,6 +162,19 @@
     <div class="block">
       <el-slider v-model="value2"></el-slider>
     </div>
+    <div class="marquee-fa" style="margin: 20px 0">
+      <div class="marquee_head">
+        <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px" />
+        <p style="margin-left: 10px; width: 70px">通知公告：</p>
+      </div>
+      <Marquee>
+        <p>安全生产创效益，违规操作酿祸端</p>
+      </Marquee>
+    </div>
+    <el-tabs v-model="activeName" type="card">
+      <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
+      <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 <script>
@@ -177,6 +190,7 @@ import { Message } from 'element-ui';
 import chartsComponents from '@/components/echarts-com/index.vue';
 import irregularityBox from '@/components/irregularity-box/index.vue';
 import myModal from '@/components/modal/index.vue';
+import marquee from '@/components/marquee-window/index.vue';
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 const labelName = ['总值', '合格值'];
@@ -224,9 +238,11 @@ export default {
     irregularityBox,
     chartsComponents,
     myModal,
+    marquee,
   },
   data() {
     return {
+      activeName: 'first',
       input: '',
       checkList: ['复选框 A'],
       activeTabIndex: 0,
@@ -870,11 +886,11 @@ export default {
       });
     },
     next() {
-      this.activerow+=1
+      this.activerow += 1;
       if (this.activerow === 2) this.activerow = 0;
     },
     next1() {
-      this.activecolumn+=1
+      this.activecolumn += 1;
       if (this.activecolumn === 2) this.activecolumn = 0;
     },
     /** 采购商品申请趋势选择 */

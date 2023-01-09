@@ -4,6 +4,7 @@ import { TOKEN_NAME } from '@/config/global';
 import { login, getInfo, logout} from '@/api/login'
 import { encrypt } from '@/utils/jsencrypt';
 import store from '@/store';
+import router from '@/router'
 
 const InitUserInfo = {
   roles: [],
@@ -20,6 +21,8 @@ const state = {
   avatar: '',
   userRoles: [],
   loginBack:false, // true:后台管理+门户,false:门户
+  logout: '0', // '0':门户,'1'：后台
+  isGroupLogin: false,// 门户模式/后台模式，false：后台模式，体现在控制左侧菜单，多tab标签
 };
 
 const mutations = {
@@ -51,7 +54,13 @@ const mutations = {
   },
   SET_LOGINBACK: (state, loginBack) =>{
     state.loginBack = loginBack
-  }
+  },
+  SETLOGOUT: (state, logout) =>{
+    state.logout = logout
+  },
+  SETISGROUPLOGIN: (state, isGroupLogin) =>{
+    state.isGroupLogin = isGroupLogin
+  },
 };
 
 const getters = {
@@ -63,6 +72,8 @@ const getters = {
   name: state => state.name,
   userRoles: (state) => state.userRoles,
   loginBack: (state) => state.loginBack,
+  logout: (state) => state.logout,
+  isGroupLogin: (state) => state.isGroupLogin,
 };
 
 const actions = {
@@ -94,7 +105,7 @@ const actions = {
   //         console.log(error);
   //       });
   //   },
-  login({ commit }, userInfo) {
+  login({ commit,dispatch }, userInfo) {
     // 登录接口获取token
     const params = {
       code: userInfo.code,
@@ -115,6 +126,7 @@ const actions = {
             Cookies.remove('rememberMe');
           }
           commit('setToken', res.data.data.access_token);
+          dispatch("getUserInfo");
         } else {
           message.error(res.data.msg);
         }
@@ -165,6 +177,31 @@ const actions = {
           const avatar = user.avatar === "" ? '' : user.avatar;
           // 判断登录门户/后台管理系统
           commit('SET_LOGINBACK', res.data.loginBack)
+          commit('SETLOGOUT', res.data.user.logout)
+          if (res.data.user.logout === '0') {
+            // sessionStorage.setItem('isGroupLogin', 'true');
+            commit('SETISGROUPLOGIN', true)
+            console.log('门户，上次登出的位置');
+            router.push('/portal/projectionMode');
+          } else if(res.data.user.logout === '1'){
+            // sessionStorage.setItem('isGroupLogin', 'false');
+            commit('SETISGROUPLOGIN', false)
+
+            console.log('后台，上次登出的位置');
+            router.push('/homePage/index');
+          } else if (!res.data.loginBack) {
+            // sessionStorage.setItem('isGroupLogin', 'true');
+            commit('SETISGROUPLOGIN', true)
+
+            console.log('门户');
+            router.push('/portal/projectionMode');
+          } else {
+            // sessionStorage.setItem('isGroupLogin', 'false');
+            commit('SETISGROUPLOGIN', false)
+
+            console.log('后台，有门户+后台的权限');
+            router.push('/homePage/index');
+          }
           if (res.data.roles && res.data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
             commit('SET_ROLES', res.data.roles)
             commit('SET_PERMISSIONS', res.data.permissions)

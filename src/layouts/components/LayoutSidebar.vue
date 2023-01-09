@@ -1,6 +1,6 @@
 <template>
   <side-nav
-    v-if="showSidebar&&!isGroupLogin"
+    v-if="showSidebar&&!$store.getters['user/isGroupLogin']"
     :showLogo="showSidebarLogo"
     :layout="setting.layout"
     :isFixed="setting.isSidebarFixed"

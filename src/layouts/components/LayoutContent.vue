@@ -1,7 +1,7 @@
 <template>
   <t-layout :class="[`${prefix}-layout`]">
     <t-tabs
-      v-if="isUseTabsRouter&&!isGroupLogin"
+      v-if="isUseTabsRouter&&!$store.getters['user/isGroupLogin']"
       theme="card"
       :class="`${prefix}-layout-tabs-nav`"
       :value="$route.path"

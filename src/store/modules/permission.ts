@@ -3,7 +3,7 @@ import axios from '@/utils/request';
 import Layout from '@/layouts/index.vue';
 import ParentView from '@/layouts/blank.vue';
 import router from '@/router/index';
-import GenerateRouter from '@/utils/routerPermission'; // 路由映射文件
+// import GenerateRouter from '@/utils/routerMapping/routerPermission'; // 路由映射文件
 import InnerLink from '@/pages/intelligentOilfield/iframePage/index.vue'
 
 // function filterPermissionsRouters(routes, roles) {
@@ -83,6 +83,14 @@ function filterAsyncRouter(asyncRouterMap, type = false) {
     // if (type && route.children) {
     //   route.children = filterChildren(route.children)
     // }
+
+    // 批量引入@/utils/routerMapping下所有js文件
+    const myFiles = import.meta.globEager(`../../utils/routerMapping/*.js`);
+    let modules = {}
+    Object.keys(myFiles).forEach(el => {
+      modules={...modules, ...myFiles[el].default}
+    });
+
     if (route.component) {
       //   Layout ParentView 组件特殊处理
       if (route.component === 'Layout') {
@@ -91,7 +99,8 @@ function filterAsyncRouter(asyncRouterMap, type = false) {
         route.component = ParentView
       } 
       else {
-        route.component = GenerateRouter[route.name]
+        route.component = modules[route.name]
+        // route.component = GenerateRouter[route.name]
       }
       // 链接走这里
       if(route.meta.link) {

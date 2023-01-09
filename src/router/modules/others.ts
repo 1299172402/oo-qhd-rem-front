@@ -1,22 +1,22 @@
-import Layout from '@/layouts/index.vue';
+// import Layout from '@/layouts/index.vue';
 
 export default [
-  // 显示一级菜单
-  {
-    path: '/user',
-    name: 'user',
-    component: Layout,
-    redirect: '/user/index',
-    meta: { title: '个人中心', icon: 'user-circle', single: true },
-    children: [
-      {
-        path: 'index',
-        name: 'UserIndex',
-        component: () => import('@/pages/examplePage/user/index.vue'),
-        meta: { title: '个人中心' },
-      },
-    ],
-  },
+//   // 显示一级菜单
+//   {
+//     path: '/user',
+//     name: 'user',
+//     component: Layout,
+//     redirect: '/user/index',
+//     meta: { title: '个人中心', icon: 'user-circle', single: true },
+//     children: [
+//       {
+//         path: 'index',
+//         name: 'UserIndex',
+//         component: () => import('@/pages/examplePage/user/index.vue'),
+//         meta: { title: '个人中心' },
+//       },
+//     ],
+//   },
   // {
   //   path: '/loginRedirect',
   //   name: 'loginRedirect',

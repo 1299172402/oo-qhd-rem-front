@@ -5,35 +5,55 @@
       :theme="theme"
       expandType="popup"
       :value="active"
-      style="background: var(--bottom-light);margin-right:0px"
+      style="background: var(--bottom-light); margin-right: 0px"
     >
       <template #logo>
-        <span
-          v-if="showLogo"
-          class="header-logo-container"
-          style="font-size: 20px; width: 226px"
-        >
+        <span v-if="showLogo" class="header-logo-container" style="font-size: 20px; width: 226px">
           <!-- <logo-full
             class="t-logo"
             style="width: 49px; height: 44px; margin-top: -10px; margin-right: 10px;"
           /> -->
           <span>管理系统</span>
         </span>
-        <div v-if="layout!=='top'&&!isGroupLogin" class="header-operate-left">
+        <div v-if="layout !== 'top' && !$store.getters['user/isGroupLogin']" class="header-operate-left">
           <t-button theme="default" shape="square" variant="text" @click="changeCollapsed">
-            <view-list-icon class="collapsed-icon" style="color: var(--whiteColor)"/>
+            <view-list-icon class="collapsed-icon" style="color: var(--whiteColor)" />
           </t-button>
           <!-- <search :layout="layout" /> -->
         </div>
       </template>
-      <menu-content v-show="layout !== 'side'&&!isGroupLogin" class="header-menu" :navData="menu" />
+      <menu-content v-show="layout !== 'side' && !$store.getters['user/isGroupLogin']" class="header-menu" :navData="menu" />
       <template #operations>
         <div class="operations-container" style="margin-left: 20px">
           <!-- 搜索框 -->
           <!-- <search v-if="layout !== 'side'" :layout="layout" /> -->
 
-          <!-- 全局通知 -->
+          <!-- 全局通知，通告 -->
+          <message />
+          <!-- 全局通知，通告 -->
           <notice />
+          <el-tooltip class="item" effect="dark" content="编辑面板" placement="bottom">
+            <svg-icon v-show="$store.getters['user/isGroupLogin']" icon-class="edit-panel" class="panelIconClass" />
+          </el-tooltip>
+          
+           <el-tooltip class="item" effect="dark" content="切后台" placement="bottom">
+            <svg-icon @clickIcon="switchRouter('后台')" v-show="$store.getters['user/isGroupLogin']" icon-class="switch-system" class="panelIconClass" />
+          </el-tooltip>
+           <el-tooltip class="item" effect="dark" content="切办公模式" placement="bottom">
+            <svg-icon @clickIcon="switchMode" v-show="$store.getters['user/isGroupLogin']&&currentMode==='办公模式'" icon-class="office-mode" class="panelIconClass" />
+          </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="切办公模式" placement="bottom">
+            <svg-icon @clickIcon="switchMode" v-show="$store.getters['user/isGroupLogin']&&currentMode==='投影模式'" icon-class="projection-mode" class="panelIconClass" />
+          </el-tooltip>
+          <!-- <t-button v-show="$store.getters['user/isGroupLogin']" theme="default" variant="text" @click="switchMode" style="color: var(--whiteColor)"
+            ><swap-icon style="color: var(--whiteColor)" />{{ currentMode }}</t-button
+          > -->
+          <!-- <t-button
+            theme="default"
+            variant="text"
+            @click="projectionMode"
+            style="color: var(--whiteColor)"
+          ><swap-icon style="color: var(--whiteColor);"/>进入大屏模式</t-button> -->
 
           <t-dropdown :min-column-width="125" trigger="click">
             <template #dropdown>
@@ -54,17 +74,11 @@
                 <user-circle-icon class="header-user-avatar" style="color: var(--whiteColor)" />
               </template>
               <div class="header-user-account" style="color: var(--whiteColor)">
-                {{$store.getters['user/name']}}
+                {{ $store.getters['user/name'] }}
                 <chevron-down-icon />
               </div>
             </t-button>
           </t-dropdown>
-          <!-- <t-button
-            theme="default"
-            variant="text"
-            @click="projectionMode"
-            style="color: var(--whiteColor)"
-          >投影模式</t-button> -->
           <t-tooltip placement="bottom" content="系统设置" style="color: var(--whiteColor)">
             <t-button theme="default" shape="square" variant="text" @click="toggleSettingPanel">
               <setting-icon />
@@ -86,20 +100,24 @@ import {
   PoweroffIcon,
   SettingIcon,
   ChevronDownIcon,
+//   EditIcon,
+//   SwapIcon,
 } from 'tdesign-icons-vue';
 import { prefix } from '@/config/global';
 // import LogoFull from '@/assets/logo.svg';
 
-import Notice from './Notice.vue'
+import Notice from './Notice.vue';
+import Message from './Message.vue';
 // import Search from './Search.vue'
 import MenuContent from './MenuContent.vue';
-// import { logout } from "@/api/login";
+import { updateLastLogout } from "@/api/login";
 
 export default Vue.extend({
   components: {
     MenuContent,
     // LogoFull,
     Notice,
+    Message,
     // Search,
     ViewListIcon,
     // LogoGithubIcon,
@@ -108,6 +126,8 @@ export default Vue.extend({
     PoweroffIcon,
     SettingIcon,
     ChevronDownIcon,
+    // EditIcon,
+    // SwapIcon,
   },
   props: {
     theme: String,
@@ -140,6 +160,7 @@ export default Vue.extend({
       prefix,
       visibleNotice: false,
       isSearchFocus: false,
+      currentMode: '办公模式',
     };
   },
   computed: {
@@ -169,14 +190,37 @@ export default Vue.extend({
         },
       ];
     },
-    isGroupLogin() {
-      return sessionStorage.getItem('isGroupLogin')==='true'
-    },
+    // isGroupLogin() {
+    //   return sessionStorage.getItem('isGroupLogin') === 'true';
+    // },
   },
   methods: {
-    // 投影模式
+    // 切换到后台管理系统
+    switchRouter(type) {
+      if(type === '后台') {
+        // 解决重新登录系统标签页未关闭的问题
+        this.$store.commit('tabRouter/removeTabRouterList');
+        this.$store.commit('user/SETISGROUPLOGIN', false);
+        this.$router.push('/homePage/index');
+        this.currentMode = '办公模式';
+      }else {
+        this.$router.push('/portal/projectionMode');
+        this.$store.commit('user/SETISGROUPLOGIN', true);
+      }
+    },
+    // 进入大屏模式
     projectionMode() {
       this.$store.commit('user/setProjectionMode', true);
+    },
+    // 切换投影模式和办公模式
+    switchMode() {
+      if (this.currentMode === '办公模式') {
+        this.$router.push('/portal/officeMode');
+        this.currentMode = '投影模式';
+      } else {
+        this.$router.push('/portal/projectionMode');
+        this.currentMode = '办公模式';
+      }
     },
     toggleSettingPanel() {
       this.$store.commit('setting/toggleSettingPanel', true);
@@ -195,15 +239,36 @@ export default Vue.extend({
     //       }
     //     })
     //   });
+    //   console.log('当前路由', this.$router.app?.$route?.path);
+      let currentSystem = 0;// 0:门户，1：后台管理系统
+      if(this.$router.app?.$route?.path === '/portal/projectionMode' || this.$router.app?.$route?.path === '/portal/officeMode') {
+        currentSystem=0
+      } else {
+        currentSystem=1
+      }
+      const params={
+        userName: this.$store.getters['user/name'],
+        logout: currentSystem,
+      }
+      updateLastLogout(params).then(res => {
+        if(res.data.code === 200) {
+        //   console.log('退出登录结果===', res);
+        }
+      });
+    
       this.$confirm('确定注销并退出系统吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$store.dispatch('user/logout');
-        this.$store.dispatch('permission/restore');
-        this.$router.push(`/login?redirect=${this.$router.history.current.fullPath}`)
-      }).catch((e) => {console.log(e);});
+        type: 'warning',
+      })
+        .then(() => {
+          this.$store.dispatch('user/logout');
+          this.$store.dispatch('permission/restore');
+          this.$router.push(`/login?redirect=${this.$router.history.current.fullPath}`);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
     changeCollapsed() {
       this.$store.commit('setting/toggleSidebarCompact');
@@ -362,5 +427,12 @@ export default Vue.extend({
       margin-bottom: 8px;
     }
   }
+}
+</style>
+<style scoped>
+.panelIconClass {
+    width: 40px !important;
+    height: 25px !important;
+    cursor: pointer;
 }
 </style>

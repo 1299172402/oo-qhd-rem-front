@@ -103,7 +103,7 @@
       <t-form ref="form" class="formDiv" :data="formData" :rules="FORM_RULES" label-width="0" @validate="onValidate">
         <template>
           <t-form-item name="username" style="margin-bottom: 7%">
-            <div class="textDiv" style="width: 20%">用户名</div>
+            <div class="textDiv">用户名</div>
             <div class="borderDiv">|</div>
             <el-input
               class="loginInput"
@@ -116,7 +116,7 @@
           </t-form-item>
 
           <t-form-item name="password" style="margin-bottom: 6%">
-            <div class="textDiv" style="width: 20%">密 码</div>
+            <div class="textDiv">密 码</div>
             <div class="borderDiv">|</div>
             <el-input
               class="loginInput"
@@ -130,7 +130,7 @@
           </t-form-item>
 
           <t-form-item name="yzm">
-            <div class="textDiv" style="width: 20%">验证码</div>
+            <div class="textDiv">验证码</div>
             <div class="borderDiv">|</div>
             <el-input
               class="loginInput"
@@ -301,36 +301,61 @@ export default Vue.extend({
     async onSubmit() {
       //   if (validateResult === true) {
     //   await this.$store.dispatch('user/login', this.formData);
-      this.$store.dispatch('user/login',this.formData).then(() => {
-        this.$store.dispatch('user/getUserInfo').then(() => {
-        //   console.log('111111', this.$store.getters['user/loginBack']);
+      this.$store
+        .dispatch('user/login', this.formData)
+        .then(() => {
           this.getCode();
-          if (!this.$store.getters['user/loginBack']) {
-            sessionStorage.setItem('isGroupLogin', 'true');
-            console.log('门户');
-            this.$router.push('/portal/projectionMode');
-          } else {
-            sessionStorage.setItem('isGroupLogin', 'false');
-            console.log('后台');
-            this.$router.push('/homePage/index');
-          }
-          this.$store.dispatch('permission/initRoutes', this.$store.getters['user/roles']);
-        }).catch(err=>{
+
+        }).catch((err) => {
           this.getCode();
           console.log(err);
         });
-      }).catch(err => {
-        this.getCode();
-        console.log(err);
-      })
-     
-    //   if (this.currentTab === '业务门户') {
-    //     sessionStorage.setItem('isGroupLogin', 'true');
-    //     this.$router.push('/portal/projectionMode');
-    //   } else {
-    //     sessionStorage.setItem('isGroupLogin', 'false');
-    //     this.$router.push('/homePage/index');
-    //   }
+      //   this.$store
+      //     .dispatch('user/login', this.formData)
+      //     .then(() => {
+      //       this.$store
+      //         .dispatch('user/getUserInfo')
+      //         .then(() => {
+      //           console.log('111111', this.$store.getters['user/logout']);
+      //           this.getCode();
+      //           if (this.$store.getters['user/logout'] === '0') {
+      //             sessionStorage.setItem('isGroupLogin', 'true');
+      //             console.log('门户，上次登出的位置');
+      //             this.$router.push('/portal/projectionMode');
+      //           } else if(this.$store.getters['user/logout'] === '1'){
+      //             sessionStorage.setItem('isGroupLogin', 'false');
+      //             console.log('后台，上次登出的位置');
+      //             this.$router.push('/homePage/index');
+      //           } else if (!this.$store.getters['user/loginBack']) {
+      //             sessionStorage.setItem('isGroupLogin', 'true');
+      //             console.log('门户，只有门户权限');
+      //             this.$router.push('/portal/projectionMode');
+      //           } else {
+      //             sessionStorage.setItem('isGroupLogin', 'false');
+      //             console.log('后台，有门户+后台的权限');
+      //             this.$router.push('/homePage/index');
+      //           }
+              
+      //           this.$store.dispatch('permission/initRoutes', this.$store.getters['user/roles']);
+      //         })
+      //         .catch((err) => {
+      //           this.getCode();
+      //           console.log(err);
+      //         });
+      //     })
+      //     .catch((err) => {
+      //       this.getCode();
+      //       console.log(err);
+      //     });
+  
+
+      //   if (this.currentTab === '业务门户') {
+      //     sessionStorage.setItem('isGroupLogin', 'true');
+      //     this.$router.push('/portal/projectionMode');
+      //   } else {
+      //     sessionStorage.setItem('isGroupLogin', 'false');
+      //     this.$router.push('/homePage/index');
+      //   }
       //   this.$router.replace('/').catch(() => '');
       //   }
     },
@@ -423,6 +448,7 @@ export default Vue.extend({
         font-weight: 400;
         color: #303133;
         margin-right: 10px;
+        width: 70px;
       }
       .borderDiv {
         width: 1px;

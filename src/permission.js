@@ -31,18 +31,18 @@ router.beforeEach(async (to, from, next) => {
       next();
     } else {
       try {
-        // await store.dispatch('user/getUserInfo');
+        await store.dispatch('user/getUserInfo');
 
-        // // 路由跳转前拦截：先获取登录时拿到的角色
-        // await store.dispatch('permission/initRoutes', store.getters['user/roles']);
+        // 路由跳转前拦截：先获取登录时拿到的角色
+        await store.dispatch('permission/initRoutes', store.getters['user/roles']);
 
-        // next({ ...to });
-        store.dispatch('user/getUserInfo').then(() => {
-          store.dispatch('permission/initRoutes', store.getters['user/roles']);
-          next({ ...to });
-        }).catch(err=>{
-          console.log(err);
-        });
+        next({ ...to });
+        // store.dispatch('user/getUserInfo').then(() => {
+        //   store.dispatch('permission/initRoutes', store.getters['user/roles']);
+        //   next({ ...to });
+        // }).catch(err=>{
+        //   console.log(err);
+        // });
         
       } catch (error) {
         await store.commit('user/removeToken');

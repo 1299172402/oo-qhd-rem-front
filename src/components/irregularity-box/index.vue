@@ -28,7 +28,7 @@ export default {
   display: flex;
 }
 .topRight {
-  background: green;
+  /* background: green; */
   width: 200px;
   height: 50px;
 }
