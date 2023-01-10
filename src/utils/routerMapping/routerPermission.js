@@ -10,7 +10,7 @@ const  GenerateRouter = {
   "Roles":()=>import('@/pages/intelligentOilfield/rolesManagement/index.vue'),// 角色管理
   "Menu":()=>import('@/pages/intelligentOilfield/menuManagement/index.vue'),// 菜单管理
   "Permission":()=>import('@/pages/intelligentOilfield/dataPermission/index.vue'),// 数据权限管理
-  "Application":()=>import('@/pages/intelligentOilfield/applicationCenter/index.vue'),// 应用中心管理
+  // "Application":()=>import('@/pages/intelligentOilfield/applicationCenter/index.vue'),// 应用中心管理
   "Designer":()=>import('@/pages/intelligentOilfield/configurationCenter/processCenter/designer/index.vue'),// 流程设计器
   "InstanceList":()=>import('@/pages/intelligentOilfield/configurationCenter/processCenter/instanceList/index.vue'),// 流程实例清单
   "ApplicationConfiguration":()=>import('@/pages/intelligentOilfield/configurationCenter/applicationConfiguration/index.vue'),// 应用配置
@@ -19,12 +19,14 @@ const  GenerateRouter = {
   "MyFirstMenu":()=>import('@/pages/intelligentOilfield/firstMenu/index.vue'),// 一级菜单管理
   "MySecondMenu":()=>import('@/pages/intelligentOilfield/secondMenu/index.vue'),// 二级菜单管理
   //   "LinkMenu":()=>import('@/pages/intelligentOilfield/iframePage/index.vue'),// 内部链接
+  "Dict":()=>import('@/pages/intelligentOilfield/dictManagement/index.vue'),// 字典管理
 
   "MyThirdMenu1":()=>import('@/pages/intelligentOilfield/thirdMenu/index.vue'),// 三级菜单-1管理
   "MyThirdMenu2":()=>import('@/pages/intelligentOilfield/myThirdMenu/index.vue'),// 三级菜单-2管理
 
   "Index":()=>import('@/pages/intelligentOilfield/demo/index.vue'),
   "CodeGeneration":()=>import('@/pages/intelligentOilfield/codeGeneration/index.vue'),
+  "DataIndexConfiguration":()=>import('@/pages/intelligentOilfield/configurationCenter/dataIndexConfiguration/index.vue'), // 配置中心-数据指标配置
 
 }
 

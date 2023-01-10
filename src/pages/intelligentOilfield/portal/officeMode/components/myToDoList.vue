@@ -7,16 +7,16 @@
         <!-- 右侧事项列表 -->
         <el-scrollbar class="scrollbar">
           <div class="listBox g-row-column">
-            <div class="listItemBox g-row-flex-V" v-for="(item, index) in eventList" :key="index">
+            <div class="listItemBox g-row-flex-V" :style="{background: $store.state.setting.mode==='dark'? 'rgba(0, 222, 240, 0.2)':'#fff',color: $store.state.setting.mode==='dark'? 'rgba(255,255,255,0.7)':'rgba(0, 0, 0, 0.6)'}" v-for="(item, index) in eventList" :key="index">
               <div style="width: 5%" class="text-center">{{ index + 1 }}</div>
-              <div style="width: 51%" class="mainText">{{ item.name }}</div>
+              <div style="width: 51%" :style="{color: $store.state.setting.mode==='dark'? 'rgba(255,255,255,0.9)':'#303133'}"  class="mainText">{{ item.name }}</div>
               <div class="g-row-flex-V text-center" style="width: 7%">
                 <div class="dot" :style="{ background: item.isHandle === 0 ? '#faad14' : '#0060a6' }"></div>
                 <div>{{ item.isHandle === 0 ? '待办' : '已办' }}</div>
               </div>
               <div style="width: 13%" class="text-center">发起时间：{{ item.initiationTime }}</div>
               <div style="width: 12%" class="text-center">发起人：{{ item.person }}</div>
-              <div style="width: 12%" class="operation text-center">处理</div>
+              <div style="width: 12%" :style="{color: $store.state.setting.mode==='dark'? 'var(--lightBlueColor)':'#0060a6'}" class="operation text-center">处理</div>
             </div>
           </div>
         </el-scrollbar>

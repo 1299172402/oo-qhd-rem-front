@@ -1,4 +1,4 @@
-<!-- 后台——数据权限管理 -->
+<!-- 后台——应用中心管理 -->
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true">
@@ -66,9 +66,15 @@
               <span>管理员；用户</span>
             </div>
             <div class="content_footer">
-              <p>应用状态：</p>
-              <div>
-                <el-switch v-model="status" active-value="0" inactive-value="1"></el-switch>
+              <div class="content_footerle">
+                <p>应用状态：</p>
+                <div>
+                  <el-switch v-model="status" active-value="0" inactive-value="1"></el-switch>
+                </div>
+              </div>
+              <div class="content_footerle" style="padding-right: 10px;">
+                <div><i class="el-icon-view"></i></div>
+                <div><i class="el-icon-edit-outline"></i></div>
               </div>
             </div>
           </div>
@@ -91,83 +97,11 @@
         @pagination="getList"
       />
     </div>
-    <!-- 添加或修改角色配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="50vw" append-to-body :close-on-click-modal="false">
-      <div class="dialog_box">
-        <div class="dialog_left">
-          <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-            <div class="headerinfo">基础信息</div>
-            <el-row>
-              <el-col :span="24">
-                <el-form-item label="用户名称" prop="nickName">
-                  <el-input v-model="form.nickName" placeholder="请输入用户名称" maxlength="30" />
-                </el-form-item>
-              </el-col>
-            
-            </el-row>
-            <el-row>
-              <el-col :span="24">
-                <el-form-item label="用户岗位">
-                  <el-select v-model="form.tempPostId" placeholder="请选择用户岗位" @change="changePost">
-                    <el-option
-                      v-for="item in postOptions"
-                      :key="item.postId"
-                      :label="item.postName"
-                      :value="item.postId"
-                      :disabled="item.status == 1"
-                    ></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <div class="headerinfo">账号信息</div>
-            <el-row>
-              <el-col :span="24">
-                <el-form-item label="用户账号" prop="userName">
-                  <el-input v-model="form.userName" placeholder="请输入用户账号" maxlength="30" />
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="24">
-                <el-form-item label="用户手机" prop="phonenumber">
-                  <el-input v-model="form.phonenumber" placeholder="请输入手机号码" maxlength="11" />
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="24">
-                <el-form-item label="用户密码" prop="password">
-                  <el-input
-                    v-model="form.password"
-                    placeholder="请输入用户密码"
-                    type="password"
-                    maxlength="20"
-                    show-password
-                  />
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </el-form>
-        </div>
-        <div class="dialog_right"></div>
-      </div>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel" class="cancelBtn">取 消</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import {
-  appList,
-  adddataPer,
-  deldataPer,
-  updatePer,
-  changeDataStatus,
-} from '@/api/system/dataper';
+import { appList, adddataPer, deldataPer, updatePer, changeDataStatus } from '@/api/system/dataper';
 
 export default {
   dicts: ['sys_normal_disable'],
@@ -175,7 +109,8 @@ export default {
     return {
       status: 0,
       appList: [],
-      form: {},
+      form: { type: [] },
+      imageUrl: '',
       open: false, // 新增弹框
       title: '', // 弹窗标题
       addtableRole: [],
@@ -238,6 +173,21 @@ export default {
         this.loading = false;
       });
     },
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
+    },
 
     // 数据权限状态修改
     handleStatusChange(row) {
@@ -285,9 +235,9 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = '组织框架列表';
+      this.$router.push({
+        name: `addapp`,
+      });
     },
     /** 确认增加按钮 */
     submitForm() {
@@ -368,15 +318,32 @@ export default {
         flex-direction: column;
         .content_body {
           width: 100%;
-          padding-left: 15px;
+          padding-left: 10px;
           line-height: 32px;
         }
 
         .content_footer {
           display: flex;
+          justify-content: space-between;
           line-height: 32px;
           width: 100%;
-          padding-left: 15px;
+          padding-left: 10px;
+
+          .content_footerle{
+            width: 50%;
+            display: flex;
+            justify-content: flex-start;
+            
+            .el-icon-view{
+              color: var(--lightBlueColor);;
+              font-size: 20px;
+              margin-right: 10px;
+            }
+            .el-icon-edit-outline{
+              color: var(--lightBlueColor);;
+              font-size: 20px;
+            }
+          }
         }
       }
     }
@@ -392,13 +359,14 @@ export default {
 .dialog_box {
   width: 100%;
   display: flex;
+  overflow: scroll;
 }
 .dialog_left {
   width: 50%;
-  height: 500px;
+  height: 700px;
 }
 .dialog_right {
   width: 50%;
-  height: 500px;
+  height: 700px;
 }
 </style>

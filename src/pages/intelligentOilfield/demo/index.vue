@@ -171,9 +171,11 @@
         <p>安全生产创效益，违规操作酿祸端</p>
       </Marquee>
     </div>
-    <el-tabs v-model="activeName" type="card">
-      <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
-      <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+    <!-- tabs标签页 -->
+    <div style="margin: 10px 0">================================tabs标签页=================================</div>
+    <el-tabs v-model="activeName" class="g-pageHeader">
+      <el-tab-pane label="用户管理" name="first"></el-tab-pane>
+      <el-tab-pane label="配置管理" name="second"></el-tab-pane>
     </el-tabs>
   </div>
 </template>

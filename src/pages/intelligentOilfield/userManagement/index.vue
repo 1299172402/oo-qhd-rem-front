@@ -694,7 +694,8 @@ export default {
         nickName: [{ required: true, message: '用户名称不能为空', trigger: 'blur' }],
         password: [
           { required: true, message: '用户密码不能为空', trigger: 'blur' },
-          { min: 5, max: 20, message: '用户密码长度必须介于 5 和 20 之间', trigger: 'blur' },
+          //   { min: 8, max: 20, message: '用户密码长度必须介于 8 和 20 之间', trigger: 'blur' },
+          {pattern:/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{8,20}$/, message:'必须包含大小写字母，数字和特殊字符，且字符在8到20之间'}
         ],
         surePassword: [
           { required: true, message: '确认密码不能为空', trigger: 'blur' },
@@ -916,8 +917,8 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         closeOnClickModal: false,
-        inputPattern: /^.{5,20}$/,
-        inputErrorMessage: '用户密码长度必须介于 5 和 20 之间',
+        inputPattern: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{8,20}$/,
+        inputErrorMessage: '必须包含大小写字母，数字和特殊字符，且字符在8到20之间',
       })
         .then(({ value }) => {
           resetUserPwd(row.userId, value).then((res) => {

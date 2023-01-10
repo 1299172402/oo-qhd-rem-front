@@ -12,13 +12,15 @@
       :margin="[10, 10]"
       :use-css-transforms="true"
       @layout-updated="layoutUpdatedEvent"
+      @layout-ready="layoutReadyEvent"
     >
-      <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i">
+      <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i" @resized="resizedEvent">
         <!-- <div style="padding: 10px 0 0 10px" v-if="item.i != 2"> {{ item.i }}</div> -->
-        <component :is="getContent(item.i)" />
+        <component :is="getContent(item.i)"  :height="item.height" />
       </grid-item>
     </grid-layout>
   </div>
+    
 </template>
 <script>
 import VueGridLayout from 'vue-grid-layout';
@@ -39,11 +41,11 @@ export default {
   data() {
     return {
       layout: [
-        { x: 0, y: 0, w: 2, h: 1, i: '0' },
-        { x: 2, y: 0, w: 1, h: 0.6, i: '1' },
-        { x: 0, y: 2, w: 2, h: 3, i: '2' },
-        { x: 2, y: 2, w: 1, h: 1.7, i: '3' },
-        { x: 2, y: 2, w: 1, h: 1.7, i: '4' },
+        { x: 0, y: 0, w: 2, h: 1, i: '0' ,height:''},
+        { x: 2, y: 0, w: 1, h: 0.6, i: '1',height:'' },
+        { x: 0, y: 2, w: 2, h: 3, i: '2' ,height:''},
+        { x: 2, y: 2, w: 1, h: 1, i: '3',height:'' },
+        { x: 2, y: 2, w: 1, h: 1.7, i: '4',height:'381' },
       ],
       tempLayOut: [],
 
@@ -82,6 +84,14 @@ export default {
     layoutUpdatedEvent(newLayout) {
       this.tempLayOut = newLayout;
     },
+    layoutReadyEvent(newLayout){
+      console.log("Ready layout: ", newLayout)
+    },
+
+    resizedEvent(i, newH, newW, newHPx, newWPx){
+      console.log(`RESIZED i=${  i  }, H=${  newH  }, W=${  newW  }, H(px)=${  newHPx  }, W(px)=${  newWPx}`);
+      this.layout[i].height = newHPx
+    }
   },
 };
 </script>

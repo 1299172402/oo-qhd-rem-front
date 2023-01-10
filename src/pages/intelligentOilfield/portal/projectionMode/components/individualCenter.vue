@@ -8,9 +8,9 @@
           <div class="text-center nameText">{{ $store.getters['user/name'] }}</div>
         </div>
         <div class="personInfo g-column-flex">
-          <div>职位：xx公司xx部门xx经理</div>
-          <div>登录IP：192.168.1.1</div>
-          <div>最近登录：2022.11.15 14:21:15</div>
+          <div>职位：{{userInfo.title}}</div>
+          <div>登录IP：{{userInfo.loginIp}}</div>
+          <div>最近登录：{{ parseTime(userInfo.loginDate) }}</div>
         </div>
       </div>
       <!-- <template #titleContent>
@@ -39,8 +39,19 @@ export default {
   data() {
     return {
       circleUrl: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+      userInfo:{
+        loginIp:'',
+        loginDate:'',
+        title:''  
+      }
     };
   },
+  created() {
+    const roles = this.$store.getters['user/userDetail'].roles.join(',')
+    this.userInfo.loginIp = this.$store.getters['user/userDetail'].user.loginIp
+    this.userInfo.loginDate = this.$store.getters['user/userDetail'].user.loginDate
+    this.userInfo.title = this.$store.getters['user/userDetail'].user.dept.deptName +  roles 
+  }
 };
 </script>
 

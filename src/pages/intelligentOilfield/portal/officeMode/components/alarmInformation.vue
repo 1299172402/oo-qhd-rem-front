@@ -4,11 +4,12 @@
     <info-window infoWidth="100%" infoHeight="100%" headerTitle="报警信息">
       <div class="g-w100 g-h100" style="font-size: 20px">
         <div class="g-row-flex-V aa">
-          <div>11</div>
-          <div>22</div>
+            <div><horizontalSwitchBtn @selectBtn="selectBtnLeft"></horizontalSwitchBtn></div>
+            <div><horizontalSwitchBtn @selectBtn="selectBtnRight" :dataList="dataList"></horizontalSwitchBtn></div>
         </div>
         <div>
           <el-table
+            v-show="currentType==='列表'"
             height="350px"
             :row-style="{ height: '0px' }"
             :header-cell-style="{ 'text-align': 'center', padding: '6px 0' }"
@@ -29,6 +30,25 @@
               </template>
             </el-table-column>
           </el-table>
+          <div v-show="currentType!=='列表'">
+              <div class="g-row-flex-V aa">
+                 <div>统计数据</div>
+                 <div>
+                     <el-date-picker
+                        v-model="value1"
+                        type="daterange"
+                        style="width: 400px"
+                        range-separator="-"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期"
+                        >
+                      </el-date-picker>
+                 </div>
+              </div>
+              <div>
+                    
+              </div>
+          </div>
           <el-pagination background layout="prev, pager, next,total" :total="1000" class="paginationDiv">
           </el-pagination>
         </div>
@@ -38,13 +58,20 @@
 </template>
 <script>
 import infoWindow from '@/components/info-window/index.vue';
+import horizontalSwitchBtn from '@/components/horizontal-switch-button/index.vue';
 
 export default {
   components: {
     infoWindow,
+    horizontalSwitchBtn,
   },
   data() {
     return {
+      value1: '',
+      dataList: [
+        { name: '列表', isChecked: true },
+        { name: '图表', isChecked: false },
+      ],
       tableData: [
         {
           roleName: '安全帽识别类型',
@@ -110,12 +137,22 @@ export default {
           date: '2016-05-04 12:21',
         },
       ],
+      currentBelong: '全部',
+      currentType: '列表',
     };
   },
   methods: {
     sureWarn() {
       console.log('queren');
     },
+    selectBtnLeft(item) {
+      console.log('左侧选择===', item);
+      this.currentBelong = item.name;
+    },
+    selectBtnRight(item) {
+      console.log('右侧选择===', item);
+      this.currentType = item.name;
+    }
   },
 };
 </script>

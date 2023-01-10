@@ -39,7 +39,8 @@
     "file-saver": "2.0.5",
     "@riophae/vue-treeselect": "0.4.0",
     "vue-cropper": "0.5.5",
-    "highlight.js": "9.18.5"
+    "highlight.js": "9.18.5",
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.4.0"
   },
   "devDependencies": {
     "@types/vue-color": "^2.4.3",

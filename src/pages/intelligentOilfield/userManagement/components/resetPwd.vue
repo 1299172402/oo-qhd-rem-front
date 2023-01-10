@@ -45,7 +45,8 @@ export default {
         oldPassword: [{ required: true, message: '旧密码不能为空', trigger: 'blur' }],
         newPassword: [
           { required: true, message: '新密码不能为空', trigger: 'blur' },
-          { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
+          //   { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
+          {pattern:/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{8,20}$/, message:'必须包含大小写字母，数字和特殊字符，且字符在8到20之间'}
         ],
         confirmPassword: [
           { required: true, message: '确认密码不能为空', trigger: 'blur' },

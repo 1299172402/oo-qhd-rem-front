@@ -1,11 +1,11 @@
 <!--轮循面板组件-->
 <template>
-  <div class="g-w100 g-h00">
-    <el-carousel trigger="click" :autoplay="false">
-      <el-carousel-item v-for="item1 in 4" :key="item1" class="g-row-flex" style="flex-wrap: wrap">
-        <div class="g-column-flex-H panelDiv" v-for="item2 in 12" :key="item2">
+  <div class="g-w100 g-h00 panel">
+    <el-carousel trigger="click" :autoplay="false" arrow="never" indicator-position="outside">
+      <el-carousel-item v-for="(item1,index) in panelList" :key="index" class="g-row-flex" style="flex-wrap: wrap">
+        <div class="g-column-flex-H panelDiv" v-for="(item2,index) in item1" :key="index+200">
           <div class="panelImg"></div>
-          <div>其他应用{{ item2 }}</div>
+          <div>{{item2.title}}</div>
         </div>
       </el-carousel-item>
     </el-carousel>
@@ -13,14 +13,67 @@
 </template>
 <script>
 export default {
-  props: {},
+  props: {
+    panels:{
+      type: Array,
+      default() {
+        return [
+          {img:'',title:'油藏管理'},
+          {img:'',title:'设备设施'},
+          {img:'',title:'安全'},
+          {img:'',title:'船体'},
+          {img:'',title:'油藏管理'},
+          {img:'',title:'设备设施'},
+          {img:'',title:'安全'},
+          {img:'',title:'船体'},
+          {img:'',title:'船体'},
+        ];
+      }
+    },
+    height: {
+
+    }
+  },
+    
   data() {
     return {};
+  },
+  computed: {
+    panelList() {
+      // 先判定容器的高来决定一页可放几个标签 height 要先减去头部的高度以及底部的分页条的高度 每一行高100，上下padding加起来是40
+      console.log(this.height)
+      //   const height2 = this.height-40-32
+      //   const row = Math.floor(height2/140)
+            
+      //  alert(Math.floor(80/52));
+      // 根据页容量进行分页
+      const returnList  = []
+      for (let i = 0; i < this.panels.length; i += 4) {
+        returnList.push(this.panels.slice(i, i + 4));
+      }
+      console.log(returnList)
+      return returnList
+         
+    },
   },
   methods: {},
 };
 </script>
+<style>
+  .panel  .el-carousel__button{
+        width: 8px !important;
+        height: 8px !important;
+        border-radius: 7px !important;
+    }
+    .panel .el-carousel__indicators--outside button {
+        background-color: #3f87bc !important;
+    }
+    .panel .el-carousel__container{
+        height: 80px !important;
+    }
+</style>
 <style scoped>
+  
 /* */
 .panelImg {
   background-image: url('https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png');

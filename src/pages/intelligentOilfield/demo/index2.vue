@@ -137,14 +137,20 @@
     <info-window infoWidth="400px" infoHeight="300px" headerTitle="开采现状分析">
         <div style="padding:20px">放主内容</div>
     </info-window>
+    <!-- tab切换按钮：横向，可传值，可传背景色和border色系，可控制深浅色系颜色 -->
+    <div style="margin: 10px 0">=================================tab切换按钮：横向，可传值，可传背景色和border色系，可控制深浅色系颜色=================================</div>
+    <horizontalSwitchBtn style="margin-bottom: 10px"></horizontalSwitchBtn>
+    <!-- <horizontalSwitchBtn :colorList="colorList" :borderList="borderList" :dataList="dataList"></horizontalSwitchBtn> -->
   </div>
 </template>
 <script>
 import infoWindow from '@/components/info-window/index.vue';
+import horizontalSwitchBtn from '@/components/horizontal-switch-button/index.vue';
 
 export default {
   components: {
     infoWindow,
+    horizontalSwitchBtn,
   },
   data() {
     const generateData = () => {
@@ -159,6 +165,13 @@ export default {
       return data;
     };
     return {
+      colorList: { 'dark':'rgba(13,255,168,0.4)','light':'red'},
+      borderList: {'dark':'rgba(13,255,168,1)','light':'green'},
+      dataList: [
+        { name: '第一', isChecked: true },
+        { name: '第二', isChecked: false },
+        { name: '第三', isChecked: false },
+      ],
       // 自定义进度条颜色，使用:color="colors"
       colors: 'rgba(166, 29, 36, 1)',
       // 表单

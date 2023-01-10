@@ -28,6 +28,7 @@ import applicationCenter from './components/applicationCenter.vue';
 import kanbanCenter from './components/kanbanCenter.vue';
 import alarmInformation from './components/alarmInformation.vue';
 import quickEntry from './components/quickEntry.vue';
+import runningAway from './components/runningAway.vue';
 
 export default {
   components: {
@@ -54,7 +55,7 @@ export default {
     getContent(i) {
       switch (i) {
       case '0': // 跑马灯
-        return;
+        return runningAway;
       case '1':
         return individualCenter;
       case '2':
