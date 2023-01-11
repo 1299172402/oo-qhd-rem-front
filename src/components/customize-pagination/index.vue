@@ -19,7 +19,6 @@
 import scrollTo from '@/utils/scroll-to'
 
 export default {
-  name: 'pagination',
   props: {
     total: {
       required: true,

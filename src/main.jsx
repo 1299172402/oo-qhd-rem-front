@@ -25,7 +25,7 @@ import { getDicts } from "@/api/system/dict/data";
 import { getConfigKey } from "@/api/system/config";
 import DictTag from '@/components/dict-tag/index.vue';
 import DictData from '@/components/dict-data/index.js'
-import Pagination from "@/components/pagination/index.vue";
+import Pagination from "@/components/customize-pagination/index.vue";
 import directive from './directive'
 import 'virtual:svg-icons-register'
 import SvgIcon from '@/components/svg-icon/index.vue'
