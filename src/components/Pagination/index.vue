@@ -10,7 +10,7 @@
       :total="total"
       v-bind="$attrs"
       @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
+      @current-change="handleCurrentChange" 
     />
   </div>
 </template>
@@ -19,7 +19,7 @@
 import scrollTo from '@/utils/scroll-to'
 
 export default {
-  name: 'Pagination',
+  name: 'pagination',
   props: {
     total: {
       required: true,
