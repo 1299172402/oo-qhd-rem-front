@@ -1,6 +1,7 @@
 {
   "name": "intelligent-oilfield",
   "version": "0.4.3",
+  "private": false,
   "scripts": {
     "dev:mock": "vite --open --mode mock",
     "dev": "vite --open --mode development",
