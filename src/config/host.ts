@@ -14,7 +14,7 @@ export default {
   },
   release: {
     // 正式环境接口地址
-    API: 'http://localhost:80/dev-api/',
+    API: 'http://10.247.112.166:80/dev-api/',
     // 正式环境 cdn 路径
     CDN: '',
   },
