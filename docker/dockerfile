@@ -1,5 +1,5 @@
 # 基础镜像
-FROM swr.zhydc-nyyjy-1.r410.cnooc/public-image-swr/nginx-arm:1.23.1
+FROM swr.zhydc-nyyjy-1.r410.cnooc/public-image-swr/nginx:1.22.0
 # author
 MAINTAINER cnooc
 # 挂载目录	 
