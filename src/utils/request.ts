@@ -64,7 +64,7 @@ function hideLoading() {
 
 const instance = axios.create({
   baseURL: API_HOST,
-  timeout: 1000,
+  timeout: 10000,
   withCredentials: true,
 });
 
