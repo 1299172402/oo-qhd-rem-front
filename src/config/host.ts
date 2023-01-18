@@ -14,7 +14,7 @@ export default {
   },
   release: {
     // 正式环境接口地址
-    API: 'http://192.168.1.136:32452/prod-api/',
+    API: 'http://cnooc-web-out.cnooc-dev.svc.cluster.local:8081/prod-api/',
     // 正式环境 cdn 路径
     CDN: '',
   },
