@@ -27,8 +27,8 @@ const toHideLoading = _.debounce(() => {
 
 const env = import.meta.env.MODE || 'development';
 
-//const API_HOST = env === 'mock' ? '/' : proxy[env].API; // 如果是mock模式 就不配置host 会走本地Mock拦截
-const API_HOST = 'http://10.247.207.41:8081/dev-api/';
+const API_HOST = env === 'mock' ? '/' : proxy[env].API; // 如果是mock模式 就不配置host 会走本地Mock拦截
+//const API_HOST = 'http://10.247.207.41:8081/dev-api/';
 
 const CODE = {
   LOGIN_TIMEOUT: 1000,
