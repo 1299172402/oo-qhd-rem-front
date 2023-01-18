@@ -4,8 +4,6 @@ FROM swr.zhydc-nyyjy-1.r410.cnooc/public-image-swr/nginx-arm:1.23.1
 MAINTAINER cnooc
 # 挂载目录	 
 VOLUME /cnooc-ui	 
-# 创建目录	 
-RUN "mkdir -p /cnooc-ui"
 # 指定路径
 WORKDIR /cnooc-ui
 # 复制conf文件到路径
