@@ -14,7 +14,7 @@ export default {
   },
   release: {
     // 正式环境接口地址
-    API: 'http://10.247.207.41:8081/prod-api/',
+    API: 'http://10.247.207.41:8082/prod-api/',
     // 正式环境 cdn 路径
     CDN: '',
   },
