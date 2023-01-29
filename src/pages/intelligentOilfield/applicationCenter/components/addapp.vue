@@ -260,7 +260,7 @@
 </template>
   
 <script>
-import { addapp } from '@/api/system/app';
+import { addApp } from '@/api/system/app';
 import { getUser } from '@/api/system/user';
 import { listDept } from '@/api/system/dept';
 
@@ -392,7 +392,7 @@ export default {
     },
     // 保存
     submitFormadd() {
-      addapp(this.form).then((response) => {
+      addApp(this.form).then((response) => {
         console.log(response)
         this.$modal.msgSuccess('新增成功');
       });
