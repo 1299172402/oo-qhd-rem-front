@@ -1,0 +1,31 @@
+.title {
+    font-size: 10pt;
+    font-weight: 600;
+    display: block;
+    color: #000;
+    text-align: left;
+}
+
+.audit-flow {
+    &-item {
+        display: flex;
+        &-left {
+           padding-right: 10px;
+            &-title, &-person{
+                .title
+            }
+            &-time {
+                font-size: 12px;
+                text-align: left;
+            }
+        }
+        &-right {
+            &-title {
+                .title
+            }
+        }
+        &-description {
+            margin: 10px 0
+        }
+    }
+}

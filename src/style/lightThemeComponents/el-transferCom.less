@@ -33,8 +33,35 @@
   width: 3px;
   height: 3px;
 }
+
 //滚动条的滑块
 ::-webkit-scrollbar-thumb {
   background-color: #a1a3a9;
   border-radius: 3px;
+}
+
+.el-transfer-panel__list {
+  .el-checkbox {
+    margin-right: 0;
+
+  }
+
+  .is-checked {
+    background: #CCDFED;
+
+    .el-checkbox__label {
+      color: #606266;
+    }
+
+    .el-checkbox__inner{
+      background-color: #0060A6;
+      border-color: #0060A6;
+    }
+  }
+}
+.el-transfer-panel__item:hover {
+  color: #0060A6;
+}
+.el-checkbox__input.is-focus .el-checkbox__inner{
+  border-color: #DCDFE6;
 }

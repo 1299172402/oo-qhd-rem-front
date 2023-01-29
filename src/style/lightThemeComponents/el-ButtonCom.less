@@ -1,5 +1,5 @@
 .el-button--primary {
-  background: var(--primaryBtn);
+  background: var(--primaryBtn) !important;
   border-radius: 0px;
   border: 0px;
   color: #fff;
@@ -16,9 +16,10 @@
 
 
 .commonBtn {
-  border: 1px solid var(--lightBlueColor);
+  background: #fff !important;
+  border: 1px solid var(--lightBlueColor) !important;
   border-radius: 0;
-  color: var(--lightBlueColor);
+  color: var(--lightBlueColor) !important;
   height: 40px;
   // width: 100px;
   font-size: 14px;
@@ -32,27 +33,52 @@
 
 .cancelBtn {
   border-radius: 0;
+  background: #FFF !important;
+  border: 1px solid #DCDFE6 !important;
+  color: #606266 !important;
 }
 
 .errorBtn {
-  background: #a61d24;
-  color: #fff;
+  background: #a61d24 !important;
+  color: #fff !important;
   border: 0px;
 }
 
 .errorBtnplain {
-  background-color: transparent;
-  color: #a61d24;
-  border: 1px solid #a61d24;
+  background-color: transparent !important;
+  color: #a61d24 !important;
+  border: 1px solid #a61d24 !important;
 }
 
 .disableBtn {
-  color: #C0C4CC;
+  color: #C0C4CC !important;
   cursor: not-allowed;
-  background-image: none;
-  border-color: #EBEEF5;
-
+  background-image: none !important;
+  border-color: #C0C4CC !important;
+  border-radius: 0;
 }
-.el-button{
+
+.el-button {
   height: 40px;
+}
+
+
+
+//按钮hover时的样式
+.buttonActive_primary:hover {
+  background: var(--primaryBtn) !important;
+  border: none;
+}
+.commonBtn:hover {
+  color: #409EFF !important;
+  border-color: #c6e2ff !important;
+  background-color: #ecf5ff !important;
+}
+.cancelBtn:hover{
+  color: #409EFF !important;
+  border-color: #c6e2ff !important;
+  background-color: #ecf5ff !important;
+}
+.disableBtn:hover{
+  background-color: #fff !important;
 }

@@ -45,7 +45,8 @@
     </template>
     <t-badge :count="unreadMsg.length" :offset="[15, 21]">
       <t-button theme="default" shape="square" variant="text" @click="isNoticeVisible = true">
-        <notification-icon style="color: var(--whiteColor);"/>
+        <!-- <notification-icon style="color: var(--whiteColor);"/> -->
+        <svg-icon icon-class="reminder" class="panelIconClass"></svg-icon>
       </t-button>
     </t-badge>
   </t-popup>
@@ -54,13 +55,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapState, mapGetters } from 'vuex';
-import { NotificationIcon } from 'tdesign-icons-vue';
+// import { NotificationIcon } from 'tdesign-icons-vue';
 
 import { NotificationItem } from '@/interface';
 
 export default Vue.extend({
   components: {
-    NotificationIcon,
+    // NotificationIcon,
   },
   data() {
     return {
@@ -80,7 +81,7 @@ export default Vue.extend({
       this.isNoticeVisible = visible;
     },
     goDetail() {
-      this.$router.push('/detail/secondary');
+      this.$router.push('/stationMessage/stationMessageDetail');
       this.isNoticeVisible = false;
     },
     setRead(type: string, item?: NotificationItem) {

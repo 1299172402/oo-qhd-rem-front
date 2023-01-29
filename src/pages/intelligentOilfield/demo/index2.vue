@@ -1,5 +1,8 @@
 <template>
   <div>
+      <div class="headerTitle spaceMargin">
+      ====================================================其他组件一览大全========================================
+    </div>
     <!-- Progress进度条 -->
     <div>=================================大号进度条=================================</div>
     <el-progress :percentage="50" style="width: 400px"></el-progress>
@@ -137,20 +140,21 @@
     <info-window infoWidth="400px" infoHeight="300px" headerTitle="开采现状分析">
         <div style="padding:20px">放主内容</div>
     </info-window>
+    <div style="margin: 40px 0"> =================================end========================</div>
     <!-- tab切换按钮：横向，可传值，可传背景色和border色系，可控制深浅色系颜色 -->
-    <div style="margin: 10px 0">=================================tab切换按钮：横向，可传值，可传背景色和border色系，可控制深浅色系颜色=================================</div>
+    <!-- <div style="margin: 10px 0">=================================tab切换按钮：横向，可传值，可传背景色和border色系，可控制深浅色系颜色=================================</div>
     <horizontalSwitchBtn style="margin-bottom: 10px"></horizontalSwitchBtn>
-    <!-- <horizontalSwitchBtn :colorList="colorList" :borderList="borderList" :dataList="dataList"></horizontalSwitchBtn> -->
+    <horizontalSwitchBtn :colorList="colorList" :borderList="borderList" :dataList="dataList"></horizontalSwitchBtn> -->
   </div>
 </template>
 <script>
 import infoWindow from '@/components/info-window/index.vue';
-import horizontalSwitchBtn from '@/components/horizontal-switch-button/index.vue';
+// import horizontalSwitchBtn from '@/components/horizontal-switch-button/index.vue';
 
 export default {
   components: {
     infoWindow,
-    horizontalSwitchBtn,
+    // horizontalSwitchBtn,
   },
   data() {
     const generateData = () => {
@@ -234,5 +238,13 @@ export default {
 }
 .lineStyle {
   text-align: center;
+}
+.headerTitle {
+  font-size: 16px;
+  color: var(--lightBlueColor);
+  font-weight: 700;
+}
+.demoClass .spaceMargin {
+  padding: 15px 0;
 }
 </style>

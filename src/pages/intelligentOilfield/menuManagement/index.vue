@@ -167,7 +167,7 @@
                 </el-tooltip>
                 路由名称
               </span>
-              <el-input v-model="form.path" placeholder="请输入路由名称" />
+              <el-input v-model="form.path" placeholder="请输入路由名称" @input="change($event)"/>
             </el-form-item>
           </el-col>
           <el-col :span="12" v-if="form.menuType != 'F'">
@@ -365,6 +365,10 @@ export default {
     this.getList();
   },
   methods: {
+    // 解决弹窗input框不能输入问题
+    change() {
+      this.$forceUpdate();
+    },
     // 清除图标
     clearIcon() {
       this.form.icon = '#';

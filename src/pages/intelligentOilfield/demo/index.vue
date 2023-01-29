@@ -1,13 +1,98 @@
 <template>
-  <div>
-    <div>点击“成功”按钮将出现警告提示</div>
-    <el-button type="primary" @click="open2">成功</el-button>
-    <div>点击“重置”按钮将出现Dialog提示</div>
-    <el-button class="commonBtn" @click="open1">重置</el-button>
-    <el-button class="cancelBtn">取消</el-button>
-    <el-select v-model="value" placeholder="请选择" style="margin: 0 20px">
+  <div class="demoClass">
+    <!-- 常用组件一览大全 -->
+    <div class="headerTitle spaceMargin">
+      ====================================================常用组件一览大全========================================
+    </div>
+    <div class="headerTitle spaceMargin">
+      1、按钮============================================================================================
+    </div>
+    <div class="spaceMargin">1.1、主要按钮</div>
+    <el-button type="primary" class="buttonActive_primary">主要按钮</el-button>
+    <el-button type="primary" class="buttonActive_primary" icon="el-icon-search">搜索</el-button>
+    <div class="spaceMargin">1.2、次要按钮</div>
+    <el-button class="commonBtn">次要按钮</el-button>
+    <el-button class="commonBtn" icon="el-icon-search">搜索</el-button>
+    <div class="spaceMargin">1.3、取消按钮</div>
+    <el-button class="cancelBtn">取消按钮</el-button>
+    <el-button class="cancelBtn" icon="el-icon-search">搜索</el-button>
+    <div class="spaceMargin">1.4、危险按钮</div>
+    <el-button class="errorBtn">危险按钮</el-button>
+    <el-button class="errorBtnplain">危险按钮</el-button>
+    <div class="spaceMargin">
+      1.5、失效按钮
+    </div>
+    <el-button class="disableBtn">失效按钮</el-button>
+
+    <div class="headerTitle spaceMargin">
+      2、下拉框=========================================================================================
+    </div>
+    <div class="spaceMargin">
+      2.1、主下拉框
+    </div>
+     <div class="spaceMargin">
+      2.1.1、单选下拉框
+    </div>
+    <el-select v-model="value" placeholder="请选择">
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
     </el-select>
+     <div class="spaceMargin">
+      2.1.2、多选下拉框
+    </div>
+    <el-select multiple v-model="valueA" placeholder="请选择">
+      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+    </el-select>
+    <div class="spaceMargin">
+      2.2、无border下拉框
+    </div>
+    <el-select v-model="value" placeholder="请选择" class="dropdown">
+      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+    </el-select>
+    <div class="spaceMargin">
+      2.3、下拉菜单
+    </div>
+    <el-dropdown trigger="click">
+      <span class="el-dropdown-link"> 下拉菜单<i class="el-icon-arrow-down el-icon--right"></i> </span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item>黄金糕</el-dropdown-item>
+        <el-dropdown-item>狮子头</el-dropdown-item>
+        <el-dropdown-item>螺蛳粉</el-dropdown-item>
+        <el-dropdown-item disabled>双皮奶</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+    <div class="spaceMargin">
+      2.4、Cascader 级联选择器
+    </div>
+    <el-cascader
+    v-model="valueC"
+    :options="optionsC"
+    ></el-cascader>
+    <div class="headerTitle spaceMargin">
+      3、输入框=========================================================================================
+    </div>
+    <div class="spaceMargin">
+      3.1、主输入框
+    </div>
+    <el-input  suffix-icon="el-icon-date"  v-model="input" style="width: 300px" placeholder="请输入角色名称"></el-input>
+    <div class="spaceMargin">
+      3.2、失效输入框
+    </div>
+    <el-input prefix-icon="el-icon-search" v-model="input" disabled style="width: 300px" placeholder="请输入角色名称"></el-input>
+
+    <div class="spaceMargin">
+      3.3、文本域
+    </div>
+    <el-input type="textarea" style="width: 300px" v-model="input"></el-input>
+
+    <div class="headerTitle spaceMargin">
+      4、日期选择器=========================================================================================
+    </div>
+    <div class="spaceMargin">
+      4.1、时间范围选择器
+    </div>
+    <div class="spaceMargin">
+      4.1.1、日期范围选择器
+    </div>
     <el-date-picker
       v-model="value1"
       type="daterange"
@@ -17,10 +102,33 @@
       end-placeholder="结束日期"
     >
     </el-date-picker>
-    <irregularityBox style="margin: 20px 20px 20px 0"></irregularityBox>
+     <div class="spaceMargin">
+      4.1.2、时间范围选择器
+    </div>
+    <el-date-picker
+      v-model="value1"
+      type="datetimerange"
+      style="width: 400px"
+      range-separator="-"
+      start-placeholder="开始时间"
+      end-placeholder="结束时间"
+    >
+    </el-date-picker>
+    <div class="spaceMargin">
+      4.2、日期选择器
+    </div>
+    <el-date-picker type="date" placeholder="选择日期" v-model="date1" style="width: 400px"></el-date-picker>
+    <div class="spaceMargin">
+      4.3、时间选择器
+    </div>
+    <el-time-picker placeholder="选择时间" v-model="date2" style="width: 400px"></el-time-picker>
+
+    <div class="headerTitle spaceMargin">
+      5、table表格=========================================================================================
+    </div>
     <el-table
       :row-style="{ height: '0px' }"
-      :header-cell-style="{ 'text-align': 'center', padding: '6px 0' }"
+      :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       :data="tableData"
       header-cell-class-name="table_header"
       :cell-style="{ padding: '6px', 'text-align': 'center' }"
@@ -31,15 +139,143 @@
       <el-table-column prop="name" label="姓名" sortable width="180"> </el-table-column>
       <el-table-column prop="address" label="地址"> </el-table-column>
     </el-table>
-    <el-radio-group style="margin: 20px 0" v-model="activeTabIndex">
+
+    <div class="headerTitle spaceMargin">
+      6、分页=========================================================================================
+    </div>
+    <div class="spaceMargin">
+      6.1、elementUI的分页器
+    </div>
+    <el-pagination background layout="prev, pager, next,total" :total="1000" class="paginationDiv"> </el-pagination>
+    <div class="spaceMargin">
+      6.2、自定义封装分页器，实际页面中多个地方使用，具体看实际功能列表
+    </div>
+    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize" />
+    <div class="headerTitle spaceMargin">
+      7、单选按钮=========================================================================================
+    </div>
+    <el-radio-group v-model="activeTabIndex">
       <el-radio :label="0">力导布局</el-radio>
       <el-radio :label="1">树形布局</el-radio>
     </el-radio-group>
+    <div class="headerTitle spaceMargin">
+      8、多选按钮=========================================================================================
+    </div>
     <el-checkbox-group v-model="checkList">
       <el-checkbox label="复选框 A"></el-checkbox>
       <el-checkbox label="复选框 B"></el-checkbox>
       <el-checkbox label="复选框 C"></el-checkbox>
     </el-checkbox-group>
+    <div class="headerTitle spaceMargin">
+      9、Dialog弹窗=========================================================================================
+    </div>
+    <el-button type="primary" class="buttonActive_primary" @click="dialogVisible = true">点击打开Dialog</el-button>
+    <el-dialog title="标题" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false">
+      <span>何时使用：需要用户处理事务，又不希望跳转</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false" class="cancelBtn">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
+    <div class="headerTitle spaceMargin">
+      10、Message消息提示=========================================================================================
+    </div>
+    <el-button :plain="true" @click="opensuccess" class="commonBtn">成功消息提示</el-button>
+    <el-button :plain="true" @click="openwarn" class="commonBtn">警告消息提示</el-button>
+    <el-button :plain="true" @click="openinfo" class="commonBtn">消息消息提示</el-button>
+    <el-button :plain="true" @click="openerror" class="commonBtn">失败消息提示</el-button>
+    <div class="headerTitle spaceMargin">
+      11、Alert警告提示=========================================================================================
+    </div>
+    <el-alert
+      title="成功提示的文案"
+      type="success"
+      description="文字说明文字说明文字说明文字说明文字说明文字说明"
+      show-icon
+      style="width: 400px"
+    >
+    </el-alert>
+    <el-alert
+      title="消息提示的文案"
+      type="info"
+      description="文字说明文字说明文字说明文字说明文字说明文字说明"
+      show-icon
+      style="width: 400px;margin:10px 0"
+    >
+    </el-alert>
+    <el-alert
+      title="警告提示的文案"
+      type="warning"
+      description="文字说明文字说明文字说明文字说明文字说明文字说明"
+      show-icon
+      style="width: 400px"
+    >
+    </el-alert>
+    <el-alert
+      title="错误提示的文案"
+      type="error"
+      description="文字说明文字说明文字说明文字说明文字说明文字说明"
+      show-icon
+      style="width: 400px;margin:10px 0"
+    >
+    </el-alert>
+    <div class="headerTitle spaceMargin">
+      12、Message弹窗【待修改：深色系弹窗背景色修改】=========================================================================================
+    </div>
+    <el-button class="commonBtn" @click="open1">点击弹出Message弹窗</el-button>
+    <div class="headerTitle spaceMargin">
+      13、Steps步骤条=========================================================================================
+    </div>
+    <div style="width: 40%" class="stepsrow">
+      <el-steps :active="activerow" finish-status="success">
+        <el-step title="步骤 1" description="这是一段很长很长很长的描述性文字"></el-step>
+        <el-step title="步骤 2" description="这是一段很长很长很长的描述性文字"></el-step>
+        <el-step title="步骤 3" description="这是一段很长很长很长的描述性文字"></el-step>
+      </el-steps>
+      <el-button style="margin-top: 12px" @click="next" class="commonBtn">下一步（横）</el-button>
+      <el-button style="margin-top: 12px" @click="next1" class="commonBtn">下一步(竖)</el-button>
+    </div>
+    <div style="height: 300px" class="stepscolumn spaceMargin">
+      <el-steps :active="activecolumn" finish-status="success" direction="vertical">
+        <el-step title="步骤 1" description="这是一段很长很长很长的描述性文字"></el-step>
+        <el-step title="步骤 2" description="这是一段很长很长很长的描述性文字"></el-step>
+        <el-step title="步骤 3" description="这是一段很长很长很长的描述性文字"></el-step>
+      </el-steps>
+    </div>
+    <div class="headerTitle spaceMargin">
+      14、Silder滑块=========================================================================================
+    </div>
+    <div style="width: 40%">
+      <el-slider v-model="value2"></el-slider>
+    </div>
+    <div class="headerTitle spaceMargin">
+      15、tabs标签页=========================================================================================
+    </div>
+    <div class="spaceMargin">
+      15.1、elementUI的tabs标签页
+    </div>
+    <el-tabs v-model="activeName" class="g-pageHeader">
+      <el-tab-pane label="用户管理" name="first"></el-tab-pane>
+      <el-tab-pane label="配置管理" name="second"></el-tab-pane>
+    </el-tabs>
+    <div class="spaceMargin">
+      15.2、自定义的tabs切换按钮（横向，可传值，可传背景色和border色系，可控制深浅色系颜色）
+    </div>
+    <horizontalSwitchBtn style="margin-bottom: 10px"></horizontalSwitchBtn>
+    <horizontalSwitchBtn :colorList="colorList" :borderList="borderList" :dataList="dataList"></horizontalSwitchBtn>
+    <div class="headerTitle spaceMargin">
+      16、自定义消息通知跑马灯组件=========================================================================================
+    </div>
+    <div class="marquee-fa" style="margin: 20px 0">
+      <div class="marquee_head">
+        <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px" />
+        <p style="margin-left: 10px; width: 70px">通知公告：</p>
+      </div>
+      <Marquee>{{ val }}</Marquee>
+    </div>
+    <div class="headerTitle spaceMargin">
+      17、echarts图表【未作封装以及大小适配】=========================================================================================
+    </div>
     <chartsComponents
       :chart-data-options="dataOption"
       echartsType="pie1"
@@ -56,127 +292,7 @@
       style="width: 600px; height: 400px"
     ></chartsComponents>
     <div id="lineContainer" ref="lineContainer" style="width: 50%; height: 410px"></div>
-    <el-input v-model="input" style="width: 300px; margin: 20px 0" placeholder="请输入角色名称"></el-input>
-    <el-pagination background layout="prev, pager, next,total" :total="1000" class="paginationDiv"> </el-pagination>
-    <div style="margin-top: 20px">点击“点击打开Modal”按钮将出现Modal对话框</div>
-    <el-button type="text" @click="dialogVisible = true">点击打开Modal</el-button>
-    <div class="eldialog">
-      <el-dialog title="标题" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false">
-        <span>何时使用：需要用户处理事务，又不希望跳转</span>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-        </span>
-      </el-dialog>
-    </div>
-
-    <div>点击“删除”按钮将出现Modal对话框</div>
-    <el-button class="commonBtn" @click="onShowModal">删除</el-button>
-    <myModal
-      :title="title"
-      :content="content"
-      cancelText="取消"
-      okText="确认"
-      mode="confirm"
-      type="confirm"
-      :center="center"
-      :loading="loading"
-      @cancel="onCancel"
-      @ok="onConfirm"
-      v-show="showModal"
-    />
-    <div style="margin-top: 20px">
-      <el-alert
-        title="成功提示的文案"
-        type="success"
-        description="文字说明文字说明文字说明文字说明文字说明文字说明"
-        show-icon
-      >
-      </el-alert>
-      <el-alert
-        title="消息提示的文案"
-        type="info"
-        description="文字说明文字说明文字说明文字说明文字说明文字说明"
-        show-icon
-      >
-      </el-alert>
-      <el-alert
-        title="警告提示的文案"
-        type="warning"
-        description="文字说明文字说明文字说明文字说明文字说明文字说明"
-        show-icon
-      >
-      </el-alert>
-      <el-alert
-        title="错误提示的文案"
-        type="error"
-        description="文字说明文字说明文字说明文字说明文字说明文字说明"
-        show-icon
-      >
-      </el-alert>
-    </div>
-
-    <div style="margin-top: 20px">
-      <el-button :plain="true" @click="opensuccess" class="commonBtn">成功消息提示</el-button>
-      <el-button :plain="true" @click="openwarn" class="commonBtn">警告消息提示</el-button>
-      <el-button :plain="true" @click="openinfo" class="commonBtn">消息消息提示</el-button>
-      <el-button :plain="true" @click="openerror" class="commonBtn">失败消息提示</el-button>
-    </div>
-    <div style="margin-top: 20px">
-      <el-button class="errorBtn">危险按钮</el-button>
-      <el-button class="errorBtnplain">危险按钮</el-button>
-      <el-button class="disableBtn">失效按钮</el-button>
-    </div>
-    <div style="margin-top: 20px" class="dropdown">
-      <el-select v-model="value" placeholder="请选择">
-        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
-      </el-select>
-    </div>
-    <div style="margin-top: 20px">
-      <el-dropdown trigger="click">
-        <span class="el-dropdown-link"> 下拉菜单<i class="el-icon-arrow-down el-icon--right"></i> </span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>黄金糕</el-dropdown-item>
-          <el-dropdown-item>狮子头</el-dropdown-item>
-          <el-dropdown-item>螺蛳粉</el-dropdown-item>
-          <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </div>
-    <div style="margin-top: 20px; width: 50%" class="stepsrow">
-      <el-steps :active="activerow" finish-status="success">
-        <el-step title="步骤 1"></el-step>
-        <el-step title="步骤 2"></el-step>
-        <el-step title="步骤 3"></el-step>
-      </el-steps>
-      <el-button style="margin-top: 12px" @click="next" class="commonBtn">下一步（横）</el-button>
-      <el-button style="margin-top: 12px" @click="next1" class="commonBtn">下一步(竖)</el-button>
-    </div>
-    <div style="margin-top: 20px; height: 300px" class="stepscolumn">
-      <el-steps :active="activecolumn" finish-status="success" direction="vertical">
-        <el-step title="步骤 1"></el-step>
-        <el-step title="步骤 2"></el-step>
-        <el-step title="步骤 3"></el-step>
-      </el-steps>
-    </div>
-    <div class="block">
-      <el-slider v-model="value2"></el-slider>
-    </div>
-    <div class="marquee-fa" style="margin: 20px 0">
-      <div class="marquee_head">
-        <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px" />
-        <p style="margin-left: 10px; width: 70px">通知公告：</p>
-      </div>
-      <Marquee>
-        <p>安全生产创效益，违规操作酿祸端</p>
-      </Marquee>
-    </div>
-    <!-- tabs标签页 -->
-    <div style="margin: 10px 0">================================tabs标签页=================================</div>
-    <el-tabs v-model="activeName" class="g-pageHeader">
-      <el-tab-pane label="用户管理" name="first"></el-tab-pane>
-      <el-tab-pane label="配置管理" name="second"></el-tab-pane>
-    </el-tabs>
+    <div style="margin: 40px 0"> =================================end========================</div>
   </div>
 </template>
 <script>
@@ -187,11 +303,10 @@ import { CanvasRenderer } from 'echarts/renderers';
 import * as echarts from 'echarts/core';
 import { getFolderLineDataSet } from './index';
 import { Message } from 'element-ui';
+import horizontalSwitchBtn from '@/components/horizontal-switch-button/index.vue';
 
 // import * as echarts from "echarts";
 import chartsComponents from '@/components/echarts-com/index.vue';
-import irregularityBox from '@/components/irregularity-box/index.vue';
-import myModal from '@/components/modal/index.vue';
 import marquee from '@/components/marquee-window/index.vue';
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
@@ -237,13 +352,222 @@ const color = [
 ];
 export default {
   components: {
-    irregularityBox,
+    horizontalSwitchBtn,
     chartsComponents,
-    myModal,
     marquee,
   },
   data() {
     return {
+      dataList:[],
+      valueA: [],
+      optionsC: [{
+        value: 'zhinan',
+        label: '指南',
+        children: [{
+          value: 'shejiyuanze',
+          label: '设计原则',
+          children: [{
+            value: 'yizhi',
+            label: '一致'
+          }, {
+            value: 'fankui',
+            label: '反馈'
+          }, {
+            value: 'xiaolv',
+            label: '效率'
+          }, {
+            value: 'kekong',
+            label: '可控'
+          }]
+        }, {
+          value: 'daohang',
+          label: '导航',
+          children: [{
+            value: 'cexiangdaohang',
+            label: '侧向导航'
+          }, {
+            value: 'dingbudaohang',
+            label: '顶部导航'
+          }]
+        }]
+      }, {
+        value: 'zujian',
+        label: '组件',
+        children: [{
+          value: 'basic',
+          label: 'Basic',
+          children: [{
+            value: 'layout',
+            label: 'Layout 布局'
+          }, {
+            value: 'color',
+            label: 'Color 色彩'
+          }, {
+            value: 'typography',
+            label: 'Typography 字体'
+          }, {
+            value: 'icon',
+            label: 'Icon 图标'
+          }, {
+            value: 'button',
+            label: 'Button 按钮'
+          }]
+        }, {
+          value: 'form',
+          label: 'Form',
+          children: [{
+            value: 'radio',
+            label: 'Radio 单选框'
+          }, {
+            value: 'checkbox',
+            label: 'Checkbox 多选框'
+          }, {
+            value: 'input',
+            label: 'Input 输入框'
+          }, {
+            value: 'input-number',
+            label: 'InputNumber 计数器'
+          }, {
+            value: 'select',
+            label: 'Select 选择器'
+          }, {
+            value: 'cascader',
+            label: 'Cascader 级联选择器'
+          }, {
+            value: 'switch',
+            label: 'Switch 开关'
+          }, {
+            value: 'slider',
+            label: 'Slider 滑块'
+          }, {
+            value: 'time-picker',
+            label: 'TimePicker 时间选择器'
+          }, {
+            value: 'date-picker',
+            label: 'DatePicker 日期选择器'
+          }, {
+            value: 'datetime-picker',
+            label: 'DateTimePicker 日期时间选择器'
+          }, {
+            value: 'upload',
+            label: 'Upload 上传'
+          }, {
+            value: 'rate',
+            label: 'Rate 评分'
+          }, {
+            value: 'form',
+            label: 'Form 表单'
+          }]
+        }, {
+          value: 'data',
+          label: 'Data',
+          children: [{
+            value: 'table',
+            label: 'Table 表格'
+          }, {
+            value: 'tag',
+            label: 'Tag 标签'
+          }, {
+            value: 'progress',
+            label: 'Progress 进度条'
+          }, {
+            value: 'tree',
+            label: 'Tree 树形控件'
+          }, {
+            value: 'pagination',
+            label: 'Pagination 分页'
+          }, {
+            value: 'badge',
+            label: 'Badge 标记'
+          }]
+        }, {
+          value: 'notice',
+          label: 'Notice',
+          children: [{
+            value: 'alert',
+            label: 'Alert 警告'
+          }, {
+            value: 'loading',
+            label: 'Loading 加载'
+          }, {
+            value: 'message',
+            label: 'Message 消息提示'
+          }, {
+            value: 'message-box',
+            label: 'MessageBox 弹框'
+          }, {
+            value: 'notification',
+            label: 'Notification 通知'
+          }]
+        }, {
+          value: 'navigation',
+          label: 'Navigation',
+          children: [{
+            value: 'menu',
+            label: 'NavMenu 导航菜单'
+          }, {
+            value: 'tabs',
+            label: 'Tabs 标签页'
+          }, {
+            value: 'breadcrumb',
+            label: 'Breadcrumb 面包屑'
+          }, {
+            value: 'dropdown',
+            label: 'Dropdown 下拉菜单'
+          }, {
+            value: 'steps',
+            label: 'Steps 步骤条'
+          }]
+        }, {
+          value: 'others',
+          label: 'Others',
+          children: [{
+            value: 'dialog',
+            label: 'Dialog 对话框'
+          }, {
+            value: 'tooltip',
+            label: 'Tooltip 文字提示'
+          }, {
+            value: 'popover',
+            label: 'Popover 弹出框'
+          }, {
+            value: 'card',
+            label: 'Card 卡片'
+          }, {
+            value: 'carousel',
+            label: 'Carousel 走马灯'
+          }, {
+            value: 'collapse',
+            label: 'Collapse 折叠面板'
+          }]
+        }]
+      }, {
+        value: 'ziyuan',
+        label: '资源',
+        children: [{
+          value: 'axure',
+          label: 'Axure Components'
+        }, {
+          value: 'sketch',
+          label: 'Sketch Templates'
+        }, {
+          value: 'jiaohu',
+          label: '组件交互文档'
+        }]
+      }],
+      valueC: [],
+      colorList: { dark: 'rgba(13,255,168,0.4)', light: 'red' },
+      borderList: { dark: 'rgba(13,255,168,1)', light: 'green' },
+      // 总条数
+      total: 12,
+      // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+      },
+      date1: '',
+      date2: '',
+      val: '安全生产创效益，违规操作酿祸端',
       activeName: 'first',
       input: '',
       checkList: ['复选框 A'],
@@ -813,7 +1137,7 @@ export default {
       center: true,
       activerow: 0, // steps步骤条
       activecolumn: 0,
-      value2: 10, // slider滑块
+      value2: 50, // slider滑块
     };
   },
   computed: {
@@ -838,6 +1162,7 @@ export default {
       this.$confirm('确定注销并退出系统吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
+        cancelButtonClass: 'cancelBtn',
         type: 'warning',
       }).then(() => {
         console.log('tanchuang');
@@ -889,11 +1214,11 @@ export default {
     },
     next() {
       this.activerow += 1;
-      if (this.activerow === 2) this.activerow = 0;
+      if (this.activerow === 3) this.activerow = 0;
     },
     next1() {
       this.activecolumn += 1;
-      if (this.activecolumn === 2) this.activecolumn = 0;
+      if (this.activecolumn === 3) this.activecolumn = 0;
     },
     /** 采购商品申请趋势选择 */
     onMaterialChange(value) {
@@ -942,5 +1267,13 @@ export default {
 }
 .eldialog ::v-deep.el-dialog {
   background: linear-gradient(to bottom, rgba(0, 162, 218, 0.3), rgba(0, 162, 218, 0.6));
+}
+.headerTitle {
+  font-size: 16px;
+  color: var(--lightBlueColor);
+  font-weight: 700;
+}
+.demoClass .spaceMargin {
+  padding: 15px 0;
 }
 </style>

@@ -76,6 +76,14 @@ export default ({ mode }) => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api/, ''),
         },
+        // 流程平台地址-有可供测试的流程平台时放开
+        // '/biz/flow': {
+        //   // 用于开发环境下的转发请求
+        //   // 更多请参考：https://vitejs.dev/config/#server-proxy
+        //   target: '',
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(/^\/biz\/flow/, ''),
+        // },
       },
     },
   };

@@ -20,7 +20,7 @@
         <t-header><layout-header /></t-header>
         <t-layout>
           <t-aside><layout-sidebar /></t-aside>
-          <t-content><layout-content /></t-content>
+          <t-content :style="{'--paddingNum': this.paddingNum}"><layout-content /></t-content>
         </t-layout>
       </t-layout>
     </template>
@@ -52,6 +52,11 @@ export default Vue.extend({
     LayoutSidebar,
     Setting,
   },
+  data() {
+    return {
+      paddingNum: '24px'
+    }
+  },
   computed: {
     ...mapGetters({
       tabRouterList: 'tabRouter/tabRouterList',
@@ -69,6 +74,14 @@ export default Vue.extend({
         name,
       } = newRoute;
       this.$store.commit('tabRouter/appendTabRouterList', { path, title, name, isAlive: true });
+    },
+    '$store.state.user.isGroupLogin': {
+      handler(newValue) {
+        // 投影模式下减少面板内间距填充
+        this.paddingNum = newValue ? '5px' : '24px';
+      },
+      deep: true,
+      immediate: true,
     },
   },
   // 如果不需要持久化标签页可以注释掉created和destroyed的内容

@@ -32,19 +32,7 @@
           <message />
           <!-- 全局通知，通告 -->
           <notice />
-          <el-tooltip class="item" effect="dark" content="编辑面板" placement="bottom">
-            <svg-icon v-show="$store.getters['user/isGroupLogin']" icon-class="edit-panel" class="panelIconClass" />
-          </el-tooltip>
           
-           <el-tooltip class="item" effect="dark" content="切后台" placement="bottom">
-            <svg-icon @clickIcon="switchRouter('后台')" v-show="$store.getters['user/isGroupLogin']" icon-class="switch-system" class="panelIconClass" />
-          </el-tooltip>
-           <el-tooltip class="item" effect="dark" content="切办公模式" placement="bottom">
-            <svg-icon @clickIcon="switchMode" v-show="$store.getters['user/isGroupLogin']&&currentMode==='办公模式'" icon-class="office-mode" class="panelIconClass" />
-          </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="切办公模式" placement="bottom">
-            <svg-icon @clickIcon="switchMode" v-show="$store.getters['user/isGroupLogin']&&currentMode==='投影模式'" icon-class="projection-mode" class="panelIconClass" />
-          </el-tooltip>
           <!-- <t-button v-show="$store.getters['user/isGroupLogin']" theme="default" variant="text" @click="switchMode" style="color: var(--whiteColor)"
             ><swap-icon style="color: var(--whiteColor)" />{{ currentMode }}</t-button
           > -->
@@ -195,6 +183,10 @@ export default Vue.extend({
     // },
   },
   methods: {
+    // 编辑面板
+    editPanel() {
+      this.$bus.$emit("emitBus");
+    },
     // 切换到后台管理系统
     switchRouter(type) {
       if(type === '后台') {
@@ -427,12 +419,5 @@ export default Vue.extend({
       margin-bottom: 8px;
     }
   }
-}
-</style>
-<style scoped>
-.panelIconClass {
-    width: 40px !important;
-    height: 25px !important;
-    cursor: pointer;
 }
 </style>

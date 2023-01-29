@@ -13,10 +13,13 @@
   color: #303133;
   font-size: 14px;
   font-weight: 600;
-  background: linear-gradient(to bottom, #F0F2F5, #F0F2F5);
-  // height: 40px;
+//   background: linear-gradient(to bottom, #F0F2F5, #F0F2F5);
+//   height: 40px
 }
-
+.el-table td.el-table__cell,
+.el-table th.el-table__cell.is-leaf {
+  border-bottom: 1px solid rgba(242,244,246,1);
+}
 .el-table tbody tr:hover>td {
   background: var(--opacityBlueBg);
 }
@@ -51,8 +54,8 @@
   .cell{
     background: #FAFAFA;
       color: #333;
-      height: 44px;
-      line-height: 44px;
+      height: 34px;
+      line-height: 34px;
       
   }
 
@@ -84,4 +87,17 @@
 }
 .right{
   height: calc(100vh - 145px);
+}
+
+.el-table .descending .sort-caret.descending {
+    border-top-color: var(--lightBlueColor);
+}
+.el-table .ascending .sort-caret.ascending {
+    border-bottom-color: var(--lightBlueColor)
+}
+.el-table .sort-caret.ascending {
+    border-bottom-color: rgba(125, 173, 208, 1);
+}
+.el-table .sort-caret.descending {
+    border-top-color: rgba(125, 173, 208, 1);
 }

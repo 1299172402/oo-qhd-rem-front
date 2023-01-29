@@ -122,12 +122,13 @@ import SettingDarkIcon from '@/assets/assets-setting-dark.svg';
 import SettingLightIcon from '@/assets/assets-setting-light.svg';
 import SettingAutoIcon from '@/assets/assets-setting-auto.svg';
 
-const LAYOUT_OPTION = ['side', 'top', 'mix'];
+// const LAYOUT_OPTION = ['side', 'top', 'mix'];
+const LAYOUT_OPTION = ['top', 'mix'];
 const COLOR_OPTIONS = ['default', 'cyan', 'green', 'yellow', 'orange', 'red', 'pink', 'purple', 'dynamic'];
 const MODE_OPTIONS = [
   { type: 'light', text: '明亮' },
   { type: 'dark', text: '暗黑' },
-  { type: 'auto', text: '跟随系统' },
+  // { type: 'auto', text: '跟随系统' },
 ];
 
 export default {
@@ -341,7 +342,7 @@ export default {
     min-height: 32px;
     width: 100%;
     height: auto;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
   }
 

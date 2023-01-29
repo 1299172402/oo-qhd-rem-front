@@ -46,7 +46,9 @@ export function parseTime(time, pattern) {
 // 表单重置
 export function resetForm(refName) {
   if (this.$refs[refName]) {
-    this.$refs[refName].resetFields();
+    this.$nextTick(()=>{
+      this.$refs[refName].resetFields();
+    })
   }
 }
 

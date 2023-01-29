@@ -1,5 +1,4 @@
 // 智能油田一级页面
-// import { LayersIcon } from 'tdesign-icons-vue';
 import Layout from '@/layouts/index.vue';
 
 export default [
@@ -82,6 +81,23 @@ export default [
       },
     ],
   },
+  // 详情页路由注册——不显示在左侧菜单
+  {
+    path: '/addapplication',
+    name: 'addapplication',
+    component: Layout,
+    hidden: true,
+    redirect: '/addapplication/addapp',
+    meta: { title: '新增应用', icon: '', single: true },
+    children: [
+      {
+        path: 'addapp',
+        name: 'addapp',
+        component: () => import('@/pages/intelligentOilfield/applicationCenter/components/addapp.vue'),
+        meta: { title: '新增应用' },
+      },
+    ],
+  },
   {
     path: '/rolesManagementDetail',
     name: 'rolesManagementDetail',
@@ -111,6 +127,35 @@ export default [
         name: 'editTable',
         component: () => import('@/pages/intelligentOilfield/codeGeneration/components/editTable.vue'),
         meta: { title: '修改生成配置' },
+      },
+    ],
+  },
+  {
+    path: '/dictManagement/dict-data',
+    component: Layout,
+    hidden: true,
+    redirect: '/dictManagement/dict-data/index/:dictId(\\d+)',
+    children: [
+      {
+        path: 'index/:dictId(\\d+)',
+        name: 'dictData',
+        component: () => import('@/pages/intelligentOilfield/dictManagement/data.vue'),
+        meta: { title: '字典数据' }
+      }
+    ]
+  },
+  {
+    path: '/stationMessage',
+    component: Layout,
+    hidden: true,
+    redirect: '/stationMessage/stationMessageDetail',
+    meta: { title: '站内信', icon: '', single: true },
+    children: [
+      {
+        path: 'stationMessageDetail',
+        name: 'stationMessageDetail',
+        component: () => import('@/pages/intelligentOilfield/stationMessage/index.vue'),
+        meta: { title: '站内信' },
       },
     ],
   },

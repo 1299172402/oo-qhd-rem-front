@@ -48,6 +48,7 @@ Vue.prototype.getConfigKey = getConfigKey
 Vue.prototype.download = download
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$request = axiosInstance;
+Vue.prototype.$bus = new Vue()
 
 
 Vue.use(directive)

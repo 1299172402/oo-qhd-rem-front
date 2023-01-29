@@ -5,7 +5,7 @@
       <el-carousel-item v-for="(item1,index) in panelList" :key="index" class="g-row-flex" style="flex-wrap: wrap">
         <div class="g-column-flex-H panelDiv" v-for="(item2,index) in item1" :key="index+200">
           <div class="panelImg"></div>
-          <div>{{item2.title}}</div>
+          <div>{{item2.name}}</div>
         </div>
       </el-carousel-item>
     </el-carousel>
@@ -18,15 +18,15 @@ export default {
       type: Array,
       default() {
         return [
-          {img:'',title:'油藏管理'},
-          {img:'',title:'设备设施'},
-          {img:'',title:'安全'},
-          {img:'',title:'船体'},
-          {img:'',title:'油藏管理'},
-          {img:'',title:'设备设施'},
-          {img:'',title:'安全'},
-          {img:'',title:'船体'},
-          {img:'',title:'船体'},
+          {img:'',name:'油藏管理'},
+          {img:'',name:'设备设施'},
+          {img:'',name:'安全'},
+          {img:'',name:'船体'},
+          {img:'',name:'油藏管理'},
+          {img:'',name:'设备设施'},
+          {img:'',name:'安全'},
+          {img:'',name:'船体'},
+          {img:'',name:'船体'},
         ];
       }
     },
@@ -60,6 +60,10 @@ export default {
 };
 </script>
 <style>
+.panel {
+   position: relative;
+   z-index: 0 !important;
+}
   .panel  .el-carousel__button{
         width: 8px !important;
         height: 8px !important;
