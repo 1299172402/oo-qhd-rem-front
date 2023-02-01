@@ -49,7 +49,13 @@
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
     </el-select>
     <div class="spaceMargin">
-      2.3、下拉菜单
+      2.3、无border背景色下拉框
+    </div>
+    <el-select v-model="value" placeholder="请选择" class="noBorderBg">
+      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+    </el-select>
+    <div class="spaceMargin">
+      2.4、下拉菜单
     </div>
     <el-dropdown trigger="click">
       <span class="el-dropdown-link"> 下拉菜单<i class="el-icon-arrow-down el-icon--right"></i> </span>
@@ -61,7 +67,7 @@
       </el-dropdown-menu>
     </el-dropdown>
     <div class="spaceMargin">
-      2.4、Cascader 级联选择器
+      2.5、Cascader 级联选择器
     </div>
     <el-cascader
     v-model="valueC"

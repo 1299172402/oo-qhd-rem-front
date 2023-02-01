@@ -3,7 +3,7 @@ export default {
     // 流程平台
     BIZ_FLOW_API: "/biz/flow",
     // 文件预览服务
-    PREVIEW_FILE_API: "文件服务地址",
+    PREVIEW_FILE_API: "/b/upload",
     // 开发环境接口请求
     API: 'dev-api',
     // API: '',

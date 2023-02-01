@@ -21,6 +21,15 @@
           </t-button>
           <!-- <search :layout="layout" /> -->
         </div>
+         <treeselect
+                v-model="valueA"
+                :options="deptOptions"
+                :show-count="true"
+                placeholder="请选择所属机构"
+                class="noBgBorderTree"
+                style="width: 150px"
+                :clearable="false"
+              />
       </template>
       <menu-content v-show="layout !== 'side' && !$store.getters['user/isGroupLogin']" class="header-menu" :navData="menu" />
       <template #operations>
@@ -99,6 +108,10 @@ import Message from './Message.vue';
 // import Search from './Search.vue'
 import MenuContent from './MenuContent.vue';
 import { updateLastLogout } from "@/api/login";
+import {getDeptsBydeptId} from '@/api/system/dept'
+import Treeselect from '@riophae/vue-treeselect'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css';
+
 
 export default Vue.extend({
   components: {
@@ -116,6 +129,7 @@ export default Vue.extend({
     ChevronDownIcon,
     // EditIcon,
     // SwapIcon,
+    Treeselect,
   },
   props: {
     theme: String,
@@ -149,6 +163,8 @@ export default Vue.extend({
       visibleNotice: false,
       isSearchFocus: false,
       currentMode: '办公模式',
+      valueA: this.$store.getters['user/userDetail'].user.dept.deptId,
+      deptOptions: [],
     };
   },
   computed: {
@@ -182,7 +198,15 @@ export default Vue.extend({
     //   return sessionStorage.getItem('isGroupLogin') === 'true';
     // },
   },
+  mounted() {
+    this.getInitDeptds();
+  },
   methods: {
+    getInitDeptds() {
+      getDeptsBydeptId(this.$store.getters['user/userDetail'].user.deptId).then((response) => {
+        this.deptOptions = response.data.data;
+      });
+    },
     // 编辑面板
     editPanel() {
       this.$bus.$emit("emitBus");
@@ -268,12 +292,6 @@ export default Vue.extend({
     handleNav(url) {
       this.$router.push(url);
     },
-    navToGitHub() {
-      window.open('https://github.com/Tencent/tdesign-vue-starter');
-    },
-    navToHelper() {
-      window.open('http://tdesign.tencent.com/starter/docs/get-started');
-    },
   },
 });
 </script>
@@ -317,7 +335,7 @@ export default Vue.extend({
 
 .header-operate-left {
   display: flex;
-  margin-left: 20px;
+  margin-left: -20px;
   align-items: normal;
   line-height: 0;
 

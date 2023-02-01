@@ -84,6 +84,14 @@ export default ({ mode }) => {
         //   changeOrigin: true,
         //   rewrite: (path) => path.replace(/^\/biz\/flow/, ''),
         // },
+        // 文件服务地址-有可供测试的文件服务时放开
+        // '/b/upload': {
+        //   // 用于开发环境下的转发请求
+        //   // 更多请参考：https://vitejs.dev/config/#server-proxy
+        //   target: '',
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(/^\/b\/upload/, ''),
+        // },
       },
     },
   };

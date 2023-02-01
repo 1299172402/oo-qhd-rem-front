@@ -1,20 +1,313 @@
 <!-- 后台——用户访问 -->
 <template>
-  <div>用户访问</div>
+  <div class="app-container">
+    <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true">
+      <el-form-item label="组织机构" prop="deptId">
+        <el-select v-model="queryParams.deptId" placeholder="请选择" clearable size="small" style="width: 240px">
+          <el-option
+            v-for="(item, index) in deptSelect"
+            :key="index"
+            :label="item.deptName"
+            :value="item.deptId"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="用户名称" prop="roleKey">
+        <el-input
+          v-model="queryParams.roleKey"
+          placeholder="请输入用户名称"
+          clearable
+          size="small"
+          style="width: 240px"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="时间">
+        <el-date-picker
+          v-model="dateRange"
+          size="small"
+          style="width: 240px"
+          value-format="yyyy-MM-dd"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        ></el-date-picker>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery" class="commonBtn">重置</el-button>
+      </el-form-item>
+    </el-form>
+
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button type="primary" size="mini" @click="handleExport" v-hasPermi="['system:role:export']">导出</el-button>
+      </el-col>
+    </el-row>
+    <div
+      class="footerBox"
+      :style="{
+        background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff',
+      }"
+    >
+      <div class="headerStyle">用户访问</div>
+      <el-table :data="userList" @selection-change="handleSelectionChange" height="calc(100% - 260px)">
+        <el-table-column type="selection" width="55" align="center" />
+        <el-table-column label="序号" type="index" />
+        <el-table-column label="组织机构" prop="key1" />
+        <el-table-column label="用户账号" prop="key2" />
+        <el-table-column label="用户名称" prop="key3" />
+        <el-table-column label="登录时间" align="center" prop="createTime">
+          <template slot-scope="scope">
+            <span>{{ parseTime(scope.row.key5) }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="访问页面" prop="key4" width="150" />
+        <el-table-column label="状态" align="center">
+          <!-- <template slot-scope="scope">
+            <el-switch
+              v-model="scope.row.status"
+              active-value="0"
+              inactive-value="1"
+              @change="handleStatusChange(scope.row)"
+            ></el-switch>
+          </template> -->
+        </el-table-column>
+      </el-table>
+      <div style="width: 100%">
+        <chartsComponents
+          :chart-data-options="dataZhuzhuang"
+          echartsType="bar1"
+          style="width: 600px; height: 250px"
+        ></chartsComponents>
+        <pagination
+          :total="total"
+          :page.sync="queryParams.pageNum"
+          :limit.sync="queryParams.pageSize"
+          @pagination="getList"
+        />
+      </div>
+    </div>
+  </div>
 </template>
-
 <script>
+import { listDept } from '@/api/system/dept';
+import { LineChart } from 'echarts/charts';
+import { GridComponent, TooltipComponent, LegendComponent } from 'echarts/components';
+import { CanvasRenderer } from 'echarts/renderers';
+import * as echarts from 'echarts/core';
+import chartsComponents from '@/components/echarts-com/index.vue';
 
+echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 export default {
+  components: {
+    chartsComponents,
+  },
+  dicts: ['sys_normal_disable'],
   data() {
     return {
-        
-    }
+      dataZhuzhuang: {
+        xAxis: {
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        },
+        yAxis: {},
+        series: [
+          {
+            type: 'bar',
+            data: [23, 24, 18, 25, 27, 28, 25],
+          },
+        ],
+      },
+      // 遮罩层
+      loading: true,
+      // 选中数组
+      ids: [],
+      // 非单个禁用
+      single: true,
+      // 非多个禁用
+      multiple: true,
+      // 显示搜索条件
+      showSearch: true,
+      // 总条数
+      total: 0,
+      // 角色表格数据
+      userList: [
+        {
+          key1: '这是一条公告',
+          key2: '产量波动指标',
+          key3: '油藏管理',
+          key4: '_',
+          key5: '2022.11.15 18:36',
+        },
+        {
+          key1: '这是一条公告',
+          key2: '产量相关指标',
+          key3: '油藏管理',
+          key4: '_',
+          key5: '2022.11.15 18:36',
+        },
+        {
+          key1: '这是一条公告',
+          key2: '产量执行',
+          key3: '油藏管理',
+          key4: '_',
+          key5: '2022.11.15 18:36',
+        },
+        {
+          key1: '这是一条公告',
+          key2: '剩余油分布情况',
+          key3: '油藏管理',
+          key4: '_',
+          key5: '2022.11.15 18:36',
+        },
+        {
+          key1: '这是一条公告',
+          key2: '油田大事件',
+          key3: '油藏管理',
+          key4: '_',
+          key5: '2022.11.15 18:36',
+        },
+        {
+          key1: '这是一条公告',
+          key2: '月度产量情况',
+          key3: '油藏管理',
+          key4: '_',
+          key5: '2022.11.15 18:36',
+        },
+        {
+          key1: '这是一条公告',
+          key2: '产量够成情况',
+          key3: '油藏管理',
+          key4: '_',
+          key5: '2022.11.15 18:36',
+        },
+        {
+          key1: '这是一条公告',
+          key2: '采油速度',
+          key3: '油藏管理',
+          key4: '_',
+          key5: '2022.11.15 18:36',
+        },
+        {
+          key1: '这是一条公告',
+          key2: '采油速度',
+          key3: '油藏管理',
+          key4: '_',
+          key5: '2022.11.15 18:36',
+        },
+        {
+          key1: '这是一条公告',
+          key2: '采油速度',
+          key3: '油藏管理',
+          key4: '_',
+          key5: '2022.11.15 18:36',
+        },
+      ],
+      // 是否显示弹出层（数据权限）
+      menuExpand: false,
+      menuNodeAll: false,
+      deptExpand: true,
+      deptNodeAll: false,
+      // 日期范围
+      dateRange: [],
+      // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+        deptId: undefined,
+        roleName: undefined,
+        roleKey: undefined,
+        status: undefined,
+      },
+      deptSelect: [],
+      // 表单参数
+      form: {},
+    };
   },
-  methods: {},
+  created() {
+    this.getList();
+    this.choiceDepts(); // 获取组织机构
+  },
+  methods: {
+    // 选择机构
+    choiceDepts() {
+      listDept().then((response) => {
+        this.deptSelect = response.data.data;
+        this.deptList = this.handleTree(response.data.data, 'deptId');
+      });
+    },
+    /** 查询用户访问列表 */
+    getList() {
+      this.loading = true;
+      // listRole(this.addDateRange(this.queryParams, this.dateRange)).then((response) => {
+      //   this.userList = response.data.rows;
+      //   this.total = response.data.total;
+      //   this.loading = false;
+      // });
+    },
+    // 表单重置
+    reset() {
+      if (this.$refs.menu !== undefined) {
+        this.$refs.menu.setCheckedKeys([]);
+      }
+      this.menuExpand = false;
+      this.menuNodeAll = false;
+      this.deptExpand = true;
+      this.deptNodeAll = false;
+      this.form = {
+        roleId: undefined,
+        roleName: undefined,
+        roleKey: undefined,
+        roleSort: 0,
+        status: '0',
+        menuIds: [],
+        deptIds: [],
+        menuCheckStrictly: true,
+        deptCheckStrictly: true,
+        remark: undefined,
+      };
+      this.resetForm('form');
+    },
+    /** 搜索按钮操作 */
+    handleQuery() {
+      this.queryParams.pageNum = 1;
+      this.getList();
+    },
+    /** 重置按钮操作 */
+    resetQuery() {
+      this.dateRange = [];
+      this.resetForm('queryForm');
+      this.handleQuery();
+    },
+    // 多选框选中数据
+    handleSelectionChange(selection) {
+      this.ids = selection.map((item) => item.roleId);
+      this.single = selection.length !== 1;
+      this.multiple = !selection.length;
+    },
+    /** 导出按钮操作 */
+    handleExport() {
+      this.download(
+        'system/role/export',
+        {
+          ...this.queryParams,
+        },
+        `role_${new Date().getTime()}.xlsx`,
+      );
+    },
+  },
 };
 </script>
-
-<style scoped>
-
+  <style lang="less" scoped>
+.app-container {
+  height: 100%;
+  .el-table {
+    overflow: scroll;
+  }
+}
+.el-tree {
+  max-height: 370px;
+  overflow: scroll;
+}
 </style>

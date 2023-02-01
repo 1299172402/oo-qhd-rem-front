@@ -9,6 +9,7 @@ const  GenerateRouter = {
   "User":()=>import('@/pages/intelligentOilfield/userManagement/index.vue'),// 用户管理
   "Roles":()=>import('@/pages/intelligentOilfield/rolesManagement/index.vue'),// 角色管理
   "Menu":()=>import('@/pages/intelligentOilfield/menuManagement/index.vue'),// 菜单管理
+  "UserAccess":()=>import('@/pages/intelligentOilfield/userAccess/index.vue'),// 用户访问
   "Permission":()=>import('@/pages/intelligentOilfield/dataPermission/index.vue'),// 数据权限管理
   // "Application":()=>import('@/pages/intelligentOilfield/applicationCenter/index.vue'),// 应用中心管理
   "Designer":()=>import('@/pages/intelligentOilfield/configurationCenter/processCenter/designer/index.vue'),// 流程设计器
@@ -27,11 +28,8 @@ const  GenerateRouter = {
   "Index":()=>import('@/pages/intelligentOilfield/demo/index.vue'),
   "CodeGeneration":()=>import('@/pages/intelligentOilfield/codeGeneration/index.vue'),
   "DataIndexConfiguration":()=>import('@/pages/intelligentOilfield/configurationCenter/dataIndexConfiguration/index.vue'), // 配置中心-数据指标配置
-  "UserAccess":()=>import('@/pages/intelligentOilfield/userAccess/index.vue'), // 用户访问
-  "ApplicationList":()=>import('@/pages/intelligentOilfield/configurationCenter/applicationList/index.vue'), // 应用列表
-  "LargeScreenConfiguration":()=>import('@/pages/intelligentOilfield/configurationCenter/largeScreenConfiguration/index.vue'), // 大屏配置
-  "KanbanConfiguration":()=>import('@/pages/intelligentOilfield/configurationCenter/kanbanConfiguration/index.vue'), // 看板配置
-  "ShortcutEntryConfiguration":()=>import('@/pages/intelligentOilfield/configurationCenter/shortcutEntryConfiguration/index.vue'), // 快捷入口配置
+  "LargeScreenConfiguration":()=>import('@/pages/intelligentOilfield/configurationCenter/businessCenter/index.vue'), // 配置中心-业务中心配置
+  "ShortcutEntryConfiguration":()=>import('@/pages/intelligentOilfield/configurationCenter/expressEntrance/index.vue'), // 办公模式配置中心-快捷入口配置
 
 
   "HandleBusinessList": () => import('@/pages/common/handleBusinessList/index.vue'),

@@ -18,3 +18,23 @@
 .vue-treeselect--single .vue-treeselect__option--selected{
     background: linear-gradient(to right, rgba(2, 30, 54, .2), rgba(0, 144, 188, 0.8));
 }
+.noBgBorderTree{
+    .vue-treeselect__control{
+        background: transparent;
+        border: transparent;
+    }
+    .vue-treeselect__single-value {
+        color:  var(--lightBlueColor);
+    }
+    .vue-treeselect__input {
+        color:  var(--lightBlueColor);
+    }
+    .vue-treeselect__control-arrow-container:hover {
+        .vue-treeselect__control-arrow {
+            color: var(--lightBlueColor);
+        }
+    }
+    .vue-treeselect__control-arrow {
+        color: var(--lightBlueColor);
+    }
+}

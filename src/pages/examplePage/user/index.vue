@@ -6,7 +6,6 @@
           Hi，User
           <span class="regular"> 下午好，今天是你加入后台管理第 100 天～</span>
         </div>
-        <!-- <img src="@/assets/assets-tencent-logo.png" class="logo" /> -->
       </div>
 
       <t-card class="user-info-list" title="个人信息">

@@ -1,5 +1,13 @@
 import request from '@/utils/request'
 
+// 根据组织机构id查询其下的组织机构
+export function getDeptsBydeptId(deptId) {
+  return request({
+    url: `/system/dept/getDeptsBydeptId/${deptId}`,
+    method: 'get',
+  })
+}
+
 // 查询部门列表
 export function listDept(query) {
   return request({

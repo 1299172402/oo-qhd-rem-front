@@ -42,6 +42,11 @@ const defaultRouterList = [
     name: 'login',
     component: () => import('@/pages/intelligentOilfield/login/index.vue'),
   },
+  {
+    path: "/file/preview",
+    name: "PreviewPage",
+    component: () => import("@/components/upload/preview/PreviewPage.tsx")
+  },
   ...asyncRouterList,
 ];
 

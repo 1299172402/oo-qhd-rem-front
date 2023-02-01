@@ -116,7 +116,7 @@
               <t-form-item label="" name="files">
                 <t-upload
                   v-model="formData.files"
-                  action="https://service-bv448zsw-1257786608.gz.apigw.tencentcs.com/api/upload-demo"
+                  action="https://service-bv448zsw-1257786608.gz.apigw.com/api/upload-demo"
                   tips="请上传pdf文件，大小在60M以内"
                   :size-limit="{ size: 60, unit: 'MB' }"
                   :format-response="formatResponse"
