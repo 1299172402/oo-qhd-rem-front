@@ -31,7 +31,11 @@
                 :clearable="false"
               />
       </template>
-      <menu-content v-show="layout !== 'side' && !$store.getters['user/isGroupLogin']" class="header-menu" :navData="menu" />
+      <menu-content
+        v-show="layout !== 'side' && !$store.getters['user/isGroupLogin']"
+        class="header-menu"
+        :navData="menu"
+      />
       <template #operations>
         <div class="operations-container" style="margin-left: 20px">
           <!-- 搜索框 -->
@@ -41,7 +45,6 @@
           <message />
           <!-- 全局通知，通告 -->
           <notice />
-          
           <!-- <t-button v-show="$store.getters['user/isGroupLogin']" theme="default" variant="text" @click="switchMode" style="color: var(--whiteColor)"
             ><swap-icon style="color: var(--whiteColor)" />{{ currentMode }}</t-button
           > -->
@@ -97,8 +100,8 @@ import {
   PoweroffIcon,
   SettingIcon,
   ChevronDownIcon,
-//   EditIcon,
-//   SwapIcon,
+  //   EditIcon,
+  //   SwapIcon,
 } from 'tdesign-icons-vue';
 import { prefix } from '@/config/global';
 // import LogoFull from '@/assets/logo.svg';
@@ -107,9 +110,10 @@ import Notice from './Notice.vue';
 import Message from './Message.vue';
 // import Search from './Search.vue'
 import MenuContent from './MenuContent.vue';
-import { updateLastLogout } from "@/api/login";
-import {getDeptsBydeptId} from '@/api/system/dept'
-import Treeselect from '@riophae/vue-treeselect'
+import { updateLastLogout } from "@/api/intelligentOilfield/login";
+import { updateaccessPage } from '@/api/intelligentOilfield/system/user';
+import {getDeptsBydeptId} from '@/api/intelligentOilfield/system/dept';
+import Treeselect from '@riophae/vue-treeselect';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 
 
@@ -213,13 +217,13 @@ export default Vue.extend({
     },
     // 切换到后台管理系统
     switchRouter(type) {
-      if(type === '后台') {
+      if (type === '后台') {
         // 解决重新登录系统标签页未关闭的问题
         this.$store.commit('tabRouter/removeTabRouterList');
         this.$store.commit('user/SETISGROUPLOGIN', false);
         this.$router.push('/homePage/index');
         this.currentMode = '办公模式';
-      }else {
+      } else {
         this.$router.push('/portal/projectionMode');
         this.$store.commit('user/SETISGROUPLOGIN', true);
       }
@@ -242,42 +246,50 @@ export default Vue.extend({
       this.$store.commit('setting/toggleSettingPanel', true);
     },
     handleLogout() {
-    // logout().then(res => {
-    //     this.$confirm('确定注销并退出系统吗？', '提示', {
-    //       confirmButtonText: '确定',
-    //       cancelButtonText: '取消',
-    //       type: 'warning'
-    //     }).then(() => {
-    //       if(res.data.code === 200) {
-    //         this.$store.dispatch('user/logout');
-    //         this.$store.dispatch('permission/restore');
-    //         this.$router.push(`/login?redirect=${this.$router.history.current.fullPath}`);
-    //       }
-    //     })
-    //   });
-    //   console.log('当前路由', this.$router.app?.$route?.path);
-      let currentSystem = 0;// 0:门户，1：后台管理系统
-      if(this.$router.app?.$route?.path === '/portal/projectionMode' || this.$router.app?.$route?.path === '/portal/officeMode') {
-        currentSystem=0
+      // logout().then(res => {
+      //     this.$confirm('确定注销并退出系统吗？', '提示', {
+      //       confirmButtonText: '确定',
+      //       cancelButtonText: '取消',
+      //       type: 'warning'
+      //     }).then(() => {
+      //       if(res.data.code === 200) {
+      //         this.$store.dispatch('user/logout');
+      //         this.$store.dispatch('permission/restore');
+      //         this.$router.push(`/login?redirect=${this.$router.history.current.fullPath}`);
+      //       }
+      //     })
+      //   });
+      //   console.log('当前路由', this.$router.app?.$route?.path);
+      let currentSystem = 0; // 0:门户，1：后台管理系统
+      if (
+        this.$router.app?.$route?.path === '/portal/projectionMode' ||
+        this.$router.app?.$route?.path === '/portal/officeMode'
+      ) {
+        currentSystem = 0;
       } else {
-        currentSystem=1
+        currentSystem = 1;
       }
-      const params={
+      const params = {
         userName: this.$store.getters['user/name'],
         logout: currentSystem,
-      }
-      updateLastLogout(params).then(res => {
-        if(res.data.code === 200) {
-        //   console.log('退出登录结果===', res);
+      };
+      updateLastLogout(params).then((res) => {
+        if (res.data.code === 200) {
+          //   console.log('退出登录结果===', res);
         }
       });
-    
+
       this.$confirm('确定注销并退出系统吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
       })
         .then(() => {
+          // 更新访问页面
+          const sysUser = { accessPage: this.$store.state.route.meta.title, userName: this.$store.state.user.name };
+          updateaccessPage(sysUser).then((res) => {
+            console.log(res);
+          });
           this.$store.dispatch('user/logout');
           this.$store.dispatch('permission/restore');
           this.$router.push(`/login?redirect=${this.$router.history.current.fullPath}`);
@@ -437,5 +449,12 @@ export default Vue.extend({
       margin-bottom: 8px;
     }
   }
+}
+</style>
+<style scoped>
+.panelIconClass {
+  width: 40px !important;
+  height: 25px !important;
+  cursor: pointer;
 }
 </style>

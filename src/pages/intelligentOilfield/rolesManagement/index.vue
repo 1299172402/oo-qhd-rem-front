@@ -99,14 +99,14 @@
       </el-col> -->
       <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
     </el-row>
-    <div
-      class="footerBox"
-      :style="{
-        background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff',
-      }"
-    >
-      <div class="headerStyle">角色管理</div>
-      <el-table :data="roleList" @selection-change="handleSelectionChange" height="calc(100% - 45px)">
+     <pagePanel headerTitle="角色管理">
+      <el-table :data="roleList" @selection-change="handleSelectionChange" height="calc(100% - 45px)"
+        :row-style="{ height: '0px' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        header-cell-class-name="table_header"
+        :cell-style="{ padding: '2px', 'text-align': 'center' }"
+        style="width: 100%; height: 100%;"
+        :default-sort="{ prop: 'date', order: 'descending' }">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="序号" type="index" width="120" />
         <!-- <el-table-column label="角色编号" prop="roleId" width="120" /> -->
@@ -167,7 +167,7 @@
         :limit.sync="queryParams.pageSize"
         @pagination="getList"
       />
-    </div>
+   </pagePanel>
 
     <!-- 添加或修改角色配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body :close-on-click-modal="false">
@@ -284,9 +284,9 @@
 </template>
 
 <script>
-import { listRole, getRole, delRole, addRole, updateRole, dataScope, changeRoleStatus } from '@/api/system/role';
-import { treeselect as menuTreeselect, roleMenuTreeselect } from '@/api/system/menu';
-import { treeselect as deptTreeselect, roleDeptTreeselect } from '@/api/system/dept';
+import { listRole, getRole, delRole, addRole, updateRole, dataScope, changeRoleStatus } from '@/api/intelligentOilfield/system/role';
+import { treeselect as menuTreeselect, roleMenuTreeselect } from '@/api/intelligentOilfield/system/menu';
+import { treeselect as deptTreeselect, roleDeptTreeselect } from '@/api/intelligentOilfield/system/dept';
 
 export default {
   dicts: ['sys_normal_disable'],

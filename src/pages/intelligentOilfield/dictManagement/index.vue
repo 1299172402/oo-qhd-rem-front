@@ -109,14 +109,15 @@
       </el-col> -->
       <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
     </el-row>
-    <div
-      class="footerBox"
-      :style="{
-        background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff',
-      }"
-    >
-      <div class="headerStyle">字典管理</div>
-      <el-table v-loading="loading" :data="typeList" @selection-change="handleSelectionChange">
+     <pagePanel headerTitle="字典管理">
+      <el-table v-loading="loading" :data="typeList" @selection-change="handleSelectionChange"
+      height="calc(100% - 45px)"
+        :row-style="{ height: '0px' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        header-cell-class-name="table_header"
+        :cell-style="{ padding: '2px', 'text-align': 'center' }"
+        style="width: 100%; height: 100%;"
+        :default-sort="{ prop: 'date', order: 'descending' }">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="字典编号" align="center" prop="dictId" />
         <el-table-column label="字典名称" align="center" prop="dictName" :show-overflow-tooltip="true" />
@@ -167,7 +168,7 @@
         :limit.sync="queryParams.pageSize"
         @pagination="getList"
       />
-    </div>
+    </pagePanel>
 
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
@@ -198,7 +199,7 @@
 </template>
   
 <script>
-import { listType, getType, delType, addType, updateType, refreshCache } from '@/api/system/dict/type';
+import { listType, getType, delType, addType, updateType, refreshCache } from '@/api/intelligentOilfield/system/dict/type';
 
 export default {
   name: 'Dict',

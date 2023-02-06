@@ -49,7 +49,7 @@
 </template>
 
 <script> 
-import { listDbTable, importTable } from "@/api/tool/gen";
+import { listDbTable, importTable } from "@/api/intelligentOilfield/tool/gen";
 
 export default {
   data() {

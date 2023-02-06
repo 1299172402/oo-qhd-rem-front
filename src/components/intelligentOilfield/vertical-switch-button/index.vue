@@ -1,18 +1,19 @@
-<!--自定义竖向切换按钮-->
+<!--自定义横向竖向切换按钮-->
 <template>
-  <div class="g-w100 g-h100">
+  <div class="g-w100 g-h100" :class="btnDirection === 'column' ? 'g-column-flex' : 'g-row-flex'">
     <div v-for="(item, index) in dataList" :key="index" class="btnStyle">
       <el-button
         v-if="item.isChecked"
-        style="width: 200px"
-        :style="{ width: buttonWidth }"
+        style="width: 200px;line-height: 0px;"
+        :style="{ width: buttonWidth ,height:buttonHeight}"
         :type="item.isChecked ? 'primary' : ''"
         @click="selectBtn(item)"
         >{{ item.name }}</el-button
       >
       <el-button
         v-else
-        :style="{ width: buttonWidth }"
+        style="width: 200px;line-height: 0px;"
+        :style="{ width: buttonWidth,height:buttonHeight }"
         :class="!item.isChecked ? 'commonBtn' : ''"
         @click="selectBtn(item)"
         >{{ item.name }}</el-button
@@ -32,8 +33,18 @@ export default {
         { name: '我的发起', isChecked: false },
       ],
     },
+    // 方向，默认垂直:column, 水平： row
+    btnDirection : {
+      type: String,
+      default: 'column'
+    },
     // 按钮宽度
     buttonWidth: {
+      type: String,
+      default: '',
+    },
+    // 按钮高度
+    buttonHeight: {
       type: String,
       default: '',
     },
@@ -58,5 +69,6 @@ export default {
 }
 .btnStyle {
   margin-bottom: 20px;
+  margin-right: 10px;
 }
 </style>

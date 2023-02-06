@@ -53,15 +53,14 @@
         >
       </el-col>
     </el-row>
-    <div
-      class="footerBox"
-      :style="{
-        background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff',
-        height: 'calc(100% - 125px)',
-      }"
-    >
-      <div class="headerStyle">通知通告列表</div>
-      <el-table :data="noticeList" @selection-change="handleSelectionChange" height="calc(100% - 45px)">
+     <pagePanel headerTitle="通知通告列表">
+      <el-table :data="noticeList" @selection-change="handleSelectionChange" height="calc(100% - 45px)"
+      :row-style="{ height: '0px' }"
+        :header-cell-style="{ 'text-align': 'center',padding:'0px'}"
+        header-cell-class-name="table_header"
+        :cell-style="{ 'text-align': 'center',padding:'2px'}"
+        style="width: 100%; height: 100%;"
+        :default-sort="{ prop: 'date', order: 'descending' }">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="序号" type="index" width="120" align="center" />
         <el-table-column
@@ -107,7 +106,7 @@
         :limit.sync="queryParams.pageSize"
         @pagination="getList"
       />
-    </div>
+    </pagePanel>
     <!-- 添加或修改角色配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body :close-on-click-modal="false">
       <el-form ref="addform" :model="addform" :rules="rules" label-width="100px">
@@ -179,8 +178,8 @@
 </template>
 
 <script>
-import { listDept } from '@/api/system/dept';
-import { addnotice, noticeList, deldataNotice, updatenotice } from '@/api/system/notice';
+import { listDept } from '@/api/intelligentOilfield/system/dept';
+import { addnotice, noticeList, deldataNotice, updatenotice } from '@/api/intelligentOilfield/system/notice';
 
 export default {
   dicts: ['sys_normal_disable'],

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import result from '@/components/result/index.vue';
+import result from '@/components/intelligentOilfield/result/index.vue';
 
 export default {
   name: 'ResultMaintenance',

@@ -52,20 +52,21 @@
       </el-col>
       <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
     </el-row>
-    <div
-      class="footerBox"
-      :style="{
-        background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff',
-      }"
-    >
-      <div class="headerStyle">组织机构管理</div>
+     <pagePanel headerTitle="组织机构管理">
       <el-table
         v-if="refreshTable"
         :data="deptList"
         row-key="deptId"
         :default-expand-all="isExpandAll"
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-        height="calc(100% - 45px)"
+
+         height="calc(100% - 50px)"
+        :row-style="{ height: '0px' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        header-cell-class-name="table_header"
+        :cell-style="{ padding: '2px', 'text-align': 'center' }"
+        style="width: 100%; height: 100%;"
+        :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column prop="deptName" label="部门名称" width="260"></el-table-column>
         <el-table-column prop="orderNum" label="排序" width="200"></el-table-column>
@@ -110,7 +111,7 @@
           </template>
         </el-table-column>
       </el-table>
-    </div>
+    </pagePanel>
 
     <!-- 添加或修改部门对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body :close-on-click-modal="false">
@@ -191,7 +192,7 @@
 </template>
 
 <script>
-import { listDept, getDept, delDept, addDept, updateDept, listDeptExcludeChild } from '@/api/system/dept';
+import { listDept, getDept, delDept, addDept, updateDept, listDeptExcludeChild } from '@/api/intelligentOilfield/system/dept';
 import Treeselect from '@riophae/vue-treeselect';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 

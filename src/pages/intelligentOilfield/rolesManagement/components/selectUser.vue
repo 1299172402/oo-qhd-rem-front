@@ -70,8 +70,8 @@
 </template>
 
 <script>
-import { unallocatedUserList, authUserSelectAll } from "@/api/system/role";
-import { treeselect } from '@/api/system/dept';
+import { unallocatedUserList, authUserSelectAll } from "@/api/intelligentOilfield/system/role";
+import { treeselect } from '@/api/intelligentOilfield/system/dept';
 import Treeselect from '@riophae/vue-treeselect';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 

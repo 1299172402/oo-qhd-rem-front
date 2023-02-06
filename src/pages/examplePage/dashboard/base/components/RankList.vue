@@ -49,7 +49,7 @@
   </t-row>
 </template>
 <script>
-import Trend from '@/components/trend/index.vue';
+import Trend from '@/components/intelligentOilfield/trend/index.vue';
 import { SALE_TEND_LIST, BUY_TEND_LIST, SALE_COLUMNS, BUY_COLUMNS } from '@/service/service-base';
 
 export default {

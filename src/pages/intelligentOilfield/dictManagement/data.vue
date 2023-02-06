@@ -87,13 +87,7 @@
         </el-col> -->
       <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
     </el-row>
-    <div
-      class="footerBox"
-      :style="{
-        background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff',
-      }"
-    >
-      <div class="headerStyle">字典数据</div>
+     <pagePanel headerTitle="字典数据">
       <el-table v-loading="loading" :data="dataList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="字典编码" align="center" prop="dictCode" />
@@ -146,7 +140,7 @@
         :limit.sync="queryParams.pageSize"
         @pagination="getList"
       />
-    </div>
+    </pagePanel>
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
@@ -195,8 +189,8 @@
 </template>
   
 <script>
-import { listData, getData, delData, addData, updateData } from '@/api/system/dict/data';
-import { listType, getType } from '@/api/system/dict/type';
+import { listData, getData, delData, addData, updateData } from '@/api/intelligentOilfield/system/dict/data';
+import { listType, getType } from '@/api/intelligentOilfield/system/dict/type';
 
 export default {
   name: 'Data',

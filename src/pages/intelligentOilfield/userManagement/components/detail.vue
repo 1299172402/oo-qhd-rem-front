@@ -89,7 +89,7 @@
 import userAvatar from './userAvatar.vue';
 import userInfo from './userInfo.vue';
 import resetPwd from './resetPwd.vue';
-import { getUser } from '@/api/system/user';
+import { getUser } from '@/api/intelligentOilfield/system/user';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
 export default {

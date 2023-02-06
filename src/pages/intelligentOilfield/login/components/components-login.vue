@@ -178,7 +178,7 @@
 import Vue from 'vue';
 // import QrcodeVue from 'qrcode.vue';
 // import { UserIcon, LockOnIcon, BrowseOffIcon, BrowseIcon } from 'tdesign-icons-vue';
-import { getCodeImg } from '@/api/login';
+import { getCodeImg } from '@/api/intelligentOilfield/login';
 import { decrypt } from '@/utils/jsencrypt';
 import Cookies from 'js-cookie';
 

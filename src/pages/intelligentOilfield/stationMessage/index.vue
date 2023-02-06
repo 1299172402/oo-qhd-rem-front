@@ -12,12 +12,18 @@
                 >
             </el-col>
         </el-row>
-        <div class="footerBox" :style="{background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff', }">
+     <pagePanel headerTitle="站内信">
             <el-tabs v-model="activeName" class="g-pageHeader"  @tab-click="handleClick">
                 <el-tab-pane label="消息列表" name="first"></el-tab-pane>
                 <el-tab-pane label="报警列表" name="second"></el-tab-pane>
             </el-tabs>
-            <el-table :data="dataList"  height="calc(100% - 125px)">
+            <el-table :data="dataList"  height="calc(100% - 125px)"
+            :row-style="{ height: '0px' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        header-cell-class-name="table_header"
+        :cell-style="{ padding: '2px', 'text-align': 'center' }"
+        style="width: 100%; height: 100%;"
+        :default-sort="{ prop: 'date', order: 'descending' }">
                 <el-table-column label="序号" type="index" width="50" />
                 <el-table-column :label="activeName =='first'?'消息类型':'报警类型'"  prop="key1" width="150"  align="center" :show-overflow-tooltip="true"  />
                 <el-table-column  :label="activeName =='first'?'消息名称':'报警名称'" prop="key2" width="150" align="center" :show-overflow-tooltip="true" />
@@ -47,12 +53,12 @@
                 :limit.sync="queryParams.pageSize"
                 @pagination="getList"
             />
-        </div>
+        </pagePanel>
     </div>
 </template>
 
 <script>
-// import { listRole } from '@/api/system/role';
+// import { listRole } from '@/api/intelligentOilfield/system/role';
 
 export default {
   dicts: ['sys_normal_disable'],

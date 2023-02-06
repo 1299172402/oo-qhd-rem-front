@@ -113,6 +113,13 @@ instance.interceptors.response.use(
         type: 'warning'
       }
       ).then(() => {
+        // 更新访问页面
+        // console.log(store.state.route)
+        // console.log(router)
+        // let sysUser = { accessPage: store.state.route.meta.title, userName: store.state.user.name };
+        // updateaccessPage(sysUser).then((res) => {
+        //   console.log(res);
+        // });
         router.replace({ path: `/`})
         store.dispatch('user/logout')
         store.dispatch('permission/restore');

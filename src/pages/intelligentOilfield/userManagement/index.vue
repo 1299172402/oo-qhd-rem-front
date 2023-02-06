@@ -158,14 +158,14 @@
           <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList" :columns="columns"></right-toolbar> -->
         </el-row>
         <!-- v-loading="loading" -->
-        <div
-          class="footerBox"
-          :style="{
-            background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff',
-          }"
-        >
-          <div class="headerStyle">用户管理</div>
-          <el-table :data="userList" @selection-change="handleSelectionChange" height="calc(100% - 125px)">
+     <pagePanel headerTitle="用户管理">
+          <el-table :data="userList" @selection-change="handleSelectionChange" height="calc(100% - 115px)"
+        :row-style="{ height: '0px' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        header-cell-class-name="table_header"
+        :cell-style="{ padding: '2px', 'text-align': 'center' }"
+        style="width: 100%; height: 100%;"
+        :default-sort="{ prop: 'date', order: 'descending' }">
             <el-table-column type="selection" width="50" align="center" />
             <el-table-column label="序号" type="index" width="50"> </el-table-column>
             <!-- <el-table-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible" /> -->
@@ -270,7 +270,7 @@
             :limit.sync="queryParams.pageSize"
             @pagination="getList"
           />
-        </div>
+        </pagePanel>
       </el-col>
     </el-row>
 
@@ -546,10 +546,10 @@
 </template>
 
 <script>
-import { listUser, getUser, delUser, addUser, updateUser, resetUserPwd, changeUserStatus } from '@/api/system/user';
-import { listPost, addPost } from '@/api/system/post';
+import { listUser, getUser, delUser, addUser, updateUser, resetUserPwd, changeUserStatus } from '@/api/intelligentOilfield/system/user';
+import { listPost, addPost } from '@/api/intelligentOilfield/system/post';
 // import { getToken } from "@/utils/auth";
-import { treeselect } from '@/api/system/dept';
+import { treeselect } from '@/api/intelligentOilfield/system/dept';
 import Treeselect from '@riophae/vue-treeselect';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 import proxy from '@/config/host';
@@ -695,7 +695,11 @@ export default {
         password: [
           { required: true, message: '用户密码不能为空', trigger: 'blur' },
           //   { min: 8, max: 20, message: '用户密码长度必须介于 8 和 20 之间', trigger: 'blur' },
-          {pattern:/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{8,20}$/, message:'必须包含大小写字母，数字和特殊字符，且字符在8到20之间'}
+          {
+            pattern:
+              /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{8,20}$/,
+            message: '必须包含大小写字母，数字和特殊字符，且字符在8到20之间',
+          },
         ],
         surePassword: [
           { required: true, message: '确认密码不能为空', trigger: 'blur' },
@@ -903,8 +907,8 @@ export default {
         this.postOptions = response.data.posts;
         this.roleOptions = response.data.roles;
         this.form.postIds = response.data.postIds;
-        this.form.tempPostId = parseInt(response.data.postIds.toLocaleString(), 10);
-        this.form.roleIds = response.data.roleIds;
+        this.form.tempPostId = String(response.data.postIds.toLocaleString());
+        this.form.roleIds = response.data.roleIds.toLocaleString().split(',');
         this.open = true;
         this.title = '编辑用户';
         this.form.password = '';
@@ -917,7 +921,8 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         closeOnClickModal: false,
-        inputPattern: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{8,20}$/,
+        inputPattern:
+          /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{8,20}$/,
         inputErrorMessage: '必须包含大小写字母，数字和特殊字符，且字符在8到20之间',
       })
         .then(({ value }) => {
@@ -1062,9 +1067,8 @@ export default {
   white-space: nowrap;
 }
 
-  .el-dialog__body .el-row {
-    display: flex;
-    justify-content: space-between;
-  }
-
+.el-dialog__body .el-row {
+  display: flex;
+  justify-content: space-between;
+}
 </style>

@@ -50,13 +50,8 @@
         >
       </el-col>
     </el-row>
-    <div
-      class="footerBox"
-      :style="{
-        background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff',
-      }"
-    >
-      <div class="headerStyle">应用中心管理</div>
+     <pagePanel headerTitle="应用中心管理">
+
       <div class="content-body">
         <div class="content-box">
           <p class="content-header">安全管理基础信息</p>
@@ -96,12 +91,11 @@
         :limit.sync="queryParams.pageSize"
         @pagination="getList"
       />
-    </div>
-  </div>
+     </pagePanel>
 </template>
 
 <script>
-import { appList, adddataPer, deldataPer, updatePer, changeDataStatus } from '@/api/system/dataper';
+import { appList, adddataPer, deldataPer, updatePer, changeDataStatus } from '@/api/intelligentOilfield/system/dataper';
 
 export default {
   dicts: ['sys_normal_disable'],

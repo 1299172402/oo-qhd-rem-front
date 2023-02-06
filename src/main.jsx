@@ -21,21 +21,24 @@ import VueClipboard from 'vue-clipboard2';
 import axiosInstance, { download } from '@/utils/request';
 import plugins from './plugins' // plugins
 import { parseTime, resetForm, addDateRange, selectDictLabel, selectDictLabels, handleTree } from "@/utils/commonSettings.js";
-import { getDicts } from "@/api/system/dict/data";
-import { getConfigKey } from "@/api/system/config";
-import DictTag from '@/components/dict-tag/index.vue';
-import DictData from '@/components/dict-data/index.js'
-import Pagination from "@/components/customize-pagination/index.vue";
+import { getDicts } from "@/api/intelligentOilfield/system/dict/data";
+import { getConfigKey } from "@/api/intelligentOilfield/system/config";
+import DictTag from '@/components/intelligentOilfield/dict-tag/index.vue';
+import DictData from '@/components/intelligentOilfield/dict-data/index.js'
+import Pagination from "@/components/intelligentOilfield/customize-pagination/index.vue";
 import directive from './directive'
 import 'virtual:svg-icons-register'
-import SvgIcon from '@/components/svg-icon/index.vue'
+import SvgIcon from '@/components/intelligentOilfield/svg-icon/index.vue'
+import pagePanel from '@/components/intelligentOilfield/page-panel/index.vue'
+import infoWindow from '@/components/intelligentOilfield/info-window/index.vue';
 
 // 全局组件挂载
 Vue.component('svg-icon', SvgIcon)
 Vue.component('Pagination', Pagination)
 Vue.component('DictTag', DictTag)
 Vue.component('t-page-header');
-
+Vue.component('pagePanel', pagePanel)
+Vue.component('infoWindow', infoWindow)
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
 Vue.prototype.parseTime = parseTime

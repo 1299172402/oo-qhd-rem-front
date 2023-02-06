@@ -50,13 +50,7 @@
       </el-col> -->
       <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
     </el-row>
-    <div
-      class="footerBox"
-      :style="{
-        background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff',
-      }"
-    >
-      <div class="headerStyle">菜单管理</div>
+     <pagePanel headerTitle="菜单管理">
       <el-table
         v-if="refreshTable"
         height="calc(100% - 45px)"
@@ -64,7 +58,13 @@
         row-key="menuId"
         :default-expand-all="isExpandAll"
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-      >
+
+      :row-style="{ height: '0px' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        header-cell-class-name="table_header"
+        :cell-style="{ padding: '2px', 'text-align': 'center' }"
+        style="width: 100%; height: 100%;"
+        :default-sort="{ prop: 'date', order: 'descending' }">
         <el-table-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="160"></el-table-column>
         <el-table-column prop="icon" label="图标" align="center" width="100">
           <template slot-scope="scope">
@@ -103,7 +103,7 @@
           </template>
         </el-table-column>
       </el-table>
-    </div>
+    </pagePanel>
 
     <!-- 添加或修改菜单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="680px" append-to-body :close-on-click-modal="false">
@@ -293,10 +293,10 @@
 </template>
 
 <script>
-import { listMenu, getMenu, delMenu, addMenu, updateMenu } from '@/api/system/menu';
+import { listMenu, getMenu, delMenu, addMenu, updateMenu } from '@/api/intelligentOilfield/system/menu';
 import Treeselect from '@riophae/vue-treeselect';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
-import IconSelect from '@/components/icon-select/index.vue';
+import IconSelect from '@/components/intelligentOilfield/icon-select/index.vue';
 
 export default {
   dicts: ['sys_show_hide', 'sys_normal_disable'],

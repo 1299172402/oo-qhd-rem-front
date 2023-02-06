@@ -1,7 +1,7 @@
 import { message } from 'tdesign-vue'
 import Cookies from "js-cookie";
 import { TOKEN_NAME } from '@/config/global';
-import { login, getInfo, logout} from '@/api/login'
+import { login, getInfo, logout} from '@/api/intelligentOilfield/login'
 import { encrypt } from '@/utils/jsencrypt';
 import store from '@/store';
 import router from '@/router'

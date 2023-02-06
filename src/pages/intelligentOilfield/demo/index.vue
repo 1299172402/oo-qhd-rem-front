@@ -125,7 +125,11 @@
     </div>
     <el-date-picker type="date" placeholder="选择日期" v-model="date1" style="width: 400px"></el-date-picker>
     <div class="spaceMargin">
-      4.3、时间选择器
+      4.3、年份选择器
+    </div>
+    <el-date-picker type="year" placeholder="选择年份" v-model="date3" style="width: 400px"></el-date-picker>
+    <div class="spaceMargin">
+      4.4、时间选择器
     </div>
     <el-time-picker placeholder="选择时间" v-model="date2" style="width: 400px"></el-time-picker>
 
@@ -269,6 +273,17 @@
     </div>
     <horizontalSwitchBtn style="margin-bottom: 10px"></horizontalSwitchBtn>
     <horizontalSwitchBtn :colorList="colorList" :borderList="borderList" :dataList="dataList"></horizontalSwitchBtn>
+     <div class="spaceMargin">
+      15.3、自定义的横向纵向tabs切换按钮（横向纵向都可以）
+    </div>
+      <div class="spaceMargin">
+      15.3.1、横向
+    </div>
+     <verticalSwitchButton @selectBtn="selectBtn" :dataList="dataList1" buttonWidth="120px" buttonHeight="30px" style="width: 9%;" btnDirection="row"></verticalSwitchButton>
+      <div class="spaceMargin">
+      15.3.1、纵向
+    </div>
+     <verticalSwitchButton @selectBtn="selectBtn" :dataList="dataList1" buttonWidth="120px" buttonHeight="30px" style="width: 9%;" btnDirection="column"></verticalSwitchButton>
     <div class="headerTitle spaceMargin">
       16、自定义消息通知跑马灯组件=========================================================================================
     </div>
@@ -280,7 +295,7 @@
       <Marquee>{{ val }}</Marquee>
     </div>
     <div class="headerTitle spaceMargin">
-      17、echarts图表【未作封装以及大小适配】=========================================================================================
+      18、echarts图表【未作封装以及大小适配】=========================================================================================
     </div>
     <chartsComponents
       :chart-data-options="dataOption"
@@ -309,11 +324,11 @@ import { CanvasRenderer } from 'echarts/renderers';
 import * as echarts from 'echarts/core';
 import { getFolderLineDataSet } from './index';
 import { Message } from 'element-ui';
-import horizontalSwitchBtn from '@/components/horizontal-switch-button/index.vue';
-
+import horizontalSwitchBtn from '@/components/intelligentOilfield/horizontal-switch-button/index.vue';
+import verticalSwitchButton from '@/components/intelligentOilfield/vertical-switch-button/index.vue';
 // import * as echarts from "echarts";
-import chartsComponents from '@/components/echarts-com/index.vue';
-import marquee from '@/components/marquee-window/index.vue';
+import chartsComponents from '@/components/intelligentOilfield/echarts-com/index.vue';
+import marquee from '@/components/intelligentOilfield/marquee-window/index.vue';
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 const labelName = ['总值', '合格值'];
@@ -361,9 +376,16 @@ export default {
     horizontalSwitchBtn,
     chartsComponents,
     marquee,
+    verticalSwitchButton,
   },
   data() {
     return {
+      dataList1: [
+        { name: '生产曲线分析', isChecked: false },
+        { name: '指标变化分析', isChecked: true },
+        { name: '曲线对比分析', isChecked: false },
+      ],
+      date3: '',
       dataList:[],
       valueA: [],
       optionsC: [{
@@ -1164,6 +1186,9 @@ export default {
     this.renderCharts();
   },
   methods: {
+    selectBtn(item) {
+      console.log('选中结果==', item);
+    },
     open1() {
       this.$confirm('确定注销并退出系统吗？', '提示', {
         confirmButtonText: '确定',

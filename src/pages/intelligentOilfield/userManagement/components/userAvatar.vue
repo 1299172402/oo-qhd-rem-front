@@ -65,7 +65,7 @@
 <script>
 import store from '@/store';
 import { VueCropper } from 'vue-cropper';
-import { uploadAvatar } from '@/api/system/user';
+import { uploadAvatar } from '@/api/intelligentOilfield/system/user';
 import imgUrl from '@/assets/profile.jpg' // 引入图片方法一
 
 export default {

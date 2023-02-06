@@ -71,13 +71,7 @@
       </el-col> -->
       <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
     </el-row>
-    <div
-      class="footerBox"
-      :style="{
-        background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff',
-      }"
-    >
-      <div class="headerStyle">角色管理</div>
+     <pagePanel headerTitle="角色管理">
       <el-table :data="userList" @selection-change="handleSelectionChange" height="calc(100% - 112px)">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="序号" type="index" width="80" />
@@ -113,14 +107,14 @@
         :limit.sync="queryParams.pageSize"
         @pagination="getList"
       />
-    </div>
+    </pagePanel>
 
     <select-user ref="select" :roleId="queryParams.roleId" @ok="handleQuery" />
   </div>
 </template>
 
 <script>
-import { authUserCancel, authUserCancelAll, viewUserList } from '@/api/system/role';
+import { authUserCancel, authUserCancelAll, viewUserList } from '@/api/intelligentOilfield/system/role';
 import selectUser from './selectUser.vue';
 
 export default {

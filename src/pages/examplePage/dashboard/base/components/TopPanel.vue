@@ -55,7 +55,7 @@ import { CanvasRenderer } from 'echarts/renderers';
 import { UsergroupIcon, FileIcon, ChevronRightIcon } from 'tdesign-icons-vue';
 import { mapState } from 'vuex';
 
-import Trend from '@/components/trend/index.vue';
+import Trend from '@/components/intelligentOilfield/trend/index.vue';
 
 import { constructInitDashboardDataset } from '../index';
 import { changeChartsTheme } from '@/utils/color';

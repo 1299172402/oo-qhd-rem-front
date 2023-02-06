@@ -126,9 +126,9 @@
 </template>
 
 <script>
-import { getGenTable, updateGenTable } from "@/api/tool/gen";
-import { optionselect as getDictOptionselect } from "@/api/system/dict/type";
-import { listMenu as getMenuTreeselect } from "@/api/system/menu";
+import { getGenTable, updateGenTable } from "@/api/intelligentOilfield/tool/gen";
+import { optionselect as getDictOptionselect } from "@/api/intelligentOilfield/system/dict/type";
+import { listMenu as getMenuTreeselect } from "@/api/intelligentOilfield/system/menu";
 import basicInfoForm from "./basicInfoForm.vue";
 import genInfoForm from "./genInfoForm.vue";
 import Sortable from 'sortablejs'

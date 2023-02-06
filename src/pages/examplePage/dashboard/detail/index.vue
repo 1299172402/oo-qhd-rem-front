@@ -64,8 +64,8 @@ import * as echarts from 'echarts/core';
 import { mapState } from 'vuex';
 import { ChevronRightIcon } from 'tdesign-icons-vue';
 
-import Trend from '@/components/trend/index.vue';
-import ProductCard from '@/components/product-card/index.vue';
+import Trend from '@/components/intelligentOilfield/trend/index.vue';
+import ProductCard from '@/components/intelligentOilfield/product-card/index.vue';
 
 import { LAST_7_DAYS } from '@/utils/date';
 import { changeChartsTheme } from '@/utils/color';

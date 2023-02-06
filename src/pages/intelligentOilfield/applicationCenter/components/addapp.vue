@@ -1,13 +1,7 @@
 <!-- 后台——应用中心管理-新增应用 -->
 <template>
   <div class="app-container">
-    <div
-      class="footerBox"
-      :style="{
-        background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff',
-      }"
-    >
-      <div class="headerStyle">组织框架列表</div>
+     <pagePanel headerTitle="组织框架列表">
       <div class="dialog_box">
         <div class="dialog_left">
           <el-form ref="form" :model="form" :rules="rules" label-width="122px">
@@ -193,7 +187,7 @@
         <el-button type="primary" @click="submitFormadd">保 存</el-button>
         <el-button @click="canceladd" class="cancelBtn">取 消</el-button>
       </div>
-    </div>
+    </pagePanel>
     <!-- 选择角色对话框 -->
     <el-dialog :title="title" :visible.sync="choiceRole" width="800px" append-to-body :close-on-click-modal="false">
       <el-table
@@ -260,9 +254,9 @@
 </template>
   
 <script>
-import { addApp } from '@/api/system/app';
-import { getUser } from '@/api/system/user';
-import { listDept } from '@/api/system/dept';
+import { addApp } from '@/api/intelligentOilfield/system/app';
+import { getUser } from '@/api/intelligentOilfield/system/user';
+import { listDept } from '@/api/intelligentOilfield/system/dept';
 
 export default {
   name: 'Profile',
@@ -437,10 +431,6 @@ export default {
   <style lang="less" scoped>
 .app-container {
   height: 100%;
-}
-.footerBox {
-  height: 100% !important;
-  margin: 0 !important;
 }
 .dialog_box {
   width: 100%;

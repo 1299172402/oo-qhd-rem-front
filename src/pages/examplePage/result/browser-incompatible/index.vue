@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import Result from '@/components/result/index.vue';
-import Thumbnail from '@/components/thumbnail/index.vue';
+import Result from '@/components/intelligentOilfield/result/index.vue';
+import Thumbnail from '@/components/intelligentOilfield/thumbnail/index.vue';
 
 export default {
   name: 'ResultBrowserIncompatible',

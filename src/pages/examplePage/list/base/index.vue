@@ -77,7 +77,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { SearchIcon } from 'tdesign-icons-vue';
-import Trend from '@/components/trend/index.vue';
+import Trend from '@/components/intelligentOilfield/trend/index.vue';
 import { prefix } from '@/config/global';
 
 import { CONTRACT_STATUS, CONTRACT_STATUS_OPTIONS, CONTRACT_TYPES, CONTRACT_PAYMENT_TYPES } from '@/constants';

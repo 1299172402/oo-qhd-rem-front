@@ -19,6 +19,22 @@ export default [
     ],
   },
   {
+    path: '/homePageDetail',
+    name: 'homePageDetail',
+    component: Layout,
+    hidden: true,
+    redirect: '/homePageDetail/homeDetail',
+    meta: { title: '首页', icon: '', single: true },
+    children: [
+      {
+        path: 'homeDetail',
+        name: 'homeDetail',
+        component: () => import('@/pages/intelligentOilfield/homePage/components/detail.vue'),
+        meta: { title: '首页' },
+      },
+    ],
+  },
+  {
     path: '/demo',
     name: 'demo',
     hidden: false, // 设置为true路由不可见

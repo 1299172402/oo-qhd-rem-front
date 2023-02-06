@@ -143,10 +143,10 @@
 </template>
 
 <script>
-import { updateUser } from '@/api/system/user';
-import { treeselect } from '@/api/system/dept';
+import { updateUser } from '@/api/intelligentOilfield/system/user';
+import { treeselect } from '@/api/intelligentOilfield/system/dept';
 import Treeselect from '@riophae/vue-treeselect';
-import { listPost, addPost } from '@/api/system/post';
+import { listPost, addPost } from '@/api/intelligentOilfield/system/post';
 
 export default {
   components: { Treeselect },
@@ -255,8 +255,8 @@ export default {
           status: '0',
           remark: newVal.data?.remark,
           postIds: newVal.postIds,
-          roleIds: newVal.roleIds,
-          tempPostId: newVal.tempPostId, // 临时的用户岗位
+          roleIds: newVal.roleIds.toLocaleString().split(','),
+          tempPostId: String(newVal.tempPostId.toLocaleString()), // 临时的用户岗位
           userType: newVal.data?.userType, // 账号类型
         };
         // console.log(this.tempUser);

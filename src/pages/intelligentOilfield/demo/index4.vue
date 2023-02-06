@@ -187,10 +187,10 @@ import { getFolderLineDataSet } from './index';
 import { Message } from 'element-ui';
 
 // import * as echarts from "echarts";
-import chartsComponents from '@/components/echarts-com/index.vue';
-import irregularityBox from '@/components/irregularity-box/index.vue';
-import myModal from '@/components/modal/index.vue';
-import marquee from '@/components/marquee-window/index.vue';
+import chartsComponents from '@/components/intelligentOilfield/echarts-com/index.vue';
+import irregularityBox from '@/components/intelligentOilfield/irregularity-box/index.vue';
+import myModal from '@/components/intelligentOilfield/modal/index.vue';
+import marquee from '@/components/intelligentOilfield/marquee-window/index.vue';
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 const labelName = ['总值', '合格值'];
