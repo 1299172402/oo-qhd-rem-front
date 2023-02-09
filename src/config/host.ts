@@ -27,7 +27,7 @@ export default {
     // 文件预览服务
     PREVIEW_FILE_API: "文件服务地址",
     // 正式环境接口地址
-    API: 'http://10.77.78.221:31995/prod-api/',
+    API: 'http://10.77.79.177:31995/prod-api/',
     // 正式环境 cdn 路径
     CDN: '',
   },
