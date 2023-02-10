@@ -14,7 +14,7 @@
     </pagePanel>
     <pagePanel headerTitle="已授权应用" style="height: 185px">
       <div class="authorized_content">
-        <div class="authorized">
+        <!-- <div class="authorized">
           <svg-icon icon-class="SvgIcon" class="icon" />
           <p class="authorized_title">智能安全</p>
         </div>
@@ -57,12 +57,12 @@
         <div class="authorized">
           <svg-icon icon-class="SvgIcon" class="icon" />
           <p class="authorized_title">移动模块</p>
-        </div>
+        </div> -->
       </div>
     </pagePanel>
     <pagePanel headerTitle="已授权看板" style="height: 185px">
       <div class="authorized_content">
-        <div class="authorized">
+        <!-- <div class="authorized">
           <svg-icon icon-class="SvgIcon" class="icon" />
           <p class="authorized_title">注水看板</p>
         </div>
@@ -77,7 +77,7 @@
         <div class="authorized">
           <svg-icon icon-class="SvgIcon" class="icon" />
           <p class="authorized_title">报警看板</p>
-        </div>
+        </div> -->
       </div>
     </pagePanel>
     <pagePanel headerTitle="已授权业务" style="height: 256px">
@@ -87,12 +87,12 @@
 </template>
 <script>
 import marquee from '@/components/intelligentOilfield/marquee-window/index.vue';
-import SvgIcon from '@/assets/homepage/智能安全.svg';
+// import SvgIcon from '@/assets/homepage/智能安全.svg';
 
 export default {
   components: {
     marquee,
-    SvgIcon,
+    // SvgIcon,
   },
   data() {
     return {
