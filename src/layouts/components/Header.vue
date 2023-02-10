@@ -224,6 +224,7 @@ export default Vue.extend({
         this.$router.push('/homePage/index');
         this.currentMode = '办公模式';
       } else {
+        this.$store.dispatch('user/getUserInfo');
         this.$router.push('/portal/projectionMode');
         this.$store.commit('user/SETISGROUPLOGIN', true);
       }
@@ -234,6 +235,7 @@ export default Vue.extend({
     },
     // 切换投影模式和办公模式
     switchMode() {
+      this.$store.dispatch('user/getUserInfo');
       if (this.currentMode === '办公模式') {
         this.$router.push('/portal/officeMode');
         this.currentMode = '投影模式';
@@ -456,5 +458,6 @@ export default Vue.extend({
   width: 40px !important;
   height: 25px !important;
   cursor: pointer;
+  color: #fff;
 }
 </style>

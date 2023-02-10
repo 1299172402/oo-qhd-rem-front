@@ -42,7 +42,7 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" size="mini" @click="handleExport" v-hasPermi="['system:role:export']">导出</el-button>
+        <el-button type="primary" size="mini" @click="handleExport" v-hasPermi="['system:userAccess:export']">导出</el-button>
       </el-col>
     </el-row>
     <pagePanel headerTitle="用户访问">

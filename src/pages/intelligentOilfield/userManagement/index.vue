@@ -275,7 +275,7 @@
     </el-row>
 
     <!-- 添加或修改用户配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body :close-on-click-modal="false">
+    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body :close-on-click-modal="false" @close="closeDialog('form')">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <div class="headerinfo">基础信息</div>
         <el-row>
@@ -419,7 +419,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel" class="cancelBtn">取 消</el-button>
+        <el-button @click="cancel('form')" class="cancelBtn">取 消</el-button>
       </div>
     </el-dialog>
     <!-- 修改密码（带原密码，确认密码）-暂时不用 -->
@@ -803,9 +803,10 @@ export default {
         });
     },
     // 取消按钮
-    cancel() {
+    cancel(formName) {
       this.open = false;
       this.reset();
+      this.$refs[formName].resetFields();
     },
     // 表单重置
     reset() {
@@ -1055,6 +1056,9 @@ export default {
     // 提交上传文件
     submitFileForm() {
       this.$refs.upload.submit();
+    },
+    closeDialog(formName) {
+      this.$refs[formName].resetFields();
     },
   },
 };

@@ -150,10 +150,10 @@ export default [
     path: '/dictManagement/dict-data',
     component: Layout,
     hidden: true,
-    redirect: '/dictManagement/dict-data/index/:dictId(\\d+)',
+    redirect: '/dictManagement/dict-data/index/:dictId',
     children: [
       {
-        path: 'index/:dictId(\\d+)',
+        path: 'index/:dictId',
         name: 'dictData',
         component: () => import('@/pages/intelligentOilfield/dictManagement/data.vue'),
         meta: { title: '字典数据' }

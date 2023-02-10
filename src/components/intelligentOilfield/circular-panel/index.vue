@@ -1,11 +1,29 @@
 <!--轮循面板组件-->
 <template>
   <div class="g-w100 g-h00 panel">
-    <el-carousel trigger="click" :autoplay="false" arrow="never" indicator-position="outside">
-      <el-carousel-item v-for="(item1,index) in panelList" :key="index" class="g-row-flex" style="flex-wrap: wrap">
-        <div class="g-column-flex-H panelDiv" v-for="(item2,index) in item1" :key="index+200">
-          <div class="panelImg"></div>
-          <div>{{item2.name}}</div>
+    <el-carousel
+      :style="{ '--containerHeight': containerHeight }"
+      trigger="click"
+      :autoplay="false"
+      arrow="never"
+      indicator-position="outside"
+    >
+      <el-carousel-item v-for="(item1, index) in panelList" :key="index" class="g-row-flex" style="flex-wrap: wrap">
+        <div class="g-column-flex-H panelDiv" v-for="(item2, index) in item1" :key="index + 200">
+          <!-- <div class="panelImg"></div> -->
+          <div class="g-column-flex-H" @click="jumpLink(item2, index)" v-if="entranceType === 'UpperLower'">
+            <img :src="modelName === 'kanban'?item2.img:item2.appImg" alt="" />
+            <div style="font-size: 14px">{{ modelName === 'kanban'?item2.name:item2.appName}}</div>
+          </div>
+          <div
+            v-else
+            class="panelBg g-row-flex-HV"
+            @click="jumpLink(item2, index)"
+            :class="index % 3 === 0 ? 'panelBlueColor' : index % 3 === 1 ? 'panelRedColor' : 'panelGreenColor'"
+          >
+            <a :href="item2.url" :id="'hrefText' + index" target="_blank" v-show="false">跳转</a>
+            <div class="g-flex-row-HV" style="font-size: 12px">{{ item2.name }}</div>
+          </div>
         </div>
       </el-carousel-item>
     </el-carousel>
@@ -14,70 +32,111 @@
 <script>
 export default {
   props: {
-    panels:{
+    panels: {
       type: Array,
       default() {
-        return [
-          {img:'',name:'油藏管理'},
-          {img:'',name:'设备设施'},
-          {img:'',name:'安全'},
-          {img:'',name:'船体'},
-          {img:'',name:'油藏管理'},
-          {img:'',name:'设备设施'},
-          {img:'',name:'安全'},
-          {img:'',name:'船体'},
-          {img:'',name:'船体'},
-        ];
-      }
+        return [];
+      },
     },
-    height: {
-
-    }
+    // 跳转类型
+    jumpType: {
+      type: String,
+      default: 'iframe',
+    },
+    // 入口类型, UpperLower:图片文本上下结构,Containment:图片文本包容结构
+    entranceType: {
+      type: String,
+      default: 'UpperLower',
+    },
+    // 模块名-可能不同模块名绑定字段不一样
+    modelName: {
+      type: String,
+      default: 'kanban'
+    },
+    // 缩放组件至某一宽度newWPx，目的是换展现形式
+    changeNewPx: {
+      type: Number,
+      default: 464,
+    },
+    height: {},
   },
-    
   data() {
-    return {};
+    return {
+      //   containerHeight: '100px',
+      onePageNum: 4,
+      panelList: [],
+      currentWPX: this.changeNewPx,
+    };
   },
   computed: {
-    panelList() {
-      // 先判定容器的高来决定一页可放几个标签 height 要先减去头部的高度以及底部的分页条的高度 每一行高100，上下padding加起来是40
-      console.log(this.height)
-      //   const height2 = this.height-40-32
-      //   const row = Math.floor(height2/140)
-            
-      //  alert(Math.floor(80/52));
-      // 根据页容量进行分页
-      const returnList  = []
-      for (let i = 0; i < this.panels.length; i += 4) {
-        returnList.push(this.panels.slice(i, i + 4));
+    containerHeight() {
+      if (this.entranceType === 'UpperLower') {
+        return '100px';
       }
-      console.log(returnList)
-      return returnList
-         
+      return '120px';
     },
   },
-  methods: {},
+  watch: {
+    panels: {
+      handler(newVal) {
+        this.panelList = [];
+        for (let i = 0; i < newVal.length; i += this.onePageNum) {
+          this.panelList.push(newVal.slice(i, i + this.onePageNum));
+        }
+      },
+      deep: true,
+      immediate: true,
+    },
+    changeNewPx: {
+      handler(newVal) {
+        this.currentWPX = newVal;
+        // console.log('最新宽度22', this.currentWPX);
+        if (this.currentWPX !== 0) {
+          this.onePageNum = parseInt((this.currentWPX - 42) / 96, 10);
+          //   console.log('最后个数', this.onePageNum);
+        }
+        this.panelList = [];
+        for (let i = 0; i < this.panels.length; i += this.onePageNum) {
+          this.panelList.push(this.panels.slice(i, i + this.onePageNum));
+        }
+      },
+      deep: true,
+      immediate: true,
+    },
+  },
+  methods: {
+    // 全屏展示链接, 未完不能全屏跳转！！！
+    linkPage() {
+      document.getElementById('hrefText').click();
+    },
+    jumpLink(item, index) {
+      if (this.jumpType === 'iframe') {
+        this.$emit('linkIframe', item);
+      } else {
+        document.getElementById(`hrefText${index}`).click();
+      }
+    },
+  },
 };
 </script>
 <style>
 .panel {
-   position: relative;
-   z-index: 0 !important;
+  position: relative;
+  z-index: 0 !important;
 }
-  .panel  .el-carousel__button{
-        width: 8px !important;
-        height: 8px !important;
-        border-radius: 7px !important;
-    }
-    .panel .el-carousel__indicators--outside button {
-        background-color: #3f87bc !important;
-    }
-    .panel .el-carousel__container{
-        height: 80px !important;
-    }
+.panel .el-carousel__button {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 7px !important;
+}
+.panel .el-carousel__indicators--outside button {
+  background-color: #3f87bc !important;
+}
+.panel .el-carousel__container {
+  height: var(--containerHeight);
+}
 </style>
 <style scoped>
-  
 /* */
 .panelImg {
   background-image: url('https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png');
@@ -103,5 +162,25 @@ export default {
 }
 .panelDiv {
   margin: 0 16px;
+  cursor: pointer;
+}
+.panelBg {
+  width: 100px;
+  height: 50px;
+  text-align: center;
+  line-height: 16px;
+  padding: 0px 10px;
+}
+.panelBlueColor {
+  background: linear-gradient(to bottom, transparent, rgba(26, 103, 210, 0.6));
+  border: 1px solid rgba(26, 103, 210, 1);
+}
+.panelRedColor {
+  background: linear-gradient(to bottom, transparent, rgba(224, 96, 25, 0.6));
+  border: 1px solid rgba(224, 96, 25, 1);
+}
+.panelGreenColor {
+  background: linear-gradient(to bottom, transparent, rgba(1, 229, 194, 0.6));
+  border: 1px solid rgba(1, 229, 194, 1);
 }
 </style>

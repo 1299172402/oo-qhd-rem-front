@@ -1,8 +1,8 @@
 <!--自定义info信息窗-->
 <template>
-  <div :style="{width: infoWidth,height:infoHeight}">
+  <div :style="{width: infoWidth,height:infoHeight}" class="g-w100">
     <div class="infoHeader" :style="{background: $store.state.setting.mode==='dark'?'linear-gradient(to left, rgba(0, 202, 255, 0.4), var(--opacityBlueBg2))':'linear-gradient(to right, rgba(0, 96, 166, 1), rgba(0, 96, 166, 0.2))',color:$store.state.setting.mode==='dark'?'var(--lightBlueColor)':'var(--whiteColor)'}">
-        <div>{{headerTitle}}</div>
+        <div style="width: 17%">{{headerTitle}}</div>
         <div class="titleStyle">
             <slot name="titleContent"></slot>
         </div>
@@ -46,6 +46,7 @@ export default {
     font-size: 18px;
     border: 1px solid var(--lightBlueColor);
     display: flex;
+    width: 100%;
     /* background: linear-gradient(to right, rgba(0, 202, 255, 0.4), var(--opacityBlueBg2)); */
     /* color: var(--lightBlueColor); */
 }
@@ -61,5 +62,6 @@ export default {
     font-size: 14px;
     color: white;
     margin-left: 10px;
+    width: 83%;
 }
 </style>

@@ -8,6 +8,7 @@
       <Marquee>{{ val }}</Marquee>
     </div>
     <pagePanel headerTitle="作业区概览" style="height: calc(100% - 10px)">
+      <div style="width: 100%; height: calc(100% - 10px); overflow: scroll;">
         <el-row :gutter="20">
           <el-col :span="8">
             <div class="boxCard cardStyle">
@@ -22,7 +23,8 @@
                 <p style="margin-bottom: 15px;">今日活跃用户统计</p>
                 <el-progress type="circle" :stroke-width="10" :width="60" :percentage="68"></el-progress>
               </div>
-              <div class="boxCard_right" @click="handleAuth(id)">查看</div>
+              <div class="boxCard_right" @click="handleAuth(id)">
+              <span>查看</span></div>
             </div>
           </el-col>
           <el-col :span="8"> <div class="boxCard cardStyle">1-2</div> </el-col>
@@ -39,6 +41,8 @@
           <el-col :span="12"><div class="boxCard cardStyle">3-1</div></el-col>
           <el-col :span="12"><div class="boxCard cardStyle">3-2</div></el-col>
         </el-row>
+      </div>
+        
     </pagePanel>
   </div>
 </template>
@@ -64,11 +68,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.footerBox_content {
-  margin: 0 !important;
-  height: 100% !important;
-  overflow: scroll;
-}
 .cardStyle {
   height: 250px;
   margin: 0 10px;
@@ -123,7 +122,7 @@ export default {
   align-items: center;
 }
 .boxCard_right{
-  width: 20%;
+  width: 12%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -131,5 +130,8 @@ export default {
   writing-mode: vertical-rl;
   font-size: 18px;
   color: #fff;
+  cursor: pointer;
 }
+
+
 </style>

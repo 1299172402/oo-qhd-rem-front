@@ -53,7 +53,7 @@
      <pagePanel headerTitle="菜单管理">
       <el-table
         v-if="refreshTable"
-        height="calc(100% - 45px)"
+        height="calc(100% - 2px)"
         :data="menuList"
         row-key="menuId"
         :default-expand-all="isExpandAll"

@@ -5,6 +5,7 @@ import { login, getInfo, logout} from '@/api/intelligentOilfield/login'
 import { encrypt } from '@/utils/jsencrypt';
 import store from '@/store';
 import router from '@/router'
+// import { getToken, setToken, setExpiresIn, removeToken } from '@/utils/auth'
 
 const InitUserInfo = {
   roles: [],
@@ -13,6 +14,7 @@ const InitUserInfo = {
 // 定义的state初始值
 const state = {
   token: localStorage.getItem(TOKEN_NAME),
+  //   token: getToken(),
   userInfo: InitUserInfo,
   projectionMode: false, // 投影模式
   currentRoles: [], // 新增当前角色
@@ -30,6 +32,9 @@ const mutations = {
   setToken(state, token) {
     localStorage.setItem(TOKEN_NAME, token);
     state.token = token;
+  },
+  SET_EXPIRES_IN: (state, time) => {
+    state.expires_in = time
   },
   removeToken(state) {
     localStorage.removeItem(TOKEN_NAME);
@@ -131,6 +136,10 @@ const actions = {
             Cookies.remove('rememberMe');
           }
           commit('setToken', res.data.data.access_token);
+          //   setToken(res.data.data.access_token)
+          //   commit('setToken', res.data.data.access_token)
+          //   setExpiresIn(res.data.data.expires_in)
+          //   commit('SET_EXPIRES_IN', res.data.data.expires_in)
           dispatch("getUserInfo", 'firstLogin');
         } else {
           message.error(res.data.msg);
@@ -179,23 +188,23 @@ const actions = {
           console.log('获取用户角色====', res.data)
           const {user} = res.data
           // const avatar = user.avatar === "" ? require("@/assets/images/profile.jpg") : user.avatar;
-          const avatar = user.avatar === "" ? '' : user.avatar;
+          const avatar = user?.avatar === "" ? '' : user?.avatar;
           // 判断登录门户/后台管理系统
-          commit('SET_LOGINBACK', res.data.loginBack)
-          commit('SETLOGOUT', res.data.user.logout)
+          commit('SET_LOGINBACK', res.data?.loginBack)
+          commit('SETLOGOUT', res.data.user?.logout)
           commit('SETUSERDETAILS', res.data)
           if(firstLogin === 'firstLogin') {
-            if (res.data.user.logout === '0') {
+            if (res.data.user?.logout === '0') {
             //   sessionStorage.setItem('isGroupLogin', 'true');
               commit('SETISGROUPLOGIN', true)
               console.log('门户，上次登出的位置');
               router.push('/portal/projectionMode');
-            } else if(res.data.user.logout === '1'){
+            } else if(res.data.user?.logout === '1'){
             //   sessionStorage.setItem('isGroupLogin', 'false');
               commit('SETISGROUPLOGIN', false)
               console.log('后台，上次登出的位置');
               router.push('/homePage/index');
-            } else if (!res.data.loginBack) {
+            } else if (!res.data?.loginBack) {
             //   sessionStorage.setItem('isGroupLogin', 'true');
               commit('SETISGROUPLOGIN', true)
               console.log('门户');

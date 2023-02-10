@@ -1,6 +1,16 @@
 import request from '@/utils/request'
 import { praseStrEmpty } from "@/utils/commonSettings";
 
+
+//  门户-修改用户投影/办公模式布局数据
+export function updateUserModel(data) {
+  return request({
+    url: '/system/user/updateModel',
+    method: 'post',
+    data
+  })
+}
+
 // 查询用户列表
 export function listUser(query) {
   return request({

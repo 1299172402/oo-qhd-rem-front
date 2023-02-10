@@ -273,8 +273,8 @@ export default {
     /** 查询字典类型详细 */
     getType(dictId) {
       getType(dictId).then((response) => {
-        this.queryParams.dictType = response.data.dictType;
-        this.defaultDictType = response.data.dictType;
+        this.queryParams.dictType = response.data.data.dictType;
+        this.defaultDictType = response.data.data.dictType;
         this.getList();
       });
     },
@@ -346,7 +346,7 @@ export default {
       this.reset();
       const dictCode = row.dictCode || this.ids;
       getData(dictCode).then((response) => {
-        this.form = response.data;
+        this.form = response.data.data;
         this.open = true;
         this.title = '修改字典数据';
       });

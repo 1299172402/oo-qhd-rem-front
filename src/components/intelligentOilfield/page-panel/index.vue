@@ -7,7 +7,7 @@
       }"
     >
       <div class="headerStyle">{{headerTitle}}</div>
-      <div style="padding: 20px" class="g-w100 g-h100" >
+      <div style="padding: 20px;height:calc(100% - 32px)" class="g-w100">
          <slot></slot>
       </div>
     </div>
