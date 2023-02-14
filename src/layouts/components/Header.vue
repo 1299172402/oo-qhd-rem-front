@@ -45,9 +45,7 @@
           <message />
           <!-- 全局通知，通告 -->
           <notice />
-          <!-- <t-button v-show="$store.getters['user/isGroupLogin']" theme="default" variant="text" @click="switchMode" style="color: var(--whiteColor)"
-            ><swap-icon style="color: var(--whiteColor)" />{{ currentMode }}</t-button
-          > -->
+          
           <!-- <t-button
             theme="default"
             variant="text"
@@ -215,34 +213,9 @@ export default Vue.extend({
     editPanel() {
       this.$bus.$emit("emitBus");
     },
-    // 切换到后台管理系统
-    switchRouter(type) {
-      if (type === '后台') {
-        // 解决重新登录系统标签页未关闭的问题
-        this.$store.commit('tabRouter/removeTabRouterList');
-        this.$store.commit('user/SETISGROUPLOGIN', false);
-        this.$router.push('/homePage/index');
-        this.currentMode = '办公模式';
-      } else {
-        this.$store.dispatch('user/getUserInfo');
-        this.$router.push('/portal/projectionMode');
-        this.$store.commit('user/SETISGROUPLOGIN', true);
-      }
-    },
     // 进入大屏模式
     projectionMode() {
       this.$store.commit('user/setProjectionMode', true);
-    },
-    // 切换投影模式和办公模式
-    switchMode() {
-      this.$store.dispatch('user/getUserInfo');
-      if (this.currentMode === '办公模式') {
-        this.$router.push('/portal/officeMode');
-        this.currentMode = '投影模式';
-      } else {
-        this.$router.push('/portal/projectionMode');
-        this.currentMode = '办公模式';
-      }
     },
     toggleSettingPanel() {
       this.$store.commit('setting/toggleSettingPanel', true);

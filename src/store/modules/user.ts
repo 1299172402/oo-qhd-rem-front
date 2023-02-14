@@ -181,7 +181,7 @@ const actions = {
   //     const res = await mockRemoteUserInfo();
   //     commit('setUserInfo', res);
   //   },
-  getUserInfo({ commit }, firstLogin) {
+  getUserInfo({ commit }) {
     return new Promise((resolve, reject) => {
       getInfo().then(res => {
         if (res.data.code === 200) {
@@ -193,30 +193,10 @@ const actions = {
           commit('SET_LOGINBACK', res.data?.loginBack)
           commit('SETLOGOUT', res.data.user?.logout)
           commit('SETUSERDETAILS', res.data)
-          if(firstLogin === 'firstLogin') {
-            if (res.data.user?.logout === '0') {
-            //   sessionStorage.setItem('isGroupLogin', 'true');
-              commit('SETISGROUPLOGIN', true)
-              console.log('门户，上次登出的位置');
-              router.push('/portal/projectionMode');
-            } else if(res.data.user?.logout === '1'){
-            //   sessionStorage.setItem('isGroupLogin', 'false');
-              commit('SETISGROUPLOGIN', false)
-              console.log('后台，上次登出的位置');
-              router.push('/homePage/index');
-            } else if (!res.data?.loginBack) {
-            //   sessionStorage.setItem('isGroupLogin', 'true');
-              commit('SETISGROUPLOGIN', true)
-              console.log('门户');
-              router.push('/portal/projectionMode');
-            } else {
-            //   sessionStorage.setItem('isGroupLogin', 'false');
-              commit('SETISGROUPLOGIN', false)
-              console.log('后台，有门户+后台的权限');
-              router.push('/homePage/index');
-            }
-          }
-         
+
+          commit('SETISGROUPLOGIN', false)
+          router.push('/homePage/index');
+          
           if (res.data.roles && res.data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
             commit('SET_ROLES', res.data.roles)
             commit('SET_PERMISSIONS', res.data.permissions)
