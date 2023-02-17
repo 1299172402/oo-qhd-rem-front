@@ -9,9 +9,9 @@
       indicator-position="outside"
     >
       <el-carousel-item v-for="(item1, index) in panelList" :key="index" class="g-row-flex" style="flex-wrap: wrap">
-        <div class="g-column-flex-H panelDiv" v-for="(item2, index) in item1" :key="index + 200">
+        <div class="g-column-flex-HV panelDiv" v-for="(item2, index) in item1" :key="index + 200">
           <!-- <div class="panelImg"></div> -->
-          <div class="g-column-flex-H" @click="jumpLink(item2, index)" v-if="entranceType === 'UpperLower'">
+          <div class="g-column-flex-HV" @click="jumpLink(item2, index)" v-if="entranceType === 'UpperLower'">
             <img :src="modelName === 'kanban'?item2.img:item2.appImg" alt="" />
             <div style="font-size: 14px">{{ modelName === 'kanban'?item2.name:item2.appName}}</div>
           </div>
@@ -59,11 +59,15 @@ export default {
       default: 464,
     },
     height: {},
+    currentResizeList: {
+      type: Object,
+      default: ()=>({})
+    }
   },
   data() {
     return {
       //   containerHeight: '100px',
-      onePageNum: 4,
+      onePageNum: 5,
       panelList: [],
       currentWPX: this.changeNewPx,
     };
@@ -71,7 +75,7 @@ export default {
   computed: {
     containerHeight() {
       if (this.entranceType === 'UpperLower') {
-        return '100px';
+        return '120px';
       }
       return '120px';
     },
@@ -92,7 +96,7 @@ export default {
         this.currentWPX = newVal;
         // console.log('最新宽度22', this.currentWPX);
         if (this.currentWPX !== 0) {
-          this.onePageNum = parseInt((this.currentWPX - 42) / 96, 10);
+          this.onePageNum = parseInt((this.currentWPX - 42) / 80, 10);
           //   console.log('最后个数', this.onePageNum);
         }
         this.panelList = [];
@@ -161,7 +165,7 @@ export default {
   /* background-color: #d3dce6; */
 }
 .panelDiv {
-  margin: 0 16px;
+  margin: 0 12px;
   cursor: pointer;
 }
 .panelBg {

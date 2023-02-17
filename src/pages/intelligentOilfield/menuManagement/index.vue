@@ -156,7 +156,8 @@
               <el-input-number v-model="form.orderNum" controls-position="right" :min="0" />
             </el-form-item>
           </el-col>
-          <el-col :span="24" v-if="form.menuType != 'F'">
+          <el-col :span="24">
+            <div  v-if="form.menuType != 'F'">
             <el-form-item prop="path">
               <span slot="label">
                 <el-tooltip
@@ -167,10 +168,12 @@
                 </el-tooltip>
                 路由名称
               </span>
-              <el-input v-model="form.path" placeholder="请输入路由名称" @input="change($event)"/>
+              <el-input v-model="form.path" placeholder="请输入路由名称"/>
             </el-form-item>
+            </div>
           </el-col>
-          <el-col :span="12" v-if="form.menuType != 'F'">
+          <el-col :span="12">
+            <div  v-if="form.menuType != 'F'">
             <el-form-item>
               <span slot="label">
                 <el-tooltip content="选择是外链则路由地址需要以`http(s)://`开头" placement="top">
@@ -183,8 +186,10 @@
                 <el-radio label="1">否</el-radio>
               </el-radio-group>
             </el-form-item>
+            </div>
           </el-col>
-          <el-col :span="12" v-if="form.menuType != 'F'">
+          <el-col :span="12">
+            <div  v-if="form.menuType != 'F'">
             <el-form-item :prop="form.isFrame === '0'?'link':''">
               <span slot="label">
                 <el-tooltip
@@ -197,8 +202,29 @@
               </span>
               <el-input v-model="form.link" placeholder="请输入路由地址" />
             </el-form-item>
+            </div>
           </el-col>
-          <el-col :span="12" v-if="form.menuType == 'C'">
+          <el-col :span="12">
+            <div  v-if="form.menuType != 'F'">
+          <el-form-item>
+              <span slot="label">
+                <el-tooltip content="选择隐藏则路由将不会出现在侧边栏，但仍然可以访问" placement="top">
+                <i class="el-icon-question"></i>
+                </el-tooltip>
+                显示状态
+              </span>
+              <el-radio-group v-model="form.visible">
+                <el-radio
+                  v-for="dict in dict.type.sys_show_hide"
+                  :key="dict.value"
+                  :label="dict.value"
+                >{{dict.label}}</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="12" >
+            <div  v-if="form.menuType == 'C'">
             <el-form-item prop="component">
               <span slot="label">
                 <el-tooltip content="访问的组件路径，如：`system/user/index`，默认在`views`目录下" placement="top">
@@ -208,8 +234,10 @@
               </span>
               <el-input v-model="form.component" placeholder="请输入组件路径" />
             </el-form-item>
+            </div>
           </el-col>
-          <el-col :span="12" v-if="form.menuType != 'M'">
+          <el-col :span="12">
+            <div  v-if="form.menuType != 'M'">
             <el-form-item>
               <el-input v-model="form.perms" placeholder="请输入权限标识" maxlength="100" />
               <span slot="label">
@@ -222,7 +250,9 @@
                 权限字符
               </span>
             </el-form-item>
+            </div>
           </el-col>
+          
           <!-- <el-col :span="12" v-if="form.menuType == 'C'">
             <el-form-item>
               <el-input v-model="form.query" placeholder="请输入路由参数" maxlength="255" />
@@ -424,6 +454,9 @@ export default {
         visible: '0',
         status: '0',
         link: '',
+        path: undefined,
+        component: '',
+        perms: undefined,
       };
       this.resetForm('form');
     },
@@ -443,7 +476,7 @@ export default {
       if (row != null && row.menuId) {
         this.form.parentId = row.menuId;
       } else {
-        this.form.parentId = 0;
+        this.form.parentId = '0';
       }
       this.open = true;
       this.title = '添加菜单';

@@ -207,7 +207,7 @@ export default {
       return SettingAutoIcon;
     },
     getThumbnailUrl(name: string) {
-      return `https://tdesign.gtimg.com/starter/setting/${name}.png`;
+      return new URL(`../assets/intelligentOilfield/${name}.png`, import.meta.url).href
     },
     handleClick(): void {
       this.$store.commit('setting/toggleSettingPanel', true);

@@ -10,7 +10,6 @@
               placeholder="请选择"
               @change="changeSource(indicatorSource)"
               clearable
-              @clear="clearData"
             >
               <el-option v-for="item in searchOption" :key="item.value" :label="item.label" :value="item.value"> </el-option>
             </el-select>
@@ -34,11 +33,37 @@
         </div>
       </div>
     </div>
+     <div class="lineStyle" v-if="isQuickEntry"></div>
+    <div v-if="isQuickEntry">
+      <div>自定义快捷入口</div>
+      <div class="g-row-flex itemStyle">
+        <div v-for="(item2, index2) in currentQuickEntryList" :key="index2" style="margin: 0 10px 5px 0">
+          <el-button class="cancelBtn" @click="selectEntryData(item2)" style="position:relative">
+            <div class="g-row-flex-V g-w100 g-h100">
+                <div style="margin-right:10px">{{item2.name}}</div>
+                <i class="el-icon-remove" style="position: absolute;right: 10px;width:10px;color:red;cursor:pointer" @click.stop="removeQuickEntry(item2)"/>
+            </div>
+          </el-button>
+        
+        </div>
+        <i class="el-icon-circle-plus g-row-flex-V" style="font-size: 22px;color:var(--lightBlueColor);cursor:pointer" @click="addQuickEntry"/>
+      </div>
+    </div>
+     <div slot="footer" class="dialog-footer g-row-flex-V" style="justify-content: flex-end;
+    margin: 50px 0;margin-top: 50px;height: 76px;">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel" class="cancelBtn">取 消</el-button>
+      </div>
   </div>
 </template>
 <script>
 export default {
   props: {
+    // 自定义快捷入口集合
+    quickEntryList: {
+      type: Array,
+      default: ()=>[],
+    },
     // 搜索下拉框关键词名字
     searchName: {
       type: String,
@@ -64,6 +89,11 @@ export default {
       type: Array,
       default: () => [],
     },
+    // 快捷入口专属
+    isQuickEntry: {
+      type: Boolean,
+      default: false,
+    }
   },
   data() {
     return {
@@ -71,6 +101,7 @@ export default {
       indicatorSource: '',
       currentSelectedList: this.selectedList,
       currentAllList: this.allList,
+      currentQuickEntryList: this.quickEntryList,
     };
   },
   watch: {
@@ -89,74 +120,94 @@ export default {
       deep: true,
       immediate: true,
     },
+    quickEntryList: {
+      handler(newVal) {
+        this.currentQuickEntryList = newVal;
+      },
+      deep: true,
+      immediate: true,
+    },
   },
   methods: {
+    // 删除自定义快捷入口数据
+    removeQuickEntry(val) {
+      this.$confirm('确定删除该自定义快捷入口？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        cancelButtonClass: 'cancelBtn',
+        type: 'warning',
+      }).then(() => {
+        this.currentQuickEntryList.map((item, index) => {
+          let result;
+          if (item === val) {
+            result = this.currentQuickEntryList.splice(index, 1);
+          }
+          return result;
+        });
+      }).catch((e)=>{
+        console.log(e);
+      });
+    },
+    // 点击选择自定义快捷入口数据
+    selectEntryData(val) {
+      this.currentQuickEntryList.map((item, index) => {
+        let result;
+        if (item === val) {
+          result = this.currentQuickEntryList.splice(index, 1);
+        }
+        return result;
+      });
+      this.currentSelectedList.push({...val,type:'entryData'});
+    },
+    // 增加快捷入口快捷数据源
+    addQuickEntry() {
+      this.$emit('addQuickEntry')
+    },
     // 改变数据来源
     changeSource(value) {
-      this.getDataList(value);
-    },
-    // 清除来源，获取所有数据
-    clearData() {
-      this.getDataList('');
-    },
-    // 获取所有数据来源
-    getDataList(searchParam) {
-      this.currentAllList = [];
-      // 调取接口：获取指标图片来源接口（indicatorSource：当前搜索内容）
-      //   listUser().then((response) => {
-      //     this.allList = response.data.data;
-      //   });
-      
-      switch (searchParam) {
-      case '':
-        this.currentAllList = [
-          { id: 6, img: new URL(`../../../../../assets/intelligentOilfield/yewu1.png`, import.meta.url).href, name: '施工总览', url: 'https://element.eleme.cn/#/zh-CN/component/installation' },
-          { id: 7, img: new URL(`../../../../../assets/intelligentOilfield/yewu2.png`, import.meta.url).href, name: '痕迹管理', url: 'https://lbs.amap.com/api/loca-v2/api#viewcontrol' },
-          { id: 8, img: new URL(`../../../../../assets/intelligentOilfield/yewu3.png`, import.meta.url).href, name: '注采联动', url: 'https://www.isqqw.com/#/homepage' },
-        ]
-        break;
-      case '1':
-        this.currentAllList = [
-          { id: 7, img: new URL(`../../../../../assets/intelligentOilfield/yewu2.png`, import.meta.url).href, name: '痕迹管理', url: 'https://lbs.amap.com/api/loca-v2/api#viewcontrol' },
-        ]
-        break;
-      case '2':
-        this.currentAllList = [
-          { id: 8, img: new URL(`../../../../../assets/intelligentOilfield/yewu3.png`, import.meta.url).href, name: '注采联动', url: 'https://www.isqqw.com/#/homepage' },
-        ]
-        break;
-      case '3':
-        this.currentAllList = [
-          { id: 6, img: new URL(`../../../../../assets/intelligentOilfield/yewu1.png`, import.meta.url).href, name: '施工总览', url: 'https://element.eleme.cn/#/zh-CN/component/installation' },
-        ]
-        break;
-      default:
-        break;
-      }
+      this.$emit('changeSource', value)
     },
     // 选择数据到上面
     selectData(val) {
+      let currentItem={};
       this.currentAllList.map((item, index) => {
         let result;
         if (item === val) {
           result = this.currentAllList.splice(index, 1);
+          item.isSelected = '1';
+          currentItem = item;
         }
         return result;
       });
       this.currentSelectedList.push(val);
-      this.$emit('changeData', this.currentSelectedList);
+      this.$emit('changeData', this.currentSelectedList,currentItem);
     },
     // 删除元素
     deleteItem(val) {
+      let currentItem={};
       this.currentSelectedList.map((item, index) => {
         let result;
         if (item === val) {
           result = this.currentSelectedList.splice(index, 1);
+          item.isSelected = '0';
+          currentItem = item;
         }
         return result;
       });
-      this.currentAllList.push(val);
-      this.$emit('changeData', this.currentSelectedList);
+      if(val.type === 'entryData') { // 快捷入口的数据
+        this.currentQuickEntryList.push(val);
+      } else {
+        this.currentAllList.push(val);
+      }
+      this.$emit('changeData', this.currentSelectedList,currentItem);
+    },
+    submitForm() {
+      this.indicatorSource = '';
+      this.$emit('submitForm');
+    },
+    cancel() {
+      this.indicatorSource = '';
+      this.$emit('cancel');
     },
   },
 };

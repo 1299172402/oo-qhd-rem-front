@@ -255,7 +255,7 @@ export default {
           status: '0',
           remark: newVal.data?.remark,
           postIds: newVal.postIds,
-          roleIds: newVal.roleIds.toLocaleString().split(','),
+          roleIds: newVal.roleIds?.toLocaleString().split(','),
           tempPostId: String(newVal.tempPostId.toLocaleString()), // 临时的用户岗位
           userType: newVal.data?.userType, // 账号类型
         };

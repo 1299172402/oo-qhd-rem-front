@@ -8,29 +8,29 @@
       <Marquee>{{ val }}</Marquee>
     </div>
     <pagePanel headerTitle="作业区概览" style="height: calc(100% - 10px)">
-      <div style="width: 100%; height: calc(100% - 10px); overflow: scroll;">
+      <div style="width: 100%; height: calc(100% - 10px); overflow: scroll;overflow-x: hidden;">
         <el-row :gutter="20">
           <el-col :span="8">
             <div class="boxCard cardStyle">
               <div class="boxCard_left">
-                <p style="color: var(--lightBlueColor);">秦皇岛326作业区</p>
-                <p>租户授权app数量:<span>12</span></p>
-                <p>租户授权看板数量:<span>6</span></p>
-                <p>租户授权大屏数量:<span>4</span></p>
-                <p>租户下属用户数量:<span>19</span></p>
+                <p style="color: var(--lightBlueColor);font-size:16px">秦皇岛326作业区</p>
+                <p class="divStyle">租户授权app数量：<span>12</span></p>
+                <p>租户授权看板数量：<span>6</span></p>
+                <p>租户授权大屏数量：<span>4</span></p>
+                <p>租户下属用户数量：<span>19</span></p>
               </div>
               <div class="boxCard_middle">
                 <p style="margin-bottom: 15px;">今日活跃用户统计</p>
                 <el-progress type="circle" :stroke-width="10" :width="60" :percentage="68"></el-progress>
               </div>
-              <div class="boxCard_right" @click="handleAuth(id)">
-              <span>查看</span></div>
+              <div class="boxCard_right" @click="handleAuth">
+              <span>查 看</span></div>
             </div>
           </el-col>
-          <el-col :span="8"> <div class="boxCard cardStyle">1-2</div> </el-col>
-          <el-col :span="8"> <div class="boxCard cardStyle">1-3</div> </el-col>
+          <!-- <el-col :span="8"> <div class="boxCard cardStyle">1-2</div> </el-col>
+          <el-col :span="8"> <div class="boxCard cardStyle">1-3</div> </el-col> -->
         </el-row>
-        <el-row>
+        <!-- <el-row>
           <el-col :span="8">
             <div class="boxCard cardStyle">2-1</div>
           </el-col>
@@ -40,7 +40,7 @@
         <el-row>
           <el-col :span="12"><div class="boxCard cardStyle">3-1</div></el-col>
           <el-col :span="12"><div class="boxCard cardStyle">3-2</div></el-col>
-        </el-row>
+        </el-row> -->
       </div>
         
     </pagePanel>
@@ -59,9 +59,10 @@ export default {
     };
   },
   methods:{
-    handleAuth(id) {
-      console.log('aa')
-      this.$router.push({ name: `homeDetail`, query: { id } });
+    handleAuth() {
+    //   console.log('aa')
+    //   //   this.$router.push({ name: `homeDetail`, query: { id } });
+    //   this.$router.push({ name: `homeDetail`});
     },
   }
 };
@@ -73,6 +74,7 @@ export default {
   margin: 0 10px;
   display: flex;
   justify-content: space-between;
+  border-radius: 4px;
 }
 .cardStyle>div{
   height: 100%;
@@ -107,9 +109,10 @@ export default {
   padding-top: 15px;
   padding-left: 15px;
   p{
-    height: 40px;
+    height: 35px;
+    font-size: 14px;
     span{
-      margin-left: 5px;
+    //   margin-left: 5px;
       color: var(--lightBlueColor);
     }
   }

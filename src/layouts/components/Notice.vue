@@ -28,7 +28,7 @@
         </t-list>
 
         <div v-else class="empty-list">
-          <img src="https://tdesign.gtimg.com/pro-template/personal/nothing.png" alt="空" />
+          <img src="../../assets/intelligentOilfield/nothing.png" alt="空" />
           <p>暂无通知</p>
         </div>
         <div class="header-msg-bottom">

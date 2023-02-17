@@ -221,14 +221,14 @@
             </template>
           </el-table-column> -->
             <el-table-column label="账号信息" align="center" width="160" class-name="small-padding fixed-width">
-              <template slot-scope="scope" v-if="scope.row.userId !== 1">
+              <template slot-scope="scope" v-if="scope.row.userId !== '1'">
                 <el-button size="mini" type="text" @click="seeDetail(scope.row)" v-hasPermi="['system:user:edit']"
                   >查看账号信息</el-button
                 >
               </template>
             </el-table-column>
             <el-table-column label="操作" align="center" width="220" class-name="small-padding fixed-width">
-              <template slot-scope="scope" v-if="scope.row.userId !== 1">
+              <template slot-scope="scope" v-if="scope.row.userId !== '1'">
                 <el-button size="mini" type="text" @click="handleUpdate(scope.row)" v-hasPermi="['system:user:edit']"
                   >修改</el-button
                 >
@@ -825,6 +825,7 @@ export default {
         roleIds: [],
         tempPostId: undefined, // 临时的用户岗位
         userType: '', // 账号类型
+        surePassword: undefined,
       };
       this.resetForm('form');
     },

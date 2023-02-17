@@ -114,7 +114,7 @@
         <el-table-column label="权限字符" prop="roleKey" :show-overflow-tooltip="true" width="150" />
         <el-table-column label="角色排序" prop="roleSort" width="100" />
         <el-table-column label="分配用户" align="center" width="150">
-          <template slot-scope="scope" v-if="scope.row.roleId !== 1">
+          <template slot-scope="scope" v-if="scope.row.roleId !== '1'">
             <el-button size="mini" type="text" @click="handleAuthUser(scope.row)" v-hasPermi="['system:role:edit']"
               >查看({{ scope.row.num }})</el-button
             >
@@ -136,7 +136,7 @@
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-          <template slot-scope="scope" v-if="scope.row.roleId !== 1">
+          <template slot-scope="scope" v-if="scope.row.roleId !== '1'">
             <el-button size="mini" type="text" @click="handleUpdate(scope.row)" v-hasPermi="['system:role:edit']"
               >修改</el-button
             >
