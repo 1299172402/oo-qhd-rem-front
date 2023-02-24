@@ -9,6 +9,7 @@ export default {
     // API: '',
     // 开发环境 cdn 路径
     CDN: '',
+    appId: null
     
   },
   test: {
@@ -20,6 +21,7 @@ export default {
     API: '',
     // 测试环境 cdn 路径
     CDN: '',
+    appId: null
   },
   release: {
     // 流程平台
@@ -30,5 +32,6 @@ export default {
     API: 'http://10.77.79.177:31995/prod-api/',
     // 正式环境 cdn 路径
     CDN: '',
+    appId: null
   },
 };
