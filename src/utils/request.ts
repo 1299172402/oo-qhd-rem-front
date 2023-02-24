@@ -154,6 +154,9 @@ instance.interceptors.response.use(
         return data;
       }
       return response;
+    } else {
+      hideLoading();
+      return response.data;
     }
   },
   (err) => {

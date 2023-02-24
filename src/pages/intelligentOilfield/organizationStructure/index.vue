@@ -3,15 +3,10 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
       <el-form-item label="组织机构名称" prop="deptName">
-        <el-input
-          v-model="queryParams.deptName"
-          placeholder="请输入组织机构名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.deptName" placeholder="请输入组织机构名称" clearable size="small"
+          @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <!-- <el-form-item label="组织机构ID" prop="deptId">
+    <!-- <el-form-item label="组织机构ID" prop="deptId">
            <el-input
           v-model="queryParams.deptId"
           placeholder="请输入组织机构ID"
@@ -19,15 +14,11 @@
           size="small"
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item> -->
+                                          </el-form-item> -->
       <el-form-item label="部门状态" prop="status">
         <el-select v-model="queryParams.status" placeholder="请选择部门状态" clearable size="small">
-          <el-option
-            v-for="dict in dict.type.sys_normal_disable"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
+          <el-option v-for="dict in dict.type.sys_normal_disable" :key="dict.value" :label="dict.label"
+            :value="dict.value" />
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -38,40 +29,29 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button
-          type="primary"
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['system:dept:add']"
-          >新增</el-button
-        >
+        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd"
+          v-hasPermi="['system:dept:add']">新增</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="info" plain icon="el-icon-sort" size="mini" @click="toggleExpandAll" class="commonBtn">展开/折叠</el-button>
+        <el-button type="info" plain icon="el-icon-sort" size="mini" @click="toggleExpandAll"
+          class="commonBtn">展开/折叠</el-button>
       </el-col>
       <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
     </el-row>
-     <pagePanel headerTitle="组织机构管理">
-      <el-table
-        v-if="refreshTable"
-        :data="deptList"
-        row-key="deptId"
-        :default-expand-all="isExpandAll"
-        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-
-         height="calc(100% - 50px)"
-        :row-style="{ height: '0px' }"
-        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-        header-cell-class-name="table_header"
-        :cell-style="{ padding: '2px', 'text-align': 'center' }"
-        style="width: 100%; height: 100%;"
-        :default-sort="{ prop: 'date', order: 'descending' }"
-      >
-        <el-table-column prop="deptName" label="部门名称" width="260"></el-table-column>
-        <el-table-column prop="orderNum" label="排序" width="200"></el-table-column>
-        <el-table-column prop="type" label="部门类型" width="200"></el-table-column>
-        <el-table-column prop="status" label="部门状态" width="100">
+    <pagePanel headerTitle="组织机构管理">
+      <el-table v-if="refreshTable" :data="deptList" row-key="deptId" :default-expand-all="isExpandAll"
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" height="calc(100% - 50px)"
+        :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        header-cell-class-name="table_header" :cell-style="{ padding: '2px' }" style="width: 100%; height: 100%;"
+        :default-sort="{ prop: 'date', order: 'descending' }">
+        <el-table-column prop="deptName" label="部门名称" width="260" align="left"></el-table-column>
+        <el-table-column prop="orderNum" label="排序" width="200" align="center"></el-table-column>
+        <el-table-column prop="type" label="部门类型" width="200" align="center">
+          <template slot-scope="scope">
+            {{ dict.type.sys_department_type?.find(dict => dict.value == scope.row.type)?.label }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="status" label="部门状态" width="100" align="center">
           <template slot-scope="scope">
             <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status" />
           </template>
@@ -83,31 +63,12 @@
         </el-table-column>
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="text"
-              icon="el-icon-edit"
-              @click="handleUpdate(scope.row)"
-              v-hasPermi="['system:dept:edit']"
-              >修改</el-button
-            >
-            <el-button
-              size="mini"
-              type="text"
-              icon="el-icon-plus"
-              @click="handleAdd(scope.row)"
-              v-hasPermi="['system:dept:add']"
-              >新增</el-button
-            >
-            <el-button
-              v-if="scope.row.parentId != '0'"
-              size="mini"
-              type="text"
-              icon="el-icon-delete"
-              @click="handleDelete(scope.row)"
-              v-hasPermi="['system:dept:remove']"
-              >删除</el-button
-            >
+            <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
+              v-hasPermi="['system:dept:edit']">修改</el-button>
+            <el-button size="mini" type="text" icon="el-icon-plus" @click="handleAdd(scope.row)"
+              v-hasPermi="['system:dept:add']">新增</el-button>
+            <el-button v-if="scope.row.parentId != '0'" size="mini" type="text" icon="el-icon-delete"
+              @click="handleDelete(scope.row)" v-hasPermi="['system:dept:remove']">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -119,12 +80,7 @@
         <el-row :gutter="20">
           <el-col :span="24" v-if="form.parentId !== '0'">
             <el-form-item label="上级部门" prop="parentId">
-              <treeselect
-                v-model="form.parentId"
-                :options="deptOptions"
-                :normalizer="normalizer"
-                placeholder="选择上级部门"
-              />
+              <treeselect v-model="form.parentId" :options="deptOptions" :normalizer="normalizer" placeholder="选择上级部门" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -137,7 +93,7 @@
               <el-input-number v-model="form.orderNum" controls-position="right" :min="0" />
             </el-form-item>
           </el-col>
-          <!-- <el-col :span="12">
+        <!-- <el-col :span="12">
             <el-form-item label="负责人" prop="leader">
               <el-input v-model="form.leader" placeholder="请输入负责人" maxlength="20" />
             </el-form-item>
@@ -151,26 +107,38 @@
             <el-form-item label="邮箱" prop="email">
               <el-input v-model="form.email" placeholder="请输入邮箱" maxlength="50" />
             </el-form-item>
-          </el-col> -->
-           <el-col :span="12">
-            <el-form-item label="部门类型">
-              <el-select v-model="form.type" placeholder="请选择部门类型">
-                <el-option
-                  v-for="item in departmentOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
+                                              </el-col> -->
+          <el-col :span="12">
+            <el-form-item label="部门类型" prop="type">
+              <el-select v-model="form.type" placeholder="请选择部门类型" clearable>
+                <el-option v-for="dict in dict.type.sys_department_type" :key="dict.value" :label="dict.label"
+                  :value="dict.value"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="部门状态">
+            <el-form-item label="部门状态" prop="status">
               <el-radio-group v-model="form.status">
                 <el-radio v-for="dict in dict.type.sys_normal_disable" :key="dict.value" :label="dict.value">{{
                   dict.label
                 }}</el-radio>
               </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="是否租户" prop="isTenant">
+              <el-radio-group v-model="form.isTenant">
+                <el-radio label="0">否</el-radio>
+                <el-radio label="1">是</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24" v-if="form.isTenant == '1'">
+            <el-form-item label="选择角色" prop="tenantRoleId">
+              <el-select size="small" style="width: 100%" v-model="form.tenantRoleId" placeholder="请选择角色" clearable>
+                <el-option v-for=" item in roleList" :key="item.roleId" :label="item.roleName" :value="item.roleId">
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -193,17 +161,18 @@
 
 <script>
 import { listDept, getDept, delDept, addDept, updateDept, listDeptExcludeChild } from '@/api/intelligentOilfield/system/dept';
+import { listRole } from '@/api/intelligentOilfield/system/role';
 import Treeselect from '@riophae/vue-treeselect';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 
 export default {
-  dicts: ['sys_normal_disable'],
+  dicts: ['sys_normal_disable', 'sys_department_type'],
   components: { Treeselect },
   data() {
     return {
       departmentOptions: [
-        {label: '公司', value: '公司'},
-        {label: '职能部门', value: '职能部门'},
+        { label: '公司', value: '公司' },
+        { label: '职能部门', value: '职能部门' },
       ],
       // 遮罩层
       loading: true,
@@ -248,13 +217,25 @@ export default {
             trigger: 'blur',
           },
         ],
+        type: [{ required: true, message: '部门类型不能为空', trigger: 'change' }],
+        status: [{ required: true, message: '部门状态不能为空', trigger: 'change' }],
+        isTenant: [{ required: true, message: '是否租户不能为空', trigger: 'change' }],
+        tenantRoleId: [{ required: true, message: '选择角色不能为空', trigger: 'change' }],
       },
+      roleList: []
     };
   },
   created() {
     this.getList();
+    this.getRoleList()
   },
   methods: {
+    /** 获取角色权限列表 */
+    getRoleList() {
+      listRole({ isTenant: '1' }).then((response) => {
+        this.roleList = response.data.rows;
+      });
+    },
     /** 查询部门列表 */
     getList() {
       this.loading = true;
@@ -292,6 +273,8 @@ export default {
         status: '0',
         isPlatform: '0', // "0":是,"1":否
         type: '', // 部门类型
+        isTenant: '0',
+        tenantRoleId: undefined
       };
       this.resetForm('form');
     },
@@ -302,7 +285,9 @@ export default {
     /** 重置按钮操作 */
     resetQuery() {
       this.resetForm('queryForm');
-      this.handleQuery();
+      this.$nextTick(() => {
+        this.handleQuery();
+      })
     },
     /** 新增按钮操作 */
     handleAdd(row) {
@@ -381,6 +366,7 @@ export default {
 <style lang="less" scoped>
 .app-container {
   height: 100%;
+
   .el-table {
     overflow: scroll;
   }

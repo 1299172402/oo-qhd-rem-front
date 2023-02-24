@@ -2,7 +2,7 @@
 <template>
   <div :style="{width: infoWidth,height:infoHeight}" class="g-w100">
     <div class="infoHeader" :style="{background: $store.state.setting.mode==='dark'?'linear-gradient(to left, rgba(0, 202, 255, 0.4), var(--opacityBlueBg2))':'linear-gradient(to right, rgba(0, 96, 166, 1), rgba(0, 96, 166, 0.2))',color:$store.state.setting.mode==='dark'?'var(--lightBlueColor)':'var(--whiteColor)'}">
-        <div style="width: 17%">{{headerTitle}}</div>
+        <div style="width: 100%">{{headerTitle}}</div>
         <div class="titleStyle">
             <slot name="titleContent"></slot>
         </div>

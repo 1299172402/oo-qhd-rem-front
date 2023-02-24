@@ -4,35 +4,23 @@
     <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true">
       <el-form-item label="组织机构" prop="deptId">
         <el-select v-model="queryParams.deptId" placeholder="请选择" clearable size="small" style="width: 240px">
-          <el-option
-            v-for="(item, index) in deptSelect"
-            :key="index"
-            :label="item.deptName"
-            :value="item.deptId"
-          ></el-option>
+          <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.deptName"
+            :value="item.deptId"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="用户名称" prop="roleKey">
-        <el-input
-          v-model="queryParams.roleKey"
-          placeholder="请输入用户名称"
-          clearable
-          size="small"
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="用户名称" prop="nickName">
+        <el-input v-model="queryParams.nickName" placeholder="请输入用户名称" clearable size="small" style="width: 240px"
+          @keyup.enter.native="handleQuery" />
       </el-form-item>
       <el-form-item label="时间">
-        <el-date-picker
-          v-model="dateRange"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
+        <el-date-picker v-model="queryParams.loginDate" size="small" style="width: 240px" value-format="yyyy-MM-dd"
+          type="date" placeholder="选择时间" @change="dateRange = []">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="自定义时间">
+        <el-date-picker v-model="dateRange" size="small" style="width: 240px" value-format="yyyy-MM-dd" type="daterange"
+          range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"
+          @change="queryParams.loginDate = undefined"></el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -42,19 +30,17 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" size="mini" @click="handleExport" v-hasPermi="['system:userAccess:export']">导出</el-button>
+        <el-button type="primary" size="mini" @click="handleExport"
+          v-hasPermi="['system:userAccess:export']">导出</el-button>
       </el-col>
     </el-row>
     <pagePanel headerTitle="用户访问">
       <el-table :data="userList" @selection-change="handleSelectionChange" height="calc(100% - 260px)"
-       :row-style="{ height: '0px' }"
-        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-        header-cell-class-name="table_header"
-        :cell-style="{ padding: '10px', 'text-align': 'center' }"
-        style="width: 100%; height: 100%;"
-        :default-sort="{ prop: 'date', order: 'descending' }">
+        :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        header-cell-class-name="table_header" :cell-style="{ padding: '10px', 'text-align': 'center' }"
+        style="width: 100%; height: 100%;" :default-sort="{ prop: 'date', order: 'descending' }">
         <el-table-column type="selection" width="65" align="center" />
-        <el-table-column label="序号" type="index"  width="65" />
+        <el-table-column label="序号" type="index" width="65" />
         <el-table-column label="组织机构" prop="dept.deptName" />
         <el-table-column label="用户账号" prop="userName" />
         <el-table-column label="用户名称" prop="nickName" />
@@ -72,24 +58,17 @@
         </el-table-column>
       </el-table>
       <div style="width: 100%">
-        <chartsComponents
-          :chart-data-options="dataZhuzhuang"
-          echartsType="bar1"
-          style="width: 600px; height: 250px"
-        ></chartsComponents>
-        <pagination
-          :total="total"
-          :page.sync="queryParams.pageNum"
-          :limit.sync="queryParams.pageSize"
-          @pagination="getList"
-        />
+        <chartsComponents :chart-data-options="dataZhuzhuang" echartsType="bar1" style="width: 600px; height: 250px">
+        </chartsComponents>
+        <pagination :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+          @pagination="getList" />
       </div>
     </pagePanel>
   </div>
 </template>
 <script>
 
-import { listUseraccess} from '@/api/intelligentOilfield/system/user';
+import { listUseraccess, getAccessCount } from '@/api/intelligentOilfield/system/user';
 import { listDept } from '@/api/intelligentOilfield/system/dept';
 import { LineChart } from 'echarts/charts';
 import { GridComponent, TooltipComponent, LegendComponent } from 'echarts/components';
@@ -107,13 +86,13 @@ export default {
     return {
       dataZhuzhuang: {
         xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: [],
         },
         yAxis: {},
         series: [
           {
             type: 'bar',
-            data: [23, 24, 18, 25, 27, 28, 25],
+            data: [],
           },
         ],
       },
@@ -146,6 +125,10 @@ export default {
         roleName: undefined,
         roleKey: undefined,
         status: undefined,
+        nickName: undefined,
+        loginDate: undefined,
+        beginTime: undefined,
+        endTime: undefined
       },
       deptSelect: [],
       // 表单参数
@@ -155,8 +138,21 @@ export default {
   created() {
     this.getList();
     this.choiceDepts(); // 获取组织机构
+    this.getAccessCount();
   },
   methods: {
+    // 查询统计表信息
+    getAccessCount() {
+      getAccessCount().then((response) => {
+        this.dataZhuzhuang.xAxis.data = []
+        this.dataZhuzhuang.series[0].data = []
+        response.data.data.forEach(item => {
+          this.dataZhuzhuang.xAxis.data.push(item.appName)
+          this.dataZhuzhuang.series[0].data.push(item.count)
+        })
+
+      });
+    },
     // 选择机构
     choiceDepts() {
       listDept().then((response) => {
@@ -167,6 +163,9 @@ export default {
     /** 查询用户访问列表 */
     getList() {
       this.loading = true;
+      const [beginTime, endTime] = this.dateRange;
+      this.queryParams.beginTime = beginTime;
+      this.queryParams.endTime = endTime;
       listUseraccess(this.queryParams).then((response) => {
         this.userList = response.data.rows;
         this.total = response.data.total;
@@ -205,7 +204,9 @@ export default {
     resetQuery() {
       this.dateRange = [];
       this.resetForm('queryForm');
-      this.handleQuery();
+      this.$nextTick(() => {
+        this.handleQuery();
+      })
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -216,23 +217,25 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       this.download(
-        'system/role/export',
+        'system/user/exportAccessPage',
         {
           ...this.queryParams,
         },
-        `role_${new Date().getTime()}.xlsx`,
+        `user_access_${new Date().getTime()}.xlsx`,
       );
     },
   },
 };
 </script>
-  <style lang="less" scoped>
+<style lang="less" scoped>
 .app-container {
   height: 100%;
+
   .el-table {
     overflow: scroll;
   }
 }
+
 .el-tree {
   max-height: 370px;
   overflow: scroll;

@@ -12,8 +12,8 @@
         <div class="g-column-flex-HV panelDiv" v-for="(item2, index) in item1" :key="index + 200">
           <!-- <div class="panelImg"></div> -->
           <div class="g-column-flex-HV" @click="jumpLink(item2, index)" v-if="entranceType === 'UpperLower'">
-            <img :src="modelName === 'kanban'?item2.img:item2.appImg" alt="" />
-            <div style="font-size: 14px">{{ modelName === 'kanban'?item2.name:item2.appName}}</div>
+            <img :src="item2.img" alt="" style="width:50px;height:50px"/>
+            <div style="font-size: 14px">{{ item2.name}}</div>
           </div>
           <div
             v-else
@@ -30,6 +30,9 @@
   </div>
 </template>
 <script>
+import {jumpToApplication} from '@/utils/thirdPartyInteraction.js';
+import { addAccessinfo } from '@/api/intelligentOilfield/system/user';
+
 export default {
   props: {
     panels: {
@@ -116,8 +119,21 @@ export default {
     jumpLink(item, index) {
       if (this.jumpType === 'iframe') {
         this.$emit('linkIframe', item);
-      } else {
-        document.getElementById(`hrefText${index}`).click();
+      } else if(this.modelName === 'application'){ // 应用中心
+        if(item.appType === '0') { // 内部跳转的逻辑
+          const paramQuery = {
+            appId: item.appId,
+            appName: item.appName,
+            userId:this.$store.getters['user/userDetail'].user.userId
+          }
+          addAccessinfo(paramQuery).then((response) => {
+            console.log('asas', response);
+          });
+          jumpToApplication(item.appPcAccessUrl)
+        // document.getElementById(`hrefText${index}`).click();
+        }
+      } else if(this.modelName === 'enter') { // 快捷入口
+        jumpToApplication(item.enterUrl)
       }
     },
   },

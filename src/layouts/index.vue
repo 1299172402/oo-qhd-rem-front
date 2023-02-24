@@ -72,8 +72,9 @@ export default Vue.extend({
         path,
         meta: { title },
         name,
+        query
       } = newRoute;
-      this.$store.commit('tabRouter/appendTabRouterList', { path, title, name, isAlive: true });
+      this.$store.commit('tabRouter/appendTabRouterList', { path, title, name, query,isAlive: true });
     },
     '$store.state.user.isGroupLogin': {
       handler(newValue) {

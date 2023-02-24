@@ -16,7 +16,7 @@ const  GenerateRouter = {
   "InstanceList":()=>import('@/pages/intelligentOilfield/configurationCenter/processCenter/instanceList/index.vue'),// 流程实例清单
   "ApplicationConfiguration":()=>import('@/pages/intelligentOilfield/configurationCenter/applicationConfiguration/index.vue'),// 应用配置
   "Notice":()=>import('@/pages/intelligentOilfield/noticeManagement/index.vue'),// 通知通告管理
-  "Message":()=>import('@/pages/intelligentOilfield/messageCenter/index.vue'),// 消息中心管理
+  "Message":()=>import('@/pages/intelligentOilfield/messageCenter/index1.vue'),// 消息中心管理
   "MyFirstMenu":()=>import('@/pages/intelligentOilfield/firstMenu/index.vue'),// 一级菜单管理
   "MySecondMenu":()=>import('@/pages/intelligentOilfield/secondMenu/index.vue'),// 二级菜单管理
   //   "LinkMenu":()=>import('@/pages/intelligentOilfield/iframePage/index.vue'),// 内部链接
@@ -25,7 +25,7 @@ const  GenerateRouter = {
   "MyThirdMenu1":()=>import('@/pages/intelligentOilfield/thirdMenu/index.vue'),// 三级菜单-1管理
   "MyThirdMenu2":()=>import('@/pages/intelligentOilfield/myThirdMenu/index.vue'),// 三级菜单-2管理
 
-  "Index":()=>import('@/pages/intelligentOilfield/demo/index.vue'),
+  //   "Index":()=>import('@/pages/intelligentOilfield/demo/index.vue'),
   "CodeGeneration":()=>import('@/pages/intelligentOilfield/codeGeneration/index.vue'),
   "DataIndexConfiguration":()=>import('@/pages/intelligentOilfield/configurationCenter/dataIndexConfiguration/index.vue'), // 配置中心-数据指标配置
   "LargeScreenConfiguration":()=>import('@/pages/intelligentOilfield/configurationCenter/businessCenter/index.vue'), // 配置中心-业务中心配置
@@ -33,7 +33,12 @@ const  GenerateRouter = {
 
 
   "HandleBusinessList": () => import('@/pages/common/handleBusinessList/index.vue'),
-  "DoneBusinessList": () => import('@/pages/common/doneBusinessList/index.vue')
+  "DoneBusinessList": () => import('@/pages/common/doneBusinessList/index.vue'),
+  "MessageLog": () => import('@/pages/intelligentOilfield/messageCenter/index.vue'),
+  "MessageSubject": () => import('@/pages/intelligentOilfield/messageCenter/messageConfig/index.vue'),
+//   "DemoIndex":()=>import('@/pages/intelligentOilfield/demo/index.vue'),
+//   "DemoIndex2":()=>import('@/pages/intelligentOilfield/demo/index2.vue'),
+//   "DemoIndex3":()=>import('@/pages/intelligentOilfield/demo/index3.vue'),
 }
 
 export default GenerateRouter

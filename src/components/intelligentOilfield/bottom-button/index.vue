@@ -39,7 +39,7 @@ export default {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    /* background: linear-gradient(to bottom, transparent,rgba(36, 222, 255, 0.8), transparent); */
+    background: linear-gradient(to bottom, transparent,rgba(36, 222, 255, 0.8), transparent);
 }
 .textScreen {
      transition: all .6s ease-in-out;

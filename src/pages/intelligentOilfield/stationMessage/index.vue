@@ -127,7 +127,7 @@ export default {
     /** 查询指标列表 */
     getList() { 
       this.loading = true;
-      this.total = this.dataList.length
+      // this.total = this.dataList.length
       this.loading = false;
       // 判断是那个列表先，在请求数据 num计算未读消息的数量
       if(this.activeName === 'first'){

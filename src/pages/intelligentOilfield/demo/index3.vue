@@ -3,7 +3,7 @@
     <div class="topSearchDiv">
       <div>角色名称：<el-input v-model="input" style="width: 300px" placeholder="请输入角色名称"></el-input></div>
       <div style="margin: 0 20px">
-        状态：<el-select v-model="value" placeholder="请选择">
+        状态：<el-select v-model="value" placeholder="请选择" clearable>
           <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
         </el-select>
       </div>

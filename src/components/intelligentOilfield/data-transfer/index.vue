@@ -137,27 +137,25 @@ export default {
         cancelButtonClass: 'cancelBtn',
         type: 'warning',
       }).then(() => {
-        this.currentQuickEntryList.map((item, index) => {
-          let result;
-          if (item === val) {
-            result = this.currentQuickEntryList.splice(index, 1);
-          }
-          return result;
-        });
+        this.$emit('removeQuickEntry', val)
       }).catch((e)=>{
         console.log(e);
       });
     },
     // 点击选择自定义快捷入口数据
     selectEntryData(val) {
+      let currentItem={};
       this.currentQuickEntryList.map((item, index) => {
         let result;
         if (item === val) {
           result = this.currentQuickEntryList.splice(index, 1);
+          item.isSelected = '1';
+          currentItem = item;
         }
         return result;
       });
       this.currentSelectedList.push({...val,type:'entryData'});
+      this.$emit('changeData', this.currentSelectedList,currentItem);
     },
     // 增加快捷入口快捷数据源
     addQuickEntry() {
@@ -194,7 +192,7 @@ export default {
         }
         return result;
       });
-      if(val.type === 'entryData') { // 快捷入口的数据
+      if(val.enterUser === this.$store.getters['user/userDetail'].user.userId) { // 快捷入口的数据
         this.currentQuickEntryList.push(val);
       } else {
         this.currentAllList.push(val);

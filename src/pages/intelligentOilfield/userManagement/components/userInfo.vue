@@ -40,6 +40,7 @@
               multiple
               placeholder="请选择用户角色"
               collapse-tags
+              clearable
             >
               <el-option
                 v-for="item in roleOptions"
@@ -54,7 +55,7 @@
         <el-col :span="8">
           <el-form-item label="用户岗位">
             <div style="display: flex">
-              <el-select v-model="tempUser.tempPostId" placeholder="请选择用户岗位" @change="refreshSelect">
+              <el-select v-model="tempUser.tempPostId" placeholder="请选择用户岗位" @change="refreshSelect" clearable>
                 <el-option
                   v-for="item in tempPostOptions"
                   :key="item.postId"
@@ -107,7 +108,7 @@
       <el-row>
         <el-col :span="8">
           <el-form-item label="账号类型" prop="userType">
-            <el-select v-model="tempUser.userType" placeholder="请选择账号类型" @change="refreshSelect">
+            <el-select v-model="tempUser.userType" placeholder="请选择账号类型" @change="refreshSelect" clearable>
               <el-option
                 v-for="(item, index) in accountType"
                 :key="index"

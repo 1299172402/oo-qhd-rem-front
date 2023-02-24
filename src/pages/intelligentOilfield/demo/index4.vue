@@ -5,7 +5,7 @@
     <div>点击“重置”按钮将出现Dialog提示</div>
     <el-button class="commonBtn" @click="open1">重置</el-button>
     <el-button class="cancelBtn">取消</el-button>
-    <el-select v-model="value" placeholder="请选择" style="margin: 0 20px">
+    <el-select v-model="value" placeholder="请选择" style="margin: 0 20px" clearable>
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
     </el-select>
     <el-date-picker
@@ -128,7 +128,7 @@
       <el-button class="disableBtn">失效按钮</el-button>
     </div>
     <div style="margin-top: 20px" class="dropdown">
-      <el-select v-model="value" placeholder="请选择">
+      <el-select v-model="value" placeholder="请选择" clearable>
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
       </el-select>
     </div>

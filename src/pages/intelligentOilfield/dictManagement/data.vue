@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="字典名称" prop="dictType">
-        <el-select v-model="queryParams.dictType" size="small">
+        <el-select v-model="queryParams.dictType" size="small" clearable>
           <el-option v-for="item in typeOptions" :key="item.dictId" :label="item.dictName" :value="item.dictType" />
         </el-select>
       </el-form-item>
@@ -160,7 +160,7 @@
           <el-input-number v-model="form.dictSort" controls-position="right" :min="0" />
         </el-form-item>
         <el-form-item label="回显样式" prop="listClass">
-          <el-select v-model="form.listClass">
+          <el-select v-model="form.listClass" clearable>
             <el-option
               v-for="item in listClassOptions"
               :key="item.value"
@@ -326,7 +326,9 @@ export default {
     resetQuery() {
       this.resetForm('queryForm');
       this.queryParams.dictType = this.defaultDictType;
-      this.handleQuery();
+      this.$nextTick(() => {
+        this.handleQuery();
+      })
     },
     /** 新增按钮操作 */
     handleAdd() {

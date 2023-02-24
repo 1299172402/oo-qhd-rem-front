@@ -34,7 +34,7 @@
           plain
           icon="el-icon-plus"
           size="mini"
-          @click="handleAdd"
+          @click="handleAdd({}, '外层新增')"
           v-hasPermi="['system:menu:add']"
           >新增</el-button
         >
@@ -94,7 +94,7 @@
             <el-button size="mini" type="text" @click="handleUpdate(scope.row)" v-hasPermi="['system:menu:edit']"
               >修改</el-button
             >
-            <el-button size="mini" type="text" @click="handleAdd(scope.row)" v-hasPermi="['system:menu:add']"
+            <el-button size="mini" type="text" @click="handleAdd(scope.row, '内层新增')" v-hasPermi="['system:menu:add']"
               >新增</el-button
             >
             <el-button size="mini" type="text" @click="handleDelete(scope.row)" v-hasPermi="['system:menu:remove']"
@@ -124,11 +124,24 @@
             <el-form-item label="菜单类型" prop="menuType">
               <el-radio-group v-model="form.menuType">
                 <el-radio label="M">目录</el-radio>
-                <el-radio label="C">菜单</el-radio>
-                <el-radio label="F">按钮</el-radio>
+                <el-radio v-if="isShowRadioBtn" label="C">菜单</el-radio>
+                <el-radio v-if="isShowRadioBtn" label="F">按钮</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
+          <el-col :span="24">
+            <el-form-item label="所属应用" prop="appId">
+               <el-select
+               :disabled="form.menuType !== 'M' || (form.menuType === 'M'&&!isParent)"
+               style="width:100%"
+              v-model="form.appId"
+              placeholder="请选择"
+              clearable
+            >
+              <el-option v-for="item in searchOption" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+            </el-select>
+            </el-form-item>
+        </el-col>
           <el-col :span="24" v-if="form.menuType != 'F'">
             <el-form-item label="菜单图标">
               <el-popover placement="bottom-start" width="460" trigger="click" @show="$refs['iconSelect'].reset()">
@@ -327,6 +340,7 @@ import { listMenu, getMenu, delMenu, addMenu, updateMenu } from '@/api/intellige
 import Treeselect from '@riophae/vue-treeselect';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 import IconSelect from '@/components/intelligentOilfield/icon-select/index.vue';
+import { applicationAllList} from '@/api/intelligentOilfield/portal/officeMode';
 
 export default {
   dicts: ['sys_show_hide', 'sys_normal_disable'],
@@ -348,6 +362,9 @@ export default {
   },
   data() {
     return {
+      isParent: true,
+      isShowRadioBtn: false,
+      searchOption: [],
       // 遮罩层
       loading: true,
       // 显示搜索条件
@@ -393,8 +410,20 @@ export default {
   },
   created() {
     this.getList();
+    this.getSelectOptions();
   },
   methods: {
+    getSelectOptions() {
+      this.searchOption= [];
+      applicationAllList().then((response) => {
+        response.data.data.forEach(el => {
+          this.searchOption.push({
+            label: el.appName,
+            value: el.appId
+          });
+        });
+      });
+    },
     // 解决弹窗input框不能输入问题
     change() {
       this.$forceUpdate();
@@ -457,6 +486,7 @@ export default {
         path: undefined,
         component: '',
         perms: undefined,
+        appId: undefined,
       };
       this.resetForm('form');
     },
@@ -467,19 +497,28 @@ export default {
     /** 重置按钮操作 */
     resetQuery() {
       this.resetForm('queryForm');
-      this.handleQuery();
+      this.$nextTick(() => {
+        this.handleQuery();
+      })
     },
     /** 新增按钮操作 */
-    handleAdd(row) {
+    handleAdd(row, type) {
+      this.isShowRadioBtn = type !== '外层新增';
       this.reset();
       this.getTreeselect();
       if (row != null && row.menuId) {
         this.form.parentId = row.menuId;
+        this.isParent = false // 上级已经存在目录的不可点击
       } else {
         this.form.parentId = '0';
+        this.isParent = true // 上级不存在目录的可点击
       }
       this.open = true;
       this.title = '添加菜单';
+      getMenu(row.menuId).then((response) => { // 上级菜单
+        this.form.appId = response.data.data.appId;
+        this.$forceUpdate();
+      });
     },
     /** 展开/折叠操作 */
     toggleExpandAll() {
@@ -491,12 +530,25 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
+      console.log('zzz', row.parentId);
+      this.isShowRadioBtn = true;
       this.reset();
       this.getTreeselect();
+      if(row.parentId !== '0') {
+        this.isParent = false // 上级已经存在目录的不可点击
+      }else {
+        this.isParent = true // 上级不存在目录的可点击
+      }
       getMenu(row.menuId).then((response) => {
         this.form = response.data.data;
         this.open = true;
         this.title = '修改菜单';
+        getMenu(row.parentId).then((response) => { // 上级菜单
+          if(response.data.data) {
+            this.form.appId = response.data.data.appId;
+          }
+          this.$forceUpdate();
+        });
       });
     },
     /** 提交按钮 */
@@ -504,6 +556,7 @@ export default {
       if(this.form.icon === '') {
         this.clearIcon();
       }
+      //   console.log('ppppp', this.form);
       this.$refs.form.validate((valid) => {
         if (valid) {
           if (this.form.menuId !== undefined) {

@@ -40,7 +40,7 @@
             />
           </el-form-item>
           <el-form-item label="用户角色" prop="roleId">
-            <el-select v-model="queryParams.roleId" style="width: 240px" placeholder="请选择用户角色">
+            <el-select v-model="queryParams.roleId" style="width: 240px" placeholder="请选择用户角色" clearable>
               <el-option
                 v-for="item in roleOptions"
                 :key="item.roleId"
@@ -51,7 +51,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="用户岗位" prop="postId">
-            <el-select v-model="queryParams.postId" style="width: 240px" placeholder="请选择用户岗位" collapse-tags>
+            <el-select v-model="queryParams.postId" style="width: 240px" placeholder="请选择用户岗位" collapse-tags clearable>
               <el-option
                 v-for="item in postOptions"
                 :key="item.postId"
@@ -286,7 +286,7 @@
           </el-col>
           <el-col :span="11">
             <el-form-item label="用户角色" prop="roleIds">
-              <el-select v-model="form.roleIds" multiple placeholder="请选择用户角色" collapse-tags>
+              <el-select v-model="form.roleIds" multiple placeholder="请选择用户角色" collapse-tags clearable>
                 <el-option
                   v-for="item in roleOptions"
                   :key="item.roleId"
@@ -301,7 +301,7 @@
         <el-row>
           <el-col :span="11">
             <el-form-item label="用户岗位">
-              <el-select v-model="form.tempPostId" placeholder="请选择用户岗位" @change="changePost">
+              <el-select v-model="form.tempPostId" placeholder="请选择用户岗位" @change="changePost" clearable>
                 <el-option
                   v-for="item in postOptions"
                   :key="item.postId"
@@ -353,7 +353,7 @@
           </el-col>
           <el-col :span="11">
             <el-form-item label="账号类型" prop="userType">
-              <el-select v-model="form.userType" placeholder="请选择账号类型">
+              <el-select v-model="form.userType" placeholder="请选择账号类型" clearable>
                 <el-option
                   v-for="(item, index) in accountType"
                   :key="index"
@@ -838,7 +838,9 @@ export default {
     resetQuery() {
       this.dateRange = [];
       this.resetForm('queryForm');
-      this.handleQuery();
+      this.$nextTick(() => {
+        this.handleQuery();
+      })
     },
     // 多选框选中数据
     handleSelectionChange(selection) {

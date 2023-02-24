@@ -160,10 +160,27 @@ export function listUseraccess(query) {
   })
 }
 
+// 查询统计表信息
+export function getAccessCount() {
+  return request({
+    url: '/system/user/getAccessCount',
+    method: 'post',
+  })
+}
+
 // 访问页面
 export function updateaccessPage(data) {
   return request({
     url: '/system/user/updateAccessPage',
+    method: 'post',
+    data
+  })
+}
+
+// 添加用户访问记录
+export function addAccessinfo(data) {
+  return request({
+    url: '/system/user/addAccessinfo',
     method: 'post',
     data
   })

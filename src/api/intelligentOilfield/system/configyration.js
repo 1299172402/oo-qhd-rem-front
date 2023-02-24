@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询角色列表
+// 快捷入口模块
 export function listEnter(query) {
   return request({
     url: '/system/enter/list',
@@ -30,6 +30,42 @@ export function updateEnter(data) {
   return request({
     url: '/system/enter',
     method: 'put',
+    data
+  })
+}
+
+// 门户办公模式-查询列表
+export function getListEnter(query) {
+  return request({
+    url: '/system/enter/getList',
+    method: 'get',
+    params: query
+  })
+}
+    
+// 门户办公模式-选中
+export function selectEnter(data) {
+  return request({
+    url: `/system/enter/inEnter`,
+    method: 'post',
+    data
+  })
+}
+      
+// 门户办公模式-取消选中
+export function noSelectEnter(data) {
+  return request({
+    url: `/system/enter/outEnter`,
+    method: 'post',
+    data
+  })
+}
+        
+// 门户办公模式-确定取消
+export function sureEnter(data) {
+  return request({
+    url: '/system/enter/sureEnter',
+    method: 'post',
     data
   })
 }

@@ -19,44 +19,30 @@
     <div class="spaceMargin">1.4、危险按钮</div>
     <el-button class="errorBtn">危险按钮</el-button>
     <el-button class="errorBtnplain">危险按钮</el-button>
-    <div class="spaceMargin">
-      1.5、失效按钮
-    </div>
+    <div class="spaceMargin">1.5、失效按钮</div>
     <el-button class="disableBtn">失效按钮</el-button>
 
     <div class="headerTitle spaceMargin">
       2、下拉框=========================================================================================
     </div>
-    <div class="spaceMargin">
-      2.1、主下拉框
-    </div>
-     <div class="spaceMargin">
-      2.1.1、单选下拉框
-    </div>
-    <el-select v-model="value" placeholder="请选择">
+    <div class="spaceMargin">2.1、主下拉框</div>
+    <div class="spaceMargin">2.1.1、单选下拉框</div>
+    <el-select v-model="value" placeholder="请选择" clearable>
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
     </el-select>
-     <div class="spaceMargin">
-      2.1.2、多选下拉框
-    </div>
-    <el-select multiple v-model="valueA" placeholder="请选择">
+    <div class="spaceMargin">2.1.2、多选下拉框</div>
+    <el-select multiple v-model="valueA" placeholder="请选择" clearable>
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
     </el-select>
-    <div class="spaceMargin">
-      2.2、无border下拉框
-    </div>
-    <el-select v-model="value" placeholder="请选择" class="dropdown">
+    <div class="spaceMargin">2.2、无border下拉框</div>
+    <el-select v-model="value" placeholder="请选择" class="dropdown" clearable>
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
     </el-select>
-    <div class="spaceMargin">
-      2.3、无border背景色下拉框
-    </div>
-    <el-select v-model="value" placeholder="请选择" class="noBorderBg">
+    <div class="spaceMargin">2.3、无border背景色下拉框</div>
+    <el-select v-model="value" placeholder="请选择" class="noBorderBg" clearable>
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
     </el-select>
-    <div class="spaceMargin">
-      2.4、下拉菜单
-    </div>
+    <div class="spaceMargin">2.4、下拉菜单</div>
     <el-dropdown trigger="click">
       <span class="el-dropdown-link"> 下拉菜单<i class="el-icon-arrow-down el-icon--right"></i> </span>
       <el-dropdown-menu slot="dropdown">
@@ -66,39 +52,30 @@
         <el-dropdown-item disabled>双皮奶</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
-    <div class="spaceMargin">
-      2.5、Cascader 级联选择器
-    </div>
-    <el-cascader
-    v-model="valueC"
-    :options="optionsC"
-    ></el-cascader>
+    <div class="spaceMargin">2.5、Cascader 级联选择器</div>
+    <el-cascader v-model="valueC" :options="optionsC"></el-cascader>
     <div class="headerTitle spaceMargin">
       3、输入框=========================================================================================
     </div>
-    <div class="spaceMargin">
-      3.1、主输入框
-    </div>
-    <el-input  suffix-icon="el-icon-date"  v-model="input" style="width: 300px" placeholder="请输入角色名称"></el-input>
-    <div class="spaceMargin">
-      3.2、失效输入框
-    </div>
-    <el-input prefix-icon="el-icon-search" v-model="input" disabled style="width: 300px" placeholder="请输入角色名称"></el-input>
+    <div class="spaceMargin">3.1、主输入框</div>
+    <el-input suffix-icon="el-icon-date" v-model="input" style="width: 300px" placeholder="请输入角色名称"></el-input>
+    <div class="spaceMargin">3.2、失效输入框</div>
+    <el-input
+      prefix-icon="el-icon-search"
+      v-model="input"
+      disabled
+      style="width: 300px"
+      placeholder="请输入角色名称"
+    ></el-input>
 
-    <div class="spaceMargin">
-      3.3、文本域
-    </div>
+    <div class="spaceMargin">3.3、文本域</div>
     <el-input type="textarea" style="width: 300px" v-model="input"></el-input>
 
     <div class="headerTitle spaceMargin">
       4、日期选择器=========================================================================================
     </div>
-    <div class="spaceMargin">
-      4.1、时间范围选择器
-    </div>
-    <div class="spaceMargin">
-      4.1.1、日期范围选择器
-    </div>
+    <div class="spaceMargin">4.1、时间范围选择器</div>
+    <div class="spaceMargin">4.1.1、日期范围选择器</div>
     <el-date-picker
       v-model="value1"
       type="daterange"
@@ -108,9 +85,7 @@
       end-placeholder="结束日期"
     >
     </el-date-picker>
-     <div class="spaceMargin">
-      4.1.2、时间范围选择器
-    </div>
+    <div class="spaceMargin">4.1.2、时间范围选择器</div>
     <el-date-picker
       v-model="value1"
       type="datetimerange"
@@ -120,17 +95,11 @@
       end-placeholder="结束时间"
     >
     </el-date-picker>
-    <div class="spaceMargin">
-      4.2、日期选择器
-    </div>
+    <div class="spaceMargin">4.2、日期选择器</div>
     <el-date-picker type="date" placeholder="选择日期" v-model="date1" style="width: 400px"></el-date-picker>
-    <div class="spaceMargin">
-      4.3、年份选择器
-    </div>
+    <div class="spaceMargin">4.3、年份选择器</div>
     <el-date-picker type="year" placeholder="选择年份" v-model="date3" style="width: 400px"></el-date-picker>
-    <div class="spaceMargin">
-      4.4、时间选择器
-    </div>
+    <div class="spaceMargin">4.4、时间选择器</div>
     <el-time-picker placeholder="选择时间" v-model="date2" style="width: 400px"></el-time-picker>
 
     <div class="headerTitle spaceMargin">
@@ -149,17 +118,57 @@
       <el-table-column prop="name" label="姓名" sortable width="180"> </el-table-column>
       <el-table-column prop="address" label="地址"> </el-table-column>
     </el-table>
-
+ <el-table
+    :data="tableData"
+    :border="false"
+     :row-style="{ height: '0px' }"
+      header-cell-class-name="table_header"
+      :cell-style="{ padding: '6px', 'text-align': 'center' }"
+      style="width: 700px; margin: 20px 0"
+      :default-sort="{ prop: 'date', order: 'descending' }"
+     :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+    >
+    <el-table-column
+      prop="date"
+      label="日期"
+      width="150">
+    </el-table-column>
+    <el-table-column label="配送信息">
+      <el-table-column
+        prop="name"
+        label="姓名"
+        width="120">
+      </el-table-column>
+      <el-table-column label="地址">
+        <el-table-column
+          prop="province"
+          label="省份"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="city"
+          label="市区"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          label="地址"
+          width="300">
+        </el-table-column>
+        <el-table-column
+          prop="zip"
+          label="邮编"
+          width="120">
+        </el-table-column>
+      </el-table-column>
+    </el-table-column>
+  </el-table>
     <div class="headerTitle spaceMargin">
       6、分页=========================================================================================
     </div>
-    <div class="spaceMargin">
-      6.1、elementUI的分页器
-    </div>
+    <div class="spaceMargin">6.1、elementUI的分页器</div>
     <el-pagination background layout="prev, pager, next,total" :total="1000" class="paginationDiv"> </el-pagination>
-    <div class="spaceMargin">
-      6.2、自定义封装分页器，实际页面中多个地方使用，具体看实际功能列表
-    </div>
+    <div class="spaceMargin">6.2、自定义封装分页器，实际页面中多个地方使用，具体看实际功能列表</div>
     <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize" />
     <div class="headerTitle spaceMargin">
       7、单选按钮=========================================================================================
@@ -210,7 +219,7 @@
       type="info"
       description="文字说明文字说明文字说明文字说明文字说明文字说明"
       show-icon
-      style="width: 400px;margin:10px 0"
+      style="width: 400px; margin: 10px 0"
     >
     </el-alert>
     <el-alert
@@ -226,7 +235,7 @@
       type="error"
       description="文字说明文字说明文字说明文字说明文字说明文字说明"
       show-icon
-      style="width: 400px;margin:10px 0"
+      style="width: 400px; margin: 10px 0"
     >
     </el-alert>
     <div class="headerTitle spaceMargin">
@@ -261,9 +270,7 @@
     <div class="headerTitle spaceMargin">
       15、tabs标签页=========================================================================================
     </div>
-    <div class="spaceMargin">
-      15.1、elementUI的tabs标签页
-    </div>
+    <div class="spaceMargin">15.1、elementUI的tabs标签页</div>
     <el-tabs v-model="activeName" class="g-pageHeader">
       <el-tab-pane label="用户管理" name="first"></el-tab-pane>
       <el-tab-pane label="配置管理" name="second"></el-tab-pane>
@@ -273,17 +280,25 @@
     </div>
     <horizontalSwitchBtn style="margin-bottom: 10px"></horizontalSwitchBtn>
     <horizontalSwitchBtn :colorList="colorList" :borderList="borderList" :dataList="dataList"></horizontalSwitchBtn>
-     <div class="spaceMargin">
-      15.3、自定义的横向纵向tabs切换按钮（横向纵向都可以）
-    </div>
-      <div class="spaceMargin">
-      15.3.1、横向
-    </div>
-     <verticalSwitchButton @selectBtn="selectBtn" :dataList="dataList1" buttonWidth="120px" buttonHeight="30px" style="width: 9%;" btnDirection="row"></verticalSwitchButton>
-      <div class="spaceMargin">
-      15.3.1、纵向
-    </div>
-     <verticalSwitchButton @selectBtn="selectBtn" :dataList="dataList1" buttonWidth="120px" buttonHeight="30px" style="width: 9%;" btnDirection="column"></verticalSwitchButton>
+    <div class="spaceMargin">15.3、自定义的横向纵向tabs切换按钮（横向纵向都可以）</div>
+    <div class="spaceMargin">15.3.1、横向</div>
+    <verticalSwitchButton
+      @selectBtn="selectBtn"
+      :dataList="dataList1"
+      buttonWidth="120px"
+      buttonHeight="30px"
+      style="width: 9%"
+      btnDirection="row"
+    ></verticalSwitchButton>
+    <div class="spaceMargin">15.3.1、纵向</div>
+    <verticalSwitchButton
+      @selectBtn="selectBtn"
+      :dataList="dataList1"
+      buttonWidth="120px"
+      buttonHeight="30px"
+      style="width: 9%"
+      btnDirection="column"
+    ></verticalSwitchButton>
     <div class="headerTitle spaceMargin">
       16、自定义消息通知跑马灯组件=========================================================================================
     </div>
@@ -313,7 +328,26 @@
       style="width: 600px; height: 400px"
     ></chartsComponents>
     <div id="lineContainer" ref="lineContainer" style="width: 50%; height: 410px"></div>
-    <div style="margin: 40px 0"> =================================end========================</div>
+    <div class="headerTitle spaceMargin">
+      18、上传图片/文件=========================================================================================
+    </div>
+    <div class="spaceMargin">18.1、图片上传</div>
+    <el-upload
+      class="avatar-uploader imageUpload"
+      action="https://jsonplaceholder.typicode.com/posts/"
+      :show-file-list="false"
+      :on-success="handleAvatarSuccess"
+    >
+      <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+    </el-upload>
+    <div class="spaceMargin">18.2、文件上传</div>
+    <el-upload style="width: 400px;" class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
+      <i class="el-icon-upload"></i>
+      <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+      <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+    </el-upload>
+    <div style="margin: 40px 0">=================================end========================</div>
   </div>
 </template>
 <script>
@@ -380,209 +414,283 @@ export default {
   },
   data() {
     return {
+      imageUrl: '',
       dataList1: [
         { name: '生产曲线分析', isChecked: false },
         { name: '指标变化分析', isChecked: true },
         { name: '曲线对比分析', isChecked: false },
       ],
       date3: '',
-      dataList:[],
+      dataList: [],
       valueA: [],
-      optionsC: [{
-        value: 'zhinan',
-        label: '指南',
-        children: [{
-          value: 'shejiyuanze',
-          label: '设计原则',
-          children: [{
-            value: 'yizhi',
-            label: '一致'
-          }, {
-            value: 'fankui',
-            label: '反馈'
-          }, {
-            value: 'xiaolv',
-            label: '效率'
-          }, {
-            value: 'kekong',
-            label: '可控'
-          }]
-        }, {
-          value: 'daohang',
-          label: '导航',
-          children: [{
-            value: 'cexiangdaohang',
-            label: '侧向导航'
-          }, {
-            value: 'dingbudaohang',
-            label: '顶部导航'
-          }]
-        }]
-      }, {
-        value: 'zujian',
-        label: '组件',
-        children: [{
-          value: 'basic',
-          label: 'Basic',
-          children: [{
-            value: 'layout',
-            label: 'Layout 布局'
-          }, {
-            value: 'color',
-            label: 'Color 色彩'
-          }, {
-            value: 'typography',
-            label: 'Typography 字体'
-          }, {
-            value: 'icon',
-            label: 'Icon 图标'
-          }, {
-            value: 'button',
-            label: 'Button 按钮'
-          }]
-        }, {
-          value: 'form',
-          label: 'Form',
-          children: [{
-            value: 'radio',
-            label: 'Radio 单选框'
-          }, {
-            value: 'checkbox',
-            label: 'Checkbox 多选框'
-          }, {
-            value: 'input',
-            label: 'Input 输入框'
-          }, {
-            value: 'input-number',
-            label: 'InputNumber 计数器'
-          }, {
-            value: 'select',
-            label: 'Select 选择器'
-          }, {
-            value: 'cascader',
-            label: 'Cascader 级联选择器'
-          }, {
-            value: 'switch',
-            label: 'Switch 开关'
-          }, {
-            value: 'slider',
-            label: 'Slider 滑块'
-          }, {
-            value: 'time-picker',
-            label: 'TimePicker 时间选择器'
-          }, {
-            value: 'date-picker',
-            label: 'DatePicker 日期选择器'
-          }, {
-            value: 'datetime-picker',
-            label: 'DateTimePicker 日期时间选择器'
-          }, {
-            value: 'upload',
-            label: 'Upload 上传'
-          }, {
-            value: 'rate',
-            label: 'Rate 评分'
-          }, {
-            value: 'form',
-            label: 'Form 表单'
-          }]
-        }, {
-          value: 'data',
-          label: 'Data',
-          children: [{
-            value: 'table',
-            label: 'Table 表格'
-          }, {
-            value: 'tag',
-            label: 'Tag 标签'
-          }, {
-            value: 'progress',
-            label: 'Progress 进度条'
-          }, {
-            value: 'tree',
-            label: 'Tree 树形控件'
-          }, {
-            value: 'pagination',
-            label: 'Pagination 分页'
-          }, {
-            value: 'badge',
-            label: 'Badge 标记'
-          }]
-        }, {
-          value: 'notice',
-          label: 'Notice',
-          children: [{
-            value: 'alert',
-            label: 'Alert 警告'
-          }, {
-            value: 'loading',
-            label: 'Loading 加载'
-          }, {
-            value: 'message',
-            label: 'Message 消息提示'
-          }, {
-            value: 'message-box',
-            label: 'MessageBox 弹框'
-          }, {
-            value: 'notification',
-            label: 'Notification 通知'
-          }]
-        }, {
-          value: 'navigation',
-          label: 'Navigation',
-          children: [{
-            value: 'menu',
-            label: 'NavMenu 导航菜单'
-          }, {
-            value: 'tabs',
-            label: 'Tabs 标签页'
-          }, {
-            value: 'breadcrumb',
-            label: 'Breadcrumb 面包屑'
-          }, {
-            value: 'dropdown',
-            label: 'Dropdown 下拉菜单'
-          }, {
-            value: 'steps',
-            label: 'Steps 步骤条'
-          }]
-        }, {
-          value: 'others',
-          label: 'Others',
-          children: [{
-            value: 'dialog',
-            label: 'Dialog 对话框'
-          }, {
-            value: 'tooltip',
-            label: 'Tooltip 文字提示'
-          }, {
-            value: 'popover',
-            label: 'Popover 弹出框'
-          }, {
-            value: 'card',
-            label: 'Card 卡片'
-          }, {
-            value: 'carousel',
-            label: 'Carousel 走马灯'
-          }, {
-            value: 'collapse',
-            label: 'Collapse 折叠面板'
-          }]
-        }]
-      }, {
-        value: 'ziyuan',
-        label: '资源',
-        children: [{
-          value: 'axure',
-          label: 'Axure Components'
-        }, {
-          value: 'sketch',
-          label: 'Sketch Templates'
-        }, {
-          value: 'jiaohu',
-          label: '组件交互文档'
-        }]
-      }],
+      optionsC: [
+        {
+          value: 'zhinan',
+          label: '指南',
+          children: [
+            {
+              value: 'shejiyuanze',
+              label: '设计原则',
+              children: [
+                {
+                  value: 'yizhi',
+                  label: '一致',
+                },
+                {
+                  value: 'fankui',
+                  label: '反馈',
+                },
+                {
+                  value: 'xiaolv',
+                  label: '效率',
+                },
+                {
+                  value: 'kekong',
+                  label: '可控',
+                },
+              ],
+            },
+            {
+              value: 'daohang',
+              label: '导航',
+              children: [
+                {
+                  value: 'cexiangdaohang',
+                  label: '侧向导航',
+                },
+                {
+                  value: 'dingbudaohang',
+                  label: '顶部导航',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          value: 'zujian',
+          label: '组件',
+          children: [
+            {
+              value: 'basic',
+              label: 'Basic',
+              children: [
+                {
+                  value: 'layout',
+                  label: 'Layout 布局',
+                },
+                {
+                  value: 'color',
+                  label: 'Color 色彩',
+                },
+                {
+                  value: 'typography',
+                  label: 'Typography 字体',
+                },
+                {
+                  value: 'icon',
+                  label: 'Icon 图标',
+                },
+                {
+                  value: 'button',
+                  label: 'Button 按钮',
+                },
+              ],
+            },
+            {
+              value: 'form',
+              label: 'Form',
+              children: [
+                {
+                  value: 'radio',
+                  label: 'Radio 单选框',
+                },
+                {
+                  value: 'checkbox',
+                  label: 'Checkbox 多选框',
+                },
+                {
+                  value: 'input',
+                  label: 'Input 输入框',
+                },
+                {
+                  value: 'input-number',
+                  label: 'InputNumber 计数器',
+                },
+                {
+                  value: 'select',
+                  label: 'Select 选择器',
+                },
+                {
+                  value: 'cascader',
+                  label: 'Cascader 级联选择器',
+                },
+                {
+                  value: 'switch',
+                  label: 'Switch 开关',
+                },
+                {
+                  value: 'slider',
+                  label: 'Slider 滑块',
+                },
+                {
+                  value: 'time-picker',
+                  label: 'TimePicker 时间选择器',
+                },
+                {
+                  value: 'date-picker',
+                  label: 'DatePicker 日期选择器',
+                },
+                {
+                  value: 'datetime-picker',
+                  label: 'DateTimePicker 日期时间选择器',
+                },
+                {
+                  value: 'upload',
+                  label: 'Upload 上传',
+                },
+                {
+                  value: 'rate',
+                  label: 'Rate 评分',
+                },
+                {
+                  value: 'form',
+                  label: 'Form 表单',
+                },
+              ],
+            },
+            {
+              value: 'data',
+              label: 'Data',
+              children: [
+                {
+                  value: 'table',
+                  label: 'Table 表格',
+                },
+                {
+                  value: 'tag',
+                  label: 'Tag 标签',
+                },
+                {
+                  value: 'progress',
+                  label: 'Progress 进度条',
+                },
+                {
+                  value: 'tree',
+                  label: 'Tree 树形控件',
+                },
+                {
+                  value: 'pagination',
+                  label: 'Pagination 分页',
+                },
+                {
+                  value: 'badge',
+                  label: 'Badge 标记',
+                },
+              ],
+            },
+            {
+              value: 'notice',
+              label: 'Notice',
+              children: [
+                {
+                  value: 'alert',
+                  label: 'Alert 警告',
+                },
+                {
+                  value: 'loading',
+                  label: 'Loading 加载',
+                },
+                {
+                  value: 'message',
+                  label: 'Message 消息提示',
+                },
+                {
+                  value: 'message-box',
+                  label: 'MessageBox 弹框',
+                },
+                {
+                  value: 'notification',
+                  label: 'Notification 通知',
+                },
+              ],
+            },
+            {
+              value: 'navigation',
+              label: 'Navigation',
+              children: [
+                {
+                  value: 'menu',
+                  label: 'NavMenu 导航菜单',
+                },
+                {
+                  value: 'tabs',
+                  label: 'Tabs 标签页',
+                },
+                {
+                  value: 'breadcrumb',
+                  label: 'Breadcrumb 面包屑',
+                },
+                {
+                  value: 'dropdown',
+                  label: 'Dropdown 下拉菜单',
+                },
+                {
+                  value: 'steps',
+                  label: 'Steps 步骤条',
+                },
+              ],
+            },
+            {
+              value: 'others',
+              label: 'Others',
+              children: [
+                {
+                  value: 'dialog',
+                  label: 'Dialog 对话框',
+                },
+                {
+                  value: 'tooltip',
+                  label: 'Tooltip 文字提示',
+                },
+                {
+                  value: 'popover',
+                  label: 'Popover 弹出框',
+                },
+                {
+                  value: 'card',
+                  label: 'Card 卡片',
+                },
+                {
+                  value: 'carousel',
+                  label: 'Carousel 走马灯',
+                },
+                {
+                  value: 'collapse',
+                  label: 'Collapse 折叠面板',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          value: 'ziyuan',
+          label: '资源',
+          children: [
+            {
+              value: 'axure',
+              label: 'Axure Components',
+            },
+            {
+              value: 'sketch',
+              label: 'Sketch Templates',
+            },
+            {
+              value: 'jiaohu',
+              label: '组件交互文档',
+            },
+          ],
+        },
+      ],
       valueC: [],
       colorList: { dark: 'rgba(13,255,168,0.4)', light: 'red' },
       borderList: { dark: 'rgba(13,255,168,1)', light: 'green' },
@@ -1186,6 +1294,9 @@ export default {
     this.renderCharts();
   },
   methods: {
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
     selectBtn(item) {
       console.log('选中结果==', item);
     },

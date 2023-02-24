@@ -33,3 +33,49 @@ export function updateBusiness(data) {
     data
   })
 }
+
+// 上传入口
+export function uploadBusinessImg(formData) {
+  return request({
+    url: '/system/business/uploadBusinessImg',
+    method: 'post',
+    data: formData
+  })
+}
+
+// 门户投影模式-业务中心查询列表
+export function getListBusiness(query) {
+  return request({
+    url: '/system/business/getList',
+    method: 'get',
+    params: query
+  })
+}
+
+// 门户投影模式-选中业务中心
+export function selectBusiness(data) {
+  return request({
+    url: `/system/business/inBusiness`,
+    method: 'post',
+    data
+  })
+}
+  
+// 门户投影模式-取消选中业务中心
+export function noSelectBusiness(data) {
+  return request({
+    url: `/system/business/outBusiness`,
+    method: 'post',
+    data
+  })
+}
+    
+// 门户投影模式-确定取消业务中心
+export function sureBusiness(data) {
+  return request({
+    url: '/system/business/sureBusiness',
+    method: 'post',
+    data
+  })
+}
+      
