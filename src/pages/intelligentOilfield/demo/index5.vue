@@ -1,0 +1,29 @@
+<!-- 拖拽页面-样例 -->
+<template>
+  <div class="g-w100 g-h100">
+    <gridLayout :layout="layout" portalType="XX"></gridLayout>
+  </div>
+</template>
+
+<script>
+
+import gridLayout from '@/components/intelligentOilfield/grid-layout/index.vue'
+
+export default {
+  components: {
+    gridLayout,
+  },
+  data() {
+    return {
+      layout: [
+        { x: 0, y: 0, w: 9, h: 8, i: '0',name: '示例组件', content:'default', contentSetting: false, isVisConSet: false },
+        { x: 9, y: 0, w: 3, h: 6, i: '1',name: 'XX组件', content:'default', contentSetting: false, isVisConSet: true },
+        { x: 0, y: 8, w: 9, h: 12, i:'2',name: 'XX组件', content:'default', contentSetting: false, isVisConSet: false },
+        { x: 9, y: 8, w: 3, h: 6, i: '3',name: 'XX组件', content:'default', contentSetting: false, isVisConSet: true },
+        { x: 9, y: 14, w: 3, h: 8, i: '4',name: 'XX组件', content:'default', contentSetting: false, isVisConSet: true},
+      ],
+    }
+  },
+  methods: {},
+};
+</script>

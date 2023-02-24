@@ -45,7 +45,9 @@
           <message />
           <!-- 全局通知，通告 -->
           <notice />
-          
+          <el-tooltip class="item" effect="dark" content="编辑面板" placement="bottom">
+            <svg-icon @clickIcon="editPanel" icon-class="edit-panel" class="panelIconClass" />
+          </el-tooltip>
           <!-- <t-button
             theme="default"
             variant="text"
