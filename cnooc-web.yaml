@@ -1,7 +1,7 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: cnooc-web
+  name: system-cnooc-web
   labels:
     appgroup: ''
     version: v1
@@ -129,25 +129,25 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: cnooc-web
+      app: system-cnooc-web
       version: v1
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: cnooc-web
+        app: system-cnooc-web
         version: v1
       annotations:
         metrics.alpha.kubernetes.io/custom-endpoints: '[{"api":"","path":"","port":"","names":""}]'
     spec:
       containers:
         - name: container-1
-          image: 'swr.zhydc-nyyjy-1.r410.cnooc/cnooc/cnooc-web:{{version}}'
+          image: 'swr.zhydc-nyyjy-1.r410.cnooc/cnooc/system-cnooc-web:{{version}}'
           env:
             - name: PAAS_APP_NAME
-              value: cnooc-web
+              value: ystem-cnooc-web
             - name: PAAS_NAMESPACE
-              value: cnooc-dev
+              value: system-cnooc
             - name: PAAS_PROJECT_ID
               value: 17315608afe042f48f106a9775b18ab6
           resources:
