@@ -1,6 +1,7 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <headerSearch class="g-w100 g-h100">
+    <el-form :model="queryParams" style="margin-top:20px" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="字典名称" prop="dictName">
         <el-input v-model="queryParams.dictName" placeholder="请输入字典名称" clearable size="small" style="width: 240px"
           @keyup.enter.native="handleQuery" />
@@ -21,11 +22,13 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery" class="commonBtn">重置</el-button>
       </el-form-item>
     </el-form>
+</headerSearch>
 
-    <el-row :gutter="10" class="mb8">
+    <pagePanelNew headerTitle="字典管理" style="height:calc(100% - 100px);">
+        <el-row :gutter="10" class="mb8" style="margin-bottom:20px">
       <el-col :span="1.5">
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
           v-hasPermi="['system:dict:add']">新增</el-button>
@@ -55,7 +58,7 @@
         >
       </el-col> -->
       <el-col :span="1.5">
-        <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport"
+        <el-button class="commonBtn" type="warning" plain icon="el-icon-download" size="mini" @click="handleExport"
           v-hasPermi="['system:dict:export']">导出</el-button>
       </el-col>
       <!-- <el-col :span="1.5">
@@ -71,8 +74,7 @@
       </el-col> -->
       <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
     </el-row>
-    <pagePanel headerTitle="字典管理">
-      <el-table v-loading="loading" :data="typeList" @selection-change="handleSelectionChange" height="calc(100% - 45px)"
+      <el-table v-loading="loading" :data="typeList" @selection-change="handleSelectionChange" height="calc(100% - 110px)"
         :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header" :cell-style="{ padding: '2px', 'text-align': 'center' }"
         style="width: 100%; height: 100%;" :default-sort="{ prop: 'date', order: 'descending' }">
@@ -102,14 +104,14 @@
             <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
               v-hasPermi="['system:dict:edit']">修改</el-button>
             <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-              v-hasPermi="['system:dict:remove']">删除</el-button>
+              v-hasPermi="['system:dict:remove']" class="delbutton">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
 
       <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
         @pagination="getList" />
-    </pagePanel>
+    </pagePanelNew>
 
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>

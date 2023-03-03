@@ -69,3 +69,11 @@ export function sureEnter(data) {
     data
   })
 }
+
+// 门户办公模式-获取已关联菜单应用列表
+export function queryLinkedApps() {
+  return request({
+    url: '/system/app/queryLinkedApps',
+    method: 'get',
+  })
+}

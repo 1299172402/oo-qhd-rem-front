@@ -124,7 +124,7 @@
      :row-style="{ height: '0px' }"
       header-cell-class-name="table_header"
       :cell-style="{ padding: '6px', 'text-align': 'center' }"
-      style="width: 700px; margin: 20px 0"
+      style="width: 800px; margin: 20px 0"
       :default-sort="{ prop: 'date', order: 'descending' }"
      :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
     >

@@ -1,100 +1,124 @@
 // 智能油田一级页面
+import { LayersIcon } from 'tdesign-icons-vue';
 import Layout from '@/layouts/index.vue';
 
 export default [
   // 静态本地路由【首页，组件样例，页面样例，门户页面】
-  {
-    path: '/homePage',
-    name: 'homePage',
-    component: Layout,
-    redirect: '/homePage/index',
-    meta: { title: '首页', icon: 'build', single: true },
-    children: [
-      {
-        path: 'index',
-        name: 'homePageIndex',
-        component: () => import('@/pages/intelligentOilfield/homePage/index.vue'),
-        meta: { title: '首页' },
-      },
-    ],
-  },
+//   {
+//     path: '/homePage',
+//     name: 'homePage',
+//     component: Layout,
+//     redirect: '/homePage/index',
+//     meta: { title: '首页', icon: 'build', single: true },
+//     children: [
+//       {
+//         path: 'index',
+//         name: 'homePageIndex',
+//         component: () => import('@/pages/intelligentOilfield/homePage/index.vue'),
+//         meta: { title: '首页' },
+//       },
+//     ],
+//   },
   {
     path: '/homePageDetail',
     name: 'homePageDetail',
     component: Layout,
     hidden: true,
     redirect: '/homePageDetail/homeDetail',
-    meta: { title: '首页', icon: '', single: true },
+    meta: { title: '首页详情', icon: '', single: true },
     children: [
       {
         path: 'homeDetail',
         name: 'homeDetail',
         component: () => import('@/pages/intelligentOilfield/homePage/components/detail.vue'),
-        meta: { title: '首页' },
+        meta: { title: '首页详情' },
       },
     ],
   },
-  {
-    path: '/demo',
-    name: 'demo',
-    hidden: false, // 设置为true路由不可见
-    component: Layout,
-    redirect: '/demo/demoIndex',
-    meta: { title: '组件样例', icon: 'dashboard', single: true }, // single设置为true只显示一级路由
-    children: [
-      {
-        path: 'demoIndex',
-        name: 'demoIndex',
-        component: () => import('@/pages/intelligentOilfield/demo/index.vue'),
-        meta: { title: '组件样例' },
-      },
-    ],
+  //   {
+  //     path: '/demo',
+  //     name: 'demo',
+  //     hidden: false, // 设置为true路由不可见
+  //     component: Layout,
+  //     redirect: '/demo/demoIndex',
+  //     meta: { title: '组件样例', icon: 'dashboard', single: true }, // single设置为true只显示一级路由
+  //     children: [
+  //       {
+  //         path: 'demoIndex',
+  //         name: 'demoIndex',
+  //         component: () => import('@/pages/intelligentOilfield/demo/index.vue'),
+  //         meta: { title: '组件样例' },
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     path: '/demo2',
+  //     name: 'demo2',
+  //     component: Layout,
+  //     redirect: '/demo2/demoIndex2',
+  //     meta: { title: '组件样例2', icon: 'education', single: true },
+  //     children: [
+  //       {
+  //         path: 'demoIndex2',
+  //         name: 'demoIndex2',
+  //         component: () => import('@/pages/intelligentOilfield/demo/index2.vue'),
+  //         meta: { title: '组件样例2' },
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     path: '/demo3',
+  //     name: 'demo3',
+  //     component: Layout,
+  //     redirect: '/demo3/demoIndex3',
+  //     meta: { title: '列表示例页', icon: 'form', single: true },
+  //     children: [
+  //       {
+  //         path: 'demoIndex3',
+  //         name: 'demoIndex3',
+  //         component: () => import('@/pages/intelligentOilfield/demo/index3.vue'),
+  //         meta: { title: '列表示例页' },
+  //       },
+  //     ],
+  //   },
+  {	 
+    path: '/portal',	 
+    component: Layout,	 
+    redirect: '/portal/projectionMode',	 
+    name: 'portal',	 
+    hidden: true,	 
+    meta: {	 
+      title: '门户',	 
+      icon: LayersIcon,	 
+    },	 
+    children: [	 
+      {	 
+        path: 'projectionMode',	 
+        name: 'projectionMode',	 
+        component: () => import('@/pages/intelligentOilfield/portal/projectionMode/index.vue'),	 
+        meta: { title: '投影模式' },	 
+      },	 
+      {	 
+        path: 'officeMode',	 
+        name: 'officeMode',	 
+        component: () => import('@/pages/intelligentOilfield/portal/officeMode/index.vue'),	 
+        meta: { title: '办公模式' },	 
+      },	 
+    ],	 
   },
-  {
-    path: '/demo2',
-    name: 'demo2',
-    component: Layout,
-    redirect: '/demo2/demoIndex2',
-    meta: { title: '组件样例2', icon: 'education', single: true },
-    children: [
-      {
-        path: 'demoIndex2',
-        name: 'demoIndex2',
-        component: () => import('@/pages/intelligentOilfield/demo/index2.vue'),
-        meta: { title: '组件样例2' },
-      },
-    ],
-  },
-  {
-    path: '/demo3',
-    name: 'demo3',
-    component: Layout,
-    redirect: '/demo3/demoIndex3',
-    meta: { title: '列表示例页', icon: 'form', single: true },
-    children: [
-      {
-        path: 'demoIndex3',
-        name: 'demoIndex3',
-        component: () => import('@/pages/intelligentOilfield/demo/index3.vue'),
-        meta: { title: '列表示例页' },
-      },
-    ],
-  },
-  {
-    path: '/demo5',
-    name: 'demo5',
-    component: Layout,
-    redirect: '/demo5/demoIndex5',
-    meta: { title: '拖拽示例', icon: 'education', single: true },
-    children: [
-      {
-        path: 'demoIndex5',
-        name: 'demoIndex5',
-        component: () => import('@/pages/intelligentOilfield/demo/index5.vue'),
-        meta: { title: '拖拽示例' },
-      },
-    ],
-  },
+  //   {
+  //     path: '/system/role-auth',
+  //     component: Layout,
+  //     hidden: true,
+  //     children: [
+  //       {
+  //         path: 'user/:roleId(\\d+)',
+  //         component: (resolve) => require(['@/views/system/role/authUser'], resolve),
+  //         name: 'AuthUser',
+  //         meta: { title: '分配用户', activeMenu: '/system/role' }
+  //       }
+  //     ]
+  //   },
   // 详情页路由注册——不显示在左侧菜单
   {
     path: '/userManagementDetail',

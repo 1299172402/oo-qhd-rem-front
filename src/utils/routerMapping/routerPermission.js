@@ -5,6 +5,7 @@
  */
 
 const  GenerateRouter = {
+  "Index":()=>import('@/pages/intelligentOilfield/homePage/index.vue'),// 组织机构管理
   "Organization":()=>import('@/pages/intelligentOilfield/organizationStructure/index.vue'),// 组织机构管理
   "User":()=>import('@/pages/intelligentOilfield/userManagement/index.vue'),// 用户管理
   "Roles":()=>import('@/pages/intelligentOilfield/rolesManagement/index.vue'),// 角色管理
@@ -36,9 +37,9 @@ const  GenerateRouter = {
   "DoneBusinessList": () => import('@/pages/common/doneBusinessList/index.vue'),
   "MessageLog": () => import('@/pages/intelligentOilfield/messageCenter/index.vue'),
   "MessageSubject": () => import('@/pages/intelligentOilfield/messageCenter/messageConfig/index.vue'),
-//   "DemoIndex":()=>import('@/pages/intelligentOilfield/demo/index.vue'),
-//   "DemoIndex2":()=>import('@/pages/intelligentOilfield/demo/index2.vue'),
-//   "DemoIndex3":()=>import('@/pages/intelligentOilfield/demo/index3.vue'),
+  "DemoIndex":()=>import('@/pages/intelligentOilfield/demo/index.vue'),
+  "DemoIndex2":()=>import('@/pages/intelligentOilfield/demo/index2.vue'),
+  "DemoIndex3":()=>import('@/pages/intelligentOilfield/demo/index3.vue'),
 }
 
 export default GenerateRouter

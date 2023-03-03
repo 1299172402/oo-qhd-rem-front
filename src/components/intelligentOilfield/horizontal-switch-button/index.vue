@@ -21,7 +21,7 @@ export default {
       type:Object,
       default(){
         return {
-          'dark':'rgba(0, 222, 240, 0.4)','light':'linear-gradient(180deg, rgba(0, 96, 166, 0.5) 0%, #0060a6 100%)'
+          'dark':'rgba(0, 222, 240, 0.4)','light':'linear-gradient(180deg, rgba(0, 96, 166, 0.5) 0%, var(--onlyLightBlueColor) 100%)'
         }
       }
     },
@@ -30,7 +30,7 @@ export default {
       type:Object,
       default(){
         return {
-          'dark':'rgba(0, 222, 240, 1)','light':'#0060a6'
+          'dark':'rgba(0, 222, 240, 1)','light':'var(--onlyLightBlueColor)'
         }
       }
     },

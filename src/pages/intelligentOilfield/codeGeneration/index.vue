@@ -79,6 +79,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['tool:gen:remove']"
+          class="delbutton"
         >删除</el-button>
       </el-col>
       <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
@@ -143,6 +144,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['tool:gen:remove']"
+            class="delbutton"
           >删除</el-button>
           <el-button
             type="text"

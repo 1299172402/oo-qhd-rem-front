@@ -508,7 +508,7 @@ export default Vue.extend({
 <style scoped>
 .loginInput >>> .el-input__inner {
   border: 1px solid transparent !important;
-  color: #0060a6 !important;
+  color: var(--onlyLightBlueColor) !important;
 }
 .loginInput >>> .t-checkbox__input {
   border: 1px solid #0061a7 !important;

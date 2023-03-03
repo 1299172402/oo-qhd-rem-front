@@ -1,7 +1,8 @@
 <!-- 后台——用户访问 -->
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true">
+    <headerSearch class="g-w100 g-h100">
+    <el-form :model="queryParams" style="margin-top:20px" ref="queryForm" v-show="showSearch" :inline="true">
       <el-form-item label="组织机构" prop="deptId">
         <el-select v-model="queryParams.deptId" placeholder="请选择" clearable size="small" style="width: 240px">
           <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.deptName"
@@ -27,14 +28,15 @@
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery" class="commonBtn">重置</el-button>
       </el-form-item>
     </el-form>
-
-    <el-row :gutter="10" class="mb8">
+</headerSearch>
+  
+    <pagePanelNew headerTitle="用户访问" style="height:calc(100% - 100px);">
+        <el-row :gutter="10" class="mb8" style="margin-bottom:20px">
       <el-col :span="1.5">
         <el-button type="primary" size="mini" @click="handleExport"
           v-hasPermi="['system:userAccess:export']">导出</el-button>
       </el-col>
     </el-row>
-    <pagePanel headerTitle="用户访问">
       <el-table :data="userList" @selection-change="handleSelectionChange" height="calc(100% - 260px)"
         :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header" :cell-style="{ padding: '10px', 'text-align': 'center' }"
@@ -63,7 +65,7 @@
         <pagination :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
           @pagination="getList" />
       </div>
-    </pagePanel>
+    </pagePanelNew>
   </div>
 </template>
 <script>
@@ -78,6 +80,7 @@ import chartsComponents from '@/components/intelligentOilfield/echarts-com/index
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 export default {
+  name: 'UserAccess',
   components: {
     chartsComponents,
   },

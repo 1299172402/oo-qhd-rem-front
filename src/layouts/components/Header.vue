@@ -80,7 +80,7 @@
             </t-button>
           </t-dropdown>
           <t-tooltip placement="bottom" content="系统设置" style="color: var(--whiteColor)">
-            <t-button theme="default" shape="square" variant="text" @click="toggleSettingPanel">
+            <t-button theme="default" shape="square" variant="text" @click="toggleSettingPanel" style="background: transparent;border: 0px;">
               <setting-icon />
             </t-button>
           </t-tooltip>

@@ -83,7 +83,7 @@
             align="center"
           >
             <template slot-scope="scope">
-              <el-button type="text" @click="handleDel(scope.$index)">
+              <el-button type="text" @click="handleDel(scope.$index)" class="delbutton">
                 删除
               </el-button>
             </template>

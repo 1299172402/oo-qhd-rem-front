@@ -54,18 +54,18 @@
         <el-button type="primary" @click="submitForm">关 闭</el-button>
       </div>
     </el-dialog>
-    <div style="height: 8%; position: relative" class="g-row-flex-V">
+    <div style="height: 63.19px; position: relative; display: flex;justify-content: space-between;" class="g-row-flex-V">
       <i class="el-icon-search searchStyle" @click="clickItem(input, '搜索')"></i>
       <el-input prefix-icon="aa" v-model="input" style="width: 400px" placeholder="请输入检索项目"></el-input>
     </div>
-    <div style="height: 92%;position:relative;" class="g-row-flex">
+    <div style="height: 728.8px;position:relative;" :style="{marginTop: isFullScreen ? '25px': '5px'}" class="g-row-flex">
       <div style="height: calc(100% - 0px);" class="g-column-flex leftBgStyle">
         <div style="margin: 10px 0 0 20px;font-weight:700"
-          :style="{ color: $store.state.setting.mode === 'dark' ? '#fff' : '#0060A6' }">边端数据链路</div>
+          :style="{ color: $store.state.setting.mode === 'dark' ? '#fff' : 'var(--onlyLightBlueColor)' }">边端数据链路</div>
         <div class="g-w100 g-h100">
           <!-- I平台 -->
           <div style="height: 33%; position: relative;z-index:1" class="g-row-flex-V">
-            <div class="titleStyle" :style="{ color: $store.state.setting.mode === 'dark' ? '#3AA4ED' : '#0060A6' }">I平台
+            <div class="titleStyle" :style="{ color: $store.state.setting.mode === 'dark' ? '#3AA4ED' : 'var(--onlyLightBlueColor)' }">I平台
             </div>
             <div class="g-row-flex-V"
               style="justify-content: space-between; width: 540px; height: 90%; border: 1px dashed #979797">
@@ -104,7 +104,7 @@
           </div>
           <!-- J平台 -->
           <div style="height: 33%; position: relative" class="g-row-flex-V">
-            <div class="titleStyle" :style="{ color: $store.state.setting.mode === 'dark' ? '#3AA4ED' : '#0060A6' }">J平台
+            <div class="titleStyle" :style="{ color: $store.state.setting.mode === 'dark' ? '#3AA4ED' : 'var(--onlyLightBlueColor)' }">J平台
             </div>
             <div class="g-row-flex-V"
               style="justify-content: space-between; width: 540px; height: 90%; border: 1px dashed #979797">
@@ -138,7 +138,7 @@
           </div>
           <!-- FPSO平台 -->
           <div style="height: 33%; position: relative" class="g-row-flex-V">
-            <div class="titleStyle" :style="{ color: $store.state.setting.mode === 'dark' ? '#3AA4ED' : '#0060A6' }">
+            <div class="titleStyle" :style="{ color: $store.state.setting.mode === 'dark' ? '#3AA4ED' : 'var(--onlyLightBlueColor)' }">
               FPSO平台</div>
             <div class="g-row-flex-V"
               style="justify-content: space-between; width: 540px; height: 90%; border: 1px dashed #979797">
@@ -185,7 +185,7 @@
       </div>
       <div style="height: calc(100% - 0px)" class="g-column-flex rightBgStyle">
         <div style="margin: 10px 0 0 20px;font-weight:700"
-          :style="{ color: $store.state.setting.mode === 'dark' ? '#fff' : '#0060A6' }">云端数据链路</div>
+          :style="{ color: $store.state.setting.mode === 'dark' ? '#fff' : 'var(--onlyLightBlueColor)' }">云端数据链路</div>
         <div class="g-row-flex-V g-h100 g-w100">
           <div class="g-column-flex-HV g-h100" style="width: 22%">
             <div class="g-column-flex-HV"
@@ -320,6 +320,7 @@
 import lineSvg from '@/pages/intelligentOilfield/messageCenter/lineSvg.vue';
 
 export default {
+  name:'Message',
   components: {
     lineSvg,
   },
@@ -413,15 +414,15 @@ export default {
       dialogType: '工作项',
       verticalLine: '12,10 12,10 11,37',
       topLine: '0,20 120,20 120,35 290 35,290,50',
-      bottomLine: '0,40 120,40 120,25 290 25,290,0',
-      wwLink: '265px',
+      bottomLine: '0,40 120,40 120,25 290 25,290,4',
+      wwLink: '218px',
       wwlinkTop: '-167px',
-      wwLinkLine: '0,235 200,235 200,0',
+      wwLinkLine: '0,190 200,190 200,0',
       wtLine: '5,0 5,193 105,193',
       fyLinkHeight: '37px',
       fyLinkTop: '150px',
-      fyPoint: '65,37 65,0 64,0'
-
+      fyPoint: '65,37 65,0 64,0',
+      isFullScreen: false,
     };
   },
   created() {
@@ -442,29 +443,29 @@ export default {
   methods: {
     differFBL() {
       if (document.body.clientHeight === 1080) {
-        this.verticalLine = '12,10 12,10 11,58';
-        this.topLine = '0,20 120,20 120,35 290 35,290,58';
-        this.bottomLine = '0,40 120,40 120,25 290 25,290,0';
-        this.wwLink = '265px';
-        this.wwlinkTop = '-210px';
-        this.wwLinkLine = '0,235 200,235 200,0';
-        this.wtLine = '5,0 5,245 105,245';
-        this.fyLinkHeight = '80px';
-        this.fyLinkTop = '170px';
-        this.fyPoint = '65,80 65,0 64,0'
-
+        // this.verticalLine = '12,10 12,10 11,58';
+        // this.topLine = '0,20 120,20 120,35 290 35,290,58';
+        // this.bottomLine = '0,40 120,40 120,25 290 25,290,0';
+        // this.wwLink = '265px';
+        // this.wwlinkTop = '-210px';
+        // this.wwLinkLine = '0,235 200,235 200,0';
+        // this.wtLine = '5,0 5,245 105,245';
+        // this.fyLinkHeight = '80px';
+        // this.fyLinkTop = '170px';
+        // this.fyPoint = '65,80 65,0 64,0'
+        this.isFullScreen = true;
       } else {
-        this.verticalLine = '12,10 12,10 11,37';
-        this.topLine = '0,20 120,20 120,35 290 35,290,50';
-        this.bottomLine = '0,40 120,40 120,25 290 25,290,4';
-        this.wwLink = '218px';
-        this.wwlinkTop = '-167px';
-        this.wwLinkLine = '0,190 200,190 200,0';
-        this.wtLine = '5,0 5,193 105,193';
-        this.fyLinkHeight = '37px';
-        this.fyLinkTop = '150px';
-        this.fyPoint = '65,37 65,0 64,0'
-
+        // this.verticalLine = '12,10 12,10 11,37';
+        // this.topLine = '0,20 120,20 120,35 290 35,290,50';
+        // this.bottomLine = '0,40 120,40 120,25 290 25,290,4';
+        // this.wwLink = '218px';
+        // this.wwlinkTop = '-167px';
+        // this.wwLinkLine = '0,190 200,190 200,0';
+        // this.wtLine = '5,0 5,193 105,193';
+        // this.fyLinkHeight = '37px';
+        // this.fyLinkTop = '150px';
+        // this.fyPoint = '65,37 65,0 64,0'
+        this.isFullScreen = false;
       }
     },
     submitForm() {
