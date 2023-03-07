@@ -73,8 +73,7 @@ export default ({ mode }) => {
           // 用于开发环境下的转发请求
           // 更多请参考：https://vitejs.dev/config/#server-proxy
           // target: 'http://114.116.211.6:8080', // 旧地址
-          target: 'http://114.115.233.247:38085/prod-api', // 新地址
-          // target: 'http://aselinceaa.natapp1.cc', // zhangbin地址
+          target: 'http://114.116.211.6:8080', // 新地址
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api/, ''),
         },
