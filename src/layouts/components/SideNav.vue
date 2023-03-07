@@ -19,7 +19,7 @@
           v-if="!collapsed && showLogo"
           style="font-size: 16px"
           :style="{ color: formData.mode == 'light' ? '#000' : '#fff' }"
-          >管理系统</span
+          >智能油田管理系统</span
         >
       </template>
       <menu-content :navData="menu" />

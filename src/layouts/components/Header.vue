@@ -9,11 +9,11 @@
     >
       <template #logo>
         <span v-if="showLogo" class="header-logo-container" style="font-size: 20px; width: 226px">
-          <!-- <logo-full
+          <logo-full
             class="t-logo"
             style="width: 49px; height: 44px; margin-top: -10px; margin-right: 10px;"
-          /> -->
-          <span>管理系统</span>
+          />
+          <span class="headerText">智能油田管理系统</span>
         </span>
         <div v-if="layout !== 'top' && !$store.getters['user/isGroupLogin']" class="header-operate-left">
           <t-button theme="default" shape="square" variant="text" @click="changeCollapsed">
@@ -104,7 +104,7 @@ import {
   //   SwapIcon,
 } from 'tdesign-icons-vue';
 import { prefix } from '@/config/global';
-// import LogoFull from '@/assets/logo.svg';
+import LogoFull from '@/assets/logo.svg';
 
 import Notice from './Notice.vue';
 import Message from './Message.vue';
@@ -120,7 +120,7 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 export default Vue.extend({
   components: {
     MenuContent,
-    // LogoFull,
+    LogoFull,
     Notice,
     Message,
     // Search,
@@ -340,7 +340,15 @@ export default Vue.extend({
   margin-left: 24px;
   //   color: var(--td-text-color-primary);
   color: var(--whiteColor);
-
+.headerText{
+    width: 146px;
+height: 25px;
+font-size: 18px;
+font-family: PingFangSC-Semibold, PingFang SC;
+font-weight: 600;
+color: #FFFFFF;
+line-height: 25px;
+}
   .t-logo {
     width: 100%;
     height: 100%;

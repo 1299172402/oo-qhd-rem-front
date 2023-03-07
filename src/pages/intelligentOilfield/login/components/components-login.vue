@@ -98,7 +98,7 @@
         </t-form>
       </div>
     </div>-->
-    <div class="headerDiv">XXXX管理系统</div>
+    <div class="headerDiv">智能油田管理系统</div>
     <div class="loginInput">
       <t-form ref="form" class="formDiv" :data="formData" :rules="FORM_RULES" label-width="0" @validate="onValidate">
         <template>
