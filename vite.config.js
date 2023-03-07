@@ -72,7 +72,7 @@ export default ({ mode }) => {
         '/dev-api': {
           // 用于开发环境下的转发请求
           // 更多请参考：https://vitejs.dev/config/#server-proxy
-          target: 'http://10.247.187.28:8080/dev-api/',
+          target: 'http://10.77.79.57:8080/dev-api/',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api/, ''),
         },
