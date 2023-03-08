@@ -74,7 +74,7 @@
         <el-input v-model="ruleForm.name"></el-input>
       </el-form-item>
       <el-form-item label="活动区域" prop="region">
-        <el-select v-model="ruleForm.region" placeholder="请选择活动区域" style="width: 300px">
+        <el-select v-model="ruleForm.region" placeholder="请选择活动区域" style="width: 300px" clearable>
           <el-option label="区域一" value="shanghai"></el-option>
           <el-option label="区域二" value="beijing"></el-option>
         </el-select>
@@ -135,6 +135,29 @@
       <!-- <el-button class="transfer-footer" slot="left-footer" size="small">操作</el-button>
       <el-button class="transfer-footer" slot="right-footer" size="small">操作</el-button> -->
     </el-transfer>
+    
+    <div style="margin: 10px 0">=================================页面通用面板【具体使用可参照列表示例页】=================================</div>
+    <pagePanel headerTitle="我是标题" style="height: 600px">
+        <!-- <div>这里显示主内容，padding为20px</div> -->
+        <el-table
+      :row-style="{ height: '0px' }"
+      :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+      :data="tableData"
+      header-cell-class-name="table_header"
+      :cell-style="{ padding: '6px', 'text-align': 'center' }"
+      :default-sort="{ prop: 'date', order: 'descending' }"
+    >
+      <el-table-column prop="date" label="日期" sortable width="180"> </el-table-column>
+      <el-table-column prop="name" label="姓名" sortable width="180"> </el-table-column>
+      <el-table-column prop="address" label="地址"> </el-table-column>
+      <el-table-column prop="date" label="日期" sortable width="180"> </el-table-column>
+      <el-table-column prop="name" label="姓名" sortable width="180"> </el-table-column>
+      <el-table-column prop="address" label="地址"> </el-table-column>
+    </el-table>
+    </pagePanel>
+     <div style="margin: 10px 0">=================================新的页面通用面板【具体使用可参照列表示例页】【新增】=================================</div>
+    <pagePanelNew style="height: 600px">
+    </pagePanelNew>
     <!-- 自定义info信息窗 -->
     <div style="margin: 10px 0">=================================自定义info信息窗=================================</div>
     <info-window infoWidth="400px" infoHeight="300px" headerTitle="开采现状分析">
@@ -145,11 +168,16 @@
     <!-- <div style="margin: 10px 0">=================================tab切换按钮：横向，可传值，可传背景色和border色系，可控制深浅色系颜色=================================</div>
     <horizontalSwitchBtn style="margin-bottom: 10px"></horizontalSwitchBtn>
     <horizontalSwitchBtn :colorList="colorList" :borderList="borderList" :dataList="dataList"></horizontalSwitchBtn> -->
+     <!-- Header搜索框部分 -->
+    <div style="margin: 10px 0">=================================Header搜索框部分=================================</div>
+    <header-search>
+    </header-search>
+    <div style="margin: 40px 0"> =================================end========================</div>
   </div>
 </template>
 <script>
-import infoWindow from '@/components/info-window/index.vue';
-// import horizontalSwitchBtn from '@/components/horizontal-switch-button/index.vue';
+import infoWindow from '@/components/intelligentOilfield/info-window/index.vue';
+// import horizontalSwitchBtn from '@/components/intelligentOilfield/horizontal-switch-button/index.vue';
 
 export default {
   components: {
@@ -169,6 +197,49 @@ export default {
       return data;
     };
     return {
+      tableData: [
+        {
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄',
+        },
+        {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1517 弄',
+        },
+        {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄',
+        },
+        {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1516 弄',
+        },
+        {
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄',
+        },
+        {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1517 弄',
+        },
+        {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄',
+        },
+        {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1516 弄',
+        },
+       
+      ],
       colorList: { 'dark':'rgba(13,255,168,0.4)','light':'red'},
       borderList: {'dark':'rgba(13,255,168,1)','light':'green'},
       dataList: [

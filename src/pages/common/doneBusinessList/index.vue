@@ -60,14 +60,14 @@
             </el-form-item>
           </el-form>
           <!-- v-loading="loading" -->
-          <div
-            class="footerBox"
-            :style="{
-              background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff',
-            }"
-          >
-            <div class="headerStyle">用户管理</div>
-            <el-table :data="dataSource" height="calc(100% - 125px)">
+    <pagePanel headerTitle="我的已办">
+            <el-table :data="dataSource" height="calc(100% - 125px)"
+             :row-style="{ height: '0px' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        header-cell-class-name="table_header"
+        :cell-style="{ padding: '2px', 'text-align': 'center' }"
+        style="width: 100%; height: 100%;"
+        :default-sort="{ prop: 'date', order: 'descending' }">
               <el-table-column label="序号" type="index" width="50"> </el-table-column>
               <el-table-column
                 label="流程名称"
@@ -133,7 +133,7 @@
               :limit.sync="ipagination.pageSize"
               @pagination="handleTableChange"
             />
-          </div>
+    </pagePanel>
         </el-col>
       </el-row>
     </div>

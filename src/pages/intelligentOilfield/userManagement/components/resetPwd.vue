@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { updateUserPwdByUserName } from '@/api/system/user';
+import { updateUserPwdByUserName } from '@/api/intelligentOilfield/system/user';
 
 export default {
   props: {

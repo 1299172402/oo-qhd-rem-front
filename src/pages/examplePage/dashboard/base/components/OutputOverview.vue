@@ -69,7 +69,7 @@ import { mapState } from 'vuex';
 import { constructInitDataset } from '../index';
 import { changeChartsTheme } from '@/utils/color';
 import { LAST_7_DAYS } from '@/utils/date';
-import Trend from '@/components/trend/index.vue';
+import Trend from '@/components/intelligentOilfield/trend/index.vue';
 
 import { PANE_LIST, SALE_TEND_LIST, BUY_TEND_LIST, SALE_COLUMNS, BUY_COLUMNS } from '@/service/service-base';
 

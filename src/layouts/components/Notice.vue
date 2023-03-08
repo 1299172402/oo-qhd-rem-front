@@ -1,18 +1,12 @@
 <template>
-  <t-popup
-    expand-animation
-    placement="bottom-right"
-    trigger="click"
-    :visible="isNoticeVisible"
-    @visible-change="onPopupVisibleChange"
-  >
+  <t-popup expand-animation placement="bottom-right" trigger="click" :visible="isNoticeVisible"
+    @visible-change="onPopupVisibleChange">
     <template #content>
       <div class="header-msg">
         <div class="header-msg-top">
           <p>通知</p>
-          <t-button v-if="unreadMsg.length > 0" class="clear-btn" variant="text" theme="primary" @click="setRead('all')"
-            >清空</t-button
-          >
+          <t-button v-if="unreadMsg.length > 0" class="clear-btn" variant="text" theme="primary"
+            @click="setRead('all')">全部已读</t-button>
         </div>
         <t-list v-if="unreadMsg.length > 0" class="narrow-scrollbar" :split="true">
           <t-list-item v-for="(item, index) in unreadMsg" :key="index">
@@ -28,23 +22,17 @@
         </t-list>
 
         <div v-else class="empty-list">
-          <img src="https://tdesign.gtimg.com/pro-template/personal/nothing.png" alt="空" />
+          <img src="../../assets/intelligentOilfield/nothing.png" alt="空" />
           <p>暂无通知</p>
         </div>
         <div class="header-msg-bottom">
-          <t-button
-            v-if="unreadMsg.length > 0"
-            class="header-msg-bottom-link"
-            variant="text"
-            theme="primary"
-            @click="goDetail"
-            >查看全部</t-button
-          >
+          <t-button v-if="unreadMsg.length > 0" class="header-msg-bottom-link" variant="text" theme="primary"
+            @click="goDetail">查看全部</t-button>
         </div>
       </div>
     </template>
     <t-badge :count="unreadMsg.length" :offset="[15, 21]">
-      <t-button theme="default" shape="square" variant="text" @click="isNoticeVisible = true">
+      <t-button theme="default" shape="square" variant="text" @click="isNoticeVisible = true" style="background: transparent;border: 0px;">
         <!-- <mail-icon style="color: var(--whiteColor);"/> -->
         <svg-icon icon-class="message-logo" class="panelIconClass"></svg-icon>
       </t-button>
@@ -56,6 +44,7 @@
 import Vue from 'vue';
 import { mapState, mapGetters } from 'vuex';
 // import { MailIcon } from 'tdesign-icons-vue';
+import { getList, updateAllStatus, updateOneStatus } from '@/api/intelligentOilfield/system/notification.js';
 
 import { NotificationItem } from '@/interface';
 
@@ -72,7 +61,15 @@ export default Vue.extend({
     ...mapState('notification', ['msgData']),
     ...mapGetters('notification', ['unreadMsg']),
   },
+  created() {
+    this.getList();
+  },
   methods: {
+    getList() {
+      getList({ userId: this.$store.getters['user/userDetail'].user.userId, status: '0' }).then(res => {
+        this.$store.commit('notification/setMsgData', res.data.rows);
+      })
+    },
     onPopupVisibleChange(visible: boolean, context) {
       if (context.trigger === 'trigger-element-click') {
         this.isNoticeVisible = true;
@@ -87,17 +84,23 @@ export default Vue.extend({
     setRead(type: string, item?: NotificationItem) {
       const changeMsg = this.msgData;
       if (type === 'all') {
-        changeMsg.forEach((e) => {
-          e.status = false;
-        });
+        // changeMsg.forEach((e) => {
+        //   e.status = false;
+        // });
+        updateAllStatus(this.$store.getters['user/userDetail'].user.userId).then(res => {
+          this.getList()
+        })
       } else {
-        changeMsg.forEach((e) => {
-          if (e.id === item.id) {
-            e.status = false;
-          }
-        });
+        // changeMsg.forEach((e) => {
+        //   if (e.id === item.id) {
+        //     e.status = false;
+        //   }
+        // });
+        updateOneStatus({ userId: this.$store.getters['user/userDetail'].user.userId, mailId: item.mailId }).then(res => {
+          this.getList()
+        })
       }
-      this.$store.commit('notification/setMsgData', changeMsg);
+      // this.$store.commit('notification/setMsgData', changeMsg);
     },
   },
 });

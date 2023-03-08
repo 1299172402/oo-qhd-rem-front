@@ -13,7 +13,19 @@
 .app-container{
     .pagination-container{
         position: absolute;
-        right: 0;
+        right: 20px;
         bottom: 0;
     }
+}
+.el-pagination button:disabled {
+    background: transparent;
+    border: 1px solid var(--lightBlueColor);
+    color: var(--lightBlueColor);
+    font-weight: 500;
+}
+.el-pager li.active {
+    background: var(--lightBlueColor);
+    border: 1px solid var(--lightBlueColor);
+    color: #fff;
+    font-weight: 500;
 }

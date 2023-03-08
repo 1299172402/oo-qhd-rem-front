@@ -54,7 +54,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      paddingNum: '24px'
+      paddingNum: '20px'
     }
   },
   computed: {
@@ -72,13 +72,14 @@ export default Vue.extend({
         path,
         meta: { title },
         name,
+        query
       } = newRoute;
-      this.$store.commit('tabRouter/appendTabRouterList', { path, title, name, isAlive: true });
+      this.$store.commit('tabRouter/appendTabRouterList', { path, title, name, query,isAlive: true });
     },
     '$store.state.user.isGroupLogin': {
       handler(newValue) {
         // 投影模式下减少面板内间距填充
-        this.paddingNum = newValue ? '5px' : '24px';
+        this.paddingNum = newValue ? '0px' : '20px';
       },
       deep: true,
       immediate: true,

@@ -29,6 +29,7 @@
   color: var(--lightBlueColor);
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 500;
+  padding: 0px !important;
 }
 
 .cancelBtn {
@@ -60,9 +61,12 @@
 
 .el-button {
   height: 40px;
+  padding: 0 16px;
 }
 
-
+.el-button+.el-button{
+  margin-left: 20px !important;
+}
 
 //按钮hover时的样式
 .buttonActive_primary:hover {
@@ -81,4 +85,10 @@
 }
 .disableBtn:hover{
   background-color: #fff !important;
+}
+.el-button--small{
+  border-radius: 0;
+}
+.delbutton{
+  color: #FF4D4F;
 }

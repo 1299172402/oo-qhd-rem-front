@@ -49,7 +49,7 @@
 </template>
 
 <script> 
-import { listDbTable, importTable } from "@/api/tool/gen";
+import { listDbTable, importTable } from "@/api/intelligentOilfield/tool/gen";
 
 export default {
   data() {
@@ -101,7 +101,9 @@ export default {
     /** 重置按钮操作 */
     resetQuery() {
       this.resetForm("queryForm");
-      this.handleQuery();
+      this.$nextTick(() => {
+        this.handleQuery();
+      })
     },
     /** 导入按钮操作 */
     handleImportTable() {

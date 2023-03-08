@@ -10,10 +10,14 @@
   background: transparent;
 }
 
+.el-table .cell{
+  height: 40px;
+  line-height: 40px;
+}
 .table_header {
   color: var(--lightBlueColor);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   background: transparent;
   // height: 40px;
 }
@@ -22,6 +26,10 @@
   background: var(--opacityBlueBg);
 }
 
+.el-table th.el-table__cell,
+.el-table th.el-table__cell.is-leaf{
+    background: linear-gradient(to bottom, rgba(36, 222, 255, 0.3), rgba(36, 222, 255, 0.2), rgba(36, 222, 255, 0.3),rgba(36, 222, 255, 0.4)) !important;
+}
 .el-table td.el-table__cell,
 .el-table th.el-table__cell.is-leaf {
   border-bottom: 1px solid var(--opacityBlueBg);
@@ -51,7 +59,8 @@
 .el-table__header-wrapper {
   .cell {
     // background: var(--elDialogcolor);
-  background: linear-gradient(to bottom, rgba(36, 222, 255, 0.3), rgba(36, 222, 255, 0.2), rgba(36, 222, 255, 0.3),rgba(36, 222, 255, 0.4));
+    background: transparent;
+//   background: linear-gradient(to bottom, rgba(36, 222, 255, 0.3), rgba(36, 222, 255, 0.2), rgba(36, 222, 255, 0.3),rgba(36, 222, 255, 0.4));
     color: #fff;
     height: 34px;
     line-height: 34px;
@@ -78,7 +87,10 @@
   margin: 20px 0 0 0;
   height: calc(100% - 125px);
   position: relative;
-  padding: 14px 14px 0;
+//   padding: 14px 14px 0;
+    border: 1px solid #ddd;
+    border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
+    // overflow: hidden;
 }
 
 .right {
@@ -101,4 +113,29 @@
 }
 .el-table .sort-caret.descending {
     border-top-color: gray;
+}
+
+.el-table thead.is-group th.el-table__cell {
+    background: transparent;
+}
+.el-table--border .el-table__cell, .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed {
+    border-right: 1px solid var(--opacityBlueBg);
+}
+.el-table--border th.el-table__cell, .el-table__fixed-right-patch {
+    border-bottom: 1px solid var(--opacityBlueBg);
+}
+.el-table--border, .el-table--group {
+    border: 1px solid var(--opacityBlueBg) !important;
+}
+.el-table--border::after, .el-table--group::after, .el-table::before {
+    background-color: var(--opacityBlueBg);
+}
+.tablestyle{
+  .el-table__row{
+    line-height: 20px;
+    font-family: PingFangSC-Regular, PingFang SC;
+  }
+}
+.el-table__cell{
+  padding: 0px !important;
 }

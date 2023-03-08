@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="字典名称" prop="dictType">
-        <el-select v-model="queryParams.dictType" size="small">
+        <el-select v-model="queryParams.dictType" size="small" clearable>
           <el-option v-for="item in typeOptions" :key="item.dictId" :label="item.dictName" :value="item.dictType" />
         </el-select>
       </el-form-item>
@@ -87,13 +87,7 @@
         </el-col> -->
       <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
     </el-row>
-    <div
-      class="footerBox"
-      :style="{
-        background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff',
-      }"
-    >
-      <div class="headerStyle">字典数据</div>
+     <pagePanel headerTitle="字典数据">
       <el-table v-loading="loading" :data="dataList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="字典编码" align="center" prop="dictCode" />
@@ -134,6 +128,7 @@
               icon="el-icon-delete"
               @click="handleDelete(scope.row)"
               v-hasPermi="['system:dict:remove']"
+              class="delbutton"
               >删除</el-button
             >
           </template>
@@ -146,7 +141,7 @@
         :limit.sync="queryParams.pageSize"
         @pagination="getList"
       />
-    </div>
+    </pagePanel>
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
@@ -166,7 +161,7 @@
           <el-input-number v-model="form.dictSort" controls-position="right" :min="0" />
         </el-form-item>
         <el-form-item label="回显样式" prop="listClass">
-          <el-select v-model="form.listClass">
+          <el-select v-model="form.listClass" clearable>
             <el-option
               v-for="item in listClassOptions"
               :key="item.value"
@@ -195,8 +190,8 @@
 </template>
   
 <script>
-import { listData, getData, delData, addData, updateData } from '@/api/system/dict/data';
-import { listType, getType } from '@/api/system/dict/type';
+import { listData, getData, delData, addData, updateData } from '@/api/intelligentOilfield/system/dict/data';
+import { listType, getType } from '@/api/intelligentOilfield/system/dict/type';
 
 export default {
   name: 'Data',
@@ -279,8 +274,8 @@ export default {
     /** 查询字典类型详细 */
     getType(dictId) {
       getType(dictId).then((response) => {
-        this.queryParams.dictType = response.data.dictType;
-        this.defaultDictType = response.data.dictType;
+        this.queryParams.dictType = response.data.data.dictType;
+        this.defaultDictType = response.data.data.dictType;
         this.getList();
       });
     },
@@ -332,7 +327,9 @@ export default {
     resetQuery() {
       this.resetForm('queryForm');
       this.queryParams.dictType = this.defaultDictType;
-      this.handleQuery();
+      this.$nextTick(() => {
+        this.handleQuery();
+      })
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -352,7 +349,7 @@ export default {
       this.reset();
       const dictCode = row.dictCode || this.ids;
       getData(dictCode).then((response) => {
-        this.form = response.data;
+        this.form = response.data.data;
         this.open = true;
         this.title = '修改字典数据';
       });

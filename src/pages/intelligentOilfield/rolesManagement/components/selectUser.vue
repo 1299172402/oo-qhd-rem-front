@@ -70,8 +70,8 @@
 </template>
 
 <script>
-import { unallocatedUserList, authUserSelectAll } from "@/api/system/role";
-import { treeselect } from '@/api/system/dept';
+import { unallocatedUserList, authUserSelectAll } from "@/api/intelligentOilfield/system/role";
+import { treeselect } from '@/api/intelligentOilfield/system/dept';
 import Treeselect from '@riophae/vue-treeselect';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 
@@ -151,7 +151,9 @@ export default {
     /** 重置按钮操作 */
     resetQuery() {
       this.resetForm("queryForm");
-      this.handleQuery();
+      this.$nextTick(() => {
+        this.handleQuery();
+      })
     },
     /** 选择授权用户操作 */
     handleSelectUser() {

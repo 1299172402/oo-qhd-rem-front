@@ -28,7 +28,8 @@
       </el-col>
       <!--用户数据-->
       <el-col :span="20" :xs="24" class="right">
-        <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+      <headerSearch class="g-w100 g-h100">
+        <el-form :model="queryParams" ref="queryForm" style="margin-top:20px" :inline="true" v-show="showSearch" label-width="68px">
           <el-form-item label="用户账号" prop="userName">
             <el-input
               v-model="queryParams.userName"
@@ -40,7 +41,7 @@
             />
           </el-form-item>
           <el-form-item label="用户角色" prop="roleId">
-            <el-select v-model="queryParams.roleId" style="width: 240px" placeholder="请选择用户角色">
+            <el-select v-model="queryParams.roleId" style="width: 240px" placeholder="请选择用户角色" clearable>
               <el-option
                 v-for="item in roleOptions"
                 :key="item.roleId"
@@ -51,7 +52,13 @@
             </el-select>
           </el-form-item>
           <el-form-item label="用户岗位" prop="postId">
-            <el-select v-model="queryParams.postId" style="width: 240px" placeholder="请选择用户岗位" collapse-tags>
+            <el-select
+              v-model="queryParams.postId"
+              style="width: 240px"
+              placeholder="请选择用户岗位"
+              collapse-tags
+              clearable
+            >
               <el-option
                 v-for="item in postOptions"
                 :key="item.postId"
@@ -109,8 +116,11 @@
             <el-button icon="el-icon-refresh" size="mini" class="commonBtn" @click="resetQuery">重置</el-button>
           </el-form-item>
         </el-form>
+      </headerSearch>
 
-        <el-row :gutter="10" class="mb8">
+        <!-- v-loading="loading" -->
+        <pagePanelNew headerTitle="用户管理" style="height:calc(100% - 100px);">
+            <el-row :gutter="10" class="mb8" style="margin-bottom:20px">
           <el-col :span="1.5">
             <el-button
               type="primary"
@@ -157,15 +167,17 @@
           </el-col>
           <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList" :columns="columns"></right-toolbar> -->
         </el-row>
-        <!-- v-loading="loading" -->
-        <div
-          class="footerBox"
-          :style="{
-            background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff',
-          }"
-        >
-          <div class="headerStyle">用户管理</div>
-          <el-table :data="userList" @selection-change="handleSelectionChange" height="calc(100% - 125px)">
+          <el-table
+            :data="userList"
+            @selection-change="handleSelectionChange"
+            height="calc(100% - 108px)"
+            :row-style="{ height: '0px' }"
+            :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+            header-cell-class-name="table_header"
+            :cell-style="{ padding: '2px', 'text-align': 'center' }"
+            style="width: 100%; height: 100%"
+            :default-sort="{ prop: 'date', order: 'descending' }"
+          >
             <el-table-column type="selection" width="50" align="center" />
             <el-table-column label="序号" type="index" width="50"> </el-table-column>
             <!-- <el-table-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible" /> -->
@@ -221,14 +233,14 @@
             </template>
           </el-table-column> -->
             <el-table-column label="账号信息" align="center" width="160" class-name="small-padding fixed-width">
-              <template slot-scope="scope" v-if="scope.row.userId !== 1">
+              <template slot-scope="scope" v-if="scope.row.userId !== '1'">
                 <el-button size="mini" type="text" @click="seeDetail(scope.row)" v-hasPermi="['system:user:edit']"
                   >查看账号信息</el-button
                 >
               </template>
             </el-table-column>
             <el-table-column label="操作" align="center" width="220" class-name="small-padding fixed-width">
-              <template slot-scope="scope" v-if="scope.row.userId !== 1">
+              <template slot-scope="scope" v-if="scope.row.userId !== '1'">
                 <el-button size="mini" type="text" @click="handleUpdate(scope.row)" v-hasPermi="['system:user:edit']"
                   >修改</el-button
                 >
@@ -239,7 +251,12 @@
                   v-hasPermi="['system:user:resetPwd']"
                   >重置密码</el-button
                 >
-                <el-button size="mini" type="text" @click="handleDelete(scope.row)" v-hasPermi="['system:user:remove']"
+                <el-button
+                  size="mini"
+                  type="text"
+                  @click="handleDelete(scope.row)"
+                  v-hasPermi="['system:user:remove']"
+                  class="delbutton"
                   >删除</el-button
                 >
                 <!-- <el-dropdown
@@ -270,12 +287,19 @@
             :limit.sync="queryParams.pageSize"
             @pagination="getList"
           />
-        </div>
+        </pagePanelNew>
       </el-col>
     </el-row>
 
     <!-- 添加或修改用户配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body :close-on-click-modal="false">
+    <el-dialog
+      :title="title"
+      :visible.sync="open"
+      width="800px"
+      append-to-body
+      :close-on-click-modal="false"
+      @close="closeDialog('form')"
+    >
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <div class="headerinfo">基础信息</div>
         <el-row>
@@ -286,7 +310,7 @@
           </el-col>
           <el-col :span="11">
             <el-form-item label="用户角色" prop="roleIds">
-              <el-select v-model="form.roleIds" multiple placeholder="请选择用户角色" collapse-tags>
+              <el-select v-model="form.roleIds" multiple placeholder="请选择用户角色" collapse-tags clearable>
                 <el-option
                   v-for="item in roleOptions"
                   :key="item.roleId"
@@ -301,7 +325,15 @@
         <el-row>
           <el-col :span="11">
             <el-form-item label="用户岗位">
-              <el-select v-model="form.tempPostId" placeholder="请选择用户岗位" @change="changePost">
+              <el-select
+                multiple
+                collapse-tags
+                v-model="form.postIds"
+                placeholder="请选择用户岗位"
+                @change="changePost"
+                clearable
+                style="width: 100%"
+              >
                 <el-option
                   v-for="item in postOptions"
                   :key="item.postId"
@@ -353,7 +385,7 @@
           </el-col>
           <el-col :span="11">
             <el-form-item label="账号类型" prop="userType">
-              <el-select v-model="form.userType" placeholder="请选择账号类型">
+              <el-select v-model="form.userType" placeholder="请选择账号类型" clearable class="g-w100">
                 <el-option
                   v-for="(item, index) in accountType"
                   :key="index"
@@ -419,7 +451,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel" class="cancelBtn">取 消</el-button>
+        <el-button @click="cancel('form')" class="cancelBtn">取 消</el-button>
       </div>
     </el-dialog>
     <!-- 修改密码（带原密码，确认密码）-暂时不用 -->
@@ -546,15 +578,24 @@
 </template>
 
 <script>
-import { listUser, getUser, delUser, addUser, updateUser, resetUserPwd, changeUserStatus } from '@/api/system/user';
-import { listPost, addPost } from '@/api/system/post';
+import {
+  listUser,
+  getUser,
+  delUser,
+  addUser,
+  updateUser,
+  resetUserPwd,
+  changeUserStatus,
+} from '@/api/intelligentOilfield/system/user';
+import { listPost, addPost } from '@/api/intelligentOilfield/system/post';
 // import { getToken } from "@/utils/auth";
-import { treeselect } from '@/api/system/dept';
+import { treeselect } from '@/api/intelligentOilfield/system/dept';
 import Treeselect from '@riophae/vue-treeselect';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 import proxy from '@/config/host';
 
 export default {
+  name: 'User',
   dicts: ['sys_normal_disable', 'sys_user_sex'],
   components: { Treeselect },
   filters: {
@@ -695,7 +736,11 @@ export default {
         password: [
           { required: true, message: '用户密码不能为空', trigger: 'blur' },
           //   { min: 8, max: 20, message: '用户密码长度必须介于 8 和 20 之间', trigger: 'blur' },
-          {pattern:/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{8,20}$/, message:'必须包含大小写字母，数字和特殊字符，且字符在8到20之间'}
+          {
+            pattern:
+              /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{8,20}$/,
+            message: '必须包含大小写字母，数字和特殊字符，且字符在8到20之间',
+          },
         ],
         surePassword: [
           { required: true, message: '确认密码不能为空', trigger: 'blur' },
@@ -799,9 +844,10 @@ export default {
         });
     },
     // 取消按钮
-    cancel() {
+    cancel(formName) {
       this.open = false;
       this.reset();
+      this.$refs[formName].resetFields();
     },
     // 表单重置
     reset() {
@@ -820,6 +866,7 @@ export default {
         roleIds: [],
         tempPostId: undefined, // 临时的用户岗位
         userType: '', // 账号类型
+        surePassword: undefined,
       };
       this.resetForm('form');
     },
@@ -832,7 +879,9 @@ export default {
     resetQuery() {
       this.dateRange = [];
       this.resetForm('queryForm');
-      this.handleQuery();
+      this.$nextTick(() => {
+        this.handleQuery();
+      });
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -902,13 +951,13 @@ export default {
         this.form = response.data.data;
         this.postOptions = response.data.posts;
         this.roleOptions = response.data.roles;
-        this.form.postIds = response.data.postIds;
-        this.form.tempPostId = parseInt(response.data.postIds.toLocaleString(), 10);
-        this.form.roleIds = response.data.roleIds;
+        this.form.postIds = response.data.postIds.toLocaleString().split(',');
+        // this.form.tempPostId = String(response.data.postIds.toLocaleString());
+        this.form.roleIds = response.data.roleIds.toLocaleString().split(',');
         this.open = true;
         this.title = '编辑用户';
         this.form.password = '';
-        console.log('sdsds', this.form.postIds);
+        // console.log('sdsds', this.form.postIds);
       });
     },
     /** 重置密码按钮操作 */
@@ -917,7 +966,8 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         closeOnClickModal: false,
-        inputPattern: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{8,20}$/,
+        inputPattern:
+          /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{8,20}$/,
         inputErrorMessage: '必须包含大小写字母，数字和特殊字符，且字符在8到20之间',
       })
         .then(({ value }) => {
@@ -949,8 +999,8 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      this.form.postIds = [];
-      this.form.postIds.push(this.form.tempPostId);
+      //   this.form.postIds = [];
+      //   this.form.postIds.push(this.form.tempPostId);
       this.queryParams.pageNum = 1;
       this.$refs.form.validate((valid) => {
         if (valid) {
@@ -1051,6 +1101,9 @@ export default {
     submitFileForm() {
       this.$refs.upload.submit();
     },
+    closeDialog(formName) {
+      this.$refs[formName].resetFields();
+    },
   },
 };
 </script>
@@ -1062,9 +1115,8 @@ export default {
   white-space: nowrap;
 }
 
-  .el-dialog__body .el-row {
-    display: flex;
-    justify-content: space-between;
-  }
-
+.el-dialog__body .el-row {
+  display: flex;
+  justify-content: space-between;
+}
 </style>

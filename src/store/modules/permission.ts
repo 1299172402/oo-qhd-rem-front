@@ -5,6 +5,9 @@ import ParentView from '@/layouts/blank.vue';
 import router from '@/router/index';
 // import GenerateRouter from '@/utils/routerMapping/routerPermission'; // 路由映射文件
 import InnerLink from '@/pages/intelligentOilfield/iframePage/index.vue'
+import proxy from "@/config/host";
+
+const env = import.meta.env.MODE || "development";
 
 // function filterPermissionsRouters(routes, roles) {
 //   const res = [];
@@ -145,8 +148,9 @@ const actions = {
     // }
     
     // commit('setRouters', asyncRouterList);
+    const {appId} = proxy[env];
     await axios
-      .get('system/menu/getRouters').then(res => {
+      .get(`system/menu/getRouters${appId ? `?appId=${appId}` : ""}`).then(res => {
         if (res.data.code === 200) {
           const sidebarRoutes = filterAsyncRouter(res.data.data)
 

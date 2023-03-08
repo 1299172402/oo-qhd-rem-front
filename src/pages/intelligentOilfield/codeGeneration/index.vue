@@ -79,12 +79,20 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['tool:gen:remove']"
+          class="delbutton"
         >删除</el-button>
       </el-col>
       <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
     </el-row>
-
-    <el-table v-loading="loading" :data="tableList" @selection-change="handleSelectionChange">
+    <pagePanel headerTitle="代码生成" style="height: 600px">
+    <el-table v-loading="loading" :data="tableList" @selection-change="handleSelectionChange"
+    :row-style="{ height: '0px' }"
+    height="calc(100% - 125px)"
+      :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+      header-cell-class-name="table_header"
+      :cell-style="{ padding: '6px', 'text-align': 'center' }"
+      :default-sort="{ prop: 'date', order: 'descending' }"
+      style="height">
       <el-table-column type="selection" align="center" width="55"></el-table-column>
       <el-table-column label="序号" type="index" width="50" align="center">
         <template slot-scope="scope">
@@ -136,6 +144,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['tool:gen:remove']"
+            class="delbutton"
           >删除</el-button>
           <el-button
             type="text"
@@ -161,6 +170,7 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
+    </pagePanel>
     <!-- 预览界面 -->
     <el-dialog :title="preview.title" :visible.sync="preview.open" width="80%" top="5vh" append-to-body class="scrollbar">
       <el-tabs v-model="preview.activeName">
@@ -170,7 +180,6 @@
           :name="key.substring(key.lastIndexOf('/')+1,key.indexOf('.vm'))"
           :key="key"
         >
-          <el-link :underline="false" icon="el-icon-document-copy" v-clipboard:copy="value" v-clipboard:success="clipboardSuccess" style="float:right">复制</el-link>
           <pre><code class="hljs" v-html="highlightedCode(value, key)"></code></pre>
         </el-tab-pane>
       </el-tabs>
@@ -180,7 +189,7 @@
 </template>
 
 <script>
-import { listTable, previewTable, delTable, genCode, synchDb } from "@/api/tool/gen";
+import { listTable, previewTable, delTable, genCode, synchDb } from "@/api/intelligentOilfield/tool/gen";
 import importTable from "./components/importTable.vue";
 import hljs from "highlight.js/lib/highlight";
 import "highlight.js/styles/github-gist.css";
@@ -294,7 +303,9 @@ export default {
     resetQuery() {
       this.dateRange = [];
       this.resetForm("queryForm");
-      this.handleQuery();
+      this.$nextTick(() => {
+        this.handleQuery();
+      })
     },
     /** 预览按钮 */
     handlePreview(row) {

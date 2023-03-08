@@ -116,7 +116,7 @@
 </template>
 <script>
 import { prefix } from '@/config/global';
-import Trend from '@/components/trend/index.vue';
+import Trend from '@/components/intelligentOilfield/trend/index.vue';
 
 import {
   CONTRACT_STATUS,

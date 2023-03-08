@@ -6,11 +6,11 @@
         <div>推荐以下主流浏览器</div>
         <div class="recommend-browser">
           <div>
-            <thumbnail class="browser-icon" url="https://tdesign.gtimg.com/starter/result-page/chorme.png" />
+            <thumbnail class="browser-icon" url="../../../../assets/intelligentOilfield/chorme.png" />
             <div>Chrome</div>
           </div>
           <div>
-            <thumbnail class="browser-icon" url="https://tdesign.gtimg.com/starter/result-page/qq-browser.png" />
+            <thumbnail class="browser-icon" url="../../../../assets/intelligentOilfield/qq-browser.png" />
             <div>QQ Browser</div>
           </div>
         </div>
@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import Result from '@/components/result/index.vue';
-import Thumbnail from '@/components/thumbnail/index.vue';
+import Result from '@/components/intelligentOilfield/result/index.vue';
+import Thumbnail from '@/components/intelligentOilfield/thumbnail/index.vue';
 
 export default {
   name: 'ResultBrowserIncompatible',

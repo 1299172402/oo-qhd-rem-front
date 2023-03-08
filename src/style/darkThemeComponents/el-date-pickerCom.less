@@ -148,3 +148,19 @@
 .el-popper[x-placement^=top] .popper__arrow::after {
     border-top-color: rgba(0, 0, 0, 0.8);
 }
+// 年份选择器
+.el-year-table td .cell {
+    color: var(--whiteColor);
+}
+.el-year-table td.today .cell {
+    border: 1px solid #177DDC;
+    color: #177DDC;
+}
+.el-year-table td.current:not(.disabled) .cell {
+    color: #fff;
+    background: #177DDC;
+    border-radius: 4px;
+}
+.el-year-table td .cell:hover {
+    color: #177DDC;
+}

@@ -5,6 +5,7 @@ export type TRouterInfo = {
   name?: string;
   isAlive?: boolean;
   isHome?: boolean;
+  query?: any
 };
 
 export type TTabRouterType = {

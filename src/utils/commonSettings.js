@@ -47,7 +47,12 @@ export function parseTime(time, pattern) {
 export function resetForm(refName) {
   if (this.$refs[refName]) {
     this.$nextTick(()=>{
-      this.$refs[refName].resetFields();
+      // this.$refs[refName].resetFields();
+      if(refName==='queryForm'){
+        this.$refs[refName].resetFields();
+      }else{
+        this.$refs[refName].clearValidate();
+      }
     })
   }
 }

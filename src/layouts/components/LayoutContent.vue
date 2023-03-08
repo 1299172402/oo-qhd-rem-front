@@ -121,7 +121,10 @@ export default Vue.extend({
       }
     },
     handleChangeCurrentTab(path: string) {
-      this.$router.push(path);
+      const tabRouterItem = this.tabRouterList.find((item) => item.path === path) || { path };
+      console.log(tabRouterItem.query);
+      
+      this.$router.push({ path: tabRouterItem.path, query: tabRouterItem.query || {}});
     },
     handleRefresh(currentPath: string, routeIdx: number) {
       this.$store.commit('tabRouter/toggleTabRouterAlive', routeIdx);

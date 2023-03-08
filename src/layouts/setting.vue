@@ -115,8 +115,8 @@ import { PopupVisibleChangeContext } from 'tdesign-vue';
 import STYLE_CONFIG from '@/config/style';
 import { insertThemeStylesheet, generateColorMap } from '@/config/color';
 
-import Thumbnail from '@/components/thumbnail/index.vue';
-import ColorContainer from '@/components/color/index.vue';
+import Thumbnail from '@/components/intelligentOilfield/thumbnail/index.vue';
+import ColorContainer from '@/components/intelligentOilfield/color/index.vue';
 
 import SettingDarkIcon from '@/assets/assets-setting-dark.svg';
 import SettingLightIcon from '@/assets/assets-setting-light.svg';
@@ -207,7 +207,7 @@ export default {
       return SettingAutoIcon;
     },
     getThumbnailUrl(name: string) {
-      return `https://tdesign.gtimg.com/starter/setting/${name}.png`;
+      return new URL(`../assets/intelligentOilfield/${name}.png`, import.meta.url).href
     },
     handleClick(): void {
       this.$store.commit('setting/toggleSettingPanel', true);

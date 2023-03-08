@@ -3,6 +3,7 @@ import 'nprogress/nprogress.css'; // progress bar style
 
 import store from '@/store';
 import router from '@/router';
+import { jumpFromGateway } from "@/utils/thirdPartyInteraction";
 
 NProgress.configure({ showSpinner: false });
 
@@ -11,6 +12,9 @@ const whiteListRouters = store.getters['permission/whiteListRouters'];
 router.beforeEach(async (to, from, next) => {
   NProgress.start();
 
+  if (jumpFromGateway(to)) {
+    return;
+  }
   const token = store.getters['user/token'];
 
   if (token) {

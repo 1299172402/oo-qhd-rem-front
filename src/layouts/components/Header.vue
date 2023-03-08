@@ -9,11 +9,11 @@
     >
       <template #logo>
         <span v-if="showLogo" class="header-logo-container" style="font-size: 20px; width: 226px">
-          <!-- <logo-full
+          <logo-full
             class="t-logo"
             style="width: 49px; height: 44px; margin-top: -10px; margin-right: 10px;"
-          /> -->
-          <span>管理系统</span>
+          />
+          <span class="headerText">智能油田管理系统</span>
         </span>
         <div v-if="layout !== 'top' && !$store.getters['user/isGroupLogin']" class="header-operate-left">
           <t-button theme="default" shape="square" variant="text" @click="changeCollapsed">
@@ -31,7 +31,11 @@
                 :clearable="false"
               />
       </template>
-      <menu-content v-show="layout !== 'side' && !$store.getters['user/isGroupLogin']" class="header-menu" :navData="menu" />
+      <menu-content
+        v-show="layout !== 'side' && !$store.getters['user/isGroupLogin']"
+        class="header-menu"
+        :navData="menu"
+      />
       <template #operations>
         <div class="operations-container" style="margin-left: 20px">
           <!-- 搜索框 -->
@@ -41,10 +45,9 @@
           <message />
           <!-- 全局通知，通告 -->
           <notice />
-          
-          <!-- <t-button v-show="$store.getters['user/isGroupLogin']" theme="default" variant="text" @click="switchMode" style="color: var(--whiteColor)"
-            ><swap-icon style="color: var(--whiteColor)" />{{ currentMode }}</t-button
-          > -->
+          <el-tooltip class="item" effect="dark" content="编辑面板" placement="bottom">
+            <svg-icon @clickIcon="editPanel" icon-class="edit-panel" class="panelIconClass" />
+          </el-tooltip>
           <!-- <t-button
             theme="default"
             variant="text"
@@ -77,7 +80,7 @@
             </t-button>
           </t-dropdown>
           <t-tooltip placement="bottom" content="系统设置" style="color: var(--whiteColor)">
-            <t-button theme="default" shape="square" variant="text" @click="toggleSettingPanel">
+            <t-button theme="default" shape="square" variant="text" @click="toggleSettingPanel" style="background: transparent;border: 0px;">
               <setting-icon />
             </t-button>
           </t-tooltip>
@@ -97,26 +100,27 @@ import {
   PoweroffIcon,
   SettingIcon,
   ChevronDownIcon,
-//   EditIcon,
-//   SwapIcon,
+  //   EditIcon,
+  //   SwapIcon,
 } from 'tdesign-icons-vue';
 import { prefix } from '@/config/global';
-// import LogoFull from '@/assets/logo.svg';
+import LogoFull from '@/assets/logo.svg';
 
 import Notice from './Notice.vue';
 import Message from './Message.vue';
 // import Search from './Search.vue'
 import MenuContent from './MenuContent.vue';
-import { updateLastLogout } from "@/api/login";
-import {getDeptsBydeptId} from '@/api/system/dept'
-import Treeselect from '@riophae/vue-treeselect'
+import { updateLastLogout } from "@/api/intelligentOilfield/login";
+import { updateaccessPage } from '@/api/intelligentOilfield/system/user';
+import {getDeptsBydeptId} from '@/api/intelligentOilfield/system/dept';
+import Treeselect from '@riophae/vue-treeselect';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 
 
 export default Vue.extend({
   components: {
     MenuContent,
-    // LogoFull,
+    LogoFull,
     Notice,
     Message,
     // Search,
@@ -211,73 +215,58 @@ export default Vue.extend({
     editPanel() {
       this.$bus.$emit("emitBus");
     },
-    // 切换到后台管理系统
-    switchRouter(type) {
-      if(type === '后台') {
-        // 解决重新登录系统标签页未关闭的问题
-        this.$store.commit('tabRouter/removeTabRouterList');
-        this.$store.commit('user/SETISGROUPLOGIN', false);
-        this.$router.push('/homePage/index');
-        this.currentMode = '办公模式';
-      }else {
-        this.$router.push('/portal/projectionMode');
-        this.$store.commit('user/SETISGROUPLOGIN', true);
-      }
-    },
     // 进入大屏模式
     projectionMode() {
       this.$store.commit('user/setProjectionMode', true);
-    },
-    // 切换投影模式和办公模式
-    switchMode() {
-      if (this.currentMode === '办公模式') {
-        this.$router.push('/portal/officeMode');
-        this.currentMode = '投影模式';
-      } else {
-        this.$router.push('/portal/projectionMode');
-        this.currentMode = '办公模式';
-      }
     },
     toggleSettingPanel() {
       this.$store.commit('setting/toggleSettingPanel', true);
     },
     handleLogout() {
-    // logout().then(res => {
-    //     this.$confirm('确定注销并退出系统吗？', '提示', {
-    //       confirmButtonText: '确定',
-    //       cancelButtonText: '取消',
-    //       type: 'warning'
-    //     }).then(() => {
-    //       if(res.data.code === 200) {
-    //         this.$store.dispatch('user/logout');
-    //         this.$store.dispatch('permission/restore');
-    //         this.$router.push(`/login?redirect=${this.$router.history.current.fullPath}`);
-    //       }
-    //     })
-    //   });
-    //   console.log('当前路由', this.$router.app?.$route?.path);
-      let currentSystem = 0;// 0:门户，1：后台管理系统
-      if(this.$router.app?.$route?.path === '/portal/projectionMode' || this.$router.app?.$route?.path === '/portal/officeMode') {
-        currentSystem=0
+      // logout().then(res => {
+      //     this.$confirm('确定注销并退出系统吗？', '提示', {
+      //       confirmButtonText: '确定',
+      //       cancelButtonText: '取消',
+      //       type: 'warning'
+      //     }).then(() => {
+      //       if(res.data.code === 200) {
+      //         this.$store.dispatch('user/logout');
+      //         this.$store.dispatch('permission/restore');
+      //         this.$router.push(`/login?redirect=${this.$router.history.current.fullPath}`);
+      //       }
+      //     })
+      //   });
+      //   console.log('当前路由', this.$router.app?.$route?.path);
+      let currentSystem = 0; // 0:门户，1：后台管理系统
+      if (
+        this.$router.app?.$route?.path === '/portal/projectionMode' ||
+        this.$router.app?.$route?.path === '/portal/officeMode'
+      ) {
+        currentSystem = 0;
       } else {
-        currentSystem=1
+        currentSystem = 1;
       }
-      const params={
+      const params = {
         userName: this.$store.getters['user/name'],
         logout: currentSystem,
-      }
-      updateLastLogout(params).then(res => {
-        if(res.data.code === 200) {
-        //   console.log('退出登录结果===', res);
+      };
+      updateLastLogout(params).then((res) => {
+        if (res.data.code === 200) {
+          //   console.log('退出登录结果===', res);
         }
       });
-    
+
       this.$confirm('确定注销并退出系统吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
       })
         .then(() => {
+          // 更新访问页面
+          const sysUser = { accessPage: this.$store.state.route.meta.title, userName: this.$store.state.user.name };
+          updateaccessPage(sysUser).then((res) => {
+            console.log(res);
+          });
           this.$store.dispatch('user/logout');
           this.$store.dispatch('permission/restore');
           this.$router.push(`/login?redirect=${this.$router.history.current.fullPath}`);
@@ -351,7 +340,15 @@ export default Vue.extend({
   margin-left: 24px;
   //   color: var(--td-text-color-primary);
   color: var(--whiteColor);
-
+.headerText{
+    width: 146px;
+height: 25px;
+font-size: 18px;
+font-family: PingFangSC-Semibold, PingFang SC;
+font-weight: 600;
+color: #FFFFFF;
+line-height: 25px;
+}
   .t-logo {
     width: 100%;
     height: 100%;
@@ -437,5 +434,13 @@ export default Vue.extend({
       margin-bottom: 8px;
     }
   }
+}
+</style>
+<style scoped>
+.panelIconClass {
+  width: 40px !important;
+  height: 25px !important;
+  cursor: pointer;
+  color: #fff;
 }
 </style>

@@ -1,9 +1,10 @@
 <template>
   <div style="width: 100%; height: 100%" class="pageBox">
-    <div class="topSearchDiv">
-      <div>角色名称：<el-input v-model="input" style="width: 300px" placeholder="请输入角色名称"></el-input></div>
+    <header-search class="g-w100 g-h100">
+        <div class="g-row-flex-V g-w100 g-h100">
+      <div>角色名称：<el-input v-model="input" style="width: 200px" placeholder="请输入角色名称"></el-input></div>
       <div style="margin: 0 20px">
-        状态：<el-select v-model="value" placeholder="请选择">
+        状态：<el-select v-model="value" placeholder="请选择" clearable>
           <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
         </el-select>
       </div>
@@ -11,25 +12,21 @@
         <el-button type="primary">搜索</el-button>
         <el-button class="commonBtn">重置</el-button>
       </div>
-    </div>
-    <div
-      class="footerBox"
-      :style="{
-        background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff',
-      }"
-    >
-      <div class="headerStyle">角色列表</div>
-
+      </div>
+    </header-search>
+    <pagePanelNew headerTitle="角色列表" style="height:calc(100% - 100px);" class="g-w100">
       <!-- <gradientBox></gradientBox> -->
+      <div class="btnPosition g-row-flex">
+      <el-button class=""  type="primary">新增</el-button>
+      </div>
       <el-table
-        height="calc(100% - 170px)"
+        height="calc(100% - 113px)"
         :row-style="{ height: '0px' }"
-        class="tableDiv"
-        :header-cell-style="{ 'text-align': 'center', padding: '6px 0' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
-        :cell-style="{ padding: '6px', 'text-align': 'center' }"
+        :cell-style="{ padding: '3px', 'text-align': 'center' }"
         :data="tableData"
-        style="width: 98%; height: 100%; margin: 20px"
+        style="width: 100%; height: 100%"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column type="index" label="序号" width="100"> </el-table-column>
@@ -47,13 +44,19 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination background layout="prev, pager, next,total" :total="1000" class="paginationDiv"> </el-pagination>
-    </div>
+       <pagination
+        v-show="total > 0"
+        :total="total"
+        :page.sync="queryParams.pageNum"
+        :limit.sync="queryParams.pageSize"
+      />
+      <!-- <el-pagination background layout="prev, pager, next,total" :total="1000" class="paginationDiv"> </el-pagination> -->
+    </pagePanelNew>
   </div>
 </template>
 
 <script>
-// import gradientBox from '@/components/irregularity-box/gradient.vue';
+// import gradientBox from '@/components/intelligentOilfield/irregularity-box/gradient.vue';
 
 export default {
   components: {
@@ -61,6 +64,16 @@ export default {
   },
   data() {
     return {
+      // 总条数
+      total: 10,
+      // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+        roleName: undefined,
+        roleKey: undefined,
+        status: undefined,
+      },
       input: '',
       value: '',
       options: [
@@ -194,29 +207,8 @@ export default {
 .topSearchDiv {
   display: flex;
 }
-.tableDiv {
-}
-.paginationDiv {
-  position: absolute;
-  bottom: 50px;
-  right: 0;
-  float: right;
-  margin-top: 20px;
-}
-.footerBox {
-  border: 1px solid var(--lightBlueColor);
-  width: 100%;
-  margin: 20px 0 0 0;
-  position: relative;
-  height: calc(100% - 60px) !important;
-}
-.headerStyle {
-  height: 32px;
-  width: 100%;
-  line-height: 32px;
-  font-size: 14px;
-  color: var(--whiteColor);
-  padding: 0 0 0 20px;
-  background: linear-gradient(to right, rgba(0, 96, 166, 1), rgba(0, 96, 166, 0.2));
+.btnPosition {
+    margin: 0 0 20px 0;
+    justify-content: flex-end;
 }
 </style>
