@@ -5,7 +5,7 @@ import { login, getInfo, logout, getCodeImg} from '@/api/intelligentOilfield/log
 import { encrypt, encryptlogin } from '@/utils/jsencrypt';
 import store from '@/store';
 import router from '@/router'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+// import { getToken, setToken, removeToken } from '@/utils/auth'
 // import { getToken, setToken, setExpiresIn, removeToken } from '@/utils/auth'
 
 const InitUserInfo = {
@@ -14,8 +14,8 @@ const InitUserInfo = {
 
 // 定义的state初始值
 const state = {
-  // token: localStorage.getItem(TOKEN_NAME),
-  token: getToken(),
+  token: localStorage.getItem(TOKEN_NAME),
+  // token: getToken(),
   userInfo: InitUserInfo,
   projectionMode: false, // 投影模式
   currentRoles: [], // 新增当前角色
@@ -32,14 +32,14 @@ const state = {
 
 const mutations = {
   setToken(state, token) {
-    // localStorage.setItem(TOKEN_NAME, token);
+    localStorage.setItem(TOKEN_NAME, token);
     state.token = token;
   },
   SET_EXPIRES_IN: (state, time) => {
     state.expires_in = time
   },
   removeToken(state) {
-    // localStorage.removeItem(TOKEN_NAME);
+    localStorage.removeItem(TOKEN_NAME);
     state.token = '';
   },
   setUserInfo(state, userInfo) {
@@ -151,7 +151,7 @@ const actions = {
               Cookies.remove("password");
               Cookies.remove('rememberMe');
             }
-            setToken(res.data.data.access_token)
+            // setToken(res.data.data.access_token)
             commit('setToken', res.data.data.access_token);
             //   commit('setToken', res.data.data.access_token)
             //   setExpiresIn(res.data.data.expires_in)
@@ -242,7 +242,7 @@ const actions = {
         // 解决重新登录系统标签页未关闭的问题
         store.commit('tabRouter/removeTabRouterList');
         localStorage.removeItem('tabRouterList')
-        removeToken();
+        // removeToken();
         commit('removeToken');
         // commit('setUserInfo', InitUserInfo);
         commit('setUserInfo', {
