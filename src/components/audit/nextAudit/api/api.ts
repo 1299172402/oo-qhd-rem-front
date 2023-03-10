@@ -1,4 +1,4 @@
-import { postAction, getAction } from "../../process/api/manage";
+import { postAction, getAction } from "@/api/common/manage";
 
 // 角色管理
 const addRole = (params) => postAction("/sys/role/add", params);
@@ -13,7 +13,7 @@ const queryall = (params?) => getAction("/sys/role/queryall", params);
 const addUser = (params) => postAction("/sys/user/add", params);
 const editUser = (params) => postAction("/sys/user/edit", params);
 const queryUserRole = (params) => getAction("/sys/user/queryUserRole", params);
-const getUserList = (params) => getAction("/sys/user/list", params);
+const getUserList = (params) => getAction("/system/user/list", params);
 const getRecentList = () => getAction("/flow/task/recent-selection");
 // const deleteUser = (params)=>deleteAction("/sys/user/delete",params);
 // const deleteUserList = (params)=>deleteAction("/sys/user/deleteBatch",params);
@@ -48,6 +48,7 @@ const queryPermissionRule = (params) => getAction("/sys/permission/queryPermissi
 // 部门管理
 const queryDepartTreeList = (params) => getAction("/sys/sysDepart/queryTreeList", params);
 const queryAuditorDeptTree = (params) => getAction("/sys/sysDepart/queryTreeByIdParam", params);
+const querySysTreeList = (params) => getAction("/system/dept/treeList", params);
 const queryIdTree = (params) => getAction("/sys/sysDepart/queryIdTree", params);
 const queryParentName = (params) => getAction("/sys/sysDepart/queryParentName", params);
 const searchByKeywords = (params) => getAction("/sys/sysDepart/searchBy", params);
@@ -252,5 +253,6 @@ export {
   saveDeptRolePermission,
   queryMyDepartTreeList,
   addSignatureInfo,
-  addProblemClassify
+  addProblemClassify,
+  querySysTreeList
 };

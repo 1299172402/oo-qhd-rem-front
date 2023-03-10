@@ -1,19 +1,42 @@
 import Vue from "vue";
 import { getActionDesc } from "@/components/audit/utils";
-import "../styles/AuditFlowStyle.less"; 
+import "../styles/AuditFlowStyle.less";
+
+function computeWidth(val) {
+  if (val > 0) {
+    this.$nextTick(() => {
+      let _maxWidth = this.maxWidth;
+      document.querySelectorAll(".audit-flow-item-left")
+        .forEach(item => { _maxWidth = Math.max(_maxWidth, item.clientWidth) });
+      this.maxWidth = _maxWidth;
+      this.maxWidthStyle = `${_maxWidth + 10}px`
+    })  
+  }
+}
 
 export default Vue.extend({
   name: "AuditFlowPanel",
   inject: ["auditContext"],
   data() {
     return {
-      leftWidth: "auto"      
+      maxWidthStyle: "auto",
+      maxWidth: 0
     }
   },
   props: {
     dataSource: {
       type: Array,
       required: true
+    }
+  },
+  mounted() {
+    if (this.dataSource.length > 0) {
+      computeWidth.call(this, this.dataSource.length);
+    }
+  },
+  watch: {
+    "dataSource.length": function (val) { 
+      computeWidth.call(this, val)
     }
   },
   methods: {
@@ -28,36 +51,30 @@ export default Vue.extend({
     }
   },
   render() {
-        
     return (
       <t-timeline layout="vertical" mode="same">
         {
-          this.dataSource.map(item => {
-            if (item.endDate) {
-              this.leftWidth = "140px";
-            }
-            return (
-              <div class={"audit-flow-item"}>
-                <div class={"audit-flow-item-left"} style={{width: this.leftWidth}}>
-                  <div class={"audit-flow-item-left-title"}>{item.taskName}</div>
-                  <div class={"audit-flow-item-left-person"}>{item.assigneeName}</div>
-                  <div class={"audit-flow-item-left-time"}>{item.endDate}</div>
-                </div>
-                <t-timeline-item class={"audit-flow-item-right"}>
-                  <div class={"audit-flow-item-right-title"}>{getActionDesc(item)}</div>
-                  <div>
-                    <t-tag theme="primary" variant="light">{ item.assigneeDeptName || "未指定部门" }</t-tag>
-                  </div>
-                  <p class="audit-flow-item-description">
-                    {
-                      item.operation !== '3' ? <span>审批意见：</span> : null
-                    }
-                    <span>{item.opinion}</span>
-                  </p>
-                </t-timeline-item>
+          this.dataSource.map(item => (
+            <div class={"audit-flow-item"}>
+              <div class={"audit-flow-item-left"} style={{width: `${this.maxWidthStyle}`}}>
+                <div class={"audit-flow-item-left-title"}>{item.taskName}</div>
+                <div class={"audit-flow-item-left-person"}>{item.assigneeName}</div>
+                <div class={"audit-flow-item-left-time"}>{item.endDate}</div>
               </div>
-            )
-          }
+              <t-timeline-item class={"audit-flow-item-right"}>
+                <div class={"audit-flow-item-right-title"}>{getActionDesc(item)}</div>
+                <div>
+                  <t-tag theme="primary" variant="light">{ item.assigneeDeptName || "未指定部门" }</t-tag>
+                </div>
+                <p class="audit-flow-item-description">
+                  {
+                    item.operation !== '3' ? <span>审批意见：</span> : null
+                  }
+                  <span>{item.opinion}</span>
+                </p>
+              </t-timeline-item>
+            </div>
+          )
           )
         }
       </t-timeline>

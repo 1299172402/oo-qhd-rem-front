@@ -16,7 +16,7 @@
           <span class="headerText">智能油田管理系统</span>
         </span>
         <div v-if="layout !== 'top' && !$store.getters['user/isGroupLogin']" class="header-operate-left">
-          <t-button theme="default" shape="square" variant="text" @click="changeCollapsed">
+          <t-button theme="default" shape="square" variant="text" @click="changeCollapsed" style="background: transparent;border: 0px;">
             <view-list-icon class="collapsed-icon" style="color: var(--whiteColor)" />
           </t-button>
           <!-- <search :layout="layout" /> -->

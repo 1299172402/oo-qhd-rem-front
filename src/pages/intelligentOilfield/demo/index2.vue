@@ -136,7 +136,7 @@
       <el-button class="transfer-footer" slot="right-footer" size="small">操作</el-button> -->
     </el-transfer>
     
-    <div style="margin: 10px 0">=================================页面通用面板【具体使用可参照列表示例页】=================================</div>
+    <div style="margin: 10px 0">=================================页面通用面板【具体使用可参照列表示例页】【废弃】=================================</div>
     <pagePanel headerTitle="我是标题" style="height: 600px">
         <!-- <div>这里显示主内容，padding为20px</div> -->
         <el-table
@@ -155,7 +155,7 @@
       <el-table-column prop="address" label="地址"> </el-table-column>
     </el-table>
     </pagePanel>
-     <div style="margin: 10px 0">=================================新的页面通用面板【具体使用可参照列表示例页】【新增】=================================</div>
+     <div style="margin: 10px 0">=================================页面通用面板【具体使用可参照列表示例页】【新增】=================================</div>
     <pagePanelNew style="height: 600px">
     </pagePanelNew>
     <!-- 自定义info信息窗 -->

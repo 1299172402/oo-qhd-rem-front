@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 新增数据权限
 export function addnotice(data) {
   return request({
-    url: 'system//notice',
+    url: 'system/notice',
     method: 'post',
     data
   })
@@ -109,5 +109,14 @@ export function changeDataStatus(dataId, status) {
     url: '/system/data/changeStatus',
     method: 'put',
     data
+  })
+}
+
+// 查询部门列表
+export function listTenant(query) {
+  return request({
+    url: '/system/tenant/list',
+    method: 'get',
+    params: query
   })
 }

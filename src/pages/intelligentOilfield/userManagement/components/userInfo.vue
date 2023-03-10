@@ -1,13 +1,8 @@
 <template>
   <div>
     <!-- 添加岗位对话框 -->
-    <el-dialog
-      :title="postForm.title"
-      :visible.sync="postForm.open"
-      width="500px"
-      append-to-body
-      :close-on-click-modal="false"
-    >
+    <el-dialog :title="postForm.title" :visible.sync="postForm.open" width="500px" append-to-body
+      :close-on-click-modal="false">
       <el-form ref="postFormRef" :model="postForm" :rules="postRules" label-width="80px">
         <el-form-item label="岗位名称" prop="postName">
           <el-input v-model="postForm.postName" placeholder="请输入岗位名称" />
@@ -34,28 +29,17 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label="用户角色" prop="roleIds">
-            <el-select
-              v-model="tempUser.roleIds"
-              @change="refreshSelect"
-              multiple
-              placeholder="请选择用户角色"
-              collapse-tags
-              clearable
-            >
-              <el-option
-                v-for="item in roleOptions"
-                :key="item.roleId"
-                :label="item.roleName"
-                :value="item.roleId"
-                :disabled="item.status == 1"
-              ></el-option>
+            <el-select v-model="tempUser.roleIds" @change="refreshSelect" multiple placeholder="请选择用户角色" collapse-tags
+              clearable>
+              <el-option v-for="item in roleOptions" :key="item.roleId" :label="item.roleName" :value="item.roleId"
+                :disabled="item.status == 1"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item label="用户岗位">
             <div style="display: flex">
-              <el-select v-model="tempUser.tempPostId" placeholder="请选择用户岗位" @change="refreshSelect" clearable>
+              <el-select multiple collapse-tags v-model="tempUser.postIds" placeholder="请选择用户岗位" @change="refreshSelect" clearable>
                 <el-option
                   v-for="item in tempPostOptions"
                   :key="item.postId"
@@ -72,12 +56,7 @@
       <el-row>
         <el-col :span="12">
           <el-form-item label="所属机构" prop="deptId">
-            <treeselect
-              v-model="tempUser.deptId"
-              :options="deptOptions"
-              :show-count="true"
-              placeholder="请选择所属机构"
-            />
+            <treeselect v-model="tempUser.deptId" :options="deptOptions" :show-count="true" placeholder="请选择所属机构" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -96,25 +75,24 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="用户手机" prop="phonenumber">
-            <el-input
-              @input="refreshSelect"
-              v-model="tempUser.phonenumber"
-              placeholder="请输入手机号码"
-              maxlength="11"
-            />
+            <el-input @input="refreshSelect" v-model="tempUser.phonenumber" placeholder="请输入手机号码" maxlength="11" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="8">
           <el-form-item label="账号类型" prop="userType">
-            <el-select v-model="tempUser.userType" placeholder="请选择账号类型" @change="refreshSelect" clearable>
+            <!-- <el-select v-model="tempUser.userType" placeholder="请选择账号类型" @change="refreshSelect" clearable>
               <el-option
                 v-for="(item, index) in accountType"
                 :key="index"
                 :label="item.label"
                 :value="item.label"
               ></el-option>
+            </el-select> -->
+            <el-select v-model="tempUser.userType" placeholder="请选择账号类型" @change="refreshSelect" clearable>
+              <el-option v-for="dict in dict.type.sys_user_account_type" :key="dict.value" :label="dict.label"
+                :value="dict.label" />
             </el-select>
           </el-form-item>
         </el-col>
@@ -148,8 +126,10 @@ import { updateUser } from '@/api/intelligentOilfield/system/user';
 import { treeselect } from '@/api/intelligentOilfield/system/dept';
 import Treeselect from '@riophae/vue-treeselect';
 import { listPost, addPost } from '@/api/intelligentOilfield/system/post';
+import returnPaterPage from "@/utils/returnPaterPage";
 
 export default {
+  dicts: ['sys_user_account_type'],
   components: { Treeselect },
   props: {
     user: {
@@ -182,10 +162,10 @@ export default {
         status: '0',
       },
       // 账号类型
-      accountType: [
-        { label: '集团账号', value: 0 },
-        { label: '普通账号', value: 1 },
-      ],
+      // accountType: [
+      //   { label: '集团账号', value: 0 },
+      //   { label: '普通账号', value: 1 },
+      // ],
       deptOptions: [],
       // 表单校验
       rules: {
@@ -255,9 +235,10 @@ export default {
           sex: newVal.data?.sex,
           status: '0',
           remark: newVal.data?.remark,
-          postIds: newVal.postIds,
+          //   postIds: newVal.postIds,
+          postIds: newVal.postIds.toLocaleString().split(','),
           roleIds: newVal.roleIds?.toLocaleString().split(','),
-          tempPostId: String(newVal.tempPostId.toLocaleString()), // 临时的用户岗位
+          //   tempPostId: String(newVal.tempPostId.toLocaleString()), // 临时的用户岗位
           userType: newVal.data?.userType, // 账号类型
         };
         // console.log(this.tempUser);
@@ -318,8 +299,8 @@ export default {
       });
     },
     submit() {
-      this.tempUser.postIds = [];
-      this.tempUser.postIds.push(this.tempUser.tempPostId);
+      //   this.tempUser.postIds = [];
+      //   this.tempUser.postIds.push(this.tempUser.tempPostId);
       //   console.log(' this.tempUser',  this.tempUser);
       this.$refs.formRef.validate((valid) => {
         if (valid) {
@@ -327,6 +308,9 @@ export default {
             if (res ? res.data.code === 200 : false) {
               this.$modal.msgSuccess('修改成功');
               this.$emit('updateList');
+
+              returnPaterPage(this.$route.path, '/PortalManagement/user')
+
             }
           });
         }

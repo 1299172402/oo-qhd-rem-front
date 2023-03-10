@@ -1,10 +1,11 @@
 <!-- 后台——用户管理 -->
 <template>
-    <div class="app-container">
-      <el-row :gutter="24">
-        <!--用户数据-->
-        <el-col :span="24" :xs="24" class="right">
-          <el-form :model="queryParam" ref="queryForm" :inline="true" label-width="68px">
+  <div class="app-container">
+    <el-row :gutter="24">
+      <!--用户数据-->
+      <el-col :span="24" :xs="24" class="right">
+        <headerSearch class="g-w100 g-h100">
+          <el-form :model="queryParam" ref="queryForm" :inline="true" label-width="68px" style="margin-top: 18px">
             <el-form-item label="流程名称" prop="processDefinitionName">
               <el-input
                 v-model="queryParam.processDefinitionName"
@@ -12,27 +13,21 @@
                 clearable
                 size="medium"
                 style="width: 240px; height: 40px"
-                @keyup.enter.native="handleQuery"
+                @keyup.enter.native="searchQuery"
               />
             </el-form-item>
             <el-form-item label="业务名称" prop="roleId">
-                <el-input
+              <el-input
                 v-model="queryParam.businessName"
                 placeholder="请输入业务名称"
                 clearable
                 size="medium"
                 style="width: 240px; height: 40px"
-                @keyup.enter.native="handleQuery"
+                @keyup.enter.native="searchQuery"
               />
             </el-form-item>
             <el-form-item>
-              <el-button
-               type="primary"
-                icon="el-icon-search" 
-                size="mini"
-                 @click="searchQuery"
-                  style="height: 40px"
-
+              <el-button type="primary" icon="el-icon-search" size="mini" @click="searchQuery" style="height: 40px"
                 >搜索</el-button
               >
               <el-button
@@ -44,157 +39,156 @@
                 重置</el-button>
             </el-form-item>
           </el-form>
-          <!-- v-loading="loading" -->
-              <pagePanel headerTitle="我的待办">
-            <el-table :data="dataSource" height="calc(100% - 125px)"
-             :row-style="{ height: '0px' }"
-        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-        header-cell-class-name="table_header"
-        :cell-style="{ padding: '2px', 'text-align': 'center' }"
-        style="width: 100%; height: 100%;"
-        :default-sort="{ prop: 'date', order: 'descending' }">
-              <el-table-column label="序号" type="index" width="50"> </el-table-column>
-              <el-table-column
-                label="流程名称"
-                align="center"
-                key="processDefinitionName"
-                prop="processDefinitionName"
-                :show-overflow-tooltip="true"
-              />
-              <el-table-column 
-              label="业务名称" 
-              align="center" 
+        </headerSearch>
+        <!-- v-loading="loading" -->
+        <pagePanelNew headerTitle="我的待办" style="height: calc(100% - 90px)">
+          <el-table
+            :data="dataSource"
+            height="calc(100% - 46px)"
+            :row-style="{ height: '0px' }"
+            :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+            header-cell-class-name="table_header"
+            :cell-style="{ padding: '2px', 'text-align': 'center' }"
+            style="width: 100%; height: 100%"
+            :default-sort="{ prop: 'date', order: 'descending' }"
+          >
+            <el-table-column label="序号" type="index" width="50"> </el-table-column>
+            <el-table-column
+              label="流程名称"
+              align="center"
+              key="processDefinitionName"
+              prop="processDefinitionName"
+              :show-overflow-tooltip="true"
+            />
+            <el-table-column
+              label="业务名称"
+              align="center"
               :show-overflow-tooltip="true"
               prop="businessName"
               key="businessName"
-              >
-              </el-table-column>
-              <el-table-column
-                label="当前节点"
-                align="center"
-                key="activityName"
-                prop="activityName"
-                :show-overflow-tooltip="true"
-              />
-              <el-table-column
-                label="上一处理人"
-                align="center"
-                key="lastAuditUserName"
-                prop="lastAuditUserName"
-                :show-overflow-tooltip="true"
-              >
+            >
             </el-table-column>
-              <el-table-column
-               label="发起人"
-                align="center"
-                 key="startUserName"
-                 prop="startUserName"
-                 >
-              </el-table-column>
-              <el-table-column
-               label="创建时间"
-                align="center"
-                 key="startTime"
-                 prop="startTime"
-                 >
-                <template slot-scope="scope">
-                    <span>{{ scope.row.startTime && dayjs(scope.row.endTime).format("YYYY-MM-DD HH:mm:ss") }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="操作" align="center" width="220" class-name="small-padding fixed-width">
-                <template slot-scope="scope">
-                  <el-button size="mini" type="text" @click="handleView(scope.row)" v-hasPermi="['system:user:remove']"
-                    >查看</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-            <pagination
-              v-show="ipagination.total > 0"
-              :total="ipagination.total"
-              :page.sync="ipagination.current"
-              :limit.sync="ipagination.pageSize"
-              @pagination="handleTableChange"
+            <el-table-column
+              label="当前节点"
+              align="center"
+              key="activityName"
+              prop="activityName"
+              :show-overflow-tooltip="true"
             />
-              </pagePanel>
-        </el-col>
-      </el-row>
-    </div>
-  </template>
+            <el-table-column
+              label="上一处理人"
+              align="center"
+              key="lastAuditUserName"
+              prop="lastAuditUserName"
+              :show-overflow-tooltip="true"
+            >
+            </el-table-column>
+            <el-table-column label="发起人" align="center" key="startUserName" prop="startUserName"> </el-table-column>
+            <el-table-column label="创建时间" align="center" key="startTime" prop="startTime">
+              <template slot-scope="scope">
+                <span>{{ scope.row.startTime && dayjs(scope.row.endTime).format('YYYY-MM-DD HH:mm:ss') }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" align="center" width="220" class-name="small-padding fixed-width">
+              <template slot-scope="scope">
+                <el-button
+                  size="mini"
+                  type="text"
+                  @click="handleBusiness(scope.row)"
+                  v-hasPermi="['system:user:remove']"
+                  >{{ showHandleText(scope.row) }}</el-button
+                >
+              </template>
+            </el-table-column>
+          </el-table>
+          <pagination
+            v-show="ipagination.total > 0"
+            :total="ipagination.total"
+            :page.sync="ipagination.current"
+            :limit.sync="ipagination.pageSize"
+            @pagination="handleTableChange"
+          />
+        </pagePanelNew>
+      </el-col>
+    </el-row>
+  </div>
+</template>
   
 <script>
-import dayjs from "dayjs";
-import { getAction, postAction } from "@/components/audit/process/api/manage";
-import { transformPathToName } from "@/components/audit/utils";
-import "@/assets/styles/pages/handleBusinessListStyle.less"
-import OpenOtherTab from "@/pages/common/mixins/commonMixin"
-import { mapGetters } from "vuex";
+import dayjs from 'dayjs';
+import { getAction, postAction } from '@/api/common/manage';
+import '@/assets/styles/pages/handleBusinessListStyle.less';
+import OpenOtherTab from '@/pages/common/mixins/commonMixin';
+import { mapGetters } from 'vuex';
 
 function routeWatch(val) {
-  if (val.path === "/bpm/personalOffice/HandleBusinessList" && this.closeTabKey) {
+  if (val.path === '/bpm/personalOffice/HandleBusinessList' && this.closeTabKey) {
     this.searchQuery();
-    this.$store.dispatch("ToggleCloseTabKey", "");
+    this.$store.dispatch('ToggleCloseTabKey', '');
   }
 }
 
 export default {
-  name: "HandleBusinessList",
-  description: "我的待办任务",
+  name: 'HandleBusinessList',
+  description: '我的待办任务',
   mixins: [OpenOtherTab],
-  data () {
+  data() {
     return {
       dayjs,
-      description: "我的待办",
+      description: '我的待办',
       loading: false,
       dataSource: [],
       ipagination: {
         current: 1,
         pageSize: 10,
-        pageSizeOptions: ["10", "20", "30"],
-        showTotal: (total, range) => `${range[0]  }-${  range[1]  } 共${  total  }条`,
+        pageSizeOptions: ['10', '20', '30'],
+        showTotal: (total, range) => `${range[0]}-${range[1]} 共${total}条`,
         showQuickJumper: true,
         showSizeChanger: true,
-        total: 0
+        total: 0,
       },
       queryParam: {
-        processDefinitionName: "",
-        businessName: ""
+        processDefinitionName: '',
+        businessName: '',
       },
       spinning: false,
       url: {
-        list: "/flow/task/assigned"
-      }
+        list: '/system/flow/integration/todo/assigned',
+      },
     };
   },
   computed: {
-    ...mapGetters(["closeTabKey"]),
+    ...mapGetters(['closeTabKey']),
     // 构建查询参数
-    generateQueryParam () {
+    generateQueryParam() {
       return {
-        procDefName: this.queryParam.processDefinitionName ? `%${this.queryParam.processDefinitionName}%` : this.queryParam.processDefinitionName,
+        procDefName: this.queryParam.processDefinitionName
+          ? `%${this.queryParam.processDefinitionName}%`
+          : this.queryParam.processDefinitionName,
         businessName: this.queryParam.businessName ? `%${this.queryParam.businessName}%` : this.queryParam.businessName,
-        sort: "startTime",
+        sort: 'startTime',
         start: (this.ipagination.current - 1) * this.ipagination.pageSize,
-        size: this.ipagination.pageSize
+        size: this.ipagination.pageSize,
       };
-    }
+    },
   },
   watch: {
-    "$route": routeWatch.bind(this)
+    $route: routeWatch.bind(this),
   },
-  activated () {
+  activated() {
     if (this.$route.query.isRefresh) {
       this.searchQuery();
     }
   },
-  mounted () {
+  mounted() {
     this.searchQuery();
-    document.addEventListener("visibilitychange", this.visibilitychange);
+    document.addEventListener('visibilitychange', this.visibilitychange);
   },
   beforeDestroy() {
-    document.removeEventListener("visibilitychange", this.visibilitychange);
+    document.removeEventListener('visibilitychange', this.visibilitychange);
   },
   methods: {
-    searchQuery () {
+    searchQuery() {
       this.dataSource = [];
       this.ipagination.current = 1;
       this.lazyLoad();
@@ -213,34 +207,34 @@ export default {
         this.spinning = false;
       });
     },
-    searchReset () {
+    searchReset() {
       this.queryParam = {};
       this.searchQuery();
     },
-    handleTableChange (pagination) {
+    handleTableChange(pagination) {
       this.ipagination.current = pagination.page;
       this.ipagination.pageSize = pagination.limit;
       this.lazyLoad();
     },
     // 办理
-    handleBusiness (record) {
+    handleBusiness(record) {
       if (this.isWindowOpenOther(record)) {
         return;
       }
       const params = {
         businessKey: record.businessKey, // 交接单id
         taskId: record.id, // 任务id
-        processInstanceId: record.processInstanceId // 流程实例id
+        processInstanceId: record.processInstanceId, // 流程实例id
       };
-      getAction(`/flow/task/${record.id}/view-component`, { }).then((res) => {
+      getAction(`/system/flow/task/${record.id}/view-component`, {}).then((res) => {
         if (res.success) {
           if (res.viewComponent) {
             this.$router.push({
-              name: transformPathToName(res.viewComponent),
+              name: res.viewComponent,
               query: params,
               params: {
-                action: "Audit"
-              }
+                action: 'Audit',
+              },
             });
           }
         }
@@ -250,7 +244,7 @@ export default {
      * 默认显示处理，有特殊需求的特殊显示按钮
      */
     showHandleText(record) {
-      return (record.extendProps || {}).audit_button_text || "处理";
+      return (record.extendProps || {}).audit_button_text || '处理';
     },
     /**
      * 从别的tab回到我的待办时，刷新数据
@@ -259,21 +253,20 @@ export default {
       if (!document.hidden) {
         this.lazyLoad();
       }
-    }
-  }
+    },
+  },
 };
 </script>
   <style lang="less" scoped>
-  .textOverFlow {
-    display: flex;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  
-    .el-dialog__body .el-row {
-      display: flex;
-      justify-content: space-between;
-    }
-  
-  </style>
+.textOverFlow {
+  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.el-dialog__body .el-row {
+  display: flex;
+  justify-content: space-between;
+}
+</style>

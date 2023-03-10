@@ -26,7 +26,7 @@
             }"
           >
             <template v-if="!route.isHome">
-              {{ route.title }}
+              {{ route.title+(route.query.pathName?'-'+route.query.pathName:'') }}
             </template>
             <home-icon v-else />
             <template #dropdown>

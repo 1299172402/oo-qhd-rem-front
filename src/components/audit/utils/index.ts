@@ -78,15 +78,15 @@ export function filterTreeDict(listData, value, textField = "title") {
   return changeListToTree(cloneDeep(listData.filter(v => v[textField].indexOf(value) !== -1)));
 }
 
-export function generateList(treeData, pDeptFullName = "") {
+export function generateList(treeData, pDeptFullName = "", parentId?) {
   let dataList = [];
   for (let i = 0; i < treeData.length; i++) {
     const node = treeData[i];
-    const {key} = node;
-    const pName = pDeptFullName ? `${pDeptFullName  }-${  node.departName}` : node.departName;
-    dataList.push({ key, title: node.title, parentId: node.parentId, deptFullName: pName, orgCode: node.orgCode });
+    const key = node.id;
+    const pName = pDeptFullName ? `${pDeptFullName}-${ node.departName}` : node.departName;
+    dataList.push({ key, title: node.label, label: node.label, parentId, deptFullName: node.label, id: key});
     if (node.children) {
-      dataList = [...dataList, ...generateList(node.children, pName)];
+      dataList = [...dataList, ...generateList(node.children, pName, node.id)];
     }
   }
   return dataList;

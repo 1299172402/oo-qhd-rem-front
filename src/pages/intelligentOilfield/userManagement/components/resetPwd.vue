@@ -18,12 +18,15 @@
 
 <script>
 import { updateUserPwdByUserName } from '@/api/intelligentOilfield/system/user';
+import returnPaterPage from "@/utils/returnPaterPage";
+import { getCodeImg } from '@/api/intelligentOilfield/login';
+import { encryptlogin } from '@/utils/jsencrypt';
 
 export default {
   props: {
     userName: {
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     const equalToPassword = (rule, value, callback) => {
@@ -40,13 +43,17 @@ export default {
         newPassword: undefined,
         confirmPassword: undefined,
       },
-      // 表单校验 
+      // 表单校验
       rules: {
         oldPassword: [{ required: true, message: '旧密码不能为空', trigger: 'blur' }],
         newPassword: [
           { required: true, message: '新密码不能为空', trigger: 'blur' },
           //   { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
-          {pattern:/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{8,20}$/, message:'必须包含大小写字母，数字和特殊字符，且字符在8到20之间'}
+          {
+            pattern:
+              /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{8,20}$/,
+            message: '必须包含大小写字母，数字和特殊字符，且字符在8到20之间',
+          },
         ],
         confirmPassword: [
           { required: true, message: '确认密码不能为空', trigger: 'blur' },
@@ -59,10 +66,23 @@ export default {
     submit() {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          updateUserPwdByUserName(this.tempUserName,this.user.oldPassword, this.user.newPassword).then((response) => {
-            if (response ? response.data.code === 200 : false) {
-              this.$modal.msgSuccess('修改成功');
-            }
+          // updateUserPwdByUserName(this.tempUserName,this.user.oldPassword, this.user.newPassword).then((response) => {
+          //   if (response ? response.data.code === 200 : false) {
+          //     this.$modal.msgSuccess('修改成功');
+          //   }
+          // });
+          getCodeImg().then((res) => {
+            const { publicKey } = res.data.publicKey;
+            updateUserPwdByUserName(
+              this.tempUserName,
+              encryptlogin(this.user.oldPassword, publicKey),
+              encryptlogin(this.user.newPassword, publicKey),
+            ).then((response) => {
+              if (response ? response.data.code === 200 : false) {
+                this.$modal.msgSuccess('修改成功');
+                returnPaterPage(this.$route.path, '/PortalManagement/user')
+              }
+            });
           });
         }
       });

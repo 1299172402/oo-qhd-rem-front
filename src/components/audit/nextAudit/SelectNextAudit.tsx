@@ -137,12 +137,14 @@ export default Vue.extend({
         this.auditorDataReduction();
       } else {
         const [first] = userArray;
-        this.selectAuditUser = first;
-        this.selectAuditUser.userRealName = this.selectAuditUser.realname;
+        this.selectAuditUser = {
+          ...first,
+          userId: first.userName,
+          userRealName: first.nickName
+        }
         this.auditIdString = idstr;
         this.auditorDataReduction();
       }
-      
     },
     assignAuditorOk(key, resources = []) {
       const Auditor = cloneDeep(resources?.find(item => item.id === key));
@@ -269,8 +271,8 @@ export default Vue.extend({
       const item = vals[0] || {}; this.parallelNodeModel[index].users = {
         email: item.email,
         phone: item.phone,
-        userId: item.userId,
-        userRealName: item.realname
+        userId: item.userName,
+        userRealName: item.nickName
       };
       this.emitParallelNodeselectAuditorOk();
     },
@@ -354,7 +356,7 @@ export default Vue.extend({
             onChange={this.selectAuditorOk}
             query-params={this.selectNextAuditSetting}
             value={this.auditIdString}
-            select-users={this.selectAuditUser.realname}
+            select-users={this.selectAuditUser.nickName}
             multi={false}
           /> : null
         }

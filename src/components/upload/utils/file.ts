@@ -1,5 +1,4 @@
-import { axios } from "../request";
-import { download } from "@/utils/request";
+import axios, { download } from "@/utils/request"
 import { responseWhitelist } from "./responseWhiteList";
 
 /**

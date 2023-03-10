@@ -9,6 +9,7 @@ import { getAttributeByName } from "@/components/audit/utils/domUtil";
 const nodeCovers = [];
 export default Vue.extend({
   name: "AuditMapPanel",
+  inject: ["auditContext"],
   props: {
     dataSource: {
       type: String,
@@ -40,7 +41,7 @@ export default Vue.extend({
          * 加载图片详细信息
          */
     loadDiagramDetail() {
-      diagramDetail(this.procInstId)
+      diagramDetail(this.auditContext._processInstanceId)
         .then(flowDetail => {
           this.flowDetail = flowDetail;
           this.creatDiagramDetail();

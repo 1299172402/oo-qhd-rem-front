@@ -1,4 +1,4 @@
-import { axios } from "../request/index";
+import axios from "@/utils/request";
 
 export function downFile (id: string) {
   return axios({

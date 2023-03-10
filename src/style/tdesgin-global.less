@@ -12,6 +12,7 @@
 }
 .t-head-menu .t-menu__item {
     color: var(--whiteColor);
+    width: 137px;
 }
 .t-menu__item.t-is-active {
     color: var(--lightBlueColor);
@@ -25,12 +26,18 @@
 }
 // 解决顶部菜单过长显示不全问题
 .t-head-menu .t-menu,.header-menu {
-    overflow: auto;
+    overflow-x: scroll;
+}
+.t-submenu,.t-menu__item{
+    overflow: visible !important;
 }
 // 门户/投影-面板缩放功能置顶
 .vue-grid-item>.vue-resizable-handle {
     z-index: 1;
 }
 .tdesign-starter-layout-tabs-nav + .tdesign-starter-content-layout {
-    padding-top: 20px
+    padding: 20px
+}
+.t-head-menu .t-submenu > .t-menu__item::before{
+    height: 0 !important;
 }

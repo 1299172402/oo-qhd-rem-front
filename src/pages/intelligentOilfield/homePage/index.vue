@@ -7,7 +7,7 @@
       </div>
       <Marquee style="white-space:pre-wrap;">{{ val }}</Marquee>
     </div>
-    <pagePanel headerTitle="作业区概览" style="height: calc(100% - 10px)">
+    <pagePanel headerTitle="作业区概览" style="height: calc(100% - 0px)">
       <div style="width: 100%; height: calc(100% - 10px); overflow: scroll;overflow-x: hidden;" class="el_row_wrap">
         <el-row :gutter="0">
           <el-col :span="8" v-for="(item, index) in listNumData" :key="index">

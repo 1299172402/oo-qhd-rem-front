@@ -1,9 +1,9 @@
 
 
-import { postAction, signDocPostAction } from "../api/manage";
+import { postAction } from "@/api/common/manage";
 import actionType from "./ActionType";
 
-const BASE_URL = "/bizflow";
+const BASE_URL = "/system/bizFlow";
 
 export const startApi = (BusinessType, data?) => {
   const url = `${BASE_URL}/${BusinessType}/${actionType.START}`;
@@ -32,7 +32,7 @@ const terminateApi = (BusinessType, data) => {
 
 export const modelApi = (BusinessType, data) => {
   const url = `${BASE_URL}/${BusinessType}/${actionType.Model}`;
-  return postAction(url, data);
+  return postAction(url, data).then(v => v.data);
 };
 
 const delegateApi = (BusinessType, data) => {
@@ -58,11 +58,6 @@ const saveDataApi = (BusinessType, data) => {
 const getDocApi = (BusinessType, data) => {
   const url = `${BASE_URL}/${BusinessType}/${actionType.GETDOC}`;
   return postAction(url, data);
-};
-
-const signDocApi = (BusinessType, data) => {
-  const url = `${BASE_URL}/${BusinessType}/${actionType.SIGN}`;
-  return signDocPostAction(url, data);
 };
 
 const restartSubmitApi = (BusinessType, data) => {
@@ -92,8 +87,6 @@ export const actionApi = (ActionType, BusinessType, data) => {
     return saveDataApi(BusinessType, data);
   case actionType.GETDOC:
     return getDocApi(BusinessType, data);
-  case actionType.SIGN:
-    return signDocApi(BusinessType, data);
   case actionType.RESTARTSUBMIT:
     return restartSubmitApi(BusinessType, data);
   default: 
