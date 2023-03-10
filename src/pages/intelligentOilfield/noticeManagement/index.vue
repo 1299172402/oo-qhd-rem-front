@@ -45,7 +45,7 @@
         <el-table-column label="序号" type="index" width="120" align="center" />
         <el-table-column label="通知内容" prop="noticeContent" :show-overflow-tooltip="true" width="260" align="center" />
         <el-table-column label="通知类型" prop="noticeTypename" :show-overflow-tooltip="true" width="150" align="center" />
-        <el-table-column label="通知机构" prop="tenantname" width="200" align="center" />
+        <el-table-column label="通知机构" prop="tenantName" width="200" align="center" />
         <el-table-column label="创建者" prop="createBy" width="180" align="center" />
         <el-table-column label="创建时间" align="center" prop="createTime" width="240">
           <template slot-scope="scope">
@@ -207,7 +207,7 @@ export default {
             }
           }
           if (item.tenantList) {
-            item.tenantname = item.tenantList.map((d) => d.tenantName).join(',');
+            item.tenantName = item.tenantList?.map((d) => d?.tenantName).join(',');
           }
         });
         this.noticeList = response.data.rows;

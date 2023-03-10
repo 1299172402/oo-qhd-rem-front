@@ -129,7 +129,7 @@
       <el-table-column prop="address" label="地址" fixed="right"> </el-table-column>
     </el-table>
  <el-table
-    :data="tableData"
+    :data="tableData1"
     :border="false"
      :row-style="{ height: '0px' }"
       header-cell-class-name="table_header"
@@ -138,7 +138,8 @@
       :default-sort="{ prop: 'date', order: 'descending' }"
      :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
     >
-    <el-table-column
+     <el-table-column
+     fixed
       prop="date"
       label="日期"
       width="150">
@@ -172,6 +173,12 @@
         </el-table-column>
       </el-table-column>
     </el-table-column>
+    <el-table-column
+    fixed="right"
+      prop="date"
+      label="操作"
+      width="150">
+     </el-table-column>
   </el-table>
     <div class="headerTitle spaceMargin">
       6、分页=========================================================================================
@@ -428,6 +435,56 @@ export default {
   },
   data() {
     return {
+      tableData1: [{
+        date: '2016-05-03',
+        name: '王小虎',
+        province: '上海',
+        city: '普陀区',
+        address: '上海市普陀区金沙江路 1518 弄',
+        zip: 200333
+      }, {
+        date: '2016-05-02',
+        name: '王小虎',
+        province: '上海',
+        city: '普陀区',
+        address: '上海市普陀区金沙江路 1518 弄',
+        zip: 200333
+      }, {
+        date: '2016-05-04',
+        name: '王小虎',
+        province: '上海',
+        city: '普陀区',
+        address: '上海市普陀区金沙江路 1518 弄',
+        zip: 200333
+      }, {
+        date: '2016-05-01',
+        name: '王小虎',
+        province: '上海',
+        city: '普陀区',
+        address: '上海市普陀区金沙江路 1518 弄',
+        zip: 200333
+      }, {
+        date: '2016-05-08',
+        name: '王小虎',
+        province: '上海',
+        city: '普陀区',
+        address: '上海市普陀区金沙江路 1518 弄',
+        zip: 200333
+      }, {
+        date: '2016-05-06',
+        name: '王小虎',
+        province: '上海',
+        city: '普陀区',
+        address: '上海市普陀区金沙江路 1518 弄',
+        zip: 200333
+      }, {
+        date: '2016-05-07',
+        name: '王小虎',
+        province: '上海',
+        city: '普陀区',
+        address: '上海市普陀区金沙江路 1518 弄',
+        zip: 200333
+      }],
       imageUrl: '',
       dataList1: [
         { name: '生产曲线分析', isChecked: false },

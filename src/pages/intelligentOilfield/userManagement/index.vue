@@ -161,20 +161,34 @@
             </template>
                   </el-table-column> -->
             <el-table-column label="账号信息" align="center" width="160" class-name="small-padding fixed-width">
-              <template slot-scope="scope" v-if="scope.row.userId !== '1'">
-                <el-button size="mini" type="text" @click="seeDetail(scope.row)"
-                  v-hasPermi="['system:user:edit']">查看账号信息</el-button>
+              <template slot-scope="scope">
+                <el-button size="mini" type="text" @click="seeDetail(scope.row)" v-hasPermi="['system:user:edit']"
+                  >查看账号信息</el-button
+                >
               </template>
             </el-table-column>
             <el-table-column label="操作" align="center" width="220" class-name="small-padding fixed-width">
-              <template slot-scope="scope" v-if="scope.row.userId !== '1'">
-                <el-button size="mini" type="text" @click="handleUpdate(scope.row)"
-                  v-hasPermi="['system:user:edit']">修改</el-button>
-                <el-button size="mini" type="text" @click="handleResetPwd(scope.row)"
-                  v-hasPermi="['system:user:resetPwd']">重置密码</el-button>
-                <el-button size="mini" type="text" @click="handleDelete(scope.row)" v-hasPermi="['system:user:remove']"
-                  class="delbutton">删除</el-button>
-              <!-- <el-dropdown
+              <template slot-scope="scope">
+                <el-button size="mini" type="text" @click="handleUpdate(scope.row)" v-hasPermi="['system:user:edit']"
+                  >修改</el-button
+                >
+                <el-button
+                  size="mini"
+                  type="text"
+                  @click="handleResetPwd(scope.row)"
+                  v-hasPermi="['system:user:resetPwd']"
+                  >重置密码</el-button
+                >
+                <el-button
+                  size="mini"
+                  type="text"
+                  @click="handleDelete(scope.row)"
+                  v-hasPermi="['system:user:remove']"
+                  v-if="scope.row.userId !== '1'"
+                  class="delbutton"
+                  >删除</el-button
+                >
+                <!-- <el-dropdown
                 size="mini"
                 @command="(command) => handleCommand(command, scope.row)"
                 v-hasPermi="['system:user:resetPwd', 'system:user:edit']"
@@ -244,16 +258,18 @@
             </el-form-item>
           </el-col>
           <el-col :span="11">
-            <el-form-item label="身份证" prop="idCard">
+            <!-- <el-form-item label="身份证" prop="idCard">
                 <template>
                     <div v-if="form.userId===$store.getters['user/userDetail'].user.userId||title==='新增用户'">
-                         <el-input v-model="form.idCard" placeholder="请输入身份证" maxlength="30" ></el-input>
-                         <i v-if="title!=='新增用户'" class="searchStyle el-icon-view"></i>
+                         <el-input v-model="form.idCard" placeholder="请输入身份证" maxlength="30" :disabled="isInputDisable"></el-input>
+                     <el-tooltip class="item" effect="dark" content="点击一下小眼睛显示才能编辑" placement="bottom">
+                         <i v-if="title!=='新增用户'" class="searchStyle el-icon-view" @click="showOrHidden"></i>
+                         </el-tooltip>
                     </div>
                 
-                 <span v-else>{{form.idCard?form.idCard:'暂无数据'}}</span>
+                 <span v-else>{{form.convertIdCard?form.convertIdCard:'暂无数据'}}</span>
               </template>
-            </el-form-item>
+            </el-form-item> -->
           </el-col>
         </el-row>
         <div class="headerinfo">账号信息</div>
@@ -457,6 +473,8 @@ export default {
       }
     };
     return {
+      // 身份证输入框是否可见
+      isInputDisable: false,
       // 遮罩层
       loading: true,
       // 选中数组
@@ -717,6 +735,8 @@ export default {
         userType: '', // 账号类型
         surePassword: undefined,
         idCard: undefined,
+        convertIdCard: undefined,
+        currentIdCard: undefined,
       };
       this.resetForm('form');
     },
@@ -755,6 +775,7 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
+      this.isInputDisable = false;
       this.getTreeselect();
       getUser().then((response) => {
         this.postOptions = response.data.posts;
@@ -793,14 +814,27 @@ export default {
       });
       console.log('查询结果', row);
     },
+    /** 显示/隐藏身份证操作 */
+    showOrHidden() {
+      this.isInputDisable = !this.isInputDisable;
+      if(this.isInputDisable) { // 不可看
+        this.form.idCard = this.form.convertIdCard;
+      } else {
+        this.form.idCard = this.form.currentIdCard;
+      }
+    },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
+      this.isInputDisable = true;
       this.getTreeselect();
       const userId = row.userId || this.ids;
       getUser(userId).then((response) => {
         this.form = response.data.data;
-        this.form.idCard = response.data.data.idCard?.replace(/^(.{0})(?:\d+)(.{4})$/,  "\$1**************\$2");
+        this.form.idCard = response.data.data.idCard;
+        // this.form.currentIdCard = response.data.data.idCard;
+        // this.form.convertIdCard = response.data.data.idCard?.replace(/^(.{0})(?:\d+)(.{4})$/,  "\$1**************\$2");
+        // this.form.idCard = this.form.convertIdCard;
         this.postOptions = response.data.posts;
         this.roleOptions = response.data.roles;
         this.form.postIds = response.data.postIds.toLocaleString().split(',');
@@ -874,13 +908,25 @@ export default {
               }
             });
           } else {
-            addUser(this.form).then((res) => {
-              if (res ? res.data.code === 200 : false) {
-                this.$modal.msgSuccess('新增成功');
-                this.open = false;
-                this.getList();
-              }
-            });
+            getCodeImg().then((res) => {
+              const {publicKey} = res.data.publicKey;
+              this.form.password = encryptlogin(this.form.password, publicKey);
+              this.form.surePassword = encryptlogin(this.form.surePassword, publicKey);
+              addUser(this.form).then((res) => {
+                if (res ? res.data.code === 200 : false) {
+                  this.$modal.msgSuccess('新增成功');
+                  this.open = false;
+                  this.getList();
+                }
+              });
+            })
+            // addUser(this.form).then((res) => {
+            //   if (res ? res.data.code === 200 : false) {
+            //     this.$modal.msgSuccess('新增成功');
+            //     this.open = false;
+            //     this.getList();
+            //   }
+            // });
           }
         }
       });
