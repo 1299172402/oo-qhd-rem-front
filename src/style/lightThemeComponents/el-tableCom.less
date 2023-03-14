@@ -9,6 +9,10 @@
   background: var(--whiteColor);
 }
 
+.el-table .cell{
+  height: 40px;
+  line-height: 40px;
+}
 .table_header {
   text-align: center;
   color: #303133;
@@ -42,18 +46,26 @@
 
 // 滚动条的滑块
 .el-table__body-wrapper::-webkit-scrollbar-thumb {
-  background: #8FA4CC;
+  background: #ddd;
   border-radius: 3px;
 }
 
 .el-table .el-table__cell.gutter {
   background: transparent;
 }
-
+.el-table th.el-table__cell,
+.el-table th.el-table__cell.is-leaf{
+    background: #FAFAFA !important;
+}
+.el-table td.el-table__cell,
+.el-table th.el-table__cell.is-leaf {
+  border-bottom: 1px solid rgba(242,244,246,1);
+}
 //表头
 .el-table__header-wrapper {
   .cell{
-    background: #FAFAFA;
+    // background: #FAFAFA;
+    background: transparent;
       color:  #303133;
       height: 34px;
       line-height: 34px;
@@ -75,7 +87,7 @@
   font-size: 14px;
   color: var(--whiteColor);
   padding: 0 0 0 20px;
-  background: linear-gradient(to right, rgba(0, 96, 166, 1), rgba(0, 96, 166, 0.2));
+  background: linear-gradient(to right, var(--onlyLightBlueColor), rgba(0, 96, 166, 0.2));
 }
 
 .footerBox {
@@ -86,7 +98,7 @@
   position: relative;
   //   padding: 14px 14px 0;
   border: 1px solid #ddd;
-  border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), rgba(0, 96, 166, 1)) 1 1;
+  border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
 //   overflow: hidden;
 }
 .right{
@@ -104,4 +116,28 @@
 }
 .el-table .sort-caret.descending {
     border-top-color: rgba(125, 173, 208, 1);
+}
+.el-table thead.is-group th.el-table__cell {
+    background: transparent;
+}
+.el-table--border .el-table__cell, .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed {
+    border-right: 1px solid rgba(242,244,246,1);
+}
+.el-table--border th.el-table__cell, .el-table__fixed-right-patch {
+    border-bottom: 1px solid rgba(242,244,246,1);
+}
+.el-table--border, .el-table--group {
+    border: 1px solid rgba(242,244,246,1) !important;
+}
+.el-table--border::after, .el-table--group::after, .el-table::before {
+    background-color: rgba(242,244,246,1);
+}
+.tablestyle{
+  .el-table__row{
+    line-height: 20px;
+    font-family: PingFangSC-Regular, PingFang SC;
+  }
+}
+.el-table__cell{
+  padding: 0px !important;
 }

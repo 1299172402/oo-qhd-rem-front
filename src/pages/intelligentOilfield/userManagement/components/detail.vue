@@ -93,7 +93,6 @@ import { getUser } from '@/api/intelligentOilfield/system/user';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
 export default {
-  name: 'Profile',
   components: { userAvatar, userInfo, resetPwd },
   data() {
     return {

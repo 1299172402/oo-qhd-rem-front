@@ -56,7 +56,7 @@
         </el-button>
         <el-button
           icon="el-icon-refresh"
-          class="common-btn"
+          class="commonBtn"
           @click="resetQuery"
         >
           重置
@@ -78,6 +78,7 @@
           type="warning"
           icon="el-icon-back"
           plain
+          class="commonBtn"
           @click="handleBack"
         >
           返回

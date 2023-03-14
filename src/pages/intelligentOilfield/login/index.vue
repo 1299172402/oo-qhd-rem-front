@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <div class="bottom-Div">XXXX石油集团有限公司版权所有</div>
+    <div class="bottom-Div">中国石油（中国）有限公司天津分公司版权所有</div>
   </div>
 </template>
 <script>

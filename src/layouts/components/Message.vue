@@ -44,7 +44,7 @@
       </div>
     </template>
     <t-badge :count="unreadMsg.length" :offset="[15, 21]">
-      <t-button theme="default" shape="square" variant="text" @click="isNoticeVisible = true">
+      <t-button theme="default" shape="square" variant="text" @click="isNoticeVisible = true" style="background: transparent;border: 0px;">
         <!-- <notification-icon style="color: var(--whiteColor);"/> -->
         <svg-icon icon-class="reminder" class="panelIconClass"></svg-icon>
       </t-button>

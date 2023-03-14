@@ -54,6 +54,7 @@ import { listNum, noticeList } from '@/api/intelligentOilfield/system/home';
 import marquee from '@/components/intelligentOilfield/marquee-window/index.vue';
 
 export default {
+  name:'Index',
   components: {
     marquee,
   },

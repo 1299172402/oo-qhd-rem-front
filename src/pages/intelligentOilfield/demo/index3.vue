@@ -1,7 +1,8 @@
 <template>
   <div style="width: 100%; height: 100%" class="pageBox">
-    <div class="topSearchDiv">
-      <div>角色名称：<el-input v-model="input" style="width: 300px" placeholder="请输入角色名称"></el-input></div>
+    <header-search class="g-w100 g-h100">
+        <div class="g-row-flex-V g-w100 g-h100">
+      <div>角色名称：<el-input v-model="input" style="width: 200px" placeholder="请输入角色名称"></el-input></div>
       <div style="margin: 0 20px">
         状态：<el-select v-model="value" placeholder="请选择" clearable>
           <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
@@ -11,11 +12,15 @@
         <el-button type="primary">搜索</el-button>
         <el-button class="commonBtn">重置</el-button>
       </div>
-    </div>
-    <pagePanel headerTitle="角色列表" style="height:calc(100% - 80px)">
+      </div>
+    </header-search>
+    <pagePanelNew headerTitle="角色列表" style="height:calc(100% - 100px);" class="g-w100">
       <!-- <gradientBox></gradientBox> -->
+      <div class="btnPosition g-row-flex">
+      <el-button class=""  type="primary">新增</el-button>
+      </div>
       <el-table
-        height="calc(100% - 110px)"
+        height="calc(100% - 113px)"
         :row-style="{ height: '0px' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
@@ -46,7 +51,7 @@
         :limit.sync="queryParams.pageSize"
       />
       <!-- <el-pagination background layout="prev, pager, next,total" :total="1000" class="paginationDiv"> </el-pagination> -->
-    </pagePanel>
+    </pagePanelNew>
   </div>
 </template>
 
@@ -201,5 +206,9 @@ export default {
 }
 .topSearchDiv {
   display: flex;
+}
+.btnPosition {
+    margin: 0 0 20px 0;
+    justify-content: flex-end;
 }
 </style>

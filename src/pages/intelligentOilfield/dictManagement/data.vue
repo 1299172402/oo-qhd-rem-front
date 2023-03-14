@@ -128,6 +128,7 @@
               icon="el-icon-delete"
               @click="handleDelete(scope.row)"
               v-hasPermi="['system:dict:remove']"
+              class="delbutton"
               >删除</el-button
             >
           </template>

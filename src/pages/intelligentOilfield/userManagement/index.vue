@@ -28,7 +28,8 @@
       </el-col>
       <!--用户数据-->
       <el-col :span="20" :xs="24" class="right">
-        <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+      <headerSearch class="g-w100 g-h100">
+        <el-form :model="queryParams" ref="queryForm" style="margin-top:20px" :inline="true" v-show="showSearch" label-width="68px">
           <el-form-item label="用户账号" prop="userName">
             <el-input
               v-model="queryParams.userName"
@@ -51,7 +52,13 @@
             </el-select>
           </el-form-item>
           <el-form-item label="用户岗位" prop="postId">
-            <el-select v-model="queryParams.postId" style="width: 240px" placeholder="请选择用户岗位" collapse-tags clearable>
+            <el-select
+              v-model="queryParams.postId"
+              style="width: 240px"
+              placeholder="请选择用户岗位"
+              collapse-tags
+              clearable
+            >
               <el-option
                 v-for="item in postOptions"
                 :key="item.postId"
@@ -109,8 +116,11 @@
             <el-button icon="el-icon-refresh" size="mini" class="commonBtn" @click="resetQuery">重置</el-button>
           </el-form-item>
         </el-form>
+      </headerSearch>
 
-        <el-row :gutter="10" class="mb8">
+        <!-- v-loading="loading" -->
+        <pagePanelNew headerTitle="用户管理" style="height:calc(100% - 100px);">
+            <el-row :gutter="10" class="mb8" style="margin-bottom:20px">
           <el-col :span="1.5">
             <el-button
               type="primary"
@@ -157,15 +167,17 @@
           </el-col>
           <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList" :columns="columns"></right-toolbar> -->
         </el-row>
-        <!-- v-loading="loading" -->
-     <pagePanel headerTitle="用户管理">
-          <el-table :data="userList" @selection-change="handleSelectionChange" height="calc(100% - 115px)"
-        :row-style="{ height: '0px' }"
-        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-        header-cell-class-name="table_header"
-        :cell-style="{ padding: '2px', 'text-align': 'center' }"
-        style="width: 100%; height: 100%;"
-        :default-sort="{ prop: 'date', order: 'descending' }">
+          <el-table
+            :data="userList"
+            @selection-change="handleSelectionChange"
+            height="calc(100% - 108px)"
+            :row-style="{ height: '0px' }"
+            :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+            header-cell-class-name="table_header"
+            :cell-style="{ padding: '2px', 'text-align': 'center' }"
+            style="width: 100%; height: 100%"
+            :default-sort="{ prop: 'date', order: 'descending' }"
+          >
             <el-table-column type="selection" width="50" align="center" />
             <el-table-column label="序号" type="index" width="50"> </el-table-column>
             <!-- <el-table-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible" /> -->
@@ -239,7 +251,12 @@
                   v-hasPermi="['system:user:resetPwd']"
                   >重置密码</el-button
                 >
-                <el-button size="mini" type="text" @click="handleDelete(scope.row)" v-hasPermi="['system:user:remove']"
+                <el-button
+                  size="mini"
+                  type="text"
+                  @click="handleDelete(scope.row)"
+                  v-hasPermi="['system:user:remove']"
+                  class="delbutton"
                   >删除</el-button
                 >
                 <!-- <el-dropdown
@@ -270,12 +287,19 @@
             :limit.sync="queryParams.pageSize"
             @pagination="getList"
           />
-        </pagePanel>
+        </pagePanelNew>
       </el-col>
     </el-row>
 
     <!-- 添加或修改用户配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body :close-on-click-modal="false" @close="closeDialog('form')">
+    <el-dialog
+      :title="title"
+      :visible.sync="open"
+      width="800px"
+      append-to-body
+      :close-on-click-modal="false"
+      @close="closeDialog('form')"
+    >
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <div class="headerinfo">基础信息</div>
         <el-row>
@@ -301,7 +325,15 @@
         <el-row>
           <el-col :span="11">
             <el-form-item label="用户岗位">
-              <el-select v-model="form.tempPostId" placeholder="请选择用户岗位" @change="changePost" clearable>
+              <el-select
+                multiple
+                collapse-tags
+                v-model="form.postIds"
+                placeholder="请选择用户岗位"
+                @change="changePost"
+                clearable
+                style="width: 100%"
+              >
                 <el-option
                   v-for="item in postOptions"
                   :key="item.postId"
@@ -353,7 +385,7 @@
           </el-col>
           <el-col :span="11">
             <el-form-item label="账号类型" prop="userType">
-              <el-select v-model="form.userType" placeholder="请选择账号类型" clearable>
+              <el-select v-model="form.userType" placeholder="请选择账号类型" clearable class="g-w100">
                 <el-option
                   v-for="(item, index) in accountType"
                   :key="index"
@@ -546,7 +578,15 @@
 </template>
 
 <script>
-import { listUser, getUser, delUser, addUser, updateUser, resetUserPwd, changeUserStatus } from '@/api/intelligentOilfield/system/user';
+import {
+  listUser,
+  getUser,
+  delUser,
+  addUser,
+  updateUser,
+  resetUserPwd,
+  changeUserStatus,
+} from '@/api/intelligentOilfield/system/user';
 import { listPost, addPost } from '@/api/intelligentOilfield/system/post';
 // import { getToken } from "@/utils/auth";
 import { treeselect } from '@/api/intelligentOilfield/system/dept';
@@ -555,6 +595,7 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 import proxy from '@/config/host';
 
 export default {
+  name: 'User',
   dicts: ['sys_normal_disable', 'sys_user_sex'],
   components: { Treeselect },
   filters: {
@@ -840,7 +881,7 @@ export default {
       this.resetForm('queryForm');
       this.$nextTick(() => {
         this.handleQuery();
-      })
+      });
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -910,13 +951,13 @@ export default {
         this.form = response.data.data;
         this.postOptions = response.data.posts;
         this.roleOptions = response.data.roles;
-        this.form.postIds = response.data.postIds;
-        this.form.tempPostId = String(response.data.postIds.toLocaleString());
+        this.form.postIds = response.data.postIds.toLocaleString().split(',');
+        // this.form.tempPostId = String(response.data.postIds.toLocaleString());
         this.form.roleIds = response.data.roleIds.toLocaleString().split(',');
         this.open = true;
         this.title = '编辑用户';
         this.form.password = '';
-        console.log('sdsds', this.form.postIds);
+        // console.log('sdsds', this.form.postIds);
       });
     },
     /** 重置密码按钮操作 */
@@ -958,8 +999,8 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      this.form.postIds = [];
-      this.form.postIds.push(this.form.tempPostId);
+      //   this.form.postIds = [];
+      //   this.form.postIds.push(this.form.tempPostId);
       this.queryParams.pageNum = 1;
       this.$refs.form.validate((valid) => {
         if (valid) {

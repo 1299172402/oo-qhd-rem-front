@@ -45,10 +45,10 @@
         </div>
         <div style="position: relative;z-index: 1;" >
             <div class="operateBtn g-row-flex">
-          <i v-show="isOperation" class="el-icon-rank vue-draggable-handle" :style="{margin: item.isVisConSet?'0 10px': '0 0 0 10px'}"></i>
+          <i v-show="isOperation" class="el-icon-rank vue-draggable-handle" style="margin:0 0 0 10px"></i>
           </div>
         </div>
-        <component :operate="operate" :currentResizeList="currentResizeList" :newWPx="newWPx" :is="getContent(item.name)" :componentItem="item" class="no-drag" @changeContentSetting="changeContentSetting(arguments,item)"  />
+        <component :is="getContent(item.name)" class="no-drag" />
       </grid-item>
     </grid-layout>
   </div>
@@ -80,26 +80,15 @@ export default {
   },
   data() {
     return {
-      panelType: '',
       currentLayout: this.layout,
       colNum: 12, // 12列
-      index: 0,
       interfaceDataStore: [], // 接口面板数据存储
       initLayOut: [],// 模板面板存储
       isOperation: false, // 是否可拖拽和移动
       singleHeight: (document.body.clientHeight - this.heightFromBottom) / this.rowNum,
       screenWidth: document.body.clientWidth, // 屏幕宽度
       screenHeight: document.body.clientHeight, // 屏幕高度
-      heightFromBottom: 290,
-      newWPx: 0, // 拖动盒子的宽度
-      operate: '', // 当前点击的操作,主要区分取消和重置
-      currentResizeList: {
-        i:0,
-        newH: 0,
-        newW: 0,
-        newHPx: 0,
-        newWPx: 0,
-      },
+      heightFromBottom: 350,
     };
   },
   watch: {
@@ -120,7 +109,6 @@ export default {
       // 监听是否编辑面板
       this.isOperation = true;
     });
-    this.index = this.currentLayout.length;
     this.computeNum();
     window.onresize = () =>
       (() => {
@@ -141,36 +129,10 @@ export default {
         cancelButtonText: '取消',
         type: 'warning',
       }).then(() => {
-        // 面板重置并保存
+        // 面板重置逻辑
         // this.currentLayout = JSON.parse(JSON.stringify(this.initLayOut));
-        // this.saveItem();
-        // 内容重置为默认
-        this.operate = '重置'
+        this.isOperation = false;
       }).catch((e)=>{console.log(e);});
-    },
-    submitForm() {
-      const storeItem = this.initLayOut.find((item)=>item.name === this.panelType)
-      this.currentLayout.push({
-        x: storeItem.x,
-        y: storeItem.y, // puts it at the bottom
-        w: storeItem.w,
-        h: storeItem.h,
-        i: this.index,
-        content: 'newPanel',
-        name: this.panelType,
-        contentSetting: false,
-        isVisConSet: true
-      });
-      // Increment the counter to ensure key is always unique.
-      this.index += 1;
-      this.cancel();
-    },
-    cancel() {
-      this.panelType = '';
-    },
-    saveItem() {
-    // 保存元素
-      this.isOperation = false;
     },
     // 取消元素
     cancelItem() {
@@ -179,21 +141,16 @@ export default {
         cancelButtonText: '取消',
         type: 'warning',
       }).then(() => {
-        // 面板重置
+        // 面板取消逻辑
         // this.currentLayout = JSON.parse(JSON.stringify(this.interfaceDataStore));
-        // 关闭编辑窗体
         this.isOperation = false;
-        this.operate = '取消'
       }).catch((e)=>{console.log(e);});
-    },
-    changeContentSetting(val,item) {
-      // eslint-disable-next-line prefer-destructuring
-      item.contentSetting = val[0];
     },
     getContent(i) {
       switch (i) {
       case '示例组件':
         return demoIndex;
+        // 增加所需要引入子组件
       default:
         break;
       }
@@ -208,8 +165,6 @@ export default {
     resizedEvent(i, newH, newW, newHPx, newWPx) {
       console.log(`RESIZED i=${i}, H=${newH}, W=${newW}, H(px)=${newHPx}, W(px)=${newWPx}`);
       this.currentLayout[i].height = newHPx;
-      this.newWPx = newWPx;
-      this.currentResizeList = {i,newH,newW,newHPx,newWPx}
     },
   },
 };

@@ -4,7 +4,7 @@ import request from '@/utils/request'
 // 应用中心-列表
 export function applicationCenterList(data) { 
   return request({
-    url: `system/app/getList?appName=${data.appName}&apply=${data.apply}&appType=${data.appType}`,
+    url: `system/app/getList?appName=${data.appName}&apply=${data.apply}&appCategory=${data.appCategory}`,
     method: 'get',
     data
   })

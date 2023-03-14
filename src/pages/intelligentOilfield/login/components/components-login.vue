@@ -98,7 +98,7 @@
         </t-form>
       </div>
     </div>-->
-    <div class="headerDiv">XXXX管理系统</div>
+    <div class="headerDiv">智能油田管理系统</div>
     <div class="loginInput">
       <t-form ref="form" class="formDiv" :data="formData" :rules="FORM_RULES" label-width="0" @validate="onValidate">
         <template>
@@ -508,7 +508,7 @@ export default Vue.extend({
 <style scoped>
 .loginInput >>> .el-input__inner {
   border: 1px solid transparent !important;
-  color: #0060a6 !important;
+  color: var(--onlyLightBlueColor) !important;
 }
 .loginInput >>> .t-checkbox__input {
   border: 1px solid #0061a7 !important;

@@ -43,6 +43,12 @@ export function encrypt(txt) {
   encryptor.setPublicKey(publicKey) // 设置公钥
   return encryptor.encrypt(txt) // 对数据进行加密
 }
+// 加密(登录)
+export function encryptlogin(txt,publicKey) {
+  const encryptor = new JSEncrypt()
+  encryptor.setPublicKey(publicKey) // 设置公钥
+  return encryptor.encrypt(txt) // 对数据进行加密
+}
 
 // 解密
 export function decrypt(txt) {

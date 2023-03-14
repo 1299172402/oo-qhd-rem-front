@@ -31,6 +31,9 @@ import 'virtual:svg-icons-register'
 import SvgIcon from '@/components/intelligentOilfield/svg-icon/index.vue'
 import pagePanel from '@/components/intelligentOilfield/page-panel/index.vue'
 import infoWindow from '@/components/intelligentOilfield/info-window/index.vue';
+import pagePanelNew from '@/components/intelligentOilfield/page-panel-new/index.vue'
+import headerSearch from '@/components/intelligentOilfield/header-search/index.vue';
+
 
 // 全局组件挂载
 Vue.component('svg-icon', SvgIcon)
@@ -39,6 +42,8 @@ Vue.component('DictTag', DictTag)
 Vue.component('t-page-header');
 Vue.component('pagePanel', pagePanel)
 Vue.component('infoWindow', infoWindow)
+Vue.component('pagePanelNew', pagePanelNew)
+Vue.component('headerSearch', headerSearch)
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
 Vue.prototype.parseTime = parseTime

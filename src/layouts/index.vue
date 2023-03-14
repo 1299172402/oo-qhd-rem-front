@@ -54,7 +54,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      paddingNum: '24px'
+      paddingNum: '20px'
     }
   },
   computed: {
@@ -79,7 +79,7 @@ export default Vue.extend({
     '$store.state.user.isGroupLogin': {
       handler(newValue) {
         // 投影模式下减少面板内间距填充
-        this.paddingNum = newValue ? '5px' : '24px';
+        this.paddingNum = newValue ? '0px' : '20px';
       },
       deep: true,
       immediate: true,

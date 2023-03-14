@@ -155,6 +155,9 @@
       <el-table-column prop="address" label="地址"> </el-table-column>
     </el-table>
     </pagePanel>
+     <div style="margin: 10px 0">=================================新的页面通用面板【具体使用可参照列表示例页】【新增】=================================</div>
+    <pagePanelNew style="height: 600px">
+    </pagePanelNew>
     <!-- 自定义info信息窗 -->
     <div style="margin: 10px 0">=================================自定义info信息窗=================================</div>
     <info-window infoWidth="400px" infoHeight="300px" headerTitle="开采现状分析">
@@ -165,6 +168,11 @@
     <!-- <div style="margin: 10px 0">=================================tab切换按钮：横向，可传值，可传背景色和border色系，可控制深浅色系颜色=================================</div>
     <horizontalSwitchBtn style="margin-bottom: 10px"></horizontalSwitchBtn>
     <horizontalSwitchBtn :colorList="colorList" :borderList="borderList" :dataList="dataList"></horizontalSwitchBtn> -->
+     <!-- Header搜索框部分 -->
+    <div style="margin: 10px 0">=================================Header搜索框部分=================================</div>
+    <header-search>
+    </header-search>
+    <div style="margin: 40px 0"> =================================end========================</div>
   </div>
 </template>
 <script>
@@ -230,26 +238,7 @@ export default {
           name: '王小虎',
           address: '上海市普陀区金沙江路 1516 弄',
         },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-        },
+       
       ],
       colorList: { 'dark':'rgba(13,255,168,0.4)','light':'red'},
       borderList: {'dark':'rgba(13,255,168,1)','light':'green'},

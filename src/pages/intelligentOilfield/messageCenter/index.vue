@@ -59,7 +59,7 @@
         </el-button>
         <el-button
           icon="el-icon-refresh"
-          class="common-btn"
+          class="commonBtn"
           @click="resetQuery"
         >
           重置
@@ -159,6 +159,7 @@ const columns = [
   { props: "status", label: "消息状态" }
 ];
 export default {
+  name: 'MessageLog',
   components: {
     MailView,
     SmsView,
