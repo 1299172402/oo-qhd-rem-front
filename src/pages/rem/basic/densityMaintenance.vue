@@ -82,67 +82,67 @@
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <!-- <el-table-column type="selection" width="55" align="center" /> -->
-        <el-table-column label="油气田" prop="name" width="120" align="center"> </el-table-column>
-        <el-table-column label="一月" prop="one" width="120" align="center">
+        <el-table-column label="油气田" prop="name"  align="center"> </el-table-column>
+        <el-table-column label="一月" prop="one"  align="center">
           <template slot-scope="scope">
             <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
             <span v-else> <el-input v-model="scope.row.one" size="small" /></span>
           </template>
         </el-table-column>
-        <el-table-column label="二月" prop="two" width="120" align="center">
+        <el-table-column label="二月" prop="two"  align="center">
           <template slot-scope="scope">
             <span v-if="scope.row.state == '0'">{{ scope.row.two }}</span>
             <span v-else> <el-input v-model="scope.row.two" size="small" /></span>
           </template>
         </el-table-column>
-        <el-table-column label="三月" prop="three" width="120" align="center">
+        <el-table-column label="三月" prop="three"  align="center">
           <template slot-scope="scope">
             <span v-if="scope.row.state == '0'">{{ scope.row.three }}</span>
             <span v-else> <el-input v-model="scope.row.three" size="small" /></span>
           </template>
         </el-table-column>
-        <el-table-column label="四月" prop="four" width="120" align="center">
+        <el-table-column label="四月" prop="four"  align="center">
            <template slot-scope="scope">
             <span v-if="scope.row.state == '0'">{{ scope.row.four }}</span>
             <span v-else> <el-input v-model="scope.row.four" size="small" /></span>
           </template> </el-table-column>
-        <el-table-column label="五月" prop="five" width="120" align="center"> 
+        <el-table-column label="五月" prop="five"  align="center"> 
            <template slot-scope="scope">
             <span v-if="scope.row.state == '0'">{{ scope.row.five }}</span>
             <span v-else> <el-input v-model="scope.row.five" size="small" /></span>
           </template>
         </el-table-column>
-        <el-table-column label="六月" prop="six" width="120" align="center">
+        <el-table-column label="六月" prop="six"  align="center">
            <template slot-scope="scope">
             <span v-if="scope.row.state == '0'">{{ scope.row.six }}</span>
             <span v-else> <el-input v-model="scope.row.six" size="small" /></span>
           </template> </el-table-column>
-        <el-table-column label="七月" prop="seven" width="120" align="center">
+        <el-table-column label="七月" prop="seven"  align="center">
            <template slot-scope="scope">
             <span v-if="scope.row.state == '0'">{{ scope.row.seven }}</span>
             <span v-else> <el-input v-model="scope.row.seven" size="small" /></span>
           </template> </el-table-column>
-        <el-table-column label="八月" prop="eight" width="120" align="center">
+        <el-table-column label="八月" prop="eight"  align="center">
            <template slot-scope="scope">
             <span v-if="scope.row.state == '0'">{{ scope.row.eight }}</span>
             <span v-else> <el-input v-model="scope.row.eight" size="small" /></span>
           </template> </el-table-column>
-        <el-table-column label="九月" prop="nine" width="120" align="center">
+        <el-table-column label="九月" prop="nine"  align="center">
            <template slot-scope="scope">
             <span v-if="scope.row.state == '0'">{{ scope.row.nine }}</span>
             <span v-else> <el-input v-model="scope.row.nine" size="small" /></span>
           </template> </el-table-column>
-        <el-table-column label="十月" prop="ten" width="120" align="center">
+        <el-table-column label="十月" prop="ten"  align="center">
            <template slot-scope="scope">
             <span v-if="scope.row.state == '0'">{{ scope.row.ten }}</span>
             <span v-else> <el-input v-model="scope.row.ten" size="small" /></span>
           </template> </el-table-column>
-        <el-table-column label="十一月" prop="eleven" width="120" align="center">
+        <el-table-column label="十一月" prop="eleven"  align="center">
            <template slot-scope="scope">
             <span v-if="scope.row.state == '0'">{{ scope.row.eleven }}</span>
             <span v-else> <el-input v-model="scope.row.eleven" size="small" /></span>
           </template> </el-table-column>
-        <el-table-column label="十二月" prop="twelve" width="120" align="center">
+        <el-table-column label="十二月" prop="twelve"  align="center">
            <template slot-scope="scope">
             <span v-if="scope.row.state == '0'">{{ scope.row.twelve }}</span>
             <span v-else> <el-input v-model="scope.row.twelve" size="small" /></span>

@@ -104,14 +104,14 @@
             ></el-option>
           </el-select>
         </el-form-item>
-       
       </el-form>
         </el-row>
+        <span>油井</span>
         <el-transfer
       v-model="value"
       :left-default-checked="[2, 3]"
       :right-default-checked="[1]"
-      :titles="['源列表', '目的列表']"
+      :titles="['未选中', '已选中']"
       @change="handleChange"
       :data="data"
     >
