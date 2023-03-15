@@ -25,14 +25,14 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="井别" prop="jb">
-                    <el-select v-model="ruleForm.jb" placeholder="">
+                  <el-select v-model="ruleForm.jb" placeholder="">
                     <el-option 
                     v-for="item in jbOptions"
                     :key="item.id"
                     :label="item.jbmc" 
                     :value="item.id">
                     </el-option>
-                    </el-select>
+                  </el-select>
                 </el-form-item>
                 <el-form-item label="评价时间" prop="pjsj">
                     <el-date-picker
@@ -49,32 +49,61 @@
           </div>
         </div>
       </header-search>
-      <pagePanelNew headerTitle="QHD32-6-A1井" style="height:calc(100% - 100px);" class="g-w100">
-        <el-form
-          :model="djclForm"
-          style="width: 600px"
-          ref="djclForm"
-          label-width="100px"
-          class="demo-ruleForm">
-          <el-form-item label="层位选择" prop="cw">
-            <el-input v-model="djclForm.cw"></el-input>
-          </el-form-item>
-          <el-form-item label="有效厚度" prop="cw">
-            <el-input v-model="djclForm.yxhd"></el-input>
-          </el-form-item>
-          <el-form-item label="控制储量" prop="kzcl">
-            <el-input v-model="djclForm.kzcl"></el-input>
-          </el-form-item>
-          <el-form-item label="有效厚度" prop="kzmj">
-            <el-input v-model="djclForm.kzmj"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" icon="el-icon-edit">编辑</el-button>
-            <el-button type="primary">保存</el-button>
-            <el-button type="primary">运行计算</el-button>
-          </el-form-item>
-        </el-form>
-      </pagePanelNew>
+      <div style="display: flex;justify-content: center;align-items:center;height:calc(100% - 80px)">
+        <info-window infoWidth="900px" infoHeight="260px" headerTitle="单井储量信息维护">
+          <el-form
+            :model="djclForm"
+            style="width: 800px;padding-top:20px"
+            ref="djclForm"
+            label-width="100px"
+            class="demo-ruleForm">
+            <el-row>
+              <el-col :span="10">
+                <el-form-item label="层位选择" prop="cw">
+                  <el-select v-model="djclForm.cw" placeholder="">
+                    <el-option 
+                    v-for="item in cwOptions"
+                    :key="item.id"
+                    :label="item.cwmc" 
+                    :value="item.id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="2">&nbsp;</el-col>
+              <el-col :span="10">
+                <el-form-item label="有效厚度" prop="cw">
+                  <el-input v-model="djclForm.yxhd"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="2">m</el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="10">
+                <el-form-item label="控制储量" prop="kzcl">
+                  <el-input v-model="djclForm.kzcl"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="2">m³</el-col>
+              <el-col :span="10">
+                <el-form-item label="控制面积" prop="kzmj">
+                  <el-input v-model="djclForm.kzmj"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="2">㎡</el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="24" align="right">
+                <el-form-item>
+                  <el-button type="primary" icon="el-icon-edit">编辑</el-button>
+                  <el-button type="primary">保存</el-button>
+                  <el-button type="primary">运行计算</el-button>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </info-window>
+      </div>
     </div>
   </template>
   
@@ -103,7 +132,7 @@ export default {
         id: '1',
         jbmc: '井别1'
       }],
-      cwOption:[{
+      cwOptions:[{
         id: '1',
         cwmc: 'N1ml I -3'
       }],      
