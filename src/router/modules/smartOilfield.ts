@@ -81,31 +81,6 @@ export default [
   //       },
   //     ],
   //   },
-  {	 
-    path: '/portal',	 
-    component: Layout,	 
-    redirect: '/portal/projectionMode',	 
-    name: 'portal',	 
-    hidden: true,	 
-    meta: {	 
-      title: '门户',	 
-      icon: LayersIcon,	 
-    },	 
-    children: [	 
-      {	 
-        path: 'projectionMode',	 
-        name: 'projectionMode',	 
-        component: () => import('@/pages/intelligentOilfield/portal/projectionMode/index.vue'),	 
-        meta: { title: '投影模式' },	 
-      },	 
-      {	 
-        path: 'officeMode',	 
-        name: 'officeMode',	 
-        component: () => import('@/pages/intelligentOilfield/portal/officeMode/index.vue'),	 
-        meta: { title: '办公模式' },	 
-      },	 
-    ],	 
-  },
   //   {
   //     path: '/system/role-auth',
   //     component: Layout,
@@ -119,6 +94,21 @@ export default [
   //       }
   //     ]
   //   },
+  {
+    path: '/demo5',
+    name: 'demo5',
+    component: Layout,
+    redirect: '/demo5/demoIndex5',
+    meta: { title: '拖拽组件', icon: 'form', single: true },
+    children: [
+      {
+        path: 'demoIndex5',
+        name: 'demoIndex5',
+        component: () => import('@/pages/intelligentOilfield/demo/index5.vue'),
+        meta: { title: '拖拽组件' },
+      },
+    ],
+  },
   // 详情页路由注册——不显示在左侧菜单
   {
     path: '/userManagementDetail',
@@ -129,7 +119,7 @@ export default [
     meta: { title: '查看用户', icon: '', single: true },
     children: [
       {
-        path: 'userDetail',
+        path: 'userDetail/:userId',
         name: 'userDetail',
         component: () => import('@/pages/intelligentOilfield/userManagement/components/detail.vue'),
         meta: { title: '查看用户' },
@@ -146,7 +136,7 @@ export default [
     meta: { title: '分配用户', icon: '', single: true },
     children: [
       {
-        path: 'rolesDetail',
+        path: 'rolesDetail/:roleId',
         name: 'rolesDetail',
         component: () => import('@/pages/intelligentOilfield/rolesManagement/components/detail.vue'),
         meta: { title: '分配用户' },

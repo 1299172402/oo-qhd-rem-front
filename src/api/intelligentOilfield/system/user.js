@@ -56,10 +56,11 @@ export function delUser(userId) {
 }
 
 // 用户密码重置
-export function resetUserPwd(userId, password) {
+export function resetUserPwd(userId, password,userName) {
   const data = {
     userId,
-    password
+    password,
+    userName
   }
   return request({
     url: '/system/user/resetPwd',

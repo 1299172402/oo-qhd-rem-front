@@ -32,8 +32,8 @@
           <p>暂无通知</p>
         </div>
         <div class="header-msg-bottom">
+          <!-- v-if="unreadMsg.length > 0" -->
           <t-button
-            v-if="unreadMsg.length > 0"
             class="header-msg-bottom-link"
             variant="text"
             theme="primary"

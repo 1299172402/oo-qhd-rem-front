@@ -18,6 +18,7 @@ export default {
         return false;
                 
       },
+      trigger: "blur",
       message: "请选择下一节点处理人"
     }
   ]

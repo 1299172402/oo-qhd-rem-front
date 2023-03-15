@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import { getAction } from "../process/api/manage";
+import { getAction } from "@/api/common/manage";
 import DeptTree from "./DeptTree";
 import OpenClose from "./OpenClose";
 import UserTable from "./UserTable";
@@ -115,9 +115,9 @@ export default Vue.extend({
         {
           title: "用户姓名",
           align: "center",
-          colKey: "realname",
+          colKey: "nickName",
           width: 120,
-          key: "realname"
+          key: "nickName"
         },
         {
           title: "操作",
@@ -132,7 +132,7 @@ export default Vue.extend({
       ],
       userMutiple: this.multiple,
       userTableQueryParams: {
-        orgCode: ""
+        deptId: ""
       }
     };
   },
@@ -199,17 +199,19 @@ export default Vue.extend({
             this.userMutiple = val.canMultiSelect;
           }
           if (deptId) {
-            getAction("/sys/sysDepart/getById", {
-              id: deptId
-            })
-              .then(v => {
-                if (v.result && v.result.id === deptId) {
-                  this.handleDeptCheckChange([v.result]);
-                  this.setStartSearchUser();
-                } else {
-                  this.$message.warning("没有找到预期的部门");
-                }
-              });
+            this.handleDeptCheckChange(deptId);
+            this.setStartSearchUser();
+            // getAction("/sys/sysDepart/getById", {
+            //   id: deptId
+            // })
+            //   .then(v => {
+            //     if (v.result && v.result.id === deptId) {
+            //       this.handleDeptCheckChange([v.result]);
+            //       this.setStartSearchUser();
+            //     } else {
+            //       this.$message.warning("没有找到预期的部门");
+            //     }
+            //   });
           } else if (val.orgCode) {
             this.handleDeptCheckChange([{ orgCode: val.orgCode }]);
           } else {
@@ -301,10 +303,10 @@ export default Vue.extend({
     /**
      * 已选部门改变，本页面的已选部门跟着同步
      */
-    handleDeptCheckChange(val) {
-      (this as any).selectedDepts = val || [];
-      const orgCode = val.map(v => v.orgCode).join(",");
-      this.$set((this as any).userTableQueryParams, "orgCode", orgCode);
+    handleDeptCheckChange(id: string) {
+      // (this as any).selectedDepts = val || [];
+      // const orgCode = val.map(v => v.orgCode).join(",");
+      this.$set((this as any).userTableQueryParams, "deptId", id);
     },
     /**
      * 自定义用户输入框显示出来

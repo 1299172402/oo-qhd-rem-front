@@ -123,8 +123,8 @@ export default {
         this.onePageNum = 0;
         // const onePageNumW = this.entranceType === 'UpperLower' ? parseInt((newVal.width - 42) / 80, 10) : parseInt((newVal.width - 42) / 124, 10);
         // const onePageNumH = this.entranceType === 'UpperLower' ? parseInt((newVal.height - 128) / 80, 10) : parseInt((newVal.height - 96) / 80, 10);
-        const onePageNumW = this.entranceType === 'UpperLower' ? parseInt((newVal.width - 22) / 80, 10) : parseInt((newVal.width - 22) / 190, 10);
-        const onePageNumH = this.entranceType === 'UpperLower' ? parseInt((newVal.height - 128) / 105, 10) : parseInt((newVal.height - 96) / 65, 10);
+        const onePageNumW = this.entranceType === 'UpperLower' ? parseInt((newVal.width - 23) / 80, 10) : parseInt((newVal.width - 23) / 190, 10);
+        const onePageNumH = this.entranceType === 'UpperLower' ? parseInt((newVal.height - 129) / 105, 10) : parseInt((newVal.height - 97) / 65, 10);
         if (newVal.width && onePageNumW > 0 && newVal.height && onePageNumH > 0) {
           this.onePageNum = onePageNumW * onePageNumH;
           // console.log('最后个数'+newVal.name, this.onePageNum);
@@ -204,7 +204,7 @@ export default {
 }
 
 .el-carousel__item {
-  justify-content: space-around;
+  justify-content: flex-start;
 }
 
 .el-carousel__item:nth-child(2n) {

@@ -10,10 +10,11 @@ import {
 import { actionApi } from "@/components/audit/process/auditSave/ActionApi";
 import ActionType from "@/components/audit/process/auditSave/ActionType";
 import { getValidateFormResult } from "@/components/audit/utils";
-import { postAction } from "@/components/audit/process/api/manage";
+import { postAction } from "@/api/common/manage";
 
 export default Vue.extend({
   name: "AuditPopup",
+  inject: ["auditContext"],
   components: {
     AuditPanel,
     AuditMapPanel,
@@ -133,10 +134,10 @@ export default Vue.extend({
       this.$refs.signModal.showFiles();
     },
     async loadDiagram() {
-      this.diagram = await diagram(this.dataSource.procInstId);
+      this.diagram = await diagram(this.auditContext._processInstanceId);
     },
     async loadComment() {
-      const list = await commentList(this.dataSource.procInstId);
+      const list = await commentList(this.auditContext._processInstanceId);
       (list || []).forEach(item => {
         item.attachmentsArray = (item.attachments && item.attachments.split("|")) || [];
         item.up = false;
@@ -144,8 +145,8 @@ export default Vue.extend({
       this.commentList = list || [];
     },
     async nextNodeInfo() {
-      const { result } = await actionApi(ActionType.Model, this.businessType, this.dataSource);
-      this.info = result;
+      const { data } = await actionApi(ActionType.Model, this.businessType, this.dataSource) as any;
+      this.info = data;
     },
     async submit() {
       const _this = this as any;
@@ -157,7 +158,8 @@ export default Vue.extend({
         return;
       }
       const { dataReturned, action } = _this.$refs.auditInfo.auditDataReduction;
-      const data = Object.assign(_this.dataSource, dataReturned);
+      const _data = { ..._this.dataSource, procInstId: this.auditContext._processInstanceId };
+      const data = Object.assign(_data, dataReturned);
 
       await this.saveData(data)
         .catch(() => {
@@ -335,7 +337,7 @@ export default Vue.extend({
   render() {
     const AuditContent = (
       <t-tabs value={this.tabIndex} class={"audit-popup-tabs"} onChange={val => { this.tabIndex = val}}>
-        <t-tab-panel value="1" label="审批">
+        <t-tab-panel value="1" label="审批" destroyOnHide={false}>
           <AuditPanel ref={"auditInfo"} dataSource={this.info}/>
         </t-tab-panel>
         <t-tab-panel value="2" label="审批流信息">
@@ -348,11 +350,11 @@ export default Vue.extend({
     );
     const ViewContent =  (
       <t-tabs value={this.tabIndex} className={"audit-popup-tabs"} onChange={val => { this.tabIndex = val }}>
-        <t-tab-panel value="2" label="审批流信息">
-          <AuditFlowPanel/>
+        <t-tab-panel value="1" label="审批流信息">
+          <AuditFlowPanel dataSource={this.commentList} />
         </t-tab-panel>
-        <t-tab-panel value="3" label="审批地图">
-          <AuditMapPanel />
+        <t-tab-panel value="2" label="审批地图">
+          <AuditMapPanel procInstId={this.dataSource?.procInstId} dataSource={this.diagram} />
         </t-tab-panel>
       </t-tabs>
     )

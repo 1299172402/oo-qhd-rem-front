@@ -1,7 +1,9 @@
 <!-- 后台——消息配置列表 -->
 <template>
   <div class="app-container">
+    <headerSearch class="g-w100 g-h100">
     <el-form
+     style="margin-top:18px"
       v-show="showSearch"
       ref="queryForm"
       :model="queryParams"
@@ -63,20 +65,21 @@
         </el-button>
       </el-form-item>
     </el-form>
-    <el-row :gutter="10" class="mb8">
+    </headerSearch>
+   
+     <pagePanelNew headerTitle="消息主题"  style="height: calc(100% - 100px)">
+         <el-row :gutter="10" class="mb8" style="margin-bottom:20px">
       <el-col :span="1.5">
         <el-button
           v-hasPermi="['messageConfig:add']"
           type="primary"
           plain
-          icon="el-icon-plus"
           @click="handleDatil(null, 'Add')"
         >
           新增
         </el-button>
         <el-button
           type="warning"
-          icon="el-icon-back"
           plain
           class="commonBtn"
           @click="handleBack"
@@ -86,8 +89,10 @@
       </el-col>
       <!-- <right-toolbar :show-search.sync="showSearch" @queryTable="getList" /> -->
     </el-row>
-     <pagePanel headerTitle="消息主题">
-        <el-table :data="data">
+        <el-table :data="data" height="calc(100% - 113px)" :row-style="{ height: '0px' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }" header-cell-class-name="table_header"
+        :cell-style="{ padding: '2px', 'text-align': 'center' }" style="width: 100%; height: 100%"
+        :default-sort="{ prop: 'date', order: 'descending' }">
           <el-table-column
             label="序号"
             type="index"
@@ -115,10 +120,10 @@
             align="center"
           >
             <template slot-scope="scope">
-              <el-button type="text" icon="el-icon-view" @click="handleDatil(scope.row.id, 'View')">
+              <el-button type="text" @click="handleDatil(scope.row.id, 'View')">
                 查看
               </el-button>
-              <el-button type="text" icon="el-icon-edit" @click="handleDatil(scope.row.id,  'Edit')">
+              <el-button type="text" @click="handleDatil(scope.row.id,  'Edit')">
                 编辑
               </el-button>
             </template>
@@ -131,7 +136,7 @@
           :limit.sync="queryParams.pageSize"
           @pagination="getList"
         />
-    </pagePanel>
+    </pagePanelNew>
     <config-form ref="configForm" @ok="getList" />
   </div>
 </template>

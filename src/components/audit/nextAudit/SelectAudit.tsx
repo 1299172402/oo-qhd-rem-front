@@ -15,7 +15,8 @@ export default {
     },
     apiFn: {
       type: Function,
-      default: null
+      default: null,
+      require: true
     },
     apiNextAuditInfosQueryParams: {
       type: Object,
@@ -51,7 +52,6 @@ export default {
         return this.nextAuditInfosQueryParams.selectDelegationSettings?.selectResources;
       } 
       return this.nextAuditInfosQueryParams && this.nextAuditInfosQueryParams.nextActivities && this.nextAuditInfosQueryParams.nextActivities[0].assignResources;
-            
     },
     blankTip() {
       if (this.useDelegationSetting) {
@@ -84,8 +84,8 @@ export default {
       if (this.pageModel.nextAuditUsers) {
         try {
           re = JSON.parse(this.pageModel.nextAuditUsers).map(v => ({
-            userId: v.userId,
-            realname: v.userRealName
+            userId: v.userName,
+            realname: v.nickName
           }));
         } catch (e) {
           re = getUsersInitDataFromStringField(this.pageModel.nextAuditUsers);
@@ -151,10 +151,10 @@ export default {
       };
       userArray.forEach(item => {
         auditor.users.push({
-          userId: item.userId,
-          userRealName: item.realname || item.userRealName,
+          userId: item.userName,
+          userRealName: item.nickName,
           email: item.email || "",
-          phone: item.phone || ""
+          phone: item.phonenumber || ""
         });
       });
       return auditor;
@@ -175,7 +175,7 @@ export default {
         }
         user = user[0] || user;
         this.handleSelectChange(user);
-        this.selectModel = user.userId || user.id;
+        this.selectModel = user.userName;
       }
       if (this.afterInit) {
         // 将下一节点人赋值为空
@@ -187,19 +187,22 @@ export default {
     /**
          * 下拉选项改变，给赋值下一节点人
          */
-    handleSelectChange(val) {
-      const row = val || {};
-      this.$set(this.pageModel, "nextAuditInfos", !val ? [] : [{
+    handleSelectChange(val, { option }) {
+      const row = option || {};
+      this.$set(this.pageModel, "nextAuditInfos", !option ? [] : [{
         actId: this.nextAuditInfosQueryParams.nextActivities[0].actId,
         users: [{
-          "email": row.recipient || row.email,
-          "phone": row.phone,
-          "userId": row.id || row.userId,
-          "userRealName": row.name || row.realname
+          "email": row.email,
+          "phone": row.phonenumber,
+          "userId": row.id,
+          "userRealName": row.name
         }]
       }]);
-      this.$set(this.pageModel, "nextAuditUsers", val ? JSON.stringify(val) : "");
+      this.$set(this.pageModel, "nextAuditUsers", option ? JSON.stringify(option) : "");
       this.$emit("change", this.pageModel.nextAuditInfos);
+      if (this.blankTip) {
+        this.selectModel = row.id;
+      }
     },
     /**
          * 下拉筛选
@@ -216,22 +219,20 @@ export default {
   render() {
     const getAuditComponent = () => {
       if (this.blankTip) {
+        const userOPtions = this.resources.map((item) => ({
+          label: item.name,
+          value: item.id,
+          ...item
+        }))
         return <div>
           <t-select
             value={this.selectModel}
             clearable
             readOnly={true}
             onChange={this.handleSelectChange}
+            options={userOPtions}
             placeholder="请选择下一节点审批人"
-          >
-            {
-              this.resources.map(item => (
-                <t-option label={item.name} value={item.id}>  
-                </t-option>
-              ))
-            }
-            
-          </t-select>
+          />
         </div>
       } 
       return <SelectUser

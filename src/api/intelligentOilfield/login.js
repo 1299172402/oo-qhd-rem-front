@@ -1,14 +1,15 @@
 import request from '@/utils/request'
 
 // 登录方法
-export function login(param) {
+export function login(data,param) {
   return request({
     url: 'auth/login',
     headers: {
       isToken: false
     },
     method: 'post',
-    data: param
+    data, 
+    param
   })
 }
 
@@ -67,4 +68,24 @@ export function updateLastLogout(data) {
     method: 'post',
     data
   })
+}
+// 一键登录
+export function getGoOtherLogin(query) {
+  return request({
+    url: "/auth/getCorpOauthUrl",
+    method: "get",
+    params: query
+  });
+}
+// 三方登录
+export function callBackLogin(data, params) {
+  return request({
+    headers: {
+      isToken: false
+    },
+    url: "/auth/login",
+    method: "post",
+    data,
+    params
+  });
 }

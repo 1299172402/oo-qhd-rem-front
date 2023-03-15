@@ -92,9 +92,7 @@ export default Vue.extend({
       this.$emit("change", this.selectedDepts);
     },
     getDeptTreeData() {
-      return getDeptTreeData({
-        swOrganType: this.swOrganType
-      })
+      return getDeptTreeData()
         .then(v => {
           if (this.noDepartment) {
             this.deleteDept(v);
@@ -111,11 +109,11 @@ export default Vue.extend({
      * 触发点击事件
      */
     handleSelect(treeData) {
-      const selectedKeys = treeData.node.data.id;
-      if (!this.multiple) {
-        this.selectedDepts = deptList.filter(v => (selectedKeys || []).includes(v.key));
-        this.$emit("change", this.selectedDepts);
-      }
+      this.$emit("change", treeData.node.data.id);
+      // if (!this.multiple) {
+      //   this.selectedDepts = deptList.filter(v => (selectedKeys || []).includes(v.key));
+      //   this.$emit("change", this.selectedDepts);
+      // }
     },
     /**
      * 初始化选中的数据
@@ -173,7 +171,7 @@ export default Vue.extend({
         {
           !this.showTag ?
             <t-tag-input
-              value={this.selectedDepts.map(item => item.title) || this}
+              value={this.selectedDepts.map(item => item.deptName)}
               onChange={this.handleTagInputChange}
               onInput={this.handle}
               placeholder="筛选"
@@ -192,7 +190,7 @@ export default Vue.extend({
         <t-tree
           activable
           hover
-          keys={{ label: "title", value: "id" }}
+          keys={{ label: "label", value: "id" }}
           disableCheck={!this.multiple}
           defaultValue={this.checkedKeys}
           activeMultiple={this.multiple}
