@@ -2,37 +2,38 @@
 <template>
   <div class="app-container">
     <headerSearch class="g-w100 g-h100">
-    <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true" style="margin-top:18px">
-      <el-form-item label="组织机构筛选" prop="deptId">
-        <el-select v-model="queryParams.deptId" placeholder="请选择" clearable size="small" style="width: 240px">
-          <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.deptName"
-            :value="item.deptId"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="通知内容" prop="noticeContent">
-        <el-input v-model="queryParams.noticeContent" placeholder="请输入通知内容" clearable size="small"
-          @keyup.enter.native="handleQuery" />
-      </el-form-item>
-      <el-form-item label="操作人员" prop="createBy">
-        <el-input v-model="queryParams.createBy" placeholder="请输入操作人员" clearable size="small"
-          @keyup.enter.native="handleQuery" />
-      </el-form-item>
-      <el-form-item label="类型" prop="noticeType">
-        <el-select v-model="queryParams.noticeType" placeholder="请选择" clearable size="small" style="width: 240px">
-          <el-option v-for="(item, index) in types" :key="index" :label="item.type" :value="item.noticeType"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery" class="commonBtn">重置</el-button>
-      </el-form-item>
-    </el-form>
+      <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true" style="margin-top:18px">
+        <el-form-item label="组织机构筛选" prop="tenantId">
+          <el-select v-model="queryParams.tenantId" placeholder="请选择" clearable size="small" style="width: 240px">
+            <el-option v-for="(item, index) in tenantSelect" :key="index" :label="item.tenantName"
+              :value="item.tenantId"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="通知内容" prop="noticeContent">
+          <el-input v-model="queryParams.noticeContent" placeholder="请输入通知内容" clearable size="small"
+            @keyup.enter.native="handleQuery" />
+        </el-form-item>
+        <el-form-item label="操作人员" prop="createBy">
+          <el-input v-model="queryParams.createBy" placeholder="请输入操作人员" clearable size="small"
+            @keyup.enter.native="handleQuery" />
+        </el-form-item>
+        <el-form-item label="类型" prop="noticeType">
+          <el-select v-model="queryParams.noticeType" placeholder="请选择" clearable size="small" style="width: 240px">
+            <el-option v-for="(item, index) in types" :key="index" :label="item.type"
+              :value="item.noticeType"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery" class="commonBtn">重置</el-button>
+        </el-form-item>
+      </el-form>
     </headerSearch>
 
     <pagePanelNew headerTitle="通知通告列表" style="height:calc(100% - 100px);">
         <el-row :gutter="10" class="mb8" style="margin-bottom:20px">
       <el-col :span="1.5">
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd"
+        <el-button type="primary" size="mini" @click="handleAdd"
           v-hasPermi="['system:role:add']">新增</el-button>
       </el-col>
     </el-row>
@@ -44,7 +45,7 @@
         <el-table-column label="序号" type="index" width="120" align="center" />
         <el-table-column label="通知内容" prop="noticeContent" :show-overflow-tooltip="true" width="260" align="center" />
         <el-table-column label="通知类型" prop="noticeTypename" :show-overflow-tooltip="true" width="150" align="center" />
-        <el-table-column label="通知机构" prop="deptname" width="200" align="center" />
+        <el-table-column label="通知机构" prop="tenantName" width="200" align="center" />
         <el-table-column label="创建者" prop="createBy" width="180" align="center" />
         <el-table-column label="创建时间" align="center" prop="createTime" width="240">
           <template slot-scope="scope">
@@ -58,8 +59,8 @@
               v-if="scope.row.status === '0'">启用</el-button>
             <el-button size="mini" type="text" @click="handleClose(scope.row)"
               v-if="scope.row.status === '1'">关闭</el-button>
-            <el-button size="mini" type="text" @click="handleDelete(scope.row)"
-              v-hasPermi="['system:role:remove']" class="delbutton">删除</el-button>
+            <el-button size="mini" type="text" @click="handleDelete(scope.row)" v-hasPermi="['system:role:remove']"
+              class="delbutton">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -103,13 +104,13 @@
         </el-row>
         <el-row>
           <el-col :span="12" :offset="6">
-            <el-form-item label="通知对象" prop="deptIds">
-              <el-table :data="deptList" row-key="deptId"
+            <el-form-item label="通知对象" prop="tenantIds">
+              <el-table :data="tenantList" row-key="tenantId"
                 :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :default-expand-all="isExpandAll"
                 @selection-change="handleSelectionChange1" height="500px" style="max-height: 500px; overflow: scroll">
                 <el-table-column type="selection" width="50" align="center"> </el-table-column>
                 <el-table-column type="index" label="序号" width="50" align="center"> </el-table-column>
-                <el-table-column prop="deptName" label="部门名称" width="150" align="center"></el-table-column>
+                <el-table-column prop="tenantName" label="部门名称" width="150" align="center"></el-table-column>
               </el-table>
             </el-form-item>
           </el-col>
@@ -124,8 +125,7 @@
 </template>
 
 <script>
-import { listDept } from '@/api/intelligentOilfield/system/dept';
-import { addnotice, noticeList, deldataNotice, updatenotice } from '@/api/intelligentOilfield/system/notice';
+import { addnotice, noticeList, deldataNotice, updatenotice, listTenant } from '@/api/intelligentOilfield/system/notice';
 
 export default {
   name: 'Notice',
@@ -138,7 +138,7 @@ export default {
         { noticeType: '1', type: '通知' },
         { noticeType: '2', type: '公告' },
       ], // 类型
-      deptSelect: [],
+      tenantSelect: [],
       noticetypes: [
         { noticeId: 1, noticeName: '通知' },
         { noticeId: 2, noticeName: '公告' },
@@ -148,17 +148,17 @@ export default {
         noticeType: '',
         radio: '',
         sendTime: '',
-        deptIds: [],
+        tenantIds: [],
       },
       // 是否展开，默认全部展开
       isExpandAll: true,
-      deptList: [],
+      tenantList: [],
       rules: {
         noticeContent: [{ required: true, message: '通知内容不能为空', trigger: 'blur' }],
         noticeType: [{ required: true, message: '通知类型不能为空', trigger: 'blur' }],
         radio: [{ required: true, message: '发送时间不能为空', trigger: 'blur' }],
         sendTime: [{ required: true, message: '定时时间不能为空', trigger: 'blur' }],
-        deptIds: [{ required: true, message: '通知对象不能为空', trigger: 'blur' }],
+        tenantIds: [{ required: true, message: '通知对象不能为空', trigger: 'blur' }],
       },
       // 显示搜索条件
       showSearch: true,
@@ -172,7 +172,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        deptId: undefined,
+        tenantId: undefined,
         noticeContent: undefined,
         createBy: undefined,
         noticeType: undefined,
@@ -181,7 +181,7 @@ export default {
   },
   created() {
     this.getList();
-    this.choiceDepts(); // 获取组织机构
+    this.choiceTenants(); // 获取组织机构
   },
   methods: {
     /** 查询通知通告列表 */
@@ -206,10 +206,8 @@ export default {
               item.noticetype = '播放中';
             }
           }
-          if (item.deptList) {
-            item.deptname = item.deptList
-              .map((d) => d.deptName)
-              .join(',');
+          if (item.tenantList) {
+            item.tenantName = item.tenantList?.map((d) => d?.tenantName).join(',');
           }
         });
         this.noticeList = response.data.rows;
@@ -218,12 +216,15 @@ export default {
       });
     },
     // 选择机构
-    choiceDepts() {
+    choiceTenants() {
       this.title = '新增通知';
-      this.choiceDept = true;
-      listDept().then((response) => {
-        this.deptSelect = response.data.data;
-        this.deptList = this.handleTree(response.data.data, 'deptId');
+      this.choiceTenant = true;
+      listTenant({
+        pageNum: 1,
+        pageSize: 100000
+      }).then((response) => {
+        this.tenantSelect = response.data.rows;
+        this.tenantList = this.handleTree(response.data.rows, 'tenantId');
       });
     },
     // 取消按钮
@@ -241,7 +242,7 @@ export default {
         noticeType: '',
         radio: '',
         sendTime: '',
-        deptIds: [],
+        tenantIds: [],
       };
       this.resetForm('addform');
     },
@@ -265,14 +266,14 @@ export default {
     },
     // 多选框选中数据（选择机构）
     handleSelectionChange1(selection) {
-      this.addform.deptIds = selection.map((item) => item.deptId);
+      this.addform.tenantIds = selection.map((item) => item.tenantId);
     },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
       this.open = true;
       this.title = '新增通知';
-      this.choiceDepts();
+      this.choiceTenants();
     },
     /** 关闭按钮操作 */
     handleClose(row) {

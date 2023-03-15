@@ -323,7 +323,6 @@ export default Vue.extend({
       key="opinionRequired"
       label="处理意见"
       name="opinion"
-      initialData="123456"
     >
       <t-textarea
         placeholder="请输入处理意见"
@@ -343,7 +342,7 @@ export default Vue.extend({
           onChange={(val) => { this.auditInfo.opinion = val }} />
       </t-form-item>
     );
-        
+    // 处理意见元素
     const defaultOpinionEl = (<t-form-item
       key="opinionRequired"
       label="处理意见"
@@ -354,7 +353,7 @@ export default Vue.extend({
         clearable
         onChange={(val) => { this.auditInfo.opinion = val }} />
     </t-form-item>);
-        
+    //  流程回到我
     const curFlowBackToMeModeEl = (
       <t-form-item label="流程回到我">
         <t-checkbox onChange={(val) => { this.auditInfo.flowBackToMe = val }} disabled={this.curFlowBackToMeMode === "back"} />
@@ -370,12 +369,48 @@ export default Vue.extend({
       terminateOrOpinionEl = defaultOpinionEl
     }
 
+    const nextAuditUserEl = <t-form-item
+      label="下一处理节点"
+      name={this.nextAuditInfoProp}
+      initialData="['1']"
+      requiredMark={true}
+    >
+      <div class={"audit-panel-next-node"}>
+        <div>
+          <t-select value={this.nodeType} onChange={(val) => { this.nodeType = val }}>
+            {
+              this.nextNodeType.map(item => <t-option key={item.value} label={item.value} value={item.key} />)
+            }
+          </t-select>
+        </div>
+        <SelectNextAudit 
+          nodeType={this.nodeType}
+          dataSource={this.dataSource}
+          watch-value={this.selectNextAuditWatch}
+          class={"select-next-audit"}
+          onParallelNode={(val) => {this.isParallelNode = val}}
+          onSelectAuditorOk={this.selectAuditorOk}
+        />
+      </div>
+    </t-form-item>
+
     return (
       <t-form ref={"form"} rules={this.rules} data={this.auditInfo}>
         {
           this.flowShowAction && !this.isSelectNode ? <t-form-item label="处理操作" name="name" initialData="TDesign">
             {
-              !this.defaultAction ? <t-radio-group value={this.auditInfo.currentAction.key} onChange={(val) => { this.auditInfo.currentAction.key = val }}>
+              !this.defaultAction ? <t-radio-group value={this.auditInfo.currentAction.key} onChange={(val) => {
+                this.auditInfo.currentAction.key = val;
+                if (val === "Reject") this.auditInfo.nextAuditInfo.nextActId = undefined;
+                this.$set(this.auditInfo, "currentAction", cloneDeep(
+                  this.acceptActions.find(item => item.key === val)) || {}
+                );
+                this.$nextTick(() => {
+                  setTimeout(() => {
+                    this.$refs.form.clearValidate();
+                  });
+                });
+              }}>
                 {
                   this.acceptActions.filter(v => v.key !== "Reslove" && v.disabled === false).map(item => <t-radio key={item.value} disable={item.disabled} value={item.key}>{item.value}</t-radio>)
                 }
@@ -390,30 +425,10 @@ export default Vue.extend({
           // 意见元素
           this.flowShowComment ? terminateOrOpinionEl : null
         }
-        <t-form-item
-          label="下一处理节点"
-          name={this.nextAuditInfoProp}
-          initialData="['1']"
-          requiredMark={true}
-        >
-          <div class={"audit-panel-next-node"}>
-            <div>
-              <t-select value={this.nodeType} onChange={(val) => { this.nodeType = val }}>
-                {
-                  this.nextNodeType.map(item => <t-option key={item.value} label={item.value} value={item.key} />)
-                }
-              </t-select>
-            </div>
-            <SelectNextAudit 
-              nodeType={this.nodeType}
-              dataSource={this.dataSource}
-              watch-value={this.selectNextAuditWatch}
-              class={"select-next-audit"}
-              onParallelNode={(val) => {this.isParallelNode = val}}
-              onSelectAuditorOk={this.selectAuditorOk}
-            />
-          </div>
-        </t-form-item>
+        {
+          !this.isResolve && this.auditInfo.currentAction.key !== "Reject" && this.defaultAction !== "Terminate" ? nextAuditUserEl : null
+        }
+       
         {
           this.nodeType === "Delegate" && this.curFlowBackToMeMode !== "go" ? curFlowBackToMeModeEl : null
         }

@@ -101,62 +101,68 @@
     <div class="headerDiv">智能油田管理系统</div>
     <div class="loginInput">
       <t-form ref="form" class="formDiv" :data="formData" :rules="FORM_RULES" label-width="0" @validate="onValidate">
-        <template>
-          <t-form-item name="username" style="margin-bottom: 7%">
-            <div class="textDiv">用户名</div>
-            <div class="borderDiv">|</div>
-            <el-input
-              class="loginInput"
-              v-model="formData.username"
-              placeholder="请输入用户名/手机号"
-              style="width: 100%"
-            >
-            </el-input>
-            <div class="bottomBorderDiv"></div>
-          </t-form-item>
+        <t-tabs 
+          :value="tabValue" 
+          @change="(newValue) => (tabValue = newValue)">
+          <t-tab-panel value="corp" label="内部人员登录" class="neibuLogin">
+            <components-company-login />
+          </t-tab-panel>
+          <t-tab-panel value="password" label="外部人员登录">
+            <template>
+              <t-form-item name="username" style="margin-bottom: 7%">
+                <div class="textDiv">用户名</div>
+                <div class="borderDiv">|</div>
+                <el-input
+                  class="loginInput"
+                  v-model="formData.username"
+                  placeholder="请输入用户名/手机号"
+                  style="width: 100%"
+                >
+                </el-input>
+                <div class="bottomBorderDiv"></div>
+              </t-form-item>
 
-          <t-form-item name="password" style="margin-bottom: 6%">
-            <div class="textDiv">密 码</div>
-            <div class="borderDiv">|</div>
-            <el-input
-              class="loginInput"
-              v-model="formData.password"
-              placeholder="请输入密码"
-              style="width: 100%"
-              show-password
-            >
-            </el-input>
-            <div class="bottomBorderDiv"></div>
-          </t-form-item>
+              <t-form-item name="password" style="margin-bottom: 6%">
+                <div class="textDiv">密 码</div>
+                <div class="borderDiv">|</div>
+                <el-input
+                  class="loginInput"
+                  v-model="formData.password"
+                  placeholder="请输入密码"
+                  style="width: 100%"
+                  show-password
+                >
+                </el-input>
+                <div class="bottomBorderDiv"></div>
+              </t-form-item>
 
-          <t-form-item name="yzm">
-            <div class="textDiv">验证码</div>
-            <div class="borderDiv">|</div>
-            <el-input
-              class="loginInput"
-              v-model="formData.code"
-              auto-complete="off"
-              placeholder="验证码"
-              style="width: 63%"
-            >
-            </el-input>
-            <div class="bottomBorderDiv" style="width: 68%"></div>
-            <div class="login-code">
-              <img :src="codeUrl" @click="getCode" class="login-code-img" style="height: 38px; width: 100%" />
-            </div>
-          </t-form-item>
-          <div class="pwdDiv">
-            <div class="check-container remember-pwd checkBox">
-              <t-checkbox>自动登录</t-checkbox>
-              <t-checkbox v-model="formData.rememberMe">记住密码</t-checkbox>
-            </div>
-          </div>
-        </template>
+              <t-form-item name="yzm">
+                <div class="textDiv">验证码</div>
+                <div class="borderDiv">|</div>
+                <el-input
+                  class="loginInput"
+                  v-model="formData.code"
+                  auto-complete="off"
+                  placeholder="验证码"
+                  style="width: 63%"
+                >
+                </el-input>
+                <div class="bottomBorderDiv" style="width: 68%"></div>
+                <div class="login-code">
+                  <img :src="codeUrl" @click="getCode" class="login-code-img" style="height: 38px; width: 100%" />
+                </div>
+              </t-form-item>
+              <div class="pwdDiv">
+                <div class="check-container remember-pwd checkBox">
+                  <t-checkbox>自动登录</t-checkbox>
+                  <t-checkbox v-model="formData.rememberMe">记住密码</t-checkbox>
+                </div>
+              </div>
+            </template>
+          </t-tab-panel>
+        </t-tabs>
         <div class="loginBtn">
-          <t-form-item style="margin: 3% 0">
-            <t-button block size="large" type="submit" @click="loginSys('集团登录')"> 集团登录 </t-button>
-          </t-form-item>
-          <t-form-item class="btn-container" style="margin-top: 5%">
+          <t-form-item class="btn-container" v-if="tabValue === 'password'" style="margin-top: 5%">
             <t-button block size="large" type="submit" @click="loginSys('登录')"> 登录 </t-button>
           </t-form-item>
         </div>
@@ -181,7 +187,10 @@ import Vue from 'vue';
 import { getCodeImg } from '@/api/intelligentOilfield/login';
 import { decrypt } from '@/utils/jsencrypt';
 import Cookies from 'js-cookie';
+import proxy from "@/config/host";
+import ComponentsCompanyLogin from "./components-companylogin.vue";
 
+const env = import.meta.env.MODE;
 // const INITIAL_DATA = {
 //   phone: '',
 //   username: '',
@@ -209,9 +218,12 @@ export default Vue.extend({
     // BrowseOffIcon,
     // BrowseIcon,
     // RefreshIcon,
+    ComponentsCompanyLogin
   },
   data() {
+    const loginType = proxy[env].LOGIN_TYPES;
     return {
+      tabValue: loginType[0] === "password" ? "password" : "corp",
       tabList: [
         { name: '业务门户', isChecked: true },
         { name: '管理后台', isChecked: false },
@@ -298,18 +310,22 @@ export default Vue.extend({
       this.type = val;
       this.$refs.form.reset();
     },
-    async onSubmit() {
+    async onSubmit(type) {
       //   if (validateResult === true) {
     //   await this.$store.dispatch('user/login', this.formData);
-      this.$store
-        .dispatch('user/login', this.formData)
-        .then(() => {
-          this.getCode();
+      this.checkUrl()
+      if(type === '登录') {
+        this.$store
+          .dispatch('user/login', this.formData)
+          .then(() => {
+            this.getCode();
 
-        }).catch((err) => {
-          this.getCode();
-          console.log(err);
-        });
+          }).catch((err) => {
+            this.getCode();
+            console.log(err);
+          });
+      }
+      
       //   this.$store
       //     .dispatch('user/login', this.formData)
       //     .then(() => {
@@ -358,6 +374,19 @@ export default Vue.extend({
       //   }
       //   this.$router.replace('/').catch(() => '');
       //   }
+    },
+    /**
+     * 检查url是否包含srid参数，如果有，将其作为登录接口参数
+     */
+    checkUrl() {
+      const urlStr = window.location.hash.split("?")[1];
+      if (urlStr) {
+        const urlSearchParams = new URLSearchParams(urlStr);
+        const result = Object.fromEntries(urlSearchParams.entries());
+        if (result.srid) {
+          this.$set(this.formData, "srid", result.srid);
+        }
+      }
     },
     handleCounter() {
       this.countDown = 60;
@@ -502,6 +531,20 @@ export default Vue.extend({
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: #909399;
+  }
+  .t-tabs__nav-wrap {
+    flex: 1;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #D8D8D8;
+  }
+  ::v-deep .t-tabs__header {
+    margin-bottom: 18px;
+  }
+  ::v-deep .t-is-smooth {
+    transform: translate(20px, 0px) !important;
+  }
+  ::v-deep .t-tabs__nav-item-text-wrapper {
+    font-size: 17px;
   }
 }
 </style>

@@ -23,6 +23,9 @@
             :value="dict.value" />
         </el-select>
       </el-form-item>
+      <el-form-item label="appId" prop="appId" v-if="showAppSearch">
+        <search-select v-model="queryParams.appId"></search-select>
+      </el-form-item>
     <!-- <el-form-item label="创建时间">
         <el-date-picker
           v-model="dateRange"
@@ -45,7 +48,7 @@
     <pagePanelNew headerTitle="角色管理" style="height:calc(100% - 100px);">
          <el-row :gutter="10" class="mb8" style="margin-bottom:20px">
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
+        <el-button type="primary" plain size="mini" @click="handleAdd"
           v-hasPermi="['system:role:add']">新增</el-button>
       </el-col>
     <!-- <el-col :span="1.5">
@@ -93,6 +96,11 @@
         <el-table-column label="序号" type="index" width="120" />
         <!-- <el-table-column label="角色编号" prop="roleId" width="120" /> -->
         <el-table-column label="角色名称" prop="roleName" :show-overflow-tooltip="true" min-width="40" />
+        <el-table-column label="角色类型" prop="roleType" width="100">
+          <template slot-scope="scope">
+            <dict-tag :options="dict.type.sys_role_type" :value="scope.row.roleType" />
+          </template>
+        </el-table-column>
         <el-table-column label="权限字符" prop="roleKey" :show-overflow-tooltip="true" width="160" />
         <el-table-column label="角色排序" prop="roleSort" width="120" />
         <el-table-column label="分配用户" align="center" width="180">
@@ -161,10 +169,24 @@
         </el-row>
         <el-row>
           <el-col :span="12">
+            <el-form-item label="角色类型" prop="roleType" >
+              <el-select v-model="form.roleType" :disabled="$route.query.id || form.appId">
+                <el-option
+                  v-for="item in dict.type.sys_role_type"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="角色顺序" prop="roleSort">
               <el-input-number v-model="form.roleSort" controls-position="right" :min="0" />
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="角色状态" prop="status">
               <el-radio-group v-model="form.status">
@@ -235,10 +257,22 @@
 import { listRole, getRole, delRole, addRole, updateRole, dataScope, changeRoleStatus } from '@/api/intelligentOilfield/system/role';
 import { treeselect as menuTreeselect, roleMenuTreeselect } from '@/api/intelligentOilfield/system/menu';
 import { treeselect as deptTreeselect, roleDeptTreeselect } from '@/api/intelligentOilfield/system/dept';
+import SearchSelect from '@/components/intelligentOilfield/searchSelect/AppSearchSelect.vue'
 
 export default {
   name: 'Roles',
-  dicts: ['sys_normal_disable'],
+  dicts: ['sys_normal_disable', 'sys_role_type'],
+  components:{SearchSelect},
+  props:{
+    showAppSearch:{
+      type: Boolean,
+      default: true
+    },
+    appId: {
+      type: String,
+      default: undefined
+    }
+  },
   data() {
     return {
       // 遮罩层
@@ -301,7 +335,17 @@ export default {
         roleName: undefined,
         roleKey: undefined,
         status: undefined,
+        appId: undefined
       },
+      options:[],
+      // 下拉appid分页查询
+      pagePrarms: {
+        pageSize: 10,
+        startIndex: 1,
+        key: undefined,
+        pagesNum: 0
+      },
+      allowLoad: true,
       // 表单参数
       form: {},
       defaultProps: {
@@ -311,6 +355,7 @@ export default {
       // 表单校验
       rules: {
         roleName: [{ required: true, message: '角色名称不能为空', trigger: 'blur' }],
+        roleType: [{ required: true, message: '角色类型不能为空', trigger: 'blur' }],
         roleKey: [{ required: true, message: '权限字符不能为空', trigger: 'blur' }],
         roleSort: [{ required: true, message: '角色顺序不能为空', trigger: 'blur' }],
         status: [{ required: true, message: '角色状态不能为空', trigger: 'change' }],
@@ -329,7 +374,7 @@ export default {
     /** 查询角色列表 */
     getList() {
       this.loading = true;
-      listRole(this.addDateRange(this.queryParams, this.dateRange)).then((response) => {
+      listRole(this.addDateRange({...this.queryParams, appId: this.queryParams.appId || this.appId }, this.dateRange)).then((response) => {
         this.roleList = response.data.rows;
         this.total = response.data.total;
         this.loading = false;
@@ -426,6 +471,7 @@ export default {
         menuCheckStrictly: true,
         deptCheckStrictly: true,
         remark: undefined,
+        appId: undefined
         // isTenant: '0'
       };
       this.resetForm('form');
@@ -495,6 +541,9 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
+      if(this.$route.query.id){
+        this.form.roleType = 'application'
+      }
       this.getMenuTreeselect();
       this.open = true;
       this.title = '新增角色';
@@ -544,7 +593,7 @@ export default {
     /** 分配用户操作 */
     handleAuthUser(row) {
       const { roleId } = row;
-      this.$router.push({ name: `rolesDetail`, query: { roleId } });
+      this.$router.push({ name: `rolesDetail`, query: { roleId, pathName:row.roleName } ,params:{roleId}});
       //   this.$router.push(`/system/role-auth/user/${roleId}`);
     },
     /** 提交按钮 */
@@ -552,6 +601,9 @@ export default {
       this.form.menuIds = this.getMenuAllCheckedKeys();
       this.$refs.form.validate((valid) => {
         if (valid) {
+          if (!this.form.appId && this.$route.query.id) {
+            this.form.appId = this.$route.query.id;
+          }
           if (this.form.roleId !== undefined) {
             // this.form.menuIds = this.getMenuAllCheckedKeys();
             updateRole(this.form).then((res) => {
@@ -612,7 +664,7 @@ export default {
         },
         `role_${new Date().getTime()}.xlsx`,
       );
-    },
+    }
   },
 };
 </script>

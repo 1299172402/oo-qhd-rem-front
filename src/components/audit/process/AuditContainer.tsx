@@ -121,7 +121,12 @@ export default Vue.extend({
     _processInstanceId(val) {
       this.model.procInstId = val;
     },
-    "$route": (this as any).routeWatch,
+    // eslint-disable-next-line func-names
+    "$route": function (val) {
+      if (val.path.indexOf("/Audit") !== -1 && this.acceptActions.length === 0) {
+        this.getAuditPageInfo();
+      }
+    },
     toggleLeftMenuShow() {
       this.handleGetBtnGroupWidth();
     }
@@ -129,19 +134,17 @@ export default Vue.extend({
   created() {
     this.getAuditPageInfo();
   },
+  activated() {
+    this.getAuditPageInfo();
+  },
   methods: {
-    routeWatch(val) {
-      if (val.path.indexOf("/Audit") !== -1 && this.acceptActions.length === 0) {
-        this.getAuditPageInfo();
-      }
-    },
     getAuditPageInfo() {
       const { taskId } = this.$route.query;
       const _this = this as any;
       if (taskId) {
         _this.model = cloneDeep(modelSchema);
         auditPageInfo(taskId)
-          .then(v => {
+          .then((v) => {
             // 判断是否有申领
             if (this.infos.businessType && v.acceptActions.includes("Claim")) {
               const data = {
@@ -212,8 +215,7 @@ export default Vue.extend({
         // 点击处理按钮快速办结
         const quickFinish = (this.model.extendProperties || []).some(v => v.key === "quickFinish" && v.value === "true");
         if (quickFinish) {
-          this.quickFinish("completeTask", this.model, businessType);
-                    
+          this.quickFinish("completeTask", this.model, businessType);    
         } else {
           const actionAreaProps: ActionAreaProps = {
             businessType,
@@ -271,8 +273,9 @@ export default Vue.extend({
         }
       }
     }
+
     return (
-      <div>
+      <div style="display: flex; flex-direction: column; height: 100%">
         <div class="audit-container-main">
           {this.$slots.default}
         </div>
@@ -280,7 +283,8 @@ export default Vue.extend({
           {
             that.hideFooter ? null : <AuditActionArea { ...actionAreaProps }>
               {{
-                footer: () => this.$slots.footer
+                footer: () => this.$slots.footer,
+                editData: () => this.$slots.editData
               }}
             </AuditActionArea>
           }

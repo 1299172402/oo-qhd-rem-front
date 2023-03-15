@@ -46,6 +46,11 @@ export default Vue.extend({
     }  
   },
   methods: {
+    handleReturn() {
+      this.$nextTick(() => {
+        this.$router.go(-1)
+      }) 
+    },
     renderAuditComponent(props: ActionAreaProps): void {
       const { isView, businessType } = props;
       this.auditProps.isView = isView;
@@ -54,7 +59,7 @@ export default Vue.extend({
     }
   },
   render() {
-    const { footer } = this.$slots;
+    const { footer, editData } = this.$slots.default[0];
     const currentNodeEl = (
       <div className="audit-action-current-node">
         <span>
@@ -85,32 +90,37 @@ export default Vue.extend({
           this.actionOutside && this.isAudit ? processingOperationEl : null
         }
         <t-button variant="outline" theme="default" onClick={this.cancelFn}>取消</t-button>
-        <t-button onClick={() => this.completeFn(this.renderAuditComponent)}>
-          {
-            this.auditContext.isAudit ? "处理" : auditText
-          }
-        </t-button>
+        {
+          this.showEditDataBtn ? <span style="margin-right: 10px">{ editData() }</span> : null
+        }
+        {
+          this.infos.processId ? <span>
+            <t-button onClick={() => this.completeFn(this.renderAuditComponent)}>
+              {
+                this.auditContext.isAudit ? "处理" : auditText
+              }
+            </t-button>
+          </span> : null
+        }
         {
           this.auditContext.isView ? <span>{ this.$slots.viewData }</span> : null
         }
         {
           this.auditContext.isAudit ? <span>{ this.$slots.auditData && this.$slots.auditData({ item: this.model}) }</span> : null
         }
-        {
-          this.showEditDataBtn ? <span>{ this.$slots.editData }</span> : null
-        }
       </div>
     ];
     return (
       <div class="audit-action">
         {
-          footer || defaultFooter
+          footer() || defaultFooter
         }
         <AuditPopup
           ref={"AuditPopup"}
           dataSource={this.model}
           businessType={this.auditProps.businessType}
           isView={this.auditProps.isView}
+          successCallback={this.handleReturn}
           onClose={() => {
             this.$nextTick(() => {
               this.visible = false

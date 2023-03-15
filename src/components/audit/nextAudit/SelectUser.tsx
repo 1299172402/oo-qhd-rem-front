@@ -151,7 +151,7 @@ export default Vue.extend({
               this.$slots.left :
               <t-select-input
                 readOnly={true}
-                value={this.selectedUsers?.[0]?.realname}
+                value={this.selectedUsers?.[0]?.nickName}
                 class={"select-user-input"}
                 placeholder={this.placeholder}
               >

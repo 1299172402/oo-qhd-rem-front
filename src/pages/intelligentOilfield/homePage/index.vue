@@ -7,7 +7,7 @@
       </div>
       <Marquee style="white-space:pre-wrap;">{{ val }}</Marquee>
     </div>
-    <pagePanel headerTitle="作业区概览" style="height: calc(100% - 10px)">
+    <pagePanel headerTitle="作业区概览" style="height: calc(100% - 0px)">
       <div style="width: 100%; height: calc(100% - 10px); overflow: scroll;overflow-x: hidden;" class="el_row_wrap">
         <el-row :gutter="0">
           <el-col :span="8" v-for="(item, index) in listNumData" :key="index">
@@ -25,7 +25,7 @@
                   :format="() => (item.userNum ? item.userLonginNum + '/' + item.userNum : '0/0')"
                   :percentage="item.userNum ? item.userLonginNum / item.userNum : 0"></el-progress>
               </div>
-              <div class="boxCard_right" @click="handleAuth(item.depId)">
+              <div class="boxCard_right" @click="handleAuth(item.tenantId)">
                 <span>查 看</span>
               </div>
             </div>
@@ -54,7 +54,7 @@ import { listNum, noticeList } from '@/api/intelligentOilfield/system/home';
 import marquee from '@/components/intelligentOilfield/marquee-window/index.vue';
 
 export default {
-  name:'Index',
+  name: 'Index',
   components: {
     marquee,
   },
@@ -70,15 +70,15 @@ export default {
   },
   methods: {
     listNum() {
-      listNum(this.$store.getters['user/userDetail'].user.dept.deptId).then((response) => {
+      listNum(this.$store.getters['user/userDetail'].user.userId).then((response) => {
         // listNum(100).then((response) => {
         this.listNumData = response
       });
     },
-    handleAuth(depId) {
+    handleAuth(tenantId) {
       console.log('aa')
       //   this.$router.push({ name: `homeDetail`, query: { id } });
-      this.$router.push({ name: `homeDetail`, query: { depId } });
+      this.$router.push({ name: `homeDetail`, query: { tenantId } });
     },
     noticeList() {
       noticeList().then(response => {

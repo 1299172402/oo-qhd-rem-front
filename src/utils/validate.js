@@ -82,3 +82,34 @@ export function isArray(arg) {
   }
   return Array.isArray(arg)
 }
+
+/**
+ * 必填验证未通过时定位到该元素位置
+ */
+export function scrollToElement(className = "has-error", options) {
+  const dom = document.querySelector(`.${className}`);
+  dom?.scrollIntoView(options || { block: "center" });
+}
+
+function getLengthLE(length, required = true, otherRuleArray = [], trigger = "change") {
+  return [
+    ...otherRuleArray,
+    {
+      required,
+      validator(rule, value, callback) {
+        if (!value) {
+          return rule.required ? callback(new Error("必填")) : callback();
+        } if (value.length <= length) {
+          return callback();
+        }
+        return callback(new Error(`内容字数已超【${value.length}/${length}】`));
+      },
+      trigger
+    }
+  ];
+}
+
+// 必填且字数少于20个
+export const requiredLengthLE20 = getLengthLE(20);
+export const arrayRequired = [{ type: "array", required: true, message: "必填", trigger: ["blur", "change"] }];
+export const simpleRequired = [{ required: true, message: "必填", trigger: ["blur", "change"] }];

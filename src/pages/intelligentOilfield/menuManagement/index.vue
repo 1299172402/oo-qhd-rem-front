@@ -12,6 +12,9 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="所属应用" prop="appId" v-if="showAppSearch">
+        <search-select v-model="queryParams.appId"></search-select>
+      </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select v-model="queryParams.status" placeholder="菜单状态" clearable size="small">
           <el-option
@@ -35,7 +38,6 @@
         <el-button
           type="primary"
           plain
-          icon="el-icon-plus"
           size="mini"
           @click="handleAdd({}, '外层新增')"
           v-hasPermi="['system:menu:add']"
@@ -79,6 +81,11 @@
             <span>{{ scope.row.menuType | filterType }}</span>
           </template>
         </el-table-column>
+        <!-- <el-table-column prop="appId" label="所属应用" width="100">
+          <template slot-scope="scope">
+            <span>{{ searchOption.find(item=>item.value===scope.row.appId)?.label }}</span>
+          </template>
+        </el-table-column> -->
         <el-table-column prop="perms" label="权限标识" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="component" label="组件路径" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="status" label="状态" width="80">
@@ -138,20 +145,6 @@
                 <el-radio v-if="isShowRadioBtn" label="C">菜单</el-radio>
                 <el-radio v-if="isShowRadioBtn" label="F">按钮</el-radio>
               </el-radio-group>
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="所属应用" prop="appId">
-              <el-select
-                :disabled="form.menuType !== 'M' || (form.menuType === 'M' && !isParent)"
-                style="width: 100%"
-                v-model="form.appId"
-                placeholder="请选择"
-                clearable
-              >
-                <el-option v-for="item in searchOption" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="24" v-if="form.menuType != 'F'">
@@ -348,11 +341,12 @@ import Treeselect from '@riophae/vue-treeselect';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 import IconSelect from '@/components/intelligentOilfield/icon-select/index.vue';
 import { applicationAllList } from '@/api/intelligentOilfield/portal/officeMode';
+import SearchSelect from '@/components/intelligentOilfield/searchSelect/AppSearchSelect.vue'
 
 export default {
   name: 'Menu',
   dicts: ['sys_show_hide', 'sys_normal_disable'],
-  components: { Treeselect, IconSelect },
+  components: { Treeselect, IconSelect, SearchSelect},
   filters: {
     filterType(value) { 
       switch (value) {
@@ -368,11 +362,19 @@ export default {
       //   return value === 'M'?'目录':(value === 'C'?'菜单':'按钮');
     },
   },
+  props:{
+    showAppSearch:{
+      type:Boolean,
+      default:true
+    },
+    appId: {
+      type: String,
+      default: undefined
+    }
+  },
   data() {
     return {
-      isParent: true,
       isShowRadioBtn: false,
-      searchOption: [],
       // 遮罩层
       loading: true,
       // 显示搜索条件
@@ -393,6 +395,7 @@ export default {
       queryParams: {
         menuName: undefined,
         visible: undefined,
+        appId: undefined
       },
       // 表单参数
       form: {},
@@ -403,25 +406,13 @@ export default {
         path: [{ required: true, message: '路由名称不能为空', trigger: 'blur' }],
         component: [{ required: true, message: '组件路径不能为空', trigger: 'blur' }],
         link: [{ required: true, message: '路由地址不能为空', trigger: 'blur' }],
-      },
+      }
     };
   },
   created() {
     this.getList();
-    this.getSelectOptions();
   },
   methods: {
-    getSelectOptions() {
-      this.searchOption = [];
-      applicationAllList().then((response) => {
-        response.data.data.forEach((el) => {
-          this.searchOption.push({
-            label: el.appName,
-            value: el.appId,
-          });
-        });
-      });
-    },
     // 解决弹窗input框不能输入问题
     change() {
       this.$forceUpdate();
@@ -437,7 +428,7 @@ export default {
     /** 查询菜单列表 */
     getList() {
       this.loading = true;
-      listMenu(this.queryParams).then((response) => {
+      listMenu({ ...this.queryParams, appId: this.queryParams.appId || this.appId }).then((response) => {
         this.menuList = this.handleTree(response.data.data, 'menuId');
         this.loading = false;
       });
@@ -506,18 +497,11 @@ export default {
       this.getTreeselect();
       if (row != null && row.menuId) {
         this.form.parentId = row.menuId;
-        this.isParent = false; // 上级已经存在目录的不可点击
       } else {
         this.form.parentId = '0';
-        this.isParent = true; // 上级不存在目录的可点击
       }
       this.open = true;
       this.title = '添加菜单';
-      getMenu(row.menuId).then((response) => {
-        // 上级菜单
-        this.form.appId = response.data.data.appId;
-        this.$forceUpdate();
-      });
     },
     /** 展开/折叠操作 */
     toggleExpandAll() {
@@ -533,22 +517,10 @@ export default {
       this.isShowRadioBtn = true;
       this.reset();
       this.getTreeselect();
-      if (row.parentId !== '0') {
-        this.isParent = false; // 上级已经存在目录的不可点击
-      } else {
-        this.isParent = true; // 上级不存在目录的可点击
-      }
       getMenu(row.menuId).then((response) => {
         this.form = response.data.data;
         this.open = true;
         this.title = '修改菜单';
-        getMenu(row.parentId).then((response) => {
-          // 上级菜单
-          if (response.data.data) {
-            this.form.appId = response.data.data.appId;
-          }
-          this.$forceUpdate();
-        });
       });
     },
     /** 提交按钮 */
@@ -559,6 +531,9 @@ export default {
       //   console.log('ppppp', this.form);
       this.$refs.form.validate((valid) => {
         if (valid) {
+          if (!this.form.appId && this.$route.query.id) {
+            this.form.appId = this.$route.query.id;
+          }
           if (this.form.menuId !== undefined) {
             updateMenu(this.form).then((res) => {
               if (res ? res.data.code === 200 : false) {
@@ -593,7 +568,7 @@ export default {
         .catch((e) => {
           console.log(e);
         });
-    },
+    }
   },
 };
 </script>

@@ -29,3 +29,30 @@ export function authorizeBatch(data) {
     data
   });
 }
+
+// 所有查询租户列表
+export function newListTenant(query) {
+  return request({
+    url: "/system/tenant/newList",
+    method: "get",
+    params: query
+  });
+}
+
+// 查询租户分页列表
+export function list(query) {
+  return request({
+    url: "/system/tenant/list",
+    method: "get",
+    params: query
+  });
+}
+
+// 查询应用列表
+export function listApp(query) {
+  return request({
+    url: "/system/app/list",
+    method: "get",
+    params: query
+  });
+}

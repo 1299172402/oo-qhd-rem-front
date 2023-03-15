@@ -7,12 +7,12 @@
         }})</el-button>
       </el-col>
     </el-row>
-    <pagePanel headerTitle="站内信">
+    <pagePanel headerTitle="站内信" style="height:calc(100% - 60px);">
     <!-- <el-tabs v-model="activeName" class="g-pageHeader" @tab-click="handleClick">
         <el-tab-pane label="消息列表" name="first"></el-tab-pane>
         <el-tab-pane label="报警列表" name="second"></el-tab-pane>
                                   </el-tabs> -->
-      <el-table :data="dataList" height="calc(100% - 125px)" :row-style="{ height: '0px' }"
+      <el-table :data="dataList" height="calc(100% - 56px)" :row-style="{ height: '0px' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }" header-cell-class-name="table_header"
         :cell-style="{ padding: '2px', 'text-align': 'center' }" style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }">

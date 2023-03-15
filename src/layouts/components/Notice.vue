@@ -26,13 +26,14 @@
           <p>暂无通知</p>
         </div>
         <div class="header-msg-bottom">
-          <t-button v-if="unreadMsg.length > 0" class="header-msg-bottom-link" variant="text" theme="primary"
-            @click="goDetail">查看全部</t-button>
+          <!-- v-if="unreadMsg.length > 0" -->
+          <t-button class="header-msg-bottom-link" variant="text" theme="primary" @click="goDetail">查看全部</t-button>
         </div>
       </div>
     </template>
     <t-badge :count="unreadMsg.length" :offset="[15, 21]">
-      <t-button theme="default" shape="square" variant="text" @click="isNoticeVisible = true" style="background: transparent;border: 0px;">
+      <t-button theme="default" shape="square" variant="text" @click="isNoticeVisible = true"
+        style="background: transparent;border: 0px;">
         <!-- <mail-icon style="color: var(--whiteColor);"/> -->
         <svg-icon icon-class="message-logo" class="panelIconClass"></svg-icon>
       </t-button>
@@ -66,7 +67,10 @@ export default Vue.extend({
   },
   methods: {
     getList() {
-      getList({ userId: this.$store.getters['user/userDetail'].user.userId, status: '0' }).then(res => {
+      getList({
+        userId: this.$store.getters['user/userDetail'].user.userId, status: '0', pageNum: 1,
+        pageSize: 100000,
+      }).then(res => {
         this.$store.commit('notification/setMsgData', res.data.rows);
       })
     },

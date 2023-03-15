@@ -1,7 +1,7 @@
 <template>
   <transition name="fade" mode="out-in">
     <keep-alive :include="this.aliveViews">
-      <router-view v-if="!this.isRefreshing" />
+      <router-view v-if="!this.isRefreshing" :key="$route.path"/>
     </keep-alive>
   </transition>
 </template>
