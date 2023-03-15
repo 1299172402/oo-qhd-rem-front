@@ -8,6 +8,7 @@ import zhConfig from 'tdesign-vue/es/locale/zh_CN';
 import './permission';
 import store from './store';
 import * as echarts from 'echarts';
+import proxy from "@/config/host.ts";
 
 import 'tdesign-vue/es/style/index.css';
 import '@/style/index.less';
@@ -34,6 +35,9 @@ import infoWindow from '@/components/intelligentOilfield/info-window/index.vue';
 import pagePanelNew from '@/components/intelligentOilfield/page-panel-new/index.vue'
 import headerSearch from '@/components/intelligentOilfield/header-search/index.vue';
 
+import "@/utils/filter";
+
+const env = import.meta.env.MODE;
 
 // 全局组件挂载
 Vue.component('svg-icon', SvgIcon)
@@ -58,6 +62,7 @@ Vue.prototype.$echarts = echarts;
 Vue.prototype.$request = axiosInstance;
 Vue.prototype.$bus = new Vue()
 
+localStorage.setItem("contextRoot", proxy[env].processAPI);
 
 Vue.use(directive)
 Vue.use(plugins)
@@ -78,6 +83,7 @@ const originReplace = VueRouter.prototype.replace;
 VueRouter.prototype.replace = function replace(location) {
   return originReplace.call(this, location).catch((err) => err);
 };
+
 // eslint-disable-next-line
 Date.prototype.format=function(e){let t=e;return t=t.replace(/yyyy|YYYY/,this.getFullYear()),t=t.replace(/MM/,this.getMonth()+1>9?(this.getMonth()+1).toString():"0".concat(this.getMonth()+1)),t=t.replace(/dd|DD/,this.getDate()>9?this.getDate().toString():"0".concat(this.getDate())),t=t.replace(/hh/,this.getHours()>9?this.getHours().toString():"0".concat(this.getHours())),t=t.replace(/mm/,this.getMinutes()>9?this.getMinutes().toString():"0".concat(this.getMinutes())),t=t.replace(/ss/,this.getSeconds()>9?this.getSeconds().toString():"0".concat(this.getSeconds()))},Date.prototype.addDays=function(e){return this.setDate(this.getDate()+e),this};
 

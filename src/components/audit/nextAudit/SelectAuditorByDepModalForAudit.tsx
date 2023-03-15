@@ -1,7 +1,7 @@
 import Vue from "vue";
 import BInput from "../common/BInput";
 import store from "@/store";
-import {queryAuditorDeptTree, getUserList, queryUserBydept, getRecentList} from "./api/api";
+import { getUserList, getRecentList} from "./api/api";
 import { filterObj } from "../utils";
 
 export default Vue.extend({
@@ -36,7 +36,7 @@ export default Vue.extend({
   data() {
     return {
       queryParam: {
-        realname: "",
+        nickName: "",
       },
       selectModule: 1,
       cardStyle:"",
@@ -47,12 +47,13 @@ export default Vue.extend({
         {
           title: '用户姓名',
           align: 'center',
-          colKey: 'realname'
+          colKey: 'nickName',
         },
         {
           title: '部门',
           align: 'center',
-          colKey: 'departName'
+          colKey: 'deptName',
+          cell: (h, { row }) => <div>{row.dept.deptName}</div>
         }
       ],
       scrollTrigger: {},
@@ -150,13 +151,13 @@ export default Vue.extend({
         const values = `${this.userIds.split(',')  },`
         getUserList({
           id: values,
-          pageNo: 1,
+          pageNum: 1,
           pageSize: values.length
         }).then((res) => {
-          if (res.success) {
+          if (res.data.code === 200) {
             const selectedRowKeys = []
             const realNames = []
-            res.result.records.forEach(user => {
+            res.data.rows.forEach(user => {
               realNames.push(user.realname)
               selectedRowKeys.push(user.id)
             })
@@ -177,10 +178,10 @@ export default Vue.extend({
       } else {
         this.loading = true
         const params = this.getQueryParams()// 查询条件
-        await getUserList(params).then((res) => {
-          if (res.success) {
-            this.dataSource = res.result.records
-            this.ipagination.total = res.result.total
+        await getUserList({ ...params }).then((res) => {
+          if (res.data.code === 200) {
+            this.dataSource = res.data.rows
+            this.ipagination.total = res.data.total
           }
         }).finally(() => {
           this.loading = false
@@ -211,8 +212,8 @@ export default Vue.extend({
         this.queryDepartTree(queryParam);
       } else {
         getRecentList().then((res) => {
-          if (res.success) {
-            this.dataSource = res.recentSelectUsers;
+          if (res.data.code === 200) {
+            this.dataSource = res.data.recentSelectUsers;
             this.mountedDone = 1;
           } else {
             this.$warning({ title: "失败", content: "查询最近选择审批人失败" });
@@ -225,7 +226,7 @@ export default Vue.extend({
     },
     getQueryParams() {
       const param = { ...this.queryParam, ...this.isorter};
-      param.pageNo = this.ipagination.current;
+      param.pageNum = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
       return filterObj(param);
     },
@@ -310,12 +311,13 @@ export default Vue.extend({
     },
     // 点击树节点,筛选出对应的用户
     onDepSelect(selectedDepIds) {
-      this.orgCode = this.departArray.find(v => v.id === selectedDepIds[0]).orgCode;
-      if (selectedDepIds[0] != null) {
-        this.initQueryUserByDepId(selectedDepIds); // 调用方法根据选选择的id查询用户信息
-        if (this.selectedDepIds[0] !== selectedDepIds[0]) {
-          this.selectedDepIds = [selectedDepIds[0]];
-        }
+      // this.orgCode = this.departArray.find(v => v.id === selectedDepIds[0]).orgCode;
+      // if (selectedDepIds[0] != null) {
+      if (this.param.auditUserSearchCallBackData) {
+        this.initQueryUserByDepId(this.param.auditUserSearchCallBackData); // 调用方法根据选选择的id查询用户信息
+        // if (this.selectedDepIds[0] !== selectedDepIds[0]) {
+        //   this.selectedDepIds = [selectedDepIds[0]];
+        // }
       }
       this.loadUserIds();
     },
@@ -328,15 +330,15 @@ export default Vue.extend({
       this.loadData(1);
     },
     // 根据选择的id来查询用户信息
-    initQueryUserByDepId(selectedDepIds) {
+    initQueryUserByDepId(selectedDepId) {
       this.loading = true
-      return queryUserBydept({id: selectedDepIds.toString(), roleCode: this.switchOn ? "":this.role, orgCode: this.orgCode, ...this.getQueryParams()}).then((res) => {
-        if (res.success) {
-          this.dataSource = res.result.records;
+      return getUserList({ roleCode: this.switchOn ? "":this.role, orgCode: this.orgCode, ...this.getQueryParams()}).then((res) => {
+        if (res.data.code === 200) {
+          this.dataSource = res.data.rows;
           this.$nextTick(() => {
             this.loadUserIds();
           })
-          this.ipagination.total = res.result.total;
+          this.ipagination.total = res.data.total;
         }
       }).finally(() => {
         this.loading = false
@@ -347,13 +349,13 @@ export default Vue.extend({
      */
     queryUserByName(val) {
       if (typeof val === "string") {
-        this.queryParam.realname = val;
+        this.queryParam.nickName = val;
       }
       this.loading = true
       if (this.selectModule === 2) {
         return getRecentList().then((res) => {
-          if (res.success) {
-            this.dataSource = res.recentSelectUsers;
+          if (res.data.code === 200) {
+            this.dataSource = res.data.recentSelectUsers;
             this.mountedDone = 1;
           } else {
             this.$warning({ title: "失败", content: "查询最近选择审批人失败" });
@@ -363,10 +365,10 @@ export default Vue.extend({
           this.loading = false;
         });
       }
-      return queryUserBydept({id: this.selectedDepIds.toString(), roleCode: this.switchOn ? "":this.role, orgCode: this.orgCode, realname: this.queryParam.realname}).then((res) => {
-        if (res.success) {
-          this.dataSource = res.result.records;
-          this.ipagination.total = res.result.total;
+      return getUserList({ roleCode: this.switchOn ? "":this.role, orgCode: this.orgCode, nickName: this.queryParam.nickName}).then((res) => {
+        if (res.data.code === 200) {
+          this.dataSource = res.data.rows;
+          this.ipagination.total = res.data.total;
         }
       }).finally(() => {
         this.loading = false
@@ -391,24 +393,25 @@ export default Vue.extend({
      * 机构数查询方法及相关数据处理
      */
     queryDepartTree(queryParam) {
-      const params = {
-        startDeptId: queryParam.auditUserSearchCallBackData,
-        dataScope: queryParam.dataScope,
-        applyScope: queryParam.applyScope,
-        relativePerson: queryParam.relativePerson,
-        unlimit: this.switchOn
-      };
-      queryAuditorDeptTree(params).then((res) => {
-        if (res.success) {
-          this.departTree = res.result || [];
-          this.departArray = this.arrayChildrenFlatten(this.departTree, {}, true);
-          this.mountedDone = 1;
-          this.onDepSelect([this.departTree[0].id]);
-          this.selectedDepIds = [this.departTree[0].id];
-          // 默认展开父节点
-          this.expandedKeys = this.departTree.map(item => item.id)
-        }
-      })
+      // const params = {
+      //   deptId: queryParam.auditUserSearchCallBackData,
+      //   dataScope: queryParam.dataScope,
+      //   applyScope: queryParam.applyScope,
+      //   relativePerson: queryParam.relativePerson,
+      //   unlimit: this.switchOn
+      // };
+      // querySysTreeList(params).then((res) => {
+      //   if (res.success) {
+      //     this.departTree = res.result || [];
+      //     this.departArray = this.arrayChildrenFlatten(this.departTree, {}, true);
+      //     this.mountedDone = 1;
+      //     this.onDepSelect([this.departTree[0].id]);
+      //     this.selectedDepIds = [this.departTree[0].id];
+      //     // 默认展开父节点
+      //     this.expandedKeys = this.departTree.map(item => item.id)
+      //   }
+      // })
+      this.onDepSelect();
     },
     /**
      * 查找最近
@@ -456,7 +459,7 @@ export default Vue.extend({
 
     return (
       <div>
-        <t-popup content={popupContent}>
+        {/* <t-popup content={popupContent}>
           <div>
             <t-icon
               style={{display: this.selectModule !== 2 ? "inline-block" : "none"}}
@@ -465,7 +468,7 @@ export default Vue.extend({
             />
             <span class="icon-text">(点击查看单位)</span>
           </div>
-        </t-popup>
+        </t-popup> */}
         <t-card
           bordered={false}
           style="line-height:48px; height: 280px"
@@ -479,26 +482,26 @@ export default Vue.extend({
             >
               <t-option value={1} label="人员">
               </t-option>
-              <t-option value={2} label="最近">
-              </t-option>
+              {/* <t-option value={2} label="最近">
+              </t-option> */}
             </t-select>
             <t-input
               style={{display: this.selectModule !== 2 ? "inline-block": "none", width: "250px", marginBottom: "15px", marginLeft: "10px"}}
               placeholder="请输入姓名"
               type="search"
-              value={this.queryParam.realname}
+              value={this.queryParam.nickName}
               onChange={this.queryUserByName}
               onSearch={this.queryUserByName}
             >
             </t-input>
-            <span style="float: right">
+            {/* <span style="float: right">
               <span style="height: 48px; float: right; margin-left: 20px; margin-top: -25px">
                 <span style={{display: this.selectModule !== 2 ? "inline-block" : "none", height: "50%", width: "100%", float: "left"}}>所有</span>
                 <span style={{display: this.selectModule !== 2 ? "inline-block" : "none", height: "50%", float: "left"}}>
                   <t-switch value={this.switchOn} onChange={val => {this.switchOn = val}} style="width: 55px" />
                 </span>
               </span>
-            </span>
+            </span> */}
           </div>
           <t-table
             ref="table"

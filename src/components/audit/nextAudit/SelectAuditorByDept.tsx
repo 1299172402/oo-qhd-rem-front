@@ -21,7 +21,7 @@ const stragegyMap = {
         };
         return queryAuditorDeptTree(params)
           .then((res) => {
-            if (res.success && res.result?.length > 0) {
+            if (res.data.code === 200 && res.data.rows?.length > 0) {
               const item = res.result[0];
               return { orgCode: item.orgCode, id: [item.id].toString() };
             } 
@@ -38,12 +38,12 @@ const stragegyMap = {
             }
             queryUserBydept(queryUserByDeptParams)
               .then((result) => {
-                if (result.success) {
-                  const { records } = result.result;
-                  if (records && records.length > 0) {
-                    this.selectOK(records, records[0].userId)
+                if (result.data.code === 200) {
+                  const { rows } = result.data;
+                  if (rows && rows.length > 0) {
+                    this.selectOK(rows, rows[0].userId)
                   }
-                  return records;
+                  return rows;
                 }
               })
           })
@@ -160,7 +160,7 @@ export default Vue.extend({
       } else {
         let temp = ''
         rows.forEach(item => {
-          temp += `,${  item.realname}`
+          temp += `,${item.realname}`
           if (!this.userInfos.find(v => v.userId === item.userId)) {
             this.userInfos.push(item)
           }
@@ -184,18 +184,19 @@ export default Vue.extend({
     return (
       <div>
         <t-popup 
-          on-visible-change={(val) => {this.visible = val}} 
+          visible={this.visible}
+          on-visible-change={(val) => { this.visible = val }} 
           content={() =>
             <SelectAuditorByDepModalForAudit
               {...this.$attrs}
               ref="selectModal"
               modalWidth={this.modalWidth}
               multi={this.multi}
-              onClose={this.visibleChange}
               selectOk={this.selectOK}
               user-id={this.value}
-              onInitComp={this.initComp}
               style="width: 440px"
+              onInitComp={this.initComp}
+              onClose={this.visibleChange}
             />
           }>
           <t-select

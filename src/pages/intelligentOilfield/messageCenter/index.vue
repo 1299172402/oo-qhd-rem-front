@@ -1,7 +1,9 @@
 <!-- 后台——消息日志 -->
 <template>
   <div class="app-container">
+    <headerSearch class="g-w100 g-h100" >
     <el-form
+     style="margin-top:18px"
       v-show="showSearch"
       ref="queryForm"
       :model="queryParams"
@@ -66,12 +68,14 @@
         </el-button>
       </el-form-item>
     </el-form>
-    <el-row :gutter="10" class="mb8">
+    </headerSearch>
+   
+    <pagePanelNew headerTitle="消息日志" style="height: calc(100% - 100px)">
+         <el-row :gutter="10" class="mb8" style="margin-bottom:20px">
       <el-col :span="1.5">
         <el-button
           v-hasPermi="['message:config']"
           type="primary"
-          icon="el-icon-setting"
           plain
           @click="onMessageConfig"
         >
@@ -80,8 +84,10 @@
       </el-col>
       <!-- <right-toolbar :show-search.sync="showSearch" @queryTable="getList" /> -->
     </el-row>
-    <pagePanel headerTitle="消息日志">
-      <el-table :data="data">
+      <el-table :data="data" height="calc(100% - 113px)" :row-style="{ height: '0px' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }" header-cell-class-name="table_header"
+        :cell-style="{ padding: '2px', 'text-align': 'center' }" style="width: 100%; height: 100%"
+        :default-sort="{ prop: 'date', order: 'descending' }">
         <el-table-column
           label="序号"
           type="index"
@@ -110,7 +116,7 @@
           align="center"
         >
           <template slot-scope="scope">
-            <el-button type="text" icon="el-icon-view" @click="handleView(scope.row.id, scope.row)">
+            <el-button type="text" @click="handleView(scope.row.id, scope.row)">
               查看
             </el-button>
             <el-button v-if="scope.row.status === 'FAILURE'" type="text" @click="handleResend(scope.row)">
@@ -134,7 +140,7 @@
       <error-log-view ref="errorView" />
       <!-- 其他类型查看 -->
       <logging-view ref="loggingView" />
-    </pagePanel>
+    </pagePanelNew>
   </div>
 </template>
 

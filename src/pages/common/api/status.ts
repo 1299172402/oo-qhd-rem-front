@@ -1,4 +1,4 @@
-import { getAction } from "@/components/audit/process/api/manage";
+import { getAction } from "@/api/common/manage";
 
 export function getProcessStatus() {
   return getAction("/sys/dict/getDictItems/process_instance_status")

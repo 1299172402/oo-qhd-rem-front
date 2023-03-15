@@ -133,7 +133,7 @@ export default {
   },
   methods: {
     listAll() {
-      listAll(this.$route.query.depId).then((response) => {
+      listAll(this.$route.query.tenantId).then((response) => {
         this.listAllData = response
       });
     },

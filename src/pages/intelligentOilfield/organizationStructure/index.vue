@@ -2,12 +2,13 @@
 <template>
   <div class="app-container">
     <headerSearch class="g-w100 g-h100">
-    <el-form label-height="80px" :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch"  style="margin-top:20px">
-      <el-form-item label="组织机构名称" prop="deptName">
-        <el-input v-model="queryParams.deptName" placeholder="请输入组织机构名称" clearable size="small"
-          @keyup.enter.native="handleQuery" />
-      </el-form-item>
-    <!-- <el-form-item label="组织机构ID" prop="deptId">
+      <el-form label-height="80px" :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch"
+        style="margin-top:20px">
+        <el-form-item label="组织机构名称" prop="deptName">
+          <el-input v-model="queryParams.deptName" placeholder="请输入组织机构名称" clearable size="small"
+            @keyup.enter.native="handleQuery" />
+        </el-form-item>
+      <!-- <el-form-item label="组织机构ID" prop="deptId">
            <el-input
           v-model="queryParams.deptId"
           placeholder="请输入组织机构ID"
@@ -15,28 +16,28 @@
           size="small"
           @keyup.enter.native="handleQuery"
         />
-                                            </el-form-item> -->
-      <el-form-item label="部门状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择部门状态" clearable size="small">
-          <el-option v-for="dict in dict.type.sys_normal_disable" :key="dict.value" :label="dict.label"
-            :value="dict.value" />
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery" class="commonBtn">重置</el-button>
-      </el-form-item>
-    </el-form>
-</headerSearch>
-    
+                                              </el-form-item> -->
+        <el-form-item label="部门状态" prop="status">
+          <el-select v-model="queryParams.status" placeholder="请选择部门状态" clearable size="small">
+            <el-option v-for="dict in dict.type.sys_normal_disable" :key="dict.value" :label="dict.label"
+              :value="dict.value" />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery" class="commonBtn">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </headerSearch>
+
     <pagePanelNew headerTitle="组织机构管理" style="height:calc(100% - 100px);">
         <el-row :gutter="10" class="mb8" style="margin-bottom:20px">
       <el-col :span="1.5">
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd"
+        <el-button type="primary" size="mini" @click="handleAdd"
           v-hasPermi="['system:dept:add']">新增</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="info" plain icon="el-icon-sort" size="mini" @click="toggleExpandAll"
+        <el-button type="info" plain size="mini" @click="toggleExpandAll"
           class="commonBtn">展开/折叠</el-button>
       </el-col>
       <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
@@ -65,11 +66,11 @@
         </el-table-column>
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
-            <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
+            <el-button size="mini" type="text" @click="handleUpdate(scope.row)"
               v-hasPermi="['system:dept:edit']">修改</el-button>
-            <el-button size="mini" type="text" icon="el-icon-plus" @click="handleAdd(scope.row)"
+            <el-button size="mini" type="text" @click="handleAdd(scope.row)"
               v-hasPermi="['system:dept:add']">新增</el-button>
-            <el-button v-if="scope.row.parentId != '0'" size="mini" type="text" icon="el-icon-delete"
+            <el-button v-if="scope.row.parentId != '0'" size="mini" type="text"
               @click="handleDelete(scope.row)" v-hasPermi="['system:dept:remove']" class="delbutton">删除</el-button>
           </template>
         </el-table-column>
@@ -109,7 +110,7 @@
             <el-form-item label="邮箱" prop="email">
               <el-input v-model="form.email" placeholder="请输入邮箱" maxlength="50" />
             </el-form-item>
-                                                </el-col> -->
+                                                  </el-col> -->
           <el-col :span="12">
             <el-form-item label="部门类型" prop="type">
               <el-select v-model="form.type" placeholder="请选择部门类型" clearable>
@@ -134,7 +135,7 @@
                 <el-radio label="1">是</el-radio>
               </el-radio-group>
             </el-form-item>
-            </el-col> -->
+              </el-col> -->
         <!-- <el-col :span="24" v-if="form.isTenant == '1'">
             <el-form-item label="选择角色" prop="tenantRoleId">
               <el-select size="small" style="width: 100%" v-model="form.tenantRoleId" placeholder="请选择角色" clearable>
@@ -142,7 +143,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            </el-col> -->
+              </el-col> -->
           <el-col :span="24">
             <el-form-item label="是否为平台机构" label-width="120px">
               <el-radio-group v-model="form.isPlatform">
@@ -162,7 +163,7 @@
 </template>
 
 <script>
-import { listDept, getDept, delDept, addDept, updateDept, listDeptExcludeChild } from '@/api/intelligentOilfield/system/dept';
+import { listDept, selectDepts, getDept, delDept, addDept, updateDept, listDeptExcludeChild } from '@/api/intelligentOilfield/system/dept';
 // import { listRole } from '@/api/intelligentOilfield/system/role';
 import Treeselect from '@riophae/vue-treeselect';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
@@ -242,7 +243,7 @@ export default {
     /** 查询部门列表 */
     getList() {
       this.loading = true;
-      listDept(this.queryParams).then((response) => {
+      selectDepts(this.queryParams).then((response) => {
         this.deptList = this.handleTree(response.data.data, 'deptId');
         this.loading = false;
       });

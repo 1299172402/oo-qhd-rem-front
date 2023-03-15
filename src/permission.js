@@ -11,8 +11,19 @@ const whiteListRouters = store.getters['permission/whiteListRouters'];
 
 router.beforeEach(async (to, from, next) => {
   NProgress.start();
-
-  if (jumpFromGateway(to)) {
+  if (to.path === "/login" && Object.prototype.hasOwnProperty.call(to.query, "srid")) {
+    // 如果跳转到登录页且携带srid参数则放行
+    next();
+    NProgress.done();
+    return;
+  }
+  if (to.path.indexOf("/iamCallback") === 0 ) {
+    next();
+  } else if (Object.prototype.hasOwnProperty.call(to.query, "srid")) {
+    // url地址存在srid参数携带该参数跳转到登录页
+    await store.commit("user/removeToken");
+    next({ path: "/login", query: { ...to.query }});
+  } else if (jumpFromGateway(to)) {
     return;
   }
   const token = store.getters['user/token'];

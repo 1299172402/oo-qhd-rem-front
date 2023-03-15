@@ -27,7 +27,6 @@
         <slot name="footer" />
         <el-button
           v-if="!viewOnly"
-          icon="el-icon-check"
           :loading="loading"
           type="primary"
           @click="$emit('ok')"

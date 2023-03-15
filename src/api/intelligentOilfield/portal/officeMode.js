@@ -53,3 +53,12 @@ export function applicationAllList() {
     method: 'get',
   })
 }
+
+// 我的事项-获取数据
+export function getAssignedList(data) { 
+  return request({
+    url: `system/flow/integration/todo/assigned`,
+    method: 'post',
+    data
+  })
+}

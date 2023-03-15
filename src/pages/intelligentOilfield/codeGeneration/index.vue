@@ -43,7 +43,6 @@
         <el-button
           type="primary"
           plain
-          icon="el-icon-download"
           size="mini"
           @click="handleGenTable"
           v-hasPermi="['tool:gen:code']"
@@ -53,7 +52,6 @@
         <el-button
           type="info"
           plain
-          icon="el-icon-upload"
           size="mini"
           @click="openImportTable"
           v-hasPermi="['tool:gen:import']"
@@ -63,7 +61,6 @@
         <el-button
           type="success"
           plain
-          icon="el-icon-edit"
           size="mini"
           :disabled="single"
           @click="handleEditTable"
@@ -74,7 +71,6 @@
         <el-button
           type="danger"
           plain
-          icon="el-icon-delete"
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
@@ -82,7 +78,6 @@
           class="delbutton"
         >删除</el-button>
       </el-col>
-      <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
     </el-row>
     <pagePanel headerTitle="代码生成" style="height: 600px">
     <el-table v-loading="loading" :data="tableList" @selection-change="handleSelectionChange"
@@ -127,21 +122,18 @@
           <el-button
             type="text"
             size="small"
-            icon="el-icon-view"
             @click="handlePreview(scope.row)"
             v-hasPermi="['tool:gen:preview']"
           >预览</el-button>
           <el-button
             type="text"
             size="small"
-            icon="el-icon-edit"
             @click="handleEditTable(scope.row)"
             v-hasPermi="['tool:gen:edit']"
           >编辑</el-button>
           <el-button
             type="text"
             size="small"
-            icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['tool:gen:remove']"
             class="delbutton"
@@ -149,14 +141,12 @@
           <el-button
             type="text"
             size="small"
-            icon="el-icon-refresh"
             @click="handleSynchDb(scope.row)"
             v-hasPermi="['tool:gen:edit']"
           >同步</el-button>
           <el-button
             type="text"
             size="small"
-            icon="el-icon-download"
             @click="handleGenTable(scope.row)"
             v-hasPermi="['tool:gen:code']"
           >生成代码</el-button>

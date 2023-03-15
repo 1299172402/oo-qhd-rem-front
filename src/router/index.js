@@ -38,6 +38,12 @@ const defaultRouterList = [
     ]
   },
   {
+    path: "/iamCallback",
+    name: "iamCallback",
+    hidden: true,
+    component: () => import("@/pages/intelligentOilfield/login/components/IamCallback.vue")
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import('@/pages/intelligentOilfield/login/index.vue'),

@@ -4,8 +4,9 @@ import { getImgUrl } from "./utils/file";
 import "./style/index.less";
 import { downFile, download } from "./utils/api";
 import { fileTypeMap, fileTypeReverseMap, imgTypeArr } from "./utils/fileType";
+import proxy from "@/config/host";
 
-
+const env = import.meta.env.MODE || "development";
 const uidGenerator = () => `-${parseInt((Math.random() * 10000 + 1).toString(), 10)}`;
 
 export default Vue.extend({
@@ -18,7 +19,7 @@ export default Vue.extend({
     },
     action: {
       type: String,
-      default: "/b/upload/sys/common/upload"
+      default: `${proxy[env].API}/file/upload`
     },
     // 该属性将自动转换为W3C要求的格式
     accept: {
@@ -28,10 +29,6 @@ export default Vue.extend({
     fileSize: {
       type: Number,
       default: 50
-    },
-    bizPath: {
-      type: String,
-      default: ""
     },
     uploadParams: {
       type: Object,
@@ -62,7 +59,8 @@ export default Vue.extend({
       imgValues: [],
       upload: "/sys/common/upload",
       urlDownload: "/sys/common/static/",
-      loading: true
+      loading: true,
+      headers: { Authorization: `Bearer ${this.$store.getters["user/token"]}` },
     }
   },
   computed: {
@@ -122,6 +120,7 @@ export default Vue.extend({
       this.$message.error(`文件 ${currentFile.name} 上传失败`)
     },
     uploadChange(val) {
+      console.log(val);
       // 如果是删除操作
       switch(this.mode) {
       case "img":
@@ -219,10 +218,6 @@ export default Vue.extend({
     }
     // 上传前的最终检查
     const beforeUploadFn = (file) => {
-      if (!this.bizPath) {
-        this.$message.error("请正确设置bizPath");
-        return false;
-      } 
       const { type } = file.raw;
       if ((this.accept || this.mode === "img") && !acceptArr.includes(type)) {
         this.$message.error(`只能上传文件类型为【${this.mode === "img" ? imgAccept : this.accept}】的文件`);
@@ -267,7 +262,7 @@ export default Vue.extend({
                   )
                 } 
                 return (
-                  <li>
+                  <li class="uploading-file">
                     <div>
                       {h(icon)}
                       <a style="color: red">{`${item.name}【文件正在上传...】`}</a>
@@ -280,8 +275,6 @@ export default Vue.extend({
         </div>
       )
     }
-    // 处理props
-    const data = { bizPath: this.bizPath }
     // 文件上传组件
     const file = (
       <div>
@@ -290,8 +283,7 @@ export default Vue.extend({
           disabled={this.$attrs.disabled}
           abridgeName={this.$attrs.abridgeName || [6, 6]}
           action={this.uploadActionUrl}
-          data={data}
-          header={this.$attrs.header}
+          headers={this.headers}
           value={this.fileList}
           fileListDisplay={fileListEl}
           before-upload={beforeUploadFn}
@@ -300,6 +292,7 @@ export default Vue.extend({
         />
       </div>
     );  
+    const data = {};
     // 图片上传组件
     const img = (
       <div>
@@ -313,7 +306,7 @@ export default Vue.extend({
           action={this.uploadActionUrl}
           value={this.imgValues}
           data={data}
-          header={this.$attrs.header}
+          headers={this.headers}
           formatResponse={this.formatImgResponse}
           on-fail={this.handleFail}
           on-change={this.uploadChange}
