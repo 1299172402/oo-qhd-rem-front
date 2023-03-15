@@ -1,4 +1,3 @@
-<!-- 后台——通知通告管理 -->
 <template>
   <div class="app-container">
     <headerSearch class="g-w100 g-h100">
