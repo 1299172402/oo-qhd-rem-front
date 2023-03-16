@@ -12,21 +12,21 @@ export default [
             {
                 path: 'density',
                 name: 'density',
-                component: () => import('@/pages/rem/basic/densityMaintenance.vue'),
+                component: () => import('@/pages/rem/basic/densityMaintenance/index.vue'),
                 meta: { title: '密度维护表' },
               },
               {
                 path: 'reserves',
                 name: 'reserves',
-                component: () => import('@/pages/rem/basic/wellControlReserves.vue'),
+                component: () => import('@/pages/rem/basic/wellControlReserves/index.vue'),
                 meta: { title: '井控储量数据页面' },
               },
-              {
-                path: 'maintenance',
-                name: 'maintenance',
-                component: () => import('@/pages/rem/basic/wellGroupMaintenance.vue'),
-                meta: { title: '井组信息维护' },
-              },
+              // {
+              //   path: 'maintenance',
+              //   name: 'maintenance',
+              //   component: () => import('@/pages/rem/basic/wellGroupMaintenance/index.vue'),
+              //   meta: { title: '井组信息维护' },
+              // },
         ],
       },
 

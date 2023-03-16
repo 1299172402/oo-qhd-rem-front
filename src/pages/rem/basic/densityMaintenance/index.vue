@@ -62,6 +62,7 @@
     </headerSearch>
 
     <pagePanelNew headerTitle="通知通告列表" style="height: calc(100% - 100px)">
+        <info-window infoWidth="100%" infoHeight="100%" headerTitle="密度信息维护">
       <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
         <!-- <el-col :span="1.5">
         <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd"
@@ -148,6 +149,7 @@
             <span v-else> <el-input v-model="scope.row.twelve" size="small" /></span>
           </template> </el-table-column>
       </el-table>
+        </info-window>
     </pagePanelNew>
     <!-- 添加或修改角色配置对话框 -->
   </div>
