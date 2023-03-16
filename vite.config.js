@@ -75,7 +75,7 @@ export default ({ mode }) => {
           // target: 'http://10.247.187.28:8080/dev-api/',
           // target: 'http://114.116.211.6:8080',
           // target: 'http://114.116.123.113:8080',
-          target: 'http://10.77.78.250',
+          target: 'http://10.77.78.250',  
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api/, '/prod-api'),
         },

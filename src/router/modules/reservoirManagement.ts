@@ -12,7 +12,7 @@ export default [
             {
                 path: 'density',
                 name: 'density',
-                component: () => import('@/pages/rem/basic/densityMaintenance/index.vue'),
+                component: () => import('@/pages/rem/basic/densityMaintenance.vue'),
                 meta: { title: '密度维护表' },
               },
               {
