@@ -2,12 +2,12 @@
 <template>
   <div class="app-container">
     <headerSearch class="g-w100 g-h100">
-    <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true" style="margin-top:20px">
-      <el-form-item label="角色名称" prop="roleName">
-        <el-input v-model="queryParams.roleName" placeholder="请输入角色名称" clearable size="small" style="width: 240px"
-          @keyup.enter.native="handleQuery" />
-      </el-form-item>
-    <!-- <el-form-item label="权限字符" prop="roleKey">
+      <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true" style="margin-top:20px">
+        <el-form-item label="角色名称" prop="roleName">
+          <el-input v-model="queryParams.roleName" placeholder="请输入角色名称" clearable size="small" style="width: 240px"
+            @keyup.enter.native="handleQuery" />
+        </el-form-item>
+      <!-- <el-form-item label="权限字符" prop="roleKey">
         <el-input
           v-model="queryParams.roleKey"
           placeholder="请输入权限字符"
@@ -37,13 +37,13 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
         ></el-date-picker>
-                            </el-form-item> -->
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery" class="commonBtn">重置</el-button>
-      </el-form-item>
-    </el-form>
-</headerSearch>
+                              </el-form-item> -->
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery" class="commonBtn">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </headerSearch>
 
     <pagePanelNew headerTitle="角色管理" style="height:calc(100% - 100px);">
          <el-row :gutter="10" class="mb8" style="margin-bottom:20px">
@@ -124,8 +124,8 @@
           <template slot-scope="scope" v-if="scope.row.roleId !== '1'">
             <el-button size="mini" type="text" @click="handleUpdate(scope.row)"
               v-hasPermi="['system:role:edit']">修改</el-button>
-            <el-button size="mini" type="text" @click="handleDelete(scope.row)"
-              v-hasPermi="['system:role:remove']" class="delbutton">删除</el-button>
+            <el-button size="mini" type="text" @click="handleDelete(scope.row)" v-hasPermi="['system:role:remove']"
+              class="delbutton">删除</el-button>
             <el-button size="mini" type="text" @click="handleDataScope(scope.row)"
               v-hasPermi="['system:role:edit']">数据权限</el-button>
           <!-- <el-dropdown size="mini" @command="(command) => handleCommand(command, scope.row)" v-hasPermi="['system:role:edit']">
@@ -138,7 +138,7 @@
               <el-dropdown-item command="handleAuthUser" icon="el-icon-user"
                 v-hasPermi="['system:role:edit']">分配用户</el-dropdown-item>
             </el-dropdown-menu>
-                                </el-dropdown> -->
+                                  </el-dropdown> -->
           </template>
         </el-table-column>
       </el-table>
@@ -202,7 +202,7 @@
             <el-radio label="0">否</el-radio>
             <el-radio label="1">是</el-radio>
           </el-radio-group>
-          </el-form-item> -->
+            </el-form-item> -->
         <el-form-item label="菜单权限" prop="menuIds">
           <el-checkbox v-model="menuExpand" @change="handleCheckedTreeExpand($event, 'menu')">展开/折叠</el-checkbox>
           <el-checkbox v-model="menuNodeAll" @change="handleCheckedTreeNodeAll($event, 'menu')">全选/全不选</el-checkbox>
@@ -213,7 +213,7 @@
         </el-form-item>
       <!-- <el-form-item label="备注">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
-                              </el-form-item> -->
+                                </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -498,14 +498,14 @@ export default {
     // 更多操作触发
     handleCommand(command, row) {
       switch (command) {
-      case 'handleDataScope':
-        this.handleDataScope(row);
-        break;
-      case 'handleAuthUser':
-        this.handleAuthUser(row);
-        break;
-      default:
-        break;
+        case 'handleDataScope':
+          this.handleDataScope(row);
+          break;
+        case 'handleAuthUser':
+          this.handleAuthUser(row);
+          break;
+        default:
+          break;
       }
     },
     // 树权限（展开/折叠）
@@ -669,6 +669,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+
+
+    
 .app-container {
   height: 100%;
 
