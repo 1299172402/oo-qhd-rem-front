@@ -18,13 +18,13 @@ export default [
               {
                 path: 'reserves',
                 name: 'reserves',
-                component: () => import('@/pages/rem/basic/wellControlReserves/index.vue'),
+                component: () => import('@/pages/rem/basic/wellControlReserves.vue'),
                 meta: { title: '井控储量数据页面' },
               },
               {
                 path: 'maintenance',
                 name: 'maintenance',
-                component: () => import('@/pages/rem/basic/wellGroupMaintenance/index.vue'),
+                component: () => import('@/pages/rem/basic/wellGroupMaintenance.vue'),
                 meta: { title: '井组信息维护' },
               },
         ],
