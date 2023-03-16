@@ -34,13 +34,13 @@ export default {
     API: '',
     // 测试环境 cdn 路径
     CDN: '',
-    appId: null
+    appId: '3d7f304391bd45a28e31a4bde3219fcb'
   },
   stage: {
     ...config,
     processAPI: "http://kd.bytzdev.xyz:38880/stage-api/workflow",
     // 正式环境接口地址
-    API: "http://kd.bytzdev.xyz:38880/stage-api",
+    API: "http://10.77.78.250:8081/stage-api",
     // 正式环境 cdn 路径
     CDN: "",
   },
