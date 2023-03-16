@@ -52,10 +52,10 @@ export default {
     // 文件预览服务
     PREVIEW_FILE_API: "文件服务地址",
     // 正式环境接口地址
-    API: 'http://10.77.78.250:80/prod-api/',
+    API: 'http://10.77.78.250:8081/prod-api/',
     // 正式环境 cdn 路径
     CDN: '',
-    appId: null,
+    appId: '3d7f304391bd45a28e31a4bde3219fcb ',
     LOGIN_TYPES: ["corp_oauth", "password"]
   },
 };
