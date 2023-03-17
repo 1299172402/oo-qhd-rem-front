@@ -170,7 +170,7 @@
 <script>
 import { listDept } from '@/api/intelligentOilfield/system/dept';
 import { addnotice, noticeList, deldataNotice, updatenotice } from '@/api/intelligentOilfield/system/notice';
-import { getOilFieldList, getWorkCompany } from '@/api/rem/workcompanydesignate.js';
+
 
 export default {
   name: 'Notice',
@@ -301,31 +301,7 @@ export default {
       this.ids = [];
       this.ids = val;
     },
-    getList() {
-      getWorkCompany().then((data) => {
-        // console.log(data)
-        let code = data.data.code;
-        if (code == 200) {
-          this.company = data.data.data;
-          if (this.company) {
-            this.queryParams.orgId = data.data.data[0].orgId;
-            getOilFieldList({ orgId: this.queryParams.orgId }).then((res) => {
-              let code = data.data.code;
-               if (code == 200) {
-                this.oilfield = res.data.data;
-                if(this.oilfield){
-                  this.queryParams.oilFieldId = res.data.data[0].oilFieldId
-                }
-               }else{
-                this.$message.warning('系统错误请重新尝试或联系运维人员！');
-               }
-            });
-          }
-        } else {
-          alert('系统错误请重新尝试或联系运维人员！');
-        }
-      });
-    },
+
     // 编辑
     redact() {
       let arr = [];
