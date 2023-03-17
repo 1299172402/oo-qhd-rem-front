@@ -1,3 +1,4 @@
+<!-- 基础数据维护 - 井控储量数据界面 -->
 <template>
   <div style="width: 100%; height: 100%" class="pageBox">
     <header-search class="g-w100 g-h100">
@@ -37,13 +38,13 @@
           :model="djclForm"
           style="width: 800px; padding-top: 20px"
           ref="djclForm"
-          label-width="100px"
+          label-width="110px"
           class="demo-ruleForm"
         >
           <el-row>
             <el-col :span="10">
               <el-form-item label="层位选择" prop="cw">
-                <el-select v-model="djclForm.cw" placeholder="">
+                <el-select v-model="djclForm.cw" placeholder="" style="width:100.5%">
                   <el-option v-for="item in cwOptions" :key="item.id" :label="item.cwmc" :value="item.id"> </el-option>
                 </el-select>
               </el-form-item>
@@ -51,24 +52,21 @@
             <el-col :span="2">&nbsp;</el-col>
             <el-col :span="10">
               <el-form-item label="有效厚度" prop="cw">
-                <el-input v-model="djclForm.yxhd" suffix-icon="m"></el-input>
+                <el-input v-model="djclForm.yxhd"> <i slot="suffix">m</i></el-input>
               </el-form-item>
             </el-col>
           </el-row>  
           <el-row>
             <el-col :span="10">
               <el-form-item label="控制储量" prop="kzcl">
-                <el-input v-model="djclForm.kzcl"></el-input>
+                <el-input v-model="djclForm.kzcl"> <i slot="suffix">m³</i></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="2">&nbsp;</el-col>
             <el-col :span="10">
               <el-form-item label="控制面积" prop="kzmj">
-                <el-input v-model="djclForm.kzmj" prefix-icon="㎡">
-                  <!-- <i slot="prefix" style="margin-left:200px">㎡</i>
-                  <span slot="scope">
-
-                  </span> -->
+                <el-input v-model="djclForm.kzmj">
+                  <i slot="suffix">m²</i>
                   </el-input>
               </el-form-item>
             </el-col>
@@ -159,7 +157,7 @@ export default {
 .smart-energy-item {
   width: 1000px;
   height: 500px;
-  text-align: center;
+  // text-align: center;
   border: 2px solid #5be4e4;
   margin: 50px auto 30px;
   position: relative;

@@ -1,6 +1,7 @@
+<!-- 基础数据维护 - 密度维护表 -->
 <template>
   <div class="app-container">
-    <headerSearch class="g-w100 g-h100">
+    <headerSearch class="g-w100 g-h100" style="height:auto">
       <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true" style="margin-top: 18px">
         <el-form-item label="作业公司：" prop="deptId">
           <el-select
@@ -71,6 +72,8 @@
         </el-row>
         <el-table
           :data="noticeList"
+            @current-change="handleCurrentChange"
+        @selection-change="handleSelectionChange"
           highlight-current-row
           height="calc(100% - 45px)"
           :row-style="{ height: '0px' }"
@@ -296,13 +299,50 @@ export default {
     // this.choiceDepts(); // 获取组织机构
   },
   methods: {
-    // 选中表格的事件
+    /**
+     *   获取下拉框数据
+     * @param orgId 作业公司id
+     * @param oilFieldId 油田id
+     * @param oilfield 油田数据数组
+     */
+     getList() {
+      getWorkCompany().then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.company = data.data.data;
+          if (this.company) {
+            this.queryParams.orgId = data.data.data[0].orgId;
+            getOilFieldList({ orgId: this.queryParams.orgId }).then((res) => {
+              let code = data.data.code;
+               if (code == 200) {
+                this.oilfield = res.data.data;
+                if(this.oilfield){
+                  this.queryParams.oilFieldId = res.data.data[0].oilFieldId
+                }
+               }else{
+                this.$message.warning('系统错误请重新尝试或联系运维人员！');
+               }
+            });
+          }
+        } else {
+          alert('系统错误请重新尝试或联系运维人员！');
+        }
+      });
+    },
+    // 编辑
+    /**
+     *  选中表格事件
+     * @param ids 选中的表格单行内容，携带index与判断条件
+     */
     handleCurrentChange(val) {
       this.ids = [];
       this.ids = val;
+      console.log(this.ids)
     },
-
-    // 编辑
+    /**
+     *  编辑
+     * @param noticeList 表格数据data
+     */
     redact() {
       let arr = [];
       this.noticeList.map((n) => {
