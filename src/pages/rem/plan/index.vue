@@ -569,6 +569,41 @@ export default {
 <style lang="less" scoped>
   .app-container {
     height: 100%;
-    
+    .legend {
+      padding: 5px 10px 5px 15px;
+      position: relative;
+      cursor: pointer;
+
+      &::before {
+        position: absolute;
+        top: 40%;
+        left: 0;
+        content: '';
+        display: block;
+        margin-top: 0px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+
+      &.bg-green {
+        &::before {
+          background: #00BC9C 100%;
+        }
+        text-decoration-line: underline;
+      }
+
+      &.bg-yellow {
+        &::before {
+          background: #EDD722 100%;
+        }
+      }
+
+      &.bg-orange {
+        &::before {
+          background: #FF7135 100%;
+        }
+      }
+    }
   }
 </style>

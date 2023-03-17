@@ -1,3 +1,11 @@
+/*
+ * @Author: Dear_Zxb 13521265431@163.com
+ * @Date: 2023-03-17 10:18:04
+ * @LastEditors: Dear_Zxb 13521265431@163.com
+ * @LastEditTime: 2023-03-17 14:18:54
+ * @FilePath: \dcoit_haiyou\oo-qhd-rem-front\src\router\modules\reservoirManagement.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import Layout from '@/layouts/index.vue';
 
 export default [
@@ -32,3 +40,4 @@ export default [
 
     ];
     
+

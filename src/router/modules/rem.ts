@@ -28,7 +28,7 @@ export default [
             meta: { title: '措施管理', icon: 'icon' },
           },
           {
-            hidden:false,
+            hidden:true,
             path: 'wellMonitoring',
             name: 'wellMonitoring',
             component: () => import('@/pages/rem/plan/wellMonitoring.vue'),

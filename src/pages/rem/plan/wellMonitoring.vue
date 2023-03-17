@@ -1,17 +1,20 @@
 <!-- 措施效果跟踪 -->
 <template>
   <div class="app-container">
-    <pagePanelNew headerTitle="角色管理" style="height:100%;marginTop:0;">
+    <pagePanelNew headerTitle="措施效果跟踪" style="height:100%;marginTop:0;">
       <el-container class="layout">
         <el-header height="auto">
           <div class="titleBox">
-            <el-button type="primary" class="fr" @click="switchToBack">返回</el-button>
+            <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;">
+              措施效果跟踪
+              <el-button type="primary" style="height:30px;" @click="switchToBack">返回</el-button>
+           </div>
           </div>
         </el-header>
-        <el-main class="mt-4">
+        <el-main class="main">
           <el-row :gutter="20" style="height: 240px">
             <el-col :span="24">
-              <div style="height: 220px" class="svg">
+              <div style="height: 220px;padding-top:0;" class="svg">
                 <el-table v-show="type == 0" highlight :data="oilWellTableData" style="width: 100%" height="190">
                   <el-table-column type="index" align="center" width="60" label="序号"> </el-table-column>
                   <el-table-column prop="wellNo" align="center" label="井号" width="160"> </el-table-column>
@@ -155,24 +158,30 @@
               </div>
             </el-col>
           </el-row>
-          <el-row class="mt-4" v-if="type == 0" style="height: 50px">
-            <el-radio-group v-model="oilTabType" @change="doSearchCharts">
-              <el-radio-button label="0" name="油井日度曲线">油井日度曲线</el-radio-button>
-              <el-radio-button label="1" name="油井实时曲线">油井实时曲线</el-radio-button>
-              <el-radio-button label="2" name="虚拟计量曲线">虚拟计量曲线</el-radio-button>
-              <el-radio-button label="3" name="化验数据">化验数据</el-radio-button>
-            </el-radio-group>
+          <el-row class="main-row" v-if="type == 0" style="height: 50px">
+            <verticalSwitchButton
+              @selectBtn="selectBtn"
+              :dataList="dataList"
+              buttonWidth="120px"
+              buttonHeight="40px"
+              style="width: 9%"
+              btnDirection="row"
+            ></verticalSwitchButton>
           </el-row>
-          <el-row class="mt-4" v-if="type == 1" style="height: 50px">
-            <el-radio-group v-model="waterTabType" @change="doSearchCharts">
-              <el-radio-button label="0" name="水井日度曲线">水井日度曲线</el-radio-button>
-              <el-radio-button label="1" name="水井实时曲线">水井实时曲线</el-radio-button>
-            </el-radio-group>
+          <el-row class="main-row" v-if="type == 1" style="height: 50px">
+            <verticalSwitchButton
+              @selectBtn="selectBtn2"
+              :dataList="dataList2"
+              buttonWidth="120px"
+              buttonHeight="40px"
+              style="width: 9%"
+              btnDirection="row"
+            ></verticalSwitchButton>
           </el-row>
-          <el-row class="mt-4" v-if="type == 0">
-            <div style="height: 220px" class="svg" v-if="oilTabType == '0'">
-              <div>
-                <span>日期</span>
+          <el-row class="main-row2" v-if="type == 0">
+            <div class="svg" v-if="oilTabType == '0'">
+              <div class="search-date">
+                <span>日期：</span>
                 <el-date-picker
                   v-model="selectData"
                   type="daterange"
@@ -182,31 +191,28 @@
                   value-format="yyyy-MM-dd"
                 >
                 </el-date-picker>
-                <el-button @click="doSearchCharts">检索</el-button>
+                <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">检索</el-button>
               </div>
-              <echarts :chart-data="oilOption" height="480px"></echarts>
+              <div class="echarts-view">
+                <echarts :chart-data="oilOption" height="100%"></echarts>
+              </div> 
             </div>
-            <div style="height: 220px" class="svg" v-else-if="oilTabType == '1'">
-              <span>日期：</span>
-              <el-date-picker
-                v-model="dateDetail"
-                type="datetimerange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-                value-format="yyyy-MM-dd"
-                @change="createChange"
-              >
-              </el-date-picker>
-              <el-button icon="el-icon-search" style="margin-left: 10px" type="primary" @click="doSearchCharts"
-                >检索
-              </el-button>
-              <el-row
-                v-for="(item, index) in checkList.filter((item) => {
-                  return item.isRealTime == 0;
-                })"
-                :key="index"
-              >
+            <div class="svg" v-else-if="oilTabType == '1'">
+              <div class="search-date">
+                <span>日期：</span>
+                <el-date-picker
+                  v-model="dateDetail"
+                  type="datetimerange"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  value-format="yyyy-MM-dd"
+                  @change="createChange"
+                >
+                </el-date-picker>
+                <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doSearchCharts">检索</el-button>
+              </div>
+              <el-row v-for="(item, index) in checkList.filter((item) => {return item.isRealTime == 0;})" :key="index">
                 <div style="width: 100px; display: inline-block">
                   <span>{{ item.paramName }}</span>
                 </div>
@@ -221,13 +227,13 @@
                   >
                 </el-checkbox-group>
               </el-row>
-              <el-scrollbar style="height: 460px">
-                <echarts :chart-data="optionRealData" style="height: 460px"></echarts>
-              </el-scrollbar>
+              <div class="echarts-view">
+                <echarts :chart-data="optionRealData" height="100%"></echarts>
+              </div> 
             </div>
-            <div style="height: 220px" class="svg" v-else-if="oilTabType == '2'">
-              <div>
-                <span>日期</span>
+            <div class="svg" v-else-if="oilTabType == '2'">
+              <div class="search-date">
+                <span>日期：</span>
                 <el-date-picker
                   v-model="selectDateTime"
                   type="datetime"
@@ -235,24 +241,28 @@
                   format="yyyy-MM-dd hh:mm"
                 >
                 </el-date-picker>
-                <el-button @click="doWellFluxLastDayHour">检索</el-button>
+                <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doWellFluxLastDayHour">检索</el-button>
               </div>
-              <echarts :chart-data="oilOption2" height="480px"></echarts>
+              <div class="echarts-view">
+                <echarts :chart-data="oilOption2" height="100%"></echarts>
+              </div> 
             </div>
-            <div style="height: 220px" class="svg" v-else-if="oilTabType == '3'">
-              <el-table :data="chemicalTableData" highlight style="width: 100%" height="480">
-                <el-table-column label="序号" align="center" header-align="center" type="index"></el-table-column>
-                <el-table-column label="日期" prop="startTime" align="center" header-align="center"> </el-table-column>
-                <el-table-column label="含水" prop="waterCut" align="center" header-align="center"> </el-table-column>
-                <el-table-column label="含砂" prop="sand" align="center" header-align="center"></el-table-column>
-                <el-table-column label="备注" prop="remark" align="center" header-align="center"> </el-table-column>
-              </el-table>
+            <div class="svg" v-else-if="oilTabType == '3'">
+              <div class="table-view">
+                <el-table :data="chemicalTableData" highlight style="width: 100%" height="446px">
+                  <el-table-column label="序号" align="center" header-align="center" type="index"></el-table-column>
+                  <el-table-column label="日期" prop="startTime" align="center" header-align="center"> </el-table-column>
+                  <el-table-column label="含水" prop="waterCut" align="center" header-align="center"> </el-table-column>
+                  <el-table-column label="含砂" prop="sand" align="center" header-align="center"></el-table-column>
+                  <el-table-column label="备注" prop="remark" align="center" header-align="center"> </el-table-column>
+                </el-table>
+              </div>
             </div>
           </el-row>
-          <el-row class="mt-4" v-if="type == 1">
-            <div style="height: 220px" class="svg" v-if="waterTabType == '0'">
-              <div>
-                <span>日期</span>
+          <el-row class="main-row2" v-if="type == 1">
+            <div class="svg" v-if="waterTabType == '0'">
+              <div class="search-date">
+                <span>日期：</span>
                 <el-date-picker
                   v-model="selectData"
                   type="datetimerange"
@@ -262,13 +272,15 @@
                   value-format="yyyy-MM-dd"
                 >
                 </el-date-picker>
-                <el-button @click="doSearchCharts">检索</el-button>
+                <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">检索</el-button>
               </div>
-              <echarts :chart-data="waterOption" height="480px"></echarts>
+              <div class="echarts-view">
+                <echarts :chart-data="waterOption" height="100%"></echarts>
+              </div> 
             </div>
-            <div style="height: 220px" class="svg" v-if="waterTabType == '1'">
-              <div>
-                <span>日期</span>
+            <div class="svg" v-if="waterTabType == '1'">
+              <div class="search-date">
+                <span>日期：</span>
                 <el-date-picker
                   v-model="selectRealData"
                   type="datetimerange"
@@ -278,9 +290,11 @@
                   value-format="yyyy-MM-dd"
                 >
                 </el-date-picker>
-                <el-button @click="doSearchCharts">检索</el-button>
+                <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">检索</el-button>
               </div>
-              <echarts :chart-data="waterRealOption" height="480px"></echarts>
+              <div class="echarts-view">
+                <echarts :chart-data="waterRealOption" height="100%"></echarts>
+              </div>
             </div>
           </el-row>
         </el-main>
@@ -291,6 +305,7 @@
 
 <script>
 import fileSaver from 'file-saver';
+import verticalSwitchButton from '@/components/intelligentOilfield/vertical-switch-button/index.vue';
 import Echarts from '@/components/rem/tools/Echarts/index.vue';
 import { fetchMeasureStatInfos } from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
 import { uploadFile } from '@/api/oilDeposit/rem-02/primaryinfo.js';
@@ -304,10 +319,21 @@ import { wellFluxLastDayHour } from '@/api/oilDeposit/opm/opmData.js';
 export default {
   name: 'ff',
   components: {
+    verticalSwitchButton,
     Echarts,
   },
   data() {
     return {
+      dataList:[
+        { name: '油井日度曲线', isChecked: true,oilTabType:'0' },
+        { name: '油井实时曲线', isChecked: false,oilTabType:'1' },
+        { name: '虚拟计量曲线', isChecked: false,oilTabType:'2'},
+        { name: '化验数据', isChecked: false,oilTabType:'3' },
+      ],
+      dataList2:[
+        { name: '水井日度曲线', isChecked: true,waterTabType:'0' },
+        { name: '水井实时曲线', isChecked: false,waterTabType:'1' },
+      ],
       queryParams: {
         beginDate: new Date().addDays(-1).format('yyyy-MM-dd'),
         endDate: new Date().format('yyyy-MM-dd'),
@@ -580,7 +606,7 @@ export default {
       // 井名 井管名称
       wellBoreName: '',
       // 判断类型（0为油井，1为水井）
-      type: 0,
+      type: 1,
       tableData: [],
       // 油井数据内容
       oilWellTableData: [],
@@ -753,7 +779,7 @@ export default {
             nameRotate: 0,
             nameGap: 50,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             scale: true,
@@ -781,7 +807,7 @@ export default {
             nameRotate: 0,
             nameGap: 50,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             offset: 80,
@@ -811,7 +837,7 @@ export default {
             nameRotate: 0,
             nameGap: 50,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             position: 'right',
@@ -840,7 +866,7 @@ export default {
             nameRotate: 0,
             nameGap: 50,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             position: 'right',
@@ -872,7 +898,7 @@ export default {
             nameGap: 50,
             nameRotate: 0,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             scale: true,
@@ -900,7 +926,7 @@ export default {
             nameRotate: 0,
             nameGap: 50,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             position: 'left',
@@ -930,7 +956,7 @@ export default {
             nameRotate: 0,
             nameGap: 50,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             position: 'right',
@@ -961,7 +987,7 @@ export default {
             nameRotate: 0,
             nameGap: 50,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             position: 'right',
@@ -991,7 +1017,7 @@ export default {
             nameRotate: 0,
             nameGap: 50,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             scale: true,
@@ -1019,7 +1045,7 @@ export default {
             nameRotate: 0,
             nameGap: 50,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             position: 'left',
@@ -1049,7 +1075,7 @@ export default {
             nameRotate: 0,
             nameGap: 50,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             position: 'right',
@@ -1118,7 +1144,7 @@ export default {
         xAxis: {
           name: '时间',
           nameTextStyle: {
-            color: '#fff',
+            color: '#8FA4CC',
             fontSize: 14,
           },
           type: 'category',
@@ -1127,7 +1153,7 @@ export default {
         yAxis: {
           name: '流量Sm³/d',
           nameTextStyle: {
-            color: '#fff',
+            color: '#8FA4CC',
             fontSize: 14,
           },
           type: 'value',
@@ -1276,7 +1302,7 @@ export default {
             nameRotate: 0,
             nameGap: 50,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             max: 24,
@@ -1306,7 +1332,7 @@ export default {
             nameRotate: 0,
             nameGap: 50,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             position: 'right',
@@ -1335,7 +1361,7 @@ export default {
             nameRotate: 0,
             nameGap: 50,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             position: 'right',
@@ -1365,7 +1391,7 @@ export default {
             nameGap: 50,
             nameRotate: 0,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             scale: true,
@@ -1393,7 +1419,7 @@ export default {
             nameRotate: 0,
             nameGap: 50,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             position: 'left',
@@ -1423,7 +1449,7 @@ export default {
             nameRotate: 0,
             nameGap: 50,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             position: 'right',
@@ -1452,7 +1478,7 @@ export default {
             nameRotate: 0,
             nameGap: 50,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               fontSize: 14,
             },
             position: 'right',
@@ -1544,7 +1570,7 @@ export default {
             nameLocation: 'center',
             nameRotate: 90,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               // lineHeight: 80
             },
             scale: true,
@@ -1575,7 +1601,7 @@ export default {
             nameRotate: 90,
             nameGap: 40,
             nameTextStyle: {
-              color: '#fff',
+              color: '#8FA4CC',
               // lineHeight: 80
             },
             scale: true,
@@ -1646,22 +1672,34 @@ export default {
     this.initData();
   },
   methods: {
+    selectBtn(item){
+      if(this.oilTabType!=item.oilTabType){
+        this.oilTabType=item.oilTabType;
+        this.doSearchCharts();
+      }
+    },
+    selectBtn2(item){
+      if(this.waterTabType!=item.waterTabType){
+        this.waterTabType=item.waterTabType;
+        this.doSearchCharts();
+      }
+    },
     /**
      * hwh
      * 初始化
      * @returns {Promise<void>}
      */
     async initData() {
-      const { oilFieldId } = this.$route.params;
-      const { platformId } = this.$route.params;
-      const { selectWellId } = this.$route.params;
-      const { selectMeasuresId } = this.$route.params;
-      const { measuresDate } = this.$route.params;
-      const { wellNameNano } = this.$route.params;
-      const { wellBoreName } = this.$route.params;
-      this.canDownload = this.$route.params.canDownload;
-      console.log(this.$route.params.wellType);
-      const { wellType } = this.$route.params;
+      const { oilFieldId } = this.$route.query;
+      const { platformId } = this.$route.query;
+      const { selectWellId } = this.$route.query;
+      const { selectMeasuresId } = this.$route.query;
+      const { measuresDate } = this.$route.query;
+      const { wellNameNano } = this.$route.query;
+      const { wellBoreName } = this.$route.query;
+      this.canDownload = this.$route.query.canDownload;
+      console.log(this.$route.query.wellType);
+      const { wellType } = this.$route.query;
       if (wellType == '002002001') {
         this.type = 0;
       } else if (wellType == '002003001' || wellType == '002005001') {
@@ -1756,6 +1794,7 @@ export default {
       this.tableData = [];
       this.chemicalTableData = [];
       fetchMeasureStatInfos(request).then((res) => {
+        console.log(res,99)
         if (res.data.code == 200) {
           this.tableData = res.data.data.measureResultStat;
           this.chemicalTableData = res.data.data.taskPlanExcuteRecordList;
@@ -1985,11 +2024,12 @@ export default {
         wellId: this.selectWellId,
       };
       produceData(request).then((res) => {
+        console.log('res',res)
         const seriesData = [];
         const legendData = [];
         // 获取x轴数据信息
         const xSet = new Set();
-        if (res.data.code == 0) {
+        if (res.data.code == 200) {
           const chartDataS = res.data.data.charts;
           for (let i = 0; i < chartDataS.length; i++) {
             if (chartDataS[i].linearDataSets == null || chartDataS[i].linearDataSets == undefined) {
@@ -2046,6 +2086,7 @@ export default {
         this.waterOption.xAxis[0].data = xData;
         this.waterOption.xAxis[1].data = xData;
         this.waterOption.series = seriesData;
+        console.log('this.waterOption',this.waterOption)
       });
     },
     // 检索图形
@@ -2586,26 +2627,47 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .app-container {
   height: 100%;
-
-  .el-table {
-    overflow: scroll;
+  ::v-deep .layout{
+    height:100%;
   }
+  ::v-deep .main{
+    display: flex;
+    flex-direction: column;
+    .main-row2{
+      flex:1;
+      display: flex;
+      flex-direction: column;
+    }
+    .svg{
+      flex:1;
+      padding-top:10px;
+      display: flex;
+      flex-direction: column;
+      .search-date{
+        padding-bottom:15px;
+      }
+      .echarts-view{
+        flex:1;
+      }
+      .table-view{
+        flex:1;
+      }
 
+    }
+  }
 }
 
 
-::v-deep .el-upload {
-  border: 0px;
-  border-radius: 0px;
-}
+// ::v-deep .el-upload {
+//   border: 0px;
+//   border-radius: 0px;
+// }
 
-::v-deep .el-upload-list {
-  display: none;
-}
+// ::v-deep .el-upload-list {
+//   display: none;
+// }
 
 ::v-deep .el-table .cell:empty::before {
   content: '-';
