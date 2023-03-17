@@ -29,6 +29,7 @@
           :show-word-limit="item.showWordLimit"
           :clearable="item.clearable === false ? false : true"
           :placeholder="item.placeholder || ('请输入' + item.label)"
+          :disabled="item.disabled"
         />
         <el-input-number
           v-else-if="item.type === 'number'"

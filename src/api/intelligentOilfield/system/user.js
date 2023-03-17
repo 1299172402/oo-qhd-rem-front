@@ -186,3 +186,12 @@ export function addAccessinfo(data) {
     data
   })
 }
+
+// 保存页面配置
+export function setpageConfig(data) {
+  return request({
+    url: '/system/pageConfig/saveOrUpdatePageConfig',
+    method: 'post',
+    data
+  })
+}

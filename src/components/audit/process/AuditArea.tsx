@@ -22,6 +22,10 @@ export default Vue.extend({
       type: Function,
       default: () => ({})
     },
+    returnFn: {
+      type: Function,
+      default: () => ({})
+    },
     infos: {
       type: Object,
       default: () => ({})
@@ -46,11 +50,6 @@ export default Vue.extend({
     }  
   },
   methods: {
-    handleReturn() {
-      this.$nextTick(() => {
-        this.$router.go(-1)
-      }) 
-    },
     renderAuditComponent(props: ActionAreaProps): void {
       const { isView, businessType } = props;
       this.auditProps.isView = isView;
@@ -120,7 +119,7 @@ export default Vue.extend({
           dataSource={this.model}
           businessType={this.auditProps.businessType}
           isView={this.auditProps.isView}
-          successCallback={this.handleReturn}
+          successCallback={this.returnFn}
           onClose={() => {
             this.$nextTick(() => {
               this.visible = false

@@ -170,12 +170,12 @@
     </div>
     <div class="erweima">
       <div class="erweiDisplay">
-        <div class="erweimaBg"></div>
-        <div class="erweiText">陆地移动端下载</div>
+        <!-- <div class="erweimaBg"></div>
+        <div class="erweiText">陆地移动端下载</div> -->
       </div>
       <div class="erweiDisplay">
-        <div class="erweimaBg"></div>
-        <div class="erweiText">海上移动端下载</div>
+        <!-- <div class="erweimaBg"></div>
+        <div class="erweiText">海上移动端下载</div> -->
       </div>
     </div>
   </div>
@@ -249,6 +249,7 @@ export default Vue.extend({
       // 验证码开关
       captchaOnOff: true,
       loginType: '集团登录',
+      currentTheme: 'light'
     };
   },
   created() {
@@ -532,6 +533,11 @@ export default Vue.extend({
     font-weight: 400;
     color: #909399;
   }
+
+  .t-tabs{
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.9);
+  }
   .t-tabs__nav-wrap {
     flex: 1;
     padding-bottom: 20px;
@@ -544,9 +550,29 @@ export default Vue.extend({
     transform: translate(20px, 0px) !important;
   }
   ::v-deep .t-tabs__nav-item-text-wrapper {
+    color: rgba(0, 0, 0, 0.6);
     font-size: 17px;
   }
+
+  ::v-deep .t-tabs__nav-item-wrapper{
+    background-color: #fff !important;
+  }
+
+  ::v-deep .t-tabs__bar{
+    color: #0060a6 !important;
+    background: #0060a6 !important;
+  }
+  ::v-deep .t-tabs__nav-container.t-is-top::after{
+    content: none;
+  }
+
+  ::v-deep .t-button {
+    background: #0061a7 !important;
+  }
+  
 }
+
+
 </style>
 <style scoped>
 .loginInput >>> .el-input__inner {

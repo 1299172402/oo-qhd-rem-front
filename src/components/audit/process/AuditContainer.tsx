@@ -9,6 +9,7 @@ import {
 import { auditPageInfo } from "@/components/audit/process/api/audit";
 import { actionApi, claimApi } from "@/components/audit/process/auditSave/ActionApi";
 import { ActionAreaProps } from "@/components/audit/types";
+import returnPaterPage from "@/utils/returnPaterPage";
 
 
 
@@ -51,6 +52,10 @@ export default Vue.extend({
           vm.$emit("return");
         })
       }
+    },
+    returnName: {
+      type: String,
+      default: ""
     }
   },
   data() {
@@ -132,9 +137,6 @@ export default Vue.extend({
     }
   },
   created() {
-    this.getAuditPageInfo();
-  },
-  activated() {
     this.getAuditPageInfo();
   },
   methods: {
@@ -252,7 +254,11 @@ export default Vue.extend({
         });
     },
     handleCancel() {
-      this.$router.go(-1);
+      if (this.returnName && typeof this.returnName === "string") {
+        returnPaterPage(this.$route.path, this.returnName)
+      } else {
+        console.error("AuditContainer:请确认returnPath路径配置正确")
+      }
     }
   },
   render() {
@@ -263,6 +269,7 @@ export default Vue.extend({
       props: {
         completeFn: this.handleComplete,
         cancelFn: cancelFn || this.handleCancel,
+        returnFn: this.handleCancel,
         infos: this.infos,
         isView: this.isView,
         model: this.model

@@ -17,6 +17,15 @@ export function getMenu(menuId) {
   })
 }
 
+// 根据appID查询菜单下拉树结构
+export function roleMenuTreeSelectByAppId(query) {
+  return request({
+    url: "/system/menu/roleMenuTreeSelectByAppId",
+    method: "get",
+    params: query
+  });
+}
+
 // 查询菜单下拉树结构
 export function treeselect() {
   return request({

@@ -36,6 +36,8 @@ import pagePanelNew from '@/components/intelligentOilfield/page-panel-new/index.
 import headerSearch from '@/components/intelligentOilfield/header-search/index.vue';
 
 import "@/utils/filter";
+import VXETable from 'vxe-table'
+import 'vxe-table/lib/style.css'
 
 const env = import.meta.env.MODE;
 
@@ -64,6 +66,7 @@ Vue.prototype.$bus = new Vue()
 
 localStorage.setItem("contextRoot", proxy[env].processAPI);
 
+Vue.use(VXETable)
 Vue.use(directive)
 Vue.use(plugins)
 Vue.use(ElementUI);

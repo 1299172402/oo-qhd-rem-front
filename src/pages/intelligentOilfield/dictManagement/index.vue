@@ -105,7 +105,7 @@
           <template slot-scope="scope">
             <el-button size="mini" type="text" @click="handleUpdate(scope.row)"
               v-hasPermi="['system:dict:edit']">修改</el-button>
-            <el-button size="mini" type="text" @click="handleDelete(scope.row)"
+            <el-button size="mini" type="text" @click="handleDelete(scope.row,scope.$index)"
               v-hasPermi="['system:dict:remove']" class="delbutton">删除</el-button>
           </template>
         </el-table-column>
@@ -285,12 +285,12 @@ export default {
       });
     },
     /** 删除按钮操作 */
-    handleDelete({ row, $index }) {
+    handleDelete(row,index) {
       const dictIds = row.dictId || this.ids;
       // this.$modal
       //   .confirm(`是否确认删除字典编号为"${dictIds}"的数据项？`)
       this.$modal
-        .confirm(`是否确认删除序号为"${$index + 1}"的数据项？`)
+        .confirm(`是否确认删除序号为"${index + 1}"的数据项？`)
         .then(() => delType(dictIds))
         .then(() => {
           this.getList();

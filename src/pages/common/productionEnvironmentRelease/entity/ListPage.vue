@@ -89,10 +89,10 @@ export default {
       },
       routerInfo: {
         edit: {
-          name: "ProdEnvironmentReleaseEdit"
+          name: "ProdEnvironmentReleaseEdit/:action/:id?"
         },
         view: {
-          name: "ProdEnvironmentReleaseView"
+          name: "ProdEnvironmentReleaseView/:action/:id?"
         }
       }
     };

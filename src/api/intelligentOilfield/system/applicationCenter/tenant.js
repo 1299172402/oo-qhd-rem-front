@@ -88,3 +88,11 @@ export function unbindTenantManager(data) {
     data
   });
 }
+
+// 根据租户 code 查询信息
+export function getInfoByCode(tenantCode) {
+  return request({
+    url: `/system/tenant/getInfoByCode/${tenantCode}`,
+    method: "get"
+  });
+}

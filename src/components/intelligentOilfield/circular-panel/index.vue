@@ -3,19 +3,23 @@
   <div class="g-w100 g-h100 panel">
     <el-carousel :style="{ '--containerHeight': containerHeight, height: '100%' }" trigger="click" :autoplay="false"
       arrow="never" indicator-position="outside">
-      <el-carousel-item v-for="(item1, index) in panelList" :key="index" class="g-row-flex" style="flex-wrap: wrap">
+      <el-carousel-item v-for="(item1, index) in panelList" :key="index" class="g-row-flex" style="flex-wrap: wrap" :style="entranceType === 'UpperLower'?'':'justify-content:space-between'">
         <div class="g-column-flex-HV panelDiv" v-for="(item2, index) in item1" :key="index + 200">
           <!-- <div class="panelImg"></div> -->
           <div class="g-column-flex-HV" @click="jumpLink(item2, index)" v-if="entranceType === 'UpperLower'">
-            <img :src="item2.img" alt="" style="width:60px;height:60px" />
-            <div style="max-width:60px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" :title="item2.name">
-              {{
-                item2.name }}</div>
+            <img :src="item2.img" alt="" style="width:56px;height:56px" v-if="item2.img"/>
+             <!-- TODO: Maybe change back -->
+            <!-- <span v-else style="width:60px;height:60px" class="thumbnail">{{item2.name[0]}}</span> -->
+            <div v-else class="bgImage g-row-flex-HV" style="width:56px;height:56px">
+                {{ item2.name[0] }}
+            </div>
+            <div style="max-width:56px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" :title="item2.name">
+              {{item2.name}}</div>
           </div>
           <!-- :class="index % 3 === 0 ? 'panelBlueColor' : index % 3 === 1 ? 'panelRedColor' : 'panelGreenColor'" -->
           <div v-else class="panelBg g-row-flex-HV" @click="jumpLink(item2, index)">
             <a :href="item2.url" :id="'hrefText' + index" target="_blank" v-show="false">跳转</a>
-            <div class="g-flex-row-HV textImageDiv">{{ item2.name }}</div>
+            <div class="g-flex-row-HV textImageDiv">{{  item2.name }}</div>
           </div>
         </div>
       </el-carousel-item>
@@ -123,8 +127,8 @@ export default {
         this.onePageNum = 0;
         // const onePageNumW = this.entranceType === 'UpperLower' ? parseInt((newVal.width - 42) / 80, 10) : parseInt((newVal.width - 42) / 124, 10);
         // const onePageNumH = this.entranceType === 'UpperLower' ? parseInt((newVal.height - 128) / 80, 10) : parseInt((newVal.height - 96) / 80, 10);
-        const onePageNumW = this.entranceType === 'UpperLower' ? parseInt((newVal.width - 23) / 80, 10) : parseInt((newVal.width - 23) / 190, 10);
-        const onePageNumH = this.entranceType === 'UpperLower' ? parseInt((newVal.height - 129) / 105, 10) : parseInt((newVal.height - 97) / 65, 10);
+        const onePageNumW = this.entranceType === 'UpperLower' ? parseInt((newVal.width - 23) / 76, 10) : parseInt((newVal.width - 23) / 210, 10);
+        const onePageNumH = this.entranceType === 'UpperLower' ? parseInt((newVal.height - 50 - 64 - 2 - (newVal.name==='应用中心'?46:0)) / 88, 10) : parseInt((newVal.height - 50 - 32 - 2 - 46) / 46, 10);
         if (newVal.width && onePageNumW > 0 && newVal.height && onePageNumH > 0) {
           this.onePageNum = onePageNumW * onePageNumH;
           // console.log('最后个数'+newVal.name, this.onePageNum);
@@ -185,15 +189,9 @@ export default {
   height: var(--containerHeight);
 }
 </style>
-<style scoped>
+<style scoped lang="less">
 /* */
-.panelImg {
-  background-image: url('https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  width: 50px;
-  height: 50px;
-}
+
 
 .el-carousel__item h3 {
   color: #475669;
@@ -216,7 +214,7 @@ export default {
 }
 
 .panelDiv {
-  margin: 10px;
+  margin: 5px 10px;
   cursor: pointer;
 
   font-size: 12px;
@@ -226,20 +224,22 @@ export default {
 }
 
 .panelBg {
-  width: 170px;
-  height: 44px;
+  width: 190px;
+  height: 36px;
   text-align: center;
   line-height: 16px;
   padding: 0px 10px;
-  background: url('../../../assets/intelligentOilfield/enterImage.png');
-  color: #fff;
+  // TODO: Maybe change back
+  /* background: url('../../../assets/intelligentOilfield/enterImage.png'); */
+  color: #51A1FF;
+  border: 1px solid #51A1FF;
 }
 
 .textImageDiv {
   font-size: 16px;
   font-family: 'PingFangSC-Semibold, PingFang SC';
   /* font-weight: 600; */
-  color: #FFFFFF;
+  color: #51A1FF;
 }
 
 .panelBlueColor {
@@ -255,5 +255,12 @@ export default {
 .panelGreenColor {
   background: linear-gradient(to bottom, transparent, rgba(1, 229, 194, 0.6));
   border: 1px solid rgba(1, 229, 194, 1);
+}
+.bgImage {
+    background: url('../../../assets/intelligentOilfield/bgImg.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    color: #51A1FF;
+    font-size: 22px;
 }
 </style>

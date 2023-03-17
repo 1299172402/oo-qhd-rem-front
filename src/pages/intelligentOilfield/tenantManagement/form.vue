@@ -1,5 +1,5 @@
 <template>
-  <form-section submit-text="" @save="handleOk">
+  <form-section submit-text="" @save="handleOk" :return-name="returnPath">
     <div class="tenant-form">
       <el-form
         ref="Form"
@@ -78,7 +78,8 @@ export default {
         tenantName: [{ required: true, message: "请输入租户名称", trigger: "blur" }],
         deptId: [{ required: true, message: "请输入分配组织机构", trigger: "change" }],
         status: [{ required: true, message: "请输入租户状态", trigger: "change" }]
-      }
+      },
+      returnPath: 'Tenant'
     };
   },
   mounted() {
@@ -87,7 +88,7 @@ export default {
   },
   activated() {
     if(this.$route.params.id === undefined){
-      this.$refs['Form'].resetFields();
+      this.$refs.Form.resetFields();
     }    
     this.getTreeselect();
     this.fn.save = this.$route.params.id ? updateTenant : addTenant;

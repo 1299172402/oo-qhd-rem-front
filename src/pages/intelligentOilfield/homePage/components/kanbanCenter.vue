@@ -28,8 +28,12 @@
           <div class="g-column-flex-H" v-for="(item, index) in list" :key="index"
             style="position: relative;padding: 20px; justify-content: space-around; flex-wrap: wrap;cursor: pointer"
             @click="toClick(item.boardUrl)">
-            <img :src="item.boardImg" alt="" class="imgSetting" style="width:40px" />
-            {{ item.boardName }}
+            <img v-if="item.boardImg" :src="item.boardImg?item.boardImg:''" @error="imgError(item)" alt="" class="imgSetting" style="width:40px" />
+            <!-- 增加未上传图标显示默认图标+首字母 -->
+            <div v-else class="bgImage g-row-flex-HV" style="width:40px;height:40px">
+                {{ item.boardName[0] }}
+            </div>
+            <span class="textSpan">{{ item.boardName }}</span>
           </div>
         </div>
       <!-- <div class="g-w100 g-row-flex-HV" style="height: 85%;">
@@ -102,10 +106,10 @@ export default {
       immediate: true,
     },
   },
-  created() {
-    // this.getInitData(this.activeName);
-  },
   methods: {
+    imgError(item) {
+      item.img = new URL('../../../../assets/intelligentOilfield/bgImg.png', import.meta.url).href
+    },
     toClick(url) {
       const a = document.createElement('a')
       a.setAttribute('target', '_blank')
@@ -197,65 +201,6 @@ export default {
         // 写全屏后的执行函数
       }
     },
-    getInitData(param) {
-      this.selectedList = [];
-      // 调用接口,param为传参
-      if (param === 'professionalKanban') {
-        this.selectedList = [
-          {
-            img: new URL(`../../../../assets/intelligentOilfield/kanban-dark.png`, import.meta.url),
-            name: '注水看板',
-            url: 'https://www.isqqw.com/#/homepage',
-          },
-          {
-            img: new URL(`../../../../assets/intelligentOilfield/kanban-dark.png`, import.meta.url),
-            name: '操纵看板',
-            url: 'https://element.eleme.cn/#/zh-CN/component/installation',
-          },
-          {
-            img: new URL(`../../../../assets/intelligentOilfield/kanban-dark.png`, import.meta.url),
-            name: '设备看板',
-            url: 'https://lbs.amap.com/api/loca-v2/api#viewcontrol',
-          },
-          {
-            img: new URL(`../../../../assets/intelligentOilfield/kanban-dark.png`, import.meta.url),
-            name: '报警看板',
-            url: 'https://www.iconfont.cn/home/index?spm=a313x.7781069.1998910419.2',
-          },
-          {
-            img: new URL(`../../../../assets/intelligentOilfield/kanban-dark.png`, import.meta.url),
-            name: '自定义看板',
-            url: 'https://ant.design/components/overview-cn',
-          },
-          {
-            img: new URL(`../../../../assets/intelligentOilfield/kanban-dark.png`, import.meta.url),
-            name: '自定义看板',
-            url: 'https://www.isqqw.com/#/homepage',
-          },
-          {
-            img: new URL(`../../../../assets/intelligentOilfield/kanban-dark.png`, import.meta.url),
-            name: '自定义看板',
-            url: 'https://element.eleme.cn/#/zh-CN/component/installation',
-          },
-        ];
-      } else {
-        this.selectedList = [
-          {
-            img: new URL(`../../../../assets/intelligentOilfield/kanban-dark.png`, import.meta.url),
-            name: '注水看板',
-            url: 'https://lbs.amap.com/api/loca-v2/api#viewcontrol',
-          },
-          {
-            img: new URL(`../../../../assets/intelligentOilfield/kanban-dark.png`, import.meta.url),
-            name: '操纵看板',
-            url: 'https://www.iconfont.cn/home/index?spm=a313x.7781069.1998910419.2',
-          },
-        ];
-      }
-    },
-    handleClick() {
-      this.getInitData(this.activeName);
-    },
   },
 };
 </script>
@@ -264,9 +209,17 @@ export default {
 .bottomBtn {
   position: absolute;
   bottom: 0;
-  /* right: 0;
-  font-size: 44px;
-  color: red;
-  z-index: 999999999909999; */
+}
+.bgImage {
+    background: url('../../../../assets/intelligentOilfield/bgImg.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    color: #51A1FF;
+}
+.textSpan {
+    font-size: 12px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #909399;
 }
 </style>

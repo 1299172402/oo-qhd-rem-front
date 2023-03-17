@@ -7,6 +7,7 @@
       header="页面配置"
       :closeBtn="true"
       :onCloseBtnClick="handleCloseDrawer"
+      :onClose="setpageConfigs"
       class="setting-drawer-container"
     >
       <div class="setting-container">
@@ -66,27 +67,31 @@
               <t-radio-button :key="index" :value="item"><thumbnail :src="getThumbnailUrl(item)" /></t-radio-button>
             </div>
           </t-radio-group>
-
-          <t-form-item v-show="formData.layout === 'mix'" label="分割菜单（混合模式下有效）" name="splitMenu">
+          <!-- TODO: Maybe change back -->
+          <!-- <t-form-item v-show="formData.layout === 'mix'" label="分割菜单（混合模式下有效）" name="splitMenu">
             <t-switch v-model="formData.splitMenu"></t-switch>
-          </t-form-item>
+          </t-form-item> -->
 
-          <t-form-item v-show="formData.layout !== 'side'" label="固定 Header" name="isHeaderFixed">
+          <!-- <t-form-item v-show="formData.layout !== 'side'" label="固定 Header" name="isHeaderFixed">
             <t-switch v-model="formData.isHeaderFixed"></t-switch>
           </t-form-item>
           <t-form-item v-show="formData.layout !== 'top'" label="固定 Sidebar" name="isSidebarFixed">
             <t-switch v-model="formData.isSidebarFixed"></t-switch>
-          </t-form-item>
+          </t-form-item> -->
 
           <div class="setting-group-title">元素开关</div>
           <t-form-item label="显示 Header" name="showHeader" v-show="formData.layout === 'side'">
             <t-switch v-model="formData.showHeader"></t-switch>
           </t-form-item>
-          <t-form-item label="显示 Breadcrumbs" name="showBreadcrumb">
+          <!-- TODO: Maybe change back -->
+          <!-- <t-form-item label="显示 Breadcrumbs" name="showBreadcrumb">
             <t-switch v-model="formData.showBreadcrumb"></t-switch>
-          </t-form-item>
+          </t-form-item> -->
           <t-form-item label="显示 Footer" name="showFooter">
             <t-switch v-model="formData.showFooter"></t-switch>
+          </t-form-item>
+          <t-form-item label="显示左侧菜单栏" name="isUseMenu" v-show="formData.layout == 'mix'">
+            <t-switch v-model="formData.isUseMenu" @change="isUsemenu"></t-switch>
           </t-form-item>
           <t-form-item label="使用 多标签Tab页" name="isUseTabsRouter">
             <t-switch v-model="formData.isUseTabsRouter"></t-switch>
@@ -121,6 +126,7 @@ import ColorContainer from '@/components/intelligentOilfield/color/index.vue';
 import SettingDarkIcon from '@/assets/assets-setting-dark.svg';
 import SettingLightIcon from '@/assets/assets-setting-light.svg';
 import SettingAutoIcon from '@/assets/assets-setting-auto.svg';
+import { setpageConfig } from '@/api/intelligentOilfield/system/user';
 
 // const LAYOUT_OPTION = ['side', 'top', 'mix'];
 const LAYOUT_OPTION = ['top', 'mix'];
@@ -207,13 +213,31 @@ export default {
       return SettingAutoIcon;
     },
     getThumbnailUrl(name: string) {
-      return new URL(`../assets/intelligentOilfield/${name}.png`, import.meta.url).href
+      return new URL(`../assets/intelligentOilfield/${name}.png`, import.meta.url).href;
     },
     handleClick(): void {
       this.$store.commit('setting/toggleSettingPanel', true);
     },
     handleCloseDrawer(): void {
       this.$store.commit('setting/toggleSettingPanel', false);
+    },
+    setpageConfigs(): void {
+      let data = {
+        brandTheme: this.formData.brandTheme,
+        isHeaderFixed: this.formData.isHeaderFixed,
+        isSidebarFixed: this.formData.isSidebarFixed,
+        isUseMenu: this.formData.isUseMenu,
+        isUseTabsRouter: this.formData.isUseTabsRouter,
+        layout: this.formData.layout,
+        mode: this.formData.mode,
+        showBreadcrumb: this.formData.showBreadcrumb,
+        showFooter: this.formData.showFooter,
+        splitMenu: this.formData.splitMenu,
+        userId: this.$store.getters['user/userDetail'].user.userId,
+      };
+      setpageConfig(data).then(res => {
+        console.log(res)
+      })
     },
     handleCopy(): void {
       const text = JSON.stringify(this.formData, null, 4);
@@ -238,6 +262,9 @@ export default {
       insertThemeStylesheet(hex, colorMap, mode);
 
       this.$store.dispatch('setting/changeTheme', { ...setting, brandTheme: hex });
+    },
+    isUsemenu() {
+      this.$store.commit('setting/toggleSidebarCompact');
     },
   },
 };
@@ -357,7 +384,7 @@ export default {
       max-height: 78px;
       padding: 8px;
       border-radius: @border-radius;
-    //   border: 2px solid var(--td-component-border);
+      //   border: 2px solid var(--td-component-border);
       border: 2px solid rgba(100, 90, 90, 0.5);
       height: auto;
 

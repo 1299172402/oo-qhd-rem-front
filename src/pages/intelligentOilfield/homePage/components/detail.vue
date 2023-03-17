@@ -6,7 +6,7 @@
         <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px" />
         <p style="margin-left: 10px; width: 70px">通知公告：</p>
       </div>
-      <Marquee style="white-space:pre-wrap;">{{ val }}</Marquee>
+      <Marquee style="white-space:pre-wrap;">{{ $store.getters['user/notice'] }}</Marquee>
     </div>
   <!-- <pagePanel headerTitle="统计数据" style="height: 256px">
       <div style="width: 100%; margin-top: 20px"></div>
@@ -129,7 +129,8 @@ export default {
   },
   created() {
     this.listAll()
-    this.noticeList()
+    // TODO: Maybe change back
+    // this.noticeList()
   },
   methods: {
     listAll() {
@@ -172,8 +173,8 @@ export default {
       }
     },
     noticeList() {
-      noticeList().then(response => {
-        response.data.data.forEach(item => {
+      noticeList(this.$store.getters['user/tenantId']).then(response => {
+        response?.data?.data?.forEach(item => {
           this.val += `${item.noticeContent  }                                                                                                    `
         })
       })

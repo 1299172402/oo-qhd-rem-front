@@ -1,6 +1,7 @@
 import {merge, cloneDeep, get} from "lodash";
 import dayJs from "dayjs";
 import { deleteNullAttribute } from "@/utils/objectOperate";
+import returnPaterPage from "@/utils/returnPaterPage.js";
 
 /**
  * 验证必填项
@@ -49,7 +50,8 @@ export default {
       onlySubmitRequired: true,
       saveRequired: [],
       refName: "myForm",
-      needNextAudit: true
+      needNextAudit: true,
+      returnName: ""
     }
   },
   created() {
@@ -57,11 +59,8 @@ export default {
     this.$on("ok", this.handleToList)
   },
   mounted() {
-    this.getModel(this.$route.query.id || this.modelId);
-  },
-  activated() {
     this.beforeGetModel && this.beforeGetModel();
-    this.getModel(this.$route.query.id || this.modelId);
+    this.getModel(this.$route.params.id || this.modelId);
   },
   computed: {
     isAdd() {
@@ -162,20 +161,24 @@ export default {
          * 保存提交后跳转到查询页面
          */
     handleToList() {
-      if (this.routeInfo?.ok && !this.isAudit) {
-        this.$router.push({ 
-          name: this.routeInfo.ok.name,
-          params: this.routeInfo.ok.params,
-          query: this.routeInfo.ok.query,
-        })
+      if (this.returnName && !this.isAudit && typeof this.returnName === "string") {
+        returnPaterPage(this.$route.path, this.returnName);
+      } else {
+        this.errorHandle("请确认returnPath路径配置正确")
       }
-      // todo
     },
     handleReturn() {
-      this.$router.go(-1);
+      if (this.returnName && typeof this.returnName === "string") {
+        returnPaterPage(this.$route.path, this.returnName);
+      } else {
+        this.errorHandle("请确认returnPath路径配置正确")
+      }
     },
     getSaveModel() {
       return this.model;
+    },
+    errorHandle(message) {
+      console.error(`EditMixin:${message}`)
     }
   }
 }

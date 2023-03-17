@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="user-info-head" @click="editCropper()">
-      <img :src="imgUrl2" title="点击上传头像" class="img-circle img-lg" />
+      <img :src="imgUrl2" title="点击上传头像" style="width:150px;height:198px" class="img-circle img-lg" />
     </div>
     <el-dialog
       :title="title"
@@ -96,7 +96,7 @@ export default {
     };
   },
   mounted() {
-    this.imgUrl2 = new URL('../../../../assets/profile.jpg', import.meta.url).href // 引入图片方法二
+    this.imgUrl2 = new URL('../../../../assets/person.png', import.meta.url).href // 引入图片方法二
   },
   methods: {
     // 编辑头像

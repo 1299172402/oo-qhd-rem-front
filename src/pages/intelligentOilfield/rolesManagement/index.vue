@@ -170,7 +170,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="角色类型" prop="roleType" >
-              <el-select v-model="form.roleType" :disabled="$route.query.id || form.appId">
+              <el-select v-model="form.roleType" :disabled="!!($route.params.id || form.appId)">
                 <el-option
                   v-for="item in dict.type.sys_role_type"
                   :key="item.value"
@@ -232,7 +232,7 @@
         </el-form-item>
         <el-form-item label="权限范围">
           <el-select v-model="form.dataScope" @change="dataScopeSelectChange" clearable>
-            <el-option v-for="item in dataScopeOptions" :key="item.value" :label="item.label"
+            <el-option v-for="item in isFromApp ? dataScopeOptions.filter(v => v.value !== '2') : dataScopeOptions" :key="item.value" :label="item.label"
               :value="item.value"></el-option>
           </el-select>
         </el-form-item>
@@ -255,7 +255,7 @@
 
 <script>
 import { listRole, getRole, delRole, addRole, updateRole, dataScope, changeRoleStatus } from '@/api/intelligentOilfield/system/role';
-import { treeselect as menuTreeselect, roleMenuTreeselect } from '@/api/intelligentOilfield/system/menu';
+import { treeselect as menuTreeselect, roleMenuTreeselect, roleMenuTreeSelectByAppId } from '@/api/intelligentOilfield/system/menu';
 import { treeselect as deptTreeselect, roleDeptTreeselect } from '@/api/intelligentOilfield/system/dept';
 import SearchSelect from '@/components/intelligentOilfield/searchSelect/AppSearchSelect.vue'
 
@@ -293,6 +293,7 @@ export default {
       title: '',
       // 是否显示弹出层
       open: false,
+      isFromApp: false,
       // 是否显示弹出层（数据权限）
       openDataScope: false,
       menuExpand: false,
@@ -382,6 +383,15 @@ export default {
     },
     /** 查询菜单树结构 */
     getMenuTreeselect() {
+      if (this.appId) {
+        const params = {
+          appId: this.appId,
+        };
+        return roleMenuTreeSelectByAppId(params).then((response) => {
+          this.menuOptions = response.data.menus;
+          return response;
+        });
+      }
       menuTreeselect().then((response) => {
         this.menuOptions = response.data.data;
       });
@@ -414,6 +424,16 @@ export default {
     },
     /** 根据角色ID查询菜单树结构 */
     getRoleMenuTreeselect(roleId) {
+      if (this.appId) {
+        const params = {
+          appId: this.appId,
+          roleId: roleId
+        };
+        return roleMenuTreeSelectByAppId(params).then((res) => {
+          this.menuOptions = res.data.menus;
+          return res;
+        });
+      }
       return roleMenuTreeselect(roleId).then((response) => {
         this.menuOptions = response.data.menus;
         return response;
@@ -541,7 +561,7 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-      if(this.$route.query.id){
+      if(this.$route.params.id){
         this.form.roleType = 'application'
       }
       this.getMenuTreeselect();
@@ -578,6 +598,11 @@ export default {
     /** 分配数据权限操作 */
     handleDataScope(row) {
       this.reset();
+      if(this.appId !== undefined){
+        this.isFromApp = true
+      } else {
+        this.isFromApp = false
+      }
       const roleDeptTreeselect = this.getRoleDeptTreeselect(row.roleId);
       getRole(row.roleId).then((response) => {
         this.form = response.data.data;
@@ -593,7 +618,7 @@ export default {
     /** 分配用户操作 */
     handleAuthUser(row) {
       const { roleId } = row;
-      this.$router.push({ name: `rolesDetail`, query: { roleId, pathName:row.roleName } ,params:{roleId}});
+      this.$router.push({ name: `rolesDetail`, params:{roleId}});
       //   this.$router.push(`/system/role-auth/user/${roleId}`);
     },
     /** 提交按钮 */
@@ -601,8 +626,8 @@ export default {
       this.form.menuIds = this.getMenuAllCheckedKeys();
       this.$refs.form.validate((valid) => {
         if (valid) {
-          if (!this.form.appId && this.$route.query.id) {
-            this.form.appId = this.$route.query.id;
+          if (!this.form.appId && this.$route.params.id) {
+            this.form.appId = this.$route.params.id;
           }
           if (this.form.roleId !== undefined) {
             // this.form.menuIds = this.getMenuAllCheckedKeys();

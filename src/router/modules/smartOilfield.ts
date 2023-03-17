@@ -188,4 +188,10 @@ export default [
       },
     ],
   },
+  // 404页面
+  {
+    path: '/pageInfo/error',
+    name: 'error',
+    component: () => import('@/pages/examplePage/result/404/index.vue'),
+  },
 ];

@@ -123,11 +123,7 @@ export default {
       fileMap: {},
       fileTypeMap: new Map(),
       dictMap: {},
-      routeInfo: {
-        ok: {
-          name: 'ProdEnvironmentReleaseList',
-        },
-      },
+      returnName: "ProdEnvironmentReleaseList"
     };
   },
   watch: {

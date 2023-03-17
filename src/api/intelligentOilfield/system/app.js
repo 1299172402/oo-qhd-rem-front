@@ -56,3 +56,11 @@ export function listApp(query) {
     params: query
   });
 }
+
+// 根据租户 code 获取已授权应用列表
+export function authorizedAppListByTenantCode(tenantCode) {
+  return request({
+    url: `/system/app/authorizedAppList/${tenantCode}`,
+    method: "get"
+  });
+}

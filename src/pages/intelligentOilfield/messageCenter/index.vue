@@ -74,6 +74,14 @@
          <el-row :gutter="10" class="mb8" style="margin-bottom:20px">
       <el-col :span="1.5">
         <el-button
+          v-hasPermi="['message:export']"
+          type="primary"
+          plain
+          @click="handleExport"
+        >
+          导出
+        </el-button>
+        <el-button
           v-hasPermi="['message:config']"
           type="primary"
           plain
@@ -154,6 +162,7 @@ import ErrorLogView from "./components/errorLogViewDialog.vue";
 
 import { filterObj } from "@/utils/objectOperate";
 import { listMessage, reSendMail, reSendSms } from "@/api/intelligentOilfield/messaging";
+import  exportFile  from '@/utils/exportFile.js'
 
 const columns = [
   { props: "title", label: "消息主题" },
@@ -272,6 +281,12 @@ export default {
           });
         }
       }
+    },
+    /**
+     * 消息日志导出
+     */
+    handleExport() {
+      exportFile('/message-service/management/logging/export', this.queryParams)
     }
   }
 };

@@ -15,20 +15,22 @@
           />
           <span class="headerText">智能油田管理系统</span>
         </span>
-        <div v-if="layout !== 'top' && !$store.getters['user/isGroupLogin']" class="header-operate-left">
+        <!-- TODO: Maybe change back -->
+        <!-- <div v-if="layout !== 'top' && !$store.getters['user/isGroupLogin']" class="header-operate-left">
           <t-button theme="default" shape="square" variant="text" @click="changeCollapsed" style="background: transparent;border: 0px;">
             <view-list-icon class="collapsed-icon" style="color: var(--whiteColor)" />
-          </t-button>
+          </t-button> -->
           <!-- <search :layout="layout" /> -->
-        </div>
+        <!-- </div> -->
          <treeselect
                 v-model="valueA"
-                :options="deptOptions"
+                :options="tenantOptions"
                 :show-count="true"
                 placeholder="请选择所属机构"
                 class="noBgBorderTree"
                 style="width: 150px"
                 :clearable="false"
+                @select="treeselectSelect"
               />
       </template>
       <menu-content
@@ -111,10 +113,11 @@ import Message from './Message.vue';
 // import Search from './Search.vue'
 import MenuContent from './MenuContent.vue';
 import { updateLastLogout } from "@/api/intelligentOilfield/login";
-import { updateaccessPage } from '@/api/intelligentOilfield/system/user';
-import {getDeptsBydeptId} from '@/api/intelligentOilfield/system/dept';
+import { updateaccessPage , addAccessinfo } from '@/api/intelligentOilfield/system/user';
+import {getTenantsByUserId} from '@/api/intelligentOilfield/system/dept';
 import Treeselect from '@riophae/vue-treeselect';
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
+import { noticeList } from '@/api/intelligentOilfield/system/home';
 
 
 export default Vue.extend({
@@ -167,8 +170,8 @@ export default Vue.extend({
       visibleNotice: false,
       isSearchFocus: false,
       currentMode: '办公模式',
-      valueA: this.$store.getters['user/userDetail'].user.dept.deptId,
-      deptOptions: [],
+      valueA: this.$store.getters['user/tenantId'],
+      tenantOptions: [],
     };
   },
   computed: {
@@ -207,8 +210,11 @@ export default Vue.extend({
   },
   methods: {
     getInitDeptds() {
-      getDeptsBydeptId(this.$store.getters['user/userDetail'].user.deptId).then((response) => {
-        this.deptOptions = response.data.data;
+      getTenantsByUserId(this.$store.getters['user/userDetail'].user.userId).then((response) => {
+        this.tenantOptions = response.data.data.map(item=>({label:item.tenantName,id:item.tenantId}));
+        this.valueA = this.tenantOptions[0]?.id;
+        this.$store.commit('user/SETTENANTID', this.valueA);
+        this.noticeList();
       });
     },
     // 编辑面板
@@ -281,6 +287,19 @@ export default Vue.extend({
     handleNav(url) {
       this.$router.push(url);
     },
+    treeselectSelect(node){
+      this.$store.commit('user/SETTENANTID', node.id);
+      this.noticeList();
+    },
+    noticeList() {
+      noticeList(this.$store.getters['user/tenantId']).then(response => {
+        let val = ''
+        response.data.data.forEach(item => {
+          val += `${item.noticeContent}                                                                                                    `
+        })
+        this.$store.commit('user/SETNOTICE', val);
+      })
+    }
   },
 });
 </script>

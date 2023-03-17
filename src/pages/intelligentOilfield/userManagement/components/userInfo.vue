@@ -59,6 +59,20 @@
             <treeselect v-model="tempUser.deptId" :options="deptOptions" :show-count="true" placeholder="请选择所属机构" />
           </el-form-item>
         </el-col>
+        <el-col :span="8">
+          <el-form-item label="身份证" prop="idCard">
+            <template>
+                    <div v-if="tempUser.userId===$store.getters['user/userDetail'].user.userId">
+                         <el-input v-model="convertIdCard" placeholder="请输入身份证" maxlength="30" :disabled="isInputDisable"></el-input>
+                     <el-tooltip class="item" effect="dark" content="点击一下小眼睛显示才能编辑" placement="bottom">
+                         <i class="searchStyle el-icon-view" @click="showOrHidden"></i>
+                         </el-tooltip>
+                    </div>
+                
+                 <span v-else>{{tempUser.idCard?tempUser.idCard:'暂无数据' | filterShow}}</span>
+              </template>
+          </el-form-item>
+        </el-col>
       </el-row>
       <div class="headerinfo">账号信息</div>
       <el-row>
@@ -131,6 +145,11 @@ import returnPaterPage from "@/utils/returnPaterPage";
 export default {
   dicts: ['sys_user_account_type'],
   components: { Treeselect },
+  filters: {
+    filterShow(val) {
+      return val?.replace(/^(.{0})(?:\d+)(.{4})$/,  "\$1**************\$2");
+    },
+  },
   props: {
     user: {
       type: Object,
@@ -145,6 +164,8 @@ export default {
   },
   data() {
     return {
+      // 身份证输入框是否可见
+      isInputDisable: true,
       tempPostOptions: this.postOptions,
       tempUser: {},
       // 添加岗位参数
@@ -192,6 +213,15 @@ export default {
             trigger: 'blur',
           },
         ],
+        idCard: [
+          { required: true, message: '身份证不能为空', trigger: 'blur' },
+          //   { min: 8, max: 20, message: '用户密码长度必须介于 8 和 20 之间', trigger: 'blur' },
+          {
+            pattern:
+              /^\d{6}((((((19|20)\d{2})(0[13-9]|1[012])(0[1-9]|[12]\d|30))|(((19|20)\d{2})(0[13578]|1[02])31)|((19|20)\d{2})02(0[1-9]|1\d|2[0-8])|((((19|20)([13579][26]|[2468][048]|0[48]))|(2000))0229))\d{3})|((((\d{2})(0[13-9]|1[012])(0[1-9]|[12]\d|30))|((\d{2})(0[13578]|1[02])31)|((\d{2})02(0[1-9]|1\d|2[0-8]))|(([13579][26]|[2468][048]|0[048])0229))\d{2}))(\d|X|x)$/,
+            message: '请输入正确的身份证号，支持1代（15位）和2代（18位）',
+          },
+        ],
       },
       // 岗位表单校验
       postRules: {
@@ -200,6 +230,20 @@ export default {
         postSort: [{ required: true, message: '岗位顺序不能为空', trigger: 'blur' }],
       },
     };
+  },
+  computed: {
+    convertIdCard: {
+      get() {
+        if(this.isInputDisable) {
+          return this.tempUser.idCard?.replace(/^(.{0})(?:\d+)(.{4})$/,  "\$1**************\$2");
+
+        } 
+        return this.tempUser.idCard; 
+      },
+      set(val) {
+        this.tempUser.idCard= val
+      }
+    }
   },
   // computed: {
   //   tempUser() {
@@ -235,6 +279,7 @@ export default {
           sex: newVal.data?.sex,
           status: '0',
           remark: newVal.data?.remark,
+          idCard: newVal.data?.idCard,
           //   postIds: newVal.postIds,
           postIds: newVal.postIds?.toLocaleString().split(','),
           roleIds: newVal.roleIds?.toLocaleString().split(','),
@@ -298,6 +343,10 @@ export default {
         this.deptOptions = response.data.data;
       });
     },
+    /** 显示/隐藏身份证操作 */
+    showOrHidden() {
+      this.isInputDisable = !this.isInputDisable;
+    },
     submit() {
       //   this.tempUser.postIds = [];
       //   this.tempUser.postIds.push(this.tempUser.tempPostId);
@@ -309,7 +358,7 @@ export default {
               this.$modal.msgSuccess('修改成功');
               this.$emit('updateList');
 
-              returnPaterPage(this.$route.path, '/PortalManagement/user')
+              returnPaterPage(this.$route.path, 'User')
 
             }
           });
@@ -327,3 +376,15 @@ export default {
   },
 };
 </script>
+<style scoped>
+.searchStyle {
+  position: absolute;
+  top: 10px;
+  right: 8px;
+  color: var(--lightBlueColor);
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 1;
+}
+</style>

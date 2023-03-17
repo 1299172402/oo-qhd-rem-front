@@ -41,6 +41,14 @@ export function getInfo() {
   })
 }
 
+// 获取用户详细信息,带appId,目的是拿到已有的第一个路由,方便进行后续跳转
+export function getInfoByAppId(appId) {
+  return request({
+    url: `system/user/getInfo?appId=${appId}`,
+    method: 'get'
+  })
+}
+
 // 退出方法
 export function logout() {
   return request({

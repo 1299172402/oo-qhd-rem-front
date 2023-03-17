@@ -41,9 +41,9 @@
                 clearable
               >
                 <el-option
-                  v-for="item in processStatus"
+                  v-for="item in dict.type.process_instance_status"
                   :key="item.value"
-                  :label="item.text"
+                  :label="item.label"
                   :value="item.value"
                 ></el-option>
               </el-select>
@@ -145,14 +145,13 @@
 <script>
 import dayjs from 'dayjs';
 import { getAction, postAction } from '@/api/common/manage';
-import { transformPathToName } from '@/components/audit/utils';
 import '@/assets/styles/pages/handleBusinessListStyle.less';
-import { getProcessStatus } from '../api/status';
 import OpenOtherTab from '@/pages/common/mixins/commonMixin';
 
 export default {
   name: 'DoneBusinessList',
   description: '我的已办流程',
+  dicts: ['process_instance_status'],
   mixins: [OpenOtherTab],
   data() {
     return {
@@ -228,7 +227,7 @@ export default {
         total: 0,
       },
       url: {
-        list: '/flow/instance/involved',
+        list: '/system/flow/instance/involved',
       },
       processStatus: [],
     };
@@ -247,12 +246,6 @@ export default {
     },
   },
   mounted() {
-    getProcessStatus().then((res) => {
-      if (!res) {
-        return;
-      }
-      this.processStatus = res.result;
-    });
     this.searchQuery();
   },
   methods: {
@@ -288,11 +281,11 @@ export default {
         businessKey: record.businessKey, // 交接单id
         processInstanceId: record.processInstanceId, // 流程实例id
       };
-      getAction(`/flow/instance/${record.processInstanceId}/view-component`, {}).then((res) => {
+      getAction(`/system/flow/instance/${record.processInstanceId}/view-component`, {}).then((res) => {
         if (res.success) {
           if (res.viewComponent) {
             this.$router.push({
-              name: transformPathToName(res.viewComponent),
+              name: res.viewComponent,
               query: params,
               params: {
                 action: 'View',

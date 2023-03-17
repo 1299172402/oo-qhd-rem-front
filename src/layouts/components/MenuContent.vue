@@ -10,13 +10,13 @@
           :value="item.meta?.single ? item.redirect : item.path"
         >
           <template #icon>
-            <svg-icon  class="svgIconClass" v-if="typeof item.icon === 'string' && item.icon" :icon-class="item.icon" />
+            <svg-icon class="svgIconClass" v-if="typeof item.icon === 'string' && item.icon" :icon-class="item.icon" />
             <!-- <t-icon v-if="typeof item.icon === 'string' && item.icon" :name="item.icon" /> -->
             <renderFnIcon :item="item" />
           </template>
         </t-menu-item>
         <!-- 通过link判断路由外链跳转 -->
-          <!-- 
+        <!-- 
           :name="item.path"
           :value="item.meta?.single ? item.redirect : item.path"
           :href="item.meta.link"
@@ -31,7 +31,7 @@
         >
           <template #icon>
             <!-- 只要不是一级路由就占位儿 -->
-            <span style="color: transparent" >{{item.meta.single ? '' : '####'}}</span>
+            <span style="color: transparent">{{ item.meta.single ? '' : '####' }}</span>
             <svg-icon class="svgIconClass" v-if="typeof item.icon === 'string' && item.icon" :icon-class="item.icon" />
             <!-- <t-icon v-if="typeof item.icon === 'string' && item.icon" :name="item.icon" /> -->
             <renderFnIcon :item="item" />
@@ -48,10 +48,14 @@
         >
           <template #icon>
             <!-- 只要不是一级路由就占位儿 -->
-            <span style="color: transparent" >{{item.meta.single ? '' : '##'}}</span>
+            <span style="color: transparent">{{ item.meta.single ? '' : '##' }}</span>
             <!-- 三级路由最后一项占位儿 -->
             <span style="color: transparent" v-if="item.isThirdRouter">##</span>
-            <svg-icon class="svgIconClass"  v-if="typeof item.icon === 'string' && item.icon&&item.icon!=='#'" :icon-class="item.icon" />
+            <svg-icon
+              class="svgIconClass"
+              v-if="typeof item.icon === 'string' && item.icon && item.icon !== '#'"
+              :icon-class="item.icon"
+            />
             <!-- <t-icon v-if="typeof item.icon === 'string' && item.icon&&item.icon!=='#'" :name="item.icon" /> -->
             <!-- 选中带圆点未完 -->
             <!-- <div style="width:6px;height:6px;border-radius:4px;background:var(--lightBlueColor);margin-right:7px"></div> -->
@@ -60,11 +64,22 @@
           {{ item.title }}
         </t-menu-item>
       </template>
-      <t-submenu v-else :name="item.path" :value="item.path" :title="item.title" :key="item.path">
+      <t-submenu
+        v-else
+        :name="item.path"
+        :value="item.path"
+        :title="item.title"
+        :key="item.path"
+        @mouseover.native="onmouseoverRight"
+      >
         <template #icon>
-            <svg-icon class="svgIconClass" v-if="typeof item.icon === 'string' && item.icon&&item.icon!=='#'" :icon-class="item.icon" />
-            <!-- 二级路由且不带图标占位儿 -->
-            <span v-else style="color:transparent">##</span>
+          <svg-icon
+            class="svgIconClass"
+            v-if="typeof item.icon === 'string' && item.icon && item.icon !== '#'"
+            :icon-class="item.icon"
+          />
+          <!-- 二级路由且不带图标占位儿 -->
+          <span v-else style="color: transparent">##</span>
           <!-- <t-icon v-if="typeof item.icon === 'string' && item.icon&&item.icon!=='#'" :name="item.icon" /> -->
           <renderFnIcon :item="item" />
         </template>
@@ -86,7 +101,7 @@ const getMenuList = (list: MenuRoute[], basePath?: string): MenuRoute[] => {
     return [];
   }
   return list
-    .map((item) => { 
+    .map((item) => {
       let path;
       path = basePath ? `${basePath}/${item.path}` : item.path;
       if (path.indexOf('//') !== -1) {
@@ -142,14 +157,31 @@ export default Vue.extend({
     },
   },
   methods: {
-    changeMenu(value:MenuRoute) {
+    onmouseoverRight(e) {
+      if (this.$store.state.setting.layout == 'top') {
+        if (e.target.tagName == 'DIV') {
+          e.srcElement.parentNode.lastElementChild.style.left = e.target.getBoundingClientRect().left + 'px';
+          let b = Number(e.target.getBoundingClientRect().left) + 160;
+          if (e.target.className == 't-menu__item' && e.target.parentNode.className != 't-submenu') {
+            console.log(e.target,'sss')
+            // TODO: Maybe change back
+            // e.srcElement.parentNode.lastElementChild.lastElementChild.lastElementChild.lastElementChild.lastElementChild.style.top = e.target.getBoundingClientRect().top + 'px';
+            e.target.nextSibling.style.top = e.target.getBoundingClientRect().top + 'px';
+            // TODO: Maybe change back
+            // e.srcElement.parentNode.lastElementChild.lastElementChild.style.top = e.target.getBoundingClientRect().top + 'px';
+            e.target.nextSibling.style.left = b + 'px';
+          }
+        }
+      }
+    },
+    changeMenu(value: MenuRoute) {
       // 一级菜单接口链接
-      if(value.meta.single) {
+      if (value.meta.single) {
         this.$store.commit('permission/setRouterLink', value.children[0].meta?.link);
       }
     },
     // 二级菜单/三级菜单接口链接
-    changeMenu1(value:MenuRoute) {
+    changeMenu1(value: MenuRoute) {
       this.$store.commit('permission/setRouterLink', value.meta?.link);
     },
     getHref(item: MenuRoute) {
@@ -160,7 +192,7 @@ export default Vue.extend({
 </script>
 <style scoped>
 .svgIconClass {
-    width:2.5em !important;
-    height: 1.3em !important;
+  width: 2.5em !important;
+  height: 1.3em !important;
 }
 </style>

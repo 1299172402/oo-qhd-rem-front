@@ -1,3 +1,5 @@
+import returnPaterPage from "@/utils/returnPaterPage";
+
 export const BytzFormMixins = {};
 
 export const FormMixins = {
@@ -37,7 +39,7 @@ export const FormMixins = {
     /**
      * 根据id获取数据
      */
-    getModel: function(id) {
+    getModel(id) {
       this.loading = true;
       return this.fn.findById(id)
         .then((v) => {
@@ -51,13 +53,13 @@ export const FormMixins = {
     /**
      * 获取数据处理
      */
-    getFindModel: function(re) {
+    getFindModel(re) {
       return re.data;
     },
     /**
      * 保存数据方法
      */
-    postForm: function(way = "save") {
+    postForm(way = "save") {
       this.loading = true;
       this.fn[way](this.getSaveModel())
         .then((res) => {
@@ -109,7 +111,9 @@ export const FormMixins = {
      * 页面返回
      */
     handleBack() {
-      if (window.opener) {
+      if(this.returnName && typeof this.returnName === "string"){
+        returnPaterPage(this.$route.path, this.returnName)
+      } else if (window.opener) {
         window.close();
       } else {
         this.$router.go(-1);

@@ -65,18 +65,18 @@
         :row-style="{ height: '0px' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
-        :cell-style="{ padding: '2px', 'text-align': 'center' }"
+        :cell-style="{ padding: '2px' }"
         style="width: 100%; height: 100%"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
-        <el-table-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="160"></el-table-column>
+        <el-table-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="160" align="left"></el-table-column>
         <el-table-column prop="icon" label="图标" align="center" width="100">
           <template slot-scope="scope">
             <svg-icon :icon-class="scope.row.icon" />
           </template>
         </el-table-column>
-        <el-table-column prop="orderNum" label="菜单排序" width="80"></el-table-column>
-        <el-table-column prop="menuType" label="菜单类型" width="100">
+        <el-table-column prop="orderNum" label="菜单排序" width="80" align="center"></el-table-column>
+        <el-table-column prop="menuType" label="菜单类型" width="100" align="center">
           <template slot-scope="scope">
             <span>{{ scope.row.menuType | filterType }}</span>
           </template>
@@ -86,9 +86,9 @@
             <span>{{ searchOption.find(item=>item.value===scope.row.appId)?.label }}</span>
           </template>
         </el-table-column> -->
-        <el-table-column prop="perms" label="权限标识" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="component" label="组件路径" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="status" label="状态" width="80">
+        <el-table-column prop="perms" label="权限标识" :show-overflow-tooltip="true" align="center"></el-table-column>
+        <el-table-column prop="component" label="组件路径" :show-overflow-tooltip="true" align="center"></el-table-column>
+        <el-table-column prop="status" label="状态" width="80" align="center">
           <template slot-scope="scope">
             <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status" />
           </template>

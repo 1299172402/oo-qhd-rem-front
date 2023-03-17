@@ -40,8 +40,8 @@
     </headerSearch>
     <pagePanelNew headerTitle="分配用户" style="height:calc(100% - 100px);">
     <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
-      <el-col :span="1.5">
-        <select-user ref="select" @ok="loadData" />
+      <el-col v-show="isBindUser" :span="1.5">
+        <select-user ref="select" @ok="loadData" :data-sources="dataSource"/>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -51,7 +51,7 @@
           :disabled="multiple"
           @click="cancelBind(userIds)"
         >
-          {{ "批量取消关联" }}
+          {{ isBindUser ? "批量取消关联" : "批量取消绑定" }}
         </el-button>
         <el-button
           type="warning"
@@ -71,6 +71,7 @@
       >
         <el-table-column
           type="selection"
+          :selectable="selectedTable"
           width="55"
           align="center"
         />
@@ -81,11 +82,21 @@
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button
+              v-if="isBindUser || scope.row.isManager === '1'"
               v-hasPermi="['system:tenant:unbind']"
               type="text"
               @click="cancelBind([scope.row.userId])"
             >
-              {{ "取消关联" }}
+              {{ isBindUser ? "取消关联" : "取消绑定" }}
+            </el-button>
+            <el-button
+              v-else
+              v-hasPermi="['system:tenant:bind']"
+              type="text"
+              icon="el-icon-lock"
+              @click="bindManager(scope.row.userId)"
+            >
+              绑定
             </el-button>
           </template>
         </el-table-column>
@@ -129,6 +140,12 @@ export default {
       showSearch: true
     };
   },
+  computed: {
+    isBindUser() {
+      // 判断是否进行绑定用户操作
+      return this.$route.query.configName === "userBind";
+    }
+  },
   created() {
     this.dataId = this.$route.params.id;    
     this.queryParams.tenantId = this.dataId;
@@ -145,14 +162,28 @@ export default {
       this.userIds = selection.map((item) => item.userId);
       this.multiple = !selection.length;
     },
+    selectedTable(row) {
+      if (this.isBindUser || row.isManager === "1") {
+        return true;
+      }
+    },
     /**
      * 取消绑定按钮操作
      */
     cancelBind(userIds) {
-      const fn = unbindTenantUser;
+      const fn = this.isBindUser ? unbindTenantUser : unbindTenantManager;
       this.$modal.confirm("是否取消选中用户绑定数据项？").then(() => fn({ tenantId: this.dataId, userIds: userIds })).then(() => {
         this.loadData();
-        this.$modal.msgSuccess("取消关联成功");
+        this.isBindUser ? this.$modal.msgSuccess("取消关联成功") : this.$modal.msgSuccess("取消绑定成功");
+      });
+    },
+    /**
+     * 绑定租户管理员
+     */
+    bindManager(userId) {
+      bindTenantManager({ tenantId: this.dataId, userIds: [userId] }).then((res) => {        
+          this.loadData();
+          this.$modal.msgSuccess("绑定成功");
       });
     },
     /**

@@ -3,12 +3,12 @@
   <div class="app-container">
     <el-row :gutter="20">
       <!--部门数据-->
-      <el-col :span="4" :xs="24" class="left">
+      <el-col :span="4" :xs="24" class="left" style="overflow: scroll;">
         <div class="head-container">
           <el-input v-model="deptName" placeholder="请输入部门名称" clearable size="small" prefix-icon="el-icon-search"
             style="margin-bottom: 10px; height: 40px" />
         </div>
-        <div class="head-container">
+        <div class="head-container" style="overflow: auto;">
           <el-tree :data="deptOptions" :props="defaultProps" :expand-on-click-node="false"
             :filter-node-method="filterNode" ref="tree" default-expand-all @node-click="handleNodeClick" />
         </div>
@@ -175,25 +175,19 @@
                 <el-button
                   size="mini"
                   type="text"
-                  @click="handleResetPwd(scope.row)"
-                  v-hasPermi="['system:user:resetPwd']"
-                  >重置密码</el-button
-                >
-                <el-button
-                  size="mini"
-                  type="text"
                   @click="handleDelete(scope.row)"
                   v-hasPermi="['system:user:remove']"
                   v-if="scope.row.userId !== '1'"
                   class="delbutton"
                   >删除</el-button
                 >
-                <!-- <el-dropdown
+              <el-dropdown
                 size="mini"
                 @command="(command) => handleCommand(command, scope.row)"
                 v-hasPermi="['system:user:resetPwd', 'system:user:edit']"
+                style="margin-left: 20px;"
               >
-                <span class="el-dropdown-link"> <i class="el-icon-d-arrow-right el-icon--right"></i>更多 </span>
+                <span class="el-dropdown-link">更多</span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item command="handleResetPwd" icon="el-icon-key" v-hasPermi="['system:user:resetPwd']"
                     >重置密码</el-dropdown-item
@@ -204,8 +198,15 @@
                     v-hasPermi="['system:user:edit']"
                     >分配角色</el-dropdown-item
                   >
+                  <el-dropdown-item
+                    v-hasPermi="['system:user:appRole']"
+                    command="handleAppRole"
+                    icon="el-icon-user"
+                    >
+                    分配应用角色
+                  </el-dropdown-item>
                 </el-dropdown-menu>
-                      </el-dropdown> -->
+              </el-dropdown>
               </template>
             </el-table-column>
           </el-table>
@@ -258,18 +259,18 @@
             </el-form-item>
           </el-col>
           <el-col :span="11">
-            <!-- <el-form-item label="身份证" prop="idCard">
+            <el-form-item label="身份证" prop="idCard">
                 <template>
                     <div v-if="form.userId===$store.getters['user/userDetail'].user.userId||title==='新增用户'">
-                         <el-input v-model="form.idCard" placeholder="请输入身份证" maxlength="30" :disabled="isInputDisable"></el-input>
+                         <el-input v-model="convertIdCard" placeholder="请输入身份证" maxlength="30" :disabled="isInputDisable"></el-input>
                      <el-tooltip class="item" effect="dark" content="点击一下小眼睛显示才能编辑" placement="bottom">
                          <i v-if="title!=='新增用户'" class="searchStyle el-icon-view" @click="showOrHidden"></i>
                          </el-tooltip>
                     </div>
                 
-                 <span v-else>{{form.convertIdCard?form.convertIdCard:'暂无数据'}}</span>
+                 <span v-else>{{form.idCard?form.idCard:'暂无数据' | filterShow}}</span>
               </template>
-            </el-form-item> -->
+            </el-form-item>
           </el-col>
         </el-row>
         <div class="headerinfo">账号信息</div>
@@ -432,6 +433,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 import {
   listUser,
   getUser,
@@ -449,6 +452,7 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 import proxy from '@/config/host';
 import { getCodeImg} from '@/api/intelligentOilfield/login';
 import { encryptlogin } from '@/utils/jsencrypt';
+import { getInfoByCode } from "@/api/intelligentOilfield/system/applicationCenter/tenant.js";
 
 export default {
   name: 'User',
@@ -461,6 +465,9 @@ export default {
         return `${value.slice(0, 5)}...`;
       }
       return value;
+    },
+    filterShow(val) {
+      return val?.replace(/^(.{0})(?:\d+)(.{4})$/,  "\$1**************\$2");
     },
   },
   data() {
@@ -645,6 +652,23 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapGetters({
+      userInfo: "user/userInfo"
+    }),
+    convertIdCard: {
+      get() {
+        if(this.isInputDisable) {
+          return this.form.idCard?.replace(/^(.{0})(?:\d+)(.{4})$/,  "\$1**************\$2");
+
+        } 
+        return this.form.idCard; 
+      },
+      set(val) {
+        this.form.idCard= val
+      }
+    }
+  },
   watch: {
     // 根据名称筛选部门树
     deptName(val) {
@@ -680,9 +704,44 @@ export default {
     },
     /** 查询部门下拉树结构 */
     getTreeselect() {
-      treeselect().then((response) => {
-        this.deptOptions = response.data.data;
-      });
+      treeselect().then((response) => this.getDeptOptions(response.data.data))
+        .then((response) => {
+          this.deptOptions = response;
+          this.getList();
+        });
+    },
+    /**
+     * 如果是租户管理员则只能看到对应部门下的数据
+     */
+    getDeptOptions(data) {
+      if (this.userInfo.isTenantAdmin && this.userInfo.currentTenantCode) {
+        return getInfoByCode(this.userInfo.currentTenantCode)
+          .then((v) => {
+            const {deptId} = v.data.data;
+            const getCurrentDeptDataByLoop = function(data, deptId) {
+              let re;
+              for (let i = 0; i < data.length; i++) {
+                if (data[i].id === deptId) {
+                  re = data[i];
+                }
+                if (!re && data[i].children?.length > 0) {
+                  re = getCurrentDeptDataByLoop(data[i].children, deptId);
+                }
+                if (re) {
+                  break;
+                }
+              }
+              return re;
+            };
+            const re = getCurrentDeptDataByLoop(data, deptId);
+            if (re) {
+              this.queryParams.deptId = re.id;
+              return [re];
+            }
+            return [];
+          });
+      }
+      return Promise.resolve(data);
     },
     // 筛选节点
     filterNode(value, data) {
@@ -735,8 +794,6 @@ export default {
         userType: '', // 账号类型
         surePassword: undefined,
         idCard: undefined,
-        convertIdCard: undefined,
-        currentIdCard: undefined,
       };
       this.resetForm('form');
     },
@@ -767,6 +824,9 @@ export default {
         break;
       case 'handleAuthRole':
         this.handleAuthRole(row);
+        break;
+      case "handleAppRole":
+        this.handleAppRole(row);
         break;
       default:
         break;
@@ -817,11 +877,6 @@ export default {
     /** 显示/隐藏身份证操作 */
     showOrHidden() {
       this.isInputDisable = !this.isInputDisable;
-      if(this.isInputDisable) { // 不可看
-        this.form.idCard = this.form.convertIdCard;
-      } else {
-        this.form.idCard = this.form.currentIdCard;
-      }
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -832,9 +887,6 @@ export default {
       getUser(userId).then((response) => {
         this.form = response.data.data;
         this.form.idCard = response.data.data.idCard;
-        // this.form.currentIdCard = response.data.data.idCard;
-        // this.form.convertIdCard = response.data.data.idCard?.replace(/^(.{0})(?:\d+)(.{4})$/,  "\$1**************\$2");
-        // this.form.idCard = this.form.convertIdCard;
         this.postOptions = response.data.posts;
         this.roleOptions = response.data.roles;
         this.form.postIds = response.data.postIds.toLocaleString().split(',');
@@ -890,7 +942,18 @@ export default {
     /** 分配角色操作 */
     handleAuthRole(row) {
       const { userId } = row;
-      this.$router.push(`/system/user-auth/role/${userId}`);
+      this.$router.push({
+        name: "AuthRole/:userId",
+        params: {userId}
+      });
+    },
+    /** 分配应用角色操作 */
+    handleAppRole(row) {
+      const { userId } = row;
+      this.$router.push({
+        name: "AppRole/:id",
+        params: {id: userId}
+      });
     },
     /** 提交按钮 */
     submitForm() {

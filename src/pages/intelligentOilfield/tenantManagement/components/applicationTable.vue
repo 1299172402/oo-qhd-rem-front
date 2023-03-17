@@ -13,16 +13,9 @@
         align="center"
         :show-overflow-tooltip="true"
       />
-      <el-table-column label="配置内容" width="120" align="center">
-        <template slot-scope="scope">
-          <el-button type="primary" @click="handleClick(scope)">
-            编辑
-          </el-button>
-        </template>
-      </el-table-column>
       <el-table-column label="操作" width="120" align="center">
         <template slot-scope="scope">
-          <el-button type="danger" @click="handleDelete(scope.$index, scope.row)">
+          <el-button type="text" @click="handleDelete(scope.$index, scope.row)" class="delbutton">
             删除
           </el-button>
         </template>

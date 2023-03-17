@@ -55,7 +55,10 @@ export default {
               router.push(result.redirect);
               this.loading = false;
             } else {
-              router.push("/homePage/index");
+              // TODO: Maybe change back
+              // router.push("/homePage/index");
+              const firstRoputer = `${this.$store.getters['user/userDetail'].firstMenu.path}/${this.$store.getters['user/userDetail'].firstMenu.children[0].path}`
+              this.$router.push(firstRoputer);
               this.loading = false;
             }
           }
