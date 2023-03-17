@@ -4,39 +4,37 @@
       <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true" style="margin-top: 18px">
         <el-form-item label="作业公司：" prop="deptId">
           <el-select
-            v-model="queryParams.deptId"
+            v-model="queryParams.orgId"
             placeholder="请选择作业公司"
-            clearable
             size="small"
             style="width: 240px"
           >
             <el-option
-              v-for="(item, index) in deptSelect"
+              v-for="(item, index) in company"
               :key="index"
-              :label="item.deptName"
-              :value="item.deptId"
+              :label="item.orgShortName"
+              :value="item.orgId"
             ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="油田：" prop="noticeContent">
-         <el-select
-            v-model="queryParams.deptId"
+          <el-select
+            v-model="queryParams.oilFieldId"
             placeholder="请选择油田"
-            clearable
             size="small"
             style="width: 240px"
           >
             <el-option
-              v-for="(item, index) in deptSelect"
+              v-for="(item, index) in oilfield"
               :key="index"
-              :label="item.deptName"
-              :value="item.deptId"
+              :label="item.oilFieldName"
+              :value="item.oilFieldId"
             ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="产品类型：" prop="createBy">
           <el-select
-            v-model="queryParams.deptId"
+            v-model="queryParams.cplx"
             placeholder="请选择产品类型"
             clearable
             size="small"
@@ -55,109 +53,124 @@
         </el-form-item>
         <el-form-item>
           <el-button icon="el-icon-edit-outline" size="mini" @click="redact" class="commonBtn">编辑</el-button>
-          <el-button icon="el-icon-refresh" size="mini" @click="save" class="commonBtn">保存</el-button>
-          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery" class="commonBtn">运行计算</el-button>
+          <el-button icon="el-icon-document-checked" size="mini" @click="save" class="commonBtn">保存</el-button>
+          <el-button icon="el-icon-s-platform" size="mini" @click="dialogVisible = true" class="commonBtn"
+            >运行计算</el-button
+          >
         </el-form-item>
       </el-form>
     </headerSearch>
 
     <pagePanelNew headerTitle="通知通告列表" style="height: calc(100% - 100px)">
-        <info-window infoWidth="100%" infoHeight="100%" headerTitle="密度信息维护">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
-        <!-- <el-col :span="1.5">
+      <info-window infoWidth="100%" infoHeight="100%" headerTitle="密度信息维护">
+        <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
+          <!-- <el-col :span="1.5">
         <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd"
           v-hasPermi="['system:role:add']">新增</el-button>
       </el-col> -->
-      </el-row>
-      <el-table
-        :data="noticeList"
-        highlight-current-row
-        @current-change="handleCurrentChange"
-        @selection-change="handleSelectionChange"
-        height="calc(100% - 45px)"
-        :row-style="{ height: '0px' }"
-        :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
-        header-cell-class-name="table_header"
-        :cell-style="{ 'text-align': 'center', padding: '2px' }"
-        style="width: 100%; height: 1000px"
-        :default-sort="{ prop: 'date', order: 'descending' }"
-      >
-        <!-- <el-table-column type="selection" width="55" align="center" /> -->
-        <el-table-column label="油气田" prop="name"  align="center"> </el-table-column>
-        <el-table-column label="一月" prop="one"  align="center">
-          <template slot-scope="scope">
-            <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
-            <span v-else> <el-input v-model="scope.row.one" size="small" /></span>
-          </template>
-        </el-table-column>
-        <el-table-column label="二月" prop="two"  align="center">
-          <template slot-scope="scope">
-            <span v-if="scope.row.state == '0'">{{ scope.row.two }}</span>
-            <span v-else> <el-input v-model="scope.row.two" size="small" /></span>
-          </template>
-        </el-table-column>
-        <el-table-column label="三月" prop="three"  align="center">
-          <template slot-scope="scope">
-            <span v-if="scope.row.state == '0'">{{ scope.row.three }}</span>
-            <span v-else> <el-input v-model="scope.row.three" size="small" /></span>
-          </template>
-        </el-table-column>
-        <el-table-column label="四月" prop="four"  align="center">
-           <template slot-scope="scope">
-            <span v-if="scope.row.state == '0'">{{ scope.row.four }}</span>
-            <span v-else> <el-input v-model="scope.row.four" size="small" /></span>
-          </template> </el-table-column>
-        <el-table-column label="五月" prop="five"  align="center"> 
-           <template slot-scope="scope">
-            <span v-if="scope.row.state == '0'">{{ scope.row.five }}</span>
-            <span v-else> <el-input v-model="scope.row.five" size="small" /></span>
-          </template>
-        </el-table-column>
-        <el-table-column label="六月" prop="six"  align="center">
-           <template slot-scope="scope">
-            <span v-if="scope.row.state == '0'">{{ scope.row.six }}</span>
-            <span v-else> <el-input v-model="scope.row.six" size="small" /></span>
-          </template> </el-table-column>
-        <el-table-column label="七月" prop="seven"  align="center">
-           <template slot-scope="scope">
-            <span v-if="scope.row.state == '0'">{{ scope.row.seven }}</span>
-            <span v-else> <el-input v-model="scope.row.seven" size="small" /></span>
-          </template> </el-table-column>
-        <el-table-column label="八月" prop="eight"  align="center">
-           <template slot-scope="scope">
-            <span v-if="scope.row.state == '0'">{{ scope.row.eight }}</span>
-            <span v-else> <el-input v-model="scope.row.eight" size="small" /></span>
-          </template> </el-table-column>
-        <el-table-column label="九月" prop="nine"  align="center">
-           <template slot-scope="scope">
-            <span v-if="scope.row.state == '0'">{{ scope.row.nine }}</span>
-            <span v-else> <el-input v-model="scope.row.nine" size="small" /></span>
-          </template> </el-table-column>
-        <el-table-column label="十月" prop="ten"  align="center">
-           <template slot-scope="scope">
-            <span v-if="scope.row.state == '0'">{{ scope.row.ten }}</span>
-            <span v-else> <el-input v-model="scope.row.ten" size="small" /></span>
-          </template> </el-table-column>
-        <el-table-column label="十一月" prop="eleven"  align="center">
-           <template slot-scope="scope">
-            <span v-if="scope.row.state == '0'">{{ scope.row.eleven }}</span>
-            <span v-else> <el-input v-model="scope.row.eleven" size="small" /></span>
-          </template> </el-table-column>
-        <el-table-column label="十二月" prop="twelve"  align="center">
-           <template slot-scope="scope">
-            <span v-if="scope.row.state == '0'">{{ scope.row.twelve }}</span>
-            <span v-else> <el-input v-model="scope.row.twelve" size="small" /></span>
-          </template> </el-table-column>
-      </el-table>
-        </info-window>
+        </el-row>
+        <el-table
+          :data="noticeList"
+          highlight-current-row
+          height="calc(100% - 45px)"
+          :row-style="{ height: '0px' }"
+          :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
+          header-cell-class-name="table_header"
+          :cell-style="{ 'text-align': 'center', padding: '2px' }"
+          style="width: 100%; height: 1000px"
+          :default-sort="{ prop: 'date', order: 'descending' }"
+        >
+          <!-- <el-table-column type="selection" width="55" align="center" /> -->
+          <el-table-column label="油气田" prop="name" align="center"> </el-table-column>
+          <el-table-column label="一月" prop="one" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+              <span v-else> <el-input v-model="scope.row.one" size="small" /></span>
+            </template>
+          </el-table-column>
+          <el-table-column label="二月" prop="two" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.state == '0'">{{ scope.row.two }}</span>
+              <span v-else> <el-input v-model="scope.row.two" size="small" /></span>
+            </template>
+          </el-table-column>
+          <el-table-column label="三月" prop="three" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.state == '0'">{{ scope.row.three }}</span>
+              <span v-else> <el-input v-model="scope.row.three" size="small" /></span>
+            </template>
+          </el-table-column>
+          <el-table-column label="四月" prop="four" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.state == '0'">{{ scope.row.four }}</span>
+              <span v-else> <el-input v-model="scope.row.four" size="small" /></span>
+            </template>
+          </el-table-column>
+          <el-table-column label="五月" prop="five" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.state == '0'">{{ scope.row.five }}</span>
+              <span v-else> <el-input v-model="scope.row.five" size="small" /></span>
+            </template>
+          </el-table-column>
+          <el-table-column label="六月" prop="six" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.state == '0'">{{ scope.row.six }}</span>
+              <span v-else> <el-input v-model="scope.row.six" size="small" /></span>
+            </template>
+          </el-table-column>
+          <el-table-column label="七月" prop="seven" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.state == '0'">{{ scope.row.seven }}</span>
+              <span v-else> <el-input v-model="scope.row.seven" size="small" /></span>
+            </template>
+          </el-table-column>
+          <el-table-column label="八月" prop="eight" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.state == '0'">{{ scope.row.eight }}</span>
+              <span v-else> <el-input v-model="scope.row.eight" size="small" /></span>
+            </template>
+          </el-table-column>
+          <el-table-column label="九月" prop="nine" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.state == '0'">{{ scope.row.nine }}</span>
+              <span v-else> <el-input v-model="scope.row.nine" size="small" /></span>
+            </template>
+          </el-table-column>
+          <el-table-column label="十月" prop="ten" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.state == '0'">{{ scope.row.ten }}</span>
+              <span v-else> <el-input v-model="scope.row.ten" size="small" /></span>
+            </template>
+          </el-table-column>
+          <el-table-column label="十一月" prop="eleven" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.state == '0'">{{ scope.row.eleven }}</span>
+              <span v-else> <el-input v-model="scope.row.eleven" size="small" /></span>
+            </template>
+          </el-table-column>
+          <el-table-column label="十二月" prop="twelve" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.state == '0'">{{ scope.row.twelve }}</span>
+              <span v-else> <el-input v-model="scope.row.twelve" size="small" /></span>
+            </template>
+          </el-table-column>
+        </el-table>
+      </info-window>
     </pagePanelNew>
-    <!-- 添加或修改角色配置对话框 -->
+    <el-dialog title="模型运行结果通知" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false">
+      <span>何时使用：需要用户处理事务，又不希望跳转</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false" class="cancelBtn">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { listDept } from '@/api/intelligentOilfield/system/dept';
 import { addnotice, noticeList, deldataNotice, updatenotice } from '@/api/intelligentOilfield/system/notice';
+import { getOilFieldList, getWorkCompany } from '@/api/rem/workcompanydesignate.js';
 
 export default {
   name: 'Notice',
@@ -165,16 +178,11 @@ export default {
   data() {
     return {
       open: false, // 新增弹框
+      dialogVisible: false, //运行计算展示弹窗
       title: '', // 弹窗标题
-      types: [
-        { noticeType: '1', type: '通知' },
-        { noticeType: '2', type: '公告' },
-      ], // 类型
+      company: [],
+      oilfield: [],
       deptSelect: [],
-      noticetypes: [
-        { noticeId: 1, noticeName: '通知' },
-        { noticeId: 2, noticeName: '公告' },
-      ],
       addform: {
         noticeContent: '',
         noticeType: '',
@@ -271,13 +279,13 @@ export default {
       // 选中数组
       ids: [],
       // 保存数组
-      savelist:[],
+      savelist: [],
       // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        deptId: undefined,
-        noticeContent: undefined,
+        orgId: undefined,
+        oilFieldId: undefined,
         createBy: undefined,
         noticeType: undefined,
       },
@@ -285,19 +293,44 @@ export default {
   },
   created() {
     this.getList();
-    this.choiceDepts(); // 获取组织机构
+    // this.choiceDepts(); // 获取组织机构
   },
   methods: {
     // 选中表格的事件
     handleCurrentChange(val) {
-      this.ids = []
+      this.ids = [];
       this.ids = val;
+    },
+    getList() {
+      getWorkCompany().then((data) => {
+        // console.log(data)
+        let code = data.data.code;
+        if (code == 200) {
+          this.company = data.data.data;
+          if (this.company) {
+            this.queryParams.orgId = data.data.data[0].orgId;
+            getOilFieldList({ orgId: this.queryParams.orgId }).then((res) => {
+              let code = data.data.code;
+               if (code == 200) {
+                this.oilfield = res.data.data;
+                if(this.oilfield){
+                  this.queryParams.oilFieldId = res.data.data[0].oilFieldId
+                }
+               }else{
+                this.$message.warning('系统错误请重新尝试或联系运维人员！');
+               }
+            });
+          }
+        } else {
+          alert('系统错误请重新尝试或联系运维人员！');
+        }
+      });
     },
     // 编辑
     redact() {
-      const arr = [];
+      let arr = [];
       this.noticeList.map((n) => {
-        if ((n.state == '1')) {
+        if (n.state == '1') {
           arr.push(n);
         }
       });
@@ -305,19 +338,17 @@ export default {
         this.$message.warning('同时只能编辑一个油田！');
       } else {
         this.noticeList[this.ids.index].state = '1';
-        this.savelist = this.noticeList[this.ids.index]
-      } 
+        this.savelist = this.noticeList[this.ids.index];
+      }
     },
     // 保存
-    save(){
-      if(this.savelist){
-        this.noticeList[this.savelist.index].state = '0';   
+    save() {
+      if (this.savelist) {
+        this.noticeList[this.savelist.index].state = '0';
         this.$message.warning('修改成功');
-        this.savelist = []
+        this.savelist = [];
       }
-
     },
-
   },
 };
 </script>
