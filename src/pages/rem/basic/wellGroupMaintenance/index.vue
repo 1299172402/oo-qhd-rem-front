@@ -38,17 +38,15 @@
         <el-button class="" type="primary">运行计算</el-button>
         <el-button class="" type="primary" icon="el-icon-download">下载</el-button>
       </div>
-      <el-row :gutter="12">
+      <el-row :gutter="12" >
         <el-col :span="8">
           <el-table
             :data="noticeList"
             highlight-current-row
-            height="calc(100% - 45px)"
             :row-style="{ height: '0px' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
             header-cell-class-name="table_header"
             :cell-style="{ 'text-align': 'center', padding: '2px' }"
-            style="width: 100%; height: 100%"
             :default-sort="{ prop: 'date', order: 'descending' }"
           >
             <!-- <el-table-column type="selection" width="55" align="center" /> -->

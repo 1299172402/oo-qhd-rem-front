@@ -51,33 +51,34 @@
             <el-col :span="2">&nbsp;</el-col>
             <el-col :span="10">
               <el-form-item label="有效厚度" prop="cw">
-                <el-input v-model="djclForm.yxhd"></el-input>
+                <el-input v-model="djclForm.yxhd" suffix-icon="m"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="2">m</el-col>
-          </el-row>
+          </el-row>  
           <el-row>
             <el-col :span="10">
               <el-form-item label="控制储量" prop="kzcl">
                 <el-input v-model="djclForm.kzcl"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="2">m³</el-col>
+            <el-col :span="2">&nbsp;</el-col>
             <el-col :span="10">
               <el-form-item label="控制面积" prop="kzmj">
-                <el-input v-model="djclForm.kzmj"></el-input>
-                <span style="position:absolue;top:19%;right:6%;color:#adadad;display:table-cell;white-space:nowrap;padding:7px 10px">㎡</span>
+                <el-input v-model="djclForm.kzmj" prefix-icon="㎡">
+                  <!-- <i slot="prefix" style="margin-left:200px">㎡</i>
+                  <span slot="scope">
+
+                  </span> -->
+                  </el-input>
               </el-form-item>
             </el-col>
             <!-- <el-col :span="2">㎡</el-col> -->
           </el-row>
           <el-row>
             <el-col :span="24" align="right" style="padding-top:20px">
-       
                 <el-button type="primary" icon="el-icon-edit">编辑</el-button>
                 <el-button type="primary">保存</el-button>
                 <el-button type="primary" icon="el-icon-search">运行计算</el-button>
-           
             </el-col>
           </el-row>
         </el-form>
@@ -130,10 +131,10 @@ export default {
         pjsj: new Date().format('yyyy-MM'),
       },
       djclForm: {
-        cw: '1',
-        yxhd: '10',
-        kzcl: '10000',
-        kzmj: '260',
+        cw: undefined,
+        yxhd: undefined,
+        kzcl: undefined,
+        kzmj: undefined,
       },
     };
   },
@@ -175,6 +176,7 @@ export default {
     bottom: -1px;
     border-bottom: 2px solid #0e393b;
     border-top: 2px solid #0e393b;
+    z-index: -1;
   }
   &::before {
     content: '';
@@ -186,6 +188,7 @@ export default {
     top: 12px;
     border-left: 2px solid #0e393b;
     border-right: 2px solid #0e393b;
+     z-index: -1;
   }
 }
 </style>
