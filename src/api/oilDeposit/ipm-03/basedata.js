@@ -1,4 +1,5 @@
 import Axios from '@/utils/request'
+
 const baseUrl = process.env.NODE_ENV == "production" ? "/ipm03/api" : "/ipm03/api"
 export function getOgfInfo(orgId) {
   return Axios({
@@ -18,28 +19,28 @@ export function getPlatInfo(ogfId) {
     method: "get",
   });
 }
-/*全井 油井+水井*/
+/* 全井 油井+水井 */
 export function getWellInfo(platId, ogfId) {
   return Axios({
     url: `${baseUrl}/baseData/getWellInfo?platId=${platId}&ogfId=${ogfId}`,
     method: "get",
   });
 }
-/*仅生产状态油井*/
+/* 仅生产状态油井 */
 export function getOilWellProdInfo(platId, ogfId,platIds) {
   return Axios({
     url: `${baseUrl}/baseData/getOilWellProdInfo?platId=${platId}&ogfId=${ogfId}&platIds=${platIds}`,
     method: "get",
   });
 }
-/*全油井*/
+/* 全油井 */
 export function getOilWellInfo(platId,ogfId,platIds) {
   return Axios({
     url: `${baseUrl}/baseData/getOilWellInfo?platId=${platId}&ogfId=${ogfId}&platIds=${platIds}`,
     method: "get",
   })
 }
-/*全水井*/
+/* 全水井 */
 export function getWaterWellInfo(platId, ogfId) {
   return Axios({
     url: `${baseUrl}/baseData/getWaterWellInfo?platId=${platId}&ogfId=${ogfId}`,

@@ -26,7 +26,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  * 
- **/
+ * */
  
 /**
  * @author nicolas.peters
@@ -38,7 +38,7 @@ if(!ORYX) var ORYX = {};
 
 if(!ORYX.I18N) ORYX.I18N = {};
 
-ORYX.I18N.Language = "de_DE"; //Pattern <ISO language code>_<ISO country code> in lower case!
+ORYX.I18N.Language = "de_DE"; // Pattern <ISO language code>_<ISO country code> in lower case!
 
 if(!ORYX.I18N.Oryx) ORYX.I18N.Oryx = {};
 
@@ -246,7 +246,7 @@ ORYX.I18N.View.zoomStandardDesc = "Originalgröße";
 ORYX.I18N.View.zoomFitToModel = "Modelgröße";
 ORYX.I18N.View.zoomFitToModelDesc = "Modelgröße";
 
-/** New Language Properties: 08.12.2008 **/
+/** New Language Properties: 08.12.2008 * */
 
 ORYX.I18N.PropertyWindow.title = "Eigenschaften";
 
@@ -265,22 +265,22 @@ ORYX.I18N.Perspective.noTip = "Zurücksetzen der aktuellen Perspektive"
 
 /** New Language Properties: 21.04.2009 */
 ORYX.I18N.JSONSupport = {
-    imp: {
-        name: "JSON importieren",
-        desc: "Importiert ein neues Modell aus JSON",
-        group: "Export",
-        selectFile: "Wählen Sie eine JSON-Datei (*.json) aus, die Sie importieren möchten, oder fügen Sie JSON in das Textfeld ein.",
-        file: "Datei",
-        btnImp: "Importieren",
-        btnClose: "Schließen",
-        progress: "Importieren ...",
-        syntaxError: "Syntaxfehler"
-    },
-    exp: {
-        name: "Nach JSON exportieren",
-        desc: "Exportiert das aktuelle Modell nach JSON",
-        group: "Export"
-    }
+  imp: {
+    name: "JSON importieren",
+    desc: "Importiert ein neues Modell aus JSON",
+    group: "Export",
+    selectFile: "Wählen Sie eine JSON-Datei (*.json) aus, die Sie importieren möchten, oder fügen Sie JSON in das Textfeld ein.",
+    file: "Datei",
+    btnImp: "Importieren",
+    btnClose: "Schließen",
+    progress: "Importieren ...",
+    syntaxError: "Syntaxfehler"
+  },
+  exp: {
+    name: "Nach JSON exportieren",
+    desc: "Exportiert das aktuelle Modell nach JSON",
+    group: "Export"
+  }
 };
 
 /** New Language Properties: 09.05.2009 */
@@ -295,7 +295,7 @@ ORYX.I18N.RDFExport.group = "Export";
 ORYX.I18N.RDFExport.rdfExport = "Nach RDF exportieren";
 ORYX.I18N.RDFExport.rdfExportDescription = "Exportiert das aktuelle Model in die XML-Serialisierung des Resource Description Frameworks (RDF)";
 
-/** New Language Properties: 15.05.2009*/
+/** New Language Properties: 15.05.2009 */
 if(!ORYX.I18N.SyntaxChecker.BPMN) ORYX.I18N.SyntaxChecker.BPMN={};
 ORYX.I18N.SyntaxChecker.BPMN_NO_SOURCE = "Eine Kante muss einen Ursprung haben.";
 ORYX.I18N.SyntaxChecker.BPMN_NO_TARGET = "Eine Kante muss ein Ziel haben.";
@@ -345,21 +345,21 @@ ORYX.I18N.SyntaxChecker.PetriNet_NO_ID = "Ein Knoten besitzt keine ID.";
 ORYX.I18N.SyntaxChecker.PetriNet_SAME_SOURCE_AND_TARGET = "Zwei Flussbeziehungen besitzen den gleichen Ursprung und das gleiche Ziel.";
 ORYX.I18N.SyntaxChecker.PetriNet_NODE_NOT_SET = "Ein Knoten ist nicht definiert für einen Flussbeziehung.";
 
-/** New Language Properties: 02.06.2009*/
+/** New Language Properties: 02.06.2009 */
 ORYX.I18N.Edge = "Kante";
 ORYX.I18N.Node = "Knoten";
 
-/** New Language Properties: 02.06.2009*/
+/** New Language Properties: 02.06.2009 */
 ORYX.I18N.SyntaxChecker.notice = "Bitte bewegen Sie den Mauszeiger über ein rotes Kreuz, um die Details zu erfahren.";
 
-/** New Language Properties: 15.07.2009*/
+/** New Language Properties: 15.07.2009 */
 if(!ORYX.I18N.Layouting) ORYX.I18N.Layouting ={};
 ORYX.I18N.Layouting.doing = "Layouten...";
 
-/** New Language Properties: 18.08.2009*/
+/** New Language Properties: 18.08.2009 */
 ORYX.I18N.SyntaxChecker.MULT_ERRORS = "Mehrere Fehler";
 
-/** New Language Properties: 08.09.2009*/
+/** New Language Properties: 08.09.2009 */
 if(!ORYX.I18N.PropertyWindow) ORYX.I18N.PropertyWindow = {};
 ORYX.I18N.PropertyWindow.oftenUsed = "Hauptattribute";
 ORYX.I18N.PropertyWindow.moreProps = "Mehr Attribute";

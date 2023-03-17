@@ -12,158 +12,157 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
+
+
 
 // Decision Table service
 angular.module('flowableModeler').service('DecisionTableService', [ '$rootScope', '$http', '$q', '$timeout', '$translate',
-    function ($rootScope, $http, $q, $timeout, $translate) {
+  function ($rootScope, $http, $q, $timeout, $translate) {
 
-        var httpAsPromise = function(options) {
-            var deferred = $q.defer();
-            $http(options).
-                success(function (response, status, headers, config) {
-                    deferred.resolve(response);
-                })
-                .error(function (response, status, headers, config) {
-                    console.log('Something went wrong during http call:' + response);
-                    deferred.reject(response);
-                });
-            return deferred.promise;
-        };
+    const httpAsPromise = function(options) {
+      const deferred = $q.defer();
+      $http(options).
+        success((response, status, headers, config) => {
+          deferred.resolve(response);
+        })
+        .error((response, status, headers, config) => {
+          console.log(`Something went wrong during http call:${  response}`);
+          deferred.reject(response);
+        });
+      return deferred.promise;
+    };
 
-        this.filterDecisionTables = function(filter) {
-            return httpAsPromise(
-                {
-                    method: 'GET',
-                    url: FLOWABLE.APP_URL.getDecisionTableModelsUrl(),
-                    params: {filter: filter}
-                }
-            );
-        };
+    this.filterDecisionTables = function(filter) {
+      return httpAsPromise(
+        {
+          method: 'GET',
+          url: FLOWABLE.APP_URL.getDecisionTableModelsUrl(),
+          params: {filter}
+        }
+      );
+    };
 
-        /**
+    /**
          * Fetches the details of a decision table.
          */
-        this.fetchDecisionTableDetails = function(modelId, historyModelId) {
-            var url = historyModelId ?
-                FLOWABLE.APP_URL.getDecisionTableModelHistoryUrl(encodeURIComponent(modelId), encodeURIComponent(historyModelId)) :
-                FLOWABLE.APP_URL.getDecisionTableModelUrl(encodeURIComponent(modelId));
-            return httpAsPromise({ method: 'GET', url: url });
-        };
+    this.fetchDecisionTableDetails = function(modelId, historyModelId) {
+      const url = historyModelId ?
+        FLOWABLE.APP_URL.getDecisionTableModelHistoryUrl(encodeURIComponent(modelId), encodeURIComponent(historyModelId)) :
+        FLOWABLE.APP_URL.getDecisionTableModelUrl(encodeURIComponent(modelId));
+      return httpAsPromise({ method: 'GET', url });
+    };
 
-        function cleanUpModel (decisionTableDefinition) {
-            delete decisionTableDefinition.isEmbeddedTable;
-            var expressions = (decisionTableDefinition.inputExpressions || []).concat(decisionTableDefinition.outputExpressions || []);
-            if (decisionTableDefinition.rules && decisionTableDefinition.rules.length > 0) {
-                decisionTableDefinition.rules.forEach(function (rule) {
-                    var headerExpressionIds = [];
-                    expressions.forEach(function(def){
-                        headerExpressionIds.push(def.id);
-                    });
+    function cleanUpModel (decisionTableDefinition) {
+      delete decisionTableDefinition.isEmbeddedTable;
+      const expressions = (decisionTableDefinition.inputExpressions || []).concat(decisionTableDefinition.outputExpressions || []);
+      if (decisionTableDefinition.rules && decisionTableDefinition.rules.length > 0) {
+        decisionTableDefinition.rules.forEach((rule) => {
+          const headerExpressionIds = [];
+          expressions.forEach((def)=> {
+            headerExpressionIds.push(def.id);
+          });
 
-                    // Make sure that the rule has all header ids defined as attribtues
-                    headerExpressionIds.forEach(function(id){
-                        if (!rule.hasOwnProperty(id)) {
-                            rule[id] = "";
-                        }
-                    });
-
-                    // Make sure that the rule does not have an attribute that is not a header id
-                    delete rule.$$hashKey;
-                    for (var id in rule) {
-                        if (headerExpressionIds.indexOf(id) === -1) {
-                            delete rule[id];
-                            delete rule.validationErrorMessages;
-                        }
-                    }
-
-                });
+          // Make sure that the rule has all header ids defined as attribtues
+          headerExpressionIds.forEach((id)=> {
+            if (!rule.hasOwnProperty(id)) {
+              rule[id] = "";
             }
-        }
+          });
 
-        this.saveDecisionTable = function (data, name, key, description, saveCallback, errorCallback) {
-
-            data.decisionTableRepresentation = {
-            	name: name,
-            	key: key
-            };
-
-            if (description && description.length > 0) {
-                data.decisionTableRepresentation.description = description;
+          // Make sure that the rule does not have an attribute that is not a header id
+          delete rule.$$hashKey;
+          for (const id in rule) {
+            if (headerExpressionIds.indexOf(id) === -1) {
+              delete rule[id];
+              delete rule.validationErrorMessages;
             }
+          }
 
-            var decisionTableDefinition = angular.copy($rootScope.currentDecisionTable);
+        });
+      }
+    }
 
-            data.decisionTableRepresentation.decisionTableDefinition = decisionTableDefinition;
-            decisionTableDefinition.modelVersion = '2';
-            decisionTableDefinition.key = key;
-            decisionTableDefinition.rules = angular.copy($rootScope.currentDecisionTableRules);
+    this.saveDecisionTable = function (data, name, key, description, saveCallback, errorCallback) {
 
-			html2canvas(jQuery('#decision-table-editor'), {
-                onrendered: function (canvas) {
-                    var scale = canvas.width / 300.0;
+      data.decisionTableRepresentation = {
+            	name,
+            	key
+      };
 
-                    var extra_canvas = document.createElement('canvas');
-                    extra_canvas.setAttribute('width', 300);
-                    extra_canvas.setAttribute('height', canvas.height / scale);
+      if (description && description.length > 0) {
+        data.decisionTableRepresentation.description = description;
+      }
 
-                    var ctx = extra_canvas.getContext('2d');
-                    ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, 300, canvas.height / scale);
+      const decisionTableDefinition = angular.copy($rootScope.currentDecisionTable);
 
-                    data.decisionTableImageBase64 = extra_canvas.toDataURL('image/png');
+      data.decisionTableRepresentation.decisionTableDefinition = decisionTableDefinition;
+      decisionTableDefinition.modelVersion = '2';
+      decisionTableDefinition.key = key;
+      decisionTableDefinition.rules = angular.copy($rootScope.currentDecisionTableRules);
 
-                    $http({
+      html2canvas(jQuery('#decision-table-editor'), {
+        onrendered (canvas) {
+          const scale = canvas.width / 300.0;
+
+          const extra_canvas = document.createElement('canvas');
+          extra_canvas.setAttribute('width', 300);
+          extra_canvas.setAttribute('height', canvas.height / scale);
+
+          const ctx = extra_canvas.getContext('2d');
+          ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, 300, canvas.height / scale);
+
+          data.decisionTableImageBase64 = extra_canvas.toDataURL('image/png');
+
+          $http({
 	                    method: 'PUT',
 	                    url: FLOWABLE.APP_URL.getDecisionTableModelUrl($rootScope.currentDecisionTable.id),
-	                    data: data}).
+	                    data}).
 	                
-	                	success(function (response, status, headers, config) {
+	                	success((response, status, headers, config) => {
 
-                            if (saveCallback) {
-                                saveCallback();
-                            }
-                        }).
-                        error(function (response, status, headers, config) {
-                            if (errorCallback) {
-                                errorCallback(response);
-                            }
-                        });
-                }
+              if (saveCallback) {
+                saveCallback();
+              }
+            }).
+            error((response, status, headers, config) => {
+              if (errorCallback) {
+                errorCallback(response);
+              }
             });
-        };
+        }
+      });
+    };
 
-        this.getDecisionTables = function (decisionTableIds, callback) {
+    this.getDecisionTables = function (decisionTableIds, callback) {
 
-            if (decisionTableIds.length > 0) {
+      if (decisionTableIds.length > 0) {
 
-                var decisionTableIdParams = '';
-                for (var i = 0; i < decisionTableIds.length; i++) {
-                    if (decisionTableIdParams.length > 0) {
-                        decisionTableIdParams += '&';
-                    }
-                    decisionTableIdParams += 'decisionTableId=' + decisionTableIds[i];
-                }
-                if (decisionTableIdParams.length > 0) {
-                    decisionTableIdParams += '&';
-                }
-                decisionTableIdParams += 'version=' + Date.now();
+        let decisionTableIdParams = '';
+        for (let i = 0; i < decisionTableIds.length; i++) {
+          if (decisionTableIdParams.length > 0) {
+            decisionTableIdParams += '&';
+          }
+          decisionTableIdParams += `decisionTableId=${  decisionTableIds[i]}`;
+        }
+        if (decisionTableIdParams.length > 0) {
+          decisionTableIdParams += '&';
+        }
+        decisionTableIdParams += `version=${  Date.now()}`;
 
-                $http({method: 'GET', url: FLOWABLE.APP_URL.getDecisionTableModelValuesUrl(decisionTableIdParams)}).
-                    success(function (data) {
-                        if (callback) {
-                            callback(data);
-                        }
-                    }).
-
-                    error(function (data) {
-                        console.log('Something went wrong when fetching decision table(s):' + JSON.stringify(data));
-                    });
-                    
-            } else {
-                if (callback) {
-                    callback();
-                }
+        $http({method: 'GET', url: FLOWABLE.APP_URL.getDecisionTableModelValuesUrl(decisionTableIdParams)}).
+          success((data) => {
+            if (callback) {
+              callback(data);
             }
-        };
+          }).
 
-    }]);
+          error((data) => {
+            console.log(`Something went wrong when fetching decision table(s):${  JSON.stringify(data)}`);
+          });
+                    
+      } else if (callback) {
+        callback();
+      }
+    };
+
+  }]);

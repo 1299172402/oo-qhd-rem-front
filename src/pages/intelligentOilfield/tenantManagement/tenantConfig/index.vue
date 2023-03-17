@@ -150,7 +150,7 @@ export default {
      */
     cancelBind(userIds) {
       const fn = unbindTenantUser;
-      this.$modal.confirm("是否取消选中用户绑定数据项？").then(() => fn({ tenantId: this.dataId, userIds: userIds })).then(() => {
+      this.$modal.confirm("是否取消选中用户绑定数据项？").then(() => fn({ tenantId: this.dataId, userIds })).then(() => {
         this.loadData();
         this.$modal.msgSuccess("取消关联成功");
       });

@@ -10,10 +10,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
+
+
 
 angular.module('flowableModeler')
-    .controller('HeaderController', ['$rootScope', '$scope', '$http', '$timeout', function ($rootScope, $scope, $http, $timeout) {
+  .controller('HeaderController', ['$rootScope', '$scope', '$http', '$timeout', function ($rootScope, $scope, $http, $timeout) {
     	
     	// Add reference to global header-config
     	$scope.headerConfig = FLOWABLE.HEADER_CONFIG;
@@ -22,4 +23,4 @@ angular.module('flowableModeler')
     	
     	// TODO: generate user-menu items
 
-}]);
+  }]);

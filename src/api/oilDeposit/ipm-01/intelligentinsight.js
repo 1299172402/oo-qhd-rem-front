@@ -1,4 +1,5 @@
 import Axios from '@/utils/request'
+
 const baseUrl = process.env.NODE_ENV == "production" ? "/ipm01/api" : "/ipm01/api"
 
 export function getMeasureOptimumParams(data) {

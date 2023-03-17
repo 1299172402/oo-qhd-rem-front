@@ -8,14 +8,14 @@ import Axios from '@/utils/request'
  */
 export function adjustWellChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/adjustWellChart`,
+    url: `rem/oilFieldManagePlanController/adjustWellChart`,
     method: "post",
     data: request,
   });
 }
 export function chart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/chart`,
+    url: `rem/oilFieldManagePlanController/chart`,
     method: "post",
     data: request,
   });
@@ -29,49 +29,49 @@ export function chart(request) {
  */
 export function compositeDeclineRate(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/compositeDeclineRate`,
+    url: `rem/oilFieldManagePlanController/compositeDeclineRate`,
     method: "post",
     data: request,
   });
 }
 export function composiveDeclineChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/composiveDeclineChart`,
+    url: `rem/oilFieldManagePlanController/composiveDeclineChart`,
     method: "post",
     data: request,
   });
 }
 export function declineChartData(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/declineChartData`,
+    url: `rem/oilFieldManagePlanController/declineChartData`,
     method: "post",
     data: request,
   });
 }
 export function declineIndicatorEveluationResult(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/declineIndicatorEveluationResult`,
+    url: `rem/oilFieldManagePlanController/declineIndicatorEveluationResult`,
     method: "post",
     data: request,
   });
 }
 export function devPhaseInfos(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/devPhaseInfos`,
+    url: `rem/oilFieldManagePlanController/devPhaseInfos`,
     method: "post",
     data: request,
   });
 }
 export function devStatusInfos(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/devStatusInfos`,
+    url: `rem/oilFieldManagePlanController/devStatusInfos`,
     method: "post",
     data: request,
   });
 }
 export function devWellChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/devWellChart`,
+    url: `rem/oilFieldManagePlanController/devWellChart`,
     method: "post",
     data: request,
   });
@@ -85,7 +85,7 @@ export function devWellChart(request) {
  */
 export function dividingLayerQualityRate(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/dividingLayerQualityRate`,
+    url: `rem/oilFieldManagePlanController/dividingLayerQualityRate`,
     method: "post",
     data: request,
   });
@@ -99,7 +99,7 @@ export function dividingLayerQualityRate(request) {
  */
 export function dividingTestRate(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/dividingTestRate`,
+    url: `rem/oilFieldManagePlanController/dividingTestRate`,
     method: "post",
     data: request,
   });
@@ -113,56 +113,56 @@ export function dividingTestRate(request) {
  */
 export function dynamicMoniterFinshRate(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/dynamicMoniterFinshRate`,
+    url: `rem/oilFieldManagePlanController/dynamicMoniterFinshRate`,
     method: "post",
     data: request,
   });
 }
 export function experienceFormulaCalResult(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/experienceFormulaCalResult`,
+    url: `rem/oilFieldManagePlanController/experienceFormulaCalResult`,
     method: "post",
     data: request,
   });
 }
 export function fetchMeasureInfos(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/fetchMeasureInfos`,
+    url: `rem/oilFieldManagePlanController/fetchMeasureInfos`,
     method: "post",
     data: request,
   });
 }
 export function fetchMeasureStatInfos(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/fetchMeasureStatInfos`,
+    url: `rem/oilFieldManagePlanController/fetchMeasureStatInfos`,
     method: "post",
     data: request,
   });
 }
 export function fieldDevWarnings(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/fieldDevWarnings`,
+    url: `rem/oilFieldManagePlanController/fieldDevWarnings`,
     method: "post",
     data: request,
   });
 }
 export function generalDeclineChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/generalDeclineChart`,
+    url: `rem/oilFieldManagePlanController/generalDeclineChart`,
     method: "post",
     data: request,
   });
 }
 export function generalPressure(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/generalPressure`,
+    url: `rem/oilFieldManagePlanController/generalPressure`,
     method: "post",
     data: request,
   });
 }
 export function indicatorEveluationResults(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/indicatorEveluationResults`,
+    url: `rem/oilFieldManagePlanController/indicatorEveluationResults`,
     method: "post",
     data: request,
   });
@@ -176,14 +176,14 @@ export function indicatorEveluationResults(request) {
  */
 export function indicatorResult(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/indicatorResult`,
+    url: `rem/oilFieldManagePlanController/indicatorResult`,
     method: "post",
     data: request,
   });
 }
 export function injectionProRate(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/injectionProRate`,
+    url: `rem/oilFieldManagePlanController/injectionProRate`,
     method: "post",
     data: request,
   });
@@ -197,7 +197,7 @@ export function injectionProRate(request) {
  */
 export function injectionWellDividingRate(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/injectionWellDividingRate`,
+    url: `rem/oilFieldManagePlanController/injectionWellDividingRate`,
     method: "post",
     data: request,
   });
@@ -211,7 +211,7 @@ export function injectionWellDividingRate(request) {
  */
 export function injectionYear(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/injectionYear`,
+    url: `rem/oilFieldManagePlanController/injectionYear`,
     method: "post",
     data: request,
   });
@@ -225,7 +225,7 @@ export function injectionYear(request) {
  */
 export function layerPressureLevelRate(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/layerPressureLevelRate`,
+    url: `rem/oilFieldManagePlanController/layerPressureLevelRate`,
     method: "post",
     data: request,
   });
@@ -238,7 +238,7 @@ export function layerPressureLevelRate(request) {
  */
 export function measureChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/measureChart`,
+    url: `rem/oilFieldManagePlanController/measureChart`,
     method: "post",
     data: request,
   });
@@ -252,7 +252,7 @@ export function measureChart(request) {
  */
 export function natureDeclineChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/natureDeclineChart`,
+    url: `rem/oilFieldManagePlanController/natureDeclineChart`,
     method: "post",
     data: request,
   });
@@ -266,7 +266,7 @@ export function natureDeclineChart(request) {
  */
 export function natureDeclineRate(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/natureDeclineRate`,
+    url: `rem/oilFieldManagePlanController/natureDeclineRate`,
     method: "post",
     data: request,
   });
@@ -280,42 +280,42 @@ export function natureDeclineRate(request) {
  */
 export function natureDeclineRateForTech(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/natureDeclineRateForTech`,
+    url: `rem/oilFieldManagePlanController/natureDeclineRateForTech`,
     method: "post",
     data: request,
   });
 }
 export function newLastYearChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/newLastYearChart`,
+    url: `rem/oilFieldManagePlanController/newLastYearChart`,
     method: "post",
     data: request,
   });
 }
 export function newToInjectionChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/newToInjectionChart`,
+    url: `rem/oilFieldManagePlanController/newToInjectionChart`,
     method: "post",
     data: request,
   });
 }
 export function oilFieldDevWarnings(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/oilFieldDevWarnings`,
+    url: `rem/oilFieldManagePlanController/oilFieldDevWarnings`,
     method: "post",
     data: request,
   });
 }
 export function oilFieldOutputVaryChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/oilFieldOutputVaryChart`,
+    url: `rem/oilFieldManagePlanController/oilFieldOutputVaryChart`,
     method: "post",
     data: request,
   });
 }
 export function oilFieldRecoveryRatio(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/oilFieldRecoveryRatio`,
+    url: `rem/oilFieldManagePlanController/oilFieldRecoveryRatio`,
     method: "post",
     data: request,
   });
@@ -329,7 +329,7 @@ export function oilFieldRecoveryRatio(request) {
  */
 export function oilYear(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/oilYear`,
+    url: `rem/oilFieldManagePlanController/oilYear`,
     method: "post",
     data: request,
   });
@@ -342,7 +342,7 @@ export function oilYear(request) {
  */
 export function oldLastYearChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/oldLastYearChart`,
+    url: `rem/oilFieldManagePlanController/oldLastYearChart`,
     method: "post",
     data: request,
   });
@@ -355,7 +355,7 @@ export function oldLastYearChart(request) {
  */
 export function oldToInjectionChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/oldToInjectionChart`,
+    url: `rem/oilFieldManagePlanController/oldToInjectionChart`,
     method: "post",
     data: request,
   });
@@ -368,21 +368,21 @@ export function oldToInjectionChart(request) {
  */
 export function oldWellChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/oldWellChart`,
+    url: `rem/oilFieldManagePlanController/oldWellChart`,
     method: "post",
     data: request,
   });
 }
 export function outputDegree(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/outputDegree`,
+    url: `rem/oilFieldManagePlanController/outputDegree`,
     method: "post",
     data: request,
   });
 }
 export function outputDegreeTongChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/outputDegreeTongChart`,
+    url: `rem/oilFieldManagePlanController/outputDegreeTongChart`,
     method: "post",
     data: request,
   });
@@ -395,7 +395,7 @@ export function outputDegreeTongChart(request) {
  */
 export function outputSpeed(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/outputSpeed`,
+    url: `rem/oilFieldManagePlanController/outputSpeed`,
     method: "post",
     data: request,
   });
@@ -409,7 +409,7 @@ export function outputSpeed(request) {
  */
 export function proSpeed(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/proSpeed`,
+    url: `rem/oilFieldManagePlanController/proSpeed`,
     method: "post",
     data: request,
   });
@@ -423,42 +423,42 @@ export function proSpeed(request) {
  */
 export function proTimeRate(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/proTimeRate`,
+    url: `rem/oilFieldManagePlanController/proTimeRate`,
     method: "post",
     data: request,
   });
 }
 export function proWellIndicatorWarningAssosiationAnalysisClose(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/proWellIndicatorWarningAssosiationAnalysisClose`,
+    url: `rem/oilFieldManagePlanController/proWellIndicatorWarningAssosiationAnalysisClose`,
     method: "post",
     data: request,
   });
 }
 export function proWellIndicatorWarningAssosiationAnalysisForInjectionWell(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/proWellIndicatorWarningAssosiationAnalysisForInjectionWell`,
+    url: `rem/oilFieldManagePlanController/proWellIndicatorWarningAssosiationAnalysisForInjectionWell`,
     method: "post",
     data: request,
   });
 }
 export function proWellIndicatorWarningAssosiationAnalysisForProWell(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/proWellIndicatorWarningAssosiationAnalysisForProWell`,
+    url: `rem/oilFieldManagePlanController/proWellIndicatorWarningAssosiationAnalysisForProWell`,
     method: "post",
     data: request,
   });
 }
 export function proWellIndicatorWarningAssosiationAnalysisSave(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/proWellIndicatorWarningAssosiationAnalysisSave`,
+    url: `rem/oilFieldManagePlanController/proWellIndicatorWarningAssosiationAnalysisSave`,
     method: "post",
     data: request,
   });
 }
 export function proWellIndicatorWarningAssosiationAnalysisToObserve(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/proWellIndicatorWarningAssosiationAnalysisToObserve`,
+    url: `rem/oilFieldManagePlanController/proWellIndicatorWarningAssosiationAnalysisToObserve`,
     method: "post",
     data: request,
   });
@@ -472,7 +472,7 @@ export function proWellIndicatorWarningAssosiationAnalysisToObserve(request) {
  */
 export function proWellUsageRate(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/proWellUsageRate`,
+    url: `rem/oilFieldManagePlanController/proWellUsageRate`,
     method: "post",
     data: request,
   });
@@ -486,7 +486,7 @@ export function proWellUsageRate(request) {
  */
 export function rateOfmoistureRate(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/rateOfmoistureRate`,
+    url: `rem/oilFieldManagePlanController/rateOfmoistureRate`,
     method: "post",
     data: request,
   });
@@ -499,7 +499,7 @@ export function rateOfmoistureRate(request) {
  */
 export function reservoirsControlDegreeChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/reservoirsControlDegreeChart`,
+    url: `rem/oilFieldManagePlanController/reservoirsControlDegreeChart`,
     method: "post",
     data: request,
   });
@@ -512,7 +512,7 @@ export function reservoirsControlDegreeChart(request) {
  */
 export function reservoirsProRateChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/reservoirsProRateChart`,
+    url: `rem/oilFieldManagePlanController/reservoirsProRateChart`,
     method: "post",
     data: request,
   });
@@ -525,70 +525,70 @@ export function reservoirsProRateChart(request) {
  */
 export function reservoirsUseDegreeChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/reservoirsUseDegreeChart`,
+    url: `rem/oilFieldManagePlanController/reservoirsUseDegreeChart`,
     method: "post",
     data: request,
   });
 }
 export function searchDevTrendAnalysis(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/searchDevTrendAnalysis`,
+    url: `rem/oilFieldManagePlanController/searchDevTrendAnalysis`,
     method: "post",
     data: request,
   });
 }
 export function searchGasChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/searchGasChart`,
+    url: `rem/oilFieldManagePlanController/searchGasChart`,
     method: "post",
     data: request,
   });
 }
 export function searchInjectionChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/searchInjectionChart`,
+    url: `rem/oilFieldManagePlanController/searchInjectionChart`,
     method: "post",
     data: request,
   });
 }
 export function searchInjectionTable(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/searchInjectionTable`,
+    url: `rem/oilFieldManagePlanController/searchInjectionTable`,
     method: "post",
     data: request,
   });
 }
 export function searchLongTermPlan(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/searchLongTermPlan`,
+    url: `rem/oilFieldManagePlanController/searchLongTermPlan`,
     method: "post",
     data: request,
   });
 }
 export function searchOilProductionChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/searchOilProductionChart`,
+    url: `rem/oilFieldManagePlanController/searchOilProductionChart`,
     method: "post",
     data: request,
   });
 }
 export function searchOilProductionTable(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/searchOilProductionTable`,
+    url: `rem/oilFieldManagePlanController/searchOilProductionTable`,
     method: "post",
     data: request,
   });
 }
 export function targetChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/targetChart`,
+    url: `rem/oilFieldManagePlanController/targetChart`,
     method: "post",
     data: request,
   });
 }
 export function tongChartData(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/tongChartData`,
+    url: `rem/oilFieldManagePlanController/tongChartData`,
     method: "post",
     data: request,
   });
@@ -602,7 +602,7 @@ export function tongChartData(request) {
  */
 export function waterContainRaiseChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/waterContainRaiseChart`,
+    url: `rem/oilFieldManagePlanController/waterContainRaiseChart`,
     method: "post",
     data: request,
   });
@@ -615,7 +615,7 @@ export function waterContainRaiseChart(request) {
  */
 export function waterControlDegreeChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/waterControlDegreeChart`,
+    url: `rem/oilFieldManagePlanController/waterControlDegreeChart`,
     method: "post",
     data: request,
   });
@@ -629,14 +629,14 @@ export function waterControlDegreeChart(request) {
  */
 export function waterCutRaiseRate(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/waterCutRaiseRate`,
+    url: `rem/oilFieldManagePlanController/waterCutRaiseRate`,
     method: "post",
     data: request,
   });
 }
 export function waterDriveChartData(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/waterDriveChartData`,
+    url: `rem/oilFieldManagePlanController/waterDriveChartData`,
     method: "post",
     data: request,
   });
@@ -649,7 +649,7 @@ export function waterDriveChartData(request) {
  */
 export function waterDriveUseDegreeChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/waterDriveUseDegreeChart`,
+    url: `rem/oilFieldManagePlanController/waterDriveUseDegreeChart`,
     method: "post",
     data: request,
   });
@@ -663,7 +663,7 @@ export function waterDriveUseDegreeChart(request) {
  */
 export function waterIndicatorChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/waterIndicatorChart`,
+    url: `rem/oilFieldManagePlanController/waterIndicatorChart`,
     method: "post",
     data: request,
   });
@@ -677,7 +677,7 @@ export function waterIndicatorChart(request) {
  */
 export function waterQualityRate(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/waterQualityRate`,
+    url: `rem/oilFieldManagePlanController/waterQualityRate`,
     method: "post",
     data: request,
   });
@@ -691,7 +691,7 @@ export function waterQualityRate(request) {
  */
 export function waterSotreRateChart(request) {
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/waterSotreRateChart`,
+    url: `rem/oilFieldManagePlanController/waterSotreRateChart`,
     method: "post",
     data: request,
   });
@@ -705,7 +705,7 @@ export function waterSotreRateChart(request) {
  */
 export function experienceFormulaParameter(request){
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/experienceFormulaParameter`,
+    url: `rem/oilFieldManagePlanController/experienceFormulaParameter`,
     method: "post",
     data: request,
   });
@@ -719,7 +719,7 @@ export function experienceFormulaParameter(request){
  */
 export function techIndicatorStat(request){
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/techIndicatorStat`,
+    url: `rem/oilFieldManagePlanController/techIndicatorStat`,
     method: "post",
     data: request,
   });
@@ -733,7 +733,7 @@ export function techIndicatorStat(request){
  */
 export function injectionIndicatorStat(request){
   return Axios({
-    url: `/rem03/api/oilFieldManagePlanController/injectionIndicatorStat`,
+    url: `rem/oilFieldManagePlanController/injectionIndicatorStat`,
     method: "post",
     data: request,
   });
@@ -741,7 +741,7 @@ export function injectionIndicatorStat(request){
 
 export function nameAndCode(request){
   return Axios({
-    url: '/rem03/api/oilFieldManagePlanController/nameAndCode',
+    url: 'rem/oilFieldManagePlanController/nameAndCode',
     method: 'post',
     data: request
   })
@@ -750,40 +750,40 @@ export function nameAndCode(request){
  * 作业公司产量跟踪
  */
 export function queryOutputTraccking(params) {
-  var url = '/rem03/api/oilFieldManagePlanController/getReportFroms';
-  return Axios.get(url, {params: params});
+  const url = 'rem/oilFieldManagePlanController/getReportFroms';
+  return Axios.get(url, {params});
 }
 
 /**
  * 作业公司产量跟踪-日滚动预测
  */
 export function getWorkCompanyTrack(params) {
-  var url = '/rem03/api/oilFieldRollingForecast/getWorkCompanyTrack';
-  return Axios.get(url, {params: params});
+  const url = 'rem/oilFieldRollingForecast/getWorkCompanyTrack';
+  return Axios.get(url, {params});
 }
 
 /**
  * 油田预测产量-日滚动预测
  */
 export function getOilForecastProd(params) {
-  var url = '/rem03/api/oilFieldRollingForecast/getOilForecastProd';
-  return Axios.get(url, {params: params});
+  const url = 'rem/oilFieldRollingForecast/getOilForecastProd';
+  return Axios.get(url, {params});
 }
 
 /**
  * 油田剩余水平-日滚动预测
  */
 export function getOilResidueLevel(params) {
-  var url = '/rem03/api/oilFieldRollingForecast/getOilResidueLevel';
-  return Axios.get(url, {params: params});
+  const url = 'rem/oilFieldRollingForecast/getOilResidueLevel';
+  return Axios.get(url, {params});
 }
 
 /**
  * 滚动预测日期下拉-日滚动预测
  */
 export function getForecastDate(params) {
-  var url = '/rem03/api/oilFieldRollingForecast/getForecastDate';
-  return Axios.get(url, {params: params});
+  const url = 'rem/oilFieldRollingForecast/getForecastDate';
+  return Axios.get(url, {params});
 }
 
 /**
@@ -791,8 +791,8 @@ export function getForecastDate(params) {
  * @param {*} params
  */
 export function getOilFieldInfo(params){
-  var url = '/rem03/api/oilFieldRollingForecast/getOilFieldInfo'
-  return Axios.get(url,{params:params});
+  const url = 'rem/oilFieldRollingForecast/getOilFieldInfo'
+  return Axios.get(url,{params});
 }
 
 /**
@@ -801,7 +801,7 @@ export function getOilFieldInfo(params){
  */
 export function saveInfluencingFactorsOfOilfieldProduction(request){
   return Axios({
-    url: `/rem03/api/oilFieldRollingForecast/saveInfluencingFactorsOfOilfieldProduction`,
+    url: `rem/oilFieldRollingForecast/saveInfluencingFactorsOfOilfieldProduction`,
     method: "post",
     data: request,
   });

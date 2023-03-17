@@ -498,14 +498,14 @@ export default {
     // 更多操作触发
     handleCommand(command, row) {
       switch (command) {
-        case 'handleDataScope':
-          this.handleDataScope(row);
-          break;
-        case 'handleAuthUser':
-          this.handleAuthUser(row);
-          break;
-        default:
-          break;
+      case 'handleDataScope':
+        this.handleDataScope(row);
+        break;
+      case 'handleAuthUser':
+        this.handleAuthUser(row);
+        break;
+      default:
+        break;
       }
     },
     // 树权限（展开/折叠）

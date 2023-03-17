@@ -13,32 +13,32 @@
 
 // Create custom functions for the FLOWABLE-editor
 FLOWABLE.TOOLBAR.ACTIONS.closeEditor =  function(services) {
-    if (services.editorManager && services.editorManager.getStencilData()) {
-        var stencilNameSpace = services.editorManager.getStencilData().namespace;
-        if (stencilNameSpace !== undefined && stencilNameSpace !== null && stencilNameSpace.indexOf('cmmn1.1') !== -1) {
-            services.$location.path("/casemodels");
-            return;
-        }
+  if (services.editorManager && services.editorManager.getStencilData()) {
+    const stencilNameSpace = services.editorManager.getStencilData().namespace;
+    if (stencilNameSpace !== undefined && stencilNameSpace !== null && stencilNameSpace.indexOf('cmmn1.1') !== -1) {
+      services.$location.path("/casemodels");
+      return;
     }
-	services.$location.path("/processes");
+  }
+  services.$location.path("/processes");
 };
 
 FLOWABLE.TOOLBAR.ACTIONS.navigateToProcess = function(processId) {
-    var navigateEvent = {
-        type: FLOWABLE.eventBus.EVENT_TYPE_NAVIGATE_TO_PROCESS,
-        processId: processId
-    };
-    FLOWABLE.eventBus.dispatch(FLOWABLE.eventBus.EVENT_TYPE_NAVIGATE_TO_PROCESS, navigateEvent);
+  const navigateEvent = {
+    type: FLOWABLE.eventBus.EVENT_TYPE_NAVIGATE_TO_PROCESS,
+    processId
+  };
+  FLOWABLE.eventBus.dispatch(FLOWABLE.eventBus.EVENT_TYPE_NAVIGATE_TO_PROCESS, navigateEvent);
 },
 
 // Add custom buttons 
 FLOWABLE.TOOLBAR_CONFIG.secondaryItems.push( 
-	{
-        "type" : "button",
-        "title" : "Close",
-        "cssClass" : "glyphicon glyphicon-remove",
-        "action" : "FLOWABLE.TOOLBAR.ACTIONS.closeEditor"
-    }
+  {
+    "type" : "button",
+    "title" : "Close",
+    "cssClass" : "glyphicon glyphicon-remove",
+    "action" : "FLOWABLE.TOOLBAR.ACTIONS.closeEditor"
+  }
 );
 
 

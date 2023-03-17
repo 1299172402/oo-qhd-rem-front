@@ -74,15 +74,15 @@ export default {
       return this.boxOffsetWidth
         ? this.boxOffsetWidth
         : this.width == "auto"
-        ? 20
-        : Number(this.width.replace(/px|%/, ""));
+          ? 20
+          : Number(this.width.replace(/px|%/, ""));
     },
     _height() {
       return this.boxOffsetHeight
         ? this.boxOffsetHeight
         : this.height == "auto"
-        ? 20
-        : Number(this.height.replace(/px|%/, ""));
+          ? 20
+          : Number(this.height.replace(/px|%/, ""));
     },
     points() {
       // console.log('2222',`20,0 ${this._width},0 ${this._width},${this._height - 20} ${this._width - 20},${this._height} 0,${this._height} 0,20`)
@@ -92,40 +92,40 @@ export default {
     },
     fillColor() {
       switch (this.color) {
-        case "blue":
-          return ["rgba(33,122,255,0)", "rgba(33,122,255,0.5)"];
-          break;
-        case "green":
-          return ["rgba(0,255,211,0)", "rgba(0,255,211,0.5)"];
-          break;
-        case "orange":
-          return ["rgba(255,103,18,0)", "rgba(255,103,18,0.5)"];
-          break;
-        case "gray":
-          return ["rgba(138,164,209,0)", "rgba(138,164,209,0.5)"];
-          break;
-        default:
-          return ["rgba(0,72,122,0.16)", "rgba(0,68,115,0.64)"];
-          break;
+      case "blue":
+        return ["rgba(33,122,255,0)", "rgba(33,122,255,0.5)"];
+        break;
+      case "green":
+        return ["rgba(0,255,211,0)", "rgba(0,255,211,0.5)"];
+        break;
+      case "orange":
+        return ["rgba(255,103,18,0)", "rgba(255,103,18,0.5)"];
+        break;
+      case "gray":
+        return ["rgba(138,164,209,0)", "rgba(138,164,209,0.5)"];
+        break;
+      default:
+        return ["rgba(0,72,122,0.16)", "rgba(0,68,115,0.64)"];
+        break;
       }
     },
     strokeColor() {
       switch (this.color) {
-        case "blue":
-          return ["rgba(33,122,255,1)", "rgba(33,122,255,1)"];
-          break;
-        case "green":
-          return ["rgba(0,255,213,1)", "rgba(0,255,213,1)"];
-          break;
-        case "orange":
-          return ["rgba(255,103,18,1)", "rgba(255,103,18,1)"];
-          break;
-        case "gray":
-          return ["rgba(138,164,209,1)", "rgba(138,164,209,1)"];
-          break;
-        default:
-          return ["rgba(0,180,255,1)", "rgba(116,190,243,0.5)"];
-          break;
+      case "blue":
+        return ["rgba(33,122,255,1)", "rgba(33,122,255,1)"];
+        break;
+      case "green":
+        return ["rgba(0,255,213,1)", "rgba(0,255,213,1)"];
+        break;
+      case "orange":
+        return ["rgba(255,103,18,1)", "rgba(255,103,18,1)"];
+        break;
+      case "gray":
+        return ["rgba(138,164,209,1)", "rgba(138,164,209,1)"];
+        break;
+      default:
+        return ["rgba(0,180,255,1)", "rgba(116,190,243,0.5)"];
+        break;
       }
     },
   },

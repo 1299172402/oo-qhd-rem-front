@@ -10,29 +10,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
+
+
 
 angular.module('flowableModeler')
   .controller('ProcessesCtrl', ['$rootScope', '$scope', '$translate', '$http', '$timeout','$location', '$modal', function ($rootScope, $scope, $translate, $http, $timeout, $location, $modal) {
 
-      // Main page (needed for visual indicator of current page)
-      $rootScope.setMainPageById('processes');
-      $rootScope.formItems = undefined;
+    // Main page (needed for visual indicator of current page)
+    $rootScope.setMainPageById('processes');
+    $rootScope.formItems = undefined;
 
-      // get latest thumbnails
-      $scope.imageVersion = Date.now();
+    // get latest thumbnails
+    $scope.imageVersion = Date.now();
 
 	  $scope.model = {
-        filters: [
-            {id: 'processes', labelKey: 'PROCESSES'}
-		],
+      filters: [
+        {id: 'processes', labelKey: 'PROCESSES'}
+      ],
 
-		sorts: [
+      sorts: [
 		        {id: 'modifiedDesc', labelKey: 'MODIFIED-DESC'},
 		        {id: 'modifiedAsc', labelKey: 'MODIFIED-ASC'},
 		        {id: 'nameAsc', labelKey: 'NAME-ASC'},
 		        {id: 'nameDesc', labelKey: 'NAME-DESC'}
-		]
+      ]
 	  };
 
 	  if ($rootScope.modelFilter) {
@@ -66,7 +67,7 @@ angular.module('flowableModeler')
 	  $scope.loadProcesses = function() {
 		  $scope.model.loading = true;
 
-		  var params = {
+		  const params = {
 		      filter: $scope.model.activeFilter.id,
 		      sort: $scope.model.activeSort.id,
 		      modelType: 0
@@ -76,20 +77,20 @@ angular.module('flowableModeler')
 		    params.filterText = $scope.model.filterText;
 		  }
 
-		  $http({method: 'GET', url: FLOWABLE.APP_URL.getModelsUrl(), params: params}).
-		  	success(function(data, status, headers, config) {
+		  $http({method: 'GET', url: FLOWABLE.APP_URL.getModelsUrl(), params}).
+		  	success((data, status, headers, config) => {
 	    		$scope.model.processes = data;
 	    		$scope.model.loading = false;
 	        }).
-	        error(function(data, status, headers, config) {
-	           console.log('Something went wrong: ' + data);
+	        error((data, status, headers, config) => {
+	           console.log(`Something went wrong: ${  data}`);
 	           $scope.model.loading = false;
 	        });
 	  };
 
 	  var timeoutFilter = function() {
 	      $scope.model.isFilterDelayed = true;
-	      $timeout(function() {
+	      $timeout(() => {
 	          $scope.model.isFilterDelayed = false;
 	          if ($scope.model.isFilterUpdated) {
 	              $scope.model.isFilterUpdated = false;
@@ -111,28 +112,28 @@ angular.module('flowableModeler')
 	  };
 
 	  $scope.createProcess = function(mode) {
-	    var modalInstance = _internalCreateModal({
-	        template: 'views/popup/process-create.html?version=' + Date.now()
+	    const modalInstance = _internalCreateModal({
+	        template: `views/popup/process-create.html?version=${  Date.now()}`
 	    }, $modal, $scope);
 	  };
 
 	  $scope.importProcess = function () {
-          _internalCreateModal({
-              template: 'views/popup/process-import.html?version=' + Date.now()
-          }, $modal, $scope);
+      _internalCreateModal({
+        template: `views/popup/process-import.html?version=${  Date.now()}`
+      }, $modal, $scope);
 	  };
 
 	  $scope.showProcessDetails = function(process) {
 	      if (process) {
 	          $rootScope.editorHistory = [];
-	          $location.path("/processes/" + process.id);
+	          $location.path(`/processes/${  process.id}`);
 	      }
 	  };
 
 	  $scope.editProcessDetails = function(process) {
 		  if (process) {
 		      $rootScope.editorHistory = [];
-              $location.path("/editor/" + process.id);
+        $location.path(`/editor/${  process.id}`);
 		  }
 	  };
 
@@ -141,156 +142,156 @@ angular.module('flowableModeler')
   }]);
 
 angular.module('flowableModeler')
-.controller('CreateNewProcessModelCtrl', ['$rootScope', '$scope', '$modal', '$http', '$location',
-                                          function ($rootScope, $scope, $modal, $http, $location) {
+  .controller('CreateNewProcessModelCtrl', ['$rootScope', '$scope', '$modal', '$http', '$location',
+    function ($rootScope, $scope, $modal, $http, $location) {
 
-    $scope.model = {
-       loading: false,
-       process: {
-            name: '',
-            key: '',
-            description: '',
+      $scope.model = {
+        loading: false,
+        process: {
+          name: '',
+          key: '',
+          description: '',
            	modelType: 0
-       }
-    };
+        }
+      };
 
-    if ($scope.initialModelType !== undefined) {
+      if ($scope.initialModelType !== undefined) {
         $scope.model.process.modelType = $scope.initialModelType;
-    }
+      }
 
-    $scope.ok = function () {
+      $scope.ok = function () {
 
         if (!$scope.model.process.name || $scope.model.process.name.length == 0 ||
         	!$scope.model.process.key || $scope.model.process.key.length == 0) {
         	
-            return;
+          return;
         }
 
         $scope.model.loading = true;
 
         $http({method: 'POST', url: FLOWABLE.APP_URL.getModelsUrl(), data: $scope.model.process}).
-            success(function(data) {
-                $scope.$hide();
-
-                $scope.model.loading = false;
-                $rootScope.editorHistory = [];
-                $location.path("/editor/" + data.id);
-            }).
-            error(function(data, status, headers, config) {
-                $scope.model.loading = false;
-                $scope.model.errorMessage = data.message;
-            });
-    };
-
-    $scope.cancel = function () {
-        if(!$scope.model.loading) {
+          success((data) => {
             $scope.$hide();
+
+            $scope.model.loading = false;
+            $rootScope.editorHistory = [];
+            $location.path(`/editor/${  data.id}`);
+          }).
+          error((data, status, headers, config) => {
+            $scope.model.loading = false;
+            $scope.model.errorMessage = data.message;
+          });
+      };
+
+      $scope.cancel = function () {
+        if(!$scope.model.loading) {
+          $scope.$hide();
         }
-    };
-}]);
+      };
+    }]);
 
 angular.module('flowableModeler')
-.controller('DuplicateProcessModelCtrl', ['$rootScope', '$scope', '$modal', '$http', '$location',
-                                          function ($rootScope, $scope, $modal, $http, $location) {
+  .controller('DuplicateProcessModelCtrl', ['$rootScope', '$scope', '$modal', '$http', '$location',
+    function ($rootScope, $scope, $modal, $http, $location) {
 
-    $scope.model = {
-       loading: false,
-       process: {
-            name: '',
-            key: '',
-            description: ''
-       }
-    };
+      $scope.model = {
+        loading: false,
+        process: {
+          name: '',
+          key: '',
+          description: ''
+        }
+      };
 
-    if ($scope.originalModel) {
-        //clone the model
+      if ($scope.originalModel) {
+        // clone the model
         $scope.model.process.name = $scope.originalModel.process.name;
         $scope.model.process.key = $scope.originalModel.process.key;
         $scope.model.process.description = $scope.originalModel.process.description;
         $scope.model.process.id = $scope.originalModel.process.id;
         $scope.model.process.modelType = $scope.originalModel.process.modelType;
-    }
+      }
 
-    $scope.ok = function () {
+      $scope.ok = function () {
 
         if (!$scope.model.process.name || $scope.model.process.name.length == 0 || 
         	!$scope.model.process.key || $scope.model.process.key.length == 0) {
         	
-            return;
+          return;
         }
 
         $scope.model.loading = true;
 
         $http({method: 'POST', url: FLOWABLE.APP_URL.getCloneModelsUrl($scope.model.process.id), data: $scope.model.process}).
-            success(function(data) {
-                $scope.$hide();
-
-                $scope.model.loading = false;
-                $rootScope.editorHistory = [];
-                $location.path("/editor/" + data.id);
-            }).
-            error(function(data, status, headers, config) {
-                $scope.model.loading = false;
-                $scope.model.errorMessage = data.message;
-            });
-    };
-
-    $scope.cancel = function () {
-        if(!$scope.model.loading) {
+          success((data) => {
             $scope.$hide();
+
+            $scope.model.loading = false;
+            $rootScope.editorHistory = [];
+            $location.path(`/editor/${  data.id}`);
+          }).
+          error((data, status, headers, config) => {
+            $scope.model.loading = false;
+            $scope.model.errorMessage = data.message;
+          });
+      };
+
+      $scope.cancel = function () {
+        if(!$scope.model.loading) {
+          $scope.$hide();
         }
-    };
-}]);
+      };
+    }]);
 
 angular.module('flowableModeler')
-.controller('ImportProcessModelCtrl', ['$rootScope', '$scope', '$http', 'Upload', '$location', function ($rootScope, $scope, $http, Upload, $location) {
+  .controller('ImportProcessModelCtrl', ['$rootScope', '$scope', '$http', 'Upload', '$location', function ($rootScope, $scope, $http, Upload, $location) {
 
-  $scope.model = {
-       loading: false
-  };
+    $scope.model = {
+      loading: false
+    };
 
-  $scope.onFileSelect = function($files, isIE) {
+    $scope.onFileSelect = function($files, isIE) {
 
       $scope.model.loading = true;
 
-      for (var i = 0; i < $files.length; i++) {
-          var file = $files[i];
+      for (let i = 0; i < $files.length; i++) {
+        const file = $files[i];
 
-          var url;
-          if (isIE) {
-              url = FLOWABLE.APP_URL.getImportProcessModelTextUrl();
-          } else {
-              url = FLOWABLE.APP_URL.getImportProcessModelUrl();
+        var url;
+        if (isIE) {
+          url = FLOWABLE.APP_URL.getImportProcessModelTextUrl();
+        } else {
+          url = FLOWABLE.APP_URL.getImportProcessModelUrl();
+        }
+
+        Upload.upload({
+          url,
+          method: 'POST',
+          file
+        }).progress((evt) => {
+          $scope.model.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
+
+        }).success((data) => {
+          $scope.model.loading = false;
+
+          $location.path(`/editor/${  data.id}`);
+          $scope.$hide();
+
+        }).error((data) => {
+
+          if (data && data.message) {
+            $scope.model.errorMessage = data.message;
           }
 
-          Upload.upload({
-              url: url,
-              method: 'POST',
-              file: file
-          }).progress(function(evt) {
-              $scope.model.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
-
-          }).success(function(data) {
-              $scope.model.loading = false;
-
-              $location.path("/editor/" + data.id);
-              $scope.$hide();
-
-          }).error(function(data) {
-
-              if (data && data.message) {
-                  $scope.model.errorMessage = data.message;
-              }
-
-              $scope.model.error = true;
-              $scope.model.loading = false;
-          });
+          $scope.model.error = true;
+          $scope.model.loading = false;
+        });
       }
-  };
+    };
 
-  $scope.cancel = function () {
+    $scope.cancel = function () {
 	  if(!$scope.model.loading) {
 		  $scope.$hide();
 	  }
-  };
-}]);
+    };
+  }]);

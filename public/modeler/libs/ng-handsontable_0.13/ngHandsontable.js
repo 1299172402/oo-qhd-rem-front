@@ -17,27 +17,27 @@ if (document.all && !document.addEventListener) { // IE 8 and lower
 angular.module('ngHandsontable.services', []);
 angular.module('ngHandsontable.directives', []);
 angular.module('ngHandsontable', [
-    'ngHandsontable.services',
-    'ngHandsontable.directives'
-  ]);
+  'ngHandsontable.services',
+  'ngHandsontable.directives'
+]);
 
-Handsontable.hooks.add('afterContextMenuShow', function() {
+Handsontable.hooks.add('afterContextMenuShow', () => {
   Handsontable.eventManager.isHotTableEnv = false;
 });
 
 (function() {
   function autoCompleteFactory($parse) {
     return {
-      parseAutoComplete: function(column, dataSet, propertyOnly) {
+      parseAutoComplete(column, dataSet, propertyOnly) {
         column.source = function(query, process) {
-          var row = this.instance.getSelected()[0];
-          var source = [];
-          var data = dataSet[row];
+          const row = this.instance.getSelected()[0];
+          let source = [];
+          const data = dataSet[row];
 
           if (!data) {
             return;
           }
-          var options = column.optionList;
+          const options = column.optionList;
 
           if (!options || !options.object) {
             return;
@@ -47,12 +47,12 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
           } else {
             // Using $parse to evaluate the expression against the row object
             // allows us to support filters like the ngRepeat directive does.
-            var paramObject = $parse(options.object)(data);
+            const paramObject = $parse(options.object)(data);
 
             if (angular.isArray(paramObject)) {
               if (propertyOnly) {
-                for (var i = 0, length = paramObject.length; i < length; i++) {
-                  var item = paramObject[i][options.property];
+                for (let i = 0, {length} = paramObject; i < length; i++) {
+                  const item = paramObject[i][options.property];
 
                   if (item !== null && item !== undefined) {
                     source.push(item);
@@ -78,18 +78,18 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
 (function() {
 
   function hotRegisterer() {
-    var instances = {};
+    const instances = {};
 
     return {
-      getInstance: function(id) {
+      getInstance(id) {
         return instances[id];
       },
 
-      registerInstance: function(id, instance) {
+      registerInstance(id, instance) {
         instances[id] = instance;
       },
 
-      removeInstance: function(id) {
+      removeInstance(id) {
         instances[id] = void 0;
       }
     };
@@ -102,15 +102,11 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
 (function() {
 
   function hyphenate(string) {
-    return string.replace(/[A-Z]/g, function(match) {
-      return ('-' + match.charAt(0).toLowerCase());
-    });
+    return string.replace(/[A-Z]/g, (match) => (`-${  match.charAt(0).toLowerCase()}`));
   }
 
   function camelCase(string) {
-    return string.replace(/-\D/g, function(match) {
-      return match.charAt(1).toUpperCase();
-    });
+    return string.replace(/-\D/g, (match) => match.charAt(1).toUpperCase());
   }
 
   function ucFirst(string) {
@@ -127,9 +123,9 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
        * @param {qLite} element
        * @param {Object} htSettings
        */
-      initializeHandsontable: function(element, htSettings) {
-        var container = document.createElement('div'),
-          hot;
+      initializeHandsontable(element, htSettings) {
+        const container = document.createElement('div');
+        let hot;
 
         container.className = this.containerClassName;
 
@@ -152,7 +148,7 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
        * @param {Handsontable} instance
        * @param {Object} settings
        */
-      updateHandsontableSettings: function(instance, settings) {
+      updateHandsontableSettings(instance, settings) {
         if (instance) {
           instance.updateSettings(settings);
         }
@@ -163,7 +159,7 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
        *
        * @param {Handsontable} instance
        */
-      renderHandsontable: function(instance) {
+      renderHandsontable(instance) {
         if (instance) {
           instance.render();
         }
@@ -176,10 +172,10 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
        * @param {Object} scope
        * @returns {Object}
        */
-      mergeSettingsFromScope: function(settings, scope) {
-        var
-          scopeOptions = angular.extend({}, scope),
-          htOptions, i, length;
+      mergeSettingsFromScope(settings, scope) {
+        const
+          scopeOptions = angular.extend({}, scope);
+        let htOptions; let i; let length;
 
         settings = settings || {};
         angular.extend(scopeOptions, scope.settings || {});
@@ -201,17 +197,17 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
        * @param {Object} scope
        * @returns {Object}
        */
-      mergeHooksFromScope: function(settings, scope) {
-        var
-          scopeOptions = angular.extend({}, scope),
-          htHooks, i, length, attribute;
+      mergeHooksFromScope(settings, scope) {
+        const
+          scopeOptions = angular.extend({}, scope);
+        let htHooks; let i; let length; let attribute;
 
         settings = settings || {};
         angular.extend(scopeOptions, scope.settings || {});
         htHooks = this.getAvailableHooks();
 
         for (i = 0, length = htHooks.length; i < length; i++) {
-          attribute = 'on' + ucFirst(htHooks[i]);
+          attribute = `on${  ucFirst(htHooks[i])}`;
 
           if (typeof scopeOptions[htHooks[i]] === 'function' || typeof scopeOptions[attribute] === 'function') {
             settings[htHooks[i]] = scopeOptions[htHooks[i]] || scopeOptions[attribute];
@@ -228,8 +224,8 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
        * @param {Object} attrs
        * @returns {Object}
        */
-      trimScopeDefinitionAccordingToAttrs: function(scopeDefinition, attrs) {
-        for (var i in scopeDefinition) {
+      trimScopeDefinitionAccordingToAttrs(scopeDefinition, attrs) {
+        for (const i in scopeDefinition) {
           if (scopeDefinition.hasOwnProperty(i) && attrs[i] === void 0 &&
               attrs[scopeDefinition[i].substr(1, scopeDefinition[i].length)] === void 0) {
             delete scopeDefinition[i];
@@ -244,8 +240,8 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
        *
        * @return {Object}
        */
-      getTableScopeDefinition: function() {
-        var scopeDefinition = {};
+      getTableScopeDefinition() {
+        const scopeDefinition = {};
 
         this.applyAvailableSettingsScopeDef(scopeDefinition);
         this.applyAvailableHooksScopeDef(scopeDefinition);
@@ -253,7 +249,7 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
         scopeDefinition.datarows = '=';
         scopeDefinition.dataschema = '=';
         scopeDefinition.observeDomVisibility = '=';
-        //scopeDefinition.settings = '=';
+        // scopeDefinition.settings = '=';
 
         return scopeDefinition;
       },
@@ -263,8 +259,8 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
        *
        * @return {Object}
        */
-      getColumnScopeDefinition: function() {
-        var scopeDefinition = {};
+      getColumnScopeDefinition() {
+        const scopeDefinition = {};
 
         this.applyAvailableSettingsScopeDef(scopeDefinition);
         scopeDefinition.data = '@';
@@ -278,8 +274,8 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
        * @param {Object} [scopeDefinition]
        * @returns {Object}
        */
-      applyAvailableSettingsScopeDef: function(scopeDefinition) {
-        var options, i, length;
+      applyAvailableSettingsScopeDef(scopeDefinition) {
+        let options; let i; let length;
 
         options = this.getAvailableSettings();
 
@@ -296,13 +292,13 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
        * @param {Object} [scopeDefinition]
        * @returns {Object}
        */
-      applyAvailableHooksScopeDef: function(scopeDefinition) {
-        var options, i, length;
+      applyAvailableHooksScopeDef(scopeDefinition) {
+        let options; let i; let length;
 
         options = this.getAvailableHooks();
 
         for (i = 0, length = options.length; i < length; i++) {
-          scopeDefinition[options[i]] = '=on' + ucFirst(options[i]);
+          scopeDefinition[options[i]] = `=on${  ucFirst(options[i])}`;
         }
 
         return scopeDefinition;
@@ -314,8 +310,8 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
        * @param {Boolean} [hyphenateStyle=undefined] If `true` then returns options in hyphenate mode (eq. row-header)
        * @returns {Array}
        */
-      getAvailableSettings: function(hyphenateStyle) {
-        var settings = Object.keys(Handsontable.DefaultSettings.prototype);
+      getAvailableSettings(hyphenateStyle) {
+        let settings = Object.keys(Handsontable.DefaultSettings.prototype);
 
         if (settings.indexOf('contextMenuCopyPaste') === -1) {
           settings.push('contextMenuCopyPaste');
@@ -339,13 +335,11 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
        * @param {Boolean} [hyphenateStyle=undefined] If `true` then returns hooks in hyphenate mode (eq. on-after-init)
        * @returns {Array}
        */
-      getAvailableHooks: function(hyphenateStyle) {
-        var settings = Handsontable.hooks.getRegistered();
+      getAvailableHooks(hyphenateStyle) {
+        let settings = Handsontable.hooks.getRegistered();
 
         if (hyphenateStyle) {
-          settings = settings.map(function(hook) {
-            return 'on-' + hyphenate(hook);
-          });
+          settings = settings.map((hook) => `on-${  hyphenate(hook)}`);
         }
 
         return settings;
@@ -366,8 +360,8 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
       restrict: 'EA',
       scope: true,
       require: '^hotColumn',
-      link: function(scope, element, attrs, controllerInstance) {
-        var options = attrs.datarows;
+      link(scope, element, attrs, controllerInstance) {
+        const options = attrs.datarows;
 
         controllerInstance.setColumnOptionList(options);
       }
@@ -392,8 +386,8 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
           if (!$scope.column) {
             $scope.column = {};
           }
-          var optionList = {};
-          var match = options.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)\s*$/);
+          const optionList = {};
+          const match = options.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)\s*$/);
 
           if (match) {
             optionList.property = match[1];
@@ -404,13 +398,13 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
           $scope.column.optionList = optionList;
         };
       }],
-      compile: function(tElement, tAttrs) {
-        var _this = this;
+      compile(tElement, tAttrs) {
+        const _this = this;
 
         this.scope = settingFactory.trimScopeDefinitionAccordingToAttrs(settingFactory.getColumnScopeDefinition(), tAttrs);
-        //this.$$isolateBindings = {};
+        // this.$$isolateBindings = {};
 
-        angular.forEach(Object.keys(this.scope), function(key) {
+        angular.forEach(Object.keys(this.scope), (key) => {
           _this.$$isolateBindings[key] = {
             attrName: key,
             collection: false,
@@ -420,10 +414,10 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
         });
 
         return function(scope, element, attrs, controllerInstance) {
-          var column = {};
+          const column = {};
 
           // Turn all attributes without value as `true` by default
-          angular.forEach(Object.keys(attrs), function(key) {
+          angular.forEach(Object.keys(attrs), (key) => {
             if (key.charAt(0) !== '$' && attrs[key] === '') {
               column[key] = true;
             }
@@ -436,7 +430,7 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
           angular.extend(scope.column, column);
           controllerInstance.setColumnSetting(scope.column);
 
-          scope.$on('$destroy', function() {
+          scope.$on('$destroy', () => {
             controllerInstance.removeColumnSetting(scope.column);
           });
         };
@@ -476,20 +470,20 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
           }
         };
       }],
-      compile: function(tElement, tAttrs) {
-        var _this = this,
-          bindingsKeys;
+      compile(tElement, tAttrs) {
+        const _this = this;
+        let bindingsKeys;
 
         this.scope = settingFactory.trimScopeDefinitionAccordingToAttrs(settingFactory.getTableScopeDefinition(), tAttrs);
         bindingsKeys = Object.keys(this.scope);
 
-        angular.forEach(bindingsKeys, function(key) {
-          var mode = _this.scope[key].charAt(0);
+        angular.forEach(bindingsKeys, (key) => {
+          const mode = _this.scope[key].charAt(0);
 
           _this.$$isolateBindings[key] = {
             attrName: _this.scope[key].length > 1 ? _this.scope[key].substr(1, _this.scope[key].length) : key,
             collection: key === 'datarows',
-            mode: mode,
+            mode,
             optional: false
           };
         });
@@ -501,7 +495,7 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
             scope.htSettings = {};
           }
           // Turn all attributes without value as `true` by default
-          angular.forEach(Object.keys(attrs), function(key) {
+          angular.forEach(Object.keys(attrs), (key) => {
             if (key.charAt(0) !== '$' && attrs[key] === '') {
               scope.htSettings[key] = true;
             }
@@ -518,8 +512,8 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
           scope.htSettings.observeDOMVisibility = scope.observeDomVisibility;
 
           if (scope.htSettings.columns) {
-            for (var i = 0, length = scope.htSettings.columns.length; i < length; i++) {
-              var column = scope.htSettings.columns[i];
+            for (let i = 0, {length} = scope.htSettings.columns; i < length; i++) {
+              const column = scope.htSettings.columns[i];
 
               if (column.type !== 'autocomplete') {
                 continue;
@@ -528,8 +522,8 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
                 continue;
               }
               if (typeof column.optionList === 'string') {
-                var optionList = {};
-                var match = column.optionList.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)\s*$/);
+                const optionList = {};
+                const match = column.optionList.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)\s*$/);
 
                 if (match) {
                   optionList.property = match[1];
@@ -542,7 +536,7 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
               autoCompleteFactory.parseAutoComplete(column, scope.datarows, true);
             }
           }
-          var origAfterChange = scope.htSettings.afterChange;
+          const origAfterChange = scope.htSettings.afterChange;
 
           scope.htSettings.afterChange = function() {
             if (origAfterChange) {
@@ -555,8 +549,8 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
           scope.hotInstance = settingFactory.initializeHandsontable(element, scope.htSettings);
 
           // TODO: Add watch properties descriptor + needs perf test. Watch full equality vs toJson
-          angular.forEach(bindingsKeys, function(key) {
-            scope.$watch(key, function(newValue, oldValue) {
+          angular.forEach(bindingsKeys, (key) => {
+            scope.$watch(key, (newValue, oldValue) => {
               if (newValue === void 0) {
                 return;
               }
@@ -579,7 +573,7 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
            * Check for reference equality changes for datarows
            * TODO: must the remaining bindingsKeys need to be added also if their reference changes
            */
-          scope.$watch('datarows', function(newValue) {
+          scope.$watch('datarows', (newValue) => {
             if (newValue === void 0) {
               return;
             }
@@ -591,7 +585,7 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
           /**
            * Check if data length has been changed
            */
-          scope.$watchCollection('datarows', function(newValue, oldValue) {
+          scope.$watchCollection('datarows', (newValue, oldValue) => {
             if (oldValue && oldValue.length === scope.htSettings.minSpareRows && newValue.length !== scope.htSettings.minSpareRows) {
               scope.htSettings.data = scope.datarows;
               settingFactory.updateHandsontableSettings(scope.hotInstance, scope.htSettings);

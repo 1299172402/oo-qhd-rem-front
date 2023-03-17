@@ -76,9 +76,11 @@ export default ({ mode }) => {
           // target: 'http://114.116.211.6:8080',
           // target: 'http://114.116.123.113:8080',
           target: 'http://10.77.78.250',  
+          // target: 'http://127.0.0.1:8089', 
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api/, '/prod-api'),
         },
+        
         // 流程平台地址-有可供测试的流程平台时放开
         // '/biz/flow': {
         //   // 用于开发环境下的转发请求

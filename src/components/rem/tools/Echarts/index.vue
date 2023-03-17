@@ -3,28 +3,26 @@
 </template>
 
 <script>
-import echarts from "echarts";
-import { mapState } from "vuex";
+// import echarts from "echarts";
+// import echarts from 'echarts/charts';
+import { mapState } from "vuex"; // echarts theme
+import resize from './mixins/resize.js'
 // import "echarts-gl";
-require("echarts/theme/macarons"); // echarts theme
-import resize from './mixins/resize'
+// require("echarts/theme/macarons");
 
 // var lodash = require("lodash");
 
 export default {
+  name:'EchartsIndex',
   mixins: [resize],
   props: {
     chartData: {
       type: Object,
-      default: () => {
-        return {};
-      }
+      default: () => ({})
     },
     otherData: {
       type: Object,
-      default: () => {
-        return {};
-      }
+      default: () => ({})
     },
     className: {
       type: String,
@@ -68,7 +66,7 @@ export default {
       type: String,
       default: ""
     },
-    //等待
+    // 等待
     loading: Boolean
   },
   data() {
@@ -79,9 +77,9 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      collapse: state => state.APP.collapse
-    }),
+    // ...mapState({
+    //   collapse: state => state.APP.collapse
+    // }),
   },
   watch: {
     chartData: {
@@ -113,20 +111,20 @@ export default {
         });
       }
     },
-    collapse: {
-      handler(val) {
-        if(this.timeOut) clearTimeout(this.timeOut);
-        this.timeOut = setTimeout(()=> {
-          this.chart.resize();
-        },300)
-      }
-    },
+    // collapse: {
+    //   handler(val) {
+    //     if(this.timeOut) clearTimeout(this.timeOut);
+    //     this.timeOut = setTimeout(()=> {
+    //       this.chart.resize();
+    //     },300)
+    //   }
+    // },
     loading: {
       handler(val) {
         if(!this.chart) return
         if(val){
           this.chart.showLoading({
-            color: '#24DEFF',//icon
+            color: '#24DEFF',// icon
             textColor: '#fff',
             maskColor: 'rgba(36,222,255,0.22)'
           })
@@ -138,10 +136,10 @@ export default {
   },
   mounted() {
     this.initChart(); // 初始化echarts
-    /*echarts  事件*/
+    /* echarts  事件 */
     this.$nextTick(() => {
       this.events.forEach(events => {
-        let event = events.name || events;
+        const event = events.name || events;
         this.chart.on(event, ev => {
           if(event == 'click'){
             clearTimeout(this.dbFixed);
@@ -176,10 +174,10 @@ export default {
       }else{
         this.chart.setOption(this.otherData);
       }
-      /*echarts  事件*/
+      /* echarts  事件 */
       this.$nextTick(() => {
         this.events.forEach(events => {
-          let event = events.name || events;
+          const event = events.name || events;
           this.chart.on(event, ev => {
             if(event == 'click'){
               clearTimeout(this.dbFixed);
@@ -197,11 +195,12 @@ export default {
       });
     },
     initChart() {
-      this.chart = echarts.init(this.$el, this.theme);
+      // this.chart = echarts.init(this.$el, this.theme);
+      this.chart = this.$echarts.init(this.$el, this.theme);
       this.setOptions();
     },
-    isEmptyObject: function(value) {
-      for (var key in value) {
+    isEmptyObject(value) {
+      for (const key in value) {
         if (hasOwnProperty.call(value, key)) {
           return false
         }

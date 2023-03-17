@@ -119,7 +119,7 @@ export default {
       if (
         this.$route.path !== "/iframe" &&
         this.menus.findIndex((item) => {
-          let path = item.path || item[this.pathName];
+          const path = item.path || item[this.pathName];
           path.replace(/^\//, "") == data.path.replace(/^\//, "");
         }) > -1
       ) {
@@ -129,7 +129,7 @@ export default {
           return "active";
         }
         return "";
-      } else if (this.$route.path === "/iframe") {
+      } if (this.$route.path === "/iframe") {
         if (
           this.breadcrumbViews.path.replace(/^\//, "") ===
           data.path.replace(/^\//, "")
@@ -141,7 +141,7 @@ export default {
       return "";
     },
     subMenuClick(item) {
-      //调用日志
+      // 调用日志
       if (VSAuth.getAuthInfo().isLogined) {
         insertSysLogInfo(item.resId, this.ip);
       }
@@ -154,18 +154,18 @@ export default {
     },
     getUserIP(){
       console.log("getUserIP-->")
-      let RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+      const RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
       console.log("getUserIP-->RTCPeerConnection",RTCPeerConnection);
       if(RTCPeerConnection) (()=>{
-        var rtc = new RTCPeerConnection();
-        rtc.createDataChannel("");//创建通道
-        rtc.createOffer( offerDesc=>{//创建并存储sdp数据
+        const rtc = new RTCPeerConnection();
+        rtc.createDataChannel("");// 创建通道
+        rtc.createOffer( offerDesc=>{// 创建并存储sdp数据
           rtc.setLocalDescription(offerDesc);
         }, e=>{
           console.log(e);
         });
         console.log("getUserIP-->RTCPeerConnection:trc",rtc);
-        rtc.onicecandidate = (evt)=>{//监听candiDate事件
+        rtc.onicecandidate = (evt)=>{// 监听candiDate事件
           console.log("rtc.onicecandidate-->",evt);
           if(evt.candidate){
             this.ip = evt.candidate.address;

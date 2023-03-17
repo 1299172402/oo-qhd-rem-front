@@ -11,347 +11,347 @@
  * limitations under the License.
  */
 angular.module('flowableModeler').controller('FlowablePlanItemLifecycleListenersCtrl',
-    ['$scope', '$modal', '$timeout', '$translate', function ($scope, $modal, $timeout, $translate) {
+  ['$scope', '$modal', '$timeout', '$translate', function ($scope, $modal, $timeout, $translate) {
 
-        // Config for the modal window
-        var opts = {
-            template: 'editor-app/configuration/properties/plan-item-lifecycle-listeners-popup.html?version=' + Date.now(),
-            scope: $scope
-        };
+    // Config for the modal window
+    const opts = {
+      template: `editor-app/configuration/properties/plan-item-lifecycle-listeners-popup.html?version=${  Date.now()}`,
+      scope: $scope
+    };
 
-        // Open the dialog
-        _internalCreateModal(opts, $modal, $scope);
-    }]);
+    // Open the dialog
+    _internalCreateModal(opts, $modal, $scope);
+  }]);
 
 angular.module('flowableModeler').controller('FlowablePlanItemLifecycleListenersPopupCtrl',
-    ['$scope', '$q', '$translate', '$timeout', function ($scope, $q, $translate, $timeout) {
+  ['$scope', '$q', '$translate', '$timeout', function ($scope, $q, $translate, $timeout) {
 
-        // Put json representing form properties on scope
-        if ($scope.property.value !== undefined && $scope.property.value !== null
+    // Put json representing form properties on scope
+    if ($scope.property.value !== undefined && $scope.property.value !== null
             && $scope.property.value.planItemLifecycleListeners !== undefined
             && $scope.property.value.planItemLifecycleListeners !== null) {
 
-            if ($scope.property.value.planItemLifecycleListeners.constructor == String) {
-                $scope.planItemLifecycleListeners = JSON.parse($scope.property.value.planItemLifecycleListeners);
-            }
-            else {
-                // Note that we clone the json object rather then setting it directly,
-                // this to cope with the fact that the user can click the cancel button and no changes should have happened
-                $scope.planItemLifecycleListeners = angular.copy($scope.property.value.planItemLifecycleListeners);
+      if ($scope.property.value.planItemLifecycleListeners.constructor == String) {
+        $scope.planItemLifecycleListeners = JSON.parse($scope.property.value.planItemLifecycleListeners);
+      }
+      else {
+        // Note that we clone the json object rather then setting it directly,
+        // this to cope with the fact that the user can click the cancel button and no changes should have happened
+        $scope.planItemLifecycleListeners = angular.copy($scope.property.value.planItemLifecycleListeners);
+      }
+
+      for (let i = 0; i < $scope.planItemLifecycleListeners.length; i++) {
+        const planItemLifeCycleListener = $scope.planItemLifecycleListeners[i];
+        if (planItemLifeCycleListener.className !== undefined && planItemLifeCycleListener.className !== '') {
+          planItemLifeCycleListener.implementation = planItemLifeCycleListener.className;
+        }
+        else if (planItemLifeCycleListener.expression !== undefined && planItemLifeCycleListener.expression !== '') {
+          planItemLifeCycleListener.implementation = planItemLifeCycleListener.expression;
+        }
+        else if (planItemLifeCycleListener.delegateExpression !== undefined && planItemLifeCycleListener.delegateExpression !== '') {
+          planItemLifeCycleListener.implementation = planItemLifeCycleListener.delegateExpression;
+        }
+      }
+    } else {
+      $scope.planItemLifecycleListeners = [];
+    }
+
+    $scope.selectedListener = undefined;
+    $scope.selectedField = undefined;
+    $scope.fields = [];
+    $scope.translationsRetrieved = false;
+
+    $scope.labels = {};
+
+    const sourceStatePromise = $translate('PROPERTY.PLANITEMLIFECYCLELISTENERS.SOURCE_STATE');
+    const targetStatePromise = $translate('PROPERTY.PLANITEMLIFECYCLELISTENERS.TARGET_STATE');
+    const implementationPromise = $translate('PROPERTY.PLANITEMLIFECYCLELISTENERS.FIELDS.IMPLEMENTATION');
+    const namePromise = $translate('PROPERTY.PLANITEMLIFECYCLELISTENERS.FIELDS.NAME');
+
+    $q.all([sourceStatePromise, targetStatePromise, implementationPromise, namePromise]).then((results) => {
+      $scope.labels.sourceStateLabel = results[1];
+      $scope.labels.targetStateLabel = results[2];
+      $scope.labels.implementationLabel = results[3];
+      $scope.labels.nameLabel = results[4];
+      $scope.translationsRetrieved = true;
+
+      // Config for grid
+      $scope.gridOptions = {
+        data: $scope.planItemLifecycleListeners,
+        headerRowHeight: 28,
+        enableRowSelection: true,
+        enableRowHeaderSelection: false,
+        multiSelect: false,
+        modifierKeysToMultiSelect: false,
+        enableHorizontalScrollbar: 0,
+        enableColumnMenus: false,
+        enableSorting: false,
+        columnDefs: [
+          {field: 'sourceState', displayName: $scope.labels.sourceStateLabel},
+          {field: 'targetState', displayName: $scope.labels.targetStateLabel},
+          {field: 'implementation', displayName: $scope.labels.implementationLabel}
+        ]
+      };
+
+      $scope.gridOptions.onRegisterApi = function (gridApi) {
+        // set gridApi on scope
+        $scope.gridApi = gridApi;
+        gridApi.selection.on.rowSelectionChanged($scope, (row) => {
+          $scope.selectedListener = row.entity;
+          $scope.selectedField = undefined;
+          if ($scope.selectedListener) {
+            const {fields} = $scope.selectedListener;
+            if (fields !== undefined && fields !== null) {
+              for (var i = 0; i < fields.length; i++) {
+                const field = fields[i];
+                if (field.stringValue !== undefined && field.stringValue !== '') {
+                  field.implementation = field.stringValue;
+                } else if (field.expression !== undefined && field.expression !== '') {
+                  field.implementation = field.expression;
+                } else if (field.string !== undefined && field.string !== '') {
+                  field.implementation = field.string;
+                }
+              }
+            } else {
+              $scope.selectedListener.fields = [];
             }
 
-            for (var i = 0; i < $scope.planItemLifecycleListeners.length; i++) {
-                var planItemLifeCycleListener = $scope.planItemLifecycleListeners[i];
-                if (planItemLifeCycleListener.className !== undefined && planItemLifeCycleListener.className !== '') {
-                    planItemLifeCycleListener.implementation = planItemLifeCycleListener.className;
-                }
-                else if (planItemLifeCycleListener.expression !== undefined && planItemLifeCycleListener.expression !== '') {
-                    planItemLifeCycleListener.implementation = planItemLifeCycleListener.expression;
-                }
-                else if (planItemLifeCycleListener.delegateExpression !== undefined && planItemLifeCycleListener.delegateExpression !== '') {
-                    planItemLifeCycleListener.implementation = planItemLifeCycleListener.delegateExpression;
-                }
+            $scope.fields.length = 0;
+            for (var i = 0; i < $scope.selectedListener.fields.length; i++) {
+              $scope.fields.push($scope.selectedListener.fields[i]);
             }
-        } else {
-            $scope.planItemLifecycleListeners = [];
+          }
+        });
+      };
+
+      // Config for field grid
+      $scope.gridFieldOptions = {
+        data: $scope.fields,
+        headerRowHeight: 28,
+        enableRowSelection: true,
+        enableRowHeaderSelection: false,
+        multiSelect: false,
+        modifierKeysToMultiSelect: false,
+        columnDefs: [{field: 'name', displayName: $scope.labels.name},
+          {field: 'implementation', displayName: $scope.labels.implementationLabel}]
+      };
+
+      $scope.gridFieldOptions.onRegisterApi = function (gridApi) {
+        // set gridApi on scope
+        $scope.fieldGridApi = gridApi;
+        gridApi.selection.on.rowSelectionChanged($scope, (row) => {
+          $scope.selectedField = row.entity;
+        });
+      };
+    });
+
+    $scope.listenerDetailsChanged = function () {
+      if ($scope.selectedListener.className !== '') {
+        $scope.selectedListener.implementation = $scope.selectedListener.className;
+      } else if ($scope.selectedListener.expression !== '') {
+        $scope.selectedListener.implementation = $scope.selectedListener.expression;
+      } else if ($scope.selectedListener.delegateExpression !== '') {
+        $scope.selectedListener.implementation = $scope.selectedListener.delegateExpression;
+      } else {
+        $scope.selectedListener.implementation = '';
+      }
+    };
+
+    // Click handler for add button
+    $scope.addNewListener = function () {
+      const newListener = {
+        sourceState: 'available',
+        targetState: 'active',
+        implementation: '',
+        className: '',
+        expression: '',
+        delegateExpression: ''
+      };
+      $scope.planItemLifecycleListeners.push(newListener);
+
+      $timeout(() => {
+        $scope.gridApi.selection.toggleRowSelection(newListener);
+      });
+    };
+
+    // Click handler for remove button
+    $scope.removeListener = function () {
+      const selectedItems = $scope.gridApi.selection.getSelectedRows();
+      if (selectedItems && selectedItems.length > 0) {
+        const index = $scope.planItemLifecycleListeners.indexOf(selectedItems[0]);
+        $scope.gridApi.selection.toggleRowSelection(selectedItems[0]);
+
+        $scope.planItemLifecycleListeners.splice(index, 1);
+
+        if ($scope.planItemLifecycleListeners.length == 0) {
+          $scope.selectedListener = undefined;
         }
 
-        $scope.selectedListener = undefined;
-        $scope.selectedField = undefined;
-        $scope.fields = [];
-        $scope.translationsRetrieved = false;
-
-        $scope.labels = {};
-
-        var sourceStatePromise = $translate('PROPERTY.PLANITEMLIFECYCLELISTENERS.SOURCE_STATE');
-        var targetStatePromise = $translate('PROPERTY.PLANITEMLIFECYCLELISTENERS.TARGET_STATE');
-        var implementationPromise = $translate('PROPERTY.PLANITEMLIFECYCLELISTENERS.FIELDS.IMPLEMENTATION');
-        var namePromise = $translate('PROPERTY.PLANITEMLIFECYCLELISTENERS.FIELDS.NAME');
-
-        $q.all([sourceStatePromise, targetStatePromise, implementationPromise, namePromise]).then(function (results) {
-            $scope.labels.sourceStateLabel = results[1];
-            $scope.labels.targetStateLabel = results[2];
-            $scope.labels.implementationLabel = results[3];
-            $scope.labels.nameLabel = results[4];
-            $scope.translationsRetrieved = true;
-
-            // Config for grid
-            $scope.gridOptions = {
-                data: $scope.planItemLifecycleListeners,
-                headerRowHeight: 28,
-                enableRowSelection: true,
-                enableRowHeaderSelection: false,
-                multiSelect: false,
-                modifierKeysToMultiSelect: false,
-                enableHorizontalScrollbar: 0,
-                enableColumnMenus: false,
-                enableSorting: false,
-                columnDefs: [
-                    {field: 'sourceState', displayName: $scope.labels.sourceStateLabel},
-                    {field: 'targetState', displayName: $scope.labels.targetStateLabel},
-                    {field: 'implementation', displayName: $scope.labels.implementationLabel}
-                ]
-            };
-
-            $scope.gridOptions.onRegisterApi = function (gridApi) {
-                //set gridApi on scope
-                $scope.gridApi = gridApi;
-                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                    $scope.selectedListener = row.entity;
-                    $scope.selectedField = undefined;
-                    if ($scope.selectedListener) {
-                        var fields = $scope.selectedListener.fields;
-                        if (fields !== undefined && fields !== null) {
-                            for (var i = 0; i < fields.length; i++) {
-                                var field = fields[i];
-                                if (field.stringValue !== undefined && field.stringValue !== '') {
-                                    field.implementation = field.stringValue;
-                                } else if (field.expression !== undefined && field.expression !== '') {
-                                    field.implementation = field.expression;
-                                } else if (field.string !== undefined && field.string !== '') {
-                                    field.implementation = field.string;
-                                }
-                            }
-                        } else {
-                            $scope.selectedListener.fields = [];
-                        }
-
-                        $scope.fields.length = 0;
-                        for (var i = 0; i < $scope.selectedListener.fields.length; i++) {
-                            $scope.fields.push($scope.selectedListener.fields[i]);
-                        }
-                    }
-                });
-            };
-
-            // Config for field grid
-            $scope.gridFieldOptions = {
-                data: $scope.fields,
-                headerRowHeight: 28,
-                enableRowSelection: true,
-                enableRowHeaderSelection: false,
-                multiSelect: false,
-                modifierKeysToMultiSelect: false,
-                columnDefs: [{field: 'name', displayName: $scope.labels.name},
-                    {field: 'implementation', displayName: $scope.labels.implementationLabel}]
-            };
-
-            $scope.gridFieldOptions.onRegisterApi = function (gridApi) {
-                // set gridApi on scope
-                $scope.fieldGridApi = gridApi;
-                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                    $scope.selectedField = row.entity;
-                });
-            };
+        $timeout(() => {
+          if ($scope.planItemLifecycleListeners.length > 0) {
+            $scope.gridApi.selection.toggleRowSelection($scope.planItemLifecycleListeners[0]);
+          }
         });
+      }
+    };
 
-        $scope.listenerDetailsChanged = function () {
-            if ($scope.selectedListener.className !== '') {
-                $scope.selectedListener.implementation = $scope.selectedListener.className;
-            } else if ($scope.selectedListener.expression !== '') {
-                $scope.selectedListener.implementation = $scope.selectedListener.expression;
-            } else if ($scope.selectedListener.delegateExpression !== '') {
-                $scope.selectedListener.implementation = $scope.selectedListener.delegateExpression;
-            } else {
-                $scope.selectedListener.implementation = '';
-            }
-        };
-
-        // Click handler for add button
-        $scope.addNewListener = function () {
-            var newListener = {
-                sourceState: 'available',
-                targetState: 'active',
-                implementation: '',
-                className: '',
-                expression: '',
-                delegateExpression: ''
-            };
-            $scope.planItemLifecycleListeners.push(newListener);
-
-            $timeout(function () {
-                $scope.gridApi.selection.toggleRowSelection(newListener);
+    // Click handler for up button
+    $scope.moveListenerUp = function () {
+      const selectedItems = $scope.gridApi.selection.getSelectedRows();
+      if (selectedItems && selectedItems.length > 0) {
+        const index = $scope.planItemLifecycleListeners.indexOf(selectedItems[0]);
+        if (index != 0) { // If it's the first, no moving up of course
+          const temp = $scope.planItemLifecycleListeners[index];
+          $scope.planItemLifecycleListeners.splice(index, 1);
+          $timeout(() => {
+            $scope.planItemLifecycleListeners.splice(index + -1, 0, temp);
+            $timeout(() => {
+              $scope.gridApi.selection.toggleRowSelection(temp);
             });
+          });
+        }
+      }
+    };
+
+    // Click handler for down button
+    $scope.moveListenerDown = function () {
+      const selectedItems = $scope.gridApi.selection.getSelectedRows();
+      if (selectedItems && selectedItems.length > 0) {
+        const index = $scope.planItemLifecycleListeners.indexOf(selectedItems[0]);
+        if (index != $scope.planItemLifecycleListeners.length - 1) { // If it's the last element, no moving down of course
+          const temp = $scope.planItemLifecycleListeners[index];
+          $scope.planItemLifecycleListeners.splice(index, 1);
+          $timeout(() => {
+            $scope.planItemLifecycleListeners.splice(index + 1, 0, temp);
+            $timeout(() => {
+              $scope.gridApi.selection.toggleRowSelection(temp);
+            });
+          });
+
+        }
+      }
+    };
+
+    $scope.fieldDetailsChanged = function () {
+      if ($scope.selectedField.stringValue != '') {
+        $scope.selectedField.implementation = $scope.selectedField.stringValue;
+      } else if ($scope.selectedField.expression != '') {
+        $scope.selectedField.implementation = $scope.selectedField.expression;
+      } else if ($scope.selectedField.string != '') {
+        $scope.selectedField.implementation = $scope.selectedField.string;
+      } else {
+        $scope.selectedField.implementation = '';
+      }
+    };
+
+    // Click handler for add button
+    $scope.addNewField = function () {
+      if ($scope.selectedListener) {
+        if ($scope.selectedListener.fields == undefined) {
+          $scope.selectedListener.fields = [];
+        }
+
+        const newField = {
+          name: 'fieldName',
+          implementation: '',
+          stringValue: '',
+          expression: '',
+          string: ''
         };
+        $scope.fields.push(newField);
+        $scope.selectedListener.fields.push(newField);
 
-        // Click handler for remove button
-        $scope.removeListener = function () {
-            var selectedItems = $scope.gridApi.selection.getSelectedRows();
-            if (selectedItems && selectedItems.length > 0) {
-                var index = $scope.planItemLifecycleListeners.indexOf(selectedItems[0]);
-                $scope.gridApi.selection.toggleRowSelection(selectedItems[0]);
+        $timeout(() => {
+          $scope.fieldGridApi.selection.toggleRowSelection(newField);
+        });
+      }
+    };
 
-                $scope.planItemLifecycleListeners.splice(index, 1);
+    // Click handler for remove button
+    $scope.removeField = function () {
+      const selectedItems = $scope.fieldGridApi.selection.getSelectedRows();
+      if (selectedItems && selectedItems.length > 0) {
+        const index = $scope.fields.indexOf(selectedItems[0]);
+        $scope.fieldGridApi.selection.toggleRowSelection(selectedItems[0]);
 
-                if ($scope.planItemLifecycleListeners.length == 0) {
-                    $scope.selectedListener = undefined;
-                }
+        $scope.fields.splice(index, 1);
+        $scope.selectedListener.fields.splice(index, 1);
 
-                $timeout(function () {
-                    if ($scope.planItemLifecycleListeners.length > 0) {
-                        $scope.gridApi.selection.toggleRowSelection($scope.planItemLifecycleListeners[0]);
-                    }
-                });
-            }
-        };
+        if ($scope.fields.length == 0) {
+          $scope.selectedField = undefined;
+        }
 
-        // Click handler for up button
-        $scope.moveListenerUp = function () {
-            var selectedItems = $scope.gridApi.selection.getSelectedRows();
-            if (selectedItems && selectedItems.length > 0) {
-                var index = $scope.planItemLifecycleListeners.indexOf(selectedItems[0]);
-                if (index != 0) { // If it's the first, no moving up of course
-                    var temp = $scope.planItemLifecycleListeners[index];
-                    $scope.planItemLifecycleListeners.splice(index, 1);
-                    $timeout(function () {
-                        $scope.planItemLifecycleListeners.splice(index + -1, 0, temp);
-                        $timeout(function () {
-                            $scope.gridApi.selection.toggleRowSelection(temp);
-                        });
-                    });
-                }
-            }
-        };
+        $timeout(() => {
+          if ($scope.fields.length > 0) {
+            $scope.fieldGridApi.selection.toggleRowSelection($scope.fields[0]);
+          }
+        });
+      }
+    };
 
-        // Click handler for down button
-        $scope.moveListenerDown = function () {
-            var selectedItems = $scope.gridApi.selection.getSelectedRows();
-            if (selectedItems && selectedItems.length > 0) {
-                var index = $scope.planItemLifecycleListeners.indexOf(selectedItems[0]);
-                if (index != $scope.planItemLifecycleListeners.length - 1) { // If it's the last element, no moving down of course
-                    var temp = $scope.planItemLifecycleListeners[index];
-                    $scope.planItemLifecycleListeners.splice(index, 1);
-                    $timeout(function () {
-                        $scope.planItemLifecycleListeners.splice(index + 1, 0, temp);
-                        $timeout(function () {
-                            $scope.gridApi.selection.toggleRowSelection(temp);
-                        });
-                    });
+    // Click handler for up button
+    $scope.moveFieldUp = function () {
+      const selectedItems = $scope.fieldGridApi.selection.getSelectedRows();
+      if (selectedItems && selectedItems.length > 0) {
+        const index = $scope.fields.indexOf(selectedItems[0]);
+        if (index != 0) { // If it's the first, no moving up of course
+          const temp = $scope.fields[index];
+          $scope.fields.splice(index, 1);
+          $scope.selectedListener.fields.splice(index, 1);
+          $timeout(() => {
+            $scope.fields.splice(index + -1, 0, temp);
+            $scope.selectedListener.fields.splice(index + -1, 0, temp);
+            $timeout(() => {
+              $scope.fieldGridApi.selection.toggleRowSelection(temp);
+            });
+          });
 
-                }
-            }
-        };
+        }
+      }
+    };
 
-        $scope.fieldDetailsChanged = function () {
-            if ($scope.selectedField.stringValue != '') {
-                $scope.selectedField.implementation = $scope.selectedField.stringValue;
-            } else if ($scope.selectedField.expression != '') {
-                $scope.selectedField.implementation = $scope.selectedField.expression;
-            } else if ($scope.selectedField.string != '') {
-                $scope.selectedField.implementation = $scope.selectedField.string;
-            } else {
-                $scope.selectedField.implementation = '';
-            }
-        };
+    // Click handler for down button
+    $scope.moveFieldDown = function () {
+      const selectedItems = $scope.fieldGridApi.selection.getSelectedRows();
+      if (selectedItems && selectedItems.length > 0) {
+        const index = $scope.fields.indexOf(selectedItems[0]);
+        if (index != $scope.fields.length - 1) { // If it's the last element, no moving down of course
+          const temp = $scope.fields[index];
+          $scope.fields.splice(index, 1);
+          $scope.selectedListeners.fields.splice(index, 1);
+          $timeout(() => {
+            $scope.fields.splice(index + 1, 0, temp);
+            $scope.selectedListener.fields.splice(index + 1, 0, temp);
+            $timeout(() => {
+              $scope.fieldGridApi.selection.toggleRowSelection(temp);
+            });
+          });
+        }
+      }
+    };
 
-        // Click handler for add button
-        $scope.addNewField = function () {
-            if ($scope.selectedListener) {
-                if ($scope.selectedListener.fields == undefined) {
-                    $scope.selectedListener.fields = [];
-                }
+    // Click handler for save button
+    $scope.save = function () {
 
-                var newField = {
-                    name: 'fieldName',
-                    implementation: '',
-                    stringValue: '',
-                    expression: '',
-                    string: ''
-                };
-                $scope.fields.push(newField);
-                $scope.selectedListener.fields.push(newField);
+      if ($scope.planItemLifecycleListeners.length > 0) {
+        $scope.property.value = {};
+        $scope.property.value.planItemLifecycleListeners = $scope.planItemLifecycleListeners;
+      } else {
+        $scope.property.value = null;
+      }
 
-                $timeout(function () {
-                    $scope.fieldGridApi.selection.toggleRowSelection(newField);
-                });
-            }
-        };
+      $scope.updatePropertyInModel($scope.property);
+      $scope.close();
+    };
 
-        // Click handler for remove button
-        $scope.removeField = function () {
-            var selectedItems = $scope.fieldGridApi.selection.getSelectedRows();
-            if (selectedItems && selectedItems.length > 0) {
-                var index = $scope.fields.indexOf(selectedItems[0]);
-                $scope.fieldGridApi.selection.toggleRowSelection(selectedItems[0]);
+    $scope.cancel = function () {
+      $scope.close();
+    };
 
-                $scope.fields.splice(index, 1);
-                $scope.selectedListener.fields.splice(index, 1);
+    // Close button handler
+    $scope.close = function () {
+      $scope.property.mode = 'read';
+      $scope.$hide();
+    };
 
-                if ($scope.fields.length == 0) {
-                    $scope.selectedField = undefined;
-                }
-
-                $timeout(function () {
-                    if ($scope.fields.length > 0) {
-                        $scope.fieldGridApi.selection.toggleRowSelection($scope.fields[0]);
-                    }
-                });
-            }
-        };
-
-        // Click handler for up button
-        $scope.moveFieldUp = function () {
-            var selectedItems = $scope.fieldGridApi.selection.getSelectedRows();
-            if (selectedItems && selectedItems.length > 0) {
-                var index = $scope.fields.indexOf(selectedItems[0]);
-                if (index != 0) { // If it's the first, no moving up of course
-                    var temp = $scope.fields[index];
-                    $scope.fields.splice(index, 1);
-                    $scope.selectedListener.fields.splice(index, 1);
-                    $timeout(function () {
-                        $scope.fields.splice(index + -1, 0, temp);
-                        $scope.selectedListener.fields.splice(index + -1, 0, temp);
-                        $timeout(function () {
-                            $scope.fieldGridApi.selection.toggleRowSelection(temp);
-                        });
-                    });
-
-                }
-            }
-        };
-
-        // Click handler for down button
-        $scope.moveFieldDown = function () {
-            var selectedItems = $scope.fieldGridApi.selection.getSelectedRows();
-            if (selectedItems && selectedItems.length > 0) {
-                var index = $scope.fields.indexOf(selectedItems[0]);
-                if (index != $scope.fields.length - 1) { // If it's the last element, no moving down of course
-                    var temp = $scope.fields[index];
-                    $scope.fields.splice(index, 1);
-                    $scope.selectedListeners.fields.splice(index, 1);
-                    $timeout(function () {
-                        $scope.fields.splice(index + 1, 0, temp);
-                        $scope.selectedListener.fields.splice(index + 1, 0, temp);
-                        $timeout(function () {
-                            $scope.fieldGridApi.selection.toggleRowSelection(temp);
-                        });
-                    });
-                }
-            }
-        };
-
-        // Click handler for save button
-        $scope.save = function () {
-
-            if ($scope.planItemLifecycleListeners.length > 0) {
-                $scope.property.value = {};
-                $scope.property.value.planItemLifecycleListeners = $scope.planItemLifecycleListeners;
-            } else {
-                $scope.property.value = null;
-            }
-
-            $scope.updatePropertyInModel($scope.property);
-            $scope.close();
-        };
-
-        $scope.cancel = function () {
-            $scope.close();
-        };
-
-        // Close button handler
-        $scope.close = function () {
-            $scope.property.mode = 'read';
-            $scope.$hide();
-        };
-
-    }]);
+  }]);

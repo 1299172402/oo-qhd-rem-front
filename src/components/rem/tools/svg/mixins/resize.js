@@ -9,7 +9,7 @@ export default {
   mounted() {
 
     this.initListener();
-    //用于初始化页面是高度问题
+    // 用于初始化页面是高度问题
   },
   activated() {
     if (!this.$_resizeHandler) {
@@ -50,7 +50,7 @@ export default {
       })
     },
     watchResize(){
-      let initSizeInterval = setInterval(()=>{
+      const initSizeInterval = setInterval(()=>{
         if(this._height == this.$el.offsetHeight){
           clearInterval(initSizeInterval)
         }else{

@@ -26,6 +26,7 @@
 <script>
 import checkFullScreen from "@/lib/FullScreen.js";
 import config from  "@/config";
+
 export default {
   name: "H5MajorComponentsnew",
   mixins: [checkFullScreen],
@@ -157,10 +158,10 @@ export default {
       if(this.loadKey){
         if(this.w && this.w.fView && this.w.fView.RefreshData){
           console.log('setSampleDate')
-            this.w.fView.RefreshData(data,true,true)
-            // this.w.fView.View.ScrollView(this.w.fView.View.HScrollValue, this.w.fView.View.VScrollValue);
-            // this.w.fView.ZoomPicture();
-            // this.w.fView.View.Repaint();
+          this.w.fView.RefreshData(data,true,true)
+          // this.w.fView.View.ScrollView(this.w.fView.View.HScrollValue, this.w.fView.View.VScrollValue);
+          // this.w.fView.ZoomPicture();
+          // this.w.fView.View.Repaint();
         }
         // this.loadKey = false
       }else{

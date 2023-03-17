@@ -64,19 +64,19 @@ export default {
   },
   computed: {
     tableList() {
-      let _data = [];
+      const _data = [];
       if (!this.tableData) return;
       Object.keys(this.tableData).forEach((val, index, list) => {
-        //val key
-        //tableData[val] value
+        // val key
+        // tableData[val] value
         if (index % this.col == 0) {
-          //col 列数
-          let _obj = {};
+          // col 列数
+          const _obj = {};
           for (let i = 0, l = this.col; i < l; i++) {
-            _obj["f" + i] = list[index + i] ? list[index + i] : "";
-            _obj["f" + i + 1] = String(this.tableData[list[index + i]])
+            _obj[`f${  i}`] = list[index + i] ? list[index + i] : "";
+            _obj[`f${  i  }${1}`] = String(this.tableData[list[index + i]])
               ? this.tableData[list[index + i]]
-              : ""; //String 为了防止value为零的时候转换为false
+              : ""; // String 为了防止value为零的时候转换为false
           }
           _data.push(_obj);
         }

@@ -11,17 +11,17 @@
  * limitations under the License.
  */
 
-'use strict';
+
 
 angular.module('flowableModeler')
-    .controller('ToolbarController', ['$scope', '$http', '$modal', '$q', '$rootScope', '$translate', '$location', 'editorManager',
+  .controller('ToolbarController', ['$scope', '$http', '$modal', '$q', '$rootScope', '$translate', '$location', 'editorManager',
     		function ($scope, $http, $modal, $q, $rootScope, $translate, $location, editorManager) {
 
-    	$scope.editorFactory.promise.then(function () {
-	        var toolbarItems = FLOWABLE.TOOLBAR_CONFIG.items;
+    	$scope.editorFactory.promise.then(() => {
+	        const toolbarItems = FLOWABLE.TOOLBAR_CONFIG.items;
 	        $scope.items = [];
 	        
-	        for (var i = 0; i < toolbarItems.length; i++)
+	        for (let i = 0; i < toolbarItems.length; i++)
 	        {
 	        	if ($rootScope.modelData.model.modelType === 'form')
 		        {
@@ -37,150 +37,150 @@ angular.module('flowableModeler')
 	        }
     	});
         
-        $scope.secondaryItems = FLOWABLE.TOOLBAR_CONFIG.secondaryItems;
+      $scope.secondaryItems = FLOWABLE.TOOLBAR_CONFIG.secondaryItems;
 
-        // Call configurable click handler (From http://stackoverflow.com/questions/359788/how-to-execute-a-javascript-function-when-i-have-its-name-as-a-string)
-        var executeFunctionByName = function(functionName, context /*, args */) {
-            var args = Array.prototype.slice.call(arguments).splice(2);
-            var namespaces = functionName.split(".");
-            var func = namespaces.pop();
-            for(var i = 0; i < namespaces.length; i++) {
-                context = context[namespaces[i]];
-            }
-            return context[func].apply(this, args);
+      // Call configurable click handler (From http://stackoverflow.com/questions/359788/how-to-execute-a-javascript-function-when-i-have-its-name-as-a-string)
+      const executeFunctionByName = function(functionName, context /* , args */) {
+        const args = Array.prototype.slice.call(arguments).splice(2);
+        const namespaces = functionName.split(".");
+        const func = namespaces.pop();
+        for(let i = 0; i < namespaces.length; i++) {
+          context = context[namespaces[i]];
+        }
+        return context[func].apply(this, args);
+      };
+
+      // Click handler for toolbar buttons
+      $scope.toolbarButtonClicked = function(buttonIndex) {
+
+        // Default behaviour
+        const buttonClicked = $scope.items[buttonIndex];
+        const services = { '$scope' : $scope, '$rootScope' : $rootScope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate, 'editorManager' : editorManager};
+        executeFunctionByName(buttonClicked.action, window, services);
+
+        // Other events
+        const event = {
+          type : FLOWABLE.eventBus.EVENT_TYPE_TOOLBAR_BUTTON_CLICKED,
+          toolbarItem : buttonClicked
         };
-
-        // Click handler for toolbar buttons
-        $scope.toolbarButtonClicked = function(buttonIndex) {
-
-            // Default behaviour
-            var buttonClicked = $scope.items[buttonIndex];
-            var services = { '$scope' : $scope, '$rootScope' : $rootScope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate, 'editorManager' : editorManager};
-            executeFunctionByName(buttonClicked.action, window, services);
-
-            // Other events
-            var event = {
-                type : FLOWABLE.eventBus.EVENT_TYPE_TOOLBAR_BUTTON_CLICKED,
-                toolbarItem : buttonClicked
-            };
-            FLOWABLE.eventBus.dispatch(event.type, event);
-        };
+        FLOWABLE.eventBus.dispatch(event.type, event);
+      };
         
-        // Click handler for secondary toolbar buttons
-        $scope.toolbarSecondaryButtonClicked = function(buttonIndex) {
-            var buttonClicked = $scope.secondaryItems[buttonIndex];
-            var services = { '$scope' : $scope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate, '$location': $location, 'editorManager' : editorManager};
-            executeFunctionByName(buttonClicked.action, window, services);
-        };
+      // Click handler for secondary toolbar buttons
+      $scope.toolbarSecondaryButtonClicked = function(buttonIndex) {
+        const buttonClicked = $scope.secondaryItems[buttonIndex];
+        const services = { '$scope' : $scope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate, '$location': $location, 'editorManager' : editorManager};
+        executeFunctionByName(buttonClicked.action, window, services);
+      };
         
-        /* Key bindings */
-        Mousetrap.bind('mod+z', function(e) {
-        	var services = { '$scope' : $scope, '$rootScope' : $rootScope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate, 'editorManager' : editorManager};
+      /* Key bindings */
+      Mousetrap.bind('mod+z', (e) => {
+        	const services = { '$scope' : $scope, '$rootScope' : $rootScope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate, 'editorManager' : editorManager};
         	FLOWABLE.TOOLBAR.ACTIONS.undo(services);
-            return false;
-        });
+        return false;
+      });
         
-        Mousetrap.bind('mod+y', function(e) {
-        	var services = { '$scope' : $scope, '$rootScope' : $rootScope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate, 'editorManager' : editorManager};
+      Mousetrap.bind('mod+y', (e) => {
+        	const services = { '$scope' : $scope, '$rootScope' : $rootScope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate, 'editorManager' : editorManager};
         	FLOWABLE.TOOLBAR.ACTIONS.redo(services);
-            return false;
-        });
+        return false;
+      });
         
-        Mousetrap.bind('mod+c', function(e) {
-        	var services = { '$scope' : $scope, '$rootScope' : $rootScope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate, 'editorManager' : editorManager};
+      Mousetrap.bind('mod+c', (e) => {
+        	const services = { '$scope' : $scope, '$rootScope' : $rootScope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate, 'editorManager' : editorManager};
         	FLOWABLE.TOOLBAR.ACTIONS.copy(services);
-            return false;
-        });
+        return false;
+      });
         
-        Mousetrap.bind('mod+v', function(e) {
-        	var services = { '$scope' : $scope, '$rootScope' : $rootScope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate, 'editorManager' : editorManager};
+      Mousetrap.bind('mod+v', (e) => {
+        	const services = { '$scope' : $scope, '$rootScope' : $rootScope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate, 'editorManager' : editorManager};
         	FLOWABLE.TOOLBAR.ACTIONS.paste(services);
-            return false;
-        });
+        return false;
+      });
         
-        Mousetrap.bind(['del'], function(e) {
-        	var services = { '$scope' : $scope, '$rootScope' : $rootScope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate, 'editorManager' : editorManager};
+      Mousetrap.bind(['del'], (e) => {
+        	const services = { '$scope' : $scope, '$rootScope' : $rootScope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate, 'editorManager' : editorManager};
         	FLOWABLE.TOOLBAR.ACTIONS.deleteItem(services);
-            return false;
-        });
+        return false;
+      });
 
-        /* Undo logic */
+      /* Undo logic */
 
-        $scope.undoStack = [];
-        $scope.redoStack = [];
+      $scope.undoStack = [];
+      $scope.redoStack = [];
         
-        FLOWABLE.eventBus.addListener(FLOWABLE.eventBus.EVENT_TYPE_UNDO_REDO_RESET,function($scope){
-			this.undoStack = [];
-			this.redoStack = [];
-			if (this.items) {
-				for(var i = 0; i < this.items.length; i++) {
-					var item = this.items[i];
-					if (item.action === 'FLOWABLE.TOOLBAR.ACTIONS.undo' || item.action === "FLOWABLE.TOOLBAR.ACTIONS.redo"){
-						item.enabled = false;
-					}
-				}
-			}
+      FLOWABLE.eventBus.addListener(FLOWABLE.eventBus.EVENT_TYPE_UNDO_REDO_RESET,function($scope){
+        this.undoStack = [];
+        this.redoStack = [];
+        if (this.items) {
+          for(let i = 0; i < this.items.length; i++) {
+            const item = this.items[i];
+            if (item.action === 'FLOWABLE.TOOLBAR.ACTIONS.undo' || item.action === "FLOWABLE.TOOLBAR.ACTIONS.redo"){
+              item.enabled = false;
+            }
+          }
+        }
 			
-		},$scope);
+      },$scope);
 
-        $scope.editorFactory.promise.then(function() {
+      $scope.editorFactory.promise.then(() => {
 
-            // Catch all command that are executed and store them on the respective stacks
-            editorManager.registerOnEvent(ORYX.CONFIG.EVENT_EXECUTE_COMMANDS, function( evt ){
+        // Catch all command that are executed and store them on the respective stacks
+        editorManager.registerOnEvent(ORYX.CONFIG.EVENT_EXECUTE_COMMANDS, ( evt )=> {
 
-                // If the event has commands
-                if( !evt.commands ){ return; }
+          // If the event has commands
+          if( !evt.commands ){ return; }
 
-                $scope.undoStack.push( evt.commands );
-                $scope.redoStack = [];
+          $scope.undoStack.push( evt.commands );
+          $scope.redoStack = [];
                 
-                for(var i = 0; i < $scope.items.length; i++) 
+          for(let i = 0; i < $scope.items.length; i++) 
         		{
-                    var item = $scope.items[i];
-                    if (item.action === 'FLOWABLE.TOOLBAR.ACTIONS.undo')
-                    {
+            const item = $scope.items[i];
+            if (item.action === 'FLOWABLE.TOOLBAR.ACTIONS.undo')
+            {
                     	item.enabled = true;
-                    }
-                    else if (item.action === 'FLOWABLE.TOOLBAR.ACTIONS.redo')
-                    {
+            }
+            else if (item.action === 'FLOWABLE.TOOLBAR.ACTIONS.redo')
+            {
                     	item.enabled = false;
-                    }
+            }
         		}
 
-                // Update
-                editorManager.getCanvas().update();
-                editorManager.updateSelection();
-
-            });
+          // Update
+          editorManager.getCanvas().update();
+          editorManager.updateSelection();
 
         });
+
+      });
         
-        // Handle enable/disable toolbar buttons 
-        $scope.editorFactory.promise.then(function() {
-        	editorManager.registerOnEvent(ORYX.CONFIG.EVENT_SELECTION_CHANGED, function( evt ){
-        		var elements = evt.elements;
+      // Handle enable/disable toolbar buttons 
+      $scope.editorFactory.promise.then(() => {
+        	editorManager.registerOnEvent(ORYX.CONFIG.EVENT_SELECTION_CHANGED, ( evt )=> {
+        		const {elements} = evt;
         		
-        		for(var i = 0; i < $scope.items.length; i++)  {
-                    var item = $scope.items[i];
-                    if (item.enabledAction && item.enabledAction === 'element') {
-                    	var minLength = 1;
+        		for(let i = 0; i < $scope.items.length; i++)  {
+            var item = $scope.items[i];
+            if (item.enabledAction && item.enabledAction === 'element') {
+                    	let minLength = 1;
                     	if (item.minSelectionCount) {
                     		minLength = item.minSelectionCount;
                     	}
                     	
                     	if (elements.length >= minLength && !item.enabled) {
-                    		$scope.safeApply(function () {
+                    		$scope.safeApply(() => {
                     			item.enabled = true;
-                            });
+                });
                     	} else if (elements.length == 0 && item.enabled) {
-                    		$scope.safeApply(function () {
+                    		$scope.safeApply(() => {
                     			item.enabled = false;
-                            });
+                });
                     	}
-                    }
-                }
+            }
+          }
         	});
         	
-        });
+      });
 
     }]);

@@ -65,7 +65,7 @@ export default {
       // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
       console.log("paht", path);
       const { params } = this.$route;
-      var toPath = pathToRegexp.compile(path);
+      const toPath = pathToRegexp.compile(path);
       return toPath(params);
     },
     handleLink(item) {

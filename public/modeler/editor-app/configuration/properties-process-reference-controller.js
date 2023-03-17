@@ -12,30 +12,30 @@
  */
 
 angular.module('flowableModeler').controller('FlowableProcessReferenceCtrl',
-    [ '$scope', '$modal', '$http', function($scope, $modal, $http) {
+  [ '$scope', '$modal', '$http', function($scope, $modal, $http) {
 	
-     // Config for the modal window
-     var opts = {
-         template:  'editor-app/configuration/properties/process-reference-popup.html?version=' + Date.now(),
-         scope: $scope
-     };
+    // Config for the modal window
+    const opts = {
+      template:  `editor-app/configuration/properties/process-reference-popup.html?version=${  Date.now()}`,
+      scope: $scope
+    };
 
-     // Open the dialog
-        _internalCreateModal(opts, $modal, $scope);
-}]);
+    // Open the dialog
+    _internalCreateModal(opts, $modal, $scope);
+  }]);
 
 angular.module('flowableModeler').controller('FlowableProcessReferencePopupCtrl', [ '$scope', '$http', function($scope, $http) {
 	
-    $scope.state = {'loadingProcesses' : true, 'error' : false};
+  $scope.state = {'loadingProcesses' : true, 'error' : false};
     
-    // Close button handler
-    $scope.close = function() {
+  // Close button handler
+  $scope.close = function() {
     	$scope.property.mode = 'read';
-        $scope.$hide();
-    };
+    $scope.$hide();
+  };
     
-    // Selecting/deselecting a process
-    $scope.selectProcess = function(processModel, $event) {
+  // Selecting/deselecting a process
+  $scope.selectProcess = function(processModel, $event) {
    	 	$event.stopPropagation();
    	 	if ($scope.selectedProcess && $scope.selectedProcess.id && processModel.id == $scope.selectedProcess.id) {
    	 		// un-select the current selection
@@ -43,10 +43,10 @@ angular.module('flowableModeler').controller('FlowableProcessReferencePopupCtrl'
    	 	} else {
    	 		$scope.selectedProcess = processModel;
    	 	}
-    };
+  };
     
-    // Saving the selected value
-    $scope.save = function() {
+  // Saving the selected value
+  $scope.save = function() {
    	 	if ($scope.selectedProcess) {
    	 		$scope.property.value = {'id' : $scope.selectedProcess.id, 'name' : $scope.selectedProcess.name};
    	 	} else {
@@ -54,27 +54,27 @@ angular.module('flowableModeler').controller('FlowableProcessReferencePopupCtrl'
    	 	}
    	 	$scope.updatePropertyInModel($scope.property);
    	 	$scope.close();
-    };
+  };
     
-    $scope.loadProcesses = function() {
+  $scope.loadProcesses = function() {
    	 
     	$http.get(FLOWABLE.APP_URL.getModelsUrl("?modelType=0"))
     		.success(
-    			function(response) {
+    			(response) => {
     				$scope.state.loadingProcesses = false;
     				$scope.state.processError = false;
     				$scope.processModels = response.data;
     			})
     		.error(
-    			function(data, status, headers, config) {
+    			(data, status, headers, config) => {
     				$scope.state.loadingProcesses = false;
     				$scope.state.processError = true;
     			});
-    };
+  };
     
-    if ($scope.property && $scope.property.value && $scope.property.value.id) {
+  if ($scope.property && $scope.property.value && $scope.property.value.id) {
    	 	$scope.selectedProcess = $scope.property.value;
-    }
+  }
     
-    $scope.loadProcesses();  
+  $scope.loadProcesses();  
 }]);

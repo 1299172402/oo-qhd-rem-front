@@ -1,4 +1,5 @@
 import Axios from '@/utils/request'
+
 const baseUrl = process.env.NODE_ENV == "production" ? "/ipm03/api" : "/ipm03/api"
 export function getChangeTrajectory(chartConditionDto) {
   return Axios({
@@ -178,7 +179,7 @@ export function downloadRunningTimeList(data){
   return Axios({
     url: `${baseUrl}/indexOverviewIpm/downloadRunningTimeList`,
     method: "post",
-    data: data,
+    data,
   })
 }
 
@@ -192,6 +193,6 @@ export function getAbnormalWell(data){
   return Axios({
     url: `${baseUrl}/indexOverviewIpm/getAbnormalWell`,
     method: "post",
-    data: data
+    data
   })
 }

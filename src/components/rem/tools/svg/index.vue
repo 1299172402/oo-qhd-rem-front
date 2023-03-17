@@ -49,6 +49,7 @@
 </template>
 <script>
 import resize from "./mixins/resize";
+
 export default {
   mixins: [resize],
   props: {
@@ -78,15 +79,15 @@ export default {
       return this.boxOffsetWidth
         ? this.boxOffsetWidth
         : this.width == "auto"
-        ? 20
-        : this.width.replace(/px|%/, "");
+          ? 20
+          : this.width.replace(/px|%/, "");
     },
     _height() {
       return this.boxOffsetHeight
         ? this.boxOffsetHeight
         : this.height == "auto"
-        ? 20
-        : this.height.replace(/px|%/, "");
+          ? 20
+          : this.height.replace(/px|%/, "");
     },
     points() {
       return `20,0 ${this._width},0 ${this._width},${this._height - 20} ${

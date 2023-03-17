@@ -2,8 +2,8 @@ import Axios from '@/utils/request'
 
 export function areaDiagram(request) {
   return Axios({
-        url: `/rem01/api/fieldDynamicAnalysisController/areaDiagram`,
-      //url: `/static/IsoFrameCom/data/response.json`,
+    url: `remynamicAnalysisController/areaDiagram`,
+    // url: `/static/IsoFrameCom/data/response.json`,
     method: "post",
     data: request,
   });
@@ -17,7 +17,7 @@ export function areaDiagram(request) {
  */
 export function developmentDataDevelopmentAdjustmentPlan(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/developmentDataDevelopmentAdjustmentPlan`,
+    url: `remynamicAnalysisController/developmentDataDevelopmentAdjustmentPlan`,
     method: "post",
     data: request,
   });
@@ -31,7 +31,7 @@ export function developmentDataDevelopmentAdjustmentPlan(request) {
  */
 export function developmentDataDevelopmentPlan(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/developmentDataDevelopmentPlan`,
+    url: `remynamicAnalysisController/developmentDataDevelopmentPlan`,
     method: "post",
     data: request,
   });
@@ -45,7 +45,7 @@ export function developmentDataDevelopmentPlan(request) {
  */
 export function developmentDataReservesReport(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/developmentDataReservesReport`,
+    url: `remynamicAnalysisController/developmentDataReservesReport`,
     method: "post",
     data: request,
   });
@@ -59,7 +59,7 @@ export function developmentDataReservesReport(request) {
  */
 export function developmentDataWellPattern(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/developmentDataWellPattern`,
+    url: `remynamicAnalysisController/developmentDataWellPattern`,
     method: "post",
     data: request,
   });
@@ -73,7 +73,7 @@ export function developmentDataWellPattern(request) {
  */
 export function developmentDataWellPatternImprovementChart(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/developmentDataWellPatternImprovementChart`,
+    url: `remynamicAnalysisController/developmentDataWellPatternImprovementChart`,
     method: "post",
     data: request,
   });
@@ -87,7 +87,7 @@ export function developmentDataWellPatternImprovementChart(request) {
  */
 export function dynamicDataAccumulatedWaterOilRatioDistribution(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/dynamicDataAccumulatedWaterOilRatioDistribution`,
+    url: `remynamicAnalysisController/dynamicDataAccumulatedWaterOilRatioDistribution`,
     method: "post",
     data: request,
   });
@@ -101,7 +101,7 @@ export function dynamicDataAccumulatedWaterOilRatioDistribution(request) {
  */
 export function dynamicDataComprehensiveDevelopmentCurve(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/dynamicDataComprehensiveDevelopmentCurve`,
+    url: `remynamicAnalysisController/dynamicDataComprehensiveDevelopmentCurve`,
     method: "post",
     data: request,
   });
@@ -115,7 +115,7 @@ export function dynamicDataComprehensiveDevelopmentCurve(request) {
  */
 export function dynamicDataContourMapOfInjectionIntensity(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/dynamicDataContourMapOfInjectionIntensity`,
+    url: `remynamicAnalysisController/dynamicDataContourMapOfInjectionIntensity`,
     method: "post",
     data: request,
   });
@@ -129,7 +129,7 @@ export function dynamicDataContourMapOfInjectionIntensity(request) {
  */
 export function dynamicDataCumulativeOilAndWaterProductionStatusMap(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/dynamicDataCumulativeOilAndWaterProductionStatusMap`,
+    url: `remynamicAnalysisController/dynamicDataCumulativeOilAndWaterProductionStatusMap`,
     method: "post",
     data: request,
   });
@@ -143,7 +143,7 @@ export function dynamicDataCumulativeOilAndWaterProductionStatusMap(request) {
  */
 export function dynamicDataCumulativeOilProductionPerMeter(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/dynamicDataCumulativeOilProductionPerMeter`,
+    url: `remynamicAnalysisController/dynamicDataCumulativeOilProductionPerMeter`,
     method: "post",
     data: request,
   });
@@ -157,7 +157,7 @@ export function dynamicDataCumulativeOilProductionPerMeter(request) {
  */
 export function meterProIndicator(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/meterProIndicator`,
+    url: `remynamicAnalysisController/meterProIndicator`,
     method: "post",
     data: request,
   });
@@ -171,7 +171,7 @@ export function meterProIndicator(request) {
  */
 export function dynamicDataDevelopmentIndexTable(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/dynamicDataDevelopmentIndexTable`,
+    url: `remynamicAnalysisController/dynamicDataDevelopmentIndexTable`,
     method: "post",
     data: request,
   });
@@ -185,7 +185,7 @@ export function dynamicDataDevelopmentIndexTable(request) {
  */
 export function dynamicDataDevelopmentStatusTable(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/dynamicDataDevelopmentStatusTable`,
+    url: `remynamicAnalysisController/dynamicDataDevelopmentStatusTable`,
     method: "post",
     data: request,
   });
@@ -199,7 +199,7 @@ export function dynamicDataDevelopmentStatusTable(request) {
  */
 export function dynamicDataDifferentialPressureDiagram(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/dynamicDataDifferentialPressureDiagram`,
+    url: `remynamicAnalysisController/dynamicDataDifferentialPressureDiagram`,
     method: "post",
     data: request,
   });
@@ -212,7 +212,7 @@ export function dynamicDataDifferentialPressureDiagram(request) {
  */
 export function dynamicDataDynamicLiquidLevelContourMap(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/dynamicDataDynamicLiquidLevelContourMap`,
+    url: `remynamicAnalysisController/dynamicDataDynamicLiquidLevelContourMap`,
     method: "post",
     data: request,
   });
@@ -226,7 +226,7 @@ export function dynamicDataDynamicLiquidLevelContourMap(request) {
  */
 export function dynamicDataInjectionProductionRatioDistribution(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/dynamicDataInjectionProductionRatioDistribution`,
+    url: `remynamicAnalysisController/dynamicDataInjectionProductionRatioDistribution`,
     method: "post",
     data: request,
   });
@@ -240,7 +240,7 @@ export function dynamicDataInjectionProductionRatioDistribution(request) {
  */
 export function dynamicDataIsogramOfFluidProductionStrength(request) {
   return Axios({
-    url: '/rem01/api/fieldDynamicAnalysisController/dynamicDataIsogramOfFluidProductionStrength',
+    url: 'remynamicAnalysisController/dynamicDataIsogramOfFluidProductionStrength',
     method: "post",
     data: request,
   });
@@ -254,7 +254,7 @@ export function dynamicDataIsogramOfFluidProductionStrength(request) {
  */
 export function dynamicDataOilWaterContourMap(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/dynamicDataOilWaterContourMap`,
+    url: `remynamicAnalysisController/dynamicDataOilWaterContourMap`,
     method: "post",
     data: request,
   });
@@ -268,7 +268,7 @@ export function dynamicDataOilWaterContourMap(request) {
  */
 export function dynamicDataOilWaterDifferenceIsogram(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/dynamicDataOilWaterDifferenceIsogram`,
+    url: `remynamicAnalysisController/dynamicDataOilWaterDifferenceIsogram`,
     method: "post",
     data: request,
   });
@@ -282,7 +282,7 @@ export function dynamicDataOilWaterDifferenceIsogram(request) {
  */
 export function dynamicDataRemainingOilDistribution(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/dynamicDataRemainingOilDistribution`,
+    url: `remynamicAnalysisController/dynamicDataRemainingOilDistribution`,
     method: "post",
     data: request,
   });
@@ -296,7 +296,7 @@ export function dynamicDataRemainingOilDistribution(request) {
  */
 export function dynamicDataTotalPressureDropDiagram(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/dynamicDataTotalPressureDropDiagram`,
+    url: `remynamicAnalysisController/dynamicDataTotalPressureDropDiagram`,
     method: "post",
     data: request,
   });
@@ -310,28 +310,28 @@ export function dynamicDataTotalPressureDropDiagram(request) {
  */
 export function dynamicDataYieldComponentCurve(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/dynamicDataYieldComponentCurve`,
+    url: `remynamicAnalysisController/dynamicDataYieldComponentCurve`,
     method: "post",
     data: request,
   });
 }
 export function outputStatusAnalysis(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/outputStatusAnalysis`,
+    url: `remynamicAnalysisController/outputStatusAnalysis`,
     method: "post",
     data: request,
   });
 }
 export function proInjectionBalanceAnalysis(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/proInjectionBalanceAnalysis`,
+    url: `remynamicAnalysisController/proInjectionBalanceAnalysis`,
     method: "post",
     data: request,
   });
 }
 export function proStatusAnalysis(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/proStatusAnalysis`,
+    url: `remynamicAnalysisController/proStatusAnalysis`,
     method: "post",
     data: request,
   });
@@ -345,7 +345,7 @@ export function proStatusAnalysis(request) {
  */
 export function reservoirDataBasicReservoirData(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/reservoirDataBasicReservoirData`,
+    url: `remynamicAnalysisController/reservoirDataBasicReservoirData`,
     method: "post",
     data: request,
   });
@@ -359,7 +359,7 @@ export function reservoirDataBasicReservoirData(request) {
  */
 export function reservoirDataComprehensiveGeologicalMap(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/reservoirDataComprehensiveGeologicalMap`,
+    url: `remynamicAnalysisController/reservoirDataComprehensiveGeologicalMap`,
     method: "post",
     data: request,
   });
@@ -373,7 +373,7 @@ export function reservoirDataComprehensiveGeologicalMap(request) {
  */
 export function reservoirDataConstructureDaigram(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/reservoirDataConstructureDaigram`,
+    url: `remynamicAnalysisController/reservoirDataConstructureDaigram`,
     method: "post",
     data: request,
   });
@@ -387,7 +387,7 @@ export function reservoirDataConstructureDaigram(request) {
  */
 export function reservoirDataCoreTestData(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/reservoirDataCoreTestData`,
+    url: `remynamicAnalysisController/reservoirDataCoreTestData`,
     method: "post",
     data: request,
   });
@@ -401,7 +401,7 @@ export function reservoirDataCoreTestData(request) {
  */
 export function reservoirDataEffectiveThicknessMap(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/reservoirDataEffectiveThicknessMap`,
+    url: `remynamicAnalysisController/reservoirDataEffectiveThicknessMap`,
     method: "post",
     data: request,
   });
@@ -415,7 +415,7 @@ export function reservoirDataEffectiveThicknessMap(request) {
  */
 export function reservoirDataFiveSensitivityAnalysisData(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/reservoirDataFiveSensitivityAnalysisData`,
+    url: `remynamicAnalysisController/reservoirDataFiveSensitivityAnalysisData`,
     method: "post",
     data: request,
   });
@@ -429,7 +429,7 @@ export function reservoirDataFiveSensitivityAnalysisData(request) {
  */
 export function reservoirDataPhasePermeabilityCurve(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/reservoirDataPhasePermeabilityCurve`,
+    url: `remynamicAnalysisController/reservoirDataPhasePermeabilityCurve`,
     method: "post",
     data: request,
   });
@@ -443,7 +443,7 @@ export function reservoirDataPhasePermeabilityCurve(request) {
  */
 export function reservoirDataPorosityAndFractureDevelopment(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/reservoirDataPorosityAndFractureDevelopment`,
+    url: `remynamicAnalysisController/reservoirDataPorosityAndFractureDevelopment`,
     method: "post",
     data: request,
   });
@@ -457,7 +457,7 @@ export function reservoirDataPorosityAndFractureDevelopment(request) {
  */
 export function reservoirDataReservoirProfile(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/reservoirDataReservoirProfile`,
+    url: `remynamicAnalysisController/reservoirDataReservoirProfile`,
     method: "post",
     data: request,
   });
@@ -471,7 +471,7 @@ export function reservoirDataReservoirProfile(request) {
  */
 export function reservoirDataSandThicknessMap(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/reservoirDataSandThicknessMap`,
+    url: `remynamicAnalysisController/reservoirDataSandThicknessMap`,
     method: "post",
     data: request,
   });
@@ -485,14 +485,14 @@ export function reservoirDataSandThicknessMap(request) {
  */
 export function reservoirDataSedimentaryFaciesAndSedimentaryMicroImage(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/reservoirDataSedimentaryFaciesAndSedimentaryMicroImage`,
+    url: `remynamicAnalysisController/reservoirDataSedimentaryFaciesAndSedimentaryMicroImage`,
     method: "post",
     data: request,
   });
 }
 export function stableBaseAnalysis(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/stableBaseAnalysis`,
+    url: `remynamicAnalysisController/stableBaseAnalysis`,
     method: "post",
     data: request,
   });
@@ -506,7 +506,7 @@ export function stableBaseAnalysis(request) {
  */
 export function streamingMediaDataCrudeOilViscosity(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/streamingMediaDataCrudeOilViscosity`,
+    url: `remynamicAnalysisController/streamingMediaDataCrudeOilViscosity`,
     method: "post",
     data: request,
   });
@@ -520,7 +520,7 @@ export function streamingMediaDataCrudeOilViscosity(request) {
  */
 export function streamingMediaDataHighPressurePhysicalPropertyAnalysis(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/streamingMediaDataHighPressurePhysicalPropertyAnalysis`,
+    url: `remynamicAnalysisController/streamingMediaDataHighPressurePhysicalPropertyAnalysis`,
     method: "post",
     data: request,
   });
@@ -534,14 +534,14 @@ export function streamingMediaDataHighPressurePhysicalPropertyAnalysis(request) 
  */
 export function streamingMediaDataWaterPhysicalPropertyData(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/streamingMediaDataWaterPhysicalPropertyData`,
+    url: `remynamicAnalysisController/streamingMediaDataWaterPhysicalPropertyData`,
     method: "post",
     data: request,
   });
 }
 export function wellGroups(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/wellGroups`,
+    url: `remynamicAnalysisController/wellGroups`,
     method: "post",
     data: request,
   });
@@ -555,7 +555,7 @@ export function wellGroups(request) {
  */
 export function permeabilityDistributionForField(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/permeabilityDistributionForField`,
+    url: `remynamicAnalysisController/permeabilityDistributionForField`,
     method: "post",
     data: request,
   });
@@ -569,7 +569,7 @@ export function permeabilityDistributionForField(request) {
  */
 export function wellTieProfiles(request) {
   return Axios({
-    url: `/rem01/api/fieldDynamicAnalysisController/wellTieProfiles`,
+    url: `remynamicAnalysisController/wellTieProfiles`,
     method: "post",
     data: request,
   })

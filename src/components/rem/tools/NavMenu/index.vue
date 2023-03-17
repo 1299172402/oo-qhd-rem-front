@@ -3,7 +3,7 @@
     :default-openeds="opends" -->
     <!-- :default-openeds="opendsMenu" -->
 
-  <Menu
+  <menu
     v-bind="$props"
     :unique-opened="false"
     :default-active="activeMenu"
@@ -24,18 +24,19 @@
       :id-label="idLabel"
       :menus="flatMenus"
     ></submenu>
-  </Menu>
+  </menu>
 </template>
 <script>
 import { Menu } from "element-ui";
 import store from "@/store/index.js";
-const loginuserid = store.getters["APP/getLoginUserId"];
-const businessType = store.getters["getBusinessType"];
 import { mapState } from "vuex";
 import submenu from "./submenu";
 import { factorial, getParentIdArr } from "@/lib/comFun";
 import {insertSysLogInfo} from '@/lib/menuDeal'
 import VSAuth from "@vsui/lib-vueauth4vseaf";
+
+const loginuserid = store.getters["APP/getLoginUserId"];
+const businessType = store.getters.getBusinessType;
 
 export default {
   name: "NavMenu",
@@ -78,18 +79,18 @@ export default {
 
     getUserIP(){
       console.log("getUserIP-->")
-      let RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+      const RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
       console.log("getUserIP-->RTCPeerConnection",RTCPeerConnection);
       if(RTCPeerConnection) (()=>{
-        var rtc = new RTCPeerConnection();
-        rtc.createDataChannel("");//创建通道
-        rtc.createOffer( offerDesc=>{//创建并存储sdp数据
+        const rtc = new RTCPeerConnection();
+        rtc.createDataChannel("");// 创建通道
+        rtc.createOffer( offerDesc=>{// 创建并存储sdp数据
           rtc.setLocalDescription(offerDesc);
         }, e=>{
           console.log(e);
         });
         console.log("getUserIP-->RTCPeerConnection:trc",rtc);
-        rtc.onicecandidate = (evt)=>{//监听candiDate事件
+        rtc.onicecandidate = (evt)=>{// 监听candiDate事件
           console.log("rtc.onicecandidate-->",evt);
           if(evt.candidate){
             this.ip = evt.candidate.address;
@@ -101,16 +102,16 @@ export default {
     handleClose(key, keyPath) {},
     handleSelect(key, keyPath) {
       console.log(key,keyPath,this.$route.matched);
-      var resId, path;
+      let resId; let path;
       if (key) {
         try {
-          var array = key.split('~~');
+          const array = key.split('~~');
           resId = array[0];
           path = array[1];
           if (VSAuth.getAuthInfo().isLogined) {
             insertSysLogInfo(resId, this.ip);
           }
-          this.$router.push({ path: path });
+          this.$router.push({ path });
         } catch (e) {
           console.log("处理路径失败", key, e)
         }
@@ -137,11 +138,11 @@ export default {
       routers: (state) => state.breadcrumb.routers,
     }),
     opendsMenu(){
-      let menu = Array.isArray(this.menuData)
-              ? this.menuData
-              : this.menuData.children
-              ? this.menuData.children
-              : [];
+      const menu = Array.isArray(this.menuData)
+        ? this.menuData
+        : this.menuData.children
+          ? this.menuData.children
+          : [];
       return menu.map(item => item[this.idLabel])
     },
     opends() {
@@ -180,7 +181,7 @@ export default {
   },
   /**
    * 当页面第二次，工程信息已存，进行请求数据
-   **/
+   * */
   mounted() {
 
     this.getUserIP();

@@ -1,3 +1,4 @@
+<!-- 规范计划管理-措施管理界面 -->
 <template>
   <div class="app-container">
     <headerSearch class="g-w100 g-h100">
@@ -158,7 +159,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <pagination v-show="pageTotal > 0" :total="pageTotal" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />
+      <pagination v-show="pageTotal > 0" :pageSizes="[15, 20, 40, 100]" :total="pageTotal" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />
     </pagePanelNew>
     <!-- <el-pagination style="margin-top:10px;float:right" :current-page="page" :page-size="pageSize"
         :page-sizes="[15, 20, 40, 100]" :pager-count="5" layout="prev, pager, next,sizes,slot, total"
@@ -166,35 +167,36 @@
     </el-pagination> -->
   </div>
 </template>
+
 <script>
 import {fetchOilFields,fetchPlatforms,fetchInjectionWells,fetchInjectionWellsByPlatform,fetchProductionWells,fetchProductionWellsByPlatform,} from '@/api/oilDeposit/rem-02/primaryinfo.js';
 import {fetchMeasureInfos,nameAndCode,} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
 // import {exportExcel} from '@/utils/oilDeposit/exportExcel.js';
 export default {
-  name:'measuresManagement',
+  name:'planIndex',
   data() {
     return {
       dateTime: "",
       queryParams:{
         page: 1,
-        pageSize: 10,
+        pageSize: 15,
       },
       pageTotal: 100,
-      //油田
+      // 油田
       selectOilField: '',
-      //油田下拉框
+      // 油田下拉框
       oilFields: [],
-      //平台
+      // 平台
       selectPlatform: '',
-      //平台下拉
+      // 平台下拉
       platforms: [],
-      //井号
+      // 井号
       wellId: '',
-      //井号下拉
+      // 井号下拉
       wells: [],
-      //措施
+      // 措施
       measuresType: '',
-      //措施类型
+      // 措施类型
       measuresTypes: [
         {
           value: '全部',
@@ -209,26 +211,26 @@ export default {
           label: '压裂'
         },
       ],
-      //table表格数据
+      // table表格数据
       tableData: [],
-      //已完成条数
+      // 已完成条数
       finishNum: 0,
 
-      //缓存权限数据
+      // 缓存权限数据
       myWidget: [],
       userInfo: {},
-      //按钮权限组
-      //添加记录
+      // 按钮权限组
+      // 添加记录
       canAddInfo: false,
-      //修改数据
+      // 修改数据
       canUpdateInfo: false,
-      //发布数据
+      // 发布数据
       canSendInfo: false,
-      //删除数据
+      // 删除数据
       canDeleteInfo: false,
-      //下载数据
+      // 下载数据
       canDownload: false,
-      //上传数据
+      // 上传数据
       canUpload: false,
     };
   },
@@ -236,16 +238,12 @@ export default {
     this.dateTime = new Date().format('yyyy');
   },
   mounted() {
-    // this.initData();
+    this.initData();
   },
-  //方法
+  // 方法
   methods: {
-    pagination(e){
-      console.log('e',e);
-    },
-    //
     editData(row) {
-      //编辑页面跳转
+      // 编辑页面跳转
       this.$router.push({ name: "wellMonitoring" })
     },
     /**
@@ -255,7 +253,7 @@ export default {
      */
     async initData() {
       await fetchOilFields().then((res) => {
-        if (res.data.code == 0) {
+        if (res.data.code == 200) {
           this.oilFields = res.data.data.oilFields;
           if (this.oilFields.length == 0) {
             this.selectOilField = "";
@@ -265,28 +263,28 @@ export default {
         }
       });
       this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
-      let requestPlat = {
+      const requestPlat = {
         oilFieldId: this.selectOilField,
       };
       await fetchPlatforms(requestPlat).then((res) => {
-        if (res.data.code == 0) {
+        if (res.data.code == 200) {
           this.platforms = res.data.data.platform;
           this.selectPlatform = requestPlat.oilFieldId;
         }
       });
-      //初始化需要根据油田
-      let requestWell = {
+      // 初始化需要根据油田
+      const requestWell = {
         oilFieldId: this.selectOilField,
       };
       await fetchProductionWells(requestWell).then((res) => {
-        if (res.data.code == 0) {
-          let wellList = res.data.data.productionWells;
+        if (res.data.code == 200) {
+          const wellList = res.data.data.productionWells;
           this.wells = [...wellList];
         }
       });
       await fetchInjectionWells(requestWell).then((res) => {
-        if (res.data.code == 0) {
-          let wellList = res.data.data.injectionWell;
+        if (res.data.code == 200) {
+          const wellList = res.data.data.injectionWell;
           this.wells = [...this.wells, ...wellList];
         }
       });
@@ -308,24 +306,25 @@ export default {
      * @param isStimTypeCodeOrNot 是否是增产增注措施：0是，1不是
      */
     getFetchMeasureInfos(oilFieldId, platformId, wellId, measureId, year, page, pageSize, isStimTypeCodeOrNot) {
-      let wellArray = [];
+      const wellArray = [];
       wellArray.push(wellId);
-      let request = {
-        oilFieldId: oilFieldId,
-        platformId: platformId,
+      const request = {
+        oilFieldId,
+        platformId,
         wellId: wellArray,
-        measureId: measureId,
-        year: year,
-        page: page,
-        pageSize: pageSize,
-        isStimTypeCodeOrNot: isStimTypeCodeOrNot,
+        measureId,
+        year,
+        page,
+        pageSize,
+        isStimTypeCodeOrNot,
       };
       fetchMeasureInfos(request).then((res) => {
-        if (res.data.code == 0) {
-          /*this.tableData = res.data.data.measureManagamentInfos;*/
-          //临时
+        // eslint-disable-next-line eqeqeq
+        if (res.data.code == 200) {
+          /* this.tableData = res.data.data.measureManagamentInfos; */
+          // 临时
 
-          let as = res.data.data.measureManagamentInfos;
+          const as = res.data.data.measureManagamentInfos;
           /*          let f1 = as.find((item)=>{
           return item.wellName=='QHD32-6-B19'&&item.measureName=='换大泵'
           });
@@ -357,34 +356,27 @@ export default {
         }
       });
     },
-
-    /**
-     *  hwh
-     *  改变当前页 跳转下一页
-     * @param pageValue 当前页数
+     /**
+     * zxb
+     * 切换分页
+     *
      */
-    handleChangePage(pageValue) {
-      this.page = pageValue;
+     pagination(e){
+      this.page = e.page;
+      this.pageSize = e.limit;
     },
-    /**
-     *  hwh
-     *  改变当前页大小
-     * @param rowsValue 当前页大小
-     */
-    handleChangePageSize(rowsValue) {
-      this.pageSize = rowsValue;
-    },
+    //
     /**
      * 检索信息
      */
     doSearch() {
-      let oilFieldId = this.selectOilField;
-      let plarformId = this.selectPlatform;
-      let wellId = this.wellId;
-      let measureId = this.measuresType;
-      let year = this.dateTime;
-      let page = this.page;
-      let pageSize = this.pageSize;
+      const oilFieldId = this.selectOilField;
+      const plarformId = this.selectPlatform;
+      const {wellId} = this;
+      const measureId = this.measuresType;
+      const year = this.dateTime;
+      const {page} = this;
+      const {pageSize} = this;
       this.getMeasureNameAndCode(oilFieldId, plarformId, wellId, measureId, year, page, pageSize, 0);
       this.getFetchMeasureInfos(oilFieldId, plarformId, wellId, measureId, year, page, pageSize, 0);
     },
@@ -394,11 +386,11 @@ export default {
      * @param oilFieldId 油田id
      */
     getFetchPlatforms(oilFieldId) {
-      let request = {
-        oilFieldId: oilFieldId,
+      const request = {
+        oilFieldId,
       };
       fetchPlatforms(request).then((res) => {
-        if (res.data.code == 0) {
+        if (res.data.code == 200) {
           this.platforms = res.data.data.platform;
           this.selectPlatform = request.oilFieldId;
         }
@@ -413,35 +405,35 @@ export default {
     getFetchWells(oilFieldId, platformId) {
       this.wells = [];
       if (oilFieldId == platformId) {
-        let request = {
-          oilFieldId: oilFieldId,
+        const request = {
+          oilFieldId,
         };
         fetchProductionWells(request).then((res) => {
-          if (res.data.code == 0) {
-            let oilWellList = res.data.data.productionWells || [];
+          if (res.data.code == 200) {
+            const oilWellList = res.data.data.productionWells || [];
             this.wells = this.wells.concat(oilWellList);
           }
         });
         fetchInjectionWells(request).then((res) => {
-          if (res.data.code == 0) {
-            let waterWellList = res.data.data.injectionWell || [];
+          if (res.data.code == 200) {
+            const waterWellList = res.data.data.injectionWell || [];
             this.wells = this.wells.concat(waterWellList);
           }
         });
 
       } else {
-        let request = {
-          platformId: platformId,
+        const request = {
+          platformId,
         };
         fetchProductionWellsByPlatform(request).then((res) => {
-          if (res.data.code == 0) {
-            let oilWellList = res.data.data.productionWells || [];
+          if (res.data.code == 200) {
+            const oilWellList = res.data.data.productionWells || [];
             this.wells = this.wells.concat(oilWellList);
           }
         });
         fetchInjectionWellsByPlatform(request).then((res) => {
-          if (res.data.code == 0) {
-            let waterWellList = res.data.data.injectionWell || [];
+          if (res.data.code == 200) {
+            const waterWellList = res.data.data.injectionWell || [];
             this.wells = this.wells.concat(waterWellList);
           }
         });
@@ -464,18 +456,18 @@ export default {
       if (state != '已完成') {
         return;
       }
-      let dateDetail = yearMonthDay;
-      //跳转到重点项目页面
+      const dateDetail = yearMonthDay;
+      // 跳转到重点项目页面  
       this.$router.push({
-        name: 'wellMonitoring', params: {
-          oilFieldId: oilFieldId,
-          platformId: platformId,
-          selectWellId: selectWellId,
-          selectMeasuresId: selectMeasuresId,
+        path: 'wellMonitoring', query: {
+          oilFieldId,
+          platformId,
+          selectWellId,
+          selectMeasuresId,
           measuresDate: dateDetail,
-          wellType: wellType,
-          wellNameNano: wellNameNano,
-          wellBoreName: wellBoreName,
+          wellType,
+          wellNameNano,
+          wellBoreName,
           canDownload: this.canDownload,
         }
       });
@@ -485,20 +477,20 @@ export default {
      * 措施事件
      */
     getMeasureNameAndCode(oilFieldId, platformId, wellId, measureId, year, page, pageSize, isStimTypeCodeOrNot) {
-      let wellArray = [];
+      const wellArray = [];
       wellArray.push(wellId);
-      let request = {
-        oilFieldId: oilFieldId,
-        platformId: platformId,
+      const request = {
+        oilFieldId,
+        platformId,
         wellId: wellArray,
-        measureId: measureId,
-        year: year,
-        page: page,
-        pageSize: pageSize,
-        isStimTypeCodeOrNot: isStimTypeCodeOrNot,
+        measureId,
+        year,
+        page,
+        pageSize,
+        isStimTypeCodeOrNot,
       }
       nameAndCode(request).then((res) => {
-        if (res.data.code == 0) {
+        if (res.data.code == 200) {
           this.measuresTypes = res.data.data.namesAndCodes;
           this.measuresTypes.unshift({ code: '', name: '全部' });
         }
@@ -532,37 +524,35 @@ export default {
      */
     getPageAuthMessage() {
       this.userInfo = VSAuth.getAuthInfo();
-      let myPath = this.$route.path;
-      //该值可以为空
-      let areaCode = "znytglxt";
-      let loginName = this.userInfo.userName;
+      const myPath = this.$route.path;
+      // 该值可以为空
+      const areaCode = "znytglxt";
+      const loginName = this.userInfo.userName;
       getWidgetByAreaUser({ "areaCode": areaCode, "loginName": loginName }).then(res => {
-        let myList = res.data.dataList;
+        const myList = res.data.dataList;
         if (myList) {
-          let pageMes = myList.find((item) => {
-            return item.resPvalue == myPath
-          });
+          const pageMes = myList.find((item) => item.resPvalue == myPath);
           if (pageMes) {
             this.myWidget = pageMes.widgetList;
           }
           if (this.myWidget) {
-            for (let indexNum in this.myWidget) {
+            for (const indexNum in this.myWidget) {
               try {
-                let myWidgetItem = this.myWidget[indexNum];
+                const myWidgetItem = this.myWidget[indexNum];
                 switch (myWidgetItem.widgetCode) {
-                  case "addInfo":
-                    this.canAddInfo = true; break;
-                  case "updateInfo":
-                    this.canUpdateInfo = true; break;
-                  case "sendInfo":
-                    this.canSendInfo = true; break;
-                  case "deleteInfo":
-                    this.canDeleteInfo = true; break;
-                  case "download":
-                    this.canDownload = true; break;
-                  case "upload":
-                    this.canUpload = true; break;
-                  default:
+                case "addInfo":
+                  this.canAddInfo = true; break;
+                case "updateInfo":
+                  this.canUpdateInfo = true; break;
+                case "sendInfo":
+                  this.canSendInfo = true; break;
+                case "deleteInfo":
+                  this.canDeleteInfo = true; break;
+                case "download":
+                  this.canDownload = true; break;
+                case "upload":
+                  this.canUpload = true; break;
+                default:
                 }
               } catch (e) {
                 continue;
@@ -579,8 +569,6 @@ export default {
 <style lang="less" scoped>
   .app-container {
     height: 100%;
-    .el-table {
-      overflow: scroll;
-    }
+    
   }
 </style>

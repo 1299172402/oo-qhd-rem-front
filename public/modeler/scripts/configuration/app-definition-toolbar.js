@@ -10,24 +10,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var APP_DEFINITION_TOOLBAR_CONFIG = {
-    "items" : [
-        {
-            "type" : "button",
-            "title" : "APP_DEFINITION_TOOLBAR.ACTION.SAVE",
-            "cssClass" : "editor-icon editor-icon-save",
-            "action" : "APP_DEFINITION_TOOLBAR.ACTIONS.saveModel"
-        }
-    ],
+
+
+const APP_DEFINITION_TOOLBAR_CONFIG = {
+  "items" : [
+    {
+      "type" : "button",
+      "title" : "APP_DEFINITION_TOOLBAR.ACTION.SAVE",
+      "cssClass" : "editor-icon editor-icon-save",
+      "action" : "APP_DEFINITION_TOOLBAR.ACTIONS.saveModel"
+    }
+  ],
     
-    "secondaryItems" : [
-		{
+  "secondaryItems" : [
+    {
 		    "type" : "button",
 		    "title" : "Close",
 		    "cssClass" : "glyphicon glyphicon-remove",
 		    "action" : "APP_DEFINITION_TOOLBAR.ACTIONS.closeEditor"
-		}
-    ]
+    }
+  ]
 };
