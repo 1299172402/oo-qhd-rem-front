@@ -1,15 +1,10 @@
 <!-- 基础数据维护 - 密度维护表 -->
 <template>
   <div class="app-container">
-    <headerSearch class="g-w100 g-h100" style="height:auto">
+    <headerSearch class="g-w100 g-h100" style="height: auto">
       <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true" style="margin-top: 18px">
         <el-form-item label="作业公司：" prop="deptId">
-          <el-select
-            v-model="queryParams.orgId"
-            placeholder="请选择作业公司"
-            size="small"
-            style="width: 240px"
-          >
+          <el-select v-model="queryParams.orgId" placeholder="请选择作业公司" size="small" style="width: 240px">
             <el-option
               v-for="(item, index) in company"
               :key="index"
@@ -19,12 +14,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="油田：" prop="noticeContent">
-          <el-select
-            v-model="queryParams.oilFieldId"
-            placeholder="请选择油田"
-            size="small"
-            style="width: 240px"
-          >
+          <el-select v-model="queryParams.oilFieldId" placeholder="请选择油田" size="small" style="width: 240px">
             <el-option
               v-for="(item, index) in oilfield"
               :key="index"
@@ -62,8 +52,8 @@
       </el-form>
     </headerSearch>
 
-    <pagePanelNew headerTitle="通知通告列表" style="height: calc(100% - 100px)">
-      <info-window infoWidth="100%" infoHeight="100%" headerTitle="密度信息维护">
+    <pagePanelNew style="height: calc(100% - 100px)">
+      <info-window infoWidth="100%" infoHeight="100%" headerTitle="生产指标">
         <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
           <!-- <el-col :span="1.5">
         <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd"
@@ -72,8 +62,8 @@
         </el-row>
         <el-table
           :data="noticeList"
-            @current-change="handleCurrentChange"
-        @selection-change="handleSelectionChange"
+          @current-change="handleCurrentChange"
+          @selection-change="handleSelectionChange"
           highlight-current-row
           height="calc(100% - 45px)"
           :row-style="{ height: '0px' }"
@@ -173,7 +163,6 @@
 <script>
 import { listDept } from '@/api/intelligentOilfield/system/dept';
 import { addnotice, noticeList, deldataNotice, updatenotice } from '@/api/intelligentOilfield/system/notice';
-
 
 export default {
   name: 'Notice',
@@ -305,7 +294,7 @@ export default {
      * @param oilFieldId 油田id
      * @param oilfield 油田数据数组
      */
-     getList() {
+    getList() {
       getWorkCompany().then((data) => {
         let code = data.data.code;
         if (code == 200) {
@@ -314,14 +303,14 @@ export default {
             this.queryParams.orgId = data.data.data[0].orgId;
             getOilFieldList({ orgId: this.queryParams.orgId }).then((res) => {
               let code = data.data.code;
-               if (code == 200) {
+              if (code == 200) {
                 this.oilfield = res.data.data;
-                if(this.oilfield){
-                  this.queryParams.oilFieldId = res.data.data[0].oilFieldId
+                if (this.oilfield) {
+                  this.queryParams.oilFieldId = res.data.data[0].oilFieldId;
                 }
-               }else{
+              } else {
                 this.$message.warning('系统错误请重新尝试或联系运维人员！');
-               }
+              }
             });
           }
         } else {
@@ -337,7 +326,7 @@ export default {
     handleCurrentChange(val) {
       this.ids = [];
       this.ids = val;
-      console.log(this.ids)
+      console.log(this.ids);
     },
     /**
      *  编辑

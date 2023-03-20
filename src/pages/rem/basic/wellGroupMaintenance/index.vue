@@ -34,12 +34,12 @@
 
     <pagePanelNew headerTitle="生产井运行概况" style="height: calc(100% - 100px)">
       <div class="btnPosition g-row-flex">
-        <el-button @click="dialogVisible=true" type="primary" icon="el-icon-edit">更改</el-button>
+        <el-button @click="dialogVisible = true" type="primary" icon="el-icon-edit">更改</el-button>
         <el-button class="" type="primary">保存</el-button>
         <el-button class="" type="primary">运行计算</el-button>
         <el-button class="" type="primary" icon="el-icon-download">下载</el-button>
       </div>
-      <el-row :gutter="12" >
+      <el-row :gutter="12">
         <el-col :span="8">
           <el-table
             :data="noticeList"
@@ -80,43 +80,61 @@
         </el-col>
       </el-row>
     </pagePanelNew>
-    <el-dialog title="井组自定义"  :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false">
-        <el-row >
-         <el-form :model="queryParams" ref="queryForm"  :inline="true" style="margin-top: 18px">
-       <el-form-item label="水井：" prop="noticeContent">
-          <el-select v-model="queryParams.deptId" placeholder="请选择水井" clearable size="small" style="width: 240px">
-            <el-option
-              v-for="(item, index) in deptSelect"
-              :key="index"
-              :label="item.deptName"
-              :value="item.deptId"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-       <el-form-item label="层位：" prop="noticeContent">
-          <el-select v-model="queryParams.deptId" placeholder="请选择层位" clearable size="small" style="width: 240px">
-            <el-option
-              v-for="(item, index) in deptSelect"
-              :key="index"
-              :label="item.deptName"
-              :value="item.deptId"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-        </el-row>
-        <span>油井</span>
-        <el-transfer
-      v-model="value"
-      :left-default-checked="[2, 3]"
-      :right-default-checked="[1]"
-      :titles="['未选中', '已选中']"
-      @change="handleChange"
-      :data="data"
-    >
-      <!-- <el-button class="transfer-footer" slot="left-footer" size="small">操作</el-button>
+    <el-dialog title="井组自定义" :visible.sync="dialogVisible" width="700px" :close-on-click-modal="false">
+      <el-row>
+        <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 18px">
+          <el-form-item label="水井：" prop="noticeContent">
+            <el-select
+              v-model="queryParams.deptId"
+              placeholder="请选择水井"
+              clearable
+              size="small"
+              style="width: 240px"
+            >
+              <el-option
+                v-for="(item, index) in deptSelect"
+                :key="index"
+                :label="item.deptName"
+                :value="item.deptId"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-col :span="20">
+          <el-form-item label="层位：" prop="noticeContent">
+            <el-select
+              v-model="queryParams.deptId"
+              placeholder="请选择层位"
+              clearable
+              size="small"
+              style="width: 240px"
+            >
+              <el-option
+                v-for="(item, index) in deptSelect"
+                :key="index"
+                :label="item.deptName"
+                :value="item.deptId"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          </el-col>
+<el-col :span="20">
+          <span>油井</span>
+</el-col>
+          <el-form-item label="井号">
+            <el-transfer
+              v-model="value"
+              :left-default-checked="[2, 3]"
+              :right-default-checked="[1]"
+              :titles="['未选中', '已选中']"
+              @change="handleChange"
+              :data="data"
+            >
+              <!-- <el-button class="transfer-footer" slot="left-footer" size="small">操作</el-button>
       <el-button class="transfer-footer" slot="right-footer" size="small">操作</el-button> -->
-    </el-transfer>
+            </el-transfer>
+          </el-form-item>
+        </el-form>
+      </el-row>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false" class="cancelBtn">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>

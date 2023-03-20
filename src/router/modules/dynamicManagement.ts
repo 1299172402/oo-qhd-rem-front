@@ -1,0 +1,27 @@
+import Layout from '@/layouts/index.vue';
+
+export default [
+  {
+    path: '/dynamicManagement',
+    name: 'dynamicManagement',
+    hidden: false,
+    component: Layout,
+    meta: { title: '油藏动态管理', icon: 'client', single: false },
+    children: [
+      {
+        path: 'performance',
+        name: 'performance',
+        component: () => import('@/layouts/blank.vue'),
+        meta: { title: '井组动态分析', single: false },
+        children: [
+          {
+            path: 'groupAssistance',
+            name: 'groupAssistance',
+            component: () => import('@/pages/rem/performance/wellGroup/groupAssistance/groupAssistance.vue'),
+            meta: { title: '井组辅助分析',icon: 'icon' },
+          },
+        ],
+      },
+    ],
+  },
+];
