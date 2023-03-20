@@ -87,7 +87,7 @@ export default {
   },
   activated() {
     if(this.$route.params.id === undefined){
-      this.$refs['Form'].resetFields();
+      this.$refs.Form.resetFields();
     }    
     this.getTreeselect();
     this.fn.save = this.$route.params.id ? updateTenant : addTenant;

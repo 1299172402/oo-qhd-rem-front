@@ -1,3 +1,4 @@
+<!-- 基础数据维护 - 井组信息维护 -->
 <template>
   <div class="app-container">
     <headerSearch class="g-w100 g-h100">
@@ -38,17 +39,15 @@
         <el-button class="" type="primary">运行计算</el-button>
         <el-button class="" type="primary" icon="el-icon-download">下载</el-button>
       </div>
-      <el-row :gutter="12">
+      <el-row :gutter="12" >
         <el-col :span="8">
           <el-table
             :data="noticeList"
             highlight-current-row
-            height="calc(100% - 45px)"
             :row-style="{ height: '0px' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
             header-cell-class-name="table_header"
             :cell-style="{ 'text-align': 'center', padding: '2px' }"
-            style="width: 100%; height: 100%"
             :default-sort="{ prop: 'date', order: 'descending' }"
           >
             <!-- <el-table-column type="selection" width="55" align="center" /> -->
@@ -104,14 +103,14 @@
             ></el-option>
           </el-select>
         </el-form-item>
-       
       </el-form>
         </el-row>
+        <span>油井</span>
         <el-transfer
       v-model="value"
       :left-default-checked="[2, 3]"
       :right-default-checked="[1]"
-      :titles="['源列表', '目的列表']"
+      :titles="['未选中', '已选中']"
       @change="handleChange"
       :data="data"
     >

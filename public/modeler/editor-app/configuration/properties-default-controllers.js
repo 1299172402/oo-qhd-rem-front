@@ -17,34 +17,34 @@
 
 angular.module('flowableModeler').controller('FlowableStringPropertyCtrl', [ '$scope', function ($scope) {
 
-	$scope.shapeId = $scope.selectedShape.id;
-	$scope.valueFlushed = false;
-    /** Handler called when input field is blurred */
-    $scope.inputBlurred = function() {
+  $scope.shapeId = $scope.selectedShape.id;
+  $scope.valueFlushed = false;
+  /** Handler called when input field is blurred */
+  $scope.inputBlurred = function() {
     	$scope.valueFlushed = true;
     	if ($scope.property.value) {
     		$scope.property.value = $scope.property.value.replace(/(<([^>]+)>)/ig,"");
     	}
-        $scope.updatePropertyInModel($scope.property);
-    };
+    $scope.updatePropertyInModel($scope.property);
+  };
 
-    $scope.enterPressed = function(keyEvent) {
-        // if enter is pressed
-        if (keyEvent && keyEvent.which === 13) {
-            keyEvent.preventDefault();
-            $scope.inputBlurred(); // we want to do the same as if the user would blur the input field
-        }
-        // else; do nothing
-    };
+  $scope.enterPressed = function(keyEvent) {
+    // if enter is pressed
+    if (keyEvent && keyEvent.which === 13) {
+      keyEvent.preventDefault();
+      $scope.inputBlurred(); // we want to do the same as if the user would blur the input field
+    }
+    // else; do nothing
+  };
     
-    $scope.$on('$destroy', function controllerDestroyed() {
+  $scope.$on('$destroy', () => {
     	if(!$scope.valueFlushed) {
     		if ($scope.property.value) {
         		$scope.property.value = $scope.property.value.replace(/(<([^>]+)>)/ig,"");
         	}
     		$scope.updatePropertyInModel($scope.property, $scope.shapeId);
     	}
-    });
+  });
 
 }]);
 
@@ -54,31 +54,31 @@ angular.module('flowableModeler').controller('FlowableStringPropertyCtrl', [ '$s
 
 angular.module('flowableModeler').controller('FlowableBooleanPropertyCtrl', ['$scope', function ($scope) {
 
-    $scope.changeValue = function() {
-        if ($scope.property.key === 'oryx-defaultflow' && $scope.property.value) {
-            var selectedShape = $scope.selectedShape;
-            if (selectedShape) {
-                var incomingNodes = selectedShape.getIncomingShapes();
-                if (incomingNodes && incomingNodes.length > 0) {
-                    // get first node, since there can be only one for a sequence flow
-                    var rootNode = incomingNodes[0];
-                    var flows = rootNode.getOutgoingShapes();
-                    if (flows && flows.length > 1) {
-                        // in case there are more flows, check if another flow is already defined as default
-                        for (var i = 0; i < flows.length; i++) {
-                            if (flows[i].resourceId != selectedShape.resourceId) {
-                                var defaultFlowProp = flows[i].properties.get('oryx-defaultflow');
-                                if (defaultFlowProp) {
-                                    flows[i].setProperty('oryx-defaultflow', false, true);
-                                }
-                            }
-                        }
-                    }
+  $scope.changeValue = function() {
+    if ($scope.property.key === 'oryx-defaultflow' && $scope.property.value) {
+      const {selectedShape} = $scope;
+      if (selectedShape) {
+        const incomingNodes = selectedShape.getIncomingShapes();
+        if (incomingNodes && incomingNodes.length > 0) {
+          // get first node, since there can be only one for a sequence flow
+          const rootNode = incomingNodes[0];
+          const flows = rootNode.getOutgoingShapes();
+          if (flows && flows.length > 1) {
+            // in case there are more flows, check if another flow is already defined as default
+            for (let i = 0; i < flows.length; i++) {
+              if (flows[i].resourceId != selectedShape.resourceId) {
+                const defaultFlowProp = flows[i].properties.get('oryx-defaultflow');
+                if (defaultFlowProp) {
+                  flows[i].setProperty('oryx-defaultflow', false, true);
                 }
+              }
             }
+          }
         }
-        $scope.updatePropertyInModel($scope.property);
-    };
+      }
+    }
+    $scope.updatePropertyInModel($scope.property);
+  };
 
 }]);
 
@@ -88,31 +88,31 @@ angular.module('flowableModeler').controller('FlowableBooleanPropertyCtrl', ['$s
 
 angular.module('flowableModeler').controller('FlowableTextPropertyCtrl', [ '$scope', '$modal', '$timeout', function($scope, $modal, $timeout) {
 
-    var opts = {
-        template:  'editor-app/configuration/properties/text-popup.html?version=' + Date.now(),
-        scope: $scope,
-        prefixEvent: 'textModalEvent'
-    };
+  const opts = {
+    template:  `editor-app/configuration/properties/text-popup.html?version=${  Date.now()}`,
+    scope: $scope,
+    prefixEvent: 'textModalEvent'
+  };
     
-     $scope.$on('textModalEvent.hide.before', function() {
-        $timeout(function() {
-            $scope.property.mode = 'read';
-        }, 0);
-    });
+  $scope.$on('textModalEvent.hide.before', () => {
+    $timeout(() => {
+      $scope.property.mode = 'read';
+    }, 0);
+  });
     
-    // Open the dialog
-    _internalCreateModal(opts, $modal, $scope);
+  // Open the dialog
+  _internalCreateModal(opts, $modal, $scope);
 }]);
 
 angular.module('flowableModeler').controller('FlowableTextPropertyPopupCtrl', ['$scope', function($scope) {
 
-    $scope.save = function() {
-        $scope.updatePropertyInModel($scope.property);
-        $scope.close();
-    };
+  $scope.save = function() {
+    $scope.updatePropertyInModel($scope.property);
+    $scope.close();
+  };
     
-    $scope.close = function() {
-        $scope.property.mode = 'read';
-        $scope.$hide();
-    };
+  $scope.close = function() {
+    $scope.property.mode = 'read';
+    $scope.$hide();
+  };
 }]);

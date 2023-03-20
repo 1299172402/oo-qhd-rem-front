@@ -37,7 +37,7 @@ export const FormMixins = {
     /**
      * 根据id获取数据
      */
-    getModel: function(id) {
+    getModel(id) {
       this.loading = true;
       return this.fn.findById(id)
         .then((v) => {
@@ -51,13 +51,13 @@ export const FormMixins = {
     /**
      * 获取数据处理
      */
-    getFindModel: function(re) {
+    getFindModel(re) {
       return re.data;
     },
     /**
      * 保存数据方法
      */
-    postForm: function(way = "save") {
+    postForm(way = "save") {
       this.loading = true;
       this.fn[way](this.getSaveModel())
         .then((res) => {

@@ -94,21 +94,21 @@ export default [
   //       }
   //     ]
   //   },
-  {
-    path: '/demo5',
-    name: 'demo5',
-    component: Layout,
-    redirect: '/demo5/demoIndex5',
-    meta: { title: '拖拽组件', icon: 'form', single: true },
-    children: [
-      {
-        path: 'demoIndex5',
-        name: 'demoIndex5',
-        component: () => import('@/pages/intelligentOilfield/demo/index5.vue'),
-        meta: { title: '拖拽组件' },
-      },
-    ],
-  },
+  // {
+  //   path: '/demo5',
+  //   name: 'demo5',
+  //   component: Layout,
+  //   redirect: '/demo5/demoIndex5',
+  //   meta: { title: '拖拽组件', icon: 'form', single: true },
+  //   children: [
+  //     {
+  //       path: 'demoIndex5',
+  //       name: 'demoIndex5',
+  //       component: () => import('@/pages/intelligentOilfield/demo/index5.vue'),
+  //       meta: { title: '拖拽组件' },
+  //     },
+  //   ],
+  // },
   // 详情页路由注册——不显示在左侧菜单
   {
     path: '/userManagementDetail',

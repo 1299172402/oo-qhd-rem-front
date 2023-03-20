@@ -13,70 +13,70 @@
 
 angular.module('flowableModeler').controller('FlowablePlanItemDropdownCtrl', [ '$scope', function($scope) {
 
-    // Find all planitems
-    var selectedShape = $scope.selectedShape;
-    if (selectedShape) {
+  // Find all planitems
+  const {selectedShape} = $scope;
+  if (selectedShape) {
         
-        // Go up in parent chain until plan model is found
-        var planModel;        
-        var parent = selectedShape.parent;
-        if (parent) {
-            while (planModel === undefined && parent !== null && parent !== undefined) {
-                if (parent.resourceId !== null && parent.resourceId !== undefined && 'casePlanModel' === parent.resourceId) {
-                    planModel = parent;                
-                } else {
-                    parent = parent.parent;
-                }
-            }
+    // Go up in parent chain until plan model is found
+    let planModel;        
+    let {parent} = selectedShape;
+    if (parent) {
+      while (planModel === undefined && parent !== null && parent !== undefined) {
+        if (parent.resourceId !== null && parent.resourceId !== undefined && parent.resourceId === 'casePlanModel') {
+          planModel = parent;                
+        } else {
+          parent = parent.parent;
         }
+      }
+    }
         
-        var planItems = [];
-        if (planModel !== null && planModel !== undefined) {
+    const planItems = [];
+    if (planModel !== null && planModel !== undefined) {
         
-            var toVisit = [];
-            for (var i=0; i<planModel.children.length; i++) {
-                toVisit.push(planModel.children[i]);
-            }
+      const toVisit = [];
+      for (var i=0; i<planModel.children.length; i++) {
+        toVisit.push(planModel.children[i]);
+      }
             
-            while (toVisit.length > 0) {
-                var child = toVisit.pop();
-                if (typeof child.getStencil === 'function' 
+      while (toVisit.length > 0) {
+        const child = toVisit.pop();
+        if (typeof child.getStencil === 'function' 
                     && (child.getStencil()._jsonStencil.groups.indexOf('Activities') >= 0 || (child.getStencil()._jsonStencil.title === 'Stage') )) {
-                    planItems.push(child);
-                }
-                if (child.children !== null && child.children !== undefined) {
-                     for (var i=0; i<child.children.length; i++) {
-                        toVisit.push(child.children[i]);
-                    }
-                }
-            }
+          planItems.push(child);
         }
-        
-        var simplifiedPlanItems = [];
-        for (var i=0; i<planItems.length; i++) {
-            simplifiedPlanItems.push({ id: planItems[i].resourceId, name: planItems[i].properties.get('oryx-name') });
+        if (child.children !== null && child.children !== undefined) {
+          for (var i=0; i<child.children.length; i++) {
+            toVisit.push(child.children[i]);
+          }
         }
-        
-        if (simplifiedPlanItems.length > 0) {
-            simplifiedPlanItems.sort(function(a,b) {
-                if(a.name < b.name) {
-                    return -1;
-                } else if (a.name > b.name) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            });
-        }
-        $scope.planItems = simplifiedPlanItems;
-        
+      }
     }
+        
+    const simplifiedPlanItems = [];
+    for (var i=0; i<planItems.length; i++) {
+      simplifiedPlanItems.push({ id: planItems[i].resourceId, name: planItems[i].properties.get('oryx-name') });
+    }
+        
+    if (simplifiedPlanItems.length > 0) {
+      simplifiedPlanItems.sort((a,b) => {
+        if(a.name < b.name) {
+          return -1;
+        } if (a.name > b.name) {
+          return 1;
+        } 
+        return 0;
+        
+      });
+    }
+    $scope.planItems = simplifiedPlanItems;
+        
+  }
 
-    if ($scope.property.value == undefined && $scope.property.value == null) {
+  if ($scope.property.value == undefined && $scope.property.value == null) {
     	$scope.property.value = '';
-    }
+  }
         
-    $scope.planItemChanged = function() {
+  $scope.planItemChanged = function() {
     	$scope.updatePropertyInModel($scope.property);
-    };
+  };
 }]);

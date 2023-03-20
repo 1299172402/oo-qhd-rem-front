@@ -12,43 +12,43 @@
  */
 angular.module('flowableModeler')
   .controller('ProcessDiagramCtrl', ['$rootScope', '$scope', '$translate', '$http', '$location', '$routeParams','$modal', '$popover', '$timeout', 'appResourceRoot', 'ResourceService',
-                              function ($rootScope, $scope, $translate, $http, $location, $routeParams, $modal, $popover, $timeout, appResourceRoot, ResourceService) {
+    function ($rootScope, $scope, $translate, $http, $location, $routeParams, $modal, $popover, $timeout, appResourceRoot, ResourceService) {
 
-    // Main page (needed for visual indicator of current page)
-    $rootScope.setMainPageById('processes');
+      // Main page (needed for visual indicator of current page)
+      $rootScope.setMainPageById('processes');
 
-    // Initialize model
-    $scope.model = {
+      // Initialize model
+      $scope.model = {
         // Store the main model id, this points to the current version of a model,
         // even when we're showing history
         latestModelId: $routeParams.modelId
-    };
+      };
     
-    $scope.loadProcess = function() {
+      $scope.loadProcess = function() {
         $scope.model.process = {id : $routeParams.modelId};
 
-        $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        $rootScope.$on('$routeChangeStart', (event, next, current) => {
           jQuery('.qtip').qtip('destroy', true);
         });
 
-        $timeout(function() {
-        jQuery("#bpmnModel").attr('data-model-id', $routeParams.modelId);
-        jQuery("#bpmnModel").attr('data-model-type', 'design');
+        $timeout(() => {
+          jQuery("#bpmnModel").attr('data-model-id', $routeParams.modelId);
+          jQuery("#bpmnModel").attr('data-model-type', 'design');
 
-        var viewerUrl = appResourceRoot + "display/displaymodel.html?version=" + Date.now();
+          const viewerUrl = `${appResourceRoot  }display/displaymodel.html?version=${  Date.now()}`;
 
-        // If Flowable has been deployed inside an AMD environment Raphael will fail to register
-        // itself globally until displaymodel.js (which depends ona global Raphale variable) is running,
-        // therefore remove AMD's define method until we have loaded in Raphael and displaymodel.js
-        // and assume/hope its not used during.
-        var amdDefine = window.define;
-        window.define = undefined;
-        ResourceService.loadFromHtml(viewerUrl, function(){
+          // If Flowable has been deployed inside an AMD environment Raphael will fail to register
+          // itself globally until displaymodel.js (which depends ona global Raphale variable) is running,
+          // therefore remove AMD's define method until we have loaded in Raphael and displaymodel.js
+          // and assume/hope its not used during.
+          const amdDefine = window.define;
+          window.define = undefined;
+          ResourceService.loadFromHtml(viewerUrl, ()=> {
             // Restore AMD's define method again
             window.define = amdDefine;
+          });
         });
-        });
-    };
+      };
     
-    $scope.loadProcess();
-}]);
+      $scope.loadProcess();
+    }]);

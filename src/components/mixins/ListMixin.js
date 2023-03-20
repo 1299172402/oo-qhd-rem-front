@@ -366,7 +366,7 @@ export const ListMixins = {
 };
 export const DeleteMixin = {
   methods: {
-    handleDelete: function(id) {
+    handleDelete(id) {
       this.$modal
         .confirm("是否确认删除该数据？")
         .then(() => this.fn.delete(id))

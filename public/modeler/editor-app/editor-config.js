@@ -11,17 +11,17 @@
  * limitations under the License.
  */
 
-'use strict';
+
 
 var FLOWABLE = FLOWABLE || {};
 
 FLOWABLE.UI_CONFIG = {
-		'showRemovedProperties' : false
+  'showRemovedProperties' : false
 };
 
 FLOWABLE.HEADER_CONFIG = {
-		'showAppTitle' : true,
-		'showHeaderMenu' : true,
-		'showMainNavigation' : true,
-		'showPageHeader' : true
+  'showAppTitle' : true,
+  'showHeaderMenu' : true,
+  'showMainNavigation' : true,
+  'showPageHeader' : true
 };

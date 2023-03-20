@@ -13,19 +13,19 @@
  * limitations under the License.
  */
 
-'use strict';
+
 
 var FLOWABLE = FLOWABLE || {};
 
-var pathname = window.location.pathname.replace(/^(\/[^\/]*)(\/.*)?$/, '$1').replace(/\/$/, '');
+const pathname = window.location.pathname.replace(/^(\/[^\/]*)(\/.*)?$/, '$1').replace(/\/$/, '');
 
-var FtId = window.location.href.substring(window.location.href.indexOf('=') + 1, window.location.href.length)
+const FtId = window.location.href.substring(window.location.href.indexOf('=') + 1, window.location.href.length)
 
 FLOWABLE.CONFIG = {
-	'onPremise' : true,
-	'contextRoot' : localStorage.getItem("contextRoot"),
-	'webContextRoot' : window.origin + "/modeler",
-	'datesLocalization' : false,
-	'loginPage' : "/login.html",
-	'FtId' : FtId
+  'onPremise' : true,
+  'contextRoot' : localStorage.getItem("contextRoot"),
+  'webContextRoot' : `${window.origin  }/modeler`,
+  'datesLocalization' : false,
+  'loginPage' : "/login.html",
+  'FtId' : FtId
 };

@@ -12,30 +12,30 @@
  */
 angular.module('flowableModeler').controller('FlowableMessageRefCtrl', [ '$scope', function($scope) {
 
-    // Find the parent shape on which the message definitions are defined
-    var messageDefinitionsProperty = undefined;
-    var parent = $scope.selectedShape;
-    while (parent !== null && parent !== undefined && messageDefinitionsProperty === undefined) {
-        if (parent.properties && parent.properties.get('oryx-messagedefinitions')) {
+  // Find the parent shape on which the message definitions are defined
+  let messageDefinitionsProperty;
+  let parent = $scope.selectedShape;
+  while (parent !== null && parent !== undefined && messageDefinitionsProperty === undefined) {
+    if (parent.properties && parent.properties.get('oryx-messagedefinitions')) {
         	messageDefinitionsProperty = parent.properties.get('oryx-messagedefinitions');
-        } else {
-            parent = parent.parent;
-        }
+    } else {
+      parent = parent.parent;
     }
+  }
 
-    try {
-        messageDefinitionsProperty = JSON.parse(messageDefinitionsProperty);
-        if (typeof messageDefinitionsProperty == 'string') {
-            messageDefinitionsProperty = JSON.parse(messageDefinitionsProperty);
-        }
-    } catch (err) {
-        // Do nothing here, just to be sure we try-catch it
+  try {
+    messageDefinitionsProperty = JSON.parse(messageDefinitionsProperty);
+    if (typeof messageDefinitionsProperty === 'string') {
+      messageDefinitionsProperty = JSON.parse(messageDefinitionsProperty);
     }
+  } catch (err) {
+    // Do nothing here, just to be sure we try-catch it
+  }
 
-    $scope.messageDefinitions = messageDefinitionsProperty;
+  $scope.messageDefinitions = messageDefinitionsProperty;
 
 
-    $scope.messageChanged = function() {
+  $scope.messageChanged = function() {
     	$scope.updatePropertyInModel($scope.property);
-    };
+  };
 }]);

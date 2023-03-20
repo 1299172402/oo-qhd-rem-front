@@ -46,6 +46,7 @@ const mutations = {
   },
   setUserInfo(state, userInfo) {
     state.userInfo = userInfo;
+    console.log('state.userInfo',state.userInfo)
   },
   setProjectionMode(state, projectionMode) {
     state.projectionMode = projectionMode;

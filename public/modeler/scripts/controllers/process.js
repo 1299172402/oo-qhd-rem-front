@@ -12,42 +12,42 @@
  */
 angular.module('flowableModeler')
   .controller('ProcessCtrl', ['$rootScope', '$scope', '$translate', '$http', '$location', '$routeParams','$modal', '$popover', '$timeout', 'appResourceRoot', 'ResourceService',
-                              function ($rootScope, $scope, $translate, $http, $location, $routeParams, $modal, $popover, $timeout, appResourceRoot, ResourceService) {
+    function ($rootScope, $scope, $translate, $http, $location, $routeParams, $modal, $popover, $timeout, appResourceRoot, ResourceService) {
 
-    // Main page (needed for visual indicator of current page)
-    $rootScope.setMainPageById('processes');
+      // Main page (needed for visual indicator of current page)
+      $rootScope.setMainPageById('processes');
 
-    // Initialize model
-    $scope.model = {
+      // Initialize model
+      $scope.model = {
         // Store the main model id, this points to the current version of a model,
         // even when we're showing history
         latestModelId: $routeParams.modelId
-    };
+      };
     
-    $scope.loadProcess = function() {
-      var url;
-      if ($routeParams.modelHistoryId) {
-        url = FLOWABLE.APP_URL.getModelUrl($routeParams.modelId) + '/history/' + $routeParams.modelHistoryId;
-      } else {
-        url = FLOWABLE.APP_URL.getModelUrl($routeParams.modelId);
-      }
+      $scope.loadProcess = function() {
+        let url;
+        if ($routeParams.modelHistoryId) {
+          url = `${FLOWABLE.APP_URL.getModelUrl($routeParams.modelId)  }/history/${  $routeParams.modelHistoryId}`;
+        } else {
+          url = FLOWABLE.APP_URL.getModelUrl($routeParams.modelId);
+        }
       
-      $http({method: 'GET', url: url}).
-        success(function(data, status, headers, config) {
-          $scope.model.process = data;
+        $http({method: 'GET', url}).
+          success((data, status, headers, config) => {
+            $scope.model.process = data;
 
-          $scope.loadVersions();
+            $scope.loadVersions();
 
-          $scope.model.bpmn20DownloadUrl = $routeParams.modelHistoryId == undefined ?
+            $scope.model.bpmn20DownloadUrl = $routeParams.modelHistoryId == undefined ?
               FLOWABLE.APP_URL.getModelBpmn20ExportUrl($routeParams.modelId) :
               FLOWABLE.APP_URL.getModelHistoryBpmn20ExportUrl($routeParams.modelId, $routeParams.modelHistoryId);
 
 
-        	  $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        	  $rootScope.$on('$routeChangeStart', (event, next, current) => {
         		  jQuery('.qtip').qtip('destroy', true);
         	  });
         	  
-	          $timeout(function() {
+	          $timeout(() => {
 	            jQuery("#bpmnModel").attr('data-model-id', $routeParams.modelId);
 	            jQuery("#bpmnModel").attr('data-model-type', 'design');
 	            
@@ -56,97 +56,97 @@ angular.module('flowableModeler')
 	              jQuery("#bpmnModel").attr('data-history-id', $routeParams.modelHistoryId);
 	            }
 
-                var viewerUrl = appResourceRoot + "display/displaymodel.html?version=" + Date.now();
+              const viewerUrl = `${appResourceRoot  }display/displaymodel.html?version=${  Date.now()}`;
 
-                // If Flowable has been deployed inside an AMD environment Raphael will fail to register
-                // itself globally until displaymodel.js (which depends ona global Raphale variable) is running,
-                // therefore remove AMD's define method until we have loaded in Raphael and displaymodel.js
-                // and assume/hope its not used during.
-                var amdDefine = window.define;
-                window.define = undefined;
-                ResourceService.loadFromHtml(viewerUrl, function(){
-                    // Restore AMD's define method again
-                    window.define = amdDefine;
-                });
+              // If Flowable has been deployed inside an AMD environment Raphael will fail to register
+              // itself globally until displaymodel.js (which depends ona global Raphale variable) is running,
+              // therefore remove AMD's define method until we have loaded in Raphael and displaymodel.js
+              // and assume/hope its not used during.
+              const amdDefine = window.define;
+              window.define = undefined;
+              ResourceService.loadFromHtml(viewerUrl, ()=> {
+                // Restore AMD's define method again
+                window.define = amdDefine;
               });
+            });
 
-        }).error(function(data, status, headers, config) {
-          $scope.returnToList();
-        });
-    };
+          }).error((data, status, headers, config) => {
+            $scope.returnToList();
+          });
+      };
     
-    $scope.useAsNewVersion = function() {
+      $scope.useAsNewVersion = function() {
         _internalCreateModal({
     		template: 'views/popup/model-use-as-new-version.html',
     		scope: $scope
     	}, $modal, $scope);
-    };
-    
-    $scope.loadVersions = function() {
-      
-      var params = {
-        includeLatestVersion: !$scope.model.process.latestVersion  
       };
+    
+      $scope.loadVersions = function() {
       
-      $http({method: 'GET', url: FLOWABLE.APP_URL.getModelHistoriesUrl($scope.model.latestModelId), params: params}).
-      success(function(data, status, headers, config) {
-        if ($scope.model.process.latestVersion) {
-          if (!data.data) {
-            data.data = [];
-          }
-          data.data.unshift($scope.model.process);
-        }
+        const params = {
+          includeLatestVersion: !$scope.model.process.latestVersion  
+        };
+      
+        $http({method: 'GET', url: FLOWABLE.APP_URL.getModelHistoriesUrl($scope.model.latestModelId), params}).
+          success((data, status, headers, config) => {
+            if ($scope.model.process.latestVersion) {
+              if (!data.data) {
+                data.data = [];
+              }
+              data.data.unshift($scope.model.process);
+            }
         
-        $scope.model.versions = data;
-      });
-    };
+            $scope.model.versions = data;
+          });
+      };
     
-    $scope.showVersion = function(version) {
-      if(version) {
-        if(version.latestVersion) {
-            $location.path("/processes/" +  $scope.model.latestModelId);
-        } else{
+      $scope.showVersion = function(version) {
+        if(version) {
+          if(version.latestVersion) {
+            $location.path(`/processes/${   $scope.model.latestModelId}`);
+          } else{
           // Show latest version, no history-suffix needed in URL
-          $location.path("/processes/" +  $scope.model.latestModelId + "/history/" + version.id);
+            $location.path(`/processes/${   $scope.model.latestModelId  }/history/${  version.id}`);
+          }
         }
-      }
-    };
+      };
     
-    $scope.returnToList = function() {
+      $scope.returnToList = function() {
         $location.path("/processes/");
-    };
+      };
     
-    $scope.editProcess = function() {
+      $scope.editProcess = function() {
         _internalCreateModal({
     		template: 'views/popup/model-edit.html',
 	        scope: $scope
     	}, $modal, $scope);
-    };
+      };
 
-    $scope.duplicateProcess = function() {
-      var modalInstance = _internalCreateModal({
-        template: 'views/popup/process-duplicate.html?version=' + Date.now()
-      }, $modal, $scope);
+      $scope.duplicateProcess = function() {
+        const modalInstance = _internalCreateModal({
+          template: `views/popup/process-duplicate.html?version=${  Date.now()}`
+        }, $modal, $scope);
 
-      modalInstance.$scope.originalModel = $scope.model;
-    };
+        modalInstance.$scope.originalModel = $scope.model;
+      };
 
-    $scope.deleteProcess = function() {
+      $scope.deleteProcess = function() {
         _internalCreateModal({
     		template: 'views/popup/model-delete.html',
     		scope: $scope
     	}, $modal, $scope);
-    };
+      };
     
-    $scope.openEditor = function() {
-      if ($scope.model.process) {
-        $location.path("/editor/" + $scope.model.process.id);
-      }
-    };
+      $scope.openEditor = function() {
+        if ($scope.model.process) {
+          $location.path(`/editor/${  $scope.model.process.id}`);
+        }
+      };
       
-    $scope.toggleHistory = function($event) {
+      $scope.toggleHistory = function($event) {
         if(!$scope.historyState) {
-          var state = {};
+          const state = {};
           $scope.historyState = state;
           
           // Create popover
@@ -158,7 +158,7 @@ angular.module('flowableModeler')
             container: 'body'
           });
           
-          var destroy = function() {
+          const destroy = function() {
             state.popover.destroy();
             delete $scope.historyState;
           }
@@ -167,7 +167,7 @@ angular.module('flowableModeler')
           state.popover.$scope.$on('tooltip.hide', destroy);
           $scope.$on('$destroy', destroy);
         }
-    };
+      };
     
-    $scope.loadProcess();
-}]);
+      $scope.loadProcess();
+    }]);

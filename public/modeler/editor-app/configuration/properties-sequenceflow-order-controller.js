@@ -16,66 +16,66 @@
  */
 
 angular.module('flowableModeler').controller('FlowableSequenceFlowOrderCtrl',
-    [ '$scope', '$modal', '$timeout', '$translate', function($scope, $modal, $timeout, $translate) {
+  [ '$scope', '$modal', '$timeout', '$translate', function($scope, $modal, $timeout, $translate) {
 
     // Config for the modal window
-    var opts = {
-        template:  'editor-app/configuration/properties/sequenceflow-order-popup.html?version=' + Date.now(),
-        scope: $scope
+    const opts = {
+      template:  `editor-app/configuration/properties/sequenceflow-order-popup.html?version=${  Date.now()}`,
+      scope: $scope
     };
 
     _internalCreateModal(opts, $modal, $scope);
-}]);
+  }]);
 
 angular.module('flowableModeler').controller('FlowableSequenceFlowOrderPopupCtrl',
-    ['$scope', '$translate', function($scope, $translate) {
+  ['$scope', '$translate', function($scope, $translate) {
 
     // Find the outgoing sequence flow of the current selected shape
-    var outgoingSequenceFlow = [];
-    var selectedShape = $scope.selectedShape;
+    const outgoingSequenceFlow = [];
+    const {selectedShape} = $scope;
     if (selectedShape) {
-        var outgoingNodes = selectedShape.getOutgoingShapes();
-        for (var i=0; i<outgoingNodes.length; i++) {
-            if (outgoingNodes[i].getStencil().idWithoutNs() === 'SequenceFlow') {
-                var targetActivity = outgoingNodes[i].getTarget();
-                // We need the resourceId of a sequence flow, not the id because that will change with every editor load
-                outgoingSequenceFlow.push({
-                    id : outgoingNodes[i].resourceId,
-                    targetTitle : targetActivity.properties.get('oryx-name'),
-                    targetType : $translate.instant(targetActivity.getStencil().title())
-                });
-            }
+      const outgoingNodes = selectedShape.getOutgoingShapes();
+      for (let i=0; i<outgoingNodes.length; i++) {
+        if (outgoingNodes[i].getStencil().idWithoutNs() === 'SequenceFlow') {
+          const targetActivity = outgoingNodes[i].getTarget();
+          // We need the resourceId of a sequence flow, not the id because that will change with every editor load
+          outgoingSequenceFlow.push({
+            id : outgoingNodes[i].resourceId,
+            targetTitle : targetActivity.properties.get('oryx-name'),
+            targetType : $translate.instant(targetActivity.getStencil().title())
+          });
         }
+      }
     } else {
-        console.log('Programmatic error: no selected shape found');
+      console.log('Programmatic error: no selected shape found');
     }
 
     // Now we can apply the order which was (possibly) previously saved
-    var orderedOutgoingSequenceFlow = [];
+    let orderedOutgoingSequenceFlow = [];
     if ($scope.property.value && $scope.property.value.sequenceFlowOrder) {
 
-        var sequenceFlowOrderList = $scope.property.value.sequenceFlowOrder;
+      const sequenceFlowOrderList = $scope.property.value.sequenceFlowOrder;
 
-        // Loop the list of sequence flow that was saved  in the json model and match them with the outgoing sequence flow found above
-        for (var flowIndex=0; flowIndex < sequenceFlowOrderList.length; flowIndex++) {
+      // Loop the list of sequence flow that was saved  in the json model and match them with the outgoing sequence flow found above
+      for (let flowIndex=0; flowIndex < sequenceFlowOrderList.length; flowIndex++) {
 
-            // find the sequence flow in the outgoing sequence flows.
+        // find the sequence flow in the outgoing sequence flows.
 
-            for (var outgoingFlowIndex=0; outgoingFlowIndex < outgoingSequenceFlow.length; outgoingFlowIndex++) {
-                if (outgoingSequenceFlow[outgoingFlowIndex].id === sequenceFlowOrderList[flowIndex]) {
-                    orderedOutgoingSequenceFlow.push(outgoingSequenceFlow[outgoingFlowIndex]);
-                    outgoingSequenceFlow.splice(outgoingFlowIndex, 1);
-                    break;
-                }
-            }
+        for (let outgoingFlowIndex=0; outgoingFlowIndex < outgoingSequenceFlow.length; outgoingFlowIndex++) {
+          if (outgoingSequenceFlow[outgoingFlowIndex].id === sequenceFlowOrderList[flowIndex]) {
+            orderedOutgoingSequenceFlow.push(outgoingSequenceFlow[outgoingFlowIndex]);
+            outgoingSequenceFlow.splice(outgoingFlowIndex, 1);
+            break;
+          }
         }
+      }
 
-        // Now all the matching sequence flow we're removed from the outgoing sequence flow list
-        // We can simply apply the remaining ones (these are new vs. the time when the values were saved to the model)
-        orderedOutgoingSequenceFlow = orderedOutgoingSequenceFlow.concat(outgoingSequenceFlow);
+      // Now all the matching sequence flow we're removed from the outgoing sequence flow list
+      // We can simply apply the remaining ones (these are new vs. the time when the values were saved to the model)
+      orderedOutgoingSequenceFlow = orderedOutgoingSequenceFlow.concat(outgoingSequenceFlow);
 
     } else {
-        orderedOutgoingSequenceFlow = outgoingSequenceFlow;
+      orderedOutgoingSequenceFlow = outgoingSequenceFlow;
     }
 
     // Now we can put it on the scope
@@ -83,44 +83,44 @@ angular.module('flowableModeler').controller('FlowableSequenceFlowOrderPopupCtrl
 
     // Move up click handler
     $scope.moveUp = function(index) {
-        var temp = $scope.outgoingSequenceFlow[index];
-        $scope.outgoingSequenceFlow[index] = $scope.outgoingSequenceFlow[index - 1];
-        $scope.outgoingSequenceFlow[index - 1] = temp;
+      const temp = $scope.outgoingSequenceFlow[index];
+      $scope.outgoingSequenceFlow[index] = $scope.outgoingSequenceFlow[index - 1];
+      $scope.outgoingSequenceFlow[index - 1] = temp;
     };
 
     // Move down click handler
     $scope.moveDown = function(index) {
-        var temp = $scope.outgoingSequenceFlow[index];
-        $scope.outgoingSequenceFlow[index] = $scope.outgoingSequenceFlow[index + 1];
-        $scope.outgoingSequenceFlow[index + 1] = temp;
+      const temp = $scope.outgoingSequenceFlow[index];
+      $scope.outgoingSequenceFlow[index] = $scope.outgoingSequenceFlow[index + 1];
+      $scope.outgoingSequenceFlow[index + 1] = temp;
     };
 
     // Save click handler
     $scope.save = function() {
-        if ($scope.outgoingSequenceFlow.length > 0) {
-            $scope.property.value = {};
-            $scope.property.value.sequenceFlowOrder = [];
+      if ($scope.outgoingSequenceFlow.length > 0) {
+        $scope.property.value = {};
+        $scope.property.value.sequenceFlowOrder = [];
 
-            for (var flowIndex=0; flowIndex < $scope.outgoingSequenceFlow.length; flowIndex++) {
-                $scope.property.value.sequenceFlowOrder.push($scope.outgoingSequenceFlow[flowIndex].id);
-            }
-        } else {
-            $scope.property.value = null;
+        for (let flowIndex=0; flowIndex < $scope.outgoingSequenceFlow.length; flowIndex++) {
+          $scope.property.value.sequenceFlowOrder.push($scope.outgoingSequenceFlow[flowIndex].id);
         }
+      } else {
+        $scope.property.value = null;
+      }
 
-        $scope.updatePropertyInModel($scope.property);
-        $scope.close();
+      $scope.updatePropertyInModel($scope.property);
+      $scope.close();
     };
 
     // Cancel click handler
     $scope.cancel = function() {
-        $scope.close();
+      $scope.close();
     };
 
     // Close button handler
     $scope.close = function() {
-        $scope.property.mode = 'read';
-        $scope.$hide();
+      $scope.property.mode = 'read';
+      $scope.$hide();
     };
 
-}]);
+  }]);

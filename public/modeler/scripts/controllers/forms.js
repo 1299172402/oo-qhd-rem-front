@@ -10,29 +10,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
+
+
 
 angular.module('flowableModeler')
   .controller('FormsCtrl', ['$rootScope', '$scope', '$translate', '$http', '$timeout','$location', '$modal', function ($rootScope, $scope, $translate, $http, $timeout, $location, $modal) {
 
-      // Main page (needed for visual indicator of current page)
-      $rootScope.setMainPageById('forms');
-      $rootScope.formItems = undefined;
+    // Main page (needed for visual indicator of current page)
+    $rootScope.setMainPageById('forms');
+    $rootScope.formItems = undefined;
 
-      // get latest thumbnails
-      $scope.imageVersion = Date.now();
+    // get latest thumbnails
+    $scope.imageVersion = Date.now();
 
 	  $scope.model = {
-        filters: [
-            {id: 'forms', labelKey: 'FORMS'}
-		],
+      filters: [
+        {id: 'forms', labelKey: 'FORMS'}
+      ],
 
-		sorts: [
+      sorts: [
 		        {id: 'modifiedDesc', labelKey: 'MODIFIED-DESC'},
 		        {id: 'modifiedAsc', labelKey: 'MODIFIED-ASC'},
 		        {id: 'nameAsc', labelKey: 'NAME-ASC'},
 		        {id: 'nameDesc', labelKey: 'NAME-DESC'}
-		]
+      ]
 	  };
 
 	  if ($rootScope.formFilter) {
@@ -66,7 +67,7 @@ angular.module('flowableModeler')
 	  $scope.loadForms = function() {
 		  $scope.model.loading = true;
 
-		  var params = {
+		  const params = {
 		      filter: $scope.model.activeFilter.id,
 		      sort: $scope.model.activeSort.id,
 		      modelType: 2
@@ -76,19 +77,19 @@ angular.module('flowableModeler')
 		    params.filterText = $scope.model.filterText;
 		  }
 
-		  $http({method: 'GET', url: FLOWABLE.APP_URL.getModelsUrl(), params: params}).
-		  	success(function(data, status, headers, config) {
+		  $http({method: 'GET', url: FLOWABLE.APP_URL.getModelsUrl(), params}).
+		  	success((data, status, headers, config) => {
 	    		$scope.model.forms = data;
 	    		$scope.model.loading = false;
 	        }).
-	        error(function(data, status, headers, config) {
+	        error((data, status, headers, config) => {
 	           $scope.model.loading = false;
 	        });
 	  };
 
 	  var timeoutFilter = function() {
 	    $scope.model.isFilterDelayed = true;
-	    $timeout(function() {
+	    $timeout(() => {
 	        $scope.model.isFilterDelayed = false;
 	        if($scope.model.isFilterUpdated) {
 	          $scope.model.isFilterUpdated = false;
@@ -113,10 +114,10 @@ angular.module('flowableModeler')
 	      $rootScope.currentKickstartModel = undefined;
 		  $scope.createFormCallback = function(result) {
 		      $rootScope.editorHistory = [];
-			  $location.path("/form-editor/" + result.id);
+			  $location.path(`/form-editor/${  result.id}`);
 		  };
-          _internalCreateModal({
-			  template: 'views/popup/form-create.html?version=' + Date.now(),
+      _internalCreateModal({
+			  template: `views/popup/form-create.html?version=${  Date.now()}`,
 			  scope: $scope
 		  }, $modal, $scope);
 	  };
@@ -124,14 +125,14 @@ angular.module('flowableModeler')
 	  $scope.showFormDetails = function(form) {
 	      if (form) {
 	          $rootScope.editorHistory = [];
-	          $location.path("/forms/" + form.id);
+	          $location.path(`/forms/${  form.id}`);
 	      }
 	  };
 
 	  $scope.editFormDetails = function(form) {
 		  if (form) {
 		      $rootScope.editorHistory = [];
-			  $location.path("/form-editor/" + form.id);
+			  $location.path(`/form-editor/${  form.id}`);
 		  }
 	  };
 
@@ -141,107 +142,107 @@ angular.module('flowableModeler')
 
 
 angular.module('flowableModeler')
-.controller('CreateNewFormCtrl', ['$rootScope', '$scope', '$http',
+  .controller('CreateNewFormCtrl', ['$rootScope', '$scope', '$http',
     function ($rootScope, $scope, $http) {
 
-    $scope.model = {
-       loading: false,
-       form: {
-            name: '',
-            key: '',
-            description: '',
-            modelType: 2
-       }
-    };
+      $scope.model = {
+        loading: false,
+        form: {
+          name: '',
+          key: '',
+          description: '',
+          modelType: 2
+        }
+      };
 
-    $scope.ok = function () {
+      $scope.ok = function () {
 
         if (!$scope.model.form.name || $scope.model.form.name.length == 0 ||
         	!$scope.model.form.key || $scope.model.form.key.length == 0) {
         	
-            return;
+          return;
         }
 
         $scope.model.loading = true;
 
         $http({method: 'POST', url: FLOWABLE.APP_URL.getModelsUrl(), data: $scope.model.form}).
-            success(function(data, status, headers, config) {
-                $scope.$hide();
-                $scope.model.loading = false;
+          success((data, status, headers, config) => {
+            $scope.$hide();
+            $scope.model.loading = false;
 
-                if ($scope.createFormCallback) {
+            if ($scope.createFormCallback) {
                 	$scope.createFormCallback(data);
                 	$scope.createFormCallback = undefined;
-                }
+            }
 
-            }).
-            error(function(data, status, headers, config) {
-                $scope.model.loading = false;
-                $scope.model.errorMessage = data.message;
-            });
-    };
+          }).
+          error((data, status, headers, config) => {
+            $scope.model.loading = false;
+            $scope.model.errorMessage = data.message;
+          });
+      };
 
-    $scope.cancel = function () {
+      $scope.cancel = function () {
         if(!$scope.model.loading) {
-            $scope.$hide();
+          $scope.$hide();
         }
-    };
-}]);
+      };
+    }]);
 
 angular.module('flowableModeler')
-	.controller('DuplicateFormCtrl', ['$rootScope', '$scope', '$http',
-		function ($rootScope, $scope, $http) {
+  .controller('DuplicateFormCtrl', ['$rootScope', '$scope', '$http',
+    function ($rootScope, $scope, $http) {
 
-			$scope.model = {
-				loading: false,
-				form: {
-					id: '',
-					name: '',
-					key: '',
-					description: '',
-					modelType: 2
-				}
-			};
+      $scope.model = {
+        loading: false,
+        form: {
+          id: '',
+          name: '',
+          key: '',
+          description: '',
+          modelType: 2
+        }
+      };
 
-			if ($scope.originalModel) {
-				//clone the model
-				$scope.model.form.name = $scope.originalModel.form.name;
-				$scope.model.form.key = $scope.originalModel.form.key;
-				$scope.model.form.description = $scope.originalModel.form.description;
-				$scope.model.form.modelType = $scope.originalModel.form.modelType;
-				$scope.model.form.id = $scope.originalModel.form.id;
-			}
+      if ($scope.originalModel) {
+        // clone the model
+        $scope.model.form.name = $scope.originalModel.form.name;
+        $scope.model.form.key = $scope.originalModel.form.key;
+        $scope.model.form.description = $scope.originalModel.form.description;
+        $scope.model.form.modelType = $scope.originalModel.form.modelType;
+        $scope.model.form.id = $scope.originalModel.form.id;
+      }
 
-			$scope.ok = function () {
+      $scope.ok = function () {
 
-				if (!$scope.model.form.name || $scope.model.form.name.length == 0 ||
+        if (!$scope.model.form.name || $scope.model.form.name.length == 0 ||
 					!$scope.model.form.key || $scope.model.form.key.length == 0) {
 					
-					return;
-				}
+          return;
+        }
 
-				$scope.model.loading = true;
+        $scope.model.loading = true;
 
-				$http({method: 'POST', url: FLOWABLE.APP_URL.getCloneModelsUrl($scope.model.form.id), data: $scope.model.form}).
-					success(function(data, status, headers, config) {
-						$scope.$hide();
-						$scope.model.loading = false;
+        $http({method: 'POST', url: FLOWABLE.APP_URL.getCloneModelsUrl($scope.model.form.id), data: $scope.model.form}).
+          success((data, status, headers, config) => {
+            $scope.$hide();
+            $scope.model.loading = false;
 
-						if ($scope.duplicateFormCallback) {
-							$scope.duplicateFormCallback(data);
-							$scope.duplicateFormCallback = undefined;
-						}
+            if ($scope.duplicateFormCallback) {
+              $scope.duplicateFormCallback(data);
+              $scope.duplicateFormCallback = undefined;
+            }
 
-					}).
-					error(function(data, status, headers, config) {
-						$scope.model.loading = false;
+          }).
+          error((data, status, headers, config) => {
+            $scope.model.loading = false;
 						 $scope.model.errorMessage = data.message;
-					});
-			};
+          });
+      };
 
-			$scope.cancel = function () {
-				if(!$scope.model.loading) {
-					$scope.$hide();
-				}
-			};
-		}]);
+      $scope.cancel = function () {
+        if(!$scope.model.loading) {
+          $scope.$hide();
+        }
+      };
+    }]);
