@@ -8,8 +8,47 @@
             <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;">
               措施效果跟踪
               <el-button type="primary" style="height:30px;" @click="switchToBack">返回</el-button>
-           </div>
+            </div>
           </div>
+          <headerSearch class="g-w100 g-h100">
+            <div style="padding-top:20px;display: flex;align-items: center;">
+              <div class="fl">
+                <span>油田：</span>
+                <el-select v-model="selectOilField" class="f2" disabled @change="onFieldChange">
+                  <el-option v-for="(item, index) in oilFields" :key="index" :label="item.name" :value="item.oilFieldId">
+                  </el-option>
+                </el-select>
+              </div>
+              <div class="fl mg">
+                <span>平台：</span>
+                <el-select v-model="selectPlatform" class="f2" style="width: 220px;" @change="onPlatfromChange">
+                  <el-option v-for="(item, index) in platforms" :key="index" :label="item.platName" :value="item.platFormId">
+                  </el-option>
+                </el-select>
+              </div>
+              <div class="fl mg">
+                <span>井号：</span>
+                <el-select v-model="wellId" class="f2">
+                  <el-option v-for="(item, index) in wells" :key="index" :label="item.wellName" :value="item.wellId">
+                  </el-option>
+                </el-select>
+              </div>
+              <div class="fl mg">
+                <span>措施事件：</span>
+                <el-select v-model="cuoshishijian" class="f2" filterable>
+                  <el-option v-for="(item, index) in []" :key="index" :label="item.name" :value="item.code">
+                  </el-option>
+                </el-select>
+              </div>
+              <div class="fl mg">
+                <span>时间:</span>
+                <el-date-picker class="f3" v-model="dateTime" style="margin-left:10px" type="year" placeholder="选择日期" value-format="yyyy"></el-date-picker>
+              </div>
+              <div class="fr mg">
+                <el-button type="primary" icon="el-icon-search" size="mini" @click="doSearch">搜索</el-button>
+              </div>
+            </div>
+          </headerSearch>
         </el-header>
         <el-main class="main">
           <el-row :gutter="20" style="height: 240px">
@@ -249,12 +288,28 @@
             </div>
             <div class="svg" v-else-if="oilTabType == '3'">
               <div class="table-view">
-                <el-table :data="chemicalTableData" highlight style="width: 100%" height="446px">
-                  <el-table-column label="序号" align="center" header-align="center" type="index"></el-table-column>
-                  <el-table-column label="日期" prop="startTime" align="center" header-align="center"> </el-table-column>
-                  <el-table-column label="含水" prop="waterCut" align="center" header-align="center"> </el-table-column>
-                  <el-table-column label="含砂" prop="sand" align="center" header-align="center"></el-table-column>
-                  <el-table-column label="备注" prop="remark" align="center" header-align="center"> </el-table-column>
+                <el-table :data="chemicalTableData" highlight style="width: 100%" height="446px" :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+          header-cell-class-name="table_header" :cell-style="{ padding: '2px', 'text-align': 'center' }">
+                  <el-table-column label="序号" type="index"></el-table-column>
+                  <el-table-column label="日期" prop="startTime"></el-table-column>
+                  <el-table-column label="含水" prop="waterCut"></el-table-column>
+                  <el-table-column label="含砂" prop="sand"></el-table-column>
+                  <el-table-column label="备注" prop="remark"></el-table-column>
+                </el-table>
+              </div>
+            </div>
+            <div class="svg" v-else-if="oilTabType == '4'">
+              <div class="table-view">
+                <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;">
+                  现场作业进度表
+                  <el-button type="primary" style="height:30px;">下载</el-button>
+                </div>
+                <el-table :data="tableList2" highlight style="width: 100%" height="334px" :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+          header-cell-class-name="table_header" :cell-style="{ padding: '2px', 'text-align': 'center' }">
+                  <el-table-column label="井号" prop="name1" width="150"></el-table-column>
+                  <el-table-column label="开始时间" prop="name2" width="150"></el-table-column>
+                  <el-table-column label="预计结束时间" prop="name3" width="150"></el-table-column>
+                  <el-table-column label="当前作业内容" prop="name4"></el-table-column>
                 </el-table>
               </div>
             </div>
@@ -315,7 +370,6 @@ import { getIntervalWorkConditionDataCurve } from '@/api/oilDeposit/ipm-02/opera
 import { getProduceParams, getRealtimeData } from '@/api/oilDeposit/ipm-03/machineprodwellipm.js';
 import { transformBorepipeNo } from '@/api/oilDeposit/ipm-03/basedata.js';
 import { wellFluxLastDayHour } from '@/api/oilDeposit/opm/opmData.js';
-
 export default {
   name: 'ff',
   components: {
@@ -324,12 +378,39 @@ export default {
   },
   data() {
     return {
+      // 油田下拉框
+      oilFields: [],
+      // 平台下拉
+      platforms: [],
+      // 井号下拉
+      wells: [],
+      // 措施类型
+      measuresTypes: [
+        {
+          value: '全部',
+          label: '全部'
+        },
+        {
+          value: '酸化',
+          label: '酸化'
+        },
+        {
+          value: '压裂',
+          label: '压裂'
+        },
+      ],
+      //措施事件
+      cuoshishijian:'',
+      //措施版本
+      cuoshibanben:'',
       dataList:[
         { name: '油井日度曲线', isChecked: true,oilTabType:'0' },
         { name: '油井实时曲线', isChecked: false,oilTabType:'1' },
         { name: '虚拟计量曲线', isChecked: false,oilTabType:'2'},
         { name: '化验数据', isChecked: false,oilTabType:'3' },
+        { name: '作业信息', isChecked: false,oilTabType:'4' },
       ],
+      tableList2:[{name1:'QHD32-6-D18H1',name2:'2022-07-26 8:00',name3:'2022-07-26 9:00',name4:'移井架直A14井'}],
       dataList2:[
         { name: '水井日度曲线', isChecked: true,waterTabType:'0' },
         { name: '水井实时曲线', isChecked: false,waterTabType:'1' },
@@ -2671,5 +2752,17 @@ export default {
 
 ::v-deep .el-table .cell:empty::before {
   content: '-';
+}
+.titleBox{
+  margin-bottom:10px;
+}
+.f2{
+  width:250px!important;
+}
+.f3{
+  width:180px!important;
+}
+.mg{
+  margin-left:15px;
 }
 </style>

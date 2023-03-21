@@ -1,8 +1,8 @@
 /*
  * @Author: Dear_Zxb
  * @Date: 2023-03-15 15:03:10
- * @LastEditors: Dear_Zxb 
- * @LastEditTime: 2023-03-16 14:42:39
+ * @LastEditors: Dear_Zxb 13521265431@163.com
+ * @LastEditTime: 2023-03-20 10:29:40
  * @Description: 油藏模块本地路由表
  */
 import Layout from '@/layouts/index.vue';
@@ -20,11 +20,18 @@ export default [
         meta: { title: '规划计划管理' },
         component: () => import('@/layouts/blank.vue'),
         children: [
+          // {
+          //   hidden: false,
+          //   path: 'planIndex',
+          //   name: 'planIndex',
+          //   component: () => import('@/pages/rem/plan/index.vue'),
+          //   meta: { title: '措施管理', icon: 'icon' },
+          // },
           {
             hidden: false,
-            path: 'planIndex',
-            name: 'planIndex',
-            component: () => import('@/pages/rem/plan/index.vue'),
+            path: 'newPlanIndex',
+            name: 'newPlanIndex',
+            component: () => import('@/pages/rem/plan/newPlanIndex.vue'),
             meta: { title: '措施管理', icon: 'icon' },
           },
           {
@@ -36,6 +43,20 @@ export default [
           },
         ],
       },
+      {
+        path: 'performance',
+        meta: { title: '油藏动态管理' },
+        component: () => import('@/layouts/blank.vue'),
+        children: [
+          {
+            hidden: false,
+            path: 'oilAuxiliaryAnalysis',
+            name: 'oilAuxiliaryAnalysis',
+            component: () => import('@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/index.vue'),
+            meta: { title: '油井辅助分析', icon: 'icon' },
+          },
+        ],
+      }
     ],
   },
 ];
