@@ -42,7 +42,7 @@
       <el-row style="height: 50px">
         <verticalSwitchButton
           @selectBtn="selectBtn"
-          :dataList="dataList1"
+          :dataList="dataListmain"
           buttonWidth="120px"
           buttonHeight="30px"
           style="width: 9%; padding: 10px"
@@ -52,7 +52,7 @@
       <el-row style="height: 50px" v-if="tableshow">
         <verticalSwitchButton
           :dataList="dataList"
-          @selectBtn="selectdt"
+          @selectBtn="selectjt"
           buttonWidth="120px"
           buttonHeight="30px"
           style="width: 9%; padding: 10px"
@@ -61,7 +61,7 @@
       </el-row>
       <el-row style="height: 50px" v-else>
         <verticalSwitchButton
-          :dataList="dataList2"
+          :dataList="dataListcc"
           @selectBtn="selectjt"
           buttonWidth="120px"
           buttonHeight="30px"
@@ -83,8 +83,10 @@ import seismicAttribute from '@/pages/rem/performance/wellGroup/groupAssistance/
 import topplaneStructure from '@/pages/rem/performance/wellGroup/groupAssistance/topplaneStructure/index.vue';
 import effectiveThickness from '@/pages/rem/performance/wellGroup/groupAssistance/effectiveThickness/index.vue';
 import groupConnection from '@/pages/rem/performance/wellGroup/groupAssistance/groupConnection/index.vue';
+import developmentCurve from '@/pages/rem/performance/wellGroup/groupAssistance/developmentCurve/index.vue';
 import permeabilityDistribution from '@/pages/rem/performance/wellGroup/groupAssistance/permeabilityDistribution/index.vue';
 import wellProfile from '@/pages/rem/performance/wellGroup/groupAssistance/wellProfile/index.vue';
+
 import {fetchOilFields,wellGroups,fetchFields} from '@/api/oilDeposit/rem-02/primaryinfo.js';
 
 export default {
@@ -92,31 +94,32 @@ export default {
     verticalSwitchButton,
     sedimentaryMap,
     seismicAttribute,
-    topplaneStructure,effectiveThickness,groupConnection,permeabilityDistribution,wellProfile
+    topplaneStructure,effectiveThickness,groupConnection,permeabilityDistribution,wellProfile,developmentCurve
   },
   name: 'Notice',
   dicts: ['sys_normal_disable'],
   data() {
     return {
       dialogVisible: false, //运行计算展示弹窗
-      tableshow:false,
+      tableshow:true,
       oilfield: [],
       oilFields:[],
       deptSelect: [],
       wellGroups:[],
       platforms:[],
-      currentTab: 'sedimentaryMap',
-      dataList1: [
+      currentTab: '',
+      transfer:'',
+      dataListmain: [
         { name: '储层资料', src: '', isChecked: false },
         { name: '动态资料', src: '', isChecked: true },
       ],
       dataList: [
-        { name: '井组开发区线', src: '', isChecked: true },
+        { name: '井组开发区线', src: 'developmentCurve', isChecked: false },
         { name: '注采对应曲线', src: '', isChecked: false },
         { name: '示踪剂', src: '', isChecked: false },
         { name: '措施效果', src: '', isChecked: false },
       ],
-      dataList2: [
+      dataListcc: [
         { name: '小层顶面构造图', src: 'topplaneStructure', isChecked: false },
         { name: '地震属性图', src: 'seismicAttribute', isChecked: false },
         { name: '沉积相图', src: 'sedimentaryMap', isChecked: false },
@@ -266,12 +269,15 @@ export default {
     selectBtn(item) {
       if (item.name === '储层资料') {
         this.tableshow = false;
+        this.currentTab = this.transfer
       } else {
         this.tableshow = true;
+        this.currentTab = ''
       }
     },
     selectjt(item) {
       this.currentTab = item.src;
+      this.transfer = this.currentTab
     },
     // 编辑
     /**
