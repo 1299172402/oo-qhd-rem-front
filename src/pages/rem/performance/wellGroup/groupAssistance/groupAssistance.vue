@@ -84,7 +84,7 @@ import topplaneStructure from '@/pages/rem/performance/wellGroup/groupAssistance
 import effectiveThickness from '@/pages/rem/performance/wellGroup/groupAssistance/effectiveThickness/index.vue';
 import groupConnection from '@/pages/rem/performance/wellGroup/groupAssistance/groupConnection/index.vue';
 import developmentCurve from '@/pages/rem/performance/wellGroup/groupAssistance/developmentCurve/index.vue';
-import permeabilityDistribution from '@/pages/rem/performance/wellGroup/groupAssistance/permeabilityDistribution/index.vue';
+import permeability from '@/pages/rem/performance/wellGroup/groupAssistance/permeability/index.vue';
 import wellProfile from '@/pages/rem/performance/wellGroup/groupAssistance/wellProfile/index.vue';
 
 import {fetchOilFields,wellGroups,fetchFields} from '@/api/oilDeposit/rem-02/primaryinfo.js';
@@ -94,7 +94,7 @@ export default {
     verticalSwitchButton,
     sedimentaryMap,
     seismicAttribute,
-    topplaneStructure,effectiveThickness,groupConnection,permeabilityDistribution,wellProfile,developmentCurve
+    topplaneStructure,effectiveThickness,groupConnection,permeability,wellProfile,developmentCurve
   },
   name: 'Notice',
   dicts: ['sys_normal_disable'],
@@ -124,7 +124,7 @@ export default {
         { name: '地震属性图', src: 'seismicAttribute', isChecked: false },
         { name: '沉积相图', src: 'sedimentaryMap', isChecked: false },
         { name: '有效厚度图', src: 'effectiveThickness', isChecked: false },
-        { name: '渗透率分布图', src: 'permeabilityDistribution', isChecked: false },
+        { name: '渗透率分布图', src: 'permeability', isChecked: false },
         { name: '井组联通图', src: 'groupConnection', isChecked: false },
         { name: '连井刨面图', src: 'wellProfile', isChecked: false },
       ],
