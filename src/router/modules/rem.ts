@@ -20,20 +20,20 @@ export default [
         meta: { title: '规划计划管理' },
         component: () => import('@/layouts/blank.vue'),
         children: [
-          // {
-          //   hidden: false,
-          //   path: 'planIndex',
-          //   name: 'planIndex',
-          //   component: () => import('@/pages/rem/plan/index.vue'),
-          //   meta: { title: '措施管理', icon: 'icon' },
-          // },
           {
             hidden: false,
-            path: 'newPlanIndex',
-            name: 'newPlanIndex',
-            component: () => import('@/pages/rem/plan/newPlanIndex.vue'),
+            path: 'planIndex',
+            name: 'planIndex',
+            component: () => import('@/pages/rem/plan/index.vue'),
             meta: { title: '措施管理', icon: 'icon' },
           },
+          // {
+          //   hidden: false,
+          //   path: 'newPlanIndex',
+          //   name: 'newPlanIndex',
+          //   component: () => import('@/pages/rem/plan/newPlanIndex.vue'),
+          //   meta: { title: '措施管理', icon: 'icon' },
+          // },
           {
             hidden:true,
             path: 'wellMonitoring',

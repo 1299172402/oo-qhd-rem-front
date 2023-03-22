@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div>
     <div style="line-height: 24px; text-align: center; font-size: 20px; font-weight: 400; color: #02eeff">
       秦皇岛32-6油田年度计划运行曲线
     </div>
@@ -9,6 +10,7 @@
         echartsType="line1"
         style="width: 100%; height: 100%"
       ></chartsComponents>
+    </div>
     </div>
   </div>
 </template>
