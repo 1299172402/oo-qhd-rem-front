@@ -1,23 +1,23 @@
 <template>
   <div style="width: 100%; height: 100%" class="pageBox">
     <header-search class="g-w100 g-h100">
-        <div class="g-row-flex-V g-w100 g-h100">
-      <div>角色名称：<el-input v-model="input" style="width: 200px" placeholder="请输入角色名称"></el-input></div>
-      <div style="margin: 0 20px">
-        状态：<el-select v-model="value" placeholder="请选择" clearable>
-          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
-        </el-select>
-      </div>
-      <div>
-        <el-button type="primary">搜索</el-button>
-        <el-button class="commonBtn">重置</el-button>
-      </div>
+      <div class="g-row-flex-V g-w100 g-h100">
+        <div>角色名称：<el-input v-model="input" style="width: 200px" placeholder="请输入角色名称"></el-input></div>
+        <div style="margin: 0 20px">
+          状态：<el-select v-model="value" placeholder="请选择" clearable>
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+          </el-select>
+        </div>
+        <div>
+          <el-button type="primary">搜索</el-button>
+          <el-button class="commonBtn">重置</el-button>
+        </div>
       </div>
     </header-search>
-    <pagePanelNew headerTitle="角色列表" style="height:calc(100% - 100px);" class="g-w100">
+    <pagePanelNew headerTitle="角色列表" style="height: calc(100% - 100px)" class="g-w100">
       <!-- <gradientBox></gradientBox> -->
       <div class="btnPosition g-row-flex">
-      <el-button class=""  type="primary">新增</el-button>
+        <el-button class="" type="primary">新增</el-button>
       </div>
       <el-table
         height="calc(100% - 113px)"
@@ -44,7 +44,7 @@
           </template>
         </el-table-column>
       </el-table>
-       <pagination
+      <pagination
         v-show="total > 0"
         :total="total"
         :page.sync="queryParams.pageNum"
@@ -208,7 +208,7 @@ export default {
   display: flex;
 }
 .btnPosition {
-    margin: 0 0 20px 0;
-    justify-content: flex-end;
+  margin: 0 0 20px 0;
+  justify-content: flex-end;
 }
 </style>

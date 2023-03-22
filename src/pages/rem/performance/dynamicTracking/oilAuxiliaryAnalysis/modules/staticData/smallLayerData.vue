@@ -1,6 +1,6 @@
 <!--小层数据-->
 <template>
-  <NormalCard class="mt-2">
+  <!-- <NormalCard class="mt-2"> -->
     <el-table id="tableData" highlight :data="tableData" style="width: 100%;" height="600">
       <el-table-column type="index" label="序号" width="180" align="center"></el-table-column>
       <!--<el-table-column prop="wellNo" label="井号" width="180" align="center"></el-table-column>
@@ -23,16 +23,16 @@
       <el-table-column prop="strataContact" label="接触关系" align="center"></el-table-column>
       <el-table-column prop="remark" label="备注" align="center"></el-table-column>
     </el-table>
-  </NormalCard>
+  <!-- </NormalCard> -->
 </template>
 <script>
-import NormalCard from '@/components/tools/NormalCard';
+// import NormalCard from '@/components/tools/NormalCard';
 import {microLayerData,} from '@/api/rem-01/dynamicAnalysis.js';
-import {exportExcel} from "@/lib/exportExcel";
+// import {exportExcel} from "@/lib/exportExcel";
 
 export default {
   components: {
-    NormalCard,
+    // NormalCard,
   },
   props: {
     //选择油田
@@ -77,7 +77,7 @@ export default {
       if(this.wellName){
         fileName = this.wellName + fileName;
       }
-      exportExcel('#tableData',fileName);
+      // exportExcel('#tableData',fileName);
     },
     /**
      * hwh el table 表格头 标题单位样式

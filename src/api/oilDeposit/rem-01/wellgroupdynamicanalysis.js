@@ -1,30 +1,32 @@
 import Axios from '@/utils/request'
+const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
+
 //= ==油藏动态管理/井组动态分析===//
 // 开发生产问题检测
 export function indicatorVariationTrendency(wellGroupIndicatorRequest) {
   return Axios({// 0303-01-01-开发生产问题检测-指标变化趋势（模型计算）
-    url: `remoupDynamicAnalysis/indicatorVariationTrendency`,
+    url: `${baseUrl}/oupDynamicAnalysis/indicatorVariationTrendency`,
     method: "post",
     data: wellGroupIndicatorRequest,
   });
 }
 export function injectionEffectivity(wellGroupIndicatorRequest) {
   return Axios({// 0303-01-03-开发生产问题检测-注水受效分析（模型计算）
-    url: `remoupDynamicAnalysis/injectionEffectivity`,
+    url: `${baseUrl}/oupDynamicAnalysis/injectionEffectivity`,
     method: "post",
     data: wellGroupIndicatorRequest,
   });
 }
 export function proInjectBalance(wellGroupIndicatorRequest) {
   return Axios({// 0303-01-04-开发生产问题检测-注采平衡（模型计算）
-    url: `remoupDynamicAnalysis/proInjectBalance`,
+    url: `${baseUrl}/oupDynamicAnalysis/proInjectBalance`,
     method: "post",
     data: wellGroupIndicatorRequest,
   });
 }
 export function pressureMaintain(wellGroupIndicatorRequest) {
   return Axios({// 0303-01-05-开发生产问题检测-压力保持（模型计算）
-    url: `remoupDynamicAnalysis/pressureMaintain`,
+    url: `${baseUrl}/oupDynamicAnalysis/pressureMaintain`,
     method: "post",
     data: wellGroupIndicatorRequest,
   });
@@ -32,7 +34,7 @@ export function pressureMaintain(wellGroupIndicatorRequest) {
 // 措施推荐
 export function wellGroupRecommendMeasure(wellGroupIndicatorRequest) {
   return Axios({// 0303-01-06-查询井组推荐措施（模型计算）
-    url: `remoupDynamicAnalysis/wellGroupRecommendMeasure`,
+    url: `${baseUrl}/oupDynamicAnalysis/wellGroupRecommendMeasure`,
     method: "post",
     data: wellGroupIndicatorRequest,
   });
@@ -40,7 +42,7 @@ export function wellGroupRecommendMeasure(wellGroupIndicatorRequest) {
 
 export function wellGroupDynamicAnalysisDetail(request) {
   return Axios({// 0303-01-井组动态分析详细列表
-    url: `remoupDynamicAnalysis/wellGroupDynamicAnalysisDetail`,
+    url: `${baseUrl}/oupDynamicAnalysis/wellGroupDynamicAnalysisDetail`,
     method: "post",
     data: request,
   });
@@ -54,7 +56,7 @@ export function wellGroupDynamicAnalysisDetail(request) {
  */
 export function seismicAttributePlot(request) {
   return Axios({
-    url: `remoupDynamicAnalysis/seismicAttributePlot`,
+    url: `${baseUrl}/oupDynamicAnalysis/seismicAttributePlot`,
     method: "post",
     data: request,
   });
@@ -68,7 +70,7 @@ export function seismicAttributePlot(request) {
  */
 export function conectionPlot(request) {
   return Axios({
-    url: `remoupDynamicAnalysis/conectionPlot`,
+    url: `${baseUrl}/oupDynamicAnalysis/conectionPlot`,
     method: "post",
     data: request,
   });
@@ -82,7 +84,7 @@ export function conectionPlot(request) {
  */
 export function sandLayerThicknessDiagram(request) {
   return Axios({
-    url: `remoupDynamicAnalysis/sandLayerThicknessDiagram`,
+    url: `${baseUrl}/oupDynamicAnalysis/sandLayerThicknessDiagram`,
     method: "post",
     data: request,
   });
@@ -96,7 +98,7 @@ export function sandLayerThicknessDiagram(request) {
  */
 export function effectiveThicknessDiagram(request) {
   return Axios({
-    url: `remoupDynamicAnalysis/effectiveThicknessDiagram`,
+    url: `${baseUrl}/oupDynamicAnalysis/effectiveThicknessDiagram`,
     method: "post",
     data: request,
   });
@@ -110,7 +112,7 @@ export function effectiveThicknessDiagram(request) {
  */
 export function permeabilityDistribution(request) {
   return Axios({
-    url: `remoupDynamicAnalysis/permeabilityDistribution`,
+    url: `${baseUrl}/oupDynamicAnalysis/permeabilityDistribution`,
     method: "post",
     data: request,
   });
@@ -124,7 +126,7 @@ export function permeabilityDistribution(request) {
  */
 export function permeabilityBarCharts(request) {
   return Axios({
-    url: `remoupDynamicAnalysis/permeabilityBarCharts`,
+    url: `${baseUrl}/oupDynamicAnalysis/permeabilityBarCharts`,
     method: "post",
     data: request,
   });
@@ -138,7 +140,7 @@ export function permeabilityBarCharts(request) {
  */
 export function tracer(request) {
   return Axios({
-    url: `remoupDynamicAnalysis/tracer`,
+    url: `${baseUrl}/oupDynamicAnalysis/tracer`,
     method: "post",
     data: request,
   });
@@ -152,7 +154,7 @@ export function tracer(request) {
  */
 export function wellGroupDevLineCharts(request) {
   return Axios({
-    url: `remoupDynamicAnalysis/wellGroupDevLineCharts`,
+    url: `${baseUrl}/oupDynamicAnalysis/wellGroupDevLineCharts`,
     method: "post",
     data: request,
   });
@@ -166,7 +168,7 @@ export function wellGroupDevLineCharts(request) {
  */
 export function proInjectLineCharts(request) {
   return Axios({
-    url: `remoupDynamicAnalysis/proInjectLineCharts`,
+    url: `${baseUrl}/oupDynamicAnalysis/proInjectLineCharts`,
     method: "post",
     data: request,
   });
@@ -180,7 +182,7 @@ export function proInjectLineCharts(request) {
  */
 export function wellGroupMeasureStat(request) {
   return Axios({
-    url: `remoupDynamicAnalysis/wellGroupMeasureStat`,
+    url: `${baseUrl}/oupDynamicAnalysis/wellGroupMeasureStat`,
     method: "post",
     data: request,
   });
@@ -194,7 +196,7 @@ export function wellGroupMeasureStat(request) {
  */
 export function reservoirDataConstructureDaigramForWellGroup(request) {
   return Axios({
-    url: `remoupDynamicAnalysis/reservoirDataConstructureDaigramForWellGroup`,
+    url: `${baseUrl}/oupDynamicAnalysis/reservoirDataConstructureDaigramForWellGroup`,
     method: "post",
     data: request,
   });

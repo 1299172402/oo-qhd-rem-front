@@ -1,12 +1,11 @@
 <!--单井基本信息表-->
 <template>
-  <!-- <NormalCard class="mt-2"> -->
     <el-table
         id="tableData"
-        highlight
-        :data="tableData"
-        style="width: 100%;"
-        height="600"
+        :data="tableData" :border="false" :row-style="{ height: '0px' }"
+        header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
+        style="width:100%; padding: 20px 0" height="calc(100% - 86px)" :default-sort="{ prop: 'date', order: 'descending' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
     >
       <el-table-column
           prop="wellNo"
@@ -84,17 +83,11 @@
       >
       </el-table-column>
     </el-table>
-  <!-- </NormalCard> -->
 </template>
 <script>
-// import NormalCard from '@/components/tools/NormalCard';
 import {wellBaseInfo} from "@/api/oilDeposit/rem-01/dynamicAnalysis";
 // import {exportExcel} from "@/lib/exportExcel";
-
 export default {
-  components: {
-    // NormalCard,
-  },
   filters: {
     formatTime(val){
       if(val){

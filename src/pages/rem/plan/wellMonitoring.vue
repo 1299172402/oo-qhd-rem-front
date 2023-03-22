@@ -687,7 +687,7 @@ export default {
       // 井名 井管名称
       wellBoreName: '',
       // 判断类型（0为油井，1为水井）
-      type: 1,
+      type: 0,
       tableData: [],
       // 油井数据内容
       oilWellTableData: [],

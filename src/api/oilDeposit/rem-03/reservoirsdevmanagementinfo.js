@@ -1,4 +1,5 @@
 import Axios from '@/utils/request'
+const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
 /**
  *  hwh
@@ -8,168 +9,168 @@ import Axios from '@/utils/request'
  */
 export function adjustWellChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/adjustWellChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/adjustWellChart`,
     method: "post",
     data: request,
   });
 }
 export function compositeDeclineRate(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/compositeDeclineRate`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/compositeDeclineRate`,
     method: "post",
     data: request,
   });
 }
 export function composiveDeclineChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/composiveDeclineChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/composiveDeclineChart`,
     method: "post",
     data: request,
   });
 }
 export function declineChartData(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/declineChartData`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/declineChartData`,
     method: "post",
     data: request,
   });
 }
 export function declineIndicatorEveluationResult(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/declineIndicatorEveluationResult`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/declineIndicatorEveluationResult`,
     method: "post",
     data: request,
   });
 }
 export function devPhaseInfos(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/devPhaseInfos`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/devPhaseInfos`,
     method: "post",
     data: request,
   });
 }
 export function devStatusChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/devStatusChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/devStatusChart`,
     method: "post",
     data: request,
   });
 }
 export function devStatusInfos(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/devStatusInfos`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/devStatusInfos`,
     method: "post",
     data: request,
   });
 }
 export function devWellChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/devWellChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/devWellChart`,
     method: "post",
     data: request,
   });
 }
 export function dividingLayerQualityRate(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/dividingLayerQualityRate`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/dividingLayerQualityRate`,
     method: "post",
     data: request,
   });
 }
 export function dividingTestRate(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/dividingTestRate`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/dividingTestRate`,
     method: "post",
     data: request,
   });
 }
 export function dynamicMoniterFinshRate(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/dynamicMoniterFinshRate`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/dynamicMoniterFinshRate`,
     method: "post",
     data: request,
   });
 }
 export function experienceFormulaCalResult(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/experienceFormulaCalResult`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/experienceFormulaCalResult`,
     method: "post",
     data: request,
   });
 }
 export function fetchMeasureInfos(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/fetchMeasureInfos`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/fetchMeasureInfos`,
     method: "post",
     data: request,
   });
 }
 export function fetchMeasureStatInfos(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/fetchMeasureStatInfos`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/fetchMeasureStatInfos`,
     method: "post",
     data: request,
   });
 }
 export function fieldDevWarnings(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/fieldDevWarnings`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/fieldDevWarnings`,
     method: "post",
     data: request,
   });
 }
 export function generalDeclineChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/generalDeclineChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/generalDeclineChart`,
     method: "post",
     data: request,
   });
 }
 export function generalPressure(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/generalPressure`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/generalPressure`,
     method: "post",
     data: request,
   });
 }
 export function indicatorEveluationResults(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/indicatorEveluationResults`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/indicatorEveluationResults`,
     method: "post",
     data: request,
   });
 }
 export function indicatorResult(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/indicatorResult`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/indicatorResult`,
     method: "post",
     data: request,
   });
 }
 export function injectionProRate(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/injectionProRate`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/injectionProRate`,
     method: "post",
     data: request,
   });
 }
 export function injectionWellDividingRate(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/injectionWellDividingRate`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/injectionWellDividingRate`,
     method: "post",
     data: request,
   });
 }
 export function injectionYear(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/injectionYear`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/injectionYear`,
     method: "post",
     data: request,
   });
 }
 export function layerPressureLevelRate(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/layerPressureLevelRate`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/layerPressureLevelRate`,
     method: "post",
     data: request,
   });
@@ -183,28 +184,28 @@ export function layerPressureLevelRate(request) {
  */
 export function measureChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/measureChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/measureChart`,
     method: "post",
     data: request,
   });
 }
 export function natureDeclineChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/natureDeclineChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/natureDeclineChart`,
     method: "post",
     data: request,
   });
 }
 export function natureDeclineRate(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/natureDeclineRate`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/natureDeclineRate`,
     method: "post",
     data: request,
   });
 }
 export function natureDeclineRateForTech(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/natureDeclineRateForTech`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/natureDeclineRateForTech`,
     method: "post",
     data: request,
   });
@@ -218,42 +219,42 @@ export function natureDeclineRateForTech(request) {
  */
 export function newLastYearChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/newLastYearChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/newLastYearChart`,
     method: "post",
     data: request,
   });
 }
 export function newToInjectionChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/newToInjectionChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/newToInjectionChart`,
     method: "post",
     data: request,
   });
 }
 export function oilFieldDevWarnings(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/oilFieldDevWarnings`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/oilFieldDevWarnings`,
     method: "post",
     data: request,
   });
 }
 export function oilFieldOutputVaryChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/oilFieldOutputVaryChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/oilFieldOutputVaryChart`,
     method: "post",
     data: request,
   });
 }
 export function oilFieldRecoveryRatio(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/oilFieldRecoveryRatio`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/oilFieldRecoveryRatio`,
     method: "post",
     data: request,
   });
 }
 export function oilYear(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/oilYear`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/oilYear`,
     method: "post",
     data: request,
   });
@@ -267,7 +268,7 @@ export function oilYear(request) {
  */
 export function oldLastYearChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/oldLastYearChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/oldLastYearChart`,
     method: "post",
     data: request,
   });
@@ -281,7 +282,7 @@ export function oldLastYearChart(request) {
  */
 export function oldToInjectionChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/oldToInjectionChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/oldToInjectionChart`,
     method: "post",
     data: request,
   });
@@ -295,21 +296,21 @@ export function oldToInjectionChart(request) {
  */
 export function oldWellChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/oldWellChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/oldWellChart`,
     method: "post",
     data: request,
   });
 }
 export function outputDegree(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/outputDegree`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/outputDegree`,
     method: "post",
     data: request,
   });
 }
 export function outputDegreeTongChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/outputDegreeTongChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/outputDegreeTongChart`,
     method: "post",
     data: request,
   });
@@ -323,98 +324,98 @@ export function outputDegreeTongChart(request) {
  */
 export function outputSpeed(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/outputSpeed`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/outputSpeed`,
     method: "post",
     data: request,
   });
 }
 export function outputTracing(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/outputTracing`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/outputTracing`,
     method: "post",
     data: request,
   });
 }
 export function outputTracingAnalysis(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/outputTracingAnalysis`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/outputTracingAnalysis`,
     method: "post",
     data: request,
   });
 }
 export function platformOutputContributeAnalysis(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/platformOutputContributeAnalysis`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/platformOutputContributeAnalysis`,
     method: "post",
     data: request,
   });
 }
 export function proSpeed(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/proSpeed`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/proSpeed`,
     method: "post",
     data: request,
   });
 }
 export function proTimeRate(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/proTimeRate`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/proTimeRate`,
     method: "post",
     data: request,
   });
 }
 export function proWellIndicatorWarningAssosiationAnalysisClose(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/proWellIndicatorWarningAssosiationAnalysisClose`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/proWellIndicatorWarningAssosiationAnalysisClose`,
     method: "post",
     data: request,
   });
 }
 export function proWellIndicatorWarningAssosiationAnalysisForInjectionWell(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/proWellIndicatorWarningAssosiationAnalysisForInjectionWell`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/proWellIndicatorWarningAssosiationAnalysisForInjectionWell`,
     method: "post",
     data: request,
   });
 }
 export function proWellIndicatorWarningAssosiationAnalysisForProWell(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/proWellIndicatorWarningAssosiationAnalysisForProWell`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/proWellIndicatorWarningAssosiationAnalysisForProWell`,
     method: "post",
     data: request,
   });
 }
 export function proWellIndicatorWarningAssosiationAnalysisSave(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/proWellIndicatorWarningAssosiationAnalysisSave`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/proWellIndicatorWarningAssosiationAnalysisSave`,
     method: "post",
     data: request,
   });
 }
 export function proWellIndicatorWarningAssosiationAnalysisToObserve(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/proWellIndicatorWarningAssosiationAnalysisToObserve`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/proWellIndicatorWarningAssosiationAnalysisToObserve`,
     method: "post",
     data: request,
   });
 }
 export function proWellUsageRate(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/proWellUsageRate`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/proWellUsageRate`,
     method: "post",
     data: request,
   });
 }
 export function rateOfmoistureRate(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/rateOfmoistureRate`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/rateOfmoistureRate`,
     method: "post",
     data: request,
   });
 }
 export function reasonAnalysis(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/reasonAnalysis`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/reasonAnalysis`,
     method: "post",
     data: request,
   });
@@ -428,7 +429,7 @@ export function reasonAnalysis(request) {
  */
 export function reservoirsControlDegreeChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/reservoirsControlDegreeChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/reservoirsControlDegreeChart`,
     method: "post",
     data: request,
   });
@@ -442,7 +443,7 @@ export function reservoirsControlDegreeChart(request) {
  */
 export function reservoirsProRateChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/reservoirsProRateChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/reservoirsProRateChart`,
     method: "post",
     data: request,
   });
@@ -456,77 +457,77 @@ export function reservoirsProRateChart(request) {
  */
 export function reservoirsUseDegreeChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/reservoirsUseDegreeChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/reservoirsUseDegreeChart`,
     method: "post",
     data: request,
   });
 }
 export function searchDevTrendAnalysis(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/searchDevTrendAnalysis`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/searchDevTrendAnalysis`,
     method: "post",
     data: request,
   });
 }
 export function searchGasChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/searchGasChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/searchGasChart`,
     method: "post",
     data: request,
   });
 }
 export function searchInjectionChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/searchInjectionChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/searchInjectionChart`,
     method: "post",
     data: request,
   });
 }
 export function searchInjectionTable(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/searchInjectionTable`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/searchInjectionTable`,
     method: "post",
     data: request,
   });
 }
 export function searchLongTermPlan(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/searchLongTermPlan`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/searchLongTermPlan`,
     method: "post",
     data: request,
   });
 }
 export function searchOilProductionChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/searchOilProductionChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/searchOilProductionChart`,
     method: "post",
     data: request,
   });
 }
 export function searchOilProductionTable(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/searchOilProductionTable`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/searchOilProductionTable`,
     method: "post",
     data: request,
   });
 }
 export function targetChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/targetChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/targetChart`,
     method: "post",
     data: request,
   });
 }
 export function tongChartData(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/tongChartData`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/tongChartData`,
     method: "post",
     data: request,
   });
 }
 export function waterContainRaiseChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/waterContainRaiseChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/waterContainRaiseChart`,
     method: "post",
     data: request,
   });
@@ -540,21 +541,21 @@ export function waterContainRaiseChart(request) {
  */
 export function waterControlDegreeChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/waterControlDegreeChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/waterControlDegreeChart`,
     method: "post",
     data: request,
   });
 }
 export function waterCutRaiseRate(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/waterCutRaiseRate`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/waterCutRaiseRate`,
     method: "post",
     data: request,
   });
 }
 export function waterDriveChartData(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/waterDriveChartData`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/waterDriveChartData`,
     method: "post",
     data: request,
   });
@@ -568,28 +569,28 @@ export function waterDriveChartData(request) {
  */
 export function waterDriveUseDegreeChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/waterDriveUseDegreeChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/waterDriveUseDegreeChart`,
     method: "post",
     data: request,
   });
 }
 export function waterIndicatorChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/waterIndicatorChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/waterIndicatorChart`,
     method: "post",
     data: request,
   });
 }
 export function waterQualityRate(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/waterQualityRate`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/waterQualityRate`,
     method: "post",
     data: request,
   });
 }
 export function waterSotreRateChart(request) {
   return Axios({
-    url: `rem/reservoirsDevManagementInfo/waterSotreRateChart`,
+    url: `${baseUrl}/reservoirsDevManagementInfo/waterSotreRateChart`,
     method: "post",
     data: request,
   });

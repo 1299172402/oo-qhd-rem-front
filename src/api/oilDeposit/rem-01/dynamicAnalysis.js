@@ -1,9 +1,10 @@
 import Axios from '@/utils/request'
+const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 //===油藏动态管理/油井动态分析===//
 //生产动态数据
 export function dynamicProd(request) {
   return Axios({//0301-01-生产动态（模型计算）
-    url: `/rem/dynamicAnalysis/dynamicProd`,
+    url: `${baseUrl}/dynamicAnalysis/dynamicProd`,
     method: "post",
     data: request,
   });
@@ -11,42 +12,42 @@ export function dynamicProd(request) {
 //生产问题检测
 export function operatingStatus(request) {
   return Axios({//0301-01-生产问题监测-油井工况（模型计算）
-    url: `/rem/dynamicAnalysis/operatingStatus`,
+    url: `${baseUrl}/dynamicAnalysis/operatingStatus`,
     method: "post",
     data: request,
   });
 }
 export function supplyDischargeRelationship(request) {
   return Axios({// 0301-01-生产问题监测-供排关系（模型计算）
-    url: `/rem/dynamicAnalysis/supplyDischargeRelationship`,
+    url: `${baseUrl}/dynamicAnalysis/supplyDischargeRelationship`,
     method: "post",
     data: request,
   });
 }
 export function declineRate(request) {
   return Axios({// 0301-01-生产问题监测-递减率（模型计算）
-    url: `/rem/dynamicAnalysis/declineRate`,
+    url: `${baseUrl}/dynamicAnalysis/declineRate`,
     method: "post",
     data: request,
   });
 }
 export function fluidProducingIntensity(request) {
   return Axios({// 0301-01-生产问题监测-采液强度（模型计算）
-    url: `/rem/dynamicAnalysis/fluidProducingIntensity`,
+    url: `${baseUrl}/dynamicAnalysis/fluidProducingIntensity`,
     method: "post",
     data: request,
   });
 }
 export function fluidProductivityIndex(request) {
   return Axios({// 0301-01--潜力分析-采液指数（模型计算）
-    url: `/rem/dynamicAnalysis/fluidProductivityIndex`,
+    url: `${baseUrl}/dynamicAnalysis/fluidProductivityIndex`,
     method: "post",
     data: request,
   });
 }
 export function fluidProductivityIndexMeter(request) {
   return Axios({// 0301-01--潜力分析-米采液指数（模型计算）
-    url: `/rem/dynamicAnalysis/fluidProductivityIndexMeter`,
+    url: `${baseUrl}/dynamicAnalysis/fluidProductivityIndexMeter`,
     method: "post",
     data: request,
   });
@@ -54,14 +55,14 @@ export function fluidProductivityIndexMeter(request) {
 //潜力分析
 export function potential(request) {
   return Axios({// 0301-01-潜力分析-提液潜力（模型计算）
-    url: `/rem/dynamicAnalysis/potential`,
+    url: `${baseUrl}/dynamicAnalysis/potential`,
     method: "post",
     data: request,
   });
 }
 export function reserveProducing(request) {
   return Axios({// 0301-01--潜力分析-储量动用（模型计算
-    url: `/rem/dynamicAnalysis/reserveProducing`,
+    url: `${baseUrl}/dynamicAnalysis/reserveProducing`,
     method: "post",
     data: request,
   });
@@ -69,14 +70,14 @@ export function reserveProducing(request) {
 //措施推荐
 export function measureRecommend(request) {
   return Axios({// 0301-01-措施推荐（模型计算）油井
-    url: `/rem/dynamicAnalysis/measureRecommend`,
+    url: `${baseUrl}/dynamicAnalysis/measureRecommend`,
     method: "post",
     data: request,
   });
 }
 export function proWellDynamicAnalysisDetail(request) {
   return Axios({// 油井动态分析详细列表
-    url: `/rem/dynamicAnalysis/proWellDynamicAnalysisDetail`,
+    url: `${baseUrl}/dynamicAnalysis/proWellDynamicAnalysisDetail`,
     method: "post",
     data: request,
   });
@@ -85,14 +86,14 @@ export function proWellDynamicAnalysisDetail(request) {
 //生产问题
 export function layerVariationTrend(request) {
   return Axios({// 0302-01-生产问题-井层指标变化趋势
-    url: `/rem/dynamicAnalysis/layerVariationTrend`,
+    url: `${baseUrl}/dynamicAnalysis/layerVariationTrend`,
     method: "post",
     data: request,
   });
 }
 export function layerInjectionStatus(request) {
   return Axios({// 0302-01-生产问题-井层注水工况
-    url: `/rem/dynamicAnalysis/layerInjectionStatus`,
+    url: `${baseUrl}/dynamicAnalysis/layerInjectionStatus`,
     method: "post",
     data: request,
   });
@@ -100,28 +101,28 @@ export function layerInjectionStatus(request) {
 //超欠注原因分析
 export function groundReason(request) {
   return Axios({// 0302-01-超欠注原因分析-地面原因
-    url: `/rem/dynamicAnalysis/groundReason`,
+    url: `${baseUrl}/dynamicAnalysis/groundReason`,
     method: "post",
     data: request,
   });
 }
 export function wellBoreReason(request) {
   return Axios({// 0302-01--超欠注原因分析-井筒原因
-    url: `/rem/dynamicAnalysis/wellBoreReason`,
+    url: `${baseUrl}/dynamicAnalysis/wellBoreReason`,
     method: "post",
     data: request,
   });
 }
 export function layerReason(request) {
   return Axios({// 0302-01--超欠注原因分析-地层原因
-    url: `/rem/dynamicAnalysis/layerReason`,
+    url: `${baseUrl}/dynamicAnalysis/layerReason`,
     method: "post",
     data: request,
   });
 }
 export function injectionClosed(request) {
   return Axios({// 0302-01--超欠注原因分析-停注恢复
-    url: `/rem/dynamicAnalysis/injectionClosed`,
+    url: `${baseUrl}/dynamicAnalysis/injectionClosed`,
     method: "post",
     data: request,
   });
@@ -129,14 +130,14 @@ export function injectionClosed(request) {
 //措施推荐
 export function injectionMeasureRecommend(request) {
   return Axios({// 0302-01--措施推荐 水井
-    url: `/rem/dynamicAnalysis/injectionMeasureRecommend`,
+    url: `${baseUrl}/dynamicAnalysis/injectionMeasureRecommend`,
     method: "post",
     data: request,
   });
 }
 export function injectionWellDynamicAnalysisDetail(request) {
   return Axios({//　0302-01-水井动态分析详细列表
-    url: `/rem/dynamicAnalysis/injectionWellDynamicAnalysisDetail`,
+    url: `${baseUrl}/dynamicAnalysis/injectionWellDynamicAnalysisDetail`,
     method: "post",
     data: request,
   });
@@ -147,7 +148,7 @@ export function injectionWellDynamicAnalysisDetail(request) {
 //0301(0302)-02-辅助分析-静态资料-小层平面图
 export function microPhasePlot(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/microPhasePlot`,
+    url: `${baseUrl}/dynamicAnalysis/microPhasePlot`,
     method: "post",
     data: request,
   });
@@ -156,7 +157,7 @@ export function microPhasePlot(request){
 //0301(0302)-03-辅助分析-静态资料-地震属性图
 export function seismicAttributePlot(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/seismicAttributePlot`,
+    url: `${baseUrl}/dynamicAnalysis/seismicAttributePlot`,
     method: "post",
     data: request,
   });
@@ -165,7 +166,7 @@ export function seismicAttributePlot(request){
 //0301(0302)-04-辅助分析-静态资料-沉积相图
 export function depositionFaciesDiagram(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/depositionFaciesDiagram`,
+    url: `${baseUrl}/dynamicAnalysis/depositionFaciesDiagram`,
     method: "post",
     data: request,
   });
@@ -174,7 +175,7 @@ export function depositionFaciesDiagram(request){
 //0301(0302)-05-辅助分析-静态资料-小层顶页面构造图
 export function structureDiagram(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/structureDiagram`,
+    url: `${baseUrl}/dynamicAnalysis/structureDiagram`,
     method: "post",
     data: request,
   });
@@ -183,7 +184,7 @@ export function structureDiagram(request){
 //0301(0302)-06-辅助分析-静态资料-测井曲线
 export function loggingCurve(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/loggingCurve`,
+    url: `${baseUrl}/dynamicAnalysis/loggingCurve`,
     method: "post",
     data: request,
   });
@@ -192,7 +193,7 @@ export function loggingCurve(request){
 //0301(0302)-07-辅助分析-静态资料-固井质量测井图
 export function cementingQuality(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/cementingQuality`,
+    url: `${baseUrl}/dynamicAnalysis/cementingQuality`,
     method: "post",
     data: request,
   });
@@ -201,7 +202,7 @@ export function cementingQuality(request){
 //0301(0302)-08-辅助分析-静态资料-随钻轨迹
 export function drillingTrajectory(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/drillingTrajectory`,
+    url: `${baseUrl}/dynamicAnalysis/drillingTrajectory`,
     method: "post",
     data: request,
   });
@@ -210,7 +211,7 @@ export function drillingTrajectory(request){
 //0301(0302)-09-辅助分析-静态资料-地震剖面图
 export function seismicPlot(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/seismicPlot`,
+    url: `${baseUrl}/dynamicAnalysis/seismicPlot`,
     method: "post",
     data: request,
   });
@@ -219,7 +220,7 @@ export function seismicPlot(request){
 //0301(0302)-10-辅助分析-静态资料-测井解释成果
 export function loggingInterpretation(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/loggingInterpretation`,
+    url: `${baseUrl}/dynamicAnalysis/loggingInterpretation`,
     method: "post",
     data: request,
   });
@@ -228,7 +229,7 @@ export function loggingInterpretation(request){
 //0301(0302)-11-辅助分析-静态资料-小层数据
 export function microLayerData(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/microLayerData`,
+    url: `${baseUrl}/dynamicAnalysis/microLayerData`,
     method: "post",
     data: request,
   });
@@ -237,7 +238,7 @@ export function microLayerData(request){
 //0301(0302)-12-辅助分析-静态资料-井斜数据
 export function deviationData(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/deviationData`,
+    url: `${baseUrl}/dynamicAnalysis/deviationData`,
     method: "post",
     data: request,
   });
@@ -246,7 +247,7 @@ export function deviationData(request){
 //0301(0302)-13-辅助分析-生产动态资料-生产数据
 export function produceData(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/produceData`,
+    url: `${baseUrl}/dynamicAnalysis/produceData`,
     method: "post",
     data: request,
   });
@@ -255,7 +256,7 @@ export function produceData(request){
 //0301(0302)-14-辅助分析-生产动态资料--井网图
 export function wellNetDiagram(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/wellNetDiagram`,
+    url: `${baseUrl}/dynamicAnalysis/wellNetDiagram`,
     method: "post",
     data: request,
   });
@@ -263,7 +264,7 @@ export function wellNetDiagram(request){
 //0301(0302)-15-辅助分析-生产动态资料--完井管状图
 export function wellCompletionDiagram(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/wellCompletionDiagram`,
+    url: `${baseUrl}/dynamicAnalysis/wellCompletionDiagram`,
     method: "post",
     data: request,
   });
@@ -271,7 +272,7 @@ export function wellCompletionDiagram(request){
 //0301(0302)-16-辅助分析-生产动态资料-作业井史
 export function workingHistory(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/workingHistory`,
+    url: `${baseUrl}/dynamicAnalysis/workingHistory`,
     method: "post",
     data: request,
   });
@@ -279,7 +280,7 @@ export function workingHistory(request){
 //0301(0302)-17-辅助分析-生产动态资料-射孔数据
 export function getComPerfInterval(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/getComPerfInterval`,
+    url: `${baseUrl}/dynamicAnalysis/getComPerfInterval`,
     method: "post",
     data: request,
   });
@@ -287,7 +288,7 @@ export function getComPerfInterval(request){
 //0301(0302)-18-辅助分析-生产动态资料-单井基本信息
 export function wellBaseInfo(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/wellBaseInfo`,
+    url: `${baseUrl}/dynamicAnalysis/wellBaseInfo`,
     method: "post",
     data: request,
   });
@@ -295,7 +296,7 @@ export function wellBaseInfo(request){
 //0301(0302)-19-辅助分析-动态监测资料-压力测试
 export function pressure(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/pressure`,
+    url: `${baseUrl}/dynamicAnalysis/pressure`,
     method: "post",
     data: request,
   });
@@ -303,7 +304,7 @@ export function pressure(request){
 //0301(0302)-20-辅助分析-动态监测资料-产液剖面
 export function outProfileLoggingInterpretation(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/outProfileLoggingInterpretation`,
+    url: `${baseUrl}/dynamicAnalysis/outProfileLoggingInterpretation`,
     method: "post",
     data: request,
   });
@@ -311,7 +312,7 @@ export function outProfileLoggingInterpretation(request){
 //0301(0302)-21-辅助分析-动态监测资料-饱和度测井
 export function saturationLoggingInterpretation(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/saturationLoggingInterpretation`,
+    url: `${baseUrl}/dynamicAnalysis/saturationLoggingInterpretation`,
     method: "post",
     data: request,
   });
@@ -319,7 +320,7 @@ export function saturationLoggingInterpretation(request){
 //0301(0302)-22-辅助分析-动态监测资料-化验数据
 export function testReport(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/testReport`,
+    url: `${baseUrl}/dynamicAnalysis/testReport`,
     method: "post",
     data: request,
   });
@@ -327,7 +328,7 @@ export function testReport(request){
 //0301(0302)-23-辅助分析-动态监测资料-试井报告
 export function testWellReport(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/testWellReport`,
+    url: `${baseUrl}/dynamicAnalysis/testWellReport`,
     method: "post",
     data: request,
   });
@@ -335,7 +336,7 @@ export function testWellReport(request){
 //0301-24-辅助分析-动态监测资料-分层测试数据
 export function divLayerTestData(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/divLayerTestData`,
+    url: `${baseUrl}/dynamicAnalysis/divLayerTestData`,
     method: "post",
     data: request,
   });
@@ -343,7 +344,7 @@ export function divLayerTestData(request){
 //0300-01-单井累产指标变化动态
 export function wellProSumIndicatorVariation(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/wellProSumIndicatorVariation`,
+    url: `${baseUrl}/dynamicAnalysis/wellProSumIndicatorVariation`,
     method: "post",
     data: request,
   });
@@ -352,7 +353,7 @@ export function wellProSumIndicatorVariation(request){
 //0300-02-单井日产指标变化动态
 export function wellDailyIndicatorVariation(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/wellDailyIndicatorVariation`,
+    url: `${baseUrl}/dynamicAnalysis/wellDailyIndicatorVariation`,
     method: "post",
     data: request,
   });
@@ -360,7 +361,7 @@ export function wellDailyIndicatorVariation(request){
 //0300-03-油田指标变化动态
 export function oilFieldIndicatorVariation(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/oilFieldIndicatorVariation`,
+    url: `${baseUrl}/dynamicAnalysis/oilFieldIndicatorVariation`,
     method: "post",
     data: request,
   });
@@ -368,14 +369,14 @@ export function oilFieldIndicatorVariation(request){
 //0300-04-曲线对比分析
 export function chartComparationAnalysis(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/chartComparationAnalysis`,
+    url: `${baseUrl}/dynamicAnalysis/chartComparationAnalysis`,
     method: "post",
     data: request,
   });
 }
 export function findDynamicAnalysisUsingPOST(request) {
   return Axios({
-    url: `/rem/dynamicAnalysis/dynamicAnalysis`,
+    url: `${baseUrl}/dynamicAnalysis/dynamicAnalysis`,
     method: "post",
     data: request,
   });
@@ -383,7 +384,7 @@ export function findDynamicAnalysisUsingPOST(request) {
 
 export function getSectionWell(request){
   return Axios({
-    url: `/rem/dynamicAnalysis/getSectionWell`,
+    url: `${baseUrl}/dynamicAnalysis/getSectionWell`,
     method: "post",
     data: request,
   });

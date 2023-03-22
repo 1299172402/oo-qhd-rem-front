@@ -10,7 +10,7 @@
 <template>
   <el-container class="mt-2">
     <el-main>
-      <NormalCard>
+      <!-- <NormalCard> -->
         <el-row style="height: 600px;overflow: auto;">
           <el-image :src="image">
             <div slot="error">
@@ -18,7 +18,7 @@
             </div>
           </el-image>
         </el-row>
-      </NormalCard>
+      <!-- </NormalCard> -->
     </el-main>
   </el-container>
 </template>

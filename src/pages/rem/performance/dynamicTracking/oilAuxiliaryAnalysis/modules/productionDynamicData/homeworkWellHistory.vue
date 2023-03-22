@@ -1,13 +1,12 @@
 <!--作业井史-->
 <template>
-  <!-- <NormalCard class="mt-2"> -->
     <el-table
         id="tableData"
-        highlight
-        :data="tableData"
-        style="width: 100%;"
-        height="600"
-    >
+        :data="tableData" :border="false" :row-style="{ height: '0px' }"
+            header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
+            style="width:100%; padding: 20px 0" height="calc(100% - 86px)" :default-sort="{ prop: 'date', order: 'descending' }"
+            :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        >
       <el-table-column
           type="index"
           label="序号"
@@ -35,24 +34,20 @@
       >
       </el-table-column>
     </el-table>
-  <!-- </NormalCard> -->
 </template>
 <script>
-// import NormalCard from '@/components/tools/NormalCard';
 import {workingHistory} from "@/api/oilDeposit/rem-01/dynamicAnalysis";
 // import {exportExcel} from "@/lib/exportExcel";
 
 export default {
-  components: {
-    // NormalCard,
-  },
   props: {
     //选择油田
     oilFeildId: {},
     //选择平台
     platform: {},
     //选择井号
-    wellId: {}
+    wellId: {},
+    majorEventsBrieflyValue:''
   },
   data() {
     return {
@@ -68,11 +63,12 @@ export default {
      * hwh
      * 根据父组件传递过来的参数进行查询
      */
-    doSearch() {
+    doSearch(majorEventsBriefly='') {
       let request = {
         ogfId: this.oilFeildId,
         platformId: this.platform,
         wellId: this.wellId,
+        majorEventsBriefly
       };
       workingHistory(request).then((res) => {
         if (res.data.code == 200) {
@@ -95,7 +91,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-::v-deep .el-table .cell:empty::before{
-  content: '-';
-}
+    ::v-deep .el-table .cell:empty::before{
+      content: '-';
+    }
 </style>

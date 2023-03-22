@@ -1,6 +1,6 @@
 <!--测井解释成果-->
 <template>
-  <NormalCard class="mt-2">
+  <!-- <NormalCard class="mt-2"> -->
     <el-table
         id="tableData"
         highlight
@@ -129,7 +129,7 @@
         min-width="200"
       ></el-table-column>
     </el-table>
-  </NormalCard>
+  <!-- </NormalCard> -->
 </template>
 <script>
 // import NormalCard from '@/components/tools/NormalCard';

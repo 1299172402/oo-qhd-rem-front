@@ -2,7 +2,7 @@
 <template>
   <el-container class="mt-2">
     <el-main>
-      <NormalCard>
+      <!-- <NormalCard> -->
         <el-row style="height: 600px;overflow: auto;">
           <el-image :src="image">
             <div slot="error">
@@ -10,7 +10,7 @@
             </div>
           </el-image>
         </el-row>
-      </NormalCard>
+      <!-- </NormalCard> -->
     </el-main>
   </el-container>
 </template>
@@ -18,7 +18,7 @@
 
 </style>
 <script>
-import NormalCard from '@/components/tools/NormalCard';
+// import NormalCard from '@/components/tools/NormalCard';
 import
 {loggingCurve}
   from '@/api/rem-01/dynamicAnalysis.js';
@@ -27,7 +27,7 @@ import config from "@/config";
 
 export default {
   components: {
-    NormalCard,
+    // NormalCard,
   },
   props: {
     //选择油田
@@ -93,7 +93,7 @@ export default {
       if(this.wellName){
         fileName = this.wellName + fileName;
       }
-      downFile(this.image,fileName);
+      // downFile(this.image,fileName);
     }
   },
 }

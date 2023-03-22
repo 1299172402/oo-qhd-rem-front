@@ -4,8 +4,7 @@
  * @Date: 2021-03-31 11:33:05
  */
 import Axios from '@/utils/request'
-
-const baseUrl = process.env.NODE_ENV == "production" ? "rem" : "rem";
+const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
 export default {
   // 措施动态
