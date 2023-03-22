@@ -27,7 +27,6 @@
 </template>
 <script>
 // import NormalCard from '@/components/tools/NormalCard';
-import {microLayerData,} from '@/api/rem-01/dynamicAnalysis.js';
 // import {exportExcel} from "@/lib/exportExcel";
 
 export default {
