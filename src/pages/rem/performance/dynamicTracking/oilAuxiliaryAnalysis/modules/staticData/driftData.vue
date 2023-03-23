@@ -1,6 +1,10 @@
 <!--井斜数据-->
 <template>
-    <el-table id="tableData" highlight :data="tableData" style="width: 100%;" height="600">
+    <el-table 
+        :data="tableData" :border="false" :row-style="{ height: '0px' }"
+        header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
+        style="width:100%; padding: 20px 0" height="calc(100% - 86px)" :default-sort="{ prop: 'date', order: 'descending' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
       <el-table-column type="index" label="序号" align="center" width="80"></el-table-column>
       <el-table-column prop="wellName" label="井标识" width="180" align="center"></el-table-column>
       <el-table-column prop="measureDepth" :render-header="renderHeader" label="测点斜深 (m)" align="center"></el-table-column>

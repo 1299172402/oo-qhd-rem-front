@@ -3,37 +3,26 @@
         <headerSearch class="g-w100 g-h100">
             <div class="g-row-flex-V g-w100 g-h100">
                 <span class="title" style="margin-left: 20px">油田：</span>
-                <el-select v-model="selectOilField" placeholder="请选择" filterable clearable disabled
-                    @change="doChangeYt">
-                    <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name"
-                        :value="item.oilFieldId">
-                    </el-option>
+                <el-select v-model="selectOilField" placeholder="请选择" filterable clearable disabled @change="doChangeYt">
+                    <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
                 </el-select>
                 <span class="title" style="margin-left: 20px">平台：</span>
-                <el-select v-model="selectPlatform" style="width: 220px" placeholder="请选择" filterable clearable
-                    @change="doChangePT">
-                    <el-option v-for="item in platform" :key="item.platFormId" :label="item.platName"
-                        :value="item.platFormId">
-                    </el-option>
+                <el-select v-model="selectPlatform" style="width: 220px" placeholder="请选择" filterable clearable @change="doChangePT">
+                    <el-option v-for="item in platform" :key="item.platFormId" :label="item.platName" :value="item.platFormId"></el-option>
                 </el-select>
                 <span class="title" style="margin-left: 20px">井号：</span>
                 <el-select v-model="selectWellId" filterable clearable @change="onChangeWell">
-                    <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId"
-                        :disabled="item.disabled">
-                    </el-option>
+                    <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled"></el-option>
                 </el-select>
-                <el-button type="primary" icon="el-icon-search" style="margin-left: 20px" @click="doSearch">检索
-                </el-button>
+                <el-button type="primary" icon="el-icon-search" style="margin-left: 20px" @click="doSearch">检索</el-button>
                 <el-upload ref="upload" style="margin-left: 20px" class="upload-demo" action=""
                     :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove"
                     :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList"
                     :show-file-list="false" :on-success="handleSuccess" v-show="canUpload && !ljpmTag">
                     <el-button type="primary">上传文档</el-button>
                 </el-upload>
-                <el-button class="upload-demo" v-show="canUpload && ljpmTag" style="margin-left: 20px"
-                    @click="ljpmUploadDialog">上传文档</el-button>
-                <el-button style="margin-left: 20px" type="primary" @click="doDownLoad" v-show="canDownload"> 下载
-                </el-button>
+                <el-button class="upload-demo" v-show="canUpload && ljpmTag" style="margin-left: 20px" @click="ljpmUploadDialog">上传文档</el-button>
+                <el-button style="margin-left: 20px" type="primary" @click="doDownLoad" v-show="canDownload">下载</el-button>
             </div>
         </headerSearch>
         <pagePanelNew headerTitle="角色列表" style="height: calc(100% - 100px)" class="g-w100">
@@ -54,8 +43,8 @@
                     </div>
                 </el-tab-pane>
             </el-tabs>
-            <keep-alive :include="[]" :max="10">
-                <component :is="component" ref="componentCustom" :oil-feild-id="selectOilField" :platform="selectPlatform" :well-id="selectWellId" @childPara="changeChildParam"></component>
+            <keep-alive :include="[]" :max="10" v-if="selectWellId">
+                <component :is="component" ref="componentCustom" :oil-feild-id="selectOilField" :platform="selectPlatform" :well-id="selectWellId" :majorEventsBrieflyValue="majorEventsBrieflyValue" @childPara="changeChildParam"></component>
             </keep-alive>
             <el-dialog custom-class="border" title="连井剖面图上传" :visible.sync="ljpmDialog" width="50%"
                 :before-close="ljpmDialogClose">
@@ -102,9 +91,7 @@
     } from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import { getMajorEventsBriefly } from '@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js';
     // import VSAuth from '@vsui/lib-vueauth4vseaf';
-    import {
-        getWidgetByAreaUser
-    } from '@/api/oilDeposit/rmm-01/rmm01.js';
+    import {getWidgetByAreaUser} from '@/api/oilDeposit/rmm-01/rmm01.js';
     export default {
         name: 'OilAuxiliaryAnalysis',
         data() {
@@ -127,7 +114,8 @@
                 fileList: [],
                 component: null,
                 activeName: 'staticData',
-                currentModule: 'smallLayerStructureDiagram',
+                // currentModule: 'smallLayerStructureDiagram',
+                currentModule:'perforationData',
                 queryParams: {
                     ogfId: '',
                     platId: '',
@@ -137,22 +125,22 @@
                         label: '静态资料',
                         name: 'staticData',
                         modules: [
-                            {
-                                label: '小层顶面构造图',
-                                name: 'smallLayerStructureDiagram',
-                            },
-                            {
-                                label: '地震属性图', //原小层平面图
-                                name: 'smallFloorPlan',
-                            },
-                            {
-                                label: '连井剖面图', //原地震属性图
-                                name: 'seismicAttributeMap',
-                            },
-                            {
-                                label: '沉积相图',
-                                name: 'theSedimentaryFaciesMap',
-                            },
+                            // {
+                            //     label: '小层顶面构造图',
+                            //     name: 'smallLayerStructureDiagram',
+                            // },
+                            // {
+                            //     label: '地震属性图', //原小层平面图
+                            //     name: 'smallFloorPlan',
+                            // },
+                            // {
+                            //     label: '连井剖面图', //原地震属性图
+                            //     name: 'seismicAttributeMap',
+                            // },
+                            // {
+                            //     label: '沉积相图',
+                            //     name: 'theSedimentaryFaciesMap',
+                            // },
                             /* {
                                 label: "测井曲线",
                                 name: "wellLoggingCurve",
@@ -161,18 +149,18 @@
                                 label: "固井质量测井图",
                                 name: "cementingQualityLog",
                               },*/
-                            {
-                                label: '地震剖面图',
-                                name: 'seismicProfile',
-                            },
-                            {
-                                label: '地质探边图',
-                                name: 'whileDrillingTrajectory',
-                            },
-                            {
-                                label: '测井解释成果',
-                                name: 'loggingInterpretationResult',
-                            },
+                            // {
+                            //     label: '地震剖面图',
+                            //     name: 'seismicProfile',
+                            // },
+                            // {
+                            //     label: '地质探边图',
+                            //     name: 'whileDrillingTrajectory',
+                            // },
+                            // {
+                            //     label: '测井解释成果',
+                            //     name: 'loggingInterpretationResult',
+                            // },
                             /*{
                                 label: "小层数据",
                                 name: "smallLayerData",
@@ -181,20 +169,20 @@
                                 label: '射孔数据',
                                 name: 'perforationData',
                             },
-                            {
-                                label: '井斜数据',
-                                name: 'driftData',
-                            },
+                            // {
+                            //     label: '井斜数据',
+                            //     name: 'driftData',
+                            // },
                         ],
                     },
                     {
                         label: '生产动态资料',
                         name: 'productionDynamicData',
                         modules: [
-                            {
-                                label: '生产数据',
-                                name: 'productionData',
-                            },
+                            // {
+                            //     label: '生产数据',
+                            //     name: 'productionData',
+                            // },
                             {
                                 label: '井网图',
                                 name: 'wellNetworkDiagram',
@@ -207,10 +195,10 @@
                                 label: '作业井史',
                                 name: 'homeworkWellHistory',
                             },
-                            {
-                                label: '单井基本信息表',
-                                name: 'individualWellBasicInformationSheet',
-                            },
+                            // {
+                            //     label: '单井基本信息表',
+                            //     name: 'individualWellBasicInformationSheet',
+                            // },
                             {
                                 label: '生产段状态',
                                 name: 'productionSectionStatus'
@@ -233,14 +221,14 @@
                                 label: '饱和度测井',
                                 name: 'saturationLog',
                             },
-                            {
-                                label: '化验数据',
-                                name: 'testData',
-                            },
-                            {
-                                label: '试井报告',
-                                name: 'wellTestReport',
-                            }
+                            // {
+                            //     label: '化验数据',
+                            //     name: 'testData',
+                            // },
+                            // {
+                            //     label: '试井报告',
+                            //     name: 'wellTestReport',
+                            // }
                         ],
                     },
                 ],
@@ -487,19 +475,12 @@
             beforeRemove(file, fileList) {
                 return this.$confirm(`确定移除 ${file.name}？`);
             },
-            /**
-             *  hwh 初始化 数据
-             * @returns {Promise<void>}
-             */
+            //hwh 初始化 数据
             async initData() {
                 let oilFeildId = this.$route.params.oilField;
                 console.log(this.$route.params);
                 let wellId = this.$route.params.wellId;
-                // console.log(oilFeildId, wellId);
-                /**
-                 * hwh
-                 * 获得油田信息给下拉列表
-                 */
+                //获得油田信息给下拉列表
                 await fetchOilFields().then((res) => {
                     if (res.data.code == 200) {
                         this.oilField = res.data.data.oilFields;
@@ -536,12 +517,8 @@
                         this.wellData = res.data.data.productionWells;
                     }
                 });
-                //this.selectWellId='7861A07F47CA4D5B8AF1A83AA4EB2C14';
-                //this.selectWellId='0A3012E64C1F426896EA16BB9F13E3BD';
                 if (wellId == undefined || wellId == null) {
                     if (this.wellData && this.wellData.length > 0) {
-                        //默认值设置
-                        //this.selectWellId = 'E0A74EC3D8F9413CA69A65C792122D8B';
                         this.selectWellId = this.wellData[0].wellId;
                     }
                 } else {
@@ -552,11 +529,7 @@
                 }
                 this.doSearch();
             },
-            /**
-             * hwh
-             * 获得平台数据
-             * @param oilFieldId
-             */
+            //获得平台数据@param oilFieldId
             getFetchPlatforms(oilFieldId) {
                 let request = {
                     oilFieldId: oilFieldId,
@@ -572,11 +545,7 @@
                     }
                 });
             },
-            /**
-             * hwh
-             * 通过平台id 查询油井信息
-             * @param platformId
-             */
+            //通过平台id 查询油井信息@param platformId
             getFetchProductionWellsByPlatform(platformId) {
                 let request = {
                     platformId: platformId,
@@ -584,19 +553,10 @@
                 fetchProductionWellsByPlatform(request).then((res) => {
                     if (res.data.code == 200) {
                         this.wellData = res.data.data.productionWells;
-                        /*if(this.wellData.length==0){
-                            this.selectWellId="";
-                          }else{
-                            this.selectWellId = this.wellData[0].wellId;
-                          }*/
                     }
                 });
             },
-            /**
-             * hwh
-             * 通过油田id 查询油井信息
-             * @param oilFieldId
-             */
+            //通过油田id 查询油井信息@param oilFieldId
             getFetchProductionWells(oilFieldId) {
                 let request = {
                     oilFieldId: oilFieldId,
@@ -604,15 +564,9 @@
                 fetchProductionWells(request).then((res) => {
                     if (res.data.code == 200) {
                         this.wellData = res.data.data.productionWells;
-                        /* if(this.wellData.length==0){
-                            this.selectWellId="";
-                          }else{
-                            this.selectWellId = this.wellData[0].wellId;
-                          }*/
                     }
                 });
             },
-
             getLjpmWells() {
                 let request = {
                     ogfId: this.selectOilField,
@@ -623,37 +577,23 @@
                     }
                 });
             },
-
-            
-            /**
-             * zxb
-             * 大事简要数据源接口
-             * @param majorEventsBriefly
-             */
+            //大事简要数据源接口@param majorEventsBriefly
             getMajorEventsBriefly() {
                 getMajorEventsBriefly({
-                    majorEventsBriefly: this.majorEventsBrieflyValue
+                    majorEventsBriefly: this.majorEventsBrieflyValue,
                 }).then((res) => {
-                    console.log(res, 888);
-                    if(res.data.code=='200'){
+                    if(res.data.code==200){
                        this.majorEventsBrieflyList=res.data.data;
                     }
                 });
             },
-            /**
-             * zxb
-             * 大事简要下拉框change事件
-             */
-            majorEventsBrieflyChange(){
+            //zxb大事简要下拉框change事件
+            majorEventsBrieflyChange(e){
+                this.majorEventsBrieflyValue=e;
+                console.log('this.majorEventsBrieflyValue',this.majorEventsBrieflyValue)
                 this.$refs.componentCustom.doSearch(this.majorEventsBrieflyValue);
             },
-            
-            
-            /**
-             * hwh
-             * 上传图片文件
-             *
-             */
+            //上传图片文件
             async useUploadPic(file, fileList) {
                 if (
                     this.currentModule == 'smallLayerStructureDiagram' ||
@@ -663,7 +603,6 @@
                     this.$message.error('该部分内容需要通过区块辅助分析进行上传');
                     return;
                 }
-                //console.log(fileList);
                 if (fileList.length > 1) {
                     this.fileList.slice(-1);
                 }
@@ -733,12 +672,7 @@
                     }
                 });
             },
-            /**
-             * hwh
-             * 解析图片文件 图片文件转二进制流
-             * @param file
-             * @returns {Promise<unknown>}
-             */
+            //hwh解析图片文件 图片文件转二进制流@param file
             selectImageFile(file) {
                 return new Promise((resolve, reject) => {
                     let reader = new FileReader();
@@ -748,11 +682,7 @@
                     };
                 });
             },
-            /**
-             * hwh 是否能够上传图片
-             * 通过映射表来判断
-             * @returns {boolean}
-             */
+            //hwh 是否能够上传图片通过映射表来判断
             showUploadPic() {
                 let tabName = this.tabsPathName.find((item) => item.name == this.currentModule);
                 console.log(tabName);
@@ -762,14 +692,9 @@
                     return false;
                 }
             },
-            /**
-             *  hwh
-             *  子组件传递参数
-             * @param val
-             */
+            //hwh子组件传递参数@param val
             changeChildParam(val) {
                 this.childParam = val;
-                //console.log(this.childParam);
             },
             /*//base64 转二进制流
               dataURLtoBlob(dataurl) {
@@ -792,7 +717,7 @@
                     this.$refs.componentCustom.selectPosition = this.childParam;
                 }
                 //调用子组件的事件
-                this.$refs.componentCustom.doSearch();
+                this.$refs.componentCustom.doSearch(this.majorEventsBrieflyValue);
             },
             //上传成功后操作
             handleSuccess() {
@@ -834,11 +759,7 @@
                 }
                 this.$refs.componentCustom.doDownLoad();
             },
-            /**
-             * hwh
-             * 判断上传文件是否是正确的类型
-             * @param type
-             */
+            //判断上传文件是否是正确的类型@param type
             isCorrectFileType(type) {
                 if (
                     this.currentModule == 'smallLayerStructureDiagram' ||
@@ -877,10 +798,7 @@
                     return true;
                 }
             },
-            /**
-             * hwh
-             * 获取当前页面的权限内容，并处理其逻辑问题
-             */
+            //hwh获取当前页面的权限内容，并处理其逻辑问题
             getPageAuthMessage() {
                 // this.userInfo = VSAuth.getAuthInfo();
                 let myPath = this.$route.path;

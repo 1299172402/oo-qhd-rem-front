@@ -14,3 +14,14 @@ export function getMajorEventsBriefly(request) {
     data: request,
   });
 }
+ 
+//生产状态列表接口
+export function getProductionStatus(request) {
+  return Axios({
+    url: `${baseUrl}/dynamicAnalysis/getProductionStatus`,
+    method: "get",
+    params: request
+  });
+}
+
+

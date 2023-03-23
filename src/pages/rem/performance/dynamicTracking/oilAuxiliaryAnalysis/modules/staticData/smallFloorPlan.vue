@@ -22,9 +22,7 @@
     </el-main>
   </el-container>
 </template>
-<style lang="scss" scoped>
 
-</style>
 <script>
 import {fieldLayers} from '@/api/oilDeposit/rem-02/primaryinfo.js';
 import {microPhasePlot} from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';

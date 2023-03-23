@@ -8,9 +8,7 @@
     </el-main>
   </el-container>
 </template>
-<style lang="scss" scoped>
 
-</style>
 <script>
 import {testWellReport} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 // import {downFile} from "@/lib/remBase64Download";
@@ -40,7 +38,6 @@ export default {
      * 调用图片
      */
     doSearch(){
-      //let wellId = this.wellId;
       let request={
         ogfId: this.oilFeildId,
         platformId: this.platform,

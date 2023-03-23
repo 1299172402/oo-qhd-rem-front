@@ -140,13 +140,7 @@ export default {
   },
 }
 </script>
-<!--<style type="text/css" scoped>
-  .el-carousel__item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-</style>-->
+
 <style scoped>
   ::v-deep .el-carousel__indicators--outside button {
     background-color: #23d8f8 !important;

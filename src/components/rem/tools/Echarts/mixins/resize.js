@@ -1,5 +1,4 @@
 import { debounce } from 'lodash'
-// var lodash = require("lodash");
 
 export default {
   data() {
@@ -24,9 +23,8 @@ export default {
     this.$_sidebarElm && this.$_sidebarElm.removeEventListener('transitionend', this.$_sidebarResizeHandler)
   },
   methods: {
-    // use $_ for mixins properties
-    // https://vuejs.org/v2/style-guide/index.html#Private-property-names-essential
     $_sidebarResizeHandler(e) {
+        console.log(e,888)
       if (e.propertyName === 'width') {
         this.__resizeHandler()
       }

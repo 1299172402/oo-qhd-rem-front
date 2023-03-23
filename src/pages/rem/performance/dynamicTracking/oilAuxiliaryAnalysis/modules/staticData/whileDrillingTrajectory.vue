@@ -11,9 +11,7 @@
     </el-main>
   </el-container>
 </template>
-<style lang="scss" scoped>
 
-</style>
 <script>
 import {drillingTrajectory} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 // import {downFile} from "@/lib/remBase64Download";

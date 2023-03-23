@@ -1,15 +1,20 @@
 <!-- 生产数据 -->
 <template>
-    <el-row class="mt-2" style="height: 100%;">
-        <el-main style="width: calc(100% - 10px);height: 100%;margin-left: 10px" ref="zmain">
+    <div class="z-main">
+        <div class="z-search">
             <span>日期：</span>
-            <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期"
-                end-placeholder="结束日期" value-format="yyyy-MM-dd">
-            </el-date-picker>
-            <Echarts ref="echartDown" :chart-data="option" :height="echartsHeight"></Echarts>
-        </el-main>
-    </el-row>
+            <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"/>
+            <el-select v-model="selectValue" placeholder="请选择" @change="selectChange" style="margin-left:20px;">
+                <el-option label="分配" value="分配"></el-option>
+                <el-option label="计量" value="计量"></el-option>
+            </el-select>
+        </div> 
+        <div class="z-echarts">
+            <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
+        </div>   
+    </div>
 </template>
+
 <script>
     import Echarts from "@/components/rem/tools/Echarts/index.vue";
     import {produceData} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
@@ -28,8 +33,8 @@
         },
         data() {
             return {
-                echartsHeight: '600px',
                 selectData: [],
+                selectValue:'分配',
                 option: {
                     title: {},
                     tooltip: {
@@ -190,7 +195,8 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                // color: "#fff",
+                                color:'#8FA4CC',
                                 fontSize: 14,
                             },
                             // scale: true,
@@ -218,7 +224,8 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                // color: "#fff",
+                                color:'#8FA4CC',
                                 fontSize: 14,
                             },
                             offset: 80,
@@ -248,7 +255,8 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                // color: "#fff",
+                                color:'#8FA4CC',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -277,7 +285,8 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                // color: "#fff",
+                                color:'#8FA4CC',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -309,7 +318,8 @@
                             nameGap: 50,
                             nameRotate: 0,
                             nameTextStyle: {
-                                color: "#fff",
+                                // color: "#fff",
+                                color:'#8FA4CC',
                                 fontSize: 14,
                             },
                             // scale: true,
@@ -337,7 +347,8 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                // color: "#fff",
+                                color:'#8FA4CC',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -367,7 +378,8 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                // color: "#fff",
+                                color:'#8FA4CC',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -398,7 +410,8 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                // color: "#fff",
+                                color:'#8FA4CC',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -428,7 +441,8 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                // color: "#fff",
+                                color:'#8FA4CC',
                                 fontSize: 14,
                             },
                             // scale: true,
@@ -456,7 +470,8 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                // color: "#fff",
+                                color:'#8FA4CC',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -486,7 +501,8 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                // color: "#fff",
+                                color:'#8FA4CC',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -547,10 +563,6 @@
         mounted() {
             let year = new Date().getFullYear();
             this.selectData = [new Date(year + '-01-01').format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
-            let heightP1 = this.$refs.zmain.$el.clientHeight;
-            this.$nextTick(() => {
-                this.echartsHeight = (heightP1 - 40) + 'px';
-            })
             this.doSearch();
         },
         methods: {
@@ -691,10 +703,11 @@
                 series.data = seriesData;
                 return series;
             },
-            /**
-             * hwh
-             * 下载echarts
-             */
+            //select change
+            selectChange(){
+                
+            },
+            //下载echarts
             doDownLoad() {
                 let res = this.$refs['echartDown'].chart.getDataURL({
                     type: 'png',
@@ -716,3 +729,21 @@
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    .z-main{
+        width: 100%;
+        height:calc(100% - 86px);
+        padding-top:20px;
+        display:flex;
+        flex-direction: column;
+        .z-search{
+            height:60px;
+        }
+        .z-echarts{
+            // background:#000;
+            width: 100%;
+            flex:1;
+        }
+    }
+</style>

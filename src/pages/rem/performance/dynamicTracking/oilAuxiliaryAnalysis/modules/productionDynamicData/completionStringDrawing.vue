@@ -49,7 +49,6 @@ export default {
      * 调用图片
      */
     doSearch(){
-      //let wellId = this.wellId;
       let request={
         ogfId: this.oilFeildId,
         platformId: this.platform,

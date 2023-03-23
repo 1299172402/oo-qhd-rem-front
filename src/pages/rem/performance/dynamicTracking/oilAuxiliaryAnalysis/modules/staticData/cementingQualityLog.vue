@@ -1,11 +1,3 @@
-<!--
- * @Author: Dear_Zxb 13521265431@163.com
- * @Date: 2023-03-20 10:07:04
- * @LastEditors: Dear_Zxb 13521265431@163.com
- * @LastEditTime: 2023-03-20 13:49:22
- * @FilePath: \dcoit_haiyou\oo-qhd-rem-front\src\pages\rem\performance\dynamicTracking\oilAuxiliaryAnalysis\modules\staticData\cementingQualityLog.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <!--固井质量测井图-->
 <template>
   <el-container class="mt-2">
@@ -20,9 +12,7 @@
     </el-main>
   </el-container>
 </template>
-<style lang="scss" scoped>
 
-</style>
 <script>
 import {cementingQuality} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 // import {downFile} from "@/lib/remBase64Download";

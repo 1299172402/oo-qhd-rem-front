@@ -5,7 +5,7 @@
             <iframe :src="image?(image+'#toolbar=0'):''" style="width:100%;height:100%;"></iframe>
         </div>
         <div class="z-right-view">
-            <info-window infoWidth="100%" infoHeight="calc(100%)" headerTitle="产出剖面解释成果表">
+            <info-window infoWidth="100%" infoHeight="calc(100%)" headerTitle="产液剖面解释成果表">
                 <el-table 
                     id="tableData"
                     :data="tableData" :border="false" :row-style="{ height: '0px' }"
@@ -73,8 +73,6 @@
         },
         data() {
             return {
-                radio: 3,
-                src: "../../static/img/oilAuxiliaryAnalysis/productionDynamicData/fluidProducingProfile.jpg",
                 tableData: [],
                 image: '',
             };

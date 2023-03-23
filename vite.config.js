@@ -73,16 +73,17 @@ export default ({ mode }) => {
           // 用于开发环境下的转发请求
           // 更多请参考：https://vitejs.dev/config/#server-proxy
           // target: 'http://10.247.187.28:8080/dev-api/',
-          // target: 'http://114.116.211.6:8080',
-          // target: 'http://114.116.123.113:8080',
-          target: 'http://10.178.118.184:8080',
+          // target: 'http://10.178.118.181:9220',
+          target:'http://10.178.118.189:1234',
+          // target: 'http://10.178.118.184:8080',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, ''),
         },
         '/dev-api': {
           // 用于开发环境下的转发请求
           // 更多请参考：https://vitejs.dev/config/#server-proxy
-          target: 'http://10.77.79.57:8080/dev-api/',
+          // target: 'http://10.77.79.57:8080/dev-api/',
+          target: 'http://10.77.78.250',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api/, '/prod-api'),
         },

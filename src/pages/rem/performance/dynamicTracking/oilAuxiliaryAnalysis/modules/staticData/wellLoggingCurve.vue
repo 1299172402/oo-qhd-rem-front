@@ -2,7 +2,6 @@
 <template>
   <el-container class="mt-2">
     <el-main>
-      <!-- <NormalCard> -->
         <el-row style="height: 600px;overflow: auto;">
           <el-image :src="image">
             <div slot="error">
@@ -10,17 +9,12 @@
             </div>
           </el-image>
         </el-row>
-      <!-- </NormalCard> -->
     </el-main>
   </el-container>
 </template>
-<style lang="scss" scoped>
 
-</style>
 <script>
-import
-{loggingCurve}
-  from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
+import {loggingCurve} from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
 // import {downFile} from "@/lib/remBase64Download";
 
 export default {

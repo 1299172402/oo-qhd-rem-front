@@ -2,9 +2,7 @@
 <template>
     <div class="z-main">
         <div class="z-left-view">
-            <el-image :src="image">
-                <div slot="error"></div>
-            </el-image>
+            <iframe :src="image?(image+'#toolbar=0'):''" style="width:100%;height:100%;"></iframe>
         </div>
         <div class="z-right-view">
             <info-window infoWidth="100%" infoHeight="calc(100%)" headerTitle="饱和度测井数据">
@@ -41,16 +39,10 @@
 </template>
 
 <script>
-    // import NormalCard from '@/components/tools/NormalCard';
-    import {
-        saturationLoggingInterpretation
-    } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
+    import { saturationLoggingInterpretation } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
     // import {downFile} from "@/lib/remBase64Download";
     // import {exportExcel} from "@/lib/exportExcel";
     export default {
-        components: {
-            // NormalCard,
-        },
         filters: {
             /**
              * hwh
@@ -153,10 +145,10 @@
         .z-left-view{
             width:600px;
             padding-right:40px;
-            // iframe{
-            //     border: 1px solid #ddd;
-            //     border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
-            // }
+            iframe{
+                border: 1px solid #ddd;
+                border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
+            }
         }
         .z-right-view{
             flex:1;

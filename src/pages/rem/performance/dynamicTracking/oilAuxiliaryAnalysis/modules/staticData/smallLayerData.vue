@@ -89,6 +89,7 @@ export default {
   },
 }
 </script>
+
 <style scoped lang="scss">
 ::v-deep .el-table .cell:empty::before{
   content: '-';
