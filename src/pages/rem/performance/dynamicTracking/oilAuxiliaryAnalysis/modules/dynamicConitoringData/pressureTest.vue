@@ -35,7 +35,7 @@
 </template>
 
 <script>
-    import {pressure} from "@/api/oilDeposit/rem-01/dynamicAnalysis";
+    import {pressure} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
     // import {exportExcel} from "@/lib/exportExcel";
     export default {
         filters: {

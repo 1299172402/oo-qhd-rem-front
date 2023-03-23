@@ -85,7 +85,7 @@
     </el-table>
 </template>
 <script>
-import {wellBaseInfo} from "@/api/oilDeposit/rem-01/dynamicAnalysis";
+import {wellBaseInfo} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 // import {exportExcel} from "@/lib/exportExcel";
 export default {
   filters: {

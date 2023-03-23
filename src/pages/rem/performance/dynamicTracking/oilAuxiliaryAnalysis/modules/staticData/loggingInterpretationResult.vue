@@ -1,6 +1,5 @@
 <!--测井解释成果-->
 <template>
-  <!-- <NormalCard class="mt-2"> -->
     <el-table
         id="tableData"
         highlight
@@ -129,17 +128,12 @@
         min-width="200"
       ></el-table-column>
     </el-table>
-  <!-- </NormalCard> -->
 </template>
 <script>
-// import NormalCard from '@/components/tools/NormalCard';
 import {loggingInterpretation,} from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
 // import {exportExcel} from "@/lib/exportExcel";
 
 export default {
-  components: {
-    // NormalCard,
-  },
   props: {
     //选择油田
     oilFeildId: {},

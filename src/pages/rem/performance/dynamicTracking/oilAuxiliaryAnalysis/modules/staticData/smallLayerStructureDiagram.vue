@@ -24,14 +24,10 @@
 
 <script>
   import { fieldLayers } from '@/api/oilDeposit/rem-02/primaryinfo.js';
-  // import NormalCard from '@/components/tools/NormalCard';
-  import { structureDiagram } from '@/api/oilDeposit/rem-01/dynamicAnalysis';
+  import { structureDiagram } from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
   // import {downFile} from "@/lib/remBase64Download";
   // import config from "@/config";
   export default {
-    components: {
-      // NormalCard,
-    },
     props: {
       //选择油田
       oilFeildId: {
@@ -48,12 +44,10 @@
     },
     data() {
       return {
-        radio: 3,
         //所选择的层位
         selectPosition: '',
         //层位所选择内容信息
         position: [],
-        src: '../../static/img/oilAuxiliaryAnalysis/staticData/smallLayerStructureDiagram.jpg',
         image: '',
         imageList: [],
       };

@@ -1,6 +1,5 @@
 <!--射孔数据-->
 <template>
-  <!-- <NormalCard class="mt-2"> -->
     <el-table
         id="tableData"
         highlight
@@ -113,17 +112,12 @@
           label="备注">
       </el-table-column>
     </el-table>
-  <!-- </NormalCard> -->
 </template>
 <script>
-// import NormalCard from '@/components/tools/NormalCard';
-import {getComPerfInterval} from "@/api/oilDeposit/rem-01/dynamicAnalysis";
+import {getComPerfInterval} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 // import {exportExcel} from "@/lib/exportExcel";
 
 export default {
-  components: {
-    // NormalCard,
-  },
   props: {
     //选择油田
     oilFeildId: {},

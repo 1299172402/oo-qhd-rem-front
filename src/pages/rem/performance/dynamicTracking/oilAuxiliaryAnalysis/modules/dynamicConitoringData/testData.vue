@@ -63,7 +63,7 @@
 </template>
 
 <script>
-    import {testReport} from "@/api/oilDeposit/rem-01/dynamicAnalysis";
+    import {testReport} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
     // import {exportExcel} from "@/lib/exportExcel";
     export default {
         filters: {

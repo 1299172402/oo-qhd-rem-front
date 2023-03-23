@@ -2,7 +2,6 @@
 <template>
   <el-container class="mt-2">
     <el-main>
-      <!-- <NormalCard> -->
         <el-row style="height: 600px;overflow: auto;">
           <el-carousel :interval="4000" height="570px" :autoplay="false" indicator-position="outside">
             <el-carousel-item v-for="(item, index) in imageList" ref="imageCaeousel" :key="index" style="height: 550px; overflow-y: auto;display: block">
@@ -13,7 +12,6 @@
             </el-carousel-item>
           </el-carousel>
         </el-row>
-      <!-- </NormalCard> -->
     </el-main>
   </el-container>
 </template>
@@ -21,14 +19,10 @@
 
 </style>
 <script>
-// import NormalCard from '@/components/tools/NormalCard';
 import {getSectionWell} from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
 // import {downFileList} from '@/lib/remBase64Download';
 
 export default {
-  components: {
-    // NormalCard,
-  },
   props: {
     //选择油田
     oilFeildId: {
@@ -45,7 +39,6 @@ export default {
   },
   data() {
     return {
-      src: '../../static/img/oilAuxiliaryAnalysis/staticData/seismicAttributeMap.jpg',
       //图片数据
       image: '',
       imageList: [],

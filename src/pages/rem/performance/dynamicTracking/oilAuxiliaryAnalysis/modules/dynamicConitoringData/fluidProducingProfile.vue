@@ -44,7 +44,7 @@
 </template>
 
 <script>
-    import {outProfileLoggingInterpretation} from "@/api/oilDeposit/rem-01/dynamicAnalysis";
+    import {outProfileLoggingInterpretation} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
     // import {exportExcel} from "@/lib/exportExcel";
     // import {downFile} from "@/lib/remBase64Download";
     export default {

@@ -19,7 +19,7 @@
 </style>
 <script>
 // import NormalCard from '@/components/tools/NormalCard';
-import {testWellReport} from "@/api/oilDeposit/rem-01/dynamicAnalysis";
+import {testWellReport} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 // import {downFile} from "@/lib/remBase64Download";
 
 export default {

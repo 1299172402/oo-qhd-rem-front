@@ -44,7 +44,7 @@
     // import NormalCard from '@/components/tools/NormalCard';
     import {
         saturationLoggingInterpretation
-    } from "@/api/oilDeposit/rem-01/dynamicAnalysis";
+    } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
     // import {downFile} from "@/lib/remBase64Download";
     // import {exportExcel} from "@/lib/exportExcel";
     export default {

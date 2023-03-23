@@ -54,7 +54,6 @@
                     </div>
                 </el-tab-pane>
             </el-tabs>
-            <!--  v-if="selectWellId" -->
             <keep-alive :include="[]" :max="10">
                 <component :is="component" ref="componentCustom" :oil-feild-id="selectOilField" :platform="selectPlatform" :well-id="selectWellId" @childPara="changeChildParam"></component>
             </keep-alive>
@@ -106,7 +105,6 @@
     import {
         getWidgetByAreaUser
     } from '@/api/oilDeposit/rmm-01/rmm01.js';
-    var _this;
     export default {
         name: 'OilAuxiliaryAnalysis',
         data() {
@@ -461,7 +459,6 @@
             },
         },
         mounted() {
-            _this = this;
             //初始化
             this.initData();
             this.getMajorEventsBriefly();

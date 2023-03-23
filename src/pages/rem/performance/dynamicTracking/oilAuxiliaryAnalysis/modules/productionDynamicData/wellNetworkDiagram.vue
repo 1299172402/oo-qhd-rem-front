@@ -2,15 +2,12 @@
 <template>
   <el-container class="mt-2">
     <el-main>
-      <!-- <NormalCard> -->
         <el-row style="height: 600px;overflow: auto;">
-         <!-- <el-image style="height: 600px" :src="src"></el-image>-->
           <el-image :src="image">
             <div slot="error">
             </div>
           </el-image>
         </el-row>
-      <!-- </NormalCard> -->
     </el-main>
   </el-container>
 </template>
@@ -18,14 +15,10 @@
 
 </style>
 <script>
-// import NormalCard from '@/components/tools/NormalCard';
-import {wellNetDiagram} from "@/api/oilDeposit/rem-01/dynamicAnalysis";
+import {wellNetDiagram} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 // import {downFile} from "@/lib/remBase64Download";
 
 export default {
-  components: {
-    // NormalCard,
-  },
   props: {
     //选择油田
     oilFeildId: {
@@ -42,7 +35,6 @@ export default {
   },
   data() {
     return {
-      src: '../../static/img/oilAuxiliaryAnalysis/productionDynamicData/wellNetworkDiagram.jpg',
       //图片数据
       image: '',
     };
@@ -57,7 +49,6 @@ export default {
      * 调用图片
      */
     doSearch(){
-      //let wellId = this.wellId;
       let request={
         ogfId: this.oilFeildId,
         platformId: this.platform,

@@ -1,6 +1,5 @@
 <!--井斜数据-->
 <template>
-  <!-- <NormalCard class="mt-2"> -->
     <el-table id="tableData" highlight :data="tableData" style="width: 100%;" height="600">
       <el-table-column type="index" label="序号" align="center" width="80"></el-table-column>
       <el-table-column prop="wellName" label="井标识" width="180" align="center"></el-table-column>
@@ -16,17 +15,12 @@
       <el-table-column prop="curvature" :render-header="renderHeader" label="狗腿度（曲度） (°/30m)" width="180" align="center"></el-table-column>
       <el-table-column prop="remark" label="备注" min-width="180" align="center"></el-table-column>
     </el-table>
-  <!-- </NormalCard> -->
 </template>
 <script>
-// import NormalCard from '@/components/tools/NormalCard';
 import {deviationData,} from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
 // import {exportExcel} from "@/lib/exportExcel";
 
 export default {
-  components: {
-    // NormalCard,
-  },
   props: {
     //选择油田
     oilFeildId: {},

@@ -2,7 +2,6 @@
 <template>
   <el-container class="mt-2">
     <el-main>
-      <!-- <NormalCard> -->
         <el-row >
           <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable  clearable >
             <el-option
@@ -20,7 +19,6 @@
             </div>
           </el-image>
         </el-row>
-      <!-- </NormalCard> -->
     </el-main>
   </el-container>
 </template>
@@ -28,15 +26,11 @@
 
 </style>
 <script>
-// import NormalCard from '@/components/tools/NormalCard';
 import {fieldLayers} from '@/api/oilDeposit/rem-02/primaryinfo.js';
 import {microPhasePlot} from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
 // import {downFile} from "@/lib/remBase64Download";
 // import config from "@/config";
 export default {
-  components: {
-    // NormalCard
-  },
   props: {
     //选择油田
     oilFeildId: {
@@ -74,7 +68,6 @@ export default {
         label: '层位5',
         value: 'cw5',
       },*/],
-      src: '../../static/img/oilAuxiliaryAnalysis/staticData/smallFloorPlan.jpg',
       image: '',
       imageList: [],
     };
