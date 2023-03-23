@@ -20,7 +20,7 @@
 <script>
 import
 {loggingCurve}
-  from '@/api/rem-01/dynamicAnalysis.js';
+  from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
 // import {downFile} from "@/lib/remBase64Download";
 
 export default {

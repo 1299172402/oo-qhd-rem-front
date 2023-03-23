@@ -2,15 +2,9 @@
 <template>
   <el-container class="mt-2">
     <el-main>
-      <!-- <NormalCard> -->
         <el-row>
-          <!--<el-image style="height: 600px" :src="src"></el-image>-->
-          <!-- <el-image style="height: 600px" :src="Image"></el-image>-->
-          <iframe :src="image?(image+'#toolbar=0'):''" style="width: 100%;height:600px;">
-
-          </iframe>
+          <iframe :src="image?(image+'#toolbar=0'):''" style="width: 100%;height:600px;"></iframe>
         </el-row>
-      <!-- </NormalCard> -->
     </el-main>
   </el-container>
 </template>
@@ -18,14 +12,10 @@
 
 </style>
 <script>
-// import NormalCard from '@/components/tools/NormalCard';
 import {testWellReport} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 // import {downFile} from "@/lib/remBase64Download";
 
 export default {
-  components: {
-    // NormalCard,
-  },
   props: {
     //选择油田
     oilFeildId: {},
@@ -36,8 +26,6 @@ export default {
   },
   data() {
     return {
-      radio: 3,
-      src: '../../static/img/oilAuxiliaryAnalysis/productionDynamicData/wellTestReport.jpg',
       //图片数据
       image: '',
     };

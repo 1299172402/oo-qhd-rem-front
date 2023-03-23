@@ -24,7 +24,7 @@
     </el-table>
 </template>
 <script>
-import {microLayerData,} from '@/api/rem-01/dynamicAnalysis.js';
+import {microLayerData,} from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
 // import {exportExcel} from "@/lib/exportExcel";
 
 export default {

@@ -69,12 +69,12 @@ export default ({ mode }) => {
       port: 8080,
       open: true,
       proxy: {
-        '/dev-api/rem/api': {
-          target: 'http://10.77.78.250',
-          // target: 'http://10.178.118.181:9220',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, '/prod-api'),
-        },
+        // '/dev-api/rem/api': {
+        //   target: 'http://10.77.78.250',
+        //   // target: 'http://10.178.118.181:9220',
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, '/prod-api'),
+        // },
         '/dev-api': {
           // 用于开发环境下的转发请求
           // 更多请参考：https://vitejs.dev/config/#server-proxy
@@ -82,9 +82,8 @@ export default ({ mode }) => {
           // target: 'http://114.116.211.6:8080',
           // target: 'http://114.116.123.113:8080',
           target: 'http://10.77.78.250',
-          // target: 'http://127.0.0.1:8089',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/dev-api/, '/prod-api'),
+          rewrite: (path) => path.replace(/^\/dev-api/, '/prod-api')
         },
         // 流程平台地址-有可供测试的流程平台时放开
         // '/biz/flow': {
