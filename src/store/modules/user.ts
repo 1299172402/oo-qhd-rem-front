@@ -1,11 +1,13 @@
 import { message } from 'tdesign-vue'
 import Cookies from "js-cookie";
 import { TOKEN_NAME } from '@/config/global';
-import { login, getInfo, logout, getCodeImg} from '@/api/intelligentOilfield/login'
+import { login,getInfoByAppId, logout, getCodeImg} from '@/api/intelligentOilfield/login'
 import { encrypt, encryptlogin } from '@/utils/jsencrypt';
 import store from '@/store';
 import router from '@/router'
 import proxy from "@/config/host";
+import STYLE_CONFIG from '@/config/style';
+import { LIGHT_CHART_COLORS, DARK_CHART_COLORS } from '@/config/color';
 // import { getToken, setToken, removeToken } from '@/utils/auth'
 // import { getToken, setToken, setExpiresIn, removeToken } from '@/utils/auth'
 const env = import.meta.env.MODE || "development";
@@ -30,12 +32,18 @@ const state = {
   // isGroupLogin: false,// 门户模式/后台模式，false：后台模式，体现在控制左侧菜单，多tab标签
   isGroupLogin: localStorage.getItem('isGroupLogin')?localStorage.getItem('isGroupLogin')==='true':false,
   userDetail:'',  
+  isMax: false, // 是否最大化
+  tenantId: '',
+  notice: ''
 };
 
 const mutations = {
   setToken(state, token) {
     localStorage.setItem(TOKEN_NAME, token);
     state.token = token;
+  },
+  SETISMAX: (state, isMax) => {
+    state.isMax = isMax
   },
   SET_EXPIRES_IN: (state, time) => {
     state.expires_in = time
@@ -46,7 +54,6 @@ const mutations = {
   },
   setUserInfo(state, userInfo) {
     state.userInfo = userInfo;
-    console.log('state.userInfo',state.userInfo)
   },
   setProjectionMode(state, projectionMode) {
     state.projectionMode = projectionMode;
@@ -76,9 +83,16 @@ const mutations = {
   SETUSERDETAILS: (state, userDetail) =>{
     state.userDetail = userDetail
   },
+  SETTENANTID: (state, tenantId) =>{
+    state.tenantId = tenantId
+  },
+  SETNOTICE: (state, notice) =>{
+    state.notice = notice
+  },
 };
 
 const getters = {
+  userInfo: (state) => state.userInfo,
   token: (state) => state.token,
   roles: (state) => state.userInfo?.roles,
   getProjectionMode: (state) => state.projectionMode,
@@ -90,6 +104,9 @@ const getters = {
   logout: (state) => state.logout,
   isGroupLogin: (state) => state.isGroupLogin,
   userDetail: (state) => state.userDetail,
+  getIsMax: (state) => state.isMax,
+  tenantId: (state) => state.tenantId,
+  notice: (state) => state.notice,
 };
 
 const actions = {
@@ -219,10 +236,20 @@ const actions = {
   //     commit('setUserInfo', res);
   //   },
   getUserInfo({ commit }) {
+    const {appId} = proxy[env];
     return new Promise((resolve, reject) => {
-      getInfo().then(res => {
+      getInfoByAppId(appId || '').then(res => {
         if (res.data.code === 200) {
+          if (res.data.pageConfigs !== null) {
+            Object.assign(STYLE_CONFIG, res.data.pageConfigs)
+            const theme = STYLE_CONFIG.mode
+            store.commit('setting/update', STYLE_CONFIG);
+            store.commit('setting/changeChartColor', theme == 'dark' ? DARK_CHART_COLORS : LIGHT_CHART_COLORS);
+            store.dispatch('setting/changeTheme', STYLE_CONFIG)
+          }
           console.log('获取用户角色====', res.data)
+          // 如果又菜单走菜单,没有则走404页面
+          const firstRoputer = res.data.firstMenu?`${res.data.firstMenu.path}/${res.data.firstMenu.children[0].path}`:'/pageInfo/error';
           const {user} = res.data
           // const avatar = user.avatar === "" ? require("@/assets/images/profile.jpg") : user.avatar;
           const avatar = user?.avatar === "" ? '' : user?.avatar;
@@ -232,7 +259,7 @@ const actions = {
           commit('SETUSERDETAILS', res.data)
 
           commit('SETISGROUPLOGIN', false)
-          router.push('/homePage/index');
+          router.push(firstRoputer);
           
           if (res.data.roles && res.data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
             commit('SET_ROLES', res.data.roles)
@@ -242,13 +269,13 @@ const actions = {
           }
           commit('SET_NAME', user.userName)
           commit('SET_AVATAR', avatar)
+          commit('setUserInfo', {
+            ...user,
+            name: "td_dev",
+            roles: user.roles.length > 0 ? user.roles : ["ALL_ROUTERS"]
+          });
+          resolve(res)
         } 
-              
-        commit('setUserInfo', {
-          name: 'td_dev',
-          roles: ['ALL_ROUTERS'],
-        });
-        resolve(res)
       }).catch(error => {
         reject(error)
       })
