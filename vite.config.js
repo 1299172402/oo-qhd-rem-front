@@ -1,14 +1,28 @@
-import { loadEnv } from 'vite';
-import { viteMockServe } from 'vite-plugin-mock';
-import { createVuePlugin } from 'vite-plugin-vue2';
-import { createSvgPlugin } from 'vite-plugin-vue2-svg';
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import {
+  loadEnv
+} from 'vite';
+import {
+  viteMockServe
+} from 'vite-plugin-mock';
+import {
+  createVuePlugin
+} from 'vite-plugin-vue2';
+import {
+  createSvgPlugin
+} from 'vite-plugin-vue2-svg';
+import {
+  createSvgIconsPlugin
+} from 'vite-plugin-svg-icons'
 import path from 'path';
 
 const CWD = process.cwd();
 
-export default ({ mode }) => {
-  const { VITE_BASE_URL } = loadEnv(mode, CWD);
+export default ({
+  mode
+}) => {
+  const {
+    VITE_BASE_URL
+  } = loadEnv(mode, CWD);
 
   return {
     base: VITE_BASE_URL,
@@ -29,18 +43,16 @@ export default ({ mode }) => {
         }
       },
       postcss: {
-        plugins: [
-          {
-            postcssPlugin: 'internal:charset-removal',
-            AtRule: {
-              charset: (atRule) => {
-                if (atRule.name === 'charset') {
-                  atRule.remove();
-                }
+        plugins: [{
+          postcssPlugin: 'internal:charset-removal',
+          AtRule: {
+            charset: (atRule) => {
+              if (atRule.name === 'charset') {
+                atRule.remove();
               }
             }
           }
-        ],
+        }],
       },
     },
 
@@ -54,10 +66,10 @@ export default ({ mode }) => {
       }),
       createSvgPlugin(),
       // svg 图标
-	    createSvgIconsPlugin({
-	      iconDirs: [path.resolve(CWD, 'src/assets/icons/svg')], // svg存放路径
-	      symbolId: 'icon-[dir]-[name]',
-	    }),
+      createSvgIconsPlugin({
+        iconDirs: [path.resolve(CWD, 'src/assets/icons/svg')], // svg存放路径
+        symbolId: 'icon-[dir]-[name]',
+      }),
     ],
 
     build: {
@@ -74,7 +86,7 @@ export default ({ mode }) => {
           // 更多请参考：https://vitejs.dev/config/#server-proxy
           // target: 'http://10.247.187.28:8080/dev-api/',
           // target: 'http://10.178.118.181:9220',
-          target:'http://10.178.118.189:1234',
+          target: 'http://10.178.118.189:1234',
           // target: 'http://10.178.118.184:8080',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, ''),
