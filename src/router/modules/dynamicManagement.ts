@@ -22,20 +22,20 @@ export default [
           },
         ],
       },
-      {
-        path: 'wellPerformance',
-        name: 'wellPerformance',
-        component: () => import('@/pages/rem/performance/wellPerformance/index.vue'),
-        meta: { title: '水井动态分析', single: false },
-        children: [
-          {
-            path: 'wellPerformance',
-            name: 'wellPerformance',
-            component: () => import('@/pages/rem/performance/wellPerformance/index.vue'),
-            meta: { title: '水井辅助分析',icon: 'icon' },
-          },
-        ],
-      },
+      // {
+      //   path: 'wellPerformance',
+      //   name: 'wellPerformance',
+      //   component: () => import('@/pages/rem/performance/wellPerformance/index.vue'),
+      //   meta: { title: '水井动态分析', single: false },
+      //   children: [
+      //     {
+      //       path: 'wellPerformance',
+      //       name: 'wellPerformance',
+      //       component: () => import('@/pages/rem/performance/wellPerformance/index.vue'),
+      //       meta: { title: '水井辅助分析',icon: 'icon' },
+      //     },
+      //   ],
+      // },
     ],
     
   },
