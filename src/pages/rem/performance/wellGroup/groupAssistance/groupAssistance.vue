@@ -89,6 +89,7 @@
                 v-for="module in item.modules"
                 :key="module.name"
                 :label="module.name"
+                class="commonBtn"
               >
                 {{ module.label }}
               </el-radio-button>
@@ -243,5 +244,11 @@ export default {
 
 .pertable thead .el-table-column--selection .cell {
   display: none;
+}
+.commonBtn {
+  height: auto;
+  &:not(:first-child) {
+    margin-left: 10px;
+  }
 }
 </style>
