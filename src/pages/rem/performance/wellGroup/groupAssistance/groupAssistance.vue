@@ -2,15 +2,31 @@
 <template>
   <div class="app-container">
     <headerSearch class="g-w100 g-h100" style="height: auto">
-      <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true" style="margin-top: 18px">
+      <el-form
+        :model="queryParams"
+        ref="queryForm"
+        v-show="showSearch"
+        :inline="true"
+        style="margin-top: 18px"
+      >
         <el-form-item label="油田：" prop="noticeContent">
           <el-select v-model="selectOilField" class="f2" disabled>
-            <el-option v-for="(item, index) in oilFields" :key="index" :label="item.name" :value="item.oilFieldId">
+            <el-option
+              v-for="(item, index) in oilFields"
+              :key="index"
+              :label="item.name"
+              :value="item.oilFieldId"
+            >
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="区块：" prop="createBy">
-          <el-select v-model="queryParams.cplx" clearable size="small" style="width: 240px">
+          <el-select
+            v-model="queryParams.cplx"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
             <el-option
               v-for="(item, index) in deptSelect"
               :key="index"
@@ -20,7 +36,12 @@
           </el-select>
         </el-form-item>
         <el-form-item label="井组：" prop="createBy">
-          <el-select v-model="queryParams.cplx" clearable size="small" style="width: 240px">
+          <el-select
+            v-model="queryParams.cplx"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
             <el-option
               v-for="(item, index) in wellGroups"
               :key="index"
@@ -30,25 +51,48 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button icon="el-icon-edit-outline" size="mini" class="commonBtn">下载</el-button>
-          <el-button icon="el-icon-document-checked" size="mini" class="commonBtn">上传文档</el-button>
-          <el-button icon="el-icon-s-platform" size="mini" class="commonBtn">检索</el-button>
+          <el-button icon="el-icon-edit-outline" size="mini" class="commonBtn"
+            >下载</el-button
+          >
+          <el-button icon="el-icon-document-checked" size="mini" class="commonBtn"
+            >上传文档</el-button
+          >
+          <el-button icon="el-icon-s-platform" size="mini" class="commonBtn"
+            >检索</el-button
+          >
         </el-form-item>
       </el-form>
     </headerSearch>
-    <pagePanelNew headerTitle="通知通告列表" style="height: calc(100% - 85%); height: auto">
+    <pagePanelNew
+      headerTitle="通知通告列表"
+      style="height: calc(100% - 85%); height: auto"
+    >
       <el-tabs class="g-pageHeader" v-model="activeName" topline>
-        <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
+        <el-tab-pane
+          v-for="(item, index) in tabs"
+          :key="index"
+          :label="item.label"
+          :name="item.name"
+        >
           <div class="tab-view">
-            <el-button
-              v-for="(module, index) in item.modules"
+            <!-- <el-button
+              v-for="(module) in item.modules"
               :class="currentTab == module.name ? 'el-button--primary' : 'commonBtn'"
-              :key="index"
+              :key="module.name"
             >
               <div @click="handleClick(module)">
                 {{ module.label }}
               </div>
-            </el-button>
+            </el-button> -->
+            <el-radio-group v-model="currentTab" @change="handleClick">
+              <el-radio-button
+                v-for="module in item.modules"
+                :key="module.name"
+                :label="module.name"
+              >
+                {{ module.label }}
+              </el-radio-button>
+            </el-radio-group>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -62,92 +106,84 @@
 </template>
 
 <script>
-import verticalSwitchButton from '@/components/intelligentOilfield/vertical-switch-button/index.vue';
-import sedimentaryMap from '@/pages/rem/performance/wellGroup/groupAssistance/sedimentaryMap/index.vue';
-import seismicAttribute from '@/pages/rem/performance/wellGroup/groupAssistance/seismicAttribute/index.vue';
-import topplaneStructure from '@/pages/rem/performance/wellGroup/groupAssistance/topplaneStructure/index.vue';
-import effectiveThickness from '@/pages/rem/performance/wellGroup/groupAssistance/effectiveThickness/index.vue';
-import groupConnection from '@/pages/rem/performance/wellGroup/groupAssistance/groupConnection/index.vue';
-import developmentCurve from '@/pages/rem/performance/wellGroup/groupAssistance/developmentCurve/index.vue';
-import permeability from '@/pages/rem/performance/wellGroup/groupAssistance/permeability/index.vue';
-import wellProfile from '@/pages/rem/performance/wellGroup/groupAssistance/wellProfile/index.vue';
-import annotationChange from '@/pages/rem/performance/wellGroup/groupAssistance/annotationChange/index.vue';
-import connectivityChange from '@/pages/rem/performance/wellGroup/groupAssistance/connectivityChange/index.vue';
-import wellChange from '@/pages/rem/performance/wellGroup/groupAssistance/wellChange/index.vue';
+import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
+
+const moduleFiles = import.meta.globEager(`./modules/*/index.vue`);
+const moduleName = Object.entries(moduleFiles).reduce(
+  (t, i) =>
+    Object.assign(t, {
+      [i[0].replace(/\.\/modules\/(\S+)\/index.vue/, "$1")]: i[1].default,
+    }),
+  {}
+);
+
 export default {
   components: {
     verticalSwitchButton,
-    sedimentaryMap,
-    seismicAttribute,
-    topplaneStructure,
-    effectiveThickness,
-    groupConnection,
-    permeability,
-    wellProfile,
-    developmentCurve,annotationChange,connectivityChange,wellChange
+    ...moduleName,
   },
   data() {
     return {
-      dialogVisible: false, //运行计算展示弹窗
+      dialogVisible: false, // 运行计算展示弹窗
       tableshow: true,
       oilfield: [],
       oilFields: [],
       deptSelect: [],
       wellGroups: [],
       platforms: [],
-      activeName:'',
-      currentTab: '',
-      transfer: '',
+      activeName: "",
+      currentTab: "",
+      transfer: "",
       tabs: [
         {
-          label: '储层资料',
-          name: 'staticData',
+          label: "储层资料",
+          name: "staticData",
           modules: [
             {
-              label: '小层顶面构造图',
-              name: 'topplaneStructure',
+              label: "小层顶面构造图",
+              name: "topplaneStructure",
             },
             {
-              label: '地震属性图',
-              name: 'seismicAttribute',
+              label: "地震属性图",
+              name: "seismicAttribute",
             },
             {
-              label: '沉积相图',
-              name: 'sedimentaryMap',
+              label: "沉积相图",
+              name: "sedimentaryMap",
             },
             {
-              label: '有效厚度图',
-              name: 'effectiveThickness',
+              label: "有效厚度图",
+              name: "effectiveThickness",
             },
             {
-              label: '渗透率分布图',
-              name: 'permeability',
+              label: "渗透率分布图",
+              name: "permeability",
             },
             {
-              label: '井组联通图',
-              name: 'groupConnection',
+              label: "井组联通图",
+              name: "groupConnection",
             },
             {
-              label: '连井刨面图',
-              name: 'wellProfile',
+              label: "连井刨面图",
+              name: "wellProfile",
             },
           ],
         },
         {
-          label: '动态资料',
-          name: 'productionDynamicData',
-           modules: [
+          label: "动态资料",
+          name: "productionDynamicData",
+          modules: [
             {
-              label: '井组配注变化动态',
-              name: 'annotationChange',
+              label: "井组配注变化动态",
+              name: "annotationChange",
             },
-             {
-              label: '井组连通性变化动态',
-              name: 'connectivityChange',
+            {
+              label: "井组连通性变化动态",
+              name: "connectivityChange",
             },
-             {
-              label: '注采井网状况变化',
-              name: 'wellChange',
+            {
+              label: "注采井网状况变化",
+              name: "wellChange",
             },
           ],
         },
@@ -157,7 +193,7 @@ export default {
       deptList: [],
       // 显示搜索条件
       showSearch: true,
-      selectOilField: '',
+      selectOilField: "",
       // 总条数
       total: 0,
 
@@ -176,16 +212,17 @@ export default {
       },
     };
   },
-  created() {
-    this.getbutton()
+  computed: {},
+  mounted() {
+    this.getbutton();
   },
   methods: {
-getbutton(){
-  this.activeName = 'staticData'
-  this.currentTab = 'topplaneStructure'
-},
+    getbutton() {
+      this.activeName = "staticData";
+      this.currentTab = "topplaneStructure";
+    },
     handleClick(item) {
-      this.currentTab = item.name;
+      this.currentTab = item;
     },
   },
 };

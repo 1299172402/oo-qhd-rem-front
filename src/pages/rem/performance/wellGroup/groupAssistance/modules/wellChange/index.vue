@@ -153,7 +153,7 @@ export default {
     };
   },
   created() {
-    this.getList();
+    // this.getList();
     // this.choiceDepts(); // 获取组织机构
   },
   methods: {},
