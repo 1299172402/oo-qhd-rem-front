@@ -54,7 +54,9 @@
       </el-tabs>
     </pagePanelNew>
     <pagePanelNew headerTitle="" style="height: calc(100% - 150px)">
-      <components :is="currentTab" />
+      <keep-alive>
+        <components :is="currentTab" />
+      </keep-alive>
     </pagePanelNew>
   </div>
 </template>
@@ -69,6 +71,9 @@ import groupConnection from '@/pages/rem/performance/wellGroup/groupAssistance/g
 import developmentCurve from '@/pages/rem/performance/wellGroup/groupAssistance/developmentCurve/index.vue';
 import permeability from '@/pages/rem/performance/wellGroup/groupAssistance/permeability/index.vue';
 import wellProfile from '@/pages/rem/performance/wellGroup/groupAssistance/wellProfile/index.vue';
+import annotationChange from '@/pages/rem/performance/wellGroup/groupAssistance/annotationChange/index.vue';
+import connectivityChange from '@/pages/rem/performance/wellGroup/groupAssistance/connectivityChange/index.vue';
+import wellChange from '@/pages/rem/performance/wellGroup/groupAssistance/wellChange/index.vue';
 export default {
   components: {
     verticalSwitchButton,
@@ -79,7 +84,7 @@ export default {
     groupConnection,
     permeability,
     wellProfile,
-    developmentCurve,
+    developmentCurve,annotationChange,connectivityChange,wellChange
   },
   data() {
     return {
@@ -131,6 +136,20 @@ export default {
         {
           label: '动态资料',
           name: 'productionDynamicData',
+           modules: [
+            {
+              label: '井组配注变化动态',
+              name: 'annotationChange',
+            },
+             {
+              label: '井组连通性变化动态',
+              name: 'connectivityChange',
+            },
+             {
+              label: '注采井网状况变化',
+              name: 'wellChange',
+            },
+          ],
         },
       ],
       // 是否展开，默认全部展开

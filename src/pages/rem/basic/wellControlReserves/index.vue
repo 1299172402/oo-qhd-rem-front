@@ -4,10 +4,15 @@
     <header-search class="g-w100 g-h100">
       <div class="g-row-flex-V g-w100 g-h100">
         <div style="margin-top: 20px">
-          <el-form :model="ruleForm" ref="ruleForm" :inline="true">
+          <el-form :inline="true">
             <el-form-item label="油田">
-              <el-select v-model="ruleForm.yt" prop="yt" placeholder="">
-                <el-option v-for="item in ytOptions" :key="item.id" :label="item.ytmc" :value="item.id"> </el-option>
+              <el-select v-model="queryData.ogfId" prop="yt" placeholder="">
+                <el-option
+                  v-for="(item, index) in oilFields"
+                  :key="index"
+                  :label="item.name"
+                  :value="item.oilFieldId"
+                ></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="平台" prop="pt">
@@ -21,18 +26,18 @@
               </el-select>
             </el-form-item>
             <el-form-item label="评价时间" prop="pjsj">
-              <el-date-picker v-model="ruleForm.pjsj" type="month" format="yyyy-MM" value-format="yyyy-MM">
+              <el-date-picker v-model="queryData.month" type="month" format="yyyy-MM" value-format="yyyy-MM">
               </el-date-picker>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" icon="el-icon-search">搜索</el-button>
+              <el-button type="primary" icon="el-icon-search">检索</el-button>
             </el-form-item>
           </el-form>
         </div>
       </div>
     </header-search>
 
-    <info-window infoWidth="100%" infoHeight="100%" headerTitle="单井储量信息维护">
+    <pagePanel headerTitle="单井储量信息维护" style="height: calc(100% - 100px)" class="g-w100">
       <div class="smart-energy-item">
         <el-form
           :model="djclForm"
@@ -44,7 +49,7 @@
           <el-row>
             <el-col :span="10">
               <el-form-item label="层位选择" prop="cw">
-                <el-select v-model="djclForm.cw" placeholder="" style="width:100.5%">
+                <el-select v-model="djclForm.cw" placeholder="" style="width: 100.5%">
                   <el-option v-for="item in cwOptions" :key="item.id" :label="item.cwmc" :value="item.id"> </el-option>
                 </el-select>
               </el-form-item>
@@ -55,7 +60,7 @@
                 <el-input v-model="djclForm.yxhd"> <i slot="suffix">m</i></el-input>
               </el-form-item>
             </el-col>
-          </el-row>  
+          </el-row>
           <el-row>
             <el-col :span="10">
               <el-form-item label="控制储量" prop="kzcl">
@@ -67,25 +72,32 @@
               <el-form-item label="控制面积" prop="kzmj">
                 <el-input v-model="djclForm.kzmj">
                   <i slot="suffix">m²</i>
-                  </el-input>
+                </el-input>
               </el-form-item>
             </el-col>
             <!-- <el-col :span="2">㎡</el-col> -->
           </el-row>
           <el-row>
-            <el-col :span="24" align="right" style="padding-top:20px">
-                <el-button type="primary" icon="el-icon-edit">编辑</el-button>
-                <el-button type="primary">保存</el-button>
-                <el-button type="primary" icon="el-icon-search">运行计算</el-button>
+            <el-col :span="24" align="right" style="padding-top: 20px">
+              <el-button type="primary" icon="el-icon-edit">编辑</el-button>
+              <el-button type="primary">保存</el-button>
+              <el-button type="primary" icon="el-icon-search">运行计算</el-button>
             </el-col>
           </el-row>
         </el-form>
       </div>
-    </info-window>
+    </pagePanel>
   </div>
 </template>
-
 <script>
+import {
+  fetchOilFields,
+  fetchPlatforms,
+  fetchInjectionWells,
+  fetchInjectionWellsByPlatform,
+  fetchProductionWells,
+  fetchProductionWellsByPlatform,
+} from '@/api/oilDeposit/rem-02/primaryinfo.js';
 export default {
   components: {},
   data() {
@@ -128,6 +140,13 @@ export default {
         jb: '0',
         pjsj: new Date().format('yyyy-MM'),
       },
+      queryData: {
+        assetCode: '',
+        month: new Date().format('yyyy-MM'),
+        ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
+      },
+      platforms: [],
+      oilFields: [],
       djclForm: {
         cw: undefined,
         yxhd: undefined,
@@ -136,7 +155,28 @@ export default {
       },
     };
   },
-  methods: {},
+  mounted() {
+    this.getList();
+  },
+  methods: {
+    getList() {
+      fetchOilFields().then((res) => {
+        console.log(res);
+        if (res.data.code == 200) {
+          this.oilFields = res.data.data.oilFields;
+          this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F';
+          const requestPlat = {
+            oilFieldId: this.queryData.ogfId,
+          };
+          fetchPlatforms(requestPlat).then((res) => {
+            if (res.data.code == 200) {
+              this.platforms = res.data.data.platform;
+            }
+          });
+        }
+      });
+    },
+  },
 };
 </script>
 
@@ -186,7 +226,7 @@ export default {
     top: 12px;
     border-left: 2px solid #0e393b;
     border-right: 2px solid #0e393b;
-     z-index: -1;
+    z-index: -1;
   }
 }
 </style>

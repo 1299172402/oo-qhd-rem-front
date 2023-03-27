@@ -1,20 +1,21 @@
 <template>
   <div>
-    <el-image
+    <img
       style="width: 100%; height:600px"
-     :src="require('@/pages/rem/performance/wellGroup/groupAssistance/img/地震属性图.jpg')"></el-image>
+     :src="url"/>
   </div>
 </template>
 
 <script>
+import img from '@/pages/rem/performance/wellGroup/groupAssistance/img/地震属性图.jpg';
+
 export default {
-data(){
-    return{
-
-
-    }
-}
-}
+  data() {
+    return {
+      url: img,
+    };
+  },
+};
 </script>
 
 <style>
