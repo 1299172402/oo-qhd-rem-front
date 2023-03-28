@@ -86,7 +86,8 @@ export default ({
           // 更多请参考：https://vitejs.dev/config/#server-proxy
           // target: 'http://10.247.187.28:8080/dev-api/',
           // target: 'http://10.178.118.181:9220',
-          target: 'http://10.178.118.199:9229', //姜
+          // target: 'http://10.178.118.199:9229', //姜
+          target: 'http://10.178.118.189:1234',//黄明杰
           // target: 'http://10.178.118.184:8080',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, ''),
