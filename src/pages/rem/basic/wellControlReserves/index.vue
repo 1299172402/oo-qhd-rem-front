@@ -5,6 +5,12 @@
       <div class="g-row-flex-V g-w100 g-h100">
         <div style="margin-top: 20px">
           <el-form :inline="true">
+            <el-form-item label="作业公司：">
+              <el-select v-model="queryData.orgId" disabled>
+                <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.deptName" :value="item.deptId">
+                </el-option>
+              </el-select>
+            </el-form-item>
             <el-form-item label="油田">
               <el-select v-model="queryData.ogfId">
                 <el-option
@@ -119,7 +125,14 @@ export default {
         month: new Date().format('yyyy-MM'),
         ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
         wellId: '',
+        orgId: '715AD1CD60484BB59E737CD18A9DE44A',
       },
+      deptSelect: [
+        {
+          deptId: '715AD1CD60484BB59E737CD18A9DE44A',
+          deptName: '秦皇岛32-6渤中作业公司',
+        },
+      ], //作业公司
       wells: [],
       platforms: [],
       oilFields: [],
@@ -155,6 +168,12 @@ export default {
           fetchPlatforms(requestPlat).then((res) => {
             if (res.data.code == 200) {
               this.platforms = res.data.data.platform;
+              this.platforms.map((n)=>{
+                if(n.platName == '全部'){
+                  n.platFormId = ''
+                }
+                this.queryData.pt = ''
+              })
             }
           });
         }
@@ -185,22 +204,28 @@ export default {
       });
     },
     getData() {
-      let obj = '3FC9A818F5BC43B88270DB80BBB3018F';
+      let oilFieldId = '3FC9A818F5BC43B88270DB80BBB3018F';
       const request = {
-        obj,
+        oilFieldId
       };
       fetchProductionWells(request).then((res) => {
         if (res.data.code == 200) {
-          const wellList = res.data.data.productionWells;
-          this.wells = [...wellList];
+          let wellList = res.data.data.productionWells;
+          let arr = []
+          wellList.map((n)=>{
+            if(n.wellName !=null){
+              arr.push(n)
+            }
+          })
+          this.wells = [...arr];
         }
       });
-      fetchInjectionWells(request).then((res) => {
-        if (res.data.code == 200) {
-          const wellList = res.data.data.injectionWell;
-          this.wells = [...this.wells, ...wellList];
-        }
-      });
+      // fetchInjectionWells(request).then((res) => {
+      //   if (res.data.code == 200) {
+      //     const wellList = res.data.data.injectionWell;
+      //     this.wells = [...this.wells, ...wellList];
+      //   }
+      // });
     },
   },
 };

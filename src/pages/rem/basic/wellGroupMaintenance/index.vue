@@ -6,7 +6,12 @@
       <el-form inline>
         <el-form-item label="油田：">
           <el-select v-model="query.selectField" class="f2" @change="changeOilfield" disabled>
-            <el-option v-for="item in options" :key="item.ogfId" :value="item.ogfId" :label="item.ogfName"></el-option>
+            <el-option
+              v-for="item in options"
+              :key="item.oilFieldId"
+              :label="item.oilFieldName"
+              :value="item.oilFieldId"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="区块：">
@@ -204,6 +209,7 @@
 //   delectByWellGroupId,
 //   saveAllWellGroup,
 // } from '@/api/ipm-04/r-wellConnectEvaluate.js';
+import { queryDensityInfo, getOilFieldList, queryProductList } from '@/api/rem/workcompanydesignate';
 export default {
   components: {},
   data() {
@@ -431,8 +437,10 @@ export default {
     },
     // 获取油田下拉数据
     selectData() {
-      getoilfield().then(({ ogfId }) => {
-        this.options = ogfId;
+      getOilFieldList({ orgId: '715AD1CD60484BB59E737CD18A9DE44A' }).then((res) => {
+        if (res.data.code == 200) {
+          this.options = res.data.data;
+        }
       });
     },
     // 获取区块数据

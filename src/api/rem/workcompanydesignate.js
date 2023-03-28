@@ -15,6 +15,13 @@ export function save(data) {
     data
   });
 }
+export function queryProductList(data) {
+  return request({
+    url: `${baseUrl}/workCompanyDesignate/WorkCompanyDesignate/queryProductList`,
+    method: "post",
+    data
+  });
+}
 export function getOilFieldList({ orgId } = {}) {
   return request({
     url: `${baseUrl}/workCompanyDesignate/getOilFieldList/${orgId}`,

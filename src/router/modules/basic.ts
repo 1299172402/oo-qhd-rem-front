@@ -27,6 +27,12 @@ export default [
                 component: () => import('@/pages/rem/basic/wellGroupMaintenance/index.vue'),
                 meta: { title: '井组信息维护' },
               },
+              {
+                path: 'personnelplan',
+                name: 'personnelplan',
+                component: () => import('@/pages/rem/plan/personnelplan/index.vue'),
+                meta: { title: '人员措施' },
+              },
         ],
       },
 

@@ -22,11 +22,20 @@
         >
       </el-form> -->
     </headerSearch>
-    <pagePanel headerTitle="平台人数对比" style="height: calc(100% - 100px)">
-      <Echart :chart-data="histogram" :height="chartHeight"></Echart>
-    </pagePanel>
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <pagePanel headerTitle="平台人数对比" style="height: calc(100% - 100px)">
+          <Echart :chart-data="option" :events="events" height="100%"></Echart>
+        </pagePanel>
+      </el-col>
+      <el-col :span="12">
+        <pagePanel headerTitle="项目人数分布" style="height: calc(100% - 100px)">
+          <Echart :chart-data="option" :events="events" height="100%"></Echart>
+        </pagePanel>
+      </el-col>
+    </el-row>
     <pagePanel headerTitle="人员类型概况" style="height: calc(100% - 100px)">
-      <el-table highlight  style="width: 100%" :summary-method="getSummaries" show-summary>
+      <el-table highlight style="width: 100%" :summary-method="getSummaries" show-summary>
         <el-table-column prop="prodPlatFormName" label="平台" min-width="200px" align="center"> </el-table-column>
         <el-table-column prop="newsPapering" label="报务" min-width="80px" align="center"> </el-table-column>
         <el-table-column prop="mineStaff" min-width="120px" label="定员" align="center"> </el-table-column>
@@ -99,198 +108,12 @@ export default {
       page: 1,
       pageSize: 10,
       total: 0,
+      events: [{ name: 'click' }],
       // ecahrts 高度
       chartHeight: '150px',
       // table高度
       tableHeight: 280,
-      //柱状图1  平台人数对比
-      histogram: {
-        tooltip: {
-          show: true,
-        },
-        legend: {
-          left: 'left',
-          padding: [5, 100],
-          icon: 'rect',
-          itemWidth: 12,
-          itemHeight: 10,
-          itemGap: 40,
-          data: ['定员人数', 'POB'],
-          textStyle: {
-            color: '#FFFFFF',
-            fontSize: 14,
-          },
-        },
-        grid: {
-          top: 30,
-          left: 40,
-          right: 10,
-          bottom: 30,
-        },
-        xAxis: [
-          {
-            type: 'category',
-            data: [],
-            axisLabel: {
-              color: '#8FA4CC',
-              fontSize: 14,
-            },
-            axisTick: {
-              show: false,
-            },
-            axisLine: {
-              lineStyle: {
-                //color: '#979797'
-                color: 'rgba(255,255,255,.16)',
-              },
-            },
-          },
-        ],
-        yAxis: [
-          {
-            type: 'value',
-            axisLabel: {
-              color: '#8FA4CC',
-              fontSize: 14,
-            },
-            axisTick: {
-              show: false,
-            },
-            axisLine: {
-              show: false,
-              lineStyle: {
-                color: '#979797',
-              },
-            },
-            splitLine: {
-              show: true,
-              lineStyle: {
-                color: 'rgba(255,255,255,.16)',
-              },
-            },
-          },
-        ],
-        series: [
-          {
-            name: '定员人数',
-            type: 'bar',
-            barWidth: '12',
-            data: [],
-            itemStyle: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: '#00D9EA',
-                },
-                {
-                  offset: 1,
-                  color: '#0F65EA',
-                },
-              ]),
-            },
-            /*showBackground: true,
-          backgroundStyle: {
-            color: 'rgba(143,164,204,0.2)',
-          },*/
-          },
-          {
-            name: 'POB',
-            type: 'bar',
-            barWidth: '12',
-            data: [],
-            itemStyle: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: '#F5BE43',
-                },
-                {
-                  offset: 1,
-                  color: '#FF7135',
-                },
-              ]),
-            },
-            /*showBackground: true,
-          backgroundStyle: {
-            color: 'rgba(143,164,204,0.2)',
-          },*/
-          },
-        ],
-      },
-      // //柱状图2  项目人数分布
-      // histogram2: {
-      //   tooltip: {
-      //     show: true,
-      //   },
-      //   grid: {
-      //     top: 30,
-      //     left: 40,
-      //     right: 10,
-      //     bottom: 30,
-      //   },
-      //   xAxis: {
-      //     type: 'category',
-      //     data: [],
-      //     axisLabel: {
-      //       color: '#8FA4CC',
-      //       fontSize: 14,
-      //     },
-      //     axisTick: {
-      //       show: false,
-      //     },
-      //     axisLine: {
-      //       lineStyle: {
-      //         color: 'rgba(255,255,255,.16)',
-      //       },
-      //     },
-      //   },
-      //   yAxis: {
-      //     type: 'value',
-      //     axisLabel: {
-      //       color: '#8FA4CC',
-      //       fontSize: 14,
-      //     },
-      //     axisTick: {
-      //       show: false,
-      //     },
-      //     axisLine: {
-      //       show: false,
-      //       lineStyle: {
-      //         color: 'rgba(151,151,151,.16)',
-      //       },
-      //     },
-      //     splitLine: {
-      //       show: true,
-      //       lineStyle: {
-      //         color: 'rgba(255,255,255,.16)',
-      //       },
-      //     },
-      //   },
-      //   series: [
-      //     {
-      //       data: [],
-      //       type: 'bar',
-      //       barWidth: '32',
-      //       itemStyle: {
-      //         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-      //           {
-      //             offset: 0,
-      //             color: '#00D9EA',
-      //           },
-      //           {
-      //             offset: 1,
-      //             color: '#0F65EA',
-      //           },
-      //         ]),
-      //       },
-      //       /*showBackground: true,
-      //     backgroundStyle: {
-      //       color: 'rgba(143,164,204,0.2)',
-      //     },*/
-      //     },
-      //   ],
-      // },
-      //表格数据1  当日施工概况数据展示
+      option: {},
       tableData1: [],
       tableData2: [
         {
@@ -320,6 +143,165 @@ export default {
   mounted() {
     //初始化下拉框数据
     // this.initData();
+    this.ageEchartData();
+  },
+  computed: {
+    ageEchartData() {
+      const option = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow',
+          },
+        },
+        legend: {
+          data: ['35岁以下', '35岁-50岁', '50岁以上'],
+        },
+        grid: {
+          left: 10,
+          right: 10,
+          bottom: 10,
+          containLabel: true,
+        },
+        dataZoom: [
+          {
+            type: 'inside',
+            yAxisIndex: 0,
+          },
+          {
+            type: 'slider',
+            yAxisIndex: 0,
+          },
+        ],
+        xAxis: {
+          show: true,
+          position: 'bottom',
+          nameLocation: 'end',
+          type: 'value',
+          min: 0,
+        },
+        yAxis: {
+          type: 'category',
+          data: [],
+        },
+        series: [
+          {
+            name: '35岁以下',
+            type: 'bar',
+            stack: 'total',
+            label: {
+              show: true,
+            },
+            itemStyle: {
+              color: 'rgb(51, 153, 255)',
+            },
+            emphasis: {
+              focus: 'series',
+            },
+            // data: [12,14,15,11]
+            data: [],
+          },
+          {
+            name: '35岁-50岁',
+            type: 'bar',
+            stack: 'total',
+            label: {
+              show: true,
+            },
+            itemStyle: {
+              color: 'rgb(0, 204, 51)',
+            },
+            emphasis: {
+              focus: 'series',
+            },
+            // data: [21,24,18,20]
+            data: [],
+          },
+          {
+            name: '50岁以上',
+            type: 'bar',
+            stack: 'total',
+            label: {
+              show: true,
+            },
+            itemStyle: {
+              color: 'rgb(255, 127, 0)',
+            },
+            emphasis: {
+              focus: 'series',
+            },
+            // data: [1,1,3,0]
+            data: [],
+          },
+        ],
+      };
+      if (this.ageOption.length) {
+        this.ageOption.forEach((item) => {
+          option.yAxis.data.push(item.platName);
+          option.series[0].data.push(item.Age30);
+          option.series[1].data.push(item.Age35);
+          option.series[2].data.push(item.Age45);
+        });
+      }
+      return option;
+    },
+    pieData() {
+      return function (val) {
+        const option = {
+          title: {
+            text: val,
+            left: 'center',
+            textStyle: {
+              fontSize: 14,
+              color: 'rgba(255,255,255,1)',
+            },
+          },
+          tooltip: {
+            trigger: 'item',
+          },
+          series: [
+            {
+              type: 'pie',
+              radius: '50%',
+              center: ['50%', '60%'],
+              label: {
+                formatter: (params) => `${params.name}\n${params.percent}%`,
+              },
+              data: [],
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)',
+                },
+              },
+            },
+          ],
+        };
+        if (this.ageOption.length) {
+          const sel = this.ageOption.filter((item) => item.platName == val)[0];
+          const data = [
+            {
+              value: sel.Age30,
+              name: '35岁以下',
+              itemStyle: { color: 'rgb(51, 153, 255)' },
+            },
+            {
+              value: sel.Age35,
+              name: '35-50岁',
+              itemStyle: { color: 'rgb(0, 204, 51)' },
+            },
+            {
+              value: sel.Age45,
+              name: '50岁以上',
+              itemStyle: { color: 'rgb(255, 127, 0)' },
+            },
+          ];
+          option.series[0].data = data;
+        }
+        return option;
+      };
+    },
   },
   methods: {
     //检索数据
