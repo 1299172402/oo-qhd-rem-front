@@ -141,10 +141,29 @@ export function generalPressure(data) {
     data
   });
 }
+export function getMeasureType() {
+  return request({
+    url: `${baseUrl}/oilFieldManagePlanController/getMeasureType`,
+    method: "get",
+  });
+}
+export function getMeasureVersion() {
+  return request({
+    url: `${baseUrl}/oilFieldManagePlanController/getMeasureVersion`,
+    method: "get",
+  });
+}
 export function getReportFroms({ date, unitType } = {}) {
   return request({
     url: `${baseUrl}/oilFieldManagePlanController/getReportFroms?date=${ date || "" }&unitType=${ unitType || "" }`,
     method: "get",
+  });
+}
+export function getWorkProgress(data) {
+  return request({
+    url: `${baseUrl}/oilFieldManagePlanController/getWorkProgress`,
+    method: "post",
+    data
   });
 }
 export function indicatorEveluationResults(data) {

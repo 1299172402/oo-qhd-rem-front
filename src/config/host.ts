@@ -21,7 +21,7 @@ export default {
     // API: '',
     // 开发环境 cdn 路径
     CDN: '',
-    appId: null
+    appId: 'f198c1a239254b0e86529a0668cf4adb ',
     
   },
   test: {

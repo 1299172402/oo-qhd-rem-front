@@ -92,6 +92,19 @@ export function getComPerfInterval(data) {
     data
   });
 }
+export function getMajorEventsBriefly(data) {
+  return request({
+    url: `${baseUrl}/dynamicAnalysis/getMajorEventsBriefly`,
+    method: "post",
+    data
+  });
+}
+export function getProductionStatus({ ogfId, platformId, wellId } = {}) {
+  return request({
+    url: `${baseUrl}/dynamicAnalysis/getProductionStatus?ogfId=${ ogfId || "" }&platformId=${ platformId || "" }&wellId=${ wellId || "" }`,
+    method: "get",
+  });
+}
 export function getSectionWell(data) {
   return request({
     url: `${baseUrl}/dynamicAnalysis/getSectionWell`,

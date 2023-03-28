@@ -19,7 +19,7 @@
           <el-table-column label="井号" prop="one" align="center"></el-table-column>
           <el-table-column label="生产层位" prop="one" align="center"></el-table-column>
           <el-table-column label="所属区块" prop="one" align="center"></el-table-column>
-          <el-table-column label="油藏厚度（m）" prop="one" align="center"></el-table-column>
+          <el-table-column label="油藏厚度（m）" width="130px" prop="one" align="center"></el-table-column>
           <el-table-column label="水平段长度（m）" prop="one" align="center"></el-table-column>
           <el-table-column label="完井方式" prop="one" align="center"></el-table-column>
         </el-table-column>
