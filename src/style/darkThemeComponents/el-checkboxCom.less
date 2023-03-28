@@ -1,0 +1,18 @@
+.el-checkbox {
+    // color: rgba(167,173,179,1);
+    color: var(--whiteOpacity7);
+}
+.el-checkbox__input.is-checked + .el-checkbox__label {
+    color: var(--lightBlueColor);
+}
+.el-checkbox__input.is-checked .el-checkbox__inner,
+.el-checkbox__input.is-indeterminate .el-checkbox__inner {
+    border-color: var(--lightBlueColor);
+    background: transparent;
+}
+.el-checkbox__inner {
+    background-color: transparent;
+    // border: 1px solid rgba(53,68,82,1);
+    border: 1px solid var(--whiteOpacity7);
+    z-index: 0;
+}

@@ -1,0 +1,19 @@
+.dept-tree{
+    overflow: hidden;
+    &-container {
+        height: 100%;
+        .t-card__body {
+            padding: 0;
+            height: 100%;
+            .t-tree {
+                height: calc(100% - 33px);
+                display: table;
+                .t-tree__list {
+                    height: 100%;
+                    max-width: 300px;
+                    overflow: auto;
+                }
+            }
+        }
+    }
+}
