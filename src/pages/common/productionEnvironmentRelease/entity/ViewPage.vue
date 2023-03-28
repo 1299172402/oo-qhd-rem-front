@@ -1,10 +1,6 @@
 <template>
   <pagePanel headerTitle="生产环境发布申请单填写" style="height: calc(100% - 80px)">
-<<<<<<< HEAD
-    <audit-container :infos="infos" :beforeComplete="beforeComplete" @ready="getModel">
-=======
     <audit-container :infos="infos" :beforeComplete="beforeComplete" @ready="getModel" returnName="ProdEnvironmentReleaseList">
->>>>>>> newbranch
       <div>
         <div>项目信息</div>
         <hr />

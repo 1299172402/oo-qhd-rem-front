@@ -309,11 +309,7 @@ export default Vue.extend({
          */
     getDocList(params) {
       return postAction(this.prepareUrl, params)
-<<<<<<< HEAD
-        .then(res => res.result);
-=======
         .then(res => res.data);
->>>>>>> newbranch
     },
     /**
          * callBack function of signatureModal close
@@ -340,11 +336,7 @@ export default Vue.extend({
   },
   render() {
     const AuditContent = (
-<<<<<<< HEAD
-      <t-tabs value={this.tabIndex} class={"audit-popup-tabs"} onChange={val => { this.tabIndex = val}}>
-=======
       <t-tabs value={this.tabIndex} onChange={val => { this.tabIndex = val}}>
->>>>>>> newbranch
         <t-tab-panel value="1" label="审批" destroyOnHide={false}>
           <AuditPanel ref={"auditInfo"} dataSource={this.info}/>
         </t-tab-panel>
@@ -357,11 +349,7 @@ export default Vue.extend({
       </t-tabs>
     );
     const ViewContent =  (
-<<<<<<< HEAD
-      <t-tabs value={this.tabIndex} className={"audit-popup-tabs"} onChange={val => { this.tabIndex = val }}>
-=======
       <t-tabs value={this.tabIndex} onChange={val => { this.tabIndex = val }}>
->>>>>>> newbranch
         <t-tab-panel value="1" label="审批流信息">
           <AuditFlowPanel dataSource={this.commentList} />
         </t-tab-panel>

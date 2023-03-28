@@ -9,10 +9,7 @@ import {
 import { auditPageInfo } from "@/components/audit/process/api/audit";
 import { actionApi, claimApi } from "@/components/audit/process/auditSave/ActionApi";
 import { ActionAreaProps } from "@/components/audit/types";
-<<<<<<< HEAD
-=======
 import returnPaterPage from "@/utils/returnPaterPage";
->>>>>>> newbranch
 
 
 
@@ -55,13 +52,10 @@ export default Vue.extend({
           vm.$emit("return");
         })
       }
-<<<<<<< HEAD
-=======
     },
     returnName: {
       type: String,
       default: ""
->>>>>>> newbranch
     }
   },
   data() {
@@ -145,12 +139,6 @@ export default Vue.extend({
   created() {
     this.getAuditPageInfo();
   },
-<<<<<<< HEAD
-  activated() {
-    this.getAuditPageInfo();
-  },
-=======
->>>>>>> newbranch
   methods: {
     getAuditPageInfo() {
       const { taskId } = this.$route.query;
@@ -266,15 +254,11 @@ export default Vue.extend({
         });
     },
     handleCancel() {
-<<<<<<< HEAD
-      this.$router.go(-1);
-=======
       if (this.returnName && typeof this.returnName === "string") {
         returnPaterPage(this.$route.path, this.returnName)
       } else {
         console.error("AuditContainer:请确认returnPath路径配置正确")
       }
->>>>>>> newbranch
     }
   },
   render() {
@@ -285,10 +269,7 @@ export default Vue.extend({
       props: {
         completeFn: this.handleComplete,
         cancelFn: cancelFn || this.handleCancel,
-<<<<<<< HEAD
-=======
         returnFn: this.handleCancel,
->>>>>>> newbranch
         infos: this.infos,
         isView: this.isView,
         model: this.model

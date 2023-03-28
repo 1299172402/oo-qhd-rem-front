@@ -250,7 +250,7 @@ import {
   fetchProductionWells,
   fetchProductionWellsByPlatform,
 } from '@/api/oilDeposit/rem-02/primaryinfo.js';
-import { queryDensityInfo,getOilFieldList } from '@/api/rem/workcompanydesignate';
+import { queryDensityInfo,getOilFieldList } from '@/api/rem/workcompanydesignate.js';
 export default {
   name: 'Notice',
   dicts: ['sys_normal_disable'],
