@@ -1,4 +1,4 @@
-<!-- 基础数据维护 - 密度维护表 -->
+
 <template>
   <div class="app-container">
     <pagePanelNew style="height: calc(100% - 100px)">

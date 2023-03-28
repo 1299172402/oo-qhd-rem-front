@@ -2,28 +2,20 @@
 <template>
   <div class="app-container">
     <headerSearch class="g-w100 g-h100" style="height: auto">
-      <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true" style="margin-top: 18px">
-        <el-form-item label="作业公司：" prop="deptId">
-          <el-select v-model="queryParams.orgId" placeholder="请选择作业公司" size="small" style="width: 240px">
-            <el-option
-              v-for="(item, index) in company"
-              :key="index"
-              :label="item.orgShortName"
-              :value="item.orgId"
-            ></el-option>
+      <el-form :model="queryParams" :inline="true" style="margin-top: 18px">
+        <el-form-item label="作业公司：">
+          <el-select v-model="queryParams.orgId" disabled>
+            <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.deptName" :value="item.deptId">
+            </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="油田：" prop="noticeContent">
-          <el-select v-model="queryParams.oilFieldId" placeholder="请选择油田" size="small" style="width: 240px">
-            <el-option
-              v-for="(item, index) in oilfield"
-              :key="index"
-              :label="item.oilFieldName"
-              :value="item.oilFieldId"
-            ></el-option>
+        <el-form-item label="油田：">
+          <el-select v-model="queryParams.ogfId">
+            <el-option v-for="(item, index) in oilFields" :key="index" :label="item.oilFieldName" :value="item.oilFieldId">
+            </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="产品类型：" prop="createBy">
+        <el-form-item label="产品类型：">
           <el-select
             v-model="queryParams.cplx"
             placeholder="请选择产品类型"
@@ -39,8 +31,8 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="年份：" prop="noticeType">
-          <el-date-picker type="year" placeholder="选择年份" v-model="date3"></el-date-picker>
+        <el-form-item label="年份：">
+          <el-date-picker type="year" placeholder="选择年份" v-model="queryParams.year"></el-date-picker>
         </el-form-item>
         <el-form-item>
           <el-button icon="el-icon-edit-outline" size="mini" @click="redact" class="commonBtn">编辑</el-button>
@@ -53,17 +45,11 @@
     </headerSearch>
 
     <pagePanelNew style="height: calc(100% - 100px)">
-      <info-window infoWidth="100%" infoHeight="100%" headerTitle="生产指标">
-        <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
-          <!-- <el-col :span="1.5">
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd"
-          v-hasPermi="['system:role:add']">新增</el-button>
-      </el-col> -->
-        </el-row>
+      <info-window infoWidth="100%" infoHeight="100%" headerTitle="密度信息维护">
+        <el-row :gutter="10" class="mb8" style="margin-bottom: 20px"> </el-row>
         <el-table
           :data="noticeList"
           @current-change="handleCurrentChange"
-          @selection-change="handleSelectionChange"
           highlight-current-row
           height="calc(100% - 45px)"
           :row-style="{ height: '0px' }"
@@ -73,85 +59,180 @@
           style="width: 100%; height: 1000px"
           :default-sort="{ prop: 'date', order: 'descending' }"
         >
-          <!-- <el-table-column type="selection" width="55" align="center" /> -->
           <el-table-column label="油气田" prop="name" align="center"> </el-table-column>
           <el-table-column label="一月" prop="one" align="center">
-            <template slot-scope="scope">
-              <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
-              <span v-else> <el-input v-model="scope.row.one" size="small" /></span>
-            </template>
+            <el-table-column label="计划值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.one" size="small" /></span>
+              </template>
+            </el-table-column>
+            <el-table-column label="实际值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.january" size="small" /></span>
+              </template>
+            </el-table-column>
           </el-table-column>
           <el-table-column label="二月" prop="two" align="center">
-            <template slot-scope="scope">
-              <span v-if="scope.row.state == '0'">{{ scope.row.two }}</span>
-              <span v-else> <el-input v-model="scope.row.two" size="small" /></span>
-            </template>
+            <el-table-column label="计划值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.one" size="small" /></span>
+              </template>
+            </el-table-column>
+            <el-table-column label="实际值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.february" size="small" /></span>
+              </template>
+            </el-table-column>
           </el-table-column>
           <el-table-column label="三月" prop="three" align="center">
-            <template slot-scope="scope">
-              <span v-if="scope.row.state == '0'">{{ scope.row.three }}</span>
-              <span v-else> <el-input v-model="scope.row.three" size="small" /></span>
-            </template>
+            <el-table-column label="计划值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.one" size="small" /></span>
+              </template>
+            </el-table-column>
+            <el-table-column label="实际值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.march" size="small" /></span>
+              </template>
+            </el-table-column>
           </el-table-column>
-          <el-table-column label="四月" prop="four" align="center">
-            <template slot-scope="scope">
-              <span v-if="scope.row.state == '0'">{{ scope.row.four }}</span>
-              <span v-else> <el-input v-model="scope.row.four" size="small" /></span>
-            </template>
+          <el-table-column label="四月" align="center">
+            <el-table-column label="计划值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.one" size="small" /></span>
+              </template>
+            </el-table-column>
+            <el-table-column label="实际值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.april" size="small" /></span>
+              </template>
+            </el-table-column>
           </el-table-column>
           <el-table-column label="五月" prop="five" align="center">
-            <template slot-scope="scope">
-              <span v-if="scope.row.state == '0'">{{ scope.row.five }}</span>
-              <span v-else> <el-input v-model="scope.row.five" size="small" /></span>
-            </template>
+            <el-table-column label="计划值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.one" size="small" /></span>
+              </template>
+            </el-table-column>
+            <el-table-column label="实际值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.may" size="small" /></span>
+              </template>
+            </el-table-column>
           </el-table-column>
           <el-table-column label="六月" prop="six" align="center">
-            <template slot-scope="scope">
-              <span v-if="scope.row.state == '0'">{{ scope.row.six }}</span>
-              <span v-else> <el-input v-model="scope.row.six" size="small" /></span>
-            </template>
+            <el-table-column label="计划值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.one" size="small" /></span>
+              </template>
+            </el-table-column>
+            <el-table-column label="实际值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.june" size="small" /></span>
+              </template>
+            </el-table-column>
           </el-table-column>
           <el-table-column label="七月" prop="seven" align="center">
-            <template slot-scope="scope">
-              <span v-if="scope.row.state == '0'">{{ scope.row.seven }}</span>
-              <span v-else> <el-input v-model="scope.row.seven" size="small" /></span>
-            </template>
+            <el-table-column label="计划值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.one" size="small" /></span>
+              </template>
+            </el-table-column>
+            <el-table-column label="实际值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.july" size="small" /></span>
+              </template>
+            </el-table-column>
           </el-table-column>
           <el-table-column label="八月" prop="eight" align="center">
-            <template slot-scope="scope">
-              <span v-if="scope.row.state == '0'">{{ scope.row.eight }}</span>
-              <span v-else> <el-input v-model="scope.row.eight" size="small" /></span>
-            </template>
+            <el-table-column label="计划值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.one" size="small" /></span>
+              </template>
+            </el-table-column>
+            <el-table-column label="实际值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.august" size="small" /></span>
+              </template>
+            </el-table-column>
           </el-table-column>
           <el-table-column label="九月" prop="nine" align="center">
-            <template slot-scope="scope">
-              <span v-if="scope.row.state == '0'">{{ scope.row.nine }}</span>
-              <span v-else> <el-input v-model="scope.row.nine" size="small" /></span>
-            </template>
+            <el-table-column label="计划值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.one" size="small" /></span>
+              </template>
+            </el-table-column>
+            <el-table-column label="实际值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.september" size="small" /></span>
+              </template>
+            </el-table-column>
           </el-table-column>
           <el-table-column label="十月" prop="ten" align="center">
-            <template slot-scope="scope">
-              <span v-if="scope.row.state == '0'">{{ scope.row.ten }}</span>
-              <span v-else> <el-input v-model="scope.row.ten" size="small" /></span>
-            </template>
+            <el-table-column label="计划值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.one" size="small" /></span>
+              </template>
+            </el-table-column>
+            <el-table-column label="实际值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.october" size="small" /></span>
+              </template>
+            </el-table-column>
           </el-table-column>
           <el-table-column label="十一月" prop="eleven" align="center">
-            <template slot-scope="scope">
-              <span v-if="scope.row.state == '0'">{{ scope.row.eleven }}</span>
-              <span v-else> <el-input v-model="scope.row.eleven" size="small" /></span>
-            </template>
+            <el-table-column label="计划值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.one" size="small" /></span>
+              </template>
+            </el-table-column>
+            <el-table-column label="实际值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.november" size="small" /></span>
+              </template>
+            </el-table-column>
           </el-table-column>
           <el-table-column label="十二月" prop="twelve" align="center">
-            <template slot-scope="scope">
-              <span v-if="scope.row.state == '0'">{{ scope.row.twelve }}</span>
-              <span v-else> <el-input v-model="scope.row.twelve" size="small" /></span>
-            </template>
+            <el-table-column label="计划值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.december" size="small" /></span>
+              </template>
+            </el-table-column>
+            <el-table-column label="实际值" prop="one" align="center">
+              <template slot-scope="scope">
+                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-else> <el-input v-model="scope.row.one" size="small" /></span>
+              </template>
+            </el-table-column>
           </el-table-column>
         </el-table>
       </info-window>
     </pagePanelNew>
     <el-dialog title="模型运行结果通知" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false">
-      <span>何时使用：需要用户处理事务，又不希望跳转</span>
+      <span> AC-20井组指标变化趋势评价模型（日度）、AC-25井组注采平衡分析、AC-23井组措施推荐模型全部运行成功。AC-22井组注水受效分析运行失败。</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false" class="cancelBtn">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -161,9 +242,15 @@
 </template>
 
 <script>
-import { listDept } from '@/api/intelligentOilfield/system/dept';
-import { addnotice, noticeList, deldataNotice, updatenotice } from '@/api/intelligentOilfield/system/notice';
-
+import {
+  fetchOilFields,
+  fetchPlatforms,
+  fetchInjectionWells,
+  fetchInjectionWellsByPlatform,
+  fetchProductionWells,
+  fetchProductionWellsByPlatform,
+} from '@/api/oilDeposit/rem-02/primaryinfo.js';
+import { queryDensityInfo,getOilFieldList } from '@/api/rem/workcompanydesignate';
 export default {
   name: 'Notice',
   dicts: ['sys_normal_disable'],
@@ -174,95 +261,18 @@ export default {
       title: '', // 弹窗标题
       company: [],
       oilfield: [],
-      deptSelect: [],
-      addform: {
-        noticeContent: '',
-        noticeType: '',
-        radio: '',
-        sendTime: '',
-        deptIds: [],
-      },
+      deptSelect: [
+        {
+          deptId: '715AD1CD60484BB59E737CD18A9DE44A',
+          deptName: '秦皇岛32-6渤中作业公司',
+        },
+      ], //作业公司
+      oilFields: [],
       // 表格数据
-      noticeList: [
-        {
-          name: '油田一期',
-          one: '',
-          two: '',
-          three: '',
-          index: 0,
-          four: '',
-          five: '',
-          six: '',
-          seven: '',
-          eight: '',
-          nine: '',
-          ten: '',
-          eleven: '',
-          twelve: '',
-          state: '0',
-        },
-        {
-          name: '油田二期',
-          index: 1,
-          one: '',
-          two: '',
-          three: '',
-          four: '',
-          five: '',
-          six: '',
-          seven: '',
-          eight: '',
-          nine: '',
-          ten: '',
-          eleven: '',
-          twelve: '',
-          state: '0',
-        },
-        {
-          name: '油田三期',
-          index: 2,
-          one: '',
-          two: '',
-          three: '',
-          four: '',
-          five: '',
-          six: '',
-          seven: '',
-          eight: '',
-          nine: '',
-          ten: '',
-          eleven: '',
-          twelve: '',
-          state: '0',
-        },
-        {
-          name: '油田四期',
-          index: 3,
-          one: '',
-          two: '',
-          three: '',
-          four: '',
-          five: '',
-          six: '',
-          seven: '',
-          eight: '',
-          nine: '',
-          ten: '',
-          eleven: '',
-          twelve: '',
-          state: '0',
-        },
-      ],
+      noticeList: [],
       // 是否展开，默认全部展开
       isExpandAll: true,
       deptList: [],
-      rules: {
-        noticeContent: [{ required: true, message: '通知内容不能为空', trigger: 'blur' }],
-        noticeType: [{ required: true, message: '通知类型不能为空', trigger: 'blur' }],
-        radio: [{ required: true, message: '发送时间不能为空', trigger: 'blur' }],
-        sendTime: [{ required: true, message: '定时时间不能为空', trigger: 'blur' }],
-        deptIds: [{ required: true, message: '通知对象不能为空', trigger: 'blur' }],
-      },
       // 显示搜索条件
       showSearch: true,
       // 总条数
@@ -274,16 +284,21 @@ export default {
       savelist: [],
       // 查询参数
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
-        orgId: undefined,
-        oilFieldId: undefined,
-        createBy: undefined,
-        noticeType: undefined,
+        assetCode: '',
+        year: '',
+        ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
+        orgId: '715AD1CD60484BB59E737CD18A9DE44A',
       },
     };
   },
   created() {
+    var data = new Date();
+    var y = data.getFullYear();
+    var m = data.getMonth() + 1;
+    if (m >= 1 && m <= 9) {
+      m = '0' + m;
+    }
+    this.queryParams.year = String(y);
     this.getList();
     // this.choiceDepts(); // 获取组织机构
   },
@@ -295,26 +310,28 @@ export default {
      * @param oilfield 油田数据数组
      */
     getList() {
-      getWorkCompany().then((data) => {
+      console.log(this.queryParams);
+      // debugger
+      getOilFieldList({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then((res) => {
+        if (res.data.code == 200) {
+          console.log(res,'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+          this.oilFields = res.data.data;
+          // if (this.oilFields.length == 0) {
+          //   this.selectOilField = "";
+          // } else {
+          //   this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
+          // }
+        }
+      });
+      fetchOilFields({ orgId: this.queryParams.orgId }).then((res) => {
         let code = data.data.code;
         if (code == 200) {
-          this.company = data.data.data;
-          if (this.company) {
-            this.queryParams.orgId = data.data.data[0].orgId;
-            getOilFieldList({ orgId: this.queryParams.orgId }).then((res) => {
-              let code = data.data.code;
-              if (code == 200) {
-                this.oilfield = res.data.data;
-                if (this.oilfield) {
-                  this.queryParams.oilFieldId = res.data.data[0].oilFieldId;
-                }
-              } else {
-                this.$message.warning('系统错误请重新尝试或联系运维人员！');
-              }
-            });
+          this.oilfield = res.data.data;
+          if (this.oilfield) {
+            this.queryParams.oilFieldId = res.data.data[0].oilFieldId;
           }
         } else {
-          alert('系统错误请重新尝试或联系运维人员！');
+          this.$message.warning('系统错误请重新尝试或联系运维人员！');
         }
       });
     },

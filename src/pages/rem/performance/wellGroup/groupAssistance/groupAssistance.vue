@@ -75,16 +75,16 @@
           :name="item.name"
         >
           <div class="tab-view">
-            <!-- <el-button
+            <el-button
               v-for="(module) in item.modules"
               :class="currentTab == module.name ? 'el-button--primary' : 'commonBtn'"
               :key="module.name"
             >
-              <div @click="handleClick(module)">
+              <div @click="handleClick(module.name)">
                 {{ module.label }}
               </div>
-            </el-button> -->
-            <el-radio-group v-model="currentTab" @change="handleClick">
+            </el-button>
+            <!-- <el-radio-group v-model="currentTab" @change="handleClick">
               <el-radio-button
                 v-for="module in item.modules"
                 :key="module.name"
@@ -93,7 +93,7 @@
               >
                 {{ module.label }}
               </el-radio-button>
-            </el-radio-group>
+            </el-radio-group> -->
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -161,11 +161,11 @@ export default {
               name: "permeability",
             },
             {
-              label: "井组联通图",
+              label: "井组连通图",
               name: "groupConnection",
             },
             {
-              label: "连井刨面图",
+              label: "连井剖面图",
               name: "wellProfile",
             },
           ],
