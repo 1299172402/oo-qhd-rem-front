@@ -1,8 +1,7 @@
 import Layout from '@/layouts/index.vue';
 
 export default [
-      // 基础数据维护
-      {
+    {
         path: '/plan',
         name: 'plan',
         component: Layout,
@@ -10,19 +9,42 @@ export default [
         meta: { title: '规划计划管理', icon: 'client', single: false },
         children: [
             {
+                hidden: false,
+                path: 'planIndex',
+                name: 'planIndex',
+                component: () => import('@/pages/rem/plan/index.vue'),
+                meta: { title: '措施管理', icon: 'icon' },
+            },
+            // {
+            //   hidden: false,
+            //   path: 'newPlanIndex',
+            //   name: 'newPlanIndex',
+            //   component: () => import('@/pages/rem/plan/newPlanIndex.vue'),
+            //   meta: { title: '措施管理', icon: 'icon' },
+            // },
+            {
+              hidden:true,
+              path: 'wellMonitoring',
+              name: 'wellMonitoring',
+              component: () => import('@/pages/rem/plan/wellMonitoring.vue'),
+              meta: { title: '措施效果跟踪',icon: 'icon'},
+            },
+            {
+                hidden: true,
                 path: 'operationplan',
                 name: 'operationplan',
                 component: () => import('@/pages/rem/plan/operationplan/index.vue'),
                 meta: { title: '现场作业计划' },
-              },
-              {
+            },
+            {
+                hidden: true,
                 path: 'planmessage',
                 name: 'planmessage',
                 component: () => import('@/pages/rem/plan/planmessage/index.vue'),
                 meta: { title: '措施计划情况' },
-              },
+            },
         ],
-      },
+    },
 
-    ];
-    
+];
+
