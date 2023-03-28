@@ -9,7 +9,7 @@
     view-only
     @closed="visible=false"
     @ok="handleSelectUser"
-    @open="loadData"
+    @open="handleOpen"
   >
     <div style="display: flex;">
       <el-aside width="200px">
@@ -36,7 +36,7 @@
         </el-scrollbar>
       </el-aside>
       <el-divider direction="vertical" />
-      <el-container direction="vertical" style="height: 510px;">
+      <el-container direction="vertical">
         <div>
           <headerSearch class="g-w100 g-h100">
           <el-header style="height: 50px;">
@@ -73,7 +73,7 @@
               :row-key="getRowKey"
               @selection-change="handleSelectionChange"
             >
-              <el-table-column type="selection" :reserve-selection="true" width="55" />
+              <el-table-column type="selection" :reserve-selection="true" :selectable="selectable" width="55" />
               <el-table-column label="用户账号" prop="userName" :show-overflow-tooltip="true" />
               <el-table-column label="用户名称" prop="nickName" :show-overflow-tooltip="true" />
               <el-table-column label="所属机构" prop="dept.deptName" :show-overflow-tooltip="true" />
@@ -132,8 +132,15 @@ export default {
     CommonDialog
   },
   mixins: [ListMixins],
+  props: {
+    dataSources: {
+      type: Array,
+      default: () => ([])
+    }    
+  },
   data() {
     return {
+      tableData: [],
       visible: false,
       // 选中数组值
       userIds: [],
@@ -163,6 +170,26 @@ export default {
     this.getTreeselect();
   },
   methods: {
+    selectable(row, index){
+      if (this.tableData.indexOf(row.userId) >= 0) {
+        return false
+      } else {
+        return true
+      }
+    },
+    handleOpen() {
+      this.loadData()
+      this.$nextTick(() => {
+        this.tableData = this.dataSources.map(v => v.userId)
+        this.dataSource.forEach((row) => {
+          if (this.tableData.indexOf(row.userId) >= 0) {
+            this.$refs.table.toggleRowSelection(row, true);     
+          } else {
+            this.$refs.table.toggleRowSelection(row, false);         
+          }
+        });
+      });
+    },
     /**
      * 查询部门下拉树结构
      */

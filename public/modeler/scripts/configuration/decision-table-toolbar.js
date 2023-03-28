@@ -12,26 +12,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+'use strict';
 
-
-
-const DECISION_TABLE_TOOLBAR_CONFIG = {
-  "items" : [
-    {
-      "type" : "button",
-      "title" : "TOOLBAR.ACTION.SAVE",
-      "cssClass" : "editor-icon editor-icon-save",
-      "action" : "DECISION_TABLE_TOOLBAR.ACTIONS.saveModel",
-      "disableOnReadonly": true
-    }
-  ],
+var DECISION_TABLE_TOOLBAR_CONFIG = {
+    "items" : [
+        {
+            "type" : "button",
+            "title" : "TOOLBAR.ACTION.SAVE",
+            "cssClass" : "editor-icon editor-icon-save",
+            "action" : "DECISION_TABLE_TOOLBAR.ACTIONS.saveModel",
+            "disableOnReadonly": true
+        }
+    ],
     
-  "secondaryItems" : [
-    {
+    "secondaryItems" : [
+		{
 		    "type" : "button",
 		    "title" : "TOOLBAR.ACTION.CLOSE",
 		    "cssClass" : "glyphicon glyphicon-remove",
 		    "action" : "DECISION_TABLE_TOOLBAR.ACTIONS.closeEditor"
-    }
-  ]
+		}
+    ]
 };

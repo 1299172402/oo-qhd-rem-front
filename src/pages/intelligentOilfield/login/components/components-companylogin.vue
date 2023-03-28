@@ -2,8 +2,9 @@
   <div class="first-tab-body">
     <div class="logo-img" />
     <div class="company-name">
-      <div class="chinese-name">这个是一个公司</div>
-      <div class="english-name">这个公司的Englishname</div>
+      <div class="chinese-name">欢迎登录</div>
+      <!-- TODO: Maybe change back -->
+      <!-- <div class="english-name">这个公司的Englishname</div> -->
     </div>
     <t-button block size="large" class="login__submit-btn" @click="goCallBack"> 集团登录 </t-button>
     <div>仅供双因素测试使用，不提供真实功能</div>

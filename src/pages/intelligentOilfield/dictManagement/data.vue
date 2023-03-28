@@ -114,7 +114,7 @@
             <el-button
               size="mini"
               type="text"
-              @click="handleDelete(scope.row)"
+              @click="handleDelete(scope.row, scope.$index)"
               v-hasPermi="['system:dict:remove']"
               class="delbutton"
               >删除</el-button
@@ -356,12 +356,12 @@ export default {
       });
     },
     /** 删除按钮操作 */
-    handleDelete({ row, $index }) {
+    handleDelete(row, index) {
       const dictCodes = row.dictCode || this.ids;
       // this.$modal
       //   .confirm(`是否确认删除字典编码为"${  dictCodes  }"的数据项？`)
       this.$modal
-        .confirm(`是否确认删除序号为"${$index + 1}"的数据项？`)
+        .confirm(`是否确认删除序号为"${index + 1}"的数据项？`)
         .then(() => delData(dictCodes))
         .then(() => {
           this.getList();

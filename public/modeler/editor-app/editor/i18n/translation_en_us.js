@@ -26,7 +26,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  * 
- * */
+ **/
  
 /**
  * @author nicolas.peters
@@ -38,7 +38,7 @@ if(!ORYX) var ORYX = {};
 
 if(!ORYX.I18N) ORYX.I18N = {};
 
-ORYX.I18N.Language = "en_us"; // Pattern <ISO language code>_<ISO country code> in lower case!
+ORYX.I18N.Language = "en_us"; //Pattern <ISO language code>_<ISO country code> in lower case!
 
 if(!ORYX.I18N.Oryx) ORYX.I18N.Oryx = {};
 
@@ -305,22 +305,22 @@ ORYX.I18N.Perspective.noTip = "Unload the current perspective"
 
 /** New Language Properties: 21.04.2009 */
 ORYX.I18N.JSONSupport = {
-  imp: {
-    name: "Import from JSON",
-    desc: "Imports a model from JSON",
-    group: "Export",
-    selectFile: "Select an JSON (.json) file or type in JSON to import it!",
-    file: "File",
-    btnImp: "Import",
-    btnClose: "Close",
-    progress: "Importing ...",
-    syntaxError: "Syntax error"
-  },
-  exp: {
-    name: "Export to JSON",
-    desc: "Exports current model to JSON",
-    group: "Export"
-  }
+    imp: {
+        name: "Import from JSON",
+        desc: "Imports a model from JSON",
+        group: "Export",
+        selectFile: "Select an JSON (.json) file or type in JSON to import it!",
+        file: "File",
+        btnImp: "Import",
+        btnClose: "Close",
+        progress: "Importing ...",
+        syntaxError: "Syntax error"
+    },
+    exp: {
+        name: "Export to JSON",
+        desc: "Exports current model to JSON",
+        group: "Export"
+    }
 };
 
 /** New Language Properties: 09.05.2009 */
@@ -335,7 +335,7 @@ ORYX.I18N.RDFExport.group = "Export";
 ORYX.I18N.RDFExport.rdfExport = "Export to RDF";
 ORYX.I18N.RDFExport.rdfExportDescription = "Exports current model to the XML serialization defined for the Resource Description Framework (RDF)";
 
-/** New Language Properties: 15.05.2009 */
+/** New Language Properties: 15.05.2009*/
 if(!ORYX.I18N.SyntaxChecker.BPMN) ORYX.I18N.SyntaxChecker.BPMN={};
 ORYX.I18N.SyntaxChecker.BPMN_NO_SOURCE = "An edge must have a source.";
 ORYX.I18N.SyntaxChecker.BPMN_NO_TARGET = "An edge must have a target.";
@@ -385,14 +385,14 @@ ORYX.I18N.SyntaxChecker.PetriNet_NO_ID = "There is a node without id";
 ORYX.I18N.SyntaxChecker.PetriNet_SAME_SOURCE_AND_TARGET = "Two flow relationships have the same source and target";
 ORYX.I18N.SyntaxChecker.PetriNet_NODE_NOT_SET = "A node is not set for a flowrelationship";
 
-/** New Language Properties: 02.06.2009 */
+/** New Language Properties: 02.06.2009*/
 ORYX.I18N.Edge = "Edge";
 ORYX.I18N.Node = "Node";
 
-/** New Language Properties: 03.06.2009 */
+/** New Language Properties: 03.06.2009*/
 ORYX.I18N.SyntaxChecker.notice = "Move the mouse over a red cross icon to see the error message.";
 
-/** New Language Properties: 05.06.2009 */
+/** New Language Properties: 05.06.2009*/
 if(!ORYX.I18N.RESIZE) ORYX.I18N.RESIZE = {};
 ORYX.I18N.RESIZE.tipGrow = "Increase canvas size:";
 ORYX.I18N.RESIZE.tipShrink = "Decrease canvas size:";
@@ -401,14 +401,14 @@ ORYX.I18N.RESIZE.W = "Left";
 ORYX.I18N.RESIZE.S ="Down";
 ORYX.I18N.RESIZE.E ="Right";
 
-/** New Language Properties: 15.07.2009 */
+/** New Language Properties: 15.07.2009*/
 if(!ORYX.I18N.Layouting) ORYX.I18N.Layouting ={};
 ORYX.I18N.Layouting.doing = "Layouting...";
 
-/** New Language Properties: 18.08.2009 */
+/** New Language Properties: 18.08.2009*/
 ORYX.I18N.SyntaxChecker.MULT_ERRORS = "Multiple Errors";
 
-/** New Language Properties: 08.09.2009 */
+/** New Language Properties: 08.09.2009*/
 if(!ORYX.I18N.PropertyWindow) ORYX.I18N.PropertyWindow = {};
 ORYX.I18N.PropertyWindow.oftenUsed = "Often used";
 ORYX.I18N.PropertyWindow.moreProps = "More Properties";

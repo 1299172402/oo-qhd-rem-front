@@ -13,30 +13,30 @@
 
 angular.module('flowableModeler').controller('FlowableSignalRefCtrl', [ '$scope', function($scope) {
 
-  // Find the parent shape on which the signal definitions are defined
-  let signalDefinitionsProperty;
-  let parent = $scope.selectedShape;
-  while (parent !== null && parent !== undefined && signalDefinitionsProperty === undefined) {
-    if (parent.properties && parent.properties.get('oryx-signaldefinitions')) {
-      signalDefinitionsProperty = parent.properties.get('oryx-signaldefinitions');
-    } else {
-      parent = parent.parent;
+    // Find the parent shape on which the signal definitions are defined
+    var signalDefinitionsProperty = undefined;
+    var parent = $scope.selectedShape;
+    while (parent !== null && parent !== undefined && signalDefinitionsProperty === undefined) {
+        if (parent.properties && parent.properties.get('oryx-signaldefinitions')) {
+            signalDefinitionsProperty = parent.properties.get('oryx-signaldefinitions');
+        } else {
+            parent = parent.parent;
+        }
     }
-  }
 
-  try {
-    signalDefinitionsProperty = JSON.parse(signalDefinitionsProperty);
-    if (typeof signalDefinitionsProperty === 'string') {
-      signalDefinitionsProperty = JSON.parse(signalDefinitionsProperty);
+    try {
+        signalDefinitionsProperty = JSON.parse(signalDefinitionsProperty);
+        if (typeof signalDefinitionsProperty == 'string') {
+            signalDefinitionsProperty = JSON.parse(signalDefinitionsProperty);
+        }
+    } catch (err) {
+        // Do nothing here, just to be sure we try-catch it
     }
-  } catch (err) {
-    // Do nothing here, just to be sure we try-catch it
-  }
 
-  $scope.signalDefinitions = signalDefinitionsProperty;
+    $scope.signalDefinitions = signalDefinitionsProperty;
 
 
-  $scope.signalChanged = function() {
+    $scope.signalChanged = function() {
     	$scope.updatePropertyInModel($scope.property);
-  };
+    };
 }]);

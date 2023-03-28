@@ -10,73 +10,72 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-
+'use strict';
 
 angular.module('flowableModeler').service('UserService', ['$http', '$q',
-  function ($http, $q) {
+    function ($http, $q) {
 
-    const httpAsPromise = function(options) {
-      const deferred = $q.defer();
-      $http(options).
-        success((response, status, headers, config) => {
-          deferred.resolve(response);
-        })
-        .error((response, status, headers, config) => {
-          deferred.reject(response);
-        });
-      return deferred.promise;
-    };
+        var httpAsPromise = function(options) {
+            var deferred = $q.defer();
+            $http(options).
+                success(function (response, status, headers, config) {
+                    deferred.resolve(response);
+                })
+                .error(function (response, status, headers, config) {
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        };
 
-    /*
+        /*
          * Filter users based on a filter text.
          */
-    this.getFilteredUsers = function (filterText, taskId, processInstanceId) {
-      const params = {filter: filterText};
-      if(taskId) {
-        params.excludeTaskId = taskId;
-      }
-      if (processInstanceId) {
-        params.exclusdeProcessId = processInstanceId;
-      }
+        this.getFilteredUsers = function (filterText, taskId, processInstanceId) {
+            var params = {filter: filterText};
+            if(taskId) {
+                params.excludeTaskId = taskId;
+            }
+            if (processInstanceId) {
+                params.exclusdeProcessId = processInstanceId;
+            }
 
-      return httpAsPromise({
-        method: 'GET',
-        url: FLOWABLE.APP_URL.getEditorUsersUrl(),
-        params
-      });
-    };
+            return httpAsPromise({
+                method: 'GET',
+                url: FLOWABLE.APP_URL.getEditorUsersUrl(),
+                params: params
+            });
+        };
 
-  }]);
+    }]);
 
 angular.module('flowableModeler').service('GroupService', ['$http', '$q',
-  function ($http, $q) {
+    function ($http, $q) {
 
-    const httpAsPromise = function(options) {
-      const deferred = $q.defer();
-      $http(options).
-        success((response, status, headers, config) => {
-          deferred.resolve(response);
-        })
-        .error((response, status, headers, config) => {
-          deferred.reject(response);
-        });
-      return deferred.promise;
-    };
+        var httpAsPromise = function(options) {
+            var deferred = $q.defer();
+            $http(options).
+                success(function (response, status, headers, config) {
+                    deferred.resolve(response);
+                })
+                .error(function (response, status, headers, config) {
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        };
 
-    /*
+        /*
          * Filter functional groups based on a filter text.
          */
-    this.getFilteredGroups = function (filterText) {
-      let params;
-      if(filterText) {
-        params = {filter: filterText};
-      }
+        this.getFilteredGroups = function (filterText) {
+            var params;
+            if(filterText) {
+                params = {filter: filterText};
+            }
 
-      return httpAsPromise({
-        method: 'GET',
-        url: FLOWABLE.APP_URL.getEditorGroupsUrl(),
-        params
-      });
-    };
-  }]);
+            return httpAsPromise({
+                method: 'GET',
+                url: FLOWABLE.APP_URL.getEditorGroupsUrl(),
+                params: params
+            });
+        };
+    }]);

@@ -16,33 +16,33 @@
  */
 
 flowableModule.factory('NotPermittedInterceptor', [ '$q', '$window', function($q, $window) {
-  return {
-    responseError ( response ) {
+    return {
+        responseError: function ( response ) {
 
-      if (response.status === 403) {
-        // 重新登录
-        $window.location.href = FLOWABLE.CONFIG.loginPage;
-        // $window.location.reload();
-        return $q.reject(response);
-      }
-            
-      return $q.reject(response);
-            
+            if (response.status === 403) {
+                // 重新登录
+                $window.location.href = FLOWABLE.CONFIG.loginPage;
+                // $window.location.reload();
+                return $q.reject(response);
+            }
+            else{
+                return $q.reject(response);
+            }
+        }
     }
-  }
 }]);
 
 flowableModule.config(['$httpProvider', function($httpProvider) {
 
-  if (!$httpProvider.defaults.headers.get) {
-    $httpProvider.defaults.headers.get = {};
-  }
+    if (!$httpProvider.defaults.headers.get) {
+        $httpProvider.defaults.headers.get = {};
+    }
 
-  $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache, no-store, must-revalidate';
-  $httpProvider.defaults.headers.get.Pragma = 'no-cache';
-  $httpProvider.defaults.headers.get.Expires = '0';
-  $httpProvider.defaults.headers.get.Authorization = localStorage.getItem("current_user_token");
+    $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+    $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
+    $httpProvider.defaults.headers.get['Expires'] = '0';
+    $httpProvider.defaults.headers.get['Authorization'] = localStorage.getItem("current_user_token");
 
-  $httpProvider.interceptors.push('NotPermittedInterceptor');
+    $httpProvider.interceptors.push('NotPermittedInterceptor');
 
 }]);

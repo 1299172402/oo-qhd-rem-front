@@ -136,7 +136,7 @@
       <el-button class="transfer-footer" slot="right-footer" size="small">操作</el-button> -->
     </el-transfer>
     
-    <div style="margin: 10px 0">=================================页面通用面板【具体使用可参照列表示例页】【废弃】=================================</div>
+    <div style="margin: 10px 0">=================================页面通用面板【具体使用可参照列表示例页】【老版】=================================</div>
     <pagePanel headerTitle="我是标题" style="height: 600px">
         <!-- <div>这里显示主内容，padding为20px</div> -->
         <el-table
@@ -160,7 +160,7 @@
     </pagePanelNew>
     <!-- 自定义info信息窗 -->
     <div style="margin: 10px 0">=================================自定义info信息窗=================================</div>
-    <info-window infoWidth="400px" infoHeight="300px" headerTitle="开采现状分析">
+    <info-window infoWidth="400px" infoHeight="300px" headerTitle="开采现状分析" :isShowMaxBtn="true">
         <div style="padding:20px">放主内容</div>
     </info-window>
     <div style="margin: 40px 0"> =================================end========================</div>

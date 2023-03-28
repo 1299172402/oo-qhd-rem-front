@@ -13,12 +13,12 @@
 
 angular.module('flowableModeler').controller('FlowableHttpRequestMethodCtrl', [ '$scope', function($scope) {
 
-  if ($scope.property.value == undefined && $scope.property.value == null)
-  {
+    if ($scope.property.value == undefined && $scope.property.value == null)
+    {
     	   $scope.property.value = 'GET';
-  }
+    }
         
-  $scope.httpRequestMethodChanged = function() {
+    $scope.httpRequestMethodChanged = function() {
         	$scope.updatePropertyInModel($scope.property);
-  };
+    };
 }]);

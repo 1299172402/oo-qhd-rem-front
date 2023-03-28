@@ -36,6 +36,8 @@ import pagePanelNew from '@/components/intelligentOilfield/page-panel-new/index.
 import headerSearch from '@/components/intelligentOilfield/header-search/index.vue';
 
 import "@/utils/filter";
+import VXETable from 'vxe-table'
+import 'vxe-table/lib/style.css'
 
 const env = import.meta.env.MODE;
 
@@ -59,13 +61,12 @@ Vue.prototype.handleTree = handleTree
 Vue.prototype.getConfigKey = getConfigKey
 Vue.prototype.download = download
 Vue.prototype.$echarts = echarts;
-
-console.log('echarts',echarts)
 Vue.prototype.$request = axiosInstance;
 Vue.prototype.$bus = new Vue()
 
 localStorage.setItem("contextRoot", proxy[env].processAPI);
 
+Vue.use(VXETable)
 Vue.use(directive)
 Vue.use(plugins)
 Vue.use(ElementUI);
@@ -85,9 +86,6 @@ const originReplace = VueRouter.prototype.replace;
 VueRouter.prototype.replace = function replace(location) {
   return originReplace.call(this, location).catch((err) => err);
 };
-
-// eslint-disable-next-line
-Date.prototype.format=function(e){let t=e;return t=t.replace(/yyyy|YYYY/,this.getFullYear()),t=t.replace(/MM/,this.getMonth()+1>9?(this.getMonth()+1).toString():"0".concat(this.getMonth()+1)),t=t.replace(/dd|DD/,this.getDate()>9?this.getDate().toString():"0".concat(this.getDate())),t=t.replace(/hh/,this.getHours()>9?this.getHours().toString():"0".concat(this.getHours())),t=t.replace(/mm/,this.getMinutes()>9?this.getMinutes().toString():"0".concat(this.getMinutes())),t=t.replace(/ss/,this.getSeconds()>9?this.getSeconds().toString():"0".concat(this.getSeconds()))},Date.prototype.addDays=function(e){return this.setDate(this.getDate()+e),this};
 
 Vue.config.productionTip = false;
 sync(store, router);

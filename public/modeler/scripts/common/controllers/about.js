@@ -10,35 +10,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-
+'use strict';
 
 flowableApp.controller('AboutFlowablePopupCtrl', ['$rootScope', '$scope', '$http', '$translate', '$interval', '$dateFormatter', function($rootScope, $scope, $http, $translate, $interval, $dateFormatter) {
-  $scope.popup = {
-    loading: true,
-    activitiVersion: {},
-    licenseHolder: ''
-  };
+    $scope.popup = {
+        loading: true,
+        activitiVersion: {},
+        licenseHolder: ''
+    };
 
-  $http({method: 'GET', url: FLOWABLE.APP_URL.getAboutInfoUrl()}).
-    success((response, status, headers, config) => {
-      $scope.popup.licenseHolder = response.holder;
-      $scope.popup.activitiVersion = `${response.versionInfo.edition  } v${  response.versionInfo.majorVersion  }.${  response.versionInfo.minorVersion  }.${  response.versionInfo.revisionVersion}`;
-      $scope.popup.activitiVersionType = response.versionInfo.type;
-      $scope.popup.loading = false;
-    }).
-    error((response, status, headers, config) => {
-      $scope.popup.loading = false;
-    });
-
-
-  $scope.cancel = function() {
-    $scope.close();
-  };
+    $http({method: 'GET', url: FLOWABLE.APP_URL.getAboutInfoUrl()}).
+        success(function(response, status, headers, config) {
+            $scope.popup.licenseHolder = response.holder;
+            $scope.popup.activitiVersion = response.versionInfo.edition + ' v' + response.versionInfo.majorVersion + '.' + response.versionInfo.minorVersion + '.' + response.versionInfo.revisionVersion;
+            $scope.popup.activitiVersionType = response.versionInfo.type;
+            $scope.popup.loading = false;
+        }).
+        error(function(response, status, headers, config) {
+            $scope.popup.loading = false;
+        });
 
 
-  $scope.close = function() {
-    $scope.$hide();
-  }
+    $scope.cancel = function() {
+        $scope.close();
+    };
+
+
+    $scope.close = function() {
+        $scope.$hide();
+    }
 
 }]);

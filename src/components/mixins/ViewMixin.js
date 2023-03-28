@@ -10,11 +10,7 @@ export default {
   },
   created() {
     this.modelOk && this.$on("model-ok", this.modelOk);
-    this.getModel(this.$route.query.id);
-  },
-  activated() {
-    this.modelOk && this.$on("model-ok", this.modelOk);
-    this.getModel(this.$route.query.id);
+    this.getModel(this.$route.params.id);
   },
   computed: {
     isView() {

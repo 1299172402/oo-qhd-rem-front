@@ -5,7 +5,7 @@
       :element-loading-text="loadingText"
       class="form-section"
     >
-      <el-card class="box-margin" :class="{'form-view-hide-star': isView, 'form-section__main': true, 'no-border': !border}">
+      <el-card class="box-margin" :class="{'form-view-hide-star': isView, 'form-section__main': true, 'no-border': !border}" style="height: 100%">
         <div class="form-section__content">
           <slot />
         </div>
@@ -34,7 +34,8 @@
     </section>
   </template>
 <script>
-  
+import returnPaterPage from "@/utils/returnPaterPage";
+
 export default {
   name: "FormSection",
   props: {
@@ -61,6 +62,10 @@ export default {
     border: {
       type: Boolean,
       default: true
+    },
+    returnName: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -75,11 +80,15 @@ export default {
   },
   methods: {
     handleCancel() {
-      this.$emit("cancel");
-      if (window.opener) {
-        window.close();
+      if (this.returnName && typeof this.returnName === "string") {
+        returnPaterPage(this.$route.path, this.returnName)
       } else {
-        this.$router.go(-1);
+        this.$emit("cancel");
+        if (window.opener) {
+          window.close();
+        } else {
+          this.$router.go(-1);
+        }
       }
     }
   }

@@ -111,7 +111,7 @@ export default {
       form: {},
       // 总条数
       total: 0,
-      // 选中数组
+      //选中数组
       ids: [],
       // 非单个禁用
       single: true,

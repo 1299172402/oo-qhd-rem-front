@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+import returnPaterPage from "@/utils/returnPaterPage";
+
+>>>>>>> newbranch
 export const BytzFormMixins = {};
 
 export const FormMixins = {
@@ -109,7 +114,13 @@ export const FormMixins = {
      * 页面返回
      */
     handleBack() {
+<<<<<<< HEAD
       if (window.opener) {
+=======
+      if (this.returnName && typeof this.returnName === "string") {
+        returnPaterPage(this.$route.path, this.returnName)
+      } else if (window.opener) {
+>>>>>>> newbranch
         window.close();
       } else {
         this.$router.go(-1);

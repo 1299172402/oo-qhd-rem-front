@@ -26,7 +26,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  * 
- * */
+ **/
  
 ORYX.I18N.PropertyWindow.dateFormat = "d/m/y";
 
@@ -56,7 +56,7 @@ ORYX.I18N.Save.failed = "Something went wrong when trying to save your diagram. 
 ORYX.I18N.Save.exception = "Some exceptions are raised while trying to save your diagram. Please try again. If the problem resides, please contact the Signavio Support via the envelope symbol in the toolbar.";
 ORYX.I18N.Save.retrieveData = "Please wait, data is retrieving.";
 
-/** New Language Properties: 10.6.09 */
+/** New Language Properties: 10.6.09*/
 if(!ORYX.I18N.ShapeMenuPlugin) ORYX.I18N.ShapeMenuPlugin = {};
 ORYX.I18N.ShapeMenuPlugin.morphMsg = "Transform shape";
 ORYX.I18N.ShapeMenuPlugin.morphWarningTitleMsg = "Transform shape";
@@ -89,7 +89,7 @@ if(!Signavio.I18N.Glossary_Support) { Signavio.I18N.Glossary_Support = {}; }
 Signavio.I18N.Glossary_Support.renameEmpty = "No dictionary entry";
 Signavio.I18N.Glossary_Support.renameLoading = "Searching...";
 
-/** New Language Properties: 08.09.2009 */
+/** New Language Properties: 08.09.2009*/
 if(!ORYX.I18N.PropertyWindow) ORYX.I18N.PropertyWindow = {};
 ORYX.I18N.PropertyWindow.oftenUsed = "Main properties";
 ORYX.I18N.PropertyWindow.moreProps = "More properties";

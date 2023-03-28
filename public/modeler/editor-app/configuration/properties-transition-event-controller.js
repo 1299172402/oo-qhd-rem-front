@@ -17,11 +17,11 @@
 
 angular.module('flowableModeler').controller('FlowableTransitionEventCtrl', [ '$scope', function($scope) {
 
-  if ($scope.property.value == undefined && $scope.property.value == null) {
+    if ($scope.property.value == undefined && $scope.property.value == null) {
     	$scope.property.value = 'complete';
-  }
+    }
         
-  $scope.transitionEventChanged = function() {
+    $scope.transitionEventChanged = function() {
     	$scope.updatePropertyInModel($scope.property);
-  };
+    };
 }]);

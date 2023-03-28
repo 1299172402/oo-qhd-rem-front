@@ -11,42 +11,42 @@
  * limitations under the License.
  */
 angular.module('flowableModeler')
-  .controller('AppDefinitionToolbarController', ['$scope', '$http', '$modal', '$q', '$rootScope', '$translate', '$location', function ($scope, $http, $modal, $q, $rootScope, $translate, $location) {
+    .controller('AppDefinitionToolbarController', ['$scope', '$http', '$modal', '$q', '$rootScope', '$translate', '$location', function ($scope, $http, $modal, $q, $rootScope, $translate, $location) {
 
-    	const toolbarItems = APP_DEFINITION_TOOLBAR_CONFIG.items;
-    $scope.items = [];
+    	var toolbarItems = APP_DEFINITION_TOOLBAR_CONFIG.items;
+        $scope.items = [];
         
-    for (let i = 0; i < toolbarItems.length; i++)
-    {
+        for (var i = 0; i < toolbarItems.length; i++)
+        {
         	$scope.items.push(toolbarItems[i]);
-    }
+        }
         
-    $scope.secondaryItems = APP_DEFINITION_TOOLBAR_CONFIG.secondaryItems;
+        $scope.secondaryItems = APP_DEFINITION_TOOLBAR_CONFIG.secondaryItems;
 
-    // Call configurable click handler (From http://stackoverflow.com/questions/359788/how-to-execute-a-javascript-function-when-i-have-its-name-as-a-string)
-    const executeFunctionByName = function(functionName, context /* , args */) {
-      const args = Array.prototype.slice.call(arguments).splice(2);
-      const namespaces = functionName.split(".");
-      const func = namespaces.pop();
-      for(let i = 0; i < namespaces.length; i++) {
-        context = context[namespaces[i]];
-      }
-      return context[func].apply(this, args);
-    };
+        // Call configurable click handler (From http://stackoverflow.com/questions/359788/how-to-execute-a-javascript-function-when-i-have-its-name-as-a-string)
+        var executeFunctionByName = function(functionName, context /*, args */) {
+            var args = Array.prototype.slice.call(arguments).splice(2);
+            var namespaces = functionName.split(".");
+            var func = namespaces.pop();
+            for(var i = 0; i < namespaces.length; i++) {
+                context = context[namespaces[i]];
+            }
+            return context[func].apply(this, args);
+        };
 
-    // Click handler for toolbar buttons
-    $scope.toolbarButtonClicked = function(buttonIndex) {
+        // Click handler for toolbar buttons
+        $scope.toolbarButtonClicked = function(buttonIndex) {
 
-      // Default behaviour
-      const buttonClicked = $scope.items[buttonIndex];
-      const services = { '$scope' : $scope, '$rootScope' : $rootScope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate};
-      executeFunctionByName(buttonClicked.action, window, services);
-    };
+            // Default behaviour
+            var buttonClicked = $scope.items[buttonIndex];
+            var services = { '$scope' : $scope, '$rootScope' : $rootScope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate};
+            executeFunctionByName(buttonClicked.action, window, services);
+        };
         
-    // Click handler for secondary toolbar buttons
-    $scope.toolbarSecondaryButtonClicked = function(buttonIndex) {
-      const buttonClicked = $scope.secondaryItems[buttonIndex];
-      const services = { '$scope' : $scope, '$rootScope' : $rootScope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate, '$location': $location};
-      executeFunctionByName(buttonClicked.action, window, services);
-    };
-  }]);
+        // Click handler for secondary toolbar buttons
+        $scope.toolbarSecondaryButtonClicked = function(buttonIndex) {
+            var buttonClicked = $scope.secondaryItems[buttonIndex];
+            var services = { '$scope' : $scope, '$rootScope' : $rootScope, '$http' : $http, '$modal' : $modal, '$q' : $q, '$translate' : $translate, '$location': $location};
+            executeFunctionByName(buttonClicked.action, window, services);
+        };
+}]);

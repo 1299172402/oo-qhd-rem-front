@@ -8,11 +8,10 @@ const  GenerateRouter = {
   "Index":()=>import('@/pages/intelligentOilfield/homePage/index.vue'),// 组织机构管理
   "Organization":()=>import('@/pages/intelligentOilfield/organizationStructure/index.vue'),// 组织机构管理
   "User":()=>import('@/pages/intelligentOilfield/userManagement/index.vue'),// 用户管理
+  "AuthRole/:userId":()=>import('@/pages/intelligentOilfield/userManagement/authRole.vue'),// 分配角色
+  "AppRole/:id":()=>import('@/pages/intelligentOilfield/userManagement/appRole.vue'),// 应用配置角色
   "Roles":()=>import('@/pages/intelligentOilfield/rolesManagement/index.vue'),// 角色管理
   "Menu":()=>import('@/pages/intelligentOilfield/menuManagement/index.vue'),// 菜单管理
-  "Tenant":()=>import('@/pages/intelligentOilfield/tenantManagement/index.vue'),// 租户管理
-  "TenantForm":()=>import('@/pages/intelligentOilfield/tenantManagement/form.vue'),// 租户表单
-  "TenantConfig":()=>import('@/pages/intelligentOilfield/tenantManagement/tenantConfig/index.vue'),// 租户配置
   "UserAccess":()=>import('@/pages/intelligentOilfield/userAccess/index.vue'),// 用户访问
   "Permission":()=>import('@/pages/intelligentOilfield/dataPermission/index.vue'),// 数据权限管理
   // "Application":()=>import('@/pages/intelligentOilfield/applicationCenter/index.vue'),// 应用中心管理
@@ -41,7 +40,6 @@ const  GenerateRouter = {
   "DemoIndex":()=>import('@/pages/intelligentOilfield/demo/index.vue'),
   "DemoIndex2":()=>import('@/pages/intelligentOilfield/demo/index2.vue'),
   "DemoIndex3":()=>import('@/pages/intelligentOilfield/demo/index3.vue'),
-  "density":()=>import('@/pages/rem/basic/densityMaintenance/index.vue'),
 }
 
 export default GenerateRouter

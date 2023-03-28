@@ -54,10 +54,28 @@ export function applicationAllList() {
   })
 }
 
-// 我的事项-获取数据
+// 我的事项-我的待办
 export function getAssignedList(data) { 
   return request({
     url: `system/flow/integration/todo/assigned`,
+    method: 'post',
+    data
+  })
+}
+
+// 我的事项-我的已办
+export function getInvolvedList(data) { 
+  return request({
+    url: `system/flow/instance/involved`,
+    method: 'post',
+    data
+  })
+}
+
+// 我的事项-我发起的
+export function getInitiatedList(data) { 
+  return request({
+    url: `system/flow/instance/initiated`,
     method: 'post',
     data
   })

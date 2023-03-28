@@ -91,7 +91,7 @@
         </el-table>
       </el-form-item>
     </el-form>
-    <select-tenant ref="selectTenant" :tenants-data="form.grantedTenants" @ok="handleGrantedTenants" />
+    <select-tenant ref="selectTenant" :tenants-ids="form.grantedTenants" @ok="handleGrantedTenants" />
   </common-dialog>
 </template>
 
@@ -181,7 +181,7 @@ export default {
     },
     /** 租户弹窗显示 */
     handleTenant() {
-      this.$refs.selectTenant.show();
+      this.$refs.selectTenant.dialogVisible = true;
     },
     /** 取消返回配置页 */
     close() {

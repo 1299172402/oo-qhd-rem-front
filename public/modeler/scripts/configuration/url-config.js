@@ -18,230 +18,230 @@ var FLOWABLE = FLOWABLE || {};
  */
 FLOWABLE.APP_URL = {
 
-  /* ACCOUNT URLS */
+    /* ACCOUNT URLS */
 
-  getAccountUrl () {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/account`;
-  },
+    getAccountUrl: function () {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/account';
+    },
 
-  getLogoutUrl () {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/logout`;
-  },
+    getLogoutUrl: function () {
+        return FLOWABLE.CONFIG.contextRoot + '/app/logout';
+    },
 
-  /* MODEL URLS */
+    /* MODEL URLS */
 
-  getModelsUrl (query) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/models${  query || ""}`;
-  },
+    getModelsUrl: function (query) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/models' + (query || "");
+    },
 
-  getModelUrl (modelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/models/${  modelId}`;
-  },
+    getModelUrl: function (modelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/models/' + modelId;
+    },
 
-  getModelModelJsonUrl (modelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/models/${  modelId  }/model-json`;
-  },
+    getModelModelJsonUrl: function (modelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/models/' + modelId + '/model-json';
+    },
 
-  getModelBpmn20ExportUrl (modelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/models/${  modelId  }/bpmn20?version=${  Date.now()}`;
-  },
+    getModelBpmn20ExportUrl: function (modelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/models/' + modelId + '/bpmn20?version=' + Date.now();
+    },
 
-  getCloneModelsUrl (modelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/models/${  modelId  }/clone`;
-  },
+    getCloneModelsUrl: function (modelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/models/' + modelId + '/clone';
+    },
 
-  getModelHistoriesUrl (modelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/models/${  modelId  }/history`;
-  },
+    getModelHistoriesUrl: function (modelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/models/' + modelId + '/history';
+    },
 
-  getModelHistoryUrl (modelId, modelHistoryId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/models/${  modelId  }/history/${  modelHistoryId}`;
-  },
+    getModelHistoryUrl: function (modelId, modelHistoryId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/models/' + modelId + '/history/' + modelHistoryId;
+    },
 
-  getModelHistoryModelJsonUrl (modelId, modelHistoryId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/models/${  modelId  }/history/${  modelHistoryId  }/model-json`;
-  },
+    getModelHistoryModelJsonUrl: function (modelId, modelHistoryId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/models/' + modelId + '/history/' + modelHistoryId + '/model-json';
+    },
 
-  getModelHistoryBpmn20ExportUrl (modelId, modelHistoryId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/models/${  modelId  }/history/${  modelHistoryId  }/bpmn20?version=${  Date.now()}`;
-  },
+    getModelHistoryBpmn20ExportUrl: function (modelId, modelHistoryId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/models/' + modelId + '/history/' + modelHistoryId + '/bpmn20?version=' + Date.now();
+    },
 
-  getCmmnModelDownloadUrl (modelId, modelHistoryId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/models/${  modelId  }${modelHistoryId ? `/history/${  modelHistoryId}` : ''  }/cmmn?version=${  Date.now()}`;
-  },
+    getCmmnModelDownloadUrl: function (modelId, modelHistoryId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/models/' + modelId + (modelHistoryId ? '/history/' + modelHistoryId : '') + '/cmmn?version=' + Date.now();
+    },
 
-  getModelParentRelationsUrl (modelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/models/${  modelId  }/parent-relations`;
-  },
+    getModelParentRelationsUrl: function (modelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/models/' + modelId + '/parent-relations';
+    },
 
-  /* APP DEFINITION URLS  */
+    /* APP DEFINITION URLS  */
 
-  getAppDefinitionImportUrl (renewIdmIds) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/app-definitions/import?renewIdmEntries=${  renewIdmIds}`;
-  },
+    getAppDefinitionImportUrl: function (renewIdmIds) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/app-definitions/import?renewIdmEntries=' + renewIdmIds;
+    },
 
-  getAppDefinitionTextImportUrl (renewIdmIds) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/app-definitions/text/import?renewIdmEntries=${  renewIdmIds}`;
-  },
+    getAppDefinitionTextImportUrl: function (renewIdmIds) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/app-definitions/text/import?renewIdmEntries=' + renewIdmIds;
+    },
 
-  getAppDefinitionUrl (modelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/app-definitions/${  modelId}`;
-  },
+    getAppDefinitionUrl: function (modelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/app-definitions/' + modelId;
+    },
 
-  getAppDefinitionModelImportUrl (modelId, renewIdmIds) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/app-definitions/${  modelId  }/import?renewIdmEntries=${  renewIdmIds}`;
-  },
+    getAppDefinitionModelImportUrl: function (modelId, renewIdmIds) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/app-definitions/' + modelId + '/import?renewIdmEntries=' + renewIdmIds;
+    },
 
-  getAppDefinitionModelTextImportUrl (modelId, renewIdmIds) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/app-definitions/${  modelId  }/text/import?renewIdmEntries=${  renewIdmIds}`;
-  },
+    getAppDefinitionModelTextImportUrl: function (modelId, renewIdmIds) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/app-definitions/' + modelId + '/text/import?renewIdmEntries=' + renewIdmIds;
+    },
 
-  getAppDefinitionPublishUrl (modelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/app-definitions/${  modelId  }/publish`;
-  },
+    getAppDefinitionPublishUrl: function (modelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/app-definitions/' + modelId + '/publish';
+    },
 
-  getAppDefinitionExportUrl (modelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/app-definitions/${  modelId  }/export?version=${  Date.now()}`;
-  },
+    getAppDefinitionExportUrl: function (modelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/app-definitions/' + modelId + '/export?version=' + Date.now();
+    },
 
-  getAppDefinitionBarExportUrl (modelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/app-definitions/${  modelId  }/export-bar?version=${  Date.now()}`;
-  },
+    getAppDefinitionBarExportUrl: function (modelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/app-definitions/' + modelId + '/export-bar?version=' + Date.now();
+    },
 
-  getAppDefinitionHistoryUrl (modelId, historyModelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/app-definitions/${  modelId  }/history/${  historyModelId}`;
-  },
+    getAppDefinitionHistoryUrl: function (modelId, historyModelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/app-definitions/' + modelId + '/history/' + historyModelId;
+    },
 
-  getModelsForAppDefinitionUrl () {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/models-for-app-definition`;
-  },
+    getModelsForAppDefinitionUrl: function () {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/models-for-app-definition';
+    },
 
-  getCmmnModelsForAppDefinitionUrl () {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/cmmn-models-for-app-definition`;
-  },
+    getCmmnModelsForAppDefinitionUrl: function () {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/cmmn-models-for-app-definition';
+    },
 
-  /* PROCESS INSTANCE URLS */
+    /* PROCESS INSTANCE URLS */
 
-  getProcessInstanceModelJsonUrl (modelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/process-instances/${  modelId  }/model-json`;
-  },
+    getProcessInstanceModelJsonUrl: function (modelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/process-instances/' + modelId + '/model-json';
+    },
 
-  getProcessInstanceModelJsonHistoryUrl (historyModelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/process-instances/history/${  historyModelId  }/model-json`;
-  },
+    getProcessInstanceModelJsonHistoryUrl: function (historyModelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/process-instances/history/' + historyModelId + '/model-json';
+    },
 
-  /* PROCESS DEFINITION URLS */
+    /* PROCESS DEFINITION URLS */
 
-  getProcessDefinitionModelJsonUrl (processDefinitionId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/process-definitions/${  processDefinitionId  }/model-json`;
-  },
+    getProcessDefinitionModelJsonUrl: function (processDefinitionId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/process-definitions/' + processDefinitionId + '/model-json';
+    },
 
-  /* PROCESS MODEL URLS */
+    /* PROCESS MODEL URLS */
 
-  getImportProcessModelUrl () {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/import-process-model`;
-  },
+    getImportProcessModelUrl: function () {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/import-process-model';
+    },
 
-  getImportProcessModelTextUrl () {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/import-process-model/text`;
-  },
+    getImportProcessModelTextUrl: function () {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/import-process-model/text';
+    },
 
-  /* DECISION TABLE URLS */
+    /* DECISION TABLE URLS */
 
-  getDecisionTableModelsUrl () {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/decision-table-models`;
-  },
+    getDecisionTableModelsUrl: function () {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/decision-table-models';
+    },
 
-  getDecisionTableImportUrl () {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/decision-table-models/import-decision-table`;
-  },
+    getDecisionTableImportUrl: function () {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/decision-table-models/import-decision-table';
+    },
 
-  getDecisionTableTextImportUrl () {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/decision-table-models/import-decision-table-text`;
-  },
+    getDecisionTableTextImportUrl: function () {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/decision-table-models/import-decision-table-text';
+    },
 
-  getDecisionTableModelUrl (modelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/decision-table-models/${  modelId}`;
-  },
+    getDecisionTableModelUrl: function (modelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/decision-table-models/' + modelId;
+    },
 
-  getDecisionTableModelValuesUrl (query) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/decision-table-models/values?${  query}`;
-  },
+    getDecisionTableModelValuesUrl: function (query) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/decision-table-models/values?' + query;
+    },
 
-  getDecisionTableModelsHistoryUrl (modelHistoryId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/decision-table-models/history/${  modelHistoryId}`;
-  },
+    getDecisionTableModelsHistoryUrl: function (modelHistoryId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/decision-table-models/history/' + modelHistoryId;
+    },
 
-  getDecisionTableModelHistoryUrl (modelId, modelHistoryId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/decision-table-models/${  modelId  }/history/${  modelHistoryId}`;
-  },
+    getDecisionTableModelHistoryUrl: function (modelId, modelHistoryId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/decision-table-models/' + modelId + '/history/' + modelHistoryId;
+    },
 
-  /* FORM MODEL URLS */
+    /* FORM MODEL URLS */
 
-  getFormModelsUrl () {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/form-models`;
-  },
+    getFormModelsUrl: function () {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/form-models';
+    },
 
-  getFormModelValuesUrl (query) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/form-models/values?${  query}`;
-  },
+    getFormModelValuesUrl: function (query) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/form-models/values?' + query;
+    },
 
-  getFormModelUrl (modelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/form-models/${  modelId}`;
-  },
+    getFormModelUrl: function (modelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/form-models/' + modelId;
+    },
 
-  getFormModelHistoryUrl (modelId, modelHistoryId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/form-models/${  modelId  }/history/${  modelHistoryId}`;
-  },
+    getFormModelHistoryUrl: function (modelId, modelHistoryId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/form-models/' + modelId + '/history/' + modelHistoryId;
+    },
 
-  /* CASE MODEL URLS */
+    /* CASE MODEL URLS */
 
-  getCaseModelsUrl (query) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/case-models${  query || ""}`;
-  },
+    getCaseModelsUrl: function (query) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/case-models' + (query || "");
+    },
 
-  getCaseModelImportUrl () {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/import-case-model`;
-  },
+    getCaseModelImportUrl: function () {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/import-case-model';
+    },
 
-  getCaseModelTextImportUrl () {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/import-case-model/text`;
-  },
+    getCaseModelTextImportUrl: function () {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/import-case-model/text';
+    },
 
-  getCaseInstancesHistoryModelJsonUrl (modelHistoryId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/case-instances/history/${  modelHistoryId  }/model-json`;
-  },
+    getCaseInstancesHistoryModelJsonUrl: function (modelHistoryId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/case-instances/history/' + modelHistoryId + '/model-json';
+    },
 
-  getCaseInstancesModelJsonUrl (modelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/case-instances/${  modelId  }/model-json`;
-  },
+    getCaseInstancesModelJsonUrl: function (modelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/case-instances/' + modelId + '/model-json';
+    },
 
-  getCaseDefinitionModelJsonUrl (caseDefinitionId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/case-definitions/${  caseDefinitionId  }/model-json`;
-  },
+    getCaseDefinitionModelJsonUrl: function (caseDefinitionId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/case-definitions/' + caseDefinitionId + '/model-json';
+    },
 
-  /* IMAGE URLS (exposed in rootscope in app.js */
+    /* IMAGE URLS (exposed in rootscope in app.js */
 
-  getImageUrl (imageId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/image/${  imageId}`;
-  },
+    getImageUrl: function (imageId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/image/' + imageId;
+    },
 
-  getModelThumbnailUrl (modelId, version) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/models/${  modelId  }/thumbnail${  version ? `?version=${  version}` : ""}`;
-  },
+    getModelThumbnailUrl: function (modelId, version) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/models/' + modelId + '/thumbnail' + (version ? "?version=" + version : "");
+    },
 
-  /* OTHER URLS */
+    /* OTHER URLS */
 
-  getEditorUsersUrl () {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/editor-users`;
-  },
+    getEditorUsersUrl: function () {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/editor-users';
+    },
 
-  getEditorGroupsUrl () {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/editor-groups`;
-  },
+    getEditorGroupsUrl: function () {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/editor-groups';
+    },
 
-  getAboutInfoUrl () {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/about-info`;
-  }
+    getAboutInfoUrl: function () {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/about-info';
+    }
 
 };

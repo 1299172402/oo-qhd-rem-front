@@ -1,43 +1,109 @@
 .t-table .t-table__body tr:hover {
     background: var(--topBottom-light); // 深色模式——table滑过行颜色
 }
-.t-layout__sider{
+
+.t-layout__sider {
     border-right: 1px solid var(--leftTab);
 }
+
 .t-card--bordered {
     border: 1px solid var(--cardColor);
 }
+
 .t-menu__item.t-is-active {
     background: var(--td-brand-color-1);
 }
+
 .t-head-menu .t-menu__item {
     color: var(--whiteColor);
-    width: 137px;
+    min-width: 137px !important;
 }
+
 .t-menu__item.t-is-active {
     color: var(--lightBlueColor);
 }
+
 .t-notification {
     background: var(--whiteColor);
 }
+
 // 解决左侧菜单过长显示不全问题
 .t-default-menu__inner {
     height: 94%;
 }
+
 // 解决顶部菜单过长显示不全问题
-.t-head-menu .t-menu,.header-menu {
-    overflow-x: scroll;
+.t-head-menu .t-menu,
+.header-menu {
+    overflow: visible;
+    white-space: nowrap;
+    overflow-x: auto;
+    width: 100%;
 }
-.t-submenu,.t-menu__item{
-    overflow: visible !important;
+
+.t-head-menu .t-menu__popup {
+    position: fixed;
+    top: 70px;
+    min-width: 153px;
 }
+
+.t-menu__popup .t-menu__popup-wrapper div li:last-of-type {
+    left: 0 !important;
+}
+
+.t-head-menu .t-submenu>.t-menu__item {
+    padding: 0 12px;
+}
+
+.header-menu {
+    width: 100%;
+}
+
 // 门户/投影-面板缩放功能置顶
 .vue-grid-item>.vue-resizable-handle {
     z-index: 1;
 }
-.tdesign-starter-layout-tabs-nav + .tdesign-starter-content-layout {
+
+.tdesign-starter-layout-tabs-nav+.tdesign-starter-content-layout {
     padding: 20px
 }
-.t-head-menu .t-submenu > .t-menu__item::before{
+
+.t-head-menu .t-submenu>.t-menu__item::before {
     height: 0 !important;
+}
+
+//左侧菜单收起，下拉框样式
+.t-default-menu.t-menu--dark .t-menu__popup {
+    background: linear-gradient(360deg, rgba(0, 68, 115, 0.6) 0%, rgba(0, 69, 117, 0.79) 50%, rgba(0, 69, 117, 0.9) 97%, rgba(0, 69, 117, 0.5) 100%);
+    border: 1px solid;
+    border-image: linear-gradient(180deg, rgba(116, 190, 243, 0.5), rgba(0, 180, 255, 1)) 1 1;
+    .t-menu__item{
+        padding-left: 8px;
+    }
+}
+
+.t-default-menu.t-menu--light .t-menu__popup {
+    border-radius: 0;
+    box-shadow: 0px 0px 10px 0px rgba(144,147,153,0.3);
+    .t-menu__item{
+        padding-left: 8px;
+    }
+}
+
+//顶部菜单下拉框样式
+.t-menu--dark.t-head-menu .t-menu__popup {
+    background: linear-gradient(360deg, rgba(0, 68, 115, 0.6) 0%, rgba(0, 69, 117, 0.79) 50%, rgba(0, 69, 117, 0.9) 97%, rgba(0, 69, 117, 0.5) 100%);
+    border: 1px solid;
+    border-image: linear-gradient(180deg, rgba(116, 190, 243, 0.5), rgba(0, 180, 255, 1)) 1 1;
+    .t-menu__item{
+        padding-left: 8px;
+    }
+}
+
+.t-menu--light.t-head-menu .t-menu__popup {
+    border-radius: 0;
+    box-shadow: 0px 0px 10px 0px rgba(144,147,153,0.3);
+    .t-menu__item{
+        padding-left: 8px;
+    }
 }

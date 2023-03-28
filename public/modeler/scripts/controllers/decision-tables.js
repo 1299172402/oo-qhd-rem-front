@@ -12,8 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-
+'use strict';
 
 angular.module('flowableModeler')
   .controller('DecisionTablesController', ['$rootScope', '$scope', '$translate', '$http', '$timeout','$location', '$modal', function ($rootScope, $scope, $translate, $http, $timeout, $location, $modal) {
@@ -21,20 +20,20 @@ angular.module('flowableModeler')
 	  $rootScope.setMainPageById('decision-tables');
 	  $rootScope.decisionTableItems = undefined;
 
-    // get latest thumbnails
-    $scope.imageVersion = Date.now();
+      // get latest thumbnails
+      $scope.imageVersion = Date.now();
 
 	  $scope.model = {
-      filters: [
-        {id: 'decisionTables', labelKey: 'DECISION-TABLES'}
-      ],
+        filters: [
+            {id: 'decisionTables', labelKey: 'DECISION-TABLES'}
+		],
 
-      sorts: [
+		sorts: [
 		        {id: 'modifiedDesc', labelKey: 'MODIFIED-DESC'},
 		        {id: 'modifiedAsc', labelKey: 'MODIFIED-ASC'},
 		        {id: 'nameAsc', labelKey: 'NAME-ASC'},
 		        {id: 'nameDesc', labelKey: 'NAME-DESC'}
-      ]
+		]
 	  };
 
 	  if ($rootScope.decisionTableFilter) {
@@ -67,15 +66,15 @@ angular.module('flowableModeler')
 	  };
 
 	  $scope.importDecisionTable = function () {
-      _internalCreateModal({
-        template: `views/popup/decision-table-import.html?version=${  Date.now()}`
-      }, $modal, $scope);
-    };
+          _internalCreateModal({
+              template: 'views/popup/decision-table-import.html?version=' + Date.now()
+          }, $modal, $scope);
+      };
 
 	  $scope.loadDecisionTables = function() {
 		  $scope.model.loading = true;
 
-		  const params = {
+		  var params = {
 		      filter: $scope.model.activeFilter.id,
 		      sort: $scope.model.activeSort.id,
 		      modelType: 4
@@ -85,19 +84,19 @@ angular.module('flowableModeler')
 		    params.filterText = $scope.model.filterText;
 		  }
 
-		  $http({method: 'GET', url: FLOWABLE.APP_URL.getModelsUrl(), params}).
-		  	success((data, status, headers, config) => {
+		  $http({method: 'GET', url: FLOWABLE.APP_URL.getModelsUrl(), params: params}).
+		  	success(function(data, status, headers, config) {
 	    		$scope.model.decisionTables = data;
 	    		$scope.model.loading = false;
 	        }).
-	        error((data, status, headers, config) => {
+	        error(function(data, status, headers, config) {
 	           $scope.model.loading = false;
 	        });
 	  };
 
 	  var timeoutFilter = function() {
 	    $scope.model.isFilterDelayed = true;
-	    $timeout(() => {
+	    $timeout(function() {
 	        $scope.model.isFilterDelayed = false;
 	        if($scope.model.isFilterUpdated) {
 	          $scope.model.isFilterUpdated = false;
@@ -123,11 +122,11 @@ angular.module('flowableModeler')
 	      $rootScope.currentDecisionTableModel = undefined;
 		  $scope.createDecisionTableCallback = function(result) {
 		      $rootScope.editorHistory = [];
-		      $location.url(`/decision-table-editor/${  encodeURIComponent(result.id)}`);
+		      $location.url("/decision-table-editor/" + encodeURIComponent(result.id));
 		  };
 
-      _internalCreateModal({
-			  template: `views/popup/decision-table-create.html?version=${  Date.now()}`,
+          _internalCreateModal({
+			  template: 'views/popup/decision-table-create.html?version=' + Date.now(),
 			  scope: $scope
 		  }, $modal, $scope);
 	  };
@@ -136,14 +135,14 @@ angular.module('flowableModeler')
 	      if (decisionTable) {
 	      	  $rootScope.editorHistory = [];
 			  $rootScope.currentKickstartModel = undefined;
-	          $location.url(`/decision-tables/${  encodeURIComponent(decisionTable.id)}`);
+	          $location.url("/decision-tables/" + encodeURIComponent(decisionTable.id));
 	      }
 	  };
 
 	  $scope.editDecisionTableDetails = function(decisionTable) {
 		  if (decisionTable) {
 		  	  $rootScope.editorHistory = [];
-			  $location.url(`/decision-table-editor/${  encodeURIComponent(decisionTable.id)}`);
+			  $location.url("/decision-table-editor/" + encodeURIComponent(decisionTable.id));
 		  }
 	  };
 
@@ -153,155 +152,155 @@ angular.module('flowableModeler')
 
 
 angular.module('flowableModeler')
-  .controller('CreateNewDecisionTableCtrl', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
+.controller('CreateNewDecisionTableCtrl', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
 
     $scope.model = {
-      loading: false,
-      decisionTable: {
-        name: '',
-        key: '',
-        description: '',
-        modelType: 4
-      }
+       loading: false,
+       decisionTable: {
+            name: '',
+            key: '',
+            description: '',
+            modelType: 4
+       }
     };
 
     $scope.ok = function () {
 
-      if (!$scope.model.decisionTable.name || $scope.model.decisionTable.name.length == 0 ||
+        if (!$scope.model.decisionTable.name || $scope.model.decisionTable.name.length == 0 ||
         	!$scope.model.decisionTable.key || $scope.model.decisionTable.key.length == 0) {
         	
-        return;
-      }
-
-      $scope.model.loading = true;
-
-      $http({method: 'POST', url: FLOWABLE.APP_URL.getModelsUrl(), data: $scope.model.decisionTable}).
-        success((data, status, headers, config) => {
-          $scope.$hide();
-          $scope.model.loading = false;
-
-          if ($scope.createDecisionTableCallback) {
-                	$scope.createDecisionTableCallback(data);
-                	$scope.createDecisionTableCallback = undefined;
-          }
-
-        }).
-        error((data, status, headers, config) => {
-          $scope.model.loading = false;
-          $scope.model.errorMessage = data.message;
-        });
-    };
-
-    $scope.cancel = function () {
-      if(!$scope.model.loading) {
-        $scope.$hide();
-      }
-    };
-  }]);
-
-angular.module('flowableModeler')
-  .controller('DuplicateDecisionTableCtrl', ['$rootScope', '$scope', '$http',
-    function ($rootScope, $scope, $http) {
-
-      $scope.model = {
-        loading: false,
-        decisionTable: {
-          id: '',
-          name: '',
-          description: '',
-          modelType: null
-        }
-      };
-
-      if ($scope.originalModel) {
-        // clone the model
-        $scope.model.decisionTable.name = $scope.originalModel.decisionTable.name;
-        $scope.model.decisionTable.key = $scope.originalModel.decisionTable.key;
-        $scope.model.decisionTable.description = $scope.originalModel.decisionTable.description;
-        $scope.model.decisionTable.modelType = $scope.originalModel.decisionTable.modelType;
-        $scope.model.decisionTable.id = $scope.originalModel.decisionTable.id;
-      }
-
-      $scope.ok = function () {
-
-        if (!$scope.model.decisionTable.name || $scope.model.decisionTable.name.length == 0) {
-          return;
+            return;
         }
 
         $scope.model.loading = true;
 
-        $http({method: 'POST', url: FLOWABLE.APP_URL.getCloneModelsUrl($scope.model.decisionTable.id), data: $scope.model.decisionTable}).
-          success((data, status, headers, config) => {
-            $scope.$hide();
-            $scope.model.loading = false;
+        $http({method: 'POST', url: FLOWABLE.APP_URL.getModelsUrl(), data: $scope.model.decisionTable}).
+            success(function(data, status, headers, config) {
+                $scope.$hide();
+                $scope.model.loading = false;
 
-            if ($scope.duplicateDecisionTableCallback) {
-              $scope.duplicateDecisionTableCallback(data);
-              $scope.duplicateDecisionTableCallback = undefined;
-            }
+                if ($scope.createDecisionTableCallback) {
+                	$scope.createDecisionTableCallback(data);
+                	$scope.createDecisionTableCallback = undefined;
+                }
 
-          }).
-          error((data, status, headers, config) => {
-            $scope.model.loading = false;
-            $scope.model.errorMessage = data.message;
-          });
-      };
-
-      $scope.cancel = function () {
-        if(!$scope.model.loading) {
-          $scope.$hide();
-        }
-      };
-    }]);
-
-angular.module('flowableModeler')
-  .controller('ImportDecisionTableModelCtrl', ['$rootScope', '$scope', '$http', 'Upload', '$location', function ($rootScope, $scope, $http, Upload, $location) {
-
-    $scope.model = {
-      loading: false
-    };
-
-    $scope.onFileSelect = function($files, isIE) {
-
-      for (let i = 0; i < $files.length; i++) {
-        const file = $files[i];
-
-        var url;
-        if (isIE) {
-          url = FLOWABLE.APP_URL.getDecisionTableTextImportUrl();
-        } else {
-          url = FLOWABLE.APP_URL.getDecisionTableImportUrl();
-        }
-
-        Upload.upload({
-          url,
-          method: 'POST',
-          file
-        }).progress((evt) => {
-          $scope.model.loading = true;
-          $scope.model.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
-
-        }).success((data, status, headers, config) => {
-          $scope.model.loading = false;
-
-          $location.path(`/decision-table-editor/${  data.id}`);
-          $scope.$hide();
-
-        }).error((data, status, headers, config) => {
-
-          if (data && data.message) {
-            $scope.model.errorMessage = data.message;
-          }
-
-          $scope.model.error = true;
-          $scope.model.loading = false;
-        });
-      }
+            }).
+            error(function(data, status, headers, config) {
+                $scope.model.loading = false;
+                $scope.model.errorMessage = data.message;
+            });
     };
 
     $scope.cancel = function () {
-      if(!$scope.model.loading) {
-        $scope.$hide();
-      }
+        if(!$scope.model.loading) {
+            $scope.$hide();
+        }
     };
-  }]);
+}]);
+
+angular.module('flowableModeler')
+	.controller('DuplicateDecisionTableCtrl', ['$rootScope', '$scope', '$http',
+		function ($rootScope, $scope, $http) {
+
+			$scope.model = {
+				loading: false,
+                decisionTable: {
+					id: '',
+					name: '',
+					description: '',
+                    modelType: null
+				}
+			};
+
+			if ($scope.originalModel) {
+				//clone the model
+				$scope.model.decisionTable.name = $scope.originalModel.decisionTable.name;
+				$scope.model.decisionTable.key = $scope.originalModel.decisionTable.key;
+				$scope.model.decisionTable.description = $scope.originalModel.decisionTable.description;
+				$scope.model.decisionTable.modelType = $scope.originalModel.decisionTable.modelType;
+				$scope.model.decisionTable.id = $scope.originalModel.decisionTable.id;
+			}
+
+			$scope.ok = function () {
+
+				if (!$scope.model.decisionTable.name || $scope.model.decisionTable.name.length == 0) {
+					return;
+				}
+
+				$scope.model.loading = true;
+
+				$http({method: 'POST', url: FLOWABLE.APP_URL.getCloneModelsUrl($scope.model.decisionTable.id), data: $scope.model.decisionTable}).
+					success(function(data, status, headers, config) {
+						$scope.$hide();
+						$scope.model.loading = false;
+
+						if ($scope.duplicateDecisionTableCallback) {
+							$scope.duplicateDecisionTableCallback(data);
+							$scope.duplicateDecisionTableCallback = undefined;
+						}
+
+					}).
+					error(function(data, status, headers, config) {
+						$scope.model.loading = false;
+						$scope.model.errorMessage = data.message;
+					});
+			};
+
+			$scope.cancel = function () {
+				if(!$scope.model.loading) {
+					$scope.$hide();
+				}
+			};
+		}]);
+
+angular.module('flowableModeler')
+.controller('ImportDecisionTableModelCtrl', ['$rootScope', '$scope', '$http', 'Upload', '$location', function ($rootScope, $scope, $http, Upload, $location) {
+
+  $scope.model = {
+       loading: false
+  };
+
+  $scope.onFileSelect = function($files, isIE) {
+
+      for (var i = 0; i < $files.length; i++) {
+          var file = $files[i];
+
+          var url;
+          if (isIE) {
+              url = FLOWABLE.APP_URL.getDecisionTableTextImportUrl();
+          } else {
+              url = FLOWABLE.APP_URL.getDecisionTableImportUrl();
+          }
+
+          Upload.upload({
+              url: url,
+              method: 'POST',
+              file: file
+          }).progress(function(evt) {
+              $scope.model.loading = true;
+              $scope.model.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
+
+          }).success(function(data, status, headers, config) {
+              $scope.model.loading = false;
+
+              $location.path("/decision-table-editor/" + data.id);
+              $scope.$hide();
+
+          }).error(function(data, status, headers, config) {
+
+              if (data && data.message) {
+                  $scope.model.errorMessage = data.message;
+              }
+
+              $scope.model.error = true;
+              $scope.model.loading = false;
+          });
+      }
+  };
+
+  $scope.cancel = function () {
+      if(!$scope.model.loading) {
+          $scope.$hide();
+      }
+  };
+}]);

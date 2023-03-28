@@ -218,12 +218,12 @@ export default {
       } else {
         this.$router.push({
           name: this.routerInfo?.edit?.name,
-          params: this.routerInfo.edit.pararms,
-          query: {
-            ...this.routerInfo.edit.query,
-            action: "edit",
-            id: row.id
-          }
+          params: {
+            ...this.routerInfo.edit.pararms,
+            id: row.id,
+            action: "edit"
+          },
+          query: this.routerInfo.edit.query
         })
       }
     },
@@ -235,9 +235,7 @@ export default {
           if (res.firstTaskId) {
             this.$router.push({
               name: this.routerInfo.view.name,
-              params: {
-                ...this.routerInfo?.view?.parmas
-              },
+              params: this.routerInfo?.view?.parmas,
               query: {
                 ...this.routerInfo?.view?.query,
                 businessKey: id, // 交接单id
@@ -255,11 +253,11 @@ export default {
       } else {
         this.$router.push({
           name: this.routerInfo?.edit?.name,
-          params: this.routerInfo.edit.params,
-          query: {
-            ...this.routerInfo.edit.query,
+          params: {
+            ...this.routerInfo.edit.params,
             action: "add"
-          }
+          },
+          query: this.routerInfo.edit.query
         })
       }
     },
@@ -269,12 +267,12 @@ export default {
       } else {
         this.$router.push({
           name: this.routerInfo?.view?.name,
-          params: this.routerInfo.view.params,
-          query: {
-            ...this.routerInfo?.view?.query,
+          params: {
+            ...this.routerInfo.view.params,
             id,
             action: "view"
-          }
+          },
+          query: this.routerInfo?.view?.query
         })
       }
     }

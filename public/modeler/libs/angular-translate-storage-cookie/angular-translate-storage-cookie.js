@@ -6,7 +6,9 @@
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module unless amdModuleId is set
-    define([], () => (factory()));
+    define([], function () {
+      return (factory());
+    });
   } else if (typeof exports === 'object') {
     // Node. Does not work with strict CommonJS, but
     // only CommonJS-like environments that support module.exports,
@@ -15,12 +17,12 @@
   } else {
     factory();
   }
-}(this, () => {
+}(this, function () {
 
-  $translateCookieStorageFactory.$inject = ['$injector'];
-  angular.module('pascalprecht.translate')
+$translateCookieStorageFactory.$inject = ['$injector'];
+angular.module('pascalprecht.translate')
 
-  /**
+/**
  * @ngdoc object
  * @name pascalprecht.translate.$translateCookieStorage
  * @requires $cookieStore
@@ -30,39 +32,39 @@
  * to use cookieStore as storage.
  *
  */
-    .factory('$translateCookieStorage', $translateCookieStorageFactory);
+  .factory('$translateCookieStorage', $translateCookieStorageFactory);
 
-  function $translateCookieStorageFactory($injector) {
+function $translateCookieStorageFactory($injector) {
 
-    
+  'use strict';
 
-    // Since AngularJS 1.4, $cookieStore is deprecated
-    let delegate;
-    if (angular.version.major === 1 && angular.version.minor >= 4) {
-      const $cookies = $injector.get('$cookies');
-      delegate = {
-        get (key) {
-          return $cookies.get(key);
-        },
-        put (key, value) {
-          $cookies.put(key, value);
-        }
-      };
-    } else {
-      const $cookieStore = $injector.get('$cookieStore');
-      delegate = {
-        get (key) {
-          return $cookieStore.get(key);
-        },
-        put (key, value) {
-          $cookieStore.put(key, value);
-        }
-      };
-    }
+  // Since AngularJS 1.4, $cookieStore is deprecated
+  var delegate;
+  if (angular.version.major === 1 && angular.version.minor >= 4) {
+    var $cookies = $injector.get('$cookies');
+    delegate = {
+      get : function (key) {
+        return $cookies.get(key);
+      },
+      put : function (key, value) {
+        $cookies.put(key, value);
+      }
+    };
+  } else {
+    var $cookieStore = $injector.get('$cookieStore');
+    delegate = {
+      get : function (key) {
+        return $cookieStore.get(key);
+      },
+      put : function (key, value) {
+        $cookieStore.put(key, value);
+      }
+    };
+  }
 
-    const $translateCookieStorage = {
+  var $translateCookieStorage = {
 
-      /**
+    /**
      * @ngdoc function
      * @name pascalprecht.translate.$translateCookieStorage#get
      * @methodOf pascalprecht.translate.$translateCookieStorage
@@ -73,11 +75,11 @@
      * @param {string} name Item name
      * @return {string} Value of item name
      */
-      get (name) {
-        return delegate.get(name);
-      },
+    get : function (name) {
+      return delegate.get(name);
+    },
 
-      /**
+    /**
      * @ngdoc function
      * @name pascalprecht.translate.$translateCookieStorage#set
      * @methodOf pascalprecht.translate.$translateCookieStorage
@@ -90,11 +92,11 @@
      * @param {string} name Item name
      * @param {string} value Item value
      */
-      set (name, value) {
-        delegate.put(name, value);
-      },
+    set : function (name, value) {
+      delegate.put(name, value);
+    },
 
-      /**
+    /**
      * @ngdoc function
      * @name pascalprecht.translate.$translateCookieStorage#put
      * @methodOf pascalprecht.translate.$translateCookieStorage
@@ -105,15 +107,15 @@
      * @param {string} name Item name
      * @param {string} value Item value
      */
-      put (name, value) {
-        delegate.put(name, value);
-      }
-    };
+    put : function (name, value) {
+      delegate.put(name, value);
+    }
+  };
 
-    return $translateCookieStorage;
-  }
+  return $translateCookieStorage;
+}
 
-  $translateCookieStorageFactory.displayName = '$translateCookieStorage';
-  return 'pascalprecht.translate';
+$translateCookieStorageFactory.displayName = '$translateCookieStorage';
+return 'pascalprecht.translate';
 
 }));

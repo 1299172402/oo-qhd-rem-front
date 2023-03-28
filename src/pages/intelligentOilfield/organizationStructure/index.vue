@@ -144,14 +144,6 @@
               </el-select>
             </el-form-item>
               </el-col> -->
-          <el-col :span="24">
-            <el-form-item label="是否为平台机构" label-width="120px">
-              <el-radio-group v-model="form.isPlatform">
-                <el-radio label="0">是</el-radio>
-                <el-radio label="1">否</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">

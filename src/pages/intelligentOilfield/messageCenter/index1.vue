@@ -9,7 +9,7 @@
       :close-on-click-modal="false"
       @close="clesrSearchList"
     >
-      <div>
+      <div style="height: 400px;">
         <div class="g-row-flex-V" v-if="this.dialogType !== '搜索' && this.dialogType !== 'Flink集群'">
           <div style="margin-right: 10px">平台类型：</div>
           <div>
@@ -648,11 +648,11 @@ export default {
       })();
   },
   methods: {
-    // 跳转设备维护
+    //跳转设备维护
     handleToPage() {
       this.$router.push({ name: 'Equipment' });
     },
-    // 获取状态
+    //获取状态
     getstatus() {
       equipmentStatus().then((res) => {
         this.initIptList[0].isGreen = Number(res.data.data.I平台.电气类);
@@ -698,7 +698,7 @@ export default {
         this.isFullScreen = false;
       }
     },
-    // 关闭
+    //关闭
     submitForm() {
       this.openDialog = false;
       this.statusModel = '';
@@ -750,7 +750,7 @@ export default {
       }
       this.openDialog = true;
     },
-    // 搜索
+    //搜索
     handleQuery() {
       if (this.title == '检索结果') {
         const queryParams = {
@@ -783,7 +783,7 @@ export default {
         });
       }
     },
-    // 重置
+    //重置
     resetQuery() {
       this.statusModel = '';
       this.activeName = '电气类';
@@ -791,7 +791,7 @@ export default {
       this.nameInput = '';
       this.handleQuery();
     },
-    // 点击Tab标签
+    //点击Tab标签
     handleClick(tab, event) {
       // console.log(tab, event);
       const queryParams = {

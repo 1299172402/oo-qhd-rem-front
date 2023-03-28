@@ -80,7 +80,7 @@ export default {
             ).then((response) => {
               if (response ? response.data.code === 200 : false) {
                 this.$modal.msgSuccess('修改成功');
-                returnPaterPage(this.$route.path, '/PortalManagement/user')
+                returnPaterPage(this.$route.path, 'User')
               }
             });
           });

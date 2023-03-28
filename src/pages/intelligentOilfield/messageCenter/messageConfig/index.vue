@@ -71,6 +71,14 @@
          <el-row :gutter="10" class="mb8" style="margin-bottom:20px">
       <el-col :span="1.5">
         <el-button
+          v-hasPermi="['messageConfig:export']"
+          type="primary"
+          plain
+          @click="handleExport"
+        >
+          导出
+        </el-button>
+        <el-button
           v-hasPermi="['messageConfig:add']"
           type="primary"
           plain
@@ -148,6 +156,7 @@ import { listConfig } from "@/api/intelligentOilfield/messaging";
 import { filterObj } from "@/utils/objectOperate";
 
 import ConfigForm from "../configForm/index.vue";
+import  exportFile  from '@/utils/exportFile.js'
 
 const columns = [
   { props: "title", label: "消息主题名称" },
@@ -260,6 +269,9 @@ export default {
     },
     handleDatil(id, action) {
       this.$refs.configForm.handleOpen(id, action)
+    },
+    handleExport() {
+      exportFile('/message-service/management/binding/export', this.queryParams)
     }
   }
 };

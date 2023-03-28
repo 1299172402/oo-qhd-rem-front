@@ -16,13 +16,13 @@
  */
 
 angular.module('flowableModeler').controller('FlowableBpmShapeSelectionCtrl',
-  [ '$rootScope', '$scope', '$timeout', '$translate', 'editorManager', function($rootScope, $scope, $timeout, $translate, editorManager) {
+    [ '$rootScope', '$scope', '$timeout', '$translate', 'editorManager', function($rootScope, $scope, $timeout, $translate, editorManager) {
 
     $scope.currentSelectedMorph = undefined;
     
     $scope.availableMorphShapes = [];
 
-    for (let i = 0; i < $scope.morphShapes.length; i++) {
+    for (var i = 0; i < $scope.morphShapes.length; i++) {
     	if ($scope.morphShapes[i].id != $scope.currentSelectedShape.getStencil().idWithoutNs()) {
     		$scope.availableMorphShapes.push($scope.morphShapes[i]);
     	}
@@ -30,54 +30,56 @@ angular.module('flowableModeler').controller('FlowableBpmShapeSelectionCtrl',
     	
     // Config for grid
     $scope.gridOptions = {
-      data: $scope.availableMorphShapes,
-      headerRowHeight: 28,
-      enableRowSelection: true,
-      enableRowHeaderSelection: false,
-      multiSelect: false,
-      modifierKeysToMultiSelect: false,
-      enableHorizontalScrollbar: 0,
-      enableColumnMenus: false,
-      enableSorting: false,
-      columnDefs: [{ field: 'objectId', displayName: 'Icon', width: 50, cellTemplate: `editor-app/popups/icon-template.html?version=${  Date.now()}` },
-        { field: 'name', displayName: 'Name', cellTemplate: '<div class="ui-grid-cell-contents">{{"" + row.entity[col.field] | translate}}</div>'}]
+        data: $scope.availableMorphShapes,
+        headerRowHeight: 28,
+        enableRowSelection: true,
+        enableRowHeaderSelection: false,
+        multiSelect: false,
+        modifierKeysToMultiSelect: false,
+        enableHorizontalScrollbar: 0,
+		enableColumnMenus: false,
+		enableSorting: false,
+        columnDefs: [{ field: 'objectId', displayName: 'Icon', width: 50, cellTemplate: 'editor-app/popups/icon-template.html?version=' + Date.now() },
+            { field: 'name', displayName: 'Name', cellTemplate: '<div class="ui-grid-cell-contents">{{"" + row.entity[col.field] | translate}}</div>'}]
     };
     
     $scope.gridOptions.onRegisterApi = function(gridApi) {
-      // set gridApi on scope
-      $scope.gridApi = gridApi;
-      gridApi.selection.on.rowSelectionChanged($scope, (row) => {
-        if (row.isSelected) {
-          $scope.currentSelectedMorph = row.entity;
-        } else {
-          $scope.currentSelectedMorph = undefined;
-        }
-      });
+        //set gridApi on scope
+        $scope.gridApi = gridApi;
+        gridApi.selection.on.rowSelectionChanged($scope, function(row) {
+            if (row.isSelected) {
+                $scope.currentSelectedMorph = row.entity;
+            } else {
+                $scope.currentSelectedMorph = undefined;
+            }
+        });
     };
 
     // Click handler for save button
     $scope.select = function() {
 
-      if ($scope.currentSelectedMorph) {
-        	const MorphTo = ORYX.Core.Command.extend({
-    			construct(shape, stencil, facade){
+        if ($scope.currentSelectedMorph) {
+        	var MorphTo = ORYX.Core.Command.extend({
+    			construct: function(shape, stencil, facade){
     				this.shape = shape;
     				this.stencil = stencil;
     				this.facade = facade;
     			},
-    			execute(){
+    			execute: function(){
     				
-    				const {shape} = this;
-    				const {stencil} = this;
-    				const {resourceId} = shape;
+    				var shape = this.shape;
+    				var stencil = this.stencil;
+    				var resourceId = shape.resourceId;
     				
     				// Serialize all attributes
-    				let serialized = shape.serialize();
-    				stencil.properties().each(((prop) => {
+    				var serialized = shape.serialize();
+    				stencil.properties().each((function(prop) {
     					if(prop.readonly()) {
-    						serialized = serialized.reject((serProp) => serProp.name==prop.id());
+    						serialized = serialized.reject(function(serProp) {
+    							return serProp.name==prop.id();
+    						});
     					}
-    				}));
+    				}).bind(this));
     		
     				// Get shape if already created, otherwise create a new shape
     				if (this.newShape){
@@ -87,20 +89,22 @@ angular.module('flowableModeler').controller('FlowableBpmShapeSelectionCtrl',
     					newShape = this.facade.createShape({
     									type: stencil.id(),
     									namespace: stencil.namespace(),
-    									resourceId
+    									resourceId: resourceId
     								});
     				}
     				
     				// calculate new bounds using old shape's upperLeft and new shape's width/height
-    				const boundsObj = serialized.find((serProp)=> (serProp.prefix === "oryx" && serProp.name === "bounds"));
+    				var boundsObj = serialized.find(function(serProp){
+    					return (serProp.prefix === "oryx" && serProp.name === "bounds");
+    				});
     				
-    				let changedBounds = null;
+    				var changedBounds = null;
     				
     				if (!this.facade.getRules().preserveBounds(shape.getStencil())) {
     					
-    					const bounds = boundsObj.value.split(",");
+    					var bounds = boundsObj.value.split(",");
     					if (parseInt(bounds[0], 10) > parseInt(bounds[2], 10)) { // if lowerRight comes first, swap array items
-    						let tmp = bounds[0];
+    						var tmp = bounds[0];
     						bounds[0] = bounds[2];
     						bounds[2] = tmp;
     						tmp = bounds[1];
@@ -113,8 +117,8 @@ angular.module('flowableModeler').controller('FlowableBpmShapeSelectionCtrl',
     					
     				}  else {
     					
-    					let height = shape.bounds.height();
-    					let width  = shape.bounds.width();
+    					var height = shape.bounds.height();
+    					var width  = shape.bounds.width();
     					
     					// consider the minimum and maximum size of
     					// the new shape
@@ -153,7 +157,7 @@ angular.module('flowableModeler').controller('FlowableBpmShapeSelectionCtrl',
     					
     				}
     				
-    				const oPos = shape.bounds.center();
+    				var oPos = shape.bounds.center();
     				if (changedBounds !== null) {
     					newShape.bounds.set(changedBounds);
     				}
@@ -162,8 +166,8 @@ angular.module('flowableModeler').controller('FlowableBpmShapeSelectionCtrl',
     				this.setRelatedDockers(shape, newShape);
     				
     				// store DOM position of old shape
-    				const {parentNode} = shape.node;
-    				const {nextSibling} = shape.node;
+    				var parentNode = shape.node.parentNode;
+    				var nextSibling = shape.node.nextSibling;
     				
     				// Delete the old shape
     				this.facade.deleteShape(shape);
@@ -206,7 +210,7 @@ angular.module('flowableModeler').controller('FlowableBpmShapeSelectionCtrl',
     				this.newShape = newShape;
     				
     			},
-    			rollback(){
+    			rollback: function(){
     				
     				if (!this.shape || !this.newShape || !this.newShape.parent) {return;}
     				
@@ -228,18 +232,18 @@ angular.module('flowableModeler').controller('FlowableBpmShapeSelectionCtrl',
     			 * @param {Shape} shape
     			 * @param {Shape} newShape
     			 */
-    			setRelatedDockers(shape, newShape){
+    			setRelatedDockers: function(shape, newShape){
     				
     				if(shape.getStencil().type()==="node") {
     					
     					(shape.incoming||[]).concat(shape.outgoing||[])
-    						.each((i) => { 
-    							i.dockers.each((docker) => {
+    						.each(function(i) { 
+    							i.dockers.each(function(docker) {
     								if (docker.getDockedShape() == shape) {
-    									const rPoint = Object.clone(docker.referencePoint);
+    									var rPoint = Object.clone(docker.referencePoint);
     									// Move reference point per percent
 
-    									const rPointNew = {
+    									var rPointNew = {
     										x: rPoint.x*newShape.bounds.width()/shape.bounds.width(),
     										y: rPoint.y*newShape.bounds.height()/shape.bounds.height()
     									};
@@ -250,9 +254,9 @@ angular.module('flowableModeler').controller('FlowableBpmShapeSelectionCtrl',
     									if(i instanceof ORYX.Core.Edge) {
     										docker.bounds.centerMoveTo(rPointNew);
     									} else {
-    										const absXY = shape.absoluteXY();
+    										var absXY = shape.absoluteXY();
     										docker.bounds.centerMoveTo({x:rPointNew.x+absXY.x, y:rPointNew.y+absXY.y});
-    										// docker.bounds.moveBy({x:rPointNew.x-rPoint.x, y:rPointNew.y-rPoint.y});
+    										//docker.bounds.moveBy({x:rPointNew.x-rPoint.x, y:rPointNew.y-rPoint.y});
     									}
     								}
     							});	
@@ -273,18 +277,18 @@ angular.module('flowableModeler').controller('FlowableBpmShapeSelectionCtrl',
     			}
     		});
     		
-        	let stencil;
-        	const stencilSets = editorManager.getStencilSets().values();
+        	var stencil = undefined;
+        	var stencilSets = editorManager.getStencilSets().values();
         	
-        	let stencilId = $scope.currentSelectedMorph.id;
+        	var stencilId = $scope.currentSelectedMorph.id;
         	if ($scope.currentSelectedMorph.genericTaskId) {
         		stencilId = $scope.currentSelectedMorph.genericTaskId;
         	}
         	
-        	for (let i = 0; i < stencilSets.length; i++) {
-        		const stencilSet = stencilSets[i];
-    			const nodes = stencilSet.nodes();
-    			for (let j = 0; j < nodes.length; j++) {
+        	for (var i = 0; i < stencilSets.length; i++) {
+        		var stencilSet = stencilSets[i];
+    			var nodes = stencilSet.nodes();
+    			for (var j = 0; j < nodes.length; j++) {
     				if (nodes[j].idWithoutNs() === stencilId) {
     					stencil = nodes[j];
     					break;
@@ -295,11 +299,11 @@ angular.module('flowableModeler').controller('FlowableBpmShapeSelectionCtrl',
         	if (!stencil) return;
         	
     		// Create and execute command (for undo/redo)			
-    		const command = new MorphTo($scope.currentSelectedShape, stencil, editorManager.getEditor());
+    		var command = new MorphTo($scope.currentSelectedShape, stencil, editorManager.getEditor());
     		editorManager.executeCommands([command]);
-      }
+        }
 
-      $scope.close();
+        $scope.close();
     };
 
     $scope.cancel = function() {
@@ -311,4 +315,4 @@ angular.module('flowableModeler').controller('FlowableBpmShapeSelectionCtrl',
     	$scope.$hide();
     };
 
-  }]);
+}]);

@@ -21,7 +21,7 @@ export default {
     // API: '',
     // 开发环境 cdn 路径
     CDN: '',
-    appId: 'f198c1a239254b0e86529a0668cf4adb ',
+    appId: null
     
   },
   test: {
@@ -36,6 +36,14 @@ export default {
     CDN: '',
     appId: null
   },
+  stage: {
+    ...config,
+    processAPI: "http://kd.bytzdev.xyz:38880/stage-api/workflow",
+    // 正式环境接口地址
+    API: "http://kd.bytzdev.xyz:38880/stage-api",
+    // 正式环境 cdn 路径
+    CDN: "",
+  },
   release: {
     ...config,
     // 流程平台
@@ -44,11 +52,10 @@ export default {
     // 文件预览服务
     PREVIEW_FILE_API: "文件服务地址",
     // 正式环境接口地址
-     API: 'http://10.77.78.250:9107/prod-api/',
+    API: 'http://10.77.78.250:80/prod-api/',
     // 正式环境 cdn 路径
     CDN: '',
-    appId: 'f198c1a239254b0e86529a0668cf4adb ',
+    appId: null,
     LOGIN_TYPES: ["corp_oauth", "password"]
   },
 };
-

@@ -2,12 +2,12 @@
 <template>
   <div class="app-container">
     <headerSearch class="g-w100 g-h100">
-      <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true" style="margin-top:20px">
-        <el-form-item label="角色名称" prop="roleName">
-          <el-input v-model="queryParams.roleName" placeholder="请输入角色名称" clearable size="small" style="width: 240px"
-            @keyup.enter.native="handleQuery" />
-        </el-form-item>
-      <!-- <el-form-item label="权限字符" prop="roleKey">
+    <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true" style="margin-top:20px">
+      <el-form-item label="角色名称" prop="roleName">
+        <el-input v-model="queryParams.roleName" placeholder="请输入角色名称" clearable size="small" style="width: 240px"
+          @keyup.enter.native="handleQuery" />
+      </el-form-item>
+    <!-- <el-form-item label="权限字符" prop="roleKey">
         <el-input
           v-model="queryParams.roleKey"
           placeholder="请输入权限字符"
@@ -37,13 +37,13 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
         ></el-date-picker>
-                              </el-form-item> -->
-        <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery" class="commonBtn">重置</el-button>
-        </el-form-item>
-      </el-form>
-    </headerSearch>
+                            </el-form-item> -->
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery" class="commonBtn">重置</el-button>
+      </el-form-item>
+    </el-form>
+</headerSearch>
 
     <pagePanelNew headerTitle="角色管理" style="height:calc(100% - 100px);">
          <el-row :gutter="10" class="mb8" style="margin-bottom:20px">
@@ -124,8 +124,8 @@
           <template slot-scope="scope" v-if="scope.row.roleId !== '1'">
             <el-button size="mini" type="text" @click="handleUpdate(scope.row)"
               v-hasPermi="['system:role:edit']">修改</el-button>
-            <el-button size="mini" type="text" @click="handleDelete(scope.row)" v-hasPermi="['system:role:remove']"
-              class="delbutton">删除</el-button>
+            <el-button size="mini" type="text" @click="handleDelete(scope.row)"
+              v-hasPermi="['system:role:remove']" class="delbutton">删除</el-button>
             <el-button size="mini" type="text" @click="handleDataScope(scope.row)"
               v-hasPermi="['system:role:edit']">数据权限</el-button>
           <!-- <el-dropdown size="mini" @command="(command) => handleCommand(command, scope.row)" v-hasPermi="['system:role:edit']">
@@ -138,7 +138,7 @@
               <el-dropdown-item command="handleAuthUser" icon="el-icon-user"
                 v-hasPermi="['system:role:edit']">分配用户</el-dropdown-item>
             </el-dropdown-menu>
-                                  </el-dropdown> -->
+                                </el-dropdown> -->
           </template>
         </el-table-column>
       </el-table>
@@ -170,7 +170,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="角色类型" prop="roleType" >
-              <el-select v-model="form.roleType" :disabled="$route.query.id || form.appId">
+              <el-select v-model="form.roleType" :disabled="!!($route.params.id || form.appId)">
                 <el-option
                   v-for="item in dict.type.sys_role_type"
                   :key="item.value"
@@ -202,7 +202,7 @@
             <el-radio label="0">否</el-radio>
             <el-radio label="1">是</el-radio>
           </el-radio-group>
-            </el-form-item> -->
+          </el-form-item> -->
         <el-form-item label="菜单权限" prop="menuIds">
           <el-checkbox v-model="menuExpand" @change="handleCheckedTreeExpand($event, 'menu')">展开/折叠</el-checkbox>
           <el-checkbox v-model="menuNodeAll" @change="handleCheckedTreeNodeAll($event, 'menu')">全选/全不选</el-checkbox>
@@ -213,7 +213,7 @@
         </el-form-item>
       <!-- <el-form-item label="备注">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
-                                </el-form-item> -->
+                              </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -232,7 +232,7 @@
         </el-form-item>
         <el-form-item label="权限范围">
           <el-select v-model="form.dataScope" @change="dataScopeSelectChange" clearable>
-            <el-option v-for="item in dataScopeOptions" :key="item.value" :label="item.label"
+            <el-option v-for="item in isFromApp ? dataScopeOptions.filter(v => v.value !== '2') : dataScopeOptions" :key="item.value" :label="item.label"
               :value="item.value"></el-option>
           </el-select>
         </el-form-item>
@@ -255,7 +255,7 @@
 
 <script>
 import { listRole, getRole, delRole, addRole, updateRole, dataScope, changeRoleStatus } from '@/api/intelligentOilfield/system/role';
-import { treeselect as menuTreeselect, roleMenuTreeselect } from '@/api/intelligentOilfield/system/menu';
+import { treeselect as menuTreeselect, roleMenuTreeselect, roleMenuTreeSelectByAppId } from '@/api/intelligentOilfield/system/menu';
 import { treeselect as deptTreeselect, roleDeptTreeselect } from '@/api/intelligentOilfield/system/dept';
 import SearchSelect from '@/components/intelligentOilfield/searchSelect/AppSearchSelect.vue'
 
@@ -293,6 +293,7 @@ export default {
       title: '',
       // 是否显示弹出层
       open: false,
+      isFromApp: false,
       // 是否显示弹出层（数据权限）
       openDataScope: false,
       menuExpand: false,
@@ -382,6 +383,15 @@ export default {
     },
     /** 查询菜单树结构 */
     getMenuTreeselect() {
+      if (this.appId) {
+        const params = {
+          appId: this.appId,
+        };
+        return roleMenuTreeSelectByAppId(params).then((response) => {
+          this.menuOptions = response.data.menus;
+          return response;
+        });
+      }
       menuTreeselect().then((response) => {
         this.menuOptions = response.data.data;
       });
@@ -414,6 +424,16 @@ export default {
     },
     /** 根据角色ID查询菜单树结构 */
     getRoleMenuTreeselect(roleId) {
+      if (this.appId) {
+        const params = {
+          appId: this.appId,
+          roleId: roleId
+        };
+        return roleMenuTreeSelectByAppId(params).then((res) => {
+          this.menuOptions = res.data.menus;
+          return res;
+        });
+      }
       return roleMenuTreeselect(roleId).then((response) => {
         this.menuOptions = response.data.menus;
         return response;
@@ -541,7 +561,7 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-      if(this.$route.query.id){
+      if(this.$route.params.id){
         this.form.roleType = 'application'
       }
       this.getMenuTreeselect();
@@ -578,6 +598,11 @@ export default {
     /** 分配数据权限操作 */
     handleDataScope(row) {
       this.reset();
+      if(this.appId !== undefined){
+        this.isFromApp = true
+      } else {
+        this.isFromApp = false
+      }
       const roleDeptTreeselect = this.getRoleDeptTreeselect(row.roleId);
       getRole(row.roleId).then((response) => {
         this.form = response.data.data;
@@ -593,7 +618,7 @@ export default {
     /** 分配用户操作 */
     handleAuthUser(row) {
       const { roleId } = row;
-      this.$router.push({ name: `rolesDetail`, query: { roleId, pathName:row.roleName } ,params:{roleId}});
+      this.$router.push({ name: `rolesDetail`, params:{roleId}});
       //   this.$router.push(`/system/role-auth/user/${roleId}`);
     },
     /** 提交按钮 */
@@ -601,8 +626,8 @@ export default {
       this.form.menuIds = this.getMenuAllCheckedKeys();
       this.$refs.form.validate((valid) => {
         if (valid) {
-          if (!this.form.appId && this.$route.query.id) {
-            this.form.appId = this.$route.query.id;
+          if (!this.form.appId && this.$route.params.id) {
+            this.form.appId = this.$route.params.id;
           }
           if (this.form.roleId !== undefined) {
             // this.form.menuIds = this.getMenuAllCheckedKeys();
@@ -669,9 +694,6 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-
-
-    
 .app-container {
   height: 100%;
 

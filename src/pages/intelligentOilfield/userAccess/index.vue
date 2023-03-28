@@ -54,7 +54,7 @@
         <el-table-column label="访问页面" prop="accessPage" width="150" />
         <el-table-column label="状态" align="center">
           <template slot-scope="scope">
-            <span v-if="scope.row.status == 0">- -</span>
+            <span v-if="scope.row.userAccessStatus == 0">- -</span>
             <span v-else>活跃</span>
           </template>
         </el-table-column>

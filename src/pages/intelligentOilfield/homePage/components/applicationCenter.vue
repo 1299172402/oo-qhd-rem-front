@@ -28,8 +28,12 @@
           <div class="g-column-flex-H" v-for="(item, index) in list" :key="index"
             style="position: relative;padding: 20px; justify-content: space-around; flex-wrap: wrap;cursor: pointer"
             @click="toClick(item.accessUrl)">
-            <img :src="item.appImg" alt="" class="imgSetting" style="width:40px" />
-            {{ item.appName }}
+            <img v-if="item.appImg" :src="item.appImg ? item.appImg : ''" @error="imgError(item)" alt="" class="imgSetting" style="width:40px;height:40px" />
+            <!-- 增加未上传图标显示默认图标+首字母 -->
+             <div v-else class="bgImage g-row-flex-HV" style="width:40px;height:40px">
+                {{ item.appName[0] }}
+            </div>
+            <span class="textSpan">{{ item.appName }}</span>
           </div>
         </div>
       <!-- <el-tabs
@@ -125,6 +129,9 @@ export default {
     // this.getInitData();
   },
   methods: {
+    imgError(item) {
+      item.img = new URL('../../../../assets/intelligentOilfield/bgImg.png', import.meta.url).href
+    },
     toClick(url) {
       const a = document.createElement('a')
       a.setAttribute('target', '_blank')
@@ -259,5 +266,17 @@ export default {
 <style scoped>
 .myHeader>>>.el-tabs__item {
   padding: 0 10px;
+}
+.bgImage {
+    background: url('../../../../assets/intelligentOilfield/bgImg.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    color: #51A1FF;
+}
+.textSpan {
+    font-size: 12px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #909399;
 }
 </style>

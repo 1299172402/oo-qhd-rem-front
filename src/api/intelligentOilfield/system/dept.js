@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 
 // 根据组织机构id查询其下的组织机构
-export function getDeptsBydeptId(deptId) {
+export function getTenantsByUserId(userId) {
   return request({
-    url: `/system/dept/getDeptsBydeptId/${deptId}`,
+    url: `/system/tenant/getTenantsByUserId/${userId}`,
     method: 'get',
   })
 }

@@ -34,6 +34,7 @@ const mutations = {
     state.backgroundTheme = payload.backgroundTheme;
     state.brandTheme = payload.brandTheme;
     state.isUseTabsRouter = payload.isUseTabsRouter;
+    state.isUseMenu = payload.isUseMenu;
   },
   toggleSidebarCompact(state: IStateType) {
     state.isSidebarCompact = !state.isSidebarCompact;

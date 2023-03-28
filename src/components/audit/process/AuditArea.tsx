@@ -22,6 +22,13 @@ export default Vue.extend({
       type: Function,
       default: () => ({})
     },
+<<<<<<< HEAD
+=======
+    returnFn: {
+      type: Function,
+      default: () => ({})
+    },
+>>>>>>> newbranch
     infos: {
       type: Object,
       default: () => ({})
@@ -46,11 +53,14 @@ export default Vue.extend({
     }  
   },
   methods: {
+<<<<<<< HEAD
     handleReturn() {
       this.$nextTick(() => {
         this.$router.go(-1)
       }) 
     },
+=======
+>>>>>>> newbranch
     renderAuditComponent(props: ActionAreaProps): void {
       const { isView, businessType } = props;
       this.auditProps.isView = isView;
@@ -120,7 +130,11 @@ export default Vue.extend({
           dataSource={this.model}
           businessType={this.auditProps.businessType}
           isView={this.auditProps.isView}
+<<<<<<< HEAD
           successCallback={this.handleReturn}
+=======
+          successCallback={this.returnFn}
+>>>>>>> newbranch
           onClose={() => {
             this.$nextTick(() => {
               this.visible = false

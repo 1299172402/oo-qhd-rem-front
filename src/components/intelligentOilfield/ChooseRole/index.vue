@@ -79,7 +79,7 @@ export default {
   methods: {
     getList() {
       this.loading = true;
-      listRole({pageNum:this.ipagination.current, pageSize:this.ipagination.pageSize, appId: this.$route.query.id}).then((response) => {
+      listRole({pageNum:this.ipagination.current, pageSize:this.ipagination.pageSize}).then((response) => {
         this.dataSource = response.data.rows;
         this.ipagination.total = response.data.total;
         this.loading = false;
