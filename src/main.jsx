@@ -76,7 +76,6 @@ Vue.use(VueClipboard);
 DictData.install()
 
 
-
 const originPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {
   return originPush.call(this, location).catch((err) => err);
@@ -86,6 +85,7 @@ const originReplace = VueRouter.prototype.replace;
 VueRouter.prototype.replace = function replace(location) {
   return originReplace.call(this, location).catch((err) => err);
 };
+Date.prototype.format=function(e){let t=e;return t=t.replace(/yyyy|YYYY/,this.getFullYear()),t=t.replace(/MM/,this.getMonth()+1>9?(this.getMonth()+1).toString():"0".concat(this.getMonth()+1)),t=t.replace(/dd|DD/,this.getDate()>9?this.getDate().toString():"0".concat(this.getDate())),t=t.replace(/hh/,this.getHours()>9?this.getHours().toString():"0".concat(this.getHours())),t=t.replace(/mm/,this.getMinutes()>9?this.getMinutes().toString():"0".concat(this.getMinutes())),t=t.replace(/ss/,this.getSeconds()>9?this.getSeconds().toString():"0".concat(this.getSeconds()))},Date.prototype.addDays=function(e){return this.setDate(this.getDate()+e),this};
 
 Vue.config.productionTip = false;
 sync(store, router);
