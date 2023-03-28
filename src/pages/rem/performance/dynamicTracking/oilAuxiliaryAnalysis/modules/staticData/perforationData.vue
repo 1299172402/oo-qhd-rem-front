@@ -1,9 +1,10 @@
 <!--射孔数据-->
 <template>
     <el-table 
+        id="tableData"
         :data="tableData" :border="false" :row-style="{ height: '0px' }"
         header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
-        style="width:100%; padding-top: 20px;" height="calc(100% - 86px)" :default-sort="{ prop: 'date', order: 'descending' }"
+        style="width:100%;" height="calc(100% - 101px)" :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
         <el-table-column type="index" label="序号" align="center"></el-table-column>
         <el-table-column prop="wellNo" label="井号" align="center" min-width="140"></el-table-column>
@@ -24,7 +25,7 @@
 </template>
 <script>
     import { getComPerfInterval} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
-    // import {exportExcel} from "@/lib/exportExcel";
+    import {exportExcel} from "@/lib/exportExcel.js";
 
     export default {
         props: {
@@ -70,7 +71,7 @@
                 if (this.wellName) {
                     fileName = this.wellName + fileName;
                 }
-                // exportExcel('#tableData',fileName);
+                exportExcel('#tableData',fileName);
             },
             /**
              * hwh el table 表格头 标题单位样式
@@ -90,11 +91,13 @@
         },
     }
 </script>
+
 <style scoped lang="scss">
-    ::v-deep .el-table .cell:empty::before {
-        content: '-';
-    }
-    ::v-deep .el-table__body-wrapper{
-        height: calc(100% - 34px);
-    }
+    #tableData{
+        ::v-deep .cell:empty{
+            &::before {
+                content: '-';
+            } 
+        }
+    } 
 </style>

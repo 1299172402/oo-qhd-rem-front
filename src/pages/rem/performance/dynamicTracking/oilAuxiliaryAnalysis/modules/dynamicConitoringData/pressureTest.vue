@@ -1,6 +1,6 @@
 <!--压力测试-->
 <template>
-    <info-window infoWidth="100%" infoHeight="calc(100% - 86px)" headerTitle="压力数据" style="padding-top:20px;">
+    <info-window infoWidth="100%" infoHeight="calc(100% - 86px)" headerTitle="压力数据">
         <el-table
             id="tableData" 
             :data="tableData" :border="false" :row-style="{ height: '0px' }"
@@ -36,7 +36,7 @@
 
 <script>
     import {pressure} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
-    // import {exportExcel} from "@/lib/exportExcel";
+    import {exportExcel} from "@/lib/exportExcel.js";
     export default {
         filters: {
             /**
@@ -96,7 +96,7 @@
                 if (this.wellName) {
                     fileName = this.wellName + fileName;
                 }
-                // exportExcel('#tableData',fileName);
+                exportExcel('#tableData',fileName);
             },
 
             /**

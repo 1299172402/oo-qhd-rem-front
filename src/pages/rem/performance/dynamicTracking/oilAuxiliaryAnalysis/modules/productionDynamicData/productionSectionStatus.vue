@@ -1,6 +1,6 @@
 <!-- 生产段状态 -->
 <template>
-    <el-table :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header"
+    <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header"
         :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%; padding: 20px 0"
         height="calc(100% - 86px)" :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
@@ -12,9 +12,8 @@
 </template>
 
 <script>
-    import {
-        getProductionStatus
-    } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
+    import { getProductionStatus } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
+    import {exportExcel} from "@/lib/exportExcel.js";
     export default {
         props: {
             //选择油田
@@ -46,6 +45,14 @@
                     }
                 });
             },
+            //下载
+            doDownLoad() {
+                let fileName = '生产段状态';
+                if (this.wellName) {
+                    fileName = this.wellName + fileName;
+                }
+                exportExcel('#tableData',fileName);
+            }
         }
     }
 </script>

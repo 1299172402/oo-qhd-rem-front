@@ -2,7 +2,7 @@
 <template>
     <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }"
         header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
-        style="width:100%; padding-top:20px;" height="calc(100% - 86px)"
+        style="width:100%;" height="calc(100% - 101px)"
         :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
         <el-table-column type="index" label="序号" align="center">
@@ -17,7 +17,7 @@
 </template>
 <script>
     import { workingHistory} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
-    // import {exportExcel} from "@/lib/exportExcel";
+    import {exportExcel} from "@/lib/exportExcel.js";
     export default {
         props: {
             //选择油田
@@ -64,7 +64,7 @@
                 if (this.wellName) {
                     fileName = this.wellName + fileName;
                 }
-                // exportExcel('#tableData',fileName);
+                exportExcel('#tableData',fileName);
             }
         },
     }

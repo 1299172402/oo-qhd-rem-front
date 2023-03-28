@@ -361,7 +361,7 @@ export default {
      * 切换分页
      *
      */
-     pagination(e){
+    pagination(e){
       this.page = e.page;
       this.pageSize = e.limit;
     },

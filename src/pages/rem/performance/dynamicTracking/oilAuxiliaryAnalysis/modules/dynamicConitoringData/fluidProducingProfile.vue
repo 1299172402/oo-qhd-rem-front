@@ -45,8 +45,8 @@
 
 <script>
     import {outProfileLoggingInterpretation} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
-    // import {exportExcel} from "@/lib/exportExcel";
-    // import {downFile} from "@/lib/remBase64Download";
+    import {exportExcel} from "@/lib/exportExcel.js";
+    import {downFile} from "@/lib/remBase64Download.js";
     export default {
         filters: {
             /**
@@ -118,8 +118,8 @@
                 }
                 if (this.image) {
                     downFile(this.image, fileName);
-                    exportExcel('#tableData', fileName);
                 }
+                exportExcel('#tableData', fileName);
 
             },
             /**
@@ -145,7 +145,6 @@
     .z-main{
         width: 100%;
         height:calc(100% - 86px);
-        padding-top:20px;
         display: flex;
         .z-left-view{
             width:600px;

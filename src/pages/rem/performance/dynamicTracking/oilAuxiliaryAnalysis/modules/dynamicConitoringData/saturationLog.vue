@@ -40,8 +40,8 @@
 
 <script>
     import { saturationLoggingInterpretation } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
-    // import {downFile} from "@/lib/remBase64Download";
-    // import {exportExcel} from "@/lib/exportExcel";
+    import {downFile} from "@/lib/remBase64Download.js";
+    import {exportExcel} from "@/lib/exportExcel.js";
     export default {
         filters: {
             /**
@@ -113,9 +113,9 @@
                     fileName = this.wellName + fileName;
                 }
                 if (this.image) {
-                    // downFile(this.image,fileName);
-                    // exportExcel('#tableData',fileName);
+                    downFile(this.image,fileName);
                 }
+                exportExcel('#tableData',fileName);
             },
             /**
              * hwh el table 表格头 标题单位样式
@@ -140,7 +140,6 @@
     .z-main{
         width: 100%;
         height:calc(100% - 86px);
-        padding-top:20px;
         display: flex;
         .z-left-view{
             width:600px;

@@ -16,7 +16,7 @@
 </style>
 <script>
 import{wellCompletionDiagram}from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
-// import {downFile} from "@/lib/remBase64Download";
+import {downFile} from "@/lib/remBase64Download.js";
 export default {
   props: {
     //选择油田
@@ -76,7 +76,7 @@ export default {
       if(this.wellName){
         fileName = this.wellName + fileName;
       }
-      // downFile(this.image,fileName);
+      downFile(this.image,fileName);
     }
   },
 }

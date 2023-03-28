@@ -1,3 +1,4 @@
+<!-- 油井辅助分析 -->
 <template>
     <div class="app-container">
         <headerSearch class="g-w100 g-h100">
@@ -22,11 +23,11 @@
                     <el-button type="primary">上传文档</el-button>
                 </el-upload>
                 <el-button class="upload-demo" v-show="canUpload && ljpmTag" style="margin-left: 20px" @click="ljpmUploadDialog">上传文档</el-button>
-                <el-button style="margin-left: 20px" type="primary" @click="doDownLoad" v-show="canDownload">下载</el-button>
+                <el-button style="margin-left: 20px" type="primary" @click="doDownLoad">下载</el-button>
             </div>
         </headerSearch>
-        <pagePanelNew headerTitle="角色列表" style="height: calc(100% - 100px)" class="g-w100">
-            <el-tabs class="g-pageHeader" v-model="activeName" topline @tab-click="handleClick">
+        <pagePanelNew headerTitle="" style="height: calc(100% - 100px)" class="g-w100">
+            <el-tabs class="g-pageHeader" style="margin-bottom:15px;" v-model="activeName" topline @tab-click="handleClick">
                 <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
                     <div class="tab-view">
                         <el-button v-for="(module, index) in item.modules" :key="index"

@@ -59,6 +59,8 @@ Vue.prototype.handleTree = handleTree
 Vue.prototype.getConfigKey = getConfigKey
 Vue.prototype.download = download
 Vue.prototype.$echarts = echarts;
+
+console.log('echarts',echarts)
 Vue.prototype.$request = axiosInstance;
 Vue.prototype.$bus = new Vue()
 

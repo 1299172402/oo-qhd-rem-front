@@ -103,6 +103,7 @@ instance.interceptors.response.use(
   (response) => {
     // 二进制数据则直接返回
     if(response.request.responseType ===  'blob' || response.request.responseType ===  'arraybuffer'){
+        hideLoading();
       return response.data
     }
     if (response.data.code === 401 && interceptCount === 0) {
