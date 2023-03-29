@@ -1,0 +1,94 @@
+.icon-undo{
+    background:url('../images/ico/Refresh.png') no-repeat center center;
+}
+.icon-redo{
+    background:url('../images/ico/redo.png') no-repeat center center;
+}
+.icon-select{
+    background:url('../images/ico/Pointer.png') no-repeat center center;
+}
+.icon-zoomin{
+    background:url('../images/ico/ZoomIn.png') no-repeat center center;
+}
+.icon-zoomout{
+    background:url('../images/ico/ZoomOut.png') no-repeat center center;
+}
+.icon-Copy{
+    background:url('../images/ico/Copy.png') no-repeat center center;
+}
+.icon-Cut{
+    background:url('../images/ico/Cut.png') no-repeat center center;
+}
+.icon-Delete{
+    background:url('../images/ico/Delete.png') no-repeat center center;
+}
+.icon-Paste{
+    background:url('../images/ico/Paste.png') no-repeat center center;
+}
+.icon-move{
+    background:url('../images/ico/MoveAll.png') no-repeat center center;
+}
+.icon-Drag{
+	background:url('../images/ico/qtu.gif') no-repeat center center;
+}
+.icon-ObjMove{
+    background:url('../images/ico/ObjMove.png') no-repeat center center;
+}
+.icon-NewWell{
+    background:url('../images/ico/NewWell.png') no-repeat center center;
+}
+.icon-Line{
+    background:url('../images/ico/Line.png') no-repeat center center;
+}
+.icon-allmap{
+    background:url('../images/ico/qt.gif') no-repeat center center;
+}
+.icon-selectAll{
+    background:url('../images/ico/SelectAll.png') no-repeat center center;
+}
+.icon-RectSelect{
+    background:url('../images/ico/RectSelect.png') no-repeat center center;
+}
+.icon-AreaSelect{
+    background:url('../images/ico/AreaSelect.png') no-repeat center center;
+}
+.icon-layer{
+    background:url('../images/ico/tc.gif') no-repeat center center;
+}
+.icon-save{
+    background:url('../images/ico/filesave.png') no-repeat center center;
+}
+.icon-export{
+    background:url('../images/ico/export.png') no-repeat center center;
+}
+
+.icon-drawBreak{
+    background:url('../images/ico/断层线编辑.png') no-repeat center center;
+}
+.icon-drawJMX{
+    background:url('../images/ico/手绘等值线.png') no-repeat center center;
+}
+.icon-drawHYLX{
+    background:url('../images/ico/含油零线编辑.png') no-repeat center center;
+}
+.icon-drawIso{
+    background:url('../images/ico/手绘等值线.png') no-repeat center center;
+}
+.icon-drawCCMJ{
+    background:url('../images/ico/储层面积编辑.png') no-repeat center center;
+}
+.icon-drawHYMJ{
+    background:url('../images/ico/生成含油气面积.png') no-repeat center center;
+}
+.icon-drawLKX{
+    background:url('../images/ico/绘制轮廓线.png') no-repeat center center;
+}
+.icon-drawQSX{
+    background:url('../images/ico/绘制轮廓线.png') no-repeat center center;
+}
+.icon-drawQSD{
+    background:url('../images/ico/Well.png') no-repeat center center;
+}
+.icon-drawJW{
+    background:url('../images/ico/Well.png') no-repeat center center;
+}

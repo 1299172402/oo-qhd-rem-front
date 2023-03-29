@@ -205,6 +205,7 @@
             this.dateTime = new Date().format('yyyy');
         },
         mounted() {
+            console.log(123)
             this.initData();
         },
         // 方法
@@ -221,6 +222,7 @@
              *
              */
             async initData() {
+                console.log(111)
                 await fetchOilFields().then((res) => {
                     if (res.data.code == 200) {
                         this.oilFields = res.data.data.oilFields;
@@ -247,8 +249,11 @@
                 };
                 await fetchProductionWells(requestWell).then((res) => {
                     if (res.data.code == 200) {
-                        const wellList = res.data.data.productionWells;
-                        this.wells = [...wellList];
+                        let wellData=res.data.data.productionWells;
+                        if(wellData.length){
+                            const wellList = wellData.filter(el=>el.wellName);
+                            this.wells = [...wellList];
+                        }
                     }
                 });
                 await fetchInjectionWells(requestWell).then((res) => {
@@ -266,17 +271,17 @@
                 this.getFetchMeasureInfos(this.selectOilField, this.selectPlatform, this.wellId, this.measuresType,this.dateTime, this.page, this.pageSize, 0);
             },
             /**
-                     *  hwh
-                     *  措施表信息
-                     * @param oilFieldId 油田id
-                     * @param platformId 平台id
-                     * @param wellId   井号id
-                     * @param measureId  措施id
-                     * @param year   年度
-                     * @param page   当前页面
-                     * @param pageSize 单页数量
-                     * @param isStimTypeCodeOrNot 是否是增产增注措施：0是，1不是
-             */
+                *  hwh
+                *  措施表信息
+                * @param oilFieldId 油田id
+                * @param platformId 平台id
+                * @param wellId   井号id
+                * @param measureId  措施id
+                * @param year   年度
+                * @param page   当前页面
+                * @param pageSize 单页数量
+                * @param isStimTypeCodeOrNot 是否是增产增注措施：0是，1不是
+            */
             getFetchMeasureInfos(oilFieldId, platformId, wellId, measureId, year, page, pageSize, isStimTypeCodeOrNot) {
                 const wellArray = [];
                 wellArray.push(wellId);
@@ -378,8 +383,11 @@
                     const request = {oilFieldId};
                     fetchProductionWells(request).then((res) => {
                         if (res.data.code == 200) {
-                            const oilWellList = res.data.data.productionWells || [];
-                            this.wells = this.wells.concat(oilWellList);
+                            let wellData=res.data.data.productionWells||[];
+                            if(wellData.length){
+                                const wellList = wellData.filter(el=>el.wellName);
+                                this.wells = this.wells.concat(wellList);
+                            }
                         }
                     });
                     fetchInjectionWells(request).then((res) => {
@@ -393,8 +401,11 @@
                     const request = {platformId};
                     fetchProductionWellsByPlatform(request).then((res) => {
                         if (res.data.code == 200) {
-                            const oilWellList = res.data.data.productionWells || [];
-                            this.wells = this.wells.concat(oilWellList);
+                            let wellData=res.data.data.productionWells||[];
+                            if(wellData.length){
+                                const wellList = wellData.filter(el=>el.wellName);
+                                this.wells = this.wells.concat(wellList);
+                            }
                         }
                     });
                     fetchInjectionWellsByPlatform(request).then((res) => {

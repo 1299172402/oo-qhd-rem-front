@@ -13,15 +13,15 @@ export default [
                 path: 'planIndex',
                 name: 'planIndex',
                 component: () => import('@/pages/rem/plan/index.vue'),
-                meta: { title: '措施管理', icon: 'icon' },
+                meta: { title: '措施管理', icon: 'icon'},
             },
-            // {
-            //   hidden: false,
-            //   path: 'newPlanIndex',
-            //   name: 'newPlanIndex',
-            //   component: () => import('@/pages/rem/plan/newPlanIndex.vue'),
-            //   meta: { title: '措施管理', icon: 'icon' },
-            // },
+            {
+              hidden: false,
+              path: 'newPlanIndex2',
+              name: 'newPlanIndex2',
+              component: () => import('@/pages/rem/plan/newPlanIndex.vue'),
+              meta: { title: '新措施管理', icon: 'icon' },
+            },
             {
               hidden:true,
               path: 'wellMonitoring',

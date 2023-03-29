@@ -1,0 +1,278 @@
+﻿[
+  {
+    "MenuFlag": "ContextMenu",
+    "Name": "emptyMenu",
+    "Width": "100",
+    "menuitem": [
+      {
+        "Type": "command",
+        "Description": "放大",
+        "CommandName": "ViewZoomOut",
+        "ResourceName": "icon-zoomin",
+        "Name": "gcaViewZoomOut"
+      },
+      {
+        "Type": "command",
+        "Description": "缩小",
+        "CommandName": "ViewZoomIn",
+        "ResourceName": "icon-zoomout",
+        "Name": "gcaViewZoomIn"
+      },
+      {
+        "Type": "command",
+        "Description": "移动",
+        "CommandName": "ViewMapMove",
+        "ResourceName": "icon-move",
+        "Name": "gcaViewMapMove"
+      },
+      {
+        "Type": "command",
+        "Description": "全图",
+        "CommandName": "ViewZoomAll",
+        "ResourceName": "icon-allmap",
+        "Name": ""
+      },
+      {
+        "Type": "command",
+        "Description": "图元平移",
+        "CommandName": "GeoObjMove",
+        "ResourceName": "icon-ObjMove",
+        "Name": ""
+      },
+      {
+        "Type": "command",
+        "Description": "不可见井显示",
+        "CommandName": "ShowWell",
+        "ResourceName": "icon-NewWell",
+        "Name": ""
+      },
+      {
+        "Type": "command",
+        "Description": "显示轮廓线",
+        "CommandName": "ShowOutLine",
+        "ResourceName": "icon-Line",
+        "Name": ""
+      },
+      {
+        "Type": "command",
+        "Description": "隐藏轮廓线",
+        "CommandName": "HideOutLine",
+        "ResourceName": "icon-Line",
+        "Name": ""
+      },
+      {
+        "Type": "command",
+        "Description": "计算距离",
+        "CommandName": "CalcRange",
+        "ResourceName": "",
+        "Name": ""
+      },
+      {
+        "Type": "menu",
+        "Description": "基本图元",
+        "CommandName": "",
+        "ResourceName": "",
+        "menuitem": [
+          {
+            "Type": "command",
+            "Description": "点",
+            "CommandName": "DrawPoint",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "直线",
+            "CommandName": "DrawLine",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "折线",
+            "CommandName": "DrawPolyLine",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "圆弧",
+            "CommandName": "DrawArc",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "矩形",
+            "CommandName": "DrawRect",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "多边形",
+            "CommandName": "DrawPolygon",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "圆",
+            "CommandName": "DrawCircle",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "椭圆",
+            "CommandName": "DrawEllipse",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "饼图",
+            "CommandName": "DrawPie",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "图片",
+            "CommandName": "DrawPic",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "文字",
+            "CommandName": "DrawText",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "表格",
+            "CommandName": "DrawTable",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "图例",
+            "CommandName": "DrawLegend",
+            "ResourceName": "",
+            "Name": ""
+          }
+        ]
+      },
+      {
+        "Type": "menu",
+        "Description": "业务图元",
+        "CommandName": "",
+        "ResourceName": "",
+        "menuitem": [
+          {
+            "Type": "command",
+            "Description": "断层线",
+            "CommandName": "DrawBreak",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "尖灭线",
+            "CommandName": "DrawJM",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "等值线",
+            "CommandName": "DrawISO",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "含油零线",
+            "CommandName": "DrawHYLX",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "趋势线",
+            "CommandName": "DrawQSX",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "趋势点",
+            "CommandName": "DrawQSD",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "储层面积",
+            "CommandName": "DrawCCMJ",
+            "ResourceName": "",
+            "Name": ""
+          },
+          {
+            "Type": "command",
+            "Description": "含油面积",
+            "CommandName": "DrawHYMJ",
+            "ResourceName": "",
+            "Name": ""
+          }
+        ]
+      },
+      {
+        "Type": "command",
+        "Description": "新建图层",
+        "CommandName": "AddLayer",
+        "ResourceName": "icon-layer",
+        "Name": ""
+      },
+      {
+        "Type": "command",
+        "Description": "图层列表",
+        "CommandName": "ViewLayer",
+        "ResourceName": "icon-layer",
+        "Name": ""
+      },
+      {
+        "Type": "command",
+        "Description": "底图设置",
+        "CommandName": "ShowBackImg",
+        "ResourceName": "",
+        "Name": ""
+      }
+
+    ]
+  },
+  {
+    "MenuFlag": "ContextMenu",
+    "Name": "propertyMenu",
+    "Width": "100",
+    "menuitem": [
+      {
+        "Type": "command",
+        "Description": "图元平移",
+        "CommandName": "GeoObjMove",
+        "ResourceName": "icon-ObjMove",
+        "Name": ""
+      },
+      {
+        "Type": "command",
+        "Description": "边界线光滑",
+        "CommandName": "SmoothPoly",
+        "ResourceName": "icon-SmoothPoly",
+        "Name": ""
+      }
+    ]
+  }
+]

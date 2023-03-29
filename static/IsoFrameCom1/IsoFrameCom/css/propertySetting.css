@@ -1,0 +1,139 @@
+﻿body 
+{
+    
+}
+
+.divTitle
+{
+     width:75px;
+     float:left;
+     padding-top:6px;
+}
+        
+#container
+{
+     position:relative;
+     margin:0 auto;
+     width:425px;
+}
+        
+#container input[type=text]
+{
+     border:1px solid #95B8E7;
+     width:205px;
+}
+        
+
+.selPanel ul
+{
+    padding:0; 
+    margin:0;
+    width:178px;
+}
+        
+.selPanel li
+{
+    list-style:none; 
+    padding:0; 
+    margin:0;
+    text-align: center;
+}
+        
+.selPanel
+{
+    width:183px;
+    /*position:fixed;*/
+    position:absolute;
+    z-index:20001;
+    background: #fff; 
+    padding-left:0px;
+    padding-top:5px;
+    padding-bottom:5px;
+    border-left-color:#95B8E7;
+    border-left-style:solid;
+    border-left-width:1px;
+    border-bottom-color:#95B8E7;
+    border-bottom-style:solid;
+    border-bottom-width:1px;
+    border-right-color:#95B8E7;
+    border-right-style:solid;
+    border-right-width:1px;
+}
+
+.liBorder
+{
+    border-style:solid;
+    border-width:1px;
+    border-color:#95B8E7;
+}
+        
+#previewPanel
+{
+    width:100%;
+}
+
+#divCurveGrid1,#divCurveGrid2
+{
+    float:left;
+    height:120px;
+    margin-top:10px;
+    margin-left:10px;
+    color: #126EEB
+}
+
+#divCurveGridPro
+{
+    clear:both;
+    float:none;
+    position:relative;
+    top:20px;
+    left:10px;
+    right:20px;
+    height:260px;
+    width:395px
+}
+
+.divGridlayout1
+{
+    padding-top:7px;
+    padding-left:5px;
+}
+
+.divGridlayout2
+{
+    padding-top:7px;
+    padding-left:40px;
+}
+
+#divCurveScale1,#divCurveScale2
+{
+    position: relative;
+    left: 0px;
+    float: left;
+    width: 260px;
+    height: 250px;
+    color: #126EEB
+}
+
+#divCurveSecondScale1
+{
+    clear:both;
+    float: left;
+    width: 260px;
+    height: 170px;
+    margin-top: 20px;
+    color: #126EEB
+}
+#divCurveSecondScale2
+{
+    float: left;
+    width: 260px;
+    height: 170px;
+    margin-top: 20px;
+    color: #126EEB
+}
+
+.dialog-button
+{
+    text-align:center ! important;
+}

@@ -180,10 +180,10 @@
                         label: '生产动态资料',
                         name: 'productionDynamicData',
                         modules: [
-                            // {
-                            //     label: '生产数据',
-                            //     name: 'productionData',
-                            // },
+                            {
+                                label: '生产数据',
+                                name: 'productionData',
+                            },
                             {
                                 label: '井网图',
                                 name: 'wellNetworkDiagram',
@@ -435,15 +435,11 @@
             currentModule: {
                 immediate: true,
                 handler(newName, oldName) {
-                    this.loader()
-                        .then(() => {
-                            console.log('then');
-                            this.component = () => this.loader();
-                        })
-                        .catch(() => {
-                            console.log('走catch');
-                            this.component = () => import(`./modules/staticData/smallFloorPlan.vue`);
-                        });
+                    this.loader().then(() => {
+                        this.component = () => this.loader();
+                    }).catch(() => {
+                        this.component = () => import(`./modules/staticData/smallFloorPlan.vue`);
+                    });
                 },
             },
         },
@@ -515,7 +511,8 @@
                 await fetchProductionWells(paraPlatForm).then((res) => {
                     //判断联通状态
                     if (res.data.code == 200) {
-                        this.wellData = res.data.data.productionWells;
+                        let wellData=res.data.data.productionWells;
+                        this.wellData = wellData.filter(el=>el.wellName);
                     }
                 });
                 if (wellId == undefined || wellId == null) {
@@ -553,7 +550,8 @@
                 };
                 fetchProductionWellsByPlatform(request).then((res) => {
                     if (res.data.code == 200) {
-                        this.wellData = res.data.data.productionWells;
+                        let wellData=res.data.data.productionWells;
+                        this.wellData = wellData.filter(el=>el.wellName);
                     }
                 });
             },
@@ -564,7 +562,8 @@
                 };
                 fetchProductionWells(request).then((res) => {
                     if (res.data.code == 200) {
-                        this.wellData = res.data.data.productionWells;
+                        let wellData=res.data.data.productionWells;
+                        this.wellData = wellData.filter(el=>el.wellName);
                     }
                 });
             },

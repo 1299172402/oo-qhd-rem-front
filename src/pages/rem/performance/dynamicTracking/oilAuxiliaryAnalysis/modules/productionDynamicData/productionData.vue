@@ -36,7 +36,6 @@
                 selectData: [],
                 selectValue:'分配',
                 option: {
-                    title: {},
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -55,11 +54,20 @@
                     },
                     toolbox: {
                         show: true,
+                        itemSize: 20,
                         feature: {
                             saveAsImage: {
-                                name: '油井曲线对比分析',
-                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-                                backgroundColor: '#022644'
+                                name: '生产动态资料-生产数据曲线图',
+                                pixelRatio: 15,
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    borderColor:'#979797',
+                                },
+                                emphasis:{
+                                    iconStyle:{
+                                        color:'rgba(0,0,0,0)'
+                                    }, 
+                                }
                             }
                         }
                     },
@@ -113,8 +121,7 @@
                             },
                             axisLine: {
                                 lineStyle: {
-                                    //color: '#979797'
-                                    color: "rgba(255,255,255,.16)",
+                                    color: '#8FA4CC'
                                 },
                             },
                         },
@@ -147,8 +154,7 @@
                             },
                             axisLine: {
                                 lineStyle: {
-                                    //color: '#979797'
-                                    color: "rgba(255,255,255,.16)",
+                                    color: "#8FA4CC",
                                 },
                             },
                         },
@@ -173,7 +179,6 @@
                                 fontSize: 14,
                             },
                             axisLabel: {
-                                //show: false,
                                 color: "#8FA4CC",
                             },
                             axisTick: {
@@ -181,8 +186,7 @@
                             },
                             axisLine: {
                                 lineStyle: {
-                                    //color: '#979797'
-                                    color: "rgba(255,255,255,.16)",
+                                    color: "#8FA4CC",
                                 },
                             },
                         },
@@ -195,11 +199,10 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                // color: "#fff",
-                                color:'#8FA4CC',
+                                color: '#ff8e08',
                                 fontSize: 14,
                             },
-                            // scale: true,
+                            scale: true,
                             axisLabel: {
                                 show: true,
                                 color: "#8FA4CC",
@@ -208,9 +211,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -224,13 +227,12 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                // color: "#fff",
-                                color:'#8FA4CC',
+                                color: '#fe10f6',
                                 fontSize: 14,
                             },
                             offset: 80,
                             position: 'left',
-                            // scale: true,
+                            scale: true,
                             axisLabel: {
                                 show: true,
                                 color: "#8FA4CC",
@@ -241,7 +243,7 @@
                             axisLine: {
                                 show: false,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -255,12 +257,11 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                // color: "#fff",
-                                color:'#8FA4CC',
+                                color: '#ccb71f',
                                 fontSize: 14,
                             },
                             position: 'right',
-                            // scale: true,
+                            scale: true,
                             axisLabel: {
                                 show: true,
                                 color: "#8FA4CC",
@@ -269,9 +270,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                 show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -285,8 +286,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                // color: "#fff",
-                                color:'#8FA4CC',
+                                color: '#0d66fd',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -302,9 +302,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //   show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -318,8 +318,7 @@
                             nameGap: 50,
                             nameRotate: 0,
                             nameTextStyle: {
-                                // color: "#fff",
-                                color:'#8FA4CC',
+                                color: '#0206f7',
                                 fontSize: 14,
                             },
                             // scale: true,
@@ -331,9 +330,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -347,8 +346,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                // color: "#fff",
-                                color:'#8FA4CC',
+                                color: '#9dce2f',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -362,9 +360,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -378,8 +376,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                // color: "#fff",
-                                color:'#8FA4CC',
+                                color:'#fb6112',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -396,7 +393,7 @@
                             axisLine: {
                                 //  show: false,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -410,8 +407,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                // color: "#fff",
-                                color:'#8FA4CC',
+                                color: '#5a9df2',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -425,9 +421,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //   show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -441,8 +437,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                // color: "#fff",
-                                color:'#8FA4CC',
+                                color:'#018000',
                                 fontSize: 14,
                             },
                             // scale: true,
@@ -454,9 +449,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                 show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -470,8 +465,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                // color: "#fff",
-                                color:'#8FA4CC',
+                                color:'#f300f1',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -487,7 +481,7 @@
                             axisLine: {
                                 show: false,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -501,8 +495,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                // color: "#fff",
-                                color:'#8FA4CC',
+                                color:'#f90d03',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -516,9 +509,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                 show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -595,59 +588,59 @@
                             let lineName = chartData.label;
                             series.type = 'line';
                             series.name = lineName;
-                            if (lineName == '含水') {
-                                series.xAxisIndex = 1;
-                                series.yAxisIndex = 4;
-                                series.color = '#423f6e';
-                            } else if (lineName == '日产油') {
-                                series.xAxisIndex = 2;
-                                series.yAxisIndex = 8;
-                                series.color = '#577559';
-                            } else if (lineName == '日产液') {
-                                series.xAxisIndex = 2;
-                                series.yAxisIndex = 8;
-                                series.color = '#a267a6';
-                            } else if (lineName == '流压') {
+                            if (lineName == '流压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 0;
-                                series.color = '#c4ac6e';
+                                series.itemStyle={color:'#ff8e08'}
                             } else if (lineName == '油压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 2;
-                                series.color = '#bcbf8a';
+                                series.itemStyle={color:'#ccb71f'}
                             } else if (lineName == '泵频率') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 3;
-                                series.color = '#587e9d';
+                                series.itemStyle={color:'#0d66fd'}
+                            } else if (lineName == '折算基准面流压') {
+                                series.xAxisIndex = 0;
+                                series.yAxisIndex = 1;
+                                series.itemStyle={color:'#fe10f6'}
+                            } else if (lineName == '含水') {
+                                series.xAxisIndex = 1;
+                                series.yAxisIndex = 4;
+                                series.itemStyle={color:'#0206f7'}
                             } else if (lineName == '井口温度') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 7;
-                                series.color = '#9ba5ae';
-                            } else if (lineName == '折算基准面流压') {
-                                series.xAxisIndex = 0;
-                                series.yAxisIndex = 0;
-                                series.color = '#a762a0';
-                            } else if (lineName == '日产液量') {
-                                series.xAxisIndex = 2;
-                                series.yAxisIndex = 8;
-                                series.color = '#a267a6';
-                            } else if (lineName == '日产油量') {
-                                series.xAxisIndex = 2;
-                                series.yAxisIndex = 8;
-                                series.color = '#577559';
-                            } else if (lineName == '日产气量') {
-                                series.xAxisIndex = 2;
-                                series.yAxisIndex = 10;
-                                series.color = '#8c5a57';
+                                series.itemStyle={color:'#5a9df2'}
                             } else if (lineName == '气油比') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 5;
-                                series.color = '#bac09d';
+                                series.itemStyle={color:'#9dce2f'}
                             } else if (lineName == '生产时间') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 6;
-                                series.color = '#b7967b';
-                            } else {
+                                series.itemStyle={color:'#fb6112'}
+                            } else  if (lineName == '日产液量') {
+                                series.xAxisIndex = 2;
+                                series.yAxisIndex = 9;
+                                series.itemStyle={color:'#f300f1'}
+                            } else if (lineName == '日产油量') {
+                                series.xAxisIndex = 2;
+                                series.yAxisIndex = 8;
+                                series.itemStyle={color:'#018000'}
+                            } else if (lineName == '日产气量') {
+                                series.xAxisIndex = 2;
+                                series.yAxisIndex = 10;
+                                series.itemStyle={color:'#f90d03'}
+                            } else if (lineName == '日产油') {
+                                series.xAxisIndex = 2;
+                                series.yAxisIndex = 8;
+                                series.itemStyle={color:'#018000'}
+                            } else if (lineName == '日产液') {
+                                series.xAxisIndex = 2;
+                                series.yAxisIndex = 9;
+                                series.itemStyle={color:'#f300f1'}
+                            } else  {
                                 continue;
                             }
                             //折线数据
@@ -669,6 +662,7 @@
                         this.option.xAxis[1].data = xData;
                         this.option.xAxis[2].data = xData;
                         this.option.series = seriesData;
+                        console.log('生产数据echart配置',this.option)
                     }
                 })
             },
@@ -703,10 +697,8 @@
                 series.data = seriesData;
                 return series;
             },
-            //select change
-            selectChange(){
-                
-            },
+            //分配，计量change
+            selectChange(){},
             //下载echarts
             doDownLoad() {
                 let res = this.$refs['echartDown'].chart.getDataURL({
@@ -714,13 +706,8 @@
                     pixelRatio: 14,
                     backgroundColor: '#022644'
                 })
-                /*let resNext = this.$refs['echartDown'].chart.getRenderedCanvas({
-                  pixelRatio: 14,
-                  backgroundColor: '#022644'
-                })
-                console.log(res);
-                console.log(resNext);*/
-                let fileName = '生产数据';
+                console.log(res,88);
+                let fileName = '777生产数据';
                 if (this.wellName) {
                     fileName = this.wellName + fileName;
                 }

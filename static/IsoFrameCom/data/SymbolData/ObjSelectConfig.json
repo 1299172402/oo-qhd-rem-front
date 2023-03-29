@@ -1,0 +1,3076 @@
+﻿[
+  {
+    "id": "101",
+    "text": "填充符号",
+    "pelItem": [
+      {
+        "id": "33",
+        "src": "../data/SymbolData/thumbimages/33.bmp",
+        "url": "../data/SymbolData/101/33.json",
+        "text": "33",
+        "type": 0
+      },
+      {
+        "id": "DYM",
+        "src": "../data/SymbolData/thumbimages/DYM.bmp",
+        "url": "../data/SymbolData/101/DYM.json",
+        "text": "动液面",
+        "type": 0
+      },
+      {
+        "id": "FGQ",
+        "src": "../data/SymbolData/thumbimages/FGQ.bmp",
+        "url": "../data/SymbolData/101/FGQ.json",
+        "text": "封隔器",
+        "type": 0
+      },
+      {
+        "id": "JYM",
+        "src": "../data/SymbolData/thumbimages/JYM.bmp",
+        "url": "../data/SymbolData/101/JYM.json",
+        "text": "静液面",
+        "type": 0
+      },
+      {
+        "id": "mmm",
+        "src": "../data/SymbolData/thumbimages/mmm.bmp",
+        "url": "../data/SymbolData/101/mmm.json",
+        "text": "mmm",
+        "type": 0
+      },
+      {
+        "id": "QYDB",
+        "src": "../data/SymbolData/thumbimages/QYDB.bmp",
+        "url": "../data/SymbolData/101/QYDB.json",
+        "text": "潜油电泵",
+        "type": 0
+      },
+      {
+        "id": "SCJD",
+        "src": "../data/SymbolData/thumbimages/SCJD.bmp",
+        "url": "../data/SymbolData/101/SCJD.json",
+        "text": "生产井段",
+        "type": 0
+      },
+      {
+        "id": "SKJD",
+        "src": "../data/SymbolData/thumbimages/SKJD.bmp",
+        "url": "../data/SymbolData/101/SKJD.json",
+        "text": "射孔井段",
+        "type": 0
+      },
+      {
+        "id": "SYCG",
+        "src": "../data/SymbolData/thumbimages/SYCG.bmp",
+        "url": "../data/SymbolData/101/SYCG.json",
+        "text": "试油成果",
+        "type": 0
+      },
+      {
+        "id": "test",
+        "src": "../data/SymbolData/thumbimages/test.bmp",
+        "url": "../data/SymbolData/101/test.json",
+        "text": "test",
+        "type": 0
+      },
+      {
+        "id": "Test2",
+        "src": "../data/SymbolData/thumbimages/Test2.bmp",
+        "url": "../data/SymbolData/101/Test2.json",
+        "text": "Test2",
+        "type": 0
+      },
+      {
+        "id": "tt",
+        "src": "../data/SymbolData/thumbimages/tt.bmp",
+        "url": "../data/SymbolData/101/tt.json",
+        "text": "tt",
+        "type": 0
+      },
+      {
+        "id": "ttt",
+        "src": "../data/SymbolData/thumbimages/ttt.bmp",
+        "url": "../data/SymbolData/101/ttt.json",
+        "text": "ttt",
+        "type": 0
+      }
+    ]
+  },
+  {
+    "id": "102",
+    "text": "线型符号",
+    "pelItem": [
+      {
+        "id": "BSX-002C",
+        "src": "../data/SymbolData/thumbimages/BSX-002C.bmp",
+        "url": "../data/SymbolData/102/BSX-002C.json",
+        "text": "推测剥蚀灭线",
+        "type": 0
+      },
+      {
+        "id": "CFX--001C",
+        "src": "../data/SymbolData/thumbimages/CFX--001C.bmp",
+        "url": "../data/SymbolData/102/CFX--001C.json",
+        "text": "一级构造底层超覆线",
+        "type": 0
+      },
+      {
+        "id": "CFX--001H",
+        "src": "../data/SymbolData/thumbimages/CFX--001H.bmp",
+        "url": "../data/SymbolData/102/CFX--001H.json",
+        "text": "一级构造地层超覆线H",
+        "type": 0
+      },
+      {
+        "id": "CFX--002C",
+        "src": "../data/SymbolData/thumbimages/CFX--002C.bmp",
+        "url": "../data/SymbolData/102/CFX--002C.json",
+        "text": "一级构造推测地层超覆线1",
+        "type": 0
+      },
+      {
+        "id": "CFX--002H",
+        "src": "../data/SymbolData/thumbimages/CFX--002H.bmp",
+        "url": "../data/SymbolData/102/CFX--002H.json",
+        "text": "一级构造推测地层超覆线",
+        "type": 0
+      },
+      {
+        "id": "CFX--003C",
+        "src": "../data/SymbolData/thumbimages/CFX--003C.bmp",
+        "url": "../data/SymbolData/102/CFX--003C.json",
+        "text": "二级构造地层超覆线1",
+        "type": 0
+      },
+      {
+        "id": "CFX--003H",
+        "src": "../data/SymbolData/thumbimages/CFX--003H.bmp",
+        "url": "../data/SymbolData/102/CFX--003H.json",
+        "text": "二级构造地层超覆线",
+        "type": 0
+      },
+      {
+        "id": "CFX-001C",
+        "src": "../data/SymbolData/thumbimages/CFX-001C.bmp",
+        "url": "../data/SymbolData/102/CFX-001C.json",
+        "text": "地层超覆线",
+        "type": 0
+      },
+      {
+        "id": "DCJX-1C",
+        "src": "../data/SymbolData/thumbimages/DCJX-1C.bmp",
+        "url": "../data/SymbolData/102/DCJX-1C.json",
+        "text": "地层不整合界线",
+        "type": 0
+      },
+      {
+        "id": "DCJX-3C",
+        "src": "../data/SymbolData/thumbimages/DCJX-3C.bmp",
+        "url": "../data/SymbolData/102/DCJX-3C.json",
+        "text": "地层产状",
+        "type": 0
+      },
+      {
+        "id": "DCX--0020C",
+        "src": "../data/SymbolData/thumbimages/DCX--0020C.bmp",
+        "url": "../data/SymbolData/102/DCX--0020C.json",
+        "text": "一级正断层1",
+        "type": 0
+      },
+      {
+        "id": "DCX--0020H",
+        "src": "../data/SymbolData/thumbimages/DCX--0020H.bmp",
+        "url": "../data/SymbolData/102/DCX--0020H.json",
+        "text": "一级正断层",
+        "type": 0
+      },
+      {
+        "id": "DCX--0021C",
+        "src": "../data/SymbolData/thumbimages/DCX--0021C.bmp",
+        "url": "../data/SymbolData/102/DCX--0021C.json",
+        "text": "二级正断层1",
+        "type": 0
+      },
+      {
+        "id": "DCX--0021H",
+        "src": "../data/SymbolData/thumbimages/DCX--0021H.bmp",
+        "url": "../data/SymbolData/102/DCX--0021H.json",
+        "text": "二级正断层",
+        "type": 0
+      },
+      {
+        "id": "DCX--0030C",
+        "src": "../data/SymbolData/thumbimages/DCX--0030C.bmp",
+        "url": "../data/SymbolData/102/DCX--0030C.json",
+        "text": "一级逆断层1",
+        "type": 0
+      },
+      {
+        "id": "DCX--0030H",
+        "src": "../data/SymbolData/thumbimages/DCX--0030H.bmp",
+        "url": "../data/SymbolData/102/DCX--0030H.json",
+        "text": "一级逆断层",
+        "type": 0
+      },
+      {
+        "id": "DCX--0031C",
+        "src": "../data/SymbolData/thumbimages/DCX--0031C.bmp",
+        "url": "../data/SymbolData/102/DCX--0031C.json",
+        "text": "二级逆断层1",
+        "type": 0
+      },
+      {
+        "id": "DCX--0031H",
+        "src": "../data/SymbolData/thumbimages/DCX--0031H.bmp",
+        "url": "../data/SymbolData/102/DCX--0031H.json",
+        "text": "二级逆断层",
+        "type": 0
+      },
+      {
+        "id": "DCX--0040C",
+        "src": "../data/SymbolData/thumbimages/DCX--0040C.bmp",
+        "url": "../data/SymbolData/102/DCX--0040C.json",
+        "text": "一级平推断层1",
+        "type": 0
+      },
+      {
+        "id": "DCX--0040H",
+        "src": "../data/SymbolData/thumbimages/DCX--0040H.bmp",
+        "url": "../data/SymbolData/102/DCX--0040H.json",
+        "text": "一级平推断层",
+        "type": 0
+      },
+      {
+        "id": "DCX--0041C",
+        "src": "../data/SymbolData/thumbimages/DCX--0041C.bmp",
+        "url": "../data/SymbolData/102/DCX--0041C.json",
+        "text": "二级平推断层1",
+        "type": 0
+      },
+      {
+        "id": "DCX--0041H",
+        "src": "../data/SymbolData/thumbimages/DCX--0041H.bmp",
+        "url": "../data/SymbolData/102/DCX--0041H.json",
+        "text": "二级平推断层",
+        "type": 0
+      },
+      {
+        "id": "DCX--0050H",
+        "src": "../data/SymbolData/thumbimages/DCX--0050H.bmp",
+        "url": "../data/SymbolData/102/DCX--0050H.json",
+        "text": "一级逆掩断层",
+        "type": 0
+      },
+      {
+        "id": "DCX--020C",
+        "src": "../data/SymbolData/thumbimages/DCX--020C.bmp",
+        "url": "../data/SymbolData/102/DCX--020C.json",
+        "text": "断层接触1",
+        "type": 0
+      },
+      {
+        "id": "DCX--020H",
+        "src": "../data/SymbolData/thumbimages/DCX--020H.bmp",
+        "url": "../data/SymbolData/102/DCX--020H.json",
+        "text": "断层接触",
+        "type": 0
+      },
+      {
+        "id": "DCX-0020C",
+        "src": "../data/SymbolData/thumbimages/DCX-0020C.bmp",
+        "url": "../data/SymbolData/102/DCX-0020C.json",
+        "text": "一级正断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0021C",
+        "src": "../data/SymbolData/thumbimages/DCX-0021C.bmp",
+        "url": "../data/SymbolData/102/DCX-0021C.json",
+        "text": "二级正断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0022C",
+        "src": "../data/SymbolData/thumbimages/DCX-0022C.bmp",
+        "url": "../data/SymbolData/102/DCX-0022C.json",
+        "text": "三级正断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0023C",
+        "src": "../data/SymbolData/thumbimages/DCX-0023C.bmp",
+        "url": "../data/SymbolData/102/DCX-0023C.json",
+        "text": "四级正断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0024C",
+        "src": "../data/SymbolData/thumbimages/DCX-0024C.bmp",
+        "url": "../data/SymbolData/102/DCX-0024C.json",
+        "text": "一级逆断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0025C",
+        "src": "../data/SymbolData/thumbimages/DCX-0025C.bmp",
+        "url": "../data/SymbolData/102/DCX-0025C.json",
+        "text": "二级逆断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0026C",
+        "src": "../data/SymbolData/thumbimages/DCX-0026C.bmp",
+        "url": "../data/SymbolData/102/DCX-0026C.json",
+        "text": "三级逆断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0027C",
+        "src": "../data/SymbolData/thumbimages/DCX-0027C.bmp",
+        "url": "../data/SymbolData/102/DCX-0027C.json",
+        "text": "四级逆断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0028C",
+        "src": "../data/SymbolData/thumbimages/DCX-0028C.bmp",
+        "url": "../data/SymbolData/102/DCX-0028C.json",
+        "text": "一级平推断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0029C",
+        "src": "../data/SymbolData/thumbimages/DCX-0029C.bmp",
+        "url": "../data/SymbolData/102/DCX-0029C.json",
+        "text": "二级平推断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0030C",
+        "src": "../data/SymbolData/thumbimages/DCX-0030C.bmp",
+        "url": "../data/SymbolData/102/DCX-0030C.json",
+        "text": "三级平推断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0031C",
+        "src": "../data/SymbolData/thumbimages/DCX-0031C.bmp",
+        "url": "../data/SymbolData/102/DCX-0031C.json",
+        "text": "四级平推断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0032C",
+        "src": "../data/SymbolData/thumbimages/DCX-0032C.bmp",
+        "url": "../data/SymbolData/102/DCX-0032C.json",
+        "text": "一级逆掩断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0033C",
+        "src": "../data/SymbolData/thumbimages/DCX-0033C.bmp",
+        "url": "../data/SymbolData/102/DCX-0033C.json",
+        "text": "二级逆掩断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0034C",
+        "src": "../data/SymbolData/thumbimages/DCX-0034C.bmp",
+        "url": "../data/SymbolData/102/DCX-0034C.json",
+        "text": "三级逆掩断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0035C",
+        "src": "../data/SymbolData/thumbimages/DCX-0035C.bmp",
+        "url": "../data/SymbolData/102/DCX-0035C.json",
+        "text": "四级逆掩断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0036C",
+        "src": "../data/SymbolData/thumbimages/DCX-0036C.bmp",
+        "url": "../data/SymbolData/102/DCX-0036C.json",
+        "text": "一级冲断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0037C",
+        "src": "../data/SymbolData/thumbimages/DCX-0037C.bmp",
+        "url": "../data/SymbolData/102/DCX-0037C.json",
+        "text": "二级冲断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0038C",
+        "src": "../data/SymbolData/thumbimages/DCX-0038C.bmp",
+        "url": "../data/SymbolData/102/DCX-0038C.json",
+        "text": "三级冲断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-0039C",
+        "src": "../data/SymbolData/thumbimages/DCX-0039C.bmp",
+        "url": "../data/SymbolData/102/DCX-0039C.json",
+        "text": "四级冲断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-008C",
+        "src": "../data/SymbolData/thumbimages/DCX-008C.bmp",
+        "url": "../data/SymbolData/102/DCX-008C.json",
+        "text": "推测正断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-009C",
+        "src": "../data/SymbolData/thumbimages/DCX-009C.bmp",
+        "url": "../data/SymbolData/102/DCX-009C.json",
+        "text": "推测逆断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-010C",
+        "src": "../data/SymbolData/thumbimages/DCX-010C.bmp",
+        "url": "../data/SymbolData/102/DCX-010C.json",
+        "text": "推测逆掩断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-011C",
+        "src": "../data/SymbolData/thumbimages/DCX-011C.bmp",
+        "url": "../data/SymbolData/102/DCX-011C.json",
+        "text": "推测平推断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-012C",
+        "src": "../data/SymbolData/thumbimages/DCX-012C.bmp",
+        "url": "../data/SymbolData/102/DCX-012C.json",
+        "text": "推测冲断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-013C",
+        "src": "../data/SymbolData/thumbimages/DCX-013C.bmp",
+        "url": "../data/SymbolData/102/DCX-013C.json",
+        "text": "性质不明断层",
+        "type": 0
+      },
+      {
+        "id": "DCX-014C",
+        "src": "../data/SymbolData/thumbimages/DCX-014C.bmp",
+        "url": "../data/SymbolData/102/DCX-014C.json",
+        "text": "复杂断层带",
+        "type": 0
+      },
+      {
+        "id": "DCX-015C",
+        "src": "../data/SymbolData/thumbimages/DCX-015C.bmp",
+        "url": "../data/SymbolData/102/DCX-015C.json",
+        "text": "断层接触",
+        "type": 0
+      },
+      {
+        "id": "DCX-016C",
+        "src": "../data/SymbolData/thumbimages/DCX-016C.bmp",
+        "url": "../data/SymbolData/102/DCX-016C.json",
+        "text": "剖面断层",
+        "type": 0
+      },
+      {
+        "id": "DZX-1C",
+        "src": "../data/SymbolData/thumbimages/DZX-1C.bmp",
+        "url": "../data/SymbolData/102/DZX-1C.json",
+        "text": "确定等值线",
+        "type": 0
+      },
+      {
+        "id": "JMX--003C",
+        "src": "../data/SymbolData/thumbimages/JMX--003C.bmp",
+        "url": "../data/SymbolData/102/JMX--003C.json",
+        "text": "二级构造地层尖灭线1",
+        "type": 0
+      },
+      {
+        "id": "JMX-001C",
+        "src": "../data/SymbolData/thumbimages/JMX-001C.bmp",
+        "url": "../data/SymbolData/102/JMX-001C.json",
+        "text": "地层尖灭线",
+        "type": 0
+      },
+      {
+        "id": "JMX-003H",
+        "src": "../data/SymbolData/thumbimages/JMX-003H.bmp",
+        "url": "../data/SymbolData/102/JMX-003H.json",
+        "text": "二级地层构造尖灭线",
+        "type": 0
+      },
+      {
+        "id": "JMX-011H1",
+        "src": "../data/SymbolData/thumbimages/JMX-011H1.bmp",
+        "url": "../data/SymbolData/102/JMX-011H1.json",
+        "text": "二级构造地层尖灭线",
+        "type": 0
+      },
+      {
+        "id": "YQSX--1AC",
+        "src": "../data/SymbolData/thumbimages/YQSX--1AC.bmp",
+        "url": "../data/SymbolData/102/YQSX--1AC.json",
+        "text": "内油水边界线1",
+        "type": 0
+      },
+      {
+        "id": "YQSX--1AH",
+        "src": "../data/SymbolData/thumbimages/YQSX--1AH.bmp",
+        "url": "../data/SymbolData/102/YQSX--1AH.json",
+        "text": "内油水边界线",
+        "type": 0
+      },
+      {
+        "id": "YQSX--1BC",
+        "src": "../data/SymbolData/thumbimages/YQSX--1BC.bmp",
+        "url": "../data/SymbolData/102/YQSX--1BC.json",
+        "text": "外油水边界线1",
+        "type": 0
+      },
+      {
+        "id": "YQSX--1BH",
+        "src": "../data/SymbolData/thumbimages/YQSX--1BH.bmp",
+        "url": "../data/SymbolData/102/YQSX--1BH.json",
+        "text": "外油水边界线",
+        "type": 0
+      },
+      {
+        "id": "YQSX--1CC",
+        "src": "../data/SymbolData/thumbimages/YQSX--1CC.bmp",
+        "url": "../data/SymbolData/102/YQSX--1CC.json",
+        "text": "油水边界线1",
+        "type": 0
+      },
+      {
+        "id": "YQSX--1CH",
+        "src": "../data/SymbolData/thumbimages/YQSX--1CH.bmp",
+        "url": "../data/SymbolData/102/YQSX--1CH.json",
+        "text": "油水边界线",
+        "type": 0
+      },
+      {
+        "id": "YQSX--1DC",
+        "src": "../data/SymbolData/thumbimages/YQSX--1DC.bmp",
+        "url": "../data/SymbolData/102/YQSX--1DC.json",
+        "text": "含油边界线1",
+        "type": 0
+      },
+      {
+        "id": "YQSX--1DH",
+        "src": "../data/SymbolData/thumbimages/YQSX--1DH.bmp",
+        "url": "../data/SymbolData/102/YQSX--1DH.json",
+        "text": "含油边界线",
+        "type": 0
+      },
+      {
+        "id": "YQSX--1EC",
+        "src": "../data/SymbolData/thumbimages/YQSX--1EC.bmp",
+        "url": "../data/SymbolData/102/YQSX--1EC.json",
+        "text": "油藏中迹线1",
+        "type": 0
+      },
+      {
+        "id": "YQSX--1EH",
+        "src": "../data/SymbolData/thumbimages/YQSX--1EH.bmp",
+        "url": "../data/SymbolData/102/YQSX--1EH.json",
+        "text": "油藏中迹线",
+        "type": 0
+      },
+      {
+        "id": "YQSX--2AC",
+        "src": "../data/SymbolData/thumbimages/YQSX--2AC.bmp",
+        "url": "../data/SymbolData/102/YQSX--2AC.json",
+        "text": "内油气边界1",
+        "type": 0
+      },
+      {
+        "id": "YQSX--2AH",
+        "src": "../data/SymbolData/thumbimages/YQSX--2AH.bmp",
+        "url": "../data/SymbolData/102/YQSX--2AH.json",
+        "text": "内油气边界线",
+        "type": 0
+      },
+      {
+        "id": "YQSX--2BC",
+        "src": "../data/SymbolData/thumbimages/YQSX--2BC.bmp",
+        "url": "../data/SymbolData/102/YQSX--2BC.json",
+        "text": "外油气边界1",
+        "type": 0
+      },
+      {
+        "id": "YQSX--2BH",
+        "src": "../data/SymbolData/thumbimages/YQSX--2BH.bmp",
+        "url": "../data/SymbolData/102/YQSX--2BH.json",
+        "text": "外油气边界",
+        "type": 0
+      },
+      {
+        "id": "YQSX--2C",
+        "src": "../data/SymbolData/thumbimages/YQSX--2C.bmp",
+        "url": "../data/SymbolData/102/YQSX--2C.json",
+        "text": "油气边界1",
+        "type": 0
+      },
+      {
+        "id": "YQSX--2CH",
+        "src": "../data/SymbolData/thumbimages/YQSX--2CH.bmp",
+        "url": "../data/SymbolData/102/YQSX--2CH.json",
+        "text": "油气边界",
+        "type": 0
+      },
+      {
+        "id": "YQSX--4BC",
+        "src": "../data/SymbolData/thumbimages/YQSX--4BC.bmp",
+        "url": "../data/SymbolData/102/YQSX--4BC.json",
+        "text": "储量计算线1",
+        "type": 0
+      },
+      {
+        "id": "YQSX--4BH",
+        "src": "../data/SymbolData/thumbimages/YQSX--4BH.bmp",
+        "url": "../data/SymbolData/102/YQSX--4BH.json",
+        "text": "储量计算线",
+        "type": 0
+      },
+      {
+        "id": "YQSX--5H",
+        "src": "../data/SymbolData/thumbimages/YQSX--5H.bmp",
+        "url": "../data/SymbolData/102/YQSX--5H.json",
+        "text": "砂岩歼灭线",
+        "type": 0
+      },
+      {
+        "id": "YQSX-1C",
+        "src": "../data/SymbolData/thumbimages/YQSX-1C.bmp",
+        "url": "../data/SymbolData/102/YQSX-1C.json",
+        "text": "油水外边界",
+        "type": 0
+      },
+      {
+        "id": "YQSX-2C",
+        "src": "../data/SymbolData/thumbimages/YQSX-2C.bmp",
+        "url": "../data/SymbolData/102/YQSX-2C.json",
+        "text": "油水内边界",
+        "type": 0
+      },
+      {
+        "id": "YQSX-3C",
+        "src": "../data/SymbolData/thumbimages/YQSX-3C.bmp",
+        "url": "../data/SymbolData/102/YQSX-3C.json",
+        "text": "气油外边界",
+        "type": 0
+      },
+      {
+        "id": "YQSX-5C",
+        "src": "../data/SymbolData/thumbimages/YQSX-5C.bmp",
+        "url": "../data/SymbolData/102/YQSX-5C.json",
+        "text": "气水外边界",
+        "type": 0
+      },
+      {
+        "id": "YQSX-7C",
+        "src": "../data/SymbolData/thumbimages/YQSX-7C.bmp",
+        "url": "../data/SymbolData/102/YQSX-7C.json",
+        "text": "含油边界",
+        "type": 0
+      },
+      {
+        "id": "YQSX-8C",
+        "src": "../data/SymbolData/thumbimages/YQSX-8C.bmp",
+        "url": "../data/SymbolData/102/YQSX-8C.json",
+        "text": "含气边界",
+        "type": 0
+      }
+    ]
+  },
+  {
+    "id": "103",
+    "text": "标注符号",
+    "pelItem": [
+      {
+        "id": "CWBS-JCFH07C",
+        "src": "../data/SymbolData/thumbimages/CWBS-JCFH07C.bmp",
+        "url": "../data/SymbolData/103/CWBS-JCFH07C.json",
+        "text": "砂层厚度",
+        "type": 0
+      },
+      {
+        "id": "CWBS-JCFH09C",
+        "src": "../data/SymbolData/thumbimages/CWBS-JCFH09C.bmp",
+        "url": "../data/SymbolData/103/CWBS-JCFH09C.json",
+        "text": "射孔井段",
+        "type": 0
+      },
+      {
+        "id": "TY",
+        "src": "../data/SymbolData/thumbimages/TY.bmp",
+        "url": "../data/SymbolData/103/TY.json",
+        "text": "椭圆",
+        "type": 0
+      },
+      {
+        "id": "YSBJ",
+        "src": "../data/SymbolData/thumbimages/YSBJ.bmp",
+        "url": "../data/SymbolData/103/YSBJ.json",
+        "text": "油水边界",
+        "type": 0
+      }
+    ]
+  },
+  {
+    "id": "104",
+    "text": "井别符号",
+    "pelItem": [
+      {
+        "id": "BFJ",
+        "src": "../data/SymbolData/thumbimages/BFJ.bmp",
+        "url": "../data/SymbolData/104/BFJ.json",
+        "text": "报废井",
+        "type": 0
+      },
+      {
+        "id": "CQJ",
+        "src": "../data/SymbolData/thumbimages/CQJ.bmp",
+        "url": "../data/SymbolData/104/CQJ.json",
+        "text": "采气井",
+        "type": 0
+      },
+      {
+        "id": "CYJ",
+        "src": "../data/SymbolData/thumbimages/CYJ.bmp",
+        "url": "../data/SymbolData/104/CYJ.json",
+        "text": "采油井",
+        "type": 0
+      },
+      {
+        "id": "KFJB-1HC",
+        "src": "../data/SymbolData/thumbimages/KFJB-1HC.bmp",
+        "url": "../data/SymbolData/104/KFJB-1HC.json",
+        "text": "蒸汽吞吐井",
+        "type": 0
+      },
+      {
+        "id": "KFJB-21H",
+        "src": "../data/SymbolData/thumbimages/KFJB-21H.bmp",
+        "url": "../data/SymbolData/104/KFJB-21H.json",
+        "text": "采气井",
+        "type": 0
+      },
+      {
+        "id": "SJCYJ",
+        "src": "../data/SymbolData/thumbimages/SJCYJ.bmp",
+        "url": "../data/SymbolData/104/SJCYJ.json",
+        "text": "设计采油井",
+        "type": 0
+      },
+      {
+        "id": "SJXJ",
+        "src": "../data/SymbolData/thumbimages/SJXJ.bmp",
+        "url": "../data/SymbolData/104/SJXJ.json",
+        "text": "设计斜井",
+        "type": 0
+      },
+      {
+        "id": "SJZSJ",
+        "src": "../data/SymbolData/thumbimages/SJZSJ.bmp",
+        "url": "../data/SymbolData/104/SJZSJ.json",
+        "text": "设计注水井",
+        "type": 0
+      },
+      {
+        "id": "TCQJ",
+        "src": "../data/SymbolData/thumbimages/TCQJ.bmp",
+        "url": "../data/SymbolData/104/TCQJ.json",
+        "text": "停产气井",
+        "type": 0
+      },
+      {
+        "id": "TCYJ",
+        "src": "../data/SymbolData/thumbimages/TCYJ.bmp",
+        "url": "../data/SymbolData/104/TCYJ.json",
+        "text": "停产油井",
+        "type": 0
+      },
+      {
+        "id": "TJLB-41C",
+        "src": "../data/SymbolData/thumbimages/TJLB-41C.bmp",
+        "url": "../data/SymbolData/104/TJLB-41C.json",
+        "text": "干井",
+        "type": 0
+      },
+      {
+        "id": "TJLB-YTS",
+        "src": "../data/SymbolData/thumbimages/TJLB-YTS.bmp",
+        "url": "../data/SymbolData/104/TJLB-YTS.json",
+        "text": "设计采油井",
+        "type": 0
+      },
+      {
+        "id": "ZHJ",
+        "src": "../data/SymbolData/thumbimages/ZHJ.bmp",
+        "url": "../data/SymbolData/104/ZHJ.json",
+        "text": "注水井",
+        "type": 0
+      },
+      {
+        "id": "ZQTTJ",
+        "src": "../data/SymbolData/thumbimages/ZQTTJ.bmp",
+        "url": "../data/SymbolData/104/ZQTTJ.json",
+        "text": "蒸汽吞吐井",
+        "type": 0
+      }
+    ]
+  },
+  {
+    "id": "105",
+    "text": "岩性符号",
+    "pelItem": [
+      {
+        "id": "ASXWY",
+        "src": "../data/SymbolData/thumbimages/ASXWY.bmp",
+        "url": "../data/SymbolData/105/ASXWY.json",
+        "text": "安山玄武岩",
+        "type": 0
+      },
+      {
+        "id": "ASY",
+        "src": "../data/SymbolData/thumbimages/ASY.bmp",
+        "url": "../data/SymbolData/105/ASY.json",
+        "text": "安山岩",
+        "type": 0
+      },
+      {
+        "id": "Blank",
+        "src": "../data/SymbolData/thumbimages/Blank.bmp",
+        "url": "../data/SymbolData/105/Blank.json",
+        "text": "默认空白",
+        "type": 0
+      },
+      {
+        "id": "BPHY",
+        "src": "../data/SymbolData/thumbimages/BPHY.bmp",
+        "url": "../data/SymbolData/105/BPHY.json",
+        "text": "豹皮灰岩",
+        "type": 0
+      },
+      {
+        "id": "BTHJTC",
+        "src": "../data/SymbolData/thumbimages/BTHJTC.bmp",
+        "url": "../data/SymbolData/105/BTHJTC.json",
+        "text": "表土和积土层",
+        "type": 0
+      },
+      {
+        "id": "BY",
+        "src": "../data/SymbolData/thumbimages/BY.bmp",
+        "url": "../data/SymbolData/105/BY.json",
+        "text": "玢岩",
+        "type": 0
+      },
+      {
+        "id": "BYY-B16C",
+        "src": "../data/SymbolData/thumbimages/BYY-B16C.bmp",
+        "url": "../data/SymbolData/105/BYY-B16C.json",
+        "text": "竹叶状白云岩",
+        "type": 0
+      },
+      {
+        "id": "BYY-B27C",
+        "src": "../data/SymbolData/thumbimages/BYY-B27C.bmp",
+        "url": "../data/SymbolData/105/BYY-B27C.json",
+        "text": "生物礁白云岩",
+        "type": 0
+      },
+      {
+        "id": "BYY-CTL0000106C",
+        "src": "../data/SymbolData/thumbimages/BYY-CTL0000106C.bmp",
+        "url": "../data/SymbolData/105/BYY-CTL0000106C.json",
+        "text": "砂质白云岩",
+        "type": 0
+      },
+      {
+        "id": "BYY-CTL0000307C",
+        "src": "../data/SymbolData/thumbimages/BYY-CTL0000307C.bmp",
+        "url": "../data/SymbolData/105/BYY-CTL0000307C.json",
+        "text": "泥质白云岩",
+        "type": 0
+      },
+      {
+        "id": "BYY-CTL0000402C",
+        "src": "../data/SymbolData/thumbimages/BYY-CTL0000402C.bmp",
+        "url": "../data/SymbolData/105/BYY-CTL0000402C.json",
+        "text": "石膏质白云岩",
+        "type": 0
+      },
+      {
+        "id": "BYY",
+        "src": "../data/SymbolData/thumbimages/BYY.bmp",
+        "url": "../data/SymbolData/105/BYY.json",
+        "text": "白云岩",
+        "type": 0
+      },
+      {
+        "id": "BYZSY",
+        "src": "../data/SymbolData/thumbimages/BYZSY.bmp",
+        "url": "../data/SymbolData/105/BYZSY.json",
+        "text": "白云质砂岩",
+        "type": 0
+      },
+      {
+        "id": "BZNY",
+        "src": "../data/SymbolData/thumbimages/BZNY.bmp",
+        "url": "../data/SymbolData/105/BZNY.json",
+        "text": "变质泥岩",
+        "type": 0
+      },
+      {
+        "id": "BZY-BQDC",
+        "src": "../data/SymbolData/thumbimages/BZY-BQDC.bmp",
+        "url": "../data/SymbolData/105/BZY-BQDC.json",
+        "text": "片麻岩",
+        "type": 0
+      },
+      {
+        "id": "BZY-J09C",
+        "src": "../data/SymbolData/thumbimages/BZY-J09C.bmp",
+        "url": "../data/SymbolData/105/BZY-J09C.json",
+        "text": "大理岩",
+        "type": 0
+      },
+      {
+        "id": "CLY",
+        "src": "../data/SymbolData/thumbimages/CLY.bmp",
+        "url": "../data/SymbolData/105/CLY.json",
+        "text": "粗砾岩",
+        "type": 0
+      },
+      {
+        "id": "CNHY",
+        "src": "../data/SymbolData/thumbimages/CNHY.bmp",
+        "url": "../data/SymbolData/105/CNHY.json",
+        "text": "沉凝灰岩",
+        "type": 0
+      },
+      {
+        "id": "CSSY",
+        "src": "../data/SymbolData/thumbimages/CSSY.bmp",
+        "url": "../data/SymbolData/105/CSSY.json",
+        "text": "长石砂岩",
+        "type": 0
+      },
+      {
+        "id": "CSZSY",
+        "src": "../data/SymbolData/thumbimages/CSZSY.bmp",
+        "url": "../data/SymbolData/105/CSZSY.json",
+        "text": "长石中砂岩",
+        "type": 0
+      },
+      {
+        "id": "EZHY",
+        "src": "../data/SymbolData/thumbimages/EZHY.bmp",
+        "url": "../data/SymbolData/105/EZHY.json",
+        "text": "鲕状灰岩",
+        "type": 0
+      },
+      {
+        "id": "FS",
+        "src": "../data/SymbolData/thumbimages/FS.bmp",
+        "url": "../data/SymbolData/105/FS.json",
+        "text": "粉砂",
+        "type": 0
+      },
+      {
+        "id": "FSZNY",
+        "src": "../data/SymbolData/thumbimages/FSZNY.bmp",
+        "url": "../data/SymbolData/105/FSZNY.json",
+        "text": "粉砂质泥岩",
+        "type": 0
+      },
+      {
+        "id": "FXSY",
+        "src": "../data/SymbolData/thumbimages/FXSY.bmp",
+        "url": "../data/SymbolData/105/FXSY.json",
+        "text": "粉细砂岩",
+        "type": 0
+      },
+      {
+        "id": "GHNY",
+        "src": "../data/SymbolData/thumbimages/GHNY.bmp",
+        "url": "../data/SymbolData/105/GHNY.json",
+        "text": "硅化泥岩",
+        "type": 0
+      },
+      {
+        "id": "GYY",
+        "src": "../data/SymbolData/thumbimages/GYY.bmp",
+        "url": "../data/SymbolData/105/GYY.json",
+        "text": "膏盐岩",
+        "type": 0
+      },
+      {
+        "id": "GZBYY",
+        "src": "../data/SymbolData/thumbimages/GZBYY.bmp",
+        "url": "../data/SymbolData/105/GZBYY.json",
+        "text": "硅质白云岩",
+        "type": 0
+      },
+      {
+        "id": "GZJLY",
+        "src": "../data/SymbolData/thumbimages/GZJLY.bmp",
+        "url": "../data/SymbolData/105/GZJLY.json",
+        "text": "构造角砾岩",
+        "type": 0
+      },
+      {
+        "id": "GZNY",
+        "src": "../data/SymbolData/thumbimages/GZNY.bmp",
+        "url": "../data/SymbolData/105/GZNY.json",
+        "text": "硅质泥岩",
+        "type": 0
+      },
+      {
+        "id": "GZSY",
+        "src": "../data/SymbolData/thumbimages/GZSY.bmp",
+        "url": "../data/SymbolData/105/GZSY.json",
+        "text": "硅质砂岩",
+        "type": 0
+      },
+      {
+        "id": "GZY",
+        "src": "../data/SymbolData/thumbimages/GZY.bmp",
+        "url": "../data/SymbolData/105/GZY.json",
+        "text": "硅质岩",
+        "type": 0
+      },
+      {
+        "id": "HBEHY",
+        "src": "../data/SymbolData/thumbimages/HBEHY.bmp",
+        "url": "../data/SymbolData/105/HBEHY.json",
+        "text": "含白垩灰岩",
+        "type": 0
+      },
+      {
+        "id": "HBY",
+        "src": "../data/SymbolData/thumbimages/HBY.bmp",
+        "url": "../data/SymbolData/105/HBY.json",
+        "text": "煌斑岩",
+        "type": 0
+      },
+      {
+        "id": "HBYSHY",
+        "src": "../data/SymbolData/thumbimages/HBYSHY.bmp",
+        "url": "../data/SymbolData/105/HBYSHY.json",
+        "text": "含白云石灰岩",
+        "type": 0
+      },
+      {
+        "id": "HCY",
+        "src": "../data/SymbolData/thumbimages/HCY.bmp",
+        "url": "../data/SymbolData/105/HCY.json",
+        "text": "辉长岩",
+        "type": 0
+      },
+      {
+        "id": "HGHYNY",
+        "src": "../data/SymbolData/thumbimages/HGHYNY.bmp",
+        "url": "../data/SymbolData/105/HGHYNY.json",
+        "text": "含膏含盐泥岩",
+        "type": 0
+      },
+      {
+        "id": "HGNY",
+        "src": "../data/SymbolData/thumbimages/HGNY.bmp",
+        "url": "../data/SymbolData/105/HGNY.json",
+        "text": "含膏泥岩",
+        "type": 0
+      },
+      {
+        "id": "HGPMY",
+        "src": "../data/SymbolData/thumbimages/HGPMY.bmp",
+        "url": "../data/SymbolData/105/HGPMY.json",
+        "text": "花岗片麻岩",
+        "type": 0
+      },
+      {
+        "id": "HGY",
+        "src": "../data/SymbolData/thumbimages/HGY.bmp",
+        "url": "../data/SymbolData/105/HGY.json",
+        "text": "花岗岩",
+        "type": 0
+      },
+      {
+        "id": "HGYY",
+        "src": "../data/SymbolData/thumbimages/HGYY.bmp",
+        "url": "../data/SymbolData/105/HGYY.json",
+        "text": "含膏盐岩",
+        "type": 0
+      },
+      {
+        "id": "HHBYY",
+        "src": "../data/SymbolData/thumbimages/HHBYY.bmp",
+        "url": "../data/SymbolData/105/HHBYY.json",
+        "text": "含灰白云岩",
+        "type": 0
+      },
+      {
+        "id": "HLFXSY",
+        "src": "../data/SymbolData/thumbimages/HLFXSY.bmp",
+        "url": "../data/SymbolData/105/HLFXSY.json",
+        "text": "含砾粉细砂岩",
+        "type": 0
+      },
+      {
+        "id": "HLHZSY",
+        "src": "../data/SymbolData/thumbimages/HLHZSY.bmp",
+        "url": "../data/SymbolData/105/HLHZSY.json",
+        "text": "含砾灰质砂岩",
+        "type": 0
+      },
+      {
+        "id": "HLHZXSY",
+        "src": "../data/SymbolData/thumbimages/HLHZXSY.bmp",
+        "url": "../data/SymbolData/105/HLHZXSY.json",
+        "text": "含砾灰质细砂岩",
+        "type": 0
+      },
+      {
+        "id": "HLNY",
+        "src": "../data/SymbolData/thumbimages/HLNY.bmp",
+        "url": "../data/SymbolData/105/HLNY.json",
+        "text": "含砾泥岩",
+        "type": 0
+      },
+      {
+        "id": "HLNZSY",
+        "src": "../data/SymbolData/thumbimages/HLNZSY.bmp",
+        "url": "../data/SymbolData/105/HLNZSY.json",
+        "text": "含砾泥质砂岩",
+        "type": 0
+      },
+      {
+        "id": "HLSFSY",
+        "src": "../data/SymbolData/thumbimages/HLSFSY.bmp",
+        "url": "../data/SymbolData/105/HLSFSY.json",
+        "text": "海绿石粉砂岩",
+        "type": 0
+      },
+      {
+        "id": "HLSY-1",
+        "src": "../data/SymbolData/thumbimages/HLSY-1.bmp",
+        "url": "../data/SymbolData/105/HLSY-1.json",
+        "text": "含砾砂岩",
+        "type": 0
+      },
+      {
+        "id": "HLSY",
+        "src": "../data/SymbolData/thumbimages/HLSY.bmp",
+        "url": "../data/SymbolData/105/HLSY.json",
+        "text": "含螺砂岩",
+        "type": 0
+      },
+      {
+        "id": "HLSYSY",
+        "src": "../data/SymbolData/thumbimages/HLSYSY.bmp",
+        "url": "../data/SymbolData/105/HLSYSY.json",
+        "text": "含砾石英砂岩",
+        "type": 0
+      },
+      {
+        "id": "HLSZNY",
+        "src": "../data/SymbolData/thumbimages/HLSZNY.bmp",
+        "url": "../data/SymbolData/105/HLSZNY.json",
+        "text": "含砾砂质泥岩",
+        "type": 0
+      },
+      {
+        "id": "HLY",
+        "src": "../data/SymbolData/thumbimages/HLY.bmp",
+        "url": "../data/SymbolData/105/HLY.json",
+        "text": "辉绿岩",
+        "type": 0
+      },
+      {
+        "id": "HNBYY",
+        "src": "../data/SymbolData/thumbimages/HNBYY.bmp",
+        "url": "../data/SymbolData/105/HNBYY.json",
+        "text": "含泥白云岩",
+        "type": 0
+      },
+      {
+        "id": "HNHY",
+        "src": "../data/SymbolData/thumbimages/HNHY.bmp",
+        "url": "../data/SymbolData/105/HNHY.json",
+        "text": "含泥灰岩",
+        "type": 0
+      },
+      {
+        "id": "HSJKY",
+        "src": "../data/SymbolData/thumbimages/HSJKY.bmp",
+        "url": "../data/SymbolData/105/HSJKY.json",
+        "text": "火山集块岩",
+        "type": 0
+      },
+      {
+        "id": "HSJLY",
+        "src": "../data/SymbolData/thumbimages/HSJLY.bmp",
+        "url": "../data/SymbolData/105/HSJLY.json",
+        "text": "火山角砾岩",
+        "type": 0
+      },
+      {
+        "id": "HY",
+        "src": "../data/SymbolData/thumbimages/HY.bmp",
+        "url": "../data/SymbolData/105/HY.json",
+        "text": "灰岩",
+        "type": 0
+      },
+      {
+        "id": "HYNY",
+        "src": "../data/SymbolData/thumbimages/HYNY.bmp",
+        "url": "../data/SymbolData/105/HYNY.json",
+        "text": "含盐泥岩",
+        "type": 0
+      },
+      {
+        "id": "HZBYY",
+        "src": "../data/SymbolData/thumbimages/HZBYY.bmp",
+        "url": "../data/SymbolData/105/HZBYY.json",
+        "text": "灰质白云岩",
+        "type": 0
+      },
+      {
+        "id": "HZFXSY",
+        "src": "../data/SymbolData/thumbimages/HZFXSY.bmp",
+        "url": "../data/SymbolData/105/HZFXSY.json",
+        "text": "灰质粉细砂岩",
+        "type": 0
+      },
+      {
+        "id": "HZHLCSY",
+        "src": "../data/SymbolData/thumbimages/HZHLCSY.bmp",
+        "url": "../data/SymbolData/105/HZHLCSY.json",
+        "text": "灰质含砾粗砂岩",
+        "type": 0
+      },
+      {
+        "id": "HZHLSY",
+        "src": "../data/SymbolData/thumbimages/HZHLSY.bmp",
+        "url": "../data/SymbolData/105/HZHLSY.json",
+        "text": "灰质含砾砂岩",
+        "type": 0
+      },
+      {
+        "id": "HZHLXSY",
+        "src": "../data/SymbolData/thumbimages/HZHLXSY.bmp",
+        "url": "../data/SymbolData/105/HZHLXSY.json",
+        "text": "灰质含砾细砂岩",
+        "type": 0
+      },
+      {
+        "id": "HZHLZSY",
+        "src": "../data/SymbolData/thumbimages/HZHLZSY.bmp",
+        "url": "../data/SymbolData/105/HZHLZSY.json",
+        "text": "灰质含砾中砂岩",
+        "type": 0
+      },
+      {
+        "id": "HZLY",
+        "src": "../data/SymbolData/thumbimages/HZLY.bmp",
+        "url": "../data/SymbolData/105/HZLY.json",
+        "text": "灰质砾岩",
+        "type": 0
+      },
+      {
+        "id": "HZLZSY",
+        "src": "../data/SymbolData/thumbimages/HZLZSY.bmp",
+        "url": "../data/SymbolData/105/HZLZSY.json",
+        "text": "灰质砾状砂岩",
+        "type": 0
+      },
+      {
+        "id": "HZSY",
+        "src": "../data/SymbolData/thumbimages/HZSY.bmp",
+        "url": "../data/SymbolData/105/HZSY.json",
+        "text": "灰质砂岩",
+        "type": 0
+      },
+      {
+        "id": "HZYNY",
+        "src": "../data/SymbolData/thumbimages/HZYNY.bmp",
+        "url": "../data/SymbolData/105/HZYNY.json",
+        "text": "灰质油泥岩",
+        "type": 0
+      },
+      {
+        "id": "HZYYY",
+        "src": "../data/SymbolData/thumbimages/HZYYY.bmp",
+        "url": "../data/SymbolData/105/HZYYY.json",
+        "text": "灰质油页岩",
+        "type": 0
+      },
+      {
+        "id": "JLZBYY",
+        "src": "../data/SymbolData/thumbimages/JLZBYY.bmp",
+        "url": "../data/SymbolData/105/JLZBYY.json",
+        "text": "角砾状白云岩",
+        "type": 0
+      },
+      {
+        "id": "JXPFY",
+        "src": "../data/SymbolData/thumbimages/JXPFY.bmp",
+        "url": "../data/SymbolData/105/JXPFY.json",
+        "text": "基性喷发岩",
+        "type": 0
+      },
+      {
+        "id": "LIY-CSA0018C",
+        "src": "../data/SymbolData/thumbimages/LIY-CSA0018C.bmp",
+        "url": "../data/SymbolData/105/LIY-CSA0018C.json",
+        "text": "砂砾岩",
+        "type": 0
+      },
+      {
+        "id": "LIY-CSA01C",
+        "src": "../data/SymbolData/thumbimages/LIY-CSA01C.bmp",
+        "url": "../data/SymbolData/105/LIY-CSA01C.json",
+        "text": "角砾岩",
+        "type": 0
+      },
+      {
+        "id": "LIY-CSA03C",
+        "src": "../data/SymbolData/thumbimages/LIY-CSA03C.bmp",
+        "url": "../data/SymbolData/105/LIY-CSA03C.json",
+        "text": "泥砾岩",
+        "type": 0
+      },
+      {
+        "id": "LQZHY",
+        "src": "../data/SymbolData/thumbimages/LQZHY.bmp",
+        "url": "../data/SymbolData/105/LQZHY.json",
+        "text": "沥青质灰岩",
+        "type": 0
+      },
+      {
+        "id": "LQZNY",
+        "src": "../data/SymbolData/thumbimages/LQZNY.bmp",
+        "url": "../data/SymbolData/105/LQZNY.json",
+        "text": "沥青质泥岩",
+        "type": 0
+      },
+      {
+        "id": "LS",
+        "src": "../data/SymbolData/thumbimages/LS.bmp",
+        "url": "../data/SymbolData/105/LS.json",
+        "text": "砾石",
+        "type": 0
+      },
+      {
+        "id": "LTY",
+        "src": "../data/SymbolData/thumbimages/LTY.bmp",
+        "url": "../data/SymbolData/105/LTY.json",
+        "text": "铝土岩",
+        "type": 0
+      },
+      {
+        "id": "LTZNY",
+        "src": "../data/SymbolData/thumbimages/LTZNY.bmp",
+        "url": "../data/SymbolData/105/LTZNY.json",
+        "text": "铝土质泥岩",
+        "type": 0
+      },
+      {
+        "id": "LWY",
+        "src": "../data/SymbolData/thumbimages/LWY.bmp",
+        "url": "../data/SymbolData/105/LWY.json",
+        "text": "流纹岩",
+        "type": 0
+      },
+      {
+        "id": "LY",
+        "src": "../data/SymbolData/thumbimages/LY.bmp",
+        "url": "../data/SymbolData/105/LY.json",
+        "text": "砾岩",
+        "type": 0
+      },
+      {
+        "id": "LZSYSY",
+        "src": "../data/SymbolData/thumbimages/LZSYSY.bmp",
+        "url": "../data/SymbolData/105/LZSYSY.json",
+        "text": "砾状石英砂岩",
+        "type": 0
+      },
+      {
+        "id": "M",
+        "src": "../data/SymbolData/thumbimages/M.bmp",
+        "url": "../data/SymbolData/105/M.json",
+        "text": "煤",
+        "type": 0
+      },
+      {
+        "id": "MC",
+        "src": "../data/SymbolData/thumbimages/MC.bmp",
+        "url": "../data/SymbolData/105/MC.json",
+        "text": "煤层",
+        "type": 0
+      },
+      {
+        "id": "NGY",
+        "src": "../data/SymbolData/thumbimages/NGY.bmp",
+        "url": "../data/SymbolData/105/NGY.json",
+        "text": "泥膏岩",
+        "type": 0
+      },
+      {
+        "id": "NHY",
+        "src": "../data/SymbolData/thumbimages/NHY.bmp",
+        "url": "../data/SymbolData/105/NHY.json",
+        "text": "凝灰岩",
+        "type": 0
+      },
+      {
+        "id": "NHZBYY",
+        "src": "../data/SymbolData/thumbimages/NHZBYY.bmp",
+        "url": "../data/SymbolData/105/NHZBYY.json",
+        "text": "凝灰质白云岩",
+        "type": 0
+      },
+      {
+        "id": "NHZLY",
+        "src": "../data/SymbolData/thumbimages/NHZLY.bmp",
+        "url": "../data/SymbolData/105/NHZLY.json",
+        "text": "凝灰质砾岩",
+        "type": 0
+      },
+      {
+        "id": "NHZNY",
+        "src": "../data/SymbolData/thumbimages/NHZNY.bmp",
+        "url": "../data/SymbolData/105/NHZNY.json",
+        "text": "凝灰质泥岩",
+        "type": 0
+      },
+      {
+        "id": "NHZSLY",
+        "src": "../data/SymbolData/thumbimages/NHZSLY.bmp",
+        "url": "../data/SymbolData/105/NHZSLY.json",
+        "text": "凝灰质砂砾岩",
+        "type": 0
+      },
+      {
+        "id": "NHZSY",
+        "src": "../data/SymbolData/thumbimages/NHZSY.bmp",
+        "url": "../data/SymbolData/105/NHZSY.json",
+        "text": "凝灰质砂岩",
+        "type": 0
+      },
+      {
+        "id": "NIY-CSC0050315C",
+        "src": "../data/SymbolData/thumbimages/NIY-CSC0050315C.bmp",
+        "url": "../data/SymbolData/105/NIY-CSC0050315C.json",
+        "text": "白云质泥岩",
+        "type": 0
+      },
+      {
+        "id": "NIY-CSC0050402C",
+        "src": "../data/SymbolData/thumbimages/NIY-CSC0050402C.bmp",
+        "url": "../data/SymbolData/105/NIY-CSC0050402C.json",
+        "text": "石膏质泥岩",
+        "type": 0
+      },
+      {
+        "id": "NIY-CSC0050610C",
+        "src": "../data/SymbolData/thumbimages/NIY-CSC0050610C.bmp",
+        "url": "../data/SymbolData/105/NIY-CSC0050610C.json",
+        "text": "玄武质泥岩",
+        "type": 0
+      },
+      {
+        "id": "NIY-CSCC",
+        "src": "../data/SymbolData/thumbimages/NIY-CSCC.bmp",
+        "url": "../data/SymbolData/105/NIY-CSCC.json",
+        "text": "泥岩",
+        "type": 0
+      },
+      {
+        "id": "NIY-N08C",
+        "src": "../data/SymbolData/thumbimages/NIY-N08C.bmp",
+        "url": "../data/SymbolData/105/NIY-N08C.json",
+        "text": "盐质泥岩",
+        "type": 0
+      },
+      {
+        "id": "NIY-N30C",
+        "src": "../data/SymbolData/thumbimages/NIY-N30C.bmp",
+        "url": "../data/SymbolData/105/NIY-N30C.json",
+        "text": "灰质泥岩",
+        "type": 0
+      },
+      {
+        "id": "NT",
+        "src": "../data/SymbolData/thumbimages/NT.bmp",
+        "url": "../data/SymbolData/105/NT.json",
+        "text": "粘土",
+        "type": 0
+      },
+      {
+        "id": "NYY",
+        "src": "../data/SymbolData/thumbimages/NYY.bmp",
+        "url": "../data/SymbolData/105/NYY.json",
+        "text": "泥盐岩",
+        "type": 0
+      },
+      {
+        "id": "NZFS",
+        "src": "../data/SymbolData/thumbimages/NZFS.bmp",
+        "url": "../data/SymbolData/105/NZFS.json",
+        "text": "泥质粉砂",
+        "type": 0
+      },
+      {
+        "id": "NZHLCSY",
+        "src": "../data/SymbolData/thumbimages/NZHLCSY.bmp",
+        "url": "../data/SymbolData/105/NZHLCSY.json",
+        "text": "泥质含砾粗砂岩",
+        "type": 0
+      },
+      {
+        "id": "NZHLFSY",
+        "src": "../data/SymbolData/thumbimages/NZHLFSY.bmp",
+        "url": "../data/SymbolData/105/NZHLFSY.json",
+        "text": "泥质含砾粉砂岩",
+        "type": 0
+      },
+      {
+        "id": "NZHLXSY",
+        "src": "../data/SymbolData/thumbimages/NZHLXSY.bmp",
+        "url": "../data/SymbolData/105/NZHLXSY.json",
+        "text": "泥质含砾细砂岩",
+        "type": 0
+      },
+      {
+        "id": "NZHY",
+        "src": "../data/SymbolData/thumbimages/NZHY.bmp",
+        "url": "../data/SymbolData/105/NZHY.json",
+        "text": "泥质灰岩",
+        "type": 0
+      },
+      {
+        "id": "NZLY",
+        "src": "../data/SymbolData/thumbimages/NZLY.bmp",
+        "url": "../data/SymbolData/105/NZLY.json",
+        "text": "泥质砾岩",
+        "type": 0
+      },
+      {
+        "id": "NZSY",
+        "src": "../data/SymbolData/thumbimages/NZSY.bmp",
+        "url": "../data/SymbolData/105/NZSY.json",
+        "text": "泥质砂岩",
+        "type": 0
+      },
+      {
+        "id": "PY",
+        "src": "../data/SymbolData/thumbimages/PY.bmp",
+        "url": "../data/SymbolData/105/PY.json",
+        "text": "片岩",
+        "type": 0
+      },
+      {
+        "id": "QTHW-U22C",
+        "src": "../data/SymbolData/thumbimages/QTHW-U22C.bmp",
+        "url": "../data/SymbolData/105/QTHW-U22C.json",
+        "text": "含介形虫",
+        "type": 0
+      },
+      {
+        "id": "RDHY",
+        "src": "../data/SymbolData/thumbimages/RDHY.bmp",
+        "url": "../data/SymbolData/105/RDHY.json",
+        "text": "溶洞灰岩",
+        "type": 0
+      },
+      {
+        "id": "RNY",
+        "src": "../data/SymbolData/thumbimages/RNY.bmp",
+        "url": "../data/SymbolData/105/RNY.json",
+        "text": "软泥岩",
+        "type": 0
+      },
+      {
+        "id": "SCBY",
+        "src": "../data/SymbolData/thumbimages/SCBY.bmp",
+        "url": "../data/SymbolData/105/SCBY.json",
+        "text": "闪长玢岩",
+        "type": 0
+      },
+      {
+        "id": "SCY",
+        "src": "../data/SymbolData/thumbimages/SCY.bmp",
+        "url": "../data/SymbolData/105/SCY.json",
+        "text": "闪长岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-CSB0022C",
+        "src": "../data/SymbolData/thumbimages/SFSY-CSB0022C.bmp",
+        "url": "../data/SymbolData/105/SFSY-CSB0022C.json",
+        "text": "粗砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-CSB0023C",
+        "src": "../data/SymbolData/thumbimages/SFSY-CSB0023C.bmp",
+        "url": "../data/SymbolData/105/SFSY-CSB0023C.json",
+        "text": "中砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-CSB0024C",
+        "src": "../data/SymbolData/thumbimages/SFSY-CSB0024C.bmp",
+        "url": "../data/SymbolData/105/SFSY-CSB0024C.json",
+        "text": "细砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-CSB0030111C",
+        "src": "../data/SymbolData/thumbimages/SFSY-CSB0030111C.bmp",
+        "url": "../data/SymbolData/105/SFSY-CSB0030111C.json",
+        "text": "泥质粉砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-CSB0030307C",
+        "src": "../data/SymbolData/thumbimages/SFSY-CSB0030307C.bmp",
+        "url": "../data/SymbolData/105/SFSY-CSB0030307C.json",
+        "text": "灰质粉砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-CSB0030315C",
+        "src": "../data/SymbolData/thumbimages/SFSY-CSB0030315C.bmp",
+        "url": "../data/SymbolData/105/SFSY-CSB0030315C.json",
+        "text": "白云质粉砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-CSB0030402C",
+        "src": "../data/SymbolData/thumbimages/SFSY-CSB0030402C.bmp",
+        "url": "../data/SymbolData/105/SFSY-CSB0030402C.json",
+        "text": "石膏质粉砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-CSB0030602C",
+        "src": "../data/SymbolData/thumbimages/SFSY-CSB0030602C.bmp",
+        "url": "../data/SymbolData/105/SFSY-CSB0030602C.json",
+        "text": "凝灰质粉砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S01C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S01C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S01C.json",
+        "text": "砾状砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S05C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S05C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S05C.json",
+        "text": "粉砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S33C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S33C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S33C.json",
+        "text": "鲕状砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S46C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S46C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S46C.json",
+        "text": "中-细砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S47C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S47C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S47C.json",
+        "text": "粉-细砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S48C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S48C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S48C.json",
+        "text": "含砾粉-细砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S49C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S49C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S49C.json",
+        "text": "含砾中-细砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S50C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S50C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S50C.json",
+        "text": "含砾粗砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S51C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S51C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S51C.json",
+        "text": "含砾中砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S52C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S52C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S52C.json",
+        "text": "含砾细砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S53C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S53C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S53C.json",
+        "text": "含砾粉砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S54C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S54C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S54C.json",
+        "text": "含砾泥质粗砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S55C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S55C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S55C.json",
+        "text": "含砾泥质中砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S56C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S56C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S56C.json",
+        "text": "含砾泥质细砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S57C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S57C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S57C.json",
+        "text": "含砾泥质粉砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S70C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S70C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S70C.json",
+        "text": "石膏质粗砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S71C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S71C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S71C.json",
+        "text": "石膏质中砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S72C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S72C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S72C.json",
+        "text": "石膏质细砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S73C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S73C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S73C.json",
+        "text": "硅质粗砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S74C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S74C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S74C.json",
+        "text": "硅质中砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S75C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S75C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S75C.json",
+        "text": "硅质细砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S76C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S76C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S76C.json",
+        "text": "硅质粉砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S78C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S78C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S78C.json",
+        "text": "白云质粗砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S79C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S79C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S79C.json",
+        "text": "白云质中砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S80C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S80C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S80C.json",
+        "text": "白云质细砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S81C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S81C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S81C.json",
+        "text": "灰质粗砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S82C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S82C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S82C.json",
+        "text": "灰质中砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S83C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S83C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S83C.json",
+        "text": "灰质细砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S88C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S88C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S88C.json",
+        "text": "凝灰质粗砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S89C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S89C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S89C.json",
+        "text": "凝灰质中砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S90C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S90C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S90C.json",
+        "text": "凝灰质细砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S94C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S94C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S94C.json",
+        "text": "泥质粗砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S95C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S95C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S95C.json",
+        "text": "泥质中砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-S96C",
+        "src": "../data/SymbolData/thumbimages/SFSY-S96C.bmp",
+        "url": "../data/SymbolData/105/SFSY-S96C.json",
+        "text": "泥质细砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-SA1C",
+        "src": "../data/SymbolData/thumbimages/SFSY-SA1C.bmp",
+        "url": "../data/SymbolData/105/SFSY-SA1C.json",
+        "text": "含角砾粗砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-SA2C",
+        "src": "../data/SymbolData/thumbimages/SFSY-SA2C.bmp",
+        "url": "../data/SymbolData/105/SFSY-SA2C.json",
+        "text": "含角砾中砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-SA3C",
+        "src": "../data/SymbolData/thumbimages/SFSY-SA3C.bmp",
+        "url": "../data/SymbolData/105/SFSY-SA3C.json",
+        "text": "含角砾细砂岩",
+        "type": 0
+      },
+      {
+        "id": "SFSY-SA4C",
+        "src": "../data/SymbolData/thumbimages/SFSY-SA4C.bmp",
+        "url": "../data/SymbolData/105/SFSY-SA4C.json",
+        "text": "含角砾粉砂岩",
+        "type": 0
+      },
+      {
+        "id": "SGZHY",
+        "src": "../data/SymbolData/thumbimages/SGZHY.bmp",
+        "url": "../data/SymbolData/105/SGZHY.json",
+        "text": "石膏质灰岩",
+        "type": 0
+      },
+      {
+        "id": "SHY-C07C",
+        "src": "../data/SymbolData/thumbimages/SHY-C07C.bmp",
+        "url": "../data/SymbolData/105/SHY-C07C.json",
+        "text": "白云质灰岩",
+        "type": 0
+      },
+      {
+        "id": "SHY-C11C",
+        "src": "../data/SymbolData/thumbimages/SHY-C11C.bmp",
+        "url": "../data/SymbolData/105/SHY-C11C.json",
+        "text": "泥灰岩",
+        "type": 0
+      },
+      {
+        "id": "SHY-C14C",
+        "src": "../data/SymbolData/thumbimages/SHY-C14C.bmp",
+        "url": "../data/SymbolData/105/SHY-C14C.json",
+        "text": "生物灰岩",
+        "type": 0
+      },
+      {
+        "id": "SHY-C15C",
+        "src": "../data/SymbolData/thumbimages/SHY-C15C.bmp",
+        "url": "../data/SymbolData/105/SHY-C15C.json",
+        "text": "生屑灰岩",
+        "type": 0
+      },
+      {
+        "id": "SHY-C16C",
+        "src": "../data/SymbolData/thumbimages/SHY-C16C.bmp",
+        "url": "../data/SymbolData/105/SHY-C16C.json",
+        "text": "生物礁灰岩",
+        "type": 0
+      },
+      {
+        "id": "SHY-CTAC",
+        "src": "../data/SymbolData/thumbimages/SHY-CTAC.bmp",
+        "url": "../data/SymbolData/105/SHY-CTAC.json",
+        "text": "石灰岩",
+        "type": 0
+      },
+      {
+        "id": "SHY-CTD0000311C",
+        "src": "../data/SymbolData/thumbimages/SHY-CTD0000311C.bmp",
+        "url": "../data/SymbolData/105/SHY-CTD0000311C.json",
+        "text": "含螺灰岩",
+        "type": 0
+      },
+      {
+        "id": "SHY-CTD12C",
+        "src": "../data/SymbolData/thumbimages/SHY-CTD12C.bmp",
+        "url": "../data/SymbolData/105/SHY-CTD12C.json",
+        "text": "介壳灰岩",
+        "type": 0
+      },
+      {
+        "id": "SHY-CTD14C",
+        "src": "../data/SymbolData/thumbimages/SHY-CTD14C.bmp",
+        "url": "../data/SymbolData/105/SHY-CTD14C.json",
+        "text": "介形虫灰岩",
+        "type": 0
+      },
+      {
+        "id": "SHY-CTE0000110C",
+        "src": "../data/SymbolData/thumbimages/SHY-CTE0000110C.bmp",
+        "url": "../data/SymbolData/105/SHY-CTE0000110C.json",
+        "text": "泥质条带灰岩",
+        "type": 0
+      },
+      {
+        "id": "SHY-CTE0000504C",
+        "src": "../data/SymbolData/thumbimages/SHY-CTE0000504C.bmp",
+        "url": "../data/SymbolData/105/SHY-CTE0000504C.json",
+        "text": "燧石结核灰岩",
+        "type": 0
+      },
+      {
+        "id": "SHY-CTE001000011C",
+        "src": "../data/SymbolData/thumbimages/SHY-CTE001000011C.bmp",
+        "url": "../data/SymbolData/105/SHY-CTE001000011C.json",
+        "text": "角砾状灰岩",
+        "type": 0
+      },
+      {
+        "id": "SSTDBYY",
+        "src": "../data/SymbolData/thumbimages/SSTDBYY.bmp",
+        "url": "../data/SymbolData/105/SSTDBYY.json",
+        "text": "燧石条带白云岩",
+        "type": 0
+      },
+      {
+        "id": "SWSXHY",
+        "src": "../data/SymbolData/thumbimages/SWSXHY.bmp",
+        "url": "../data/SymbolData/105/SWSXHY.json",
+        "text": "生物碎屑灰岩",
+        "type": 0
+      },
+      {
+        "id": "SYSY",
+        "src": "../data/SymbolData/thumbimages/SYSY.bmp",
+        "url": "../data/SymbolData/105/SYSY.json",
+        "text": "石英砂岩",
+        "type": 0
+      },
+      {
+        "id": "SZHY",
+        "src": "../data/SymbolData/thumbimages/SZHY.bmp",
+        "url": "../data/SymbolData/105/SZHY.json",
+        "text": "砂质灰岩",
+        "type": 0
+      },
+      {
+        "id": "SZNT",
+        "src": "../data/SymbolData/thumbimages/SZNT.bmp",
+        "url": "../data/SymbolData/105/SZNT.json",
+        "text": "砂质粘土",
+        "type": 0
+      },
+      {
+        "id": "SZNY",
+        "src": "../data/SymbolData/thumbimages/SZNY.bmp",
+        "url": "../data/SymbolData/105/SZNY.json",
+        "text": "砂质泥岩",
+        "type": 0
+      },
+      {
+        "id": "SZYY",
+        "src": "../data/SymbolData/thumbimages/SZYY.bmp",
+        "url": "../data/SymbolData/105/SZYY.json",
+        "text": "砂质页岩",
+        "type": 0
+      },
+      {
+        "id": "TZHY",
+        "src": "../data/SymbolData/thumbimages/TZHY.bmp",
+        "url": "../data/SymbolData/105/TZHY.json",
+        "text": "碳质灰岩",
+        "type": 0
+      },
+      {
+        "id": "TZNY-1",
+        "src": "../data/SymbolData/thumbimages/TZNY-1.bmp",
+        "url": "../data/SymbolData/105/TZNY-1.json",
+        "text": "炭质泥岩",
+        "type": 0
+      },
+      {
+        "id": "TZNY-2",
+        "src": "../data/SymbolData/thumbimages/TZNY-2.bmp",
+        "url": "../data/SymbolData/105/TZNY-2.json",
+        "text": "碳质泥岩",
+        "type": 0
+      },
+      {
+        "id": "XCY",
+        "src": "../data/SymbolData/thumbimages/XCY.bmp",
+        "url": "../data/SymbolData/105/XCY.json",
+        "text": "斜长岩",
+        "type": 0
+      },
+      {
+        "id": "XLY",
+        "src": "../data/SymbolData/thumbimages/XLY.bmp",
+        "url": "../data/SymbolData/105/XLY.json",
+        "text": "细砾岩",
+        "type": 0
+      },
+      {
+        "id": "XS",
+        "src": "../data/SymbolData/thumbimages/XS.bmp",
+        "url": "../data/SymbolData/105/XS.json",
+        "text": "细砂",
+        "type": 0
+      },
+      {
+        "id": "XWY",
+        "src": "../data/SymbolData/thumbimages/XWY.bmp",
+        "url": "../data/SymbolData/105/XWY.json",
+        "text": "玄武岩",
+        "type": 0
+      },
+      {
+        "id": "XWZASY",
+        "src": "../data/SymbolData/thumbimages/XWZASY.bmp",
+        "url": "../data/SymbolData/105/XWZASY.json",
+        "text": "玄武质安山岩",
+        "type": 0
+      },
+      {
+        "id": "XWZCSY",
+        "src": "../data/SymbolData/thumbimages/XWZCSY.bmp",
+        "url": "../data/SymbolData/105/XWZCSY.json",
+        "text": "玄武质粗砂岩",
+        "type": 0
+      },
+      {
+        "id": "XWZFSY",
+        "src": "../data/SymbolData/thumbimages/XWZFSY.bmp",
+        "url": "../data/SymbolData/105/XWZFSY.json",
+        "text": "玄武质粉砂岩",
+        "type": 0
+      },
+      {
+        "id": "XWZHSJLY",
+        "src": "../data/SymbolData/thumbimages/XWZHSJLY.bmp",
+        "url": "../data/SymbolData/105/XWZHSJLY.json",
+        "text": "玄武质火山角砾岩",
+        "type": 0
+      },
+      {
+        "id": "XWZLY",
+        "src": "../data/SymbolData/thumbimages/XWZLY.bmp",
+        "url": "../data/SymbolData/105/XWZLY.json",
+        "text": "玄武质砾岩",
+        "type": 0
+      },
+      {
+        "id": "XWZSY",
+        "src": "../data/SymbolData/thumbimages/XWZSY.bmp",
+        "url": "../data/SymbolData/105/XWZSY.json",
+        "text": "玄武质砂岩",
+        "type": 0
+      },
+      {
+        "id": "XWZXSY",
+        "src": "../data/SymbolData/thumbimages/XWZXSY.bmp",
+        "url": "../data/SymbolData/105/XWZXSY.json",
+        "text": "玄武质细砂岩",
+        "type": 0
+      },
+      {
+        "id": "XWZZSY",
+        "src": "../data/SymbolData/thumbimages/XWZZSY.bmp",
+        "url": "../data/SymbolData/105/XWZZSY.json",
+        "text": "玄武质中砂岩",
+        "type": 0
+      },
+      {
+        "id": "YAY",
+        "src": "../data/SymbolData/thumbimages/YAY.bmp",
+        "url": "../data/SymbolData/105/YAY.json",
+        "text": "英安岩",
+        "type": 0
+      },
+      {
+        "id": "YEY-CKAC",
+        "src": "../data/SymbolData/thumbimages/YEY-CKAC.bmp",
+        "url": "../data/SymbolData/105/YEY-CKAC.json",
+        "text": "油页岩",
+        "type": 0
+      },
+      {
+        "id": "YEY-CSD0050202C",
+        "src": "../data/SymbolData/thumbimages/YEY-CSD0050202C.bmp",
+        "url": "../data/SymbolData/105/YEY-CSD0050202C.json",
+        "text": "碳质页岩",
+        "type": 0
+      },
+      {
+        "id": "YEY-CSD0050203C",
+        "src": "../data/SymbolData/thumbimages/YEY-CSD0050203C.bmp",
+        "url": "../data/SymbolData/105/YEY-CSD0050203C.json",
+        "text": "沥青质页岩",
+        "type": 0
+      },
+      {
+        "id": "YEY-CSDC",
+        "src": "../data/SymbolData/thumbimages/YEY-CSDC.bmp",
+        "url": "../data/SymbolData/105/YEY-CSDC.json",
+        "text": "页岩",
+        "type": 0
+      },
+      {
+        "id": "YEY-Y06C",
+        "src": "../data/SymbolData/thumbimages/YEY-Y06C.bmp",
+        "url": "../data/SymbolData/105/YEY-Y06C.json",
+        "text": "灰质页岩",
+        "type": 0
+      },
+      {
+        "id": "YHY",
+        "src": "../data/SymbolData/thumbimages/YHY.bmp",
+        "url": "../data/SymbolData/105/YHY.json",
+        "text": "云煌岩",
+        "type": 0
+      },
+      {
+        "id": "YNY",
+        "src": "../data/SymbolData/thumbimages/YNY.bmp",
+        "url": "../data/SymbolData/105/YNY.json",
+        "text": "油泥岩",
+        "type": 0
+      },
+      {
+        "id": "YSY",
+        "src": "../data/SymbolData/thumbimages/YSY.bmp",
+        "url": "../data/SymbolData/105/YSY.json",
+        "text": "硬砂岩",
+        "type": 0
+      },
+      {
+        "id": "YXSY",
+        "src": "../data/SymbolData/thumbimages/YXSY.bmp",
+        "url": "../data/SymbolData/105/YXSY.json",
+        "text": "岩屑砂岩",
+        "type": 0
+      },
+      {
+        "id": "ZCY",
+        "src": "../data/SymbolData/thumbimages/ZCY.bmp",
+        "url": "../data/SymbolData/105/ZCY.json",
+        "text": "正长岩",
+        "type": 0
+      },
+      {
+        "id": "ZFY-CZAC",
+        "src": "../data/SymbolData/thumbimages/ZFY-CZAC.bmp",
+        "url": "../data/SymbolData/105/ZFY-CZAC.json",
+        "text": "石膏岩",
+        "type": 0
+      },
+      {
+        "id": "ZFY-Z07C",
+        "src": "../data/SymbolData/thumbimages/ZFY-Z07C.bmp",
+        "url": "../data/SymbolData/105/ZFY-Z07C.json",
+        "text": "盐岩",
+        "type": 0
+      },
+      {
+        "id": "ZHY",
+        "src": "../data/SymbolData/thumbimages/ZHY.bmp",
+        "url": "../data/SymbolData/105/ZHY.json",
+        "text": "藻灰岩",
+        "type": 0
+      },
+      {
+        "id": "ZKZBYY",
+        "src": "../data/SymbolData/thumbimages/ZKZBYY.bmp",
+        "url": "../data/SymbolData/105/ZKZBYY.json",
+        "text": "针孔状白云岩",
+        "type": 0
+      },
+      {
+        "id": "ZKZHY",
+        "src": "../data/SymbolData/thumbimages/ZKZHY.bmp",
+        "url": "../data/SymbolData/105/ZKZHY.json",
+        "text": "针孔状灰岩",
+        "type": 0
+      },
+      {
+        "id": "ZLY",
+        "src": "../data/SymbolData/thumbimages/ZLY.bmp",
+        "url": "../data/SymbolData/105/ZLY.json",
+        "text": "中砾岩",
+        "type": 0
+      },
+      {
+        "id": "ZYY",
+        "src": "../data/SymbolData/thumbimages/ZYY.bmp",
+        "url": "../data/SymbolData/105/ZYY.json",
+        "text": "藻云岩",
+        "type": 0
+      },
+      {
+        "id": "ZYZHY",
+        "src": "../data/SymbolData/thumbimages/ZYZHY.bmp",
+        "url": "../data/SymbolData/105/ZYZHY.json",
+        "text": "竹叶状灰岩",
+        "type": 0
+      },
+      {
+        "id": "空白符",
+        "src": "../data/SymbolData/thumbimages/空白符.bmp",
+        "url": "../data/SymbolData/105/空白符.json",
+        "text": "空白符",
+        "type": 0
+      }
+    ]
+  },
+  {
+    "id": "106",
+    "text": "矿物符号",
+    "pelItem": [
+      {
+        "id": "26170001",
+        "src": "../data/SymbolData/thumbimages/26170001.bmp",
+        "url": "../data/SymbolData/106/26170001.json",
+        "text": "黄铁矿",
+        "type": 0
+      },
+      {
+        "id": "26170012",
+        "src": "../data/SymbolData/thumbimages/26170012.bmp",
+        "url": "../data/SymbolData/106/26170012.json",
+        "text": "磷灰石",
+        "type": 0
+      },
+      {
+        "id": "26170013",
+        "src": "../data/SymbolData/thumbimages/26170013.bmp",
+        "url": "../data/SymbolData/106/26170013.json",
+        "text": "石膏",
+        "type": 0
+      },
+      {
+        "id": "hanhui",
+        "src": "../data/SymbolData/thumbimages/hanhui.bmp",
+        "url": "../data/SymbolData/106/hanhui.json",
+        "text": "含灰",
+        "type": 0
+      },
+      {
+        "id": "HHL1",
+        "src": "../data/SymbolData/thumbimages/HHL1.bmp",
+        "url": "../data/SymbolData/106/HHL1.json",
+        "text": "含灰砾",
+        "type": 0
+      },
+      {
+        "id": "HNL",
+        "src": "../data/SymbolData/thumbimages/HNL.bmp",
+        "url": "../data/SymbolData/106/HNL.json",
+        "text": "含泥砾",
+        "type": 0
+      },
+      {
+        "id": "HT1",
+        "src": "../data/SymbolData/thumbimages/HT1.bmp",
+        "url": "../data/SymbolData/106/HT1.json",
+        "text": "含铁",
+        "type": 0
+      },
+      {
+        "id": "KUW-K01C",
+        "src": "../data/SymbolData/thumbimages/KUW-K01C.bmp",
+        "url": "../data/SymbolData/106/KUW-K01C.json",
+        "text": "黄铁矿",
+        "type": 0
+      },
+      {
+        "id": "KUW-K02C",
+        "src": "../data/SymbolData/thumbimages/KUW-K02C.bmp",
+        "url": "../data/SymbolData/106/KUW-K02C.json",
+        "text": "方解石",
+        "type": 0
+      },
+      {
+        "id": "KUW-K03C",
+        "src": "../data/SymbolData/thumbimages/KUW-K03C.bmp",
+        "url": "../data/SymbolData/106/KUW-K03C.json",
+        "text": "白云石",
+        "type": 0
+      },
+      {
+        "id": "KUW-K04C",
+        "src": "../data/SymbolData/thumbimages/KUW-K04C.bmp",
+        "url": "../data/SymbolData/106/KUW-K04C.json",
+        "text": "铁锰结核",
+        "type": 0
+      },
+      {
+        "id": "KUW-K05C",
+        "src": "../data/SymbolData/thumbimages/KUW-K05C.bmp",
+        "url": "../data/SymbolData/106/KUW-K05C.json",
+        "text": "自生石英",
+        "type": 0
+      },
+      {
+        "id": "KUW-K06C",
+        "src": "../data/SymbolData/thumbimages/KUW-K06C.bmp",
+        "url": "../data/SymbolData/106/KUW-K06C.json",
+        "text": "方解石脉",
+        "type": 0
+      },
+      {
+        "id": "KUW-K07C",
+        "src": "../data/SymbolData/thumbimages/KUW-K07C.bmp",
+        "url": "../data/SymbolData/106/KUW-K07C.json",
+        "text": "石英脉",
+        "type": 0
+      },
+      {
+        "id": "KUW-K08C",
+        "src": "../data/SymbolData/thumbimages/KUW-K08C.bmp",
+        "url": "../data/SymbolData/106/KUW-K08C.json",
+        "text": "石膏脉",
+        "type": 0
+      },
+      {
+        "id": "KUW-K09C",
+        "src": "../data/SymbolData/thumbimages/KUW-K09C.bmp",
+        "url": "../data/SymbolData/106/KUW-K09C.json",
+        "text": "白云岩脉",
+        "type": 0
+      },
+      {
+        "id": "KUW-K10C",
+        "src": "../data/SymbolData/thumbimages/KUW-K10C.bmp",
+        "url": "../data/SymbolData/106/KUW-K10C.json",
+        "text": "沥青脉",
+        "type": 0
+      },
+      {
+        "id": "KUW-K11C",
+        "src": "../data/SymbolData/thumbimages/KUW-K11C.bmp",
+        "url": "../data/SymbolData/106/KUW-K11C.json",
+        "text": "沥青包裹体",
+        "type": 0
+      },
+      {
+        "id": "KUW-K12C",
+        "src": "../data/SymbolData/thumbimages/KUW-K12C.bmp",
+        "url": "../data/SymbolData/106/KUW-K12C.json",
+        "text": "磷灰石",
+        "type": 0
+      },
+      {
+        "id": "KUW-K14C",
+        "src": "../data/SymbolData/thumbimages/KUW-K14C.bmp",
+        "url": "../data/SymbolData/106/KUW-K14C.json",
+        "text": "菱铁矿",
+        "type": 0
+      },
+      {
+        "id": "KUW-K15C",
+        "src": "../data/SymbolData/thumbimages/KUW-K15C.bmp",
+        "url": "../data/SymbolData/106/KUW-K15C.json",
+        "text": "盐",
+        "type": 0
+      },
+      {
+        "id": "矿物空白符",
+        "src": "../data/SymbolData/thumbimages/矿物空白符.bmp",
+        "url": "../data/SymbolData/106/矿物空白符.json",
+        "text": "矿物空白符",
+        "type": 0
+      }
+    ]
+  },
+  {
+    "id": "107",
+    "text": "化石符号",
+    "pelItem": [
+      {
+        "id": "26180031",
+        "src": "../data/SymbolData/thumbimages/26180031.bmp",
+        "url": "../data/SymbolData/107/26180031.json",
+        "text": "鱼类化石",
+        "type": 0
+      },
+      {
+        "id": "HUAS-AT2C",
+        "src": "../data/SymbolData/thumbimages/HUAS-AT2C.bmp",
+        "url": "../data/SymbolData/107/HUAS-AT2C.json",
+        "text": "复体四射珊瑚",
+        "type": 0
+      },
+      {
+        "id": "HUAS-BCC",
+        "src": "../data/SymbolData/thumbimages/HUAS-BCC.bmp",
+        "url": "../data/SymbolData/107/HUAS-BCC.json",
+        "text": "腕足动物",
+        "type": 0
+      },
+      {
+        "id": "HUAS-BIC",
+        "src": "../data/SymbolData/thumbimages/HUAS-BIC.bmp",
+        "url": "../data/SymbolData/107/HUAS-BIC.json",
+        "text": "双壳类",
+        "type": 0
+      },
+      {
+        "id": "HUAS-CE1C",
+        "src": "../data/SymbolData/thumbimages/HUAS-CE1C.bmp",
+        "url": "../data/SymbolData/107/HUAS-CE1C.json",
+        "text": "直壳鹦鹉螺类",
+        "type": 0
+      },
+      {
+        "id": "HUAS-CE2C",
+        "src": "../data/SymbolData/thumbimages/HUAS-CE2C.bmp",
+        "url": "../data/SymbolData/107/HUAS-CE2C.json",
+        "text": "软舌螺",
+        "type": 0
+      },
+      {
+        "id": "HUAS-CE4C",
+        "src": "../data/SymbolData/thumbimages/HUAS-CE4C.bmp",
+        "url": "../data/SymbolData/107/HUAS-CE4C.json",
+        "text": "竹节石",
+        "type": 0
+      },
+      {
+        "id": "HUAS-FOS",
+        "src": "../data/SymbolData/thumbimages/HUAS-FOS.bmp",
+        "url": "../data/SymbolData/107/HUAS-FOS.json",
+        "text": "有孔虫",
+        "type": 0
+      },
+      {
+        "id": "HUAS-GAC",
+        "src": "../data/SymbolData/thumbimages/HUAS-GAC.bmp",
+        "url": "../data/SymbolData/107/HUAS-GAC.json",
+        "text": "腹足类",
+        "type": 0
+      },
+      {
+        "id": "HUAS-H01C",
+        "src": "../data/SymbolData/thumbimages/HUAS-H01C.bmp",
+        "url": "../data/SymbolData/107/HUAS-H01C.json",
+        "text": "植物枝干化石",
+        "type": 0
+      },
+      {
+        "id": "HUAS-RAC",
+        "src": "../data/SymbolData/thumbimages/HUAS-RAC.bmp",
+        "url": "../data/SymbolData/107/HUAS-RAC.json",
+        "text": "放射虫",
+        "type": 0
+      },
+      {
+        "id": "HUAS-TC",
+        "src": "../data/SymbolData/thumbimages/HUAS-TC.bmp",
+        "url": "../data/SymbolData/107/HUAS-TC.json",
+        "text": "三叶虫",
+        "type": 0
+      },
+      {
+        "id": "化石空白符",
+        "src": "../data/SymbolData/thumbimages/化石空白符.bmp",
+        "url": "../data/SymbolData/107/化石空白符.json",
+        "text": "化石空白符",
+        "type": 0
+      }
+    ]
+  },
+  {
+    "id": "109",
+    "text": "层理构造符号",
+    "pelItem": [
+      {
+        "id": "BCX-1400H",
+        "src": "../data/SymbolData/thumbimages/BCX-1400H.bmp",
+        "url": "../data/SymbolData/109/BCX-1400H.json",
+        "text": "冰川相",
+        "type": 0
+      },
+      {
+        "id": "BH1",
+        "src": "../data/SymbolData/thumbimages/BH1.bmp",
+        "url": "../data/SymbolData/109/BH1.json",
+        "text": "波痕",
+        "type": 0
+      },
+      {
+        "id": "CJ1",
+        "src": "../data/SymbolData/thumbimages/CJ1.bmp",
+        "url": "../data/SymbolData/109/CJ1.json",
+        "text": "虫迹",
+        "type": 0
+      },
+      {
+        "id": "CJX-1100H",
+        "src": "../data/SymbolData/thumbimages/CJX-1100H.bmp",
+        "url": "../data/SymbolData/109/CJX-1100H.json",
+        "text": "残积、坡积相",
+        "type": 0
+      },
+      {
+        "id": "CKGZ1",
+        "src": "../data/SymbolData/thumbimages/CKGZ1.bmp",
+        "url": "../data/SymbolData/109/CKGZ1.json",
+        "text": "虫孔构造",
+        "type": 0
+      },
+      {
+        "id": "CLGZ-C01C",
+        "src": "../data/SymbolData/thumbimages/CLGZ-C01C.bmp",
+        "url": "../data/SymbolData/109/CLGZ-C01C.json",
+        "text": "水平层理",
+        "type": 0
+      },
+      {
+        "id": "CLGZ-C02C",
+        "src": "../data/SymbolData/thumbimages/CLGZ-C02C.bmp",
+        "url": "../data/SymbolData/109/CLGZ-C02C.json",
+        "text": "波状层理",
+        "type": 0
+      },
+      {
+        "id": "CLGZ-C03C",
+        "src": "../data/SymbolData/thumbimages/CLGZ-C03C.bmp",
+        "url": "../data/SymbolData/109/CLGZ-C03C.json",
+        "text": "斜层理",
+        "type": 0
+      },
+      {
+        "id": "CLGZ-C04C",
+        "src": "../data/SymbolData/thumbimages/CLGZ-C04C.bmp",
+        "url": "../data/SymbolData/109/CLGZ-C04C.json",
+        "text": "交错层理",
+        "type": 0
+      },
+      {
+        "id": "CLGZ-CL01C",
+        "src": "../data/SymbolData/thumbimages/CLGZ-CL01C.bmp",
+        "url": "../data/SymbolData/109/CLGZ-CL01C.json",
+        "text": "叠层石",
+        "type": 0
+      },
+      {
+        "id": "CLGZ-CL05C",
+        "src": "../data/SymbolData/thumbimages/CLGZ-CL05C.bmp",
+        "url": "../data/SymbolData/109/CLGZ-CL05C.json",
+        "text": "冲刷面",
+        "type": 0
+      },
+      {
+        "id": "CLGZ-CL06C",
+        "src": "../data/SymbolData/thumbimages/CLGZ-CL06C.bmp",
+        "url": "../data/SymbolData/109/CLGZ-CL06C.json",
+        "text": "干裂",
+        "type": 0
+      },
+      {
+        "id": "CLGZ-CL07C",
+        "src": "../data/SymbolData/thumbimages/CLGZ-CL07C.bmp",
+        "url": "../data/SymbolData/109/CLGZ-CL07C.json",
+        "text": "角砾状构造",
+        "type": 0
+      },
+      {
+        "id": "CLGZ-CL12C",
+        "src": "../data/SymbolData/thumbimages/CLGZ-CL12C.bmp",
+        "url": "../data/SymbolData/109/CLGZ-CL12C.json",
+        "text": "透镜体",
+        "type": 0
+      },
+      {
+        "id": "CLGZ-CL13C",
+        "src": "../data/SymbolData/thumbimages/CLGZ-CL13C.bmp",
+        "url": "../data/SymbolData/109/CLGZ-CL13C.json",
+        "text": "鸟眼构造",
+        "type": 0
+      },
+      {
+        "id": "CLGZ-CL15C",
+        "src": "../data/SymbolData/thumbimages/CLGZ-CL15C.bmp",
+        "url": "../data/SymbolData/109/CLGZ-CL15C.json",
+        "text": "泥质团块",
+        "type": 0
+      },
+      {
+        "id": "CLGZ-CL16C",
+        "src": "../data/SymbolData/thumbimages/CLGZ-CL16C.bmp",
+        "url": "../data/SymbolData/109/CLGZ-CL16C.json",
+        "text": "灰质结核",
+        "type": 0
+      },
+      {
+        "id": "CLGZ-CL17C",
+        "src": "../data/SymbolData/thumbimages/CLGZ-CL17C.bmp",
+        "url": "../data/SymbolData/109/CLGZ-CL17C.json",
+        "text": "硅质结核",
+        "type": 0
+      },
+      {
+        "id": "CLGZ-CL18C",
+        "src": "../data/SymbolData/thumbimages/CLGZ-CL18C.bmp",
+        "url": "../data/SymbolData/109/CLGZ-CL18C.json",
+        "text": "泥质条带",
+        "type": 0
+      },
+      {
+        "id": "CLGZ-CL19C",
+        "src": "../data/SymbolData/thumbimages/CLGZ-CL19C.bmp",
+        "url": "../data/SymbolData/109/CLGZ-CL19C.json",
+        "text": "砂质条带",
+        "type": 0
+      },
+      {
+        "id": "CLGZ-CL21C",
+        "src": "../data/SymbolData/thumbimages/CLGZ-CL21C.bmp",
+        "url": "../data/SymbolData/109/CLGZ-CL21C.json",
+        "text": "灰质条带",
+        "type": 0
+      },
+      {
+        "id": "FHX1",
+        "src": "../data/SymbolData/thumbimages/FHX1.bmp",
+        "url": "../data/SymbolData/109/FHX1.json",
+        "text": "缝合线",
+        "type": 0
+      },
+      {
+        "id": "GZJH1",
+        "src": "../data/SymbolData/thumbimages/GZJH1.bmp",
+        "url": "../data/SymbolData/109/GZJH1.json",
+        "text": "硅质结核",
+        "type": 0
+      },
+      {
+        "id": "HJX-1310H",
+        "src": "../data/SymbolData/thumbimages/HJX-1310H.bmp",
+        "url": "../data/SymbolData/109/HJX-1310H.json",
+        "text": "山麓冲积相",
+        "type": 0
+      },
+      {
+        "id": "HLX-1500H",
+        "src": "../data/SymbolData/thumbimages/HLX-1500H.bmp",
+        "url": "../data/SymbolData/109/HLX-1500H.json",
+        "text": "河流",
+        "type": 0
+      },
+      {
+        "id": "HPX-1620H",
+        "src": "../data/SymbolData/thumbimages/HPX-1620H.bmp",
+        "url": "../data/SymbolData/109/HPX-1620H.json",
+        "text": "盐湖",
+        "type": 0
+      },
+      {
+        "id": "HPX-1621H",
+        "src": "../data/SymbolData/thumbimages/HPX-1621H.bmp",
+        "url": "../data/SymbolData/109/HPX-1621H.json",
+        "text": "湖泊三角洲",
+        "type": 0
+      },
+      {
+        "id": "HPX-1631H",
+        "src": "../data/SymbolData/thumbimages/HPX-1631H.bmp",
+        "url": "../data/SymbolData/109/HPX-1631H.json",
+        "text": "滨湖",
+        "type": 0
+      },
+      {
+        "id": "HPX-1632H",
+        "src": "../data/SymbolData/thumbimages/HPX-1632H.bmp",
+        "url": "../data/SymbolData/109/HPX-1632H.json",
+        "text": "浅湖",
+        "type": 0
+      },
+      {
+        "id": "JHGZ1",
+        "src": "../data/SymbolData/thumbimages/JHGZ1.bmp",
+        "url": "../data/SymbolData/109/JHGZ1.json",
+        "text": "搅混构造",
+        "type": 0
+      },
+      {
+        "id": "JJXCL1",
+        "src": "../data/SymbolData/thumbimages/JJXCL1.bmp",
+        "url": "../data/SymbolData/109/JJXCL1.json",
+        "text": "季节性层理",
+        "type": 0
+      },
+      {
+        "id": "JYZGZ1",
+        "src": "../data/SymbolData/thumbimages/JYZGZ1.bmp",
+        "url": "../data/SymbolData/109/JYZGZ1.json",
+        "text": "均匀状构造",
+        "type": 0
+      },
+      {
+        "id": "LF1",
+        "src": "../data/SymbolData/thumbimages/LF1.bmp",
+        "url": "../data/SymbolData/109/LF1.json",
+        "text": "裂缝",
+        "type": 0
+      },
+      {
+        "id": "QKZGZ1",
+        "src": "../data/SymbolData/thumbimages/QKZGZ1.bmp",
+        "url": "../data/SymbolData/109/QKZGZ1.json",
+        "text": "气孔状构造",
+        "type": 0
+      },
+      {
+        "id": "RZGZ1",
+        "src": "../data/SymbolData/thumbimages/RZGZ1.bmp",
+        "url": "../data/SymbolData/109/RZGZ1.json",
+        "text": "揉皱构造",
+        "type": 0
+      },
+      {
+        "id": "SMX-1300H",
+        "src": "../data/SymbolData/thumbimages/SMX-1300H.bmp",
+        "url": "../data/SymbolData/109/SMX-1300H.json",
+        "text": "沙漠相",
+        "type": 0
+      }
+    ]
+  },
+  {
+    "id": "110",
+    "text": "含油级别符号",
+    "pelItem": [
+      {
+        "id": "LJCZ-1C",
+        "src": "../data/SymbolData/thumbimages/LJCZ-1C.bmp",
+        "url": "../data/SymbolData/110/LJCZ-1C.json",
+        "text": "饱含油",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-2C",
+        "src": "../data/SymbolData/thumbimages/LJCZ-2C.bmp",
+        "url": "../data/SymbolData/110/LJCZ-2C.json",
+        "text": "富含油",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-3C",
+        "src": "../data/SymbolData/thumbimages/LJCZ-3C.bmp",
+        "url": "../data/SymbolData/110/LJCZ-3C.json",
+        "text": "油浸",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-4C",
+        "src": "../data/SymbolData/thumbimages/LJCZ-4C.bmp",
+        "url": "../data/SymbolData/110/LJCZ-4C.json",
+        "text": "油斑",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-5C",
+        "src": "../data/SymbolData/thumbimages/LJCZ-5C.bmp",
+        "url": "../data/SymbolData/110/LJCZ-5C.json",
+        "text": "油迹",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-6C",
+        "src": "../data/SymbolData/thumbimages/LJCZ-6C.bmp",
+        "url": "../data/SymbolData/110/LJCZ-6C.json",
+        "text": "荧光",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-7C",
+        "src": "../data/SymbolData/thumbimages/LJCZ-7C.bmp",
+        "url": "../data/SymbolData/110/LJCZ-7C.json",
+        "text": "气砂",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-8C",
+        "src": "../data/SymbolData/thumbimages/LJCZ-8C.bmp",
+        "url": "../data/SymbolData/110/LJCZ-8C.json",
+        "text": "含气",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-9C",
+        "src": "../data/SymbolData/thumbimages/LJCZ-9C.bmp",
+        "url": "../data/SymbolData/110/LJCZ-9C.json",
+        "text": "水砂",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-AC",
+        "src": "../data/SymbolData/thumbimages/LJCZ-AC.bmp",
+        "url": "../data/SymbolData/110/LJCZ-AC.json",
+        "text": "含水",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-BC",
+        "src": "../data/SymbolData/thumbimages/LJCZ-BC.bmp",
+        "url": "../data/SymbolData/110/LJCZ-BC.json",
+        "text": "氧化富含油",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-CC",
+        "src": "../data/SymbolData/thumbimages/LJCZ-CC.bmp",
+        "url": "../data/SymbolData/110/LJCZ-CC.json",
+        "text": "氧化油侵",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-DC",
+        "src": "../data/SymbolData/thumbimages/LJCZ-DC.bmp",
+        "url": "../data/SymbolData/110/LJCZ-DC.json",
+        "text": "氧化油斑",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-EC",
+        "src": "../data/SymbolData/thumbimages/LJCZ-EC.bmp",
+        "url": "../data/SymbolData/110/LJCZ-EC.json",
+        "text": "含气富含油",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-FC",
+        "src": "../data/SymbolData/thumbimages/LJCZ-FC.bmp",
+        "url": "../data/SymbolData/110/LJCZ-FC.json",
+        "text": "油侵含气",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-GC",
+        "src": "../data/SymbolData/thumbimages/LJCZ-GC.bmp",
+        "url": "../data/SymbolData/110/LJCZ-GC.json",
+        "text": "油斑含气",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-HC",
+        "src": "../data/SymbolData/thumbimages/LJCZ-HC.bmp",
+        "url": "../data/SymbolData/110/LJCZ-HC.json",
+        "text": "水浸富含油",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-IC",
+        "src": "../data/SymbolData/thumbimages/LJCZ-IC.bmp",
+        "url": "../data/SymbolData/110/LJCZ-IC.json",
+        "text": "水浸油浸",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-JC",
+        "src": "../data/SymbolData/thumbimages/LJCZ-JC.bmp",
+        "url": "../data/SymbolData/110/LJCZ-JC.json",
+        "text": "水浸油斑",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-LC",
+        "src": "../data/SymbolData/thumbimages/LJCZ-LC.bmp",
+        "url": "../data/SymbolData/110/LJCZ-LC.json",
+        "text": "稠油富含油",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-MC",
+        "src": "../data/SymbolData/thumbimages/LJCZ-MC.bmp",
+        "url": "../data/SymbolData/110/LJCZ-MC.json",
+        "text": "稠油饱含油",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-MH",
+        "src": "../data/SymbolData/thumbimages/LJCZ-MH.bmp",
+        "url": "../data/SymbolData/110/LJCZ-MH.json",
+        "text": "稠油油浸",
+        "type": 0
+      },
+      {
+        "id": "LJCZ-NC",
+        "src": "../data/SymbolData/thumbimages/LJCZ-NC.bmp",
+        "url": "../data/SymbolData/110/LJCZ-NC.json",
+        "text": "稠油油侵",
+        "type": 0
+      }
+    ]
+  },
+  {
+    "id": "116",
+    "text": "颜色符号",
+    "pelItem": [
+      {
+        "id": "HS",
+        "src": "../data/SymbolData/thumbimages/HS.bmp",
+        "url": "../data/SymbolData/116/HS.json",
+        "text": "红色",
+        "type": 0
+      },
+      {
+        "id": "HS1",
+        "src": "../data/SymbolData/thumbimages/HS1.bmp",
+        "url": "../data/SymbolData/116/HS1.json",
+        "text": "灰色",
+        "type": 0
+      },
+      {
+        "id": "ZHS",
+        "src": "../data/SymbolData/thumbimages/ZHS.bmp",
+        "url": "../data/SymbolData/116/ZHS.json",
+        "text": "棕红色",
+        "type": 0
+      }
+    ]
+  },
+  {
+    "id": "202",
+    "text": "断层线",
+    "pelItem": [
+      {
+        "id": "DCX",
+        "src": "../data/SymbolData/thumbimages/DCX.bmp",
+        "url": "../data/SymbolData/202/DCX.json",
+        "text": "断层线",
+        "type": 0
+      }
+    ]
+  },
+  {
+    "id": "203",
+    "text": "尖灭线",
+    "pelItem": [
+      {
+        "id": "JMX",
+        "src": "../data/SymbolData/thumbimages/JMX.bmp",
+        "url": "../data/SymbolData/203/JMX.json",
+        "text": "断层线",
+        "type": 0
+      }
+    ]
+  },
+  {
+    "id": "204",
+    "text": "含油零线",
+    "pelItem": [
+      {
+        "id": "HYLX",
+        "src": "../data/SymbolData/thumbimages/HYLX.bmp",
+        "url": "../data/SymbolData/204/HYLX.json",
+        "text": "断层线",
+        "type": 0
+      }
+    ]
+  }
+]

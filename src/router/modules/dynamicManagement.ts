@@ -9,7 +9,8 @@ export default [
         meta: { title: '油藏动态管理', icon: 'client', single: false },
         children: [
             {
-                path: 'dynamicTracking',
+                path: 'dynamicTrackingOilAuxiliary',
+                name: 'dynamicTrackingOilAuxiliary',
                 meta: { title: '油井动态分析' },
                 component: () => import('@/layouts/blank.vue'),
                 children: [
@@ -33,6 +34,20 @@ export default [
                         name: 'groupAssistance',
                         component: () => import('@/pages/rem/performance/wellGroup/groupAssistance/groupAssistance.vue'),
                         meta: { title: '井组辅助分析', icon: 'icon' },
+                    },
+                ],
+            },
+            {
+                path: 'dynamicTrackingBlock',
+                name: 'dynamicTrackingBlock',
+                component: () => import('@/layouts/blank.vue'),
+                meta: { title: '区块动态分析', single: false },
+                children: [
+                    {
+                        path: 'blockAnalysisAided',
+                        name: 'blockAnalysisAided',
+                        component: () => import('@/pages/rem/performance/dynamicTracking/blockAnalysisAided/index.vue'),
+                        meta: { title: '区块辅助分析', icon: 'icon' },
                     },
                 ],
             },

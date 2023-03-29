@@ -1,0 +1,131 @@
+{
+  "baseUrl": "../",
+  "midWin": [
+    {
+      "objType": "131",
+      "title": "等值线属性",
+      "url": "midWin/IsoProperty.html",
+      "width": 500,
+      "height": 400
+    },
+    {
+      "objType": "129",
+      "title": "断层线属性",
+      "url": "midWin/BreakLineProperty.html",
+      "width": 500,
+      "height": 500
+    },
+    {
+      "objType": "130",
+      "title": "尖灭线/含油零线属性",
+      "url": "midWin/JMProperty.html",
+      "width": 500,
+      "height": 400
+    },
+    {
+      "objType": "132",
+      "title": "储层面积/含油面积属性",
+      "url": "midWin/HYMJProperty.html",
+      "width": 500,
+      "height": 400
+    },
+    {
+      "objType": "QSD",
+      "title": "约束点属性设置",
+      "url": "midWin/DrawQSD.html",
+      "width": 400,
+      "height": 300
+    },
+    {
+      "objType": "QSX",
+      "title": "约束线属性设置",
+      "url": "midWin/DrawQSX.html",
+      "width": 400,
+      "height": 300
+    },
+    {
+      "objType": "JMX",
+      "title": "尖灭线属性",
+      "url": "midWin/JMProperty.html",
+      "width": 500,
+      "height": 400
+    },
+    {
+      "objType": "HYLX",
+      "title": "含油零线属性",
+      "url": "midWin/HYLXProperty.html",
+      "width": 500,
+      "height": 400
+    },
+    {
+      "objType": "CCMJSX",
+      "title": "储层面积属性设置",
+      "url": "midWin/CCMJSX.html",
+      "width": 350,
+      "height": 450
+    },
+    {
+      "objType": "JSX",
+      "title": "井属性设置",
+      "url": "midWin/JSX.html",
+      "width": 450,
+      "height": 500
+    },
+    {
+      "objType": "136",
+      "title": "图框属性设置",
+      "url": "midWin/FrameBorderProperty.html",
+      "width": 400,
+      "height": 550
+    },
+    {
+      "objType": "148",
+      "title": "比例尺属性设置",
+      "url": "midWin/ScaleProperty.html",
+      "width": 450,
+      "height": 500
+    },
+    {
+      "objType": "JGJSX",
+      "title": "井轨迹属性设置",
+      "url": "midWin/JGJSX.html",
+      "width": 400,
+      "height": 450
+    },
+    {
+      "objType": "135",
+      "title": "轮廓线设置",
+      "url": "midWin/LKXSX.html",
+      "width": 350,
+      "height": 450
+    },
+    {
+      "objType": "QueryBreakLine",
+      "title": "断层线上下层查询",
+      "url": "midWin/QueryBreakLine.html",
+      "width": 400,
+      "height": 550
+    },
+    {
+      "objType": "GeoObjMove",
+      "title": "图元平移",
+      "url": "midWin/WGGeoObjMove.html",
+      "width": 300,
+      "height": 200
+    },
+    {
+      "objType": "ShowWell",
+      "title": "井可见设置",
+      "url": "midWin/ShowWell.html",
+      "width": 500,
+      "height": 400
+    },
+    {
+      "objType": "WellDataSet",
+      "title": "地质属性",
+      "url": "midWin/WellData.html",
+      "width": 500,
+      "height": 400
+    }
+  ]
+}

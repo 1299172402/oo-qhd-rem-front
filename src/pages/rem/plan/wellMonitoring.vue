@@ -636,20 +636,6 @@
                 selectRealData: [],
                 // 油井折线图内容
                 oilOption: {
-                    color: [
-                        '#ff8e08',
-                        '#ccb71f',
-                        '#0206f7',
-                        '#0d66fd',
-                        '#5a9df2',
-                        '#fe10f6',
-                        '#f300f1',
-                        '#018000',
-                        '#f90d03',
-                        '#9dce2f',
-                        '#fb6112',
-                    ],
-                    title: {},
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -665,7 +651,6 @@
                         itemWidth: 12,
                         itemHeight: 6,
                         itemGap: 14,
-                        data:['流压','油压','含水','泵频率','井口温度','折算基准面流压','日产液量','日产油量','日产气量','气油比','生产时间'],
                     },
                     grid: [
                         {
@@ -717,7 +702,7 @@
                             },
                             axisLine: {
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },
@@ -750,7 +735,7 @@
                             },
                             axisLine: {
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },
@@ -782,7 +767,7 @@
                             },
                             axisLine: {
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },
@@ -809,7 +794,7 @@
                             axisLine: {
                                 show:true,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -839,7 +824,7 @@
                             axisLine: {
                                 show:true,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -868,7 +853,7 @@
                             axisLine: {
                                 show:true,
                                 lineStyle: {
-                                   color: 'rgba(255,255,255,.16)',
+                                   color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -900,7 +885,7 @@
                             axisLine: {
                                 show:true,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -928,7 +913,7 @@
                             axisLine: {
                                 show:true,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -958,7 +943,7 @@
                             axisLine: {
                                 show:true,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -989,7 +974,7 @@
                             axisLine: {
                                 show:true,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -1019,7 +1004,7 @@
                             axisLine: {
                                 show:true,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -1047,7 +1032,7 @@
                             axisLine: {
                                 show:true,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -1077,7 +1062,7 @@
                             axisLine: {
                                 show:true,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -1107,7 +1092,7 @@
                             axisLine: {
                                 show:true,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -1758,8 +1743,11 @@
                 };
                 await fetchProductionWells(requestWell).then((res) => {
                     if (res.data.code == 200) {
-                        const wellList = res.data.data.productionWells;
-                        this.wells = [...wellList];
+                        let wellData=res.data.data.productionWells;
+                        if(wellData.length){
+                            const wellList = wellData.filter(el=>el.wellName);
+                            this.wells = [...wellList];
+                        }
                     }
                 });
                 await fetchInjectionWells(requestWell).then((res) => {
@@ -1822,8 +1810,11 @@
                     };
                     fetchProductionWells(request).then((res) => {
                         if (res.data.code == 200) {
-                            const oilWellList = res.data.data.productionWells || [];
-                            this.wells = this.wells.concat(oilWellList);
+                            let wellData=res.data.data.productionWells||[];
+                            if(wellData.length){
+                                const wellList = wellData.filter(el=>el.wellName);
+                                this.wells = this.wells.concat(wellList);
+                            }
                         }
                     });
                     fetchInjectionWells(request).then((res) => {
@@ -1845,8 +1836,11 @@
                     });
                     fetchInjectionWellsByPlatform(request).then((res) => {
                         if (res.data.code == 200) {
-                            const waterWellList = res.data.data.injectionWell || [];
-                            this.wells = this.wells.concat(waterWellList);
+                            let wellData=res.data.data.productionWells||[];
+                            if(wellData.length){
+                                const wellList = wellData.filter(el=>el.wellName);
+                                this.wells = this.wells.concat(wellList);
+                            }
                         }
                     });
                 }
@@ -2058,42 +2052,55 @@
                             if (lineName == '含水') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 4;
+                                series.itemStyle={color:'#0206f7'}
                             } else if (lineName == '日产油') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 8;
+                                series.itemStyle={color:'#018000'}
                             } else if (lineName == '日产液') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
+                                series.itemStyle={color:'#f300f1'}
                             } else if (lineName == '流压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 0;
+                                series.itemStyle={color:'#ff8e08'}
                             } else if (lineName == '油压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 2;
+                                series.itemStyle={color:'#ccb71f'}
                             } else if (lineName == '泵频率') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 3;
+                                series.itemStyle={color:'#0d66fd'}
                             } else if (lineName == '井口温度') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 7;
+                                series.itemStyle={color:'#5a9df2'}
                             } else if (lineName == '折算基准面流压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 1;
+                                series.itemStyle={color:'#fe10f6'}
                             } else if (lineName == '日产液量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
+                                series.itemStyle={color:'#f300f1'}
                             } else if (lineName == '日产油量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 8;
+                                series.itemStyle={color:'#018000'}
                             } else if (lineName == '日产气量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 10;
+                                series.itemStyle={color:'#f90d03'}
                             } else if (lineName == '气油比') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 5;
+                                series.itemStyle={color:'#9dce2f'}
                             } else if (lineName == '生产时间') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 6;
+                                series.itemStyle={color:'#fb6112'}
                             } else {
                                 continue;
                             }
@@ -2205,7 +2212,6 @@
                 if (this.type == '0') {
                     switch (this.oilTabType) {
                         case '0': {
-                            console.log(888)
                             this.doOilSearch();
                         }
                         break;

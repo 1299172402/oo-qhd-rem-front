@@ -1,0 +1,5058 @@
+{
+  "MinXMap": 2.057432E7,
+  "MaxXMap": 2.05802E7,
+  "MinYMap": 4139278.0,
+  "MaxYMap": 4145751.0,
+  "PicturePath": "images/22.png",
+  "IsShowPicture": true,
+  "PicMinXMap": 2.057432E7,
+  "PicMaxXMap": 2.05802E7,
+  "PicMinYMap": 4139278.0,
+  "PicMaxYMap": 4145751.0,
+  "Layers": [
+    {
+      "LayerName": "井位图层",
+      "LayerType": 1,
+      "Active": false,
+      "Display": true,
+      "Objects": [
+        {
+          "ObjType": 110,
+          "WellName": "B",
+          "CoordX": 20577725,
+          "CoordY": 4144655,
+          "BXHB": "3.251111",
+          "JSJG": "未确定",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "C",
+          "CoordX": 20578830,
+          "CoordY": 4142900,
+          "BXHB": "3.25",
+          "JSJG": "未确定",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "D",
+          "CoordX": 20578750,
+          "CoordY": 4140565,
+          "BXHB": "3.25",
+          "JSJG": "未确定",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "E",
+          "CoordX": 20576990,
+          "CoordY": 4140550,
+          "BXHB": "3.25",
+          "JSJG": "未确定",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P1-41",
+          "CoordX": 20575849.6,
+          "CoordY": 4142699.2,
+          "BXHB": "5.2",
+          "JSJG": "CF",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1105.80"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1105.80"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1105.80"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "0.00"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1105.80"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "0.00"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P1-47",
+          "CoordX": 20576346.3,
+          "CoordY": 4143326.3,
+          "BXHB": "5.2",
+          "JSJG": "5",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1133.30"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1133.30"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1135.40"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.10"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1135.40"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.10"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P1-49",
+          "CoordX": 20576836.2,
+          "CoordY": 4143671.4,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1129.35"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1129.35"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1133.75"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.70"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1133.75"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.70"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P10-41",
+          "CoordX": 20577879.1,
+          "CoordY": 4140908.3,
+          "BXHB": "5.2",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1182.70"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1182.70"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1189.70"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "5.50"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1189.70"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "5.50"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P10-43",
+          "CoordX": 20578287.6,
+          "CoordY": 4141125.2,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1183.25"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1183.25"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1192.25"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "9.00"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1192.25"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "9.00"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P10-45",
+          "CoordX": 20578446.4,
+          "CoordY": 4141394.8,
+          "BXHB": "5.2",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1185.70"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1185.70"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1196.00"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "10.30"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1196.00"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "10.30"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P10-46",
+          "CoordX": 20578829.3,
+          "CoordY": 4141345.3,
+          "BXHB": "5.25",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P10-47",
+          "CoordX": 20578646.7,
+          "CoordY": 4141587.4,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1180.05"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1180.05"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1189.75"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "8.40"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1189.75"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "8.40"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P10-49",
+          "CoordX": 20579098.4,
+          "CoordY": 4141543.7,
+          "BXHB": "5.2",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P10-X39",
+          "CoordX": 20577620,
+          "CoordY": 4140773.75,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1180.49"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1180.49"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1187.69"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "5.26"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1187.69"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "5.26"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P10-X51",
+          "CoordX": 20579397.546395876,
+          "CoordY": 4141470.9021118162,
+          "BXHB": "5.25",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P11-41",
+          "CoordX": 20578009.2,
+          "CoordY": 4140739,
+          "BXHB": "5.3",
+          "JSJG": "5",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1183.20"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1183.20"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1188.80"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.30"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1188.80"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.30"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P11-43",
+          "CoordX": 20578412.9,
+          "CoordY": 4140933.2,
+          "BXHB": "5.25",
+          "JSJG": "5",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1185.75"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1185.75"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1194.05"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "8.30"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1194.05"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "8.30"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P11-X44",
+          "CoordX": 20579096.230700683,
+          "CoordY": 4141264.7597930906,
+          "BXHB": "6.4",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P11-X45",
+          "CoordX": 20578652,
+          "CoordY": 4141117.5,
+          "BXHB": "5.25",
+          "JSJG": "5",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1181.76"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1181.76"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1189.79"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "8.02"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1189.79"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "8.02"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P2-37",
+          "CoordX": 20575632.5,
+          "CoordY": 4142320.9,
+          "BXHB": "4.9",
+          "JSJG": "CF",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1109.90"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1109.90"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1109.90"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "0.00"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1109.90"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "0.00"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P2-39",
+          "CoordX": 20575853.6,
+          "CoordY": 4142425.6,
+          "BXHB": "3.5",
+          "JSJG": "CF",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1113.30"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1113.30"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1113.30"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "0.00"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1113.30"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "0.00"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P2-41",
+          "CoordX": 20576102.3,
+          "CoordY": 4142627,
+          "BXHB": "5.3",
+          "JSJG": "8",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1117.50"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1117.50"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1121.10"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.60"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1121.10"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.60"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P2-43",
+          "CoordX": 20576280.5,
+          "CoordY": 4142704,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1132.75"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1132.75"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1133.75"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "1.00"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1133.75"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "1.00"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P2-49",
+          "CoordX": 20577201.7,
+          "CoordY": 4143507.6,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1143.05"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1143.05"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1150.05"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.30"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1150.05"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.30"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P2-X45",
+          "CoordX": 20576528,
+          "CoordY": 4143147,
+          "BXHB": "5",
+          "JSJG": "5",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1125.90"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1125.90"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1127.02"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "1.12"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1127.02"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "1.12"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P2-X47",
+          "CoordX": 20576816,
+          "CoordY": 4143172.75,
+          "BXHB": "5",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1140.04"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1140.04"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1147.04"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "6.12"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1147.04"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "6.12"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P253",
+          "CoordX": 20577968.6,
+          "CoordY": 4142195.2,
+          "BXHB": "3",
+          "JSJG": "1",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1177.80"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1177.80"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1181.00"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.70"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1181.00"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.70"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P272",
+          "CoordX": 20576169.5,
+          "CoordY": 4141851.4,
+          "BXHB": "3",
+          "JSJG": "1",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1144.80"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1144.80"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1152.80"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.70"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1152.80"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.70"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P273",
+          "CoordX": 20575836.5,
+          "CoordY": 4142105.3,
+          "BXHB": "3.35",
+          "JSJG": "JM",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1120.75"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1120.75"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1120.75"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "0.00"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1120.75"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "0.00"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P28",
+          "CoordX": 20577035.1,
+          "CoordY": 4142939.1,
+          "BXHB": "3.05",
+          "JSJG": "1",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1155.15"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1155.15"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1161.45"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "5.80"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1161.45"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "5.80"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P293",
+          "CoordX": 20577968.7,
+          "CoordY": 4140978.5,
+          "BXHB": "3.14",
+          "JSJG": "1",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1188.26"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1188.26"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1191.66"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.40"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1191.66"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.40"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P294",
+          "CoordX": 20577821.2,
+          "CoordY": 4143815.2,
+          "BXHB": "3.2",
+          "JSJG": "1",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1149.60"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1149.60"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1157.00"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "5.00"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1157.00"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "5.00"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P294-1",
+          "CoordX": 20577931.8,
+          "CoordY": 4144153.2,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1141.65"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1141.65"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1143.75"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.10"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1143.75"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.10"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P294-2",
+          "CoordX": 20577579,
+          "CoordY": 4143928,
+          "BXHB": "5.25",
+          "JSJG": "8",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1143.15"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1143.15"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1146.75"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.70"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1146.75"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.70"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P294-3",
+          "CoordX": 20578103.3,
+          "CoordY": 4144470.9,
+          "BXHB": "5.2",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P294-6",
+          "CoordX": 20577327,
+          "CoordY": 4143942,
+          "BXHB": "5.25",
+          "JSJG": "5",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1136.15"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1136.15"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1140.35"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.20"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1140.35"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.20"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P294-7",
+          "CoordX": 20578077,
+          "CoordY": 4143933.6,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1148.15"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1148.15"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1156.55"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "5.20"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1156.55"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "5.20"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P294-8",
+          "CoordX": 20577523,
+          "CoordY": 4143711.2,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1145.15"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1145.15"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1149.85"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.20"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1149.85"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.20"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P294-X4",
+          "CoordX": 20578208,
+          "CoordY": 4143706.5,
+          "BXHB": "5.1",
+          "JSJG": "1",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1156.06"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1156.06"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1161.55"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.96"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1161.55"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.96"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P294-X5",
+          "CoordX": 20578012,
+          "CoordY": 4143668,
+          "BXHB": "5.1",
+          "JSJG": "8",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1148.41"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1148.41"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1152.84"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "1.56"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1152.84"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "1.56"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P297",
+          "CoordX": 20577221.9,
+          "CoordY": 4142314.8,
+          "BXHB": "3",
+          "JSJG": "1",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1149.80"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1149.80"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1154.90"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.50"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1154.90"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.50"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P3-36",
+          "CoordX": 20575861.5,
+          "CoordY": 4141839.2,
+          "BXHB": "5.2",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1137.90"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1137.90"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1141.00"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.30"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1141.00"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.30"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P3-39",
+          "CoordX": 20576070.4,
+          "CoordY": 4142208.5,
+          "BXHB": "3.66",
+          "JSJG": "JM",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1126.94"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1126.94"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1126.94"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "0.00"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1126.94"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "0.00"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P3-41",
+          "CoordX": 20576292.7,
+          "CoordY": 4142410.2,
+          "BXHB": "5",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1135.60"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1135.60"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1143.60"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "5.60"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1143.60"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "5.60"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P3-43",
+          "CoordX": 20576460.7,
+          "CoordY": 4142601.8,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1138.65"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1138.65"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1146.75"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.10"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1146.75"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.10"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P3-45",
+          "CoordX": 20576707.6,
+          "CoordY": 4142810.7,
+          "BXHB": "3.75",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1139.55"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1139.55"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1147.65"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "6.50"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1147.65"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "6.50"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P3-49",
+          "CoordX": 20577155.3,
+          "CoordY": 4143247.1,
+          "BXHB": "5.2",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1151.40"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1151.40"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1161.30"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.00"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1161.30"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.00"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P3-X40",
+          "CoordX": 20576140,
+          "CoordY": 4142199.25,
+          "BXHB": "5",
+          "JSJG": "JM",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1133.85"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1133.85"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1133.85"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "0.00"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1133.85"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "0.00"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P3-X53",
+          "CoordX": 20577990,
+          "CoordY": 4143419.5,
+          "BXHB": "5",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1169.87"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1169.87"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1172.35"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.48"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1172.35"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.48"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P3-X55",
+          "CoordX": 20578128,
+          "CoordY": 4143497,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1164.50"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1164.50"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1168.52"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.02"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1168.52"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.02"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P3-X57",
+          "CoordX": 20578274,
+          "CoordY": 4143596.25,
+          "BXHB": "5",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1155.48"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1155.48"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1164.48"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "5.97"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1164.48"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "5.97"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P3-XG45",
+          "CoordX": 20576712,
+          "CoordY": 4142853,
+          "BXHB": "5",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1141.76"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1141.76"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1148.90"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.57"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1148.90"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.57"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P30-16",
+          "CoordX": 20577877.9,
+          "CoordY": 4140168.8,
+          "BXHB": "5.3",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P30-20",
+          "CoordX": 20578782.4,
+          "CoordY": 4140205.6,
+          "BXHB": "5.2",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P30-24",
+          "CoordX": 20577674.8,
+          "CoordY": 4140164.1,
+          "BXHB": "5",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P30-25",
+          "CoordX": 20578324.7,
+          "CoordY": 4140079.2,
+          "BXHB": "5.25",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P308-8",
+          "CoordX": 20575604.2,
+          "CoordY": 4141718.8,
+          "BXHB": "5.25",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P4-37",
+          "CoordX": 20576007.8,
+          "CoordY": 4141790.4,
+          "BXHB": "3.8",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1136.20"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1136.20"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1145.00"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "8.80"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1145.00"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "8.80"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P4-39",
+          "CoordX": 20576297.9,
+          "CoordY": 4141988.9,
+          "BXHB": "3.6",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1137.70"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1137.70"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1139.20"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "1.50"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1139.20"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "1.50"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P4-41",
+          "CoordX": 20576490.8,
+          "CoordY": 4142206,
+          "BXHB": "4",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1138.00"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1138.00"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1145.60"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.90"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1145.60"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.90"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P4-43",
+          "CoordX": 20576678.1,
+          "CoordY": 4142444,
+          "BXHB": "5.25",
+          "JSJG": "5",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1146.05"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1146.05"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1152.05"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.50"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1152.05"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.50"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P4-45",
+          "CoordX": 20576975,
+          "CoordY": 4142624.1,
+          "BXHB": "5.3",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1147.80"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1147.80"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1150.90"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.50"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1150.90"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.50"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P4-47",
+          "CoordX": 20577260.8,
+          "CoordY": 4142770.9,
+          "BXHB": "5.2",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1163.10"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1163.10"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1166.60"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.50"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1166.60"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.50"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P4-49",
+          "CoordX": 20577499.5,
+          "CoordY": 4143069.4,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1171.15"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1171.15"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1177.35"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.70"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1177.35"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.70"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P4-G37",
+          "CoordX": 20575974,
+          "CoordY": 4141814,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1134.99"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1134.99"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1143.99"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.70"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1143.99"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.70"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P4-X36",
+          "CoordX": 20576060,
+          "CoordY": 4141643.75,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1140.95"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1140.95"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1150.28"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.92"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1150.28"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.92"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P4-X51",
+          "CoordX": 20577710,
+          "CoordY": 4143281.5,
+          "BXHB": "5",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1175.67"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1175.67"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1180.27"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.60"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1180.27"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.60"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P41-1",
+          "CoordX": 20576228.1,
+          "CoordY": 4142957,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1116.35"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1116.35"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1119.55"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.20"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1119.55"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.20"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P41-2",
+          "CoordX": 20575780.7,
+          "CoordY": 4142971,
+          "BXHB": "5.2",
+          "JSJG": "CF",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1099.60"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1099.60"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1099.60"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "0.00"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1099.60"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "0.00"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P42",
+          "CoordX": 20578497.4,
+          "CoordY": 4141865.3,
+          "BXHB": "2.78",
+          "JSJG": "1",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1183.62"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1183.62"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1192.02"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "6.60"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1192.02"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "6.60"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-1-10",
+          "CoordX": 20575862.6,
+          "CoordY": 4141322,
+          "BXHB": "3.35",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-1-4",
+          "CoordX": 20577572.6,
+          "CoordY": 4144283.9,
+          "BXHB": "3.25",
+          "JSJG": "1",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1137.85"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1137.85"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1139.85"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.00"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1139.85"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.00"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-1-5",
+          "CoordX": 20577209,
+          "CoordY": 4143758,
+          "BXHB": "3.6",
+          "JSJG": "5",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1138.40"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1138.40"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1143.50"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.90"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1143.50"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.90"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-1-6",
+          "CoordX": 20576868.3,
+          "CoordY": 4143427.7,
+          "BXHB": "3.35",
+          "JSJG": "8",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1129.75"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1129.75"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1137.65"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.80"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1137.65"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.80"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-1-7",
+          "CoordX": 20576468.6,
+          "CoordY": 4142889.6,
+          "BXHB": "3.45",
+          "JSJG": "1",
+          "WellType": "采油井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1136.65"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1136.65"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1140.55"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.90"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1140.55"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.90"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-1-8",
+          "CoordX": 20576365.7,
+          "CoordY": 4142364,
+          "BXHB": "3.5",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1136.90"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1136.90"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1138.60"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "1.70"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1138.60"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "1.70"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-2-6",
+          "CoordX": 20577490.4,
+          "CoordY": 4143513.1,
+          "BXHB": "3.6",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1150.50"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1150.50"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1159.00"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.70"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1159.00"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.70"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-2-9",
+          "CoordX": 20576936.5,
+          "CoordY": 4141877.4,
+          "BXHB": "3.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1147.85"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1147.85"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1153.75"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.80"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1153.75"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.80"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-36",
+          "CoordX": 20576278.8,
+          "CoordY": 4141360.5,
+          "BXHB": "5.2",
+          "JSJG": "JM",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1152.10"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1152.10"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1152.10"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "0.00"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1152.10"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "0.00"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-37",
+          "CoordX": 20576296,
+          "CoordY": 4141543.3,
+          "BXHB": "4",
+          "JSJG": "8",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1147.10"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1147.10"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1153.50"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.70"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1153.50"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.70"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-39",
+          "CoordX": 20576481.5,
+          "CoordY": 4141771.7,
+          "BXHB": "3.8",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1148.20"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1148.20"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1156.70"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.00"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1156.70"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.00"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-41",
+          "CoordX": 20576678.4,
+          "CoordY": 4141958.3,
+          "BXHB": "3.9",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1137.60"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1137.60"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1145.00"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "5.30"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1145.00"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "5.30"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-43",
+          "CoordX": 20576822.9,
+          "CoordY": 4142219.4,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1144.65"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1144.65"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1150.05"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.70"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1150.05"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.70"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-45",
+          "CoordX": 20577105.8,
+          "CoordY": 4142394.9,
+          "BXHB": "4",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1147.50"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1147.50"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1154.10"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.60"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1154.10"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.60"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-51",
+          "CoordX": 20577851.6,
+          "CoordY": 4143024.9,
+          "BXHB": "5.2",
+          "JSJG": "3",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1188.70"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1188.70"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1200.70"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "7.40"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1200.70"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "7.40"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-G45",
+          "CoordX": 20577106,
+          "CoordY": 4142402.25,
+          "BXHB": "5.2",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1150.49"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1150.49"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1152.29"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "1.80"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1152.29"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "1.80"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-X38",
+          "CoordX": 20576340,
+          "CoordY": 4141543.5,
+          "BXHB": "5",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1148.32"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1148.32"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1154.18"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "5.86"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1154.18"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "5.86"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-X47",
+          "CoordX": 20577498,
+          "CoordY": 4142528,
+          "BXHB": "5",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1164.54"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1164.54"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1171.23"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.17"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1171.23"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.17"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P5-X49",
+          "CoordX": 20577538,
+          "CoordY": 4142856.75,
+          "BXHB": "5.2",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1172.63"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1172.63"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1183.53"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "6.87"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1183.53"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "6.87"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P522-1",
+          "CoordX": 20575534.2,
+          "CoordY": 4141721.7,
+          "BXHB": "5.2",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P522-4",
+          "CoordX": 20575653.6,
+          "CoordY": 4141947.4,
+          "BXHB": "5.2",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P522-9",
+          "CoordX": 20575328.4,
+          "CoordY": 4142871,
+          "BXHB": "5.1",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P531-1",
+          "CoordX": 20577959.3,
+          "CoordY": 4140489.5,
+          "BXHB": "5.2",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P6-37",
+          "CoordX": 20576508.4,
+          "CoordY": 4141379.3,
+          "BXHB": "5.2",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1155.60"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1155.60"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1161.90"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "5.10"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1161.90"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "5.10"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P6-39",
+          "CoordX": 20576689.2,
+          "CoordY": 4141580.4,
+          "BXHB": "5.2",
+          "JSJG": "8",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1152.10"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1152.10"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1160.80"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "5.40"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1160.80"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "5.40"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P6-41",
+          "CoordX": 20577009.1,
+          "CoordY": 4141789.5,
+          "BXHB": "5.2",
+          "JSJG": "8",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1151.20"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1151.20"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1157.20"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "1.80"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1157.20"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "1.80"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P6-43",
+          "CoordX": 20577144.1,
+          "CoordY": 4141990,
+          "BXHB": "5.25",
+          "JSJG": "5",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1149.15"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1149.15"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1152.65"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.50"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1152.65"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.50"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P6-45",
+          "CoordX": 20577416.7,
+          "CoordY": 4142157.4,
+          "BXHB": "5.3",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1158.20"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1158.20"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1159.40"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "1.20"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1159.40"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "1.20"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P6-X47",
+          "CoordX": 20577794,
+          "CoordY": 4142424,
+          "BXHB": "5",
+          "JSJG": "5",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1176.06"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1176.06"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1184.42"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.74"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1184.42"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.74"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P673-5",
+          "CoordX": 20578595.6,
+          "CoordY": 4143900.9,
+          "BXHB": "5.2",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P673-X3",
+          "CoordX": 20578099.9,
+          "CoordY": 4144777.1,
+          "BXHB": "5.1",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P7-37",
+          "CoordX": 20576654.2,
+          "CoordY": 4141074,
+          "BXHB": "5",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1165.20"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1165.20"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1171.00"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.60"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1171.00"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.60"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P7-39",
+          "CoordX": 20576915.9,
+          "CoordY": 4141327.6,
+          "BXHB": "5.3",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1159.10"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1159.10"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1164.30"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.60"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1164.30"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.60"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P7-41",
+          "CoordX": 20577119,
+          "CoordY": 4141528,
+          "BXHB": "3.9",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1159.50"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1159.50"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1166.10"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.70"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1166.10"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.70"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P7-43",
+          "CoordX": 20577358.9,
+          "CoordY": 4141800.6,
+          "BXHB": "5.25",
+          "JSJG": "5",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1164.55"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1164.55"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1166.25"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "1.70"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1166.25"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "1.70"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P7-X38",
+          "CoordX": 20576814,
+          "CoordY": 4141011.75,
+          "BXHB": "5",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1157.27"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1157.27"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1161.98"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.44"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1161.98"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.44"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P7-X42",
+          "CoordX": 20577124,
+          "CoordY": 4141555.25,
+          "BXHB": "5",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1160.94"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1160.94"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1165.58"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.96"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1165.58"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.96"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P7-X45",
+          "CoordX": 20577530,
+          "CoordY": 4141954,
+          "BXHB": "5",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1161.29"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1161.29"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1168.59"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.96"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1168.59"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.96"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P73-4",
+          "CoordX": 20576554.6,
+          "CoordY": 4140653.9,
+          "BXHB": "4.74",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P73-6",
+          "CoordX": 20577192.2,
+          "CoordY": 4140428.1,
+          "BXHB": "5.3",
+          "JSJG": "未确定",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P8-38",
+          "CoordX": 20577020.9,
+          "CoordY": 4141096,
+          "BXHB": "5.2",
+          "JSJG": "8",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1154.60"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1154.60"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1158.90"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.30"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1158.90"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.30"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P8-39",
+          "CoordX": 20577127.8,
+          "CoordY": 4141171.8,
+          "BXHB": "4.05",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1157.85"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1157.85"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1162.25"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.00"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1162.25"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.00"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P8-41",
+          "CoordX": 20577299.1,
+          "CoordY": 4141331.4,
+          "BXHB": "3.9",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1155.50"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1155.50"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1162.00"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.90"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1162.00"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.90"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P8-43",
+          "CoordX": 20577548.6,
+          "CoordY": 4141519.8,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1166.05"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1166.05"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1168.25"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "1.70"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1168.25"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "1.70"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P8-45",
+          "CoordX": 20577717.8,
+          "CoordY": 4141753.8,
+          "BXHB": "3.7",
+          "JSJG": "5",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1171.80"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1171.80"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1174.60"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.80"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1174.60"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.80"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P8-46",
+          "CoordX": 20577953.6,
+          "CoordY": 4142020.9,
+          "BXHB": "5.25",
+          "JSJG": "5",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1173.85"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1173.85"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1179.85"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.20"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1179.85"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.20"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P8-49",
+          "CoordX": 20578225.4,
+          "CoordY": 4142232.8,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1182.75"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1182.75"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1186.15"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.40"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1186.15"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.40"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P8-53",
+          "CoordX": 20578661.7,
+          "CoordY": 4142581.2,
+          "BXHB": "5.25",
+          "JSJG": "D",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1187.85"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1187.85"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1190.55"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.70"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1190.55"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.70"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P8-X37",
+          "CoordX": 20576958,
+          "CoordY": 4140678.25,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1173.07"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1173.07"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1178.28"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.63"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1178.28"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.63"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P8-X42",
+          "CoordX": 20577358,
+          "CoordY": 4141394.75,
+          "BXHB": "5",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1158.41"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1158.41"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1164.47"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.97"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1164.47"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.97"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P9-37",
+          "CoordX": 20577230.7,
+          "CoordY": 4140668.6,
+          "BXHB": "4.9",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1181.20"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1181.20"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1189.20"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.50"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1189.20"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.50"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P9-41",
+          "CoordX": 20577750.5,
+          "CoordY": 4141117.8,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1186.25"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1186.25"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1193.35"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "5.10"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1193.35"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "5.10"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P9-42",
+          "CoordX": 20577759.6,
+          "CoordY": 4141311.7,
+          "BXHB": "5.25",
+          "JSJG": "5",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1175.65"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1175.65"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1179.15"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.50"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1179.15"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.50"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P9-43",
+          "CoordX": 20578030.8,
+          "CoordY": 4141333.2,
+          "BXHB": "5.2",
+          "JSJG": "5",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1177.90"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1177.90"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1184.00"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.60"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1184.00"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.60"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P9-50",
+          "CoordX": 20577962.6,
+          "CoordY": 4141803.2,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1187.55"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1187.55"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1190.25"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "2.70"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1190.25"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "2.70"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P9-X38",
+          "CoordX": 20577338,
+          "CoordY": 4140678,
+          "BXHB": "5",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1180.04"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1180.04"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1187.12"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.71"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1187.12"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.71"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P9-X39",
+          "CoordX": 20577432,
+          "CoordY": 4140966.75,
+          "BXHB": "5.25",
+          "JSJG": "5",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1182.99"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1182.99"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1189.88"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "5.21"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1189.88"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "5.21"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P9-X40",
+          "CoordX": 20577632,
+          "CoordY": 4141230.25,
+          "BXHB": "5",
+          "JSJG": "8",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1161.62"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1161.62"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1164.62"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "1.87"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1164.62"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "1.87"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P9-X45",
+          "CoordX": 20577928,
+          "CoordY": 4141559.5,
+          "BXHB": "5",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1178.38"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1178.38"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1182.15"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.77"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1182.15"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.77"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "P9-X48",
+          "CoordX": 20578248,
+          "CoordY": 4141649.25,
+          "BXHB": "5.25",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1182.61"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1182.61"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1189.65"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "4.93"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1189.65"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "4.93"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "PG1",
+          "CoordX": 20576631.6,
+          "CoordY": 4143040.7,
+          "BXHB": "4.7",
+          "JSJG": "1",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1127.80"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1127.80"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1130.90"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "3.10"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1130.90"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "3.10"
+            }
+          ]
+        },
+        {
+          "ObjType": 110,
+          "WellName": "PG273",
+          "CoordX": 20575824,
+          "CoordY": 4142159.5,
+          "BXHB": "5.25",
+          "JSJG": "JM",
+          "WellType": "注水井",
+          "Used": true,
+          "Data": [
+            {
+              "code": "STDS1",
+              "name": "砂体顶深",
+              "value": "1118.24"
+            },
+            {
+              "code": "CDS1",
+              "name": "层顶深",
+              "value": "1118.24"
+            },
+            {
+              "code": "CDS2",
+              "name": "层底深",
+              "value": "1118.24"
+            },
+            {
+              "code": "CHD",
+              "name": "层厚度",
+              "value": "0.00"
+            },
+            {
+              "code": "STDS2",
+              "name": "砂体底深",
+              "value": "1118.24"
+            },
+            {
+              "code": "STHD",
+              "name": "砂体厚度",
+              "value": "0.00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "LayerName": "泡泡图",
+      "LayerType": 15,
+      "Active": true,
+      "Display": true,
+      "Objects": [
+        {
+          "ObjType": 150,
+          "Radius": 100,
+          "WellName": "井名",
+          "Legend": false,
+          "CoordX": 20576958,
+          "CoordY": 4140678.25,
+          "Pie": [
+            {
+              "Text": "日产油量",
+              "Code": "日产油量",
+              "Value": 30,
+              "Color": [
+                255,
+                255,
+                0,
+                0
+              ],
+              "ShowText":true
+            },
+            {
+              "Text": "日产油量",
+              "Code": "日产油量",
+              "Value": 50,
+              "Color": [
+                255,
+                0,
+                0,
+                255
+              ],
+              "ShowText":true
+            },
+            {
+              "Text": "日产油量",
+              "Code": "日产油量",
+              "Value": 50,
+              "Color": [
+                255,
+                0,
+                255,
+                255
+              ],
+              "ShowText":true
+            },
+            {
+              "Text": "日产油量",
+              "Code": "日产油量",
+              "Value": 30,
+              "Color": [
+                255,
+                255,
+                0,
+                255
+              ],
+              "ShowText":true
+            }
+          ]
+        }
+        
+      ]
+    }
+  ]
+}

@@ -3,7 +3,7 @@ const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
 export function areaDiagram(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/areaDiagram`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/areaDiagram`,
     // url: `/static/IsoFrameCom/data/response.json`,
     method: "post",
     data: request,
@@ -18,7 +18,7 @@ export function areaDiagram(request) {
  */
 export function developmentDataDevelopmentAdjustmentPlan(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/developmentDataDevelopmentAdjustmentPlan`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/developmentDataDevelopmentAdjustmentPlan`,
     method: "post",
     data: request,
   });
@@ -32,7 +32,7 @@ export function developmentDataDevelopmentAdjustmentPlan(request) {
  */
 export function developmentDataDevelopmentPlan(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/developmentDataDevelopmentPlan`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/developmentDataDevelopmentPlan`,
     method: "post",
     data: request,
   });
@@ -46,7 +46,7 @@ export function developmentDataDevelopmentPlan(request) {
  */
 export function developmentDataReservesReport(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/developmentDataReservesReport`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/developmentDataReservesReport`,
     method: "post",
     data: request,
   });
@@ -60,7 +60,7 @@ export function developmentDataReservesReport(request) {
  */
 export function developmentDataWellPattern(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/developmentDataWellPattern`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/developmentDataWellPattern`,
     method: "post",
     data: request,
   });
@@ -74,7 +74,7 @@ export function developmentDataWellPattern(request) {
  */
 export function developmentDataWellPatternImprovementChart(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/developmentDataWellPatternImprovementChart`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/developmentDataWellPatternImprovementChart`,
     method: "post",
     data: request,
   });
@@ -88,7 +88,7 @@ export function developmentDataWellPatternImprovementChart(request) {
  */
 export function dynamicDataAccumulatedWaterOilRatioDistribution(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/dynamicDataAccumulatedWaterOilRatioDistribution`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/dynamicDataAccumulatedWaterOilRatioDistribution`,
     method: "post",
     data: request,
   });
@@ -102,7 +102,7 @@ export function dynamicDataAccumulatedWaterOilRatioDistribution(request) {
  */
 export function dynamicDataComprehensiveDevelopmentCurve(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/dynamicDataComprehensiveDevelopmentCurve`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/dynamicDataComprehensiveDevelopmentCurve`,
     method: "post",
     data: request,
   });
@@ -116,7 +116,7 @@ export function dynamicDataComprehensiveDevelopmentCurve(request) {
  */
 export function dynamicDataContourMapOfInjectionIntensity(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/dynamicDataContourMapOfInjectionIntensity`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/dynamicDataContourMapOfInjectionIntensity`,
     method: "post",
     data: request,
   });
@@ -130,7 +130,7 @@ export function dynamicDataContourMapOfInjectionIntensity(request) {
  */
 export function dynamicDataCumulativeOilAndWaterProductionStatusMap(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/dynamicDataCumulativeOilAndWaterProductionStatusMap`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/dynamicDataCumulativeOilAndWaterProductionStatusMap`,
     method: "post",
     data: request,
   });
@@ -144,7 +144,7 @@ export function dynamicDataCumulativeOilAndWaterProductionStatusMap(request) {
  */
 export function dynamicDataCumulativeOilProductionPerMeter(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/dynamicDataCumulativeOilProductionPerMeter`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/dynamicDataCumulativeOilProductionPerMeter`,
     method: "post",
     data: request,
   });
@@ -158,7 +158,7 @@ export function dynamicDataCumulativeOilProductionPerMeter(request) {
  */
 export function meterProIndicator(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/meterProIndicator`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/meterProIndicator`,
     method: "post",
     data: request,
   });
@@ -172,7 +172,7 @@ export function meterProIndicator(request) {
  */
 export function dynamicDataDevelopmentIndexTable(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/dynamicDataDevelopmentIndexTable`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/dynamicDataDevelopmentIndexTable`,
     method: "post",
     data: request,
   });
@@ -186,7 +186,7 @@ export function dynamicDataDevelopmentIndexTable(request) {
  */
 export function dynamicDataDevelopmentStatusTable(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/dynamicDataDevelopmentStatusTable`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/dynamicDataDevelopmentStatusTable`,
     method: "post",
     data: request,
   });
@@ -200,7 +200,7 @@ export function dynamicDataDevelopmentStatusTable(request) {
  */
 export function dynamicDataDifferentialPressureDiagram(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/dynamicDataDifferentialPressureDiagram`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/dynamicDataDifferentialPressureDiagram`,
     method: "post",
     data: request,
   });
@@ -213,7 +213,7 @@ export function dynamicDataDifferentialPressureDiagram(request) {
  */
 export function dynamicDataDynamicLiquidLevelContourMap(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/dynamicDataDynamicLiquidLevelContourMap`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/dynamicDataDynamicLiquidLevelContourMap`,
     method: "post",
     data: request,
   });
@@ -227,7 +227,7 @@ export function dynamicDataDynamicLiquidLevelContourMap(request) {
  */
 export function dynamicDataInjectionProductionRatioDistribution(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/dynamicDataInjectionProductionRatioDistribution`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/dynamicDataInjectionProductionRatioDistribution`,
     method: "post",
     data: request,
   });
@@ -241,7 +241,7 @@ export function dynamicDataInjectionProductionRatioDistribution(request) {
  */
 export function dynamicDataIsogramOfFluidProductionStrength(request) {
   return Axios({
-    url: 'remynamicAnalysisController/dynamicDataIsogramOfFluidProductionStrength',
+    url: 'remfieldDynamicAnalysisController/dynamicDataIsogramOfFluidProductionStrength',
     method: "post",
     data: request,
   });
@@ -255,7 +255,7 @@ export function dynamicDataIsogramOfFluidProductionStrength(request) {
  */
 export function dynamicDataOilWaterContourMap(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/dynamicDataOilWaterContourMap`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/dynamicDataOilWaterContourMap`,
     method: "post",
     data: request,
   });
@@ -269,7 +269,7 @@ export function dynamicDataOilWaterContourMap(request) {
  */
 export function dynamicDataOilWaterDifferenceIsogram(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/dynamicDataOilWaterDifferenceIsogram`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/dynamicDataOilWaterDifferenceIsogram`,
     method: "post",
     data: request,
   });
@@ -283,7 +283,7 @@ export function dynamicDataOilWaterDifferenceIsogram(request) {
  */
 export function dynamicDataRemainingOilDistribution(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/dynamicDataRemainingOilDistribution`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/dynamicDataRemainingOilDistribution`,
     method: "post",
     data: request,
   });
@@ -297,7 +297,7 @@ export function dynamicDataRemainingOilDistribution(request) {
  */
 export function dynamicDataTotalPressureDropDiagram(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/dynamicDataTotalPressureDropDiagram`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/dynamicDataTotalPressureDropDiagram`,
     method: "post",
     data: request,
   });
@@ -311,28 +311,28 @@ export function dynamicDataTotalPressureDropDiagram(request) {
  */
 export function dynamicDataYieldComponentCurve(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/dynamicDataYieldComponentCurve`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/dynamicDataYieldComponentCurve`,
     method: "post",
     data: request,
   });
 }
 export function outputStatusAnalysis(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/outputStatusAnalysis`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/outputStatusAnalysis`,
     method: "post",
     data: request,
   });
 }
 export function proInjectionBalanceAnalysis(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/proInjectionBalanceAnalysis`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/proInjectionBalanceAnalysis`,
     method: "post",
     data: request,
   });
 }
 export function proStatusAnalysis(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/proStatusAnalysis`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/proStatusAnalysis`,
     method: "post",
     data: request,
   });
@@ -346,7 +346,7 @@ export function proStatusAnalysis(request) {
  */
 export function reservoirDataBasicReservoirData(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/reservoirDataBasicReservoirData`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/reservoirDataBasicReservoirData`,
     method: "post",
     data: request,
   });
@@ -360,7 +360,7 @@ export function reservoirDataBasicReservoirData(request) {
  */
 export function reservoirDataComprehensiveGeologicalMap(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/reservoirDataComprehensiveGeologicalMap`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/reservoirDataComprehensiveGeologicalMap`,
     method: "post",
     data: request,
   });
@@ -374,7 +374,7 @@ export function reservoirDataComprehensiveGeologicalMap(request) {
  */
 export function reservoirDataConstructureDaigram(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/reservoirDataConstructureDaigram`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/reservoirDataConstructureDaigram`,
     method: "post",
     data: request,
   });
@@ -388,7 +388,7 @@ export function reservoirDataConstructureDaigram(request) {
  */
 export function reservoirDataCoreTestData(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/reservoirDataCoreTestData`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/reservoirDataCoreTestData`,
     method: "post",
     data: request,
   });
@@ -402,7 +402,7 @@ export function reservoirDataCoreTestData(request) {
  */
 export function reservoirDataEffectiveThicknessMap(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/reservoirDataEffectiveThicknessMap`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/reservoirDataEffectiveThicknessMap`,
     method: "post",
     data: request,
   });
@@ -416,7 +416,7 @@ export function reservoirDataEffectiveThicknessMap(request) {
  */
 export function reservoirDataFiveSensitivityAnalysisData(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/reservoirDataFiveSensitivityAnalysisData`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/reservoirDataFiveSensitivityAnalysisData`,
     method: "post",
     data: request,
   });
@@ -430,7 +430,7 @@ export function reservoirDataFiveSensitivityAnalysisData(request) {
  */
 export function reservoirDataPhasePermeabilityCurve(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/reservoirDataPhasePermeabilityCurve`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/reservoirDataPhasePermeabilityCurve`,
     method: "post",
     data: request,
   });
@@ -444,7 +444,7 @@ export function reservoirDataPhasePermeabilityCurve(request) {
  */
 export function reservoirDataPorosityAndFractureDevelopment(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/reservoirDataPorosityAndFractureDevelopment`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/reservoirDataPorosityAndFractureDevelopment`,
     method: "post",
     data: request,
   });
@@ -458,7 +458,7 @@ export function reservoirDataPorosityAndFractureDevelopment(request) {
  */
 export function reservoirDataReservoirProfile(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/reservoirDataReservoirProfile`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/reservoirDataReservoirProfile`,
     method: "post",
     data: request,
   });
@@ -472,7 +472,7 @@ export function reservoirDataReservoirProfile(request) {
  */
 export function reservoirDataSandThicknessMap(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/reservoirDataSandThicknessMap`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/reservoirDataSandThicknessMap`,
     method: "post",
     data: request,
   });
@@ -486,14 +486,14 @@ export function reservoirDataSandThicknessMap(request) {
  */
 export function reservoirDataSedimentaryFaciesAndSedimentaryMicroImage(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/reservoirDataSedimentaryFaciesAndSedimentaryMicroImage`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/reservoirDataSedimentaryFaciesAndSedimentaryMicroImage`,
     method: "post",
     data: request,
   });
 }
 export function stableBaseAnalysis(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/stableBaseAnalysis`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/stableBaseAnalysis`,
     method: "post",
     data: request,
   });
@@ -507,7 +507,7 @@ export function stableBaseAnalysis(request) {
  */
 export function streamingMediaDataCrudeOilViscosity(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/streamingMediaDataCrudeOilViscosity`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/streamingMediaDataCrudeOilViscosity`,
     method: "post",
     data: request,
   });
@@ -521,7 +521,7 @@ export function streamingMediaDataCrudeOilViscosity(request) {
  */
 export function streamingMediaDataHighPressurePhysicalPropertyAnalysis(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/streamingMediaDataHighPressurePhysicalPropertyAnalysis`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/streamingMediaDataHighPressurePhysicalPropertyAnalysis`,
     method: "post",
     data: request,
   });
@@ -535,14 +535,14 @@ export function streamingMediaDataHighPressurePhysicalPropertyAnalysis(request) 
  */
 export function streamingMediaDataWaterPhysicalPropertyData(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/streamingMediaDataWaterPhysicalPropertyData`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/streamingMediaDataWaterPhysicalPropertyData`,
     method: "post",
     data: request,
   });
 }
 export function wellGroups(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/wellGroups`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/wellGroups`,
     method: "post",
     data: request,
   });
@@ -556,7 +556,7 @@ export function wellGroups(request) {
  */
 export function permeabilityDistributionForField(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/permeabilityDistributionForField`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/permeabilityDistributionForField`,
     method: "post",
     data: request,
   });
@@ -570,7 +570,7 @@ export function permeabilityDistributionForField(request) {
  */
 export function wellTieProfiles(request) {
   return Axios({
-    url: `${baseUrl}/ynamicAnalysisController/wellTieProfiles`,
+    url: `${baseUrl}/fieldDynamicAnalysisController/wellTieProfiles`,
     method: "post",
     data: request,
   })
