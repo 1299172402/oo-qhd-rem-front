@@ -93,7 +93,13 @@
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.february }}</span>
                 <span v-else>
-                  <el-input maxlength="10 " :disabled="data2" ref="februaryinput" @input="writedata(scope.index)" v-model="scope.row.february" size="small"
+                  <el-input
+                    maxlength="10 "
+                    :disabled="data2"
+                    ref="februaryinput"
+                    @input="writedata(scope.index)"
+                    v-model="scope.row.february"
+                    size="small"
                 /></span>
               </template>
             </el-table-column>
@@ -103,7 +109,14 @@
             <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
-                <span v-else> <el-input ref="marchinput" :disabled="data3" @input="writedata(scope.index)" v-model="scope.row.march" size="small" /></span>
+                <span v-else>
+                  <el-input
+                    ref="marchinput"
+                    :disabled="data3"
+                    @input="writedata(scope.index)"
+                    v-model="scope.row.march"
+                    size="small"
+                /></span>
               </template>
             </el-table-column>
           </el-table-column>
@@ -112,19 +125,19 @@
             <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
-                <span v-else> <el-input ref="aprilinput" :disabled="data4" @input="writedata(scope)" v-model="scope.row.april" size="small" /></span>
+                <span v-else>
+                  <el-input
+                    ref="aprilinput"
+                    :disabled="data4"
+                    @input="writedata(scope)"
+                    v-model="scope.row.april"
+                    size="small"
+                /></span>
               </template>
             </el-table-column>
           </el-table-column>
           <el-table-column label="五月" prop="five" align="center">
-            <el-table-column label="计划值" width="130px" align="center">
-              <template slot-scope="scope">
-                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
-                <span v-else>
-                  <el-input @input="writedata(scope)" :disabled="data5" v-model="scope.row.planDensityValue" size="small"
-                /></span>
-              </template>
-            </el-table-column>
+            <el-table-column label="计划值" width="130px" prop="planDensityValue" align="center"> </el-table-column>
             <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
@@ -133,12 +146,7 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="六月" prop="six" align="center">
-            <el-table-column label="计划值" width="130px" align="center">
-              <template slot-scope="scope">
-                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
-                <span v-else> <el-input v-model="scope.row.planDensityValue" size="small" /></span>
-              </template>
-            </el-table-column>
+            <el-table-column label="计划值" width="130px" prop="planDensityValue" align="center"> </el-table-column>
             <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
@@ -147,12 +155,7 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="七月" prop="seven" align="center">
-            <el-table-column label="计划值" width="130px" align="center">
-              <template slot-scope="scope">
-                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
-                <span v-else> <el-input v-model="scope.row.planDensityValue" size="small" /></span>
-              </template>
-            </el-table-column>
+            <el-table-column label="计划值" width="130px" prop="planDensityValue" align="center"> </el-table-column>
             <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
@@ -161,12 +164,7 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="八月" prop="eight" align="center">
-            <el-table-column label="计划值" width="130px" align="center">
-              <template slot-scope="scope">
-                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
-                <span v-else> <el-input v-model="scope.row.planDensityValue" size="small" /></span>
-              </template>
-            </el-table-column>
+            <el-table-column label="计划值" width="130px" prop="planDensityValue" align="center"> </el-table-column>
             <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
@@ -175,12 +173,7 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="九月" prop="nine" align="center">
-            <el-table-column label="计划值" width="130px" align="center">
-              <template slot-scope="scope">
-                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
-                <span v-else> <el-input v-model="scope.row.planDensityValue" size="small" /></span>
-              </template>
-            </el-table-column>
+            <el-table-column label="计划值" width="130px" prop="planDensityValue" align="center"> </el-table-column>
             <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
@@ -189,12 +182,7 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="十月" prop="ten" align="center">
-            <el-table-column label="计划值" width="130px" align="center">
-              <template slot-scope="scope">
-                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
-                <span v-else> <el-input v-model="scope.row.planDensityValue" size="small" /></span>
-              </template>
-            </el-table-column>
+            <el-table-column label="计划值" width="130px" prop="planDensityValue" align="center"> </el-table-column>
             <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
@@ -203,12 +191,7 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="十一月" prop="eleven" align="center">
-            <el-table-column label="计划值" width="130px" align="center">
-              <template slot-scope="scope">
-                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
-                <span v-else> <el-input v-model="scope.row.planDensityValue" size="small" /></span>
-              </template>
-            </el-table-column>
+            <el-table-column label="计划值" width="130px" prop="planDensityValue" align="center"> </el-table-column>
             <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
@@ -217,12 +200,7 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="十二月" prop="twelve" align="center">
-            <el-table-column label="计划值" width="130px" align="center">
-              <template slot-scope="scope">
-                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
-                <span v-else> <el-input v-model="scope.row.planDensityValue" size="small" /></span>
-              </template>
-            </el-table-column>
+            <el-table-column label="计划值" width="130px" prop="planDensityValue" align="center"> </el-table-column>
             <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
@@ -267,11 +245,11 @@ export default {
       noticeList: [],
       // 是否展开，默认全部展开
       isExpandAll: true,
-      data1:false,
-      dara2:false,
-      dara3:false,
-      dara4:false,
-      dara5:false,
+      data1: false,
+      dara2: false,
+      dara3: false,
+      dara4: false,
+      dara5: false,
       deptList: [],
       // 显示搜索条件
       showSearch: true,
@@ -300,7 +278,7 @@ export default {
     this.queryParams.year = String(y);
     this.getList();
     this.getInfo();
-    this.getdisabled()
+    this.getdisabled();
     // this.choiceDepts(); // 获取组织机构
   },
   methods: {
@@ -347,10 +325,10 @@ export default {
         }
       });
     },
-    getdisabled(){
-     for(let i = 0;i<=12;i++){
-      // data + i = true  
-     }
+    getdisabled() {
+      for (let i = 0; i <= 12; i++) {
+        // data + i = true
+      }
     },
     // 编辑
     /**
