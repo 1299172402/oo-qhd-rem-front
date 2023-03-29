@@ -24,18 +24,18 @@
     </headerSearch>
     <el-row :gutter="20">
       <el-col :span="12">
-        <pagePanel headerTitle="平台人数对比" style="height: calc(100% - 100px)">
-          <Echart :chart-data="option" :events="events" height="100%"></Echart>
+        <pagePanel headerTitle="平台人数对比" style="height: 200px">
+           <Echart :chart-data="histogram"  height="100%"></Echart>
         </pagePanel>
       </el-col>
-      <el-col :span="12">
+      <!-- <el-col :span="12">
         <pagePanel headerTitle="项目人数分布" style="height: calc(100% - 100px)">
           <Echart :chart-data="option" :events="events" height="100%"></Echart>
         </pagePanel>
-      </el-col>
+      </el-col> -->
     </el-row>
     <pagePanel headerTitle="人员类型概况" style="height: calc(100% - 100px)">
-      <el-table highlight style="width: 100%" :summary-method="getSummaries" show-summary>
+      <el-table highlight :data="peoplelist" style="width: 100%" :summary-method="getSummaries" show-summary>
         <el-table-column prop="prodPlatFormName" label="平台" min-width="200px" align="center"> </el-table-column>
         <el-table-column prop="newsPapering" label="报务" min-width="80px" align="center"> </el-table-column>
         <el-table-column prop="mineStaff" min-width="120px" label="定员" align="center"> </el-table-column>
@@ -86,6 +86,8 @@ import Echart from '@/components/tools/Echarts/index.vue';
 } from "@/api/prm-01/commonmethod.js";*/
 // import div from '@/components/tools/div';
 // import { fetchOilFields, fetchPlatforms } from '@/api/rem-02/primaryinfo';
+// echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
+import { queryPlatformPob } from '@/api/prm/rc';
 export default {
   components: {
     Echart,
@@ -115,6 +117,7 @@ export default {
       tableHeight: 280,
       option: {},
       tableData1: [],
+      peoplelist: [],
       tableData2: [
         {
           platform: 'CEPI',
@@ -129,280 +132,116 @@ export default {
           address: '-',
         },
       ],
+      histogram: {
+        tooltip: {
+          show: true
+        },
+        legend: {
+          left: 'left',
+          padding: [5, 100],
+          icon: 'rect',
+          itemWidth: 12,
+          itemHeight: 10,
+          itemGap: 40,
+          data: ['定员人数', 'POB'],
+          textStyle: {
+            color: '#FFFFFF',
+            fontSize: 14,
+          }
+        },
+        grid: {
+          top: 30,
+          left: 40,
+          right: 10,
+          bottom: 30
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: [],
+            axisLabel: {
+              color: '#8FA4CC',
+              fontSize: 14,
+            },
+            axisTick: {
+              show: false
+            },
+            axisLine: {
+              lineStyle: {
+                //color: '#979797'
+                color: 'rgba(255,255,255,.16)',
+              }
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            axisLabel: {
+              color: '#8FA4CC',
+              fontSize: 14,
+            },
+            axisTick: {
+              show: false
+            },
+            axisLine: {
+              show: false,
+              lineStyle: {
+                color: '#979797'
+              }
+            },
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: 'rgba(255,255,255,.16)',
+              }
+            }
+          }
+        ],
+        series: [{
+          name: '定员人数',
+          type: 'bar',
+          barWidth: '12',
+          data: [],
+          itemStyle: {
+          },
+          /*showBackground: true,
+          backgroundStyle: {
+            color: 'rgba(143,164,204,0.2)',
+          },*/
+        }, {
+          name: 'POB',
+          type: 'bar',
+          barWidth: '12',
+          data: [],
+          /*showBackground: true,
+          backgroundStyle: {
+            color: 'rgba(143,164,204,0.2)',
+          },*/
+        },
+        ]
+      },
     };
-  },
-  watch: {
-    selectOilField(val) {
-      this.getFetchPlatforms(val);
-    },
-
-    // selectPlatform(val) {
-    //   this.getFetchWells(this.selectOilField, val);
-    // }
   },
   mounted() {
     //初始化下拉框数据
     // this.initData();
-    this.ageEchartData();
-  },
-  computed: {
-    ageEchartData() {
-      const option = {
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'shadow',
-          },
-        },
-        legend: {
-          data: ['35岁以下', '35岁-50岁', '50岁以上'],
-        },
-        grid: {
-          left: 10,
-          right: 10,
-          bottom: 10,
-          containLabel: true,
-        },
-        dataZoom: [
-          {
-            type: 'inside',
-            yAxisIndex: 0,
-          },
-          {
-            type: 'slider',
-            yAxisIndex: 0,
-          },
-        ],
-        xAxis: {
-          show: true,
-          position: 'bottom',
-          nameLocation: 'end',
-          type: 'value',
-          min: 0,
-        },
-        yAxis: {
-          type: 'category',
-          data: [],
-        },
-        series: [
-          {
-            name: '35岁以下',
-            type: 'bar',
-            stack: 'total',
-            label: {
-              show: true,
-            },
-            itemStyle: {
-              color: 'rgb(51, 153, 255)',
-            },
-            emphasis: {
-              focus: 'series',
-            },
-            // data: [12,14,15,11]
-            data: [],
-          },
-          {
-            name: '35岁-50岁',
-            type: 'bar',
-            stack: 'total',
-            label: {
-              show: true,
-            },
-            itemStyle: {
-              color: 'rgb(0, 204, 51)',
-            },
-            emphasis: {
-              focus: 'series',
-            },
-            // data: [21,24,18,20]
-            data: [],
-          },
-          {
-            name: '50岁以上',
-            type: 'bar',
-            stack: 'total',
-            label: {
-              show: true,
-            },
-            itemStyle: {
-              color: 'rgb(255, 127, 0)',
-            },
-            emphasis: {
-              focus: 'series',
-            },
-            // data: [1,1,3,0]
-            data: [],
-          },
-        ],
-      };
-      if (this.ageOption.length) {
-        this.ageOption.forEach((item) => {
-          option.yAxis.data.push(item.platName);
-          option.series[0].data.push(item.Age30);
-          option.series[1].data.push(item.Age35);
-          option.series[2].data.push(item.Age45);
-        });
-      }
-      return option;
-    },
-    pieData() {
-      return function (val) {
-        const option = {
-          title: {
-            text: val,
-            left: 'center',
-            textStyle: {
-              fontSize: 14,
-              color: 'rgba(255,255,255,1)',
-            },
-          },
-          tooltip: {
-            trigger: 'item',
-          },
-          series: [
-            {
-              type: 'pie',
-              radius: '50%',
-              center: ['50%', '60%'],
-              label: {
-                formatter: (params) => `${params.name}\n${params.percent}%`,
-              },
-              data: [],
-              emphasis: {
-                itemStyle: {
-                  shadowBlur: 10,
-                  shadowOffsetX: 0,
-                  shadowColor: 'rgba(0, 0, 0, 0.5)',
-                },
-              },
-            },
-          ],
-        };
-        if (this.ageOption.length) {
-          const sel = this.ageOption.filter((item) => item.platName == val)[0];
-          const data = [
-            {
-              value: sel.Age30,
-              name: '35岁以下',
-              itemStyle: { color: 'rgb(51, 153, 255)' },
-            },
-            {
-              value: sel.Age35,
-              name: '35-50岁',
-              itemStyle: { color: 'rgb(0, 204, 51)' },
-            },
-            {
-              value: sel.Age45,
-              name: '50岁以上',
-              itemStyle: { color: 'rgb(255, 127, 0)' },
-            },
-          ];
-          option.series[0].data = data;
-        }
-        return option;
-      };
-    },
+    // this.ageEchartData();
+    this.getinfo();
   },
   methods: {
-    //检索数据
-    doSearch() {
-      let queryParams = {
-        endTime: this.endTime,
-        oilFieldId: this.selectOilField,
-        platformId: this.selectPlatform,
-        pageNum: this.page,
-        pageSize: this.pageSize,
+    getinfo() {
+      let data = {
+        endTime: '2023-03-27',
+        oilFieldId: '3FC9A818F5BC43B88270DB80BBB3018F',
+        pageNum: 1,
+        pageSize: 10,
+        platformId: '3FC9A818F5BC43B88270DB80BBB3018F',
       };
-      let queryParamsPOB = {
-        endTime: this.endTime,
-        prodPlatformId: this.selectPlatform,
-        pageNum: this.page,
-        pageSize: this.pageSize,
-      };
-      this.selectPlatformPob(queryParams);
-      //this.selectPOBProjectPeopleOthers(queryParamsPOB);
-      this.doGetReloadOperating(this.selectPlatform, '', this.endTime);
-    },
-    // 页面初始化信息
-    // async initData() {
-    //   await fetchOilFields().then((res) => {
-    //     if (res.data.code === 0) {
-    //       this.oilFields = res.data.data.oilFields;
-    //       if (this.oilFields.length === 0) {
-    //         this.selectOilField = '';
-    //       } else {
-    //         this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
-    //       }
-    //     }
-    //   });
-    //   this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
-    //   let requestPlat = {
-    //     oilFieldId: this.selectOilField,
-    //   };
-    //   await fetchPlatforms(requestPlat).then((res) => {
-    //     console.log(res);
-    //     if (res.data.code === 0) {
-    //       this.platforms = res.data.data.platform;
-    //       this.selectPlatform = res.data.data.platform[0].platFormId;
-    //     }
-    //   });
-    //   let queryParams = {
-    //     endTime: this.endTime,
-    //     oilFieldId: this.selectOilField,
-    //     platformId: this.selectPlatform,
-    //     pageNum: this.page,
-    //     pageSize: this.pageSize,
-    //   };
-    //   let queryParamsPOB = {
-    //     endTime: this.endTime,
-    //     prodPlatformId: this.selectPlatform,
-    //     pageNum: this.page,
-    //     pageSize: this.pageSize,
-    //   };
-    //   this.selectPlatformPob(queryParams);
-    //   //this.selectPOBProjectPeopleOthers(queryParamsPOB);
-    //   this.doGetReloadOperating(this.selectPlatform, '', this.endTime);
-    // },
-
-    /**
-     *  通过油田查询平台
-     * @param oilFieldId 油田id
-     */
-    getFetchPlatforms(oilFieldId) {
-      let request = {
-        oilFieldId: oilFieldId,
-      };
-      fetchPlatforms(request).then((res) => {
-        if (res.data.code === 0) {
-          this.platforms = res.data.data.platform;
-          this.selectPlatform = res.data.data.platform[0].platFormId;
-        }
-      });
-    },
-    /**
-     *  改变当前页 跳转下一页
-     * @param pageValue 当前页数
-     */
-    handleChangePage(pageValue) {
-      this.page = pageValue;
-      this.doSearch();
-    },
-    /**
-     *  改变当前页大小
-     * @param rowsValue 当前页大小
-     */
-    handleChangePageSize(rowsValue) {
-      this.pageSize = rowsValue;
-      this.doSearch();
-    },
-    //查询POB人员情况
-    selectPlatformPob(queryParams) {
-      queryPlatformPob(queryParams).then((data) => {
-        data = data.data.data;
-        // this.tableData2 = data;
-        // this.total=data.total;
+      queryPlatformPob(data).then((data) => {
+        this.peoplelist = data.data;
         let list;
-        list = data;
+        list = data.data;
         let x = [];
         let y = [];
         let y1 = [];
@@ -415,8 +254,8 @@ export default {
               y1.push(list[i].littleSum);
             } else {
               //折线图
-              x.push(list[i].prodPlatFormName.substr(7, 4));
-              y.push(list[i].mineStaff); //waterTimeRate
+              x.push(list[i].prodPlatFormName)
+              y.push(list[i].mineStaff); //waterqueryParamsTimeRate
               y1.push(list[i].littleSum);
             }
           }
@@ -428,29 +267,10 @@ export default {
         this.histogram.xAxis[0].data = x;
       });
     },
-    //查询POB施工项目情况
-    selectPOBProjectPeople(queryParams) {
-      queryPOBProjectPeople(queryParams).then((data) => {
-        data = data.data.data;
-        let list = data;
-        this.tableData1 = data;
-        // this.total=data.total;
-        //查询图形
-        let x = [];
-        let y = [];
-        // let y1=[];
-        for (let i in list) {
-          if (list.hasOwnProperty(i)) {
-            //折线图
-            x.push(list[i].prodPlatform);
-            y.push(list[i].projectUser.slice(0, 1)); //waterTimeRate
-          }
-        }
-        //柱图
-        this.histogram2.series[0].data = y;
-        this.histogram2.xAxis.data = x;
-      });
-    },
+  
+    
+ 
+    
     //查询POB施工项目情况
     selectPOBProjectPeopleOthers(queryParams) {
       dailyList(queryParams).then((data) => {
@@ -527,25 +347,25 @@ export default {
      * 根据当日施工日报表格内容信息 画图
      * @param tableData
      */
-    changeEchartsOption(tableData) {
-      if (tableData && tableData.length >= 0) {
-        let xData = [];
-        let seriesData = [];
-        //遍历图表信息
-        for (let i = 0; i < tableData.length; i++) {
-          let point = [];
-          xData.push(tableData[i].projectName);
-          point.push(tableData[i].projectName);
-          point.push(isNaN(Number(tableData[i].projectUser)) ? 0 : Number(tableData[i].projectUser));
-          seriesData.push(point);
-        }
-        this.histogram2.xAxis.data = xData;
-        this.histogram2.series[0].data = seriesData;
-      } else {
-        this.histogram2.xAxis.data = [];
-        this.histogram2.series[0].data = [];
-      }
-    },
+    // changeEchartsOption(tableData) {
+    //   if (tableData && tableData.length >= 0) {
+    //     let xData = [];
+    //     let seriesData = [];
+    //     //遍历图表信息
+    //     for (let i = 0; i < tableData.length; i++) {
+    //       let point = [];
+    //       xData.push(tableData[i].projectName);
+    //       point.push(tableData[i].projectName);
+    //       point.push(isNaN(Number(tableData[i].projectUser)) ? 0 : Number(tableData[i].projectUser));
+    //       seriesData.push(point);
+    //     }
+    //     this.histogram2.xAxis.data = xData;
+    //     this.histogram2.series[0].data = seriesData;
+    //   } else {
+    //     this.histogram2.xAxis.data = [];
+    //     this.histogram2.series[0].data = [];
+    //   }
+    // },
   },
 };
 </script>

@@ -38,7 +38,13 @@
           </el-select>
         </el-form-item>
         <el-form-item label="年份：">
-          <el-date-picker type="year" placeholder="选择年份" @change="getInfo()" value-format="yyyy" v-model="queryParams.year"></el-date-picker>
+          <el-date-picker
+            type="year"
+            placeholder="选择年份"
+            @change="getInfo()"
+            value-format="yyyy"
+            v-model="queryParams.year"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item>
           <el-button icon="el-icon-edit-outline" size="mini" @click="redact" type="primary">编辑</el-button>
@@ -61,61 +67,65 @@
           :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
           header-cell-class-name="table_header"
           :cell-style="{ 'text-align': 'center', padding: '2px' }"
-          style="width: 100%; height: 100%"
+          style="width: auto; height: 100%"
           :default-sort="{ prop: 'date', order: 'descending' }"
         >
-          <el-table-column label="油气田" prop="oilFieldName" align="center"> </el-table-column>
+          <el-table-column label="油气田" width="130px" prop="oilFieldName" align="center"> </el-table-column>
           <el-table-column label="一月" align="center">
-            <el-table-column label="计划值" width="135px" align="center">
+            <el-table-column label="计划值" width="130px" align="center">
               <template slot-scope="scope">
-                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
+                <span v-if="scope.row.state == '0'">{{ scope.row.planDensityValue }}</span>
                 <span v-else> <el-input v-model="scope.row.planDensityValue" size="small" /></span>
               </template>
             </el-table-column>
-            <el-table-column label="实际值" align="center">
+            <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
-                <span v-else> <el-input @input="writedata(scope)" v-model="scope.row.january" size="small" /></span>
+                <span v-else>
+                  <el-input :disabled="data1" ref="januaryinput" v-model="scope.row.january" size="small"
+                /></span>
               </template>
             </el-table-column>
           </el-table-column>
           <el-table-column label="二月" prop="two" align="center">
-            <el-table-column label="计划值" prop="planDensityValue" align="center"> </el-table-column>
-            <el-table-column label="实际值" align="center">
+            <el-table-column label="计划值" width="130px" prop="planDensityValue" align="center"> </el-table-column>
+            <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
-                <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
-                <span v-else> <el-input @input="writedata(scope)" v-model="scope.row.february" size="small" /></span>
+                <span v-if="scope.row.state == '0'">{{ scope.row.february }}</span>
+                <span v-else>
+                  <el-input maxlength="10 " :disabled="data2" ref="februaryinput" @input="writedata(scope.index)" v-model="scope.row.february" size="small"
+                /></span>
               </template>
             </el-table-column>
           </el-table-column>
           <el-table-column label="三月" prop="three" align="center">
-            <el-table-column label="计划值" prop="planDensityValue" align="center"> </el-table-column>
-            <el-table-column label="实际值" align="center">
+            <el-table-column label="计划值" width="130px" prop="planDensityValue" align="center"> </el-table-column>
+            <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
-                <span v-else> <el-input @input="writedata(scope)" v-model="scope.row.march" size="small" /></span>
+                <span v-else> <el-input ref="marchinput" :disabled="data3" @input="writedata(scope.index)" v-model="scope.row.march" size="small" /></span>
               </template>
             </el-table-column>
           </el-table-column>
           <el-table-column label="四月" align="center">
-            <el-table-column label="计划值" prop="planDensityValue" align="center"> </el-table-column>
-            <el-table-column label="实际值" align="center">
+            <el-table-column label="计划值" width="130px" prop="planDensityValue" align="center"> </el-table-column>
+            <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
-                <span v-else> <el-input @input="writedata(scope)" v-model="scope.row.april" size="small" /></span>
+                <span v-else> <el-input ref="aprilinput" :disabled="data4" @input="writedata(scope)" v-model="scope.row.april" size="small" /></span>
               </template>
             </el-table-column>
           </el-table-column>
           <el-table-column label="五月" prop="five" align="center">
-            <el-table-column label="计划值" align="center">
+            <el-table-column label="计划值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
                 <span v-else>
-                  <el-input @input="writedata(scope)" v-model="scope.row.planDensityValue" size="small"
+                  <el-input @input="writedata(scope)" :disabled="data5" v-model="scope.row.planDensityValue" size="small"
                 /></span>
               </template>
             </el-table-column>
-            <el-table-column label="实际值" align="center">
+            <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
                 <span v-else> <el-input v-model="scope.row.may" size="small" /></span>
@@ -123,13 +133,13 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="六月" prop="six" align="center">
-            <el-table-column label="计划值" align="center">
+            <el-table-column label="计划值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
                 <span v-else> <el-input v-model="scope.row.planDensityValue" size="small" /></span>
               </template>
             </el-table-column>
-            <el-table-column label="实际值" align="center">
+            <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
                 <span v-else> <el-input v-model="scope.row.june" size="small" /></span>
@@ -137,13 +147,13 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="七月" prop="seven" align="center">
-            <el-table-column label="计划值" align="center">
+            <el-table-column label="计划值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
                 <span v-else> <el-input v-model="scope.row.planDensityValue" size="small" /></span>
               </template>
             </el-table-column>
-            <el-table-column label="实际值" align="center">
+            <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
                 <span v-else> <el-input v-model="scope.row.july" size="small" /></span>
@@ -151,13 +161,13 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="八月" prop="eight" align="center">
-            <el-table-column label="计划值" align="center">
+            <el-table-column label="计划值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
                 <span v-else> <el-input v-model="scope.row.planDensityValue" size="small" /></span>
               </template>
             </el-table-column>
-            <el-table-column label="实际值" align="center">
+            <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
                 <span v-else> <el-input v-model="scope.row.august" size="small" /></span>
@@ -165,13 +175,13 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="九月" prop="nine" align="center">
-            <el-table-column label="计划值" align="center">
+            <el-table-column label="计划值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
                 <span v-else> <el-input v-model="scope.row.planDensityValue" size="small" /></span>
               </template>
             </el-table-column>
-            <el-table-column label="实际值" align="center">
+            <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
                 <span v-else> <el-input v-model="scope.row.september" size="small" /></span>
@@ -179,13 +189,13 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="十月" prop="ten" align="center">
-            <el-table-column label="计划值" align="center">
+            <el-table-column label="计划值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
                 <span v-else> <el-input v-model="scope.row.planDensityValue" size="small" /></span>
               </template>
             </el-table-column>
-            <el-table-column label="实际值" align="center">
+            <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
                 <span v-else> <el-input v-model="scope.row.october" size="small" /></span>
@@ -193,13 +203,13 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="十一月" prop="eleven" align="center">
-            <el-table-column label="计划值" align="center">
+            <el-table-column label="计划值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
                 <span v-else> <el-input v-model="scope.row.planDensityValue" size="small" /></span>
               </template>
             </el-table-column>
-            <el-table-column label="实际值" align="center">
+            <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
                 <span v-else> <el-input v-model="scope.row.november" size="small" /></span>
@@ -207,13 +217,13 @@
             </el-table-column>
           </el-table-column>
           <el-table-column label="十二月" prop="twelve" align="center">
-            <el-table-column label="计划值" align="center">
+            <el-table-column label="计划值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
                 <span v-else> <el-input v-model="scope.row.planDensityValue" size="small" /></span>
               </template>
             </el-table-column>
-            <el-table-column label="实际值" align="center">
+            <el-table-column label="实际值" width="130px" align="center">
               <template slot-scope="scope">
                 <span v-if="scope.row.state == '0'">{{ scope.row.one }}</span>
                 <span v-else> <el-input v-model="scope.row.december" size="small" /></span>
@@ -236,7 +246,7 @@
 </template>
 
 <script>
-import { queryDensityInfo, getOilFieldList, queryProductList,save } from '@/api/rem/workcompanydesignate';
+import { queryDensityInfo, getOilFieldList, queryProductList, save } from '@/api/rem/workcompanydesignate';
 export default {
   name: 'Notice',
   dicts: ['sys_normal_disable'],
@@ -244,8 +254,6 @@ export default {
     return {
       open: false, // 新增弹框
       dialogVisible: false, //运行计算展示弹窗
-      title: '', // 弹窗标题
-      company: [],
       oilfield: [],
       producttype: [],
       deptSelect: [
@@ -259,13 +267,17 @@ export default {
       noticeList: [],
       // 是否展开，默认全部展开
       isExpandAll: true,
+      data1:false,
+      dara2:false,
+      dara3:false,
+      dara4:false,
+      dara5:false,
       deptList: [],
       // 显示搜索条件
       showSearch: true,
       // 总条数
       total: 0,
-
-      // 选中数组
+      tableList: ['oilFieldName'],
       ids: [],
       // 保存数组
       savelist: [],
@@ -287,7 +299,8 @@ export default {
     }
     this.queryParams.year = String(y);
     this.getList();
-    this.getInfo()
+    this.getInfo();
+    this.getdisabled()
     // this.choiceDepts(); // 获取组织机构
   },
   methods: {
@@ -309,29 +322,35 @@ export default {
           this.producttype = res.data.data;
         }
       });
-     
     },
-    getInfo(){
- queryDensityInfo(this.queryParams).then((res)=>{
-         if (res.data.code == 200) {
-         console.log(res)
-         this.noticeList = [res.data.data]
-        //  this.noticeList.map((n)=>{
-        //   n.state = '0'
-        //  })
-         let a = ''
-         this.oilFields.map((n)=>{
-          if(n.oilFieldId == this.queryParams.ogfId){
-               a = n.oilFieldName
+    getInfo() {
+      queryDensityInfo(this.queryParams).then((res) => {
+        if (res.data.code == 200) {
+          this.noticeList = [res.data.data];
+          //  this.noticeList.map((n)=>{
+          //   n.state = '0'
+          //  })
+          if (res.data.data) {
+            let a = '';
+            this.oilFields.map((n) => {
+              if (n.oilFieldId == this.queryParams.ogfId) {
+                a = n.oilFieldName;
+                this.noticeList[0].oilFieldName = a;
+              } else {
+                return;
+              }
+            });
+            this.noticeList[0].ogfId = this.queryParams.ogfId;
           }
-         })
-         this.noticeList[0].oilFieldName = a
-         this.noticeList[0].ogfId = this.queryParams.ogfId
-        }else{
+        } else {
           this.$message.warning('系统错误请重新尝试或联系运维人员！');
-          this.noticeList = [{oilFieldName:'测试1'}]
         }
-      })
+      });
+    },
+    getdisabled(){
+     for(let i = 0;i<=12;i++){
+      // data + i = true  
+     }
     },
     // 编辑
     /**
@@ -343,25 +362,25 @@ export default {
       this.ids = val;
       console.log(this.ids);
     },
-    writedata(scope){
-      console.log(scope.$index)
+    writedata(index) {
+      console.log(index);
     },
     /**
      *  编辑
      * @param noticeList 表格数据data
      */
     redact() {
-      console.log(this.noticeList)
-       this.noticeList[0].state = '1';
+      console.log(this.noticeList);
+      this.noticeList[0].state = '1';
     },
     // 保存
     save() {
-      let densityInfoQueryVo = this.queryParams 
-      let densityModelInfo = this.noticeList[0]
-       save({densityModelInfo,densityInfoQueryVo}).then((res) => {
+      let densityInfoQueryVo = this.queryParams;
+      let densityModelInfo = this.noticeList[0];
+      save({ densityModelInfo, densityInfoQueryVo }).then((res) => {
         if (res.data.code == 200) {
           // this.producttype = res.data.data;
-          console.log(res)
+          this.$message.success('保存成功！');
         }
       });
       // if (this.savelist) {
