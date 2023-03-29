@@ -16,7 +16,7 @@ module.exports = {
             // generatorSource: "./json/temp.json",
             // generatorSource: "http://10.137.207.31:8104/v2/api-docs",
             // generatorSource: "http://10.137.206.14:17072/v2/api-docs",
-            generatorSource: "http://10.178.118.199:9229/v2/api-docs",
+            generatorSource: "http://10.178.118.191:9229/v2/api-docs",
             //
             // 过滤字段为黑名单模式，判断方法较为简单，暂不支持正则匹配，不能为空字符串，否则都会过滤掉
             filterWords: [" "],
