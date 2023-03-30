@@ -2,9 +2,9 @@ import Layout from '@/layouts/index.vue';
 
 export default [
     {
+        hidden: true,
         path: '/developStatus',
         name: 'developStatus',
-        hidden: false,
         component: Layout,
         meta: { title: '开发现状跟踪', icon: 'client', single: false },
         children: [

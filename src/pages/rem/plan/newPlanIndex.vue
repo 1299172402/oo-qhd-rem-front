@@ -458,9 +458,8 @@
             switchToMeasures(oilFieldId, platformId, selectWellId, selectMeasuresId, yearMonthDay, wellType,wellNameNano, wellBoreName,index) {
                 console.log(1111,selectWellId)
                 if(this.dateTime=='2023'&&index==1){
-                    console.log('111')
                     this.$router.push({
-                        path: '/basic/effectofMeasures',
+                        path: '/plan/effectofMeasures',
                     });
                     return false
                 }
