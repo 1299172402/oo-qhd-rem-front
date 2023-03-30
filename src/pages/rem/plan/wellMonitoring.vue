@@ -1681,7 +1681,7 @@
                 }
             },
             //初始化
-            async initData() {
+            async initData() {  
                 const {oilFieldId} = this.$route.query;
                 const {platformId} = this.$route.query;
                 const {selectWellId} = this.$route.query;
