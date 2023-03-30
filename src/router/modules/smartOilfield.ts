@@ -98,6 +98,7 @@ export default [
     path: '/demo5',
     name: 'demo5',
     component: Layout,
+    hidden: true,
     redirect: '/demo5/demoIndex5',
     meta: { title: '拖拽组件', icon: 'form', single: true },
     children: [

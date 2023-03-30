@@ -13,7 +13,7 @@ export default [
                 path: 'planIndex',
                 name: 'planIndex',
                 component: () => import('@/pages/rem/plan/index.vue'),
-                meta: { title: '措施管理', icon: 'icon'},
+                meta: { title: '措施管理(旧)', icon: 'icon'},
             },
             {
               hidden: false,
