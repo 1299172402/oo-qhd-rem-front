@@ -38,8 +38,8 @@
         data() {
             return {
                 dialogVisible1: false,
-                url: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-paopao.html',
-                url1: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
+                url: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-paopao.html',
+                url1: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
                 radio: 1,
                 //选中层位
                 selectPosition: '',

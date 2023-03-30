@@ -2,7 +2,7 @@
     <div :class="['H5Box',className]" :style="{width:width,height:height}">
         <!-- <el-button v-if="showFullBtn" class="floatR" icon="el-icon-rank" plain @click="handleFullScreen('innerIframe')">全屏查看</el-button>
         <el-button v-if="className==='znjsSave'" class="floatR znjs_btn" plain style="right: 145px;" @click="saveZNJSData">保存</el-button> -->
-        <iframe ref="innerIframe" :src=" `/${url}?t='${reload}`" frameborder="0" style="width: 100%; height: 100%" @load="loadFinish"></iframe>
+        <iframe ref="innerIframe" :src=" `${url}?t='${reload}`" frameborder="0" style="width: 100%; height: 100%" @load="loadFinish"></iframe>
     </div>
 </template>
 <script>

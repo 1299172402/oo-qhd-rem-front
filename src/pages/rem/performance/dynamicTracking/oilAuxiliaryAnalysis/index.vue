@@ -19,7 +19,7 @@
                 <el-upload ref="upload" style="margin-left: 20px" class="upload-demo" action=""
                     :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove"
                     :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList"
-                    :show-file-list="false" :on-success="handleSuccess" v-show="canUpload && !ljpmTag">
+                    :show-file-list="false" :on-success="handleSuccess" v-show="canUpload && !ljpmTag &&(currentModule=='wellNetworkDiagram' || currentModule=='completionStringDrawing' || currentModule=='fluidProducingProfile' || currentModule=='saturationLog')">
                     <el-button type="primary">上传文档</el-button>
                 </el-upload>
                 <el-button class="upload-demo" v-show="canUpload && ljpmTag" style="margin-left: 20px" @click="ljpmUploadDialog">上传文档</el-button>
