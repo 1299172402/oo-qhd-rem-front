@@ -71,7 +71,7 @@
             <el-col :span="2">&nbsp;</el-col>
             <el-col :span="10">
               <el-form-item label="有效厚度" prop="cw">
-                <el-input v-model="djclForm.thicknessEffe"  :disabled="edit"> <i slot="suffix">m</i></el-input>
+                <el-input v-model="djclForm.thicknessEffe" :disabled="edit"> <i slot="suffix">m</i></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -112,8 +112,8 @@ import {
   fetchProductionWells,
   fetchProductionWellsByPlatform,
 } from '@/api/oilDeposit/rem-02/primaryinfo.js';
-import { queryLayerList,getOilFieldList } from '@/api/rem/workcompanydesignate';
-import { saveWellDetailedEvaluation,queryByWellidCwid } from '@/api/rem/welldetailedevaluationresult';
+import { queryLayerList, getOilFieldList } from '@/api/rem/workcompanydesignate';
+import { saveWellDetailedEvaluation, queryByWellidCwid } from '@/api/rem/welldetailedevaluationresult';
 export default {
   components: {},
   data() {
@@ -126,7 +126,7 @@ export default {
         ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
         wellId: '09D30C16BD1D4F759D53F74941701307',
         orgId: '715AD1CD60484BB59E737CD18A9DE44A',
-        pt:'',
+        pt: '',
       },
       deptSelect: [
         {
@@ -137,8 +137,7 @@ export default {
       wells: [],
       platforms: [],
       oilFields: [],
-      djclForm: {  
-      },
+      djclForm: {},
     };
   },
   mounted() {
@@ -169,25 +168,29 @@ export default {
           fetchPlatforms(requestPlat).then((res) => {
             if (res.data.code == 200) {
               this.platforms = res.data.data.platform;
-              this.platforms.map((n)=>{
-                if(n.platName == '全部'){
-                  n.platFormId = ''
+              this.platforms.map((n) => {
+                if (n.platName == '全部') {
+                  n.platFormId = '';
                 }
-                this.queryData.pt = ''
-              })
+                this.queryData.pt = '';
+              });
             }
           });
         }
       });
     },
-    selectcw(){
+    selectcw() {
       let adta = {
-        wellId:this.queryData.wellId,
-        layerId:this.djclForm.layerId
-      }
-      queryByWellidCwid(adta).then((res)=>{
-        console.log(res)
-      })
+        wellId: this.queryData.wellId,
+        layerId: this.djclForm.layerId,
+      };
+      queryByWellidCwid(adta).then((res) => {
+        if (res.data.data) {
+          this.djclForm = res.data.data;
+        } else {
+          this.djclForm = []
+        }
+      });
     },
     redact() {
       this.edit = false;
@@ -203,10 +206,10 @@ export default {
       });
     },
     save() {
-      this.djclForm.controlArea = Number(this.djclForm.controlArea)
-      this.djclForm.probReservesWell = Number(this.djclForm.probReservesWell)
-      this.djclForm.thicknessEffe = Number(this.djclForm.thicknessEffe)
-      saveWellDetailedEvaluation({ ...this.djclForm, wellId: this.queryData.wellId}).then((res) => {
+      this.djclForm.controlArea = Number(this.djclForm.controlArea);
+      this.djclForm.probReservesWell = Number(this.djclForm.probReservesWell);
+      this.djclForm.thicknessEffe = Number(this.djclForm.thicknessEffe);
+      saveWellDetailedEvaluation({ ...this.djclForm, wellId: this.queryData.wellId }).then((res) => {
         if (res.data.code == 200) {
           this.edit = true;
           this.$message.success('保存成功！');
@@ -218,17 +221,17 @@ export default {
     getData() {
       let oilFieldId = '3FC9A818F5BC43B88270DB80BBB3018F';
       const request = {
-        oilFieldId
+        oilFieldId,
       };
       fetchProductionWells(request).then((res) => {
         if (res.data.code == 200) {
           let wellList = res.data.data.productionWells;
-          let arr = []
-          wellList.map((n)=>{
-            if(n.wellName !=null){
-              arr.push(n)
+          let arr = [];
+          wellList.map((n) => {
+            if (n.wellName != null) {
+              arr.push(n);
             }
-          })
+          });
           this.wells = [...arr];
         }
       });
