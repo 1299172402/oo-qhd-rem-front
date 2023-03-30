@@ -211,7 +211,7 @@
 //   delectByWellGroupId,
 //   saveAllWellGroup,
 // } from '@/api/ipm-04/r-wellConnectEvaluate.js';
-import { wellGroupParamConfiguration, wellGroupList } from '@/api/rem/wellgroupinformaintenance';
+import { wellGroupParamConfiguration,wellGroupParamConfigurationList, wellGroupList } from '@/api/rem/wellgroupinformaintenance';
 import { getOilFieldList, queryProductList, queryLayerList } from '@/api/rem/workcompanydesignate';
 import { fetchFields, fetchInjectionWells,fetchProductionWells } from '@/api/rem/primaryinfo';
 export default {
@@ -501,7 +501,7 @@ export default {
         blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
         dataTime: '2022-11-22',
       };
-      wellGroupParamConfiguration(data).then((res) => {
+      wellGroupParamConfigurationList(data).then((res) => {
         if (res.data.data && res.data.data.length > 0) {
           let index = 0;
           let obj = {};
