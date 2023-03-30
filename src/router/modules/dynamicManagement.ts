@@ -2,9 +2,9 @@ import Layout from '@/layouts/index.vue';
 
 export default [
     {
+        hidden: true,
         path: '/dynamicManagement',
         name: 'dynamicManagement',
-        hidden: false,
         component: Layout,
         meta: { title: '油藏动态管理', icon: 'client', single: false },
         children: [
@@ -67,6 +67,5 @@ export default [
             //   ],
             // },
         ],
-
     },
 ];
