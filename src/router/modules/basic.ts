@@ -27,12 +27,12 @@ export default [
         component: () => import('@/pages/rem/basic/wellGroupMaintenance/index.vue'),
         meta: { title: '井组信息维护' },
       },
-      {
-          path: 'effectofMeasures',
-          name: 'effectofMeasures',
-          component: () => import('@/pages/rem/plan/effectofMeasures.vue'),
-          meta: {title: '人员措施'},
-      },
+      // {
+      //     path: 'effectofMeasures',
+      //     name: 'effectofMeasures',
+      //     component: () => import('@/pages/rem/plan/effectofMeasures.vue'),
+      //     meta: {title: '人员措施'},
+      // },
     ],
   },
 ];

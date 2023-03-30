@@ -160,9 +160,9 @@
           <el-select v-model="select.waterBlock" placeholder="请选择" class="f2" @change="waterBut" filterable>
             <el-option
               v-for="item in waterList"
-              :key="item.injWellId"
-              :label="item.injWellNo"
-              :value="item.injWellId"
+              :key="item.wellId"
+              :label="item.wellName"
+              :value="item.wellId"
             ></el-option>
           </el-select>
         </div>
@@ -179,7 +179,7 @@
           <el-transfer
             filterable
             filter-placeholder="请输入油井井号"
-            v-model="value"
+            v-model="select.yjjh"
             :data="transferData"
             :titles="['未选中', '已选中']"
           ></el-transfer>
@@ -211,9 +211,9 @@
 //   delectByWellGroupId,
 //   saveAllWellGroup,
 // } from '@/api/ipm-04/r-wellConnectEvaluate.js';
-import { wellGroupParamConfiguration } from '@/api/rem/wellgroupinformaintenance';
+import { wellGroupParamConfiguration, wellGroupList } from '@/api/rem/wellgroupinformaintenance';
 import { getOilFieldList, queryProductList, queryLayerList } from '@/api/rem/workcompanydesignate';
-import { fetchFields } from '@/api/rem/primaryinfo';
+import { fetchFields, fetchInjectionWells,fetchProductionWells } from '@/api/rem/primaryinfo';
 export default {
   components: {},
   data() {
@@ -238,6 +238,7 @@ export default {
         waterBlock: '',
         layerBlock: '',
         ogfBlock: '',
+        yjjh:'',
       },
       blanks: [],
       waterList: [],
@@ -433,8 +434,8 @@ export default {
     },
     // 井组名称下拉
     getselectWell(data) {
-      getselectWellGroup(data).then((res) => {
-        this.blockList = res;
+      wellGroupList(data).then((res) => {
+        this.blockList = res.data.data;
         this.blockList.unshift({
           wellGroupId: '0',
           wellGroupName: '新增',
@@ -465,6 +466,21 @@ export default {
         }
         console.log(this.tableData);
       });
+
+      fetchInjectionWells({oilFieldId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then((res)=>{
+        this.waterList = res.data.data.injectionWell
+      })
+      fetchProductionWells({oilFieldId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then((res)=>{
+        let wellGroup = res.data.data.productionWells
+        let data = []
+        wellGroup.forEach((item) => {
+            data.push({
+              label: item.wellName,
+              key: item.wellId,
+            });
+          });
+        this.transferData = data
+      })
     },
     // 获取区块数据
     selectblock() {
@@ -475,7 +491,7 @@ export default {
         this.blanks = blockList;
       });
     },
-    // 油田下拉点击事件
+    // // 油田下拉点击事件
     changeOilfield() {
       this.selectblock();
     },

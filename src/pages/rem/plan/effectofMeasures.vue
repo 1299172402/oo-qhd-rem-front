@@ -23,7 +23,9 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-button size="medium" type="primary" @click="retrieval" icon="el-icon-search" style="margin-left: 10px">检索</el-button>
+        <el-button size="medium" type="primary" @click="retrieval" icon="el-icon-search" style="margin-left: 10px"
+          >检索</el-button
+        >
       </el-form>
     </headerSearch>
     <verticalSwitchButton
@@ -82,24 +84,13 @@ export default {
       this.currentTab = item.value;
     },
     // 检索按钮
-    retrieval(){
-      this.$refs.modal.show(this.queryParams)
+    retrieval() {
+      this.$refs.modal.show(this.queryParams);
     },
     getserch() {
       getOilFieldList({ orgId: '715AD1CD60484BB59E737CD18A9DE44A' }).then((res) => {
         if (res.data.code == 200) {
           this.oilFields = res.data.data;
-        }
-      });
-      fetchPlatforms(requestPlat).then((res) => {
-        if (res.data.code == 200) {
-          this.platforms = res.data.data.platform;
-          this.platforms.map((n) => {
-            if (n.platName == '全部') {
-              n.platFormId = '';
-            }
-            this.queryData.pt = '';
-          });
         }
       });
     },
