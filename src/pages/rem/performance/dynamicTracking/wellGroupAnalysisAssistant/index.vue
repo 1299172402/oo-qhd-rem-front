@@ -31,9 +31,9 @@
                     <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="currentModule = module.name">{{ module.label }}</el-button>
                 </el-tab-pane>
             </el-tabs>
-            <!-- <keep-alive :include="[]" :max="10">
+            <keep-alive :include="[]" :max="10">
                 <component :is="component" ref="componentCustom" :oil-field-id="selectOilField" :block-id="selectBlock" :layer-id="selectLayer" :well-group-id="selectWellGroup" @childPara="changeChildParam"></component>
-            </keep-alive> -->
+            </keep-alive>
         </pagePanelNew>
     </div>
 </template>

@@ -98,6 +98,7 @@
                     wellGroupId: this.wellGroupId,
                 };
                 reservoirDataConstructureDaigramForWellGroup(request).then((res) => {
+                    console.log('zxb-res',res)
                     if (res.data.code == 200) {
                         let myImageList = res.data.data.layerPics;
                         console.log("reservoirDataConstructureDaigramForWellGroup==>", this.imageList);

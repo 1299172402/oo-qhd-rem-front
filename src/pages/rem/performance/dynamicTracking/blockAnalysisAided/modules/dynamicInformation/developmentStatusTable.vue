@@ -71,7 +71,7 @@
             <el-table-column prop="waterOilRateSum" label="累计水油比" align="center"
                              show-overflow-tooltip min-width="120"></el-table-column>
           </el-table>
-      </NormalCard>
+      </div>
     </el-row>
   </div>
 </template>
