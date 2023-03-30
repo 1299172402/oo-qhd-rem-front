@@ -7,7 +7,7 @@
         @current-change="handleCurrentChange"
         @selection-change="handleSelectionChange"
         highlight-current-row
-        height="calc(100% - 45px)"
+        height="800px"
         :row-style="{ height: '0px' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
         header-cell-class-name="table_header"
