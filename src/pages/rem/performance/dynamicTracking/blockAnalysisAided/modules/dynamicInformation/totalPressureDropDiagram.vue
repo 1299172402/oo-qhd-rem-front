@@ -12,10 +12,10 @@
         <div class="z-echarts">
             <H5Chart ref="H5Chart" height="100%" :url="url" width="100%"></H5Chart>
         </div> 
-        <!-- <el-dialog width="10px" max-height="10px" :visible.sync="dialogVisible1"
+        <el-dialog width="10px" max-height="10px" :visible.sync="dialogVisible1"
             style="margin-top: 98%; margin-right: 2%">
             <H5Chart1 style="z-index: -9999;" ref="downH5Chart1" :url="url1" width="4000px" height="4000px"></H5Chart1>
-        </el-dialog> -->
+        </el-dialog>
     </div>
 </template>
 
@@ -24,12 +24,12 @@
     import {dynamicDataTotalPressureDropDiagram} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
     import {downFile} from "@/lib/remBase64Download.js";
     import H5Chart from "@/components/tools/H5Chart/index.vue";
-    // import H5Chart1 from "@/components/tools/H5Chart/index1.vue";
+    import H5Chart1 from "@/components/tools/H5Chart/index1.vue";
     let _this;
     export default {
         components: {
             H5Chart,
-            // H5Chart1,
+            H5Chart1,
         },
         props: {
             oilFieldId: {},
@@ -37,10 +37,9 @@
         },
         data() {
             return {
-                dialogVisible1: false,
                 url: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-paopao.html',
                 url1: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
-                radio: 1,
+                dialogVisible1: false,
                 //选中层位
                 selectPosition: '',
                 //层位所选择内容信息

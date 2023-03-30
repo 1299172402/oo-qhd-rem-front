@@ -1,9 +1,9 @@
 <!-- 规范计划管理-措施管理界面 -->
 <template>
     <div class="app-container">
-        <headerSearch class="g-w100 g-h100">
-            <div style="padding-top:12px;display: flex;align-items: center;">
-                <div class="fl">
+        <headerSearch class="g-w100 g-h100" style="height:auto;padding-top:18px;padding-bottom:8px;">
+            <div style="display: flex;align-items: center;flex-wrap:wrap;">
+                <div style="margin-right:15px;margin-bottom:10px;">
                     <span>油田：</span>
                     <el-select v-model="selectOilField" class="f2" disabled @change="onFieldChange">
                         <el-option v-for="(item, index) in oilFields" :key="index" :label="item.name"
@@ -11,7 +11,7 @@
                         </el-option>
                     </el-select>
                 </div>
-                <div class="fl mg">
+                <div style="margin-right:15px;margin-bottom:10px;">
                     <span>平台：</span>
                     <el-select v-model="selectPlatform" class="f2" style="width: 220px;" @change="onPlatfromChange">
                         <el-option v-for="(item, index) in platforms" :key="index" :label="item.platName"
@@ -19,7 +19,7 @@
                         </el-option>
                     </el-select>
                 </div>
-                <div class="fl mg">
+                <div style="margin-right:15px;margin-bottom:10px;">
                     <span>井号：</span>
                     <el-select v-model="wellId" class="f2">
                         <el-option v-for="(item, index) in wells" :key="index" :label="item.wellName"
@@ -27,14 +27,14 @@
                         </el-option>
                     </el-select>
                 </div>
-                <div class="fl mg">
+                <div style="margin-right:15px;margin-bottom:10px;">
                     <span>措施事件：</span>
                     <el-select class="f2" filterable>
                         <el-option v-for="(item, index) in []" :key="index" :label="item.name" :value="item.code">
                         </el-option>
                     </el-select>
                 </div>
-                <div class="fl mg">
+                <div style="margin-right:15px;margin-bottom:10px;">
                     <span>措施类型：</span>
                     <el-select v-model="measuresType" class="f2" filterable>
                         <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name"
@@ -42,19 +42,19 @@
                         </el-option>
                     </el-select>
                 </div>
-                <div class="fl mg">
+                <div style="margin-right:15px;margin-bottom:10px;">
                     <span>措施版本：</span>
                     <el-select class="f2" filterable>
                         <el-option v-for="(item, index) in []" :key="index" :label="item.name" :value="item.code">
                         </el-option>
                     </el-select>
                 </div>
-                <div class="fl mg">
+                <div style="margin-right:15px;margin-bottom:10px;">
                     <span>时间:</span>
                     <el-date-picker class="f3" v-model="dateTime" style="margin-left:10px" type="year"
                         placeholder="选择日期" value-format="yyyy"></el-date-picker>
                 </div>
-                <div class="fr mg">
+                <div style="margin-right:15px;margin-bottom:10px;">
                     <el-button type="primary" icon="el-icon-search" size="mini" @click="doSearch">搜索</el-button>
                     <el-button style="width:70px" @click="doExportFile" v-show="canDownload">下载</el-button>
                 </div>
@@ -146,7 +146,7 @@
             <pagination v-show="pageTotal > 0" :pageSizes="[15, 20, 40, 100]" :total="pageTotal" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />
         </pagePanelNew>
         <!-- 现场作业进度表-弹框 -->
-        <fieldOperations :dialogVisible="fieldOperationsShow" @close="fieldOperationsShow=false;"></fieldOperations>>
+        <fieldOperations :dialogVisible="fieldOperationsShow" @close="fieldOperationsShow=false;"></fieldOperations>
     </div>
 </template>
 
