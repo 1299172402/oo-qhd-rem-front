@@ -86,11 +86,21 @@ export default ({
           // 更多请参考：https://vitejs.dev/config/#server-proxy
           // target: 'http://10.247.187.28:8080/dev-api/',
           // target: 'http://10.178.118.181:9220',
-          target: 'http://10.178.118.191:9229',
+          target: 'http://10.178.118.184:9229', //姜
+          // target: 'http://10.178.118.182:9221', //新
           // target: 'http://10.178.118.189:1234', //黄明杰
           // target: 'http://10.178.118.184:8080',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, ''),
+        },
+        '/dev-api/prm/api': {
+          // 用于开发环境下的转发请求
+          // 更多请参考：https://vitejs.dev/config/#server-proxy
+          // target: 'http://10.247.187.28:8080/dev-api/',
+          // target: 'http://10.178.118.181:9220',
+          target: 'http://10.77.78.250:9213',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/dev-api\/prm\/api/, ''),
         },
         '/dev-api': {
           // 用于开发环境下的转发请求
