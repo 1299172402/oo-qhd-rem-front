@@ -16,7 +16,7 @@ export default [
                 meta: { title: '措施管理', icon: 'icon'},
             },
             {
-              hidden: false,
+              hidden: true,
               path: 'newPlanIndex2',
               name: 'newPlanIndex2',
               component: () => import('@/pages/rem/plan/newPlanIndex.vue'),
