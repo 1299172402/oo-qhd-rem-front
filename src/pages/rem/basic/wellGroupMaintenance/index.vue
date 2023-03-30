@@ -213,7 +213,7 @@
 // } from '@/api/ipm-04/r-wellConnectEvaluate.js';
 import { wellGroupParamConfiguration,wellGroupParamConfigurationList, wellGroupList,delectByWellGroupId } from '@/api/rem/wellgroupinformaintenance';
 import { getOilFieldList, queryProductList, queryLayerList } from '@/api/rem/workcompanydesignate';
-import { fetchFields, fetchInjectionWells,fetchProductionWells,fetchFields } from '@/api/rem/primaryinfo';
+import { fetchFields, fetchInjectionWells,fetchProductionWells } from '@/api/rem/primaryinfo';
 export default {
   components: {},
   data() {
