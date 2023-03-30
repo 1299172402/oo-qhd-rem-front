@@ -112,7 +112,7 @@ import {
   fetchProductionWells,
   fetchProductionWellsByPlatform,
 } from '@/api/oilDeposit/rem-02/primaryinfo.js';
-import { queryLayerList, queryDensityInfo, getOilFieldList } from '@/api/rem/workcompanydesignate';
+import { queryLayerList,getOilFieldList } from '@/api/rem/workcompanydesignate';
 import { saveWellDetailedEvaluation } from '@/api/rem/welldetailedevaluationresult';
 export default {
   components: {},
@@ -150,7 +150,6 @@ export default {
     getList() {
       getOilFieldList({ orgId: '715AD1CD60484BB59E737CD18A9DE44A' }).then((res) => {
         if (res.data.code == 200) {
-          console.log(res, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
           this.oilFields = res.data.data;
           // if (this.oilFields.length == 0) {
           //   this.selectOilField = "";

@@ -209,7 +209,7 @@
 //   delectByWellGroupId,
 //   saveAllWellGroup,
 // } from '@/api/ipm-04/r-wellConnectEvaluate.js';
-import { queryDensityInfo, getOilFieldList, queryProductList } from '@/api/rem/workcompanydesignate';
+import {getOilFieldList, queryProductList } from '@/api/rem/workcompanydesignate';
 export default {
   components: {},
   data() {
