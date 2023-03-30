@@ -1,7 +1,7 @@
 <!-- 现场作业计划 -->
 <template>
   <div class="app-container">
-    <pagePanelNew headerTitle="现场作业计划表" style="height: calc(100% - 100px)">
+    <pagePanel headerTitle="现场作业计划表" style="height: calc(100% - 100px)">
       <el-table
         :data="noticeList"
         @current-change="handleCurrentChange"
@@ -30,12 +30,12 @@
         <el-table-column label="预计作业时间" prop="predictedJobTime" align="center"></el-table-column>
         <el-table-column label="备注" prop="note" align="center"></el-table-column>
       </el-table>
-    </pagePanelNew>
+    </pagePanel>
   </div>
 </template>
 
 <script>
-import { getWorkCompany, getOilFieldList } from '@/api/rem/workcompanydesignate.js';
+import { getOnSiteWork } from '@/api/rem/actionplanmanagement';
 export default {
   name: 'Notice',
   dicts: ['sys_normal_disable'],
@@ -59,22 +59,8 @@ export default {
       // 是否展开，默认全部展开
       isExpandAll: true,
       deptList: [],
-      rules: {
-        noticeContent: [{ required: true, message: '通知内容不能为空', trigger: 'blur' }],
-        noticeType: [{ required: true, message: '通知类型不能为空', trigger: 'blur' }],
-        radio: [{ required: true, message: '发送时间不能为空', trigger: 'blur' }],
-        sendTime: [{ required: true, message: '定时时间不能为空', trigger: 'blur' }],
-        deptIds: [{ required: true, message: '通知对象不能为空', trigger: 'blur' }],
-      },
-      // 显示搜索条件
-      showSearch: true,
       // 总条数
       total: 0,
-
-      // 选中数组
-      ids: [],
-      // 保存数组
-      savelist: [],
       // 查询参数
       queryParams: { actionEvent: '', assetCode: '', month: '', ogfId: '', wellNo: '' },
     };
@@ -91,29 +77,6 @@ export default {
      * @param oilfield 油田数据数组
      */
     getList() {
-      getWorkCompany().then((data) => {
-        let code = data.data.code;
-        if (code == 200) {
-          this.company = data.data.data;
-          if (this.company) {
-            this.queryParams.orgId = data.data.data[0].orgId;
-            getOilFieldList({ orgId: this.queryParams.orgId }).then((res) => {
-              let code = data.data.code;
-              if (code == 200) {
-                this.oilfield = res.data.data;
-                if (this.oilfield) {
-                  this.queryParams.oilFieldId = res.data.data[0].oilFieldId;
-                }
-              } else {
-                this.$message.warning('系统错误请重新尝试或联系运维人员！');
-              }
-            });
-          }
-        } else {
-          alert('系统错误请重新尝试或联系运维人员！');
-        }
-      });
-
       getOnSiteWork(this.queryParams).then((res) => {
         if (res.data.code === 200) {
           this.noticeList = res.data.data;
@@ -123,43 +86,6 @@ export default {
         }
       });
     },
-    // 编辑
-    /**
-     *  选中表格事件
-     * @param ids 选中的表格单行内容，携带index与判断条件
-     */
-    handleCurrentChange(val) {
-      this.ids = [];
-      this.ids = val;
-      console.log(this.ids);
-    },
-    /**
-     *  编辑
-     * @param noticeList 表格数据data
-     */
-    redact() {
-      let arr = [];
-      this.noticeList.map((n) => {
-        if (n.state == '1') {
-          arr.push(n);
-        }
-      });
-      if (arr.length >= 1) {
-        this.$message.warning('同时只能编辑一个油田！');
-      } else {
-        this.noticeList[this.ids.index].state = '1';
-        this.savelist = this.noticeList[this.ids.index];
-      }
-    },
-    // 保存
-    save() {
-      if (this.savelist) {
-        this.noticeList[this.savelist.index].state = '0';
-        this.$message.warning('修改成功');
-        this.savelist = [];
-      }
-    },
-    handleSelectionChange() {},
   },
 };
 </script>

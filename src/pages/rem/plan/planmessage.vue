@@ -218,41 +218,8 @@ export default {
         }
       });
     },
-    // 编辑
-    /**
-     *  选中表格事件
-     * @param ids 选中的表格单行内容，携带index与判断条件
-     */
-    handleCurrentChange(val) {
-      this.ids = [];
-      this.ids = val;
-      console.log(this.ids);
-    },
-    /**
-     *  编辑
-     * @param noticeList 表格数据data
-     */
-    redact() {
-      let arr = [];
-      this.noticeList.map((n) => {
-        if (n.state == '1') {
-          arr.push(n);
-        }
-      });
-      if (arr.length >= 1) {
-        this.$message.warning('同时只能编辑一个油田！');
-      } else {
-        this.noticeList[this.ids.index].state = '1';
-        this.savelist = this.noticeList[this.ids.index];
-      }
-    },
-    // 保存
-    save() {
-      if (this.savelist) {
-        this.noticeList[this.savelist.index].state = '0';
-        this.$message.warning('修改成功');
-        this.savelist = [];
-      }
+    show(data){
+        console.log(data)
     },
   },
 };

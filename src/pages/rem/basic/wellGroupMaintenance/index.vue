@@ -4,11 +4,17 @@
     <!-- <el-header style="margin-top: 15px"> -->
     <header-search class="g-w100 g-h100" style="height: auto">
       <el-form inline>
+        <el-form-item label="作业公司：">
+          <el-select v-model="query.orgId" disabled>
+            <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.deptName" :value="item.deptId">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="油田：">
           <el-select v-model="query.selectField" class="f2" @change="changeOilfield" disabled>
             <el-option
-              v-for="item in options"
-              :key="item.oilFieldId"
+              v-for="(item, index) in oilFields"
+              :key="index"
               :label="item.oilFieldName"
               :value="item.oilFieldId"
             ></el-option>
@@ -163,12 +169,8 @@
         <div class="f1">
           <span>层位：</span>
           <el-select v-model="select.layerBlock" placeholder="请选择" class="f2" @change="queryBlock">
-            <el-option
-              v-for="item in layerList"
-              :key="item.layerId"
-              :label="item.layerName"
-              :value="item.layerId"
-            ></el-option>
+            <el-option v-for="item in cwOptions" :key="item.layerId" :label="item.layerName" :value="item.layerId">
+            </el-option>
           </el-select>
         </div>
         <!-- 互换 -->
@@ -209,18 +211,28 @@
 //   delectByWellGroupId,
 //   saveAllWellGroup,
 // } from '@/api/ipm-04/r-wellConnectEvaluate.js';
-import {getOilFieldList, queryProductList } from '@/api/rem/workcompanydesignate';
+import { wellGroupParamConfiguration } from '@/api/rem/wellgroupinformaintenance';
+import { getOilFieldList, queryProductList, queryLayerList } from '@/api/rem/workcompanydesignate';
+import { fetchFields } from '@/api/rem/primaryinfo';
 export default {
   components: {},
   data() {
     return {
       options: [],
       transferData: [],
+      cwOptions: [],
       query: {
-        selectField: '68B63EC37E3649B38F7C0219C9BB0948',
+        selectField: '3FC9A818F5BC43B88270DB80BBB3018F',
         value2: this.getDate(),
         selectBlock: '6CD7342CA6DD418183A4B3BC38584F7C',
+        orgId: '715AD1CD60484BB59E737CD18A9DE44A',
       },
+      deptSelect: [
+        {
+          deptId: '715AD1CD60484BB59E737CD18A9DE44A',
+          deptName: '秦皇岛32-6渤中作业公司',
+        },
+      ], //作业公司
       select: {
         selectBlock: '',
         waterBlock: '',
@@ -233,6 +245,7 @@ export default {
       layerList: [],
       radio: '1',
       tableData: [],
+      oilFields: [],
       dialogVisible: false,
       value: [],
       blockList: [],
@@ -254,6 +267,7 @@ export default {
         return data.getFullYear() + '-' + (data.getMonth() + 1);
       }
     },
+
     queryBlock() {
       this.transferData = [];
       postselectProWellByGroup({
@@ -288,6 +302,7 @@ export default {
         }
       }
     },
+
     deleteWellGroup(row) {
       const param = {
         wellGroupId: row.wellGroupId,
@@ -439,14 +454,22 @@ export default {
     selectData() {
       getOilFieldList({ orgId: '715AD1CD60484BB59E737CD18A9DE44A' }).then((res) => {
         if (res.data.code == 200) {
-          this.options = res.data.data;
+          this.oilFields = res.data.data;
         }
+      });
+      queryLayerList().then((res) => {
+        if (res.data.code == 200) {
+          this.cwOptions = res.data.data;
+        } else {
+          this.$message.error('系统错误请重新尝试或联系运维人员！');
+        }
+        console.log(this.tableData);
       });
     },
     // 获取区块数据
     selectblock() {
       if (!this.query.selectField) return;
-      getblock({
+      fetchFields({
         ogfId: this.query.selectField,
       }).then(({ blockList }) => {
         this.blanks = blockList;
@@ -459,18 +482,16 @@ export default {
     // 获取油田列表数据
     tableOilfield() {
       let data = {
-        ogfId: this.query.selectField,
-        blockId: this.query.selectBlock,
-        dateTime: this.query.value2,
-        apifoxApild: '48248204',
+        blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
+        dataTime: '2022-11-22',
       };
-      postCoefficientconnectivityList(data).then((res) => {
-        if (res && res.length > 0) {
+      wellGroupParamConfiguration(data).then((res) => {
+        if (res.data.data && res.data.data.length > 0) {
           let index = 0;
           let obj = {};
-          this.tableData = res.map((item) => {
+          this.tableData = res.data.data.map((item) => {
             if (!obj[item.wellGroupId]) {
-              obj[item.wellGroupId] = res.filter((filter) => item.wellGroupId === filter.wellGroupId);
+              obj[item.wellGroupId] = res.data.data.filter((filter) => item.wellGroupId === filter.wellGroupId);
               index = 0;
             } else {
               index++;
@@ -482,8 +503,16 @@ export default {
         } else {
           this.tableData = [];
         }
-        console.log(this.tableData);
       });
+      // let data = {
+      //   ogfId: this.query.selectField,
+      //   blockId: this.query.selectBlock,
+      //   dateTime: this.query.value2,
+      //   apifoxApild: '48248204',
+      // };
+      // postCoefficientconnectivityList(data).then((res) => {
+
+      // });
     },
     // 保存
     saveBut() {

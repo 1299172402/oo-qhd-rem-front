@@ -57,7 +57,7 @@
           <el-row>
             <el-col :span="10">
               <el-form-item label="层位选择" prop="cw">
-                <el-select v-model="djclForm.layerId" placeholder="" style="width: 100.5%">
+                <el-select v-model="djclForm.layerId" @change="selectcw" placeholder="" style="width: 100.5%">
                   <el-option
                     v-for="item in cwOptions"
                     :key="item.layerId"
@@ -113,7 +113,7 @@ import {
   fetchProductionWellsByPlatform,
 } from '@/api/oilDeposit/rem-02/primaryinfo.js';
 import { queryLayerList,getOilFieldList } from '@/api/rem/workcompanydesignate';
-import { saveWellDetailedEvaluation } from '@/api/rem/welldetailedevaluationresult';
+import { saveWellDetailedEvaluation,queryByWellidCwid } from '@/api/rem/welldetailedevaluationresult';
 export default {
   components: {},
   data() {
@@ -126,6 +126,7 @@ export default {
         ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
         wellId: '',
         orgId: '715AD1CD60484BB59E737CD18A9DE44A',
+        pt:'',
       },
       deptSelect: [
         {
@@ -136,8 +137,7 @@ export default {
       wells: [],
       platforms: [],
       oilFields: [],
-      djclForm: {
-        
+      djclForm: {  
       },
     };
   },
@@ -179,6 +179,15 @@ export default {
           });
         }
       });
+    },
+    selectcw(){
+      let adta = {
+        wellId:this.queryData.wellId,
+        layerId:this.djclForm.layerId
+      }
+      queryByWellidCwid(adta).then((res)=>{
+        console.log(res)
+      })
     },
     redact() {
       this.edit = false;

@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-row :gutter="20">
-      <el-col :span="12">
+      <el-col :span="16">
         <pagePanel headerTitle="平台人数对比" style="height: 250px">
           <Echart :chart-data="histogram" height="100%"></Echart>
         </pagePanel>
@@ -73,6 +73,7 @@ import { GridComponent, TooltipComponent, LegendComponent } from 'echarts/compon
 import { CanvasRenderer } from 'echarts/renderers';
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 export default {
+  props: ['infodata'],
   components: {
     Echart,
     verticalSwitchButton,
@@ -101,7 +102,7 @@ export default {
       pageSize: 10,
       total: 0,
       queryParams: { endTime: '' },
-    //   events: [{ name: 'click' }],
+      //   events: [{ name: 'click' }],
       // ecahrts 高度
       chartHeight: '150px',
       // table高度
@@ -157,6 +158,10 @@ export default {
             axisTick: {
               show: false,
             },
+            label: {
+              interval: 0,
+              rotate: 40,
+            },
             axisLine: {
               lineStyle: {
                 //color: '#979797'
@@ -196,21 +201,16 @@ export default {
             barWidth: '12',
             data: [],
             itemStyle: {
-              color:
-                (0,
-                0,
-                0,
-                1,
-                [
-                  {
-                    offset: 0,
-                    color: '#00D9EA',
-                  },
-                  {
-                    offset: 1,
-                    color: '#0F65EA',
-                  },
-                ]),
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: '#00D9EA',
+                },
+                {
+                  offset: 1,
+                  color: '#0F65EA',
+                },
+              ]),
             },
             /*showBackground: true,
           backgroundStyle: {
@@ -223,21 +223,16 @@ export default {
             barWidth: '12',
             data: [],
             itemStyle: {
-              color:
-                (0,
-                0,
-                0,
-                1,
-                [
-                  {
-                    offset: 0,
-                    color: '#F5BE43',
-                  },
-                  {
-                    offset: 1,
-                    color: '#FF7135',
-                  },
-                ]),
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: '#F5BE43',
+                },
+                {
+                  offset: 1,
+                  color: '#FF7135',
+                },
+              ]),
             },
             /*showBackground: true,
           backgroundStyle: {
@@ -255,6 +250,10 @@ export default {
     this.getinfo();
   },
   methods: {
+    // 接受参数
+    show(data) {
+      console.log(data);
+    },
     getinfo() {
       let data = {
         endTime: '2023-03-27',
@@ -278,14 +277,12 @@ export default {
               y.push(list[i].mineStaff); //waterTimeRate
               y1.push(list[i].littleSum);
             } else {
-              //折线图
-              x.push(list[i].prodPlatFormName);
+              x.push(list[i].prodPlatFormName.substr(7, 12));
               y.push(list[i].mineStaff); //waterqueryParamsTimeRate
               y1.push(list[i].littleSum);
             }
           }
         }
-
         //柱图
         this.histogram.series[0].data = y;
         this.histogram.series[1].data = y1;
