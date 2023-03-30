@@ -24,7 +24,7 @@
     </headerSearch>
     <el-row :gutter="20">
       <el-col :span="12">
-        <pagePanel headerTitle="平台人数对比" style="height: 200px">
+        <pagePanel headerTitle="平台人数对比" style="height: 250px">
            <Echart :chart-data="histogram"  height="100%"></Echart>
         </pagePanel>
       </el-col>

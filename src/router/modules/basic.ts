@@ -27,24 +27,24 @@ export default [
                 component: () => import('@/pages/rem/basic/wellGroupMaintenance/index.vue'),
                 meta: { title: '井组信息维护' },
               },
-            {
-                path: 'personnelplan',
-                name: 'personnelplan',
-                component: () => import('@/pages/rem/plan/personnelplan/index.vue'),
-                meta: {title: '人员措施'},
-            },
-            {
-                path: 'operationplan',
-                name: 'operationplan',
-                component: () => import('@/pages/rem/plan/operationplan/index.vue'),
-                meta: {title: '现场作业计划'},
-            },
-            {
-                path: 'planmessage',
-                name: 'planmessage',
-                component: () => import('@/pages/rem/plan/planmessage/index.vue'),
-                meta: {title: '措施计划情况'},
-            },
+            // {
+            //     path: 'personnelplan',
+            //     name: 'personnelplan',
+            //     component: () => import('@/pages/rem/plan/personnelplan/index.vue'),
+            //     meta: {title: '人员措施'},
+            // },
+            // {
+            //     path: 'operationplan',
+            //     name: 'operationplan',
+            //     component: () => import('@/pages/rem/plan/operationplan/index.vue'),
+            //     meta: {title: '现场作业计划'},
+            // },
+            // {
+            //     path: 'planmessage',
+            //     name: 'planmessage',
+            //     component: () => import('@/pages/rem/plan/planmessage/index.vue'),
+            //     meta: {title: '措施计划情况'},
+            // },
         ],
       },
 

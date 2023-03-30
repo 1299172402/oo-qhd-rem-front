@@ -195,12 +195,10 @@ export default {
       });
     },
     save() {
-      this.edit = true;
       this.djclForm.controlArea = Number(this.djclForm.controlArea)
       this.djclForm.probReservesWell = Number(this.djclForm.probReservesWell)
       this.djclForm.thicknessEffe = Number(this.djclForm.thicknessEffe)
-      
-      saveWellDetailedEvaluation({ ...this.djclForm, wellId: '25906A7AF2C24D9C972F76BCC2EB37ED'}).then((res) => {
+      saveWellDetailedEvaluation({ ...this.djclForm, wellId: this.queryData.wellId}).then((res) => {
         if (res.data.code == 200) {
           this.edit = true;
           this.$message.success('保存成功！');
