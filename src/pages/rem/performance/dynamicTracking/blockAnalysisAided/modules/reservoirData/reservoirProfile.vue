@@ -1,25 +1,20 @@
 <!--油藏剖面图-->
 <template>
-  <NormalCard class="mt-2">
+  <div class="mt-2">
     <el-row style="height: 600px;overflow: auto;">
       <el-image  :src="image">
         <div slot="error">
         </div>
       </el-image>
     </el-row>
-  </NormalCard>
+  </div>
 </template>
 
 <script>
-import {reservoirDataReservoirProfile} from "@/api/rem-01/fielddynamicanalysis";
-import NormalCard from "@/components/tools/NormalCard";
-import {downFile} from "@/lib/remBase64Download";
-import config from "@/config";
+import {reservoirDataReservoirProfile} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
+import {downFile} from "@/lib/remBase64Download.js";
 
 export default {
-  components: {
-    NormalCard,
-  },
   props: {
     oilFieldId: {
 
@@ -36,10 +31,6 @@ export default {
       //层位所选择内容信息
       position: [],
       image: '',
-      baseUrl:
-          process.env.NODE_ENV === "production"
-              ? config.publicRootPath
-              : config.devRootPath,
     };
   },
   watch: {

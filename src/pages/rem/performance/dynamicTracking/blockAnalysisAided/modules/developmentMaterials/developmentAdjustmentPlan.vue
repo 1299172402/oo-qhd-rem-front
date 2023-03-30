@@ -1,20 +1,14 @@
 <!--开发调整方案-->
 <template>
-  <NormalCard class="mt-2" style="height: 100%;">
     <el-row style="margin-top:10px;height: 100%;">
       <iframe style="width: 100%;height: 100%;border: none;" :src="image?(image+'#toolbar=0'):''" ></iframe>
     </el-row>
-  </NormalCard>
 </template>
 
 <script>
-import {developmentDataDevelopmentAdjustmentPlan} from "@/api/rem-01/fielddynamicanalysis.js";
-import NormalCard from "@/components/tools/NormalCard";
-import {downFile} from "@/lib/remBase64Download";
+import {developmentDataDevelopmentAdjustmentPlan} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
+import {downFile} from "@/lib/remBase64Download.js";
 export default {
-  components: {
-    NormalCard,
-  },
   props: {
     oilFieldId: {},
     blockId: {}
@@ -25,7 +19,6 @@ export default {
       selectPosition: '',
       //层位所选择内容信息
       position: [],
-      src: '../../static/img/blockAnalysisAided/reservoirData/structuralMap.jpg',
       image: '',
     };
   },

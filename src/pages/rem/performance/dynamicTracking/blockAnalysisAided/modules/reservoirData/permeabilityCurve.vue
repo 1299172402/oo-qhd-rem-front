@@ -1,6 +1,6 @@
 <!--相渗透率曲线-->
 <template>
-  <NormalCard class="mt-2">
+  <div class="mt-2">
     <el-row>
       <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable  clearable >
         <el-option
@@ -28,18 +28,13 @@
         </el-table>
       </el-col>
     </el-row>
-  </NormalCard>
+  </div>
 </template>
 
 <script>
-import {fieldOilLayers} from "@/api/rem-02/primaryinfo";
-import {reservoirDataPhasePermeabilityCurve} from "@/api/rem-01/fielddynamicanalysis";
-import NormalCard from "@/components/tools/NormalCard";
-import config from "@/config";
+import {fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
+import {reservoirDataPhasePermeabilityCurve} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
 export default {
-  components: {
-    NormalCard,
-  },
   props: {
     oilFieldId: {},
     blockId: {}

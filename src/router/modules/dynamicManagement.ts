@@ -24,15 +24,15 @@ export default [
                 ],
             },
             {
-                path: 'performance',
-                name: 'performance',
+                path: 'dynamicTrackingWellGroup',
+                name: 'dynamicTrackingWellGroup',
                 component: () => import('@/layouts/blank.vue'),
                 meta: { title: '井组动态分析', single: false },
                 children: [
                     {
-                        path: 'groupAssistance',
-                        name: 'groupAssistance',
-                        component: () => import('@/pages/rem/performance/wellGroup/groupAssistance/groupAssistance.vue'),
+                        path: 'wellGroupAnalysisAssistant',
+                        name: 'wellGroupAnalysisAssistant',
+                        component: () => import('@/pages/rem/performance/dynamicTracking/wellGroupAnalysisAssistant/index.vue'),
                         meta: { title: '井组辅助分析', icon: 'icon' },
                     },
                 ],

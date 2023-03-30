@@ -1,6 +1,6 @@
 <!--油藏基础信息-->
 <template>
-  <NormalCard class="mt-2">
+  <div class="mt-2">
     <el-row  :gutter="20" style="height: 600px;overflow: auto;">
       <!--临时写死-->
       <el-row>
@@ -54,18 +54,14 @@
         <td>开发方式：</td><td>天然能量+人工注水</td>
       </tr>
     </table>
-  </NormalCard>
+  </div>
 </template>
 
 <script>
-import {reservoirDataBasicReservoirData} from '@/api/rem-01/fielddynamicanalysis.js';
-import NormalCard from '@/components/tools/NormalCard';
-import {exportExcel} from "@/lib/exportExcel";
+import {reservoirDataBasicReservoirData} from '@/api/oilDeposit/rem-01/fielddynamicanalysis.js';
+import {exportExcel} from "@/lib/exportExcel.js";
 
 export default {
-  components: {
-    NormalCard,
-  },
   props: {
     oilFieldId: {
 

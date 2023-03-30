@@ -1,42 +1,24 @@
 <!--井网图-->
 <template>
-  <NormalCard class="mt-2">
     <el-row style="margin-top:10px;height: 600px;overflow: auto;">
-      <!-- <img style="height: 100%" :src="src">-->
       <el-image :src="image">
-        <div slot="error">
-        </div>
+        <div slot="error"></div>
       </el-image>
     </el-row>
-  </NormalCard>
 </template>
 
 <script>
-import {developmentDataWellPattern} from "@/api/rem-01/fielddynamicanalysis";
-import NormalCard from "@/components/tools/NormalCard";
-import {downFile} from "@/lib/remBase64Download";
-import config from "@/config";
+import {developmentDataWellPattern} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
+import {downFile} from "@/lib/remBase64Download.js";
 export default {
-  components: {
-    NormalCard,
-  },
   props: {
-    oilFieldId: {
-
-    },
-    blockId: {
-
-    }
+    oilFieldId: {},
+    blockId: {}
   },
   data() {
     return {
       radio: 1,
-      src: '../../static/img/blockAnalysisAided/reservoirData/structuralMap.jpg',
       image: '',
-      baseUrl:
-          process.env.NODE_ENV === "production"
-              ? config.publicRootPath
-              : config.devRootPath,
     };
   },
   watch: {
@@ -47,9 +29,7 @@ export default {
     }
   },
   mounted() {
-    //this.initData();
     this.doSearch();
-
   },
   methods: {
     async doSearch(){

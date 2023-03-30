@@ -1,6 +1,6 @@
 <!--五敏分析数据-->
 <template>
-  <NormalCard class="mt-2">
+  <div class="mt-2">
     <!--<el-row style="margin-top:10px">
         <el-radio-group v-model="radio">
             <el-radio :label="1"><span style="font-size:14px">层位1</span></el-radio>
@@ -41,17 +41,13 @@
         <el-table-column label="备注" align="center" prop="remark" width="200"></el-table-column>
       </el-table>
     </el-row>
-  </NormalCard>
+  </div>
 </template>
 
 <script>
-import {reservoirDataFiveSensitivityAnalysisData} from "@/api/rem-01/fielddynamicanalysis";
-import NormalCard from "@/components/tools/NormalCard";
-import {exportExcel} from "@/lib/exportExcel";
+import {reservoirDataFiveSensitivityAnalysisData} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
+import {exportExcel} from "@/lib/exportExcel.js";
 export default {
-  components: {
-    NormalCard,
-  },
   props: {
     oilFieldId: {},
     blockId: {},

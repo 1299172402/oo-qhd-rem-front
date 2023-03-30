@@ -2,26 +2,22 @@
 <template>
   <div style="height:100%">
     <el-row style="height:100%">
-      <NormalCard style="height:100%" title="开发现状">
+      <div style="height:100%" title="开发现状">
           <el-table id="tableData" highlight :data="tableData">
             <el-table-column prop="indicator" label="指标" align="center"></el-table-column>
             <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
             <el-table-column prop="conclusion" label="结论" align="center"></el-table-column>
           </el-table>
-      </NormalCard>
+      </div>
     </el-row>
   </div>
 </template>
 
 <script>
-import NormalCard from "@/components/tools/NormalCard";
-import {dynamicDataDevelopmentIndexTable} from "@/api/rem-01/fielddynamicanalysis";
-import {exportExcel} from "@/lib/exportExcel";
+import {dynamicDataDevelopmentIndexTable} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
+import {exportExcel} from "@/lib/exportExcel.js";
 
 export default {
-  components: {
-    NormalCard
-  },
   props: {
     oilFieldId: {},
     blockId: {},

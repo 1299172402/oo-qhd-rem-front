@@ -1,6 +1,6 @@
 <!--岩心化验数据-->
 <template>
-  <NormalCard class="mt-2">
+  <div class="mt-2">
     <!--<el-row style="margin-top:10px">
         <el-radio-group v-model="radio">
             <el-radio :label="1"><span style="font-size:14px">层位1</span></el-radio>
@@ -28,18 +28,14 @@
         <el-table-column label="驱替方式" align="center" prop="driveReplaceMethod"></el-table-column>
       </el-table>
     </el-row>
-  </NormalCard>
+  </div>
 </template>
 
 <script>
 
-import {reservoirDataCoreTestData} from "@/api/rem-01/fielddynamicanalysis";
-import NormalCard from '@/components/tools/NormalCard';
-import {exportExcel} from "@/lib/exportExcel";
+import {reservoirDataCoreTestData} from "@/api/oilDeposit/rem-01/fielddynamicanalysis";
+import {exportExcel} from "@/lib/exportExcel.js";
 export default {
-  components: {
-    NormalCard,
-  },
   props: {
     oilFieldId: {},
     blockId: {},

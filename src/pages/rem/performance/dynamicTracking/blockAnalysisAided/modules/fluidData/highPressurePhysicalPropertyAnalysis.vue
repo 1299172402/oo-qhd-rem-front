@@ -1,6 +1,6 @@
 <!--高压物性分析-->
 <template>
-  <NormalCard class="mt-2">
+  <div class="mt-2">
     <el-row style="margin-top:10px">
       <el-table id="tableData" highlight :data='tableData' height="600">
         <el-table-column type="index" label="序号" align="center"></el-table-column>
@@ -30,17 +30,13 @@
         <el-table-column label="备注" align="center" width="200" prop="remark"></el-table-column>
       </el-table>
     </el-row>
-  </NormalCard>
+  </div>
 </template>
 
 <script>
-import {streamingMediaDataHighPressurePhysicalPropertyAnalysis} from "@/api/rem-01/fielddynamicanalysis";
-import NormalCard from "@/components/tools/NormalCard";
-import {exportExcel} from "@/lib/exportExcel";
+import {streamingMediaDataHighPressurePhysicalPropertyAnalysis} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
+import {exportExcel} from "@/lib/exportExcel.js";
 export default {
-  components: {
-    NormalCard,
-  },
   props: {
     oilFieldId: {},
     blockId: {},
