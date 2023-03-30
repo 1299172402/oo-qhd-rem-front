@@ -9,7 +9,7 @@ export default [
         meta: { title: '规划计划管理', icon: 'client', single: false },
         children: [
             {
-                hidden: false,
+                hidden: true,
                 path: 'planIndex',
                 name: 'planIndex',
                 component: () => import('@/pages/rem/plan/index.vue'),
@@ -17,10 +17,10 @@ export default [
             },
             {
               hidden: false,
-              path: 'newPlanIndex2',
-              name: 'newPlanIndex2',
+              path: 'newPlanIndex',
+              name: 'newPlanIndex',
               component: () => import('@/pages/rem/plan/newPlanIndex.vue'),
-              meta: { title: '新措施管理', icon: 'icon' },
+              meta: { title: '措施管理', icon: 'icon' },
             },
             {
               hidden:true,
