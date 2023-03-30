@@ -51,10 +51,14 @@
             return {
                 dialogVisible1: false,
                 dialogVisible2: false,
-                url: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-yscl.html',
-                url1: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
-                zztUrl: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-yscl.html',
-                pptUrl: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-paopao.html',
+                // url: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-yscl.html',
+                // url1: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
+                // zztUrl: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-yscl.html',
+                // pptUrl: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-paopao.html',
+                url: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-yscl.html',
+                url1: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
+                zztUrl: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-yscl.html',
+                pptUrl: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-paopao.html',
                 //选中层位
                 selectPosition: '',
                 //层位所选择内容信息
