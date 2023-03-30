@@ -302,7 +302,6 @@ export default {
         this.queryParams.year = String(y);
         this.getList();
         this.getInfo();
-        this.getdisabled();
         // this.choiceDepts(); // 获取组织机构
     },
     methods: {
@@ -348,11 +347,6 @@ export default {
                     this.$message.warning('系统错误请重新尝试或联系运维人员！');
                 }
             });
-        },
-        getdisabled() {
-            for (let i = 0; i <= 12; i++) {
-                // data + i = true
-            }
         },
         // 编辑
         /**
