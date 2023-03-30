@@ -17,9 +17,9 @@
         <div class="z-echarts">
             <H5Chart ref="H5Chart" height="100%" :url="url" width="100%" @load="frameLoad"></H5Chart>
         </div> 
-        <!-- <el-dialog width="10px" max-height="10px" :visible.sync="dialogVisible1" style="margin-top: 98%; margin-right: 2%">
+        <el-dialog width="10px" max-height="10px" :visible.sync="dialogVisible1" style="margin-top: 98%; margin-right: 2%">
             <H5Chart1 style="z-index: -9999;" ref="downH5Chart1" :url="url1" width="4000px" height="4000px"></H5Chart1>
-        </el-dialog> -->
+        </el-dialog>
     </div>
 </template>
 
@@ -41,11 +41,10 @@
         },
         data() {
             return {
-                dialogVisible1: false,
-                url1: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
-                radio: 1,
-                //选中层位
                 url: '/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient.html',
+                url1: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
+                dialogVisible1: false,
+                //选中层位
                 selectPosition: '',
                 //层位所选择内容信息
                 position: [],

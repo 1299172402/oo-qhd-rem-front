@@ -26,7 +26,7 @@ export default [
             {
                 path: 'dynamicTrackingWellGroup',
                 name: 'dynamicTrackingWellGroup',
-                hidden: true,
+                hidden: false,
                 component: () => import('@/layouts/blank.vue'),
                 meta: { title: '井组动态分析', single: false },
                 children: [

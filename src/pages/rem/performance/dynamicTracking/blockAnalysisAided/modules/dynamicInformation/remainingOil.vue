@@ -25,8 +25,6 @@
         },
         data() {
             return {
-                radio: 1,
-                src: '',
                 //选中层位
                 selectPosition: '',
                 //层位所选择内容信息
