@@ -124,7 +124,7 @@ export default {
         assetCode: '',
         month: new Date().format('yyyy-MM'),
         ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
-        wellId: '',
+        wellId: '09D30C16BD1D4F759D53F74941701307',
         orgId: '715AD1CD60484BB59E737CD18A9DE44A',
         pt:'',
       },
