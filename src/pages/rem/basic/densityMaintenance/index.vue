@@ -178,7 +178,8 @@
                         <el-table-column label="实际值" width="130px" align="center">
                             <template slot-scope="scope">
                                 <span v-if="isDisabled[7]">{{ scope.row.august }}</span>
-                                <span v-else> <el-input v-model="scope.row.august" size="small" @change="inputChange(8)"/></span>
+                                <span v-else> <el-input v-model="scope.row.august" size="small"
+                                                        @change="inputChange(8)"/></span>
                             </template>
                         </el-table-column>
                     </el-table-column>
@@ -188,7 +189,8 @@
                         <el-table-column label="实际值" width="130px" align="center">
                             <template slot-scope="scope">
                                 <span v-if="isDisabled[8]">{{ scope.row.september }}</span>
-                                <span v-else> <el-input v-model="scope.row.september" size="small" @change="inputChange(9)"/></span>
+                                <span v-else> <el-input v-model="scope.row.september" size="small"
+                                                        @change="inputChange(9)"/></span>
                             </template>
                         </el-table-column>
                     </el-table-column>
@@ -198,7 +200,8 @@
                         <el-table-column label="实际值" width="130px" align="center">
                             <template slot-scope="scope">
                                 <span v-if="isDisabled[9]">{{ scope.row.october }}</span>
-                                <span v-else> <el-input v-model="scope.row.october" size="small" @change="inputChange(10)"/></span>
+                                <span v-else> <el-input v-model="scope.row.october" size="small"
+                                                        @change="inputChange(10)"/></span>
                             </template>
                         </el-table-column>
                     </el-table-column>
@@ -208,7 +211,8 @@
                         <el-table-column label="实际值" width="130px" align="center">
                             <template slot-scope="scope">
                                 <span v-if="isDisabled[10]">{{ scope.row.november }}</span>
-                                <span v-else> <el-input v-model="scope.row.november" size="small" @change="inputChange(11)"/></span>
+                                <span v-else> <el-input v-model="scope.row.november" size="small"
+                                                        @change="inputChange(11)"/></span>
                             </template>
                         </el-table-column>
                     </el-table-column>
@@ -218,7 +222,8 @@
                         <el-table-column label="实际值" width="130px" align="center">
                             <template slot-scope="scope">
                                 <span v-if="isDisabled[11]">{{ scope.row.december }}</span>
-                                <span v-else> <el-input v-model="scope.row.december" size="small" @change="inputChange(12)"/></span>
+                                <span v-else> <el-input v-model="scope.row.december" size="small"
+                                                        @change="inputChange(12)"/></span>
                             </template>
                         </el-table-column>
                     </el-table-column>
@@ -238,7 +243,8 @@
 </template>
 
 <script>
-import {queryDensityInfo, getOilFieldList, queryProductList, save} from '@/api/rem/workcompanydesignate';
+import {getOilFieldList, queryProductList} from '@/api/rem/workcompanydesignate';
+import {queryDensityInfo, save} from '@/api/rem/density.js'
 
 export default {
     name: 'Notice',
