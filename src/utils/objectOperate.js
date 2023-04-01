@@ -5,36 +5,36 @@
 function cloneObjectDeleteNull(src) {
   let Result = src;
   switch (Object.prototype.toString.call(src)) {
-  case "[object Array]":
+    case "[object Array]":
     // eslint-disable-next-line no-case-declarations
-    const temp = [];
-    // eslint-disable-next-line no-case-declarations
-    let i = 0;
-    src.forEach((a) => {
+      const temp = [];
+      // eslint-disable-next-line no-case-declarations
+      let i = 0;
+      src.forEach(a => {
       // 使用push方法会让数组所有元素的类型变成undfined
       // eslint-disable-next-line no-plusplus
-      temp[i++] = cloneObjectDeleteNull(a);
-    });
-    i = 0;
-    Result = temp;
-    break;
-  case "[object Object]":
+        temp[i++] = cloneObjectDeleteNull(a);
+      });
+      i = 0;
+      Result = temp;
+      break;
+    case "[object Object]":
     // eslint-disable-next-line no-case-declarations
-    const keys = Object.keys(src);
-    // keys 为对象src的键名字数组
-    keys.forEach((a) => {
+      const keys = Object.keys(src);
+      // keys 为对象src的键名字数组
+      keys.forEach(a => {
       // 将值为null或数组为[]的属性删掉
       // eslint-disable-next-line no-prototype-builtins
-      if (src[a] === null || Array.prototype.isPrototypeOf(src[a]) && src[a].length === 0) {
-        delete src[a];
-      } else {
-        src[a] = cloneObjectDeleteNull(src[a]);
-      }
-    });
-    Result = src;
-    break;
-  default:
-    break;
+        if (!src[a] || Array.prototype.isPrototypeOf(src[a]) && src[a].length === 0) {
+          delete src[a];
+        } else {
+          src[a] = cloneObjectDeleteNull(src[a]);
+        }
+      });
+      Result = src;
+      break;
+    default:
+      break;
   }
   return Result;
 }
@@ -50,7 +50,6 @@ export function deleteNullAttribute(model) {
  * @param obj
  * @returns {*}
  */
-// eslint-disable-next-line import/prefer-default-export
 export function filterObj(obj) {
   if (!(typeof obj === "object")) {
     return;
@@ -59,11 +58,11 @@ export function filterObj(obj) {
   // eslint-disable-next-line no-restricted-syntax
   for (const key in obj) {
     // eslint-disable-next-line no-prototype-builtins
-    if (obj.hasOwnProperty(key) && (obj[key] === null || obj[key] === undefined || obj[key] === "")) {
+    if (obj.hasOwnProperty(key) && !obj[key] && obj[key] !== 0) {
       delete obj[key];
     }
   }
-  return obj; 
+  return obj;
 }
 
 /**
@@ -71,7 +70,7 @@ export function filterObj(obj) {
  */
 export function flattenDeep(arr, childrenProp, key = "", value = "", object = null) {
   if (object) {
-    arr.forEach((item) => {
+    arr.forEach(item => {
       if (item[key]) {
         object[item[key]] = item[value];
       }

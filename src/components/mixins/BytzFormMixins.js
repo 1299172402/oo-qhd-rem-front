@@ -42,7 +42,7 @@ export const FormMixins = {
     getModel(id) {
       this.loading = true;
       return this.fn.findById(id)
-        .then((v) => {
+        .then(v => {
           this.model = this.getFindModel(v);
           this.$emit("model-ok");
         })
@@ -62,8 +62,8 @@ export const FormMixins = {
     postForm(way = "save") {
       this.loading = true;
       this.fn[way](this.getSaveModel())
-        .then((res) => {
-          if (res ? res.data.code === 200 : false) {            
+        .then(res => {
+          if (res ? res.data.code === 200 : false) {
             this.$message.success("保存成功");
             this.handleBack();
             this.$emit("ok");
@@ -96,7 +96,7 @@ export const FormMixins = {
           this.$message.error("请先给 Form 表单设置 :ref='refName' ");
           reject();
         } else {
-          ref.validate((valid) => {
+          ref.validate(valid => {
             if (valid) {
               resolve();
             } else {
@@ -111,8 +111,8 @@ export const FormMixins = {
      * 页面返回
      */
     handleBack() {
-      if(this.returnName && typeof this.returnName === "string"){
-        returnPaterPage(this.$route.path, this.returnName)
+      if (this.returnName && typeof this.returnName === "string") {
+        returnPaterPage(this.$route.path, this.returnName);
       } else if (window.opener) {
         window.close();
       } else {

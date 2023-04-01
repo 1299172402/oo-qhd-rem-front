@@ -11,29 +11,35 @@ const config = {
 export default {
   development: {
     ...config,
+    // TODO: Maybe change back
+    // 通用模块-报警中心
+    // GEM_API: "/gem001b",
     // 流程平台
     BIZ_FLOW_API: "/biz/flow",
     // 文件预览服务
     PREVIEW_FILE_API: "/b/upload",
     processAPI: "/dev-api/workflow",
     // 开发环境接口请求
-    API: '/dev-api',
+    API: "/dev-api",
     // API: '',
     // 开发环境 cdn 路径
-    CDN: '',
+    CDN: "",
     appId: null
-    
+
   },
   test: {
     ...config,
+    // TODO: Maybe change back
+    // 通用模块-报警中心
+    // GEM_API: "/gem001b",
     // 流程平台
     BIZ_FLOW_API: "/biz/flow",
     // 文件预览服务
     PREVIEW_FILE_API: "文件服务地址",
     // 测试环境接口地址
-    API: '',
+    API: "",
     // 测试环境 cdn 路径
-    CDN: '',
+    CDN: "",
     appId: null
   },
   stage: {
@@ -42,20 +48,23 @@ export default {
     // 正式环境接口地址
     API: "http://kd.bytzdev.xyz:38880/stage-api",
     // 正式环境 cdn 路径
-    CDN: "",
+    CDN: ""
   },
   release: {
     ...config,
+    // 通用模块-报警中心
+    // TODO: Maybe change back
+    // GEM_API: "/gem001b",
     // 流程平台
-    BIZ_FLOW_API: "/b/sw", 
+    BIZ_FLOW_API: "/b/sw",
     processAPI: "/prod-api/workflow",
     // 文件预览服务
     PREVIEW_FILE_API: "文件服务地址",
     // 正式环境接口地址
-    API: 'http://10.77.78.250:80/prod-api/',
+    API: "http://10.77.78.250:80/prod-api/",
     // 正式环境 cdn 路径
-    CDN: '',
+    CDN: "",
     appId: null,
     LOGIN_TYPES: ["corp_oauth", "password"]
-  },
+  }
 };

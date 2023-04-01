@@ -1,6 +1,11 @@
 <template>
   <t-row :gutter="[16, 16]">
-    <t-col :xs="6" :xl="3" v-for="(item, index) in panelList" :key="item.title">
+    <t-col
+      v-for="(item, index) in panelList"
+      :key="item.title"
+      :xs="6"
+      :xl="3"
+    >
       <t-card
         :title="item.title"
         :style="{ height: '168px' }"
@@ -16,13 +21,13 @@
             id="moneyContainer"
             class="dashboard-chart-container"
             :style="{ width: `${resizeTime * 120}px`, height: `${resizeTime * 66}px` }"
-          ></div>
+          />
           <div
             v-else-if="index === 1"
             id="refundContainer"
             class="dashboard-chart-container"
             :style="{ width: `${resizeTime * 120}px`, height: `${resizeTime * 42}px` }"
-          ></div>
+          />
           <span v-else-if="index === 2" :style="{ marginTop: `-24px` }">
             <usergroup-icon />
           </span>
@@ -49,55 +54,55 @@
   </t-row>
 </template>
 <script>
-import { LineChart, BarChart } from 'echarts/charts';
-import * as echarts from 'echarts/core';
-import { CanvasRenderer } from 'echarts/renderers';
-import { UsergroupIcon, FileIcon, ChevronRightIcon } from 'tdesign-icons-vue';
-import { mapState } from 'vuex';
+import { LineChart, BarChart } from "echarts/charts";
+import * as echarts from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { UsergroupIcon, FileIcon, ChevronRightIcon } from "tdesign-icons-vue";
+import { mapState } from "vuex";
 
-import Trend from '@/components/intelligentOilfield/trend/index.vue';
+import Trend from "@/components/intelligentOilfield/trend/index.vue";
 
-import { constructInitDashboardDataset } from '../index';
-import { changeChartsTheme } from '@/utils/color';
-import { PANE_LIST } from '@/service/service-base';
+import { constructInitDashboardDataset } from "../index";
+import { changeChartsTheme } from "@/utils/color";
+import { PANE_LIST } from "@/service/service-base";
 
 echarts.use([LineChart, BarChart, CanvasRenderer]);
 
 export default {
-  name: 'TopPanel',
+  name: "TopPanel",
   components: {
     Trend,
     UsergroupIcon,
     FileIcon,
-    ChevronRightIcon,
+    ChevronRightIcon
     // Icon,
   },
   data() {
     return {
       resizeTime: 1,
-      panelList: PANE_LIST,
+      panelList: PANE_LIST
     };
   },
   computed: {
-    ...mapState('setting', ['brandTheme', 'mode']), // 这里需要用到主题色和主题模式的全局配置
+    ...mapState("setting", ["brandTheme", "mode"]) // 这里需要用到主题色和主题模式的全局配置
   },
   watch: {
     brandTheme() {
       changeChartsTheme([this.refundChart]);
     },
     mode() {
-      [this.moneyCharts, this.refundChart].forEach((item) => {
+      [this.moneyCharts, this.refundChart].forEach(item => {
         item.dispose();
       });
       this.renderCharts();
-    },
+    }
   },
   mounted() {
     this.$nextTick(() => {
       this.updateContainer();
     });
 
-    window.addEventListener('resize', this.updateContainer, false);
+    window.addEventListener("resize", this.updateContainer, false);
     this.renderCharts();
   },
 
@@ -113,34 +118,34 @@ export default {
       this.moneyCharts.resize({
         // 根据父容器的大小设置大小
         width: `${this.resizeTime * 120}px`,
-        height: `${this.resizeTime * 66}px`,
+        height: `${this.resizeTime * 66}px`
       });
 
       this.refundChart.resize({
         // 根据父容器的大小设置大小
         width: `${this.resizeTime * 120}px`,
-        height: `${this.resizeTime * 42}px`,
+        height: `${this.resizeTime * 42}px`
       });
     },
 
     renderCharts() {
       const { chartColors } = this.$store.state.setting;
       // 收入汇总图
-      if (!this.moneyContainer) this.moneyContainer = document.getElementById('moneyContainer');
+      if (!this.moneyContainer) this.moneyContainer = document.getElementById("moneyContainer");
       this.moneyCharts = echarts.init(this.moneyContainer);
-      this.moneyCharts.setOption(constructInitDashboardDataset('line'));
+      this.moneyCharts.setOption(constructInitDashboardDataset("line"));
 
       // 退款图
-      if (!this.refundContainer) this.refundContainer = document.getElementById('refundContainer');
+      if (!this.refundContainer) this.refundContainer = document.getElementById("refundContainer");
       this.refundChart = echarts.init(this.refundContainer);
-      this.refundChart.setOption(constructInitDashboardDataset('bar', chartColors));
-    },
-  },
+      this.refundChart.setOption(constructInitDashboardDataset("bar", chartColors));
+    }
+  }
 };
 </script>
 
 <style lang="less" scoped>
-@import '@/style/variables.less';
+@import "@/style/variables.less";
 
 .dashboard-item {
   padding: 8px;

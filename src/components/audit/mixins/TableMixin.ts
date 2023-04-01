@@ -25,7 +25,7 @@ export default {
         current: 1,
         pageSize: 10,
         pageSizeOptions: ["10", "20", "30"],
-        showTotal: (total, range) => `${range[0]  }-${  range[1]  } 共${  total  }条`,
+        showTotal: (total, range) => `${range[0]}-${range[1]} 共${total}条`,
         showQuickJumper: true,
         showSizeChanger: true,
         total: 0
@@ -70,17 +70,16 @@ export default {
   },
   created() {
     if (!this.disableMixinCreated) {
-      console.log(" -- mixin created -- ");
       const filterId = this.$route.query.id;
       (this.loadData(1, filterId) || Promise.resolve())
         .then(() => {
           const row = this.dataSource.find(v => v.id && v.id === filterId);
           if (filterId && !row) {
             this.loadData();
-          } else if(row) {
+          } else if (row) {
             this.handleViewToPage(row.id);
           }
-        })
+        });
       // 初始化字典配置 在自己页面定义
       this.initDictConfig();
     }
@@ -107,7 +106,7 @@ export default {
       }
       this.loading = true;
       const httpAction = this.unGlobal ? getAction : getActionGlobal;
-      return httpAction(this.url.list, params).then((res) => {
+      return httpAction(this.url.list, params).then(res => {
         if (this.handleLoadDataRes) {
           res = this.handleLoadDataRes(res);
         }
@@ -136,12 +135,12 @@ export default {
       this.loadData();
     },
     getQueryParams() {
-      const queryParam = { ...this.queryParam , ...this.queryParamOther};
+      const queryParam = { ...this.queryParam, ...this.queryParamOther };
       Object.keys(queryParam).forEach(key => {
         // 起始时间
         if (key.endsWith("_flag") && queryParam[key].length > 0) {
-          queryParam[`${key.slice(0, -5)  }_begin`] = dayjs(queryParam[key][0]).startOf("day").format("YYYY-MM-DD HH:mm:ss");
-          queryParam[`${key.slice(0, -5)  }_end`] = dayjs(queryParam[key][1]).endOf("day").format("YYYY-MM-DD HH:mm:ss");
+          queryParam[`${key.slice(0, -5)}_begin`] = dayjs(queryParam[key][0]).startOf("day").format("YYYY-MM-DD HH:mm:ss");
+          queryParam[`${key.slice(0, -5)}_end`] = dayjs(queryParam[key][1]).endOf("day").format("YYYY-MM-DD HH:mm:ss");
           delete queryParam[key];
         }
         // 数组转字符串
@@ -151,15 +150,15 @@ export default {
         }
         // 模糊查询，值前后加*
         if (key.endsWith("_matching") && queryParam[key].length > 0) {
-          queryParam[key.slice(0, -("_matching").length)] = `*${   queryParam[key]  }*`;
+          queryParam[key.slice(0, -("_matching").length)] = `*${queryParam[key]}*`;
           delete queryParam[key];
         }
         // 模糊查询，值前后加%
         if (key.endsWith("_fuzzy") && queryParam[key].length > 0) {
-          queryParam[key.slice(0, -("_fuzzy").length)] = `%${  queryParam[key]  }%`;
+          queryParam[key.slice(0, -("_fuzzy").length)] = `%${queryParam[key]}%`;
           delete queryParam[key];
         }
-      })
+      });
       // 获取查询条件
       const sqp = {
         superQueryParams: undefined
@@ -181,11 +180,11 @@ export default {
       this.selectionRows = [];
     },
     onClearSelectedOne(id) {
-      const index = this.selectedRowKeys.indexOf(id)
+      const index = this.selectedRowKeys.indexOf(id);
       if (index > -1) {
         this.selectedRowKeys.splice(index, 1);
       }
-      const index1 = this.selectionRows.map(row =>row.id).indexOf(id);
+      const index1 = this.selectionRows.map(row => row.id).indexOf(id);
       if (index1 > -1) {
         this.selectionRows.splice(index1, 1);
       }
@@ -207,11 +206,10 @@ export default {
       }
       if (this.selectedRowKeys.length <= 0) {
         this.$message.warning("请选择一条记录！");
-        
       } else {
         let ids = "";
         for (let a = 0; a < this.selectedRowKeys.length; a++) {
-          ids += `${this.selectedRowKeys[a]  },`;
+          ids += `${this.selectedRowKeys[a]},`;
         }
         const that = this as any;
         this.$confirm({
@@ -247,9 +245,9 @@ export default {
       let idField = "id";
       let id = idInfo;
       if (typeof idInfo === "object") {
-        const [first, second]= idInfo;
+        const [first, second] = idInfo;
         id = first;
-        idField= second;
+        idField = second;
       }
       deleteAction(that.url.delete, { [idField]: id }).then((res: any) => {
         if (res.success) {
@@ -265,12 +263,11 @@ export default {
     /**
      * 更改删除和撤销的提示信息
      */
-    deleteCancelContent(record,title) {
+    deleteCancelContent(record, title) {
       if (record.status === "CaoGao" || record.status === "draft") {
         return `是否确认删除该${title}记录？`;
-      } 
+      }
       return `是否确认撤销该${title}记录？`;
-      
     },
     handleDeleteByConfirm(id, title) {
       const _this = this as any;
@@ -286,7 +283,7 @@ export default {
         },
         onCancel() {
           _this.$message.warning("已取消");
-        },
+        }
       });
     },
     handleEdit(record) {
@@ -296,7 +293,7 @@ export default {
       if (typeof this.handleEditAfter === "function") this.handleEditAfter();
       this.$refs.modalForm.edit(record);
     },
-    handleEdit2 (record) {
+    handleEdit2(record) {
       this.editingRecord = record;
       this.modalFormAction = "edit";
       this.$refs.modalForm.action = "Edit";
@@ -308,7 +305,7 @@ export default {
       this.$refs.modalForm.disableSubmit = false;
       this.$refs.modalForm.add();
     },
-    handleAdd2 () {
+    handleAdd2() {
       this.editingRecord = { };
       this.modalFormAction = "add";
       this.$refs.modalForm.action = "Add";
@@ -334,12 +331,12 @@ export default {
     handleToggleSearch() {
       this.toggleSearchStatus = !this.toggleSearchStatus;
     },
-    modalFormOk () {
+    modalFormOk() {
       this.showModalForm = false;
       // 新增/修改 成功时，重载列表
       this.loadData();
     },
-    modalFormClose () {
+    modalFormClose() {
       this.showModalForm = false;
     },
     handleDetail(record) {
@@ -347,10 +344,10 @@ export default {
       this.$refs.modalForm.title = "详情";
       this.$refs.modalForm.disableSubmit = true;
     },
-    handleDetail2 (record) {
+    handleDetail2(record) {
       this.editingRecord = record;
       this.modalFormAction = "view";
       this.showModalForm = true;
     }
   }
-}
+};

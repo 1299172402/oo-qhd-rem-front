@@ -1,4 +1,4 @@
-import "./styles/AuditContainerStyle.less"
+import "./styles/AuditContainerStyle.less";
 import { cloneDeep } from "lodash";
 import Vue from "vue";
 import AuditActionArea from "@/components/audit/process/AuditArea";
@@ -11,14 +11,12 @@ import { actionApi, claimApi } from "@/components/audit/process/auditSave/Action
 import { ActionAreaProps } from "@/components/audit/types";
 import returnPaterPage from "@/utils/returnPaterPage";
 
-
-
 export default Vue.extend({
   name: "AuditContainer",
   provide() {
     return {
       auditContext: this
-    }
+    };
   },
   props: {
     // 传递参数说明
@@ -46,11 +44,11 @@ export default Vue.extend({
     },
     handleOk: {
       type: Function,
-      default: (vm) => {
+      default: vm => {
         vm.$nextTick(() => {
           vm.$router.go(-1);
           vm.$emit("return");
-        })
+        });
       }
     },
     returnName: {
@@ -63,7 +61,7 @@ export default Vue.extend({
       model: cloneDeep(modelSchema),
       acceptActions: [],
       acceptActionsOptions
-    }
+    };
   },
   computed: {
     _processInstanceId() {
@@ -109,7 +107,7 @@ export default Vue.extend({
     /**
          * 是否将操作按钮放弹窗外面
          */
-    actionOutside () {
+    actionOutside() {
       return !!this.infos.outsideAuditModel;
     },
     /**
@@ -127,7 +125,7 @@ export default Vue.extend({
       this.model.procInstId = val;
     },
     // eslint-disable-next-line func-names
-    "$route": function (val) {
+    "$route": function(val) {
       if (val.path.indexOf("/Audit") !== -1 && this.acceptActions.length === 0) {
         this.getAuditPageInfo();
       }
@@ -146,7 +144,7 @@ export default Vue.extend({
       if (taskId) {
         _this.model = cloneDeep(modelSchema);
         auditPageInfo(taskId)
-          .then((v) => {
+          .then(v => {
             // 判断是否有申领
             if (this.infos.businessType && v.acceptActions.includes("Claim")) {
               const data = {
@@ -203,7 +201,7 @@ export default Vue.extend({
       }
       let canNext = true;
       if (this.beforeComplete) { // 通过前处理
-        canNext = await this.getNextFlag(this.beforeComplete())
+        canNext = await this.getNextFlag(this.beforeComplete());
       }
       if (this.beforeReject) { // reject前处理
         canNext = canNext && await this.getNextFlag(this.beforeReject());
@@ -217,7 +215,7 @@ export default Vue.extend({
         // 点击处理按钮快速办结
         const quickFinish = (this.model.extendProperties || []).some(v => v.key === "quickFinish" && v.value === "true");
         if (quickFinish) {
-          this.quickFinish("completeTask", this.model, businessType);    
+          this.quickFinish("completeTask", this.model, businessType);
         } else {
           const actionAreaProps: ActionAreaProps = {
             businessType,
@@ -225,8 +223,8 @@ export default Vue.extend({
             isView: this.isView,
             successCallback: this.handleOk,
             errorCallback: () => { this.$message.warning("审批失败"); },
-            outsideAuditModel: this.outsideAuditModel,
-          }
+            outsideAuditModel: this.outsideAuditModel
+          };
           renderComponent(actionAreaProps);
         }
       }
@@ -234,7 +232,7 @@ export default Vue.extend({
     async getNextFlag(promiseOrBoolean: boolean | Promise<any>) {
       if (typeof promiseOrBoolean === "boolean") {
         return promiseOrBoolean;
-      } 
+      }
       const ret = await promiseOrBoolean;
       return ret;
     },
@@ -255,9 +253,9 @@ export default Vue.extend({
     },
     handleCancel() {
       if (this.returnName && typeof this.returnName === "string") {
-        returnPaterPage(this.$route.path, this.returnName)
+        returnPaterPage(this.$route.path, this.returnName);
       } else {
-        console.error("AuditContainer:请确认returnPath路径配置正确")
+        console.error("AuditContainer:请确认returnPath路径配置正确");
       }
     }
   },
@@ -275,11 +273,11 @@ export default Vue.extend({
         model: this.model
       },
       on: {
-        actionChange: (action) => {
+        actionChange: action => {
           this.outsideAuditModel.action = action;
         }
       }
-    }
+    };
 
     return (
       <div style="display: flex; flex-direction: column; height: 100%">
@@ -297,7 +295,6 @@ export default Vue.extend({
           }
         </div>
       </div>
-    )
+    );
   }
-})
-
+});

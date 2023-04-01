@@ -1,25 +1,25 @@
 /**
  * v-hasRole 角色权限处理
  */
- 
-import store from '@/store' 
+
+import store from "@/store";
 
 export default {
   inserted(el, binding) {
-    const { value } = binding
-    const super_admin = "admin";
-    const roles = store.getters && store.getters['user/userRoles']
+    const { value } = binding;
+    const superAdmin = "admin";
+    const roles = store.getters && store.getters["user/userRoles"];
 
     if (value && value instanceof Array && value.length > 0) {
-      const roleFlag = value
+      const roleFlag = value;
 
-      const hasRole = roles.some(role => super_admin === role || roleFlag.includes(role))
+      const hasRole = roles.some(role => superAdmin === role || roleFlag.includes(role));
 
       if (!hasRole) {
-        el.parentNode && el.parentNode.removeChild(el)
+        el.parentNode && el.parentNode.removeChild(el);
       }
     } else {
-      throw new Error(`请设置角色权限标签值"`)
+      throw new Error("请设置角色权限标签值\"");
     }
   }
-}
+};

@@ -1,10 +1,9 @@
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import { getAction } from "@/api/common/manage";
 import DeptTree from "./DeptTree";
 import OpenClose from "./OpenClose";
 import UserTable from "./UserTable";
-import "./style/SelectUserModalStyle.less"
+import "./style/SelectUserModalStyle.less";
 
 const allLoading = {
   dept: true,
@@ -126,8 +125,8 @@ export default Vue.extend({
           width: 80,
           key: "action",
           cell: (h, { row, index }) => <a onClick={() => {
-            (this as any).handleDelete(row, index)
-          }}>删除</a>,
+            (this as any).handleDelete(row, index);
+          }}>删除</a>
         }
       ],
       userMutiple: this.multiple,
@@ -234,7 +233,7 @@ export default Vue.extend({
         dataIndex: "departName",
         width: 120,
         key: "departName",
-        customRender: (t) => {
+        customRender: t => {
           if (this.isCosponsor) {
             return t.includes("|") ? t.split("|")[0].slice(0, -1) : t;
           }
@@ -328,8 +327,8 @@ export default Vue.extend({
      * 自定义输入框失焦，将输入的值插入到自定义用户数组中，并隐藏输入框显示自定义按钮
      */
     handleInputConfirm() {
-      const {inputValue} = (this as any);
-      let {customtags} = (this as any);
+      const { inputValue } = (this as any);
+      let { customtags } = (this as any);
       if (inputValue && customtags.indexOf(inputValue) === -1) {
         customtags = [...customtags, inputValue];
       }
@@ -375,8 +374,8 @@ export default Vue.extend({
   render() {
     const treeContainerCls = [
       `${perfixCls}__container__left`,
-      {opening: this.defaultIsOpenDept, closing: !this.defaultIsOpenDept}
-    ]
+      { opening: this.defaultIsOpenDept, closing: !this.defaultIsOpenDept }
+    ];
 
     let inputOrtagEl = null;
     if (this.inputVisible) {
@@ -389,7 +388,7 @@ export default Vue.extend({
         onChange={this.handleInputChange}
         onBlur={this.handleInputConfirm}
         onKeydow={this.handleInputConfirm}
-      />
+      />;
     } else if (this.multiple || (this.selectedUsers.length + this.customtags.length === 0)) {
       inputOrtagEl = (<t-tag
         style="background: #fff; borderstyle: dashed"
@@ -397,7 +396,7 @@ export default Vue.extend({
       >
         <t-icon name="add" /> 自定义
       </t-tag>
-      )
+      );
     }
 
     return (
@@ -415,9 +414,9 @@ export default Vue.extend({
         <t-loading loading={this.loading} class={`${perfixCls}__spin`}>
           <div class={`${perfixCls}__container`}>
             {
-              this.showTree ? 
-                <div class={treeContainerCls}>
-                  <DeptTree 
+              this.showTree
+                ? <div class={treeContainerCls}>
+                  <DeptTree
                     showTag={true}
                     depts={this.depts}
                     swOrganType={this.swOrganType}
@@ -427,10 +426,10 @@ export default Vue.extend({
                   />
                   <OpenClose
                     style={`display: ${!this.loading ? "inline-block" : "none"}`}
-                    iconClass={{toLeft: "chevron-left-double", toRight: "chevron-right-double"}}
+                    iconClass={{ toLeft: "chevron-left-double", toRight: "chevron-right-double" }}
                     defaultIsOpen={this.defaultIsOpenDept}
-                    marginLeft={{left: ["calc(50% - 25px)", "0"]}}
-                    onClick={val => { this.defaultIsOpenDept = val}}
+                    marginLeft={{ left: ["calc(50% - 25px)", "0"] }}
+                    onClick={val => { this.defaultIsOpenDept = val; }}
                   />
                 </div> : null
             }
@@ -468,7 +467,7 @@ export default Vue.extend({
                   this.allowAdd ? <div class="custom-div">
                     {
                       this.customtags.map((item, index) => (
-                        <t-tag key={`tag_${index}`} closable={true} onClose={() => { this.customtags = this.customtags.filter((v) => v !== item)}}>
+                        <t-tag key={`tag_${index}`} closable={true} onClose={() => { this.customtags = this.customtags.filter(v => v !== item); }}>
                           {item}
                         </t-tag>
                       ))
@@ -481,6 +480,6 @@ export default Vue.extend({
           </div>
         </t-loading>
       </t-dialog>
-    )
+    );
   }
 });

@@ -10,7 +10,7 @@
               ['pdf']: item.type && item.type.value === 'pdf',
             }"
           >
-            <i v-if="item.type && item.type.key === 'contractStatus'"></i>
+            <i v-if="item.type && item.type.key === 'contractStatus'" />
             {{ item.value }}
           </span>
         </div>
@@ -20,14 +20,12 @@
     <!-- 发票进度 -->
     <t-card title="发票进度" class="container-base-margin-top">
       <t-row :class="prefix + '-operator-row row-padding'" justify="space-between">
-        <template>
-          <t-steps :current="updateCurrent">
-            <t-step-item title="申请提交" content="已于12月21日提交"></t-step-item>
-            <t-step-item title="电子发票" content="预计1～3个工作日"></t-step-item>
-            <t-step-item title="发票已邮寄" content="电子发票开出后7个工作日内联系"></t-step-item>
-            <t-step-item title="完成" content></t-step-item>
-          </t-steps>
-        </template>
+        <t-steps :current="updateCurrent">
+          <t-step-item title="申请提交" content="已于12月21日提交" />
+          <t-step-item title="电子发票" content="预计1～3个工作日" />
+          <t-step-item title="发票已邮寄" content="电子发票开出后7个工作日内联系" />
+          <t-step-item title="完成" content />
+        </t-steps>
       </t-row>
     </t-card>
 
@@ -35,8 +33,12 @@
     <t-card title="产品目录" class="container-base-margin-top">
       <template slot="option">
         <t-radio-group default-value="dateVal" @change="onAlertChange">
-          <t-radio-button value="dateVal">季度</t-radio-button>
-          <t-radio-button value="monthVal">月份</t-radio-button>
+          <t-radio-button value="dateVal">
+            季度
+          </t-radio-button>
+          <t-radio-button value="monthVal">
+            月份
+          </t-radio-button>
         </t-radio-group>
       </template>
 
@@ -77,7 +79,12 @@
         <template #purchaseNum="{ row }">
           <span>
             {{ row.purchaseNum }}
-            <t-tag v-if="row.purchaseNum > 50" theme="danger" variant="light" size="small">超预算</t-tag>
+            <t-tag
+              v-if="row.purchaseNum > 50"
+              theme="danger"
+              variant="light"
+              size="small"
+            >超预算</t-tag>
           </span>
         </template>
 
@@ -100,7 +107,7 @@
                 ['pdf']: item.type && item.type.value === 'pdf',
               }"
             >
-              <i v-if="item.type && item.type.key === 'contractStatus'"></i>
+              <i v-if="item.type && item.type.key === 'contractStatus'" />
               {{ item.value }}
             </span>
           </div>
@@ -110,38 +117,38 @@
   </div>
 </template>
 <script lang="ts">
-import { TableChangeContext, TableChangeData, TableSort } from 'tdesign-vue';
-import { OrderDescendingIcon, AddIcon } from 'tdesign-icons-vue';
-import { prefix } from '@/config/global';
-import model from '@/service/service-advance';
-import Product from './components/Product.vue';
+import { TableChangeContext, TableChangeData, TableSort } from "tdesign-vue";
+import { OrderDescendingIcon, AddIcon } from "tdesign-icons-vue";
+import { prefix } from "@/config/global";
+import model from "@/service/service-advance";
+import Product from "./components/Product.vue";
 
 const PRODUCT_LIST = [
   {
-    name: 'MacBook Pro 2021',
-    subTitle: 'MacBook Pro 2021',
-    size: '13.3 英寸',
-    cpu: 'Apple M1',
-    memory: 'RAM 16GB',
-    info: '最高可选配 16GB 内存 · 最高可选配 2TB 存储设备 电池续航最长达 18 小时',
+    name: "MacBook Pro 2021",
+    subTitle: "MacBook Pro 2021",
+    size: "13.3 英寸",
+    cpu: "Apple M1",
+    memory: "RAM 16GB",
+    info: "最高可选配 16GB 内存 · 最高可选配 2TB 存储设备 电池续航最长达 18 小时",
     use: 1420,
-    stock: 1500,
+    stock: 1500
   },
   {
-    name: 'Surface Laptop Go',
-    subTitle: '微软（Microsoft Corporation）',
-    size: '12.4 英寸',
-    cpu: 'Core i7',
-    memory: 'RAM 16GB',
-    info: '常规使用 Surface，续航时间最长可达13小时 随时伴您工作',
+    name: "Surface Laptop Go",
+    subTitle: "微软（Microsoft Corporation）",
+    size: "12.4 英寸",
+    cpu: "Core i7",
+    memory: "RAM 16GB",
+    info: "常规使用 Surface，续航时间最长可达13小时 随时伴您工作",
     use: 120,
-    stock: 2000,
-  },
+    stock: 2000
+  }
 ];
 
 /** 高级详情 */
 export default {
-  name: 'DetailAdvanced',
+  name: "DetailAdvanced",
   components: { Product, OrderDescendingIcon, AddIcon },
   data() {
     return {
@@ -157,9 +164,9 @@ export default {
         defaultPageSize: 10,
         total: 100,
         defaultCurrent: 1,
-        pageSizeOptions: [],
+        pageSizeOptions: []
       },
-      PRODUCT_LIST,
+      PRODUCT_LIST
     };
   },
   async mounted() {
@@ -172,48 +179,48 @@ export default {
     }, 2000);
 
     this.$request
-      .get('/api/get-purchase-list')
+      .get("/api/get-purchase-list")
       .then((res: { code: number; data: Record<string, any> }) => {
         if (res.code === 0) {
           const { list = [] } = res.data;
           this.data = list;
           this.pagination = {
             ...this.pagination,
-            total: list.length,
+            total: list.length
           };
         }
       })
-      .catch((e: Error) => {
-        console.log(e);
-      });
+      .catch(() => {});
   },
   methods: {
     onAlertChange(val: string): void {
+      // eslint-disable-next-line
       console.log(val);
     },
     sortChange(val: TableSort): void {
+      // eslint-disable-next-line
       console.log(val);
     },
     rehandleChange(
       changeParams: TableChangeData,
-      triggerAndData: TableChangeContext<Array<Record<string, string>>>,
+      triggerAndData: TableChangeContext<Array<Record<string, string>>>
     ): void {
-      console.log('统一Change', changeParams, triggerAndData);
+      // eslint-disable-next-line
+      console.log("统一Change", changeParams, triggerAndData);
     },
+    // eslint-disable-next-line
     listClick(e: any): void {
-      console.log(e);
       this.visible = true;
     },
     deleteClickOp(e: any): void {
-      console.log(e, 'e');
       this.data.splice(e.rowIndex, 1);
     },
     onConfirm(): void {
       this.visible = false;
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
-@import './index';
+@import "./index";
 </style>

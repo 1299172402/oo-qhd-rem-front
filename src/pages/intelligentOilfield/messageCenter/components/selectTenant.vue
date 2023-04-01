@@ -85,7 +85,7 @@ export default {
      * 设置已有用户选中状态
      */
     handChangeSelection() {
-      this.dataSource.forEach((row) => {
+      this.dataSource.forEach(row => {
         if (this.tenantIds.indexOf(row.tenantId) >= 0) {
           this.$refs.table.toggleRowSelection(row, true);
         } else {
@@ -120,7 +120,7 @@ export default {
 </script>
 <style scoped lang="less">
 .el-table {
-  border-bottom: 1px solid #EBEEF5;
+  border-bottom: 1px solid #ebeef5;
 }
 
 ::v-deep .el-table__row {

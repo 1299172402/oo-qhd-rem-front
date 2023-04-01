@@ -11,19 +11,19 @@
   </div>
 </template>
 <script>
-import TopPanel from './components/TopPanel.vue';
-import MiddleChart from './components/MiddleChart.vue';
-import RankList from './components/RankList.vue';
-import OutputOverview from './components/OutputOverview.vue';
+import TopPanel from "./components/TopPanel.vue";
+import MiddleChart from "./components/MiddleChart.vue";
+import RankList from "./components/RankList.vue";
+import OutputOverview from "./components/OutputOverview.vue";
 
 export default {
-  name: 'DashboardBase',
+  name: "DashboardBase",
   components: {
     TopPanel,
     MiddleChart,
     RankList,
-    OutputOverview,
-  },
+    OutputOverview
+  }
 };
 </script>
 <style scoped>

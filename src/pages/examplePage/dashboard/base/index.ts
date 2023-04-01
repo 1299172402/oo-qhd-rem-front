@@ -1,58 +1,58 @@
-import dayjs from 'dayjs';
-import { getChartListColor } from '@/utils/color';
-import { getRandomArray } from '@/utils/charts';
+import dayjs from "dayjs";
+import { getChartListColor } from "@/utils/color";
+import { getRandomArray } from "@/utils/charts";
 
 /** 首页 dashboard 折线图 */
 export function constructInitDashboardDataset(type: string) {
-  const dateArray: Array<string> = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+  const dateArray: Array<string> = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
   const datasetAxis = {
     xAxis: {
-      type: 'category',
+      type: "category",
       show: false,
-      data: dateArray,
+      data: dateArray
     },
     yAxis: {
       show: false,
-      type: 'value',
+      type: "value"
     },
     grid: {
       top: 0,
       left: 0,
       right: 0,
-      bottom: 0,
-    },
+      bottom: 0
+    }
   };
 
-  if (type === 'line') {
+  if (type === "line") {
     const lineDataset = {
       ...datasetAxis,
-      color: ['#fff'],
+      color: ["#fff"],
       series: [
         {
           data: [150, 230, 224, 218, 135, 147, 260],
           type,
           showSymbol: true,
-          symbol: 'circle',
+          symbol: "circle",
           symbolSize: 0,
           markPoint: {
             data: [
-              { type: 'max', name: '最大值' },
-              { type: 'min', name: '最小值' },
-            ],
+              { type: "max", name: "最大值" },
+              { type: "min", name: "最小值" }
+            ]
           },
           itemStyle: {
             normal: {
               lineStyle: {
-                width: 2,
-              },
-            },
-          },
-        },
-      ],
+                width: 2
+              }
+            }
+          }
+        }
+      ]
     };
     return lineDataset;
   }
-  if (type === 'bar') {
+  if (type === "bar") {
     const barDataset = {
       ...datasetAxis,
       color: getChartListColor(),
@@ -66,26 +66,26 @@ export function constructInitDashboardDataset(type: string) {
             {
               value: 135,
               itemStyle: {
-                opacity: 0.2,
-              },
+                opacity: 0.2
+              }
             },
             {
               value: 118,
               itemStyle: {
-                opacity: 0.2,
-              },
+                opacity: 0.2
+              }
             },
             {
               value: 60,
               itemStyle: {
-                opacity: 0.2,
-              },
-            },
+                opacity: 0.2
+              }
+            }
           ],
           type,
-          barWidth: 9,
-        },
-      ],
+          barWidth: 9
+        }
+      ]
     };
     return barDataset;
   }
@@ -95,7 +95,7 @@ export function constructInitDashboardDataset(type: string) {
 export function constructInitDataset({
   dateTime = [],
   placeholderColor,
-  borderColor,
+  borderColor
 }: { dateTime: Array<string> } & Record<string, string>) {
   const divideNum = 10;
   const timeArray = [];
@@ -105,12 +105,12 @@ export function constructInitDataset({
     if (dateTime.length > 0) {
       const dateAbsTime: number = (new Date(dateTime[1]).getTime() - new Date(dateTime[0]).getTime()) / divideNum;
       const enhandTime: number = new Date(dateTime[0]).getTime() + dateAbsTime * i;
-      timeArray.push(dayjs(enhandTime).format('MM-DD'));
+      timeArray.push(dayjs(enhandTime).format("MM-DD"));
     } else {
       timeArray.push(
         dayjs()
-          .subtract(divideNum - i, 'day')
-          .format('MM-DD'),
+          .subtract(divideNum - i, "day")
+          .format("MM-DD")
       );
     }
 
@@ -120,64 +120,64 @@ export function constructInitDataset({
   const dataset = {
     color: getChartListColor(),
     tooltip: {
-      trigger: 'item',
+      trigger: "item"
     },
     xAxis: {
-      type: 'category',
+      type: "category",
       data: timeArray,
       axisLabel: {
-        color: placeholderColor,
+        color: placeholderColor
       },
       axisLine: {
         lineStyle: {
           color: borderColor,
-          width: 1,
-        },
-      },
+          width: 1
+        }
+      }
     },
     yAxis: {
-      type: 'value',
+      type: "value",
       axisLabel: {
-        color: placeholderColor,
+        color: placeholderColor
       },
       splitLine: {
         lineStyle: {
-          color: borderColor,
-        },
-      },
+          color: borderColor
+        }
+      }
     },
     grid: {
-      top: '5%',
-      left: '25px',
+      top: "5%",
+      left: "25px",
       right: 0,
-      bottom: '60px',
+      bottom: "60px"
     },
     legend: {
-      icon: 'rect',
+      icon: "rect",
       itemWidth: 12,
       itemHeight: 4,
       itemGap: 48,
       textStyle: {
         fontSize: 12,
-        color: placeholderColor,
+        color: placeholderColor
       },
-      left: 'center',
-      bottom: '0',
-      orient: 'horizontal',
-      data: ['本月', '上月'],
+      left: "center",
+      bottom: "0",
+      orient: "horizontal",
+      data: ["本月", "上月"]
     },
     series: [
       {
-        name: '本月',
+        name: "本月",
         data: outArray,
-        type: 'bar',
+        type: "bar"
       },
       {
-        name: '上月',
+        name: "上月",
         data: inArray,
-        type: 'bar',
-      },
-    ],
+        type: "bar"
+      }
+    ]
   };
 
   return dataset;
@@ -186,7 +186,7 @@ export function constructInitDataset({
 export function getLineChartDataSet({
   dateTime = [],
   placeholderColor,
-  borderColor,
+  borderColor
 }: { dateTime?: Array<string> } & Record<string, string>) {
   const divideNum = 10;
   const timeArray = [];
@@ -196,12 +196,12 @@ export function getLineChartDataSet({
     if (dateTime.length > 0) {
       const dateAbsTime: number = (new Date(dateTime[1]).getTime() - new Date(dateTime[0]).getTime()) / divideNum;
       const enhandTime: number = new Date(dateTime[0]).getTime() + dateAbsTime * i;
-      timeArray.push(dayjs(enhandTime).format('MM-DD'));
+      timeArray.push(dayjs(enhandTime).format("MM-DD"));
     } else {
       timeArray.push(
         dayjs()
-          .subtract(divideNum - i, 'day')
-          .format('MM-DD'),
+          .subtract(divideNum - i, "day")
+          .format("MM-DD")
       );
     }
 
@@ -212,86 +212,86 @@ export function getLineChartDataSet({
   const dataSet = {
     color: getChartListColor(),
     tooltip: {
-      trigger: 'item',
+      trigger: "item"
     },
     grid: {
-      left: '0',
-      right: '20px',
-      top: '5px',
-      bottom: '36px',
-      containLabel: true,
+      left: "0",
+      right: "20px",
+      top: "5px",
+      bottom: "36px",
+      containLabel: true
     },
     legend: {
-      left: 'center',
-      bottom: '0',
-      orient: 'horizontal', // legend 横向布局。
-      data: ['本月', '上月'],
+      left: "center",
+      bottom: "0",
+      orient: "horizontal", // legend 横向布局。
+      data: ["本月", "上月"],
       textStyle: {
         fontSize: 12,
-        color: placeholderColor,
-      },
+        color: placeholderColor
+      }
     },
     xAxis: {
-      type: 'category',
+      type: "category",
       data: timeArray,
       boundaryGap: false,
       axisLabel: {
-        color: placeholderColor,
+        color: placeholderColor
       },
       axisLine: {
         lineStyle: {
-          width: 1,
-        },
-      },
+          width: 1
+        }
+      }
     },
     yAxis: {
-      type: 'value',
+      type: "value",
       axisLabel: {
-        color: placeholderColor,
+        color: placeholderColor
       },
       splitLine: {
         lineStyle: {
-          color: borderColor,
-        },
-      },
+          color: borderColor
+        }
+      }
     },
     series: [
       {
-        name: '本月',
+        name: "本月",
         data: outArray,
-        type: 'line',
+        type: "line",
         smooth: false,
         showSymbol: true,
-        symbol: 'circle',
+        symbol: "circle",
         symbolSize: 8,
         itemStyle: {
           normal: {
             borderColor,
-            borderWidth: 1,
-          },
+            borderWidth: 1
+          }
         },
         areaStyle: {
           normal: {
-            opacity: 0.1,
-          },
-        },
+            opacity: 0.1
+          }
+        }
       },
       {
-        name: '上月',
+        name: "上月",
         data: inArray,
-        type: 'line',
+        type: "line",
         smooth: false,
         showSymbol: true,
-        symbol: 'circle',
+        symbol: "circle",
         symbolSize: 8,
         itemStyle: {
           normal: {
             borderColor,
-            borderWidth: 1,
-          },
-        },
-      },
-    ],
+            borderWidth: 1
+          }
+        }
+      }
+    ]
   };
   return dataSet;
 }
@@ -321,7 +321,7 @@ export function getSelftItemList(productName: string, divideNum: number): string
 export function getScatterDataSet({
   dateTime = [],
   placeholderColor,
-  borderColor,
+  borderColor
 }: { dateTime?: Array<string> } & Record<string, string>): any {
   const divideNum = 40;
   const timeArray = [];
@@ -332,12 +332,12 @@ export function getScatterDataSet({
     if (dateTime.length > 0) {
       const dateAbsTime: number = (new Date(dateTime[1]).getTime() - new Date(dateTime[0]).getTime()) / divideNum;
       const enhandTime: number = new Date(dateTime[0]).getTime() + dateAbsTime * i;
-      timeArray.push(dayjs(enhandTime).format('MM-DD'));
+      timeArray.push(dayjs(enhandTime).format("MM-DD"));
     } else {
       timeArray.push(
         dayjs()
-          .subtract(divideNum - i, 'day')
-          .format('MM-DD'),
+          .subtract(divideNum - i, "day")
+          .format("MM-DD")
       );
     }
 
@@ -350,75 +350,75 @@ export function getScatterDataSet({
     xAxis: {
       data: timeArray,
       axisLabel: {
-        color: placeholderColor,
+        color: placeholderColor
       },
       splitLine: { show: false },
       axisLine: {
         lineStyle: {
           color: borderColor,
-          width: 1,
-        },
-      },
+          width: 1
+        }
+      }
     },
     yAxis: {
-      type: 'value',
+      type: "value",
       // splitLine: { show: false},
       axisLabel: {
-        color: placeholderColor,
+        color: placeholderColor
       },
       nameTextStyle: {
-        padding: [0, 0, 0, 60],
+        padding: [0, 0, 0, 60]
       },
       axisTick: {
         show: false,
         axisLine: {
-          show: false,
-        },
+          show: false
+        }
       },
       axisLine: {
-        show: false,
+        show: false
       },
       splitLine: {
         lineStyle: {
-          color: borderColor,
-        },
-      },
+          color: borderColor
+        }
+      }
     },
     tooltip: {
-      trigger: 'item',
+      trigger: "item"
     },
     grid: {
-      top: '5px',
-      left: '25px',
-      right: '5px',
-      bottom: '60px',
+      top: "5px",
+      left: "25px",
+      right: "5px",
+      bottom: "60px"
     },
     legend: {
-      left: 'center',
-      bottom: '0',
-      orient: 'horizontal', // legend 横向布局。
-      data: ['按摩仪', '咖啡机'],
+      left: "center",
+      bottom: "0",
+      orient: "horizontal", // legend 横向布局。
+      data: ["按摩仪", "咖啡机"],
       itemHeight: 8,
       itemWidth: 8,
       textStyle: {
         fontSize: 12,
-        color: placeholderColor,
-      },
+        color: placeholderColor
+      }
     },
     series: [
       {
-        name: '按摩仪',
+        name: "按摩仪",
         symbolSize: 10,
         data: outArray.reverse(),
-        type: 'scatter',
+        type: "scatter"
       },
       {
-        name: '咖啡机',
+        name: "咖啡机",
         symbolSize: 10,
         data: inArray.concat(inArray.reverse()),
-        type: 'scatter',
-      },
-    ],
+        type: "scatter"
+      }
+    ]
   };
 }
 
@@ -444,49 +444,49 @@ export function getAreaChartDataSet(): any {
     //   text: '柱状图动画延迟',
     // },
     legend: {
-      left: 'center',
-      bottom: '5%',
-      orient: 'horizontal',
-      data: ['测试', '上线'],
+      left: "center",
+      bottom: "5%",
+      orient: "horizontal",
+      data: ["测试", "上线"]
     },
     tooltip: {
-      trigger: 'item',
+      trigger: "item"
     },
     xAxis: {
       data: xAxisData,
       splitLine: {
-        show: false,
-      },
+        show: false
+      }
     },
     yAxis: {},
     series: [
       {
-        name: '测试',
-        type: 'bar',
+        name: "测试",
+        type: "bar",
         data: data1,
         emphasis: {
-          focus: 'series',
+          focus: "series"
         },
         animationDelay(idx: number) {
           return idx * 10;
-        },
+        }
       },
       {
-        name: '上线',
-        type: 'bar',
+        name: "上线",
+        type: "bar",
         data: data2,
         emphasis: {
-          focus: 'series',
+          focus: "series"
         },
         animationDelay(idx: number) {
           return idx * 10 + 100;
-        },
-      },
+        }
+      }
     ],
-    animationEasing: 'elasticOut',
+    animationEasing: "elasticOut",
     animationDelayUpdate(idx: number) {
       return idx * 5;
-    },
+    }
   };
 }
 
@@ -502,43 +502,43 @@ export function getColumnChartDataSet(isMonth = false) {
     return {
       color: getChartListColor(),
       legend: {
-        left: 'center',
-        top: '10%',
-        orient: 'horizontal', // legend 横向布局。
-        data: ['直接访问'],
+        left: "center",
+        top: "10%",
+        orient: "horizontal", // legend 横向布局。
+        data: ["直接访问"]
       },
       tooltip: {
-        trigger: 'axis',
+        trigger: "axis",
         axisPointer: {
           // 坐标轴指示器，坐标轴触发有效
-          type: 'shadow', // 默认为直线，可选为：'line' | 'shadow'
-        },
+          type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+        }
       },
       grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true,
+        left: "3%",
+        right: "4%",
+        bottom: "3%",
+        containLabel: true
       },
       xAxis: [
         {
-          type: 'category',
-          data: ['1', '4', '8', '12', '16', '20', '24'],
+          type: "category",
+          data: ["1", "4", "8", "12", "16", "20", "24"],
           axisTick: {
-            alignWithLabel: true,
-          },
-        },
+            alignWithLabel: true
+          }
+        }
       ],
       yAxis: [
         {
-          type: 'value',
-        },
+          type: "value"
+        }
       ],
       series: [
         {
-          name: '直接访问',
-          type: 'bar',
-          barWidth: '60%',
+          name: "直接访问",
+          type: "bar",
+          barWidth: "60%",
           data: [
             getRandomArray(Math.random() * 100),
             getRandomArray(Math.random() * 200),
@@ -546,53 +546,53 @@ export function getColumnChartDataSet(isMonth = false) {
             getRandomArray(Math.random() * 400),
             getRandomArray(Math.random() * 500),
             getRandomArray(Math.random() * 600),
-            getRandomArray(Math.random() * 700),
-          ],
-        },
-      ],
+            getRandomArray(Math.random() * 700)
+          ]
+        }
+      ]
     };
   }
 
   return {
     color: getChartListColor(),
     tooltip: {
-      trigger: 'axis',
+      trigger: "axis",
       axisPointer: {
         // 坐标轴指示器，坐标轴触发有效
-        type: 'shadow', // 默认为直线，可选为：'line' | 'shadow'
-      },
+        type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+      }
     },
     legend: {
-      left: 'center',
-      bottom: '0%',
-      orient: 'horizontal', // legend 横向布局。
-      data: ['直接访问'],
+      left: "center",
+      bottom: "0%",
+      orient: "horizontal", // legend 横向布局。
+      data: ["直接访问"]
     },
     grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '13%',
-      containLabel: true,
+      left: "3%",
+      right: "4%",
+      bottom: "13%",
+      containLabel: true
     },
     xAxis: [
       {
-        type: 'category',
-        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        type: "category",
+        data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
         axisTick: {
-          alignWithLabel: true,
-        },
-      },
+          alignWithLabel: true
+        }
+      }
     ],
     yAxis: [
       {
-        type: 'value',
-      },
+        type: "value"
+      }
     ],
     series: [
       {
-        name: '直接访问',
-        type: 'bar',
-        barWidth: '20%',
+        name: "直接访问",
+        type: "bar",
+        barWidth: "20%",
         data: [
           getRandomArray(Math.random() * 100),
           getRandomArray(Math.random() * 200),
@@ -600,10 +600,10 @@ export function getColumnChartDataSet(isMonth = false) {
           getRandomArray(Math.random() * 400),
           getRandomArray(Math.random() * 500),
           getRandomArray(Math.random() * 600),
-          getRandomArray(Math.random() * 700),
-        ],
-      },
-    ],
+          getRandomArray(Math.random() * 700)
+        ]
+      }
+    ]
   };
 }
 
@@ -611,18 +611,18 @@ export function getPieChartDataSet({
   radius = 42,
   textColor,
   placeholderColor,
-  containerColor,
+  containerColor
 }: { radius: number } & Record<string, string>) {
   return {
     color: getChartListColor(),
     tooltip: {
       show: false,
-      trigger: 'axis',
-      position: null,
+      trigger: "axis",
+      position: null
     },
     grid: {
-      top: '0',
-      right: '0',
+      top: "0",
+      right: "0"
     },
     legend: {
       selectedMode: false,
@@ -630,73 +630,73 @@ export function getPieChartDataSet({
       itemHeight: 4,
       textStyle: {
         fontSize: 12,
-        color: placeholderColor,
+        color: placeholderColor
       },
-      left: 'center',
-      bottom: '0',
-      orient: 'horizontal', // legend 横向布局。
+      left: "center",
+      bottom: "0",
+      orient: "horizontal" // legend 横向布局。
     },
     series: [
       {
-        name: '销售渠道',
-        type: 'pie',
-        radius: ['48%', '60%'],
+        name: "销售渠道",
+        type: "pie",
+        radius: ["48%", "60%"],
         avoidLabelOverlap: true,
         selectedMode: true,
         hoverAnimation: true,
         silent: true,
         itemStyle: {
           borderColor: containerColor,
-          borderWidth: 1,
+          borderWidth: 1
         },
         label: {
           show: true,
-          position: 'center',
-          formatter: ['{value|{d}%}', '{name|{b}渠道占比}'].join('\n'),
+          position: "center",
+          formatter: ["{value|{d}%}", "{name|{b}渠道占比}"].join("\n"),
           rich: {
             value: {
               color: textColor,
               fontSize: 28,
-              fontWeight: 'normal',
-              lineHeight: 46,
+              fontWeight: "normal",
+              lineHeight: 46
             },
             name: {
-              color: '#909399',
+              color: "#909399",
               fontSize: 12,
-              lineHeight: 14,
-            },
-          },
+              lineHeight: 14
+            }
+          }
         },
         emphasis: {
           label: {
             show: true,
-            formatter: ['{value|{d}%}', '{name|{b}渠道占比}'].join('\n'),
+            formatter: ["{value|{d}%}", "{name|{b}渠道占比}"].join("\n"),
             rich: {
               value: {
                 color: textColor,
                 fontSize: 28,
-                fontWeight: 'normal',
-                lineHeight: 46,
+                fontWeight: "normal",
+                lineHeight: 46
               },
               name: {
-                color: '#909399',
+                color: "#909399",
                 fontSize: 14,
-                lineHeight: 14,
-              },
-            },
-          },
+                lineHeight: 14
+              }
+            }
+          }
         },
         labelLine: {
-          show: false,
+          show: false
         },
         data: [
           {
             value: 1048,
-            name: '线上',
+            name: "线上"
           },
-          { value: radius * 7, name: '门店' },
-        ],
-      },
-    ],
+          { value: radius * 7, name: "门店" }
+        ]
+      }
+    ]
   };
 }

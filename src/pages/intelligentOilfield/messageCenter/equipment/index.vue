@@ -1,19 +1,29 @@
 <!-- 后台——设备维护 -->
 <template>
   <div class="app-container">
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button type="primary" size="mini" @click="handleImport" v-hasPermi="['system:user:import']"
-          >导入</el-button
-        >
-      </el-col>
-      <el-col :span="1.5">
-        <el-button class="commonBtn" size="mini" @click="handleExport" v-hasPermi="['system:user:export']"
-          >导出</el-button
-        >
-      </el-col>
-    </el-row>
-    <pagePanel headerTitle="设备维护列表">
+    <page-panel-new header-title="设备维护列表" style="height: 100%; margin: 0;">
+      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px;">
+        <el-col :span="1.5">
+          <el-button
+            v-hasPermi="['system:equipment:import']"
+            type="primary"
+            size="mini"
+            @click="handleImport"
+          >
+            导入
+          </el-button>
+        </el-col>
+        <el-col :span="1.5">
+          <el-button
+            v-hasPermi="['system:equipment:export']"
+            class="commonBtn"
+            size="mini"
+            @click="handleExport"
+          >
+            导出
+          </el-button>
+        </el-col>
+      </el-row>
       <el-table
         :data="equipmentList"
         height="calc(100% - 50px)"
@@ -25,12 +35,27 @@
         :default-sort="{ prop: 'date', order: 'descending' }"
         @selection-change="handleSelectionChange"
       >
-      <el-table-column type="selection" width="55" align="center" />
+        <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="序号" type="index" width="120" />
-        <el-table-column prop="equipmentName" label="设备名称" width="300" align="center"></el-table-column>
-        <el-table-column prop="type" label="设备类型" width="300" align="center"></el-table-column>
-        <el-table-column prop="terrace" label="设备平台" width="300" align="center"></el-table-column>
-        <el-table-column prop="clusterName" label="是否在Flink集群" align="center"></el-table-column>
+        <el-table-column
+          prop="equipmentName"
+          label="设备名称"
+          width="300"
+          align="center"
+        />
+        <el-table-column
+          prop="type"
+          label="设备类型"
+          width="300"
+          align="center"
+        />
+        <el-table-column
+          prop="terrace"
+          label="设备平台"
+          width="300"
+          align="center"
+        />
+        <el-table-column prop="clusterName" label="是否在Flink集群" align="center" />
       </el-table>
       <pagination
         v-show="total > 0"
@@ -39,7 +64,7 @@
         :limit.sync="queryParams.pageSize"
         @pagination="getList"
       />
-    </pagePanel>
+    </page-panel-new>
 
     <!-- 用户导入对话框 -->
     <el-dialog
@@ -61,10 +86,12 @@
         :auto-upload="false"
         drag
       >
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-        <div class="el-upload__tip text-center" slot="tip">
-          <div class="el-upload__tip" slot="tip">
+        <i class="el-icon-upload" />
+        <div class="el-upload__text">
+          将文件拖到此处，或<em>点击上传</em>
+        </div>
+        <div slot="tip" class="el-upload__tip text-center">
+          <div slot="tip" class="el-upload__tip">
             <el-checkbox v-model="upload.updateSupport" /> 是否更新已经存在的用户数据
           </div>
           <span>仅允许导入xls、xlsx格式文件。</span>
@@ -73,25 +100,30 @@
             :underline="false"
             style="font-size: 12px; vertical-align: baseline"
             @click="importTemplate"
-            >下载模板</el-link
           >
+            下载模板
+          </el-link>
         </div>
       </el-upload>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitFileForm">确 定</el-button>
-        <el-button @click="upload.open = false" class="cancelBtn">取 消</el-button>
+        <el-button type="primary" @click="submitFileForm">
+          确 定
+        </el-button>
+        <el-button class="cancelBtn" @click="upload.open = false">
+          取 消
+        </el-button>
       </div>
     </el-dialog>
   </div>
 </template>
-  
+
 <script>
 
 import { equipmentList } from "@/api/intelligentOilfield/system/equipment";
-import proxy from '@/config/host';
+import proxy from "@/config/host";
 
 export default {
-  name: 'Equipment',
+  name: "Equipment",
   data() {
     return {
       // 遮罩层
@@ -99,19 +131,19 @@ export default {
       // 表格数据
       equipmentList: [],
       // 弹出层标题
-      title: '',
+      title: "",
       // 是否显示弹出层
       open: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 10
       },
       // 表单参数
       form: {},
       // 总条数
       total: 0,
-      //选中数组
+      // 选中数组
       ids: [],
       // 非单个禁用
       single: true,
@@ -122,17 +154,17 @@ export default {
         // 是否显示弹出层（用户导入）
         open: false,
         // 弹出层标题（用户导入）
-        title: '',
+        title: "",
         // 是否禁用上传
         isUploading: false,
         // 是否更新已经存在的用户数据
         updateSupport: 0,
         // 设置上传的请求头部
         // headers: { Authorization: `Bearer ${  getToken()}` },
-        headers: { Authorization: `Bearer ${this.$store.getters['user/token']}` },
+        headers: { Authorization: `Bearer ${this.$store.getters["user/token"]}` },
         // 上传的地址
-        url: `${proxy.development.API}/system/equipment/importData`,
-      },
+        url: `${proxy.development.API}/system/equipment/importData`
+      }
     };
   },
   created() {
@@ -142,12 +174,12 @@ export default {
     /** 查询列表 */
     getList() {
       this.loading = true;
-      equipmentList(this.queryParams).then((response) => {
+      equipmentList(this.queryParams).then(response => {
         response.data.rows.forEach(item => {
-          if(item.clusterStatus == 1){
-            item.clusterName = '是';
-          }else{
-            item.clusterName = '否';
+          if (item.clusterStatus === 1) {
+            item.clusterName = "是";
+          } else {
+            item.clusterName = "否";
           }
         });
         this.equipmentList = response.data.rows;
@@ -157,18 +189,18 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map((item) => item.equipmentId);
+      this.ids = selection.map(item => item.equipmentId);
       this.single = selection.length !== 1;
       this.multiple = !selection.length;
     },
     /** 导入按钮操作 */
     handleImport() {
-      this.upload.title = '导入';
+      this.upload.title = "导入";
       this.upload.open = true;
     },
     /** 下载模板操作 */
     importTemplate() {
-      this.download('system/equipment/importTemplate', {}, `equipment_template_${new Date().getTime()}.xlsx`);
+      this.download("system/equipment/importTemplate", {}, `equipment_template_${new Date().getTime()}.xlsx`);
     },
     // 文件上传中处理
     handleFileUploadProgress() {
@@ -179,7 +211,7 @@ export default {
       this.upload.open = false;
       this.upload.isUploading = false;
       this.$refs.upload.clearFiles();
-      this.$alert(response.msg, '导入结果', { dangerouslyUseHTMLString: true });
+      this.$alert(response.msg, "导入结果", { dangerouslyUseHTMLString: true });
       this.queryParams.pageNum = 1;
       this.getList();
     },
@@ -191,14 +223,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       this.download(
-        'system/equipment/export',
+        "system/equipment/export",
         {
-          ...this.queryParams,
+          ...this.queryParams
         },
-        `equipment_${new Date().getTime()}.xlsx`,
+        `equipment_${new Date().getTime()}.xlsx`
       );
-    },
-  },
+    }
+  }
 };
 </script>
   <style lang="less" scoped>
@@ -208,6 +240,7 @@ export default {
   .footerBox{
     height: calc(100% - 60px);
   }
+
   .el-table {
     overflow: scroll;
   }

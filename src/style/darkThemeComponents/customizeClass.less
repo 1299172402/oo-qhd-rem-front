@@ -1,16 +1,43 @@
 // 缩略图默认样式
-.thumbnail {
-    width: 56px;
-    height: 56px;
-    background: #51a1ff;
-    box-shadow: 0px 0px 4px 0px rgba(144, 147, 153, 0.3);
-    border-radius: 8px;
-    color: #fff;
-    font-size: 22px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
+.bgImage {
+  background: url("../../assets/intelligentOilfield/bgImg2.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  color: var(--light-blue-color);
+  font-size: 22px;
+  box-shadow: 0 0 4px 0 rgba(144, 147, 153, 0.3);
+}
+// 首页样式
+.home-marquee-fa {
+  background: transparent;
+  border: 1px solid #2d5c7d;
+  box-shadow: unset;
+  display: flex;
+  padding: 10px;
+
+  .home-marquee_head {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
     align-items: center;
+    font-size: 14px;
+    color: var(--light-blue-color);
+    font-weight: 700;
   }
+}
+
+.home-main {
+  background: unset;
+  border: 1px solid #ddd;
+  border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
+  box-shadow: unset;
+
+  .home-card {
+    border: 1px solid var(--light-blue-color);
+    background: rgba(0, 118, 162, 0.3);
+  }
+
+  .card-title {
+    background: linear-gradient(270deg, rgba(0, 96, 166, 0.5) 0%, #0060a6 100%);
+    border-image: linear-gradient(180deg, rgba(116, 190, 243, 0), rgba(0, 180, 255, 0.6)) 1 1;
+    color: #fff;
+  }
+}

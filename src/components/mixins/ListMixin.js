@@ -1,6 +1,6 @@
 import { postAction, getAction } from "@/api/common/manage";
 import dayjs from "dayjs";
-import {filterObj} from "../audit/utils";
+import { filterObj } from "../audit/utils";
 
 export default {
   data() {
@@ -19,7 +19,7 @@ export default {
         current: 1,
         pageSize: 10,
         pageSizeOptions: ["10", "20", "30"],
-        showTotal: (total, range) => `${range[0]  }-${  range[1]  } 共${  total  }条`,
+        showTotal: (total, range) => `${range[0]}-${range[1]} 共${total}条`,
         showQuickJumper: true,
         showSizeChanger: true,
         total: 0
@@ -58,8 +58,8 @@ export default {
       // deleteConfirm
       deleteMessage: "此操作将删除该条数据，是否继续？",
       deleteTitle: "提示",
-      deleteConfirmText: '确定',
-      deleteCancelText: '取消',
+      deleteConfirmText: "确定",
+      deleteCancelText: "取消",
       deleteType: "warning"
     };
   },
@@ -77,17 +77,16 @@ export default {
   methods: {
     init() {
       if (!this.disableMixinCreated) {
-        console.log(" -- mixin created -- ");
         const filterId = this.$route.query.id;
         (this.loadData(1, filterId) || Promise.resolve())
           .then(() => {
             const row = this.dataSource.find(v => v.id && v.id === filterId);
             if (filterId && !row) {
               this.loadData();
-            } else if(row) {
+            } else if (row) {
               this.handleViewToPage(row.id);
             }
-          })
+          });
         // 初始化字典配置 在自己页面定义
         // this.initDictConfig();
       }
@@ -106,8 +105,8 @@ export default {
         params.id = id;
       }
       this.loading = true;
-      const httpAction = getAction
-      return httpAction(this.url.list, params).then((res) => {
+      const httpAction = getAction;
+      return httpAction(this.url.list, params).then(res => {
         if (this.handleLoadDataRes) {
           res = this.handleLoadDataRes(res.data);
         }
@@ -122,7 +121,7 @@ export default {
       });
     },
     getQueryParams() {
-      const queryParam = { ...this.queryParam , ...this.queryParamOther};
+      const queryParam = { ...this.queryParam, ...this.queryParamOther };
       Object.keys(queryParam).forEach(key => {
         // 起始时间
         if (key.endsWith("_flag") && queryParam[key] && queryParam[key].length > 0) {
@@ -137,15 +136,15 @@ export default {
         }
         // 模糊查询，值前后加*
         if (key.endsWith("_matching") && queryParam[key].length > 0) {
-          queryParam[key.slice(0, -("_matching").length)] = `*${   queryParam[key]  }*`;
+          queryParam[key.slice(0, -("_matching").length)] = `*${queryParam[key]}*`;
           delete queryParam[key];
         }
         // 模糊查询，值前后加%
         if (key.endsWith("_fuzzy") && queryParam[key].length > 0) {
-          queryParam[key.slice(0, -("_fuzzy").length)] = `%${  queryParam[key]  }%`;
+          queryParam[key.slice(0, -("_fuzzy").length)] = `%${queryParam[key]}%`;
           delete queryParam[key];
         }
-      })
+      });
       // 获取查询条件
       const sqp = {
         superQueryParams: undefined
@@ -170,7 +169,7 @@ export default {
         type: this.deleteType
       }).then(() => {
         postAction(`${this.url.delete}?id=${id}`)
-          .then((res) => {
+          .then(res => {
             if (res.data.code === 200) {
               this.$message.success(res.data.msg);
               this.loadData(1);
@@ -185,8 +184,8 @@ export default {
         this.$message({
           type: "info",
           message: "已取消删除"
-        })
-      })
+        });
+      });
     },
     searchReset() {
       this.queryParam = {};
@@ -198,23 +197,23 @@ export default {
     handleTableChange(pagination, type = "element") {
       // 分页、排序、筛选变化时触发
       // TODO 筛选
-      switch(type) {
-      case "element":
-        this.ipagination.current = pagination.page;
-        this.ipagination.pageSize = pagination.limit;
-        break;
-      case "tdesign":
-        this.ipagination.current = pagination.current;
-        this.ipagination.pageSize = pagination.pageSize
-        break;
-      default:
-        break
+      switch (type) {
+        case "element":
+          this.ipagination.current = pagination.page;
+          this.ipagination.pageSize = pagination.limit;
+          break;
+        case "tdesign":
+          this.ipagination.current = pagination.current;
+          this.ipagination.pageSize = pagination.pageSize;
+          break;
+        default:
+          break;
       }
       this.loadData();
     },
     handleEditToPage(row) {
       if (!this.routerInfo?.edit?.name) {
-        this.$message.warning("请先配置routeInfo.edit.name")
+        this.$message.warning("请先配置routeInfo.edit.name");
       } else {
         this.$router.push({
           name: this.routerInfo?.edit?.name,
@@ -224,14 +223,14 @@ export default {
             action: "edit"
           },
           query: this.routerInfo.edit.query
-        })
+        });
       }
     },
     handleAuditToPage(processInstanceId, id) {
       if (!this.routerInfo?.view?.name) {
-        this.$message.warning("请先配置routeInfo.view.name")
+        this.$message.warning("请先配置routeInfo.view.name");
       } else {
-        postAction("/system/flow/task/taskIdByInstance", { processInstanceId }).then((res) => {
+        postAction("/system/flow/task/taskIdByInstance", { processInstanceId }).then(res => {
           if (res.firstTaskId) {
             this.$router.push({
               name: this.routerInfo.view.name,
@@ -242,14 +241,14 @@ export default {
                 taskId: res.firstTaskId, // 任务id
                 processInstanceId // 流程实例id
               }
-            })
+            });
           }
-        })
+        });
       }
     },
     handleAddToPage() {
       if (!this.routerInfo?.edit?.name) {
-        this.$message.warning("请先配置routeInfo.edit.name")
+        this.$message.warning("请先配置routeInfo.edit.name");
       } else {
         this.$router.push({
           name: this.routerInfo?.edit?.name,
@@ -258,12 +257,12 @@ export default {
             action: "add"
           },
           query: this.routerInfo.edit.query
-        })
+        });
       }
     },
-    handleViewToPage({id}) {
+    handleViewToPage({ id }) {
       if (!this.routerInfo?.view.name) {
-        this.$message.warning("请先配置routeInfo.view.name")
+        this.$message.warning("请先配置routeInfo.view.name");
       } else {
         this.$router.push({
           name: this.routerInfo?.view?.name,
@@ -273,11 +272,11 @@ export default {
             action: "view"
           },
           query: this.routerInfo?.view?.query
-        })
+        });
       }
     }
   }
-}
+};
 
 export const ListMixins = {
   data() {
@@ -300,6 +299,11 @@ export const ListMixins = {
     };
   },
   mounted() {
+    if (this.defaultLoad) {
+      this.loadData();
+    }
+  },
+  activated() {
     if (this.defaultLoad) {
       this.loadData();
     }
@@ -327,7 +331,7 @@ export const ListMixins = {
       if (args === 1) {
         this.ipagination.current = 1;
       }
-      this.fn.list(this.getQueryParams()).then((res) => {
+      this.fn.list(this.getQueryParams()).then(res => {
         if (res && res.status === 200) {
           this.handleListResult(res);
         }

@@ -1,7 +1,7 @@
 import Vue from "vue";
 import BInput from "../common/BInput";
 import store from "@/store";
-import { getUserList, getRecentList} from "./api/api";
+import { getUserList, getRecentList } from "./api/api";
 import { filterObj } from "../utils";
 
 export default Vue.extend({
@@ -20,11 +20,11 @@ export default Vue.extend({
       default: true,
       required: false
     },
-    userIds:{
+    userIds: {
       type: String,
       default: ""
     },
-    canSelf:{
+    canSelf: {
       type: Boolean,
       default: true
     },
@@ -36,23 +36,23 @@ export default Vue.extend({
   data() {
     return {
       queryParam: {
-        nickName: "",
+        nickName: ""
       },
       selectModule: 1,
-      cardStyle:"",
+      cardStyle: "",
       role: "",
       orgCode: "",
       columns: [
-        { title: "", colKey: "id", width: 60, align: "center", cell: (h, { row }) => <t-radio value={row.userId} onClick={() => { (this as any).onSelectChange(row) }}></t-radio>},
+        { title: "", colKey: "id", width: 60, align: "center", cell: (h, { row }) => <t-radio value={row.userId} onClick={() => { (this as any).onSelectChange(row); }}></t-radio> },
         {
-          title: '用户姓名',
-          align: 'center',
-          colKey: 'nickName',
+          title: "用户姓名",
+          align: "center",
+          colKey: "nickName"
         },
         {
-          title: '部门',
-          align: 'center',
-          colKey: 'deptName',
+          title: "部门",
+          align: "center",
+          colKey: "deptName",
           cell: (h, { row }) => <div>{row.dept.deptName}</div>
         }
       ],
@@ -61,19 +61,19 @@ export default Vue.extend({
       selectedRowKeys: [],
       selectUserRows: [],
       selectUserIds: [],
-      title: '根据部门选择用户',
+      title: "根据部门选择用户",
       ipagination: {
         current: 1,
         pageSize: 10,
-        pageSizeOptions: ['10', '20', '30'],
-        showTotal: (total, range) => `${range[0]  }-${  range[1]  } 共${  total  }条`,
+        pageSizeOptions: ["10", "20", "30"],
+        showTotal: (total, range) => `${range[0]}-${range[1]} 共${total}条`,
         showQuickJumper: true,
         showSizeChanger: true,
         total: 0
       },
       isorter: {
-        column: 'createTime',
-        order: 'desc'
+        column: "createTime",
+        order: "desc"
       },
       selectedDepIds: [],
       departTree: [],
@@ -86,12 +86,12 @@ export default Vue.extend({
       loading: false,
       expandedKeys: [],
       iconType: false
-    }
+    };
   },
   computed: {
     // 计算属性的 getter
-    getType () {
-      return this.multi === true ? 'checkbox' : 'radio';
+    getType() {
+      return this.multi === true ? "checkbox" : "radio";
     }
   },
   watch: {
@@ -113,7 +113,7 @@ export default Vue.extend({
       }
     },
     switchOn: {
-      immediate:true,
+      immediate: true,
       handler() {
         if (this.mountedDone === 1) {
           this.switchChange();
@@ -125,7 +125,7 @@ export default Vue.extend({
       handler() {
         if (this.selectModule === 2) {
           this.selectRecent();
-        } else if (this.mountedDone === 1){
+        } else if (this.mountedDone === 1) {
           this.recoverModule();
         }
       }
@@ -148,25 +148,25 @@ export default Vue.extend({
     initUserNames() {
       if (this.userIds) {
         // 这里最后加一个 , 的原因是因为无论如何都要使用 in 查询，防止后台进行了模糊匹配，导致查询结果不准确
-        const values = `${this.userIds.split(',')  },`
+        const values = `${this.userIds.split(",")},`;
         getUserList({
           id: values,
           pageNum: 1,
           pageSize: values.length
-        }).then((res) => {
+        }).then(res => {
           if (res.data.code === 200) {
-            const selectedRowKeys = []
-            const realNames = []
+            const selectedRowKeys = [];
+            const realNames = [];
             res.data.rows.forEach(user => {
-              realNames.push(user.realname)
-              selectedRowKeys.push(user.id)
-            })
-            this.selectedRowKeys = selectedRowKeys
-            this.$emit('initComp', realNames.join(','))
+              realNames.push(user.realname);
+              selectedRowKeys.push(user.id);
+            });
+            this.selectedRowKeys = selectedRowKeys;
+            this.$emit("initComp", realNames.join(","));
           }
-        })
+        });
       } else {
-        this.$emit('initComp', '')
+        this.$emit("initComp", "");
       }
     },
     async loadData(arg) {
@@ -174,25 +174,25 @@ export default Vue.extend({
         this.ipagination.current = 1;
       }
       if (this.selectedDepIds && this.selectedDepIds.length > 0) {
-        await this.initQueryUserByDepId(this.selectedDepIds)
+        await this.initQueryUserByDepId(this.selectedDepIds);
       } else {
-        this.loading = true
-        const params = this.getQueryParams()// 查询条件
-        await getUserList({ ...params }).then((res) => {
+        this.loading = true;
+        const params = this.getQueryParams();// 查询条件
+        await getUserList({ ...params }).then(res => {
           if (res.data.code === 200) {
-            this.dataSource = res.data.rows
-            this.ipagination.total = res.data.total
+            this.dataSource = res.data.rows;
+            this.ipagination.total = res.data.total;
           }
         }).finally(() => {
-          this.loading = false
-        })
+          this.loading = false;
+        });
       }
     },
     // 触发屏幕自适应
     resetScreenSize() {
       const screenWidth = document.body.clientWidth;
       if (screenWidth < 500) {
-        this.scrollTrigger = {x: 800};
+        this.scrollTrigger = { x: 800 };
       } else {
         this.scrollTrigger = {};
       }
@@ -211,7 +211,7 @@ export default Vue.extend({
       if (this.selectModule !== 2) {
         this.queryDepartTree(queryParam);
       } else {
-        getRecentList().then((res) => {
+        getRecentList().then(res => {
           if (res.data.code === 200) {
             this.dataSource = res.data.recentSelectUsers;
             this.mountedDone = 1;
@@ -225,7 +225,7 @@ export default Vue.extend({
       // this.form.resetFields();
     },
     getQueryParams() {
-      const param = { ...this.queryParam, ...this.isorter};
+      const param = { ...this.queryParam, ...this.isorter };
       param.pageNum = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
       return filterObj(param);
@@ -248,7 +248,7 @@ export default Vue.extend({
       // TODO 筛选
       if (Object.keys(sorter).length > 0) {
         this.isorter.column = sorter.field;
-        this.isorter.order = sorter.order === 'ascend' ? 'asc' : 'desc';
+        this.isorter.order = sorter.order === "ascend" ? "asc" : "desc";
       }
       this.ipagination = pagination;
       this.loadData();
@@ -256,18 +256,18 @@ export default Vue.extend({
     handleSubmit() {
       const that = this as any;
       this.getSelectUserRows();
-      this.selectOk(that.selectUserRows, that.selectUserIds)
+      this.selectOk(that.selectUserRows, that.selectUserIds);
       that.close();
     },
     // 获取选择用户信息
     getSelectUserRows() {
-      const {dataSource} = this;
+      const { dataSource } = this;
       let userIds = "";
       this.selectUserRows = [];
       for (let i = 0, len = dataSource.length; i < len; i++) {
         if (this.selectedRowKeys.includes(dataSource[i].userId)) {
           this.selectUserRows.push(dataSource[i]);
-          userIds = `${userIds  },${  dataSource[i].userId}`
+          userIds = `${userIds},${dataSource[i].userId}`;
         }
       }
       this.selectUserIds = userIds.substring(1);
@@ -281,10 +281,10 @@ export default Vue.extend({
      * @param light 轻量不显示父级关系的返回结果及多余的子信息，默认不开启
      * @returns {Array}
      */
-    arrayChildrenFlatten(array, {childrenKeys, flattenParent, flattenParentKey}, light = false){
+    arrayChildrenFlatten(array, { childrenKeys, flattenParent, flattenParentKey }, light = false) {
       childrenKeys = childrenKeys || ["children"];
-      flattenParent = flattenParent|| [];
-      flattenParentKey = flattenParentKey|| "flattenParent";
+      flattenParent = flattenParent || [];
+      flattenParentKey = flattenParentKey || "flattenParent";
       const result = [];
       array.forEach(item => {
         const flattenItem = JSON.parse(JSON.stringify(item));
@@ -297,11 +297,11 @@ export default Vue.extend({
         }
         result.push(flattenItem);
         childrenKeys.forEach(key => {
-          if(item[key] && Array.isArray(item[key])) {
+          if (item[key] && Array.isArray(item[key])) {
             const children = this.arrayChildrenFlatten(item[key], {
               childrenKeys,
               flattenParent: [...flattenParent, item],
-              flattenParentKey,
+              flattenParentKey
             }, light);
             result.push(...children);
           }
@@ -310,7 +310,7 @@ export default Vue.extend({
       return result;
     },
     // 点击树节点,筛选出对应的用户
-    onDepSelect(selectedDepIds) {
+    onDepSelect() {
       // this.orgCode = this.departArray.find(v => v.id === selectedDepIds[0]).orgCode;
       // if (selectedDepIds[0] != null) {
       if (this.param.auditUserSearchCallBackData) {
@@ -330,19 +330,19 @@ export default Vue.extend({
       this.loadData(1);
     },
     // 根据选择的id来查询用户信息
-    initQueryUserByDepId(selectedDepId) {
-      this.loading = true
-      return getUserList({ roleCode: this.switchOn ? "":this.role, orgCode: this.orgCode, ...this.getQueryParams()}).then((res) => {
+    initQueryUserByDepId() {
+      this.loading = true;
+      return getUserList({ roleCode: this.switchOn ? "" : this.role, orgCode: this.orgCode, ...this.getQueryParams() }).then(res => {
         if (res.data.code === 200) {
           this.dataSource = res.data.rows;
           this.$nextTick(() => {
             this.loadUserIds();
-          })
+          });
           this.ipagination.total = res.data.total;
         }
       }).finally(() => {
-        this.loading = false
-      })
+        this.loading = false;
+      });
     },
     /**
      * 增加姓名的查询
@@ -351,9 +351,9 @@ export default Vue.extend({
       if (typeof val === "string") {
         this.queryParam.nickName = val;
       }
-      this.loading = true
+      this.loading = true;
       if (this.selectModule === 2) {
-        return getRecentList().then((res) => {
+        return getRecentList().then(res => {
           if (res.data.code === 200) {
             this.dataSource = res.data.recentSelectUsers;
             this.mountedDone = 1;
@@ -365,14 +365,14 @@ export default Vue.extend({
           this.loading = false;
         });
       }
-      return getUserList({ roleCode: this.switchOn ? "":this.role, orgCode: this.orgCode, nickName: this.queryParam.nickName}).then((res) => {
+      return getUserList({ roleCode: this.switchOn ? "" : this.role, orgCode: this.orgCode, nickName: this.queryParam.nickName }).then(res => {
         if (res.data.code === 200) {
           this.dataSource = res.data.rows;
           this.ipagination.total = res.data.total;
         }
       }).finally(() => {
-        this.loading = false
-      })
+        this.loading = false;
+      });
     },
     /**
      * 全查开关变更
@@ -387,12 +387,12 @@ export default Vue.extend({
         if (this.selectedRowKeys.length === 0) {
           this.loadUserIds();
         }
-      })
+      });
     },
     /**
      * 机构数查询方法及相关数据处理
      */
-    queryDepartTree(queryParam) {
+    queryDepartTree() {
       // const params = {
       //   deptId: queryParam.auditUserSearchCallBackData,
       //   dataScope: queryParam.dataScope,
@@ -435,12 +435,13 @@ export default Vue.extend({
      * 审批节点不能选自己
      */
     getCheckboxProps(row) {
-      const {userInfo} = store.getters;
+      const { userInfo } = store.getters;
       const props = this.canSelf ? {} : { disabled: userInfo.id === row.userId };
       return { props };
     }
   },
   render() {
+    // eslint-disable-next-line
     const popupContent = () => (
       <t-card
         bordered={false}
@@ -455,7 +456,7 @@ export default Vue.extend({
         >
         </t-tree>
       </t-card>
-    )
+    );
 
     return (
       <div>
@@ -478,7 +479,7 @@ export default Vue.extend({
               value={this.selectModule}
               style="width: 70px; display: inline-block"
               default-value={1}
-              onChange={(value) => { this.selectModule = value }}
+              onChange={value => { this.selectModule = value; }}
             >
               <t-option value={1} label="人员">
               </t-option>
@@ -486,7 +487,7 @@ export default Vue.extend({
               </t-option> */}
             </t-select>
             <t-input
-              style={{display: this.selectModule !== 2 ? "inline-block": "none", width: "250px", marginBottom: "15px", marginLeft: "10px"}}
+              style={{ display: this.selectModule !== 2 ? "inline-block" : "none", width: "250px", marginBottom: "15px", marginLeft: "10px" }}
               placeholder="请输入姓名"
               type="search"
               value={this.queryParam.nickName}
@@ -517,6 +518,6 @@ export default Vue.extend({
           </t-table>
         </t-card>
       </div>
-    )
+    );
   }
-})
+});

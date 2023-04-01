@@ -1,6 +1,12 @@
 <!-- 后台——消息主题表单页 -->
 <template>
-  <common-dialog label="" height="1" :viewOnly="isView" v-model="visible" @ok="save" >
+  <common-dialog
+    v-model="visible"
+    label=""
+    height="1"
+    :view-only="isView"
+    @ok="save"
+  >
     <el-form
       ref="form"
       :model="form"
@@ -83,7 +89,7 @@
             align="center"
           >
             <template slot-scope="scope">
-              <el-button type="text" @click="handleDel(scope.$index)" class="delbutton">
+              <el-button type="text" class="delbutton" @click="handleDel(scope.$index)">
                 删除
               </el-button>
             </template>
@@ -129,15 +135,15 @@ export default {
           { value: "SMS", label: "短信" },
           { value: "MAIL", label: "邮件" },
           { value: "PUSH", label: "移动云推送", disabled: true },
-          { value: "LETTER", label: "站内信", disabled: true }
+          { value: "LETTER", label: "站内信" }
         ],
         serviceMessageTypes: [
           { value: "EQUIPMENT", label: "设备状态", disabled: true },
           { value: "FORWARDING", label: "服务转发", disabled: true }
         ],
         activeTypes: [
-          { value: true, label: "正常" },
-          { value: false, label: "离线" }
+          { value: 0, label: "正常" },
+          { value: 1, label: "离线" }
         ]
       },
       rules: {
@@ -174,9 +180,20 @@ export default {
     /** 数据回显 */
     bindModel() {
       if (this.formId) {
-        getConfig(this.formId).then((data) => {
+        getConfig(this.formId).then(data => {
           this.form = data;
         });
+      } else {
+        this.form = {
+          descr: undefined,
+          exposeKey: undefined,
+          exposeUri: undefined,
+          grantedTenants: [],
+          messageType: undefined,
+          title: undefined,
+          triggerType: "USER",
+          active: true
+        };
       }
     },
     /** 租户弹窗显示 */
@@ -190,7 +207,7 @@ export default {
     },
     /** 显示选择的租户 */
     handleGrantedTenants(data) {
-      this.form.grantedTenants = this.form.grantedTenants.concat(data);
+      this.form.grantedTenants = data;
     },
     /** 删除租户信息 */
     handleDel(index) {
@@ -198,16 +215,20 @@ export default {
     },
     /** 保存配置信息 */
     save() {
-      this.$refs.form.validate((valid) => {
+      this.$refs.form.validate(valid => {
         if (valid) {
           if (this.form.grantedTenants.length === 0) {
             this.$modal.msgError("请至少选择一个租户");
           } else {
+            this.form.grantedTenants = this.form.grantedTenants.map(item => {
+              item.tenantKey = item.tenantCode || item.tenantKey;
+              return item;
+            });
             saveConfig(this.form).then(() => {
               this.$modal.msgSuccess("保存成功");
               this.close();
             })
-              .catch((err) => this.$modal.msgError(err.response.data.message))
+              .catch(err => this.$modal.msgError(err.response.data.message));
           }
         } else {
           this.$modal.msgError("请将必填项填写完整");

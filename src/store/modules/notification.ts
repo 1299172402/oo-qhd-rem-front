@@ -64,19 +64,19 @@ const state: { msgData: Array<msgDataItem> } = {
     //   date: '2021-01-01 08:00',
     //   quality: 'low',
     // },
-  ],
+  ]
 };
 
 const mutations = {
   setMsgData(state, data) {
     // eslint-disable-next-line no-param-reassign
     state.msgData = data;
-  },
+  }
 };
 
 const getters = {
-  unreadMsg: (state) => state.msgData.filter((item) => item.status === '0'),
-  readMsg: (state) => state.msgData.filter((item) => !item.status),
+  unreadMsg: state => state.msgData.filter(item => item.status === "0"),
+  readMsg: state => state.msgData.filter(item => !item.status)
 };
 
 const actions = {};
@@ -86,5 +86,5 @@ export default {
   state,
   mutations,
   actions,
-  getters,
+  getters
 };

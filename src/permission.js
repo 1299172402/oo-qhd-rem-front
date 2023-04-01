@@ -1,15 +1,16 @@
-import NProgress from 'nprogress'; // progress bar
-import 'nprogress/nprogress.css'; // progress bar style
+import NProgress from "nprogress"; // progress bar
+import "nprogress/nprogress.css"; // progress bar style
 
-import store from '@/store';
-import router from '@/router';
-import { jumpFromGateway } from "@/utils/thirdPartyInteraction";
+import store from "@/store";
+import router from "@/router";
 
 NProgress.configure({ showSpinner: false });
 
-const whiteListRouters = store.getters['permission/whiteListRouters'];
+const whiteListRouters = store.getters["permission/whiteListRouters"];
+// TODO: Maybe change back: gaofan
+// let defaultToWithoutPath = null;
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   NProgress.start();
   if (to.path === "/login" && Object.prototype.hasOwnProperty.call(to.query, "srid")) {
     // 如果跳转到登录页且携带srid参数则放行
@@ -17,16 +18,14 @@ router.beforeEach(async (to, from, next) => {
     NProgress.done();
     return;
   }
-  if (to.path.indexOf("/iamCallback") === 0 ) {
+  if (to.path.indexOf("/iamCallback") === 0) {
     next();
   } else if (Object.prototype.hasOwnProperty.call(to.query, "srid")) {
     // url地址存在srid参数携带该参数跳转到登录页
     await store.commit("user/removeToken");
     next({ path: "/login", query: { ...to.query }});
-  } else if (jumpFromGateway(to)) {
-    return;
   }
-  const token = store.getters['user/token'];
+  const token = store.getters["user/token"];
 
   if (token) {
     // console.log('toPath', to.path)
@@ -40,16 +39,33 @@ router.beforeEach(async (to, from, next) => {
     //   return;
     // }
 
-    const roles = store.getters['user/roles'];
+    const roles = store.getters["user/roles"];
 
     if (roles && roles.length > 0) {
+      // TODO: Maybe change back: gaofan
+    //   if (to.path === "/login" || to.path === "/" || (to.path === "/404" && defaultToWithoutPath !== "/404")) {
+    //     // 如果没有指定跳转地址，则获取默认路径或者可跳转菜单的第一个,并且切回后台模式
+    //       store.commit("tabRouter/removeTabRouterList");
+    //     store.commit("user/SETISGROUPLOGIN", false);
+    //     next(defaultToWithoutPath);
+    //     // 如果本身地址不变，需要关闭一下进度条，因为不执行 afterEach
+    //     NProgress.done();
+    //   } else {
       next();
+    //   }
     } else {
       try {
-        await store.dispatch('user/getUserInfo');
-
+        // TODO: Maybe change back: gaofan
+        // if (from.path !== "/login") {
+        await store.dispatch("user/getUserInfo");
+        // TODO: Maybe change back: gaofan
+        // } else {
+        //   await store.dispatch("user/getUserInfo", "firstLogin");
+        // }
         // 路由跳转前拦截：先获取登录时拿到的角色
-        await store.dispatch('permission/initRoutes', store.getters['user/roles']);
+        await store.dispatch("permission/initRoutes", store.getters["user/roles"]);
+        // TODO: Maybe change back: gaofan
+        // defaultToWithoutPath = store.getters["permission/defaultTo"];
 
         next({ ...to });
         // store.dispatch('user/getUserInfo').then(() => {
@@ -58,10 +74,9 @@ router.beforeEach(async (to, from, next) => {
         // }).catch(err=>{
         //   console.log(err);
         // });
-        
       } catch (error) {
-        await store.commit('user/removeToken');
-        next(`/login?redirect=${to.path}`);
+        await store.commit("user/removeToken");
+        next(`/login?redirect=${to.fullPath}`);
         NProgress.done();
       }
     }
@@ -70,7 +85,7 @@ router.beforeEach(async (to, from, next) => {
     if (whiteListRouters.indexOf(to.path) !== -1) {
       next();
     } else {
-      next(`/login?redirect=${to.path}`);
+      next(`/login?redirect=${to.fullPath}`);
     }
     NProgress.done();
   }

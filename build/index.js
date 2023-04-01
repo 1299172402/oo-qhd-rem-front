@@ -1,35 +1,35 @@
-const { run } = require('runjs')
-const chalk = require('chalk')
-const config = require('../vue.config.js')
-const rawArgv = process.argv.slice(2)
-const args = rawArgv.join(' ')
+const { run } = require("runjs");
+// const chalk = require("chalk");
+const config = require("../vue.config.js");
 
-if (process.env.npm_config_preview || rawArgv.includes('--preview')) {
-  const report = rawArgv.includes('--report')
+const rawArgv = process.argv.slice(2);
+const args = rawArgv.join(" ");
+var connect = require("connect");
+var serveStatic = require("serve-static");
 
-  run(`vue-cli-service build ${args}`)
+if (process.env.npm_config_preview || rawArgv.includes("--preview")) {
+  const report = rawArgv.includes("--report");
 
-  const port = 9526
-  const publicPath = config.publicPath
+  run(`vue-cli-service build ${args}`);
 
-  var connect = require('connect')
-  var serveStatic = require('serve-static')
-  const app = connect()
+  const port = 9526;
+  const publicPath = config.publicPath;
+
+  const app = connect();
 
   app.use(
     publicPath,
-    serveStatic('./dist', {
-      index: ['index.html', '/']
+    serveStatic("./dist", {
+      index: ["index.html", "/"]
     })
-  )
+  );
 
-  app.listen(port, function () {
-    console.log(chalk.green(`> Preview at  http://localhost:${port}${publicPath}`))
+  app.listen(port, () => {
+    // console.log(chalk.green(`> Preview at  http://localhost:${port}${publicPath}`));
     if (report) {
-      console.log(chalk.green(`> Report at  http://localhost:${port}${publicPath}report.html`))
+      // console.log(chalk.green(`> Report at  http://localhost:${port}${publicPath}report.html`));
     }
-
-  })
+  });
 } else {
-  run(`vue-cli-service build ${args}`)
+  run(`vue-cli-service build ${args}`);
 }

@@ -7,30 +7,30 @@
 <script>
 
 export default {
-  name: 'SvgIcon',
+  name: "SvgIcon",
   props: {
     iconClass: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     iconName() {
-      return `#icon-${this.iconClass}`
+      return `#icon-${this.iconClass}`;
     },
     svgClass() {
       if (this.className) {
-        return `svg-icon ${this.className}`
-      } 
-      return 'svg-icon'
-    },
+        return `svg-icon ${this.className}`;
+      }
+      return "svg-icon";
+    }
   },
   methods: {
     clickIcon() {
-      this.$emit('clickIcon')
-    },
+      this.$emit("clickIcon");
+    }
   }
-}
+};
 </script>
 <style scoped>
 .svg-icon {
@@ -38,6 +38,6 @@ export default {
   height: 1em;
   vertical-align: -0.15em;
   overflow: hidden;
-  fill: currentColor;
+  fill: currentcolor;
 }
 </style>

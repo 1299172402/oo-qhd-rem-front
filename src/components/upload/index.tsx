@@ -60,8 +60,8 @@ export default Vue.extend({
       upload: "/sys/common/upload",
       urlDownload: "/sys/common/static/",
       loading: true,
-      headers: { Authorization: `Bearer ${this.$store.getters["user/token"]}` },
-    }
+      headers: { Authorization: `Bearer ${this.$store.getters["user/token"]}` }
+    };
   },
   computed: {
     uploadActionUrl() {
@@ -72,17 +72,17 @@ export default Vue.extend({
           params += `&${item}=${this.uploadParams[item]}`;
         });
         return `${this.action}?${params}`;
-      } 
+      }
       return this.action;
     }
-  },
-  mounted() {
-    this.initFileList(this.value);
   },
   watch: {
     value() {
       this.initFileList(this.value);
     }
+  },
+  mounted() {
+    this.initFileList(this.value);
   },
   methods: {
     initFileList(paths: string) {
@@ -102,36 +102,35 @@ export default Vue.extend({
           status: "history",
           message: filePath
         }
-      }))
+      }));
       // 处理图片
       if (this.mode === "img" && this.fileList.length > 0) {
         const promiseArr = this.fileList.map(file => downFile(file.fileId).then(v => getImgUrl(v).then(url => ({ name: file.name, url }))));
         Promise.all(promiseArr).then(res => {
           this.imgValues = res;
           this.loading = false;
-        })
+        });
       } else {
         this.loading = false;
       }
     },
     defaultHandleFail(val) {
-      const [ currentFile ] = val.currentFiles;
+      const [currentFile] = val.currentFiles;
       this.$emit("fail", val);
-      this.$message.error(`文件 ${currentFile.name} 上传失败`)
+      this.$message.error(`文件 ${currentFile.name} 上传失败`);
     },
     uploadChange(val) {
-      console.log(val);
       // 如果是删除操作
-      switch(this.mode) {
-      case "img":
-        return;
-      case "file":
-        if (this.fileList.length > val.length) {
-          this.fileList = val;
+      switch (this.mode) {
+        case "img":
           return;
-        }
-        break
-      default: break;
+        case "file":
+          if (this.fileList.length > val.length) {
+            this.fileList = val;
+            return;
+          }
+          break;
+        default: break;
       }
       this.$emit("change", val);
       const lastFile = val[val.length - 1];
@@ -143,26 +142,26 @@ export default Vue.extend({
       if (this.mode === "img") {
         downFile(id).then(v => {
           getImgUrl(v).then(url => {
-            this.imgValues.push({ name, url })
-          })
-        })
+            this.imgValues.push({ name, url });
+          });
+        });
       } else {
         // 如果状态是status的话转换为done
         if (status === "success") {
-          status = "done"
+          status = "done";
         }
-        this.fileList.splice(this.fileList.length - 1, 1, { fileId: id, name, response, status })
+        this.fileList.splice(this.fileList.length - 1, 1, { fileId: id, name, response, status });
       }
     },
     handleDownLoad(file) {
       downFile(file.fileId)
         .then(v => {
           download(v, file.name);
-        })
+        });
     },
     handlePreviewFile(item) {
-      const mode = import.meta.env.MODE
-      const url = `${mode === "development" ? "/#" : "/#/b"  }/file/preview?id=${item.fileId}&name=${item.name}`;
+      const mode = import.meta.env.MODE;
+      const url = `${mode === "development" ? "/#" : "/#/b"}/file/preview?id=${item.fileId}&name=${item.name}`;
       window.open(url, "_blank");
     },
     onFileListClick(val) {
@@ -173,12 +172,12 @@ export default Vue.extend({
       this.$emit("input", this.fileList);
     },
     handleFail(file) {
-      switch(this.mode) {
-      case "file":
-        this.fileList.splice(this.fileList.length - 1, 1);
-        break;
-      default:
-        break;
+      switch (this.mode) {
+        case "file":
+          this.fileList.splice(this.fileList.length - 1, 1);
+          break;
+        default:
+          break;
       }
       this.defaultHandleFail(file);
     }
@@ -206,7 +205,7 @@ export default Vue.extend({
           return false;
         }
       },
-      file: (file) => {
+      file: file => {
         if (this.$attrs.max && this.fileList.length === this.$attrs.max) {
           this.$message.warning(`最多只能上传${this.$attrs.max}个文件`);
           return false;
@@ -215,20 +214,20 @@ export default Vue.extend({
         this.fileList.push({ name, status });
         return true;
       }
-    }
+    };
     // 上传前的最终检查
-    const beforeUploadFn = (file) => {
+    const beforeUploadFn = file => {
       const { type } = file.raw;
       if ((this.accept || this.mode === "img") && !acceptArr.includes(type)) {
         this.$message.error(`只能上传文件类型为【${this.mode === "img" ? imgAccept : this.accept}】的文件`);
         return false;
       }
-      if (file.size / 1024/ 1024 > this.fileSize) {
+      if (file.size / 1024 / 1024 > this.fileSize) {
         this.$message.error(`只能上传${this.fileSize}MB以下的文件`);
         return false;
       }
       return beforeUploadStrategy[this.mode](file);
-    }
+    };
     const icon = this.iconComp();
     let fileListEl = () => null;
     if (this.fileList.length > 0) {
@@ -252,15 +251,15 @@ export default Vue.extend({
                         <BrowseIcon onClick={() => this.handlePreviewFile(item, index)} />
                         <DownloadIcon onClick={() => this.handleDownLoad(item)} />
                         {
-                          !this.viewOnly ? <DeleteIcon 
+                          !this.viewOnly ? <DeleteIcon
                             class="delete"
-                            onClick={() => this.onFileListDelete(item)} 
+                            onClick={() => this.onFileListDelete(item)}
                           /> : null
                         }
                       </div>
                     </li>
-                  )
-                } 
+                  );
+                }
                 return (
                   <li class="uploading-file">
                     <div>
@@ -268,12 +267,12 @@ export default Vue.extend({
                       <a style="color: red">{`${item.name}【文件正在上传...】`}</a>
                     </div>
                   </li>
-                )
+                );
               })
             }
           </ul>
         </div>
-      )
+      );
     }
     // 文件上传组件
     const file = (
@@ -291,7 +290,7 @@ export default Vue.extend({
           on-fail={this.handleFail}
         />
       </div>
-    );  
+    );
     const data = {};
     // 图片上传组件
     const img = (
@@ -313,12 +312,12 @@ export default Vue.extend({
           before-upload={beforeUploadFn}
         />
       </div>
-    )
-    const UploadComponentMode = { file, img }
+    );
+    const UploadComponentMode = { file, img };
     return (
       <t-loading loading={this.loading}>
         {this.viewOnly ? fileListEl() : UploadComponentMode[this.mode]}
       </t-loading>
-    )
+    );
   }
-})
+});

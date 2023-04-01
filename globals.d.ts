@@ -3,11 +3,11 @@ declare type ClassName = { [className: string]: any } | ClassName[] | string;
 
 declare interface ImportMeta {
   env: {
-    MODE: 'mock' | 'development' | 'test' | 'release';
+    MODE: "mock" | "development" | "test" | "release";
   };
 }
 
-declare module '*.svg' {
+declare module "*.svg" {
   const content: string;
   export default content;
 }

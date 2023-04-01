@@ -106,7 +106,7 @@ export function themeExport(data) {
     method: "post",
     data,
     responseType: "blob"
-  }) 
+  });
 }
 
 // 消息日志导出
@@ -116,5 +116,5 @@ export function logExport(data) {
     method: "post",
     data,
     responseType: "blob"
-  }) 
+  });
 }

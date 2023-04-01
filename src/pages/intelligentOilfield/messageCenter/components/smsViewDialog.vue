@@ -56,7 +56,7 @@ export default {
     /** 数据回显 */
     bindModel(messageId) {
       if (messageId) {
-        getSmsData(messageId).then((data) => {
+        getSmsData(messageId).then(data => {
           this.form = data;
         });
       }

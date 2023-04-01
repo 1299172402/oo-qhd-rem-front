@@ -5,25 +5,43 @@
       :footer="false"
       :visible.sync="showSettingPanel"
       header="页面配置"
-      :closeBtn="true"
-      :onCloseBtnClick="handleCloseDrawer"
-      :onClose="setpageConfigs"
+      :close-btn="true"
+      :on-close-btn-click="handleCloseDrawer"
+      :on-close="setpageConfigs"
       class="setting-drawer-container"
     >
       <div class="setting-container">
-        <t-form :data="formData" size="large" ref="form" labelAlign="left" @reset="onReset" @submit="onSubmit">
-          <div class="setting-group-title">主题模式</div>
+        <t-form
+          ref="form"
+          :data="formData"
+          size="large"
+          label-align="left"
+          @reset="onReset"
+          @submit="onSubmit"
+        >
+          <div class="setting-group-title">
+            主题模式
+          </div>
           <t-radio-group v-model="formData.mode">
             <div v-for="(item, index) in MODE_OPTIONS" :key="index" class="setting-layout-drawer">
               <div>
-                <t-radio-button :key="index" :value="item.type"
-                  ><component :is="getModeIcon(item.type)"
-                /></t-radio-button>
-                <p :style="{ textAlign: 'center', marginTop: '8px' }">{{ item.text }}</p>
+                <t-radio-button
+                  :key="index"
+                  :value="item.type"
+                >
+                  <component
+                    :is="getModeIcon(item.type)"
+                  />
+                </t-radio-button>
+                <p :style="{ textAlign: 'center', marginTop: '8px' }">
+                  {{ item.text }}
+                </p>
               </div>
             </div>
           </t-radio-group>
-          <div class="setting-group-title">主题色</div>
+          <div class="setting-group-title">
+            主题色
+          </div>
           <t-radio-group v-model="formData.brandTheme">
             <div
               v-for="(item, index) in COLOR_OPTIONS.slice(0, COLOR_OPTIONS.length - 1)"
@@ -41,8 +59,8 @@
                 placement="bottom-right"
                 trigger="click"
                 :visible="isColoPickerDisplay"
+                :overlay-style="{ padding: 0 }"
                 @visible-change="onPopupVisibleChange"
-                :overlayStyle="{ padding: 0 }"
               >
                 <template #content>
                   <t-color-picker-panel
@@ -50,7 +68,8 @@
                     :color-modes="['monochrome']"
                     format="HEX"
                     :swatch-colors="[]"
-                /></template>
+                  />
+                </template>
                 <t-radio-button
                   :value="COLOR_OPTIONS[COLOR_OPTIONS.length - 1]"
                   class="setting-layout-color-group dynamic-color-btn"
@@ -60,11 +79,15 @@
               </t-popup>
             </div>
           </t-radio-group>
-          <div class="setting-group-title">导航布局</div>
+          <div class="setting-group-title">
+            导航布局
+          </div>
 
           <t-radio-group v-model="formData.layout">
             <div v-for="(item, index) in LAYOUT_OPTION" :key="index" class="setting-layout-drawer">
-              <t-radio-button :key="index" :value="item"><thumbnail :src="getThumbnailUrl(item)" /></t-radio-button>
+              <t-radio-button :key="index" :value="item">
+                <thumbnail :src="getThumbnailUrl(item)" />
+              </t-radio-button>
             </div>
           </t-radio-group>
           <!-- TODO: Maybe change back -->
@@ -79,121 +102,125 @@
             <t-switch v-model="formData.isSidebarFixed"></t-switch>
           </t-form-item> -->
 
-          <div class="setting-group-title">元素开关</div>
-          <t-form-item label="显示 Header" name="showHeader" v-show="formData.layout === 'side'">
-            <t-switch v-model="formData.showHeader"></t-switch>
+          <div class="setting-group-title">
+            元素开关
+          </div>
+          <t-form-item v-show="formData.layout === 'side'" label="显示 Header" name="showHeader">
+            <t-switch v-model="formData.showHeader" />
           </t-form-item>
           <!-- TODO: Maybe change back -->
           <!-- <t-form-item label="显示 Breadcrumbs" name="showBreadcrumb">
             <t-switch v-model="formData.showBreadcrumb"></t-switch>
           </t-form-item> -->
           <t-form-item label="显示 Footer" name="showFooter">
-            <t-switch v-model="formData.showFooter"></t-switch>
+            <t-switch v-model="formData.showFooter" />
           </t-form-item>
-          <t-form-item label="显示左侧菜单栏" name="isUseMenu" v-show="formData.layout == 'mix'">
-            <t-switch v-model="formData.isUseMenu" @change="isUsemenu"></t-switch>
+          <t-form-item v-show="formData.layout == 'mix'" label="显示左侧菜单栏" name="isUseMenu">
+            <t-switch v-model="formData.isUseMenu" @change="isUsemenu" />
           </t-form-item>
           <t-form-item label="使用 多标签Tab页" name="isUseTabsRouter">
-            <t-switch v-model="formData.isUseTabsRouter"></t-switch>
+            <t-switch v-model="formData.isUseTabsRouter" />
           </t-form-item>
           <t-form-item
+            v-show="formData.showFooter && !formData.isSidebarFixed"
             label="footer 内收"
             name="footerPosition"
-            v-show="formData.showFooter && !formData.isSidebarFixed"
           >
-            <t-switch v-model="formData.isFooterAside"></t-switch>
+            <t-switch v-model="formData.isFooterAside" />
           </t-form-item>
         </t-form>
         <div class="setting-info">
           <p>请复制后手动修改配置文件: /src/config/style.ts</p>
-          <t-button theme="primary" variant="text" @click="handleCopy"> 复制配置项 </t-button>
+          <t-button theme="primary" variant="text" @click="handleCopy">
+            复制配置项
+          </t-button>
         </div>
       </div>
     </t-drawer>
   </div>
 </template>
 <script lang="ts">
-import { mapGetters } from 'vuex';
-import { Color } from 'tvision-color';
-import { PopupVisibleChangeContext } from 'tdesign-vue';
+import { mapGetters } from "vuex";
+import { Color } from "tvision-color";
+import { PopupVisibleChangeContext } from "tdesign-vue";
 
-import STYLE_CONFIG from '@/config/style';
-import { insertThemeStylesheet, generateColorMap } from '@/config/color';
+import STYLE_CONFIG from "@/config/style";
+import { insertThemeStylesheet, generateColorMap } from "@/config/color";
 
-import Thumbnail from '@/components/intelligentOilfield/thumbnail/index.vue';
-import ColorContainer from '@/components/intelligentOilfield/color/index.vue';
+import Thumbnail from "@/components/intelligentOilfield/thumbnail/index.vue";
+import ColorContainer from "@/components/intelligentOilfield/color/index.vue";
 
-import SettingDarkIcon from '@/assets/assets-setting-dark.svg';
-import SettingLightIcon from '@/assets/assets-setting-light.svg';
-import SettingAutoIcon from '@/assets/assets-setting-auto.svg';
-import { setpageConfig } from '@/api/intelligentOilfield/system/user';
+import SettingDarkIcon from "@/assets/assets-setting-dark.svg";
+import SettingLightIcon from "@/assets/assets-setting-light.svg";
+import SettingAutoIcon from "@/assets/assets-setting-auto.svg";
+import { setpageConfig } from "@/api/intelligentOilfield/system/user";
 
 // const LAYOUT_OPTION = ['side', 'top', 'mix'];
-const LAYOUT_OPTION = ['top', 'mix'];
-const COLOR_OPTIONS = ['default', 'cyan', 'green', 'yellow', 'orange', 'red', 'pink', 'purple', 'dynamic'];
+const LAYOUT_OPTION = ["top", "mix"];
+const COLOR_OPTIONS = ["default", "cyan", "green", "yellow", "orange", "red", "pink", "purple", "dynamic"];
 const MODE_OPTIONS = [
-  { type: 'light', text: '明亮' },
-  { type: 'dark', text: '暗黑' },
+  { type: "light", text: "明亮" },
+  { type: "dark", text: "暗黑" }
   // { type: 'auto', text: '跟随系统' },
 ];
 
 export default {
-  name: 'DefaultLayoutSetting',
+  name: "DefaultLayoutSetting",
   components: { Thumbnail, ColorContainer },
   data() {
     return {
       colors: {
-        hex: null,
+        hex: null
       },
       MODE_OPTIONS,
       LAYOUT_OPTION,
       COLOR_OPTIONS,
       visible: false,
       formData: { ...STYLE_CONFIG },
-      isColoPickerDisplay: false,
+      isColoPickerDisplay: false
     };
   },
   computed: {
-    ...mapGetters('setting', ['showSettingBtn']),
+    ...mapGetters("setting", ["showSettingBtn"]),
     showSettingPanel: {
       get() {
         return this.$store.state.setting.showSettingPanel;
       },
       set(newVal) {
-        this.$store.commit('setting/toggleSettingPanel', newVal);
-      },
+        this.$store.commit("setting/toggleSettingPanel", newVal);
+      }
     },
     iconName() {
-      return this.visible ? 'close' : 'setting';
+      return this.visible ? "close" : "setting";
     },
     showOthers() {
       return (this.formData.showFooter && !this.formData.isSidebarFixed) || !this.formData.splitMenu;
-    },
+    }
   },
   watch: {
     formData: {
       handler(newVal) {
         // 没有在formData中 需要从store中同步过来
         const { isSidebarCompact } = this.$store.state.setting;
-        this.$store.dispatch('setting/changeTheme', { ...newVal, isSidebarCompact });
+        this.$store.dispatch("setting/changeTheme", { ...newVal, isSidebarCompact });
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
   mounted() {
-    document.querySelector('.dynamic-color-btn')?.addEventListener('click', () => {
+    document.querySelector(".dynamic-color-btn")?.addEventListener("click", () => {
       this.isColoPickerDisplay = true;
     });
   },
   methods: {
     onPopupVisibleChange(visible: boolean, context: PopupVisibleChangeContext) {
-      if (!visible && context.trigger === 'document') this.isColoPickerDisplay = visible;
+      if (!visible && context.trigger === "document") this.isColoPickerDisplay = visible;
     },
     onReset(): void {
       this.formData = {
-        ...STYLE_CONFIG,
+        ...STYLE_CONFIG
       };
-      this.$message.success('已恢复初始设置');
+      this.$message.success("已恢复初始设置");
     },
     onSubmit({ result, firstError, e }): void {
       e.preventDefault();
@@ -204,10 +231,10 @@ export default {
       }
     },
     getModeIcon(mode: string) {
-      if (mode === 'light') {
+      if (mode === "light") {
         return SettingLightIcon;
       }
-      if (mode === 'dark') {
+      if (mode === "dark") {
         return SettingDarkIcon;
       }
       return SettingAutoIcon;
@@ -216,13 +243,13 @@ export default {
       return new URL(`../assets/intelligentOilfield/${name}.png`, import.meta.url).href;
     },
     handleClick(): void {
-      this.$store.commit('setting/toggleSettingPanel', true);
+      this.$store.commit("setting/toggleSettingPanel", true);
     },
     handleCloseDrawer(): void {
-      this.$store.commit('setting/toggleSettingPanel', false);
+      this.$store.commit("setting/toggleSettingPanel", false);
     },
     setpageConfigs(): void {
-      let data = {
+      const data = {
         brandTheme: this.formData.brandTheme,
         isHeaderFixed: this.formData.isHeaderFixed,
         isSidebarFixed: this.formData.isSidebarFixed,
@@ -233,17 +260,15 @@ export default {
         showBreadcrumb: this.formData.showBreadcrumb,
         showFooter: this.formData.showFooter,
         splitMenu: this.formData.splitMenu,
-        userId: this.$store.getters['user/userDetail'].user.userId,
+        userId: this.$store.getters["user/userDetail"].user.userId
       };
-      setpageConfig(data).then(res => {
-        console.log(res)
-      })
+      setpageConfig(data).then(() => {});
     },
     handleCopy(): void {
       const text = JSON.stringify(this.formData, null, 4);
       this.$copyText(text).then(() => {
         this.$message.closeAll();
-        this.$message.success('复制成功');
+        this.$message.success("复制成功");
       });
     },
     changeColor(hex: string) {
@@ -252,32 +277,31 @@ export default {
       // hex 主题色
       const newPalette = Color.getPaletteByGradation({
         colors: [hex],
-        step: 10,
+        step: 10
       })[0];
       const { mode } = this.$store.state.setting;
       const colorMap = generateColorMap(hex, newPalette, mode);
 
-      this.$store.commit('setting/addColor', { [hex]: colorMap });
+      this.$store.commit("setting/addColor", { [hex]: colorMap });
 
       insertThemeStylesheet(hex, colorMap, mode);
 
-      this.$store.dispatch('setting/changeTheme', { ...setting, brandTheme: hex });
+      this.$store.dispatch("setting/changeTheme", { ...setting, brandTheme: hex });
     },
     isUsemenu() {
-      this.$store.commit('setting/toggleSidebarCompact');
-    },
-  },
+      this.$store.commit("setting/toggleSidebarCompact");
+    }
+  }
 };
 </script>
 <style lang="less">
-@import '@/style/variables.less';
+@import "@/style/variables.less";
 
 .tdesign-setting {
   z-index: 100;
   position: fixed;
   bottom: 200px;
   right: 0;
-  transition: transform 0.3s cubic-bezier(0.7, 0.3, 0.1, 1), visibility 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
   height: 40px;
   width: 40px;
   border-radius: 20px 0 0 20px;
@@ -323,9 +347,9 @@ export default {
 .setting-group-title {
   font-size: 14px;
   line-height: 22px;
-  margin: 32px 0 24px 0;
+  margin: 32px 0 24px;
   text-align: left;
-  font-family: PingFang SC;
+  font-family: "PingFang SC";
   font-style: normal;
   font-weight: 500;
   color: var(--td-text-color-primary);
@@ -398,12 +422,12 @@ export default {
     }
 
     .t-form__controls-content {
-      justify-content: end;
+      justify-content: flex-end;
     }
   }
 
   .t-form__controls-content {
-    justify-content: end;
+    justify-content: flex-end;
   }
 }
 

@@ -1,7 +1,14 @@
 
 <template>
   <div class="icon-body">
-    <el-input v-model="name" style="position: relative;" clearable placeholder="请输入图标名称" @clear="filterIcons" @input.native="filterIcons">
+    <el-input
+      v-model="name"
+      style="position: relative;"
+      clearable
+      placeholder="请输入图标名称"
+      @clear="filterIcons"
+      @input.native="filterIcons"
+    >
       <i slot="suffix" class="el-icon-search el-input__icon" />
     </el-input>
     <div class="icon-list">
@@ -13,43 +20,45 @@
   </div>
 </template>
 
-<script> 
-import icons from './requireIcons'
+<script>
+import icons from "./requireIcons";
 
 export default {
-  name: 'IconSelect',
+  name: "IconSelect",
   data() {
     return {
-      name: '',
+      name: "",
       iconList: icons
-    }
+    };
   },
   methods: {
     filterIcons() {
-      this.iconList = icons
+      this.iconList = icons;
       if (this.name) {
-        this.iconList = this.iconList.filter(item => item.includes(this.name))
+        this.iconList = this.iconList.filter(item => item.includes(this.name));
       }
     },
     selectedIcon(name) {
-      this.$emit('selected', name)
-      document.body.click()
+      this.$emit("selected", name);
+      document.body.click();
     },
     reset() {
-      this.name = ''
-      this.iconList = icons
+      this.name = "";
+      this.iconList = icons;
     }
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="less" scoped>
   .icon-body {
     width: 100%;
     padding: 10px;
+
     .icon-list {
       height: 200px;
       overflow-y: scroll;
+
       div {
         height: 30px;
         line-height: 30px;
@@ -58,10 +67,11 @@ export default {
         width: 33%;
         float: left;
       }
+
       span {
         display: inline-block;
         vertical-align: -0.15em;
-        fill: currentColor;
+        fill: currentcolor;
         overflow: hidden;
       }
     }

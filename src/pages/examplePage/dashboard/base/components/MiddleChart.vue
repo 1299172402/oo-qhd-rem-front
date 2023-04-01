@@ -17,7 +17,7 @@
           id="monitorContainer"
           ref="monitorContainer"
           :style="{ width: '100%', height: `${resizeTime * 326}px` }"
-        ></div>
+        />
       </t-card>
     </t-col>
     <t-col :xs="12" :xl="3">
@@ -26,60 +26,60 @@
           id="countContainer"
           ref="countContainer"
           :style="{ width: `${resizeTime * 326}px`, height: `${resizeTime * 326}px`, margin: '0 auto' }"
-        ></div>
+        />
       </t-card>
     </t-col>
   </t-row>
 </template>
 <script>
-import { TooltipComponent, LegendComponent, GridComponent } from 'echarts/components';
-import { PieChart, LineChart } from 'echarts/charts';
-import { CanvasRenderer } from 'echarts/renderers';
-import * as echarts from 'echarts/core';
-import { mapState } from 'vuex';
+import { TooltipComponent, LegendComponent, GridComponent } from "echarts/components";
+import { PieChart, LineChart } from "echarts/charts";
+import { CanvasRenderer } from "echarts/renderers";
+import * as echarts from "echarts/core";
+import { mapState } from "vuex";
 
-import { LAST_7_DAYS } from '@/utils/date';
+import { LAST_7_DAYS } from "@/utils/date";
 
-import { getPieChartDataSet, getLineChartDataSet } from '../index';
-import { changeChartsTheme } from '@/utils/color';
+import { getPieChartDataSet, getLineChartDataSet } from "../index";
+import { changeChartsTheme } from "@/utils/color";
 
 echarts.use([TooltipComponent, LegendComponent, PieChart, GridComponent, LineChart, CanvasRenderer]);
 
 export default {
-  name: 'MiddleChart',
+  name: "MiddleChart",
   data() {
     return {
       LAST_7_DAYS,
       resizeTime: 1,
-      currentMonth: this.getThisMonth(),
+      currentMonth: this.getThisMonth()
     };
   },
   computed: {
-    ...mapState('setting', ['brandTheme', 'mode']), // 这里需要用到主题色和主题模式的全局配置
+    ...mapState("setting", ["brandTheme", "mode"]) // 这里需要用到主题色和主题模式的全局配置
   },
   watch: {
     brandTheme() {
       changeChartsTheme([this.countChart, this.monitorChart]);
     },
     mode() {
-      [this.countChart, this.monitorChart].forEach((item) => {
+      [this.countChart, this.monitorChart].forEach(item => {
         item.dispose();
       });
       this.renderCharts();
-    },
+    }
   },
   mounted() {
     this.$nextTick(() => {
       this.updateContainer();
     });
 
-    window.addEventListener('resize', this.updateContainer, false);
+    window.addEventListener("resize", this.updateContainer, false);
     this.renderCharts();
   },
 
   methods: {
     /** 获取当前选中时间的短时间表达法 */
-    getThisMonth(checkedValues = '') {
+    getThisMonth(checkedValues = "") {
       let date;
       if (!checkedValues || checkedValues.length === 0) {
         date = new Date();
@@ -111,13 +111,13 @@ export default {
       this.countChart.resize({
         // 根据父容器的大小设置大小
         width: `${this.resizeTime * 326}px`,
-        height: `${this.resizeTime * 326}px`,
+        height: `${this.resizeTime * 326}px`
       });
 
       this.monitorChart.resize({
         // 根据父容器的大小设置大小
         width: this.monitorContainer.clientWidth,
-        height: `${this.resizeTime * 326}px`,
+        height: `${this.resizeTime * 326}px`
       });
     },
     renderCharts() {
@@ -125,21 +125,21 @@ export default {
 
       // 资金走势
       if (!this.monitorContainer) {
-        this.monitorContainer = document.getElementById('monitorContainer');
+        this.monitorContainer = document.getElementById("monitorContainer");
       }
       this.monitorChart = echarts.init(this.monitorContainer);
       this.monitorChart.setOption(getLineChartDataSet({ ...chartColors }));
 
       // 销售合同占比
       if (!this.countContainer) {
-        this.countContainer = document.getElementById('countContainer');
+        this.countContainer = document.getElementById("countContainer");
       }
       this.countChart = echarts.init(this.countContainer);
 
       const option = getPieChartDataSet(chartColors);
       this.countChart.setOption(option);
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>

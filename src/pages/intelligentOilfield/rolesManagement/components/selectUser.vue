@@ -1,7 +1,14 @@
 <template>
   <!-- 授权用户 -->
-  <el-dialog :close-on-click-modal="false" title="新增用户" :visible.sync="visible" width="1000px" top="5vh" append-to-body>
-    <el-form :model="queryParams" ref="queryForm" :inline="true">
+  <el-dialog
+    :close-on-click-modal="false"
+    title="新增用户"
+    :visible.sync="visible"
+    width="1000px"
+    top="5vh"
+    append-to-body
+  >
+    <el-form ref="queryForm" :model="queryParams" :inline="true">
       <el-form-item label="用户账号" prop="userName">
         <el-input
           v-model="queryParams.userName"
@@ -11,7 +18,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <!-- <el-form-item label="手机号码" prop="phonenumber"> 
+      <!-- <el-form-item label="手机号码" prop="phonenumber">
         <el-input
           v-model="queryParams.phonenumber"
           placeholder="请输入手机号码"
@@ -20,23 +27,38 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item> -->
-      <el-form-item label="所属机构" prop="deptId" > 
+      <el-form-item label="所属机构" prop="deptId">
         <treeselect
-        style="width: 300px"
-                v-model="queryParams.deptId"
-                :options="deptOptions"
-                :show-count="true"
-                placeholder="请选择所属机构"
-              />
+          v-model="queryParams.deptId"
+          style="width: 300px"
+          :options="deptOptions"
+          :show-count="true"
+          placeholder="请选择所属机构"
+        />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+        >
+          搜索
+        </el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">
+          重置
+        </el-button>
       </el-form-item>
     </el-form>
     <el-row>
-      <el-table @row-click="clickRow" ref="table" :data="userList" @selection-change="handleSelectionChange" height="260px">
-        <el-table-column type="selection" width="55"></el-table-column>
+      <el-table
+        ref="table"
+        :data="userList"
+        height="260px"
+        @row-click="clickRow"
+        @selection-change="handleSelectionChange"
+      >
+        <el-table-column type="selection" width="55" />
         <el-table-column label="用户账号" prop="userName" :show-overflow-tooltip="true" />
         <el-table-column label="用户名称" prop="nickName" :show-overflow-tooltip="true" />
         <el-table-column label="所属机构" prop="dept.deptName" :show-overflow-tooltip="true" />
@@ -45,10 +67,15 @@
         <el-table-column label="用户手机" prop="phonenumber" :show-overflow-tooltip="true" />
         <el-table-column label="状态" align="center" prop="status">
           <template slot-scope="scope">
-            <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status"/>
+            <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status" />
           </template>
         </el-table-column>
-        <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+        <el-table-column
+          label="创建时间"
+          align="center"
+          prop="createTime"
+          width="180"
+        >
           <template slot-scope="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>
@@ -63,20 +90,24 @@
       />
     </el-row>
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="handleSelectUser">确 定</el-button>
-      <el-button @click="cancelBtn">取 消</el-button>
+      <el-button type="primary" @click="handleSelectUser">
+        确 定
+      </el-button>
+      <el-button @click="cancelBtn">
+        取 消
+      </el-button>
     </div>
   </el-dialog>
 </template>
 
 <script>
 import { unallocatedUserList, authUserSelectAll } from "@/api/intelligentOilfield/system/role";
-import { treeselect } from '@/api/intelligentOilfield/system/dept';
-import Treeselect from '@riophae/vue-treeselect';
-import '@riophae/vue-treeselect/dist/vue-treeselect.css';
+import { treeselect } from "@/api/intelligentOilfield/system/dept";
+import Treeselect from "@riophae/vue-treeselect";
+import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
 export default {
-  dicts: ['sys_normal_disable'],
+  dicts: ["sys_normal_disable"],
   components: {
     Treeselect
   },
@@ -103,10 +134,10 @@ export default {
         roleId: undefined,
         userName: undefined,
         phonenumber: undefined,
-        deptId: undefined,
+        deptId: undefined
       },
       // 部门树选项
-      deptOptions: undefined,
+      deptOptions: undefined
     };
   },
   mounted() {
@@ -119,7 +150,7 @@ export default {
     },
     /** 查询部门下拉树结构 */
     getTreeselect() {
-      treeselect().then((response) => {
+      treeselect().then(response => {
         this.deptOptions = response.data.data;
       });
     },
@@ -153,11 +184,11 @@ export default {
       this.resetForm("queryForm");
       this.$nextTick(() => {
         this.handleQuery();
-      })
+      });
     },
     /** 选择授权用户操作 */
     handleSelectUser() {
-      const {roleId} = this.queryParams;
+      const { roleId } = this.queryParams;
       const userIds = this.userIds.join(",");
       if (userIds === "") {
         this.$modal.msgError("请选择要分配的用户");

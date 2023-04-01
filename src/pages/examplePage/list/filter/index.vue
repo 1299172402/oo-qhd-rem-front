@@ -4,12 +4,12 @@
   </t-card>
 </template>
 <script lang="ts">
-import CommonTable from '../components/CommonTable.vue';
+import CommonTable from "../components/CommonTable.vue";
 
 export default {
-  name: 'ListFilter',
+  name: "ListFilter",
   components: {
-    CommonTable,
-  },
+    CommonTable
+  }
 };
 </script>

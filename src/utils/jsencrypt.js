@@ -1,4 +1,4 @@
-import JSEncrypt from 'jsencrypt/bin/jsencrypt'
+import JSEncrypt from "jsencrypt/bin/jsencrypt";
 
 // 密钥对生成 http://web.chacuo.net/netrsakeypair
 
@@ -8,7 +8,7 @@ K1UZQp8+ivsVqmZS3uCSqVXxHq/Y8aKG3h2ds2b3ddViffpKqFJZOL9Q0zlzYofy
 uwqd5ZnH+ESPUzVYV9qfUF8f9DlLIW2LYrbnAFWGN+OQ3yovsvMxxSTV9V/Yrb6Z
 NtfqiNJkHCPCh01g6WaP1ko1WjUTdFGisa06UJnDHU9Kq/V8AoI3umt2jSnWneO3
 hzkWI1d87Cmyt90kgU+N8f6ld1GFOvxaNW+nuq/e/RJff18tO3V+04m9uzBVkJmT
-+wIDAQAB`
++wIDAQAB`;
 
 const privateKey = `MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC8apHZCoREmQVE
 IP/yL/2cOKhY6rjHIPMiBa1IlYyamw5AgLbSvF215U9rpSAkdmbeZq0eKtGSLGoU
@@ -35,24 +35,24 @@ fZ8/zzmcPA9Ny46gqZ2jwv3dY2+qA2+zLWHqPV785u1kWbT2NGcF+gvqoWjnLA3n
 Br3dYhPH/bUUmLCqsV7bCGnaTMUx++nGec4pFZA5AoGAH9+boczQhGp9Bjt5XoVr
 C6FqHwkjTY3jR4/7B77HDj/ShGHnptmwGcyiDRSuScUyvIPxs2OnbyPCV8l3SKx/
 RTL5qvDZvWmHROfRncHVjIxM/mXZZRtEGKcJcaU4azIzygC2c4szWXihY16RWsKH
-NYB7uG1uA4/+4+g++Qval54=`
+NYB7uG1uA4/+4+g++Qval54=`;
 
 // 加密
 export function encrypt(txt) {
-  const encryptor = new JSEncrypt()
-  encryptor.setPublicKey(publicKey) // 设置公钥
-  return encryptor.encrypt(txt) // 对数据进行加密
+  const encryptor = new JSEncrypt();
+  encryptor.setPublicKey(publicKey); // 设置公钥
+  return encryptor.encrypt(txt); // 对数据进行加密
 }
 // 加密(登录)
-export function encryptlogin(txt,publicKey) {
-  const encryptor = new JSEncrypt()
-  encryptor.setPublicKey(publicKey) // 设置公钥
-  return encryptor.encrypt(txt) // 对数据进行加密
+export function encryptlogin(txt, publicKey) {
+  const encryptor = new JSEncrypt();
+  encryptor.setPublicKey(publicKey); // 设置公钥
+  return encryptor.encrypt(txt); // 对数据进行加密
 }
 
 // 解密
 export function decrypt(txt) {
-  const encryptor = new JSEncrypt()
-  encryptor.setPrivateKey(privateKey) // 设置私钥
-  return encryptor.decrypt(txt) // 对数据进行解密
+  const encryptor = new JSEncrypt();
+  encryptor.setPrivateKey(privateKey); // 设置私钥
+  return encryptor.decrypt(txt); // 对数据进行解密
 }
