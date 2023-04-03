@@ -22,12 +22,7 @@
         </el-form-item>
         <el-form-item label="区块：">
           <el-select v-model="query.selectBlock" placeholder="请选择" class="f2" ref="elselect1">
-            <el-option
-              v-for="item in blanks"
-              :key="item.blockId"
-              :label="item.blockName"
-              :value="item.blockId"
-            ></el-option>
+            <el-option v-for="item in blanks" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="时间：">
@@ -75,7 +70,7 @@
             </el-table-column>
           </el-table>
         </el-col>
-        <el-col :span="14">
+        <el-col :span="11">
           <div>
             <el-table
               :data="tableData"
@@ -111,30 +106,30 @@
             </el-table>
           </div>
         </el-col>
-      </el-row>
-      <div style="width: 25%; display: none">
-        <el-col class="dataCount" style="padding: 20px">
+        <el-col :span="4" v-if="showcs">
           <div>
-            <span class="border"></span>
-            <span class="border"></span>
-            <span class="border"></span>
-            <span class="border"></span>
-          </div>
-          <div style="width: 100%">
-            <div style="font-size: 20px; margin: 20px auto">本月措施情况:</div>
-            <ul style="margin-left: 35px; text-align: left">
-              <li>C4井转注,请新增井组;</li>
-              <li>C4井关P3,请更改井组;</li>
-              <li>H1H侧钻,请更改井组;</li>
-              <li>H1H1调整井,请修改井组;</li>
-            </ul>
-            <div style="display: flex; justify-content: space-between">
-              <span></span>
-              <el-button type="primary" style="margin-top: 15px">确认</el-button>
+            <div>
+              <span class="border"></span>
+              <span class="border"></span>
+              <span class="border"></span>
+              <span class="border"></span>
+            </div>
+            <div style="width: 100%">
+              <div style="font-size: 20px; margin: 20px auto">本月措施情况:</div>
+              <ul style="margin-left: 35px; text-align: left">
+                <li><i class="el-icon-caret-right"></i>C4井转注,请新增井组;</li>
+                <li><i class="el-icon-caret-right"></i>C4井关P3,请更改井组;</li>
+                <li><i class="el-icon-caret-right"></i>H1H侧钻,请更改井组;</li>
+                <li><i class="el-icon-caret-right"></i>H1H1调整井,请修改井组;</li>
+              </ul>
+              <div style="display: flex; justify-content: space-between">
+                <span></span>
+                <el-button type="primary" style="margin-top: 15px" @click="showcs = false">确认</el-button>
+              </div>
             </div>
           </div>
         </el-col>
-      </div>
+      </el-row>
     </pagePanel>
     <!-- </NormalCard> -->
     <!-- </el-main> -->
@@ -211,9 +206,15 @@
 //   delectByWellGroupId,
 //   saveAllWellGroup,
 // } from '@/api/ipm-04/r-wellConnectEvaluate.js';
-import { wellGroupParamConfiguration,wellGroupParamConfigurationList, wellGroupList,delectByWellGroupId } from '@/api/rem/wellgroupinformaintenance';
+import {
+  wellGroupParamConfiguration,
+  wellGroupParamConfigurationList,
+  wellGroupList,
+  delectByWellGroupId,
+} from '@/api/rem/wellgroupinformaintenance';
 import { getOilFieldList, queryProductList, queryLayerList } from '@/api/rem/workcompanydesignate';
-import { fetchFields, fetchInjectionWells,fetchProductionWells } from '@/api/rem/primaryinfo';
+import {fetchInjectionWells, fetchProductionWells } from '@/api/rem/primaryinfo';
+import { fetchFields } from '@/api/rem/primaryinfoqhdrem';
 export default {
   components: {},
   data() {
@@ -221,10 +222,11 @@ export default {
       options: [],
       transferData: [],
       cwOptions: [],
+      showcs: true,
       query: {
         selectField: '3FC9A818F5BC43B88270DB80BBB3018F',
         value2: this.getDate(),
-        selectBlock: '6CD7342CA6DD418183A4B3BC38584F7C',
+        selectBlock: '',
         orgId: '715AD1CD60484BB59E737CD18A9DE44A',
       },
       deptSelect: [
@@ -238,7 +240,7 @@ export default {
         waterBlock: '',
         layerBlock: '',
         ogfBlock: '',
-        yjjh:'',
+        yjjh: '',
       },
       blanks: [],
       waterList: [],
@@ -467,30 +469,36 @@ export default {
         console.log(this.tableData);
       });
 
-      fetchInjectionWells({oilFieldId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then((res)=>{
-        this.waterList = res.data.data.injectionWell
-      })
-      fetchProductionWells({oilFieldId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then((res)=>{
-        let wellGroup = res.data.data.productionWells
-        let data = []
+      fetchInjectionWells({ oilFieldId: '3FC9A818F5BC43B88270DB80BBB3018F' }).then((res) => {
+        this.waterList = res.data.data.injectionWell;
+      });
+      fetchProductionWells({ oilFieldId: '3FC9A818F5BC43B88270DB80BBB3018F' }).then((res) => {
+        let wellGroup = res.data.data.productionWells;
+        let data = [];
         wellGroup.forEach((item) => {
-            data.push({
-              label: item.wellName,
-              key: item.wellId,
-            });
+          data.push({
+            label: item.wellName,
+            key: item.wellId,
           });
-        this.transferData = data
-      })
-    },
-    // 获取区块数据
-    selectblock() {
-      if (!this.query.selectField) return;
+        });
+        this.transferData = data;
+      });
       fetchFields({
-        ogfId: this.query.selectField,
-      }).then(({ blockList }) => {
-        this.blanks = blockList;
+        oilFieldId: this.query.selectField,
+      }).then((res) => {
+        console.log(res)
+          this.blanks = res.data.data.fields
       });
     },
+    // 获取区块数据
+    // selectblock() {
+    //   if (!this.query.selectField) return;
+    //   primaryInfoQhdRem({
+    //     oilFieldId: this.query.selectField,
+    //   }).then(({ blockList }) => {
+    //     this.blanks = blockList;
+    //   });
+    // },
     // // 油田下拉点击事件
     changeOilfield() {
       this.selectblock();
@@ -498,8 +506,10 @@ export default {
     // 获取油田列表数据
     tableOilfield() {
       let data = {
-        blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
-        dataTime: '2022-11-22',
+        blockId: this.query.selectBlock,
+        dataTime: this.query.value2,
+        ogfId: this.query.selectField,
+        apifoxApild: '48248204',
       };
       wellGroupParamConfigurationList(data).then((res) => {
         if (res.data.data && res.data.data.length > 0) {

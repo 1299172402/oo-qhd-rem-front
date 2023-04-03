@@ -42,8 +42,10 @@
       <productionData></productionData>
     </el-row>
      <el-row :gutter="20">
-     <pressureTest>
-     </pressureTest>
+     <pressureTest></pressureTest>
+    </el-row>
+       <el-row :gutter="20">
+     <loggingInterpretationResult></loggingInterpretationResult>
     </el-row>
   </div>
 </template>

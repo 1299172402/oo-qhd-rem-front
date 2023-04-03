@@ -1,5 +1,6 @@
 <!--压力测试-->
 <template>
+<div class="app-container">
   <pagePanel headerTitle="压力数据">
     <el-table
         id="tableData"
@@ -101,6 +102,7 @@
       <el-table-column prop="remark" min-width="200" label="备注" align="center"></el-table-column>
     </el-table>
   </pagePanel>
+</div>
 </template>
 
 <script>
@@ -186,7 +188,7 @@ export default {
 ::v-deep .el-table .cell:empty::before {
   content: '-';
 }
-::v-deep .el-table__body-wrapper {
-  width:500px
+::v-deep .el-table__empty-block {
+  height:500px
 }
 </style>
