@@ -83,10 +83,6 @@
             height: auto;
             line-height: 18px;
         }
-        ::v-deep .cell{
-            // height: auto;
-            // line-height: 18px;
-        }
         ::v-deep .cell:empty{
             &::before {
                 content: '-';

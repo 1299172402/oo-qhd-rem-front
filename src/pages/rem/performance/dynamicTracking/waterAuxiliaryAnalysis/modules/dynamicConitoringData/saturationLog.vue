@@ -2,7 +2,6 @@
 <template>
   <el-container>
     <el-main>
-      <NormalCard class="gradientBoxLeft">
         <el-row style="padding-top:20px ">
           <el-col :span="5">
           <!--  <el-image :src="src"></el-image>-->
@@ -85,7 +84,7 @@
             </el-table>
           </el-col>
         </el-row>
-      </NormalCard>
+ 
     </el-main>
   </el-container>
 </template>
@@ -97,13 +96,9 @@
 }
 </style>
 <script>
-import NormalCard from '@/components/tools/NormalCard';
-import {saturationLoggingInterpretation} from "@/api/rem-01/dynamicAnalysis";
+import {saturationLoggingInterpretation} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 
 export default {
-  components: {
-    NormalCard,
-  },
   props: {
     //选择油田
     oilFeildId: {},

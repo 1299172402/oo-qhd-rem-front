@@ -26,59 +26,52 @@
       <el-table-column prop="remark" label="备注"></el-table-column>
     </el-table>
 </template>
+
 <script>
-import {deviationData,} from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
-import {exportExcel} from "@/lib/exportExcel.js";
-export default {
-  props: {
-    //选择油田
-    oilFeildId: {},
-    //选择平台
-    platform: {},
-    //选择井号
-    wellId: {}
-  },
-  data() {
-    return {
-      tableData: [],
-    }
-  },
-  mounted() {
-    //初始化调用搜索
-    this.doSearch();
-  },
-  methods: {
-    //根据父组件传递过来的参数进行查询
-    doSearch() {
-      let request = {
-        ogfId: this.oilFeildId,
-        platformId: this.platform,
-        wellId: this.wellId,
-      };
-      deviationData(request).then((res) => {
-        if (res.data.code == 200) {
-          this.tableData = res.data.data.wellDeviation;
+    import {deviationData,} from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
+    import {exportExcel} from "@/lib/exportExcel.js";
+    export default {
+      props: {
+        //选择油田
+        oilFeildId: {},
+        //选择平台
+        platform: {},
+        //选择井号
+        wellId: {}
+      },
+      data() {
+        return {
+          tableData: [],
         }
-      })
-    },
-    //下载
-    doDownLoad(){
-      let fileName = '井斜数据';
-      if(this.wellName){
-        fileName = this.wellName + fileName;
-      }
-      exportExcel('#tableData',fileName);
-    },
-    //el table 表格头 标题单位样式
-    renderHeader (h, {column}) {
-      let header = column.label.split(' ');
-      return [h('p', [
-        h('p', {}, header[0]),
-        h('span', {}, header[1])
-      ])];
+      },
+      mounted() {
+        //初始化调用搜索
+        this.doSearch();
+      },
+      methods: {
+        //根据父组件传递过来的参数进行查询
+        doSearch() {
+          let request = {
+            ogfId: this.oilFeildId,
+            platformId: this.platform,
+            wellId: this.wellId,
+          };
+          deviationData(request).then((res) => {
+            if (res.data.code == 200) {
+              this.tableData = res.data.data.wellDeviation;
+            }
+          })
+        },
+        //下载
+        doDownLoad(){
+          let fileName = '井斜数据';
+          if(this.wellName){
+            fileName = this.wellName + fileName;
+          }
+          exportExcel('#tableData',fileName);
+        },
+      },
     }
-  },
-}
 </script>
 
 <style scoped lang="scss">
@@ -86,10 +79,6 @@ export default {
         ::v-deep .el-table__header-wrapper .cell{
             height: auto;
             line-height: 18px;
-        }
-        ::v-deep .cell{
-            // height: auto;
-            // line-height: 18px;
         }
         ::v-deep .cell:empty{
             &::before {

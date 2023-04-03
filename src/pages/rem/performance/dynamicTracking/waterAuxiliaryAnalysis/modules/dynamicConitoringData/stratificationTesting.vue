@@ -1,6 +1,5 @@
 <!--压力测试-->
 <template>
-  <NormalCard class="mt-2">
     <el-row>
       <span class="tableTitle"> 分层调配数据</span>
       <el-table
@@ -173,7 +172,6 @@
         </el-table-column>
       </el-table>
     </el-row>
-  </NormalCard>
 </template>
 <style lang="scss" scoped>
 .tableTitle {
@@ -183,14 +181,10 @@
 }
 </style>
 <script>
-import NormalCard from '@/components/tools/NormalCard';
-import {divLayerTestData} from "@/api/rem-01/dynamicAnalysis";
-import {exportExcel} from "@/lib/exportExcel";
+import {divLayerTestData} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
+import {exportExcel} from "@/lib/exportExcel.js";
 
 export default {
-  components: {
-    NormalCard,
-  },
   props: {
     //选择油田
     oilFeildId: {},

@@ -2,7 +2,6 @@
 <template>
   <el-container class="mt-2">
     <el-main>
-      <NormalCard>
         <el-row>
           <!--<el-image style="height: 600px" :src="src"></el-image>-->
           <!-- <el-image style="height: 600px" :src="Image"></el-image>-->
@@ -10,7 +9,6 @@
 
           </iframe>
         </el-row>
-      </NormalCard>
     </el-main>
   </el-container>
 </template>
@@ -18,14 +16,10 @@
 
 </style>
 <script>
-import NormalCard from '@/components/tools/NormalCard';
-import {testWellReport} from "@/api/rem-01/dynamicAnalysis";
-import {downFile} from "@/lib/remBase64Download";
+import {testWellReport} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
+import {downFile} from "@/lib/remBase64Download.js";
 
 export default {
-  components: {
-    NormalCard,
-  },
   props: {
     //选择油田
     oilFeildId: {},

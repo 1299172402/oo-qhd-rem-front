@@ -1,6 +1,5 @@
 <!--产液剖面-->
 <template>
-      <NormalCard class="mt-2">
         <el-row style="height: 600px;" :gutter="10">
           <el-col :span="12" style="overflow: auto;">
             <!--<el-image :src="src"></el-image>-->
@@ -32,7 +31,6 @@
             </el-table>
           </el-col>
         </el-row>
-      </NormalCard>
 </template>
 <style lang="scss" scoped>
 .tableTitle {
@@ -42,15 +40,11 @@
 }
 </style>
 <script>
-import NormalCard from '@/components/tools/NormalCard';
-import {outProfileLoggingInterpretation} from "@/api/rem-01/dynamicAnalysis";
-import {downFile} from "@/lib/remBase64Download";
-import {exportExcel} from "@/lib/exportExcel";
+import {outProfileLoggingInterpretation} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
+import {downFile} from "@/lib/remBase64Download.js";
+import {exportExcel} from "@/lib/exportExcel.js";
 import config from "@/config";
 export default {
-  components: {
-    NormalCard,
-  },
   props: {
     //选择油田
     oilFeildId: {},
