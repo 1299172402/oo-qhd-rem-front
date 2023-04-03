@@ -76,19 +76,19 @@
                             left: "14%",
                             top: "6%",
                             width: "74%",
-                            height: "24%"
+                            height: "26%"
                         },
                         {
                             left: "14%",
-                            top: "38%",
+                            top: "37%",
                             width: "74%",
-                            height: "24%"
+                            height: "26%"
                         },
                         {
                             left: "14%",
-                            top: "66%",
+                            top: "68%",
                             width: "74%",
-                            height: "24%"
+                            height: "28%"
                         },
                     ],
                     xAxis: [
@@ -720,15 +720,13 @@
 <style lang="scss" scoped>
     .z-main{
         width: 100%;
-        height:calc(100% - 86px);
-        padding-top:20px;
+        height:calc(100% - 101px);
         display:flex;
         flex-direction: column;
         .z-search{
             height:60px;
         }
         .z-echarts{
-            // background:#000;
             width: 100%;
             flex:1;
         }

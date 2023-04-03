@@ -1,14 +1,20 @@
-<!--完井管柱图-->
+<!--固井质量测井图-->
 <template>
-    <div class="image-content">
-        <el-image :src="image">
-            <div slot="error"></div>
-        </el-image>
-    </div>
+    <el-container class="mt-2">
+        <el-main>
+            <el-row style="padding-top: 20px;height:600px;overflow: auto;">
+                <el-image :src="image">
+                    <div slot="error">
+                        <!-- <el-image :src="baseUrl + 'static/img/remImageError.jpg'"></el-image> -->
+                    </div>
+                </el-image>
+            </el-row>
+        </el-main>
+    </el-container>
 </template>
 
 <script>
-    import { wellCompletionDiagram } from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
+    import { cementingQuality } from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
     import { downFile } from '@/lib/remBase64Download.js';
     export default {
         props: {
@@ -21,7 +27,7 @@
         },
         data() {
             return {
-                image: ''
+                image: '',
             };
         },
         mounted() {
@@ -35,8 +41,8 @@
                     platformId: this.platform,
                     wellId: this.wellId
                 };
-                wellCompletionDiagram(request).then((res) => {
-                    if (res.data.code == 200) {
+                cementingQuality(request).then((res) => {
+                    if (res.data.code == 0) {
                         let imgData = res.data.data.data;
                         let type = res.data.data.type;
                         let firstParty = 'data:' + type + ';base64,';
@@ -50,7 +56,7 @@
             },
             //下载
             doDownLoad() {
-                let fileName = '完井管柱图';
+                let fileName = '固井质量测井图';
                 if (this.wellName) {
                     fileName = this.wellName + fileName;
                 }
@@ -59,11 +65,3 @@
         }
     };
 </script>
-
-<style lang="scss" scoped>
-    .image-content{
-        width:100%;
-        height:calc(100% - 101px);
-        overflow-y: scroll;
-    }
-</style>

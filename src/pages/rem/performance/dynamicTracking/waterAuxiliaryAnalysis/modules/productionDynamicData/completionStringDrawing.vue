@@ -1,12 +1,13 @@
 <!--完井管柱图-->
 <template>
-    <div class="image-content">
-        <el-image :src="image">
-            <div slot="error"></div>
-        </el-image>
-    </div>
+    <el-container class="mt-2">
+        <el-main>
+            <el-row style="padding-top: 20px;height:600px;overflow: auto;">
+                <el-image :src="image"><div slot="error"></div></el-image>
+            </el-row>
+        </el-main>
+    </el-container>
 </template>
-
 <script>
     import { wellCompletionDiagram } from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
     import { downFile } from '@/lib/remBase64Download.js';
@@ -21,22 +22,26 @@
         },
         data() {
             return {
+                src: '../../static/img/oilAuxiliaryAnalysis/productionDynamicData/completionStringDrawing.jpg',
+                //图片数据
                 image: ''
             };
         },
         mounted() {
+            //初始化调用搜索
             this.doSearch();
         },
         methods: {
             //调用图片
             doSearch() {
+                //let wellId = this.wellId;
                 let request = {
                     ogfId: this.oilFeildId,
                     platformId: this.platform,
                     wellId: this.wellId
                 };
                 wellCompletionDiagram(request).then((res) => {
-                    if (res.data.code == 200) {
+                    if (res.data.code == 0) {
                         let imgData = res.data.data.data;
                         let type = res.data.data.type;
                         let firstParty = 'data:' + type + ';base64,';
@@ -59,11 +64,3 @@
         }
     };
 </script>
-
-<style lang="scss" scoped>
-    .image-content{
-        width:100%;
-        height:calc(100% - 101px);
-        overflow-y: scroll;
-    }
-</style>

@@ -1,14 +1,16 @@
-<!--完井管柱图-->
+<!--地震剖面图-->
 <template>
-    <div class="image-content">
-        <el-image :src="image">
-            <div slot="error"></div>
-        </el-image>
-    </div>
+    <el-container class="mt-2">
+        <el-main>
+            <el-row style="padding-top: 20px;height:600px;overflow: auto;">
+                <el-image :src="image"><div slot="error"></div></el-image>
+            </el-row>
+        </el-main>
+    </el-container>
 </template>
 
 <script>
-    import { wellCompletionDiagram } from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
+    import { seismicPlot } from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
     import { downFile } from '@/lib/remBase64Download.js';
     export default {
         props: {
@@ -21,6 +23,9 @@
         },
         data() {
             return {
+                radio: 3,
+                src: '../../static/img/oilAuxiliaryAnalysis/staticData/seismicProfile.jpg',
+                //图片数据
                 image: ''
             };
         },
@@ -30,13 +35,14 @@
         methods: {
             //调用图片
             doSearch() {
+                //let wellId = this.wellId;
                 let request = {
                     ogfId: this.oilFeildId,
                     platformId: this.platform,
                     wellId: this.wellId
                 };
-                wellCompletionDiagram(request).then((res) => {
-                    if (res.data.code == 200) {
+                seismicPlot(request).then((res) => {
+                    if (res.data.code == 0) {
                         let imgData = res.data.data.data;
                         let type = res.data.data.type;
                         let firstParty = 'data:' + type + ';base64,';
@@ -50,7 +56,7 @@
             },
             //下载
             doDownLoad() {
-                let fileName = '完井管柱图';
+                let fileName = '固井质量测井图';
                 if (this.wellName) {
                     fileName = this.wellName + fileName;
                 }
@@ -59,11 +65,3 @@
         }
     };
 </script>
-
-<style lang="scss" scoped>
-    .image-content{
-        width:100%;
-        height:calc(100% - 101px);
-        overflow-y: scroll;
-    }
-</style>
