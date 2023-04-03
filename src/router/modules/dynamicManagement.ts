@@ -21,6 +21,13 @@ export default [
                         component: () => import('@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/index.vue'),
                         meta: { title: '油井辅助分析', icon: 'icon' },
                     },
+                    {
+                        hidden: false,
+                        path: 'oilReport',
+                        name: 'oilReport',
+                        component: () => import('@/pages/rem/performance/dynamicTracking/oilReport/index.vue'),
+                        meta: { title: '油井分析报告', icon: 'icon' },
+                    },
                 ],
             },
             {
