@@ -1,9 +1,10 @@
 <!-- 生产段状态 -->
 <template>
     <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header"
-        :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%; padding: 20px 0"
-        height="calc(100% - 86px)" :default-sort="{ prop: 'date', order: 'descending' }"
+        :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;"
+        height="calc(100% - 101px)" :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+        <el-table-column type="index" label="序号"></el-table-column> 
         <el-table-column prop="wellNo" label="井号"></el-table-column>
         <el-table-column prop="productionIntervalNo" label="生产段"></el-table-column>
         <el-table-column prop="openOrClose" label="变更状态"></el-table-column>
@@ -56,3 +57,17 @@
         }
     }
 </script>
+
+<style scoped lang="scss">
+    #tableData{
+        // ::v-deep .el-table__header-wrapper .cell{
+        //     height: auto;
+        //     line-height: 18px;
+        // }
+        ::v-deep .cell:empty{
+            &::before {
+                content: '-';
+            } 
+        }
+    } 
+</style>

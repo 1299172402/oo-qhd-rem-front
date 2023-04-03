@@ -44,7 +44,7 @@
                     </div>
                 </el-tab-pane>
             </el-tabs>
-            <keep-alive :include="[]" :max="10" v-if="selectWellId">
+            <keep-alive :include="[]" :max="10">
                 <component :is="component" ref="componentCustom" :oil-feild-id="selectOilField" :platform="selectPlatform" :well-id="selectWellId" :majorEventsBrieflyValue="majorEventsBrieflyValue" @childPara="changeChildParam"></component>
             </keep-alive>
             <el-dialog custom-class="border" title="连井剖面图上传" :visible.sync="ljpmDialog" width="50%"
@@ -116,7 +116,7 @@
                 component: null,
                 activeName: 'staticData',
                 // currentModule: 'smallLayerStructureDiagram',
-                currentModule:'perforationData',
+                currentModule:'loggingInterpretationResult',
                 queryParams: {
                     ogfId: '',
                     platId: '',
@@ -143,9 +143,9 @@
                             //     name: 'theSedimentaryFaciesMap',
                             // },
                             /* {
-                                label: "测井曲线",
-                                name: "wellLoggingCurve",
-                              },*/
+                                 label: "测井曲线",
+                                 name: "wellLoggingCurve",
+                            },*/
                             /*{
                                 label: "固井质量测井图",
                                 name: "cementingQualityLog",
@@ -158,22 +158,22 @@
                             //     label: '地质探边图',
                             //     name: 'whileDrillingTrajectory',
                             // },
+                            {
+                                label: '测井解释成果',
+                                name: 'loggingInterpretationResult',
+                            },
                             // {
-                            //     label: '测井解释成果',
-                            //     name: 'loggingInterpretationResult',
+                            //     label: "小层数据",
+                            //     name: "smallLayerData",
                             // },
-                            /*{
-                                label: "小层数据",
-                                name: "smallLayerData",
-                              },*/
                             {
                                 label: '射孔数据',
                                 name: 'perforationData',
                             },
-                            // {
-                            //     label: '井斜数据',
-                            //     name: 'driftData',
-                            // },
+                            {
+                                label: '井斜数据',
+                                name: 'driftData',
+                            },
                         ],
                     },
                     {
@@ -196,10 +196,10 @@
                                 label: '作业井史',
                                 name: 'homeworkWellHistory',
                             },
-                            // {
-                            //     label: '单井基本信息表',
-                            //     name: 'individualWellBasicInformationSheet',
-                            // },
+                            {
+                                label: '单井基本信息表',
+                                name: 'individualWellBasicInformationSheet',
+                            },
                             {
                                 label: '生产段状态',
                                 name: 'productionSectionStatus'
@@ -222,14 +222,14 @@
                                 label: '饱和度测井',
                                 name: 'saturationLog',
                             },
-                            // {
-                            //     label: '化验数据',
-                            //     name: 'testData',
-                            // },
-                            // {
-                            //     label: '试井报告',
-                            //     name: 'wellTestReport',
-                            // }
+                            {
+                                label: '化验数据',
+                                name: 'testData',
+                            },
+                            {
+                                label: '试井报告',
+                                name: 'wellTestReport',
+                            }
                         ],
                     },
                 ],
@@ -307,7 +307,7 @@
                 //上传数据
                 canUpload: true,
                 //连井剖面是否选中
-                ljpmTag: false,
+                ljpmTag: true,//一期默认false，二期没定权限怎么做，先打开为true
                 //连井剖面弹窗
                 ljpmDialog: false,
                 //连井上传图片表单
@@ -446,7 +446,6 @@
         mounted() {
             //初始化
             this.initData();
-            this.getMajorEventsBriefly();
             //获取权限问题内容
             // this.getPageAuthMessage();
         },
@@ -472,7 +471,7 @@
             beforeRemove(file, fileList) {
                 return this.$confirm(`确定移除 ${file.name}？`);
             },
-            //hwh 初始化 数据
+            //初始化数据
             async initData() {
                 let oilFeildId = this.$route.params.oilField;
                 console.log(this.$route.params);
@@ -577,10 +576,12 @@
                     }
                 });
             },
-            //大事简要数据源接口@param majorEventsBriefly
+            //大事简要数据源接口
             getMajorEventsBriefly() {
                 getMajorEventsBriefly({
-                    majorEventsBriefly: this.majorEventsBrieflyValue,
+                    ogfId: this.selectOilField,
+                    platformId: this.selectPlatform,
+                    wellId: this.selectWellId,
                 }).then((res) => {
                     if(res.data.code==200){
                        this.majorEventsBrieflyList=res.data.data;
@@ -705,18 +706,17 @@
                 }
                 return new Blob([u8arr], { type: mime });
               },*/
-            /**
-             * hwh
-             * 检索功能
-             */
+            //检索功能
             doSearch() {
-                this.$refs.componentCustom.wellId = this.selectWellId;
                 this.$refs.componentCustom.oilFeildId = this.selectOilField;
                 this.$refs.componentCustom.platform = this.selectPlatform;
+                this.$refs.componentCustom.wellId = this.selectWellId;
                 if (this.childParam) {
                     this.$refs.componentCustom.selectPosition = this.childParam;
                 }
-                //调用子组件的事件
+                this.majorEventsBrieflyValue='';
+                this.getMajorEventsBriefly();
+                
                 this.$refs.componentCustom.doSearch(this.majorEventsBrieflyValue);
             },
             //上传成功后操作

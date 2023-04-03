@@ -141,7 +141,7 @@
         height:calc(100% - 86px);
         display:flex;
         flex-direction: column;
-        padding-bottom:150px;
+        padding-bottom:15px;
         .z-search{
             height:60px;
             display: flex;

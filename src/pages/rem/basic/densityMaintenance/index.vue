@@ -291,30 +291,10 @@ export default {
           this.producttype = res.data.data;
         }
       });
+      
     },
     getInfo() {
-      queryDensityInfo(this.queryParams).then((res) => {
-        if (res.data.code == 200) {
-          this.noticeList = [res.data.data];
-          //  this.noticeList.map((n)=>{
-          //   n.state = '0'
-          //  })
-          if (res.data.data) {
-            let a = '';
-            this.oilFields.map((n) => {
-              if (n.oilFieldId == this.queryParams.ogfId) {
-                a = n.oilFieldName;
-                this.noticeList[0].oilFieldName = a;
-              } else {
-                return;
-              }
-            });
-            this.noticeList[0].ogfId = this.queryParams.ogfId;
-          }
-        } else {
-          this.$message.warning('系统错误请重新尝试或联系运维人员！');
-        }
-      });
+
     },
     // 编辑
     /**

@@ -2,7 +2,7 @@ import Layout from '@/layouts/index.vue';
 
 export default [
     {
-        hidden: true,
+        hidden: false,
         path: '/dynamicManagement',
         name: 'dynamicManagement',
         component: Layout,
@@ -20,6 +20,21 @@ export default [
                         name: 'oilAuxiliaryAnalysis',
                         component: () => import('@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/index.vue'),
                         meta: { title: '油井辅助分析', icon: 'icon' },
+                    },
+                ],
+            },
+            {
+                path: 'dynamicTrackingWaterAuxiliary',
+                name: 'dynamicTrackingWaterAuxiliary',
+                meta: { title: '水井动态分析' },
+                component: () => import('@/layouts/blank.vue'),
+                children: [
+                    {
+                        hidden: false,
+                        path: 'waterAuxiliaryAnalysis',
+                        name: 'waterAuxiliaryAnalysis',
+                        component: () => import('@/pages/rem/performance/dynamicTracking/waterAuxiliaryAnalysis/index.vue'),
+                        meta: { title: '水井辅助分析', icon: 'icon' },
                     },
                 ],
             },

@@ -1,5 +1,6 @@
 <!-- 生产数据 -->
 <template>
+ <pagePanel headerTitle="单井基本信息">
     <div class="z-main">
         <div class="z-search">
             <span>日期：</span>
@@ -13,6 +14,7 @@
             <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
         </div>   
     </div>
+ </pagePanel>
 </template>
 
 <script>
@@ -76,19 +78,19 @@
                             left: "14%",
                             top: "6%",
                             width: "74%",
-                            height: "26%"
+                            height: "24%"
                         },
                         {
                             left: "14%",
-                            top: "37%",
+                            top: "38%",
                             width: "74%",
-                            height: "26%"
+                            height: "24%"
                         },
                         {
                             left: "14%",
-                            top: "68%",
+                            top: "66%",
                             width: "74%",
-                            height: "28%"
+                            height: "24%"
                         },
                     ],
                     xAxis: [
@@ -720,13 +722,15 @@
 <style lang="scss" scoped>
     .z-main{
         width: 100%;
-        height:calc(100% - 101px);
+        height:500px;
+        padding-top:20px;
         display:flex;
         flex-direction: column;
         .z-search{
             height:60px;
         }
         .z-echarts{
+            // background:#000;
             width: 100%;
             flex:1;
         }
