@@ -22,7 +22,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="平台" prop="pt">
-              <el-select v-model="queryData.pt">
+              <el-select v-model="queryData.pt" @change="onPlatfromChange">
                 <el-option v-for="item in platforms" :key="item.id" :label="item.platName" :value="item.platFormId">
                 </el-option>
               </el-select>
@@ -242,6 +242,59 @@ export default {
       //   }
       // });
     },
+    //平台下拉-change
+    onPlatfromChange(val) {
+        console.log(this.queryData.ogfId);
+        console.log(val);
+        this.getFetchWells(this.queryData.ogfId, val);
+    },
+    //通过油田 或 平台 获得井
+    getFetchWells(oilFieldId, platformId) {
+      this.wells = [];
+      if (oilFieldId == platformId) {
+          const request = {oilFieldId};
+          fetchProductionWells(request).then((res) => {
+              if (res.data.code == 200) {
+                  let wellData=res.data.data.productionWells||[];
+                  if(wellData.length){
+                      const wellList = wellData.filter(el=>el.wellName);
+                      this.wells = this.wells.concat(wellList);
+                  }
+              }
+              fetchInjectionWells(request).then((res) => {
+                  if (res.data.code == 200) {
+                      const waterWellList = res.data.data.injectionWell || [];
+                      this.wells = this.wells.concat(waterWellList);
+                  }
+              });
+          });
+      } else {
+          const request = {platformId};
+          fetchProductionWellsByPlatform(request).then((res) => {
+              if (res.data.code == 200) {
+                  let wellData=res.data.data.productionWells||[];
+                  if(wellData.length){
+                      const wellList = wellData.filter(el=>el.wellName);
+                      this.wells = this.wells.concat(wellList);
+                  }
+              }
+              fetchInjectionWellsByPlatform(request).then((res) => {
+                  if (res.data.code == 200) {
+                      const waterWellList = res.data.data.injectionWell || [];
+                      this.wells = this.wells.concat(waterWellList);
+                      this.wells.unshift({
+                          wellId: '',
+                          wellName: '全部'
+                      });
+                      this.queryData.wellId = '';
+                  }
+              });
+          });
+          
+      }
+
+    },
+
   },
 };
 </script>
