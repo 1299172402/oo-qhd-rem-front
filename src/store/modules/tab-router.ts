@@ -30,7 +30,7 @@ const state: TTabRouterType = {
 
 // 不需要做多标签tabs页缓存的列表 值为每个页面对应的name 如 DashboardDetail
 // const ignoreCacheRoutes = ['DashboardDetail'];
-const ignoreCacheRoutes = [];
+const ignoreCacheRoutes = ['wellMonitoring'];
 
 const mutations = {
   // 处理刷新

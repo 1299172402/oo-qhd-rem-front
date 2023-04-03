@@ -5,55 +5,53 @@
             <div style="display: flex;align-items: center;flex-wrap:wrap;">
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>油田：</span>
-                    <el-select v-model="selectOilField" class="f2" disabled @change="onFieldChange">
+                    <el-select v-model="selectOilField" disabled @change="onFieldChange" style="width:165px;">
                         <el-option v-for="(item, index) in oilFields" :key="index" :label="item.name":value="item.oilFieldId"></el-option>
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>平台：</span>
-                    <el-select v-model="selectPlatform" class="f2" style="width: 220px;" @change="onPlatfromChange">
+                    <el-select v-model="selectPlatform" @change="onPlatfromChange" style="width: 220px;" >
                         <el-option v-for="(item, index) in platforms" :key="index" :label="item.platName" :value="item.platFormId"></el-option>
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>井号：</span>
-                    <el-select v-model="wellId" class="f2" @change="getMeasureNameAndCode">
+                    <el-select v-model="wellId" filterable @change="getMeasureNameAndCode"  style="width:170px;">
                         <el-option v-for="(item, index) in wells" :key="index" :label="item.wellName" :value="item.wellId"></el-option>
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>措施事件：</span>
-                    <el-select v-model="measureId" class="f2">
+                    <el-select v-model="measureId" style="width:170px;">
                         <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name" :value="item.code"></el-option>
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>措施类型：</span>
-                    <el-select v-model="stimClassCode" class="f2" filterable>
+                    <el-select v-model="stimClassCode" filterable  style="width:170px;">
                         <el-option v-for="(item, index) in stimClassCodeSelect" :key="index" :label="item.name" :value="item.code"></el-option>
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>措施版本：</span>
-                    <el-select class="f2" filterable v-model="measureVersion">
+                    <el-select filterable v-model="measureVersion" style="width:170px;">
                         <el-option v-for="(item, index) in measureVersionSelect" :key="index" :label="item.planTypeName" :value="item.planTypeCode"></el-option>
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>时间:</span>
-                    <!-- disabled -->
-                    <el-date-picker class="f3" v-model="dateTime" style="margin-left:10px" type="year" placeholder="选择日期" value-format="yyyy"></el-date-picker>
+                    <el-date-picker v-model="dateTime" style="width:160px;margin-left:10px" type="year" placeholder="选择日期" value-format="yyyy"></el-date-picker>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <el-button type="primary" icon="el-icon-search" size="mini" @click="getFetchMeasureInfos">搜索</el-button>
-                    <!-- <el-button style="width:70px" @click="doExportFile" v-show="canDownload">下载</el-button> -->
                 </div>
             </div>
         </headerSearch>
         <pagePanelNew headerTitle="措施管理" style="height: calc(100% - 100px)">
             <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;">
-                秦皇岛32-6油田作业计划跟踪
-                <!-- <el-button type="primary" icon="el-icon-download" style="height:30px;">下载</el-button> -->
+                <span>秦皇岛32-6油田作业计划跟踪</span>
+                <el-button type="primary" icon="el-icon-download" style="height:30px;" @click="doExportFile" v-show="canDownload">下载</el-button>
             </div>
             <div class="tableBox" style="height:100%;">
                 <el-table id="csgl"
@@ -100,7 +98,7 @@
                                     <img src="@/assets/rem/plan/i1.png" alt="">
                                     <span>增注性措施</span>
                                 </div>
-                                <div class="icon1 mg0">
+                                <div class="icon1" style="margin-right: 0;">
                                     <img src="@/assets/rem/plan/i2.png" alt="">
                                     <span>维护性措施</span>
                                 </div>
@@ -208,7 +206,7 @@
                 myWidget: [],
                 userInfo: {},
                 // 按钮权限组
-                canDownload: false,// 下载数据
+                canDownload: true,// 下载数据
                 canUpload: false,// 上传数据
             };
         },
@@ -564,18 +562,9 @@
         }
     }
 
-    ::v-deep .el-table tbody tr:last-child:hover {
-        background: transparent !important;
-
-        td,
-        .cell:hover {
-            background: transparent !important;
-        }
-    }
-
     .app-container {
         height: 100%;
-
+        //自适应表头
         .header-titlts {
             width: 100%;
             display: flex;
@@ -604,7 +593,21 @@
                     border-radius: 1px;
                 }
             }
-
+            .icon1 {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 34px;
+            
+                img {
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+            span {
+                font-size: 14px;
+                font-weight: 500;
+            }
             .b2 {
                 width: 18px;
                 height: 18px;
@@ -613,97 +616,78 @@
                 border-radius: 1px;
             }
         }
-
         span {
             font-size: 14px;
             font-weight: 500;
         }
-    }
-
-    .icon1 {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 34px;
-
-        img {
-            width: 40px;
-            height: 40px;
-        }
-    }
-
-    span {
-        font-size: 14px;
-        font-weight: 500;
-    }
-
-    .vv {
-        width: 100%;
-        display: flex;
-        position: relative;
-        z-index: 9999;
-        .vv-left {
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            margin-right: 4px;
-
-            img {
+        //自适应行
+        .vv {
+            width: 100%;
+            display: flex;
+            position: relative;
+            z-index: 1000;
+            .vv-left {
+                cursor: pointer;
                 width: 40px;
                 height: 40px;
-            }
-        }
-    }
-
-    .vv-right {
-        cursor: pointer;
-        padding-top: 4px;
-
-        .vv-line {
-            height: 15px;
-            line-height: 15px;
-            display: flex;
-            align-items: center;
-
-            .line {
-                width: 160px;
-                margin-right: 6px;
-
-                .progress1 {
-                    ::v-deep .el-progress-bar__inner {
-                        background-image: linear-gradient(135deg, #26BAFF 0%, #7EE1C0 55%, #C0FF91 100%);
-                        box-shadow: 4px 0px 4px -8px rgba(0, 24, 148, 0.8);
-                    }
-                }
-
-                .progress2 {
-                    ::v-deep .el-progress-bar__inner {
-                        background-image: linear-gradient(-45deg, #6ACBFF 0%, #4A91F4 45%, #2D5EEB 100%);
-                        border-radius: 7px;
-                    }
-                }
-                
-                .progress3{
-                    ::v-deep .el-progress-bar__inner {
-                        background:#999;
-                    }
-                }
-                
-            }
-
-            .day {
-                font-size: 12px;
-                color: #2CBDFB;
-            }
-            
-            .day3{
-                color:#999;
-            }
-            
-        }
+                margin-right: 4px;
         
+                img {
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+            .vv-right {
+                cursor: pointer;
+                padding-top: 4px;
+            
+                .vv-line {
+                    height: 15px;
+                    line-height: 15px;
+                    display: flex;
+                    align-items: center;
+            
+                    .line {
+                        width: 160px;
+                        margin-right: 6px;
+            
+                        .progress1 {
+                            ::v-deep .el-progress-bar__inner {
+                                background-image: linear-gradient(135deg, #26BAFF 0%, #7EE1C0 55%, #C0FF91 100%);
+                                box-shadow: 4px 0px 4px -8px rgba(0, 24, 148, 0.8);
+                            }
+                        }
+            
+                        .progress2 {
+                            ::v-deep .el-progress-bar__inner {
+                                background-image: linear-gradient(-45deg, #6ACBFF 0%, #4A91F4 45%, #2D5EEB 100%);
+                                border-radius: 7px;
+                            }
+                        }
+                        
+                        .progress3{
+                            ::v-deep .el-progress-bar__inner {
+                                background:#999;
+                            }
+                        }
+                        
+                    }
+            
+                    .day {
+                        font-size: 12px;
+                        color: #2CBDFB;
+                    }
+                    
+                    .day3{
+                        color:#999;
+                    }
+                    
+                }
+            }
+        }
     }
-
+    
+    //日期
     .z-date {
         padding-top:40px;
         padding-left: 40px;
@@ -723,23 +707,12 @@
         
     }
 
-    .f2 {
-        width: 165px !important;
-
-    }
-
-    .f3 {
-        width: 150px !important;
-    }
-
+  
     .mg {
         margin-left: 15px;
     }
-
-    .mg0 {
-        margin-right: 0;
-    }
-
+    
+    //蒙层
     .tableBox {
         position: relative;
 

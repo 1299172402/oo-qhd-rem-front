@@ -2,19 +2,19 @@ import Layout from '@/layouts/index.vue';
 
 export default [
     {
-        hidden: true,
+        hidden: false,
         path: '/plan',
         name: 'plan',
         component: Layout,
         redirect: '/plan/operationplan',
         meta: { title: '规划计划管理', icon: 'client', single: false },
         children: [
-            {
-                path: 'planIndex',
-                name: 'planIndex',
-                component: () => import('@/pages/rem/plan/index.vue'),
-                meta: { title: '措施管理(旧)', icon: 'icon'},
-            },
+            // {
+            //     path: 'planIndex',
+            //     name: 'planIndex',
+            //     component: () => import('@/pages/rem/plan/index.vue'),
+            //     meta: { title: '措施管理(旧)', icon: 'icon'},
+            // },
             {
               hidden: false,
               path: 'newPlanIndex',
