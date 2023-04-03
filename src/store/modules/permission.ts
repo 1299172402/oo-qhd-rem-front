@@ -8,8 +8,6 @@ import InnerLink from "@/pages/intelligentOilfield/iframePage/index.vue";
 import proxy from "@/config/host";
 
 const env = import.meta.env.MODE || "development";
-// TODO: Maybe change back: gaofan
-// let defaultToPath = null;
 
 // function filterPermissionsRouters(routes, roles) {
 //   const res = [];
@@ -80,9 +78,8 @@ const env = import.meta.env.MODE || "development";
 const state = {
   whiteListRouters: ["/login", "/appCallback"],
   routers: [],
-  routerLink: "" // 增加路由链接
-  // TODO: Maybe change back: gaofan
-//   defaultTo: null
+  routerLink: "", // 增加路由链接
+  defaultTo: null
 };
 // 遍历后台传来的路由字符串，转换为组件对象
 function filterAsyncRouter(asyncRouterMap, type = false) {
@@ -113,10 +110,6 @@ function filterAsyncRouter(asyncRouterMap, type = false) {
         route.component = InnerLink;
         state.routerLink = route.meta?.link;
       }
-      // TODO: Maybe change back: gaofan
-    //   if (!route.hidden && !defaultToPath) {
-    //     defaultToPath = route.path;
-    //   }
     }
     if (route.children !== null && route.children && route.children.length) {
       route.children = filterAsyncRouter(route.children, type);
@@ -134,19 +127,17 @@ const mutations = {
   },
   setRouterLink: (state, routerLink) => {
     state.routerLink = routerLink;
+  },
+  setDefaultTo: (state, defaultTo) => {
+    state.defaultTo = defaultTo;
   }
-  // TODO: Maybe change back: gaofan
-//   setDefaultTo: (state, defaultTo) => {
-//     state.defaultTo = defaultTo;
-//   }
 };
 
 const getters = {
   routers: state => state.routers,
   whiteListRouters: state => state.whiteListRouters,
-  routerLink: state => state.routerLink
-  // TODO: Maybe change back: gaofan
-//   defaultTo: state => state.defaultTo
+  routerLink: state => state.routerLink,
+  defaultTo: state => state.defaultTo
 };
 const actions = {
   async initRoutes({ commit }) {
@@ -175,13 +166,11 @@ const actions = {
             },
             redirect: item.children ? `${item.path}/${item.children[0].path}` : "noRedirect"
           }));
+          mapList.push({ "path": "*", "redirect": "/pageInfo/error", "hidden": true });
           // 本地路由+动态路由整合
           const concatRouters = asyncRouterList.concat(mapList);
           commit("setRouters", concatRouters);
           router.addRoutes(concatRouters);
-          // TODO: Maybe change back: gaofan
-        //   commit("setDefaultTo", defaultToPath || "/404");
-        //   defaultToPath = null;
         }
       });
   },

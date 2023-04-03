@@ -27,10 +27,6 @@ const defaultRouterList = [
 //     redirect: '/login',
 //   },
   {
-    path: "/",
-    redirect: "/login"
-  },
-  {
     path: "/redirect",
     component: Layout,
     hidden: true,
@@ -57,7 +53,7 @@ const defaultRouterList = [
     path: "/login",
     name: "login",
     beforeEnter: (to, from, next) => {
-      if (proxy[env].appId) {
+      if (proxy[env].appId && env !== "development") {
         next(`/appCallback?redirect=${to.query?.redirect}`);
       } else {
         next();

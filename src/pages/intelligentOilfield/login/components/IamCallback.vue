@@ -55,11 +55,7 @@ export default {
               router.push(result.redirect);
               this.loading = false;
             } else {
-              // TODO: Maybe change back: gaofan
-            //   this.$router.push("/");
-              const firstMenu = this.$store.getters["user/userDetail"]?.firstMenu;
-              const firstRoputer = firstMenu ? `${firstMenu.path}/${firstMenu.children?.[0]?.path}` : "/pageInfo/error";
-              this.$router.push(firstRoputer);
+              this.$router.push("/");
               this.loading = false;
             }
           }

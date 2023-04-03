@@ -7,8 +7,7 @@ import router from "@/router";
 NProgress.configure({ showSpinner: false });
 
 const whiteListRouters = store.getters["permission/whiteListRouters"];
-// TODO: Maybe change back: gaofan
-// let defaultToWithoutPath = null;
+let defaultToWithoutPath = null;
 
 router.beforeEach(async(to, from, next) => {
   NProgress.start();
@@ -42,31 +41,26 @@ router.beforeEach(async(to, from, next) => {
     const roles = store.getters["user/roles"];
 
     if (roles && roles.length > 0) {
-      // TODO: Maybe change back: gaofan
-    //   if (to.path === "/login" || to.path === "/" || (to.path === "/404" && defaultToWithoutPath !== "/404")) {
-    //     // 如果没有指定跳转地址，则获取默认路径或者可跳转菜单的第一个,并且切回后台模式
-    //       store.commit("tabRouter/removeTabRouterList");
-    //     store.commit("user/SETISGROUPLOGIN", false);
-    //     next(defaultToWithoutPath);
-    //     // 如果本身地址不变，需要关闭一下进度条，因为不执行 afterEach
-    //     NProgress.done();
-    //   } else {
-      next();
-    //   }
+      defaultToWithoutPath = store.getters["permission/defaultTo"];
+      if (to.path === "/login" || to.path === "/" || (to.path === "/pageInfo/error" && defaultToWithoutPath !== "/pageInfo/error")) {
+        // 如果没有指定跳转地址，则获取默认路径或者可跳转菜单的第一个,并且切回后台模式
+        store.commit("tabRouter/removeTabRouterList");
+        store.commit("user/SETISGROUPLOGIN", false);
+        next(defaultToWithoutPath);
+        // 如果本身地址不变，需要关闭一下进度条，因为不执行 afterEach
+        NProgress.done();
+      } else {
+        next();
+      }
     } else {
       try {
-        // TODO: Maybe change back: gaofan
-        // if (from.path !== "/login") {
-        await store.dispatch("user/getUserInfo");
-        // TODO: Maybe change back: gaofan
-        // } else {
-        //   await store.dispatch("user/getUserInfo", "firstLogin");
-        // }
+        if (from.path !== "/login") {
+          await store.dispatch("user/getUserInfo");
+        } else {
+          await store.dispatch("user/getUserInfo", "firstLogin");
+        }
         // 路由跳转前拦截：先获取登录时拿到的角色
         await store.dispatch("permission/initRoutes", store.getters["user/roles"]);
-        // TODO: Maybe change back: gaofan
-        // defaultToWithoutPath = store.getters["permission/defaultTo"];
-
         next({ ...to });
         // store.dispatch('user/getUserInfo').then(() => {
         //   store.dispatch('permission/initRoutes', store.getters['user/roles']);

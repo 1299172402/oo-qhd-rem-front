@@ -14,9 +14,13 @@ export default {
   components: { result },
   methods: {
     logoutPage() {
-      this.$router.replace({ path: "/" });
-      this.$store.dispatch("user/logout");
-      this.$store.dispatch("permission/restore");
+      Promise.all([
+        this.$store.dispatch("user/logout"),
+        this.$store.dispatch("permission/restore")
+      ])
+        .then(() => {
+          this.$router.replace(`/login?redirect=${this.$router.history.current.fullPath}`);
+        });
     }
   }
 };

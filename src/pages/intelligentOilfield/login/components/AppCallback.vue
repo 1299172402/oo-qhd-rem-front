@@ -50,17 +50,7 @@ export default {
           }
         });
       } else {
-        // TODO: Maybe change back: gaofan
-        // router.push("/");
-        this.$store.dispatch("user/getUserInfo")
-          .then(() => {
-            this.$store.dispatch("permission/initRoutes", this.$store.getters["user/roles"])
-              .then(() => {
-                const firstMenu = this.$store.getters["user/userDetail"]?.firstMenu;
-                const firstRoputer = firstMenu ? `${firstMenu.path}/${firstMenu.children?.[0]?.path}` : "/pageInfo/error";
-                router.push(firstRoputer);
-              });
-          });
+        router.push("/");
       }
     } else {
       // 参数不存在access_token根据appId进行重定向后获取access_token

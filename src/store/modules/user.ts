@@ -249,7 +249,7 @@ const actions = {
   //     const res = await mockRemoteUserInfo();
   //     commit('setUserInfo', res);
   //   },
-  getUserInfo({ commit }) {
+  getUserInfo({ commit }, firstLogin) {
     const { appId } = proxy[env];
     return new Promise((resolve, reject) => {
       getInfoByAppId(appId || "").then(res => {
@@ -264,6 +264,7 @@ const actions = {
           const firstMenu = res.data.firstMenu;
           // 如果有菜单走菜单【菜单为本用户第一个可跳转的菜单】,没有则走404页面
           const firstRoputer = firstMenu ? `${firstMenu.path}/${firstMenu.children?.[0]?.path}` : "/pageInfo/error";
+          store.commit("permission/setDefaultTo", firstRoputer);
           const { user } = res.data;
           // const avatar = user.avatar === "" ? require("@/assets/images/profile.jpg") : user.avatar;
           const avatar = user?.avatar === "" ? "" : user?.avatar;
@@ -273,7 +274,11 @@ const actions = {
           commit("SETUSERDETAILS", res.data);
 
           commit("SETISGROUPLOGIN", false);
-          router.push(firstRoputer);
+          if (firstLogin === "firstLogin") {
+            if (!proxy[env].appId || env === "development") {
+              router.push("/");
+            }
+          }
           if (res.data.roles && res.data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
             commit("SET_ROLES", res.data.roles);
             commit("SET_PERMISSIONS", res.data.permissions);

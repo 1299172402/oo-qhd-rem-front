@@ -563,9 +563,13 @@ export default Vue.extend({
           // 更新访问页面
           const sysUser = { accessPage: this.$store.state.route.meta.title, userName: this.$store.state.user.name };
           updateaccessPage(sysUser).then(() => {});
-          this.$store.dispatch("user/logout");
-          this.$store.dispatch("permission/restore");
-          this.$router.push(`/login?redirect=${this.$router.history.current.fullPath}`);
+          Promise.all([
+            this.$store.dispatch("user/logout"),
+            this.$store.dispatch("permission/restore")
+          ])
+            .then(() => {
+              this.$router.push(`/login?redirect=${this.$router.history.current.fullPath}`);
+            });
         })
         .catch(() => {});
     },
@@ -578,12 +582,8 @@ export default Vue.extend({
     /**
      * 切换租户
      */
-    selectChange() {
-      this.tenantCodeTenant(this.valueA);
-    },
     treeselectSelect(node) {
-      this.$store.commit("user/SETTENANTID", node.tenantId);
-      this.noticeList();
+      this.tenantCodeTenant(this.valueA, node.tenantId, node.tenantName);
     },
     noticeList() {
       noticeList(this.$store.getters["user/tenantId"]).then(response => {
@@ -594,9 +594,13 @@ export default Vue.extend({
         this.$store.commit("user/SETNOTICE", val);
       });
     },
-    tenantCodeTenant(tenantRoleKey) {
+    tenantCodeTenant(tenantRoleKey, tenantId, tenantName) {
       exchangeTenant({ tenantRoleKey }).then(async res => {
-        await this.$store.dispatch("user/exchangeTenant", res.data.data);
+        this.$store.dispatch("user/exchangeTenant", {
+          token: res.data.data,
+          tenantId,
+          tenantName
+        });
         //  TODO: Maybe change back
         // 页面数据刷新的逻辑
         // if (this.$store.getters["user/isGroupLogin"]) {
