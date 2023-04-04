@@ -10,7 +10,7 @@
                             <el-button type="primary" style="height:30px;" @click="switchToBack">返回</el-button>
                         </div>
                     </div>
-                    <headerSearch class="g-w100 g-h100">
+                    <headerSearch style="height:80px;">
                         <div style="padding-top:20px;display: flex;align-items: center;">
                             <div class="fl">
                                 <span>油田：</span>
@@ -2732,7 +2732,7 @@
     }
 
     .titleBox {
-        margin-bottom: 10px;
+        margin-bottom: 14px;
     }
 
     .f2 {

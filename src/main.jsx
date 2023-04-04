@@ -16,6 +16,7 @@ import "./style/tdesgin-global.less";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import "@/style/common-style.less";
+import "@/style/replace-ele.less";
 
 import VueClipboard from "vue-clipboard2";
 import axiosInstance, { download } from "@/utils/request";

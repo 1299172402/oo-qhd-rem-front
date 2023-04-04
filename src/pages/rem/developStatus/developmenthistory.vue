@@ -1,7 +1,7 @@
 <!-- 开发历程 -->
 <template>
     <div class="app-container">
-        <headerSearch class="g-w100 g-h100">
+        <headerSearch style="height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
                 <span>油田：</span>
                 <el-select v-model="oilfield" disabled @change="onFieldChange" style="margin-right:20px">
@@ -16,44 +16,36 @@
             </div>
         </headerSearch>
         <pagePanelNew style="height: calc(100% - 100px);" class="z-main">
-            <!-- <info-window headerTitle="油田综合开发曲线" infoWidth="100%" infoHeight="650px" style="margin-bottom:20px;"> -->
             <pagePanel headerTitle="油田综合开发曲线" style="height: 650px;margin-bottom:20px;position: relative;">
-                <!-- <template slot="titleContent"> -->
-                    <el-button type="primary" style="position:absolute;right:0;top:0;;height:30px;margin-right:0px;" @click="dialogVisible = true">选择指标信息</el-button>
-                <!-- </template> -->
+                <el-button type="primary" style="position:absolute;right:0;top:0;;height:30px;margin-right:0px;" @click="dialogVisible = true">选择指标信息</el-button>
                 <div style="height:100%;">
                     <Echart :chart-data="option" style="height: 570px"></Echart>
                 </div>
             </pagePanel>
-            <!-- </info-window> -->
             <pagePanel headerTitle="油田综合开发历程表" style="height: 300px;position: relative;">
-                <!-- <info-window headerTitle="油田综合开发历程表" infoWidth="100%" infoHeight="300px"> -->
-                    <!-- <template slot="titleContent"> -->
-                    <el-button type="primary" style="position:absolute;right:0;top:0;;height:26px;margin-right:20px;" @click="doDownExcel('#ytkflc', '油田综合开发历程')" v-show="canDownload">下载</el-button>
-                    <!-- </template> -->
-                    <div style="padding-bottom:5px;height:100%;">
-                        <el-table id="ytkflc" :data="tableData" highlight height="100%">
-                            <el-table-column prop="phase" label="开发阶段" align="center" width="180px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="beginDate" label="阶段开始时间" align="center" width="120px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="endDate" label="阶段结束时间" align="center" width="120px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="interval" label="阶段历程时间（天)" align="center" width="160px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="pwellsTotal" label="阶段末油井总井数（口)" align="center" width="180px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="pwellsOpen" label="阶段末油井开井数（口）" align="center" width="190px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="liquidDaily" label="阶段末日产液（m³/d）" align="center" width="180px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="oilDaily" label="阶段末日产油量（m³/d）" align="center" width="190px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="waterCut" label="阶段末综合含水（%）" align="center" width="170px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="injectionTotal" label="阶段末水井总井数（口)" align="center" width="180px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="injectionOpen" label="阶段末水井开井数（口）" align="center" width="190px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="injection" label="阶段末注水量（10⁴m³）" align="center" min-width="200px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="proInjectionRate" label="阶段末注采比" align="center" width="180px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="proInjectionRateSum" label="累计注采比" align="center" width="140px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="produceDegress" label="阶段采出程度（%）" align="center" width="160px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="oilSum" label="阶段累计产油（10⁴m³）" align="center" min-width="200px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="liquidSum" label="阶段累计产液（10⁴m³）" align="center" min-width="200px" show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="waterSum" label="阶段累注水（10⁴m³）" align="center" min-width="170px" show-overflow-tooltip></el-table-column>
-                        </el-table>
-                    </div>
-                <!-- </info-window> -->
+                <el-button type="primary" style="position:absolute;right:0;top:0;;height:26px;margin-right:20px;" @click="doDownExcel('#ytkflc', '油田综合开发历程')" v-show="canDownload">下载</el-button>
+                <div style="padding-bottom:5px;height:100%;">
+                    <el-table id="ytkflc" :data="tableData" highlight height="100%">
+                        <el-table-column prop="phase" label="开发阶段" align="center" width="180px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="beginDate" label="阶段开始时间" align="center" width="120px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="endDate" label="阶段结束时间" align="center" width="120px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="interval" label="阶段历程时间（天)" align="center" width="160px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="pwellsTotal" label="阶段末油井总井数（口)" align="center" width="180px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="pwellsOpen" label="阶段末油井开井数（口）" align="center" width="190px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="liquidDaily" label="阶段末日产液（m³/d）" align="center" width="180px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="oilDaily" label="阶段末日产油量（m³/d）" align="center" width="190px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="waterCut" label="阶段末综合含水（%）" align="center" width="170px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="injectionTotal" label="阶段末水井总井数（口)" align="center" width="180px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="injectionOpen" label="阶段末水井开井数（口）" align="center" width="190px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="injection" label="阶段末注水量（10⁴m³）" align="center" min-width="200px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="proInjectionRate" label="阶段末注采比" align="center" width="180px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="proInjectionRateSum" label="累计注采比" align="center" width="140px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="produceDegress" label="阶段采出程度（%）" align="center" width="160px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="oilSum" label="阶段累计产油（10⁴m³）" align="center" min-width="200px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="liquidSum" label="阶段累计产液（10⁴m³）" align="center" min-width="200px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="waterSum" label="阶段累注水（10⁴m³）" align="center" min-width="170px" show-overflow-tooltip></el-table-column>
+                    </el-table>
+                </div>
             </pagePanel>
             <!-- 参数配置 -->
             <el-dialog title="参数配置" :visible="dialogCsVisible" top="20vh" width="400px" class="dialogClass" :close-on-click-modal="false" @close="[(dialogCsVisible = false)]">
@@ -311,61 +303,61 @@
                         {
                             x: '160',
                             y: '1%',
-                            width: '88%',
+                            width: '90%',
                             height: '7%'
                         },
                         {
                             x: '160',
                             y: '10%',
-                            width: '88%',
+                            width: '90%',
                             height: '8%'
                         },
                         {
                             x: '160',
                             y: '20%',
-                            width: '88%',
+                            width: '90%',
                             height: '8%'
                         },
                         {
                             x: '160',
                             y: '30%',
-                            width: '88%',
+                            width: '90%',
                             height: '8%'
                         },
                         {
                             x: '160',
                             y: '40%',
-                            width: '88%',
+                            width: '90%',
                             height: '8%'
                         },
                         {
                             x: '160',
                             y: '50%',
-                            width: '88%',
+                            width: '90%',
                             height: '8%'
                         },
                         {
                             x: '160',
                             y: '60%',
-                            width: '88%',
+                            width: '90%',
                             height: '8%'
                         },
                         {
                             x: '160',
                             y: '70%',
-                            width: '88%',
+                            width: '90%',
                             height: '8%'
                         },
                         {
                             x: '160',
                             y: '80%',
-                            width: '88%',
+                            width: '90%',
                             height: '8%'
                         },
                         {
                             x: '160',
                             y: '90%',
-                            width: '88%',
+                            width: '90%',
                             height: '7%'
                         },
                     ],

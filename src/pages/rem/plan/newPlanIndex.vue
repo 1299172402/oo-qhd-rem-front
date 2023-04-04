@@ -49,7 +49,7 @@
             </div>
         </headerSearch>
         <pagePanelNew headerTitle="措施管理" style="height: calc(100% - 100px)">
-            <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;">
+            <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
                 <span>秦皇岛32-6油田作业计划跟踪</span>
                 <el-button type="primary" icon="el-icon-download" style="height:30px;" @click="doExportFile" v-show="canDownload">下载</el-button>
             </div>

@@ -1,7 +1,7 @@
 <!-- 井组辅助分析 -->
 <template>
     <div class="app-container">
-        <headerSearch class="g-w100 g-h100">
+        <headerSearch style="height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
                 <span class="title">油田：</span>
                 <el-select v-model="selectOilField" placeholder="请选择" filterable clearable disabled @change="changeSelectOilField" style="margin-right: 20px">
@@ -32,7 +32,7 @@
                     <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="currentModule = module.name">{{ module.label }}</el-button>
                 </el-tab-pane>
             </el-tabs>
-            <keep-alive :include="[]" :max="10">
+            <keep-alive :include="[]" :max="10" v-if="selectWellGroup">
                 <component :is="component" ref="componentCustom" :oil-field-id="selectOilField" :block-id="selectBlock" :layer-id="selectLayer" :well-group-id="selectWellGroup" @childPara="changeChildParam"></component>
             </keep-alive>
         </pagePanelNew>

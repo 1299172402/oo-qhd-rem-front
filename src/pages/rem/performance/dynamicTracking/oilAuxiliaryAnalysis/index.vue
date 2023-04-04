@@ -1,13 +1,13 @@
 <!-- 油井辅助分析 -->
 <template>
     <div class="app-container">
-        <headerSearch class="g-w100 g-h100">
+        <headerSearch style="height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
-                <span class="title" style="margin-left: 20px">油田：</span>
-                <el-select v-model="selectOilField" placeholder="请选择" filterable clearable disabled @change="doChangeYt">
+                <span class="title">油田：</span>
+                <el-select v-model="selectOilField" placeholder="请选择" filterable clearable disabled @change="doChangeYt" style="margin-right:20px;">
                     <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
                 </el-select>
-                <span class="title" style="margin-left: 20px">平台：</span>
+                <span class="title">平台：</span>
                 <el-select v-model="selectPlatform" style="width: 220px" placeholder="请选择" filterable clearable @change="doChangePT">
                     <el-option v-for="item in platform" :key="item.platFormId" :label="item.platName" :value="item.platFormId"></el-option>
                 </el-select>
@@ -23,7 +23,7 @@
                     <el-button type="primary">上传文档</el-button>
                 </el-upload>
                 <el-button class="upload-demo" v-show="canUpload && ljpmTag" style="margin-left: 20px" @click="ljpmUploadDialog">上传文档</el-button>
-                <el-button style="margin-left: 20px" type="primary" @click="doDownLoad">下载</el-button>
+                <el-button style="margin-left: 20px" type="primary" icon="el-icon-download" @click="doDownLoad">下载</el-button>
             </div>
         </headerSearch>
         <pagePanelNew headerTitle="" style="height: calc(100% - 100px)" class="g-w100">

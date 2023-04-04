@@ -58,7 +58,7 @@
         methods: {
             //调用图片
             async doSearch() {
-                await fieldLayers({oilFieldId:this.oilFeildId,wellGroupId:this.wellGroupId,}).then((res) => {
+                await fieldLayers({oilFieldId:this.oilFeildId,wellGroupId:this.wellGroupId}).then((res) => {
                     if (res.data.code == 200) {
                         //层段数据
                         if (res.data.data) {

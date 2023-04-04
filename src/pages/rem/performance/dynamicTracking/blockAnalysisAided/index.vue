@@ -1,7 +1,7 @@
 <!-- 区块辅助分析 -->
 <template>
     <div class="app-container">
-        <headerSearch class="g-w100 g-h100">
+        <headerSearch style="height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
                 <span class="title" style="margin-left: 20px">油田：</span>
                 <el-select v-model="selectOilField" placeholder="请选择" filterable clearable disabled @change="getFetchFields">
@@ -53,6 +53,8 @@
                 component: null,
                 activeName: "dynamicInformation",
                 currentModule: "cumulativeOilWaterProduction",
+                // activeName:"reservoirData",
+                // currentModule:"structuralMap",
                 queryParams: {},
                 tabs: [
                     // {

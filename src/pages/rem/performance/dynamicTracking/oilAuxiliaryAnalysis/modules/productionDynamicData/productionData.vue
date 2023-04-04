@@ -4,9 +4,8 @@
         <div class="z-search">
             <span>日期：</span>
             <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"/>
-            <el-select v-model="selectValue" placeholder="请选择" @change="selectChange" style="margin-left:20px;">
-                <el-option label="分配" value="分配"></el-option>
-                <el-option label="计量" value="计量"></el-option>
+            <el-select v-model="allocOrCalculate" placeholder="请选择" @change="selectChange" style="margin-left:20px;">
+                <el-option :label="item.name" :value="item.code" v-for="(item,index) in selectAllocOrCalculate" :key="index"></el-option>
             </el-select>
         </div> 
         <div class="z-echarts">
@@ -34,7 +33,11 @@
         data() {
             return {
                 selectData: [],
-                selectValue:'分配',
+                selectAllocOrCalculate:[
+                    {name:'分配',code:'1'},
+                    {name:'计量',code:'2'},
+                ],
+                allocOrCalculate:'1',
                 option: {
                     tooltip: {
                         trigger: 'axis',
@@ -569,6 +572,7 @@
                     ogfId: this.oilFeildId,
                     platformId: this.platformId,
                     wellId: this.wellId,
+                    allocOrCalculate:this.allocOrCalculate
                 };
                 produceData(request).then((res) => {
                     let seriesData = [];
@@ -698,7 +702,9 @@
                 return series;
             },
             //分配，计量change
-            selectChange(){},
+            selectChange(){
+                this.doSearch();
+            },
             //下载echarts
             doDownLoad() {
                 let res = this.$refs['echartDown'].chart.getDataURL({

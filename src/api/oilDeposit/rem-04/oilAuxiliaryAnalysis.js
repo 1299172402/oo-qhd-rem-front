@@ -1,5 +1,5 @@
 /*
- * @Description: 油藏动态管理模块-油井辅助分析（深化接口）
+ * @Description: 油藏动态管理模块深化接口）
  * @User: zxb
  * @Date: 2023-03-22
  */
@@ -24,4 +24,30 @@ export function getProductionStatus(request) {
   });
 }
 
+//区块辅助分析-动态资料-液油含水等值线图-查询上传的文件列表 
+export function getFilePathList(request) {
+  return Axios({
+    url: `${baseUrl}/primaryInfo/getFilePathList`,
+    method: "post",
+    data: request,
+  });
+}
+
+//区块辅助分析-动态资料-液油含水等值线图-底图(设为默认)
+export function putFilePathList(request) {
+  return Axios({
+    url: `${baseUrl}/primaryInfo/setDefaultFile`,
+    method: "put",
+    params: request,
+  });
+}
+
+//区块辅助分析-动态资料-液油含水等值线图-底图(删除)
+export function deleteFile(request) {
+  return Axios({
+    url: `${baseUrl}/primaryInfo/deleteFile`,
+    method: "delete",
+    params: request,
+  });
+}
 
