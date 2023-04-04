@@ -14,7 +14,7 @@
 </template>
 <script>
     import Echarts from '@/components/tools/Echarts/index.vue';
-    import { produceData } from '@/api/rem-01/dynamicAnalysis.js';
+    import { produceData } from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
     import FileSaver from 'file-saver';
     export default {
         components: {
