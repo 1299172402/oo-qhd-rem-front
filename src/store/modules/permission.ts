@@ -105,9 +105,8 @@ function filterAsyncRouter(asyncRouterMap, type = false) {
         route.component = modules[route.name]
         // route.component = GenerateRouter[route.name]
       }
-      console.log(route,route.meta)
       // 链接走这里
-      if(route.meta) {
+      if(route.meta.link) {
         route.component = InnerLink
         state.routerLink = route.meta?.link
       }
@@ -161,7 +160,7 @@ const actions = {
             ...item,
             meta: {
               ...item.meta,
-              single: item.children ? (item.children[0].meta?.title === item.meta?.title) : false
+              single: item.children ? (item.children[0].meta.title === item.meta.title) : false
             },
             redirect: item.children ? `${item.path  }/${  item.children[0].path}` : 'noRedirect'
           }))
