@@ -10,7 +10,7 @@ export default Vue.extend({
   props: {
     placeholder: {
       type: String,
-      default: "请选择人员"  
+      default: "请选择人员"
     },
     btnText: {
       type: String,
@@ -62,7 +62,7 @@ export default Vue.extend({
       visible: false,
       selectedUsers: [],
       afterInit: false
-    }
+    };
   },
   watch: {
     reset() {
@@ -147,9 +147,9 @@ export default Vue.extend({
       <div class={"select-user-container"}>
         <div class={"select-user-input-container"}>
           {
-            this.$slots.left ?
-              this.$slots.left :
-              <t-select-input
+            this.$slots.left
+              ? this.$slots.left
+              : <t-select-input
                 readOnly={true}
                 value={this.selectedUsers?.[0]?.nickName}
                 class={"select-user-input"}
@@ -175,10 +175,10 @@ export default Vue.extend({
             visible={this.visible}
             selectDept={this.selectDept}
             onOk={this.handleOk}
-            onChangeVisible={(val) => {this.visible = val}}
+            onChangeVisible={val => { this.visible = val; }}
           />
         </div>
       </div>
-    )
+    );
   }
-})
+});

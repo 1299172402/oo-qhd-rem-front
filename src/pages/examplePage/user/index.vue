@@ -15,7 +15,12 @@
           </t-button>
         </template>
         <t-row class="content" justify="space-between">
-          <t-col v-for="(item, index) in USER_INFO_LIST" :key="index" class="contract" :span="item.span || 3">
+          <t-col
+            v-for="(item, index) in USER_INFO_LIST"
+            :key="index"
+            class="contract"
+            :span="item.span || 3"
+          >
             <div class="contract-title">
               {{ item.title }}
             </div>
@@ -54,9 +59,15 @@
 
     <t-col :flex="1">
       <t-card class="user-intro">
-        <t-avatar size="90px">T</t-avatar>
-        <div class="name">My Account</div>
-        <div class="position">XXG 港澳业务拓展组员工 直客销售</div>
+        <t-avatar size="90px">
+          T
+        </t-avatar>
+        <div class="name">
+          My Account
+        </div>
+        <div class="position">
+          XXG 港澳业务拓展组员工 直客销售
+        </div>
       </t-card>
 
       <t-card title="团队成员" class="user-team">
@@ -97,49 +108,49 @@
   </t-row>
 </template>
 <script>
-import { GridComponent, TooltipComponent, LegendComponent } from 'echarts/components';
-import { LineChart } from 'echarts/charts';
-import { CanvasRenderer } from 'echarts/renderers';
-import * as echarts from 'echarts/core';
-import { EditIcon } from 'tdesign-icons-vue';
+import { GridComponent, TooltipComponent, LegendComponent } from "echarts/components";
+import { LineChart } from "echarts/charts";
+import { CanvasRenderer } from "echarts/renderers";
+import * as echarts from "echarts/core";
+import { EditIcon } from "tdesign-icons-vue";
 
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 
-import { getFolderLineDataSet } from './index';
-import { changeChartsTheme } from '@/utils/color';
-import { LAST_7_DAYS } from '@/utils/date';
+import { getFolderLineDataSet } from "./index";
+import { changeChartsTheme } from "@/utils/color";
+import { LAST_7_DAYS } from "@/utils/date";
 
-import { USER_INFO_LIST, TEAM_MEMBERS, PRODUCT_LIST } from '@/service/service-user';
-import ProductAIcon from '@/assets/assets-product-1.svg';
-import ProductBIcon from '@/assets/assets-product-2.svg';
-import ProductCIcon from '@/assets/assets-product-3.svg';
-import ProductDIcon from '@/assets/assets-product-4.svg';
+import { USER_INFO_LIST, TEAM_MEMBERS, PRODUCT_LIST } from "@/service/service-user";
+import ProductAIcon from "@/assets/assets-product-1.svg";
+import ProductBIcon from "@/assets/assets-product-2.svg";
+import ProductCIcon from "@/assets/assets-product-3.svg";
+import ProductDIcon from "@/assets/assets-product-4.svg";
 
 echarts.use([GridComponent, TooltipComponent, LineChart, CanvasRenderer, LegendComponent]);
 
 export default {
-  name: 'UserIndex',
+  name: "UserIndex",
 
   components: {
     ProductAIcon,
     ProductBIcon,
     ProductCIcon,
     ProductDIcon,
-    EditIcon,
+    EditIcon
   },
   data() {
     return {
-      dashboardBase: '',
-      lineContainer: '',
-      lineChart: '',
+      dashboardBase: "",
+      lineContainer: "",
+      lineChart: "",
       LAST_7_DAYS,
       USER_INFO_LIST,
       TEAM_MEMBERS,
-      PRODUCT_LIST,
+      PRODUCT_LIST
     };
   },
   computed: {
-    ...mapState('setting', ['brandTheme', 'mode']),
+    ...mapState("setting", ["brandTheme", "mode"])
   },
   watch: {
     brandTheme() {
@@ -150,10 +161,10 @@ export default {
     },
     lineChart() {
       this.updateContainer();
-    },
+    }
   },
   mounted() {
-    window.addEventListener('resize', this.updateContainer, false);
+    window.addEventListener("resize", this.updateContainer, false);
     this.renderCharts();
     this.$nextTick(() => {
       this.updateContainer();
@@ -167,13 +178,13 @@ export default {
     updateContainer() {
       this.lineChart.resize?.({
         width: this.lineContainer.clientWidth,
-        height: this.lineContainer.clientHeight,
+        height: this.lineContainer.clientHeight
       });
     },
     renderCharts() {
       const { chartColors } = this.$store.state.setting;
       if (!this.lineContainer) {
-        this.lineContainer = document.getElementById('lineContainer');
+        this.lineContainer = document.getElementById("lineContainer");
       }
       this.lineChart = echarts.init(this.lineContainer);
       this.lineChart.setOption({
@@ -181,9 +192,9 @@ export default {
           x: 30, // 默认是80px
           y: 30, // 默认是60px
           x2: 10, // 默认80px
-          y2: 30, // 默认60px
+          y2: 30 // 默认60px
         },
-        ...getFolderLineDataSet({ ...chartColors }),
+        ...getFolderLineDataSet({ ...chartColors })
       });
     },
     getIcon(type) {
@@ -191,13 +202,13 @@ export default {
         a: ProductAIcon,
         b: ProductBIcon,
         c: ProductCIcon,
-        d: ProductDIcon,
+        d: ProductDIcon
       };
-      return typeMap[type || 'a'];
-    },
-  },
+      return typeMap[type || "a"];
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
-@import url('./index.less');
+@import url("./index.less");
 </style>

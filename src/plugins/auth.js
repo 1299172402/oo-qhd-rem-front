@@ -1,23 +1,21 @@
-import store from '@/store'
+import store from "@/store";
 
 function authPermission(permission) {
-  const all_permission = "*:*:*";
-  const permissions = store.getters && store.getters['user/permissions']
+  const allPermission = "*:*:*";
+  const permissions = store.getters && store.getters["user/permissions"];
   if (permission && permission.length > 0) {
-    return permissions.some(v => all_permission === v || v === permission)
-  } 
-  return false
-  
-} 
+    return permissions.some(v => allPermission === v || v === permission);
+  }
+  return false;
+}
 
 function authRole(role) {
-  const super_admin = "admin";
-  const roles = store.getters && store.getters['user/permissions']
+  const superAdmin = "admin";
+  const roles = store.getters && store.getters["user/permissions"];
   if (role && role.length > 0) {
-    return roles.some(v => super_admin === v || v === role)
-  } 
-  return false
-  
+    return roles.some(v => superAdmin === v || v === role);
+  }
+  return false;
 }
 
 export default {
@@ -27,11 +25,11 @@ export default {
   },
   // 验证用户是否含有指定权限，只需包含其中一个
   hasPermiOr(permissions) {
-    return permissions.some(item => authPermission(item))
+    return permissions.some(item => authPermission(item));
   },
   // 验证用户是否含有指定权限，必须全部拥有
   hasPermiAnd(permissions) {
-    return permissions.every(item => authPermission(item))
+    return permissions.every(item => authPermission(item));
   },
   // 验证用户是否具备某角色
   hasRole(role) {
@@ -39,10 +37,10 @@ export default {
   },
   // 验证用户是否含有指定角色，只需包含其中一个
   hasRoleOr(roles) {
-    return roles.some(item => authRole(item))
+    return roles.some(item => authRole(item));
   },
   // 验证用户是否含有指定角色，必须全部拥有
   hasRoleAnd(roles) {
-    return roles.every(item => authRole(item))
+    return roles.every(item => authRole(item));
   }
-}
+};

@@ -10,7 +10,7 @@ export default {
       if (row.processDefinitionKey === "to_do_integration") {
         let { url } = row.extendProps;
         if (url) { // 跳转外部链接的话需要拼接token
-          const {syToken} = this.$store.getters;
+          const { syToken } = this.$store.getters;
           if (syToken) {
             const location = url.indexOf("?");
             if (location === -1) {
@@ -30,9 +30,8 @@ export default {
           });
         }
         return true;
-      } 
+      }
       return false;
-        
     }
   }
 };

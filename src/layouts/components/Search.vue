@@ -38,36 +38,37 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from 'vue';
-import { SearchIcon } from 'tdesign-icons-vue';
+import Vue, { PropType } from "vue";
+import { SearchIcon } from "tdesign-icons-vue";
 
 export default Vue.extend({
   components: {
-    SearchIcon,
+    SearchIcon
   },
   props: {
     layout: {
+      // eslint-disable-next-line
       type: String as PropType<string>,
-    },
+    }
   },
   data() {
     return {
       isSearchFocus: false,
-      searchData: '',
+      searchData: ""
     };
   },
   methods: {
     changeSearchFocus(value: boolean) {
       if (!value) {
-        this.searchData = '';
+        this.searchData = "";
       }
       this.isSearchFocus = value;
-    },
-  },
+    }
+  }
 });
 </script>
 <style lang="less" scoped>
-@import '@/style/variables.less';
+@import "@/style/variables.less";
 
 .header-menu-search {
   display: flex;

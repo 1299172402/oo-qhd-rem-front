@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import  scrollTo  from "@/utils/scroll-to";
+import scrollTo from "@/utils/scroll-to";
 
 export default {
   name: "Pagination",
@@ -102,7 +102,7 @@ export default {
 
 <style scoped lang="less">
 .pagination-container {
-  background: #FFFFFF;
+  background: #fff;
   padding: 32px 16px;
 
   ::v-deep .el-pagination {

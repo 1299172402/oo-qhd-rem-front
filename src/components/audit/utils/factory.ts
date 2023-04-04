@@ -1,4 +1,4 @@
-import { 
+import {
   AuditUser,
   NextAuditUser
 } from "@/components/audit/types";
@@ -16,16 +16,16 @@ export function buildInfos(newVal, needOutsideAuditModel: boolean) {
     activityName: "",
     model: {},
     outsideAuditModel: null
-  }
+  };
   if (typeof needOutsideAuditModel === "object") {
     target.outsideAuditModel = needOutsideAuditModel;
   } else if (needOutsideAuditModel) {
     target.outsideAuditModel = {
       action: undefined,
       actionDisabled: false
-    }
+    };
   }
-    
+
   return Object.assign(target, newVal);
 }
 interface Setting {

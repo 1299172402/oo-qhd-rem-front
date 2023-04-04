@@ -1,8 +1,8 @@
-import request from '@/utils/request'
+import request from "@/utils/request";
 // 查询应用列表
 export function listApp(query) {
   return request({
-    url: '/system/app/list',
+    url: "/system/app/list",
     method: "get",
     params: query
   });

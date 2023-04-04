@@ -1,4 +1,5 @@
 dist
 node_modules
-!.prettierrc.js
-public/pdfjs
+/node_modules/*
+public
+.husky

@@ -5,6 +5,6 @@
 </template>
 <script>
 export default {
-  name: 'NestMenu',
+  name: "NestMenu"
 };
 </script>

@@ -1,6 +1,6 @@
 .el-input__inner {
   background: transparent;
-  color: var(--lightBlueColor);
+  color: var(--light-blue-color);
 }
 
 // .loginInput .el-input__inner {
@@ -15,8 +15,23 @@
     height: 40px;
   }
 }
+
 .el-input.is-disabled .el-input__inner{
-    background: rgba(51,69,86,0.8);
-  border: 1px solid #C0C4CC;
+  background: rgba(51,69,86,0.8);
+  border: 1px solid #c0c4cc;
   opacity: 0.5;
+}
+
+.el-autocomplete-suggestion {
+  background: var(--drop-down-color);
+  border: none
+}
+
+.el-autocomplete-suggestion li{
+  color: var(--white-opacity7)
+}
+
+.el-autocomplete-suggestion li:hover{
+  color: var(--white-opacity7);
+  background: linear-gradient(to right, rgba(2, 30, 54, 0.2), rgba(0, 144, 188, 0.8));
 }

@@ -142,7 +142,7 @@ export default {
     handleOpen() {
       this.$nextTick(() => {
         this.getAppIds();
-        this.dataSource.forEach((row) => {
+        this.dataSource.forEach(row => {
           if (this.appIds.indexOf(row.appId) >= 0) {
             this.$refs.table.toggleRowSelection(row, true);
           } else {
@@ -155,7 +155,7 @@ export default {
      * 获取已选appId集合
      */
     getAppIds() {
-      this.appIds = this.tableData.map((item) => item.appId);
+      this.appIds = this.tableData.map(item => item.appId);
     },
     /**
      * 选择租户

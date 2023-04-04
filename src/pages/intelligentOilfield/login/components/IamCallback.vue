@@ -1,14 +1,14 @@
 <template>
-    <div v-loading="loading" />
-  </template>
+  <div v-loading="loading" />
+</template>
 <script>
 import { callBackLogin } from "@/api/intelligentOilfield/login.js";
 import router from "@/router";
-  
+
 import proxy from "@/config/host";
-  
+
 const env = import.meta.env.MODE || "development";
-  
+
 export default {
   data() {
     return {
@@ -36,7 +36,7 @@ export default {
         if (result.srid) {
           params = { srid: result.srid };
         }
-        callBackLogin(data, params).then((res) => {
+        callBackLogin(data, params).then(res => {
           console.error("test：IamCallback", res);
           if (params.srid && res.data.data.redirectUrl) {
             // 参数携带srid需要直接进行跳转
@@ -55,10 +55,7 @@ export default {
               router.push(result.redirect);
               this.loading = false;
             } else {
-              // TODO: Maybe change back
-              // router.push("/homePage/index");
-              const firstRoputer = `${this.$store.getters['user/userDetail'].firstMenu.path}/${this.$store.getters['user/userDetail'].firstMenu.children[0].path}`
-              this.$router.push(firstRoputer);
+              this.$router.push("/");
               this.loading = false;
             }
           }
@@ -71,6 +68,6 @@ export default {
   render(h) {
     return h(); // avoid warning message
   }
-  
+
 };
 </script>

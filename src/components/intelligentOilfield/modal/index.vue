@@ -1,76 +1,88 @@
 <template>
-    <div class="m-modal-mask">
-      <div :class="['m-modal', center ? 'relative-hv-center' : 'top-center']">
-        <div class="m-modal-content">
-          <div class="m-spin-dot" v-show="loading">
-            <span class="u-dot-item"></span>
-            <span class="u-dot-item"></span>
-            <span class="u-dot-item"></span>
-            <span class="u-dot-item"></span>
-          </div>
-          <div :class="['m-modal-body', {'loading':loading}]">
-            <div class="m-body">
-              <div class="m-title">
-                <template v-if="mode==='confirm'">
-                  <!-- <span class="u-icon question">?</span> -->
-                  <span class="u-icon warning">!</span>
-                </template>
-                <template v-if="mode==='info'">
-                  <span class="u-icon info" v-if="type==='info'">!</span>
-                  <span class="u-icon success" v-if="type==='success'">✓</span>
-                  <span class="u-icon error" v-if="type==='error'">×</span>
-                  <span class="u-icon warning" v-if="type==='warning'">!</span>
-                </template>
-                <div class="u-title">{{ title }}</div>
-              </div>
-              <div class="u-content">{{ content }}</div>
-            </div>
-            <div class="m-btns">
+  <div class="m-modal-mask">
+    <div :class="['m-modal', center ? 'relative-hv-center' : 'top-center']">
+      <div class="m-modal-content">
+        <div v-show="loading" class="m-spin-dot">
+          <span class="u-dot-item" />
+          <span class="u-dot-item" />
+          <span class="u-dot-item" />
+          <span class="u-dot-item" />
+        </div>
+        <div :class="['m-modal-body', {'loading':loading}]">
+          <div class="m-body">
+            <div class="m-title">
               <template v-if="mode==='confirm'">
-                <button class="u-cancel" @click="onCancel">{{ cancelText }}</button>
-                <button class="u-confirm primary" @click="onConfirm" v-if="type==='confirm'">{{ okText }}</button>
-                <button class="u-confirm delete" @click="onConfirm" v-if="type==='delete'">{{ okText }}</button>
+                <!-- <span class="u-icon question">?</span> -->
+                <span class="u-icon warning">!</span>
               </template>
               <template v-if="mode==='info'">
-                <button class="u-confirm primary" @click="onConfirm">{{ noticeText }}</button>
+                <span v-if="type==='info'" class="u-icon info">!</span>
+                <span v-if="type==='success'" class="u-icon success">✓</span>
+                <span v-if="type==='error'" class="u-icon error">×</span>
+                <span v-if="type==='warning'" class="u-icon warning">!</span>
               </template>
+              <div class="u-title">
+                {{ title }}
+              </div>
             </div>
+            <div class="u-content">
+              {{ content }}
+            </div>
+          </div>
+          <div class="m-btns">
+            <template v-if="mode==='confirm'">
+              <button class="u-cancel" @click="onCancel">
+                {{ cancelText }}
+              </button>
+              <button v-if="type==='confirm'" class="u-confirm primary" @click="onConfirm">
+                {{ okText }}
+              </button>
+              <button v-if="type==='delete'" class="u-confirm delete" @click="onConfirm">
+                {{ okText }}
+              </button>
+            </template>
+            <template v-if="mode==='info'">
+              <button class="u-confirm primary" @click="onConfirm">
+                {{ noticeText }}
+              </button>
+            </template>
           </div>
         </div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
 <script>
 export default {
-  name: 'Modal',
+  name: "Modal",
   props: {
     title: { // 标题描述
       type: String,
-      default: 'Do you Want to delete these items ?'
+      default: "Do you Want to delete these items ?"
     },
     content: { // 内容描述
       type: String,
-      default: 'Some descriptions'
+      default: "Some descriptions"
     },
     cancelText: { // 取消按钮文字
       type: String,
-      default: '取消'
+      default: "取消"
     },
     okText: { // 确认按钮文字
       type: String,
-      default: '确定'
+      default: "确定"
     },
     noticeText: { // 通知按钮文字
       type: String,
-      default: '知道了'
+      default: "知道了"
     },
     mode: { // 确认对话框：confirm  信息提示框：info
       type: String,
-      default: 'confirm'
+      default: "confirm"
     },
     type: { // confirm mode: 'confirm', 'delete'   info mode: 'info', 'success', 'error', 'warning'
       type: String,
-      default: 'confirm'
+      default: "confirm"
     },
     center: { // 水平垂直居中：true  固定高度水平居中：false
       type: Boolean,
@@ -82,14 +94,14 @@ export default {
     }
   },
   methods: {
-    onCancel () {
-      this.$emit('cancel')
+    onCancel() {
+      this.$emit("cancel");
     },
-    onConfirm () {
-      this.$emit('ok')
+    onConfirm() {
+      this.$emit("ok");
     }
   }
-}
+};
 </script>
   <style lang="less" scoped>
   // .flex-hv-center { // 水平垂直居中方法①：弹性布局，随内容增大高度，并自适应水平垂直居中
@@ -158,9 +170,9 @@ export default {
   //           background: #1890ff;
   //           border-radius: 50%;
   //           opacity: .3;
-  //           animation: spinMove 1s linear infinite alternate;
-  //           -webkit-animation: spinMove 1s linear infinite alternate;
-  //           @keyframes spinMove {
+  //           animation: spin-move 1s linear infinite alternate;
+  //           -webkit-animation: spin-move 1s linear infinite alternate;
+  //           @keyframes spin-move {
   //             100% {opacity: 1;}
   //           }
   //         }

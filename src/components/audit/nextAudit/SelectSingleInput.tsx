@@ -1,5 +1,5 @@
 import Vue from "vue";
-import "./style/SelectSingleInput.less"
+import "./style/SelectSingleInput.less";
 
 const map = new Map<string, string>(); // 缓存角色字典翻译
 export default Vue.extend({
@@ -41,15 +41,15 @@ export default Vue.extend({
   data() {
     return {
       inputValue: undefined,
-      searchValue: "",
-      
+      searchValue: ""
+
     };
   },
   computed: {
     inputOptions() {
       if (!this.allowAdd || this.searchValue === "" || this.options.find(v => v[this.textField].indexOf(this.searchValue) !== -1)) {
         return this.options;
-      } 
+      }
       return [
         {
           [this.valueField]: this.searchValue,
@@ -57,7 +57,6 @@ export default Vue.extend({
         },
         ...this.options
       ];
-      
     }
   },
   watch: {
@@ -93,7 +92,7 @@ export default Vue.extend({
         disable={this.disable}
         onChange={this.handleChange}
         onSearch={this.handleInput}
-        onClear={() => { this.$emit("changeValue", undefined) }}
+        onClear={() => { this.$emit("changeValue", undefined); }}
       >
         {
           <template slot="panel">
@@ -103,10 +102,10 @@ export default Vue.extend({
                   this.inputOptions.map(item => {
                     map.set(item[this.valueField], item[this.textField]);
                     return (
-                      <li key={item[this.valueField]} onClick={() => { this.handleChange(item[this.valueField]) }}>
+                      <li key={item[this.valueField]} onClick={() => { this.handleChange(item[this.valueField]); }}>
                         {item[this.textField]}
                       </li>
-                    )
+                    );
                   })
                 }
               </ul>
@@ -114,6 +113,6 @@ export default Vue.extend({
           </template>
         }
       </t-select-input>
-    )
+    );
   }
-})
+});

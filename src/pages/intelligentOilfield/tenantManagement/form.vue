@@ -1,5 +1,5 @@
 <template>
-  <form-section submit-text="" @save="handleOk" :return-name="returnPath">
+  <form-section submit-text="" :return-name="returnPath" @save="handleOk">
     <div class="tenant-form">
       <el-form
         ref="Form"
@@ -79,17 +79,17 @@ export default {
         deptId: [{ required: true, message: "请输入分配组织机构", trigger: "change" }],
         status: [{ required: true, message: "请输入租户状态", trigger: "change" }]
       },
-      returnPath: 'Tenant'
+      returnPath: "Tenant"
     };
   },
   mounted() {
     this.getTreeselect();
-    this.fn.save = this.$route.params.id ? updateTenant : addTenant;    
+    this.fn.save = this.$route.params.id ? updateTenant : addTenant;
   },
   activated() {
-    if(this.$route.params.id === undefined){
+    if (!this.$route.params.id) {
       this.$refs.Form.resetFields();
-    }    
+    }
     this.getTreeselect();
     this.fn.save = this.$route.params.id ? updateTenant : addTenant;
   },
@@ -99,8 +99,8 @@ export default {
      */
     handleSelected(selectApplication) {
       this.tableData = selectApplication;
-      this.tableData.map((item) => {
-        this.model.appList.forEach((v) => {
+      this.tableData.map(item => {
+        this.model.appList.forEach(v => {
           if (item.appId === v.appId) {
             item.sourceRole = v.sourceRole;
           }
@@ -113,7 +113,7 @@ export default {
      */
     getSaveModel() {
       this.model.appList = this.tableData;
-      this.model.appList.forEach((item) => {
+      this.model.appList.forEach(item => {
         item.tenantId = this.$route.params.id;
       });
       return this.model;
@@ -129,10 +129,10 @@ export default {
       this.tableData = val;
     },
     /**
-     * 查询部门下拉树结构`  
+     * 查询部门下拉树结构`
      */
     getTreeselect() {
-      treeselect().then((response) => {
+      treeselect().then(response => {
         this.deptOptions = response.data.data;
       });
     }

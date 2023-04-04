@@ -1,7 +1,9 @@
 <template>
   <result title="浏览器版本低" tip="抱歉，您正在使用的浏览器版本过低，无法打开当前网页。" type="ie">
     <div class="result-slot-container">
-      <t-button class="result-button" @click="() => $router.push('/')">返回首页</t-button>
+      <t-button class="result-button" @click="() => $router.push('/')">
+        返回首页
+      </t-button>
       <div class="recommend-container">
         <div>推荐以下主流浏览器</div>
         <div class="recommend-browser">
@@ -20,17 +22,17 @@
 </template>
 
 <script>
-import Result from '@/components/intelligentOilfield/result/index.vue';
-import Thumbnail from '@/components/intelligentOilfield/thumbnail/index.vue';
+import Result from "@/components/intelligentOilfield/result/index.vue";
+import Thumbnail from "@/components/intelligentOilfield/thumbnail/index.vue";
 
 export default {
-  name: 'ResultBrowserIncompatible',
-  components: { Result, Thumbnail },
+  name: "ResultBrowserIncompatible",
+  components: { Result, Thumbnail }
 };
 </script>
 
 <style lang="less" scoped>
-@import '@/style/variables.less';
+@import "@/style/variables.less";
 
 .result-slot-container {
   position: relative;
@@ -50,7 +52,7 @@ export default {
   padding: 24px 48px;
   width: 640px;
   background: var(--td-bg-color-container);
-  box-shadow: 0px 1px 2px var(--td-shadow-1);
+  box-shadow: 0 1px 2px var(--td-shadow-1);
   border-radius: 3px;
 }
 

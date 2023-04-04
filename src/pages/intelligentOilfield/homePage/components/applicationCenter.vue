@@ -1,17 +1,35 @@
 <!-- 应用中心组件 -->
 <template>
   <div style="font-size: 20px" class="g-w100 g-h100">
-    <el-dialog title="内容设置-应用中心" :visible.sync="openDialog" width="600px" append-to-body :close-on-click-modal="false"
-      :show-close="false">
+    <el-dialog
+      title="内容设置-应用中心"
+      :visible.sync="openDialog"
+      width="600px"
+      append-to-body
+      :close-on-click-modal="false"
+      :show-close="false"
+    >
       <!-- :before-close="cancel" -->
       <div>
-        <dataTransfer @submitForm="submitForm" @cancel="cancel" searchName="应用来源" :searchOption="dict.type.sys_app_type"
-          :allList="allList" :selectedList="selectedList" @changeData="changeData" @changeSource="changeSource">
-        </dataTransfer>
+        <data-transfer
+          search-name="应用来源"
+          :search-option="dict.type.sys_app_type"
+          :all-list="allList"
+          :selected-list="selectedList"
+          @submitForm="submitForm"
+          @cancel="cancel"
+          @changeData="changeData"
+          @changeSource="changeSource"
+        />
       </div>
     </el-dialog>
-    <info-window infoWidth="100%" infoHeight="100%" headerTitle="已授权应用">
-    <!-- <template #titleContent>
+    <info-window
+      info-width="100%"
+      info-height="100%"
+      header-title="已授权应用"
+      :header-style="$store.state.setting.mode === 'dark'?{}:{color:'#3490D3'}"
+    >
+      <!-- <template #titleContent>
         <div>
           <el-input
             @change="getInitData(activeName, inputInfo)"
@@ -23,15 +41,26 @@
           ></el-input>
         </div>
                             </template> -->
-      <div style="padding: 20px">
-        <div class="g-row-flex g-h100 divBox" style="flex-wrap: no-wrap;">
-          <div class="g-column-flex-H" v-for="(item, index) in list" :key="index"
-            style="position: relative;padding: 20px; justify-content: space-around; flex-wrap: wrap;cursor: pointer"
-            @click="toClick(item.accessUrl)">
-            <img v-if="item.appImg" :src="item.appImg ? item.appImg : ''" @error="imgError(item)" alt="" class="imgSetting" style="width:40px;height:40px" />
+      <div style="padding: 10px 20px">
+        <div class="g-row-flex g-h100 divBox" style="flex-wrap: no-wrap;overflow: auto">
+          <div
+            v-for="(item, index) in list"
+            :key="index"
+            class="g-column-flex-H"
+            style="position: relative; justify-content: center; align-items: center; flex-wrap: wrap; cursor: pointer; width: 102px; height: 102px;min-width: 102px"
+            @click="toClick(item)"
+          >
+            <img
+              v-if="item.appImg"
+              :src="item.appImg ? item.appImg : ''"
+              alt=""
+              class="imgSetting"
+              style="width: 40px;height: 40px"
+              @error="imgError(item)"
+            >
             <!-- 增加未上传图标显示默认图标+首字母 -->
-             <div v-else class="bgImage g-row-flex-HV" style="width:40px;height:40px">
-                {{ item.appName[0] }}
+            <div v-else class="bgImage g-row-flex-HV" style="width: 40px;height: 40px">
+              {{ item.appName[0] }}
             </div>
             <span class="textSpan">{{ item.appName }}</span>
           </div>
@@ -54,22 +83,22 @@
 </template>
 <script>
 // import circularPanel from '@/components/intelligentOilfield/circular-panel/index.vue';
-import dataTransfer from '@/components/intelligentOilfield/data-transfer/index.vue';
-import { applicationCenterList, batchUpdateApp, updateApp } from '@/api/intelligentOilfield/portal/officeMode';
+import dataTransfer from "@/components/intelligentOilfield/data-transfer/index.vue";
+import { applicationCenterList, batchUpdateApp, updateApp } from "@/api/intelligentOilfield/portal/officeMode";
+import { addAccessinfo } from "@/api/intelligentOilfield/system/user";
 
 export default {
-  dicts: ['sys_app_type'],
+  dicts: ["sys_app_type"],
   components: {
     // circularPanel,
-    dataTransfer,
+    dataTransfer
   },
   props: {
-    height: {},
     // componentItem.content(解视：default:有默认面板内容 ，newPanel：新创建面板，内容为空)
     // componentItem.contentSetting(解释：内容设置，true:正在设置，false：未设置)
     componentItem: {
       type: Object,
-      default: () => ({}),
+      default: () => ({})
     },
     list: {
       type: Array,
@@ -80,8 +109,8 @@ export default {
     return {
       panels: [],
       allPanels: [],
-      inputInfo: '',
-      activeName: "1",// 1，开发生产中心;2，安全管理中心;3，设备设施中心;4，通用支持中心
+      inputInfo: "",
+      activeName: "1", // 1，开发生产中心;2，安全管理中心;3，设备设施中心;4，通用支持中心
       openDialog: false,
       allList: [],
       selectedList: [
@@ -93,33 +122,33 @@ export default {
       storeInitData: [],
       queryParam: {
         apply: parseInt(this.activeName, 10),
-        appName: '',
-        appType: ''
+        appName: "",
+        appType: ""
       },
       storeSelectedList: [],
-      searchOption: [],
+      searchOption: []
     };
   },
   watch: {
-    'componentItem.content': {
+    "componentItem.content": {
       handler() {
         // this.panels = newVal === 'default' ? this.defaultPanels:[];
         // this.panels = newVal === 'default' ? this.selectedList : [];
       },
       deep: true,
-      immediate: true,
+      immediate: true
     },
-    'componentItem.contentSetting': {
+    "componentItem.contentSetting": {
       handler(newVal) {
         if (newVal) {
           this.openDialog = newVal;
-          this.getDataList('');
+          this.getDataList("");
           this.getNum = 0;
         }
       },
       deep: true,
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   mounted() {
     // this.getOptionsList();
@@ -130,14 +159,19 @@ export default {
   },
   methods: {
     imgError(item) {
-      item.img = new URL('../../../../assets/intelligentOilfield/bgImg.png', import.meta.url).href
+      item.img = new URL("../../../../assets/intelligentOilfield/bgImg.png", import.meta.url).href;
     },
-    toClick(url) {
-      const a = document.createElement('a')
-      a.setAttribute('target', '_blank')
-      a.setAttribute('href', url)
-      a.click()
-      a.remove()
+    toClick(item) {
+      // 应用中心
+      if (item.appType === "0") { // 内部跳转的逻辑
+        const paramQuery = {
+          appId: item.appId,
+          appName: item.appName,
+          userId: this.$store.getters["user/userDetail"].user.userId
+        };
+        addAccessinfo(paramQuery).then(() => {});
+        window.open(item.appPcAccessUrl);
+      }
     },
     initData() {
       this.allPanels = [];
@@ -146,21 +180,20 @@ export default {
       this.panels = [];
       // 调用接口,param为传参
       this.queryParam = {
-        apply: '',
+        apply: "",
         appName: this.inputInfo,
-        appType: ''
-      }
+        appType: ""
+      };
       this.allPanels = [];
-      applicationCenterList(this.queryParam).then((response) => {
+      applicationCenterList(this.queryParam).then(response => {
         response.data.data.forEach(el => {
-          if (el.isSelected === '1') {
-            el.appImg = new URL(`../../../../assets/intelligentOilfield/${el.appImg}`, import.meta.url)
+          if (el.isSelected === "1") {
+            el.appImg = new URL(`../../../../assets/intelligentOilfield/${el.appImg}`, import.meta.url);
             this.allPanels.push(el);
           }
         });
         this.panels = JSON.parse(JSON.stringify(this.allPanels));
       });
-
     },
     handleClick() {
       this.getInitData();
@@ -169,66 +202,64 @@ export default {
       // 调取接口：获取下拉来源接口
       this.searchOption = [
         {
-          value: '1',
-          label: '业务应用',
+          value: "1",
+          label: "业务应用"
         },
         {
-          value: '2',
-          label: '油藏管理',
+          value: "2",
+          label: "油藏管理"
         },
         {
-          value: '3',
-          label: '普通应用',
-        },
+          value: "3",
+          label: "普通应用"
+        }
       ];
     },
     changeSource(item) {
-      this.getDataList(item)
+      this.getDataList(item);
     },
     // 获取所有数据来源
     getDataList(currentAppType) {
       this.allList = [];
       this.selectedList = [];
-      this.inputInfo = '';
+      this.inputInfo = "";
       this.queryParam = {
-        apply: '',
-        appName: '',
+        apply: "",
+        appName: "",
         appType: currentAppType
-      }
+      };
       // 调取接口
-      applicationCenterList(this.queryParam).then((response) => {
+      applicationCenterList(this.queryParam).then(response => {
         response.data.data.forEach(el => {
-          if (el.isSelected === '0') {
-            this.allList.push({ appName: el.name } = el)
+          if (el.isSelected === "0") {
+            this.allList.push({ appName: el.name } = el);
           } else {
-            this.selectedList.push({ appName: el.name } = el)
+            this.selectedList.push({ appName: el.name } = el);
           }
         });
-        if (currentAppType === '' && this.getNum === 0) { // 存储不带分类的已选应用和未选应用
+        if (currentAppType === "" && this.getNum === 0) { // 存储不带分类的已选应用和未选应用
           this.getNum += 1;
-          this.storeInitData = JSON.parse(JSON.stringify(this.allList)).concat(JSON.parse(JSON.stringify(this.selectedList)))
+          this.storeInitData = JSON.parse(JSON.stringify(this.allList)).concat(JSON.parse(JSON.stringify(this.selectedList)));
         }
       });
     },
     // 改变数据
     changeData(selectedList, currentItem) {
-      updateApp(currentItem).then((response) => {
-        console.log('kkkk', response);
-      });
+      updateApp(currentItem).then(() => {});
     },
     submitForm() {
       this.openDialog = false;
-      this.getInitData('');
-      this.$emit('changeContentSetting', false);
+      this.getInitData("");
+      this.$emit("change-content-setting", false);
     },
     cancel() {
       // 将数据置为初始状态
       batchUpdateApp(this.storeInitData).then(() => {
         this.openDialog = false;
-        this.$emit('changeContentSetting', false);
+        this.$emit("change-content-setting", false);
       });
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -267,16 +298,16 @@ export default {
 .myHeader>>>.el-tabs__item {
   padding: 0 10px;
 }
-.bgImage {
-    background: url('../../../../assets/intelligentOilfield/bgImg.png');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    color: #51A1FF;
-}
+
 .textSpan {
-    font-size: 12px;
-    font-family: PingFangSC-Medium, PingFang SC;
-    font-weight: 500;
-    color: #909399;
+  font-size: 12px;
+  font-family: PingFangSC-Medium, "PingFang SC";
+  font-weight: 500;
+  color: #909399;
+  display: inline-block;
+  max-width: 82px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 </style>
