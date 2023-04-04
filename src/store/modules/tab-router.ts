@@ -15,17 +15,17 @@ export type TTabRouterType = {
 
 const homeRoute: Array<TRouterInfo> = [
   {
-    path: '/homePage/index',
+    path: "/homePage/index",
     routeIdx: 0,
-    title: '首页',
-    name: 'homePageIndex',
-    isHome: true,
-  },
+    title: "首页",
+    name: "homePageIndex",
+    isHome: true
+  }
 ];
 
 const state: TTabRouterType = {
   tabRouterList: homeRoute,
-  isRefreshing: false,
+  isRefreshing: false
 };
 
 // 不需要做多标签tabs页缓存的列表 值为每个页面对应的name 如 DashboardDetail
@@ -41,9 +41,7 @@ const mutations = {
   // 处理新增
   appendTabRouterList(state: TTabRouterType, newRoute: TRouterInfo) {
     const needAlive = !ignoreCacheRoutes.includes(newRoute.name);
-    if (!state.tabRouterList.find((route: TRouterInfo) => route.path === newRoute.path))
-      // eslint-disable-next-line no-param-reassign
-      state.tabRouterList = state.tabRouterList.concat({ ...newRoute, isAlive: needAlive });
+    if (!state.tabRouterList.find((route: TRouterInfo) => route.path === newRoute.path)) { state.tabRouterList = state.tabRouterList.concat({ ...newRoute, isAlive: needAlive }); }
   },
   // 处理关闭当前
   subtractCurrentTabRouter(state: TTabRouterType, newRoute: TRouterInfo) {
@@ -64,7 +62,7 @@ const mutations = {
   subtractTabRouterOther(state: TTabRouterType, newRoute: TRouterInfo) {
     const { routeIdx } = newRoute;
     // 解决右键home图标关闭其他标签出现多个home图标
-    if(homeRoute[0].path !== state.tabRouterList?.[routeIdx].path) {
+    if (homeRoute[0].path !== state.tabRouterList?.[routeIdx].path) {
       state.tabRouterList = homeRoute.concat([state.tabRouterList?.[routeIdx]]);
     } else {
       state.tabRouterList = homeRoute;
@@ -73,21 +71,21 @@ const mutations = {
   // 只显示默认路由
   removeTabRouterList() {
     state.tabRouterList = [{
-      path: '/homePage/index',
+      path: "/homePage/index",
       routeIdx: 0,
-      title: '首页',
-      name: 'homePageIndex',
-      isHome: true,
+      title: "首页",
+      name: "homePageIndex",
+      isHome: true
     }];
   },
   initTabRouterList(state: TTabRouterType, newRoute: TRouterInfo[]) {
     state.tabRouterList = newRoute;
-  },
+  }
 };
 
 const getters = {
   tabRouterList: (state: TTabRouterType) => state.tabRouterList,
-  isRefreshing: (state: TTabRouterType) => state.isRefreshing,
+  isRefreshing: (state: TTabRouterType) => state.isRefreshing
 };
 
 const actions = {};
@@ -97,5 +95,5 @@ export default {
   state,
   mutations,
   actions,
-  getters,
+  getters
 };

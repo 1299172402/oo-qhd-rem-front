@@ -1,12 +1,12 @@
-import axios from 'axios';
-import { MessageBox, Message, Loading } from 'element-ui'
-import _ from 'lodash';
-import { saveAs } from 'file-saver'
-import proxy from '../config/host';
-import store from '@/store';
-import router from '@/router/index';
+import axios from "axios";
+import { MessageBox, Message, Loading } from "element-ui";
+import _ from "lodash";
+import { saveAs } from "file-saver";
+import proxy from "../config/host";
+import store from "@/store";
+import router from "@/router/index";
 import { tansParams, blobValidate } from "@/utils/commonSettings";
-import errorCode from '@/utils/errorCode'
+import errorCode from "@/utils/errorCode";
 
 let downloadLoadingInstance;
 
@@ -17,24 +17,23 @@ let needLoadingRequestCount = 0;
 // 401拦截次数
 let interceptCount = 0;
 
-// 防抖：将 300ms 间隔内的关闭 loading 便合并为一次。防止连续请求时， loading闪烁的问题。
+// 防抖：将 500ms 间隔内的关闭 loading 便合并为一次。防止连续请求时， loading闪烁的问题。
 const toHideLoading = _.debounce(() => {
   if (loading) {
     loading.close();
   }
   loading = null;
-}, 300);
+}, 500);
 
-const env = import.meta.env.MODE || 'development';
+const env = import.meta.env.MODE || "development";
 
-const API_HOST = env === 'mock' ? '/' : proxy[env].API; // 如果是mock模式 就不配置host 会走本地Mock拦截
+const API_HOST = env === "mock" ? "/" : proxy[env].API; // 如果是mock模式 就不配置host 会走本地Mock拦截
 
 const CODE = {
   LOGIN_TIMEOUT: 1000,
   REQUEST_SUCCESS: 0,
-  REQUEST_FOBID: 1001,
+  REQUEST_FOBID: 1001
 };
-
 
 // 显示loading
 function showLoading(target) {
@@ -44,7 +43,7 @@ function showLoading(target) {
     loading = Loading.service({
       lock: true,
       text: "数据加载中...",
-      background: 'rgba(0, 0, 0, 0.5)',
+      background: "rgba(0, 0, 0, 0.5)",
       target: target || "body"
     });
   }
@@ -60,12 +59,10 @@ function hideLoading() {
   }
 }
 
-
-
 const instance = axios.create({
   baseURL: API_HOST,
   timeout: 10000,
-  withCredentials: true,
+  withCredentials: true
 });
 
 // eslint-disable-next-line
@@ -75,10 +72,10 @@ instance.interceptors.retry = 3;
 
 // instance.interceptors.request.use((config) => config);
 instance.interceptors.request.use(
-  (config) => {
-    const isToken = (config.headers || {}).isToken === false
-    if (store.getters['user/token'] && !isToken) {
-      config.headers.Authorization = `Bearer ${store.getters['user/token']}`; // 让每个请求携带自定义token 请根据实际情况自行修改
+  config => {
+    const isToken = (config.headers || {}).isToken === false;
+    if (store.getters["user/token"] && !isToken) {
+      config.headers.Authorization = `Bearer ${store.getters["user/token"]}`; // 让每个请求携带自定义token 请根据实际情况自行修改
     }
     // if (store.getters['user/token']) {
     //   // config.headers['token'] = store.getters['user/token']
@@ -90,30 +87,32 @@ instance.interceptors.request.use(
     }
     return config;
   },
-  (err) => {
+  err => {
     // 判断当前请求是否设置了不显示Loading
     // if(config.headers.showLoading !== false){
     hideLoading();
     // }
-    Promise.reject(err)
-  },
+    Promise.reject(err);
+  }
 );
 
 instance.interceptors.response.use(
-  (response) => {
+  response => {
     if (response.config.returnAll) {
+      hideLoading();
       return response;
     }
     // 二进制数据则直接返回
-    if(response.request.responseType ===  'blob' || response.request.responseType ===  'arraybuffer'){
-      return response.data
+    if (response.request.responseType === "blob" || response.request.responseType === "arraybuffer") {
+      hideLoading();
+      return response.data;
     }
     if (response.data.code === 401 && interceptCount === 0) {
-      interceptCount+=1;
-      MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
-        confirmButtonText: '重新登录',
-        cancelButtonText: '取消',
-        type: 'warning'
+      interceptCount += 1;
+      MessageBox.confirm("登录状态已过期，您可以继续留在该页面，或者重新登录", "系统提示", {
+        confirmButtonText: "重新登录",
+        cancelButtonText: "取消",
+        type: "warning"
       }
       ).then(() => {
         // 更新访问页面
@@ -123,31 +122,30 @@ instance.interceptors.response.use(
         // updateaccessPage(sysUser).then((res) => {
         //   console.log(res);
         // });
-        router.replace({ path: `/`})
-        store.dispatch('user/logout')
-        store.dispatch('permission/restore');
+        router.replace({ path: "/" });
+        store.dispatch("user/logout");
+        store.dispatch("permission/restore");
         // router.push(`/login`)
         if (response.config.headers.showLoading !== false) {
           hideLoading();
         }
-      })
+      });
     } else if (response.data.code === 500) {
       Message({
         message: response.data.msg,
-        type: 'error'
-      })
+        type: "error"
+      });
       if (response.config.headers.showLoading !== false) {
         hideLoading();
       }
-    }
-    else if (response.data.code === 200) {
+    } else if (response.data.code === 200) {
       interceptCount = 0;
       const { data } = response;
       // 判断当前请求是否设置了不显示Loading（不显示自然无需隐藏）
       if (response.config.headers.showLoading !== false) {
         hideLoading();
       }
-      if(router.app?.$route?.name === 'login') { // 登录页面关闭所有loading
+      if (router.app?.$route?.name === "login") { // 登录页面关闭所有loading
         if (response.config.headers.showLoading !== false) {
           needLoadingRequestCount = 1;
           hideLoading();
@@ -162,7 +160,7 @@ instance.interceptors.response.use(
       return response.data;
     }
   },
-  (err) => {
+  err => {
     const { config } = err;
     // 判断当前请求是否设置了不显示Loading（不显示自然无需隐藏）
     // if(response.config.headers.showLoading !== false){
@@ -183,40 +181,40 @@ instance.interceptors.response.use(
 
     config.retryCount += 1;
 
-    const backoff = new Promise((resolve) => {
+    const backoff = new Promise(resolve => {
       setTimeout(() => {
         resolve({});
       }, config.retryDelay || 1);
     });
 
     return backoff.then(() => instance(config));
-  },
+  }
 );
 
 // 通用下载方法
 export function download(url, params, filename) {
-  downloadLoadingInstance = Loading.service({ text: "正在下载数据，请稍候", spinner: "el-icon-loading", background: "rgba(0, 0, 0, 0.7)", })
+  downloadLoadingInstance = Loading.service({ text: "正在下载数据，请稍候", spinner: "el-icon-loading", background: "rgba(0, 0, 0, 0.7)" });
   return instance.post(url, params, {
-    transformRequest: [(params) => tansParams(params)],
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    responseType: 'blob'
-  }).then(async (data) => {
+    transformRequest: [params => tansParams(params)],
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    responseType: "blob"
+  }).then(async data => {
     const isLogin = await blobValidate(data);
     if (isLogin) {
-      const blob = new Blob([data])
-      saveAs(blob, filename)
+      const blob = new Blob([data]);
+      saveAs(blob, filename);
     } else {
       const resText = await data.text();
       const rspObj = JSON.parse(resText);
-      const errMsg = errorCode[rspObj.code] || rspObj.msg || errorCode.default
+      const errMsg = errorCode[rspObj.code] || rspObj.msg || errorCode.default;
       Message.error(errMsg);
     }
     downloadLoadingInstance.close();
-  }).catch((r) => {
-    console.error(r)
-    Message.error('下载文件出现错误，请联系管理员！')
+  }).catch(r => {
+    console.error(r);
+    Message.error("下载文件出现错误，请联系管理员！");
     downloadLoadingInstance.close();
-  })
+  });
 }
 
 export default instance;

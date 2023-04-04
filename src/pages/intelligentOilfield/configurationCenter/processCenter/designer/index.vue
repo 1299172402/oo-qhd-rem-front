@@ -8,13 +8,9 @@
 export default {
   data() {
     return {
-        
-    }
+
+    };
   },
-  methods: {},
+  methods: {}
 };
 </script>
-
-<style scoped>
-
-</style>

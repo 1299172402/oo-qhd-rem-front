@@ -2,12 +2,27 @@
 <template>
   <div class="g-w100 g-h100">
     <!-- <bottomButton class="bottomBtn" @bigScreenMode="fullScreen"></bottomButton> -->
-    <el-dialog @close="cancel" title="内容设置-业务中心" :visible.sync="openDialog" width="600px" append-to-body
-      :close-on-click-modal="false">
-      <div>
-        <dataTransfer @submitForm="submitForm" @cancel="cancel" searchName="业务筛选"
-          :searchOption="dict.type.sys_business_module" :allList="allList" :selectedList="selectedList"
-          @changeData="changeData" @changeSource="changeSource" :headerNameList="headerNameList"></dataTransfer>
+    <el-dialog
+      title="内容设置-业务中心"
+      :visible.sync="openDialog"
+      width="65%"
+      append-to-body
+      :close-on-click-modal="false"
+      custom-class="import-dialog"
+      @close="cancel"
+    >
+      <div style="height: 100%;">
+        <data-transfer
+          search-name="业务筛选"
+          :search-option="dict.type.sys_business_module"
+          :all-list="allList"
+          :selected-list="selectedList"
+          :header-name-list="headerNameList"
+          @submitForm="submitForm"
+          @cancel="cancel"
+          @changeData="changeData"
+          @changeSource="changeSource"
+        />
       </div>
     <!-- <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -15,37 +30,58 @@
                   </div> -->
     </el-dialog>
     <div id="fullScreen_panorama">
-      <bottomButton v-if="linkUrl !== ''" @bigScreenMode="fullExit" class="bottomBtn"></bottomButton>
-      <iframe v-if="linkUrl !== ''" :src="linkUrl" frameborder="0" class="g-w100 g-h100"></iframe>
+      <bottom-button v-if="linkUrl !== ''" class="bottomBtn" @bigScreenMode="fullExit" />
+      <iframe
+        v-if="linkUrl !== ''"
+        :src="linkUrl"
+        frameborder="0"
+        class="g-w100 g-h100"
+      />
     </div>
-    <info-window infoWidth="100%" infoHeight="100%" headerTitle="已授权业务">
-      <div class="g-w100 g-h100 g-row-flex-V divBox"
-        style="overflow: scroll; padding: 20px 10px; flex-wrap: wrap; justify-content: space-around">
-        <div style="font-size: 16px; width: 32%; cursor: pointer" v-for="(item, index) in list" :key="index"
-          @click="toClick(item.businessUrl)">
-          <img :src="item.businessImg" alt="" class="g-w100" />
-          <div style="text-align: center">{{ item.businessName }}</div>
-          <!-- <t-button theme="default" @click="fullExit">退出投影模式</t-button> -->
-        </div>
+    <info-window
+      info-width="100%"
+      info-height="100%"
+      header-title="已授权业务"
+      :header-style="$store.state.setting.mode === 'dark'?{}:{color:'#3490D3'}"
+    >
+      <div class="g-w100 g-h100" style="padding: 20px 20px 10px;overflow-y: scroll">
+        <el-row :gutter="20">
+          <el-col
+            v-for="(item, index) in list"
+            :key="index"
+            :xs="24"
+            :sm="12"
+            :md="8"
+            :lg="6"
+            :xl="4"
+          >
+            <div class="g-w100" style="font-size: 16px; cursor: pointer;display: flex;flex-direction: column" @click="toClick(item.businessUrl)">
+              <img :src="item.businessImg" alt="" class="g-w100">
+              <div style="text-align: center;line-height: 32px">
+                {{ item.businessName }}
+              </div>
+            </div>
+          </el-col>
+        </el-row>
       </div>
     </info-window>
   </div>
 </template>
 <script>
-import dataTransfer from '@/components/intelligentOilfield/data-transfer/index.vue';
-import bottomButton from '@/components/intelligentOilfield/bottom-button/index.vue';
-import { getListBusiness } from '@/api/intelligentOilfield/system/business';
+import dataTransfer from "@/components/intelligentOilfield/data-transfer/index.vue";
+import bottomButton from "@/components/intelligentOilfield/bottom-button/index.vue";
+import { getListBusiness } from "@/api/intelligentOilfield/system/business";
 
 export default {
-  dicts: ['sys_business_module'],
+  dicts: ["sys_business_module"],
   components: {
     dataTransfer,
-    bottomButton,
+    bottomButton
   },
   props: {
     componentItem: {
       type: Object,
-      default: () => ({}),
+      default: () => ({})
     },
     list: {
       type: Array,
@@ -60,52 +96,51 @@ export default {
       selectedList: [],
       storeSelectedList: [],
       screenList: [],
-      linkUrl: '',
+      linkUrl: "",
       headerNameList: [
-        { id: 0, name: '已选业务', isSelected: true },
-        { id: 1, name: '未选业务', isSelected: false },
-      ],
+        { id: 0, name: "已选业务", isSelected: true },
+        { id: 1, name: "未选业务", isSelected: false }
+      ]
     };
   },
   watch: {
-    '$store.state.user.projectionMode': {
+    "$store.state.user.projectionMode": {
       handler(newValue) {
         if (newValue) {
           this.fullScreen();
         }
       },
       deep: true,
-      immediate: true,
+      immediate: true
     },
-    'componentItem.contentSetting': {
+    "componentItem.contentSetting": {
       handler(newVal) {
         if (newVal) {
           this.openDialog = newVal;
         }
       },
       deep: true,
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   mounted() {
     // this.getDataList('');
   },
   methods: {
     toClick(url) {
-      const a = document.createElement('a')
-      a.setAttribute('target', '_blank')
-      a.setAttribute('href', url)
-      a.click()
-      a.remove()
+      const a = document.createElement("a");
+      a.setAttribute("target", "_blank");
+      a.setAttribute("href", url);
+      a.click();
+      a.remove();
     },
     // 修改数据来源
     changeSource(item) {
-      console.log('jieg', item);
-      this.getDataList(item)
+      this.getDataList(item);
     },
     // 全屏展示链接, 未完不能全屏跳转！！！
     linkPage(item) {
-      this.linkUrl = `${item.businessUrl}?token=${this.$store.getters["user/token"]}`
+      this.linkUrl = `${item.businessUrl}?token=${this.$store.getters["user/token"]}`;
       this.$nextTick(() => {
         this.fullScreen();
       });
@@ -115,20 +150,20 @@ export default {
       this.allList = [];
       this.selectedList = [];
       let queryParams = {};
-      if (item !== '') {
+      if (item !== "") {
         queryParams = {
-          businessModule: item,
-        }
+          businessModule: item
+        };
       }
       // 调取接口
-      getListBusiness(queryParams).then((response) => {
-        response.data.data.forEach((item) => {
-          item.businessModule = String(item.businessModule.toLocaleString())
-          if (item.isSelected === '1') {
-            this.selectedList.push({ name: item.businessName, ...item })
+      getListBusiness(queryParams).then(response => {
+        response.data.data.forEach(item => {
+          item.businessModule = String(item.businessModule.toLocaleString());
+          if (item.isSelected === "1") {
+            this.selectedList.push({ name: item.businessName, ...item });
           }
-          this.allList.push({ name: item.businessName, ...item })
-        })
+          this.allList.push({ name: item.businessName, ...item });
+        });
       });
       // 未选中
       //   this.allList = [
@@ -198,11 +233,9 @@ export default {
       //   ];
       // 大屏list
       this.screenList = JSON.parse(JSON.stringify(this.selectedList));
-      console.log('大屏list==', this.screenList);
     },
     submitForm() {
       // 将已选应用存储起来
-      console.log('存储应用==', this.storeSelectedList);
       this.screenList = JSON.parse(JSON.stringify(this.storeSelectedList));
       // 调取接口
       this.cancel();
@@ -211,79 +244,63 @@ export default {
       // 将数据置为初始状态
       //   this.getDataList();
       this.openDialog = false;
-      this.$emit('changeContentSetting', false);
+      this.$emit("change-content-setting", false);
     },
     // 改变数据
+    // eslint-disable-next-line
     changeData(selectedList, currentItem) {
       // 更新接口
-      console.log('业务中心更新==', currentItem);
       //     updateApp(currentItem).then((response) => {
       //   });
       //   this.storeSelectedList = JSON.parse(JSON.stringify(selectedList));
     },
     fullScreen() {
       // var element= document.documentElement; //若要全屏页面中div，var element= document.getElementById("divID");
-      const element = document.getElementById('fullScreen_panorama');
+      const element = document.getElementById("fullScreen_panorama");
       // IE 10及以下ActiveXObject
       if (window.ActiveXObject) {
-        const WsShell = new window.ActiveXObject('WScript.Shell');
-        WsShell.SendKeys('{F11}');
+        const WsShell = new window.ActiveXObject("WScript.Shell");
+        WsShell.SendKeys("{F11}");
         // 写全屏后的执行函数
-      }
-      // HTML W3C 提议
-      else if (element.requestFXullScreen) {
+      } else if (element.requestFXullScreen) {
         element.requestFullScreen();
         // 写全屏后的执行函数
-      }
-      // IE11
-      else if (element.msRequestFullscreen) {
+      } else if (element.msRequestFullscreen) {
         element.msRequestFullscreen();
         // 写全屏后的执行函数
-      }
-      // Webkit (works in Safari5.1 and Chrome 15)
-      else if (element.webkitRequestFullScreen) {
+      } else if (element.webkitRequestFullScreen) {
         element.webkitRequestFullScreen();
         // 写全屏后的执行函数
-      }
-      // Firefox (works in nightly)
-      else if (element.mozRequestFullScreen) {
+      } else if (element.mozRequestFullScreen) {
         element.mozRequestFullScreen();
         // 写全屏后的执行函数
       }
     },
     fullExit() {
-      this.linkUrl = '';
-      this.$store.commit('user/setProjectionMode', false);
+      this.linkUrl = "";
+      this.$store.commit("user/setProjectionMode", false);
       // var element= document.documentElement;//若要全屏页面中div，var element= document.getElementById("divID");
-      const element = document.getElementById('fullScreen_panorama');
+      const element = document.getElementById("fullScreen_panorama");
       // IE ActiveXObject
       if (window.ActiveXObject) {
-        const WsShell = new window.ActiveXObject('WScript.Shell');
-        WsShell.SendKeys('{F11}');
+        const WsShell = new window.ActiveXObject("WScript.Shell");
+        WsShell.SendKeys("{F11}");
         // 写退出全屏后的执行函数
-      }
-      // HTML5 W3C 提议
-      else if (element.requestFullScreen) {
+      } else if (element.requestFullScreen) {
         document.exitFullscreen();
         // 写退出全屏后的执行函数
-      }
-      // IE 11
-      else if (element.msRequestFullscreen) {
+      } else if (element.msRequestFullscreen) {
         document.msExitFullscreen();
         // 写退出全屏后的执行函数
-      }
-      // Webkit (works in Safari5.1 and Chrome 15)
-      else if (element.webkitRequestFullScreen) {
+      } else if (element.webkitRequestFullScreen) {
         document.webkitCancelFullScreen();
         // 写退出全屏后的执行函数
-      }
-      // Firefox (works in nightly)
-      else if (element.mozRequestFullScreen) {
+      } else if (element.mozRequestFullScreen) {
         document.mozCancelFullScreen();
         // 写退出全屏后的执行函数
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -294,12 +311,7 @@ export default {
 }
 
 .divBox::after {
-  content: '';
+  content: "";
   width: 32%;
-}
-
-.bottomBtn {
-  position: absolute;
-  bottom: 0;
 }
 </style>

@@ -25,15 +25,15 @@ export default Vue.extend({
         if (!mode || mode === "development") {
           url = this.serverUrl;
         } else {
-          url = `/b/${this.serverUrl}`
+          url = `/b/${this.serverUrl}`;
         }
-        return `${url}?file=${encodeURIComponent(`${this.fileId}#${this.newFileName}`)}`
+        return `${url}?file=${encodeURIComponent(`${this.fileId}#${this.newFileName}`)}`;
       }
       return "";
     },
     newFileName() {
       let data = this.fileName;
-      data = `${data.slice(0, data.lastIndexOf("."))  }.pdf`;
+      data = `${data.slice(0, data.lastIndexOf("."))}.pdf`;
       return data;
     }
   },
@@ -42,6 +42,6 @@ export default Vue.extend({
       <div style="height: 100%">
         <iframe src={this.url} width="100%" height="100%" />
       </div>
-    )
+    );
   }
 });

@@ -1,5 +1,4 @@
 
-
 import { postAction } from "@/api/common/manage";
 import actionType from "./ActionType";
 
@@ -67,29 +66,29 @@ const restartSubmitApi = (BusinessType, data) => {
 
 export const actionApi = (ActionType, BusinessType, data) => {
   switch (ActionType) {
-  case actionType.START:
-    return startApi(BusinessType, data);
-  case actionType.SUBMIT:
-    return submitApi(BusinessType, data);
-  case actionType.COMPLETE:
-    return completeApi(BusinessType, data);
-  case actionType.REJECT:
-    return rejectApi(BusinessType, data);
-  case actionType.TERMINATEPROCESSINSTANCE:
-    return terminateApi(BusinessType, data);
-  case actionType.Model:
-    return modelApi(BusinessType, data);
-  case actionType.DELEGATE:
-    return delegateApi(BusinessType, data);
-  case actionType.RESOLVE:
-    return resolveApi(BusinessType, data);
-  case actionType.SAVEDATA:
-    return saveDataApi(BusinessType, data);
-  case actionType.GETDOC:
-    return getDocApi(BusinessType, data);
-  case actionType.RESTARTSUBMIT:
-    return restartSubmitApi(BusinessType, data);
-  default: 
-    return Promise.resolve()  
+    case actionType.START:
+      return startApi(BusinessType, data);
+    case actionType.SUBMIT:
+      return submitApi(BusinessType, data);
+    case actionType.COMPLETE:
+      return completeApi(BusinessType, data);
+    case actionType.REJECT:
+      return rejectApi(BusinessType, data);
+    case actionType.TERMINATEPROCESSINSTANCE:
+      return terminateApi(BusinessType, data);
+    case actionType.Model:
+      return modelApi(BusinessType, data);
+    case actionType.DELEGATE:
+      return delegateApi(BusinessType, data);
+    case actionType.RESOLVE:
+      return resolveApi(BusinessType, data);
+    case actionType.SAVEDATA:
+      return saveDataApi(BusinessType, data);
+    case actionType.GETDOC:
+      return getDocApi(BusinessType, data);
+    case actionType.RESTARTSUBMIT:
+      return restartSubmitApi(BusinessType, data);
+    default:
+      return Promise.resolve();
   }
 };

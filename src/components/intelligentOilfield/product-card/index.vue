@@ -12,19 +12,25 @@
       </t-avatar>
     </template>
     <template #status>
-      <t-tag :theme="product.isSetup ? 'success' : 'default'" :disabled="!product.isSetup">{{
-        product.isSetup ? '已启用' : '已停用'
-      }}</t-tag>
+      <t-tag :theme="product.isSetup ? 'success' : 'default'" :disabled="!product.isSetup">
+        {{
+          product.isSetup ? '已启用' : '已停用'
+        }}
+      </t-tag>
     </template>
     <template #content>
-      <p class="list-card-item_detail--name">{{ product.name }}</p>
-      <p class="list-card-item_detail--desc">{{ product.description }}</p>
+      <p class="list-card-item_detail--name">
+        {{ product.name }}
+      </p>
+      <p class="list-card-item_detail--desc">
+        {{ product.description }}
+      </p>
     </template>
     <template #footer>
       <t-avatar-group cascading="left-up" :max="2">
         <t-avatar>{{ typeMap[product.type - 1] }}</t-avatar>
-        <t-avatar
-          ><template #icon>
+        <t-avatar>
+          <template #icon>
             <add-icon />
           </template>
         </t-avatar>
@@ -47,7 +53,12 @@
           },
         ]"
       >
-        <t-button theme="default" :disabled="!product.isSetup" shape="square" variant="text">
+        <t-button
+          theme="default"
+          :disabled="!product.isSetup"
+          shape="square"
+          variant="text"
+        >
           <more-icon />
         </t-button>
       </t-dropdown>
@@ -55,10 +66,10 @@
   </t-card>
 </template>
 <script lang="ts">
-import { ShopIcon, CalendarIcon, ServiceIcon, UserAvatarIcon, LaptopIcon, MoreIcon, AddIcon } from 'tdesign-icons-vue';
+import { ShopIcon, CalendarIcon, ServiceIcon, UserAvatarIcon, LaptopIcon, MoreIcon, AddIcon } from "tdesign-icons-vue";
 
 export default {
-  name: 'ListCard',
+  name: "ListCard",
   components: {
     ShopIcon,
     CalendarIcon,
@@ -66,29 +77,29 @@ export default {
     UserAvatarIcon,
     LaptopIcon,
     MoreIcon,
-    AddIcon,
+    AddIcon
   },
   props: {
     product: {
-      type: Object,
-    },
+      type: Object
+    }
   },
   data() {
-    return { typeMap: ['A', 'B', 'C', 'D', 'E'] };
+    return { typeMap: ["A", "B", "C", "D", "E"] };
   },
   methods: {
     handleManageProduct(product) {
-      this.$emit('manage-product', product);
+      this.$emit("manage-product", product);
     },
     handleDeleteItem(product) {
-      this.$emit('delete-item', product);
-    },
-  },
+      this.$emit("delete-item", product);
+    }
+  }
 };
 </script>
 
 <style lang="less" scoped>
-@import '@/style/variables';
+@import "@/style/variables";
 
 .list-card-item {
   display: flex;
@@ -111,7 +122,7 @@ export default {
       line-height: 20px;
       overflow: hidden;
       text-overflow: ellipsis;
-      display: -webkit-box;
+      display: box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       height: 40px;

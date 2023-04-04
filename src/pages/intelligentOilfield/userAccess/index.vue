@@ -1,46 +1,109 @@
 <!-- 后台——用户访问 -->
 <template>
   <div class="app-container">
-    <headerSearch class="g-w100 g-h100">
-    <el-form :model="queryParams" style="margin-top:20px" ref="queryForm" v-show="showSearch" :inline="true">
-      <el-form-item label="组织机构" prop="deptId">
-        <el-select v-model="queryParams.deptId" placeholder="请选择" clearable size="small" style="width: 240px">
-          <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.deptName"
-            :value="item.deptId"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="用户名称" prop="nickName">
-        <el-input v-model="queryParams.nickName" placeholder="请输入用户名称" clearable size="small" style="width: 240px"
-          @keyup.enter.native="handleQuery" />
-      </el-form-item>
-      <el-form-item label="时间">
-        <el-date-picker v-model="queryParams.loginDate" size="small" style="width: 240px" value-format="yyyy-MM-dd"
-          type="date" placeholder="选择时间" @change="dateRange = []">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="自定义时间">
-        <el-date-picker v-model="dateRange" size="small" style="width: 240px" value-format="yyyy-MM-dd" type="daterange"
-          range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"
-          @change="queryParams.loginDate = undefined"></el-date-picker>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery" class="commonBtn">重置</el-button>
-      </el-form-item>
-    </el-form>
-</headerSearch>
-  
-    <pagePanelNew headerTitle="用户访问" style="height:calc(100% - 100px);">
-        <el-row :gutter="10" class="mb8" style="margin-bottom:20px">
-      <el-col :span="1.5">
-        <el-button type="primary" size="mini" @click="handleExport"
-          v-hasPermi="['system:userAccess:export']">导出</el-button>
-      </el-col>
-    </el-row>
-      <el-table :data="userList" @selection-change="handleSelectionChange" height="calc(100% - 260px)"
-        :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-        header-cell-class-name="table_header" :cell-style="{ padding: '10px', 'text-align': 'center' }"
-        style="width: 100%; height: 100%;" :default-sort="{ prop: 'date', order: 'descending' }">
+    <header-search class="g-w100 g-h100">
+      <el-form
+        v-show="showSearch"
+        ref="queryForm"
+        :model="queryParams"
+        style="margin-top: 20px"
+        :inline="true"
+      >
+        <el-form-item label="组织机构" prop="deptId">
+          <el-select
+            v-model="queryParams.deptId"
+            placeholder="请选择"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="(item, index) in deptSelect"
+              :key="index"
+              :label="item.deptName"
+              :value="item.deptId"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="用户名称" prop="nickName">
+          <el-input
+            v-model="queryParams.nickName"
+            placeholder="请输入用户名称"
+            clearable
+            size="small"
+            style="width: 240px"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item label="时间">
+          <el-date-picker
+            v-model="queryParams.loginDate"
+            size="small"
+            style="width: 240px"
+            value-format="yyyy-MM-dd"
+            type="date"
+            placeholder="选择时间"
+            @change="dateRange = []"
+          />
+        </el-form-item>
+        <el-form-item label="自定义时间">
+          <el-date-picker
+            v-model="dateRange"
+            size="small"
+            style="width: 240px"
+            value-format="yyyy-MM-dd"
+            type="daterange"
+            range-separator="-"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            @change="queryParams.loginDate = undefined"
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            size="mini"
+            @click="handleQuery"
+          >
+            搜索
+          </el-button>
+          <el-button
+            icon="el-icon-refresh"
+            size="mini"
+            class="commonBtn"
+            @click="resetQuery"
+          >
+            重置
+          </el-button>
+        </el-form-item>
+      </el-form>
+    </header-search>
+
+    <page-panel-new header-title="用户访问" style="height: calc(100% - 118px);">
+      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
+        <el-col :span="1.5">
+          <el-button
+            v-hasPermi="['system:userAccess:export']"
+            type="primary"
+            size="mini"
+            @click="handleExport"
+          >
+            导出
+          </el-button>
+        </el-col>
+      </el-row>
+      <el-table
+        :data="userList"
+        height="calc(100% - 290px)"
+        :row-style="{ height: '0px' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        header-cell-class-name="table_header"
+        :cell-style="{ padding: '10px', 'text-align': 'center' }"
+        style="width: 100%; height: 100%;"
+        :default-sort="{ prop: 'date', order: 'descending' }"
+        @selection-change="handleSelectionChange"
+      >
         <el-table-column type="selection" width="65" align="center" />
         <el-table-column label="序号" type="index" width="65" />
         <el-table-column label="组织机构" prop="dept.deptName" />
@@ -60,44 +123,79 @@
         </el-table-column>
       </el-table>
       <div style="width: 100%">
-        <chartsComponents :chart-data-options="dataZhuzhuang" echartsType="bar1" style="width: 600px; height: 250px">
-        </chartsComponents>
-        <pagination :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
-          @pagination="getList" />
+        <charts-components :chart-data-options="dataZhuzhuang" echarts-type="bar1" style="width: 600px; height: 250px" />
+        <pagination
+          :total="total"
+          :page.sync="queryParams.pageNum"
+          :limit.sync="queryParams.pageSize"
+          @pagination="getList"
+        />
       </div>
-    </pagePanelNew>
+    </page-panel-new>
   </div>
 </template>
 <script>
 
-import { listUseraccess, getAccessCount } from '@/api/intelligentOilfield/system/user';
-import { listDept } from '@/api/intelligentOilfield/system/dept';
-import { LineChart } from 'echarts/charts';
-import { GridComponent, TooltipComponent, LegendComponent } from 'echarts/components';
-import { CanvasRenderer } from 'echarts/renderers';
-import * as echarts from 'echarts/core';
-import chartsComponents from '@/components/intelligentOilfield/echarts-com/index.vue';
+import { listUseraccess, getAccessCount } from "@/api/intelligentOilfield/system/user";
+import { listDept } from "@/api/intelligentOilfield/system/dept";
+import { LineChart } from "echarts/charts";
+import { GridComponent, TooltipComponent, LegendComponent } from "echarts/components";
+import { CanvasRenderer } from "echarts/renderers";
+import * as echarts from "echarts/core";
+import chartsComponents from "@/components/intelligentOilfield/echarts-com/index.vue";
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 export default {
-  name: 'UserAccess',
+  name: "UserAccess",
   components: {
-    chartsComponents,
+    chartsComponents
   },
-  dicts: ['sys_normal_disable'],
+  dicts: ["sys_normal_disable"],
   data() {
     return {
       dataZhuzhuang: {
         xAxis: {
           data: [],
+          type: "category",
+          axisLabel: {
+            show: true,
+            interval: 0,
+            formatter: function(value) {
+              if (value.length > 6) {
+                return `${value.slice(0, 6)}...`;
+              }
+              return value;
+            },
+            textStyle: {
+              padding: [5, 0, 0, 0],
+              color: "rgb(144, 144, 144)" // X轴文字颜色
+            },
+            rotate: -45
+          }
         },
-        yAxis: {},
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow"
+          }
+        },
+        yAxis: [
+          {
+            axisLabel: {
+              show: true,
+              textStyle: {
+                fontSize: 12,
+                color: "rgb(144, 144, 144)"
+              }
+            }
+          }
+        ],
         series: [
           {
-            type: 'bar',
-            data: [],
-          },
-        ],
+            type: "bar",
+            data: []
+          }
+        ]
       },
       // 遮罩层
       loading: true,
@@ -135,7 +233,7 @@ export default {
       },
       deptSelect: [],
       // 表单参数
-      form: {},
+      form: {}
     };
   },
   created() {
@@ -143,24 +241,26 @@ export default {
     this.choiceDepts(); // 获取组织机构
     this.getAccessCount();
   },
+  activated() {
+    this.getList();
+  },
   methods: {
     // 查询统计表信息
     getAccessCount() {
-      getAccessCount().then((response) => {
-        this.dataZhuzhuang.xAxis.data = []
-        this.dataZhuzhuang.series[0].data = []
+      getAccessCount().then(response => {
+        this.dataZhuzhuang.xAxis.data = [];
+        this.dataZhuzhuang.series[0].data = [];
         response.data.data.forEach(item => {
-          this.dataZhuzhuang.xAxis.data.push(item.appName)
-          this.dataZhuzhuang.series[0].data.push(item.count)
-        })
-
+          this.dataZhuzhuang.xAxis.data.push(item.appName);
+          this.dataZhuzhuang.series[0].data.push(item.count);
+        });
       });
     },
     // 选择机构
     choiceDepts() {
-      listDept().then((response) => {
+      listDept().then(response => {
         this.deptSelect = response.data.data;
-        this.deptList = this.handleTree(response.data.data, 'deptId');
+        this.deptList = this.handleTree(response.data.data, "deptId");
       });
     },
     /** 查询用户访问列表 */
@@ -169,7 +269,7 @@ export default {
       const [beginTime, endTime] = this.dateRange;
       this.queryParams.beginTime = beginTime;
       this.queryParams.endTime = endTime;
-      listUseraccess(this.queryParams).then((response) => {
+      listUseraccess(this.queryParams).then(response => {
         this.userList = response.data.rows;
         this.total = response.data.total;
         this.loading = false;
@@ -189,14 +289,14 @@ export default {
         roleName: undefined,
         roleKey: undefined,
         roleSort: 0,
-        status: '0',
+        status: "0",
         menuIds: [],
         deptIds: [],
         menuCheckStrictly: true,
         deptCheckStrictly: true,
-        remark: undefined,
+        remark: undefined
       };
-      this.resetForm('form');
+      this.resetForm("form");
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -206,28 +306,28 @@ export default {
     /** 重置按钮操作 */
     resetQuery() {
       this.dateRange = [];
-      this.resetForm('queryForm');
+      this.resetForm("queryForm");
       this.$nextTick(() => {
         this.handleQuery();
-      })
+      });
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map((item) => item.roleId);
+      this.ids = selection.map(item => item.roleId);
       this.single = selection.length !== 1;
       this.multiple = !selection.length;
     },
     /** 导出按钮操作 */
     handleExport() {
       this.download(
-        'system/user/exportAccessPage',
+        "system/user/exportAccessPage",
         {
-          ...this.queryParams,
+          ...this.queryParams
         },
-        `user_access_${new Date().getTime()}.xlsx`,
+        `user_access_${new Date().getTime()}.xlsx`
       );
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>

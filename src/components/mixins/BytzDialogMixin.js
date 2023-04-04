@@ -25,7 +25,7 @@ export const getByIdMixin = {
     getModel: function(id) {
       this.loading = true;
       return this.fn.findById(id)
-        .then((v) => {
+        .then(v => {
           this.model = this.getFindModel(v);
         })
         .finally(() => {

@@ -1,5 +1,5 @@
 <template>
- <div class="upload-file">
+  <div class="upload-file">
     <template v-if="isPictureCard">
       <el-upload
         ref="upload"
@@ -47,10 +47,10 @@
         <div v-if="showTip" slot="tip" class="el-upload__tip">
           请上传
           <template v-if="fileSize">
-            大小不超过 <b style="color: #F56C6C;">{{ fileSize }}MB</b>
+            大小不超过 <b style="color: #f56c6c;">{{ fileSize }}MB</b>
           </template>
           <template v-if="fileType">
-            格式为 <b style="color: #F56C6C;">{{ fileType.join("/") }}</b>
+            格式为 <b style="color: #f56c6c;">{{ fileType.join("/") }}</b>
           </template>
           的文件
         </div>
@@ -123,7 +123,7 @@ export default {
     },
     viewOnly: {
       type: Boolean,
-      default : false
+      default: false
     }
   },
   data() {
@@ -154,7 +154,7 @@ export default {
           // 首先将值转为数组
           const list = Array.isArray(val) ? val : this.value.split(",");
           // 然后将数组转为对象数组
-          this.fileList = list.map((item) => {
+          this.fileList = list.map(item => {
             if (typeof item === "string") {
               item = { name: item, url: item };
             }
@@ -188,7 +188,7 @@ export default {
       if (this.isPictureCard && this.fileList.length > 0) {
         let len = this.fileList.length;
         this.imageList = [];
-        this.fileList.forEach((file) =>{
+        this.fileList.forEach(file => {
           this.imageList.push({ url: file.url, name: file.name });
           len -= 1;
           if (len === 0) {
@@ -209,7 +209,7 @@ export default {
         if (file.name.lastIndexOf(".") > -1) {
           fileExtension = file.name.slice(file.name.lastIndexOf(".") + 1);
         }
-        const isTypeOk = this.fileType.some((type) => {
+        const isTypeOk = this.fileType.some(type => {
           if (file.type.indexOf(type) > -1) { return true; }
           if (fileExtension && fileExtension.indexOf(type) > -1) { return true; }
           return false;
@@ -265,7 +265,7 @@ export default {
     handleDelete(index) {
       this.fileList.splice(index, 1);
       this.$emit("input", this.listToString(this.fileList));
-      this.$emit("change", this.fileList)
+      this.$emit("change", this.fileList);
       this.validateFile();
     },
     /**
@@ -290,7 +290,7 @@ export default {
      * 删除图片
      */
     handleRemove(file, fileList) {
-      this.fileList = fileList?.map((item) => ({ name: item.name, url: item.name })) || [];
+      this.fileList = fileList?.map(item => ({ name: item.name, url: item.name })) || [];
       this.$emit("input", this.listToString(this.fileList));
       this.validateFile();
     },
@@ -339,7 +339,7 @@ export default {
 }
 
 .upload-file-list .el-upload-list__item {
-  border: 1px solid #E4E7ED;
+  border: 1px solid #e4e7ed;
   line-height: 2;
   margin-bottom: 10px;
   position: relative;

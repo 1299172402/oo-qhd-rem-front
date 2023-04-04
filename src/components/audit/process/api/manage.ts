@@ -11,7 +11,7 @@ const api = {
 export default api;
 
 // post
-export function postAction (url: string, data?, params?): any {
+export function postAction(url: string, data?, params?): any {
   return axios({
     url,
     method: "post",
@@ -21,7 +21,7 @@ export function postAction (url: string, data?, params?): any {
 }
 
 // post method= {post | put}
-export function httpAction (url: string, parameter, method) {
+export function httpAction(url: string, parameter, method) {
   return axios({
     url,
     method,
@@ -30,7 +30,7 @@ export function httpAction (url: string, parameter, method) {
 }
 
 // put
-export function putAction (url, parameter) {
+export function putAction(url, parameter) {
   return axios({
     url,
     method: "put",
@@ -39,7 +39,7 @@ export function putAction (url, parameter) {
 }
 
 // get
-export function getAction (url: string, parameter?, other?): any {
+export function getAction(url: string, parameter?, other?): any {
   return axios({
     url,
     method: "get",
@@ -49,7 +49,7 @@ export function getAction (url: string, parameter?, other?): any {
 }
 
 // deleteAction
-export function deleteAction (url, parameter) {
+export function deleteAction(url, parameter) {
   return axios({
     url,
     method: "post",
@@ -57,7 +57,7 @@ export function deleteAction (url, parameter) {
   });
 }
 
-export function getUserList (parameter) {
+export function getUserList(parameter) {
   return axios({
     url: api.user,
     method: "get",
@@ -65,7 +65,7 @@ export function getUserList (parameter) {
   });
 }
 
-export function getRoleList (parameter) {
+export function getRoleList(parameter) {
   return axios({
     url: api.role,
     method: "get",
@@ -73,7 +73,7 @@ export function getRoleList (parameter) {
   });
 }
 
-export function getServiceList (parameter) {
+export function getServiceList(parameter) {
   return axios({
     url: api.service,
     method: "get",
@@ -81,7 +81,7 @@ export function getServiceList (parameter) {
   });
 }
 
-export function getPermissions (parameter) {
+export function getPermissions(parameter) {
   return axios({
     url: api.permissionNoPager,
     method: "get",
@@ -91,7 +91,7 @@ export function getPermissions (parameter) {
 
 // id == 0 add     post
 // id != 0 update  put
-export function saveService (parameter) {
+export function saveService(parameter) {
   return axios({
     url: api.service,
     // eslint-disable-next-line eqeqeq
@@ -107,7 +107,7 @@ export function saveService (parameter) {
  * @param method
  * @returns {*}
  */
-export function downFile (url, parameter, method = "get") {
+export function downFile(url, parameter, method = "get") {
   return axios({
     url,
     params: parameter,
@@ -121,15 +121,14 @@ export function downFile (url, parameter, method = "get") {
  * @param subStr
  * @returns {*}
  */
-export function getFileAccessHttpUrl (avatar, subStr): string {
+export function getFileAccessHttpUrl(avatar, subStr): string {
   if (!subStr) subStr = "http";
   if (avatar && avatar.startsWith(subStr)) {
     return avatar;
-  } 
-  if (avatar && avatar.length > 0 && avatar.indexOf("[") === -1) {
-    return `${(window as any)._CONFIG.staticDomainURL  }/${  avatar}`;
   }
-  
+  if (avatar && avatar.length > 0 && avatar.indexOf("[") === -1) {
+    return `${(window as any)._CONFIG.staticDomainURL}/${avatar}`;
+  }
 }
 /**
  * 文书签章超时设置10分钟

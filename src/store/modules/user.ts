@@ -1,19 +1,19 @@
-import { message } from 'tdesign-vue'
+import { message } from "tdesign-vue";
 import Cookies from "js-cookie";
-import { TOKEN_NAME } from '@/config/global';
-import { login,getInfoByAppId, logout, getCodeImg} from '@/api/intelligentOilfield/login'
-import { encrypt, encryptlogin } from '@/utils/jsencrypt';
-import store from '@/store';
-import router from '@/router'
+import { TOKEN_NAME } from "@/config/global";
+import { login, getInfoByAppId, logout, getCodeImg } from "@/api/intelligentOilfield/login";
+import { encrypt, encryptlogin } from "@/utils/jsencrypt";
+import store from "@/store";
+import router from "@/router";
 import proxy from "@/config/host";
-import STYLE_CONFIG from '@/config/style';
-import { LIGHT_CHART_COLORS, DARK_CHART_COLORS } from '@/config/color';
+import STYLE_CONFIG from "@/config/style";
+import { LIGHT_CHART_COLORS, DARK_CHART_COLORS } from "@/config/color";
 // import { getToken, setToken, removeToken } from '@/utils/auth'
 // import { getToken, setToken, setExpiresIn, removeToken } from '@/utils/auth'
 const env = import.meta.env.MODE || "development";
 
 const InitUserInfo = {
-  roles: [],
+  roles: []
 };
 
 // 定义的state初始值
@@ -24,17 +24,22 @@ const state = {
   projectionMode: false, // 投影模式
   currentRoles: [], // 新增当前角色
   permissions: [],
-  name: '',
-  avatar: '',
+  name: "",
+  avatar: "",
   userRoles: [],
-  loginBack:false, // true:后台管理+门户,false:门户
-  logout: '0', // '0':门户,'1'：后台
+  loginBack: false, // true:后台管理+门户,false:门户
+  logout: "0", // '0':门户,'1'：后台
   // isGroupLogin: false,// 门户模式/后台模式，false：后台模式，体现在控制左侧菜单，多tab标签
-  isGroupLogin: localStorage.getItem('isGroupLogin')?localStorage.getItem('isGroupLogin')==='true':false,
-  userDetail:'',  
+  isGroupLogin: localStorage.getItem("isGroupLogin") ? localStorage.getItem("isGroupLogin") === "true" : false,
+  userDetail: "",
   isMax: false, // 是否最大化
-  tenantId: '',
-  notice: ''
+  tenantId: localStorage.getItem("TENANTID_NAME"),
+  tenantName: "", // 租户名称
+  notice: "",
+  tenantCode: {
+    value: "",
+    state: false
+  }
 };
 
 const mutations = {
@@ -43,70 +48,79 @@ const mutations = {
     state.token = token;
   },
   SETISMAX: (state, isMax) => {
-    state.isMax = isMax
+    state.isMax = isMax;
   },
   SET_EXPIRES_IN: (state, time) => {
-    state.expires_in = time
+    state.expires_in = time;
   },
   removeToken(state) {
     localStorage.removeItem(TOKEN_NAME);
-    state.token = '';
+    state.token = "";
   },
   setUserInfo(state, userInfo) {
-    state.userInfo = userInfo;
+    state.userInfo = JSON.parse(JSON.stringify(userInfo));
   },
   setProjectionMode(state, projectionMode) {
     state.projectionMode = projectionMode;
   },
   SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
+    state.avatar = avatar;
   },
   SET_PERMISSIONS: (state, permissions) => {
-    state.permissions = permissions
+    state.permissions = JSON.parse(JSON.stringify(permissions));
   },
   SET_ROLES: (state, userRoles) => {
-    state.userRoles = userRoles
+    state.userRoles = JSON.parse(JSON.stringify(userRoles));
   },
   SET_NAME: (state, name) => {
-    state.name = name
+    state.name = name;
   },
-  SET_LOGINBACK: (state, loginBack) =>{
-    state.loginBack = loginBack
+  SET_LOGINBACK: (state, loginBack) => {
+    state.loginBack = loginBack;
   },
-  SETLOGOUT: (state, logout) =>{
-    state.logout = logout
+  SETLOGOUT: (state, logout) => {
+    state.logout = logout;
   },
-  SETISGROUPLOGIN: (state, isGroupLogin) =>{
-    localStorage.setItem('isGroupLogin', isGroupLogin);
-    state.isGroupLogin = isGroupLogin
+  SETISGROUPLOGIN: (state, isGroupLogin) => {
+    localStorage.setItem("isGroupLogin", isGroupLogin);
+    state.isGroupLogin = isGroupLogin;
   },
-  SETUSERDETAILS: (state, userDetail) =>{
-    state.userDetail = userDetail
+  SETUSERDETAILS: (state, userDetail) => {
+    state.userDetail = JSON.parse(JSON.stringify(userDetail));
   },
-  SETTENANTID: (state, tenantId) =>{
-    state.tenantId = tenantId
+  SETTENANTID: (state, tenantId) => {
+    localStorage.setItem("TENANTID_NAME", tenantId);
+    state.tenantId = tenantId;
   },
-  SETNOTICE: (state, notice) =>{
-    state.notice = notice
+  SETTENANTName: (state, tenantName) => {
+    state.tenantName = tenantName;
   },
+  SETNOTICE: (state, notice) => {
+    state.notice = notice;
+  },
+  SETTENANTCODE: (state, tenantCode) => {
+    state.tenantCode = JSON.parse(JSON.stringify(tenantCode));
+  }
 };
 
 const getters = {
-  userInfo: (state) => state.userInfo,
-  token: (state) => state.token,
-  roles: (state) => state.userInfo?.roles,
-  getProjectionMode: (state) => state.projectionMode,
+  userInfo: state => state.userInfo,
+  token: state => state.token,
+  roles: state => state.userInfo?.roles,
+  getProjectionMode: state => state.projectionMode,
   permissions: state => state.permissions,
   avatar: state => state.avatar,
   name: state => state.name,
-  userRoles: (state) => state.userRoles,
-  loginBack: (state) => state.loginBack,
-  logout: (state) => state.logout,
-  isGroupLogin: (state) => state.isGroupLogin,
-  userDetail: (state) => state.userDetail,
-  getIsMax: (state) => state.isMax,
-  tenantId: (state) => state.tenantId,
-  notice: (state) => state.notice,
+  userRoles: state => state.userRoles,
+  loginBack: state => state.loginBack,
+  logout: state => state.logout,
+  isGroupLogin: state => state.isGroupLogin,
+  userDetail: state => state.userDetail,
+  getIsMax: state => state.isMax,
+  tenantId: state => state.tenantId,
+  tenantName: state => state.tenantName,
+  notice: state => state.notice,
+  tenantCode: state => state.tenantCode
 };
 
 const actions = {
@@ -142,27 +156,27 @@ const actions = {
     return new Promise((resolve, reject) => {
       getCodeImg()
         .then(res => {
-          resolve(res)
+          resolve(res);
         })
         .catch(error => {
-          reject(error)
-        })
-    })
+          reject(error);
+        });
+    });
   },
-  login({ commit,dispatch }, userInfo) {
+  login({ commit, dispatch }, userInfo) {
     // 登录接口获取token
     let query = {};
     if (userInfo.srid) {
       query = { srid: userInfo.srid };
     }
     return new Promise((resolve, reject) => {
-      dispatch('getCodeImg').then(res => {
-        const {publicKey} = res.data.publicKey
+      dispatch("getCodeImg").then(res => {
+        const { publicKey } = res.data.publicKey;
         const params = {
           code: userInfo.code,
           uuid: userInfo.uuid,
           username: userInfo.username,
-          password: encryptlogin(userInfo.password, publicKey),
+          password: encryptlogin(userInfo.password, publicKey)
         };
         login(params, query).then(res => {
           if (res.data.code === 200) {
@@ -180,30 +194,30 @@ const actions = {
               if (userInfo.rememberMe) {
                 Cookies.set("username", userInfo.username, { expires: 30 });
                 Cookies.set("password", encrypt(userInfo.password), { expires: 30 });
-                Cookies.set('rememberMe', userInfo.rememberMe, { expires: 30 });
+                Cookies.set("rememberMe", userInfo.rememberMe, { expires: 30 });
               } else {
                 Cookies.remove("username");
                 Cookies.remove("password");
-                Cookies.remove('rememberMe');
+                Cookies.remove("rememberMe");
               }
               // setToken(res.data.data.access_token)
-              commit('setToken', res.data.data.access_token);
+              commit("setToken", res.data.data.access_token);
               //   commit('setToken', res.data.data.access_token)
               //   setExpiresIn(res.data.data.expires_in)
               //   commit('SET_EXPIRES_IN', res.data.data.expires_in)
-              dispatch("getUserInfo", 'firstLogin');
+              dispatch("getUserInfo", "firstLogin");
             }
           } else {
             message.error(res.data.msg);
           }
-          resolve(res)
+          resolve(res);
         }).catch(error => {
-          reject(error)
-        })
-      })
-    })
+          reject(error);
+        });
+      });
+    });
   },
-  
+
   //   async getUserInfo({ commit }) {
   //     await getInfo().then(res => {
   //       if (res.data.code === 200) {
@@ -235,69 +249,79 @@ const actions = {
   //     const res = await mockRemoteUserInfo();
   //     commit('setUserInfo', res);
   //   },
-  getUserInfo({ commit }) {
-    const {appId} = proxy[env];
+  getUserInfo({ commit }, firstLogin) {
+    const { appId } = proxy[env];
     return new Promise((resolve, reject) => {
-      getInfoByAppId(appId || '').then(res => {
+      getInfoByAppId(appId || "").then(res => {
         if (res.data.code === 200) {
           if (res.data.pageConfigs !== null) {
-            Object.assign(STYLE_CONFIG, res.data.pageConfigs)
-            const theme = STYLE_CONFIG.mode
-            store.commit('setting/update', STYLE_CONFIG);
-            store.commit('setting/changeChartColor', theme == 'dark' ? DARK_CHART_COLORS : LIGHT_CHART_COLORS);
-            store.dispatch('setting/changeTheme', STYLE_CONFIG)
+            Object.assign(STYLE_CONFIG, res.data.pageConfigs);
+            const theme = STYLE_CONFIG.mode;
+            store.commit("setting/update", STYLE_CONFIG);
+            store.commit("setting/changeChartColor", theme === "dark" ? DARK_CHART_COLORS : LIGHT_CHART_COLORS);
+            store.dispatch("setting/changeTheme", STYLE_CONFIG);
           }
-          console.log('获取用户角色====', res.data)
-          // 如果又菜单走菜单,没有则走404页面
-          const firstRoputer = res.data.firstMenu?`${res.data.firstMenu.path}/${res.data.firstMenu.children[0].path}`:'/pageInfo/error';
-          const {user} = res.data
+          const firstMenu = res.data.firstMenu;
+          // 如果有菜单走菜单【菜单为本用户第一个可跳转的菜单】,没有则走404页面
+          const firstRoputer = firstMenu ? `${firstMenu.path}/${firstMenu.children?.[0]?.path}` : "/pageInfo/error";
+          store.commit("permission/setDefaultTo", firstRoputer);
+          const { user } = res.data;
           // const avatar = user.avatar === "" ? require("@/assets/images/profile.jpg") : user.avatar;
-          const avatar = user?.avatar === "" ? '' : user?.avatar;
+          const avatar = user?.avatar === "" ? "" : user?.avatar;
           // 判断登录门户/后台管理系统
-          commit('SET_LOGINBACK', res.data?.loginBack)
-          commit('SETLOGOUT', res.data.user?.logout)
-          commit('SETUSERDETAILS', res.data)
+          commit("SET_LOGINBACK", res.data?.loginBack);
+          commit("SETLOGOUT", res.data.user?.logout);
+          commit("SETUSERDETAILS", res.data);
 
-          commit('SETISGROUPLOGIN', false)
-          router.push(firstRoputer);
-          
-          if (res.data.roles && res.data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', res.data.roles)
-            commit('SET_PERMISSIONS', res.data.permissions)
-          } else {
-            commit('SET_ROLES', ['ROLE_DEFAULT'])
+          commit("SETISGROUPLOGIN", false);
+          if (firstLogin === "firstLogin") {
+            if (!proxy[env].appId || env === "development") {
+              router.push("/");
+            }
           }
-          commit('SET_NAME', user.userName)
-          commit('SET_AVATAR', avatar)
-          commit('setUserInfo', {
+          if (res.data.roles && res.data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
+            commit("SET_ROLES", res.data.roles);
+            commit("SET_PERMISSIONS", res.data.permissions);
+          } else {
+            commit("SET_ROLES", ["ROLE_DEFAULT"]);
+          }
+          commit("SET_NAME", user.userName);
+          commit("SET_AVATAR", avatar);
+          commit("setUserInfo", {
             ...user,
             name: "td_dev",
             roles: user.roles.length > 0 ? user.roles : ["ALL_ROUTERS"]
           });
-          resolve(res)
-        } 
+          resolve(res);
+        }
       }).catch(error => {
-        reject(error)
-      })
-    })
-    
+        reject(error);
+      });
+    });
   },
   async logout({ commit }) {
-    await logout().then(res => {
+    await logout().then(() => {
     //   if(res?.data?.code === 200) {
       // 解决重新登录系统标签页未关闭的问题
-      store.commit('tabRouter/removeTabRouterList');
-      localStorage.removeItem('tabRouterList')
+      store.commit("tabRouter/removeTabRouterList");
+      localStorage.removeItem("tabRouterList");
+      commit("SETTENANTCODE", { value: "", state: false });
       // removeToken();
-      commit('removeToken');
+      commit("removeToken");
       // commit('setUserInfo', InitUserInfo);
-      commit('setUserInfo', {
-        roles: [],
+      commit("setUserInfo", {
+        roles: []
       });
 
     //   }
     });
   },
+  exchangeTenant({ commit }, info) {
+    commit("SETTENANTID", info.tenantId);
+    commit("SETTENANTName", info.tenantName);
+    commit("setToken", info.token);
+    window.location.reload();
+  }
 };
 
 export default {
@@ -305,5 +329,5 @@ export default {
   state,
   mutations,
   actions,
-  getters,
+  getters
 };

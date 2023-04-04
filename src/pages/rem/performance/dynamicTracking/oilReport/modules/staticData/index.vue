@@ -41,6 +41,7 @@
 
 <script>
 export default {
+  props:['queryData'],
   data() {
     return {
       oilField: '',
@@ -72,6 +73,7 @@ export default {
     };
   },
   created() {
+    console.log(this.queryData)
     // var date = new Date();
     // var months = date.getMonth() + 1;
     // var m = '0' + (months - 1);
@@ -85,6 +87,13 @@ export default {
     // this.getData();
   },
   methods: {
+    passValue(val){
+      console.log(val)
+    },
+    renderHeader(h, { column }) {
+      let header = column.label.split(' ');
+      return [h('p', [h('p', {}, header[0]), h('span', {}, header[1])])];
+    },
     // getList() {
     //   fetchOilFields().then((res) => {
     //     if (res.data.code == 200) {

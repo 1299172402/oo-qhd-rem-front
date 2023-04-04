@@ -48,7 +48,6 @@
             };
         },
         mounted() {
-            //初始化调用搜索
             this.doSearch();
         },
         methods: {

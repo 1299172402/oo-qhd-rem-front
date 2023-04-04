@@ -83,8 +83,8 @@ export function generateList(treeData, pDeptFullName = "", parentId?) {
   for (let i = 0; i < treeData.length; i++) {
     const node = treeData[i];
     const key = node.id;
-    const pName = pDeptFullName ? `${pDeptFullName}-${ node.departName}` : node.departName;
-    dataList.push({ key, title: node.label, label: node.label, parentId, deptFullName: node.label, id: key});
+    const pName = pDeptFullName ? `${pDeptFullName}-${node.departName}` : node.departName;
+    dataList.push({ key, title: node.label, label: node.label, parentId, deptFullName: node.label, id: key });
     if (node.children) {
       dataList = [...dataList, ...generateList(node.children, pName, node.id)];
     }
@@ -98,14 +98,14 @@ export function generateList(treeData, pDeptFullName = "", parentId?) {
  * @returns {*}
  */
 export function filterObj(obj) {
-  if (!(typeof obj === "object")) {
+  if (typeof obj !== "object") {
     return;
   }
   Object.keys(obj).forEach(key => {
-    if (Object.hasOwnProperty.call(obj, key) && (obj[key] == null || obj[key] === undefined || obj[key] === "")) {
+    if (Object.hasOwnProperty.call(obj, key) && !obj[key]) {
       delete obj[key];
-    } 
-  })
+    }
+  });
   return obj;
 }
 

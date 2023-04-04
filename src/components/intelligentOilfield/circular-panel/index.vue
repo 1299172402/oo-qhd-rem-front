@@ -1,19 +1,33 @@
 <!--轮循面板组件-->
 <template>
   <div class="g-w100 g-h100 panel">
-    <el-carousel :style="{ '--containerHeight': containerHeight, height: '100%' }" trigger="click" :autoplay="false"
-      arrow="never" indicator-position="outside">
-      <el-carousel-item v-for="(item1, index) in panelList" :key="index" class="g-row-flex" style="flex-wrap: wrap" :style="entranceType === 'UpperLower'?'':'justify-content:space-between'">
-        <div class="g-column-flex-HV panelDiv" v-for="(item2, index) in item1" :key="index + 200">
+    <!-- 非全屏展示 -->
+    <el-carousel
+      v-if="!$store.state.user.isMax"
+      :style="{ '--container-height': containerHeight, height: '100%' }"
+      trigger="click"
+      :autoplay="false"
+      arrow="never"
+      indicator-position="outside"
+    >
+      <el-carousel-item
+        v-for="(item1, index) in panelList"
+        :key="index"
+        class="g-row-flex"
+        style="flex-wrap: wrap"
+        :style="entranceType === 'UpperLower'?'':'justify-content:space-between'"
+      >
+        <!-- eslint-disable -->
+        <div v-for="(item2, index) in item1" :key="index + 200" class="g-column-flex-HV">
           <!-- <div class="panelImg"></div> -->
-          <div class="g-column-flex-HV" @click="jumpLink(item2, index)" v-if="entranceType === 'UpperLower'">
-            <img :src="item2.img" alt="" style="width:56px;height:56px" v-if="item2.img"/>
+          <div class="g-column-flex-HV panelDiv" @click="jumpLink(item2, index)" v-if="entranceType === 'UpperLower'">
+            <img :src="item2.img" alt="" style="width: 56px;height: 56px" v-if="item2.img"/>
              <!-- TODO: Maybe change back -->
             <!-- <span v-else style="width:60px;height:60px" class="thumbnail">{{item2.name[0]}}</span> -->
-            <div v-else class="bgImage g-row-flex-HV" style="width:56px;height:56px">
+            <div v-else class="bgImage g-row-flex-HV" style="width: 56px;height: 56px">
                 {{ item2.name[0] }}
             </div>
-            <div style="max-width:56px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" :title="item2.name">
+            <div style="max-width: 82px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" :title="item2.name" :style="{color:$store.state.setting.mode==='dark'?'#D8D8D8':'#606266'}">
               {{item2.name}}</div>
           </div>
           <!-- :class="index % 3 === 0 ? 'panelBlueColor' : index % 3 === 1 ? 'panelRedColor' : 'panelGreenColor'" -->
@@ -22,13 +36,32 @@
             <div class="g-flex-row-HV textImageDiv">{{  item2.name }}</div>
           </div>
         </div>
+        <!-- eslint-disable -->
       </el-carousel-item>
     </el-carousel>
+    <!-- 全屏展示 -->
+    <div v-else class="g-w100 g-row-flex" style="flex-wrap: wrap;height: auto">
+        <div v-for="(item, index) in panels" :key="'fullScreen_'+index" class="g-column-flex" style="margin-top: 5px">
+            <div class="g-column-flex-H panelDiv" @click="jumpLink(item, index)" v-if="entranceType === 'UpperLower'">
+                <img :src="item.img" alt="" style="width: 56px;height: 56px" v-if="item.img"/>
+                <div v-else class="bgImage g-row-flex-HV" style="width: 56px;height: 56px">
+                    {{ item.name[0] }}
+                </div>
+                <div style="max-width: 82px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" :title="item.name" :style="{color:$store.state.setting.mode==='dark'?'#D8D8D8':'#606266'}">
+                {{item.name}}</div>
+            </div>
+            <div v-else class="panelBg g-row-flex-HV" @click="jumpLink(item, index)">
+                <a :href="item.url" :id="'hrefText' + index" target="_blank" v-show="false">跳转</a>
+                <div class="g-flex-row-HV textImageDiv">{{  item.name }}</div>
+           </div>
+         </div>
+        </div>
+    </div>
   </div>
 </template>
 <script>
-import { jumpToApplication } from '@/utils/thirdPartyInteraction.js';
-import { addAccessinfo } from '@/api/intelligentOilfield/system/user';
+// <!-- TODO: Maybe change back -->
+// import { addAccessinfo } from "@/api/intelligentOilfield/system/user";
 
 export default {
   props: {
@@ -36,29 +69,28 @@ export default {
       type: Array,
       default() {
         return [];
-      },
+      }
     },
     // 跳转类型
     jumpType: {
       type: String,
-      default: 'iframe',
+      default: "iframe"
     },
     // 入口类型, UpperLower:图片文本上下结构,Containment:图片文本包容结构
     entranceType: {
       type: String,
-      default: 'UpperLower',
+      default: "UpperLower"
     },
     // 模块名-可能不同模块名绑定字段不一样
     modelName: {
       type: String,
-      default: 'kanban'
+      default: "kanban"
     },
     // 缩放组件至某一宽度newWPx，目的是换展现形式
     changeNewPx: {
       type: Number,
-      default: 464,
+      default: 464
     },
-    height: {},
     currentResizeList: {
       type: Object,
       default: () => ({})
@@ -69,14 +101,14 @@ export default {
         height: 0,
         width: 0
       })
-    },
+    }
   },
   data() {
     return {
       //   containerHeight: '100px',
       onePageNum: 0,
       panelList: [],
-      currentWPX: this.changeNewPx,
+      currentWPX: this.changeNewPx
     };
   },
   computed: {
@@ -85,8 +117,8 @@ export default {
       //   return '120px';
       // }
       // return '120px';
-      return 'calc(100% - 32px)'
-    },
+      return "calc(100% - 32px)";
+    }
   },
   watch: {
     panels: {
@@ -99,7 +131,7 @@ export default {
         }
       },
       deep: true,
-      immediate: true,
+      immediate: true
     },
     // changeNewPx: {
     //   handler(newVal) {
@@ -127,8 +159,8 @@ export default {
         this.onePageNum = 0;
         // const onePageNumW = this.entranceType === 'UpperLower' ? parseInt((newVal.width - 42) / 80, 10) : parseInt((newVal.width - 42) / 124, 10);
         // const onePageNumH = this.entranceType === 'UpperLower' ? parseInt((newVal.height - 128) / 80, 10) : parseInt((newVal.height - 96) / 80, 10);
-        const onePageNumW = this.entranceType === 'UpperLower' ? parseInt((newVal.width - 23) / 76, 10) : parseInt((newVal.width - 23) / 210, 10);
-        const onePageNumH = this.entranceType === 'UpperLower' ? parseInt((newVal.height - 50 - 64 - 2 - (newVal.name==='应用中心'?46:0)) / 88, 10) : parseInt((newVal.height - 50 - 32 - 2 - 46) / 46, 10);
+        const onePageNumW = this.entranceType === "UpperLower" ? parseInt((newVal.width - 23) / 76, 10) : parseInt((newVal.width - 23) / 210, 10);
+        const onePageNumH = this.entranceType === "UpperLower" ? parseInt((newVal.height - 50 - 64 - 2 - (newVal.name === "应用中心" ? 42 : 0)) / 88, 10) : parseInt((newVal.height - 50 - 32 - 2 - 46) / 46, 10);
         if (newVal.width && onePageNumW > 0 && newVal.height && onePageNumH > 0) {
           this.onePageNum = onePageNumW * onePageNumH;
           // console.log('最后个数'+newVal.name, this.onePageNum);
@@ -138,35 +170,34 @@ export default {
         }
       },
       deep: true,
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   methods: {
     // 全屏展示链接, 未完不能全屏跳转！！！
     linkPage() {
-      document.getElementById('hrefText').click();
+      document.getElementById("hrefText").click();
     },
     jumpLink(item) {
-      if (this.jumpType === 'iframe') {
-        this.$emit('linkIframe', item);
-      } else if (this.modelName === 'application') { // 应用中心
-        if (item.appType === '0') { // 内部跳转的逻辑
-          const paramQuery = {
-            appId: item.appId,
-            appName: item.appName,
-            userId: this.$store.getters['user/userDetail'].user.userId
-          }
-          addAccessinfo(paramQuery).then((response) => {
-            console.log('asas', response);
-          });
-          jumpToApplication(item.appPcAccessUrl)
+      if (this.jumpType === "iframe") {
+        this.$emit("linkIframe", item);
+      } else if (this.modelName === "application") { // 应用中心
+        if (item.appType === "0") { // 内部跳转的逻辑
+          // <!-- TODO: Maybe change back -->
+        //   const paramQuery = {
+        //     appId: item.appId,
+        //     appName: item.appName,
+        //     userId: this.$store.getters["user/userDetail"].user.userId
+        //   };
+        //   addAccessinfo(paramQuery).then(() => {});
+          window.open(item.appPcAccessUrl);
           // document.getElementById(`hrefText${index}`).click();
         }
-      } else if (this.modelName === 'enter') { // 快捷入口
-        jumpToApplication(item.enterUrl)
+      } else if (this.modelName === "enter") { // 快捷入口
+        window.open(item.enterUrl);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style>
@@ -186,19 +217,20 @@ export default {
 }
 
 .panel .el-carousel__container {
-  height: var(--containerHeight);
+  height: var(--container-height);
 }
 </style>
 <style scoped lang="less">
-/* */
-
-
 .el-carousel__item h3 {
   color: #475669;
   font-size: 14px;
   opacity: 0.75;
   line-height: 150px;
   margin: 0;
+}
+
+.el-carousel--horizontal {
+  overflow-y: hidden;
 }
 
 .el-carousel__item {
@@ -214,13 +246,13 @@ export default {
 }
 
 .panelDiv {
-  margin: 5px 10px;
+  margin: 5px 0;
   cursor: pointer;
-
   font-size: 12px;
-  font-family: PingFangSC-Medium, PingFang SC;
+  font-family: PingFangSC-Medium, "PingFang SC";
   font-weight: 500;
   color: #909399;
+  width: 82px;
 }
 
 .panelBg {
@@ -228,18 +260,25 @@ export default {
   height: 36px;
   text-align: center;
   line-height: 16px;
-  padding: 0px 10px;
+  padding: 0 10px;
+  margin: 5px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: PingFangSC-Medium, "PingFang SC";
+  font-weight: 500;
   // TODO: Maybe change back
+
   /* background: url('../../../assets/intelligentOilfield/enterImage.png'); */
-  color: #51A1FF;
-  border: 1px solid #51A1FF;
+  color: #51a1ff;
+  border: 1px solid #51a1ff;
 }
 
 .textImageDiv {
   font-size: 16px;
-  font-family: 'PingFangSC-Semibold, PingFang SC';
+  font-family: "PingFangSC-Semibold, PingFang SC";
+
   /* font-weight: 600; */
-  color: #51A1FF;
+  color: #51a1ff;
 }
 
 .panelBlueColor {
@@ -255,12 +294,5 @@ export default {
 .panelGreenColor {
   background: linear-gradient(to bottom, transparent, rgba(1, 229, 194, 0.6));
   border: 1px solid rgba(1, 229, 194, 1);
-}
-.bgImage {
-    background: url('../../../assets/intelligentOilfield/bgImg.png');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    color: #51A1FF;
-    font-size: 22px;
 }
 </style>

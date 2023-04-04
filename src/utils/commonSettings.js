@@ -5,22 +5,22 @@
 // 日期格式化
 export function parseTime(time, pattern) {
   if (arguments.length === 0 || !time) {
-    return null
+    return null;
   }
-  const format = pattern || '{y}-{m}-{d} {h}:{i}:{s}'
-  let date
-  if (typeof time === 'object') {
-    date = time
+  const format = pattern || "{y}-{m}-{d} {h}:{i}:{s}";
+  let date;
+  if (typeof time === "object") {
+    date = time;
   } else {
-    if ((typeof time === 'string') && (/^[0-9]+$/.test(time))) {
-      time = parseInt(time, 10)
-    } else if (typeof time === 'string') {
-      time = time.replace(new RegExp(/-/gm), '/').replace('T', ' ').replace(new RegExp(/\.[\d]{3}/gm), '');
+    if ((typeof time === "string") && (/^[0-9]+$/.test(time))) {
+      time = parseInt(time, 10);
+    } else if (typeof time === "string") {
+      time = time.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.[\d]{3}/gm), "");
     }
-    if ((typeof time === 'number') && (time.toString().length === 10)) {
-      time *= 1000
+    if ((typeof time === "number") && (time.toString().length === 10)) {
+      time *= 1000;
     }
-    date = new Date(time)
+    date = new Date(time);
   }
   const formatObj = {
     y: date.getFullYear(),
@@ -30,40 +30,42 @@ export function parseTime(time, pattern) {
     i: date.getMinutes(),
     s: date.getSeconds(),
     a: date.getDay()
-  }
-  const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
-    let value = formatObj[key]
+  };
+  const timeStr = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
+    let value = formatObj[key];
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value] }
+    if (key === "a") { return ["日", "一", "二", "三", "四", "五", "六"][value]; }
     if (result.length > 0 && value < 10) {
-      value = `0${value}`
+      value = `0${value}`;
     }
-    return value || 0
-  })
-  return time_str
+    return value || 0;
+  });
+  return timeStr;
 }
 
 // 表单重置
+/* eslint-disable */
 export function resetForm(refName) {
   if (this.$refs[refName]) {
-    this.$nextTick(()=>{
+    this.$nextTick(() => {
       // this.$refs[refName].resetFields();
-      if(refName==='queryForm'){
+      if (refName === "queryForm") {
         this.$refs[refName].resetFields();
-      }else{
+      } else {
         this.$refs[refName].clearValidate();
       }
-    })
+    });
   }
 }
+/* eslint-disable */
 
 // 添加日期范围
 export function addDateRange(params, dateRange, propName) {
   const search = params;
-  search.params = typeof (search.params) === 'object' && search.params !== null && !Array.isArray(search.params) ? search.params : {};
+  search.params = typeof (search.params) === "object" && search.params !== null && !Array.isArray(search.params) ? search.params : {};
   dateRange = Array.isArray(dateRange) ? dateRange : [];
-  const [beginTime, endTime] = dateRange
-  if (typeof (propName) === 'undefined') {
+  const [beginTime, endTime] = dateRange;
+  if (typeof (propName) === "undefined") {
     search.params.beginTime = beginTime;
     search.params.endTime = endTime;
   } else {
@@ -82,8 +84,8 @@ export function selectDictLabel(datas, value) {
       return true;
     }
     return false;
-  })
-  return actions.join('');
+  });
+  return actions.join("");
 }
 
 // 回显数据字典（字符串数组）
@@ -97,10 +99,10 @@ export function selectDictLabels(datas, value, separator) {
         actions.push(datas[key].label + currentSeparator);
       }
       return false;
-    })
+    });
     return false;
-  })
-  return actions.join('').substring(0, actions.join('').length - 1);
+  });
+  return actions.join("").substring(0, actions.join("").length - 1);
 }
 
 // 字符串格式化(%s )
@@ -138,7 +140,7 @@ export function mergeRecursive(source, target) {
 //       source[p] = target[p];
 //     }
 //   }
-  Object.keys(target).forEach(p => {
+  Object.keys(target).forEach((p) => {
     try {
       if (target[p].constructor === Object) {
         source[p] = mergeRecursive(source[p], target[p]);
@@ -161,9 +163,9 @@ export function mergeRecursive(source, target) {
  */
 export function handleTree(data, id, parentId, children) {
   const config = {
-    id: id || 'id',
-    parentId: parentId || 'parentId',
-    childrenList: children || 'children'
+    id: id || "id",
+    parentId: parentId || "parentId",
+    childrenList: children || "children"
   };
 
   const childrenListMap = {};
@@ -178,38 +180,36 @@ export function handleTree(data, id, parentId, children) {
   //     nodeIds[d[config.id]] = d;
   //     childrenListMap[parentId].push(d);
   //   }
-  data.forEach(d => {
+  data.forEach((d) => {
     const parentId = d[config.parentId];
-    if (childrenListMap[parentId] == null) {
+    if (!childrenListMap[parentId]) {
       childrenListMap[parentId] = [];
     }
     nodeIds[d[config.id]] = d;
     childrenListMap[parentId].push(d);
   });
-
   //   for (const d of data) {
   //     const parentId = d[config.parentId];
   //     if (nodeIds[parentId] == null) {
   //       tree.push(d);
   //     }
   //   }
-  data.forEach(d => {
+  data.forEach((d) => {
     const parentId = d[config.parentId];
-    if (nodeIds[parentId] == null) {
+    if (!nodeIds[parentId]) {
       tree.push(d);
     }
   });
 
-  
   function adaptToChildrenList(o) {
-    if (childrenListMap[o[config.id]] !== null) {
+    if (childrenListMap[o[config.id]]) {
       o[config.childrenList] = childrenListMap[o[config.id]];
     }
     if (o[config.childrenList]) {
     //   for (const c of o[config.childrenList]) {
     //     adaptToChildrenList(c);
     //   }
-      o[config.childrenList].forEach(c => {
+      o[config.childrenList].forEach((c) => {
         adaptToChildrenList(c);
       });
     }
@@ -218,10 +218,9 @@ export function handleTree(data, id, parentId, children) {
   //   for (const t of tree) {
   //     adaptToChildrenList(t);
   //   }
-  tree.forEach(t => {
+  tree.forEach((t) => {
     adaptToChildrenList(t);
   });
-  
   return tree;
 }
 
@@ -230,7 +229,7 @@ export function handleTree(data, id, parentId, children) {
 * @param {*} params  参数
 */
 export function tansParams(params) {
-  let result = ''
+  let result = "";
   //   for (const propName of Object.keys(params)) {
   //     const value = params[propName];
   //     const part = `${encodeURIComponent(propName)}=`;
@@ -248,25 +247,24 @@ export function tansParams(params) {
   //       }
   //     }
   //   }
-  Object.keys(params).forEach(propName => {
+  Object.keys(params).forEach((propName) => {
     const value = params[propName];
     const part = `${encodeURIComponent(propName)}=`;
     if (value !== null && typeof (value) !== "undefined") {
-      if (typeof value === 'object') {
-        Object.keys(value).forEach(key => {
-          if (value[key] !== null && typeof (value[key]) !== 'undefined') {
+      if (typeof value === "object") {
+        Object.keys(value).forEach((key) => {
+          if (value[key] !== null && typeof (value[key]) !== "undefined") {
             const params = `${propName}[${key}]`;
             const subPart = `${encodeURIComponent(params)}=`;
             result += `${subPart + encodeURIComponent(value[key])}&`;
           }
         });
-        
       } else {
         result += `${part + encodeURIComponent(value)}&`;
       }
     }
   });
-  return result
+  return result;
 }
 
 // 验证是否为blob格式

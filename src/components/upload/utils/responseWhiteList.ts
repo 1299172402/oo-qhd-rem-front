@@ -4,25 +4,23 @@
  */
 const responseMap = new Map();
 
-const cutUrl = (responseConfig) => responseConfig.url.split(responseConfig.baseURL)[1];
+const cutUrl = responseConfig => responseConfig.url.split(responseConfig.baseURL)[1];
 
 /**
  * 查询请求的URL是否在Map中,若在其中调用存储的Callback
  * @param response
  * @returns {*}
  */
-const responseCallback = (response) => {
+const responseCallback = response => {
   if (responseMap.size) {
-    const {config} = response;
+    const { config } = response;
     if (responseMap.has(cutUrl(config))) {
       const callback = responseMap.get(cutUrl(config));
       return callback(response);
-    } 
+    }
     return response.data;
-    
-  } 
+  }
   return response.data;
-  
 };
 
 /**
@@ -40,7 +38,7 @@ const use = (key, callback) => {
  * 移除
  * @param key URL
  */
-const clear = (key) => {
+const clear = key => {
   responseMap.delete(key);
 };
 

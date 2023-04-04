@@ -1,6 +1,6 @@
 <!--作业井史-->
 <template>
-  <div class="app-container">
+  <div style="height:600px ">
     <pagePanel headerTitle="生产简史">
       <el-table
         id="tableData"
@@ -9,12 +9,12 @@
         :row-style="{ height: '0px' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '6px', 'text-align': 'center' }"
-        style="width: 100%;height:500px"
+        style="width: 100%;height:100%"
         :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       >
         <el-table-column type="index" label="序号" width="150px" align="center"> </el-table-column>
-        <el-table-column prop="startTime" label="开始时间"  align="center" width="250"> </el-table-column>
+        <el-table-column prop="startTime" label="开始时间" align="center" width="250"> </el-table-column>
         <el-table-column prop="chronicle" label="大事简要" align="center" width="300"> </el-table-column>
         <el-table-column prop="remark" label="备注" align="center"> </el-table-column>
       </el-table>
@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import { workingHistory } from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
-import { exportExcel } from '@/lib/exportExcel.js';
+import { workingHistory } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
+import { exportExcel } from "@/lib/exportExcel.js";
 export default {
   props: {
     //选择油田
@@ -33,7 +33,7 @@ export default {
     platform: {},
     //选择井号
     wellId: {},
-    majorEventsBrieflyValue: '',
+    majorEventsBrieflyValue: "",
   },
   data() {
     return {
@@ -45,6 +45,9 @@ export default {
     this.doSearch();
   },
   methods: {
+    passValue(val) {
+      console.log(val);
+    },
     /**
      * hwh
      * 根据父组件传递过来的参数进行查询
@@ -57,12 +60,15 @@ export default {
       //     majorEventsBriefly:
       //       majorEventsBrieflyValue !== undefined ? majorEventsBrieflyValue : this.majorEventsBrieflyValue,
       //   };
-      let request = {
-        majorEventsBriefly: '',
-        ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
-        platformId: '3FC9A818F5BC43B88270DB80BBB3018F',
-        wellId: '09D30C16BD1D4F759D53F74941701307',
-      };
+      //  ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
+      //   orgId: '715AD1CD60484BB59E737CD18A9DE44A  ',
+      //   selectWellId:'',
+      // let request = {
+      //   majorEventsBriefly: "",
+      //   ogfId: this.queryData.ogfId,
+      //   platformId: this.queryData.assetCode,
+      //   wellId: this.queryData.selectWellId,
+      // };
 
       workingHistory(request).then((res) => {
         if (res.data.code == 200) {
@@ -75,11 +81,11 @@ export default {
      * 下载
      */
     doDownLoad() {
-      let fileName = '作业井史';
+      let fileName = "作业井史";
       if (this.wellName) {
         fileName = this.wellName + fileName;
       }
-      exportExcel('#tableData', fileName);
+      exportExcel("#tableData", fileName);
     },
   },
 };
@@ -87,9 +93,9 @@ export default {
 
 <style scoped lang="scss">
 ::v-deep .el-table .cell:empty::before {
-  content: '-';
+  content: "-";
 }
-::v-deep .el-table__body-wrapper {
-  height: calc(100% - 34px);
-}
+// ::v-deep .el-table__body-wrapper {
+//   height: calc(100% - 34px);
+// }
 </style>

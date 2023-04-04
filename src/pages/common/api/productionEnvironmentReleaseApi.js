@@ -5,7 +5,7 @@ import { startApi } from "@/components/audit/process/auditSave/ActionApi";
 
 /**
  * 查询表单
- * @param {表单id} id 
+ * @param {表单id} id
  * @returns 通过id获取数据
  */
 export function queryById(id) {
@@ -14,16 +14,16 @@ export function queryById(id) {
 
 /**
  * 保存表单
- * @param {表单数据} data 
+ * @param {表单数据} data
  * @returns 返回内容
  */
 export function save(data) {
   return postAction("/system/apply/saveOrUpdateApply", data);
-} 
+}
 
 /**
  * 提交表单
- * @param {表单数据} data 
+ * @param {表单数据} data
  * @returns 返回内容
  */
 export function submit(data) {
@@ -32,11 +32,11 @@ export function submit(data) {
 
 /**
  * 删除数据
- * @param {数据id} id 
- * @returns 
+ * @param {数据id} id
+ * @returns
  */
 export function deleteById(id) {
-  return postAction("/system/apply/deleteApplyById", { id })
+  return postAction("/system/apply/deleteApplyById", { id });
 }
 
 /**

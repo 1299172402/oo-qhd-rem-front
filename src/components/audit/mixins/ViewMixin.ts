@@ -1,10 +1,10 @@
-import {cloneDeep, merge} from "lodash";
+import { cloneDeep, merge } from "lodash";
 
 export default {
   data() {
     return {
       loading: false
-    }  
+    };
   },
   mounted() {
     this.getModal(this.$route.params.id);
@@ -20,7 +20,7 @@ export default {
         _this.loading = true;
         return _this.fn.findById(id)
           .then(v => {
-            _this.model = merge({} , _this.model, v);
+            _this.model = merge({}, _this.model, v);
             if (_this.infos) {
               _this.infos.processId = _this.model.procInstId;
             }
@@ -31,8 +31,8 @@ export default {
           })
           .finally(() => {
             _this.loading = false;
-          })
+          });
       }
     }
   }
-}
+};

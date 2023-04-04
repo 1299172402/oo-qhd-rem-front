@@ -65,23 +65,22 @@ export default {
     return {
       dialogVisible: false,
       selectTenement: [],
-      dataSource:[],
+      dataSource: [],
       ipagination: {
         current: 1,
         pageSize: 10,
         total: 0
-      },
+      }
     };
   },
-  created(){
-    this.getList()
+  created() {
+    this.getList();
   },
   methods: {
     getList() {
       this.loading = true;
-      tenantList({pageNum:this.ipagination.current, pageSize:this.ipagination.pageSize}).then((response) => {
+      tenantList({ pageNum: this.ipagination.current, pageSize: this.ipagination.pageSize }).then(response => {
         this.dataSource = response.data.rows;
-        console.log( this.dataSource);
         this.ipagination.total = response.data.total;
         this.loading = false;
       });
@@ -98,7 +97,7 @@ export default {
      * 设置已有用户选中状态
      */
     handChangeSelection() {
-      this.dataSource.forEach((row) => {
+      this.dataSource.forEach(row => {
         if (this.tenantIds.indexOf(row.tenantId) >= 0) {
           this.$refs.table.toggleRowSelection(row, true);
         } else {
@@ -130,6 +129,6 @@ export default {
 </script>
 <style scoped lang="less">
 .el-table {
-  border-bottom: 1px solid #EBEEF5;
+  border-bottom: 1px solid #ebeef5;
 }
 </style>

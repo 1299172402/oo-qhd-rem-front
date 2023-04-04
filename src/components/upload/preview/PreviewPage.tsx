@@ -9,14 +9,14 @@ export default Vue.extend({
   components: {
     PreviewPDF
   },
-  props:{
+  props: {
     // 是否是签章
-    isSignature:{
+    isSignature: {
       type: Boolean,
       default: false
     },
     // 弹窗中展示的文件
-    modalFileId:{
+    modalFileId: {
       type: String,
       default: ""
     }
@@ -40,22 +40,22 @@ export default Vue.extend({
       fileName: ""
     };
   },
-  created() {
-    if(!this.modalFileId){
-      this.fileId= this.$route.query.id;
-      this.fileName = this.$route.query.name
-      this.handlePreviewFile({ filePath: this.fileId });
-    }
-  },
-  watch:{
-    modalFileId:{
-      handler(val){
+  watch: {
+    modalFileId: {
+      handler(val) {
         if (val) {
           this.fileId = val;
           this.handlePreviewFile({ filePath: this.fileId });
         }
       },
-      immediate:true
+      immediate: true
+    }
+  },
+  created() {
+    if (!this.modalFileId) {
+      this.fileId = this.$route.query.id;
+      this.fileName = this.$route.query.name;
+      this.handlePreviewFile({ filePath: this.fileId });
     }
   },
   methods: {
@@ -84,7 +84,7 @@ export default Vue.extend({
       const _this = this as any;
       if (v.previewable) {
         _this.handlePreviewFileAchieve(v.previewType, item);
-      } else if(v.previewStatus === "converting_pdf" && v.retriable) {
+      } else if (v.previewStatus === "converting_pdf" && v.retriable) {
         // 正在转为 pdf，自动调用重试接口
         retryPreview(item.filePath)
           .then(v => _this.handleRetryPreview(v, item));
@@ -114,7 +114,7 @@ export default Vue.extend({
               _this.previewLoading = false;
               _this.unPreviewText = "此文件类型不支持在线预览";
             }
-          })
+          });
         }
         this.supportErrorDialog.show();
       }
@@ -124,62 +124,62 @@ export default Vue.extend({
      */
     handlePreviewFileAchieve(type, file) {
       const _this = this as any;
-      const readerOnload = (evt) => {
+      const readerOnload = evt => {
         this.otherFile = file;
         this.textContent = evt.target.result;
         this.previewLoading = false;
-      }
+      };
       switch (type) {
-      case "image":
-        preview(file.filePath)
-          .then(v => getImgUrl(v))
-          .then(v => {
-            _this.previewType = type;
-            _this.imgFile = file;
-            _this.previewImage = v;
-            _this.previewLoading = false;
-          });
-        break;
-      case "txt":
-        preview(file.filePath)
-          .then(v => {
-            _this.previewType = type;
-            const reader = new FileReader();
-            reader.readAsText(v as any, "utf-8");
-            reader.onload = readerOnload;
-          });
-        break;
-      case "pdf":
-        preview(file.filePath)
-          .then(v => window.URL.createObjectURL(new Blob([v as any])))
-          .then(v => {
-            _this.previewType = type;
-            _this.pdfFileData = v;
-            _this.pdfFile = file;
-            _this.previewLoading = false;
-          });
-        break;
-      default:
-        if (!this.typeErrordialog) {
-          this.typeErrordialog = this.$dialog({
-            header: "提示",
-            body: "此文件类型不确定，预览失败",
-            confirmBtn: "确定",
-            onConfirm: () => {
+        case "image":
+          preview(file.filePath)
+            .then(v => getImgUrl(v))
+            .then(v => {
+              _this.previewType = type;
+              _this.imgFile = file;
+              _this.previewImage = v;
               _this.previewLoading = false;
-              _this.unPreviewText = "此文件类型不确定，预览失败";
-            }
-          })
-        }
-        this.typeErrordialog.show();
-        break;
+            });
+          break;
+        case "txt":
+          preview(file.filePath)
+            .then(v => {
+              _this.previewType = type;
+              const reader = new FileReader();
+              reader.readAsText(v as any, "utf-8");
+              reader.onload = readerOnload;
+            });
+          break;
+        case "pdf":
+          preview(file.filePath)
+            .then(v => window.URL.createObjectURL(new Blob([v as any])))
+            .then(v => {
+              _this.previewType = type;
+              _this.pdfFileData = v;
+              _this.pdfFile = file;
+              _this.previewLoading = false;
+            });
+          break;
+        default:
+          if (!this.typeErrordialog) {
+            this.typeErrordialog = this.$dialog({
+              header: "提示",
+              body: "此文件类型不确定，预览失败",
+              confirmBtn: "确定",
+              onConfirm: () => {
+                _this.previewLoading = false;
+                _this.unPreviewText = "此文件类型不确定，预览失败";
+              }
+            });
+          }
+          this.typeErrordialog.show();
+          break;
       }
     }
   },
   render() {
-    let topRightEl; 
-    let previewPDFEl; 
-    
+    let topRightEl;
+    let previewPDFEl;
+
     if (this.previewType !== "pdf") {
       topRightEl = (
         <div>
@@ -187,33 +187,33 @@ export default Vue.extend({
             <DownloadIcon />下载
           </t-button>
         </div>
-      )
+      );
     }
-    
+
     const previewFontELDisplay = this.previewLoading ? "block" : "none";
     const previewFontELStyle = `padding-top: 20px; width: 100px; margin: 60px auto; display: ${previewFontELDisplay};`;
     const previewFontEL = (<div style={previewFontELStyle}>加载中...</div>);
-    
+
     const previewImgElDisplay = !this.previewLoading && this.previewType === "image" ? "inline" : "none";
-    const previewImgEl = <img alt="图片预览" src={this.previewImage} style={`display: ${previewImgElDisplay}`} />
-    
+    const previewImgEl = <img alt="图片预览" src={this.previewImage} style={`display: ${previewImgElDisplay}`} />;
+
     if (!this.previewLoading && this.previewType === "pdf") {
-      previewPDFEl = <PreviewPDF 
+      previewPDFEl = <PreviewPDF
         is-full-screen={this.isFullScreen}
         file-id={this.pdfFileData}
         file-name={this.fileName}
-      />
+      />;
     }
 
     const textContentElDisplay = !this.previewLoading && this.previewType === "txt" ? "block" : "none";
     const textContentElStyle = `padding: 10px; display: ${textContentElDisplay}`;
-    const textContentEl = <div style={textContentElStyle}>{this.textContent}</div>
+    const textContentEl = <div style={textContentElStyle}>{this.textContent}</div>;
 
     return (
       <div style="height: 100vh">
         {
-          !this.unPreviewText ? 
-            (
+          !this.unPreviewText
+            ? (
               <t-loading loading={this.previewLoading} style="height: 100%">
                 {topRightEl}
                 {previewFontEL}
@@ -221,9 +221,9 @@ export default Vue.extend({
                 {previewPDFEl}
                 {textContentEl}
               </t-loading>
-            ): <span>{this.unPreviewText}</span>
+            ) : <span>{this.unPreviewText}</span>
         }
       </div>
-    )
+    );
   }
-})
+});

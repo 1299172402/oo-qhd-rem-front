@@ -39,25 +39,26 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { ChevronRightIcon, CartIcon } from 'tdesign-icons-vue';
+import Vue from "vue";
+import { ChevronRightIcon, CartIcon } from "tdesign-icons-vue";
 
 export default Vue.extend({
   components: {
     ChevronRightIcon,
-    CartIcon,
+    CartIcon
   },
   props: {
     data: {
       type: Object,
-      default: () => ({}),
-    },
-  },
+      default: () => ({})
+    }
+  }
 });
 </script>
 
 <style lang="less" scoped>
-@import '@/style/variables.less';
+/* stylelint-disable */
+@import "@/style/variables.less";
 
 .operator-gap {
   margin-left: 20px;
@@ -70,7 +71,7 @@ export default Vue.extend({
   border-radius: 3px;
 
   .operator-content {
-    padding: 20px 32px 24px 32px;
+    padding: 20px 32px 24px;
     height: 256px;
 
     .operator-title-icon {
@@ -109,8 +110,8 @@ export default Vue.extend({
 
       &-icon {
         position: absolute;
-        top: 0px;
-        right: 0px;
+        top: 0;
+        right: 0;
       }
 
       svg {
@@ -137,7 +138,7 @@ export default Vue.extend({
         color: var(--td-text-color-placeholder);
       }
 
-      &-icon {
+      .operator-item-icon {
         position: absolute;
         bottom: 8px;
         right: 0;
@@ -149,7 +150,7 @@ export default Vue.extend({
   .operator-footer {
     position: absolute;
     width: 100%;
-    bottom: 0px;
+    bottom: 0;
     left: 0;
 
     .t-progress--thin {
@@ -164,4 +165,5 @@ export default Vue.extend({
     }
   }
 }
+/* stylelint-enable */
 </style>

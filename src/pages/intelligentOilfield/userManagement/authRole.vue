@@ -94,12 +94,12 @@ export default {
   created() {
     const userId = this.$route.params && this.$route.params.userId;
     if (userId) {
-      getAuthRole(userId).then((response) => {
+      getAuthRole(userId).then(response => {
         this.form = response.data.user;
-        this.roles = response.data.roles;        
+        this.roles = response.data.roles;
         this.total = this.roles.length;
         this.$nextTick(() => {
-          this.roles.forEach((row) => {
+          this.roles.forEach(row => {
             if (row.flag) {
               this.$refs.table.toggleRowSelection(row);
             }
@@ -119,7 +119,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.roleIds = selection.map((item) => item.roleId);
+      this.roleIds = selection.map(item => item.roleId);
     },
     // 保存选中的数据编号
     getRowKey(row) {
@@ -127,11 +127,11 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      const {userId} = this.form;
+      const { userId } = this.form;
       const roleIds = this.roleIds.join(",");
       updateAuthRole({ userId, roleIds }).then(() => {
         this.$modal.msgSuccess("授权成功");
-        returnPaterPage(this.$route.path, 'User')
+        returnPaterPage(this.$route.path, "User");
       });
     }
   }

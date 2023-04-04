@@ -142,6 +142,9 @@ export default {
     this.doSearch();
   },
   methods: {
+    passValue(val){
+      console.log(val)
+    },
     /**
      * hwh
      * 根据父组件传递过来的参数进行查询
@@ -190,5 +193,8 @@ export default {
 }
 ::v-deep .el-table__empty-block {
   height:500px
+}
+::v-deep .el-table__body-wrapper{
+    height: calc(100% - 70px) !important;
 }
 </style>

@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { debounce } from "lodash";
-import { filterTreeDict, generateList  } from "../utils";
+import { filterTreeDict, generateList } from "../utils";
 import { getDeptTreeData } from "./api/DeptTreeApi";
 import "./style/DeptTreeStyle.less";
 
@@ -47,14 +47,14 @@ export default Vue.extend({
     },
     currentSelectDept: {
       get() {
-        return this.selectedDepts.map(item => ({ label: item.title, value: item.key }))
+        return this.selectedDepts.map(item => ({ label: item.title, value: item.key }));
       },
       set(val: []) {
         if (!val || val.length === 0) {
           this.selectedDepts.length = 0;
         }
         this.selectedDepts = val;
-        this.$emit("change", this.selectedDepts)
+        this.$emit("change", this.selectedDepts);
       }
     }
   },
@@ -72,7 +72,7 @@ export default Vue.extend({
   },
   created() {
     // 生成防抖函数
-    this.changeSearchValue = debounce((val) => {
+    this.changeSearchValue = debounce(val => {
       this.searchValue = val;
     }, 500);
     this.getDeptTreeData()
@@ -157,7 +157,7 @@ export default Vue.extend({
       this.currentSelectDept = val;
     },
     handleTagInputChange(val) {
-      const [first] = val; 
+      const [first] = val;
       this.searchValue = first;
       if (val.length === 0) {
         this.selectedDepts = val;
@@ -169,8 +169,8 @@ export default Vue.extend({
     return (
       <t-card bordered={false} class="dept-tree-container">
         {
-          !this.showTag ?
-            <t-tag-input
+          !this.showTag
+            ? <t-tag-input
               value={this.selectedDepts.map(item => item.deptName)}
               onChange={this.handleTagInputChange}
               onInput={this.handle}
@@ -183,7 +183,7 @@ export default Vue.extend({
               clearable
               multiple
               on-input-change={this.handleDeptChange}
-              onClear={() => { this.currentSelectDept = [] }}
+              onClear={() => { this.currentSelectDept = []; }}
               on-tag-change={this.handleTagChange}
             />
         }
@@ -202,6 +202,6 @@ export default Vue.extend({
           onClick={this.handleSelect}
         />
       </t-card>
-    )
-  },
-})
+    );
+  }
+});

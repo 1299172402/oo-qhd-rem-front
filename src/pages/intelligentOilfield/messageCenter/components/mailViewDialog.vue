@@ -57,7 +57,7 @@ export default {
     /** 数据回显 */
     bindModel(messageId) {
       if (messageId) {
-        getMailData(messageId).then((res) => {
+        getMailData(messageId).then(res => {
           if (res.status === 200) {
             this.form = res.data;
           }
