@@ -2,7 +2,7 @@ import Layout from '@/layouts/index.vue';
 
 export default [
     {
-        hidden: false,
+        hidden: true,
         path: '/developStatus',
         name: 'developStatus',
         component: Layout,
