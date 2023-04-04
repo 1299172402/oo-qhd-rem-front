@@ -161,4 +161,7 @@ export default {
 .pertable thead .el-table-column--selection .cell {
   display: none;
 }
+::v-deep .el-table__body-wrapper{
+    height: calc(100% - 70px) !important;
+}
 </style>
