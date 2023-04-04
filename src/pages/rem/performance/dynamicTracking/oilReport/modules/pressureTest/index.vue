@@ -142,6 +142,9 @@ export default {
     this.doSearch();
   },
   methods: {
+    passValue(val){
+      console.log(val)
+    },
     /**
      * hwh
      * 根据父组件传递过来的参数进行查询

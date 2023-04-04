@@ -3,7 +3,7 @@
   <div class="app-container">
     <headerSearch class="g-w100 g-h100" style="height: auto">
       <el-form :model="queryData" :inline="true" style="margin-top: 18px">
-         <el-form-item label="作业公司：">
+        <el-form-item label="作业公司：">
           <el-select v-model="queryData.orgId" disabled>
             <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.deptName" :value="item.deptId">
             </el-option>
@@ -16,15 +16,20 @@
           </el-select>
         </el-form-item>
         <el-form-item label="平台：" prop="createBy">
-          <el-select v-model="queryData.assetCode" style="width: 220px">
+          <el-select v-model="queryData.assetCode" @change="doChangePT" style="width: 220px">
             <el-option v-for="(item, index) in platforms" :key="index" :label="item.platName" :value="item.platFormId">
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="井名：" prop="createBy">
-          <el-select v-model="queryData.assetCode" style="width: 220px">
-            <el-option v-for="(item, index) in platforms" :key="index" :label="item.platName" :value="item.platFormId">
-            </el-option>
+          <el-select v-model="queryData.selectWellId" style="width: 220px">
+            <el-option
+              v-for="item in wellData"
+              :key="item.wellId"
+              :label="item.wellName"
+              :value="item.wellId"
+              :disabled="item.disabled"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -33,26 +38,41 @@
       </el-form>
     </headerSearch>
     <el-row :gutter="20">
-      <staticData></staticData>
+      <staticData ref="toolchild0"></staticData>
     </el-row>
     <el-row :gutter="20">
-      <homeworkWellHistory></homeworkWellHistory>
+      <homeworkWellHistory ref="toolchild1" :queryData="this.queryData"></homeworkWellHistory>
     </el-row>
-     <el-row :gutter="20">
-      <productionData></productionData>
+    <el-row :gutter="20">
+      <productionData ref="toolchild2"></productionData> 
+      <!-- 生产指标 -->
+    </el-row> 
+    <el-row :gutter="20">
+      <pressureTest ref="toolchild3"></pressureTest>
     </el-row>
-     <el-row :gutter="20">
-     <pressureTest></pressureTest>
+    <el-row :gutter="20">
+      <waterInjection ref="toolchild4"></waterInjection>
     </el-row>
-       <el-row :gutter="20">
-     <loggingInterpretationResult></loggingInterpretationResult>
+    <el-row :gutter="20">
+      <fundamentalData ref="toolchild5"></fundamentalData>
+    </el-row>
+    <el-row :gutter="20">
+      <loggingInterpretationResult ref="toolchild6"></loggingInterpretationResult>
+    </el-row>
+    <el-row :gutter="20">
+      <perforationData ref="toolchild7"></perforationData>
+    </el-row>
+    <el-row :gutter="20">
+      <interpretationResults ref="toolchild8"></interpretationResults>
+    </el-row>
+    <el-row :gutter="20">
+      <wellPattern ref="toolchild9"></wellPattern>
     </el-row>
   </div>
 </template>
 
 <script>
-// import { fetchOilFields, fetchPlatforms } from '@/api/ipm/primaryinfo.js';
-// import { getBreakdownOfFailure } from '@/api/ipm/monthlyReportManagement.js';
+import { fetchOilFields, fetchPlatforms,fetchProductionWells, fetchInjectionWells, fetchInjectionWellsByPlatform, uploadFile } from '@/api/oilDeposit/rem-02/primaryinfo.js';
 const moduleFiles = import.meta.globEager(`./modules/*/index.vue`);
 const moduleName = Object.entries(moduleFiles).reduce(
   (t, i) =>
@@ -69,6 +89,7 @@ export default {
     return {
       oilField: '',
       platforms: [], //平台数据
+      wellData: [],
       pickerOption: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -88,9 +109,9 @@ export default {
       // 显示搜索条件
       queryData: {
         assetCode: '',
-        month: '',
         ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
         orgId: '715AD1CD60484BB59E737CD18A9DE44A  ',
+        selectWellId:'',
       },
     };
   },
@@ -104,42 +125,81 @@ export default {
     //   m = '12';
     // }
     // this.queryData.month = y + '-' + m.substr(m.length - 2, 2); //获取当前月拼接方法
-    // this.getList();
+    this.getList();
     // this.getData();
   },
+  // provide(){
+  //   return{
+
+  //   }
+  // },
   methods: {
-    // getList() {
-    //   fetchOilFields().then((res) => {
-    //     if (res.data.code == 200) {
-    //       this.oilFields = res.data.data.oilFields;
-    //       if (this.oilFields.length == 0) {
-    //         this.oilField = '';
-    //       } else {
-    //         this.oilField = '3FC9A818F5BC43B88270DB80BBB3018F';
-    //       }
-    //       this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
-    //       const requestPlat = {
-    //         oilFieldId: this.selectOilField,
-    //       };
-    //       fetchPlatforms(requestPlat).then((res) => {
-    //         if (res.data.code == 200) {
-    //           this.platforms = res.data.data.platform;
-    //         }
-    //       });
-    //     }
-    //   });
-    // },
-    // // 下载
-    // getData() {
-    //   getBreakdownOfFailure(this.queryData).then((res) => {
-    //     if (res.data.code == 200) {
-    //       this.noticeList = [res.data.data];
-    //       this.datalist = res.data.data.breakdownOfFailuresListVo;
-    //     } else {
-    //       this.$message.error('系统错误请重新尝试或联系运维人员！');
-    //     }
-    //   });
-    // },
+    getList() {
+      fetchOilFields().then((res) => {
+        if (res.data.code == 200) {
+          this.oilFields = res.data.data.oilFields;
+          if (this.oilFields.length == 0) {
+            this.oilField = '';
+          } else {
+            this.oilField = '3FC9A818F5BC43B88270DB80BBB3018F';
+          }
+          this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
+          const requestPlat = {
+            oilFieldId: this.selectOilField,
+          };
+          fetchPlatforms(requestPlat).then((res) => {
+            if (res.data.code == 200) {
+              this.platforms = res.data.data.platform;
+              this.queryData.assetCode = '3FC9A818F5BC43B88270DB80BBB3018F'
+            }
+          });
+        }
+      });
+      let request = {
+        oilFieldId: '3FC9A818F5BC43B88270DB80BBB3018F',
+      };
+      fetchProductionWells(request).then((res) => {
+        if (res.data.code == 200) {
+          let wellData = res.data.data.productionWells;
+          this.wellData = wellData.filter((el) => el.wellName);
+        }
+      });
+    },
+    getData() {
+      // console.log(this.queryData)
+      // for(let i = 0 ,j = 9 ;i<j;i ++ ){
+      //   console.log(this.$refs.toolchild)
+      //   this.$refs[i].passValue(this.queryData)
+      // }
+      // [this.$refs].map((n,index)=>{
+      //   this.$refs.toolchild[index].passValue
+      // })
+    },
+    getFetchProductionWellsByPlatform(platformId) {
+      let request = { platformId };
+      fetchInjectionWellsByPlatform(request).then((res) => {
+        if (res.data.code == 200) {
+          this.wellData = res.data.data.injectionWell;
+        }
+      });
+    },
+    //查询油井信息
+    getFetchProductionWells(oilFieldId) {
+      let request = { oilFieldId: oilFieldId };
+      fetchInjectionWells(request).then((res) => {
+        if (res.data.code == 200) {
+          this.wellData = res.data.data.injectionWell;
+        }
+      });
+    },
+    doChangePT(val) {
+      this.queryData.selectWellId = '';
+      if (this.queryData.ogfId == val) {
+        this.getFetchProductionWells(val);
+      } else {
+        this.getFetchProductionWellsByPlatform(val);
+      }
+    },
   },
 };
 </script>
@@ -161,7 +221,7 @@ export default {
 .pertable thead .el-table-column--selection .cell {
   display: none;
 }
-::v-deep .el-table__body-wrapper{
-    height: calc(100% - 70px) !important;
+::v-deep .el-table__body-wrapper {
+  height: calc(100% - 70px) !important;
 }
 </style>
