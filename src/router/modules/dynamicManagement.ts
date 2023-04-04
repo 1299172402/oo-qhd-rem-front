@@ -2,7 +2,7 @@ import Layout from '@/layouts/index.vue';
 
 export default [
     {
-        hidden: true,
+        hidden: false,
         path: '/dynamicManagement',
         name: 'dynamicManagement',
         component: Layout,
