@@ -43,7 +43,6 @@
 import {outProfileLoggingInterpretation} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 import {downFile} from "@/lib/remBase64Download.js";
 import {exportExcel} from "@/lib/exportExcel.js";
-import config from "@/config";
 export default {
   props: {
     //选择油田
@@ -60,10 +59,6 @@ export default {
           "../../static/img/oilAuxiliaryAnalysis/productionDynamicData/fluidProducingProfile.jpg",
       tableData: [],
       image: '',
-      baseUrl:
-          process.env.NODE_ENV === "production"
-              ? config.publicRootPath
-              : config.devRootPath,
     };
   },
   mounted() {
