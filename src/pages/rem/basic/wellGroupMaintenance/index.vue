@@ -226,7 +226,7 @@ export default {
       query: {
         selectField: '3FC9A818F5BC43B88270DB80BBB3018F',
         value2: this.getDate(),
-        selectBlock: '',
+        selectBlock: '6CD7342CA6DD418183A4B3BC38584F7C',
         orgId: '715AD1CD60484BB59E737CD18A9DE44A',
       },
       deptSelect: [
@@ -285,7 +285,8 @@ export default {
         //     key: city.proWellId,
         //   });
         // });
-        if (Array.isArray(wellGroup) && wellGroup.length) {
+        console.log(wellGroup)
+        if (wellGroup) {
           wellGroup.forEach((item) => {
             data.push({
               label: item.proWellNo,
@@ -294,6 +295,8 @@ export default {
           });
         }
         this.transferData = data;
+        console.log(this.transferData)
+        debugger
       });
     },
     mergeTable({ row, column, rowIndex, columnIndex }) {
@@ -486,7 +489,6 @@ export default {
       fetchFields({
         oilFieldId: this.query.selectField,
       }).then((res) => {
-        console.log(res)
           this.blanks = res.data.data.fields
       });
     },

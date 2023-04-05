@@ -2,6 +2,24 @@
 <template>
   <div class="app-container">
     <pagePanel headerTitle="基础数据">
+      <el-form style="padding-left: 20%" label-width="110px">
+        <el-row :gutter="20">
+          <el-form-item label="平台"> </el-form-item>
+           <el-form-item label="井坐标位置"> </el-form-item>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="12"> <el-form-item label="井型"> </el-form-item></el-col>
+          <el-col :span="12"> <el-form-item label="井别"> </el-form-item></el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="12"> <el-form-item label="井基准图"> </el-form-item></el-col>
+          <el-col :span="12"> <el-form-item label="补心海拔"> </el-form-item></el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="12"> <el-form-item label="完钻井深"> </el-form-item></el-col>
+          <el-col :span="12"> <el-form-item label="完钻垂深"> </el-form-item></el-col>
+        </el-row>
+      </el-form>
     </pagePanel>
   </div>
 </template>
@@ -10,6 +28,7 @@
 export default {
   data() {
     return {
+      tableData: [],
     };
   },
   created() {
@@ -21,46 +40,12 @@ export default {
     //   y--;
     //   m = '12';
     // }
-    // this.queryData.month = y + '-' + m.substr(m.length - 2, 2); //获取当前月拼接方法
-    // this.getList();
     // this.getData();
   },
   methods: {
-    passValue(val){
-      console.log(val)
+    passValue(val) {
+      console.log(val);
     },
-    // getList() {
-    //   fetchOilFields().then((res) => {
-    //     if (res.data.code == 200) {
-    //       this.oilFields = res.data.data.oilFields;
-    //       if (this.oilFields.length == 0) {
-    //         this.oilField = '';
-    //       } else {
-    //         this.oilField = '3FC9A818F5BC43B88270DB80BBB3018F';
-    //       }
-    //       this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
-    //       const requestPlat = {
-    //         oilFieldId: this.selectOilField,
-    //       };
-    //       fetchPlatforms(requestPlat).then((res) => {
-    //         if (res.data.code == 200) {
-    //           this.platforms = res.data.data.platform;
-    //         }
-    //       });
-    //     }
-    //   });
-    // },
-    // // 下载
-    // getData() {
-    //   getBreakdownOfFailure(this.queryData).then((res) => {
-    //     if (res.data.code == 200) {
-    //       this.noticeList = [res.data.data];
-    //       this.datalist = res.data.data.breakdownOfFailuresListVo;
-    //     } else {
-    //       this.$message.error('系统错误请重新尝试或联系运维人员！');
-    //     }
-    //   });
-    // },
   },
 };
 </script>

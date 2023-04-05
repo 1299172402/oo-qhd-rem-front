@@ -32,16 +32,11 @@ export default {
   components: {
     Echarts,
   },
-  props: {
-    //选择油田
-    oilFeildId: {},
-    //选择平台
-    platform: {},
-    //选择井号
-    wellId: {},
-  },
   data() {
     return {
+      oilFeildId: "3FC9A818F5BC43B88270DB80BBB3018F",
+      platform: "3F1E5858C6CC41E2BF4FFC4902797C08",
+      wellId: "09D30C16BD1D4F759D53F74941701307",
       selectData: [],
       selectValue: "分配",
       option: {
@@ -568,6 +563,12 @@ export default {
     this.doSearch();
   },
   methods: {
+    passValue(val) {
+      this.oilFeildId = val.ogfId;
+      this.platform = val.assetCode;
+      this.wellId = val.selectWellId;
+      this.doSearch();
+    },
     // passValue(val) {
     //   this.ogfId = val.ogfId
     //   this.platformId = val.assetCode
@@ -575,9 +576,7 @@ export default {
     // },
     //执行搜索
     doSearch() {
-        this.oilFeildId = '3FC9A818F5BC43B88270DB80BBB3018F'
-        this.platformId = '3FC9A818F5BC43B88270DB80BBB3018F'
-        // this.wellId = ''
+      // this.wellId = ''
       let startDate = this.selectData[0];
       let endDate = this.selectData[1];
       let request = {
@@ -590,7 +589,6 @@ export default {
       produceData(request).then((res) => {
         let seriesData = [];
         let legendData = [];
-         console.log(res,'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
         if (res.data.code == 200) {
           let chartDataS = res.data.data.charts;
           //获取x轴数据信息
@@ -738,7 +736,7 @@ export default {
 <style lang="scss" scoped>
 .z-main {
   width: 100%;
-  height: 500px;
+  height: 650px;
   padding-top: 20px;
   display: flex;
   flex-direction: column;

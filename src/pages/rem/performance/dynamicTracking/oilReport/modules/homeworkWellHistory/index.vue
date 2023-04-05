@@ -1,6 +1,6 @@
 <!--作业井史-->
 <template>
-  <div style="height:600px ">
+  <div>
     <pagePanel headerTitle="生产简史">
       <el-table
         id="tableData"
@@ -9,7 +9,7 @@
         :row-style="{ height: '0px' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '6px', 'text-align': 'center' }"
-        style="width: 100%;height:100%"
+        style="width: 100%; height: 100%"
         :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       >
@@ -26,18 +26,15 @@
 import { workingHistory } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 export default {
-  props: {
-    //选择油田
-    oilFeildId: {},
-    //选择平台
-    platform: {},
-    //选择井号
-    wellId: {},
-    majorEventsBrieflyValue: "",
-  },
   data() {
     return {
       tableData: [],
+      //选择油田
+      oilFeildId: "3FC9A818F5BC43B88270DB80BBB3018F",
+      //选择平台
+      platform: "3F1E5858C6CC41E2BF4FFC4902797C08",
+      //选择井号
+      wellId: "09D30C16BD1D4F759D53F74941701307",
     };
   },
   mounted() {
@@ -46,30 +43,21 @@ export default {
   },
   methods: {
     passValue(val) {
-      console.log(val);
+      this.oilFeildId = val.ogfId;
+      this.platform = val.assetCode;
+      this.wellId = val.selectWellId;
+      this.doSearch();
     },
     /**
      * hwh
      * 根据父组件传递过来的参数进行查询
      */
-    doSearch(majorEventsBrieflyValue) {
-      //   let request = {
-      //     ogfId: this.oilFeildId,
-      //     platformId: this.platform,
-      //     wellId: this.wellId,
-      //     majorEventsBriefly:
-      //       majorEventsBrieflyValue !== undefined ? majorEventsBrieflyValue : this.majorEventsBrieflyValue,
-      //   };
-      //  ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
-      //   orgId: '715AD1CD60484BB59E737CD18A9DE44A  ',
-      //   selectWellId:'',
-      // let request = {
-      //   majorEventsBriefly: "",
-      //   ogfId: this.queryData.ogfId,
-      //   platformId: this.queryData.assetCode,
-      //   wellId: this.queryData.selectWellId,
-      // };
-
+    doSearch() {
+      let request = {
+        ogfId: this.oilFeildId,
+        platformId: this.platform,
+        wellId: this.wellId,
+      };
       workingHistory(request).then((res) => {
         if (res.data.code == 200) {
           this.tableData = res.data.data.workingHistorys;

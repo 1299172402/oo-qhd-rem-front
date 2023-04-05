@@ -150,18 +150,11 @@ export default {
       getOilFieldList({ orgId: '715AD1CD60484BB59E737CD18A9DE44A' }).then((res) => {
         if (res.data.code == 200) {
           this.oilFields = res.data.data;
-          // if (this.oilFields.length == 0) {
-          //   this.selectOilField = "";
-          // } else {
-          //   this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
-          // }
         }
       });
       fetchOilFields().then((res) => {
-        console.log(res);
         if (res.data.code == 200) {
           this.oilFields = res.data.data.oilFields;
-          this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F';
           const requestPlat = {
             oilFieldId: this.queryData.ogfId,
           };

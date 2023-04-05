@@ -37,43 +37,6 @@
         </el-form-item>
       </el-form>
     </headerSearch>
-    <el-row :gutter="20">
-      <staticData ref="toolchild0"></staticData>
-    </el-row>
-    <el-row :gutter="20">
-      <homeworkWellHistory ref="toolchild1" ></homeworkWellHistory>
-    </el-row>
-    <el-row :gutter="20">
-      <productionData ref="toolchild2"></productionData>
-      <!-- 生产指标 -->
-    </el-row>
-    <el-row :gutter="20">
-      <pressureTest ref="toolchild3"></pressureTest>
-      <!-- 压力数据 -->
-    </el-row>
-    <el-row :gutter="20">
-      <waterInjection ref="toolchild4"></waterInjection>
-      <!-- 注采对应曲线 -->
-    </el-row>
-    <el-row :gutter="20">
-      <fundamentalData ref="toolchild5"></fundamentalData>
-    </el-row>
-    <el-row :gutter="20">
-      <driftData ref="toolchild6"></driftData>
-    </el-row>
-    <el-row :gutter="20">
-      <perforationData ref="toolchild7"></perforationData>
-    </el-row>
-    <!-- <el-row :gutter="20">
-      <interpretationResults ref="toolchild8"></interpretationResults>
-    </el-row> -->
-    <el-row :gutter="20">
-      <loggingInterpretationResult ref="toolchild9"></loggingInterpretationResult
-      ><!-- 测井 -->
-    </el-row>
-    <el-row :gutter="20">
-      <wellPattern ref="toolchild10"></wellPattern>
-    </el-row>
   </div>
 </template>
 
