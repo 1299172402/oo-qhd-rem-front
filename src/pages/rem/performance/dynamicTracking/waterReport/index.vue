@@ -1,42 +1,94 @@
 <!-- 油井分析报告 -->
 <template>
   <div class="app-container">
-    <headerSearch class="g-w100 g-h100" style="height: auto">
-      <el-form :model="queryData" :inline="true" style="margin-top: 18px">
-        <el-form-item label="作业公司：">
-          <el-select v-model="queryData.orgId" disabled>
-            <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.deptName" :value="item.deptId">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="油田：">
-          <el-select v-model="queryData.ogfId" disabled>
-            <el-option v-for="(item, index) in oilFields" :key="index" :label="item.name" :value="item.oilFieldId">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="平台：" prop="createBy">
-          <el-select v-model="queryData.assetCode" @change="doChangePT" style="width: 220px">
-            <el-option v-for="(item, index) in platforms" :key="index" :label="item.platName" :value="item.platFormId">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="井名：" prop="createBy">
-          <el-select v-model="queryData.selectWellId" style="width: 220px">
-            <el-option
-              v-for="item in wellData"
-              :key="item.wellId"
-              :label="item.wellName"
-              :value="item.wellId"
-              :disabled="item.disabled"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button icon="el-icon-search" @click="getData" size="mini" type="primary">检索</el-button>
-        </el-form-item>
-      </el-form>
-    </headerSearch>
+<!--    <headerSearch class="g-w100 g-h100" style="height: auto">-->
+<!--      <el-form :model="queryData" :inline="true" style="margin-top: 18px">-->
+<!--        <el-form-item label="作业公司：">-->
+<!--          <el-select v-model="queryData.orgId" disabled>-->
+<!--            <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.deptName" :value="item.deptId">-->
+<!--            </el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="油田：">-->
+<!--          <el-select v-model="queryData.ogfId" disabled>-->
+<!--            <el-option v-for="(item, index) in oilFields" :key="index" :label="item.name" :value="item.oilFieldId">-->
+<!--            </el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="平台：" prop="createBy">-->
+<!--          <el-select v-model="queryData.assetCode" @change="doChangePT" style="width: 220px">-->
+<!--            <el-option v-for="(item, index) in platforms" :key="index" :label="item.platName" :value="item.platFormId">-->
+<!--            </el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="井名：" prop="createBy">-->
+<!--          <el-select v-model="queryData.selectWellId" style="width: 220px">-->
+<!--            <el-option-->
+<!--              v-for="item in wellData"-->
+<!--              :key="item.wellId"-->
+<!--              :label="item.wellName"-->
+<!--              :value="item.wellId"-->
+<!--              :disabled="item.disabled"-->
+<!--            ></el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item>-->
+<!--          <el-button icon="el-icon-search" @click="getData" size="mini" type="primary">检索</el-button>-->
+<!--        </el-form-item>-->
+<!--      </el-form>-->
+<!--    </headerSearch>-->
+<!--      单井基本信息表-->
+      <el-row :gutter="20">
+          <individualWellBasicInformationSheet></individualWellBasicInformationSheet>
+      </el-row>
+<!--      生产简史-->
+      <el-row :gutter="20">
+          <homeworkWellHistory></homeworkWellHistory>
+      </el-row>
+<!--      分层调配-->
+      <el-row :gutter="20">
+          <stratificationTesting></stratificationTesting>
+      </el-row>
+<!--      生产指标-->
+      <el-row :gutter="20">
+          <productionData :queryData="queryData"></productionData>
+      </el-row>
+<!--      吸水剖面-->
+      <el-row :gutter="20">
+          <fluidProducingProfile :queryData="queryData"></fluidProducingProfile>
+      </el-row>
+<!--      预测-->
+      <el-row :gutter="20">
+          <predict :queryData="queryData"></predict>
+      </el-row>
+<!--      基础数据-->
+      <el-row :gutter="20">
+          <fundamentalData :queryData="queryData" ref="toolchild3"></fundamentalData>
+      </el-row>
+<!--      临井数据-->
+      <el-row :gutter="20">
+          <nearWell :queryData="queryData"></nearWell>
+      </el-row>
+<!--      示踪剂-->
+      <el-row :gutter="20">
+          <tracer :queryData="queryData"></tracer>
+      </el-row>
+<!--      井斜数据-->
+      <el-row :gutter="20">
+          <driftData :queryData="queryData"></driftData>
+      </el-row>
+<!--      射孔数据-->
+      <el-row :gutter="20">
+          <perforationData :queryData="queryData"></perforationData>
+      </el-row>
+<!--      测井解释成果-->
+      <el-row :gutter="20">
+          <loggingInterpretationResult :queryData="queryData"></loggingInterpretationResult>
+      </el-row>
+<!--      井网图-->
+      <el-row :gutter="20">
+          <wellNetworkDiagram :queryData="queryData"></wellNetworkDiagram>
+      </el-row>
   </div>
 </template>
 
@@ -61,10 +113,51 @@ export default {
   components: {
     ...moduleName,
   },
+    props: {
+        //选择油田
+        oilFeildId: {},
+        //选择平台
+        platform: {},
+        //选择井号
+        wellId: {}
+    },
+    computed:{
+        getoilFeildId(){
+            return this.oilFeildId
+        },
+        getPlatform(){
+            return this.platform
+        },
+        getWellId(){
+            return this.wellId
+        }
+    },
+    // watch:{
+    //     oilFeildId:{
+    //         handler(Nval){
+    //             this.queryData.ogfId = Nval
+    //             console.log(Nval);
+    //         },
+    //         deep:true
+    //     },
+    //     platform:{
+    //         handler(Nval){
+    //             this.queryData.platform = Nval
+    //             console.log(Nval);
+    //         },
+    //         deep:true
+    //     },
+    //     wellId:{
+    //         handler(Nval){
+    //             this.queryData.selectWellId = Nval
+    //             console.log(Nval);
+    //         },
+    //         deep:true
+    //     }
+    // },
   data() {
     return {
       oilField: "",
-      platforms: [], //平台数据
       wellData: [],
       pickerOption: {
         disabledDate(time) {
@@ -85,16 +178,24 @@ export default {
       // 显示搜索条件
       queryData: {
         assetCode: "",
-        ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
-        orgId: "715AD1CD60484BB59E737CD18A9DE44A  ",
+        ogfId: "",
+        orgId: "",
         selectWellId: "",
       },
     };
   },
   created() {
-    this.getList();
+    // this.getList();
+      this.queryAll()
   },
   methods: {
+      queryAll(){
+          this.queryData = {
+              ogfId : this.oilFeildId,
+              platform : this.platform,
+              selectWellId : this.wellId
+          }
+      },
     getList() {
       fetchOilFields().then((res) => {
         if (res.data.code == 200) {

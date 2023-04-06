@@ -22,9 +22,9 @@
                 <el-button style="margin-left: 20px;" @click="doDownLoad" v-show="canDownload">下载</el-button>
             </div>
         </headerSearch>
-        <pagePanelNew headerTitle="" style="height: calc(100% - 100px)" class="g-w100">
+        <pagePanelNew headerTitle="" :class="activeSelect" class="g-w100">
             <el-tabs class="g-pageHeader" style="margin-bottom:15px;" v-model="activeName" topline @tab-click="handleClick">
-                <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
+                <el-tab-pane style="height: auto" v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
                     <div class="tab-view">
                         <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="currentModule = module.name"> {{ module.label }}
                         </el-button>
@@ -127,6 +127,10 @@ export default {
                         {
                             label: '井斜数据',
                             name: 'driftData'
+                        },
+                        {
+                            label: '水井分析报告',
+                            name: 'waterReport'
                         }
                     ]
                 },
@@ -225,7 +229,13 @@ export default {
             } else {
                 this.ljpmTag = false;
             }
-            return () => import(`./modules/${this.activeName}/${this.currentModule}.vue`);
+            if(this.currentModule == 'waterReport'){
+                this.activeSelect = 'activeWaterReport'
+                return () => import(`../waterReport/index.vue`);
+            }else{
+                this.activeSelect = 'activeOther'
+                return () => import(`./modules/${this.activeName}/${this.currentModule}.vue`);
+            }
         }
     },
     watch: {
@@ -451,7 +461,12 @@ export default {
             }
             this.majorEventsBrieflyValue='';
             this.getMajorEventsBriefly();
-            this.$refs.componentCustom.doSearch();
+            console.log(this.currentModule);
+            if(this.currentModule == 'waterReport'){
+                this.$refs.componentCustom.queryAll()
+            }else{
+                this.$refs.componentCustom.doSearch();
+            }
         },
         //上传成功后操作
         handleSuccess() {
@@ -592,5 +607,11 @@ export default {
 
     ::v-deep .el-upload-list {
         display: none;
+    }
+    .activeWaterReport{
+        height: auto !important;
+    }
+    .activeOther{
+       height: calc(100% - 100px); 
     }
 </style>
