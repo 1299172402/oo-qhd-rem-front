@@ -40,6 +40,7 @@ import VXETable from "vxe-table";
 import "vxe-table/lib/style.css";
 
 const env = import.meta.env.MODE;
+console.log(env,789789)
 
 // 全局组件挂载
 Vue.component("SvgIcon", SvgIcon);

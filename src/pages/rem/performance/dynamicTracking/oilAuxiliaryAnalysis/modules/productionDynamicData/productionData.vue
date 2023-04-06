@@ -4,7 +4,7 @@
         <div class="z-search">
             <span>日期：</span>
             <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"/>
-            <el-select v-model="allocOrCalculate" placeholder="请选择" @change="selectChange" style="margin-left:20px;">
+            <el-select v-model="allocOrCalculate" placeholder="请选择" @change="selectChange" style="width:150px;margin-left:20px;">
                 <el-option :label="item.name" :value="item.code" v-for="(item,index) in selectAllocOrCalculate" :key="index"></el-option>
             </el-select>
         </div> 
