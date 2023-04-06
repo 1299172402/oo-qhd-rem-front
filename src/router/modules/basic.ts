@@ -27,6 +27,12 @@ export default [
         component: () => import('@/pages/rem/basic/wellGroupMaintenance/index.vue'),
         meta: { title: '井组信息维护' },
       },
+      {
+        path: 'customQuery',
+        name: 'customQuery',
+        component: () => import('@/pages/rem/basic/customQuery/index.vue'),
+        meta: { title: '自定义查询' }
+      }
       // {
       //     path: 'effectofMeasures',
       //     name: 'effectofMeasures',
