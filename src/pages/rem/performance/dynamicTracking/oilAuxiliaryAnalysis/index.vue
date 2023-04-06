@@ -25,8 +25,9 @@
                 <el-button class="upload-demo" v-show="canUpload && ljpmTag" style="margin-left: 20px" @click="ljpmUploadDialog">上传文档</el-button>
                 <el-button style="margin-left: 20px" type="primary" icon="el-icon-download" @click="doDownLoad">下载</el-button>
             </div>
-        </headerSearch>
-        <pagePanelNew headerTitle="" style="height: calc(100% - 100px)" class="g-w100">
+        </headerSearch> 
+        <!-- :style="{ height: calc(100% - 100px)}" -->
+        <pagePanelNew headerTitle=""  :style="{height:(this.currentModule == 'oilReport' ? 'auto' :'calc(100% - 100px)' )}" class="g-w100">
             <el-tabs class="g-pageHeader" style="margin-bottom:15px;" v-model="activeName" topline @tab-click="handleClick">
                 <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
                     <div class="tab-view">
@@ -173,6 +174,10 @@
                             {
                                 label: '井斜数据',
                                 name: 'driftData',
+                            },
+                             {
+                                label: '油井分析报告',
+                                name: 'oilReport',
                             },
                         ],
                     },
@@ -428,8 +433,22 @@
                 } else {
                     this.ljpmTag = false;
                 }
-                return () => import(`./modules/${this.activeName}/${this.currentModule}.vue`);
+                if(this.currentModule == 'oilReport'){
+                    let data = {
+                    ogfId:this.selectOilField,
+                    assetCode:this.selectPlatform,
+                     selectWellId:this.selectWellId
+                } 
+                // setTimeOut(function(){
+                //    this.$refs.componentCustom.queryInfo(data);
+                //   },1000)
+                return () => import(`../oilReport/oilReport.vue`)
+                }else{
+                    return () => import(`./modules/${this.activeName}/${this.currentModule}.vue`);
+                }
+              
             },
+            
         },
         watch: {
             currentModule: {
@@ -716,8 +735,20 @@
                 }
                 this.majorEventsBrieflyValue='';
                 this.getMajorEventsBriefly();
+              
+               let data = {
+                    ogfId:this.selectOilField,
+                    assetCode:this.selectPlatform,
+                     selectWellId:this.selectWellId
+                } 
+                if(this.currentModule == 'oilReport'){
                 
-                this.$refs.componentCustom.doSearch(this.majorEventsBrieflyValue);
+                 this.$refs.componentCustom.queryInfo(data);
+                    
+                }else{
+                  this.$refs.componentCustom.doSearch(this.majorEventsBrieflyValue);
+                }
+                
             },
             //上传成功后操作
             handleSuccess() {

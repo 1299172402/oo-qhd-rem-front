@@ -1,18 +1,15 @@
 <!-- 现场作业计划 -->
 <template>
-  <div class="app-container">
-    <pagePanel headerTitle="现场作业计划表" style="height: calc(100% - 100px)">
+  <div class="app-container" style="height: 100%">
+    <pagePanel headerTitle="现场作业计划表" style="height: 100%">
       <el-table
         :data="noticeList"
-        @current-change="handleCurrentChange"
-        @selection-change="handleSelectionChange"
         highlight-current-row
-        height="500px"
         :row-style="{ height: '0px' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
         header-cell-class-name="table_header"
         :cell-style="{ 'text-align': 'center', padding: '2px' }"
-        style="width: 100%; height: 1000px"
+        style="width: 100%;height:100%"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column label="*日期" prop="date" align="center"></el-table-column>
@@ -70,6 +67,10 @@ export default {
     // this.choiceDepts(); // 获取组织机构
   },
   methods: {
+     show(data){
+        this.queryParams.ogfId = data.selectOilField
+        this.queryParams.selectPlatform = data.assetCode
+    },
     /**
      *   获取下拉框数据
      * @param orgId 作业公司id
@@ -92,7 +93,6 @@ export default {
 <style lang="less" scoped>
 .app-container {
   height: 100%;
-
   .el-table {
     overflow: scroll;
   }

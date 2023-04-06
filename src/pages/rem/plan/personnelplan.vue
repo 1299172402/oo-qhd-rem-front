@@ -88,20 +88,14 @@ export default {
       selectPlatform: '',
       //初始化选择油田
       selectOilField: '',
-      dataList: [
-        { name: '人员计划', isChecked: true },
-        { name: '现场作业计划', isChecked: false },
-        { name: '措施计划情况', isChecked: false },
-      ],
       //时间段选择
       currentTime: [new Date().addDays(-30).format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')],
       //时间选择
-      endTime: new Date().addDays(-1).format('yyyy-MM-dd'),
       //分页
       page: 1,
       pageSize: 10,
       total: 0,
-      queryParams: { endTime: '' },
+      queryParams: { endTime: '',oilFieldId:'',platformId:'', },
       //   events: [{ name: 'click' }],
       // ecahrts 高度
       chartHeight: '150px',
@@ -252,17 +246,13 @@ export default {
   methods: {
     // 接受参数
     show(data) {
-      console.log(data);
+      this.queryParams.endTime = data.endTime
+      this.queryParams.oilFieldId = data.selectOilField
+      this.queryParams.platformId = data.selectPlatform
+      this.getinfo()
     },
     getinfo() {
-      let data = {
-        endTime: '2023-03-27',
-        oilFieldId: '3FC9A818F5BC43B88270DB80BBB3018F',
-        pageNum: 1,
-        pageSize: 10,
-        platformId: '3FC9A818F5BC43B88270DB80BBB3018F',
-      };
-      queryPlatformPob(data).then((data) => {
+      queryPlatformPob(this.queryParams).then((data) => {
         this.peoplelist = data.data;
         let list;
         list = data.data;

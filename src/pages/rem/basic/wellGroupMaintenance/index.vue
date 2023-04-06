@@ -210,6 +210,7 @@ import {
   wellGroupParamConfiguration,
   wellGroupParamConfigurationList,
   wellGroupList,
+  saveAllWellGroup,
   delectByWellGroupId,
 } from '@/api/rem/wellgroupinformaintenance';
 import { getOilFieldList, queryProductList, queryLayerList } from '@/api/rem/workcompanydesignate';
