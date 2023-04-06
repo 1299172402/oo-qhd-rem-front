@@ -260,7 +260,6 @@ export default {
     //获取油田下拉数据
     this.selectData();
     this.selectblock();
-    this.tableOilfield();
   },
   methods: {
     getDate() {
@@ -286,7 +285,6 @@ export default {
         //     key: city.proWellId,
         //   });
         // });
-        console.log(wellGroup)
         if (wellGroup) {
           wellGroup.forEach((item) => {
             data.push({
@@ -296,8 +294,6 @@ export default {
           });
         }
         this.transferData = data;
-        console.log(this.transferData)
-        debugger
       });
     },
     mergeTable({ row, column, rowIndex, columnIndex }) {
@@ -492,6 +488,7 @@ export default {
       }).then((res) => {
           this.blanks = res.data.data.fields
       });
+      this.tableOilfield()
     },
     // 获取区块数据
     // selectblock() {

@@ -10,7 +10,7 @@
         header-cell-class-name="table_header"
         :cell-style="{ padding: '6px', 'text-align': 'center' }"
         style="width: 100%"
-        height="calc(100% - 101px)"
+        height="600px"
         :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       >

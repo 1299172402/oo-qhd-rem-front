@@ -1,85 +1,72 @@
-<!-- 基本信息 -->
+<!--井网图-->
 <template>
-  <div class="app-container">
-    <pagePanel headerTitle="井网图">
-    </pagePanel>
-  </div>
+  <pagePanel headerTitle="井网图">
+    <div class="image-content">
+      <el-image :src="image">
+        <div slot="error"></div>
+      </el-image>
+    </div>
+  </pagePanel>
 </template>
 
 <script>
+import { wellNetDiagram } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
+import { downFile } from "@/lib/remBase64Download.js";
 export default {
   data() {
     return {
+      image: "",
+      oilFeildId: "3FC9A818F5BC43B88270DB80BBB3018F",
+      platform: "3F1E5858C6CC41E2BF4FFC4902797C08",
+      wellId: "09D30C16BD1D4F759D53F74941701307",
     };
   },
-  created() {
-    // var date = new Date();
-    // var months = date.getMonth() + 1;
-    // var m = '0' + (months - 1);
-    // var y = date.getFullYear();
-    // if (months == 1) {
-    //   y--;
-    //   m = '12';
-    // }
-    // this.queryData.month = y + '-' + m.substr(m.length - 2, 2); //获取当前月拼接方法
-    // this.getList();
-    // this.getData();
+  mounted() {
+    this.doSearch();
   },
   methods: {
-  passValue(val){
-      console.log(val)
-    }
-    // getList() {
-    //   fetchOilFields().then((res) => {
-    //     if (res.data.code == 200) {
-    //       this.oilFields = res.data.data.oilFields;
-    //       if (this.oilFields.length == 0) {
-    //         this.oilField = '';
-    //       } else {
-    //         this.oilField = '3FC9A818F5BC43B88270DB80BBB3018F';
-    //       }
-    //       this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
-    //       const requestPlat = {
-    //         oilFieldId: this.selectOilField,
-    //       };
-    //       fetchPlatforms(requestPlat).then((res) => {
-    //         if (res.data.code == 200) {
-    //           this.platforms = res.data.data.platform;
-    //         }
-    //       });
-    //     }
-    //   });
-    // },
-    // // 下载
-    // getData() {
-    //   getBreakdownOfFailure(this.queryData).then((res) => {
-    //     if (res.data.code == 200) {
-    //       this.noticeList = [res.data.data];
-    //       this.datalist = res.data.data.breakdownOfFailuresListVo;
-    //     } else {
-    //       this.$message.error('系统错误请重新尝试或联系运维人员！');
-    //     }
-    //   });
-    // },
+    passValue(val) {
+      this.oilFeildId = val.ogfId;
+      this.platform = val.assetCode;
+      this.wellId = val.selectWellId;
+      this.doSearch();
+    },
+    //调用图片
+    doSearch() {
+      let request = {
+        ogfId: this.oilFeildId,
+        platformId: this.platform,
+        wellId: this.wellId,
+      };
+      wellNetDiagram(request).then((res) => {
+        if (res.data.code == 200) {
+          let imgData = res.data.data.data;
+          let type = res.data.data.type;
+          let firstParty = "data:" + type + ";base64,";
+          if (imgData) {
+            this.image = firstParty + imgData;
+          } else {
+            this.image = "";
+          }
+        }
+      });
+    },
+    //下载
+    doDownLoad() {
+      let fileName = "井网图";
+      if (this.wellName) {
+        fileName = this.wellName + fileName;
+      }
+      downFile(this.image, fileName);
+    },
   },
 };
 </script>
-<style lang="less" scoped>
-.app-container {
-  height: 100%;
 
-  .el-table {
-    overflow: scroll;
-  }
-}
-
-::v-deep .el-table__header-wrapper {
-  .cell {
-    height: auto !important;
-  }
-}
-
-.pertable thead .el-table-column--selection .cell {
-  display: none;
+<style lang="scss" scoped>
+.image-content {
+  width: 100%;
+  height: calc(100% - 101px);
+  overflow-y: scroll;
 }
 </style>

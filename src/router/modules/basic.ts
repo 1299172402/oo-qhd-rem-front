@@ -30,6 +30,7 @@ export default [
       {
         path: 'customQuery',
         name: 'customQuery',
+        hidden:true,
         component: () => import('@/pages/rem/basic/customQuery/index.vue'),
         meta: { title: '自定义查询' }
       }

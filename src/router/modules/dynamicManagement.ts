@@ -28,13 +28,13 @@ export default [
                     //     component: () => import('@/pages/rem/performance/dynamicTracking/oilReport/index.vue'),
                     //     meta: { title: '油井分析报告', icon: 'icon' },
                     // },
-                    {
-                        hidden: false,
-                        path: 'waterReport',
-                        name: 'waterReport',
-                        component: () => import('@/pages/rem/performance/dynamicTracking/waterReport/index.vue'),
-                        meta: { title: '水井分析报告', icon: 'icon' },
-                    },
+                    // {
+                    //     hidden: false,
+                    //     path: 'waterReport',
+                    //     name: 'waterReport',
+                    //     component: () => import('@/pages/rem/performance/dynamicTracking/waterReport/index.vue'),
+                    //     meta: { title: '水井分析报告', icon: 'icon' },
+                    // },
                 ],
             },
             {

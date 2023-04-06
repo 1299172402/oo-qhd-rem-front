@@ -89,20 +89,19 @@ export default {
       },
     };
   },
-  monted() {
-    // this.getinfo();
+  mounted() {
+    this.getinfo()
   },
   methods: {
-    // getinfo() {
-    //   console.log(this.oilFeildId)
-    //   (this.queryData.ogfId = this.oilFeildId),
-    //     (this.queryData.assetCode = this.platform),
-    //     (this.queryData.selectWellId = this.wellId);
-    //   for (let i = 0, j = 9; i <= j; i++) {
-    //     const child = this.$refs[`toolchild${i}`];
-    //     child.passValue(this.queryData);
-    //   }
-    // },
+    getinfo() {
+      (this.queryData.ogfId = this.oilFeildId),
+        (this.queryData.assetCode = this.platform),
+        (this.queryData.selectWellId = this.wellId);
+      for (let i = 0, j = 9; i <= j; i++) {
+        const child = this.$refs[`toolchild${i}`];
+        child.passValue(this.queryData);
+      }
+    },
     queryInfo(val) {
       this.queryData = val;
       for (let i = 0, j = 9; i <= j; i++) {
