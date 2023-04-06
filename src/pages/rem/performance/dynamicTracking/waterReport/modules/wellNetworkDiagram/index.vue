@@ -1,17 +1,15 @@
 <!--井网图-->
 <template>
   <el-container class="mt-2">
-    <el-main>
-        <pagePanel headerTitle="井网图">
-        <el-row style="padding-top: 20px;height:600px;overflow: auto;">
+    <pagePanel headerTitle="井网图">
+    <el-row style="padding-top: 20px;height:600px;overflow: auto;">
 <!--          <el-image style="height: 400px" :src="src"></el-image>-->
 <!--          <el-image :src="image">-->
 <!--            <div slot="error">-->
 <!--            </div>-->
 <!--          </el-image>-->
-        </el-row>
-        </pagePanel>
-    </el-main>
+    </el-row>
+    </pagePanel>
   </el-container>
 </template>
 <style lang="scss" scoped>

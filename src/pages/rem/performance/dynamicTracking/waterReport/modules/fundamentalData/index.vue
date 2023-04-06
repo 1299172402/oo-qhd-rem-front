@@ -4,9 +4,11 @@
     <pagePanel headerTitle="基础数据">
       <el-form style="padding-left: 20%" label-width="110px">
         <el-row :gutter="20">
-          <el-form-item label="平台"> </el-form-item>
-           <el-form-item label="井坐标位置"> </el-form-item>
+            <el-col :span="12"><el-form-item label="平台"> </el-form-item></el-col>
         </el-row>
+          <el-row :gutter="20">
+              <el-col :span="12"><el-form-item label="井坐标位置"> </el-form-item></el-col>
+          </el-row>
         <el-row :gutter="20">
           <el-col :span="12"> <el-form-item label="井型"> </el-form-item></el-col>
           <el-col :span="12"> <el-form-item label="井别"> </el-form-item></el-col>

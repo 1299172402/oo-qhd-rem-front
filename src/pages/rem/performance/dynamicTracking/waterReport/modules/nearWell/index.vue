@@ -1,7 +1,7 @@
-<!-- 临井数据 -->
+<!-- 邻井数据 -->
 <template>
   <div class="app-container">
-    <pagePanel headerTitle="临井数据">
+    <pagePanel headerTitle="邻井数据">
 <!--      <el-form style="padding-left: 20%" label-width="110px">-->
 <!--        <el-row :gutter="20">-->
 <!--          <el-form-item label="平台"> </el-form-item>-->
