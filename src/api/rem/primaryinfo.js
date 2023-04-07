@@ -1,6 +1,12 @@
 import request from '@/utils/request'
 const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
+export function deleteFile({ remFileRecordId } = {}) {
+  return request({
+    url: `${baseUrl}/primaryInfo/deleteFile?remFileRecordId=${ remFileRecordId || "" }`,
+    method: "delete",
+  });
+}
 export function fetchAidInfo(data) {
   return request({
     url: `${baseUrl}/primaryInfo/fetchAidInfo`,
@@ -91,10 +97,23 @@ export function fieldOilLayers(data) {
     data
   });
 }
+export function getFilePathList(data) {
+  return request({
+    url: `${baseUrl}/primaryInfo/getFilePathList`,
+    method: "post",
+    data
+  });
+}
 export function getWellInfo({ ogfId, platId } = {}) {
   return request({
     url: `${baseUrl}/primaryInfo/getWellInfo?ogfId=${ ogfId || "" }&platId=${ platId || "" }`,
     method: "get",
+  });
+}
+export function setDefaultFile({ remFileRecordId } = {}) {
+  return request({
+    url: `${baseUrl}/primaryInfo/setDefaultFile?remFileRecordId=${ remFileRecordId || "" }`,
+    method: "put",
   });
 }
 export function uploadFile(data) {

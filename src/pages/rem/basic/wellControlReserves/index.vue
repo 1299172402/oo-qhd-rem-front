@@ -113,7 +113,7 @@ import {
   fetchProductionWellsByPlatform,
 } from '@/api/oilDeposit/rem-02/primaryinfo.js';
 import { queryLayerList, getOilFieldList } from '@/api/rem/workcompanydesignate';
-import { saveWellDetailedEvaluation, queryByWellidCwid } from '@/api/rem/welldetailedevaluationresult';
+import { saveControlledReserves, getControlledReserves } from '@/api/rem/welldetailedevaluationresult';
 export default {
   components: {},
   data() {
@@ -177,7 +177,7 @@ export default {
         wellId: this.queryData.wellId,
         layerId: this.djclForm.layerId,
       };
-      queryByWellidCwid(adta).then((res) => {
+      getControlledReserves(adta).then((res) => {
         if (res.data.data) {
           this.djclForm = res.data.data;
         } else {
@@ -202,7 +202,7 @@ export default {
       this.djclForm.controlArea = Number(this.djclForm.controlArea);
       this.djclForm.probReservesWell = Number(this.djclForm.probReservesWell);
       this.djclForm.thicknessEffe = Number(this.djclForm.thicknessEffe);
-      saveWellDetailedEvaluation({ ...this.djclForm, wellId: this.queryData.wellId }).then((res) => {
+      saveControlledReserves({ ...this.djclForm, wellId: this.queryData.wellId }).then((res) => {
         if (res.data.code == 200) {
           this.edit = true;
           this.$message.success('保存成功！');

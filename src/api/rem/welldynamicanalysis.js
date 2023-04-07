@@ -245,6 +245,13 @@ export function produceData(data) {
     data
   });
 }
+export function produceTableData(data) {
+  return request({
+    url: `${baseUrl}/dynamicAnalysis/produceTableData`,
+    method: "post",
+    data
+  });
+}
 export function reserveProducing(data) {
   return request({
     url: `${baseUrl}/dynamicAnalysis/reserveProducing`,

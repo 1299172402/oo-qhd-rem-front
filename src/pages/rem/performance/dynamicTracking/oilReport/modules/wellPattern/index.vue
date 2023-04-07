@@ -22,14 +22,14 @@ export default {
     };
   },
   mounted() {
-    this.doSearch();
+    // this.doSearch();
   },
   methods: {
     passValue(val) {
       this.oilFeildId = val.ogfId;
       this.platform = val.assetCode;
       this.wellId = val.selectWellId;
-      this.doSearch();
+      // this.doSearch();
     },
     //调用图片
     doSearch() {

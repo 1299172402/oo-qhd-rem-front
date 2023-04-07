@@ -14,6 +14,13 @@ export function saveAllWellGroup(data) {
     data
   });
 }
+export function selectProWellByGroup(data) {
+  return request({
+    url: `${baseUrl}/wellGroupInforMaintenance/wellConnectivityEval/selectProWellByGroup`,
+    method: "post",
+    data
+  });
+}
 export function wellGroupList(data) {
   return request({
     url: `${baseUrl}/wellGroupInforMaintenance/wellConnectivityEval/wellGroupList`,

@@ -11,7 +11,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="油田：">
-          <el-select v-model="query.selectField" class="f2" @change="changeOilfield" disabled>
+          <el-select v-model="query.selectField" disabled>
             <el-option
               v-for="(item, index) in oilFields"
               :key="index"
@@ -21,7 +21,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="区块：">
-          <el-select v-model="query.selectBlock" placeholder="请选择" class="f2" ref="elselect1">
+          <el-select v-model="query.selectBlock" placeholder="请选择" ref="elselect1">
             <el-option v-for="item in blanks" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
           </el-select>
         </el-form-item>
@@ -139,7 +139,7 @@
         <span>时间：{{ query.value2 }}</span>
         <div style="margin-left: 100px">
           <span>井组名称：</span>
-          <el-select v-model="select.selectBlock" placeholder="请选择" class="f2" @change="selectBlockBut">
+          <el-select v-model="select.selectBlock" placeholder="请选择" @change="selectBlockBut">
             <el-option
               v-for="item in blockList"
               :key="item.wellGroupId"
@@ -192,7 +192,7 @@
 
 <script>
 // import NormalCard from '@/components/tools/NormalCard';
-// import { exportExcel } from '@/lib/exportExcel';
+import { exportExcel } from "@/lib/exportExcel";
 // import {
 //   getoilfield, //油田下拉
 //   getblock, //区块下拉
@@ -211,11 +211,14 @@ import {
   wellGroupParamConfigurationList,
   wellGroupList,
   saveAllWellGroup,
+  selectProWellByGroup,
   delectByWellGroupId,
-} from '@/api/rem/wellgroupinformaintenance';
-import { getOilFieldList, queryProductList, queryLayerList } from '@/api/rem/workcompanydesignate';
-import {fetchInjectionWells, fetchProductionWells } from '@/api/rem/primaryinfo';
-import { fetchFields } from '@/api/rem/primaryinfoqhdrem';
+} from "@/api/rem/wellgroupinformaintenance";
+import { waterWellAndLayerData } from "@/api/rem/intelligentdeployment";
+
+import { getOilFieldList, queryProductList, queryLayerList } from "@/api/rem/workcompanydesignate";
+import { fetchInjectionWells, fetchProductionWells } from "@/api/rem/primaryinfo";
+import { fetchFields } from "@/api/rem/primaryinfoqhdrem";
 export default {
   components: {},
   data() {
@@ -225,29 +228,29 @@ export default {
       cwOptions: [],
       showcs: true,
       query: {
-        selectField: '3FC9A818F5BC43B88270DB80BBB3018F',
+        selectField: "3FC9A818F5BC43B88270DB80BBB3018F",
         value2: this.getDate(),
-        selectBlock: '6CD7342CA6DD418183A4B3BC38584F7C',
-        orgId: '715AD1CD60484BB59E737CD18A9DE44A',
+        selectBlock: "6CD7342CA6DD418183A4B3BC38584F7C",
+        orgId: "715AD1CD60484BB59E737CD18A9DE44A",
       },
       deptSelect: [
         {
-          deptId: '715AD1CD60484BB59E737CD18A9DE44A',
-          deptName: '秦皇岛32-6渤中作业公司',
+          deptId: "715AD1CD60484BB59E737CD18A9DE44A",
+          deptName: "秦皇岛32-6渤中作业公司",
         },
       ], //作业公司
       select: {
-        selectBlock: '',
-        waterBlock: '',
-        layerBlock: '',
-        ogfBlock: '',
-        yjjh: '',
+        selectBlock: "",
+        waterBlock: "",
+        layerBlock: "",
+        ogfBlock: "",
+        yjjh: "",
       },
       blanks: [],
       waterList: [],
       ogfList: [],
       layerList: [],
-      radio: '1',
+      radio: "1",
       tableData: [],
       oilFields: [],
       dialogVisible: false,
@@ -259,24 +262,24 @@ export default {
   created() {
     //获取油田下拉数据
     this.selectData();
-    this.selectblock();
   },
   methods: {
     getDate() {
       let data = new Date();
       if (data.getMonth() + 1 < 10) {
-        return data.getFullYear() + '-0' + (data.getMonth() + 1);
+        return data.getFullYear() + "-0" + (data.getMonth() + 1);
       } else {
-        return data.getFullYear() + '-' + (data.getMonth() + 1);
+        return data.getFullYear() + "-" + (data.getMonth() + 1);
       }
     },
 
     queryBlock() {
       this.transferData = [];
-      postselectProWellByGroup({
-        wellGroupId: this.select.selectBlock,
+      selectProWellByGroup({
+        wellGroupId: this.select.waterBlock,
         blockId: this.query.selectBlock,
-      }).then(({ wellGroup }) => {
+      }).then((res) => {
+        console.log(res);
         let data = [];
         // this.cities.push(...wellGroup);
         // this.cities.forEach((city, index) => {
@@ -314,20 +317,20 @@ export default {
       delectByWellGroupId(param).then((res) => {
         if (res.data.code == 0) {
           this.tableOilfield();
-          this.$message({ type: 'success', message: '删除成功' });
+          this.$message({ type: "success", message: "删除成功" });
         } else {
-          this.$message({ type: 'error', message: '删除失败' });
+          this.$message({ type: "error", message: "删除失败" });
         }
       });
     },
     // 去除边框线
     wipeborder({ row, column, rowIndex, columnIndex }) {
       if (rowIndex === 1) {
-        return 'border:none';
+        return "border:none";
       }
 
       if (rowIndex === 0) {
-        return 'border-bottom:1px solid #66ffff;box-shadow:0px -1px 5px #66ffff inset';
+        return "border-bottom:1px solid #66ffff;box-shadow:0px -1px 5px #66ffff inset";
       }
     },
     // 新增/修改提交
@@ -343,22 +346,23 @@ export default {
         methodCode: 0,
         blockId: this.query.selectBlock,
         wellGroupId: this.select.selectBlock,
-        injWellId: this.waterList[0].injWellId,
-        injWellName: this.waterList[0].injWellName,
+        injWellId: this.waterList[0].wellId,
+        injWellName: this.waterList[0].wellName,
       };
-      if (this.select.selectBlock != '0') data.methodCode = 1;
+      if (this.select.selectBlock != "0") data.methodCode = 1;
       postsaveAndupdateWellGroup(data).then((res) => {
         this.transferData = [];
         if (res) {
-          this.$message.success('成功');
+          this.$message.success("成功");
           this.tableOilfield();
         } else {
-          this.$message.error('失败');
+          this.$message.error("失败");
         }
         this.dialogVisible = false;
       });
     },
     // 更改
+
     editBut() {
       this.dialogVisible = true;
       let data = {
@@ -366,9 +370,9 @@ export default {
         blockId: this.query.selectBlock,
         dateTime: this.query.value2,
       };
-      this.select.waterBlock = '';
-      this.select.layerBlock = '';
-      this.select.selectBlock = '';
+      this.select.waterBlock = "";
+      this.select.layerBlock = ""; //层位
+      this.select.selectBlock = ""; //井组名称
       this.transferData = [];
       this.getselectWell(data);
     },
@@ -380,53 +384,45 @@ export default {
         dateTime: this.query.value2,
         // wellGroupId: '',
         wellGroupId: this.select.selectBlock,
-        apifoxApild: '48248204',
+        apifoxApild: "48248204",
       };
-      this.select.waterBlock = '';
-      this.select.layerBlock = '';
-      this.waterList = [];
-      this.layerList = [];
+      this.select.waterBlock = "";
+      this.select.layerBlock = "";
       this.transferData = [];
       this.value = [];
-      if (data.wellGroupId == '0') {
-        getwaterWellAndLayerData().then(({ waterWellList }) => {
-          this.waterList = waterWellList;
-        });
+      if (data.wellGroupId == "0") {
+        this.getlist()
       } else {
-        postCoefficientconnectivity(data).then((res) => {
+        wellGroupParamConfiguration(data).then((res) => {
           let arr = [];
-          if (Array.isArray(res) && res.length) {
-            arr.push({
-              injWellId: res[0].injWellId,
-              injWellNo: res[0].injWellNo,
-              layerId: res[0].layerId,
-              layerName: res[0].layerName,
-            });
-          }
-          this.waterList = arr;
-          this.layerList = arr;
-
-          res.forEach((item) => {
-            if (item.proWellId && item.proWellNo) {
-              let obj = {
-                proWellId: item.proWellId,
-                proWellNo: item.proWellNo,
-              };
-              this.value.push(item.proWellId);
-            }
+          arr.push({
+            wellId: res.data.data[0].injWellId,
+            wellName: res.data.data[0].injWellNo,
+            layerId: res.data.data[0].layerId,
+            layerName: res.data.data[0].layerName,
           });
-          this.select.waterBlock = res[0].injWellId;
-          this.select.layerBlock = res[0].layerId;
+          console.log(arr);
+          this.waterList = arr;
+          this.cwOptions = arr;
+          this.select.waterBlock = arr[0].wellId;
+          this.select.layerBlock = arr[0].layerId;
+          res.data.data.forEach((item) => {
+            let obj = {
+              proWellId: item.proWellId,
+              proWellNo: item.proWellNo,
+            };
+            this.value.push(obj);
+          });
           this.queryBlock();
         });
       }
     },
     // 水井下拉事件
     waterBut() {
-      this.select.layerBlock = '';
+      this.select.layerBlock = "";
       this.transferData = [];
       this.value = [];
-      if (this.select.selectBlock != '0') return;
+      if (this.select.selectBlock != "0") return;
       getlayerListByWaterWellId({
         wellId: this.select.waterBlock,
         // wellId: "008259D4D5B24D97BBD0BAF2AA8C2D6F"
@@ -439,23 +435,30 @@ export default {
       wellGroupList(data).then((res) => {
         this.blockList = res.data.data;
         this.blockList.unshift({
-          wellGroupId: '0',
-          wellGroupName: '新增',
+          wellGroupId: "0",
+          wellGroupName: "新增",
         });
       });
     },
     // 表格下载
     preserve() {
-      if (this.query.selectBlock) {
-        let blockName = this.blanks.find((item) => item.blockId == this.query.selectBlock).blockName;
-        exportExcel('#indexscv', blockName + '小层井组定义');
-      } else {
-        this.$message.error('请选择区块');
-      }
+      exportExcel("#indexscv", "小层井组定义");
+    },
+    getlist(){
+  queryLayerList().then((res) => {
+        if (res.data.code == 200) {
+          this.cwOptions = res.data.data;
+        } else {
+          this.$message.error("系统错误请重新尝试或联系运维人员！");
+        }
+      });
+       fetchInjectionWells({ oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F" }).then((res) => {
+        this.waterList = res.data.data.injectionWell;
+      });
     },
     // 获取油田下拉数据
     selectData() {
-      getOilFieldList({ orgId: '715AD1CD60484BB59E737CD18A9DE44A' }).then((res) => {
+      getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
         if (res.data.code == 200) {
           this.oilFields = res.data.data;
         }
@@ -464,15 +467,15 @@ export default {
         if (res.data.code == 200) {
           this.cwOptions = res.data.data;
         } else {
-          this.$message.error('系统错误请重新尝试或联系运维人员！');
+          this.$message.error("系统错误请重新尝试或联系运维人员！");
         }
-        console.log(this.tableData);
       });
 
-      fetchInjectionWells({ oilFieldId: '3FC9A818F5BC43B88270DB80BBB3018F' }).then((res) => {
+      fetchInjectionWells({ oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F" }).then((res) => {
         this.waterList = res.data.data.injectionWell;
       });
-      fetchProductionWells({ oilFieldId: '3FC9A818F5BC43B88270DB80BBB3018F' }).then((res) => {
+      fetchProductionWells({ oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F" }).then((res) => {
+        console.log(res, "xxxxxxxxxxxxxx");
         let wellGroup = res.data.data.productionWells;
         let data = [];
         wellGroup.forEach((item) => {
@@ -486,9 +489,9 @@ export default {
       fetchFields({
         oilFieldId: this.query.selectField,
       }).then((res) => {
-          this.blanks = res.data.data.fields
+        this.blanks = res.data.data.fields;
       });
-      this.tableOilfield()
+      this.tableOilfield();
     },
     // 获取区块数据
     // selectblock() {
@@ -500,16 +503,13 @@ export default {
     //   });
     // },
     // // 油田下拉点击事件
-    changeOilfield() {
-      this.selectblock();
-    },
     // 获取油田列表数据
     tableOilfield() {
       let data = {
         blockId: this.query.selectBlock,
         dataTime: this.query.value2,
         ogfId: this.query.selectField,
-        apifoxApild: '48248204',
+        apifoxApild: "48248204",
       };
       wellGroupParamConfigurationList(data).then((res) => {
         if (res.data.data && res.data.data.length > 0) {
@@ -543,7 +543,7 @@ export default {
     // 保存
     saveBut() {
       saveAllWellGroup().then(() => {
-        this.$message.success('保存成功');
+        this.$message.success("保存成功");
       });
     },
   },

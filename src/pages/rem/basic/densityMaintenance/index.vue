@@ -56,7 +56,7 @@
       </el-form>
     </headerSearch>
 
-    <info-window :is-show-max-btn="true" infoWidth="100%" infoHeight="100%" headerTitle="密度信息维护">
+    <info-window style="padding-top:20px" :is-show-max-btn="true" infoWidth="100%" infoHeight="100%" headerTitle="密度信息维护">
       <el-table
         :data="noticeList"
         @current-change="handleCurrentChange"
@@ -69,7 +69,7 @@
         style="width: auto; height: 100%"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
-        <el-table-column label="油气田" width="130px" prop="oilFieldName" align="center"></el-table-column>
+        <el-table-column label="油气田" width="130px" prop="ogfName" align="center"></el-table-column>
         <el-table-column label="一月" align="center">
           <el-table-column label="计划" width="130px" align="center">
             <template slot-scope="scope">
@@ -284,15 +284,6 @@ export default {
       queryDensityInfo(this.queryParams).then((res) => {
         if (res.data.code == 200) {
           this.noticeList = [res.data.data];
-            let a = "";
-            this.oilFields.map((n) => {
-              if (n.oilFieldId == this.queryParams.ogfId) {
-                a = n.oilFieldName;
-                this.noticeList[0].oilFieldName = a;
-              } 
-            });
-            this.noticeList[0].ogfId = this.queryParams.ogfId;
-        
         } 
       });
     },
