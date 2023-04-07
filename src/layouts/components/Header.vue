@@ -64,14 +64,6 @@
           <message />
           <!-- 全局通知，通告 -->
           <notice />
-          <el-tooltip
-            class="item"
-            effect="dark"
-            content="编辑面板"
-            placement="bottom"
-          >
-            <svg-icon icon-class="edit-panel" class="panelIconClass" @clickIcon="editPanel" />
-          </el-tooltip>
           <!-- <t-button v-show="$store.getters['user/isGroupLogin']" theme="default" variant="text" @click="switchMode" style="color: var(--white-color)"
             ><swap-icon style="color: var(--white-color)" />{{ currentMode }}</t-button
           > -->
