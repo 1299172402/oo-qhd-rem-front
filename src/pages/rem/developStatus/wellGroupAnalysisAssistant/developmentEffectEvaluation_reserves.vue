@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <el-container class="layout">
     <el-header height="auto">
       <header-search class="g-w100 g-h100" style="width: 100%">
@@ -19,7 +19,7 @@
             </el-button>
           </div>
           <div class="fr overflow-hidden">
-            <!-- 产能量 -->
+    
             <el-radio-group v-model="radio1">
               <router-link
                 :to="{
@@ -29,9 +29,9 @@
               >
                 <el-radio-button label="产能类"></el-radio-button>
               </router-link>
-              <!-- 储量类 -->
+         
               <el-radio-button label="储量类" style="margin-right: 20px"></el-radio-button>
-              <!-- 含水类 -->
+             
               <router-link
                 :to="{
                   name: 'developmentEffectEvaluation_water',
@@ -40,7 +40,7 @@
               >
                 <el-radio-button label="含水类"></el-radio-button>
               </router-link>
-              <!-- 递减类 -->
+             
               <router-link
                 :to="{
                   name: 'developmentEffectEvaluation_Decreasing',
@@ -55,8 +55,8 @@
       </header-search>
     </el-header>
     <el-main>
-      <!-- <pagePanelNew style="height: 100%; margin-top: 0px"> -->
-      <div class="dom" style="margin-top: 0px">
+      <pagePanelNew style="height: 100%; margin-top: 0px"> -->
+      <!-- <div class="dom" style="margin-top: 0px">
         <el-row class="mt-5" :gutter="20" style="margin-top: -20px">
           <el-col :span="12">
             <pagePanel headerTitle="剩余储采比" style="width: 100%; height: 380px" :isShowMaxBtn="true">
@@ -76,13 +76,13 @@
             </pagePanel>
           </el-col>
         </el-row>
-      </div>
+      </div> -->
 
       <!-- </pagePanelNew> -->
-    </el-main>
+    <!-- </el-main>
   </el-container>
-</template>
-<script>
+</template>  -->
+<!-- <script>
 import * as echarts from 'echarts';
 import Echart from '@/components/tools/Echarts/index.vue';
 import { fetchOilFields, fetchFields } from '@/api/oilDeposit/rem-02/primaryinfo.js';
@@ -912,8 +912,8 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-.QU {
+<style lang="scss" scoped> -->
+<!-- .QU {
   padding-left: 10px;
 }
 .formBox {
@@ -952,4 +952,4 @@ export default {
 ::v-deep .el-radio-button:first-child .el-radio-button__inner {
   border: 1px solid #00d6ea;
 }
-</style>
+</style> -->

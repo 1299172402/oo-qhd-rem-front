@@ -21,7 +21,8 @@
           <div class="fr overflow-hidden">
             <!-- 产能类 -->
             <el-radio-group v-model="radio1">
-              <el-radio-button label="产能类"></el-radio-button>
+              <!-- <el-radio-button label="产能类"></el-radio-button> -->
+              <el-button class="commonBtn" label="产能类" > 产能类 </el-button>
               <!-- 储量类 -->
               <router-link
                 :to="{
@@ -33,7 +34,9 @@
                   },
                 }"
               >
-                <el-radio-button label="储量类" style="margin-left: 20px"></el-radio-button>
+                <!-- <el-radio-button ></el-radio-button> -->
+
+                <el-button class="commonBtn" label="储量类" style="margin-left: 20px"> 储存类 </el-button>
               </router-link>
               <!-- 含水类 -->
               <router-link
@@ -46,7 +49,9 @@
                   },
                 }"
               >
-                <el-radio-button label="含水类" style="margin-left: 3px"></el-radio-button>
+                <!-- <el-radio-button label="含水类" style="margin-left: 3px"></el-radio-button> -->
+                <el-button class="commonBtn" label="含水类" style="margin-left: 3px"> 含水类 </el-button>
+                
               </router-link>
               <!-- 递减类  -->
               <router-link
@@ -59,7 +64,8 @@
                   },
                 }"
               >
-                <el-radio-button label="递减类"></el-radio-button>
+                <!-- <el-radio-button label="递减类"></el-radio-button> -->
+                <el-button class="commonBtn" label="递减类"> 递减类 </el-button>
               </router-link>
             </el-radio-group>
           </div></div

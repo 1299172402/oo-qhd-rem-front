@@ -26,7 +26,8 @@
                   params: { oilFieldId: selectOilField, fieldId: selectBlock, canDownload: canDownload },
                 }"
               >
-                <el-radio-button label="产能类"></el-radio-button>
+              <el-button class="commonBtn" label="产能类"> 产能类 </el-button>
+                <!-- <el-radio-button label="产能类"></el-radio-button> -->
               </router-link>
               <router-link
                 :to="{
@@ -34,16 +35,22 @@
                   params: { oilFieldId: selectOilField, fieldId: selectBlock, canDownload: canDownload },
                 }"
               >
-                <el-radio-button label="储量类"></el-radio-button>
+                <!-- <el-radio-button label="储量类"></el-radio-button> -->
+              <el-button class="commonBtn" label="储量类"> 储量类 </el-button>
+
               </router-link>
-              <el-radio-button label="含水类" style="margin-right: 20px"></el-radio-button>
+              <!-- <el-radio-button label="含水类" ></el-radio-button> -->
+              <el-button class="commonBtn" label="含水类" style="margin-right: 20px"> 含水类 </el-button>
+
               <router-link
                 :to="{
                   name: 'developmentEffectEvaluation_Decreasing',
                   params: { oilFieldId: selectOilField, fieldId: selectBlock, canDownload: canDownload },
                 }"
               >
-                <el-radio-button label="递减类"></el-radio-button>
+                <!-- <el-radio-button label="递减类"></el-radio-button> -->
+              <el-button class="commonBtn" label="递减类"> 递减类 </el-button>
+
               </router-link>
             </el-radio-group>
           </div>

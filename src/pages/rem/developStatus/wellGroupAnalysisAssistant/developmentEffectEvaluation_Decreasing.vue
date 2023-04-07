@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <el-container class="layout">
     <el-header height="auto">
       <header-search class="g-w100 g-h100">
@@ -57,7 +57,7 @@
       </header-search>
     </el-header>
     <el-main>
-      <!-- <pagePanelNew style="height: 100%; margin-top: 0px"> -->
+     <pagePanelNew style="height: 100%; margin-top: 0px"> 
 
       <div class="dom" style="margin-top: 0px">
         <el-row :gutter="20" style="margin-top: -20px">
@@ -99,10 +99,10 @@
         </el-row>
       </div>
 
-      <!-- </pagePanelNew> -->
+     </pagePanelNew> 
     </el-main>
   </el-container>
-</template>
+</template> -->
 <script>
 import * as echarts from 'echarts';
 import Echart from '@/components/tools/Echarts/index.vue';
@@ -760,7 +760,7 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
+<!-- <style lang="scss" scoped>
 .QU {
   padding-left: 10px;
 }
@@ -799,4 +799,4 @@ export default {
 ::v-deep .el-radio-button:first-child .el-radio-button__inner {
   border: 1px solid #00d6ea;
 }
-</style>
+</style> -->
