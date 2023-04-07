@@ -2,7 +2,7 @@
   <el-container class="layout">
     <el-header height="auto">
       <header-search class="g-w100 g-h100">
-        <div class="py-5 overflow-hidden" style="margin-top: 20px">
+        <div class="py-5 overflow-hidden" style="margin-top: 10px; margin-bottom: 10px">
           <div class="fl">
             <span>油田：</span>
             <el-select v-model="selectOilField" disabled @change="getFetchFields">

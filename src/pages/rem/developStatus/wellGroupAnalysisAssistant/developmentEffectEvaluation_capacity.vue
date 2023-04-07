@@ -2,7 +2,7 @@
   <el-container class="layout">
     <el-header height="auto">
       <header-search class="g-w100 g-h100" style="width: 100%">
-        <div class="py-5 overflow-hidden" style="margin-top: 20px">
+        <div class="py-5 overflow-hidden" style="margin-top: 10px; margin-bottom: 10px">
           <div class="fl">
             <span>油田：</span>
             <el-select v-model="selectOilField" disabled @change="getFetchFields">
@@ -184,15 +184,14 @@
           </el-col>
         </el-row>
       </div>
-
       <!-- </pagePanelNew> -->
     </el-main>
   </el-container>
 </template>
 <script>
-import * as echarts from 'echarts';
-import Echart from '@/components/tools/Echarts/index.vue';
-import { fetchOilFields, fetchFields } from '@/api/oilDeposit/rem-02/primaryinfo.js';
+import * as echarts from "echarts";
+import Echart from "@/components/tools/Echarts/index.vue";
+import { fetchOilFields, fetchFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import {
   outputSpeed,
   outputDegree,
@@ -200,8 +199,8 @@ import {
   injectionProRate,
   generalPressure,
   indicatorEveluationResults,
-} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
-import { getWidgetByAreaUser } from '@/api/oilDeposit/rmm-01/rmm01';
+} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+import { getWidgetByAreaUser } from "@/api/oilDeposit/rmm-01/rmm01";
 export default {
   components: {
     Echart,
@@ -214,8 +213,8 @@ export default {
   data() {
     return {
       //对标油田
-      fields: '',
-      fieldsData: '',
+      fields: "",
+      fieldsData: "",
       //注采比 第一条标线
       lineStandOne: 0.6,
       //注采比 第二条标线
@@ -225,14 +224,14 @@ export default {
       //油田
       oilField: [],
       //油田名字
-      oilFieldName: '',
+      oilFieldName: "",
       //油田选中值
-      selectOilField: '',
+      selectOilField: "",
       //区块
       block: [],
       //区块选中值
-      selectBlock: '',
-      radio1: '产能类',
+      selectBlock: "",
+      radio1: "产能类",
       //查询参数
       queryParams: {},
       page: 1,
@@ -240,40 +239,40 @@ export default {
       //油田列表
       oilFieldList: [
         {
-          value: 'QHD32-6',
-          label: '秦皇岛32-6油田',
+          value: "QHD32-6",
+          label: "秦皇岛32-6油田",
         },
       ],
       //区域列表
       areaList: [
         {
-          value: '',
-          label: '全部',
+          value: "",
+          label: "全部",
         },
         {
-          value: '区块1',
-          label: '区块1',
+          value: "区块1",
+          label: "区块1",
         },
       ],
       //采油速度
       productionSpeed: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         dataZoom: {
           start: 0,
-          type: 'inside',
+          type: "inside",
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '采油速度',
+              name: "采油速度",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
@@ -281,34 +280,34 @@ export default {
           data: [],
           left: 0,
           textStyle: {
-            color: '#24DEFF',
+            color: "#24DEFF",
           },
         },
         xAxis: {
-          type: 'category',
+          type: "category",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
           },
           axisLine: {
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
-        color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#FF5844', '#DA835E', '#9A72FF', '#FF30AD', '#2ACAFF'],
+        color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#FF5844", "#DA835E", "#9A72FF", "#FF30AD", "#2ACAFF"],
         yAxis: [
           {
-            name: '地质储量采油速度%',
-            nameLocation: 'center',
-            nameTextStyle: { color: '#8FA4CC' },
+            name: "地质储量采油速度%",
+            nameLocation: "center",
+            nameTextStyle: { color: "#8FA4CC" },
             nameGap: 44,
-            type: 'value',
+            type: "value",
             minInterval: 0,
             axisLabel: {
-              color: '#8FA4CC',
+              color: "#8FA4CC",
             },
             axisTick: {
               show: false,
@@ -316,25 +315,25 @@ export default {
             axisLine: {
               show: false,
               lineStyle: {
-                color: 'rgba(151,151,151,.16)',
+                color: "rgba(151,151,151,.16)",
               },
             },
             splitLine: {
               show: true,
               lineStyle: {
-                color: 'rgba(255,255,255,.16)',
+                color: "rgba(255,255,255,.16)",
               },
             },
           },
           {
-            name: '可采、剩余可采采油速度%',
-            nameLocation: 'center',
-            nameTextStyle: { color: '#8FA4CC' },
+            name: "可采、剩余可采采油速度%",
+            nameLocation: "center",
+            nameTextStyle: { color: "#8FA4CC" },
             nameGap: 44,
-            type: 'value',
+            type: "value",
             minInterval: 0,
             axisLabel: {
-              color: '#8FA4CC',
+              color: "#8FA4CC",
             },
             axisTick: {
               show: false,
@@ -342,13 +341,13 @@ export default {
             axisLine: {
               show: false,
               lineStyle: {
-                color: 'rgba(151,151,151,.16)',
+                color: "rgba(151,151,151,.16)",
               },
             },
             splitLine: {
               show: true,
               lineStyle: {
-                color: 'rgba(255,255,255,.16)',
+                color: "rgba(255,255,255,.16)",
               },
             },
           },
@@ -358,37 +357,37 @@ export default {
       //采出程度
       recoveryDegree: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         legend: {
           left: 0,
           textStyle: {
-            color: '#24DEFF',
+            color: "#24DEFF",
           },
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '地质储量采出程度',
+              name: "地质储量采出程度",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
-        color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#FF5844', '#DA835E', '#9A72FF', '#FF30AD', '#2ACAFF'],
+        color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#FF5844", "#DA835E", "#9A72FF", "#FF30AD", "#2ACAFF"],
         xAxis: {
-          name: '地质储量采出程度(%)',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "地质储量采出程度(%)",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 25,
           //max: 60,
-          type: 'value',
+          type: "value",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -396,24 +395,24 @@ export default {
           axisLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(151,151,151,.16)',
+              color: "rgba(151,151,151,.16)",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: {
-          name: '含水率(%)',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "含水率(%)",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 30,
-          type: 'value',
+          type: "value",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -421,13 +420,13 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
           splitLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
@@ -437,16 +436,16 @@ export default {
       //采出程度与含水率关系图
       relationship: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
           confine: true,
         },
         legend: {
           left: 0,
           textStyle: {
-            color: '#24DEFF',
+            color: "#24DEFF",
           },
           data: [
             /*"Rm=10", "Rm=20", "Rm=40", "Rm=60", "Rm=80", "采出程度"*/
@@ -457,20 +456,20 @@ export default {
           show: true,
           feature: {
             saveAsImage: {
-              name: '采出程度与含水率关系',
+              name: "采出程度与含水率关系",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         xAxis: {
-          name: '地质储量采出程度(%)',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "地质储量采出程度(%)",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 30,
-          type: 'value',
+          type: "value",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -478,24 +477,24 @@ export default {
           axisLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(151,151,151,.16)',
+              color: "rgba(151,151,151,.16)",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: {
-          name: '综合含水率(%)',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "综合含水率(%)",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 30,
-          type: 'value',
+          type: "value",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -503,67 +502,67 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
           splitLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
-        color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#FF5844', '#DA835E', '#9A72FF', '#FF30AD', '#2ACAFF'],
+        color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#FF5844", "#DA835E", "#9A72FF", "#FF30AD", "#2ACAFF"],
 
         series: [],
       },
       //注采比
       injectionProductionRatio: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         dataZoom: {
           start: 0,
-          type: 'inside',
+          type: "inside",
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '注采比',
+              name: "注采比",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         xAxis: {
-          type: 'category',
+          type: "category",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
           },
           axisLine: {
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: {
-          name: '月度注采比',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "月度注采比",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 30,
           //min:90,
           max: 1.2,
           interval: 0.2,
-          type: 'value',
+          type: "value",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -571,25 +570,25 @@ export default {
           axisLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(151,151,151,.16)',
+              color: "rgba(151,151,151,.16)",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
-        color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#FF5844', '#DA835E', '#9A72FF', '#FF30AD', '#2ACAFF'],
+        color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#FF5844", "#DA835E", "#9A72FF", "#FF30AD", "#2ACAFF"],
         series: [
           {
-            name: '注采比',
+            name: "注采比",
             data: [],
-            type: 'line',
-            barWidth: '20',
+            type: "line",
+            barWidth: "20",
             markLine: {
-              symbol: 'none',
+              symbol: "none",
               silent: false,
               data: [
                 {
@@ -600,8 +599,8 @@ export default {
                 },
               ],
               lineStyle: {
-                color: 'orange',
-                type: 'solid',
+                color: "orange",
+                type: "solid",
               },
             },
             showSymbol: false,
@@ -611,33 +610,33 @@ export default {
       //地层总压降
       totalFormationPressureDrop: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         legend: {
-          data: ['合理地层压力', '压力保持水平'],
+          data: ["合理地层压力", "压力保持水平"],
           left: 0,
           textStyle: {
-            color: '#fff',
+            color: "#fff",
           },
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '地层总压降',
+              name: "地层总压降",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         xAxis: {
-          type: 'category',
+          type: "category",
           /*data: ["CEPI", "CEPJ", "WHPH", "WHPC"],*/
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -645,14 +644,14 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: {
-          type: 'value',
+          type: "value",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -660,44 +659,44 @@ export default {
           axisLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(151,151,151,.16)',
+              color: "rgba(151,151,151,.16)",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         series: [
           {
-            name: '压力保持水平',
+            name: "压力保持水平",
             data: [
               /*7, 6, 7, 4, 5*/
             ],
-            type: 'bar',
-            barWidth: '20',
+            type: "bar",
+            barWidth: "20",
             label: {
               show: true,
-              position: 'top',
-              color: '#00D9EA',
+              position: "top",
+              color: "#00D9EA",
             },
             /*symbol: "circle",*/
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
-                  color: '#00D9EA',
+                  color: "#00D9EA",
                 },
                 {
                   offset: 1,
-                  color: '#0F65EA',
+                  color: "#0F65EA",
                 },
               ]),
             },
             markLine: {
-              symbol: 'none',
+              symbol: "none",
               silent: false,
               data: [
                 {
@@ -705,8 +704,8 @@ export default {
                 },
               ],
               lineStyle: {
-                color: 'orange',
-                type: 'solid',
+                color: "orange",
+                type: "solid",
               },
             },
           },
@@ -775,7 +774,7 @@ export default {
         if (res.data.code == 200) {
           this.oilField = res.data.data.oilFields;
           if (this.oilField.length == 0) {
-            this.selectOilField = '';
+            this.selectOilField = "";
           } else {
             this.selectOilField = this.oilField[0].oilFieldId;
           }
@@ -784,7 +783,7 @@ export default {
       let oilFieldId = this.$route.params.oilFieldId;
       if (oilFieldId == undefined) {
         //设置默认油田
-        this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
+        this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
       } else {
         this.selectOilField = oilFieldId;
       }
@@ -847,7 +846,7 @@ export default {
         fieldId: fieldId,
       };
       outputSpeed(request).then((res) => {
-        console.log(res, '22222222222222222222222');
+        console.log(res, "22222222222222222222222");
         if (res.data.code == 200) {
           let lineChart = res.data.data.chart.linearDataSets;
           let legendData = [];
@@ -875,25 +874,25 @@ export default {
      */
     outputSpeedLine(linearChart) {
       let series = {};
-      series.type = 'line';
+      series.type = "line";
       let seriesName = linearChart.label;
       series.name = seriesName;
-      if (seriesName == '实际年采油速度') {
+      if (seriesName == "实际年采油速度") {
         series.yAxisIndex = 0;
-      } else if (seriesName == '可采储量采油速度' || seriesName == '剩余可采储量采油速度') {
+      } else if (seriesName == "可采储量采油速度" || seriesName == "剩余可采储量采油速度") {
         series.yAxisIndex = 1;
       }
       let linearData = linearChart.linearData;
       let seriesData = [];
       linearData.forEach((item, index) => {
         let point = [];
-        let label = item.label.split('-');
-        point.push(label[0] + '-' + label[1]);
+        let label = item.label.split("-");
+        point.push(label[0] + "-" + label[1]);
         point.push(item.value);
         seriesData.push(point);
       });
       series.data = seriesData;
-      series.symbol = 'none';
+      series.symbol = "none";
       return series;
     },
     /**
@@ -929,14 +928,14 @@ export default {
      */
     outputDegreeLine(lineChart) {
       let series = {};
-      series.type = 'scatter';
+      series.type = "scatter";
       series.symbolSize = 4;
       /* series.symbol = 'none';*/
       series.name = lineChart.label;
       series.label = {
         show: false,
-        position: 'top',
-        color: '#00D9EA',
+        position: "top",
+        color: "#00D9EA",
       };
       let seriesData = [];
       let lineData = lineChart.numberPoints;
@@ -979,7 +978,7 @@ export default {
         if (res.data.code == 200) {
           let lineChart = res.data.data.chart.lineChartDataSets;
           lineChart.forEach((item, index) => {
-            legendData.push('Rm=' + item.label);
+            legendData.push("Rm=" + item.label);
             seriesData.push(this.outputDegreeTongChart(item));
           });
         } else {
@@ -998,9 +997,9 @@ export default {
      */
     outputDegreeTongChart(lineChart) {
       let series = {};
-      series.name = 'Rm=' + lineChart.label;
-      series.type = 'line';
-      series.symbol = 'none';
+      series.name = "Rm=" + lineChart.label;
+      series.type = "line";
+      series.symbol = "none";
       /* series.symbolSize=3;*/
       series.smooth = true;
       let seriesData = [];
@@ -1031,9 +1030,9 @@ export default {
           let seriesData = [];
           linearChart.forEach((item, index) => {
             let point = [];
-            let xData = '';
-            let label = item.label.split('-');
-            xData = label[0] + '-' + label[1];
+            let xData = "";
+            let label = item.label.split("-");
+            xData = label[0] + "-" + label[1];
             point.push(xData);
             point.push(item.value);
             seriesData.push(point);
@@ -1100,7 +1099,7 @@ export default {
       this.downPower(false);
       let myPath = this.$route.path;
       //该值可以为空
-      let areaCode = 'znytglxt';
+      let areaCode = "znytglxt";
       let loginName = this.userInfo.userName;
       getWidgetByAreaUser({ areaCode: areaCode, loginName: loginName }).then((res) => {
         let myList = res.data.dataList;
@@ -1116,25 +1115,25 @@ export default {
               try {
                 let myWidgetItem = this.myWidget[indexNum];
                 switch (myWidgetItem.widgetCode) {
-                  case 'addInfo':
+                  case "addInfo":
                     this.canAddInfo = true;
                     break;
-                  case 'updateInfo':
+                  case "updateInfo":
                     this.canUpdateInfo = true;
                     break;
-                  case 'sendInfo':
+                  case "sendInfo":
                     this.canSendInfo = true;
                     break;
-                  case 'deleteInfo':
+                  case "deleteInfo":
                     this.canDeleteInfo = true;
                     break;
-                  case 'download':
+                  case "download":
                     {
                       this.canDownload = true;
                       this.downPower(this.canDownload);
                     }
                     break;
-                  case 'upload':
+                  case "upload":
                     this.canUpload = true;
                     break;
                   default:
@@ -1216,7 +1215,7 @@ export default {
   }
 }
 ::v-deep .el-table .cell:empty::before {
-  content: '-';
+  content: "-";
 }
 
 ::v-deep .el-radio-button:first-child .el-radio-button__inner {

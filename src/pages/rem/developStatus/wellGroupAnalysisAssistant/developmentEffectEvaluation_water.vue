@@ -2,7 +2,7 @@
   <el-container class="layout">
     <el-header height="auto">
       <header-search class="g-w100 g-h100">
-        <div class="py-5 overflow-hidden" style="margin-top: 20px">
+        <div class="py-5 overflow-hidden" style="margin-top: 10px; margin-bottom: 10px">
           <div class="fl">
             <span>油田：</span>
             <el-select v-model="selectOilField" disabled @change="getFetchFields">
@@ -107,14 +107,14 @@
   </el-container>
 </template>
 <script>
-import Echart from '@/components/tools/Echarts/index.vue';
-import { fetchFields, fetchOilFields } from '@/api/oilDeposit/rem-02/primaryinfo';
+import Echart from "@/components/tools/Echarts/index.vue";
+import { fetchFields, fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo";
 import {
   waterContainRaiseChart,
   waterIndicatorChart,
   waterSotreRateChart,
   indicatorResult,
-} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 export default {
   components: {
     Echart,
@@ -129,14 +129,14 @@ export default {
       //油田
       oilField: [],
       //油田名字
-      oilFieldName: '',
+      oilFieldName: "",
       //油田选中值
-      selectOilField: '',
+      selectOilField: "",
       //区块
       block: [],
       //区块选中值
-      selectBlock: '',
-      radio1: '含水类',
+      selectBlock: "",
+      radio1: "含水类",
       //查询参数
       queryParams: {},
       page: 1,
@@ -144,61 +144,61 @@ export default {
       //油田列表
       oilFieldList: [
         {
-          value: 'QHD32-6',
-          label: '秦皇岛32-6油田',
+          value: "QHD32-6",
+          label: "秦皇岛32-6油田",
         },
       ],
       //区域列表
       areaList: [
         {
-          value: '',
-          label: '全部',
+          value: "",
+          label: "全部",
         },
         {
-          value: '区块1',
-          label: '区块1',
+          value: "区块1",
+          label: "区块1",
         },
       ],
       //含水上升率
       rateOfWaterCutRise: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         dataZoom: {
           start: 0,
-          type: 'inside',
+          type: "inside",
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '含水上升率',
+              name: "含水上升率",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         legend: {
           left: 0,
           textStyle: {
-            color: '#24DEFF',
+            color: "#24DEFF",
           },
           data: [
             /*"油田1", "油田2", "Ⅰ期", "Ⅱ期", "理论曲线"*/
           ],
         },
         xAxis: {
-          name: '含水率(%)',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "含水率(%)",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 25,
           //min:90,
-          type: 'value',
+          type: "value",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -206,24 +206,24 @@ export default {
           axisLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(151,151,151,.16)',
+              color: "rgba(151,151,151,.16)",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: {
-          name: '含水上升率(%)',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "含水上升率(%)",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 35,
-          type: 'value',
+          type: "value",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -231,53 +231,53 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
           splitLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
-        color: ['#24DEFF', '#00FFD4', '#387DFF', '#E9D456', '#CD3D00', '#8635FF'],
+        color: ["#24DEFF", "#00FFD4", "#387DFF", "#E9D456", "#CD3D00", "#8635FF"],
         series: [],
       },
       //采出程度
       recoveryDegree: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         legend: {
           left: 0,
           textStyle: {
-            color: '#24DEFF',
+            color: "#24DEFF",
           },
-          data: ['累计水驱指数', '累积注采比', '月水驱指数'],
+          data: ["累计水驱指数", "累积注采比", "月水驱指数"],
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '水驱指数',
+              name: "水驱指数",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         xAxis: {
-          name: '采出程度(%)',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "采出程度(%)",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 25,
           //max: 60,
-          type: 'value',
+          type: "value",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -285,25 +285,25 @@ export default {
           axisLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(151,151,151,.16)',
+              color: "rgba(151,151,151,.16)",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: [
           {
-            name: '累计水驱指数，累积注采比(%)',
-            nameLocation: 'center',
-            nameTextStyle: { color: '#8FA4CC' },
+            name: "累计水驱指数，累积注采比(%)",
+            nameLocation: "center",
+            nameTextStyle: { color: "#8FA4CC" },
             nameGap: 35,
-            type: 'value',
+            type: "value",
             axisLabel: {
-              color: '#8FA4CC',
+              color: "#8FA4CC",
             },
             axisTick: {
               show: false,
@@ -311,24 +311,24 @@ export default {
             axisLine: {
               lineStyle: {
                 //color: '#979797'
-                color: 'rgba(255,255,255,.16)',
+                color: "rgba(255,255,255,.16)",
               },
             },
             splitLine: {
               show: false,
               lineStyle: {
-                color: 'rgba(255,255,255,.16)',
+                color: "rgba(255,255,255,.16)",
               },
             },
           },
           {
-            name: '阶段水驱指数(%)',
-            nameLocation: 'center',
-            nameTextStyle: { color: '#8FA4CC' },
+            name: "阶段水驱指数(%)",
+            nameLocation: "center",
+            nameTextStyle: { color: "#8FA4CC" },
             nameGap: 35,
-            type: 'value',
+            type: "value",
             axisLabel: {
-              color: '#8FA4CC',
+              color: "#8FA4CC",
             },
             axisTick: {
               show: false,
@@ -336,52 +336,52 @@ export default {
             axisLine: {
               lineStyle: {
                 //color: '#979797'
-                color: 'rgba(255,255,255,.16)',
+                color: "rgba(255,255,255,.16)",
               },
             },
             splitLine: {
               show: false,
               lineStyle: {
-                color: 'rgba(255,255,255,.16)',
+                color: "rgba(255,255,255,.16)",
               },
             },
           },
         ],
-        color: ['#24DEFF', '#00FFD4', '#387DFF', '#E9D456', '#CD3D00', '#8635FF'],
+        color: ["#24DEFF", "#00FFD4", "#387DFF", "#E9D456", "#CD3D00", "#8635FF"],
         series: [],
       },
       //存水率
       waterRate: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         legend: {
           left: 0,
           textStyle: {
-            color: '#24DEFF',
+            color: "#24DEFF",
           },
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '存水率',
+              name: "存水率",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         xAxis: {
-          name: '采出程度(%)',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "采出程度(%)",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 25,
-          type: 'value',
+          type: "value",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -389,24 +389,24 @@ export default {
           axisLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(151,151,151,.16)',
+              color: "rgba(151,151,151,.16)",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: {
-          name: '存水率(%)',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "存水率(%)",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 35,
-          type: 'value',
+          type: "value",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -414,17 +414,17 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
           splitLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
-        color: ['#24DEFF', '#00FFD4', '#387DFF', '#E9D456', '#CD3D00', '#8635FF'],
+        color: ["#24DEFF", "#00FFD4", "#387DFF", "#E9D456", "#CD3D00", "#8635FF"],
         series: [],
       },
       //指标评价结果表
@@ -449,7 +449,7 @@ export default {
         if (res.data.code == 200) {
           this.oilField = res.data.data.oilFields;
           if (this.oilField.length == 0) {
-            this.selectOilField = '';
+            this.selectOilField = "";
           } else {
             this.selectOilField = this.oilField[0].oilFieldId;
           }
@@ -458,7 +458,7 @@ export default {
       let oilFieldId = this.$route.params.oilFieldId;
       if (oilFieldId == undefined) {
         //设置默认油田
-        this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
+        this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
       } else {
         this.selectOilField = oilFieldId;
       }
@@ -535,13 +535,13 @@ export default {
      */
     waterContainRaiseLine(lineChart) {
       let series = {};
-      series.type = 'line';
+      series.type = "line";
       series.smooth = true;
       series.name = lineChart.label;
-      series.symbol = 'none';
-      if (lineChart.label == '含水上升率') {
-        series.type = 'scatter';
-        series.symbol = 'circle';
+      series.symbol = "none";
+      if (lineChart.label == "含水上升率") {
+        series.type = "scatter";
+        series.symbol = "circle";
         series.symbolSize = 8;
       }
       let seriesData = [];
@@ -568,7 +568,7 @@ export default {
         fieldId: fieldId,
       };
       waterIndicatorChart(request).then((res) => {
-        console.log(res, '没有出现数据');
+        console.log(res, "没有出现数据");
         if (res.data.code == 200) {
           let legendData = [];
           let seriesData = [];
@@ -590,13 +590,13 @@ export default {
      */
     waterIndicatorLine(lineChart) {
       let series = {};
-      series.type = 'line';
-      series.symbol = 'none';
+      series.type = "line";
+      series.symbol = "none";
       series.name = lineChart.label;
       let label = lineChart.label;
-      if (label == '累计水驱指数' || label == '累计注采比') {
+      if (label == "累计水驱指数" || label == "累计注采比") {
         series.yAxisIndex = 0;
-      } else if (label == '月水驱指数') {
+      } else if (label == "月水驱指数") {
         series.yAxisIndex = 1;
       }
       let lineData = lineChart.numberPoints;
@@ -627,10 +627,10 @@ export default {
           let seriesData = [];
           let lineCharts = res.data.data.chart.lineChartDataSets;
           lineCharts.forEach((item, index) => {
-            if (item.label == '阶段存水率' || item.label == '累计存水率') {
+            if (item.label == "阶段存水率" || item.label == "累计存水率") {
               legendData.push(item.label);
             } else {
-              legendData.push('Rm=' + item.label);
+              legendData.push("Rm=" + item.label);
             }
 
             seriesData.push(this.waterSotreRateLine(item));
@@ -647,16 +647,16 @@ export default {
      */
     waterSotreRateLine(lineChart) {
       let series = {};
-      series.type = 'line';
+      series.type = "line";
       series.smooth = true;
       let label = lineChart.label;
-      if (lineChart.label == '阶段存水率' || lineChart.label == '累计存水率') {
+      if (lineChart.label == "阶段存水率" || lineChart.label == "累计存水率") {
         label = lineChart.label;
       } else {
-        label = 'Rm=' + label;
+        label = "Rm=" + label;
       }
       series.name = label;
-      series.symbol = 'none';
+      series.symbol = "none";
       let lineData = lineChart.numberPoints;
       let seriesData = [];
       lineData.forEach((item, index) => {
@@ -724,7 +724,7 @@ export default {
   }
 }
 ::v-deep .el-table .cell:empty::before {
-  content: '-';
+  content: "-";
 }
 ::v-deep .el-radio-button__inner {
   background-color: #031527;
