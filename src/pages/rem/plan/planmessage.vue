@@ -75,6 +75,7 @@ export default {
       noticeList: [
       
       ],
+       queryParams: { actionEvent: '', assetCode: '', month: '', ogfId: '', wellNo: '' },
       // 是否展开，默认全部展开
       isExpandAll: true,
       deptList: [],
@@ -93,13 +94,15 @@ export default {
     // this.choiceDepts(); // 获取组织机构
   },
   methods: {
-    getList() {
-      queryMeasurePlanList().then((res)=>{
-        console.log(res)
-      })
+     show(data){
+        this.queryParams.ogfId = data.selectOilField
+        this.queryParams.selectPlatform = data.assetCode
+        this.getList()
     },
-    show(data){
-        console.log(data)
+    getList() {
+      queryMeasurePlanList(this.queryParams).then((res)=>{
+        this.noticeList = res.data.data
+      })
     },
   },
 };
