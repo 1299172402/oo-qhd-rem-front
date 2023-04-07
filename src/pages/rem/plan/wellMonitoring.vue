@@ -1830,6 +1830,7 @@
             },
             //检索文件
             doSearch() {
+                this.doSearchCharts();
                 this.getFetchMeasureStatInfos(
                     this.selectOilField,
                     this.selectPlatform,
@@ -1843,7 +1844,7 @@
                 this.queryParams.page =1;
                 this.getWorkProgress();
             },
-            //措施信息表
+            //化验数据列表
             getFetchMeasureStatInfos(oilFieldId, platformId, wellId, measureId, yearMonth, page, pageSize, wellType,wellBoreName) {
                 const wellArray = [];
                 wellArray.push(wellId);
