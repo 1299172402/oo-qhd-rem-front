@@ -214,8 +214,7 @@ import {
   selectProWellByGroup,
   delectByWellGroupId,
 } from "@/api/rem/wellgroupinformaintenance";
-
-import { getOilFieldList, queryProductList, queryLayerList } from "@/api/rem/workcompanydesignate";
+import { getOilFieldList,queryLayerList } from "@/api/rem/workcompanydesignate";
 import { fetchInjectionWells, fetchProductionWells } from "@/api/rem/primaryinfo";
 import { fetchFields } from "@/api/rem/primaryinfoqhdrem";
 export default {
