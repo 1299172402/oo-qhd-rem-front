@@ -21,7 +21,7 @@
         <el-table-column prop="oilSaturation" label="含油饱和度 (%)" width="120"></el-table-column>
         <el-table-column prop="shaleContent" label="泥质含量 (%)"></el-table-column>
         <el-table-column prop="topKb" label="海拔顶深 (m)"></el-table-column>
-        <el-table-column prop="bottomKb" label="海拔低深 (m)"></el-table-column>
+        <el-table-column prop="bottomKb" label="海拔底深 (m)"></el-table-column>
         <el-table-column prop="usefulThickness" label="有效厚度 (m)"></el-table-column>
         <el-table-column prop="interpConclusion" label="解释结论"></el-table-column>
         <el-table-column prop="remark" label="备注" width="200"></el-table-column>

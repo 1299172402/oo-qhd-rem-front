@@ -37,5 +37,5 @@ export default [
         meta: { title: '中长期开发计划', icon: 'icon' },
       },
     ],
-  },
+  }
 ];

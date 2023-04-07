@@ -24,8 +24,6 @@
             oilFieldId: {},
             //区块id
             blockId: {},
-            //层系id
-            layerId: {},
             //井组id
             wellGroupId: {}
         },
@@ -87,7 +85,7 @@
                 let request = {
                     oilFieldId: this.oilFieldId,
                     fieldId: this.blockId,
-                    fieldLayerId: this.layerId,
+                    fieldLayerId: this.selectPosition,
                     wellGroupId: this.wellGroupId,
                 };
                 seismicAttributePlot(request).then((res) => {

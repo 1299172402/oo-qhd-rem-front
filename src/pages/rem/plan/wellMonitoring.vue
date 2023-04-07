@@ -1641,7 +1641,11 @@
             },
         },
         mounted() {
-            this.dateTime = new Date().format('yyyy');
+            if(this.$route.query.dateTime){
+               this.dateTime =this.$route.query.dateTime;
+            }else{
+               this.dateTime = new Date().format('yyyy');
+            }
             this.initData();
             this.initSearchSelect();
         },

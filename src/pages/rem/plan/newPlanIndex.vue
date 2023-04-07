@@ -341,13 +341,11 @@
                 let newDate = moment().format('YYYY-MM-DD');
                 let diffObject = this.leftDiff(newDate);
                 let marginLeft = (diffObject.month * 78) + (diffObject.month * this.spacing) + (78 / 30 * diffObject.day) - 4;
-                
-                this.mcWidth = (this.width-20) - marginLeft +'px';
+                console.log('marginLeft',marginLeft)
+                this.mcWidth = (this.width-10-40) - marginLeft +'px';
                 this.mcMgLeft=marginLeft+550+'px';
-                // this.mcWidth =1160+'px';
-                // this.mcMgLeft=550+'px';
+                console.log('this.mcWidth',this.mcWidth);
                 console.log('this.mcMgLeft',this.mcMgLeft)
-                console.log(this.mcWidth, 88);
             },
             initData2() {
                 if (this.tableData.length) {
@@ -495,6 +493,7 @@
                         wellNameNano,
                         wellBoreName,
                         canDownload: this.canDownload,
+                        dateTime:this.dateTime
                     }
                 });
             },
