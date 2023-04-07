@@ -2,7 +2,7 @@
   <el-container class="layout">
     <el-header height="auto">
       <header-search class="g-w100 g-h100" style="width: 100%">
-        <div class="py-5 overflow-hidden" style="margin-top: 10px; margin-bottom: 10px">
+        <div class="py-5 overflow-hidden" style="margin-top: 10px; margin-bottom: -5px">
           <div class="fl">
             <span>油田：</span>
             <el-select v-model="selectOilField" disabled @change="getFetchFields">
@@ -20,10 +20,10 @@
           </div>
           <div class="fr overflow-hidden">
             <!-- 产能类 -->
-            <el-radio-group v-model="radio1">
-              <!-- <el-radio-button label="产能类"></el-radio-button> -->
+            <!-- <el-radio-group v-model="radio1">
+           
               <el-button class="commonBtn" label="产能类" > 产能类 </el-button>
-              <!-- 储量类 -->
+     
               <router-link
                 :to="{
                   name: 'developmentEffectEvaluation_reserves',
@@ -34,11 +34,9 @@
                   },
                 }"
               >
-                <!-- <el-radio-button ></el-radio-button> -->
-
-                <el-button class="commonBtn" label="储量类" style="margin-left: 20px"> 储存类 </el-button>
+               
               </router-link>
-              <!-- 含水类 -->
+       
               <router-link
                 :to="{
                   name: 'developmentEffectEvaluation_water',
@@ -49,11 +47,9 @@
                   },
                 }"
               >
-                <!-- <el-radio-button label="含水类" style="margin-left: 3px"></el-radio-button> -->
-                <el-button class="commonBtn" label="含水类" style="margin-left: 3px"> 含水类 </el-button>
-                
+
               </router-link>
-              <!-- 递减类  -->
+       
               <router-link
                 :to="{
                   name: 'developmentEffectEvaluation_Decreasing',
@@ -64,17 +60,25 @@
                   },
                 }"
               >
-                <!-- <el-radio-button label="递减类"></el-radio-button> -->
-                <el-button class="commonBtn" label="递减类"> 递减类 </el-button>
+             
               </router-link>
-            </el-radio-group>
+            </el-radio-group> ---->
+
+            <vertical-switch-button
+              :data-list="dataList1"
+              button-width="120px"
+              button-height="40px"
+              style="width: 9%"
+              btn-direction="row"
+              @selectBtn="selectBtn"
+            />
           </div></div
       ></header-search>
     </el-header>
 
     <el-main class="el-main">
       <!-- <pagePanelNew style="height: 100%"> -->
-      <div class="dom" style="margin-top: 20px">
+      <div class="dom" style="margin-top: 20px; margin-bottom: 20px">
         <el-row :gutter="20" style="margin-top: -20px">
           <el-col :span="12">
             <pagePanel headerTitle="采油速度" style="width: 100%; height: 370px" :isShowMaxBtn="true">
@@ -157,35 +161,37 @@
                 <el-button type="primary" style="min-width: 65px" class="jia"> 检索</el-button>
                 <el-button type="primary" style="min-width: 65px"> 查看</el-button>
               </div>
-              <el-table :data="tableData" highlight style="margin-top: 20px">
-                <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
-                <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
-                <el-table-column prop="lastPhaseValue" label="上阶段值" align="center"></el-table-column>
-                <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center"></el-table-column>
-                <el-table-column label="理论值" align="center">
-                  <template slot-scope="scope">
-                    <el-input-number
-                      v-model="scope.row.theoryValue"
-                      :controls="false"
-                      style="width: 80px"
-                    ></el-input-number>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="diffTheoryValue" label="与理论值对比差值" align="center">
-                  <template slot-scope="scope">
-                    <span>{{
-                      (Number(scope.row.evaluationResult) - Number(scope.row.theoryValue)) | toFixNumberFour
-                    }}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="diffSimilarOilField"
-                  label="与同类型油田比较"
-                  align="center"
-                  width="80"
-                ></el-table-column>
-                <el-table-column prop="result" label="结论" align="center" width="80"></el-table-column>
-              </el-table>
+              <div style="width: 100%">
+                <el-table :data="tableData" highlight height="230px" style="margin-top: 10px">
+                  <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
+                  <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
+                  <el-table-column prop="lastPhaseValue" label="上阶段值" align="center"></el-table-column>
+                  <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center"></el-table-column>
+                  <el-table-column label="理论值" align="center">
+                    <template slot-scope="scope">
+                      <el-input-number
+                        v-model="scope.row.theoryValue"
+                        :controls="false"
+                        style="width: 80px"
+                      ></el-input-number>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="diffTheoryValue" label="与理论值对比差值" align="center">
+                    <template slot-scope="scope">
+                      <span>{{
+                        (Number(scope.row.evaluationResult) - Number(scope.row.theoryValue)) | toFixNumberFour
+                      }}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    prop="diffSimilarOilField"
+                    label="与同类型油田比较"
+                    align="center"
+                    width="80"
+                  ></el-table-column>
+                  <el-table-column prop="result" label="结论" align="center" width="80"></el-table-column>
+                </el-table>
+              </div>
             </pagePanel>
           </el-col>
         </el-row>
@@ -197,6 +203,7 @@
 <script>
 import * as echarts from "echarts";
 import Echart from "@/components/tools/Echarts/index.vue";
+import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 import { fetchOilFields, fetchFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import {
   outputSpeed,
@@ -210,6 +217,7 @@ import { getWidgetByAreaUser } from "@/api/oilDeposit/rmm-01/rmm01";
 export default {
   components: {
     Echart,
+    verticalSwitchButton,
   },
   filters: {
     toFixNumberFour(val) {
@@ -238,6 +246,10 @@ export default {
       //区块选中值
       selectBlock: "",
       radio1: "产能类",
+      dataList1: [
+        { name: "产能类", key: "developmentEffectEvaluation_reserves", isChecked: true },
+        { name: "含水类", key: "developmentEffectEvaluation_water", isChecked: false },
+      ],
       //查询参数
       queryParams: {},
       page: 1,
@@ -297,10 +309,22 @@ export default {
           axisTick: {
             show: false,
           },
+          // axisLine: {
+          //   lineStyle: {
+          //     color: "rgba(255,255,255,.16)",
+          //   },
+          // },
           axisLine: {
+            //x轴线的颜色以及宽度
+            show: true,
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#345ed4",
+              width: 1,
+              type: "solid",
             },
+          },
+          axisTick: {
+            show: false,
           },
         },
         color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#FF5844", "#DA835E", "#9A72FF", "#FF30AD", "#2ACAFF"],
@@ -319,15 +343,15 @@ export default {
               show: false,
             },
             axisLine: {
-              show: false,
+              show: true,
               lineStyle: {
-                color: "rgba(151,151,151,.16)",
+                color: "#8FA4CC",
               },
             },
             splitLine: {
               show: true,
               lineStyle: {
-                color: "rgba(255,255,255,.16)",
+                color: "#8FA4CC",
               },
             },
           },
@@ -399,15 +423,15 @@ export default {
             show: false,
           },
           axisLine: {
-            show: false,
+            show: true,
             lineStyle: {
-              color: "rgba(151,151,151,.16)",
+              color: "#8FA4CC",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
         },
@@ -426,13 +450,13 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
           splitLine: {
-            show: false,
+            show: true,
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
         },
@@ -481,15 +505,15 @@ export default {
             show: false,
           },
           axisLine: {
-            show: false,
+            show: true,
             lineStyle: {
-              color: "rgba(151,151,151,.16)",
+              color: "#8FA4CC",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
         },
@@ -508,18 +532,17 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
           splitLine: {
-            show: false,
+            show: true,
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
         },
         color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#FF5844", "#DA835E", "#9A72FF", "#FF30AD", "#2ACAFF"],
-
         series: [],
       },
       //注采比
@@ -554,7 +577,7 @@ export default {
           },
           axisLine: {
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
         },
@@ -574,15 +597,15 @@ export default {
             show: false,
           },
           axisLine: {
-            show: false,
+            show: true,
             lineStyle: {
-              color: "rgba(151,151,151,.16)",
+              color: "#8FA4CC",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
         },
@@ -650,7 +673,7 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
         },
@@ -663,15 +686,15 @@ export default {
             show: false,
           },
           axisLine: {
-            show: false,
+            show: true,
             lineStyle: {
-              color: "rgba(151,151,151,.16)",
+              color: "#8FA4CC",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
         },
@@ -745,6 +768,17 @@ export default {
     this.getPageAuthMessage();
   },
   methods: {
+    selectBtn(item) {
+      // console.log(item)
+      this.$router.push({
+        name: item.key,
+        params: {
+          oilFieldId: this.selectOilField,
+          fieldId: this.selectBlock,
+          canDownload: this.canDownload,
+        },
+      });
+    },
     /**
      *  hwh
      *  设置注采比的第一条标线
@@ -1090,8 +1124,10 @@ export default {
         fieldId: fieldId,
       };
       indicatorEveluationResults(request).then((res) => {
+        console.log(res, "66666666666666666666");
         if (res.data.code == 200) {
           this.tableData = res.data.data.indicatorEvaluationResults;
+          // this.tableData = [...res.data.data.indicatorEvaluationResults, ...res.data.data.indicatorEvaluationResults];
         } else {
           this.tableData = [];
         }
@@ -1167,6 +1203,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+::v-deep .el-main {
+  overflow: hidden;
+}
 .el-header {
   padding: 0px 0px 0px 0px;
 }

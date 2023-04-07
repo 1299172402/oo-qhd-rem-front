@@ -2,7 +2,7 @@
   <el-container class="layout">
     <el-header height="auto">
       <header-search class="g-w100 g-h100">
-        <div class="py-5 overflow-hidden" style="margin-top: 10px; margin-bottom: 10px">
+        <div class="py-5 overflow-hidden" style="margin-top: 10px; margin-bottom: -5px">
           <div class="fl">
             <span>油田：</span>
             <el-select v-model="selectOilField" disabled @change="getFetchFields">
@@ -19,15 +19,14 @@
             </el-button>
           </div>
           <div class="fr overflow-hidden">
-            <el-radio-group v-model="radio1">
+            <!-- <el-radio-group v-model="radio1">
               <router-link
                 :to="{
                   name: 'developmentEffectEvaluation_capacity',
                   params: { oilFieldId: selectOilField, fieldId: selectBlock, canDownload: canDownload },
                 }"
               >
-              <el-button class="commonBtn" label="产能类"> 产能类 </el-button>
-                <!-- <el-radio-button label="产能类"></el-radio-button> -->
+                <el-button class="commonBtn" label="产能类" style="margin-right: -20px"> 产能类 </el-button>
               </router-link>
               <router-link
                 :to="{
@@ -35,12 +34,9 @@
                   params: { oilFieldId: selectOilField, fieldId: selectBlock, canDownload: canDownload },
                 }"
               >
-                <!-- <el-radio-button label="储量类"></el-radio-button> -->
-              <el-button class="commonBtn" label="储量类"> 储量类 </el-button>
-
               </router-link>
-              <!-- <el-radio-button label="含水类" ></el-radio-button> -->
-              <el-button class="commonBtn" label="含水类" style="margin-right: 20px"> 含水类 </el-button>
+
+              <el-button class="commonBtn" label="含水类" style="margin-right: 10px"> 含水类 </el-button>
 
               <router-link
                 :to="{
@@ -48,11 +44,17 @@
                   params: { oilFieldId: selectOilField, fieldId: selectBlock, canDownload: canDownload },
                 }"
               >
-                <!-- <el-radio-button label="递减类"></el-radio-button> -->
-              <el-button class="commonBtn" label="递减类"> 递减类 </el-button>
-
               </router-link>
-            </el-radio-group>
+            </el-radio-group> -->
+
+            <vertical-switch-button
+              :data-list="dataList1"
+              button-width="120px"
+              button-height="40px"
+              style="width: 9%"
+              btn-direction="row"
+              @selectBtn="selectBtn"
+            />
           </div>
         </div>
       </header-search>
@@ -108,7 +110,6 @@
           </el-col>
         </el-row>
       </div>
-
       <!-- </pagePanelNew> -->
     </el-main>
   </el-container>
@@ -116,6 +117,7 @@
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
 import { fetchFields, fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo";
+import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 import {
   waterContainRaiseChart,
   waterIndicatorChart,
@@ -125,6 +127,7 @@ import {
 export default {
   components: {
     Echart,
+    verticalSwitchButton,
   },
   filters: {
     toFixNumberFour(val) {
@@ -133,6 +136,10 @@ export default {
   },
   data() {
     return {
+      dataList1: [
+        { name: "产能类", key: "developmentEffectEvaluation_capacity", isChecked: false },
+        { name: "含水类", key: "developmentEffectEvaluation_water", isChecked: true },
+      ],
       //油田
       oilField: [],
       //油田名字
@@ -211,15 +218,15 @@ export default {
             show: false,
           },
           axisLine: {
-            show: false,
+            show: true,
             lineStyle: {
-              color: "rgba(151,151,151,.16)",
+              color: "#8FA4CC",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
         },
@@ -238,13 +245,13 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
           splitLine: {
-            show: false,
+            show: true,
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
         },
@@ -290,15 +297,15 @@ export default {
             show: false,
           },
           axisLine: {
-            show: false,
+            show: true,
             lineStyle: {
-              color: "rgba(151,151,151,.16)",
+              color: "#8FA4CC",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
         },
@@ -318,13 +325,13 @@ export default {
             axisLine: {
               lineStyle: {
                 //color: '#979797'
-                color: "rgba(255,255,255,.16)",
+                color: "#8FA4CC",
               },
             },
             splitLine: {
-              show: false,
+              show: true,
               lineStyle: {
-                color: "rgba(255,255,255,.16)",
+                color: "#8FA4CC",
               },
             },
           },
@@ -394,15 +401,15 @@ export default {
             show: false,
           },
           axisLine: {
-            show: false,
+            show: true,
             lineStyle: {
-              color: "rgba(151,151,151,.16)",
+              color: "#8FA4CC",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
         },
@@ -421,13 +428,13 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
           splitLine: {
-            show: false,
+            show: true,
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#8FA4CC",
             },
           },
         },
@@ -443,6 +450,12 @@ export default {
     this.initData();
   },
   methods: {
+    selectBtn(item) {
+      this.$router.push({
+        name: item.key,
+        params: { oilFieldId: this.selectOilField, fieldId: this.selectBlock, canDownload: this.canDownload },
+      });
+    },
     /**
      * hwh
      * 设置页面初始化

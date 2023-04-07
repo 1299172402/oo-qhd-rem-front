@@ -62,6 +62,9 @@ export default {
       item.isChecked = true;
       this.$emit("selectBtn", item);
     }
+
+
+    
   }
 };
 </script>
