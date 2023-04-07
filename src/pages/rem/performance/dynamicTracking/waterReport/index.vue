@@ -39,11 +39,11 @@
 <!--    </headerSearch>-->
 <!--      单井基本信息表-->
       <el-row :gutter="20">
-          <individualWellBasicInformationSheet></individualWellBasicInformationSheet>
+          <individualWellBasicInformationSheet :queryData="queryData"></individualWellBasicInformationSheet>
       </el-row>
 <!--      生产简史-->
       <el-row :gutter="20">
-          <homeworkWellHistory></homeworkWellHistory>
+          <homeworkWellHistory :queryData="queryData"></homeworkWellHistory>
       </el-row>
 <!--      分层调配-->
       <el-row :gutter="20">

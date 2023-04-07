@@ -16,6 +16,7 @@
     import { exportExcel } from '@/lib/exportExcel.js';
     export default {
         props: {
+            queryData:{},
             //选择油田
             oilFeildId: {},
             //选择平台
@@ -25,24 +26,47 @@
             //大事简要
             majorEventsBrieflyValue: ''
         },
+        computed:{
+            getQueryData(){
+                return this.queryData
+            }
+        },
+        watch:{
+          queryData:{
+              handler(Nval){
+                  console.log(Nval);
+                  let params = {
+                      ogfId: Nval.ogfId,
+                      platformId: Nval.platform,
+                      wellId: Nval.selectWellId
+                  }
+                  this.doSearch(params)
+              }
+          }  
+        },
         data() {
             return {
                 tableData: []
             };
         },
         mounted() {
-            this.doSearch();
+            let params = {
+                ogfId: this.queryData.ogfId,
+                platformId: this.queryData.platform,
+                wellId: this.queryData.selectWellId
+            }
+            this.doSearch(params);
         },
         methods: {
             //根据父组件传递过来的参数进行查询
             doSearch(majorEventsBrieflyValue) {
-                let request = {
-                    ogfId: this.oilFeildId,
-                    platformId: this.platform,
-                    wellId: this.wellId,
-                    majorEventsBriefly:majorEventsBrieflyValue!==undefined?majorEventsBrieflyValue:this.majorEventsBrieflyValue
-                };
-                workingHistory(request).then((res) => {
+                // let request = {
+                //     ogfId: this.oilFeildId,
+                //     platformId: this.platform,
+                //     wellId: this.wellId,
+                //     majorEventsBriefly:majorEventsBrieflyValue!==undefined?majorEventsBrieflyValue:this.majorEventsBrieflyValue
+                // };
+                workingHistory(majorEventsBrieflyValue).then((res) => {
                     if (res.data.code == 200) {
                         this.tableData = res.data.data.workingHistorys;
                     }

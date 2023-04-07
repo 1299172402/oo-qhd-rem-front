@@ -31,12 +31,31 @@
             }
         },
         props: {
+            queryData:{},
             //选择油田
             oilFeildId: {},
             //选择平台
             platform: {},
             //选择井号
             wellId: {}
+        },
+        computed:{
+            getQueryData(){
+                return this.queryData
+            }
+        },
+        watch:{
+            queryData:{
+                handler(Nval){
+                    console.log(Nval);
+                    let params = {
+                        ogfId: Nval.ogfId,
+                        platformId: Nval.platform,
+                        wellId: Nval.selectWellId
+                    }
+                    this.doSearch(params)
+                }
+            }
         },
         data() {
             return {
@@ -45,17 +64,22 @@
             };
         },
         mounted() {
-            this.doSearch();
+            let params = {
+                ogfId: this.queryData.ogfId,
+                platformId: this.queryData.platform,
+                wellId: this.queryData.selectWellId
+            }
+            this.doSearch(params);
         },
         methods: {
             //根据父组件传递过来的参数进行查询
-            doSearch() {
-                let request = {
-                    ogfId: this.oilFeildId,
-                    platformId: this.platform,
-                    wellId: this.wellId
-                };
-                wellBaseInfo(request).then((res) => {
+            doSearch(params) {
+                // let request = {
+                //     ogfId: this.oilFeildId,
+                //     platformId: this.platform,
+                //     wellId: this.wellId
+                // };
+                wellBaseInfo(params).then((res) => {
                     if (res.data.code == 200) {
                         this.tableData = res.data.data.wellBaseInfo;
                     }
