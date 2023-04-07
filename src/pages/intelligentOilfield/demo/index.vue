@@ -128,58 +128,28 @@
       <el-table-column prop="name" label="姓名" sortable width="180"> </el-table-column>
       <el-table-column prop="address" label="地址" fixed="right"> </el-table-column>
     </el-table>
- <el-table
-    :data="tableData1"
-    :border="false"
-     :row-style="{ height: '0px' }"
+    <el-table
+      :data="tableData1"
+      :border="false"
+      :row-style="{ height: '0px' }"
       header-cell-class-name="table_header"
       :cell-style="{ padding: '6px', 'text-align': 'center' }"
       style="width: 800px; margin: 20px 0"
       :default-sort="{ prop: 'date', order: 'descending' }"
-     :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+      :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
     >
-     <el-table-column
-     fixed
-      prop="date"
-      label="日期"
-      width="150">
-    </el-table-column>
-    <el-table-column label="配送信息">
-      <el-table-column
-        prop="name"
-        label="姓名"
-        width="120">
-      </el-table-column>
-      <el-table-column label="地址">
-        <el-table-column
-          prop="province"
-          label="省份"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="city"
-          label="市区"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="address"
-          label="地址"
-          width="300">
-        </el-table-column>
-        <el-table-column
-          prop="zip"
-          label="邮编"
-          width="120">
+      <el-table-column fixed prop="date" label="日期" width="150"> </el-table-column>
+      <el-table-column label="配送信息">
+        <el-table-column prop="name" label="姓名" width="120"> </el-table-column>
+        <el-table-column label="地址">
+          <el-table-column prop="province" label="省份" width="120"> </el-table-column>
+          <el-table-column prop="city" label="市区" width="120"> </el-table-column>
+          <el-table-column prop="address" label="地址" width="300"> </el-table-column>
+          <el-table-column prop="zip" label="邮编" width="120"> </el-table-column>
         </el-table-column>
       </el-table-column>
-    </el-table-column>
-    <el-table-column
-    fixed="right"
-      prop="date"
-      label="操作"
-      width="150">
-     </el-table-column>
-  </el-table>
+      <el-table-column fixed="right" prop="date" label="操作" width="150"> </el-table-column>
+    </el-table>
     <div class="headerTitle spaceMargin">
       6、分页=========================================================================================
     </div>
@@ -287,11 +257,13 @@
     <div class="headerTitle spaceMargin">
       15、tabs标签页=========================================================================================
     </div>
+
     <div class="spaceMargin">15.1、elementUI的tabs标签页</div>
     <el-tabs v-model="activeName" class="g-pageHeader">
       <el-tab-pane label="用户管理" name="first"></el-tab-pane>
       <el-tab-pane label="配置管理" name="second"></el-tab-pane>
     </el-tabs>
+
     <div class="spaceMargin">
       15.2、自定义的tabs切换按钮（横向，可传值，可传背景色和border色系，可控制深浅色系颜色）
     </div>
@@ -359,15 +331,21 @@
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
     <div class="spaceMargin">18.2、文件上传</div>
-    <el-upload style="width: 400px;" class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
+    <el-upload
+      style="width: 400px"
+      class="upload-demo"
+      drag
+      action="https://jsonplaceholder.typicode.com/posts/"
+      multiple
+    >
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
       <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
     </el-upload>
-     <div class="headerTitle spaceMargin">
+    <div class="headerTitle spaceMargin">
       18、标题栏=========================================================================================
     </div>
-    <div class="pageHeader" style="width:100%;">我是标题栏</div>
+    <div class="pageHeader" style="width: 100%">我是标题栏</div>
     <div style="margin: 40px 0">=================================end========================</div>
   </div>
 </template>
@@ -435,56 +413,64 @@ export default {
   },
   data() {
     return {
-      tableData1: [{
-        date: '2016-05-03',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-02',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-08',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-06',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-07',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }],
+      tableData1: [
+        {
+          date: '2016-05-03',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333,
+        },
+        {
+          date: '2016-05-02',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333,
+        },
+        {
+          date: '2016-05-04',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333,
+        },
+        {
+          date: '2016-05-01',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333,
+        },
+        {
+          date: '2016-05-08',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333,
+        },
+        {
+          date: '2016-05-06',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333,
+        },
+        {
+          date: '2016-05-07',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333,
+        },
+      ],
       imageUrl: '',
       dataList1: [
         { name: '生产曲线分析', isChecked: false },
