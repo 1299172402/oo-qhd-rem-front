@@ -14,13 +14,13 @@
                 </el-select>
                 <el-button type="primary" icon="el-icon-search" style="margin-left: 20px;" @click="doSearch">检索</el-button>
                 <el-upload ref="upload" style="margin-left: 20px;" class="upload-demo" action="" :auto-upload="false" :on-change="useUploadPic" :show-file-list="false" v-show="canUpload">
-                    <el-button type="primary">上传文档</el-button>
+                    <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
                 </el-upload>
-                <el-button style="margin-left: 20px;" type="primary" @click="doDownLoad" v-show="canDownload"> 下载</el-button>
+                <el-button style="margin-left: 20px;" type="primary" icon="el-icon-download" @click="doDownLoad" v-show="canDownload"> 下载</el-button>
             </div>
         </headerSearch>
         <pagePanelNew headerTitle="" style="height: calc(100% - 100px)" class="g-w100"> 
-            <el-tabs class="g-pageHeader" style="margin-bottom:15px;" v-model="activeName" topline @tab-click="handleClick" :before-leave="beforeLeaveTab">
+            <el-tabs class="g-pageHeader" style="margin-bottom:15px;" v-model="activeName" topline @tab-click="handleClick">
                 <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
                     <el-button v-for="(module, indexButton) in item.modules" :key="indexButton" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" style="margin-top: 5px;" @click="currentModule = module.name">{{ module.label }}</el-button>
                 </el-tab-pane>
@@ -392,14 +392,6 @@
             // this.getPageAuthMessage();
         },
         methods: {
-            //切换tabs 禁止
-            beforeLeaveTab(activeName,oldActiveName){
-                console.log(activeName,oldActiveName)    
-                if(activeName!=='dynamicInformation'){
-                    this.$message.warning('温馨提示：该模块暂未开放！')
-                    return false;
-                }
-            },
             //跳转到对应页面
             handleClick(tab) {
                 this.activeName = tab.name;

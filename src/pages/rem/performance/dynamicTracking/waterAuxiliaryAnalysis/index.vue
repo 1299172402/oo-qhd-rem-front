@@ -17,9 +17,9 @@
                 </el-select>
                 <el-button type="primary" icon="el-icon-search" style="margin-left: 20px;" @click="doSearch">检索</el-button>
                 <el-upload ref="upload" style="margin-left: 20px;"  class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess" v-show="canUpload && !ljpmTag">
-                    <el-button>上传文档</el-button>
+                    <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
                 </el-upload>
-                <el-button style="margin-left: 20px;" @click="doDownLoad" v-show="canDownload">下载</el-button>
+                <el-button style="margin-left: 20px;" type="primary" icon="el-icon-download" @click="doDownLoad" v-show="canDownload">下载</el-button>
             </div>
         </headerSearch>
         <pagePanelNew headerTitle="" :class="activeSelect" class="g-w100">
@@ -214,7 +214,7 @@ export default {
             //删除数
             canDeleteInfo: false,
             //下载数
-            canDownload: false,
+            canDownload: true,
             //上传数
             canUpload: false
         };

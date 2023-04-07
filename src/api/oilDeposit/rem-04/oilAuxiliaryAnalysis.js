@@ -51,3 +51,12 @@ export function deleteFile(request) {
   });
 }
 
+//油井辅助分析-生产动态资料-生产数据(表格)
+export function produceTableData(request) {
+  return Axios({
+    url: `${baseUrl}/dynamicAnalysis/produceTableData`,
+    method: "post",
+    data: request,
+  });
+}
+

@@ -8,16 +8,16 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
       <el-table-column type="index" label="序号" align="center" width="80"></el-table-column>
       <el-table-column prop="wellName" label="井号" width="180" align="center"></el-table-column>
-      <el-table-column prop="measureDepth" :render-header="renderHeader" label="测点斜深 (m)" align="center"></el-table-column>
-      <el-table-column prop="measureVerticalDepth" :render-header="renderHeader" label="测点垂深 (m)" align="center"></el-table-column>
-      <el-table-column prop="deviationAngle" :render-header="renderHeader" label="井斜角 (°)" align="center"></el-table-column>
-      <el-table-column prop="azinuthAngle" :render-header="renderHeader" label="方位角 (°)" align="center"></el-table-column>
-      <el-table-column prop="displacement" :render-header="renderHeader" label="位移 (m)" align="center"> </el-table-column>
-      <el-table-column prop="closureAzimuth" :render-header="renderHeader" label="闭合方位 (°)" align="center"></el-table-column>
-      <el-table-column prop="closureDistance" :render-header="renderHeader" label="闭合距 (m)" align="center"></el-table-column>
+      <el-table-column prop="measureDepth" label="测点斜深 (m)" align="center"></el-table-column>
+      <el-table-column prop="measureVerticalDepth" label="测点垂深 (m)" align="center"></el-table-column>
+      <el-table-column prop="deviationAngle" label="井斜角 (°)" align="center"></el-table-column>
+      <el-table-column prop="azinuthAngle" label="方位角 (°)" align="center"></el-table-column>
+      <el-table-column prop="displacement" label="位移 (m)" align="center"> </el-table-column>
+      <el-table-column prop="closureAzimuth" label="闭合方位 (°)" align="center"></el-table-column>
+      <el-table-column prop="closureDistance" label="闭合距 (m)" align="center"></el-table-column>
       <el-table-column prop="NSIncrement" label="坐标北南增量" align="center"></el-table-column>
       <el-table-column prop="EWIncrement" label="坐标东西增量" align="center"></el-table-column>
-      <el-table-column prop="curvature" :render-header="renderHeader" label="狗腿度（曲度） (°/30m)" width="180" align="center"></el-table-column>
+      <el-table-column prop="curvature" label="狗腿度（曲度） (°/30m)" width="180" align="center"></el-table-column>
       <el-table-column prop="remark" label="备注" min-width="180" align="center"></el-table-column>
     </el-table>
 </template>

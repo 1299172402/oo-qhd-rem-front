@@ -48,94 +48,98 @@
                 </div>
             </div>
         </headerSearch>
-        <pagePanelNew headerTitle="措施管理" style="height: calc(100% - 100px)">
-            <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
-                <span>秦皇岛32-6油田作业计划跟踪</span>
-                <el-button type="primary" icon="el-icon-download" style="height:30px;" @click="doExportFile" v-show="canDownload">下载</el-button>
-            </div>
-            <div class="tableBox" style="height:100%;">
-                <el-table id="csgl"
-                    :data="tableData.slice((queryParams.page - 1) * queryParams.pageSize, queryParams.page * queryParams.pageSize)"
-                    height="548px" :row-style="{ height: '0px' }"
-                    :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-                    header-cell-class-name="table_header" :cell-style="{ padding: '2px', 'text-align': 'center' }"
-                    style="width: 100%; height: 100%;">
-                    <el-table-column prop="wellNo" label="井号" width="130"></el-table-column>
-                    <el-table-column prop="measureName" label="作业类型" width="80"></el-table-column>
-                    <el-table-column prop="measureName3" label="措施作业天数(计划/实际)" width="110">
-                        <template slot-scope="scope">
-                            <span v-if="scope.row.planMeasuresDayNum||scope.row.realityMeasuresDayNum">
-                               {{scope.row.planMeasuresDayNum===null?'无':scope.row.planMeasuresDayNum}}/{{scope.row.realityMeasuresDayNum}}
-                            </span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="status" label="措施是否达标" width="80"></el-table-column>
-                    <el-table-column prop="measureName5" label="类别" width="100">
-                        <template slot-scope="scope">
-                            <span>计划实际</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="measureName6">
-                        <template slot="header" slot-scope="scope">
-                            <div class="header-titlts">
-                                <div class="icon0">
-                                    <b class="b0"></b>
-                                    <span>实际</span>
-                                </div>
-                                <div class="icon0">
-                                    <b class="b1"></b>
-                                    <span>计划/滚动预测</span>
-                                </div>
-                                <div class="icon0">
-                                    <b class="b2"></b>
-                                    <span>未开始计划</span>
-                                </div>
-                                <div class="icon1">
-                                    <img src="@/assets/rem/plan/i0.png" alt="">
-                                    <span>增产性措施</span>
-                                </div>
-                                <div class="icon1">
-                                    <img src="@/assets/rem/plan/i1.png" alt="">
-                                    <span>增注性措施</span>
-                                </div>
-                                <div class="icon1" style="margin-right: 0;">
-                                    <img src="@/assets/rem/plan/i2.png" alt="">
-                                    <span>维护性措施</span>
-                                </div>
-                            </div>
-                        </template>
-                        <template slot-scope="scope">  
-                            <div class="vv" v-if="scope.row.type!='date'" :style="{marginLeft:scope.row.mgleftwidth}" @click="switchToMeasures(scope.row.ogfId, scope.row.prodPlatformId, scope.row.wellId, scope.row.measuresTypeCode, scope.row.yearMonthDay,  scope.row.wellTypeCode, scope.row.wellNameNano, scope.row.wellBoreName,scope.$index)">
-                                <div class="vv-left">
-                                    <img src="@/assets/rem/plan/i0.png" alt="" v-if="scope.row.stimClassCode=='003'">
-                                    <img src="@/assets/rem/plan/i1.png" alt="" v-if="scope.row.stimClassCode=='004'">
-                                    <img src="@/assets/rem/plan/i2.png" alt="" v-if="scope.row.stimClassCode=='002'">
-                                </div>
-                                <div class="vv-right">
-                                    <div class="vv-line">
-                                        <div class="line" :style="{width:scope.row.sjwidth}" v-if="Number(scope.row.realityMeasuresDayNum)">
-                                            <el-progress :class="[scope.$index==1&&dateTime=='2023'?'progress3':'progress1']" type="line" :percentage="100" :show-text="false"></el-progress>
-                                        </div>
-                                        <div class="day" :class="[scope.$index==1&&dateTime=='2023'?'day3':'']" v-if="Number(scope.row.realityMeasuresDayNum)">{{scope.row.realityMeasuresDayNum}}天</div>
-                                    </div>
-                                    <div class="vv-line">
-                                        <div class="line" :style="{width:scope.row.jhwidth}" v-if="Number(scope.row.planMeasuresDayNum)">
-                                            <el-progress class="progress2" type="line" :percentage="100" :show-text="false"></el-progress>
-                                        </div>
-                                        <div class="day" v-if="Number(scope.row.planMeasuresDayNum)">{{scope.row.planMeasuresDayNum}}天</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </template>
-                    </el-table-column>
-                </el-table>
-                <div class="z-date">
-                    <div class="day" v-for="(item,index) in days" :key="index">{{item}}</div>
+        <div class="z-container">
+            <pagePanelNew headerTitle="措施管理" style="height:100%;margin-top:0;">
+                <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
+                    <span>秦皇岛32-6油田作业计划跟踪</span>
+                    <el-button type="primary" icon="el-icon-download" style="height:30px;" @click="doExportFile" v-show="canDownload">下载</el-button>
                 </div>
-                <div class="mcBox" :style="{height:'498px',width:mcWidth}" v-if="isShowMC"></div>
-            </div>
-            <pagination v-if="pageTotal" :pageSizes="[15, 20, 40, 100]" :total="pageTotal" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />
-        </pagePanelNew>
+                <div class="tableBox" id="tableBox" style="height:calc(100% - 108px)">
+                    <el-table id="csgl"
+                        :data="tableData.slice((queryParams.page - 1) * queryParams.pageSize, queryParams.page * queryParams.pageSize)"
+                        height="calc(100% - 44px)" :row-style="{ height: '0px' }"
+                        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                        header-cell-class-name="table_header" :cell-style="{ padding: '2px', 'text-align': 'center' }"
+                        style="width: 100%; height: 100%;">
+                        <el-table-column prop="wellNo" label="井号" width="130"></el-table-column>
+                        <el-table-column prop="measureName" label="作业类型" width="80"></el-table-column>
+                        <el-table-column prop="measureName3" label="措施作业天数(计划/实际)" width="110">
+                            <template slot-scope="scope">
+                                <span v-if="scope.row.planMeasuresDayNum||scope.row.realityMeasuresDayNum">
+                                   {{scope.row.planMeasuresDayNum===null?'无':scope.row.planMeasuresDayNum}}/{{scope.row.realityMeasuresDayNum}}
+                                </span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="status" label="措施是否达标" width="80"></el-table-column>
+                        <el-table-column prop="measureName5" label="类别" width="100">
+                            <template slot-scope="scope">
+                                <span>计划实际</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="measureName6" :width="width +'px'">
+                            <template slot="header" slot-scope="scope">
+                                <div class="header-titlts">
+                                    <div class="icon0">
+                                        <b class="b0"></b>
+                                        <span>实际</span>
+                                    </div>
+                                    <div class="icon0">
+                                        <b class="b1"></b>
+                                        <span>计划/滚动预测</span>
+                                    </div>
+                                    <div class="icon0">
+                                        <b class="b2"></b>
+                                        <span>未开始计划</span>
+                                    </div>
+                                    <div class="icon1">
+                                        <img src="@/assets/rem/plan/i0.png" alt="">
+                                        <span>增产性措施</span>
+                                    </div>
+                                    <div class="icon1">
+                                        <img src="@/assets/rem/plan/i1.png" alt="">
+                                        <span>增注性措施</span>
+                                    </div>
+                                    <div class="icon1" style="margin-right: 0;">
+                                        <img src="@/assets/rem/plan/i2.png" alt="">
+                                        <span>维护性措施</span>
+                                    </div>
+                                </div>
+                            </template>
+                            <template slot-scope="scope">  
+                                <div class="vv" v-if="scope.row.type!='date'" :style="{marginLeft:scope.row.mgleftwidth}" @click="switchToMeasures(scope.row.ogfId, scope.row.prodPlatformId, scope.row.wellId, scope.row.measuresTypeCode, scope.row.yearMonthDay,  scope.row.wellTypeCode, scope.row.wellNameNano, scope.row.wellBoreName,scope.$index)">
+                                    <div class="vv-left">
+                                        <img src="@/assets/rem/plan/i0.png" alt="" v-if="scope.row.stimClassCode=='003'"  :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 增产性措施`">
+                                        <img src="@/assets/rem/plan/i1.png" alt="" v-if="scope.row.stimClassCode=='004'"  :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 增注性措施`">
+                                        <img src="@/assets/rem/plan/i2.png" alt="" v-if="scope.row.stimClassCode=='002'"  :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 维护性措施`">
+                                    </div>
+                                    <div class="vv-right">
+                                        <div class="vv-line">
+                                            <div class="line" :style="{width:scope.row.sjwidth}" v-if="Number(scope.row.realityMeasuresDayNum)">
+                                                <el-progress :class="[scope.$index==1&&dateTime=='2023'?'progress3':'progress1']" type="line" :percentage="100" :show-text="false"></el-progress>
+                                            </div>
+                                            <div class="day" :class="[scope.$index==1&&dateTime=='2023'?'day3':'']" v-if="Number(scope.row.realityMeasuresDayNum)">{{scope.row.realityMeasuresDayNum}}天</div>
+                                        </div>
+                                        <div class="vv-line">
+                                            <div class="line" :style="{width:scope.row.jhwidth}" v-if="Number(scope.row.planMeasuresDayNum)">
+                                                <el-progress class="progress2" type="line" :percentage="100" :show-text="false"></el-progress>
+                                            </div>
+                                            <div class="day" v-if="Number(scope.row.planMeasuresDayNum)">{{scope.row.planMeasuresDayNum}}天</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <div class="z-date-box">
+                        <div class="z-date">
+                            <div class="day" :style="{marginRight:spacing+'px'}" v-for="(item,index) in days" :key="index">{{item}}</div>
+                        </div>
+                    </div>
+                    <div class="mcBox" :style="{width:mcWidth,height:'calc(100% - 110px)',left:mcMgLeft}" v-if="isShowMC"></div>
+                </div>
+                <pagination v-if="pageTotal" :pageSizes="[15, 20, 40, 100]" :total="pageTotal" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />
+            </pagePanelNew>
+        </div>
         <!-- 现场作业进度表-弹框 -->
         <fieldOperations :dialogVisible="fieldOperationsShow" @close="fieldOperationsShow=false;"></fieldOperations>
     </div>
@@ -155,7 +159,10 @@
         },
         data() {
             return {
+                width:'',//table最后一列的宽度
+                spacing:'',//日期间距
                 mcWidth:'0px',
+                mcMgLeft:'',
                 basicDays: ['-01-01', '-02-01', '-03-01', '-04-01', '-05-01', '-06-01', '-07-01', '-08-01', '-09-01', '-10-01', '-11-01', '-12-01'],
                 days: [],
                 dateTime: new Date().format('yyyy'),//时间
@@ -211,7 +218,16 @@
             };
         },
         mounted() {
-            this.initData();
+            this.$nextTick(()=>{
+                let width=document.getElementById('tableBox').clientWidth -500;
+                this.width=width;
+                console.log('table最后一列的宽度',width)
+                //计算日期 间距 
+                console.log('日期宽度',Math.floor(this.width-44-20))    
+                this.spacing=Math.floor((this.width-936-44-20) / 11);
+                console.log('日期间距',this.spacing)
+                this.initData();
+            })
         },
         methods: {
             //页面初始化信息
@@ -324,8 +340,13 @@
             mcMarginLeft() {
                 let newDate = moment().format('YYYY-MM-DD');
                 let diffObject = this.leftDiff(newDate);
-                let marginLeft = (diffObject.month * 78) + (diffObject.month * 20) + (78 / 30 * diffObject.day) - 4 +'px';
-                this.mcWidth = `calc(100% - 550px - ${marginLeft} )`;
+                let marginLeft = (diffObject.month * 78) + (diffObject.month * this.spacing) + (78 / 30 * diffObject.day) - 4;
+                
+                this.mcWidth = (this.width-20) - marginLeft +'px';
+                this.mcMgLeft=marginLeft+550+'px';
+                // this.mcWidth =1160+'px';
+                // this.mcMgLeft=550+'px';
+                console.log('this.mcMgLeft',this.mcMgLeft)
                 console.log(this.mcWidth, 88);
             },
             initData2() {
@@ -339,7 +360,7 @@
                             let day = this.dateDiff(this.dateTime+'-01-01', el.realityMeasuresStartTime);
                             let diffObject = this.leftDiff(el.realityMeasuresStartTime);
                             
-                            this.tableData[i].mgleftwidth = (diffObject.month * 78) + (diffObject.month * 20) +(78 / 30 * diffObject.day) - 4 + 'px';
+                            this.tableData[i].mgleftwidth = (diffObject.month * 78) + (diffObject.month * this.spacing) +(78 / 30 * diffObject.day) - 4 + 'px';
                             let sjwidth = (78 / 30 * Number(el.realityMeasuresDayNum)) + (this.diffMonth(el.realityMeasuresStartTime, el.realityMeasuresEndTime) * 17.5);
                             this.tableData[i].sjwidth = Math.floor(sjwidth) + 'px';
                             
@@ -347,7 +368,7 @@
                                 let jhwidth = (78 / 30 * Number(el.planMeasuresDayNum)) + (this.diffMonth(el.planMeasuresStartTime, el.planMeasuresEndTime) * 17.5);
                                 this.tableData[i].jhwidth = Math.floor(jhwidth) + 'px';
                             }
-                            console.log(this.tableData[i]);
+                            // console.log(this.tableData[i]);
                         }
                     })
                 }
@@ -376,7 +397,7 @@
             },
             //计划两个日期相差月数
             diffMonth(sDate1, sDate2) {
-                console.log(sDate1,sDate2)
+                // console.log(sDate1,sDate2)
                 let starMonth = Number(sDate1.split('-')[1]);
                 let endMonth = Number(sDate2.split('-')[1]);
                 return endMonth - starMonth;
@@ -538,7 +559,9 @@
 <style lang="scss" scoped>
     ::v-deep #csgl .has-gutter {
         height: 66px;
-
+        tr{
+            height:66px;
+        }
         tr th:nth-child(3) {
             .cell {
                 line-height: 18px;
@@ -564,6 +587,13 @@
 
     .app-container {
         height: 100%;
+        display: flex;
+        flex-direction: column;
+        .z-container{
+            padding-top:20px;
+            flex:1;
+            height: 0;
+        }
         //自适应表头
         .header-titlts {
             width: 100%;
@@ -688,39 +718,36 @@
     }
     
     //日期
-    .z-date {
-        padding-top:40px;
-        padding-left: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        padding-right:20px;
-
-        .day {
-            width: 78px;
-            margin-right: 20px;
-        }
-
-        .day:last-child {
-            margin-right: 0;
-        }
+    .z-date-box{
+        width:100%;
+        height:44px;
+        .z-date {
+            padding-right:10px;
+            margin-left:554px;
+            padding-top:20px;
+            display: flex;
+            align-items: center;
+            .day {
+                width: 78px;
+                margin-right: 20px;
+            }
         
+            .day:last-child {
+                margin-right: 0!important;
+            }
+            
+        }
     }
-
   
-    .mg {
-        margin-left: 15px;
-    }
-    
     //蒙层
     .tableBox {
+        overflow-x: hidden;
         position: relative;
 
         .mcBox {
             position: absolute;
-            right: 0;
-            top: 66px;
-            width: calc(100% - 550px);
+            top:66px;
+            // width: 1190px;
             background-image: linear-gradient(90deg, rgba(169, 217, 255, 0.26) 0%, rgba(49, 167, 255, 0.26) 100%);
 
             &::before {
@@ -732,6 +759,6 @@
 
             }
         }
-        
     }
+    
 </style>

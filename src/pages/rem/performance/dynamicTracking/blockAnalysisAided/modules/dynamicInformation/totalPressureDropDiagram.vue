@@ -5,8 +5,16 @@
             <el-select v-model="selectPosition" style="width: 220px;margin-right:20px;" placeholder="请选择" filterable clearable>
                 <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
+            <el-radio-group v-model="radioYear" style="margin-right:20px;">
+                <el-radio :label="1">近一年压力发布</el-radio>
+                <el-radio :label="3">近三年压力发布</el-radio>
+            </el-radio-group>
+            <div class="btns" style="margin-right:20px;">
+                <el-button :class="[picType=='COLUMN'?'':'commonBtn']" :type="picType=='COLUMN'?'primary':''" @click="doPicTypeSwitch('COLUMN')">柱状图</el-button>
+                <el-button :class="[picType=='BUBBLE'?'':'commonBtn']" :type="picType=='BUBBLE'?'primary':''" @click="doPicTypeSwitch('BUBBLE')">泡泡图</el-button>
+            </div>
             <span>选择年份：</span>
-            <el-date-picker v-model="yearTime" type="year" placeholder="选择年" value-format="yyyy" style="margin-right:20px;"></el-date-picker>
+            <el-date-picker v-model="yearTime" type="year" placeholder="选择年" value-format="yyyy" style="margin-right:20px;" :clearable="false"></el-date-picker>
             <el-button type="primary" @click="OnChangeImage">确定</el-button>
         </div> 
         <div class="z-echarts">
@@ -37,14 +45,20 @@
         },
         data() {
             return {
-                url: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-paopao.html',
+                url: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-yscl.html',
                 url1: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
+                zztUrl: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-yscl.html',
+                pptUrl: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-paopao.html',
                 dialogVisible1: false,
                 //选中层位
                 selectPosition: '',
                 //层位所选择内容信息
                 position: [],
                 image: '',
+                //类型点
+                radioYear: 1,
+                //图类型
+                picType: "COLUMN",
                 yearTime: new Date().format('yyyy'),
                 oilWaterChartData: {},
             };
@@ -62,7 +76,6 @@
         },
         methods: {
             async doSearch() {
-                // this.$emit('childPara','');
                 //初始化获取层段关系
                 await fieldOilLayers({
                     oilFieldId: this.oilFieldId,
@@ -94,7 +107,9 @@
                     oilFieldId: this.oilFieldId,
                     fieldId: this.blockId,
                     layerId: this.selectPosition,
-                    year: this.yearTime,
+                    year:Number(this.yearTime)-this.radioYear,
+                    endYear: this.yearTime,
+                    pictureType: this.picType,
                 }
                 //获取图片组信息
                 await dynamicDataTotalPressureDropDiagram(request).then((res) => {
@@ -104,8 +119,6 @@
                                 let imageData = res.data.data.layerPics[0];
                                 let type = imageData.type;
                                 this.image = 'data:' + type + ';base64,' + imageData.data;
-
-
                             } else {
                                 this.image = '';
                             }
@@ -113,7 +126,11 @@
                             this.image = '';
                         }
                         this.oilWaterChartData = res.data.data.oilWaterChart
-                        this.bubblePic(this.oilWaterChartData, this.$refs.H5Chart);
+                        if (this.picType == 'COLUMN') {
+                            this.columnPic(this.oilWaterChartData, this.$refs.H5Chart);
+                        } else if (this.picType == 'BUBBLE') {
+                            this.bubblePic(this.oilWaterChartData, this.$refs.H5Chart);
+                        }
                     } else {
                         this.image = '';
                     }
@@ -126,7 +143,9 @@
                     oilFieldId: this.oilFieldId,
                     fieldId: this.blockId,
                     layerId: this.selectPosition,
-                    year: this.yearTime,
+                    year:Number(this.yearTime)-this.radioYear,
+                    endYear: this.yearTime,
+                    pictureType: this.picType,
                 }
                 dynamicDataTotalPressureDropDiagram(request).then((res) => {
                     if (res.data.code == 200) {
@@ -142,7 +161,11 @@
                             this.image = '';
                         }
                         this.oilWaterChartData = res.data.data.oilWaterChart
-                        this.bubblePic(this.oilWaterChartData, this.$refs.H5Chart);
+                        if (this.picType == 'COLUMN') {
+                            this.columnPic(this.oilWaterChartData, this.$refs.H5Chart);
+                        } else if (this.picType == 'BUBBLE') {
+                            this.bubblePic(this.oilWaterChartData, this.$refs.H5Chart);
+                        }
                     } else {
                         this.image = '';
                     }
@@ -175,8 +198,20 @@
                     }, 2000)
                 }, 1000)
             },
+            //图片类型切换
+            doPicTypeSwitch(val) {
+                if(this.picType!=val){
+                    this.picType=val;
+                    if (val == 'COLUMN') {
+                        this.url = this.zztUrl;
+                    } else if (val == 'BUBBLE') {
+                        this.url = this.pptUrl;
+                    }
+                    this.doYesEvent();
+                }
+            },
             //柱状图解析
-            columnPic(oilWaterChart) {
+            columnPic(oilWaterChart,refObj) {
                 let MinXMap = oilWaterChart.minXmap;
                 let MaxXMap = oilWaterChart.maxXmap;
                 let MinYMap = oilWaterChart.minYmap;
@@ -247,7 +282,7 @@
                 columnLayer.Objects = Objects;
                 h5data.Layers = [];
                 h5data.Layers.push(columnLayer);
-                this.$refs.H5Chart.setSampleDate(h5data);
+                refObj.setSampleDate(h5data);
             },
             //泡泡图解析
             bubblePic(oilWaterChart, refObj) {
@@ -314,21 +349,14 @@
             },
             //点击确定时的查询 和 初始化一致
             doYesEvent() {
-                /**
-                 *  hwh
-                 *  获取参数油田id 平台id 井id
-                 * @type {{ogfId: *, platformId: *, wellId: *}}
-                 */
                 let request = {
                     oilFieldId: this.oilFieldId,
                     fieldId: this.blockId,
                     layerId: this.selectPosition,
-                    year: this.yearTime,
+                    year:Number(this.yearTime)-this.radioYear,
+                    endYear: this.yearTime,
+                    pictureType: this.picType,
                 }
-                /**
-                 * hwh
-                 * 获取图片组信息
-                 */
                 dynamicDataTotalPressureDropDiagram(request).then((res) => {
                     if (res.data.code == 200) {
                         if (res.data.data.layerPics) {
@@ -343,8 +371,11 @@
                             this.image = '';
                         }
                         this.oilWaterChartData = res.data.data.oilWaterChart
-                        this.bubblePic(this.oilWaterChartData, this.$refs.H5Chart);
-                        //this.bubblePic(res.data.data.oilWaterChart);
+                        if (this.picType == 'COLUMN') {
+                            this.columnPic(this.oilWaterChartData, this.$refs.H5Chart);
+                        } else if (this.picType == 'BUBBLE') {
+                            this.bubblePic(this.oilWaterChartData, this.$refs.H5Chart);
+                        }
                     } else {
                         this.image = '';
                     }

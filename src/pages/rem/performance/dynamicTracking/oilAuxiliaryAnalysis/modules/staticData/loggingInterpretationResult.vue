@@ -31,24 +31,24 @@
     import { loggingInterpretation, } from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
     import {exportExcel} from "@/lib/exportExcel.js";
     export default {
-        // props: {
-        //     //选择油田
-        //     oilFeildId: {},
-        //     //选择平台
-        //     platform: {},
-        //     //选择井号
-        //     wellId: {}
-        // },
+        props: {
+            //选择油田
+            oilFeildId: {},
+            //选择平台
+            platform: {},
+            //选择井号
+            wellId: {}
+        },
         data() {
             return {
-                oilFeildId:'',
-                platform:'',
-                wellId:'',
+                // oilFeildId:'',
+                // platform:'',
+                // wellId:'',
                 tableData: []
             }
         },
         mounted() {
-            // this.doSearch();
+            this.doSearch();
         },
         methods: {
             //根据父组件传递过来的参数进行查询

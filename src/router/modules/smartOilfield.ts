@@ -1,6 +1,6 @@
 // 智能油田一级页面
 import Layout from "@/layouts/index.vue";
-
+const env = import.meta.env.MODE;
 export default [
   // 静态本地路由【首页，组件样例，页面样例，门户页面】
 //   {
@@ -94,6 +94,7 @@ export default [
   //     ]
   //   },
   {
+    hidden: env=='development'?false:true,
     path: "/demo5",
     name: "demo5",
     component: Layout,

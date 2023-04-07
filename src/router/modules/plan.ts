@@ -1,84 +1,6 @@
 import Layout from '@/layouts/index.vue';
 const env = import.meta.env.MODE;
 export default [
-<<<<<<< HEAD
-  {
-    path: '/plan',
-    name: 'plan',
-    component: Layout,
-    redirect: '/plan/operationplan',
-    meta: { title: '规划计划管理', icon: 'client', single: false },
-    children: [
-      {
-        hidden: false,
-        path: 'planIndex',
-        name: 'planIndex',
-        component: () => import('@/pages/rem/plan/index.vue'),
-        meta: { title: '措施管理', icon: 'icon' },
-      },
-      {
-        hidden: false,
-        path: 'newPlanIndex2',
-        name: 'newPlanIndex2',
-        component: () => import('@/pages/rem/plan/newPlanIndex.vue'),
-        meta: { title: '新措施管理', icon: 'icon' },
-      },
-      //年度计划管理
-      {
-        hidden: false,
-        path: 'AnnualProgramManagement',
-        name: 'AnnualProgramManagement',
-        component: () => import('@/pages/rem/AnnualProgramManagement/AnnualProgramManagement.vue'),
-        meta: { title: '年度计划管理', icon: 'icon' },
-      },
-      //油藏管理-规划计划管理-年度计划管理-原油产量详情
-      {
-        hidden: false,
-        path: 'CrudeOutput',
-        name: 'CrudeOutput',
-        component: () => import('@/pages/rem/AnnualProgramManagement/CrudeOutput.vue'),
-        meta: { title: '原油产量详情', icon: 'icon' },
-      },
-          //油藏管理-规划计划管理-年度计划管理-油田注水量详情
-      {
-        hidden: false,
-        path: 'OilfieldWaterInjectionManagement',
-        name: 'OilfieldWaterInjectionManagement',
-        component: () => import('@/pages/rem/AnnualProgramManagement/OilfieldWaterInjectionManagement.vue'),
-        meta: { title: '油田注水量详情', icon: 'icon' },
-      },
-     //油藏管理-规划计划管理-年度计划管理-两提一降
-      {
-        hidden: false,
-        path: 'index',
-        name: 'index',
-        component: () => import('@/pages/rem/AnnualProgramManagement/index.vue'),
-        meta: { title: '两提一降', icon: 'icon' },
-      },
-      {
-        hidden: true,
-        path: 'wellMonitoring',
-        name: 'wellMonitoring',
-        component: () => import('@/pages/rem/plan/wellMonitoring.vue'),
-        meta: { title: '措施效果跟踪', icon: 'icon' },
-      },
-      {
-        hidden: true,
-        path: 'operationplan',
-        name: 'operationplan',
-        component: () => import('@/pages/rem/plan/operationplan/index.vue'),
-        meta: { title: '现场作业计划' },
-      },
-      {
-        hidden: true,
-        path: 'planmessage',
-        name: 'planmessage',
-        component: () => import('@/pages/rem/plan/planmessage/index.vue'),
-        meta: { title: '措施计划情况' },
-      },
-    ],
-  },
-=======
     {
         hidden: env=='development'?false:true,
         path: '/plan',
@@ -116,5 +38,4 @@ export default [
             },
         ],
     },
->>>>>>> facb8e03914a579dd6ecbf3f7491703a5c49198c
 ];

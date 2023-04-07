@@ -1,6 +1,6 @@
 <!-- 生产数据 -->
 <template>
-    <div class="z-main">
+    <div class="z-main" ref="zMain">
         <div class="z-search">
             <span>日期：</span>
             <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"/>
@@ -11,13 +11,60 @@
         <div class="z-echarts">
             <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
         </div>   
+        <div class="develop">
+            <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
+        </div>
+        <info-window infoWidth="100%" infoHeight="300px" headerTitle="单井动态分析" v-show="isDevelop">
+            <el-table
+                id="tableData" 
+                :data="tableData" :border="false" :row-style="{ height: '0px' }"
+                header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
+                style="width:100%;" height="240px" :default-sort="{ prop: 'date', order: 'descending' }"
+                :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+                <el-table-column prop="prodDate" label="日期" width="140px"></el-table-column>
+                <el-table-column prop="prodDuration" label="生产时间 (h)" width="140"></el-table-column>
+                <el-table-column prop="fluidProdDaily" label="日产液 (m³)" width="120"></el-table-column>
+                <el-table-column prop="gasProdDaily" label="日产气 (10⁴m³)" width="130"></el-table-column>
+                <el-table-column prop="oilProdDaily" label="日产油 (m³)" width="120"></el-table-column>
+                <el-table-column prop="waterRatio" label="含水 (%)" width="120"></el-table-column>
+                <el-table-column prop="waterProdDaily" label="日产水 (m³)" width="120"></el-table-column>
+                <el-table-column prop="gasOilRatio" label="气油比 (m³/m³)" width="130"></el-table-column>
+                <el-table-column prop="airliftGasCont" label="气举重 (10⁴m³)" width="130"></el-table-column>
+                <el-table-column prop="pfl" label="动液面 (m)" width="110"></el-table-column>
+                <el-table-column prop="pumpFrequency" label="泵频率 (HZ)" width="110"></el-table-column>
+                <el-table-column prop="pumpCurrent" label="泵电流 (A)" width="110"></el-table-column>
+                <el-table-column prop="nozzleDiameter" label="油嘴 (mm)" width="120"></el-table-column>
+                <el-table-column prop="oilPress" label="油压 (MPa)" width="120"></el-table-column>
+                <el-table-column prop="drawdownPress" label="压差"></el-table-column>
+                <el-table-column prop="dhFlowingPress" label="流压 (MPa)" width="120"></el-table-column>
+                <el-table-column prop="datumPessure" label="基准面流压 (MPa)" width="140"></el-table-column>
+                <el-table-column prop="backPress" label="回压 (MPa)" width="140"></el-table-column>
+                <el-table-column prop="pumpInletPress" label="泵入口压力 (MPa)" width="140"></el-table-column>
+                <el-table-column prop="pumpOutletPress" label="泵出口压力 (MPa)" width="140"></el-table-column>
+                <el-table-column prop="csgPress" label="套压 (MPa)" width="120"></el-table-column>
+                <el-table-column prop="techCsgPress" label="技术套压 (MPa)" width="140"></el-table-column>
+                <el-table-column prop="surfaceCsgPress" label="表层套压 (MPa)" width="140"></el-table-column>
+                <el-table-column prop="pumpMotorTemp" label="马达温度 (℃)" width="140"></el-table-column>
+                <el-table-column prop="whTemp" label="井口温度 (℃)" width="140"></el-table-column>
+                <el-table-column prop="dhFlowingTemp" label="流温 (℃)"></el-table-column>
+                <el-table-column prop="cumOilProd" label="累产油 (10m³)" width="140"></el-table-column>
+                <el-table-column prop="cumFluidProd" label="累产液 (10⁴m³)" width="140"></el-table-column>
+                <el-table-column prop="cumGasProd" label="累产气 (10⁴m³)" width="140"></el-table-column>
+                <el-table-column prop="closeReason" label="关停原因" width="180"></el-table-column>
+                <el-table-column prop="closeDate" label="关停时间"></el-table-column>
+                <el-table-column prop="closePlan" label="关停计划" width="180"></el-table-column>
+                <el-table-column prop="remark" label="备注" width="180"></el-table-column>
+            </el-table>
+        </info-window>
     </div>
 </template>
 
 <script>
     import Echarts from "@/components/rem/tools/Echarts/index.vue";
     import {produceData} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
+    import {produceTableData} from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
     import FileSaver from 'file-saver';
+    import {exportExcel} from "@/lib/exportExcel.js";
     export default {
         components: {
             Echarts
@@ -554,6 +601,8 @@
                     ],
                     series: []
                 },
+                isDevelop:false,
+                tableData:[],
             }
         },
         mounted() {
@@ -669,6 +718,11 @@
                         console.log('生产数据echart配置',this.option)
                     }
                 })
+                produceTableData(request).then(res=>{
+                    if(res.data.code==200&&res.data.data){
+                        this.tableData=res.data.data;
+                    }
+                })
             },
             getLinearCharts(linearChart) {
                 let series = {};
@@ -713,12 +767,23 @@
                     backgroundColor: '#022644'
                 })
                 console.log(res,88);
-                let fileName = '777生产数据';
+                let fileName = '生产数据';
                 if (this.wellName) {
                     fileName = this.wellName + fileName;
                 }
                 FileSaver.saveAs(res,fileName);
-            }
+                
+                exportExcel('#tableData',fileName);
+            },
+            //展示|收缩
+            tapDevelop(){
+                this.isDevelop=!this.isDevelop;
+                if(this.isDevelop){
+                    this.$nextTick(()=>{
+                        this.$refs.zMain.scrollTop=10000;
+                    })
+                }
+            },
         }
     }
 </script>
@@ -727,14 +792,50 @@
     .z-main{
         width: 100%;
         height:calc(100% - 101px);
-        display:flex;
-        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: scroll;
         .z-search{
             height:60px;
         }
         .z-echarts{
-            width: 100%;
-            flex:1;
+            width:100%;
+            height:490px;
         }
+        .develop{
+            height:40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top:25px;
+            span{
+                cursor: pointer;
+                width:0;
+                height:0;
+                border:15px solid var(--td-text-color-primary);
+                border-right-color:transparent;
+                border-left-color:transparent;
+                border-bottom-color:transparent;
+            }
+            .top-span{
+                border-top:0;
+                border-bottom:15px solid var(--td-text-color-primary);
+                margin-bottom:15px;
+            }
+            .active-span{
+                animation:mymove 1.5s infinite;
+            }
+            @keyframes mymove{
+                0% {transform: translate(0px, 0px);}
+                50% {transform: translate(0px, -10px);}
+                100% {transform: translate(0px, 0px);}
+            }
+        }
+        #tableData{
+            ::v-deep .cell:empty{
+                &::before {
+                    content: '-';
+                } 
+            }
+        } 
     }
 </style>
