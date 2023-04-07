@@ -82,6 +82,9 @@
                         this.selectPosition = '';
                     }
                 });
+                this.seismicAttributePlotApi();
+            },
+            seismicAttributePlotApi(){
                 let request = {
                     oilFieldId: this.oilFieldId,
                     fieldId: this.blockId,
@@ -106,17 +109,18 @@
             },
             //切换图片
             OnChangeImage() {
-                this.image = '';
-                let imageMess = this.imageList.find((item) => item.layerId == this.selectPosition);
-                if (!imageMess) {
-                    this.image = '';
-                    return;
-                }
-                if (imageMess.data && imageMess.type){
-                    this.image = 'data:' + imageMess.type + ';base64,' + imageMess.data;
-                }else {
-                    this.image = '';
-                }
+                // this.image = '';
+                // let imageMess = this.imageList.find((item) => item.layerId == this.selectPosition);
+                // if (!imageMess) {
+                //     this.image = '';
+                //     return;
+                // }
+                // if (imageMess.data && imageMess.type){
+                //     this.image = 'data:' + imageMess.type + ';base64,' + imageMess.data;
+                // }else {
+                //     this.image = '';
+                // }
+                this.seismicAttributePlotApi();
             },
             //下载
             doDownLoad() {

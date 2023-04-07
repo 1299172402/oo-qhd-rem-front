@@ -435,7 +435,7 @@
             //子组件传递参数
             changeChildParam(val) {
                 this.childParam = val;
-                //console.log(this.childParam);
+                console.log(this.childParam);
             },
             //下载
             doDownLoad() {
