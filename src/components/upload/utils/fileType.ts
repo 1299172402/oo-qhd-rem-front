@@ -10,18 +10,18 @@ const fileTypeMap = {
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
   "application/ms-excel": "xls",
   "application/zip": "zip"
-}
+};
 
 // 文件后缀和W3C标准的映射-反转
 const fileTypeReverseMap = {};
 Object.keys(fileTypeMap).forEach(key => {
   fileTypeReverseMap[fileTypeMap[key]] = key;
-})
+});
 
-const imgTypeArr = ["image/jpeg", "image/jpg", "image/png", "image/gif"]; 
+const imgTypeArr = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
 
 export {
   fileTypeReverseMap,
   fileTypeMap,
   imgTypeArr
-}
+};

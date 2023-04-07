@@ -1,28 +1,37 @@
 <template>
   <div class="result-fail">
     <error-circle-icon class="result-fail-icon" />
-    <div class="result-fail-title">创建失败</div>
-    <div class="result-fail-describe">抱歉，您的项目创建失败，企业微信联系检查创建者权限，或返回修改。</div>
+    <div class="result-fail-title">
+      创建失败
+    </div>
+    <div class="result-fail-describe">
+      抱歉，您的项目创建失败，企业微信联系检查创建者权限，或返回修改。
+    </div>
     <div>
-      <t-button @click="() => this.$router.push('/form/base')">返回修改</t-button>
-      <t-button theme="default" @click="() => this.$router.push('/form/base')">返回首页</t-button>
+      <t-button @click="() => $router.push('/form/base')">
+        返回修改
+      </t-button>
+      <t-button theme="default" @click="() => $router.push('/form/base')">
+        返回首页
+      </t-button>
     </div>
   </div>
 </template>
 
 <script>
-import { ErrorCircleIcon } from 'tdesign-icons-vue';
+import { ErrorCircleIcon } from "tdesign-icons-vue";
 
 export default {
-  name: 'ResultFail',
+  name: "ResultFail",
   components: {
-    ErrorCircleIcon,
-  },
+    ErrorCircleIcon
+  }
 };
 </script>
 
 <style lang="less" scoped>
-@import '@/style/variables.less';
+@import "@/style/variables.less";
+
 .result-fail {
   display: flex;
   flex-direction: column;
@@ -50,6 +59,7 @@ export default {
     color: var(--td-text-color-secondary);
     line-height: 22px;
   }
+
   .t-button + .t-button {
     margin-left: @spacer;
   }

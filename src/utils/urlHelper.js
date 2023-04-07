@@ -32,7 +32,7 @@ export const getQueryString = (name, url = window.location.href) => {
  * @param {*} obj 参数对象
  * @returns 字符串类型的参数
  */
-export const queryObjectToUrlString = (obj) => {
+export const queryObjectToUrlString = obj => {
   const params = [];
   // eslint-disable-next-line no-restricted-syntax, guard-for-in
   for (const key in obj) {

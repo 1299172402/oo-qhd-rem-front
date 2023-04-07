@@ -5,13 +5,12 @@
             <div class="layout">
                 <div class="searchBox">
                     <div class="titleBox">
-                        <div class="pageHeader"
-                            style="width:100%;display: flex;align-items: center;justify-content: space-between;">
+                        <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;">
                             措施效果跟踪
                             <el-button type="primary" style="height:30px;" @click="switchToBack">返回</el-button>
                         </div>
                     </div>
-                    <headerSearch class="g-w100 g-h100">
+                    <headerSearch style="height:80px;">
                         <div style="padding-top:20px;display: flex;align-items: center;">
                             <div class="fl">
                                 <span>油田：</span>
@@ -27,7 +26,7 @@
                             </div>
                             <div class="fl mg">
                                 <span>井号：</span>
-                                <el-select v-model="selectWellId" class="f2">
+                                <el-select v-model="selectWellId" filterable class="f2">
                                    <el-option v-for="(item, index) in wells" :key="index" :label="item.wellName" :value="item.wellId"></el-option>
                                 </el-select>
                             </div>
@@ -144,22 +143,17 @@
                         </el-col>
                     </el-row>
                     <el-row class="main-row" v-if="type == 0" style="height: 50px">
-                        <verticalSwitchButton @selectBtn="selectBtn" :dataList="dataList" buttonWidth="120px"
-                            buttonHeight="40px" style="width: 9%" btnDirection="row"></verticalSwitchButton>
+                        <verticalSwitchButton @selectBtn="selectBtn" :dataList="dataList" buttonWidth="120px" buttonHeight="40px" style="width: 9%" btnDirection="row"></verticalSwitchButton>
                     </el-row>
                     <el-row class="main-row" v-if="type == 1" style="height: 50px">
-                        <verticalSwitchButton @selectBtn="selectBtn2" :dataList="dataList2" buttonWidth="120px"
-                            buttonHeight="40px" style="width: 9%" btnDirection="row"></verticalSwitchButton>
+                        <verticalSwitchButton @selectBtn="selectBtn2" :dataList="dataList2" buttonWidth="120px" buttonHeight="40px" style="width: 9%" btnDirection="row"></verticalSwitchButton>
                     </el-row>
                     <el-row class="main-row2" v-if="type == 0">
                         <div class="svg" v-if="oilTabType == '0'">
                             <div class="search-date">
                                 <span>日期：</span>
-                                <el-date-picker v-model="selectData" type="daterange" range-separator="至"
-                                    start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd">
-                                </el-date-picker>
-                                <el-button type="primary" icon="el-icon-search" style="margin-left:10px;"
-                                    @click="doSearchCharts">检索</el-button>
+                                <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
+                                <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">检索</el-button>
                             </div>
                             <div class="echarts-view">
                                 <echarts :chart-data="oilOption" height="100%"></echarts>
@@ -168,21 +162,15 @@
                         <div class="svg" v-else-if="oilTabType == '1'">
                             <div class="search-date">
                                 <span>日期：</span>
-                                <el-date-picker v-model="dateDetail" type="datetimerange" range-separator="至"
-                                    start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"
-                                    @change="createChange">
-                                </el-date-picker>
-                                <el-button type="primary" icon="el-icon-search" style="margin-left: 10px"
-                                    @click="doSearchCharts">检索</el-button>
+                                <el-date-picker v-model="dateDetail" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"  @change="createChange"></el-date-picker>
+                                <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doSearchCharts">检索</el-button>
                             </div>
-                            <el-row v-for="(item, index) in checkList.filter((item) => {return item.isRealTime == 0;})"
-                                :key="index">
+                            <el-row v-for="(item, index) in checkList.filter((item) => {return item.isRealTime == 0;})" :key="index">
                                 <div style="width: 100px; display: inline-block">
                                     <span>{{ item.paramName }}</span>
                                 </div>
                                 <el-checkbox-group v-model="queryParams.paramCodes" style="display: inline-block">
-                                    <el-checkbox v-for="(it, i) in item.childParams" :key="i" :label="it.paramCode"
-                                        style="color: #ffffff" @change="isDisabled">{{ it.paramName }}</el-checkbox>
+                                    <el-checkbox v-for="(it, i) in item.childParams" :key="i" :label="it.paramCode" style="color: #ffffff" @change="isDisabled">{{ it.paramName }}</el-checkbox>
                                 </el-checkbox-group>
                             </el-row>
                             <div class="echarts-view">
@@ -192,11 +180,8 @@
                         <div class="svg" v-else-if="oilTabType == '2'">
                             <div class="search-date">
                                 <span>日期：</span>
-                                <el-date-picker v-model="selectDateTime" type="datetime" placeholder="选择日期时间"
-                                    format="yyyy-MM-dd hh:mm">
-                                </el-date-picker>
-                                <el-button type="primary" icon="el-icon-search" style="margin-left: 10px"
-                                    @click="doWellFluxLastDayHour">检索</el-button>
+                                <el-date-picker v-model="selectDateTime" type="datetime" placeholder="选择日期时间" format="yyyy-MM-dd hh:mm"></el-date-picker>
+                                <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doWellFluxLastDayHour">检索</el-button>
                             </div>
                             <div class="echarts-view">
                                 <echarts :chart-data="oilOption2" height="100%"></echarts>
@@ -219,8 +204,7 @@
                         </div>
                         <div class="svg" v-else-if="oilTabType == '4'">
                             <div class="table-view">
-                                <div class="pageHeader"
-                                    style="width:100%;display: flex;align-items: center;justify-content: space-between;">
+                                <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;">
                                     现场作业进度表
                                     <!-- <el-button type="primary" style="height:30px;">下载</el-button> -->
                                 </div>
@@ -244,11 +228,8 @@
                         <div class="svg" v-if="waterTabType == '0'">
                             <div class="search-date">
                                 <span>日期：</span>
-                                <el-date-picker v-model="selectData" type="datetimerange" range-separator="至"
-                                    start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd">
-                                </el-date-picker>
-                                <el-button type="primary" icon="el-icon-search" style="margin-left:10px;"
-                                    @click="doSearchCharts">检索</el-button>
+                                <el-date-picker v-model="selectData" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
+                                <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">检索</el-button>
                             </div>
                             <div class="echarts-view">
                                 <echarts :chart-data="waterOption" height="100%"></echarts>
@@ -257,11 +238,8 @@
                         <div class="svg" v-if="waterTabType == '1'">
                             <div class="search-date">
                                 <span>日期：</span>
-                                <el-date-picker v-model="selectRealData" type="datetimerange" range-separator="至"
-                                    start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd">
-                                </el-date-picker>
-                                <el-button type="primary" icon="el-icon-search" style="margin-left:10px;"
-                                    @click="doSearchCharts">检索</el-button>
+                                <el-date-picker v-model="selectRealData" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
+                                <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">检索</el-button>
                             </div>
                             <div class="echarts-view">
                                 <echarts :chart-data="waterRealOption" height="100%"></echarts>
@@ -1681,7 +1659,7 @@
                 }
             },
             //初始化
-            async initData() {
+            async initData() {  
                 const {oilFieldId} = this.$route.query;
                 const {platformId} = this.$route.query;
                 const {selectWellId} = this.$route.query;
@@ -2245,13 +2223,7 @@
                     }
                 }
             },
-            /**
-             *
-             * 水井实时
-             * i 为图中位置
-             * code 008 009
-             *
-             */
+            //水井实时 i 为图中位置 code 008 009
             fetchIntervalWorkConditionDataCurve(i, code) {
                 const request = {
                     code,
@@ -2284,13 +2256,7 @@
                     }
                 });
             },
-            /**
-             *  author : hwh
-             *  下载文档
-             *  date : 2021-02-25 19:04:44
-             *  description : 跳转至方案查看
-             *
-             */
+            //下载文档 跳转至方案查看
             switchToPlan(filePath, fileType) {
                 const fp = encodeURI(filePath);
                 const ft = fileType;
@@ -2325,7 +2291,7 @@
                     }
                 });
             },
-            // 判断是否可选中
+            //判断是否可选中
             isDisabled(select, index) {
                 /* this.getRealtimeData(); */
                 if (!select.length) {
@@ -2565,12 +2531,7 @@
                     this.optionRealData.toolbox = toolBox;
                 }
             },
-            /**
-             *
-             * hwh
-             * 根据井号id转换对应实时数据的井名信息
-             *
-             */
+            //根据井号id转换对应实时数据的井名信息
             transformBorepipeNo(borepipeId) {
                 transformBorepipeNo(borepipeId).then((res) => {
                     if (res.data.code == 200) {
@@ -2580,10 +2541,7 @@
                     }
                 });
             },
-            /**
-             * hwh
-             * 初始化Mqtt数据
-             */
+            //初始化Mqtt数据
             initMqttMess() {
                 this.initMqtt(process.env.SOCKET_URL, {
                     topic: '/edge_electric_submersible_pump_monitor/qhd32-6cepi',
@@ -2622,10 +2580,7 @@
                     },
                 });
             },
-            /**
-             * hwh
-             * 获得泵工况数据信息
-             */
+            //获得泵工况数据信息
             getPumpRealData() {
                 // 泵数据
                 let pumpWellData = [];
@@ -2653,12 +2608,7 @@
                     this.pumpData = {};
                 }
             },
-            /**
-             * 点击事件
-             * @return 返回数据为已封装好的集合数据
-             * @Author Mr.Cao
-             * @Date 2021/11/16
-             */
+            //返回数据为已封装好的集合数据
             fetchAllData() {
                 if (this.oilTabType == '1') {
                     this.queryParams.platId = this.selectPlatform;
@@ -2667,22 +2617,14 @@
                     this.getRealtimeData();
                 }
             },
-            /**
-             * hwh el table 表格头 标题单位样式
-             * @param h
-             * @param column
-             * @returns {*[]}
-             */
+            //el table 表格头 标题单位样式
             renderHeader(h, {
                 column
             }) {
                 const header = column.label.split(' ');
                 return [h('p', [h('p', {}, header[0]), h('span', {}, header[1])])];
             },
-            /**
-             * hwh
-             * 虚拟计量内容 查询
-             */
+            //虚拟计量内容 查询
             doWellFluxLastDayHour() {
                 const request = {
                     date: this.selectDateTime,
@@ -2790,7 +2732,7 @@
     }
 
     .titleBox {
-        margin-bottom: 10px;
+        margin-bottom: 14px;
     }
 
     .f2 {

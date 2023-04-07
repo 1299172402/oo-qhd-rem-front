@@ -1,43 +1,53 @@
 .vue-treeselect__control{
-    background: var(--opacityBlueBg);
-    color: var(--lightBlueColor);
-    border: 1px solid var(--lightBlueColor);
-    border-radius: 0px;
+  background: var(--opacity-blue-bg);
+  color: var(--light-blue-color);
+  border: 1px solid var(--light-blue-color);
+  border-radius: 0;
 }
+
 .vue-treeselect__menu{
-    border: 1px solid var(--lightBlueColor);
-    background: var(--dropDownColor);
-    color: #fff;
+  border: 1px solid var(--light-blue-color);
+  background: var(--drop-down-color);
+  color: #fff;
 }
+
 .vue-treeselect__single-value{
-    color: var(--lightBlueColor);
+  color: var(--light-blue-color);
 }
+
 .vue-treeselect__option--highlight {
-    background: linear-gradient(to right, rgba(2, 30, 54, .2), rgba(0, 144, 188, 0.8));
+  background: linear-gradient(to right, rgba(2, 30, 54, 0.2), rgba(0, 144, 188, 0.8));
 }
+
 .vue-treeselect--single .vue-treeselect__option--selected{
-    background: linear-gradient(to right, rgba(2, 30, 54, .2), rgba(0, 144, 188, 0.8));
+  background: linear-gradient(to right, rgba(2, 30, 54, 0.2), rgba(0, 144, 188, 0.8));
 }
+
 .noBgBorderTree{
-    .vue-treeselect__control{
-        background: transparent;
-        border: transparent;
-    }
-    .vue-treeselect__single-value {
-        color:  var(--lightBlueColor);
-    }
-    .vue-treeselect__input {
-        color:  var(--lightBlueColor);
-    }
-    .vue-treeselect__control-arrow-container:hover {
-        .vue-treeselect__control-arrow {
-            color: var(--lightBlueColor);
-        }
-    }
+  .vue-treeselect__control{
+    background: transparent;
+    border: transparent;
+  }
+
+  .vue-treeselect__single-value {
+    color: var(--light-blue-color);
+  }
+
+  .vue-treeselect__input {
+    color: var(--light-blue-color);
+  }
+
+  .vue-treeselect__control-arrow-container:hover {
     .vue-treeselect__control-arrow {
-        color: var(--lightBlueColor);
+      color: var(--light-blue-color);
     }
+  }
+
+  .vue-treeselect__control-arrow {
+    color: var(--light-blue-color);
+  }
 }
-.el-icon-arrow-right:before {
-    color: rgba(255,255,255,0.8);
+
+.el-icon-arrow-right::before {
+  color: rgba(255,255,255,0.8);
 }

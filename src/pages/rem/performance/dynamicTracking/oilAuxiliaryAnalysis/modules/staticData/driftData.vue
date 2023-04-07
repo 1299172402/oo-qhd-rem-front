@@ -1,12 +1,13 @@
 <!--井斜数据-->
 <template>
     <el-table 
+        id="tableData"
         :data="tableData" :border="false" :row-style="{ height: '0px' }"
         header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
-        style="width:100%; padding: 20px 0" height="calc(100% - 86px)" :default-sort="{ prop: 'date', order: 'descending' }"
+        style="width:100%;" height="calc(100% - 101px)" :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
       <el-table-column type="index" label="序号" align="center" width="80"></el-table-column>
-      <el-table-column prop="wellName" label="井标识" width="180" align="center"></el-table-column>
+      <el-table-column prop="wellName" label="井号" width="180" align="center"></el-table-column>
       <el-table-column prop="measureDepth" :render-header="renderHeader" label="测点斜深 (m)" align="center"></el-table-column>
       <el-table-column prop="measureVerticalDepth" :render-header="renderHeader" label="测点垂深 (m)" align="center"></el-table-column>
       <el-table-column prop="deviationAngle" :render-header="renderHeader" label="井斜角 (°)" align="center"></el-table-column>
@@ -22,7 +23,7 @@
 </template>
 <script>
 import {deviationData,} from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
-// import {exportExcel} from "@/lib/exportExcel";
+import {exportExcel} from "@/lib/exportExcel.js";
 
 export default {
   props: {
@@ -43,10 +44,7 @@ export default {
     this.doSearch();
   },
   methods: {
-    /**
-     * hwh
-     * 根据父组件传递过来的参数进行查询
-     */
+    //根据父组件传递过来的参数进行查询
     doSearch() {
       let request = {
         ogfId: this.oilFeildId,
@@ -59,35 +57,23 @@ export default {
         }
       })
     },
-    /**
-     * hwh
-     * 下载
-     */
+    //下载
     doDownLoad(){
       let fileName = '井斜数据';
       if(this.wellName){
         fileName = this.wellName + fileName;
       }
-      // exportExcel('#tableData',fileName);
+      exportExcel('#tableData',fileName);
     },
-    /**
-     * hwh el table 表格头 标题单位样式
-     * @param h
-     * @param column
-     * @returns {*[]}
-     */
-    renderHeader (h, {column}) {
-      let header = column.label.split(' ');
-      return [h('p', [
-        h('p', {}, header[0]),
-        h('span', {}, header[1])
-      ])];
-    }
   },
 }
 </script>
 <style scoped lang="scss">
-::v-deep .el-table .cell:empty::before{
-  content: '-';
-}
+    #tableData{
+        ::v-deep .cell:empty{
+            &::before {
+                content: '-';
+            } 
+        }
+    } 
 </style>

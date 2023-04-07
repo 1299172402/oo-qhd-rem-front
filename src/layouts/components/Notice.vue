@@ -1,53 +1,85 @@
 <template>
-  <t-popup expand-animation placement="bottom-right" trigger="click" :visible="isNoticeVisible"
-    @visible-change="onPopupVisibleChange">
+  <t-popup
+    expand-animation
+    placement="bottom-right"
+    trigger="click"
+    :visible="isNoticeVisible"
+    @visible-change="onPopupVisibleChange"
+  >
     <template #content>
       <div class="header-msg">
         <div class="header-msg-top">
           <p>通知</p>
-          <t-button v-if="unreadMsg.length > 0" class="clear-btn" variant="text" theme="primary"
-            @click="setRead('all')">全部已读</t-button>
+          <t-button
+            v-if="unreadMsg.length > 0"
+            class="clear-btn"
+            variant="text"
+            theme="primary"
+            @click="setRead('all')"
+          >
+            全部已读
+          </t-button>
         </div>
         <t-list v-if="unreadMsg.length > 0" class="narrow-scrollbar" :split="true">
           <t-list-item v-for="(item, index) in unreadMsg" :key="index">
             <div>
-              <p class="msg-content">{{ item.content }}</p>
-              <p class="msg-type">{{ item.type }}</p>
+              <p class="msg-content">
+                {{ item.content }}
+              </p>
+              <p class="msg-type">
+                {{ item.type }}
+              </p>
             </div>
-            <p class="msg-time">{{ item.date }}</p>
+            <p class="msg-time">
+              {{ item.date }}
+            </p>
             <template #action>
-              <t-button size="small" variant="outline" @click="setRead('radio', item)"> 设为已读 </t-button>
+              <t-button size="small" variant="outline" @click="setRead('radio', item)">
+                设为已读
+              </t-button>
             </template>
           </t-list-item>
         </t-list>
 
         <div v-else class="empty-list">
-          <img src="../../assets/intelligentOilfield/nothing.png" alt="空" />
+          <img src="../../assets/intelligentOilfield/nothing.png" alt="空">
           <p>暂无通知</p>
         </div>
         <div class="header-msg-bottom">
           <!-- v-if="unreadMsg.length > 0" -->
-          <t-button class="header-msg-bottom-link" variant="text" theme="primary" @click="goDetail">查看全部</t-button>
+          <t-button
+            class="header-msg-bottom-link"
+            variant="text"
+            theme="primary"
+            @click="goDetail"
+          >
+            查看全部
+          </t-button>
         </div>
       </div>
     </template>
     <t-badge :count="unreadMsg.length" :offset="[15, 21]">
-      <t-button theme="default" shape="square" variant="text" @click="isNoticeVisible = true"
-        style="background: transparent;border: 0px;">
-        <!-- <mail-icon style="color: var(--whiteColor);"/> -->
-        <svg-icon icon-class="message-logo" class="panelIconClass"></svg-icon>
+      <t-button
+        theme="default"
+        shape="square"
+        variant="text"
+        style="background: transparent;border: 0;"
+        @click="isNoticeVisible = true"
+      >
+        <!-- <mail-icon style="color: var(--white-color);"/> -->
+        <svg-icon icon-class="message-logo" class="panelIconClass" />
       </t-button>
     </t-badge>
   </t-popup>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { mapState, mapGetters } from 'vuex';
+import Vue from "vue";
+import { mapState, mapGetters } from "vuex";
 // import { MailIcon } from 'tdesign-icons-vue';
-import { getList, updateAllStatus, updateOneStatus } from '@/api/intelligentOilfield/system/notification.js';
+import { getList, updateAllStatus, updateOneStatus } from "@/api/intelligentOilfield/system/notification.js";
 
-import { NotificationItem } from '@/interface';
+import { NotificationItem } from "@/interface";
 
 export default Vue.extend({
   components: {
@@ -55,12 +87,12 @@ export default Vue.extend({
   },
   data() {
     return {
-      isNoticeVisible: false,
+      isNoticeVisible: false
     };
   },
   computed: {
-    ...mapState('notification', ['msgData']),
-    ...mapGetters('notification', ['unreadMsg']),
+    ...mapState("notification", ["msgData"]),
+    ...mapGetters("notification", ["unreadMsg"])
   },
   created() {
     this.getList();
@@ -68,50 +100,49 @@ export default Vue.extend({
   methods: {
     getList() {
       getList({
-        userId: this.$store.getters['user/userDetail'].user.userId, status: '0', pageNum: 1,
-        pageSize: 100000,
+        userId: this.$store.getters["user/userDetail"].user.userId, status: "0", pageNum: 1,
+        pageSize: 100000
       }).then(res => {
-        this.$store.commit('notification/setMsgData', res.data.rows);
-      })
+        this.$store.commit("notification/setMsgData", res.data.rows);
+      });
     },
     onPopupVisibleChange(visible: boolean, context) {
-      if (context.trigger === 'trigger-element-click') {
+      if (context.trigger === "trigger-element-click") {
         this.isNoticeVisible = true;
         return;
       }
       this.isNoticeVisible = visible;
     },
     goDetail() {
-      this.$router.push('/stationMessage/stationMessageDetail');
+      this.$router.push("/stationMessage/stationMessageDetail");
       this.isNoticeVisible = false;
     },
     setRead(type: string, item?: NotificationItem) {
-      const changeMsg = this.msgData;
-      if (type === 'all') {
+      if (type === "all") {
         // changeMsg.forEach((e) => {
         //   e.status = false;
         // });
-        updateAllStatus(this.$store.getters['user/userDetail'].user.userId).then(res => {
-          this.getList()
-        })
+        updateAllStatus(this.$store.getters["user/userDetail"].user.userId).then(() => {
+          this.getList();
+        });
       } else {
         // changeMsg.forEach((e) => {
         //   if (e.id === item.id) {
         //     e.status = false;
         //   }
         // });
-        updateOneStatus({ userId: this.$store.getters['user/userDetail'].user.userId, mailId: item.mailId }).then(res => {
-          this.getList()
-        })
+        updateOneStatus({ userId: this.$store.getters["user/userDetail"].user.userId, mailId: item.mailId }).then(() => {
+          this.getList();
+        });
       }
       // this.$store.commit('notification/setMsgData', changeMsg);
-    },
-  },
+    }
+  }
 });
 </script>
 
 <style lang="less" scoped>
-@import '@/style/variables.less';
+@import "@/style/variables.less";
 
 .header-msg {
   width: 400px;

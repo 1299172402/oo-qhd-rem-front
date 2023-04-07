@@ -22,7 +22,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="平台" prop="pt">
-              <el-select v-model="queryData.pt">
+              <el-select v-model="queryData.pt" @change="onPlatfromChange">
                 <el-option v-for="item in platforms" :key="item.id" :label="item.platName" :value="item.platFormId">
                 </el-option>
               </el-select>
@@ -57,7 +57,7 @@
           <el-row>
             <el-col :span="10">
               <el-form-item label="层位选择" prop="cw">
-                <el-select v-model="djclForm.layerId" placeholder="" style="width: 100.5%">
+                <el-select v-model="djclForm.layerId" @change="selectcw" placeholder="" style="width: 100.5%">
                   <el-option
                     v-for="item in cwOptions"
                     :key="item.layerId"
@@ -71,7 +71,7 @@
             <el-col :span="2">&nbsp;</el-col>
             <el-col :span="10">
               <el-form-item label="有效厚度" prop="cw">
-                <el-input v-model="djclForm.thicknessEffe"  :disabled="edit"> <i slot="suffix">m</i></el-input>
+                <el-input v-model="djclForm.thicknessEffe" :disabled="edit"> <i slot="suffix">m</i></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -112,8 +112,8 @@ import {
   fetchProductionWells,
   fetchProductionWellsByPlatform,
 } from '@/api/oilDeposit/rem-02/primaryinfo.js';
-import { queryLayerList, queryDensityInfo, getOilFieldList } from '@/api/rem/workcompanydesignate';
-import { saveWellDetailedEvaluation } from '@/api/rem/welldetailedevaluationresult';
+import { queryLayerList, getOilFieldList } from '@/api/rem/workcompanydesignate';
+import { saveWellDetailedEvaluation, queryByWellidCwid } from '@/api/rem/welldetailedevaluationresult';
 export default {
   components: {},
   data() {
@@ -124,8 +124,9 @@ export default {
         assetCode: '',
         month: new Date().format('yyyy-MM'),
         ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
-        wellId: '',
+        wellId: '09D30C16BD1D4F759D53F74941701307',
         orgId: '715AD1CD60484BB59E737CD18A9DE44A',
+        pt: '',
       },
       deptSelect: [
         {
@@ -136,9 +137,7 @@ export default {
       wells: [],
       platforms: [],
       oilFields: [],
-      djclForm: {
-        
-      },
+      djclForm: {},
     };
   },
   mounted() {
@@ -150,34 +149,39 @@ export default {
     getList() {
       getOilFieldList({ orgId: '715AD1CD60484BB59E737CD18A9DE44A' }).then((res) => {
         if (res.data.code == 200) {
-          console.log(res, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
           this.oilFields = res.data.data;
-          // if (this.oilFields.length == 0) {
-          //   this.selectOilField = "";
-          // } else {
-          //   this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
-          // }
         }
       });
       fetchOilFields().then((res) => {
-        console.log(res);
         if (res.data.code == 200) {
           this.oilFields = res.data.data.oilFields;
-          this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F';
           const requestPlat = {
             oilFieldId: this.queryData.ogfId,
           };
           fetchPlatforms(requestPlat).then((res) => {
             if (res.data.code == 200) {
               this.platforms = res.data.data.platform;
-              this.platforms.map((n)=>{
-                if(n.platName == '全部'){
-                  n.platFormId = ''
+              this.platforms.map((n) => {
+                if (n.platName == '全部') {
+                  n.platFormId = '';
                 }
-                this.queryData.pt = ''
-              })
+                this.queryData.pt = '';
+              });
             }
           });
+        }
+      });
+    },
+    selectcw() {
+      let adta = {
+        wellId: this.queryData.wellId,
+        layerId: this.djclForm.layerId,
+      };
+      queryByWellidCwid(adta).then((res) => {
+        if (res.data.data) {
+          this.djclForm = res.data.data;
+        } else {
+          this.djclForm = []
         }
       });
     },
@@ -195,10 +199,10 @@ export default {
       });
     },
     save() {
-      this.djclForm.controlArea = Number(this.djclForm.controlArea)
-      this.djclForm.probReservesWell = Number(this.djclForm.probReservesWell)
-      this.djclForm.thicknessEffe = Number(this.djclForm.thicknessEffe)
-      saveWellDetailedEvaluation({ ...this.djclForm, wellId: this.queryData.wellId}).then((res) => {
+      this.djclForm.controlArea = Number(this.djclForm.controlArea);
+      this.djclForm.probReservesWell = Number(this.djclForm.probReservesWell);
+      this.djclForm.thicknessEffe = Number(this.djclForm.thicknessEffe);
+      saveWellDetailedEvaluation({ ...this.djclForm, wellId: this.queryData.wellId }).then((res) => {
         if (res.data.code == 200) {
           this.edit = true;
           this.$message.success('保存成功！');
@@ -210,17 +214,17 @@ export default {
     getData() {
       let oilFieldId = '3FC9A818F5BC43B88270DB80BBB3018F';
       const request = {
-        oilFieldId
+        oilFieldId,
       };
       fetchProductionWells(request).then((res) => {
         if (res.data.code == 200) {
           let wellList = res.data.data.productionWells;
-          let arr = []
-          wellList.map((n)=>{
-            if(n.wellName !=null){
-              arr.push(n)
+          let arr = [];
+          wellList.map((n) => {
+            if (n.wellName != null) {
+              arr.push(n);
             }
-          })
+          });
           this.wells = [...arr];
         }
       });
@@ -231,6 +235,59 @@ export default {
       //   }
       // });
     },
+    //平台下拉-change
+    onPlatfromChange(val) {
+        console.log(this.queryData.ogfId);
+        console.log(val);
+        this.getFetchWells(this.queryData.ogfId, val);
+    },
+    //通过油田 或 平台 获得井
+    getFetchWells(oilFieldId, platformId) {
+      this.wells = [];
+      if (oilFieldId == platformId) {
+          const request = {oilFieldId};
+          fetchProductionWells(request).then((res) => {
+              if (res.data.code == 200) {
+                  let wellData=res.data.data.productionWells||[];
+                  if(wellData.length){
+                      const wellList = wellData.filter(el=>el.wellName);
+                      this.wells = this.wells.concat(wellList);
+                  }
+              }
+              fetchInjectionWells(request).then((res) => {
+                  if (res.data.code == 200) {
+                      const waterWellList = res.data.data.injectionWell || [];
+                      this.wells = this.wells.concat(waterWellList);
+                  }
+              });
+          });
+      } else {
+          const request = {platformId};
+          fetchProductionWellsByPlatform(request).then((res) => {
+              if (res.data.code == 200) {
+                  let wellData=res.data.data.productionWells||[];
+                  if(wellData.length){
+                      const wellList = wellData.filter(el=>el.wellName);
+                      this.wells = this.wells.concat(wellList);
+                  }
+              }
+              fetchInjectionWellsByPlatform(request).then((res) => {
+                  if (res.data.code == 200) {
+                      const waterWellList = res.data.data.injectionWell || [];
+                      this.wells = this.wells.concat(waterWellList);
+                      this.wells.unshift({
+                          wellId: '',
+                          wellName: '全部'
+                      });
+                      this.queryData.wellId = '';
+                  }
+              });
+          });
+          
+      }
+
+    },
+
   },
 };
 </script>

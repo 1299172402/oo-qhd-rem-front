@@ -1,7 +1,7 @@
 import axios from "@/utils/request";
 
 // post
-export function postAction (url, data, params) {
+export function postAction(url, data, params) {
   return axios({
     url,
     method: "post",
@@ -11,7 +11,7 @@ export function postAction (url, data, params) {
 }
 
 // post method= {post | put}
-export function httpAction (url, parameter) {
+export function httpAction(url, parameter) {
   return axios({
     url,
     method: "post",
@@ -20,7 +20,7 @@ export function httpAction (url, parameter) {
 }
 
 // put
-export function putAction (url, parameter) {
+export function putAction(url, parameter) {
   return axios({
     url,
     method: "post",
@@ -29,7 +29,7 @@ export function putAction (url, parameter) {
 }
 
 // get
-export function getAction (url, parameter, other) {
+export function getAction(url, parameter, other) {
   return axios({
     url,
     method: "get",
@@ -39,7 +39,7 @@ export function getAction (url, parameter, other) {
 }
 
 // deleteAction
-export function deleteAction (url, parameter) {
+export function deleteAction(url, parameter) {
   return axios({
     url,
     method: "post",
@@ -53,7 +53,7 @@ export function deleteAction (url, parameter) {
  * @param parameter
  * @returns {*}
  */
-export function downFile (url, parameter) {
+export function downFile(url, parameter) {
   return axios({
     url,
     params: parameter,
@@ -67,15 +67,14 @@ export function downFile (url, parameter) {
  * @param subStr
  * @returns {*}
  */
-export function getFileAccessHttpUrl (avatar, subStr) {
+export function getFileAccessHttpUrl(avatar, subStr) {
   if (!subStr) subStr = "http";
   if (avatar && avatar.startsWith(subStr)) {
     return avatar;
-  } 
-  if (avatar && avatar.length > 0 && avatar.indexOf("[") === -1) {
-    return `${window._CONFIG.staticDomainURL  }/${  avatar}`;
   }
-    
+  if (avatar && avatar.length > 0 && avatar.indexOf("[") === -1) {
+    return `${window._CONFIG.staticDomainURL}/${avatar}`;
+  }
 }
 /**
  * 文书签章超时设置10分钟
@@ -104,7 +103,7 @@ export function customParamsGetAction(url, parameter) {
   }
   return axios.get(url, {
     params: parameter,
-    paramsSerializer (params = {}) {
+    paramsSerializer(params = {}) {
       const retArr = [];
       Object.keys(params).forEach(key => {
         if (Array.isArray(params[key])) {

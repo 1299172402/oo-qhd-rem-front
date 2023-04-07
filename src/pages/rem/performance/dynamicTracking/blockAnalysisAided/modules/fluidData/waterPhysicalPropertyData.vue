@@ -1,6 +1,6 @@
 <!--水物性数据-->
 <template>
-  <NormalCard class="mt-2">
+  <div class="mt-2">
     <el-row>
       <el-table
           id="tableData"
@@ -98,18 +98,14 @@
         </el-table-column>
       </el-table>
     </el-row>
-  </NormalCard>
+  </div>
 </template>
 
 <script>
 
-import {streamingMediaDataWaterPhysicalPropertyData} from "@/api/rem-01/fielddynamicanalysis";
-import NormalCard from "@/components/tools/NormalCard";
-import {exportExcel} from "@/lib/exportExcel";
+import {streamingMediaDataWaterPhysicalPropertyData} from "@/api/oilDeposit/rem-01/fielddynamicanalysis";
+import {exportExcel} from "@/lib/exportExcel.js";
 export default {
-  components: {
-    NormalCard,
-  },
   props: {
     oilFieldId: {},
     blockId: {},

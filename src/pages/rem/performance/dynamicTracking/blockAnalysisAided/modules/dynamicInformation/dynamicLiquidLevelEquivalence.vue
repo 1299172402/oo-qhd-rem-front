@@ -10,7 +10,8 @@
             </el-radio-group>
         </el-row>
         <el-row style="margin-top:10px;">
-            <img style="height: 100%;width:800px" :src="src">
+            <!-- zxb注释，后面放开 -->
+            <!-- <img style="height: 100%;width:800px" :src="src"> -->
         </el-row>
     </div>
 </template>

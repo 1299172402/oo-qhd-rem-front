@@ -3,11 +3,22 @@
     <t-card class="list-card-container">
       <t-row justify="space-between">
         <div class="left-operation-container">
-          <t-button @click="handleSetupContract"> 新建合同 </t-button>
-          <t-button variant="base" theme="default" :disabled="!selectedRowKeys.length"> 导出合同 </t-button>
-          <p v-if="!!selectedRowKeys.length" class="selected-count">已选{{ selectedRowKeys.length }}项</p>
+          <t-button @click="handleSetupContract">
+            新建合同
+          </t-button>
+          <t-button variant="base" theme="default" :disabled="!selectedRowKeys.length">
+            导出合同
+          </t-button>
+          <p v-if="!!selectedRowKeys.length" class="selected-count">
+            已选{{ selectedRowKeys.length }}项
+          </p>
         </div>
-        <t-input v-model="searchValue" class="search-input" placeholder="请输入你需要搜索的内容" clearable>
+        <t-input
+          v-model="searchValue"
+          class="search-input"
+          placeholder="请输入你需要搜索的内容"
+          clearable
+        >
           <template #suffix-icon>
             <search-icon size="20px" />
           </template>
@@ -22,29 +33,45 @@
           class="myTable"
           :columns="columns"
           :data="data"
-          :rowKey="rowKey"
-          :verticalAlign="verticalAlign"
+          :row-key="rowKey"
+          :vertical-align="verticalAlign"
           :hover="hover"
           :pagination="pagination"
           :selected-row-keys="selectedRowKeys"
           :loading="dataLoading"
+          :header-affixed-top="true"
+          :header-affix-props="{ offsetTop: offsetTop, container: getContainer }"
           @page-change="rehandlePageChange"
           @change="rehandleChange"
           @select-change="rehandleSelectChange"
-          :headerAffixedTop="true"
-          :headerAffixProps="{ offsetTop: offsetTop, container: getContainer }"
         >
           <template #status="{ row }">
-            <t-tag v-if="row.status === CONTRACT_STATUS.FAIL" theme="danger" variant="light">审核失败</t-tag>
-            <t-tag v-if="row.status === CONTRACT_STATUS.AUDIT_PENDING" theme="warning" variant="light">待审核</t-tag>
-            <t-tag v-if="row.status === CONTRACT_STATUS.EXEC_PENDING" theme="warning" variant="light">待履行</t-tag>
-            <t-tag v-if="row.status === CONTRACT_STATUS.EXECUTING" theme="success" variant="light">履行中</t-tag>
-            <t-tag v-if="row.status === CONTRACT_STATUS.FINISH" theme="success" variant="light">已完成</t-tag>
+            <t-tag v-if="row.status === CONTRACT_STATUS.FAIL" theme="danger" variant="light">
+              审核失败
+            </t-tag>
+            <t-tag v-if="row.status === CONTRACT_STATUS.AUDIT_PENDING" theme="warning" variant="light">
+              待审核
+            </t-tag>
+            <t-tag v-if="row.status === CONTRACT_STATUS.EXEC_PENDING" theme="warning" variant="light">
+              待履行
+            </t-tag>
+            <t-tag v-if="row.status === CONTRACT_STATUS.EXECUTING" theme="success" variant="light">
+              履行中
+            </t-tag>
+            <t-tag v-if="row.status === CONTRACT_STATUS.FINISH" theme="success" variant="light">
+              已完成
+            </t-tag>
           </template>
           <template #contractType="{ row }">
-            <p v-if="row.contractType === CONTRACT_TYPES.MAIN">审核失败</p>
-            <p v-if="row.contractType === CONTRACT_TYPES.SUB">待审核</p>
-            <p v-if="row.contractType === CONTRACT_TYPES.SUPPLEMENT">待履行</p>
+            <p v-if="row.contractType === CONTRACT_TYPES.MAIN">
+              审核失败
+            </p>
+            <p v-if="row.contractType === CONTRACT_TYPES.SUB">
+              待审核
+            </p>
+            <p v-if="row.contractType === CONTRACT_TYPES.SUPPLEMENT">
+              待履行
+            </p>
           </template>
           <template #paymentType="{ row }">
             <p v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.PAYMENT" class="payment-col">
@@ -68,29 +95,28 @@
       header="确认删除当前所选合同？"
       :body="confirmBody"
       :visible.sync="confirmVisible"
+      :on-cancel="onCancel"
       @confirm="onConfirmDelete"
-      :onCancel="onCancel"
-    >
-    </t-dialog>
+    />
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue';
-import { SearchIcon } from 'tdesign-icons-vue';
-import Trend from '@/components/intelligentOilfield/trend/index.vue';
-import { prefix } from '@/config/global';
+import Vue from "vue";
+import { SearchIcon } from "tdesign-icons-vue";
+import Trend from "@/components/intelligentOilfield/trend/index.vue";
+import { prefix } from "@/config/global";
 
-import { CONTRACT_STATUS, CONTRACT_STATUS_OPTIONS, CONTRACT_TYPES, CONTRACT_PAYMENT_TYPES } from '@/constants';
+import { CONTRACT_STATUS, CONTRACT_STATUS_OPTIONS, CONTRACT_TYPES, CONTRACT_PAYMENT_TYPES } from "@/constants";
 
 export default Vue.extend({
-  name: 'ListBase',
+  name: "ListBase",
   components: {
     SearchIcon,
-    Trend,
+    Trend
   },
   data() {
     return {
-      input: '急啊急啊就',
+      input: "急啊急啊就",
       CONTRACT_STATUS,
       CONTRACT_STATUS_OPTIONS,
       CONTRACT_TYPES,
@@ -99,64 +125,64 @@ export default Vue.extend({
       dataLoading: false,
       data: [],
       selectedRowKeys: [1, 2],
-      value: 'first',
+      value: "first",
       columns: [
-        { colKey: 'row-select', type: 'multiple', width: 64, fixed: 'left' },
+        { colKey: "row-select", type: "multiple", width: 64, fixed: "left" },
         {
-          title: '合同名称',
-          align: 'left',
+          title: "合同名称",
+          align: "left",
           width: 250,
           ellipsis: true,
-          colKey: 'name',
-          fixed: 'left',
+          colKey: "name",
+          fixed: "left"
         },
-        { title: '合同状态', colKey: 'status', width: 200, cell: { col: 'status' } },
+        { title: "合同状态", colKey: "status", width: 200, cell: { col: "status" }},
         {
-          title: '合同编号',
+          title: "合同编号",
           width: 200,
           ellipsis: true,
-          colKey: 'no',
+          colKey: "no"
         },
         {
-          title: '合同类型',
+          title: "合同类型",
           width: 200,
           ellipsis: true,
-          colKey: 'contractType',
+          colKey: "contractType"
         },
         {
-          title: '合同收付类型',
+          title: "合同收付类型",
           width: 200,
           ellipsis: true,
-          colKey: 'paymentType',
+          colKey: "paymentType"
         },
         {
-          title: '合同金额 (元)',
+          title: "合同金额 (元)",
           width: 200,
           ellipsis: true,
-          colKey: 'amount',
+          colKey: "amount"
         },
         {
-          align: 'left',
-          fixed: 'right',
+          align: "left",
+          fixed: "right",
           width: 200,
-          colKey: 'op',
-          title: '操作',
-        },
+          colKey: "op",
+          title: "操作"
+        }
       ],
-      rowKey: 'index',
-      tableLayout: 'auto',
-      verticalAlign: 'top',
+      rowKey: "index",
+      tableLayout: "auto",
+      verticalAlign: "top",
       hover: true,
       rowClassName: (rowKey: string) => `${rowKey}-class`,
       // 与pagination对齐
       pagination: {
         defaultPageSize: 20,
         total: 0,
-        defaultCurrent: 1,
+        defaultCurrent: 1
       },
-      searchValue: '',
+      searchValue: "",
       confirmVisible: false,
-      deleteIdx: -1,
+      deleteIdx: -1
     };
   },
   computed: {
@@ -165,29 +191,27 @@ export default Vue.extend({
         const { name } = this.data?.[this.deleteIdx];
         return `删除后，${name}的所有合同信息将被清空，且无法恢复`;
       }
-      return '';
+      return "";
     },
     offsetTop() {
       return this.$store.state.setting.isUseTabsRouter ? 48 : 0;
-    },
+    }
   },
   mounted() {
     this.dataLoading = true;
     this.$request
-      .get('/api/get-list')
-      .then((res) => {
+      .get("/api/get-list")
+      .then(res => {
         if (res.code === 0) {
           const { list = [] } = res.data;
           this.data = list;
           this.pagination = {
             ...this.pagination,
-            total: list.length,
+            total: list.length
           };
         }
       })
-      .catch((e: Error) => {
-        console.log(e);
-      })
+      .catch(() => {})
       .finally(() => {
         this.dataLoading = false;
       });
@@ -195,22 +219,20 @@ export default Vue.extend({
 
   methods: {
     getContainer() {
-      return document.querySelector('.tdesign-starter-layout');
+      return document.querySelector(".tdesign-starter-layout");
     },
-    rehandlePageChange(curr, pageInfo) {
-      console.log('分页变化', curr, pageInfo);
-    },
+    // eslint-disable-next-line
+    rehandlePageChange(curr, pageInfo) {},
     rehandleSelectChange(selectedRowKeys: number[]) {
       this.selectedRowKeys = selectedRowKeys;
     },
-    rehandleChange(changeParams, triggerAndData) {
-      console.log('统一Change', changeParams, triggerAndData);
-    },
+    // eslint-disable-next-line
+    rehandleChange(changeParams, triggerAndData) {},
     handleClickDetail() {
-      this.$router.push('/detail/base');
+      this.$router.push("/detail/base");
     },
     handleSetupContract() {
-      this.$router.push('/form/base');
+      this.$router.push("/form/base");
     },
     handleClickDelete(row: { rowIndex: any }) {
       this.deleteIdx = row.rowIndex;
@@ -225,7 +247,7 @@ export default Vue.extend({
         this.selectedRowKeys.splice(selectedIdx, 1);
       }
       this.confirmVisible = false;
-      this.$message.success('删除成功');
+      this.$message.success("删除成功");
       this.resetIdx();
     },
     onCancel() {
@@ -233,8 +255,8 @@ export default Vue.extend({
     },
     resetIdx() {
       this.deleteIdx = -1;
-    },
-  },
+    }
+  }
 });
 </script>
 
@@ -245,7 +267,7 @@ export default Vue.extend({
 </style>
 
 <style lang="less" scoped>
-@import '@/style/variables';
+@import "@/style/variables";
 
 .payment-col {
   display: flex;
@@ -258,7 +280,7 @@ export default Vue.extend({
 }
 
 .left-operation-container {
-  padding: 0 0 6px 0;
+  padding: 0 0 6px;
   margin-bottom: 16px;
 
   .selected-count {

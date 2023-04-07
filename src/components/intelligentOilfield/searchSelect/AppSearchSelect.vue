@@ -1,18 +1,18 @@
 <template>
-    <search-select
-      v-model="appId"
-      :fn="appOptionFn"
-      prop-name="appName"
-      value-prop="appId"
-      label-prop="appName"
-      placeholder="请选择所属应用"
-    />
-  </template>
-  
+  <search-select
+    v-model="appId"
+    :fn="appOptionFn"
+    prop-name="appName"
+    value-prop="appId"
+    label-prop="appName"
+    placeholder="请选择所属应用"
+  />
+</template>
+
 <script>
 import SearchSelect from "./index.vue";
-import { listApp } from '@/api/intelligentOilfield/system/applicationCenter/applicationCenter.js'
-  
+import { listApp } from "@/api/intelligentOilfield/system/applicationCenter/applicationCenter.js";
+
 export default {
   name: "AppSearchSelect",
   components: {

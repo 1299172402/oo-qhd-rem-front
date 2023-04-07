@@ -4,7 +4,7 @@
       <el-table
         :data="authorizedAppList"
         class="all-app"
-        height="calc(100%)"
+        height="calc(100vh - 260px)"
         row-key="appId"
         highlight-current-row
         @row-click="row => currentAppId = row.appId"
@@ -112,8 +112,8 @@ export default {
         this.getAppRoles(val)
           .then(() => {
             this.$nextTick(() => {
-              this.appRoleList[val].forEach((row) => {
-                if (this.pageModel.userRoles.find((v) => v.roleId === row.roleId)) {
+              this.appRoleList[val].forEach(row => {
+                if (this.pageModel.userRoles.find(v => v.roleId === row.roleId)) {
                   this.$refs.roleTable.toggleRowSelection(row, true);
                 }
               });
@@ -127,18 +127,17 @@ export default {
   },
   methods: {
     getModel: function() {
-      this.userInfo.currentTenantCode="";
       // 查询用户已授权数据
       authorizedAppListByTenantCode(this.userInfo.currentTenantCode)
-        .then((v) => {
-          this.authorizedAppList = v.data.data.map((app) => {
+        .then(v => {
+          this.authorizedAppList = v.data.data.map(app => {
             this.authorizedAppMap[app.appId] = app.appName;
             return app;
           });
         });
       // 查询历史用户角色信息
       getAuthRole(this.model.userId)
-        .then((v) => {
+        .then(v => {
           this.pageModel.allRoles = v.data.roles;
           this.pageModel.userRoles = v.data.user.roles;
         });
@@ -147,7 +146,7 @@ export default {
      * 保存
      */
     handleOk() {
-      updateAuthRole({ ...this.model, roleIds: this.pageModel.userRoles.map((v) => v.roleId).toString() })
+      updateAuthRole({ ...this.model, roleIds: this.pageModel.userRoles.map(v => v.roleId).toString() })
         .then(() => {
           this.$message.success("保存成功！");
           this.$router.go(-1);
@@ -165,7 +164,7 @@ export default {
         pageSize: 999,
         appId: appId
       })
-        .then((v) => {
+        .then(v => {
           this.$set(this.appRoleList, appId, v.data.rows);
         });
     },
@@ -175,34 +174,34 @@ export default {
     selectAll: function(selection) {
       if (selection.length) {
         // 全选
-        selection.forEach((row) => {
-          if (!this.pageModel.userRoles.find((v) => v.roleId === row.roleId)) {
+        selection.forEach(row => {
+          if (!this.pageModel.userRoles.find(v => v.roleId === row.roleId)) {
             this.pageModel.userRoles.push(row);
           }
         });
       } else {
       // 取消全选
-        const roleIds = this.appRoleList[this.currentAppId].map((v) => v.roleId);
-        this.pageModel.userRoles = this.pageModel.userRoles.filter((v) => !roleIds.includes(v.roleId));
+        const roleIds = this.appRoleList[this.currentAppId].map(v => v.roleId);
+        this.pageModel.userRoles = this.pageModel.userRoles.filter(v => !roleIds.includes(v.roleId));
       }
     },
     /**
      * 角色数据单选勾选发生变化时，处理数据
      */
     select: function(selection, row) {
-      if (selection.find((v) => v.roleId === row.roleId)) {
+      if (selection.find(v => v.roleId === row.roleId)) {
         // 加入勾选
         this.pageModel.userRoles.push(row);
       } else {
-        this.pageModel.userRoles = this.pageModel.userRoles.filter((v) => v.roleId !== row.roleId);
+        this.pageModel.userRoles = this.pageModel.userRoles.filter(v => v.roleId !== row.roleId);
       }
     },
     /**
      * 处理删除时需要将表格多选框一起联动
      */
     handleDelete: function(row) {
-      this.pageModel.userRoles = this.pageModel.userRoles.filter((v) => v.roleId !== row.roleId);
-      const findItem = this.appRoleList[this.currentAppId].find((v) => v.roleId === row.roleId);
+      this.pageModel.userRoles = this.pageModel.userRoles.filter(v => v.roleId !== row.roleId);
+      const findItem = this.appRoleList[this.currentAppId].find(v => v.roleId === row.roleId);
       findItem && this.$refs.roleTable.toggleRowSelection(findItem, false);
     }
   }

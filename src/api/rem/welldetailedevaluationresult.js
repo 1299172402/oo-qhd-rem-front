@@ -1,16 +1,15 @@
 import request from '@/utils/request'
 const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
-export function queryByWellidCwid({ controlledReserves } = {}) {
+export function queryByWellidCwid({ layerId, wellId } = {}) {
   return request({
-    url: `${baseUrl}/wellDetailedEvaluationRresult/queryByWellidCwid`,
+    url: `${baseUrl}/wellDetailedEvaluationResult/queryByWellidCwid?layerId=${ layerId || "" }&wellId=${ wellId || "" }`,
     method: "get",
-          data: controlledReserves,
   });
 }
 export function saveWellDetailedEvaluation(data) {
   return request({
-    url: `${baseUrl}/wellDetailedEvaluationRresult/saveControlledReserves`,
+    url: `${baseUrl}/wellDetailedEvaluationResult/saveControlledReserves`,
     method: "post",
     data
   });

@@ -2,7 +2,7 @@
 <template>
   <div class="gradientBoxLeft" style="height:100%">
     <el-row style="height:100%">
-      <NormalCard style="height:100%" title="开发现状">
+      <div style="height:100%" title="开发现状">
           <el-table id="tableData1" :data="tableData" :header-cell-style="{background:'transparent',color:'#fff'}" highlight height="calc(100% - 40px)" >
             <el-table-column prop="date" label="时间" align="center" show-overflow-tooltip min-width="200" fixed="left">
               <template slot-scope="scope">
@@ -71,20 +71,16 @@
             <el-table-column prop="waterOilRateSum" label="累计水油比" align="center"
                              show-overflow-tooltip min-width="120"></el-table-column>
           </el-table>
-      </NormalCard>
+      </div>
     </el-row>
   </div>
 </template>
 
 <script>
-import NormalCard from "@/components/tools/NormalCard";
-import {dynamicDataDevelopmentStatusTable} from "@/api/rem-01/fielddynamicanalysis";
-import {exportExcel} from "@/lib/exportExcel";
+import {dynamicDataDevelopmentStatusTable} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
+import {exportExcel} from "@/lib/exportExcel.js";
 
 export default {
-  components: {
-    NormalCard
-  },
   props: {
     oilFieldId: {},
     blockId: {},

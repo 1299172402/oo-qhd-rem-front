@@ -1,6 +1,6 @@
 <!--砂层厚度图-->
 <template>
-  <NormalCard class="mt-2">
+  <div class="mt-2">
     <el-row>
       <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable  clearable >
         <el-option
@@ -20,19 +20,14 @@
         </div>
       </el-image>
     </el-row>
-  </NormalCard>
+  </div>
 </template>
 
 <script>
-import {fieldOilLayers} from "@/api/rem-02/primaryinfo";
-import {reservoirDataSandThicknessMap} from "@/api/rem-01/fielddynamicanalysis";
-import NormalCard from "@/components/tools/NormalCard";
-import {downFile} from "@/lib/remBase64Download";
-import config from "@/config";
+import {fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
+import {reservoirDataSandThicknessMap} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
+import {downFile} from "@/lib/remBase64Download.js";
 export default {
-  components: {
-    NormalCard,
-  },
   props: {
     oilFieldId: {
 
@@ -50,10 +45,6 @@ export default {
       //层位所选择内容信息
       position: [],
       image: '',
-      baseUrl:
-          process.env.NODE_ENV === "production"
-              ? config.publicRootPath
-              : config.devRootPath,
 
     };
   },

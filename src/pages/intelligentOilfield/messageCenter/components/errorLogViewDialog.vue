@@ -40,7 +40,7 @@ export default {
     /** 数据回显 */
     bindModel(messageId) {
       if (messageId) {
-        getErrorLogData(messageId).then((data) => {
+        getErrorLogData(messageId).then(data => {
           this.dataSource = data;
         });
       }

@@ -11,6 +11,6 @@ export const ModelTemplate = {
   assessControl: "",
   attachType: [],
   attachList: []
-}
+};
 
 export default {};

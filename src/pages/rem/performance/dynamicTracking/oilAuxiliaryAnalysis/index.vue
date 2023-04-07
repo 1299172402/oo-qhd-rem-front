@@ -1,13 +1,13 @@
 <!-- 油井辅助分析 -->
 <template>
     <div class="app-container">
-        <headerSearch class="g-w100 g-h100">
+        <headerSearch style="height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
-                <span class="title" style="margin-left: 20px">油田：</span>
-                <el-select v-model="selectOilField" placeholder="请选择" filterable clearable disabled @change="doChangeYt">
+                <span class="title">油田：</span>
+                <el-select v-model="selectOilField" placeholder="请选择" filterable clearable disabled @change="doChangeYt" style="margin-right:20px;">
                     <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
                 </el-select>
-                <span class="title" style="margin-left: 20px">平台：</span>
+                <span class="title">平台：</span>
                 <el-select v-model="selectPlatform" style="width: 220px" placeholder="请选择" filterable clearable @change="doChangePT">
                     <el-option v-for="item in platform" :key="item.platFormId" :label="item.platName" :value="item.platFormId"></el-option>
                 </el-select>
@@ -19,14 +19,15 @@
                 <el-upload ref="upload" style="margin-left: 20px" class="upload-demo" action=""
                     :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove"
                     :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList"
-                    :show-file-list="false" :on-success="handleSuccess" v-show="canUpload && !ljpmTag">
+                    :show-file-list="false" :on-success="handleSuccess" v-show="canUpload && !ljpmTag &&(currentModule=='wellNetworkDiagram' || currentModule=='completionStringDrawing' || currentModule=='fluidProducingProfile' || currentModule=='saturationLog')">
                     <el-button type="primary">上传文档</el-button>
                 </el-upload>
                 <el-button class="upload-demo" v-show="canUpload && ljpmTag" style="margin-left: 20px" @click="ljpmUploadDialog">上传文档</el-button>
-                <el-button style="margin-left: 20px" type="primary" @click="doDownLoad">下载</el-button>
+                <el-button style="margin-left: 20px" type="primary" icon="el-icon-download" @click="doDownLoad">下载</el-button>
             </div>
-        </headerSearch>
-        <pagePanelNew headerTitle="" style="height: calc(100% - 100px)" class="g-w100">
+        </headerSearch> 
+        <!-- :style="{ height: calc(100% - 100px)}" -->
+        <pagePanelNew headerTitle=""  :style="{height:(this.currentModule == 'oilReport' ? 'auto' :'calc(100% - 100px)' )}" class="g-w100">
             <el-tabs class="g-pageHeader" style="margin-bottom:15px;" v-model="activeName" topline @tab-click="handleClick">
                 <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
                     <div class="tab-view">
@@ -44,7 +45,7 @@
                     </div>
                 </el-tab-pane>
             </el-tabs>
-            <keep-alive :include="[]" :max="10" v-if="selectWellId">
+            <keep-alive :include="[]" :max="10">
                 <component :is="component" ref="componentCustom" :oil-feild-id="selectOilField" :platform="selectPlatform" :well-id="selectWellId" :majorEventsBrieflyValue="majorEventsBrieflyValue" @childPara="changeChildParam"></component>
             </keep-alive>
             <el-dialog custom-class="border" title="连井剖面图上传" :visible.sync="ljpmDialog" width="50%"
@@ -116,7 +117,7 @@
                 component: null,
                 activeName: 'staticData',
                 // currentModule: 'smallLayerStructureDiagram',
-                currentModule:'perforationData',
+                currentModule:'loggingInterpretationResult',
                 queryParams: {
                     ogfId: '',
                     platId: '',
@@ -143,9 +144,9 @@
                             //     name: 'theSedimentaryFaciesMap',
                             // },
                             /* {
-                                label: "测井曲线",
-                                name: "wellLoggingCurve",
-                              },*/
+                                 label: "测井曲线",
+                                 name: "wellLoggingCurve",
+                            },*/
                             /*{
                                 label: "固井质量测井图",
                                 name: "cementingQualityLog",
@@ -158,22 +159,26 @@
                             //     label: '地质探边图',
                             //     name: 'whileDrillingTrajectory',
                             // },
+                            {
+                                label: '测井解释成果',
+                                name: 'loggingInterpretationResult',
+                            },
                             // {
-                            //     label: '测井解释成果',
-                            //     name: 'loggingInterpretationResult',
+                            //     label: "小层数据",
+                            //     name: "smallLayerData",
                             // },
-                            /*{
-                                label: "小层数据",
-                                name: "smallLayerData",
-                              },*/
                             {
                                 label: '射孔数据',
                                 name: 'perforationData',
                             },
-                            // {
-                            //     label: '井斜数据',
-                            //     name: 'driftData',
-                            // },
+                            {
+                                label: '井斜数据',
+                                name: 'driftData',
+                            },
+                             {
+                                label: '油井分析报告',
+                                name: 'oilReport',
+                            },
                         ],
                     },
                     {
@@ -196,10 +201,10 @@
                                 label: '作业井史',
                                 name: 'homeworkWellHistory',
                             },
-                            // {
-                            //     label: '单井基本信息表',
-                            //     name: 'individualWellBasicInformationSheet',
-                            // },
+                            {
+                                label: '单井基本信息表',
+                                name: 'individualWellBasicInformationSheet',
+                            },
                             {
                                 label: '生产段状态',
                                 name: 'productionSectionStatus'
@@ -222,14 +227,14 @@
                                 label: '饱和度测井',
                                 name: 'saturationLog',
                             },
-                            // {
-                            //     label: '化验数据',
-                            //     name: 'testData',
-                            // },
-                            // {
-                            //     label: '试井报告',
-                            //     name: 'wellTestReport',
-                            // }
+                            {
+                                label: '化验数据',
+                                name: 'testData',
+                            },
+                            {
+                                label: '试井报告',
+                                name: 'wellTestReport',
+                            }
                         ],
                     },
                 ],
@@ -307,7 +312,7 @@
                 //上传数据
                 canUpload: true,
                 //连井剖面是否选中
-                ljpmTag: false,
+                ljpmTag: true,//一期默认false，二期没定权限怎么做，先打开为true
                 //连井剖面弹窗
                 ljpmDialog: false,
                 //连井上传图片表单
@@ -428,8 +433,22 @@
                 } else {
                     this.ljpmTag = false;
                 }
-                return () => import(`./modules/${this.activeName}/${this.currentModule}.vue`);
+                if(this.currentModule == 'oilReport'){
+                    let data = {
+                    ogfId:this.selectOilField,
+                    assetCode:this.selectPlatform,
+                     selectWellId:this.selectWellId
+                } 
+                // setTimeOut(function(){
+                //    this.$refs.componentCustom.queryInfo(data);
+                //   },1000)
+                return () => import(`../oilReport/oilReport.vue`)
+                }else{
+                    return () => import(`./modules/${this.activeName}/${this.currentModule}.vue`);
+                }
+              
             },
+            
         },
         watch: {
             currentModule: {
@@ -446,7 +465,6 @@
         mounted() {
             //初始化
             this.initData();
-            this.getMajorEventsBriefly();
             //获取权限问题内容
             // this.getPageAuthMessage();
         },
@@ -472,7 +490,7 @@
             beforeRemove(file, fileList) {
                 return this.$confirm(`确定移除 ${file.name}？`);
             },
-            //hwh 初始化 数据
+            //初始化数据
             async initData() {
                 let oilFeildId = this.$route.params.oilField;
                 console.log(this.$route.params);
@@ -577,10 +595,12 @@
                     }
                 });
             },
-            //大事简要数据源接口@param majorEventsBriefly
+            //大事简要数据源接口
             getMajorEventsBriefly() {
                 getMajorEventsBriefly({
-                    majorEventsBriefly: this.majorEventsBrieflyValue,
+                    ogfId: this.selectOilField,
+                    platformId: this.selectPlatform,
+                    wellId: this.selectWellId,
                 }).then((res) => {
                     if(res.data.code==200){
                        this.majorEventsBrieflyList=res.data.data;
@@ -705,19 +725,30 @@
                 }
                 return new Blob([u8arr], { type: mime });
               },*/
-            /**
-             * hwh
-             * 检索功能
-             */
+            //检索功能
             doSearch() {
-                this.$refs.componentCustom.wellId = this.selectWellId;
                 this.$refs.componentCustom.oilFeildId = this.selectOilField;
                 this.$refs.componentCustom.platform = this.selectPlatform;
+                this.$refs.componentCustom.wellId = this.selectWellId;
                 if (this.childParam) {
                     this.$refs.componentCustom.selectPosition = this.childParam;
                 }
-                //调用子组件的事件
-                this.$refs.componentCustom.doSearch(this.majorEventsBrieflyValue);
+                this.majorEventsBrieflyValue='';
+                this.getMajorEventsBriefly();
+              
+               let data = {
+                    ogfId:this.selectOilField,
+                    assetCode:this.selectPlatform,
+                     selectWellId:this.selectWellId
+                } 
+                if(this.currentModule == 'oilReport'){
+                
+                 this.$refs.componentCustom.queryInfo(data);
+                    
+                }else{
+                  this.$refs.componentCustom.doSearch(this.majorEventsBrieflyValue);
+                }
+                
             },
             //上传成功后操作
             handleSuccess() {

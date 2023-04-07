@@ -1,28 +1,36 @@
 <template>
   <div class="result-success">
     <check-circle-icon class="result-success-icon" />
-    <div class="result-success-title">项目已创建成功</div>
-    <div class="result-success-describe">可以联系负责人分发应用</div>
+    <div class="result-success-title">
+      项目已创建成功
+    </div>
+    <div class="result-success-describe">
+      可以联系负责人分发应用
+    </div>
     <div>
-      <t-button @click="() => this.$router.push('/form/base')">返回首页</t-button>
-      <t-button @click="() => this.$router.push('/detail/advanced')" theme="default">查看进度</t-button>
+      <t-button @click="() => $router.push('/form/base')">
+        返回首页
+      </t-button>
+      <t-button theme="default" @click="() => $router.push('/detail/advanced')">
+        查看进度
+      </t-button>
     </div>
   </div>
 </template>
 
 <script>
-import { CheckCircleIcon } from 'tdesign-icons-vue';
+import { CheckCircleIcon } from "tdesign-icons-vue";
 
 export default {
-  name: 'ResultSuccess',
+  name: "ResultSuccess",
   components: {
-    CheckCircleIcon,
-  },
+    CheckCircleIcon
+  }
 };
 </script>
 
 <style lang="less" scoped>
-@import '@/style/variables.less';
+@import "@/style/variables.less";
 
 .result-success {
   display: flex;

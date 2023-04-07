@@ -5,9 +5,9 @@
       :data="formData"
       :label-width="80"
       colon
+      :style="{ marginBottom: '8px' }"
       @reset="onReset"
       @submit="onSubmit"
-      :style="{ marginBottom: '8px' }"
     >
       <t-row>
         <t-col :span="10">
@@ -57,8 +57,12 @@
         </t-col>
 
         <t-col :span="2" class="operation-container">
-          <t-button theme="primary" type="submit" :style="{ marginLeft: '8px' }"> 查询 </t-button>
-          <t-button type="reset" variant="base" theme="default"> 重置 </t-button>
+          <t-button theme="primary" type="submit" :style="{ marginLeft: '8px' }">
+            查询
+          </t-button>
+          <t-button type="reset" variant="base" theme="default">
+            重置
+          </t-button>
         </t-col>
       </t-row>
     </t-form>
@@ -66,27 +70,43 @@
       <t-table
         :data="data"
         :columns="columns"
-        :rowKey="rowKey"
-        :verticalAlign="verticalAlign"
+        :row-key="rowKey"
+        :vertical-align="verticalAlign"
         :hover="hover"
         :pagination="pagination"
+        :loading="dataLoading"
+        :header-affixed-top="true"
+        :header-affix-props="{ offsetTop, container: getContainer }"
         @page-change="rehandlePageChange"
         @change="rehandleChange"
-        :loading="dataLoading"
-        :headerAffixedTop="true"
-        :headerAffixProps="{ offsetTop, container: getContainer }"
       >
         <template #status="{ row }">
-          <t-tag v-if="row.status === CONTRACT_STATUS.FAIL" theme="danger" variant="light">审核失败</t-tag>
-          <t-tag v-if="row.status === CONTRACT_STATUS.AUDIT_PENDING" theme="warning" variant="light">待审核</t-tag>
-          <t-tag v-if="row.status === CONTRACT_STATUS.EXEC_PENDING" theme="warning" variant="light">待履行</t-tag>
-          <t-tag v-if="row.status === CONTRACT_STATUS.EXECUTING" theme="success" variant="light">履行中</t-tag>
-          <t-tag v-if="row.status === CONTRACT_STATUS.FINISH" theme="success" variant="light">已完成</t-tag>
+          <t-tag v-if="row.status === CONTRACT_STATUS.FAIL" theme="danger" variant="light">
+            审核失败
+          </t-tag>
+          <t-tag v-if="row.status === CONTRACT_STATUS.AUDIT_PENDING" theme="warning" variant="light">
+            待审核
+          </t-tag>
+          <t-tag v-if="row.status === CONTRACT_STATUS.EXEC_PENDING" theme="warning" variant="light">
+            待履行
+          </t-tag>
+          <t-tag v-if="row.status === CONTRACT_STATUS.EXECUTING" theme="success" variant="light">
+            履行中
+          </t-tag>
+          <t-tag v-if="row.status === CONTRACT_STATUS.FINISH" theme="success" variant="light">
+            已完成
+          </t-tag>
         </template>
         <template #contractType="{ row }">
-          <p v-if="row.contractType === CONTRACT_TYPES.MAIN">审核失败</p>
-          <p v-if="row.contractType === CONTRACT_TYPES.SUB">待审核</p>
-          <p v-if="row.contractType === CONTRACT_TYPES.SUPPLEMENT">待履行</p>
+          <p v-if="row.contractType === CONTRACT_TYPES.MAIN">
+            审核失败
+          </p>
+          <p v-if="row.contractType === CONTRACT_TYPES.SUB">
+            待审核
+          </p>
+          <p v-if="row.contractType === CONTRACT_TYPES.SUPPLEMENT">
+            待履行
+          </p>
         </template>
         <template #paymentType="{ row }">
           <p v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.PAYMENT" class="payment-col">
@@ -107,29 +127,28 @@
         header="确认删除当前所选合同？"
         :body="confirmBody"
         :visible.sync="confirmVisible"
+        :on-cancel="onCancel"
         @confirm="onConfirmDelete"
-        :onCancel="onCancel"
-      >
-      </t-dialog>
+      />
     </div>
   </div>
 </template>
 <script>
-import { prefix } from '@/config/global';
-import Trend from '@/components/intelligentOilfield/trend/index.vue';
+import { prefix } from "@/config/global";
+import Trend from "@/components/intelligentOilfield/trend/index.vue";
 
 import {
   CONTRACT_STATUS,
   CONTRACT_STATUS_OPTIONS,
   CONTRACT_TYPES,
   CONTRACT_TYPE_OPTIONS,
-  CONTRACT_PAYMENT_TYPES,
-} from '@/constants';
+  CONTRACT_PAYMENT_TYPES
+} from "@/constants";
 
 export default {
-  name: 'ListTable',
+  name: "ListTable",
   components: {
-    Trend,
+    Trend
   },
   data() {
     return {
@@ -140,69 +159,69 @@ export default {
       CONTRACT_PAYMENT_TYPES,
       prefix,
       formData: {
-        name: '',
+        name: "",
         no: undefined,
-        status: undefined,
+        status: undefined
       },
       data: [],
       dataLoading: false,
-      value: 'first',
+      value: "first",
       columns: [
         {
-          title: '合同名称',
-          fixed: 'left',
+          title: "合同名称",
+          fixed: "left",
           width: 200,
-          align: 'left',
+          align: "left",
           ellipsis: true,
-          colKey: 'name',
+          colKey: "name"
         },
-        { title: '合同状态', colKey: 'status', width: 200, cell: { col: 'status' } },
+        { title: "合同状态", colKey: "status", width: 200, cell: { col: "status" }},
         {
-          title: '合同编号',
-          width: 200,
-          ellipsis: true,
-          colKey: 'no',
-        },
-        {
-          title: '合同类型',
+          title: "合同编号",
           width: 200,
           ellipsis: true,
-          colKey: 'contractType',
+          colKey: "no"
         },
         {
-          title: '合同收付类型',
+          title: "合同类型",
           width: 200,
           ellipsis: true,
-          colKey: 'paymentType',
+          colKey: "contractType"
         },
         {
-          title: '合同金额 (元)',
+          title: "合同收付类型",
           width: 200,
           ellipsis: true,
-          colKey: 'amount',
+          colKey: "paymentType"
         },
         {
-          align: 'left',
-          fixed: 'right',
+          title: "合同金额 (元)",
           width: 200,
-          colKey: 'op',
-          title: '操作',
+          ellipsis: true,
+          colKey: "amount"
         },
+        {
+          align: "left",
+          fixed: "right",
+          width: 200,
+          colKey: "op",
+          title: "操作"
+        }
       ],
-      rowKey: 'index',
-      tableLayout: 'auto',
-      verticalAlign: 'top',
+      rowKey: "index",
+      tableLayout: "auto",
+      verticalAlign: "top",
       bordered: true,
       hover: true,
-      rowClassName: (rowKey) => `${rowKey}-class`,
+      rowClassName: rowKey => `${rowKey}-class`,
       // 与pagination对齐
       pagination: {
         defaultPageSize: 20,
         total: 100,
-        defaultCurrent: 1,
+        defaultCurrent: 1
       },
       confirmVisible: false,
-      deleteIdx: -1,
+      deleteIdx: -1
     };
   },
   computed: {
@@ -211,51 +230,49 @@ export default {
         const { name } = this.data?.[this.deleteIdx];
         return `删除后，${name}的所有合同信息将被清空，且无法恢复`;
       }
-      return '';
+      return "";
     },
     offsetTop() {
       return this.$store.state.setting.isUseTabsRouter ? 48 : 0;
-    },
+    }
   },
   mounted() {
     this.dataLoading = true;
     this.$request
-      .get('/api/get-list')
-      .then((res) => {
+      .get("/api/get-list")
+      .then(res => {
         if (res.code === 0) {
           const { list = [] } = res.data;
           this.data = list;
           this.pagination = {
             ...this.pagination,
-            total: list.length,
+            total: list.length
           };
         }
       })
-      .catch((e) => {
-        console.log(e);
-      })
+      .catch(() => {})
       .finally(() => {
         this.dataLoading = false;
       });
   },
   methods: {
     getContainer() {
-      return document.querySelector('.tdesign-starter-layout');
+      return document.querySelector(".tdesign-starter-layout");
     },
-    onReset(data) {
-      console.log(data);
+    onReset() {
+
     },
-    onSubmit(data) {
-      console.log(data);
+    onSubmit() {
+
     },
+    // eslint-disable-next-line
     rehandlePageChange(curr, pageInfo) {
-      console.log('分页变化', curr, pageInfo);
     },
+    // eslint-disable-next-line
     rehandleChange(changeParams, triggerAndData) {
-      console.log('统一Change', changeParams, triggerAndData);
     },
+    // eslint-disable-next-line
     rehandleClickOp({ text, row }) {
-      console.log(text, row);
     },
     handleClickDelete(row) {
       this.deleteIdx = row.rowIndex;
@@ -266,7 +283,7 @@ export default {
       this.data.splice(this.deleteIdx, 1);
       this.pagination.total = this.data.length;
       this.confirmVisible = false;
-      this.$message.success('删除成功');
+      this.$message.success("删除成功");
       this.resetIdx();
     },
     onCancel() {
@@ -274,13 +291,13 @@ export default {
     },
     resetIdx() {
       this.deleteIdx = -1;
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="less" scoped>
-@import '@/style/variables.less';
+@import "@/style/variables.less";
 
 .list-common-table {
   background-color: var(--td-bg-color-container);
@@ -307,6 +324,7 @@ export default {
     margin-left: 8px;
   }
 }
+
 .t-button + .t-button {
   margin-left: @spacer;
 }

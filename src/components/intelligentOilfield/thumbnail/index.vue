@@ -1,36 +1,36 @@
 <template>
-  <img :class="className" :src="url" />
+  <img :class="className" :src="url">
 </template>
 <script lang="ts">
-import Vue from 'vue';
+import Vue from "vue";
 
 export default Vue.extend({
-  name: 'Thumbnail',
+  name: "Thumbnail",
   props: {
     url: {
       type: String,
-      default: '',
+      default: ""
     },
     type: {
       type: String,
-      default: 'layout',
-    },
+      default: "layout"
+    }
   },
   computed: {
     className() {
       return [
-        'thumbnail-container',
+        "thumbnail-container",
         {
-          'thumbnail-circle': this.type === 'circle',
-          'thumbnail-layout': this.type === 'layout',
-        },
+          "thumbnail-circle": this.type === "circle",
+          "thumbnail-layout": this.type === "layout"
+        }
       ];
-    },
-  },
+    }
+  }
 });
 </script>
 <style lang="less" scoped>
-@import url('@/style/index.less');
+@import url("@/style/index.less");
 
 .thumbnail {
   &-container {

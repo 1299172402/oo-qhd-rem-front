@@ -25,8 +25,6 @@
         },
         data() {
             return {
-                radio: 1,
-                src: '',
                 //选中层位
                 selectPosition: '',
                 //层位所选择内容信息
@@ -143,7 +141,7 @@
         height:calc(100% - 86px);
         display:flex;
         flex-direction: column;
-        padding-bottom:150px;
+        padding-bottom:15px;
         .z-search{
             height:60px;
             display: flex;
@@ -154,6 +152,8 @@
             width: 100%;
             flex:1;
             overflow-y:scroll;
+            border: 1px solid #ddd;
+            border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
         }
     }
 </style>

@@ -4,19 +4,19 @@
     <el-row :gutter="20" class="mt-2">
       <el-col :span="12">
         <!--<img style="height: 100%" :src="image">-->
-        <NormalCard style="height:100%" title="产量构成曲线">
+        <div style="height:100%" title="产量构成曲线">
           <Echart ref="echartDown1" :chart-data="option" height="300px"></Echart>
-        </NormalCard>
+        </div>
       </el-col>
       <el-col :span="12">
-        <NormalCard style="height:100%" title="措施产量构成曲线">
+        <div style="height:100%" title="措施产量构成曲线">
           <Echart ref="echartDown2" :chart-data="option1" height="300px"></Echart>
-        </NormalCard>
+        </div>
       </el-col>
     </el-row>
     <el-row :gutter="20" class="mt-2">
       <el-col :span="12">
-        <NormalCard style="height:100%" title="产量构成表">
+        <div style="height:100%" title="产量构成表">
           <el-table id="tableData1" highlight :data="tableDataStruct" height="300">
             <el-table-column type="index" label="序号" align="center"></el-table-column>
             <el-table-column prop="theDate" label="时间" align="center"></el-table-column>
@@ -25,10 +25,10 @@
             <el-table-column prop="newWells" label="开发新井" align="center"></el-table-column>
             <el-table-column prop="measureOutput" label="措施产量" align="center"></el-table-column>
           </el-table>
-        </NormalCard>
+        </div>
       </el-col>
       <el-col :span="12">
-        <NormalCard style="height:100%" title="措施产量构成表">
+        <div style="height:100%" title="措施产量构成表">
           <el-table id="tableData2" highlight :data="tableDataProduct" height="300">
             <el-table-column type="index" label="序号" align="center"></el-table-column>
             <el-table-column prop="theDate" label="时间" align="center"></el-table-column>
@@ -37,24 +37,22 @@
             <el-table-column prop="profile" label="调剖" align="center"></el-table-column>
             <el-table-column prop="sideTrack" label="侧钻" align="center"></el-table-column>
           </el-table>
-        </NormalCard>
+        </div>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import echarts from 'echarts';
-import Echart from "@/components/tools/Echarts";
-import NormalCard from "@/components/tools/NormalCard";
-import {dynamicDataYieldComponentCurve} from "@/api/rem-01/fielddynamicanalysis";
-import {exportExcel} from "@/lib/exportExcel";
+import * as echarts from "echarts";
+import Echart from "@/components/tools/Echarts/index.vue";
+import {dynamicDataYieldComponentCurve} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
+import {exportExcel} from "@/lib/exportExcel.js";
 import FileSaver from 'file-saver';
 
 export default {
   components: {
     Echart,
-    NormalCard
   },
   props: {
     oilFieldId: {},

@@ -1,5 +1,6 @@
+/* stylelint-disable */
 :root,
-:root[theme-mode='light'] {
+:root[theme-mode="light"] {
   --td-brand-color-1: #e0ebff;
   --td-brand-color-2: #c0d8ff;
   --td-brand-color-3: #a1c4ff;
@@ -11,56 +12,56 @@
   --td-brand-color-9: #0048cd;
   --td-brand-color-10: #0035b5;
 
-  @import '../lightThemeComponents/boxCardCom.less';
-  @import '../lightThemeComponents/el-tableCom.less';
-  @import '../lightThemeComponents/el-paginationCom.less';
-  @import '../lightThemeComponents/el-ButtonCom.less';
-  @import '../lightThemeComponents/t-tabsNavCardCom.less';
-  @import '../lightThemeComponents/el-inputCom.less';
-  @import '../lightThemeComponents/el-SelectCom.less';
-  @import '../lightThemeComponents/el-dialogCom.less';
-  @import '../lightThemeComponents/modalCom.less';
-  @import '../lightThemeComponents/el-progressCom.less';
-  @import '../lightThemeComponents/el-date-pickerCom.less';
-  @import '../lightThemeComponents/el-transferCom.less';
-  @import '../lightThemeComponents/el-dropdownCom.less';
-  @import '../lightThemeComponents/el-stepsCom.less';
-  @import '../lightThemeComponents/el-sliderCom.less';
-  @import '../lightThemeComponents/el-treeCom.less';
-  @import '../lightThemeComponents/treeSelect.less';
-  @import '../lightThemeComponents/el-cardCom.less';
-  @import '../lightThemeComponents/applicationCenterCom.less';
-  @import '../lightThemeComponents/marquee.less';
-  @import '../lightThemeComponents/el-tabsCom.less';
-  @import '../lightThemeComponents/el-uploadCom.less';
-  @import '../lightThemeComponents/el-checkboxCom.less';
-  @import '../lightThemeComponents/el-radioCom.less';
-  @import '../lightThemeComponents/el-cascaderCom.less';
-  @import '../lightThemeComponents/customizeClass.less';
+  @import "../lightThemeComponents/boxCardCom.less";
+  @import "../lightThemeComponents/el-tableCom.less";
+  @import "../lightThemeComponents/el-paginationCom.less";
+  @import "../lightThemeComponents/el-ButtonCom.less";
+  @import "../lightThemeComponents/t-tabsNavCardCom.less";
+  @import "../lightThemeComponents/el-inputCom.less";
+  @import "../lightThemeComponents/el-SelectCom.less";
+  @import "../lightThemeComponents/el-dialogCom.less";
+  @import "../lightThemeComponents/modalCom.less";
+  @import "../lightThemeComponents/el-progressCom.less";
+  @import "../lightThemeComponents/el-date-pickerCom.less";
+  @import "../lightThemeComponents/el-transferCom.less";
+  @import "../lightThemeComponents/el-dropdownCom.less";
+  @import "../lightThemeComponents/el-stepsCom.less";
+  @import "../lightThemeComponents/el-sliderCom.less";
+  @import "../lightThemeComponents/el-treeCom.less";
+  @import "../lightThemeComponents/treeSelect.less";
+  @import "../lightThemeComponents/el-cardCom.less";
+  @import "../lightThemeComponents/applicationCenterCom.less";
+  @import "../lightThemeComponents/marquee.less";
+  @import "../lightThemeComponents/el-tabsCom.less";
+  @import "../lightThemeComponents/el-uploadCom.less";
+  @import "../lightThemeComponents/el-checkboxCom.less";
+  @import "../lightThemeComponents/el-radioCom.less";
+  @import "../lightThemeComponents/el-cascaderCom.less";
+  @import "../lightThemeComponents/customizeClass.less";
 
 
   // 自定义浅色模式
-  --leftTab: #e7e7e7; // 左菜单分割线
+  --left-tab: #e7e7e7; // 左菜单分割线
   --td-gray-color-2: rgba(241, 242, 246, 1); // 最底层背景色
 //   TODO: Maybe change back
 //   --bottom-light: linear-gradient(to bottom, rgba(120, 168, 204, 1), rgba(3, 95, 162, 1)); // header背景色
 --bottom-light:#3490D3; // header背景色
-  --td-brand-color: var(--lightBlueColor); // 左菜单选中颜色，主组件颜色
+  --td-brand-color: var( --light-blue-color); // 左菜单选中颜色，主组件颜色
   --td-gray-color-1: var(--whiteColor); // 条条线线的颜色(时间组件，输入框等)
   --td-brand-color-1: rgba(229, 240, 246, 1); // 左菜单选中背景色
 
   // 自定义颜色变量
-  --whiteColor: #ffffff;
-  --errorNotifiBg: var(--whiteColor);
-  --primaryBtn: linear-gradient(180deg, rgba(0, 96, 166, 0.5) 0%, var(--onlyLightBlueColor) 100%);
-  --opacityBlueBg2: rgba(0, 0, 0, 0.5);
-  --lightBlueColor: #0060a6;
-  --formText: #606266;
-  --svgLineBg: var(--whiteColor);
-  --onlyLightBlueColor: #0060a6;
+  --white-color: #fff;
+  --error-notifi-bg: var(--white-color);
+  --primary-btn: #3490D3;
+  --opacity-blue-bg2: rgba(0, 0, 0, 0.5);
+  --light-blue-color: #3490D3;
+  --form-text: #606266;
+  --svg-line-bg: var(--white-color);
+  --only-light-blue-color: #0060a6;
 }
 
-:root[theme-mode='dark'] {
+:root[theme-mode="dark"] {
   --td-brand-color-1: #1b2f51;
   --td-brand-color-2: #173463;
   --td-brand-color-3: #143975;
@@ -109,27 +110,27 @@
 
 
   // 自定义暗色模式
-  --leftTab: rgba(13, 74, 114, 1); // 左菜单分割线
+  --left-tab: rgba(13, 74, 114, 1); // 左菜单分割线
   --td-gray-color-14: rgba(3, 21, 39, 1); // 最底层颜色
   --bottom-light: linear-gradient(to bottom, transparent, transparent, rgba(36, 222, 255, 0.16)); // header背景色
   --right-light: linear-gradient(to right, transparent, transparent, rgba(36, 222, 255, 0.16)); // 左菜单背景色
-
   --td-brand-color: rgba(71, 135, 240, 0.5); // 左菜单选中颜色，主组件颜色
   --td-gray-color-9: rgba(13, 74, 114, 1); // 条条线线的颜色(时间组件，输入框等)
   --td-gray-color-10: rgba(71, 135, 240, 0.5); // 左侧树hover颜色
   --td-gray-color-13: rgba(3, 21, 39, 1); // 整体空间主颜色
-//   --td-gray-color-13: url(@/assets/bodybg.png) repeat left top !important;
-  --cardColor: rgba(56, 125, 170, 1); // 卡片线条颜色
+  //   --td-gray-color-13: url(@/assets/bodybg.png) repeat left top !important;
+  --card-color: rgba(56, 125, 170, 1); // 卡片线条颜色
 
   // 自定义颜色变量
-  --formText: rgba(255,255,255,.9);
-  --errorNotifiBg: rgba(42, 18, 22, 1);
-  --lightBlueColor: rgba(0, 222, 240, 1);
-  --opacityBlueBg: rgba(0, 222, 240, 0.2);
-  --opacityBlueBg2: rgba(0, 222, 240, 0.1);
-  --dropDownColor: rgba(21, 43, 62, 1);
-  --primaryBtn: linear-gradient(to right, rgba(14, 113, 234, 1), rgba(0, 217, 234, 1));
-  --elDialogcolor: linear-gradient(to bottom,rgba(0,162,218,0.3),rgba(0,162,218,0.6));
-  --whiteOpacity7: rgba(255,255,255,0.7);
-  --svgLineBg: rgba(0,96,166,0.15);
+  --form-text: rgba(255,255,255,0.9);
+  --error-notifi-bg: rgba(42, 18, 22, 1);
+  --light-blue-color: rgba(0, 222, 240, 1);
+  --opacity-blue-bg: rgba(0, 222, 240, 0.2);
+  --opacity-blue-bg2: rgba(0, 222, 240, 0.1);
+  --drop-down-color: rgba(21, 43, 62, 1);
+  --primary-btn: linear-gradient(to right, rgba(14, 113, 234, 1), rgba(0, 217, 234, 1));
+  --el-dialog-color: linear-gradient(to bottom,rgba(0,162,218,0.3),rgba(0,162,218,0.6));
+  --white-opacity7: rgba(255,255,255,0.7);
+  --svg-line-bg: rgba(0,96,166,0.15);
 }
+/* stylelint-enable */

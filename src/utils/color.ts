@@ -1,8 +1,8 @@
-import * as echarts from 'echarts/core';
-import { Color } from 'tvision-color';
+import * as echarts from "echarts/core";
+import { Color } from "tvision-color";
 
-import { getBrandColor, defaultLightColor, defaultDarkColor } from '@/config/color';
-import store from '@/store';
+import { getBrandColor, defaultLightColor, defaultDarkColor } from "@/config/color";
+import store from "@/store";
 
 const { state } = store;
 
@@ -16,22 +16,22 @@ const { state } = store;
 export function getColorFromTheme(theme: string): Array<string> {
   const { setting } = state;
   const { colorList, mode } = setting;
-  const isDarkMode = mode === 'dark';
+  const isDarkMode = mode === "dark";
   let themeColorList = [];
   const themeColor = getBrandColor(theme, colorList);
   if (!/^#[A-F\d]{6}$/i.test(theme)) {
-    theme = themeColor?.['--td-brand-color'] || '#0052D9';
+    theme = themeColor?.["--td-brand-color"] || "#0052D9";
     const themIdx = defaultLightColor.indexOf(theme.toLocaleLowerCase());
     const defaultGradients = !isDarkMode ? defaultLightColor : defaultDarkColor;
 
     const spliceThemeList = defaultGradients.slice(0, themIdx);
     themeColorList = defaultGradients.slice(themIdx, defaultGradients.length).concat(spliceThemeList);
   } else {
-    theme = themeColor?.['--td-brand-color'];
+    theme = themeColor?.["--td-brand-color"];
     themeColorList = Color.getRandomPalette({
       color: theme,
-      colorGamut: 'bright',
-      number: 8,
+      colorGamut: "bright",
+      number: 8
     });
   }
 

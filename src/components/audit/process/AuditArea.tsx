@@ -8,7 +8,7 @@ import { ActionMap } from "@/components/audit/process/auditComp/AuditPanel";
 const actionMap = new Map<keyof ActionMap, string>();
 acceptActionsOptions.forEach(item => {
   actionMap.set(item.value, item.text);
-})
+});
 
 export default Vue.extend({
   name: "AuditActionArea",
@@ -42,12 +42,12 @@ export default Vue.extend({
         businessType: "",
         isView: false
       }
-    }
+    };
   },
   computed: {
     showEditDataBtn() {
       return (this.model.extendProperties || []).find(v => v.key === "editData" && v.value === "true");
-    }  
+    }
   },
   methods: {
     renderAuditComponent(props: ActionAreaProps): void {
@@ -76,12 +76,12 @@ export default Vue.extend({
         </span>
         <t-radio-group default-value="1" onChange={(value: keyof ActionMap) => this.$emit("actionChange", value)}>
           {
-            this.auditContext.acceptActions.map((val) => <t-radio value={val}>{actionMap.get(val)}</t-radio>)
+            this.auditContext.acceptActions.map(val => <t-radio value={val}>{actionMap.get(val)}</t-radio>)
           }
         </t-radio-group>
       </span>
-    )
-    const auditText = this.auditContext.isView ? "查看审批流" : null
+    );
+    const auditText = this.auditContext.isView ? "查看审批流" : null;
     const defaultFooter = [
       this.actionOutside && this.isAudit ? currentNodeEl : <div />,
       <div class="audit-action-btns">
@@ -105,7 +105,7 @@ export default Vue.extend({
           this.auditContext.isView ? <span>{ this.$slots.viewData }</span> : null
         }
         {
-          this.auditContext.isAudit ? <span>{ this.$slots.auditData && this.$slots.auditData({ item: this.model}) }</span> : null
+          this.auditContext.isAudit ? <span>{ this.$slots.auditData && this.$slots.auditData({ item: this.model }) }</span> : null
         }
       </div>
     ];
@@ -122,11 +122,11 @@ export default Vue.extend({
           successCallback={this.returnFn}
           onClose={() => {
             this.$nextTick(() => {
-              this.visible = false
-            })
+              this.visible = false;
+            });
           }}
         />
       </div>
-    )
+    );
   }
-})
+});

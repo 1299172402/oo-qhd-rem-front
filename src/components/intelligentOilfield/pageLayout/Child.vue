@@ -1,18 +1,18 @@
 <template>
-    <div v-if="!isHalfLayout" class="form-model__content">
-        <slot v-if="index === -1" />
-        <slot v-else :name="index" />
+  <div v-if="!isHalfLayout" class="form-model__content">
+    <slot v-if="index === -1" />
+    <slot v-else :name="index" />
+  </div>
+  <div v-else class="form-model__content-half">
+    <div class="form-model__content-left">
+      <slot :name="index === -1 ? 'left' : index + '-' + 'left'" />
     </div>
-    <div v-else class="form-model__content-half">
-        <div class="form-model__content-left">
-            <slot :name="index === -1 ? 'left' : index + '-' + 'left'" />
-        </div>
-        <div class="form-model__content-right">
-            <slot :name="index === -1 ? 'right' : index + '-' + 'right'" />
-        </div>
+    <div class="form-model__content-right">
+      <slot :name="index === -1 ? 'right' : index + '-' + 'right'" />
     </div>
+  </div>
 </template>
-<script> 
+<script>
 export default {
   name: "Child",
   props: {
@@ -25,5 +25,5 @@ export default {
       default: -1
     }
   }
-}
+};
 </script>

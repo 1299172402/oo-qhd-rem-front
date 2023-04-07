@@ -14,6 +14,23 @@ export function getWorkProgress(request) {
     data: request,
   });
 }
+
+//措施版本
+export function getMeasureVersion() {
+  return Axios({
+    url: `${baseUrl}/oilFieldManagePlanController/getMeasureVersion`,
+    method: "get",
+  });
+}
+
+//措施管理列表
+export function getFetchMeasureInfos(request) {
+  return Axios({
+    url: `${baseUrl}/oilFieldManagePlanController/getFetchMeasureInfos`,
+    method: "post",
+    data: request,
+  });
+}
  
 
 

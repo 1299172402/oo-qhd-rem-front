@@ -1,7 +1,12 @@
 <!-- 分配角色 -->
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true">
+    <el-form
+      v-show="showSearch"
+      ref="queryForm"
+      :model="queryParams"
+      :inline="true"
+    >
       <el-form-item label="用户账号" prop="userName">
         <el-input
           v-model="queryParams.userName"
@@ -33,7 +38,12 @@
         />
       </el-form-item>
       <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择状态"
+          clearable
+          size="small"
+        >
           <el-option
             v-for="dict in dict.type.sys_normal_disable"
             :key="dict.value"
@@ -43,36 +53,56 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery" class="commonBtn">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+        >
+          搜索
+        </el-button>
+        <el-button
+          icon="el-icon-refresh"
+          size="mini"
+          class="commonBtn"
+          @click="resetQuery"
+        >
+          重置
+        </el-button>
       </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
+          v-hasPermi="['system:role:remove']"
           type="danger"
           plain
           size="mini"
           :disabled="multiple"
+          :class="multiple == true?'commonBtn':'errorBtn'"
           @click="cancelAuthUserAll"
-          v-hasPermi="['system:role:remove']"
-          :class= "this.multiple == true?'commonBtn':'errorBtn'"
-          >取消授权</el-button
         >
+          取消授权
+        </el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="primary" size="mini" @click="openSelectUser" v-hasPermi="['system:role:add']"
-          >增加</el-button
+        <el-button
+          v-hasPermi="['system:role:add']"
+          type="primary"
+          size="mini"
+          @click="openSelectUser"
         >
+          增加
+        </el-button>
       </el-col>
       <!-- <el-col :span="1.5">
         <el-button type="warning" plain icon="el-icon-close" size="mini" @click="handleClose">关闭</el-button>
       </el-col> -->
       <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
     </el-row>
-     <pagePanel headerTitle="角色管理">
-      <el-table :data="userList" @selection-change="handleSelectionChange" height="calc(100% - 112px)">
+    <page-panel header-title="角色管理">
+      <el-table :data="userList" height="calc(100% - 112px)" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="序号" type="index" width="80" />
         <el-table-column label="用户账号" prop="userName" :show-overflow-tooltip="true" />
@@ -86,16 +116,27 @@
             <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status" />
           </template>
         </el-table-column>
-        <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+        <el-table-column
+          label="创建时间"
+          align="center"
+          prop="createTime"
+          width="180"
+        >
           <!-- <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template> -->
         </el-table-column>
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
-            <el-button size="mini" type="text" @click="cancelAuthUser(scope.row)" v-hasPermi="['system:role:remove']" style="color: #a61d24"
-              >取消授权</el-button
+            <el-button
+              v-hasPermi="['system:role:remove']"
+              size="mini"
+              type="text"
+              style="color: #a61d24"
+              @click="cancelAuthUser(scope.row)"
             >
+              取消授权
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -107,19 +148,19 @@
         :limit.sync="queryParams.pageSize"
         @pagination="getList"
       />
-    </pagePanel>
+    </page-panel>
 
-    <select-user ref="select" :roleId="queryParams.roleId" @ok="handleQuery" />
+    <select-user ref="select" :role-id="queryParams.roleId" @ok="handleQuery" />
   </div>
 </template>
 
 <script>
-import { authUserCancel, authUserCancelAll, viewUserList } from '@/api/intelligentOilfield/system/role';
-import selectUser from './selectUser.vue';
+import { authUserCancel, authUserCancelAll, viewUserList } from "@/api/intelligentOilfield/system/role";
+import selectUser from "./selectUser.vue";
 
 export default {
-  name: 'AuthUser',
-  dicts: ['sys_normal_disable'],
+  name: "AuthUser",
+  dicts: ["sys_normal_disable"],
   components: { selectUser },
   data() {
     return {
@@ -143,11 +184,18 @@ export default {
         userName: undefined,
         phonenumber: undefined,
         email: undefined,
-        status: undefined,
-      },
+        status: undefined
+      }
     };
   },
   created() {
+    const roleId = this.$route.params && this.$route.params.roleId;
+    if (roleId) {
+      this.queryParams.roleId = roleId;
+      this.getList();
+    }
+  },
+  activated() {
     const roleId = this.$route.params && this.$route.params.roleId;
     if (roleId) {
       this.queryParams.roleId = roleId;
@@ -158,7 +206,7 @@ export default {
     /** 查询授权用户列表 */
     getList() {
       this.loading = true;
-      viewUserList(this.queryParams).then((response) => {
+      viewUserList(this.queryParams).then(response => {
         this.userList = response.data.rows;
         this.total = response.data.total;
         this.loading = false;
@@ -166,7 +214,7 @@ export default {
     },
     // 返回按钮
     handleClose() {
-      const obj = { path: '/system/role' };
+      const obj = { path: "/system/role" };
       this.$tab.closeOpenPage(obj);
     },
     /** 搜索按钮操作 */
@@ -176,14 +224,14 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm('queryForm');
+      this.resetForm("queryForm");
       this.$nextTick(() => {
         this.handleQuery();
-      })
+      });
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.userIds = selection.map((item) => item.userId);
+      this.userIds = selection.map(item => item.userId);
       this.multiple = !selection.length;
     },
     /** 打开授权用户表弹窗 */
@@ -197,42 +245,37 @@ export default {
       this.$modal
         .confirm(`确认要取消该用户"${row.userName}"角色吗？`)
         .then(() => authUserCancel({ userId: row.userId, roleId }))
-        .then((res) => {
+        .then(res => {
           if (res ? res.data.code === 200 : false) {
             this.getList();
-            this.$modal.msgSuccess('取消授权成功');
+            this.$modal.msgSuccess("取消授权成功");
           }
-        })
-        .catch((e) => {
-          console.log(e);
         });
     },
     /** 批量取消授权按钮操作 */
     cancelAuthUserAll() {
       const { roleId } = this.queryParams;
-      const userIds = this.userIds.join(',');
+      const userIds = this.userIds.join(",");
       this.$modal
-        .confirm('是否取消选中用户授权数据项？')
+        .confirm("是否取消选中用户授权数据项？")
         .then(() => authUserCancelAll({ roleId, userIds }))
-        .then((res) => {
+        .then(res => {
           if (res ? res.data.code === 200 : false) {
             this.getList();
-            this.$modal.msgSuccess('取消授权成功');
+            this.$modal.msgSuccess("取消授权成功");
           }
-        })
-        .catch((e) => {
-          console.log(e);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
 .app-container {
   height: 100%;
+
   .el-table {
     overflow: scroll;
   }
-  
+
 }
 </style>

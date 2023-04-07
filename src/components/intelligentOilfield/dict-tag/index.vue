@@ -7,15 +7,14 @@
           :key="item.value"
           :index="index"
           :class="item.raw.cssClass"
-          >{{ item.label }}</span
-        >
+        >{{ item.label }}</span>
         <el-tag
           v-else
-          :disable-transitions="true"
           :key="item.value"
+          :disable-transitions="true"
           :index="index"
           :type="item.raw.listClass == 'primary' ? '' : item.raw.listClass"
-          :class="item.raw.cssClass" 
+          :class="item.raw.cssClass"
         >
           {{ item.label }}
         </el-tag>
@@ -30,19 +29,18 @@ export default {
   props: {
     options: {
       type: Array,
-      default: null,
+      default: null
     },
-    value: [Number, String, Array],
+    value: [Number, String, Array]
   },
   computed: {
     values() {
-      if (this.value !== null && typeof this.value !== 'undefined') {
+      if (this.value !== null && typeof this.value !== "undefined") {
         return Array.isArray(this.value) ? this.value : [String(this.value)];
-      } 
+      }
       return [];
-      
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>

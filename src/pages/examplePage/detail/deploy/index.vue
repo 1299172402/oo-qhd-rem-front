@@ -12,8 +12,12 @@
         <t-card title="告警情况">
           <template #option>
             <t-radio-group default-value="dateVal" @change="onAlertChange">
-              <t-radio-button value="dateVal"> 本周 </t-radio-button>
-              <t-radio-button value="monthVal"> 本月 </t-radio-button>
+              <t-radio-button value="dateVal">
+                本周
+              </t-radio-button>
+              <t-radio-button value="monthVal">
+                本月
+              </t-radio-button>
             </t-radio-group>
           </template>
           <div id="dataContainer" style="width: 100%; height: 265px" />
@@ -28,7 +32,7 @@
         :data="data"
         :pagination="pagination"
         :hover="hover"
-        rowKey="index"
+        row-key="index"
         @sort-change="sortChange"
         @change="rehandleChange"
       >
@@ -49,8 +53,7 @@
                 ['green']: item.type && item.type.value === 'green',
                 ['blue']: item.type && item.type.value === 'blue',
               }"
-              >{{ item.value }}</span
-            >
+            >{{ item.value }}</span>
           </div>
         </div>
       </div>
@@ -58,16 +61,16 @@
   </div>
 </template>
 <script lang="ts">
-import { TableSort } from 'tdesign-vue';
-import { OrderDescendingIcon } from 'tdesign-icons-vue';
-import * as echarts from 'echarts/core';
-import { TitleComponent, ToolboxComponent, TooltipComponent, GridComponent, LegendComponent } from 'echarts/components';
-import { BarChart, LineChart } from 'echarts/charts';
-import { CanvasRenderer } from 'echarts/renderers';
-import { mapState } from 'vuex';
+import { TableSort } from "tdesign-vue";
+import { OrderDescendingIcon } from "tdesign-icons-vue";
+import * as echarts from "echarts/core";
+import { TitleComponent, ToolboxComponent, TooltipComponent, GridComponent, LegendComponent } from "echarts/components";
+import { BarChart, LineChart } from "echarts/charts";
+import { CanvasRenderer } from "echarts/renderers";
+import { mapState } from "vuex";
 
-import { getSmoothLineDataSet, get2ColBarChartDataSet } from './index';
-import model from '@/service/service-detail-deploy';
+import { getSmoothLineDataSet, get2ColBarChartDataSet } from "./index";
+import model from "@/service/service-detail-deploy";
 
 echarts.use([
   TitleComponent,
@@ -77,20 +80,20 @@ echarts.use([
   LegendComponent,
   BarChart,
   LineChart,
-  CanvasRenderer,
+  CanvasRenderer
 ]);
 
 /** 部署配置 */
 export default {
-  name: 'DetailDeploy',
+  name: "DetailDeploy",
   components: {
-    OrderDescendingIcon,
+    OrderDescendingIcon
   },
   data() {
     return {
-      monitorContainer: '',
-      dataContainer: '',
-      dashboardBase: '',
+      monitorContainer: "",
+      dataContainer: "",
+      dashboardBase: "",
       formData: {},
       data: [],
       bordered: true,
@@ -99,18 +102,18 @@ export default {
         defaultPageSize: 10,
         total: 100,
         defaultCurrent: 1,
-        pageSizeOptions: [],
+        pageSizeOptions: []
       },
       baseInfoData: model.getBaseInfoData(),
       columns: model.getTableColumns(),
       visible: false,
-      areaChart: '',
-      timer: '',
-      columnChart: '',
+      areaChart: "",
+      timer: "",
+      columnChart: ""
     };
   },
   computed: {
-    ...mapState('setting', ['brandTheme', 'mode']),
+    ...mapState("setting", ["brandTheme", "mode"])
   },
   watch: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -122,7 +125,7 @@ export default {
     },
     mode() {
       this.renderCharts();
-    },
+    }
   },
   beforeDestroy(): void {
     clearInterval(this.timer);
@@ -134,29 +137,27 @@ export default {
     });
 
     this.$request
-      .get('/api/get-project-list')
-      .then((res) => {
+      .get("/api/get-project-list")
+      .then(res => {
         if (res.code === 0) {
           const { list = [] } = res.data;
           this.data = list;
           this.pagination = {
             ...this.pagination,
-            total: list.length,
+            total: list.length
           };
         }
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch(() => {});
 
-    window.addEventListener('resize', this.updateContainer, false);
+    window.addEventListener("resize", this.updateContainer, false);
 
     this.renderCharts();
   },
   methods: {
     onAlertChange(val: string): void {
       // console.log(val);
-      const isMonth = val === 'monthVal';
+      const isMonth = val === "monthVal";
       const { chartColors } = this.$store.state.setting;
 
       this.columnChart.setOption(get2ColBarChartDataSet({ isMonth, ...chartColors }));
@@ -164,21 +165,18 @@ export default {
     updateContainer(): void {
       this.areaChart.resize({
         width: this.monitorContainer.clientWidth,
-        height: this.monitorContainer.clientHeight,
+        height: this.monitorContainer.clientHeight
       });
       this.columnChart.resize({
         width: this.dataContainer.clientWidth,
-        height: this.dataContainer.clientHeight,
+        height: this.dataContainer.clientHeight
       });
     },
-    sortChange(val: TableSort): void {
-      console.log(val);
-    },
-    rehandleChange(changeParams, triggerAndData): void {
-      console.log('统一Change', changeParams, triggerAndData);
-    },
-    listClick(e): void {
-      console.log(e);
+    // eslint-disable-next-line
+    sortChange(val: TableSort): void {},
+    // eslint-disable-next-line
+    rehandleChange(changeParams, triggerAndData): void {},
+    listClick(): void {
       this.visible = true;
     },
     deleteClickOp(e): void {
@@ -191,7 +189,7 @@ export default {
       const { chartColors } = this.$store.state.setting;
 
       if (!this.monitorContainer) {
-        this.monitorContainer = document.getElementById('monitorContainer');
+        this.monitorContainer = document.getElementById("monitorContainer");
       }
       this.areaChart = echarts.init(this.monitorContainer);
       this.areaChart.setOption(getSmoothLineDataSet({ ...chartColors }));
@@ -202,12 +200,12 @@ export default {
       }, 3000);
 
       if (!this.dataContainer) {
-        this.dataContainer = document.getElementById('dataContainer');
+        this.dataContainer = document.getElementById("dataContainer");
       }
       this.columnChart = echarts.init(this.dataContainer);
       this.columnChart.setOption(get2ColBarChartDataSet({ ...chartColors }));
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>

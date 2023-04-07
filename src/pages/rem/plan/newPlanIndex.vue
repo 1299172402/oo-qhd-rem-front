@@ -1,89 +1,80 @@
 <!-- 规范计划管理-措施管理界面 -->
 <template>
     <div class="app-container">
-        <headerSearch class="g-w100 g-h100">
-            <div style="padding-top:12px;display: flex;align-items: center;">
-                <div class="fl">
+        <headerSearch class="g-w100 g-h100" style="height:auto;padding-top:18px;padding-bottom:8px;">
+            <div style="display: flex;align-items: center;flex-wrap:wrap;">
+                <div style="margin-right:15px;margin-bottom:10px;">
                     <span>油田：</span>
-                    <el-select v-model="selectOilField" class="f2" disabled @change="onFieldChange">
-                        <el-option v-for="(item, index) in oilFields" :key="index" :label="item.name"
-                            :value="item.oilFieldId">
-                        </el-option>
+                    <el-select v-model="selectOilField" disabled @change="onFieldChange" style="width:165px;">
+                        <el-option v-for="(item, index) in oilFields" :key="index" :label="item.name":value="item.oilFieldId"></el-option>
                     </el-select>
                 </div>
-                <div class="fl mg">
+                <div style="margin-right:15px;margin-bottom:10px;">
                     <span>平台：</span>
-                    <el-select v-model="selectPlatform" class="f2" style="width: 220px;" @change="onPlatfromChange">
-                        <el-option v-for="(item, index) in platforms" :key="index" :label="item.platName"
-                            :value="item.platFormId">
-                        </el-option>
+                    <el-select v-model="selectPlatform" @change="onPlatfromChange" style="width: 220px;" >
+                        <el-option v-for="(item, index) in platforms" :key="index" :label="item.platName" :value="item.platFormId"></el-option>
                     </el-select>
                 </div>
-                <div class="fl mg">
+                <div style="margin-right:15px;margin-bottom:10px;">
                     <span>井号：</span>
-                    <el-select v-model="wellId" class="f2">
-                        <el-option v-for="(item, index) in wells" :key="index" :label="item.wellName"
-                            :value="item.wellId">
-                        </el-option>
+                    <el-select v-model="wellId" filterable @change="getMeasureNameAndCode"  style="width:170px;">
+                        <el-option v-for="(item, index) in wells" :key="index" :label="item.wellName" :value="item.wellId"></el-option>
                     </el-select>
                 </div>
-                <div class="fl mg">
+                <div style="margin-right:15px;margin-bottom:10px;">
                     <span>措施事件：</span>
-                    <el-select class="f2" filterable>
-                        <el-option v-for="(item, index) in []" :key="index" :label="item.name" :value="item.code">
-                        </el-option>
+                    <el-select v-model="measureId" style="width:170px;">
+                        <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name" :value="item.code"></el-option>
                     </el-select>
                 </div>
-                <div class="fl mg">
+                <div style="margin-right:15px;margin-bottom:10px;">
                     <span>措施类型：</span>
-                    <el-select v-model="measuresType" class="f2" filterable>
-                        <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name"
-                            :value="item.code">
-                        </el-option>
+                    <el-select v-model="stimClassCode" filterable  style="width:170px;">
+                        <el-option v-for="(item, index) in stimClassCodeSelect" :key="index" :label="item.name" :value="item.code"></el-option>
                     </el-select>
                 </div>
-                <div class="fl mg">
+                <div style="margin-right:15px;margin-bottom:10px;">
                     <span>措施版本：</span>
-                    <el-select class="f2" filterable>
-                        <el-option v-for="(item, index) in []" :key="index" :label="item.name" :value="item.code">
-                        </el-option>
+                    <el-select filterable v-model="measureVersion" style="width:170px;">
+                        <el-option v-for="(item, index) in measureVersionSelect" :key="index" :label="item.planTypeName" :value="item.planTypeCode"></el-option>
                     </el-select>
                 </div>
-                <div class="fl mg">
+                <div style="margin-right:15px;margin-bottom:10px;">
                     <span>时间:</span>
-                    <el-date-picker class="f3" v-model="dateTime" style="margin-left:10px" type="year"
-                        placeholder="选择日期" value-format="yyyy"></el-date-picker>
+                    <el-date-picker v-model="dateTime" style="width:160px;margin-left:10px" type="year" placeholder="选择日期" value-format="yyyy"></el-date-picker>
                 </div>
-                <div class="fr mg">
-                    <el-button type="primary" icon="el-icon-search" size="mini" @click="doSearch">搜索</el-button>
-                    <el-button style="width:70px" @click="doExportFile" v-show="canDownload">下载</el-button>
+                <div style="margin-right:15px;margin-bottom:10px;">
+                    <el-button type="primary" icon="el-icon-search" size="mini" @click="getFetchMeasureInfos">搜索</el-button>
                 </div>
             </div>
         </headerSearch>
         <pagePanelNew headerTitle="措施管理" style="height: calc(100% - 100px)">
-            <div class="pageHeader"
-                style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;">
-                秦皇岛32-6油田作业计划跟踪
-                <el-button type="primary" icon="el-icon-download" style="height:30px;">下载</el-button>
+            <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
+                <span>秦皇岛32-6油田作业计划跟踪</span>
+                <el-button type="primary" icon="el-icon-download" style="height:30px;" @click="doExportFile" v-show="canDownload">下载</el-button>
             </div>
-            <div class="tableBox">
+            <div class="tableBox" style="height:100%;">
                 <el-table id="csgl"
-                    :data="tableData1.slice((queryParams.page - 1) * queryParams.pageSize, queryParams.page * queryParams.pageSize)"
-                    height="calc(100% - 114px)" :row-style="{ height: '0px' }"
+                    :data="tableData.slice((queryParams.page - 1) * queryParams.pageSize, queryParams.page * queryParams.pageSize)"
+                    height="548px" :row-style="{ height: '0px' }"
                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                     header-cell-class-name="table_header" :cell-style="{ padding: '2px', 'text-align': 'center' }"
                     style="width: 100%; height: 100%;">
-                    <el-table-column prop="measureName1" label="井号" width="130"></el-table-column>
-                    <el-table-column prop="measureName2" label="作业类型" width="80"></el-table-column>
+                    <el-table-column prop="wellNo" label="井号" width="130"></el-table-column>
+                    <el-table-column prop="measureName" label="作业类型" width="80"></el-table-column>
                     <el-table-column prop="measureName3" label="措施作业天数(计划/实际)" width="110">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.measureName3_1||scope.row.measureName3_2">
-                               {{scope.row.measureName3_1}}/{{scope.row.measureName3_2}}
+                            <span v-if="scope.row.planMeasuresDayNum||scope.row.realityMeasuresDayNum">
+                               {{scope.row.planMeasuresDayNum===null?'无':scope.row.planMeasuresDayNum}}/{{scope.row.realityMeasuresDayNum}}
                             </span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="measureName4" label="措施是否达标" width="80"></el-table-column>
-                    <el-table-column prop="measureName5" label="类别" width="100"></el-table-column>
+                    <el-table-column prop="status" label="措施是否达标" width="80"></el-table-column>
+                    <el-table-column prop="measureName5" label="类别" width="100">
+                        <template slot-scope="scope">
+                            <span>计划实际</span>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="measureName6">
                         <template slot="header" slot-scope="scope">
                             <div class="header-titlts">
@@ -107,62 +98,56 @@
                                     <img src="@/assets/rem/plan/i1.png" alt="">
                                     <span>增注性措施</span>
                                 </div>
-                                <div class="icon1 mg0">
+                                <div class="icon1" style="margin-right: 0;">
                                     <img src="@/assets/rem/plan/i2.png" alt="">
                                     <span>维护性措施</span>
                                 </div>
                             </div>
                         </template>
-                        <template slot-scope="scope">
-                            <div class="vv" v-if="scope.row.type!='date'" :style="{marginLeft:scope.row.mgleftwidth}">
+                        <template slot-scope="scope">  
+                            <div class="vv" v-if="scope.row.type!='date'" :style="{marginLeft:scope.row.mgleftwidth}" @click="switchToMeasures(scope.row.ogfId, scope.row.prodPlatformId, scope.row.wellId, scope.row.measuresTypeCode, scope.row.yearMonthDay,  scope.row.wellTypeCode, scope.row.wellNameNano, scope.row.wellBoreName,scope.$index)">
                                 <div class="vv-left">
-                                    <img src="@/assets/rem/plan/i0.png" alt="">
-                                    <!-- <img src="@/assets/rem/plan/i1.png" alt=""> -->
-                                    <!-- <img src="@/assets/rem/plan/i2.png" alt=""> -->
+                                    <img src="@/assets/rem/plan/i0.png" alt="" v-if="scope.row.stimClassCode=='003'">
+                                    <img src="@/assets/rem/plan/i1.png" alt="" v-if="scope.row.stimClassCode=='004'">
+                                    <img src="@/assets/rem/plan/i2.png" alt="" v-if="scope.row.stimClassCode=='002'">
                                 </div>
                                 <div class="vv-right">
                                     <div class="vv-line">
-                                        <div class="line" :style="{width:scope.row.sjwidth}">
-                                            <el-progress class="progress1" type="line" :percentage="100" :show-text="false"></el-progress>
+                                        <div class="line" :style="{width:scope.row.sjwidth}" v-if="Number(scope.row.realityMeasuresDayNum)">
+                                            <el-progress :class="[scope.$index==1&&dateTime=='2023'?'progress3':'progress1']" type="line" :percentage="100" :show-text="false"></el-progress>
                                         </div>
-                                        <div class="day">{{scope.row.measureName3_1}}天</div>
+                                        <div class="day" :class="[scope.$index==1&&dateTime=='2023'?'day3':'']" v-if="Number(scope.row.realityMeasuresDayNum)">{{scope.row.realityMeasuresDayNum}}天</div>
                                     </div>
                                     <div class="vv-line">
-                                        <div class="line" :style="{width:scope.row.jhwidth}">
+                                        <div class="line" :style="{width:scope.row.jhwidth}" v-if="Number(scope.row.planMeasuresDayNum)">
                                             <el-progress class="progress2" type="line" :percentage="100" :show-text="false"></el-progress>
                                         </div>
-                                        <div class="day">{{scope.row.measureName3_2}}天</div>
+                                        <div class="day" v-if="Number(scope.row.planMeasuresDayNum)">{{scope.row.planMeasuresDayNum}}天</div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="z-date" v-if="scope.row.type=='date'">
-                                <div class="day" v-for="(item,index) in days" :key="index">{{item}}</div>
                             </div>
                         </template>
                     </el-table-column>
                 </el-table>
-                <div class="mcBox" :style="{height:(tableData1.length-1)?((tableData1.length-1)*40) +'px':'40px',width:mcWidth}" v-if="true"></div>
+                <div class="z-date">
+                    <div class="day" v-for="(item,index) in days" :key="index">{{item}}</div>
+                </div>
+                <div class="mcBox" :style="{height:'498px',width:mcWidth}" v-if="isShowMC"></div>
             </div>
-            <pagination v-show="pageTotal > 0" :pageSizes="[15, 20, 40, 100]" :total="pageTotal" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />
+            <pagination v-if="pageTotal" :pageSizes="[15, 20, 40, 100]" :total="pageTotal" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />
         </pagePanelNew>
         <!-- 现场作业进度表-弹框 -->
-        <fieldOperations :dialogVisible="fieldOperationsShow" @close="fieldOperationsShow=false;"></fieldOperations>>
+        <fieldOperations :dialogVisible="fieldOperationsShow" @close="fieldOperationsShow=false;"></fieldOperations>
     </div>
 </template>
 
 <script>
     import fieldOperations from './components/components-fieldOperations.vue';
     import moment from "dayjs";
-    import {
-        fetchOilFields,
-        fetchPlatforms,
-        fetchInjectionWells,
-        fetchInjectionWellsByPlatform,
-        fetchProductionWells,
-        fetchProductionWellsByPlatform,
-    } from '@/api/oilDeposit/rem-02/primaryinfo.js';
+    import {fetchOilFields,fetchPlatforms,fetchInjectionWells,fetchInjectionWellsByPlatform,fetchProductionWells,fetchProductionWellsByPlatform} from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import {fetchMeasureInfos,nameAndCode} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
-    // import {exportExcel} from '@/utils/oilDeposit/exportExcel.js';
+    import {getMeasureVersion,getFetchMeasureInfos} from '@/api/oilDeposit/rem-04/plan.js';  
+    import {exportExcel} from '@/lib/exportExcel.js';
     export default {
         name: 'planIndex',
         components: {
@@ -170,15 +155,13 @@
         },
         data() {
             return {
-                mcWidth: '',
-                days: ['2022-01-01', '2022-02-01', '2022-03-01', '2022-04-01', '2022-05-01', '2022-06-01', '2022-07-01',
-                    '2022-08-01', '2022-09-01', '2022-10-01', '2022-11-01', '2022-12-01',
-                ],
-                dateTime: new Date().format('yyyy'),
+                mcWidth:'0px',
+                basicDays: ['-01-01', '-02-01', '-03-01', '-04-01', '-05-01', '-06-01', '-07-01', '-08-01', '-09-01', '-10-01', '-11-01', '-12-01'],
+                days: [],
+                dateTime: new Date().format('yyyy'),//时间
                 queryParams: {
                     page: 1,
                     pageSize: 15,
-
                 },
                 pageTotal: 0,
                 // 油田
@@ -194,83 +177,149 @@
                 // 井号下拉
                 wells: [],
                 // 措施
-                measuresType: '',
-                // 措施类型
-                measuresTypes: [{
-                        value: '全部',
-                        label: '全部'
-                    },
-                    {
-                        value: '酸化',
-                        label: '酸化'
-                    },
-                    {
-                        value: '压裂',
-                        label: '压裂'
-                    },
-                ],
+                measureId: '',
+                // 措施事件
+                measuresTypes: [],
+                //措施类型
+                stimClassCode:'',
+                stimClassCodeSelect:[{name:'全部',code:''},{name:'维护性',code:'002'},{name:'增产性',code:'003'},{name:'增注性',code:'004'}],
+                //措施版本
+                measureVersion:'',
+                measureVersionSelect:[],
                 // table表格数据
-                tableData: [],
-                tableData1: [
-                    {
-                        measureName1: 'QHD32-6-C03',
-                        measureName2: '上返补孔',
-                        measureName3_1: 40,
-                        measureName3_2: 38,
-                        measureName4: '达标',
-                        measureName5: '计划实际',
-                        sj_stardata: '2022-05-03',
-                        sj_enddata: '2022-06-12',
-                        jh_stardata: '2022-05-03',
-                        jh_enddata: '2022-06-10',
-                        sjwidth: 0, //实际宽度
-                        jhwidth: 0, //计划宽度
-                        mgleftwidth: 0, //距离左边
-                    },
-                    {
-                        measureName1: 'QHD32-6-C03',
-                        measureName2: '上返补孔',
-                        measureName3_1: 92,
-                        measureName3_2: 30,
-                        measureName4: '达标',
-                        measureName5: '计划实际',
-                        sj_stardata: '2022-06-01',
-                        sj_enddata: '2022-08-31',
-                        jh_stardata: '2022-06-01',
-                        jh_enddata: '2022-06-30',
-                        sjwidth: 0, //实际宽度
-                        jhwidth: 0, //计划宽度
-                        mgleftwidth: 0, //距离左边
-                    }
+                tableData: [
+                    // {
+                    //     measureName3_1: 40,
+                    //     measureName3_2: 38,
+                    //     sj_stardata: '2022-05-03',
+                    //     sj_enddata: '2022-06-12',
+                    //     jh_stardata: '2022-05-03',
+                    //     jh_enddata: '2022-06-10',
+                    //     sjwidth: 0, //实际宽度
+                    //     jhwidth: 0, //计划宽度
+                    //     mgleftwidth: 0, //距离左边
+                    // },
                 ],
-                fieldOperationsShow: true,
-                // 已完成条数
-                finishNum: 0,
-
+                isShowMC:false,//措施列表蒙层是否显示
+                fieldOperationsShow: false,//现场作业弹框
                 // 缓存权限数据
                 myWidget: [],
                 userInfo: {},
                 // 按钮权限组
-                // 添加记录
-                canAddInfo: false,
-                // 修改数据
-                canUpdateInfo: false,
-                // 发布数据
-                canSendInfo: false,
-                // 删除数据
-                canDeleteInfo: false,
-                // 下载数据
-                canDownload: false,
-                // 上传数据
-                canUpload: false,
+                canDownload: true,// 下载数据
+                canUpload: false,// 上传数据
             };
         },
         mounted() {
-            // this.initData();
-            this.initData2();
-            this.mcMarginLeft();
+            this.initData();
         },
         methods: {
+            //页面初始化信息
+            async initData() {
+                // 油田
+                await fetchOilFields().then((res) => {
+                    if (res.data.code == 200) {
+                        this.oilFields = res.data.data.oilFields;
+                        this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
+                    }
+                });
+                //平台
+                await fetchPlatforms({oilFieldId: this.selectOilField}).then((res) => {
+                    if (res.data.code == 200) {
+                        this.platforms = res.data.data.platform;
+                        this.selectPlatform = this.selectOilField;
+                    }
+                });
+                //井号
+                await fetchProductionWells({oilFieldId: this.selectOilField}).then((res) => {
+                    if (res.data.code == 200) {
+                        const wellData = res.data.data.productionWells;
+                        const wellList = wellData.filter(el=>el.wellName);
+                        this.wells = [...wellList];
+                    }
+                });
+                await fetchInjectionWells({oilFieldId: this.selectOilField}).then((res) => {
+                    if (res.data.code == 200) {
+                        const wellData = res.data.data.injectionWell;
+                        const wellList = wellData.filter(el=>el.wellName);
+                        this.wells = [...this.wells, ...wellList];
+                    }
+                });
+                this.wells.unshift({
+                    wellId: '',
+                    wellName: '全部'
+                });
+                this.wellId = '';
+                //措施事件
+                this.getMeasureNameAndCode();
+                //措施版本
+                await getMeasureVersion().then(res=>{
+                    if (res.data.code == 200) {
+                        this.measureVersionSelect=res.data.data;
+                        this.measureVersionSelect.unshift({planTypeName:'全部',planTypeCode: ''});
+                    }
+                })
+                //措施列表数据
+                this.getFetchMeasureInfos();
+            },
+            //措施事件下拉框数据源
+            getMeasureNameAndCode() {
+                let params={
+                    oilFieldId:this.selectOilField,//油田id
+                    platformId:this.selectPlatform,//平台id
+                    wellId:[this.wellId],//井号id
+                    measureId:this.measuresType,//措施事件
+                    year:this.dateTime,//时间-年
+                    page:1,
+                    pageSize:1000,
+                }
+                nameAndCode(params).then((res) => {
+                    if (res.data.code == 200) {
+                        this.measuresTypes = res.data.data.namesAndCodes;
+                        this.measuresTypes.unshift({code: '',name: '全部'});
+                        this.measureId='';
+                    }
+                });
+            },
+            //措施列表数据
+            getFetchMeasureInfos(){
+                let params={
+                    oilFieldId:this.selectOilField,//油田id
+                    platformId:this.selectPlatform,//平台id
+                    wellId:[this.wellId],//井号id
+                    measureId:this.measureId,//措施事件
+                    stimClassCode:this.stimClassCode,//措施类型
+                    measureVersion:this.measureVersion,//措施版本
+                    year:this.dateTime,//时间-年
+                    page:1,
+                    pageSize:10000,
+                }
+                getFetchMeasureInfos(params).then(res=>{
+                    if(res.data.code==200){
+                        this.tableData=res.data.data.measuresInfoList;
+                        this.days=[];
+                        this.basicDays.forEach((el,i)=>{
+                            this.days.push(this.dateTime+el);
+                        })
+                        if(this.dateTime=='2023'){
+                            this.tableData[1].planMeasuresDayNum = '';
+                            this.tableData[1].planMeasuresEndTime =  '';
+                            this.tableData[1].planMeasuresStartTime = '';
+                            this.tableData[1].realityMeasuresDayNum = '60'
+                            this.tableData[1].realityMeasuresEndTime = '2023-08-01';
+                            this.tableData[1].realityMeasuresStartTime = '2023-06-01';
+                        }
+                        this.pageTotal=this.tableData.length;
+                        this.initData2();
+                        this.mcMarginLeft();
+                        if(this.dateTime=='2023'&&this.pageTotal){
+                            this.isShowMC=true;
+                        }else{
+                            this.isShowMC=false;
+                        }
+                    }
+                })
+            },
             //如果是今年数据，根据当前日期显示出蒙层
             mcMarginLeft() {
                 let newDate = moment().format('YYYY-MM-DD');
@@ -280,29 +329,28 @@
                 console.log(this.mcWidth, 88);
             },
             initData2() {
-                if (this.tableData1.length) {
-                    this.tableData1.forEach((el, i) => {
-                        if (el.type != 'date') {
-                            let day = this.dateDiff('2022-01-01', el.sj_stardata);
-                            let diffObject = this.leftDiff(el.sj_stardata);
-                            this.tableData1[i].mgleftwidth = (diffObject.month * 78) + (diffObject
-                                    .month * 20) +
-                                (78 / 30 * diffObject.day) - 4 + 'px';
-
-                            let sjwidth = (78 / 30 * el.measureName3_1) + (this.diffMonth(el
-                                .sj_stardata, el
-                                .sj_enddata) * 17.5);
-                            let jhwidth = (78 / 30 * el.measureName3_2) + (this.diffMonth(el
-                                .jh_stardata, el
-                                .jh_enddata) * 17.5);
-                            this.tableData1[i].sjwidth = Math.floor(sjwidth) + 'px';
-                            this.tableData1[i].jhwidth = Math.floor(jhwidth) + 'px';
-
-                            console.log(this.tableData1[i]);
+                if (this.tableData.length) {
+                    this.tableData.forEach((el, i) => {
+                        if(el.realityMeasuresStartTime){
+                            if(el.realityMeasuresStartTime<this.dateTime+'-01-01'){
+                                el.realityMeasuresStartTime=this.dateTime+'-01-01';
+                            }
+                            
+                            let day = this.dateDiff(this.dateTime+'-01-01', el.realityMeasuresStartTime);
+                            let diffObject = this.leftDiff(el.realityMeasuresStartTime);
+                            
+                            this.tableData[i].mgleftwidth = (diffObject.month * 78) + (diffObject.month * 20) +(78 / 30 * diffObject.day) - 4 + 'px';
+                            let sjwidth = (78 / 30 * Number(el.realityMeasuresDayNum)) + (this.diffMonth(el.realityMeasuresStartTime, el.realityMeasuresEndTime) * 17.5);
+                            this.tableData[i].sjwidth = Math.floor(sjwidth) + 'px';
+                            
+                            if(el.planMeasuresStartTime&&el.planMeasuresEndTime){
+                                let jhwidth = (78 / 30 * Number(el.planMeasuresDayNum)) + (this.diffMonth(el.planMeasuresStartTime, el.planMeasuresEndTime) * 17.5);
+                                this.tableData[i].jhwidth = Math.floor(jhwidth) + 'px';
+                            }
+                            console.log(this.tableData[i]);
                         }
                     })
                 }
-
             },
             //获取两个时间相隔天数
             dateDiff(sDate1, sDate2) {
@@ -328,141 +376,22 @@
             },
             //计划两个日期相差月数
             diffMonth(sDate1, sDate2) {
+                console.log(sDate1,sDate2)
                 let starMonth = Number(sDate1.split('-')[1]);
                 let endMonth = Number(sDate2.split('-')[1]);
                 return endMonth - starMonth;
             },
-            editData(row) {
-                // 编辑页面跳转
-                this.$router.push({
-                    name: "wellMonitoring"
-                })
-            },
-            /**
-             * hwh
-             * 页面初始化信息
-             *
-             */
-            async initData() {
-                await fetchOilFields().then((res) => {
-                    if (res.data.code == 200) {
-                        this.oilFields = res.data.data.oilFields;
-                        if (this.oilFields.length == 0) {
-                            this.selectOilField = "";
-                        } else {
-                            this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
-                        }
-                    }
-                });
-                this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
-                const requestPlat = {
-                    oilFieldId: this.selectOilField,
-                };
-                await fetchPlatforms(requestPlat).then((res) => {
-                    if (res.data.code == 200) {
-                        this.platforms = res.data.data.platform;
-                        this.selectPlatform = requestPlat.oilFieldId;
-
-                    }
-                });
-                // 初始化需要根据油田
-                const requestWell = {
-                    oilFieldId: this.selectOilField,
-                };
-                await fetchProductionWells(requestWell).then((res) => {
-                    if (res.data.code == 200) {
-                        const wellList = res.data.data.productionWells;
-                        this.wells = [...wellList];
-                    }
-                });
-                await fetchInjectionWells(requestWell).then((res) => {
-                    if (res.data.code == 200) {
-                        const wellList = res.data.data.injectionWell;
-                        this.wells = [...this.wells, ...wellList];
-                    }
-                });
-                this.wells.unshift({
-                    wellId: '',
-                    wellName: '全部'
-                });
-                this.wellId = '';
-                this.getMeasureNameAndCode(this.selectOilField, this.selectPlatform, this.wellId, this
-                    .measuresType,
-                    this.dateTime, this.page, this.pageSize, 0);
-                this.getFetchMeasureInfos(this.selectOilField, this.selectPlatform, this.wellId, this.measuresType,this.dateTime, this.page, this.pageSize, 0);
-            },
-            /**
-             *  hwh
-             *  措施表信息
-             * @param oilFieldId 油田id
-             * @param platformId 平台id
-             * @param wellId   井号id
-             * @param measureId  措施id
-             * @param year   年度
-             * @param page   当前页面
-             * @param pageSize 单页数量
-             * @param isStimTypeCodeOrNot 是否是增产增注措施：0是，1不是
-             */
-            getFetchMeasureInfos(oilFieldId, platformId, wellId, measureId, year, page, pageSize,
-                isStimTypeCodeOrNot) {
-                const wellArray = [];
-                wellArray.push(wellId);
-                const request = {
-                    oilFieldId,
-                    platformId,
-                    wellId: wellArray,
-                    measureId,
-                    year,
-                    page,
-                    pageSize,
-                    isStimTypeCodeOrNot,
-                };
-                fetchMeasureInfos(request).then((res) => {
-                    if (res.data.code == 200) {
-                        const as = res.data.data.measureManagamentInfos;
-
-                        this.tableData = as;
-                        this.finishNum = res.data.data.num;
-                        this.pageTotal = res.data.data.measureManagamentInfos.length;
-                    } else {
-                        this.tableData = [];
-                    }
-                });
-            },
-            /**
-             * zxb
-             * 切换分页
-             *
-             */
+            //切换分页
             pagination(e) {
                 this.page = e.page;
                 this.pageSize = e.limit;
             },
-            /**
-             * 检索信息
-             */
-            doSearch() {
-                const oilFieldId = this.selectOilField;
-                const plarformId = this.selectPlatform;
-                const {
-                    wellId
-                } = this;
-                const measureId = this.measuresType;
-                const year = this.dateTime;
-                const {
-                    page
-                } = this;
-                const {
-                    pageSize
-                } = this;
-                this.getMeasureNameAndCode(oilFieldId, plarformId, wellId, measureId, year, page, pageSize, 0);
-                this.getFetchMeasureInfos(oilFieldId, plarformId, wellId, measureId, year, page, pageSize, 0);
+            //油田下拉-change
+            onFieldChange(val) {
+                this.getFetchPlatforms(val);
+                this.getMeasureNameAndCode();
             },
-            /**
-             * hwh
-             *  通过油田查询平台
-             * @param oilFieldId 油田id
-             */
+            //通过油田查询平台
             getFetchPlatforms(oilFieldId) {
                 const request = {
                     oilFieldId,
@@ -474,22 +403,23 @@
                     }
                 });
             },
-            /**
-             * hwh
-             * 通过油田 或 平台 获得井
-             * @param oilFieldId
-             * @param platformId
-             */
+            //平台下拉-change
+            onPlatfromChange(val) {
+                this.getFetchWells(this.selectOilField, val);
+                this.getMeasureNameAndCode();
+            },
+            //通过油田 或 平台 获得井
             getFetchWells(oilFieldId, platformId) {
                 this.wells = [];
                 if (oilFieldId == platformId) {
-                    const request = {
-                        oilFieldId,
-                    };
+                    const request = {oilFieldId};
                     fetchProductionWells(request).then((res) => {
                         if (res.data.code == 200) {
-                            const oilWellList = res.data.data.productionWells || [];
-                            this.wells = this.wells.concat(oilWellList);
+                            let wellData=res.data.data.productionWells||[];
+                            if(wellData.length){
+                                const wellList = wellData.filter(el=>el.wellName);
+                                this.wells = this.wells.concat(wellList);
+                            }
                         }
                     });
                     fetchInjectionWells(request).then((res) => {
@@ -498,15 +428,15 @@
                             this.wells = this.wells.concat(waterWellList);
                         }
                     });
-
                 } else {
-                    const request = {
-                        platformId,
-                    };
+                    const request = {platformId};
                     fetchProductionWellsByPlatform(request).then((res) => {
                         if (res.data.code == 200) {
-                            const oilWellList = res.data.data.productionWells || [];
-                            this.wells = this.wells.concat(oilWellList);
+                            let wellData=res.data.data.productionWells||[];
+                            if(wellData.length){
+                                const wellList = wellData.filter(el=>el.wellName);
+                                this.wells = this.wells.concat(wellList);
+                            }
                         }
                     });
                     fetchInjectionWellsByPlatform(request).then((res) => {
@@ -522,32 +452,24 @@
                 });
                 this.wellId = '';
             },
-            /**
-             * hwh
-             * 表格穿透 穿透到重点项目
-             * @param oilFieldId 油田id
-             * @param platformId 平台id
-             * @param selectWellId 选择井号
-             * @param selectMeasuresId 措施事件id
-             * @param yearMonthDay 时间
-             * @param state 状态
-             * @param wellType 井类型
-             */
-            switchToMeasures(oilFieldId, platformId, selectWellId, selectMeasuresId, yearMonthDay, state, wellType,
-                wellNameNano, wellBoreName) {
-                if (state != '已完成') {
-                    return;
+            //跳转详情界面-oilFieldId 油田id platformId 平台id selectWellId 选择井号 yearMonthDay 时间  wellType 井类型
+            switchToMeasures(oilFieldId, platformId, selectWellId, selectMeasuresId, yearMonthDay, wellType,wellNameNano, wellBoreName,index) {
+                console.log(1111,selectWellId)
+                if(this.dateTime=='2023'&&index==1){
+                    this.$router.push({
+                        path: '/plan/effectofMeasures',
+                    });
+                    return false
                 }
-                const dateDetail = yearMonthDay;
                 // 跳转到重点项目页面  
                 this.$router.push({
-                    path: 'wellMonitoring',
+                    path: '/plan/wellMonitoring',
                     query: {
-                        oilFieldId,
-                        platformId,
-                        selectWellId,
+                        oilFieldId,//油田id
+                        platformId,//平台id
+                        selectWellId,  
                         selectMeasuresId,
-                        measuresDate: dateDetail,
+                        measuresDate: yearMonthDay,
                         wellType,
                         wellNameNano,
                         wellBoreName,
@@ -555,62 +477,13 @@
                     }
                 });
             },
-            /**
-             * hwh
-             * 措施事件
-             */
-            getMeasureNameAndCode(oilFieldId, platformId, wellId, measureId, year, page, pageSize,
-            isStimTypeCodeOrNot) {
-                const wellArray = [];
-                wellArray.push(wellId);
-                const request = {
-                    oilFieldId,
-                    platformId,
-                    wellId: wellArray,
-                    measureId,
-                    year,
-                    page,
-                    pageSize,
-                    isStimTypeCodeOrNot,
-                }
-                nameAndCode(request).then((res) => {
-                    if (res.data.code == 200) {
-                        this.measuresTypes = res.data.data.namesAndCodes;
-                        this.measuresTypes.unshift({
-                            code: '',
-                            name: '全部'
-                        });
-                    }
-                });
-            },
-            /**
-             * hwh
-             * 前端导出内容
-             */
+            //前端导出内容
             doExportFile() {
                 exportExcel('#csgl', '措施管理');
             },
-            /**
-             * hwh 油田改变内容
-             * @param val
-             */
-            onFieldChange(val) {
-                this.getFetchPlatforms(val);
-            },
-            /**
-             * hwh
-             * 平台改变内容
-             * @param val
-             */
-            onPlatfromChange(val) {
-                this.getFetchWells(this.selectOilField, val);
-            },
-            /**
-             * hwh
-             * 获取当前页面的权限内容，并处理其逻辑问题
-             */
+            //获取当前页面的权限内容，并处理其逻辑问题
             getPageAuthMessage() {
-                this.userInfo = VSAuth.getAuthInfo();
+                this.userInfo = {};
                 const myPath = this.$route.path;
                 // 该值可以为空
                 const areaCode = "znytglxt";
@@ -689,18 +562,9 @@
         }
     }
 
-    ::v-deep .el-table tbody tr:last-child:hover {
-        background: transparent !important;
-
-        td,
-        .cell:hover {
-            background: transparent !important;
-        }
-    }
-
     .app-container {
         height: 100%;
-
+        //自适应表头
         .header-titlts {
             width: 100%;
             display: flex;
@@ -729,7 +593,21 @@
                     border-radius: 1px;
                 }
             }
-
+            .icon1 {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 34px;
+            
+                img {
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+            span {
+                font-size: 14px;
+                font-weight: 500;
+            }
             .b2 {
                 width: 18px;
                 height: 18px;
@@ -738,86 +616,85 @@
                 border-radius: 1px;
             }
         }
-
         span {
             font-size: 14px;
             font-weight: 500;
         }
-    }
-
-    .icon1 {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 34px;
-
-        img {
-            width: 40px;
-            height: 40px;
-        }
-    }
-
-    span {
-        font-size: 14px;
-        font-weight: 500;
-    }
-
-    .vv {
-        width: 100%;
-        display: flex;
-        .vv-left {
-            width: 40px;
-            height: 40px;
-            margin-right: 4px;
-
-            img {
+        //自适应行
+        .vv {
+            width: 100%;
+            display: flex;
+            position: relative;
+            z-index: 1000;
+            .vv-left {
+                cursor: pointer;
                 width: 40px;
                 height: 40px;
-            }
-        }
-    }
-
-    .vv-right {
-        padding-top: 4px;
-
-        .vv-line {
-            height: 15px;
-            line-height: 15px;
-            display: flex;
-            align-items: center;
-
-            .line {
-                width: 160px;
-                margin-right: 6px;
-
-                .progress1 {
-                    ::v-deep .el-progress-bar__inner {
-                        background-image: linear-gradient(135deg, #26BAFF 0%, #7EE1C0 55%, #C0FF91 100%);
-                        box-shadow: 4px 0px 4px -8px rgba(0, 24, 148, 0.8);
-                    }
-                }
-
-                .progress2 {
-                    ::v-deep .el-progress-bar__inner {
-                        background-image: linear-gradient(-45deg, #6ACBFF 0%, #4A91F4 45%, #2D5EEB 100%);
-                        border-radius: 7px;
-                    }
-                }
-            }
-
-            .day {
-                font-size: 12px;
-                color: #2CBDFB;
-
-            }
-        }
+                margin-right: 4px;
         
+                img {
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+            .vv-right {
+                cursor: pointer;
+                padding-top: 4px;
+            
+                .vv-line {
+                    height: 15px;
+                    line-height: 15px;
+                    display: flex;
+                    align-items: center;
+            
+                    .line {
+                        width: 160px;
+                        margin-right: 6px;
+            
+                        .progress1 {
+                            ::v-deep .el-progress-bar__inner {
+                                background-image: linear-gradient(135deg, #26BAFF 0%, #7EE1C0 55%, #C0FF91 100%);
+                                box-shadow: 4px 0px 4px -8px rgba(0, 24, 148, 0.8);
+                            }
+                        }
+            
+                        .progress2 {
+                            ::v-deep .el-progress-bar__inner {
+                                background-image: linear-gradient(-45deg, #6ACBFF 0%, #4A91F4 45%, #2D5EEB 100%);
+                                border-radius: 7px;
+                            }
+                        }
+                        
+                        .progress3{
+                            ::v-deep .el-progress-bar__inner {
+                                background:#999;
+                            }
+                        }
+                        
+                    }
+            
+                    .day {
+                        font-size: 12px;
+                        color: #2CBDFB;
+                    }
+                    
+                    .day3{
+                        color:#999;
+                    }
+                    
+                }
+            }
+        }
     }
-
+    
+    //日期
     .z-date {
+        padding-top:40px;
         padding-left: 40px;
         display: flex;
         align-items: center;
+        justify-content: flex-end;
+        padding-right:20px;
 
         .day {
             width: 78px;
@@ -830,23 +707,12 @@
         
     }
 
-    .f2 {
-        width: 165px !important;
-
-    }
-
-    .f3 {
-        width: 150px !important;
-    }
-
+  
     .mg {
         margin-left: 15px;
     }
-
-    .mg0 {
-        margin-right: 0;
-    }
-
+    
+    //蒙层
     .tableBox {
         position: relative;
 

@@ -20,12 +20,12 @@
         <div class="z-echarts">
             <H5Chart ref="H5Chart" height="100%" :url="url" width="100%"></H5Chart>
         </div> 
-        <!-- <el-dialog width="10px" max-height="10px" :visible.sync="dialogVisible1" style="margin-top: 98%; margin-right: 2%">
+        <el-dialog width="10px" max-height="10px" :visible.sync="dialogVisible1" style="margin-top: 98%; margin-right: 2%">
             <H5Chart1 style="z-index: -9999;" ref="downH5Chart1" :url="url1" width="4000px" height="4000px"></H5Chart1>
         </el-dialog>
         <el-dialog width="10px" max-height="10px" :visible.sync="dialogVisible2" style="margin-top: 98%; margin-right: 2%">
             <H5Chart2 style="z-index: -9999;" ref="downH5Chart2" :url="url1" width="4000px" height="4000px"></H5Chart2>
-        </el-dialog> -->
+        </el-dialog>
     </div>
 </template>
 
@@ -34,14 +34,14 @@
     import {dynamicDataCumulativeOilAndWaterProductionStatusMap} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
     import {downFile} from "@/lib/remBase64Download.js";
     import H5Chart from "@/components/tools/H5Chart/index.vue";
-    // import H5Chart1 from "@/components/tools/H5Chart/index1.vue";
-    // import H5Chart2 from "@/components/tools/H5Chart/index1.vue";
+    import H5Chart1 from "@/components/tools/H5Chart/index1.vue";
+    import H5Chart2 from "@/components/tools/H5Chart/index1.vue";
     let _this;
     export default {
         components: {
             H5Chart,
-            // H5Chart1,
-            // H5Chart2,
+            H5Chart1,
+            H5Chart2,
         },
         props: {
             oilFieldId: {},
@@ -49,12 +49,12 @@
         },
         data() {
             return {
+                url: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-yscl.html',
+                url1: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
+                zztUrl: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-yscl.html',
+                pptUrl: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-paopao.html',
                 dialogVisible1: false,
                 dialogVisible2: false,
-                url: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-yscl.html',
-                url1: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
-                zztUrl: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-yscl.html',
-                pptUrl: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-paopao.html',
                 //选中层位
                 selectPosition: '',
                 //层位所选择内容信息
@@ -413,6 +413,7 @@
         height:calc(100% - 86px);
         display:flex;
         flex-direction: column;
+        padding-bottom:15px;
         .z-search{
             height:60px;
             display: flex;
@@ -420,7 +421,6 @@
         }
         .z-echarts{
             padding-top:15px;
-            padding-bottom:150px;
             width: 100%;
             flex:1;
         }

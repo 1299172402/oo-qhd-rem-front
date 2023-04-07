@@ -1,6 +1,6 @@
 
 <template>
-  <div></div>
+  <div />
 </template>
 
 <script>
@@ -8,13 +8,9 @@
 export default {
   data() {
     return {
-        
-    }
+
+    };
   },
-  methods: {},
+  methods: {}
 };
 </script>
-
-<style scoped>
-
-</style>

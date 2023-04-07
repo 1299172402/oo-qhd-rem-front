@@ -1,6 +1,6 @@
 <!--构造图-->
 <template>
-  <NormalCard class="mt-2">
+  <div class="mt-2">
     <el-row>
       <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable  clearable >
         <el-option
@@ -20,7 +20,7 @@
         </el-image>
       </el-col>
       <el-col :span="12" style="height:100%">
-        <NormalCard style="height:93%" title="地层划分表">
+        <div style="height:93%" title="地层划分表">
           <el-table id="tableData" highlight :data="tableData" height="600">
             <el-table-column label="序号" type="index" align="center" width="100"></el-table-column>
             <!--<el-table-column label="油气田" prop="ogfName" align="center" width="120"></el-table-column>-->
@@ -40,24 +40,19 @@
             <el-table-column label="层位描述" prop="layerDesc" align="center" min-width="240"></el-table-column>
             <el-table-column label="接触关系" prop="contectRelationCode" align="center" min-width="200"></el-table-column>
           </el-table>
-        </NormalCard>
+        </div>
       </el-col>
     </el-row>
-  </NormalCard>
+  </div>
 </template>
 
 <script>
-import NormalCard from "@/components/tools/NormalCard";
-import {fieldOilLayers} from "@/api/rem-02/primaryinfo";
-import {reservoirDataComprehensiveGeologicalMap} from "@/api/rem-01/fielddynamicanalysis";
-import {downFile} from "@/lib/remBase64Download";
-import {exportExcel} from "@/lib/exportExcel";
-import config from "@/config";
+import {fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
+import {reservoirDataComprehensiveGeologicalMap} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
+import {downFile} from "@/lib/remBase64Download.js";
+import {exportExcel} from "@/lib/exportExcel.js";
 
 export default {
-  components: {
-    NormalCard,
-  },
   props: {
     oilFieldId: {
 
@@ -75,10 +70,6 @@ export default {
       src: '../../static/img/blockAnalysisAided/reservoirData/geologicalMap.png',
       tableData: [],
       image: '',
-      baseUrl:
-          process.env.NODE_ENV === "production"
-              ? config.publicRootPath
-              : config.devRootPath,
     };
   },
   watch: {

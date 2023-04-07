@@ -1,115 +1,115 @@
 <template>
   <div class="app-container">
-    <headerSearch class="g-w100 g-h100">
-    <el-form
-      ref="queryForm"
-      :model="queryParams"
-      :inline="true"
-      @keyup.enter.native="searchQuery"
-      style="margin-top:20px"
-    >
-      <el-form-item label="用户名称：" prop="userName">
-        <el-input
-          v-model="queryParams.userName"
-          placeholder="请输入用户名称"
-          clearable
-          style="width: 240px;"
-        />
-      </el-form-item>
-      <el-form-item label="用户昵称：" prop="phonenumber">
-        <el-input
-          v-model="queryParams.nickName"
-          placeholder="请输入用户昵称"
-          clearable
-          style="width: 240px;"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button
-          type="primary"
-          icon="el-icon-search"
-          @click="searchQuery"
-        >
-          搜索
-        </el-button>
-        <el-button icon="el-icon-refresh" @click="searchReset">
-          重置
-        </el-button>
-      </el-form-item>
-    </el-form>
-    </headerSearch>
-    <pagePanelNew headerTitle="分配用户" style="height:calc(100% - 100px);">
-    <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
-      <el-col v-show="isBindUser" :span="1.5">
-        <select-user ref="select" @ok="loadData" :data-sources="dataSource"/>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          v-hasPermi="['system:tenant:unbind']"
-          type="danger"
-          plain
-          :disabled="multiple"
-          @click="cancelBind(userIds)"
-        >
-          {{ isBindUser ? "批量取消关联" : "批量取消绑定" }}
-        </el-button>
-        <el-button
-          type="warning"
-          plain
-          class="commonBtn"
-          @click="handleBack"
-        >
-          返回
-        </el-button>
-      </el-col>
-    </el-row>
-    <div class="footer-box container-box--background" style="height: 100%">
-      <el-table
-        :data="dataSource"
-        height="calc(100% - 45px)"
-        @selection-change="handleSelectionChange"
+    <header-search class="g-w100 g-h100">
+      <el-form
+        ref="queryForm"
+        :model="queryParams"
+        :inline="true"
+        style="margin-top: 20px"
+        @keyup.enter.native="searchQuery"
       >
-        <el-table-column
-          type="selection"
-          :selectable="selectedTable"
-          width="55"
-          align="center"
+        <el-form-item label="用户名称：" prop="userName">
+          <el-input
+            v-model="queryParams.userName"
+            placeholder="请输入用户名称"
+            clearable
+            style="width: 240px;"
+          />
+        </el-form-item>
+        <el-form-item label="用户昵称：" prop="phonenumber">
+          <el-input
+            v-model="queryParams.nickName"
+            placeholder="请输入用户昵称"
+            clearable
+            style="width: 240px;"
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            @click="searchQuery"
+          >
+            搜索
+          </el-button>
+          <el-button icon="el-icon-refresh" @click="searchReset">
+            重置
+          </el-button>
+        </el-form-item>
+      </el-form>
+    </header-search>
+    <page-panel-new header-title="分配用户" style="height: calc(100% - 100px);">
+      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
+        <el-col v-show="isBindUser" :span="1.5">
+          <select-user ref="select" :data-sources="dataSource" @ok="loadData" />
+        </el-col>
+        <el-col :span="1.5">
+          <el-button
+            v-hasPermi="['system:tenant:unbind']"
+            type="danger"
+            plain
+            :disabled="multiple"
+            @click="cancelBind(userIds)"
+          >
+            {{ isBindUser ? "批量取消关联" : "批量取消绑定" }}
+          </el-button>
+          <el-button
+            type="warning"
+            plain
+            class="commonBtn"
+            @click="handleBack"
+          >
+            返回
+          </el-button>
+        </el-col>
+      </el-row>
+      <div class="footer-box container-box--background" style="height: 100%">
+        <el-table
+          :data="dataSource"
+          height="calc(100% - 45px)"
+          @selection-change="handleSelectionChange"
+        >
+          <el-table-column
+            type="selection"
+            :selectable="selectedTable"
+            width="55"
+            align="center"
+          />
+          <el-table-column label="用户名称" prop="userName" :show-overflow-tooltip="true" />
+          <el-table-column label="用户昵称" prop="nickName" :show-overflow-tooltip="true" />
+          <el-table-column label="所属部门" prop="deptName" :show-overflow-tooltip="true" />
+          <el-table-column label="创建时间" prop="createTime" :show-overflow-tooltip="true" />
+          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+            <template slot-scope="scope">
+              <el-button
+                v-if="isBindUser || scope.row.isManager === '1'"
+                v-hasPermi="['system:tenant:unbind']"
+                type="text"
+                @click="cancelBind([scope.row.userId])"
+              >
+                {{ isBindUser ? "取消关联" : "取消绑定" }}
+              </el-button>
+              <el-button
+                v-else
+                v-hasPermi="['system:tenant:bind']"
+                type="text"
+                icon="el-icon-lock"
+                @click="bindManager(scope.row.userId)"
+              >
+                绑定
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <pagination
+          v-show="ipagination.total > 0"
+          :total="ipagination.total"
+          :page.sync="ipagination.pageNum"
+          :limit.sync="ipagination.pageSize"
+          @pagination="handlePage"
         />
-        <el-table-column label="用户名称" prop="userName" :show-overflow-tooltip="true" />
-        <el-table-column label="用户昵称" prop="nickName" :show-overflow-tooltip="true" />
-        <el-table-column label="所属部门" prop="deptName" :show-overflow-tooltip="true" />
-        <el-table-column label="创建时间" prop="createTime" :show-overflow-tooltip="true" />
-        <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-          <template slot-scope="scope">
-            <el-button
-              v-if="isBindUser || scope.row.isManager === '1'"
-              v-hasPermi="['system:tenant:unbind']"
-              type="text"
-              @click="cancelBind([scope.row.userId])"
-            >
-              {{ isBindUser ? "取消关联" : "取消绑定" }}
-            </el-button>
-            <el-button
-              v-else
-              v-hasPermi="['system:tenant:bind']"
-              type="text"
-              icon="el-icon-lock"
-              @click="bindManager(scope.row.userId)"
-            >
-              绑定
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <pagination
-        v-show="ipagination.total > 0"
-        :total="ipagination.total"
-        :page.sync="ipagination.pageNum"
-        :limit.sync="ipagination.pageSize"
-        @pagination="handlePage"
-      />
-    </div>
-    </pagePanelNew>
+      </div>
+    </page-panel-new>
   </div>
 </template>
 
@@ -147,7 +147,7 @@ export default {
     }
   },
   created() {
-    this.dataId = this.$route.params.id;    
+    this.dataId = this.$route.params.id;
     this.queryParams.tenantId = this.dataId;
   },
   methods: {
@@ -159,7 +159,7 @@ export default {
      * 多选框选中数据
      */
     handleSelectionChange(selection) {
-      this.userIds = selection.map((item) => item.userId);
+      this.userIds = selection.map(item => item.userId);
       this.multiple = !selection.length;
     },
     selectedTable(row) {
@@ -181,9 +181,9 @@ export default {
      * 绑定租户管理员
      */
     bindManager(userId) {
-      bindTenantManager({ tenantId: this.dataId, userIds: [userId] }).then((res) => {        
-          this.loadData();
-          this.$modal.msgSuccess("绑定成功");
+      bindTenantManager({ tenantId: this.dataId, userIds: [userId] }).then(() => {
+        this.loadData();
+        this.$modal.msgSuccess("绑定成功");
       });
     },
     /**

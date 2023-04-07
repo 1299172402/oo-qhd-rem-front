@@ -141,6 +141,13 @@ export function generalPressure(data) {
     data
   });
 }
+export function getFetchMeasureInfos(data) {
+  return request({
+    url: `${baseUrl}/oilFieldManagePlanController/getFetchMeasureInfos`,
+    method: "post",
+    data
+  });
+}
 export function getMeasureType() {
   return request({
     url: `${baseUrl}/oilFieldManagePlanController/getMeasureType`,

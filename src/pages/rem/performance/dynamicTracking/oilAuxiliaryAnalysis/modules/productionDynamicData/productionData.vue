@@ -4,9 +4,8 @@
         <div class="z-search">
             <span>日期：</span>
             <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"/>
-            <el-select v-model="selectValue" placeholder="请选择" @change="selectChange" style="margin-left:20px;">
-                <el-option label="分配" value="分配"></el-option>
-                <el-option label="计量" value="计量"></el-option>
+            <el-select v-model="allocOrCalculate" placeholder="请选择" @change="selectChange" style="width:150px;margin-left:20px;">
+                <el-option :label="item.name" :value="item.code" v-for="(item,index) in selectAllocOrCalculate" :key="index"></el-option>
             </el-select>
         </div> 
         <div class="z-echarts">
@@ -34,7 +33,11 @@
         data() {
             return {
                 selectData: [],
-                selectValue:'分配',
+                selectAllocOrCalculate:[
+                    {name:'分配',code:'1'},
+                    {name:'计量',code:'2'},
+                ],
+                allocOrCalculate:'1',
                 option: {
                     tooltip: {
                         trigger: 'axis',
@@ -76,19 +79,19 @@
                             left: "14%",
                             top: "6%",
                             width: "74%",
-                            height: "24%"
+                            height: "26%"
                         },
                         {
                             left: "14%",
-                            top: "38%",
+                            top: "37%",
                             width: "74%",
-                            height: "24%"
+                            height: "26%"
                         },
                         {
                             left: "14%",
-                            top: "66%",
+                            top: "68%",
                             width: "74%",
-                            height: "24%"
+                            height: "28%"
                         },
                     ],
                     xAxis: [
@@ -569,6 +572,7 @@
                     ogfId: this.oilFeildId,
                     platformId: this.platformId,
                     wellId: this.wellId,
+                    allocOrCalculate:this.allocOrCalculate
                 };
                 produceData(request).then((res) => {
                     let seriesData = [];
@@ -698,7 +702,9 @@
                 return series;
             },
             //分配，计量change
-            selectChange(){},
+            selectChange(){
+                this.doSearch();
+            },
             //下载echarts
             doDownLoad() {
                 let res = this.$refs['echartDown'].chart.getDataURL({
@@ -720,15 +726,13 @@
 <style lang="scss" scoped>
     .z-main{
         width: 100%;
-        height:calc(100% - 86px);
-        padding-top:20px;
+        height:calc(100% - 101px);
         display:flex;
         flex-direction: column;
         .z-search{
             height:60px;
         }
         .z-echarts{
-            // background:#000;
             width: 100%;
             flex:1;
         }

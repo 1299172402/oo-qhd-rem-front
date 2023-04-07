@@ -20,7 +20,9 @@
         <t-header><layout-header /></t-header>
         <t-layout>
           <t-aside><layout-sidebar /></t-aside>
-          <t-content :style="{'--paddingNum': this.paddingNum}"><layout-content /></t-content>
+          <t-content :style="{'--padding-num': paddingNum}">
+            <layout-content />
+          </t-content>
         </t-layout>
       </t-layout>
     </template>
@@ -29,18 +31,18 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { mapGetters } from 'vuex';
+import Vue from "vue";
+import { mapGetters } from "vuex";
 
-import LayoutHeader from './components/LayoutHeader.vue';
-import LayoutContent from './components/LayoutContent.vue';
-import LayoutSidebar from './components/LayoutSidebar.vue';
-import Setting from './setting.vue';
+import LayoutHeader from "./components/LayoutHeader.vue";
+import LayoutContent from "./components/LayoutContent.vue";
+import LayoutSidebar from "./components/LayoutSidebar.vue";
+import Setting from "./setting.vue";
 
-import { prefix } from '@/config/global';
-import { SettingType } from '@/interface';
+import { prefix } from "@/config/global";
+import { SettingType } from "@/interface";
 
-import '@/style/layout.less';
+import "@/style/layout.less";
 
 const name = `${prefix}-base-layout`;
 
@@ -50,20 +52,20 @@ export default Vue.extend({
     LayoutHeader,
     LayoutContent,
     LayoutSidebar,
-    Setting,
+    Setting
   },
   data() {
     return {
-      paddingNum: '20px'
-    }
+      paddingNum: "20px"
+    };
   },
   computed: {
     ...mapGetters({
-      tabRouterList: 'tabRouter/tabRouterList',
+      tabRouterList: "tabRouter/tabRouterList"
     }),
     setting(): SettingType {
       return this.$store.state.setting;
-    },
+    }
   },
   watch: {
     $route(newRoute) {
@@ -74,41 +76,41 @@ export default Vue.extend({
         name,
         query
       } = newRoute;
-      this.$store.commit('tabRouter/appendTabRouterList', { path, title, name, query,isAlive: true });
+      this.$store.commit("tabRouter/appendTabRouterList", { path, title, name, query, isAlive: true });
     },
-    '$store.state.user.isGroupLogin': {
+    "$store.state.user.isGroupLogin": {
       handler(newValue) {
         // 投影模式下减少面板内间距填充
-        this.paddingNum = newValue ? '0px' : '20px';
+        this.paddingNum = newValue ? "0px" : "20px";
       },
       deep: true,
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   // 如果不需要持久化标签页可以注释掉created和destroyed的内容
   created() {
-    window.addEventListener('beforeunload', this.setTabRouterListCache);
+    window.addEventListener("beforeunload", this.setTabRouterListCache);
   },
   destroyed() {
-    window.removeEventListener('beforeunload', this.setTabRouterListCache);
+    window.removeEventListener("beforeunload", this.setTabRouterListCache);
   },
   mounted() {
     const {
       path,
       meta: { title },
-      name,
+      name
     } = this.$route;
 
-    if (localStorage.getItem('tabRouterList')) this.getTabRouterListCache();
-    this.$store.commit('tabRouter/appendTabRouterList', { path, title, name, isAlive: true });
+    if (localStorage.getItem("tabRouterList")) this.getTabRouterListCache();
+    this.$store.commit("tabRouter/appendTabRouterList", { path, title, name, isAlive: true });
   },
   methods: {
     getTabRouterListCache() {
-      this.$store.commit('tabRouter/initTabRouterList', JSON.parse(localStorage.getItem('tabRouterList')));
+      this.$store.commit("tabRouter/initTabRouterList", JSON.parse(localStorage.getItem("tabRouterList")));
     },
     setTabRouterListCache() {
-      localStorage.setItem('tabRouterList', JSON.stringify(this.tabRouterList));
-    },
-  },
+      localStorage.setItem("tabRouterList", JSON.stringify(this.tabRouterList));
+    }
+  }
 });
 </script>

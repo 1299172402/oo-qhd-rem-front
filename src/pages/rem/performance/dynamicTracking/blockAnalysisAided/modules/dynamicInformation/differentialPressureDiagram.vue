@@ -1,6 +1,6 @@
 <!--注水强度等值图-->
 <template>
-  <NormalCard class="mt-2">
+  <div class="mt-2">
     <el-row style="margin-top:10px">
       <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable  clearable >
         <el-option
@@ -27,20 +27,18 @@
     <el-dialog width="10px" max-height="10px" :visible.sync="dialogVisible1" style="margin-top: 98%; margin-right: 2%">
       <H5Chart1 style="z-index: -9999;" ref="downH5Chart1" :url="url1" width="4000px" height="4000px"></H5Chart1>
     </el-dialog>
-  </NormalCard>
+  </div>
 </template>
 
 <script>
-import {fieldOilLayers} from "@/api/rem-02/primaryinfo";
-import {dynamicDataDifferentialPressureDiagram} from "@/api/rem-01/fielddynamicanalysis";
-import NormalCard from "@/components/tools/NormalCard";
-import {downFile} from "@/lib/remBase64Download";
-import H5Chart from "@/components/tools/H5Chart/index";
-import H5Chart1 from "@/components/tools/H5Chart/index1";
+import {fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
+import {dynamicDataDifferentialPressureDiagram} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
+import {downFile} from "@/lib/remBase64Download.js";
+import H5Chart from "@/components/tools/H5Chart/index.vue";
+import H5Chart1 from "@/components/tools/H5Chart/index1.vue";
 let _this;
 export default {
   components: {
-    NormalCard,
     H5Chart,
     H5Chart1,
   },

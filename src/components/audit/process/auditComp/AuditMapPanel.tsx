@@ -71,12 +71,12 @@ export default Vue.extend({
             nodeCover.style.position = "absolute";
             const coords = node.position.split(",").map(v => v * this.scale.rate);
             nodeCover.className = "node-cover";
-            nodeCover.style.width = `${coords[2] - coords[0]  }px`;
-            nodeCover.style.height = `${coords[3] - coords[1]  }px`;
-            nodeCover.style.left = `${coords[0]  }px`;
-            nodeCover.style.top = `${coords[1]  }px`;
+            nodeCover.style.width = `${coords[2] - coords[0]}px`;
+            nodeCover.style.height = `${coords[3] - coords[1]}px`;
+            nodeCover.style.left = `${coords[0]}px`;
+            nodeCover.style.top = `${coords[1]}px`;
             nodeCover.style.textAlign = "center";
-            nodeCover.style.lineHeight = `${(coords[3] - coords[1]) * 2 - 20  }px`;
+            nodeCover.style.lineHeight = `${(coords[3] - coords[1]) * 2 - 20}px`;
             nodeCover.setAttribute("attrDataLeft", coords[0]);
             document.getElementById("flowMapWrapper").append(nodeCover);
 
@@ -91,7 +91,7 @@ export default Vue.extend({
               const taskEl = document.createElement("div");
               taskEl.className = "node-cover-tip__item";
               const activityNameEl = document.createElement("div");
-              activityNameEl.innerText = `节点名称：${  node.activityName}`;
+              activityNameEl.innerText = `节点名称：${node.activityName}`;
               taskEl.append(activityNameEl);
               tipWrapper.prepend(taskEl);
             } else {
@@ -100,29 +100,29 @@ export default Vue.extend({
                   const taskEl = document.createElement("div");
                   taskEl.className = "node-cover-tip__item";
                   const activityNameEl = document.createElement("div");
-                  activityNameEl.innerText = `节点名称：${  node.activityName}`;
+                  activityNameEl.innerText = `节点名称：${node.activityName}`;
                   taskEl.append(activityNameEl);
                   const timeEl = document.createElement("div");
-                  timeEl.innerText = `跳过时间：${  task.endTime && dayJs(task.endTime).format("YYYY-MM-DD HH:mm:ss") || ""}`;
+                  timeEl.innerText = `跳过时间：${task.endTime && dayJs(task.endTime).format("YYYY-MM-DD HH:mm:ss") || ""}`;
                   taskEl.append(timeEl);
                   tipWrapper.prepend(taskEl);
                 } else {
                   const taskEl = document.createElement("div");
                   taskEl.className = "node-cover-tip__item";
                   const activityNameEl = document.createElement("div");
-                  activityNameEl.innerText = `节点名称：${  node.activityName}`;
+                  activityNameEl.innerText = `节点名称：${node.activityName}`;
                   taskEl.append(activityNameEl);
                   const assigneeNameEl = document.createElement("div");
-                  assigneeNameEl.innerText = `审批人：${  task.assigneeName}`;
+                  assigneeNameEl.innerText = `审批人：${task.assigneeName}`;
                   taskEl.append(assigneeNameEl);
                   const statusEl = document.createElement("div");
-                  statusEl.innerText = `审批状态：${  getActionDesc(task, task.endTime ? "发起申请" : "当前处理人")}`;
+                  statusEl.innerText = `审批状态：${getActionDesc(task, task.endTime ? "发起申请" : "当前处理人")}`;
                   taskEl.append(statusEl);
                   const timeEl = document.createElement("div");
-                  timeEl.innerText = `审批时间：${  task.endTime && dayJs(task.endTime).format("YYYY-MM-DD HH:mm:ss") || ""}`;
+                  timeEl.innerText = `审批时间：${task.endTime && dayJs(task.endTime).format("YYYY-MM-DD HH:mm:ss") || ""}`;
                   taskEl.append(timeEl);
                   const commentEl = document.createElement("div");
-                  commentEl.innerText = `审批意见：${  task.opinion || !task.operation && task.endTime && "发起流程" || ""}`;
+                  commentEl.innerText = `审批意见：${task.opinion || !task.operation && task.endTime && "发起流程" || ""}`;
                   taskEl.append(commentEl);
                   tipWrapper.prepend(taskEl);
                 }
@@ -141,19 +141,19 @@ export default Vue.extend({
             const leftCom = (flowMapWrapper.offsetWidth - 226 - 62);
             // 上下右侧放不下时将气泡放左侧
             if (left > leftCom) {
-              tipWrapper.style.left = `${coords[0] - 226 - 15 + (isNotArrive ? 6 : 0)  }px`;
-              tipWrapper.style.top = `${isNotArrive ? (+coords[3] + +coords[1]) / 2 - 15 : coords[1]  }px`;
+              tipWrapper.style.left = `${coords[0] - 226 - 15 + (isNotArrive ? 6 : 0)}px`;
+              tipWrapper.style.top = `${isNotArrive ? (+coords[3] + +coords[1]) / 2 - 15 : coords[1]}px`;
               className += " node-cover-tip--right";
             } else {
-              tipWrapper.style.left = `${left  }px`;
+              tipWrapper.style.left = `${left}px`;
               className += " node-cover-tip";
 
               // 如果顶部距离不够展示，将气泡放在下方显示
               if (top < -2) {
-                tipWrapper.style.top = `${15 + +coords[3]  }px`;
+                tipWrapper.style.top = `${15 + +coords[3]}px`;
                 className += " node-cover-tip--long";
               } else {
-                tipWrapper.style.top = `${top  }px`;
+                tipWrapper.style.top = `${top}px`;
               }
             }
             if (isNotArrive) {
@@ -194,16 +194,16 @@ export default Vue.extend({
           src={this.dataSource}
           style="opacity: 0;position: absolute;"
           alt="审批地图"
-          onload={() => this.handleImgLoad('real')}
+          onload={() => this.handleImgLoad("real")}
         />
         <img
           ref="now"
           src={this.dataSource}
           style="max-width: 100%"
           alt="审批地图"
-          onLoad={() => this.handleImgLoad('now')}
+          onLoad={() => this.handleImgLoad("now")}
         />
       </div>
-    )
+    );
   }
-})
+});

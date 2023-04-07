@@ -12,7 +12,7 @@ export const modelSchema: ModelSchema = {
   attachments: "",
   editableFormFields: [],
   extendProperties: []
-}
+};
 
 interface ActionOption {
     value: keyof ActionMap,

@@ -1,14 +1,12 @@
 <!--综合开发曲线-->
 <template>
   <div class="gradientBoxLeft">
-    <NormalCard title="综合开发曲线" style="margin-top:10px">
       <template slot="header">
         <div style="float: right; line-height: 30px; padding-right: 20px">
           <el-button size="mini" @click="dialogVisible = true">选择指标信息</el-button>
         </div>
       </template>
       <Echart ref="echartDown" :chart-data="option" style="height: 600px"></Echart>
-    </NormalCard>
     <el-dialog
         title="选择查看指标信息"
         :visible.sync="dialogVisible"
@@ -26,16 +24,13 @@
 </template>
 
 <script>
-import Echart from "@/components/tools/Echarts";
-import NormalCard from "@/components/tools/NormalCard";
-import {dynamicDataComprehensiveDevelopmentCurve} from "@/api/rem-01/fielddynamicanalysis";
-import echarts from "echarts";
+import Echart from "@/components/tools/Echarts/index.vue";
+import {dynamicDataComprehensiveDevelopmentCurve} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
+import * as echarts from "echarts";
 import FileSaver from 'file-saver';
-
 export default {
   components: {
-    Echart,
-    NormalCard
+    Echart
   },
   props: {
     oilFieldId: {},

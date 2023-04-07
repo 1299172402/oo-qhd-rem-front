@@ -15,7 +15,7 @@
       />
       <el-table-column label="操作" width="120" align="center">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleDelete(scope.$index, scope.row)" class="delbutton">
+          <el-button type="text" class="delbutton" @click="handleDelete(scope.$index, scope.row)">
             删除
           </el-button>
         </template>

@@ -12,7 +12,14 @@
         <path d="M11.5 8L8 11.5L4.5 8" stroke="currentColor" stroke-width="1.5" />
         <path d="M8 11L8 4" stroke="currentColor" stroke-width="1.5" />
       </svg>
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" v-else>
+      <svg
+        v-else
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path d="M4.5 8L8 4.5L11.5 8" stroke="currentColor" stroke-width="1.5" />
         <path d="M8 5V12" stroke="currentColor" stroke-width="1.5" />
       </svg>
@@ -21,36 +28,36 @@
   </span>
 </template>
 <script>
-import Vue from 'vue';
+import Vue from "vue";
 
 export default Vue.extend({
-  name: 'Trend',
+  name: "Trend",
 
   props: {
     type: String,
     describe: [String, Number],
-    isReverseColor: Boolean,
+    isReverseColor: Boolean
   },
   computed: {
     containerCls() {
       return [
-        'trend-container',
+        "trend-container",
         {
-          'trend-container__reverse': this.isReverseColor,
-          'trend-container__up': !this.isReverseColor && this.type === 'up',
-          'trend-container__down': !this.isReverseColor && this.type === 'down',
-        },
+          "trend-container__reverse": this.isReverseColor,
+          "trend-container__up": !this.isReverseColor && this.type === "up",
+          "trend-container__down": !this.isReverseColor && this.type === "down"
+        }
       ];
     },
     iconCls() {
-      return ['trend-icon-container'];
-    },
-  },
+      return ["trend-icon-container"];
+    }
+  }
 });
 </script>
 
 <style lang="less" scoped>
-@import '@/style/variables.less';
+@import "@/style/variables.less";
 
 .trend {
   &-container {
@@ -79,7 +86,7 @@ export default Vue.extend({
     }
 
     &__reverse {
-      color: #ffffff;
+      color: #fff;
       display: inline-flex;
       align-items: center;
       justify-content: center;

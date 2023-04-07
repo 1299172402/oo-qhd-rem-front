@@ -1,4 +1,4 @@
-import "../styles/AuditPanelStyle.less"
+import "../styles/AuditPanelStyle.less";
 import Vue from "vue";
 import { cloneDeep } from "lodash";
 import ActionType from "@/components/audit/process/auditSave/ActionType";
@@ -24,10 +24,10 @@ const actionMap: Readonly<ActionMap> = {
 
 export default Vue.extend({
   name: "AuditPanel",
-  inject: ["auditContext"],
   components: {
     SelectNextAudit
   },
+  inject: ["auditContext"],
   props: {
     dataSource: {
       type: Object,
@@ -48,7 +48,7 @@ export default Vue.extend({
           {
             message: "请先选择处理节点",
             // trigger: ["change", "blur"],
-            validator: (this as any).nextActIdValidator,
+            validator: (this as any).nextActIdValidator
           }
         ],
         parallelNodeAuditInfo: [{ required: true, message: "请选择处理人", trigger: ["blur"], transform: (this as any).parallelNodeAuditInfoTransform }]
@@ -101,7 +101,7 @@ export default Vue.extend({
       const accAct = this.dataSource.acceptActions;
       if (accAct && accAct.includes(keyword)) {
         typeArray.push({ key: "Delegate", value: "新增处理节点" });
-        if (!this.operateFlowAuth) { this.setNodeType(keyword) }
+        if (!this.operateFlowAuth) { this.setNodeType(keyword); }
       }
       return typeArray;
     },
@@ -113,15 +113,14 @@ export default Vue.extend({
         return [{ key: "Delegate", disabled: false, value: "通过", action: ActionType.DELEGATE },
           { key: "Reject", disabled: true, value: "退回", action: ActionType.REJECT },
           { key: "bohui", disabled: true, value: "驳回", action: "bohui" }]; // TODO:
-      } 
+      }
       const result = this.actions;
       if (result) {
         result.forEach(element => {
-          element.disabled = !accAct.includes(element.key)
+          element.disabled = !accAct.includes(element.key);
         });
       }
       return result;
-            
     },
     auditDataReduction() {
       const dataReturned: any = {};
@@ -132,7 +131,7 @@ export default Vue.extend({
         } else {
           // 流程回到我
           if (!dataReturned.delegateInfo) {
-            dataReturned.delegateInfo = {}
+            dataReturned.delegateInfo = {};
           }
           dataReturned.delegateInfo.flowBackToMe = this.auditInfo.flowBackToMe;
         }
@@ -143,7 +142,7 @@ export default Vue.extend({
       // 附件
       dataReturned.attachments = this.auditInfo.attachments;
 
-      const {action} = this.auditInfo.currentAction;
+      const { action } = this.auditInfo.currentAction;
       return { dataReturned, action };
     },
     isResolve() {
@@ -164,11 +163,11 @@ export default Vue.extend({
     /**
          * 下一节点审批人的prop
          */
-    nextAuditInfoProp () {
+    nextAuditInfoProp() {
       if (this.onlyActivity) {
         return "nextAuditInfoNextActId";
-      } 
-      return (this.isParallelNode ? "parallelNodeAuditInfo" : "nextAuditInfo")
+      }
+      return (this.isParallelNode ? "parallelNodeAuditInfo" : "nextAuditInfo");
     },
     /**
          * 显示审批意见
@@ -242,13 +241,13 @@ export default Vue.extend({
   },
   methods: {
     nextActIdValidator() {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         if (this.auditInfo.nextAuditInfo.nextActId) {
-          resolve({ result: true});
+          resolve({ result: true });
         } else {
-          resolve({ result: false, message: "请选择处理节点", type: "error"});
+          resolve({ result: false, message: "请选择处理节点", type: "error" });
         }
-      })
+      });
     },
     selectAuditorOk(prarms) {
       this.auditInfo.nextAuditInfo = prarms;
@@ -327,7 +326,7 @@ export default Vue.extend({
       <t-textarea
         placeholder="请输入处理意见"
         clearable
-        onChange={(val) => { this.auditInfo.opinion = val }} />
+        onChange={val => { this.auditInfo.opinion = val; }} />
     </t-form-item>);
     // 驳回组件
     const terminateEl = (
@@ -339,7 +338,7 @@ export default Vue.extend({
         <t-textarea
           placeholder="请输入处理意见"
           clearable
-          onChange={(val) => { this.auditInfo.opinion = val }} />
+          onChange={val => { this.auditInfo.opinion = val; }} />
       </t-form-item>
     );
     // 处理意见元素
@@ -351,22 +350,22 @@ export default Vue.extend({
       <t-textarea
         placeholder="请输入处理意见"
         clearable
-        onChange={(val) => { this.auditInfo.opinion = val }} />
+        onChange={val => { this.auditInfo.opinion = val; }} />
     </t-form-item>);
     //  流程回到我
     const curFlowBackToMeModeEl = (
       <t-form-item label="流程回到我">
-        <t-checkbox onChange={(val) => { this.auditInfo.flowBackToMe = val }} disabled={this.curFlowBackToMeMode === "back"} />
+        <t-checkbox onChange={val => { this.auditInfo.flowBackToMe = val; }} disabled={this.curFlowBackToMeMode === "back"} />
       </t-form-item>
-    )
+    );
 
     let terminateOrOpinionEl;
     if (this.opinionRequired) {
       terminateOrOpinionEl = opinionEl;
-    } else if (this.auditInfo.currentAction.key === "Terminate"){
+    } else if (this.auditInfo.currentAction.key === "Terminate") {
       terminateOrOpinionEl = terminateEl;
     } else {
-      terminateOrOpinionEl = defaultOpinionEl
+      terminateOrOpinionEl = defaultOpinionEl;
     }
 
     const nextAuditUserEl = <t-form-item
@@ -377,29 +376,29 @@ export default Vue.extend({
     >
       <div class={"audit-panel-next-node"}>
         <div>
-          <t-select value={this.nodeType} onChange={(val) => { this.nodeType = val }}>
+          <t-select value={this.nodeType} onChange={val => { this.nodeType = val; }}>
             {
               this.nextNodeType.map(item => <t-option key={item.value} label={item.value} value={item.key} />)
             }
           </t-select>
         </div>
-        <SelectNextAudit 
+        <SelectNextAudit
           nodeType={this.nodeType}
           dataSource={this.dataSource}
           watch-value={this.selectNextAuditWatch}
           class={"select-next-audit"}
-          onParallelNode={(val) => {this.isParallelNode = val}}
+          onParallelNode={val => { this.isParallelNode = val; }}
           onSelectAuditorOk={this.selectAuditorOk}
         />
       </div>
-    </t-form-item>
+    </t-form-item>;
 
     return (
       <t-form ref={"form"} rules={this.rules} data={this.auditInfo}>
         {
           this.flowShowAction && !this.isSelectNode ? <t-form-item label="处理操作" name="name" initialData="TDesign">
             {
-              !this.defaultAction ? <t-radio-group value={this.auditInfo.currentAction.key} onChange={(val) => {
+              !this.defaultAction ? <t-radio-group value={this.auditInfo.currentAction.key} onChange={val => {
                 this.auditInfo.currentAction.key = val;
                 if (val === "Reject") this.auditInfo.nextAuditInfo.nextActId = undefined;
                 this.$set(this.auditInfo, "currentAction", cloneDeep(
@@ -428,11 +427,11 @@ export default Vue.extend({
         {
           !this.isResolve && this.auditInfo.currentAction.key !== "Reject" && this.defaultAction !== "Terminate" ? nextAuditUserEl : null
         }
-       
+
         {
           this.nodeType === "Delegate" && this.curFlowBackToMeMode !== "go" ? curFlowBackToMeModeEl : null
         }
       </t-form>
-    )
+    );
   }
-})
+});

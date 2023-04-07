@@ -38,64 +38,69 @@
       <el-divider direction="vertical" />
       <el-container direction="vertical">
         <div>
-          <headerSearch class="g-w100 g-h100">
-          <el-header style="height: 50px;">
-            <el-form
-              ref="queryForm"
-              :model="queryParams"
-              :inline="true"
-              @keyup.enter.native="searchQuery"
-              style="margin-top:20px"
-            >
-              <el-form-item label="用户名称：" prop="userName">
-                <el-input v-model="queryParams.userName" placeholder="请输入用户名称" clearable />
-              </el-form-item>
-              <el-form-item label="手机号码：" prop="phonenumber">
-                <el-input v-model="queryParams.phonenumber" placeholder="请输入手机号码" clearable />
-              </el-form-item>
-              <el-form-item>
-                <el-button type="primary" icon="el-icon-search" @click="searchQuery">
-                  搜索
-                </el-button>
-                <el-button icon="el-icon-refresh" @click="searchReset">
-                  重置
-                </el-button>
-              </el-form-item>
-            </el-form>
-          </el-header>
-          </headerSearch>
-          <pagePanelNew headerTitle="分配用户" style="height:calc(100% - 100px);">
-          <el-main class="container">
-            <el-table
-              ref="table"
-              height="415px"
-              :data="dataSource"
-              :row-key="getRowKey"
-              @selection-change="handleSelectionChange"
-            >
-              <el-table-column type="selection" :reserve-selection="true" :selectable="selectable" width="55" />
-              <el-table-column label="用户账号" prop="userName" :show-overflow-tooltip="true" />
-              <el-table-column label="用户名称" prop="nickName" :show-overflow-tooltip="true" />
-              <el-table-column label="所属机构" prop="dept.deptName" :show-overflow-tooltip="true" />
-              <el-table-column label="用户岗位" prop="posts[0].postName" :show-overflow-tooltip="true" />
-              <el-table-column label="用户邮箱" prop="email" :show-overflow-tooltip="true" />
-              <el-table-column label="用户手机" prop="phonenumber" :show-overflow-tooltip="true" />
-              <el-table-column label="状态" align="center" prop="status">
-                <template slot-scope="scope">
-                  <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status" />
-                </template>
-              </el-table-column>
-            </el-table>
-            <pagination
-              v-show="ipagination.total > 0"
-              :total="ipagination.total"
-              :page.sync="ipagination.pageNum"
-              :limit.sync="ipagination.pageSize"
-              style="position: relative; margin-top: 20px;"
-              @pagination="handlePage"
-            />
-          </el-main>
-          </pagePanelNew>
+          <header-search class="g-w100 g-h100">
+            <el-header style="height: 50px;">
+              <el-form
+                ref="queryForm"
+                :model="queryParams"
+                :inline="true"
+                style="margin-top: 20px"
+                @keyup.enter.native="searchQuery"
+              >
+                <el-form-item label="用户名称：" prop="userName">
+                  <el-input v-model="queryParams.userName" placeholder="请输入用户名称" clearable />
+                </el-form-item>
+                <el-form-item label="手机号码：" prop="phonenumber">
+                  <el-input v-model="queryParams.phonenumber" placeholder="请输入手机号码" clearable />
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" icon="el-icon-search" @click="searchQuery">
+                    搜索
+                  </el-button>
+                  <el-button icon="el-icon-refresh" @click="searchReset">
+                    重置
+                  </el-button>
+                </el-form-item>
+              </el-form>
+            </el-header>
+          </header-search>
+          <page-panel-new header-title="分配用户" style="height: calc(100% - 100px);">
+            <el-main class="container">
+              <el-table
+                ref="table"
+                height="415px"
+                :data="dataSource"
+                :row-key="getRowKey"
+                @selection-change="handleSelectionChange"
+              >
+                <el-table-column
+                  type="selection"
+                  :reserve-selection="true"
+                  :selectable="selectable"
+                  width="55"
+                />
+                <el-table-column label="用户账号" prop="userName" :show-overflow-tooltip="true" />
+                <el-table-column label="用户名称" prop="nickName" :show-overflow-tooltip="true" />
+                <el-table-column label="所属机构" prop="dept.deptName" :show-overflow-tooltip="true" />
+                <el-table-column label="用户岗位" prop="posts[0].postName" :show-overflow-tooltip="true" />
+                <el-table-column label="用户邮箱" prop="email" :show-overflow-tooltip="true" />
+                <el-table-column label="用户手机" prop="phonenumber" :show-overflow-tooltip="true" />
+                <el-table-column label="状态" align="center" prop="status">
+                  <template slot-scope="scope">
+                    <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status" />
+                  </template>
+                </el-table-column>
+              </el-table>
+              <pagination
+                v-show="ipagination.total > 0"
+                :total="ipagination.total"
+                :page.sync="ipagination.pageNum"
+                :limit.sync="ipagination.pageSize"
+                style="position: relative; margin-top: 20px;"
+                @pagination="handlePage"
+              />
+            </el-main>
+          </page-panel-new>
         </div>
       </el-container>
       <el-divider direction="vertical" />
@@ -136,7 +141,7 @@ export default {
     dataSources: {
       type: Array,
       default: () => ([])
-    }    
+    }
   },
   data() {
     return {
@@ -170,22 +175,21 @@ export default {
     this.getTreeselect();
   },
   methods: {
-    selectable(row, index){
+    selectable(row) {
       if (this.tableData.indexOf(row.userId) >= 0) {
-        return false
-      } else {
-        return true
+        return false;
       }
+      return true;
     },
     handleOpen() {
-      this.loadData()
+      this.loadData();
       this.$nextTick(() => {
-        this.tableData = this.dataSources.map(v => v.userId)
-        this.dataSource.forEach((row) => {
+        this.tableData = this.dataSources.map(v => v.userId);
+        this.dataSource.forEach(row => {
           if (this.tableData.indexOf(row.userId) >= 0) {
-            this.$refs.table.toggleRowSelection(row, true);     
+            this.$refs.table.toggleRowSelection(row, true);
           } else {
-            this.$refs.table.toggleRowSelection(row, false);         
+            this.$refs.table.toggleRowSelection(row, false);
           }
         });
       });
@@ -194,7 +198,7 @@ export default {
      * 查询部门下拉树结构
      */
     getTreeselect() {
-      treeselect().then((response) => {
+      treeselect().then(response => {
         this.deptOptions = response.data.data;
       });
     },
@@ -229,12 +233,12 @@ export default {
      * 选择分配用户操作
      */
     handleSelectUser() {
-      this.userIds = this.selectedUser.map((item) => item.userId);
+      this.userIds = this.selectedUser.map(item => item.userId);
       if (this.userIds.length === 0) {
         this.$modal.msgError("请选择要关联的用户");
         return;
       }
-      bindTenantUser({ tenantId: this.$route.params.id, userIds: this.userIds }).then((res) => {
+      bindTenantUser({ tenantId: this.$route.params.id, userIds: this.userIds }).then(res => {
         if (res ? res.data.code === 200 : false) {
           this.$modal.msgSuccess("关联成功");
           this.$emit("ok");
