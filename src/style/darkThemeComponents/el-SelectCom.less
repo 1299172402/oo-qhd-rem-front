@@ -42,6 +42,10 @@
   border-bottom-color: var(--drop-down-color);
 }
 
+.el-select-dropdown .popper__arrow {
+  display: none;
+}
+
 .el-select-dropdown.is-multiple .el-select-dropdown__item.selected {
   background: linear-gradient(to right, rgba(2, 30, 54, 0.2), rgba(0, 144, 188, 0.8));
 }
@@ -49,6 +53,11 @@
 .el-tag.el-tag--info {
   background: transparent;
   border-color: var(--light-blue-color);
+}
+
+.el-select__tags .el-tag.el-tag--info {
+  background: rgba(52,144,211,0.4) !important;
+  border: unset !important;
 }
 
 .dropdown {

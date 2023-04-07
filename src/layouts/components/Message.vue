@@ -1,7 +1,7 @@
 <template>
   <t-popup
     expand-animation
-    placement="bottom-right"
+    placement="bottom"
     trigger="click"
     :visible="isNoticeVisible"
     @visible-change="onPopupVisibleChange"
@@ -11,7 +11,7 @@
         <div class="header-msg-top">
           <p>通知</p>
           <t-button
-            v-if="unreadMsg.length > 0"
+            v-if="tableData.length > 0"
             class="clear-btn"
             variant="text"
             theme="primary"
@@ -20,22 +20,22 @@
             清空
           </t-button>
         </div>
-        <t-list v-if="unreadMsg.length > 0" class="narrow-scrollbar" :split="true">
-          <t-list-item v-for="(item, index) in unreadMsg" :key="index">
+        <t-list v-if="tableData.length > 0" class="narrow-scrollbar" :split="true">
+          <t-list-item v-for="(item, index) in tableData" :key="index">
             <div>
               <p class="msg-content">
-                {{ item.content }}
+                {{ item.alarmContent }}
               </p>
               <p class="msg-type">
-                {{ item.type }}
+                {{ item.typeName }}
               </p>
             </div>
             <p class="msg-time">
-              {{ item.date }}
+              {{ item.alarmTime }}
             </p>
             <template #action>
-              <t-button size="small" variant="outline" @click="setRead('radio', item)">
-                设为已读
+              <t-button size="small" variant="outline" @click="sureWarn(item)">
+                {{ item.delType === '1' ? '确认': '处理' }}
               </t-button>
             </template>
           </t-list-item>
@@ -46,7 +46,6 @@
           <p>暂无通知</p>
         </div>
         <div class="header-msg-bottom">
-          <!-- v-if="unreadMsg.length > 0" -->
           <t-button
             class="header-msg-bottom-link"
             variant="text"
@@ -58,7 +57,7 @@
         </div>
       </div>
     </template>
-    <t-badge :count="unreadMsg.length" :offset="[15, 21]">
+    <t-badge :count="tableData.length" :offset="[15, 21]">
       <t-button
         theme="default"
         shape="square"
@@ -75,9 +74,11 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapState, mapGetters } from "vuex";
+import { mapState } from "vuex";
 // import { NotificationIcon } from 'tdesign-icons-vue';
-
+import {
+  queryAlcAlarmByParam, updateAlcAlarmCheckTag
+} from "@/api/intelligentOilfield/portal/projectionMode";
 import { NotificationItem } from "@/interface";
 
 export default Vue.extend({
@@ -86,14 +87,44 @@ export default Vue.extend({
   },
   data() {
     return {
-      isNoticeVisible: false
+      tableData: [],
+      isNoticeVisible: false,
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10
+      }
     };
   },
   computed: {
-    ...mapState("notification", ["msgData"]),
-    ...mapGetters("notification", ["unreadMsg"])
+    ...mapState("notification", ["msgData"])
+  },
+  created() {
+    this.getList();
   },
   methods: {
+    sureWarn(row) {
+      if (row.delType === "1") {
+        const queryParam = {
+          alarmId: row.alarmId
+        };
+        // 确认接口
+        this.$modal.confirm("是否已确定告警内容？").then(() =>
+          updateAlcAlarmCheckTag(queryParam).then(() => {
+            this.getList();
+          }));
+      } else {  // 处置
+        window.open(row.delUrl, "_blank");
+      }
+    },
+    getList() {
+      // 获取列表
+      this.tableData = [];
+      if (process.env.NODE_ENV !== "development" && window.location.host !== "114.115.233.247:38085") {
+        queryAlcAlarmByParam(this.queryParams).then(response => {
+          this.tableData = response.data.rows;
+        });
+      }
+    },
     onPopupVisibleChange(visible: boolean, context) {
       if (context.trigger === "trigger-element-click") {
         this.isNoticeVisible = true;
@@ -102,7 +133,8 @@ export default Vue.extend({
       this.isNoticeVisible = visible;
     },
     goDetail() {
-      this.$router.push("/stationMessage/stationMessageDetail");
+      // 地址等待更新
+      window.open("", "_blank");
       this.isNoticeVisible = false;
     },
     setRead(type: string, item?: NotificationItem) {

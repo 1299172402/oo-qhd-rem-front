@@ -355,6 +355,9 @@
     <div class="headerTitle spaceMargin">
       7、单选按钮=========================================================================================
     </div>
+    <div class="spaceMargin">
+      7.1、el-radio-group按钮样式单选框组
+    </div>
     <el-radio-group v-model="activeTabIndex">
       <el-radio :label="0">
         力导布局
@@ -362,6 +365,15 @@
       <el-radio :label="1">
         树形布局
       </el-radio>
+    </el-radio-group>
+    <div class="spaceMargin">
+      7.2、el-radio-group按钮样式
+    </div>
+    <el-radio-group v-model="radio1">
+      <el-radio-button label="上海" />
+      <el-radio-button label="北京" />
+      <el-radio-button label="广州" />
+      <el-radio-button label="深圳" />
     </el-radio-group>
     <div class="headerTitle spaceMargin">
       8、多选按钮=========================================================================================
@@ -649,6 +661,7 @@ export default {
   },
   data() {
     return {
+      radio1: "上海",
       tableData1: [{
         date: "2016-05-03",
         name: "王小虎",

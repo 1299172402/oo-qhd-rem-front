@@ -4,7 +4,7 @@
       <el-upload
         ref="upload"
         list-type="picture-card"
-        :action="uploadFileUrl"
+        action=""
         :before-upload="handleBeforeUpload"
         :limit="limit"
         :on-error="handleUploadError"
@@ -14,6 +14,7 @@
         :on-remove="handleRemove"
         :headers="headers"
         :file-list="imageList"
+        :http-request="httpRequest"
         class="upload-file-uploader upload-file-picture"
         :class="[fileList.length >= limit ? 'hide-upload' : '']"
       >
@@ -28,7 +29,7 @@
         v-if="showUpload"
         ref="upload"
         multiple
-        :action="uploadFileUrl"
+        action=""
         :before-upload="handleBeforeUpload"
         :file-list="fileList"
         :limit="limit"
@@ -36,7 +37,7 @@
         :on-exceed="handleExceed"
         :on-success="handleUploadSuccess"
         :show-file-list="false"
-        :headers="headers"
+        :http-request="httpRequest"
         class="upload-file-uploader"
       >
         <!-- 上传按钮 -->
@@ -73,6 +74,8 @@
   </div>
 </template>
 <script>
+import { uploadFile } from "@/components/upload/utils/file.ts";
+
 import proxy from "@/config/host";
 
 const env = import.meta.env.MODE || "development";
@@ -102,11 +105,6 @@ export default {
       type: Boolean,
       default: true
     },
-    // 上传url
-    uploadUrl: {
-      type: String,
-      default: "/file/upload"
-    },
     // 是否为照片墙
     isPictureCard: {
       type: Boolean,
@@ -132,9 +130,6 @@ export default {
       uploadList: [],
       imageList: [],
       baseUrl: `${proxy[env].API}`,
-      // 上传的图片服务器地址
-      uploadFileUrl: `${proxy[env].API}${this.uploadUrl}`,
-      headers: { Authorization: `Bearer ${this.$store.getters["user/token"]}` },
       fileList: [],
       dialogImageUrl: "",
       dialogVisible: false
@@ -175,6 +170,14 @@ export default {
     }
   },
   methods: {
+    /**
+     * 使用统一的 axios 处理文件上传，方便统一拦截处理
+     */
+    httpRequest: function(val) {
+      const fd = new FormData();
+      fd.append("file", val.file, val.file.name);
+      return uploadFile(fd);
+    },
     /**
      * 初始化文件
      */

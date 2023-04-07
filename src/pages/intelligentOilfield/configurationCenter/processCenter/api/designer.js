@@ -72,7 +72,8 @@ export function ruleList(id, param) {
 export function exportRule(id) {
   return request({
     url: `/app/rest/act-ruler/model/${id}/export-custom/nocheck`,
-    method: "get"
+    method: "get",
+    returnAll: true
   });
 }
 // 根据id删除节点规则

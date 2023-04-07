@@ -10,12 +10,11 @@
           size="mini"
           @click="updateAllStatus"
         >
-          全部已读({{ num
-          }})
+          全部已读({{ num }})
         </el-button>
       </el-col>
     </el-row>
-    <page-panel header-title="站内信" style="height: calc(100% - 60px);">
+    <page-panel header-title="站内信" style="height: calc(100% - 60px); margin-top: 20px">
       <!-- <el-tabs v-model="activeName" class="g-pageHeader" @tab-click="handleClick">
         <el-tab-pane label="消息列表" name="first"></el-tab-pane>
         <el-tab-pane label="报警列表" name="second"></el-tab-pane>
@@ -27,7 +26,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '2px', 'text-align': 'center' }"
-        style="width: 100%; height: 100%;"
+        style="width: 100%; height: 100%"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column label="序号" type="index" width="50" />
@@ -36,23 +35,27 @@
         <el-table-column
           :label="activeName == 'first' ? '消息标题' : '报警名称'"
           prop="title"
-          width="150"
-          align="center"
+          width="250"
           :show-overflow-tooltip="true"
         />
-        <el-table-column :label="activeName == 'first' ? '消息内容' : '报警内容'" prop="content" align="center" />
+        <el-table-column
+          min-width="150"
+          :label="activeName == 'first' ? '消息内容' : '报警内容'"
+          prop="content"
+          align="center"
+        />
         <el-table-column
           label="来源应用"
           align="center"
           prop="appName"
-          width="150"
+          width="100"
         />
         <!-- <el-table-column label="设施" prop="key5" width="150" align="center" /> -->
         <el-table-column
           label="创建时间"
           align="center"
           prop="createTime"
-          width="180"
+          width="250"
         >
           <template slot-scope="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -148,7 +151,6 @@ export default {
         //   key1:'安全帽识别模型',key2:'安全帽识别',key3:'报警：安全帽识别[2022-10-19 14:12:29]报警地点：CEP_NVR2初见视频监控102报警点;QHD326' +
         //           '下夹板生产汇管-321[CEP-CAM-321]报警等级:二级警报',key4:'云端服务',key5:'设备所属平台',key6:'2022.11.15 18:36',key7:'2',
         // },
-
       ],
       // 查询参数
       queryParams: {
@@ -215,7 +217,6 @@ export default {
   .el-table {
     overflow: scroll;
   }
-
 }
 
 .el-tree {

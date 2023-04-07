@@ -416,13 +416,8 @@ export default Vue.extend({
      * 检查url是否包含srid参数，如果有，将其作为登录接口参数
      */
     checkUrl() {
-      const urlStr = window.location.hash.split("?")[1];
-      if (urlStr) {
-        const urlSearchParams = new URLSearchParams(urlStr);
-        const result = Object.fromEntries(urlSearchParams.entries());
-        if (result.srid) {
-          this.$set(this.formData, "srid", result.srid);
-        }
+      if (this.$route.query && this.$route.query.srid) {
+        this.$set(this.formData, "srid", this.$route.query.srid);
       }
     },
     handleCounter() {

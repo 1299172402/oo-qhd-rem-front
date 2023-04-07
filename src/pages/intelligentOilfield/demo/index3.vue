@@ -23,7 +23,7 @@
         </div>
       </div>
     </header-search>
-    <page-panel-new header-title="角色列表" style="height: calc(100% - 107px);" class="g-w100">
+    <page-panel-new header-title="角色列表" style="height: calc(100% - 100px);" class="g-w100">
       <!-- <gradientBox></gradientBox> -->
       <div class="btnPosition g-row-flex">
         <el-button class="" type="primary">

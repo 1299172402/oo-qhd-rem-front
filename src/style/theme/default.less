@@ -38,7 +38,9 @@
   @import "../lightThemeComponents/el-radioCom.less";
   @import "../lightThemeComponents/el-cascaderCom.less";
   @import "../lightThemeComponents/customizeClass.less";
-
+  @import '../lightThemeComponents/el-collapseCom.less';
+  @import "../lightThemeComponents/el-RadioButton.less";
+  @import '../lightThemeComponents/messageBox.less';
 
   // 自定义浅色模式
   --left-tab: #e7e7e7; // 左菜单分割线
@@ -59,6 +61,8 @@
   --form-text: #606266;
   --svg-line-bg: var(--white-color);
   --only-light-blue-color: #0060a6;
+  --select-input-border: #c0c4cc;   
+  --select-tag-info: rgba(166, 177,184 , 0.2);   
 }
 
 :root[theme-mode="dark"] {
@@ -106,6 +110,8 @@
   @import '../darkThemeComponents/el-cascaderCom.less';
   @import '../darkThemeComponents/customizeClass.less';
   @import '../darkThemeComponents/vxe-table.less';
+  @import '../darkThemeComponents/el-collapseCom.less';
+  @import '../darkThemeComponents/el-RadioButton.less';
 
 
 
@@ -132,5 +138,7 @@
   --el-dialog-color: linear-gradient(to bottom,rgba(0,162,218,0.3),rgba(0,162,218,0.6));
   --white-opacity7: rgba(255,255,255,0.7);
   --svg-line-bg: rgba(0,96,166,0.15);
+  --select-input-border: #627784;
+  --select-tag-info: rgba(83,118,141,0.2);
 }
 /* stylelint-enable */

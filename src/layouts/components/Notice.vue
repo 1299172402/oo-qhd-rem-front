@@ -1,7 +1,7 @@
 <template>
   <t-popup
     expand-animation
-    placement="bottom-right"
+    placement="bottom"
     trigger="click"
     :visible="isNoticeVisible"
     @visible-change="onPopupVisibleChange"

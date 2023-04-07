@@ -1,108 +1,115 @@
 <!-- 分配角色 -->
 <template>
   <div class="app-container">
-    <el-form
-      v-show="showSearch"
-      ref="queryForm"
-      :model="queryParams"
-      :inline="true"
-    >
-      <el-form-item label="用户账号" prop="userName">
-        <el-input
-          v-model="queryParams.userName"
-          placeholder="请输入用户账号"
-          clearable
-          size="small"
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="用户邮箱" prop="email">
-        <el-input
-          v-model="queryParams.email"
-          placeholder="请输入用户邮箱"
-          clearable
-          size="small"
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="用户手机" prop="phonenumber">
-        <el-input
-          v-model="queryParams.phonenumber"
-          placeholder="请输入用户手机"
-          clearable
-          size="small"
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select
-          v-model="queryParams.status"
-          placeholder="请选择状态"
-          clearable
-          size="small"
-        >
-          <el-option
-            v-for="dict in dict.type.sys_normal_disable"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
+    <header-search class="g-w100 g-h100">
+      <el-form
+        v-show="showSearch"
+        ref="queryForm"
+        style="margin-top: 20px"
+        :model="queryParams"
+        :inline="true"
+      >
+        <el-form-item label="用户账号" prop="userName">
+          <el-input
+            v-model="queryParams.userName"
+            placeholder="请输入用户账号"
+            clearable
+            size="small"
+            style="width: 240px"
+            @keyup.enter.native="handleQuery"
           />
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button
-          type="primary"
-          icon="el-icon-search"
-          size="mini"
-          @click="handleQuery"
-        >
-          搜索
-        </el-button>
-        <el-button
-          icon="el-icon-refresh"
-          size="mini"
-          class="commonBtn"
-          @click="resetQuery"
-        >
-          重置
-        </el-button>
-      </el-form-item>
-    </el-form>
-
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          v-hasPermi="['system:role:remove']"
-          type="danger"
-          plain
-          size="mini"
-          :disabled="multiple"
-          :class="multiple == true?'commonBtn':'errorBtn'"
-          @click="cancelAuthUserAll"
-        >
-          取消授权
-        </el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          v-hasPermi="['system:role:add']"
-          type="primary"
-          size="mini"
-          @click="openSelectUser"
-        >
-          增加
-        </el-button>
-      </el-col>
-      <!-- <el-col :span="1.5">
-        <el-button type="warning" plain icon="el-icon-close" size="mini" @click="handleClose">关闭</el-button>
-      </el-col> -->
-      <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
-    </el-row>
-    <page-panel header-title="角色管理">
-      <el-table :data="userList" height="calc(100% - 112px)" @selection-change="handleSelectionChange">
+        </el-form-item>
+        <el-form-item label="用户邮箱" prop="email">
+          <el-input
+            v-model="queryParams.email"
+            placeholder="请输入用户邮箱"
+            clearable
+            size="small"
+            style="width: 240px"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item label="用户手机" prop="phonenumber">
+          <el-input
+            v-model="queryParams.phonenumber"
+            placeholder="请输入用户手机"
+            clearable
+            size="small"
+            style="width: 240px"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item label="状态" prop="status">
+          <el-select
+            v-model="queryParams.status"
+            placeholder="请选择状态"
+            clearable
+            size="small"
+          >
+            <el-option
+              v-for="dict in dict.type.sys_normal_disable"
+              :key="dict.value"
+              :label="dict.label"
+              :value="dict.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            size="mini"
+            @click="handleQuery"
+          >
+            搜索
+          </el-button>
+          <el-button
+            icon="el-icon-refresh"
+            size="mini"
+            class="commonBtn"
+            @click="resetQuery"
+          >
+            重置
+          </el-button>
+        </el-form-item>
+      </el-form>
+    </header-search>
+    <page-panel-new header-title="分配用户">
+      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
+        <el-col :span="1.5">
+          <el-button
+            v-hasPermi="['system:role:remove']"
+            type="danger"
+            plain
+            size="mini"
+            :disabled="multiple"
+            :class="multiple === true ? 'commonBtn' : 'errorBtn'"
+            @click="cancelAuthUserAll"
+          >
+            取消授权
+          </el-button>
+        </el-col>
+        <el-col :span="1.5">
+          <el-button
+            v-hasPermi="['system:role:add']"
+            type="primary"
+            size="mini"
+            @click="openSelectUser"
+          >
+            增加
+          </el-button>
+        </el-col>
+      </el-row>
+      <el-table
+        :data="userList"
+        height="calc(100% - 114px)"
+        :row-style="{ height: '0px' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        header-cell-class-name="table_header"
+        :cell-style="{ padding: '2px', 'text-align': 'center' }"
+        style="width: 100%; height: 100%"
+        @selection-change="handleSelectionChange"
+      >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="序号" type="index" width="80" />
         <el-table-column label="用户账号" prop="userName" :show-overflow-tooltip="true" />
@@ -148,7 +155,7 @@
         :limit.sync="queryParams.pageSize"
         @pagination="getList"
       />
-    </page-panel>
+    </page-panel-new>
 
     <select-user ref="select" :role-id="queryParams.roleId" @ok="handleQuery" />
   </div>
@@ -241,7 +248,7 @@ export default {
     /** 取消授权按钮操作 */
     cancelAuthUser(row) {
       const { roleId } = this.queryParams;
-      //   被取消授权的用户"${row.userName}"将无法正常登录,是否确定?
+      // 被取消授权的用户"${row.userName}"将无法正常登录,是否确定?
       this.$modal
         .confirm(`确认要取消该用户"${row.userName}"角色吗？`)
         .then(() => authUserCancel({ userId: row.userId, roleId }))
@@ -276,6 +283,5 @@ export default {
   .el-table {
     overflow: scroll;
   }
-
 }
 </style>

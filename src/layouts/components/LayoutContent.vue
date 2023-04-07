@@ -128,7 +128,7 @@ export default Vue.extend({
       this.$store.commit("tabRouter/toggleTabRouterAlive", routeIdx);
       this.$nextTick(() => {
         this.$store.commit("tabRouter/toggleTabRouterAlive", routeIdx);
-        this.$router.replace({ path: currentPath });
+        this.$router.replace({ path: currentPath, query: { ...this.$route.query }});
       });
       this.activeTabPath = null;
     },

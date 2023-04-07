@@ -230,7 +230,7 @@
     <div style="margin: 10px 0">
       =================================页面通用面板【具体使用可参照列表示例页】【老版】=================================
     </div>
-    <page-panel header-title="我是标题" style="height: 600px">
+    <page-panel header-title="我是标题" style="height: 600px" :show-btn="true">
       <!-- <div>这里显示主内容，padding为20px</div> -->
       <el-table
         :row-style="{ height: '0px' }"
@@ -271,7 +271,7 @@
     <div style="margin: 10px 0">
       =================================页面通用面板【具体使用可参照列表示例页】【新增】=================================
     </div>
-    <page-panel-new style="height: 600px" />
+    <page-panel-new style="height: 600px" :show-btn="true" />
     <!-- 自定义info信息窗 -->
     <div style="margin: 10px 0">
       =================================自定义info信息窗=================================
@@ -286,9 +286,6 @@
         放主内容
       </div>
     </info-window>
-    <div style="margin: 40px 0">
-      =================================end========================
-    </div>
     <!-- tab切换按钮：横向，可传值，可传背景色和border色系，可控制深浅色系颜色 -->
     <!-- <div style="margin: 10px 0">=================================tab切换按钮：横向，可传值，可传背景色和border色系，可控制深浅色系颜色=================================</div>
     <horizontalSwitchBtn style="margin-bottom: 10px"></horizontalSwitchBtn>

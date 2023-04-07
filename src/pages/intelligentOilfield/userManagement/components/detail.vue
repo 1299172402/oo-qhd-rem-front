@@ -6,94 +6,58 @@
         <info-window
           info-width="100%"
           info-height="100%"
-          header-title="查看用户信息"
+          header-title="用户基础信息"
           :header-style="$store.state.setting.mode === 'dark' ? {} : {color:'#3490D3'}"
         >
           <div style="padding: 10px 20px;overflow: scroll" class="g-w100 g-h100">
             <div class="text-center">
               <user-avatar :user="user" />
               <div style="margin-bottom: 20px">
-                {{ user.nickName }}
+                {{ user.nickName ? user.nickName : "无" }}
               </div>
             </div>
             <ul class="list-group list-group-striped">
               <li class="list-group-item g-flex">
                 <div class="marginRight">
-                  <svg-icon icon-class="tree" />所属机构
+                  所属机构
                 </div>
                 <div v-if="user.dept" class="pull-right rightDiv">
                   {{ user.dept.deptName }}
                 </div>
-              </li>
-              <li class="list-group-item g-flex">
-                <div class="marginRight">
-                  <svg-icon icon-class="peoples" />用户角色
-                </div>
-                <div class="pull-right rightDiv">
-                  {{ roleGroup }}
+                <div v-else>
+                  无
                 </div>
               </li>
               <li class="list-group-item g-flex">
                 <div class="marginRight">
-                  <svg-icon icon-class="post" />
-                  用户岗位
-                </div>
-                <div class="pull-right rightDiv">
-                  {{ postGroup }}
-                </div>
-              </li>
-              <li class="list-group-item g-flex">
-                <div class="marginRight">
-                  <svg-icon icon-class="user" />
-                  用户账号
-                </div>
-                <div class="pull-right rightDiv">
-                  {{ user.userName }}
-                </div>
-              </li>
-              <li class="list-group-item g-flex">
-                <div class="marginRight">
-                  <svg-icon icon-class="phone" />
                   手机号码
                 </div>
                 <div class="pull-right rightDiv">
-                  {{ user.phonenumber }}
+                  {{ user.phonenumber ? user.phonenumber : "无" }}
                 </div>
               </li>
               <li class="list-group-item g-flex">
                 <div class="marginRight">
-                  <svg-icon icon-class="email" />
                   用户邮箱
                 </div>
                 <div class="pull-right rightDiv">
-                  {{ user.email }}
+                  {{ user.email ? user.email : "无" }}
                 </div>
               </li>
               <li class="list-group-item g-flex">
                 <div class="marginRight">
-                  <svg-icon icon-class="tool" />
-                  账号类型
-                </div>
-                <div class="pull-right rightDiv">
-                  {{ user.userType }}
-                </div>
-              </li>
-              <li class="list-group-item g-flex">
-                <div class="marginRight">
-                  <svg-icon icon-class="server" />
                   登录IP
                 </div>
                 <div class="pull-right rightDiv">
-                  {{ user.loginIp }}
+                  {{ user.loginIp ? user.loginIp : "无" }}
                 </div>
               </li>
               <li class="list-group-item g-flex">
                 <div class="marginRight">
-                  <svg-icon icon-class="date" />
                   最近登录时间
                 </div>
                 <div class="pull-right rightDiv">
-                  {{ parseTime(user.loginDate) }}
+                  {{ user.loginDat ? parseTime(user.loginDate) : "无" }}
                 </div>
               </li>
             </ul>
@@ -104,7 +68,7 @@
         <info-window
           info-width="100%"
           info-height="100%"
-          header-title="用户信息"
+          header-title="用户账号信息"
           :header-style="$store.state.setting.mode === 'dark' ? {} : {color:'#3490D3'}"
         >
           <div style="padding: 10px 20px;overflow: scroll" class="g-w100 g-h100">

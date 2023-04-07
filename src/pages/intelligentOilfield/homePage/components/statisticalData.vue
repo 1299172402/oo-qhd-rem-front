@@ -112,6 +112,10 @@ export default {
     operate: {
       type: String,
       default: ""
+    },
+    list: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
@@ -137,6 +141,28 @@ export default {
     };
   },
   watch: {
+    "list": {
+      handler(newVal) {
+        this.echartsList = [];
+        newVal.forEach(item => {
+          this.echartsList.push(item);
+          if (item.isSelected === "1") {
+            // TODO: Maybe change back
+            // item.indexUrl = `${window.location.origin}/#${item.indexUrl}`;
+            this.storeInitSelectedList.push({
+              indexId: item.indexId,
+              tenantId: this.$route.query.tenantId
+            });
+          }
+        });
+        for (let F = 0; F < this.echartsList.length;) {
+          this.echartsLists.push(this.echartsList.slice(F, (F += 6)));
+        }
+        this.$forceUpdate();
+      },
+      deep: true,
+      immediate: true
+    },
     "componentItem.content": {
       handler(newVal) {
         this.echartsList = newVal === "default" ? this.echartsList : [];
@@ -175,7 +201,6 @@ export default {
   },
   mounted() {
     this.getOptionsList();
-    this.getDataList();
     this.getAllData();
   },
   methods: {

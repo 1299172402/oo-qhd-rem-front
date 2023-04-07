@@ -47,7 +47,8 @@
     "vue-cropper": "0.5.5",
     "vxe-table": "^3.6.9",
     "xe-utils": "^3.5.7",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "sm4js": "^0.0.6"
   },
   "devDependencies": {
     "@types/vue-color": "^2.4.3",

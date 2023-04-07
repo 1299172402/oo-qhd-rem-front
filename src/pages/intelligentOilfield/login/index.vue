@@ -1,11 +1,16 @@
 <template>
   <div class="login-wrapper">
-    <div style="display: flex;align-items: center;">
+    <div style="display: flex;align-items: center;height: 77px;padding-left: 23px;">
       <div class="logoDiv" />
-      <!-- TODO: Maybe change back -->
-      <p class="titleDiv">
-        智能油田管理系统
-      </p>
+      <!-- TODO: 内网 Maybe change back -->
+      <div>
+        <p class="titleDiv">
+          天津分公司秦皇岛
+        </p>
+        <p class="titleDiv">
+          智能油田管理系统
+        </p>
+      </div>
     </div>
     <div class="login-Bg">
       <div
