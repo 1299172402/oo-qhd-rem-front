@@ -6,7 +6,7 @@
             <div style="display: flex; align-items: center">
               <div>
                 <span>油田：</span>
-                <el-select v-model="queryData.ogfId" disabled style="width: 180px" @change="changeOil">
+                <el-select v-model="queryData.ogfId" style="width: 180px" @change="changeOil">
                   <el-option
                     v-for="item in oilList"
                     :key="item.ogfId"
@@ -73,14 +73,13 @@
           </div>
         </headerSearch>
         <pagePanelNew>
-          <el-main>
             <div
               title="产量劈分"
               class="m1"
               height="600px"
               style="margin-top: 12px; position: relative; text-align: center"
             >
-              <div style="position: absolute; top: 0; right: 40px">
+              <div style="float: right;padding-bottom: 20px">
                 <el-button type="primary" style="margin-left: 20px" @click="splitSection('splitSection')"
                   >劈分剖面</el-button
                 >
@@ -94,7 +93,7 @@
                 row-key="id"
                 id="clpf"
                 highlight
-                height="calc(100% - 80px)"
+                height="600px"
                 style="width: 100%; margin-top: 10px"
                 :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
               >
@@ -200,20 +199,18 @@
                 </el-table-column>
               </el-table>
             </div>
-          </el-main>
         </pagePanelNew>
   </div>
 </template>
 <script>
-// import NormalCard from "@/components/tools/NormalCard";
-// import {
-//   getProductionSplit,
-//   getOgfInfo,
-//   getblockData,
-//   getWellData,
-//   exportProductionSplit
-// } from "@/api/ipm-04/r-intelligentIPA.js";
-
+import {
+  getProductionSplit,
+  getOgfInfo,
+  getblockData,
+  getWellData,
+  exportProductionSplit
+} from "@/api/rem/injection.js";
+import FileSaver from "file-saver";
 let timeNew = new Date();
 timeNew.setMonth(timeNew.getMonth() - 1);
 timeNew.setDate(1);
@@ -223,7 +220,6 @@ let filterTime = new Date();
 export default {
   name: 'app',
   //   components: {
-  //     NormalCard,
   //   },
   data() {
     return {
@@ -316,7 +312,8 @@ export default {
      */
     queryOilFeild() {
       getOgfInfo().then((res) => {
-        this.oilList = res.ogfId;
+          console.log(res);
+          this.oilList = res.data.data.ogfId;
       });
     },
     //改变油田
@@ -333,7 +330,7 @@ export default {
         ogfId: this.queryData.ogfId.value,
       };
       getblockData(param).then((res) => {
-        this.blockList = res.blockList;
+        this.blockList = res.data.data.blockList;
       });
     },
     /**
@@ -365,7 +362,8 @@ export default {
         apprndixId: this.queryData.wellCategory,
       };
       getWellData(params).then((res) => {
-        this.wellList = res.wellList;
+          console.log(res);
+          this.wellList = res.wellList;
       });
     },
     /**
@@ -389,7 +387,7 @@ export default {
       }
       getProductionSplit(params).then((res) => {
         console.log(res);
-        res.forEach((item) => {
+        res.data.data.forEach((item) => {
           item.name = item.wellNo;
           item.id = item.wellId;
           item.airPermeability = Math.floor(item.airPermeability);
@@ -427,7 +425,7 @@ export default {
           }
         });
         console.log(res);
-        this.tableData = res;
+        this.tableData = res.data.data;
       });
     },
     /**
@@ -441,6 +439,7 @@ export default {
         wellIdList: this.queryData.wellId.join(','),
         wellType: this.queryData.wellCategory,
       }).then((res) => {
+          console.log(res)
         const aBlob = new Blob([res.data]);
         FileSaver.saveAs(aBlob, `产量劈分.xls`);
       });

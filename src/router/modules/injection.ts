@@ -4,7 +4,7 @@ export default [
   {
     path: '/injection',
     name: 'injection',
-    hidden: true,
+    hidden:process.env.NODE_ENV !== 'development',
     component: Layout,
     meta: { title: '智能注采调配', icon: 'client', single: false },
     children: [
