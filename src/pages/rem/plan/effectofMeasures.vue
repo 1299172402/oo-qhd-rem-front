@@ -131,7 +131,7 @@ export default {
               }
             }
           });
-        }else{
+        } else {
           this.$message.error("系统错误请重新尝试或联系运维人员！");
         }
       });

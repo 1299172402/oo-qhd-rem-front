@@ -11,7 +11,7 @@
         btnDirection="row"
       ></verticalSwitchButton>
     </headerSearch>
-    <pagePanelNew headerTitle="故障井统计表" style="height:100%">
+    <pagePanelNew headerTitle="" style="height:auto">
         <components :is="currentTab" />
     </pagePanelNew>
   </div>
@@ -21,19 +21,21 @@
 import fieldOutput from '@/pages/rem/yield/formalPrediction/fieldOutput.vue';
 import outputOverview from '@/pages/rem/yield/formalPrediction/outputOverview.vue';
 import yieldTracking from '@/pages/rem/yield/formalPrediction/yieldTracking.vue';
+import WellDailyMeasureImprove from '@/pages/rem/yield/formalPrediction/WellDailyMeasureImprove.vue';
 import verticalSwitchButton from '@/components/intelligentOilfield/vertical-switch-button/index.vue';
 export default {
   components: {
     verticalSwitchButton,
-    fieldOutput,outputOverview,yieldTracking
+    fieldOutput,outputOverview,yieldTracking,WellDailyMeasureImprove
   },
   data() {
     return {
         currentTab:'',
       dataList: [
-        { name: '作业公司产量跟踪', src:'yieldTracking',isChecked: false },
-        { name: '油田预测产量',src:'fieldOutput', isChecked: true },
+        { name: '作业公司产量跟踪', src:'yieldTracking',isChecked: true },
+        { name: '油田预测产量',src:'fieldOutput', isChecked: false },
         { name: '作业公司产量总览',src:'outputOverview', isChecked: false },
+        { name: '单井产量预测',src:'WellDailyMeasureImprove', isChecked: false },
       ],
       queryParams: {
         pageNum: 1,
@@ -45,7 +47,9 @@ export default {
       },
     };
   },
-  created() {},
+  created() {
+    this.currentTab = 'yieldTracking'
+  },
   methods: {
     selectBtn(item){
         console.log(item)

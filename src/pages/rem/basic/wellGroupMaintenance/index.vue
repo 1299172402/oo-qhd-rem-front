@@ -214,7 +214,7 @@ import {
   selectProWellByGroup,
   delectByWellGroupId,
 } from "@/api/rem/wellgroupinformaintenance";
-import { getOilFieldList,queryLayerList } from "@/api/rem/workcompanydesignate";
+import { getOilFieldList, queryLayerList } from "@/api/rem/workcompanydesignate";
 import { fetchInjectionWells, fetchProductionWells } from "@/api/rem/primaryinfo";
 import { fetchFields } from "@/api/rem/primaryinfoqhdrem";
 export default {
@@ -389,7 +389,7 @@ export default {
       this.transferData = [];
       this.value = [];
       if (data.wellGroupId == "0") {
-        this.getlist()
+        this.getlist();
       } else {
         wellGroupParamConfiguration(data).then((res) => {
           let arr = [];
@@ -442,15 +442,15 @@ export default {
     preserve() {
       exportExcel("#indexscv", "小层井组定义");
     },
-    getlist(){
-  queryLayerList().then((res) => {
+    getlist() {
+      queryLayerList().then((res) => {
         if (res.data.code == 200) {
           this.cwOptions = res.data.data;
         } else {
           this.$message.error("系统错误请重新尝试或联系运维人员！");
         }
       });
-       fetchInjectionWells({ oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F" }).then((res) => {
+      fetchInjectionWells({ oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F" }).then((res) => {
         this.waterList = res.data.data.injectionWell;
       });
     },
