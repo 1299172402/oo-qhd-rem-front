@@ -1,5 +1,6 @@
 import Layout from '@/layouts/index.vue';
 
+
 export default [
   // 基础数据维护
   {
@@ -30,7 +31,7 @@ export default [
       {
         path: 'customQuery',
         name: 'customQuery',
-        hidden:true,
+        hidden:process.env.NODE_ENV !== 'development',
         component: () => import('@/pages/rem/basic/customQuery/index.vue'),
         meta: { title: '自定义查询' }
       }

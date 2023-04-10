@@ -11,6 +11,15 @@
                         :value="item.oilFieldId"
                     />
                 </el-select>
+                <span style="padding-left: 20px">日期：</span>
+                <el-date-picker
+                    v-model="selectDate"
+                    type="daterange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    value-format="yyyy-MM-dd"
+                />
             </div>
        
             <div style="display: inline-block;float:right">
@@ -28,10 +37,10 @@
                 <el-col :span="6" style="margin-left: 20px;margin-right: 20px">
                     <pagePanel headerTitle="目标类型">
                         <el-radio-group v-model="activeTabIndex">
-                            <el-radio :label="0">
+                            <el-radio :label="1">
                                 单井
                             </el-radio>
-                            <el-radio :label="1">
+                            <el-radio :label="2">
                                 油田(区块)
                             </el-radio>
                         </el-radio-group>
@@ -40,9 +49,9 @@
                 <el-col :span="6" style="margin-left: 20px;margin-right: 20px">
                     <pagePanel headerTitle="时间类型">
                         <el-radio-group v-model="activeTabIndexDate">
-                            <el-radio label="日"></el-radio>
-                            <el-radio label="月"></el-radio>
-                            <el-radio label="年"></el-radio>
+                            <el-radio :label="3">日</el-radio>
+                            <el-radio :label="2">月</el-radio>
+                            <el-radio :label="1">年</el-radio>
                         </el-radio-group>
                     </pagePanel>
                 </el-col>
@@ -205,13 +214,18 @@ export default {
     components: {
         ProductionData  
     },
+    mounted() {
+        const year = new Date().getFullYear();
+        this.selectDate = [new Date(`${year}-01-01`).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];  
+    },
     data() {
         return {
             queryData:[],
             typeVal:0,
+            selectDate:[],//时间选择
             activeEchart:false,
-            activeTabIndex: 0,
-            activeTabIndexDate:'日',
+            activeTabIndex: 1,
+            activeTabIndexDate:3,
             activeTabIndexData:'井口生产指标',
             stateValue:[],//状态指标
             productValue:[],//生产指标
@@ -246,7 +260,7 @@ export default {
         // 监听目标类型
         activeTabIndex:{
             handler(Nval){
-                this.activeTabIndexDate = '日'
+                this.activeTabIndexDate = 3
                 if(Nval == 0){
                     this.activeTabIndexData = '井口生产指标'
                     this.dataTypes = ['井口生产指标','计量生产指标','核实生产指标','注入指标']
@@ -261,17 +275,17 @@ export default {
         activeTabIndexDate:{
             handler(Nval){
                 this.tableData = []
-                if(this.activeTabIndex == 0){
+                if(this.activeTabIndex == 1){
                     switch (Nval) {
-                        case '日':
+                        case 3:
                             this.activeTabIndexData = '井口生产指标'
                             this.dataTypes = ['井口生产指标','计量生产指标','核实生产指标','注入指标'] 
                             break;
-                        case '月':
+                        case 2:
                             this.activeTabIndexData = '井口月生产'
                             this.dataTypes = ['井口月生产','核实月生产','注入月指标']
                             break;
-                        case '年':
+                        case 1:
                             this.activeTabIndexData = '生产指标'
                             this.dataTypes = ['生产指标','核实生产','注入指标']
                             break;
@@ -366,7 +380,7 @@ export default {
                 this.managerList=[]
                 break;
             case '核实生产指标':
-                if(this.activeTabIndex == '0'){
+                if(this.activeTabIndex == '1'){
                     this.stateList = [],
                     this.productList = ['日核实产量','日核实油当量','日权益产量','日权益油当量','日净产量','日净产油当量'],
                     this.totalList=['月累核实产量','月累核实油当量','月累权益产量','月累权益油当量','月累净产量','月累净产油当量','年累核实产量','年累核实油当量','年累权益产量','年累权益油当量','年累净产量','年累净产油当量'],
@@ -420,19 +434,19 @@ export default {
                 //年
             case '生产指标':
                 console.log(this.activeTabIndexDate);
-                if(this.activeTabIndex == '0'){
+                if(this.activeTabIndex == '1'){
                     this.stateList = [],
                         this.productList = ['年累生产天数','总累生产天数','年产液','年产油','年产水','累产液','累产油','累产水','累产气'],
                         this.totalList = [],
                         this.injectList = [],
                         this.managerList=[]
-                }else if(this.activeTabIndex == '1' && this.activeTabIndexDate == '日'){
+                }else if(this.activeTabIndex == '2' && this.activeTabIndexDate == 3){
                     this.stateList = [],
                         this.productList = ['日产液','日产油','日产水','日产气','含水','汽油比','月累产液','月累产油','月累产水','月累产气'],
                         this.totalList = ['年累产液','年累产油','年累产水','年累产气','总累产液','总累产油','总累产水','总累产气'],
                         this.injectList = ['平均油压','平均干线压力','日注水聚总量','月累注水聚总量','年累注水聚总量','总累注水聚总量'],
                         this.managerList=['日总井数','日开井数','日总新井数','日开新井数','月累总井数','月累开井数','月累开新井数','年累总井数','年累开井数','年累总新井数','年累开新井数','日注入总井数','日注入开井数','月累注入总井数','月累注入开井数','年累注入总井数','年累注入开井数']
-                }else if(this.activeTabIndex == '1' && this.activeTabIndexDate == '年'){
+                }else if(this.activeTabIndex == '2' && this.activeTabIndexDate == 1){
                     this.stateList = [],
                         this.productList = [],
                         this.totalList = ['年产液','年产油','年产水','年产气','总累产液','总累产油','总累产水','总累产气'],
@@ -526,15 +540,16 @@ export default {
             this.dialogVisible = false
             this.activeEchart = !this.activeEchart
             queryCustomQueryList({
-                targetType: '1', //目标类型 井：1  油田 ：2
+                targetType: this.activeTabIndex, //目标类型 井：1  油田 ：2
                 dataType:  'wellhead' , //数据类型 （井口指标，计量指标等）
-                timeType:  '3' , //时间类型 1 年 2月 3 日
+                timeType:  this.activeTabIndexDate , //时间类型 1 年 2月 3 日
                 statusList: this.stateValue ,//状态指标
                 productList: this.productValue ,//生产指标
-                accumList:  [],//累产指标
-                startTime:  '2022-06-01', //开始时间
-                endTime: '2023-01-01',//结束时间
-                dataId:'BE6D76EC53E54A1E9B4F41DB1C204DDF',//油井或油田idn
+                accumList:  this.totalValue,//累产指标
+                startTime:  this.selectDate[0], //开始时间
+                endTime: this.selectDate[0],//结束时间
+                // dataId:'BE6D76EC53E54A1E9B4F41DB1C204DDF',//油井或油田idn
+                dataId:this.ogfId
             }).then((res)=>{
                 this.queryData = res.data.data.data
                 console.log(this.queryData);
