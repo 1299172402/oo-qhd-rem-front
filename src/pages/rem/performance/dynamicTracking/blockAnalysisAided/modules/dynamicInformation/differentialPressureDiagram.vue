@@ -37,8 +37,8 @@
         data() {
             return {
                 dialogVisible1: false,
-                url1: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
-                url: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-paopao.html',
+                url1: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
+                url: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-paopao.html',
                 radio: 1,
                 src: '../../static/img/blockAnalysisAided/dynamicInformation/liquidOilWaterDifference.png',
                 //选中层位

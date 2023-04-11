@@ -44,11 +44,10 @@
         data() {
             return {
                 dialogVisible1: false,
-                url1: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
+                url1: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
                 //等值线图组件
-                url: 'static/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient.html',
+                url: '/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient.html',
                 radio: 1,
-                src: '../../static/img/blockAnalysisAided/dynamicInformation/liquidOilWaterDifference.png',
                 //选中层位
                 selectPosition: '',
                 //层位所选择内容信息
