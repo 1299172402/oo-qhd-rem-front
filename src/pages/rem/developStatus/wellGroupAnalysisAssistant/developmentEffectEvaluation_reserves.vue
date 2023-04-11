@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <el-container class="layout">
     <el-header height="auto">
       <header-search class="g-w100 g-h100" style="width: 100%">
@@ -19,8 +19,7 @@
             </el-button>
           </div>
           <div class="fr overflow-hidden">
-    
-            <el-radio-group v-model="radio1">
+            <!-- <el-radio-group v-model="radio1">
               <router-link
                 :to="{
                   name: 'developmentEffectEvaluation_capacity',
@@ -29,9 +28,9 @@
               >
                 <el-radio-button label="产能类"></el-radio-button>
               </router-link>
-         
+
               <el-radio-button label="储量类" style="margin-right: 20px"></el-radio-button>
-             
+
               <router-link
                 :to="{
                   name: 'developmentEffectEvaluation_water',
@@ -40,7 +39,7 @@
               >
                 <el-radio-button label="含水类"></el-radio-button>
               </router-link>
-             
+
               <router-link
                 :to="{
                   name: 'developmentEffectEvaluation_Decreasing',
@@ -49,68 +48,84 @@
               >
                 <el-radio-button label="递减类"></el-radio-button>
               </router-link>
-            </el-radio-group>
+            </el-radio-group> -->
+
+            <vertical-switch-button
+              :data-list="dataList1"
+              button-width="120px"
+              button-height="40px"
+              style="width: 9%"
+              btn-direction="row"
+              @selectBtn="selectBtn"
+            />
           </div>
         </div>
       </header-search>
     </el-header>
     <el-main>
-      <pagePanelNew style="height: 100%; margin-top: 0px"> -->
-      <!-- <div class="dom" style="margin-top: 0px">
-        <el-row class="mt-5" :gutter="20" style="margin-top: -20px">
-          <el-col :span="12">
-            <pagePanel headerTitle="剩余储采比" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-              <Echart :chart-data="reserveProductionRatio" style="height: 100%"></Echart>
-            </pagePanel>
-          </el-col>
-          <el-col :span="12">
-            <pagePanel headerTitle="水驱动用程度" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-              <Echart :chart-data="degreeOfWaterDrive" style="height: 100%"></Echart
-            ></pagePanel>
-          </el-col>
-        </el-row>
-        <el-row class="mt-5" :gutter="20">
-          <el-col :span="12">
-            <pagePanel headerTitle="水驱控制程度" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-              <Echart :chart-data="waterDriveControlDegree" style="height: 100%"></Echart>
-            </pagePanel>
-          </el-col>
-        </el-row>
-      </div> -->
-
-      <!-- </pagePanelNew> -->
-    <!-- </el-main>
+      <pagePanelNew style="height: 100%; margin-top: 0px">
+        <div class="dom" style="margin-top: 0px">
+          <el-row class="mt-5" :gutter="20" style="margin-top: -20px">
+            <el-col :span="12">
+              <pagePanel headerTitle="剩余储采比" style="width: 100%; height: 380px" :isShowMaxBtn="true">
+                <Echart :chart-data="reserveProductionRatio" style="height: 100%"></Echart>
+              </pagePanel>
+            </el-col>
+            <el-col :span="12">
+              <pagePanel headerTitle="水驱动用程度" style="width: 100%; height: 380px" :isShowMaxBtn="true">
+                <Echart :chart-data="degreeOfWaterDrive" style="height: 100%"></Echart
+              ></pagePanel>
+            </el-col>
+          </el-row>
+          <el-row class="mt-5" :gutter="20">
+            <el-col :span="12">
+              <pagePanel headerTitle="水驱控制程度" style="width: 100%; height: 380px" :isShowMaxBtn="true">
+                <Echart :chart-data="waterDriveControlDegree" style="height: 100%"></Echart>
+              </pagePanel>
+            </el-col>
+          </el-row>
+        </div>
+      </pagePanelNew>
+    </el-main>
   </el-container>
-</template>  -->
-<!-- <script>
-import * as echarts from 'echarts';
-import Echart from '@/components/tools/Echarts/index.vue';
-import { fetchOilFields, fetchFields } from '@/api/oilDeposit/rem-02/primaryinfo.js';
+</template> 
+ <script>
+import * as echarts from "echarts";
+import Echart from "@/components/tools/Echarts/index.vue";
+import { fetchOilFields, fetchFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
+import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 import {
   reservoirsUseDegreeChart,
   reservoirsControlDegreeChart,
   reservoirsProRateChart,
   waterDriveUseDegreeChart,
   waterControlDegreeChart,
-} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 export default {
   components: {
     Echart,
+    verticalSwitchButton,
   },
   data() {
     return {
+      dataList1: [
+        { name: "产能类", key: "developmentEffectEvaluation_capacity", isChecked: false },
+        { name: "储存类", key: "developmentEffectEvaluation_reserves", isChecked: true },
+        { name: "含水类", key: "developmentEffectEvaluation_water", isChecked: false },
+        { name: "递减类", key: "developmentEffectEvaluation_Decreasing", isChecked: false },
+      ],
       //油田
       oilField: [],
       //油田名字
-      oilFieldName: '',
+      oilFieldName: "",
       //油田选中值
-      selectOilField: '',
+      selectOilField: "",
       //区块
       block: [],
       //区块选中值
-      selectBlock: '',
+      selectBlock: "",
 
-      radio1: '储量类',
+      radio1: "储量类",
       //查询参数
       queryParams: {},
       page: 1,
@@ -118,45 +133,45 @@ export default {
       //油田列表
       oilFieldList: [
         {
-          value: 'QHD32-6',
-          label: '秦皇岛32-6油田',
+          value: "QHD32-6",
+          label: "秦皇岛32-6油田",
         },
       ],
       //区域列表
       areaList: [
         {
-          value: '',
-          label: '全部',
+          value: "",
+          label: "全部",
         },
         {
-          value: '区块1',
-          label: '区块1',
+          value: "区块1",
+          label: "区块1",
         },
       ],
       //储量动用程度
       reserveUtilization: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '储量动用程度',
+              name: "储量动用程度",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         xAxis: {
-          name: '时间',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "时间",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 25,
-          type: 'category',
+          type: "category",
           /*data: [
               "2009",
               "2010",
@@ -172,7 +187,7 @@ export default {
               "2020",
             ],*/
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -180,19 +195,19 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: {
-          name: '动用程度/%',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "动用程度/%",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 30,
-          type: 'value',
+          type: "value",
           max: 120,
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -200,13 +215,13 @@ export default {
           axisLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(151,151,151,.16)',
+              color: "rgba(151,151,151,.16)",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
@@ -226,22 +241,22 @@ export default {
                 ["2019",99.7],
                 ["2020",99.6],*/
             ],
-            type: 'bar',
-            barWidth: '20',
+            type: "bar",
+            barWidth: "20",
             label: {
               show: false,
-              position: 'top',
-              color: '#00D9EA',
+              position: "top",
+              color: "#00D9EA",
             },
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
-                  color: '#00D9EA',
+                  color: "#00D9EA",
                 },
                 {
                   offset: 1,
-                  color: '#0F65EA',
+                  color: "#0F65EA",
                 },
               ]),
             },
@@ -251,27 +266,27 @@ export default {
       //储量控制程度
       degreeOfReserveControl: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '储量控制程度',
+              name: "储量控制程度",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         xAxis: {
-          name: '时间',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "时间",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 25,
-          type: 'category',
+          type: "category",
           /*data: [
               "2009",
               "2010",
@@ -287,7 +302,7 @@ export default {
               "2020",
             ],*/
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -295,19 +310,19 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: {
-          name: '控制程度/%',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "控制程度/%",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 30,
-          type: 'value',
+          type: "value",
           max: 120,
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -315,13 +330,13 @@ export default {
           axisLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(151,151,151,.16)',
+              color: "rgba(151,151,151,.16)",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
@@ -341,22 +356,22 @@ export default {
                 ["2019",99.7],
                 ["2020",99.6],*/
             ],
-            type: 'bar',
-            barWidth: '20',
+            type: "bar",
+            barWidth: "20",
             label: {
               show: false,
-              position: 'top',
-              color: '#00D9EA',
+              position: "top",
+              color: "#00D9EA",
             },
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
-                  color: '#00D9EA',
+                  color: "#00D9EA",
                 },
                 {
                   offset: 1,
-                  color: '#0F65EA',
+                  color: "#0F65EA",
                 },
               ]),
             },
@@ -366,30 +381,30 @@ export default {
       //储采比
       reserveProductionRatio: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '剩余储采比',
+              name: "剩余储采比",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         xAxis: {
-          type: 'value',
-          name: '可采储量采出程度/%',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          type: "value",
+          name: "可采储量采出程度/%",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 25,
           /*data: ["0", "5", "10", "15", "20", "25", "30", "35", "40", "45"],*/
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -397,18 +412,18 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: {
-          name: '剩余可采储量储采比/%',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "剩余可采储量储采比/%",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 45,
-          type: 'value',
+          type: "value",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -416,13 +431,13 @@ export default {
           axisLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(151,151,151,.16)',
+              color: "rgba(151,151,151,.16)",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
@@ -431,11 +446,11 @@ export default {
             data: [
               /*16, 14, 12, 10, 8, 7, 7.5, 8, 8, 8.5*/
             ],
-            type: 'scatter',
+            type: "scatter",
             label: {
               show: false,
-              position: 'top',
-              color: '#00D9EA',
+              position: "top",
+              color: "#00D9EA",
             },
             /*symbol: "none",*/
             /*itemStyle: {
@@ -456,27 +471,27 @@ export default {
       //水驱动用程度
       degreeOfWaterDrive: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '水驱动用程度',
+              name: "水驱动用程度",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         xAxis: {
-          name: '时间',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "时间",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 25,
-          type: 'category',
+          type: "category",
           /*data: [
              /!* "2009",
               "2010",
@@ -492,7 +507,7 @@ export default {
               "2020",*!/
             ],*/
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -500,19 +515,19 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: {
-          name: '动用程度/%',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "动用程度/%",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 30,
-          type: 'value',
+          type: "value",
           max: 100,
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -520,13 +535,13 @@ export default {
           axisLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(151,151,151,.16)',
+              color: "rgba(151,151,151,.16)",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
@@ -546,22 +561,22 @@ export default {
                 99.6,
                 99.1,*/
             ],
-            type: 'bar',
-            barWidth: '20',
+            type: "bar",
+            barWidth: "20",
             label: {
               show: false,
-              position: 'top',
-              color: '#00D9EA',
+              position: "top",
+              color: "#00D9EA",
             },
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
-                  color: '#00D9EA',
+                  color: "#00D9EA",
                 },
                 {
                   offset: 1,
-                  color: '#0F65EA',
+                  color: "#0F65EA",
                 },
               ]),
             },
@@ -571,27 +586,27 @@ export default {
       //水驱控制程度
       waterDriveControlDegree: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '水驱控制程度',
+              name: "水驱控制程度",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         xAxis: {
-          name: '时间',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "时间",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 25,
-          type: 'category',
+          type: "category",
           /* data: [
               /!*"2009",
               "2010",
@@ -607,7 +622,7 @@ export default {
               "2020",*!/
             ],*/
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -615,19 +630,19 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: {
-          name: '控制程度/%',
-          nameLocation: 'center',
-          nameTextStyle: { color: '#8FA4CC' },
+          name: "控制程度/%",
+          nameLocation: "center",
+          nameTextStyle: { color: "#8FA4CC" },
           nameGap: 30,
-          type: 'value',
+          type: "value",
           max: 100,
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -635,13 +650,13 @@ export default {
           axisLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(151,151,151,.16)',
+              color: "rgba(151,151,151,.16)",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
@@ -661,22 +676,22 @@ export default {
                 99.6,
                 99.1,*/
             ],
-            type: 'bar',
-            barWidth: '20',
+            type: "bar",
+            barWidth: "20",
             label: {
               show: false,
-              position: 'top',
-              color: '#00D9EA',
+              position: "top",
+              color: "#00D9EA",
             },
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
-                  color: '#00D9EA',
+                  color: "#00D9EA",
                 },
                 {
                   offset: 1,
-                  color: '#0F65EA',
+                  color: "#0F65EA",
                 },
               ]),
             },
@@ -695,6 +710,16 @@ export default {
     this.initData();
   },
   methods: {
+    selectBtn(item) {
+      this.$router.push({
+        name: item.key,
+        params: {
+          oilFieldId: this.oilFieldId,
+          fieldId: this.fieldId,
+        },
+      });
+    },
+
     /**
      * hwh
      * 初始化方法
@@ -707,7 +732,7 @@ export default {
         if (res.data.code == 200) {
           this.oilField = res.data.data.oilFields;
           if (this.oilField.length == 0) {
-            this.selectOilField = '';
+            this.selectOilField = "";
           } else {
             this.selectOilField = this.oilField[0].oilFieldId;
           }
@@ -716,7 +741,7 @@ export default {
       let oilFieldId = this.$route.params.oilFieldId;
       if (oilFieldId == undefined) {
         //设置默认油田
-        this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
+        this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
       } else {
         this.selectOilField = oilFieldId;
       }
@@ -810,7 +835,7 @@ export default {
           let barData = res.data.data.chart.barDataSets[0].barDatas;
           barData.forEach((item, index) => {
             let point = [];
-            let label = item.label.split('-');
+            let label = item.label.split("-");
             point.push(label[0]);
             point.push(item.value);
             seriesData.push(point);
@@ -837,7 +862,7 @@ export default {
           let barData = res.data.data.chart.barDataSets[0].barDatas;
           barData.forEach((item, index) => {
             let point = [];
-            let label = item.label.split('-');
+            let label = item.label.split("-");
             point.push(label[0]);
             point.push(item.value);
             seriesData.push(point);
@@ -864,7 +889,7 @@ export default {
           let barData = res.data.data.chart.barDataSets[0].barDatas;
           barData.forEach((item, index) => {
             let point = [];
-            let label = item.label.split('-');
+            let label = item.label.split("-");
             point.push(label[0]);
             point.push(item.value);
             seriesData.push(point);
@@ -891,7 +916,7 @@ export default {
           let barData = res.data.data.chart.barDataSets[0].barDatas;
           barData.forEach((item, index) => {
             let point = [];
-            let label = item.label.split('-');
+            let label = item.label.split("-");
             point.push(label[0]);
             point.push(item.value);
             seriesData.push(point);
@@ -912,8 +937,8 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped> -->
-<!-- .QU {
+<style lang="scss" scoped>
+.QU {
   padding-left: 10px;
 }
 .formBox {
@@ -952,4 +977,4 @@ export default {
 ::v-deep .el-radio-button:first-child .el-radio-button__inner {
   border: 1px solid #00d6ea;
 }
-</style> -->
+</style>

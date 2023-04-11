@@ -1,88 +1,83 @@
+<!-- 年度计划管理 -->
 <template>
   <el-container class="layout">
     <el-header height="auto"> </el-header>
     <el-container>
       <el-header class="contHeader" height="auto">
-        <header-search class="g-w100 g-h100">
-          <div style="margin-top: 20px">
+        <header-search style="height: 70px">
+          <div style="margin-top: 12px">
             <span>油田：</span>
             <el-select v-model="selectOilField" placeholder="请选择" disabled>
               <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId">
               </el-option>
             </el-select>
-            <span style="margin-left: 10px">时间：</span>
-            <el-date-picker
-              v-model="selectYear"
-              type="year"
-              format="yyyy"
-              value-format="yyyy"
-              placeholder="选择年"
-              style="background: #164052"
-            >
+            <span style="margin-left: 20px">时间：</span>
+            <el-date-picker v-model="selectYear" type="year" format="yyyy" value-format="yyyy" placeholder="选择年">
             </el-date-picker>
             <el-button icon="el-icon-search" type="primary" @click="doSearch" style="margin-left: 20px">检索</el-button>
-
-
-
-
             <el-radio-group v-model="pageType" style="margin-left: 10px" @change="changeTab">
               <el-radio-button
                 label="原油产量"
                 checked
                 style="margin-left: 10px"
                 size="medium"
-                class="yuan"
+                type="primary"
+                class="buttonActive_primary"
               ></el-radio-button>
               <el-radio-button
                 label="天然气产量"
                 style="margin-left: 10px"
                 size="medium"
-                class="yuan"
+                class="spaceMargin" 
               ></el-radio-button>
               <el-radio-button
                 label="油田注水量"
                 style="margin-left: 10px"
                 size="medium"
-                class="yuan"
+                class="spaceMargin"
+                type="primary"
               ></el-radio-button>
             </el-radio-group>
-
-            
-
-
-
-
+            <!-- 头部按钮的切换 -->
+            <!-- <vertical-switch-button
+              :data-list="dataList1"
+              button-width="120px"
+              button-height="30px"
+              style="width: 9%"
+              btn-direction="row"
+              @selectBtn="selectBtn"
+            /> -->
             <div v-if="pageType == '原油产量'" style="float: right">
-              <span>单位选择：</span>
+              <span style="margin-right: 10px">单位选择：</span>
               <el-select v-model="selectUnitOfProduction" placeholder="请选择" style="width: 100px; margin-right: 10px">
                 <el-option v-for="item in unitOfProduction" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
               </el-select>
-              <el-button class="pl-2" @click="doSearch">确定</el-button>
+              <el-button class="commonBtn" @click="doSearch"> 确实 </el-button>
             </div>
           </div>
         </header-search>
       </el-header>
-      <!-- 点击头部数据的时候下发数就行切换 -->
       <el-main>
         <template v-if="pageType == '原油产量'">
           <info-window
-            infoWidth="100%"
-            infoHeight="100%"
-            :headerTitle="oilFieldName + '年度计划运行曲线'"
-            :isShowMaxBtn="true"
+            info-width="100%"
+            info-height="100%"
+            :header-title="oilFieldName + '油田年度计划运行曲线'"
+            :is-show-max-btn="true"
             style="margin-top: -20px"
           >
             <div style="text-align: center">
-              <el-button style="float: right" @click="switchToCrudeOutput">详情</el-button>
+              <el-button class="commonBtn" style="float: right" @click="switchToCrudeOutput"> 详情 </el-button>
             </div>
             <Echart :chart-data="productLineChart" width="94%" height="400px"></Echart>
           </info-window>
+
           <info-window
-            infoWidth="100%"
-            infoHeight="100%"
-            :headerTitle="oilFieldName + '年度计划运行'"
-            :isShowMaxBtn="true"
+            info-width="100%"
+            info-height="100%"
+            :header-title="oilFieldName + '油田年度计划运行'"
+            :is-show-max-btn="true"
             style="margin-top: 10px"
           >
             <template slot="header">
@@ -90,7 +85,7 @@
                 <el-button size="mini" @click="doDownYYCL" v-show="canDownload">下载</el-button>
               </div>
             </template>
-            <el-table id="yyclcsv" highlight :data="runTimeData" style="width: 100%; height: 100%">
+            <el-table id="yyclcsv" highlight :data="runTimeData" style="width: 100%">
               <el-table-column type="index" align="center" label="序号" :index="indexMethodOilProduct">
               </el-table-column>
               <el-table-column prop="theDate" align="center" label="时间"> </el-table-column>
@@ -120,47 +115,45 @@
               >
               </el-table-column>
             </el-table>
-            <!--分页 -->
-            <!--             
+            <!-- 分页器 -->
             <pagination
-              v-show="total > 0"
-           
-              @size-change="handleOilProductChangePageSize"
-              @current-change="handleOilProductChangePage"
-            /> -->
+              :total="pageCountOilProduct"
+              :page.sync="currentPageOfRuntime"
+              :limit.sync="pageSizeOilProduct"
+            />
           </info-window>
         </template>
-
         <template v-else-if="pageType == '天然气产量'">
           <info-window
-            infoWidth="100%"
-            infoHeight="100%"
+            info-width="100%"
+            info-height="100%"
+            :header-title="oilFieldName + '油田天然气产量跟踪'"
+            :is-show-max-btn="true"
             style="margin-top: -20px"
-            :headerTitle="oilFieldName + '油田天然气产量跟踪'"
-            :isShowMaxBtn="true"
           >
-            <Echart :chart-data="GasProLineChart" height="500px"></Echart>
+            <Echart :chart-data="GasProLineChart" height="400px"></Echart>
           </info-window>
         </template>
         <template v-else>
+          <!-- 油田年度计划运行曲线 -->
           <info-window
-            infoWidth="100%"
-            infoHeight="100%"
-            :headerTitle="oilFieldName + '油田年度计划运行曲线'"
-            :isShowMaxBtn="true"
+            info-width="100%"
+            info-height="100%"
+            :header-title="oilFieldName + '油田年度计划运行曲线'"
+            :is-show-max-btn="true"
             style="margin-top: -20px"
           >
             <div style="text-align: center" class="f1">
-              <el-button style="float: right" @click="switchToOilfieldWater">详情</el-button>
+              <el-button class="commonBtn" style="float: right" @click="switchToOilfieldWater">详情 </el-button>
             </div>
-            <Echart :chart-data="OilYearLineChart" width="94%" height="500px"></Echart>
+            <Echart :chart-data="OilYearLineChart" width="94%" height="400px"></Echart>
           </info-window>
-
+          <!-- 油田年度计划运行 -->
           <info-window
-            infoWidth="100%"
-            infoHeight="100%"
-            :headerTitle="oilFieldName + '油田年度计划运行'"
-            :isShowMaxBtn="true"
+            info-width="100%"
+            info-height="100%"
+            :header-title="oilFieldName + '油田年度计划运行'"
+            :is-show-max-btn="true"
             style="margin-top: 10px"
           >
             <template slot="header">
@@ -183,17 +176,12 @@
               </el-table-column>
               <el-table-column prop="injectionSumPlan" align="center" label="计划年累注(10⁴m³)"> </el-table-column>
             </el-table>
-            <el-pagination
-              :current-page="currentPageOfOilYear"
-              :page-sizes="[10, 20, 30, 40]"
-              :page-size="pageSizeInjection"
-              layout=" prev, pager, next, sizes,total"
-              :total="pageCountInjection"
-              class="f1"
-              @size-change="handleInjectionChangePageSize"
-              @current-change="handleInjectionChangePage"
-            >
-            </el-pagination>
+            <!-- 分页器 -->
+            <pagination
+              :total="pageCountOilProduct"
+              :page.sync="currentPageOfRuntime"
+              :limit.sync="pageSizeOilProduct"
+            />
           </info-window>
         </template>
       </el-main>
@@ -201,19 +189,21 @@
   </el-container>
 </template>
   <script>
-import Echart from '@/components/tools/Echarts/index.vue';
-import { fetchOilFields } from '@/api/oilDeposit/rem-02/primaryinfo.js';
+import Echart from "@/components/tools/Echarts/index.vue";
+import { fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import {
   searchOilProductionChart,
   searchOilProductionTable,
   searchGasChart,
   searchInjectionTable,
   searchInjectionChart,
-} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
-import { exportExcel } from '@/lib/exportExcel.js';
-import { getWidgetByAreaUser } from '@/api/oilDeposit/rmm-01/rmm01';
+} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
+import { exportExcel } from "@/lib/exportExcel";
+import { getWidgetByAreaUser } from "@/api/oilDeposit/rmm-01/rmm01";
 export default {
   components: {
+    verticalSwitchButton,
     Echart,
   },
   filters: {
@@ -227,37 +217,42 @@ export default {
       if (val) {
         return parseFloat(Number(val).toFixed(2));
       } else {
-        return '';
+        return "";
       }
     },
   },
   data() {
     return {
+      dataList1: [
+        { name: "原油产量", key: "", isChecked: true },
+        { name: "天然气产量", key: "", isChecked: false },
+        { name: "油田注水量", key: "", isChecked: false },
+      ],
       //当前油田名称
-      oilFieldName: '',
+      oilFieldName: "",
       //选择页面
-      pageType: '原油产量',
+      pageType: "原油产量",
       //油田
       oilField: [],
       //油田选中值
-      selectOilField: '',
+      selectOilField: "",
       //年份
-      selectYear: new Date().format('yyyy'),
+      selectYear: new Date().format("yyyy"),
       //产量单位
       unitOfProduction: [
         {
-          label: 'm³/d',
-          value: 'm',
+          label: "m³/d",
+          value: "m",
         },
         {
-          label: 't/d',
-          value: 't',
+          label: "t/d",
+          value: "t",
         },
       ],
       //产量单位选择值
-      selectUnitOfProduction: 'm',
+      selectUnitOfProduction: "m",
       //当前单位
-      currentUnitType: 'm',
+      currentUnitType: "m",
       //原油产量 当前页
       currentPageOfRuntime: 1,
       //原油产量 每页大小
@@ -272,44 +267,44 @@ export default {
       pageCountInjection: 0,
       //原油产量 折线图
       productLineChart: {
-        color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#9A72FF', '#DA835E'],
+        color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#9A72FF", "#DA835E"],
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '原油产量',
+              name: "原油产量",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         legend: {
           data: [],
           textStyle: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
             fontSize: 14,
           },
-          top: '8%',
-          icon: 'rect',
+          top: "8%",
+          icon: "rect",
           itemWidth: 12,
           itemHeight: 6,
           itemGap: 14,
         },
         xAxis: [
           {
-            type: 'category',
-            boundaryGap: false,
+            type: "category",
+            boundaryGap: true,
             axisLabel: {
-              color: '#8FA4CC',
+              color: "#8FA4CC",
               fontSize: 14,
               interval: function (index, val) {
-                if (val.substr(-2) == '01') {
+                if (val.substr(-2) == "01") {
                   return true;
                 } else {
                   return false;
@@ -321,22 +316,22 @@ export default {
             },
             axisLine: {
               lineStyle: {
-                color: 'rgba(255,255,255,.16)',
+                color: "rgba(255,255,255,.16)",
               },
             },
           },
         ],
         yAxis: [
           {
-            name: '日产m³/d',
+            name: "日产m³/d",
             nameTextStyle: {
-              color: '#fff',
+              color: "#fff",
               fontSize: 14,
             },
-            type: 'value',
+            type: "value",
             scale: true,
             axisLabel: {
-              color: '#8FA4CC',
+              color: "#8FA4CC",
               fontSize: 14,
             },
             axisTick: {
@@ -345,26 +340,26 @@ export default {
             axisLine: {
               show: true,
               lineStyle: {
-                color: 'rgba(151,151,151,.16)',
+                color: "rgba(151,151,151,.16)",
               },
             },
             splitLine: {
-              show: false,
+              show: true,
               lineStyle: {
-                color: 'rgba(255,255,255,.16)',
+                color: "rgba(255,255,255,.16)",
               },
             },
           },
           {
-            name: '年产10⁴m³',
+            name: "年产10⁴m³",
             nameTextStyle: {
-              color: '#fff',
+              color: "#fff",
               fontSize: 14,
             },
             scale: true,
-            type: 'value',
+            type: "value",
             axisLabel: {
-              color: '#8FA4CC',
+              color: "#8FA4CC",
               fontSize: 14,
             },
             axisTick: {
@@ -373,13 +368,13 @@ export default {
             axisLine: {
               show: true,
               lineStyle: {
-                color: 'rgba(151,151,151,.16)',
+                color: "rgba(151,151,151,.16)",
               },
             },
             splitLine: {
-              show: false,
+              show: true,
               lineStyle: {
-                color: 'rgba(255,255,255,.16)',
+                color: "rgba(255,255,255,.16)",
               },
             },
           },
@@ -390,48 +385,48 @@ export default {
       runTimeData: [],
       //折线图
       GasProLineChart: {
-        color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C'],
+        color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C"],
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '天然气产量',
+              name: "天然气产量",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         legend: {
           data: [],
           textStyle: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
             fontSize: 14,
           },
-          top: '8%',
-          icon: 'rect',
+          top: "8%",
+          icon: "rect",
           itemWidth: 12,
           itemHeight: 6,
           itemGap: 14,
         },
         xAxis: {
-          name: '时间/日',
+          name: "时间/日",
           nameTextStyle: {
-            color: '#fff',
+            color: "#fff",
             fontSize: 14,
           },
           nameGap: 55,
-          type: 'category',
+          type: "category",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
             fontSize: 14,
             interval: function (index, val) {
-              if (val.substr(-2) == '01') {
+              if (val.substr(-2) == "01") {
                 return true;
               } else {
                 return false;
@@ -443,21 +438,21 @@ export default {
           },
           axisLine: {
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: [
           {
-            name: '产气量/10⁴m³',
+            name: "产气量/10⁴m³",
             nameTextStyle: {
-              color: '#fff',
+              color: "#fff",
               fontSize: 14,
             },
             scale: true,
-            type: 'value',
+            type: "value",
             axisLabel: {
-              color: '#8FA4CC',
+              color: "#8FA4CC",
               fontSize: 14,
             },
             axisTick: {
@@ -466,27 +461,27 @@ export default {
             axisLine: {
               show: true,
               lineStyle: {
-                color: 'rgba(151,151,151,.16)',
+                color: "rgba(151,151,151,.16)",
               },
             },
             splitLine: {
-              show: false,
+              show: true,
               lineStyle: {
-                color: 'rgba(255,255,255,.16)',
+                color: "rgba(255,255,255,.16)",
               },
             },
           },
           {
-            name: '油当量(折算)/10⁴m³',
+            name: "油当量(折算)/10⁴m³",
             nameTextStyle: {
-              color: '#fff',
+              color: "#fff",
               fontSize: 14,
             },
             minInterval: 0.01,
             scale: true,
-            type: 'value',
+            type: "value",
             axisLabel: {
-              color: '#8FA4CC',
+              color: "#8FA4CC",
               fontSize: 14,
             },
             axisTick: {
@@ -495,13 +490,13 @@ export default {
             axisLine: {
               show: true,
               lineStyle: {
-                color: 'rgba(151,151,151,.16)',
+                color: "rgba(151,151,151,.16)",
               },
             },
             splitLine: {
-              show: false,
+              show: true,
               lineStyle: {
-                color: 'rgba(255,255,255,.16)',
+                color: "rgba(255,255,255,.16)",
               },
             },
           },
@@ -510,43 +505,43 @@ export default {
       },
       //折线图
       OilYearLineChart: {
-        color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#9A72FF', '#DA835E'],
+        color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#9A72FF", "#DA835E"],
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '油田注水量',
+              name: "油田注水量",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         legend: {
           data: [],
           textStyle: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
             fontSize: 14,
           },
-          top: '8%',
-          icon: 'rect',
+          top: "8%",
+          icon: "rect",
           itemWidth: 12,
           itemHeight: 6,
           itemGap: 14,
         },
         xAxis: {
-          type: 'category',
+          type: "category",
           boundaryGap: false,
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
             fontSize: 14,
             interval: function (index, val) {
-              if (val.substr(-2) == '01') {
+              if (val.substr(-2) == "01") {
                 return true;
               } else {
                 return false;
@@ -558,21 +553,21 @@ export default {
           },
           axisLine: {
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: [
           {
-            name: '日注水量m³/d',
+            name: "日注水量m³/d",
             nameTextStyle: {
-              color: '#fff',
+              color: "#fff",
               fontSize: 14,
             },
             scale: true,
-            type: 'value',
+            type: "value",
             axisLabel: {
-              color: '#8FA4CC',
+              color: "#8FA4CC",
               fontSize: 14,
             },
             axisTick: {
@@ -581,26 +576,26 @@ export default {
             axisLine: {
               show: true,
               lineStyle: {
-                color: 'rgba(151,151,151,.16)',
+                color: "rgba(151,151,151,.16)",
               },
             },
             splitLine: {
-              show: false,
+              show: true,
               lineStyle: {
-                color: 'rgba(255,255,255,.16)',
+                color: "rgba(255,255,255,.16)",
               },
             },
           },
           {
-            name: '年注水量10⁴m³',
+            name: "年注水量10⁴m³",
             nameTextStyle: {
-              color: '#fff',
+              color: "#fff",
               fontSize: 14,
             },
             scale: true,
-            type: 'value',
+            type: "value",
             axisLabel: {
-              color: '#8FA4CC',
+              color: "#8FA4CC",
               fontSize: 14,
             },
             axisTick: {
@@ -609,13 +604,13 @@ export default {
             axisLine: {
               show: true,
               lineStyle: {
-                color: 'rgba(151,151,151,.16)',
+                color: "rgba(151,151,151,.16)",
               },
             },
             splitLine: {
-              show: false,
+              show: true,
               lineStyle: {
-                color: 'rgba(255,255,255,.16)',
+                color: "rgba(255,255,255,.16)",
               },
             },
           },
@@ -647,13 +642,34 @@ export default {
     this.getPageAuthMessage();
   },
   methods: {
+    selectBtn(item) {
+      //发现油田名称
+      let oilFieldContent = this.oilField.find((item) => item.oilFieldId == this.selectOilField);
+      //油田名称
+      this.oilFieldName = oilFieldContent.name;
+      if (item == "原油产量") {
+        this.getSearchOilProductionChart(this.selectOilField, this.selectUnitOfProduction);
+        this.getSearchOilProductionTable(
+          this.selectOilField,
+          this.selectUnitOfProduction,
+          this.currentPageOfRuntime,
+          this.pageSizeOilProduct,
+        );
+      } else if (item == "天然气产量") {
+        this.getSearchGasChart(this.selectOilField);
+      } else if (item == "油田注水量") {
+        this.getSearchInjectionChart(this.selectOilField);
+        this.getSearchInjectionTable(this.selectOilField, this.currentPageOfOilYear, this.pageSizeInjection);
+      }
+    },
     //原油产量跳转详情页面
     switchToCrudeOutput() {
       let oilField = this.oilField.find((item) => {
         return item.oilFieldId == this.selectOilField;
       });
+
       this.$router.push({
-        name: 'CrudeOutput',
+        name: "CrudeOutput",
         params: {
           oilFieldId: oilField.oilFieldId,
           oilFieldName: oilField.name,
@@ -669,7 +685,7 @@ export default {
         return item.oilFieldId == this.selectOilField;
       });
       this.$router.push({
-        name: 'OilfieldWaterInjectionManagement',
+        name: "OilfieldWaterInjectionManagement",
         params: {
           oilFieldId: oilField.oilFieldId,
           oilFieldName: oilField.name,
@@ -687,14 +703,13 @@ export default {
       await fetchOilFields().then((res) => {
         this.oilField = res.data.data.oilFields;
         if (this.oilField.length == 0) {
-          this.selectOilField = '';
+          this.selectOilField = "";
         } else {
           this.selectOilField = this.oilField[0].oilFieldId;
         }
       });
       //设置默认油田
-      this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
-      //this.selectOilField='D4B6B37008A94FE0B704FA872B29D478';
+      this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
       //发现油田名称
       let oilFieldContent = this.oilField.find((item) => item.oilFieldId == this.selectOilField);
       //油田名称
@@ -734,12 +749,12 @@ export default {
             //获得每一个折线数据
             let linearChart = charDataS[i];
             //向图例中添加 折线名称
-            if (linearChart.label != '实际年产' && linearChart.label != '计划年产') {
+            if (linearChart.label != "实际年产" && linearChart.label != "计划年产") {
               legendData.push(linearChart.label);
-            } else if (linearChart.label == '实际年产') {
-              legendData.push('实际年累产');
-            } else if (linearChart.label == '计划年产') {
-              legendData.push('计划年累产');
+            } else if (linearChart.label == "实际年产") {
+              legendData.push("实际年累产");
+            } else if (linearChart.label == "计划年产") {
+              legendData.push("计划年累产");
             }
             //向数据数组中添加 所有折线的信息
             seriesData.push(this.getLinearChartSeriesOilProduct(linearChart));
@@ -748,24 +763,24 @@ export default {
           this.productLineChart.legend.data = legendData;
           //各线的数据
           this.productLineChart.series = seriesData;
-          if (unitType == 'm') {
-            this.productLineChart.yAxis[0].name = '日产m³/d';
-            this.productLineChart.yAxis[1].name = '年产10⁴m³';
-          } else if (unitType == 't') {
-            this.productLineChart.yAxis[0].name = '日产t/d';
-            this.productLineChart.yAxis[1].name = '年产10⁴t';
+          if (unitType == "m") {
+            this.productLineChart.yAxis[0].name = "日产m³/d";
+            this.productLineChart.yAxis[1].name = "年产10⁴m³";
+          } else if (unitType == "t") {
+            this.productLineChart.yAxis[0].name = "日产t/d";
+            this.productLineChart.yAxis[1].name = "年产10⁴t";
           }
         } else {
           //图例数据
           this.productLineChart.legend.data = legendData;
           //各线的数据
           this.productLineChart.series = seriesData;
-          if (unitType == 'm') {
-            this.productLineChart.yAxis[0].name = '日产m³/d';
-            this.productLineChart.yAxis[1].name = '年产10⁴m³';
-          } else if (unitType == 't') {
-            this.productLineChart.yAxis[0].name = '日产t/d';
-            this.productLineChart.yAxis[1].name = '年产10⁴t';
+          if (unitType == "m") {
+            this.productLineChart.yAxis[0].name = "日产m³/d";
+            this.productLineChart.yAxis[1].name = "年产10⁴m³";
+          } else if (unitType == "t") {
+            this.productLineChart.yAxis[0].name = "日产t/d";
+            this.productLineChart.yAxis[1].name = "年产10⁴t";
           }
         }
       });
@@ -780,22 +795,22 @@ export default {
       // 单折线数据结构
       let series = {};
       series.name = linearChart.label;
-      series.type = 'line';
-      series.symbol = 'none';
+      series.type = "line";
+      series.symbol = "none";
       let label = linearChart.label;
-      if (label == '实际日产') {
+      if (label == "实际日产") {
         series.yAxisIndex = 0;
-      } else if (label == '考核日产') {
+      } else if (label == "考核日产") {
         series.yAxisIndex = 0;
-      } else if (label == '滚动预测') {
+      } else if (label == "滚动预测") {
         series.yAxisIndex = 0;
-      } else if (label == '实际年产') {
+      } else if (label == "实际年产") {
         series.yAxisIndex = 1;
-        series.name = '实际年累产';
-      } else if (label == '计划年产') {
+        series.name = "实际年累产";
+      } else if (label == "计划年产") {
         series.yAxisIndex = 1;
-        series.name = '计划年累产';
-      } else if (label == '剩余水平') {
+        series.name = "计划年累产";
+      } else if (label == "剩余水平") {
         series.yAxisIndex = 0;
       }
       let seriesData = [];
@@ -828,7 +843,6 @@ export default {
         year: this.selectYear,
       };
       searchOilProductionTable(request).then((res) => {
-        // console.log(res, '表格的数据');
         //结果获得成功
         if (res.data.code == 200) {
           //获取数据
@@ -923,12 +937,12 @@ export default {
     getLinearChartSeriesGasChart(linearChart) {
       let series = {};
       series.name = linearChart.label;
-      series.type = 'line';
-      series.symbol = 'none';
+      series.type = "line";
+      series.symbol = "none";
       let labelName = linearChart.label;
-      if (labelName == '产气量') {
+      if (labelName == "产气量") {
         series.yAxisIndex = 0;
-      } else if (labelName == '油当量（折算）') {
+      } else if (labelName == "油当量（折算）") {
         series.yAxisIndex = 1;
       }
       let seriesData = [];
@@ -962,8 +976,8 @@ export default {
         if (res.data.code == 200) {
           let chartDatas = res.data.data.chart.linearDataSets;
           for (let i = 0; i < chartDatas.length; i++) {
-            if (chartDatas[i].label == '滚动预测') {
-              legendData.push('预测注水量');
+            if (chartDatas[i].label == "滚动预测") {
+              legendData.push("预测注水量");
             } else {
               legendData.push(chartDatas[i].label);
             }
@@ -989,16 +1003,16 @@ export default {
       //结果数据
       let series = {};
       series.name = linearChart.label;
-      series.type = 'line';
-      series.symbol = 'none';
+      series.type = "line";
+      series.symbol = "none";
       let labelName = linearChart.label;
       //如果滚动预测
-      if (labelName == '滚动预测') {
-        series.name = '预测注水量';
+      if (labelName == "滚动预测") {
+        series.name = "预测注水量";
       }
-      if (labelName == '实际日注入量' || labelName == '滚动预测' || labelName == '计划日注入量') {
+      if (labelName == "实际日注入量" || labelName == "滚动预测" || labelName == "计划日注入量") {
         series.yAxisIndex = 0;
-      } else if (labelName == '实际年累注' || labelName == '计划年累注') {
+      } else if (labelName == "实际年累注" || labelName == "计划年累注") {
         series.yAxisIndex = 1;
       }
       let seriesData = [];
@@ -1082,7 +1096,7 @@ export default {
       let oilFieldContent = this.oilField.find((item) => item.oilFieldId == this.selectOilField);
       //油田名称
       this.oilFieldName = oilFieldContent.name;
-      if (val == '原油产量') {
+      if (val == "原油产量") {
         this.getSearchOilProductionChart(this.selectOilField, this.selectUnitOfProduction);
         this.getSearchOilProductionTable(
           this.selectOilField,
@@ -1090,9 +1104,9 @@ export default {
           this.currentPageOfRuntime,
           this.pageSizeOilProduct,
         );
-      } else if (val == '天然气产量') {
+      } else if (val == "天然气产量") {
         this.getSearchGasChart(this.selectOilField);
-      } else if (val == '油田注水量') {
+      } else if (val == "油田注水量") {
         this.getSearchInjectionChart(this.selectOilField);
         this.getSearchInjectionTable(this.selectOilField, this.currentPageOfOilYear, this.pageSizeInjection);
       }
@@ -1106,7 +1120,7 @@ export default {
       let oilFieldContent = this.oilField.find((item) => item.oilFieldId == this.selectOilField);
       //油田名称
       this.oilFieldName = oilFieldContent.name;
-      if (this.pageType == '原油产量') {
+      if (this.pageType == "原油产量") {
         this.getSearchOilProductionChart(this.selectOilField, this.selectUnitOfProduction);
         this.getSearchOilProductionTable(
           this.selectOilField,
@@ -1114,9 +1128,9 @@ export default {
           this.currentPageOfRuntime,
           this.pageSizeOilProduct,
         );
-      } else if (this.pageType == '天然气产量') {
+      } else if (this.pageType == "天然气产量") {
         this.getSearchGasChart(this.selectOilField);
-      } else if (this.pageType == '油田注水量') {
+      } else if (this.pageType == "油田注水量") {
         this.getSearchInjectionChart(this.selectOilField);
         this.getSearchInjectionTable(this.selectOilField, this.currentPageOfOilYear, this.pageSizeInjection);
       }
@@ -1127,14 +1141,14 @@ export default {
      * 导出原油产量CSV文件
      */
     doDownYYCL() {
-      exportExcel('#yyclcsv', '原油产量');
+      exportExcel("#yyclcsv", "原油产量");
     },
     /**
      * hwh
      * 导出油田注水量CSV文件
      */
     doDownYTZSL() {
-      exportExcel('#ytzslcsv', '油田注水量');
+      exportExcel("#ytzslcsv", "油田注水量");
     },
     /**
      * hwh
@@ -1143,10 +1157,10 @@ export default {
     getPageAuthMessage() {
       //禁止权限内容
       this.downPower(false);
-      //   this.userInfo = VSAuth.getAuthInfo();
+      // this.userInfo = VSAuth.getAuthInfo();
       let myPath = this.$route.path;
       //该值可以为空
-      let areaCode = 'znytglxt';
+      let areaCode = "znytglxt";
       let loginName = this.userInfo.userName;
       getWidgetByAreaUser({ areaCode: areaCode, loginName: loginName }).then((res) => {
         let myList = res.data.dataList;
@@ -1162,25 +1176,25 @@ export default {
               try {
                 let myWidgetItem = this.myWidget[indexNum];
                 switch (myWidgetItem.widgetCode) {
-                  case 'addInfo':
+                  case "addInfo":
                     this.canAddInfo = true;
                     break;
-                  case 'updateInfo':
+                  case "updateInfo":
                     this.canUpdateInfo = true;
                     break;
-                  case 'sendInfo':
+                  case "sendInfo":
                     this.canSendInfo = true;
                     break;
-                  case 'deleteInfo':
+                  case "deleteInfo":
                     this.canDeleteInfo = true;
                     break;
-                  case 'download':
+                  case "download":
                     {
                       this.canDownload = true;
                       this.downPower(this.canDownload);
                     }
                     break;
-                  case 'upload':
+                  case "upload":
                     this.canUpload = true;
                     break;
                   default:
@@ -1206,17 +1220,18 @@ export default {
       if (cellValue) {
         return parseFloat(Number(cellValue).toFixed(2));
       } else {
-        return '-';
+        return "-";
       }
     },
   },
 };
 </script>
-  <style lang="scss" scoped>
+<style lang="scss" scoped>
 .f1 {
   margin-left: 10px;
   margin-bottom: 10px;
 }
+
 .contHeader {
   margin: 20px 0;
 
@@ -1232,21 +1247,24 @@ export default {
     line-height: 32px;
   }
 }
+
 .el-main {
   .normal-card:not(:first-child) {
     margin-top: 20px;
   }
-  overflow: hidden;
-}
-::v-deep .el-radio-button__inner {
-  color: #00def0;
-  background-color: #031527;
-  border: 1px solid #00def0;
 }
 
-::v-deep .el-button {
-  color: #00def0;
+::v-deep .el-radio-button__inner {
+  border: 1px solid #00cbdd;
+  color: #00cbdd;
   background-color: #031527;
-  border: 1px solid #00def0;
+}
+
+::v-deep .el-radio-button:first-child .el-radio-button__inner {
+  border: 1px solid #00cbdd;
+}
+
+::v-deep .el-input__inner {
+  background-color: #164052;
 }
 </style>

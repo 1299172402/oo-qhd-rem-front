@@ -1,4 +1,4 @@
-<!-- <template>
+ <template>
   <el-container class="layout">
     <el-header height="auto">
       <header-search class="g-w100 g-h100">
@@ -25,7 +25,7 @@
             </el-button>
           </div>
           <div class="fr overflow-hidden">
-            <el-radio-group v-model="radio1">
+            <!-- <el-radio-group v-model="radio1">
               <router-link
                 :to="{
                   name: 'developmentEffectEvaluation_capacity',
@@ -51,87 +51,102 @@
                 <el-radio-button label="含水类"></el-radio-button>
               </router-link>
               <el-radio-button label="递减类"></el-radio-button>
-            </el-radio-group>
+            </el-radio-group> -->
+
+            <vertical-switch-button
+              :data-list="dataList1"
+              button-width="120px"
+              button-height="40px"
+              style="width: 9%"
+              btn-direction="row"
+              @selectBtn="selectBtn"
+            />
           </div>
         </div>
       </header-search>
     </el-header>
     <el-main>
-     <pagePanelNew style="height: 100%; margin-top: 0px"> 
-
-      <div class="dom" style="margin-top: 0px">
-        <el-row :gutter="20" style="margin-top: -20px">
-          <el-col :span="12">
-            <pagePanel headerTitle="自然递减率" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-              <Echart :chart-data="naturalDeclineRate" style="height: 100%"></Echart>
-            </pagePanel>
-          </el-col>
-          <el-col :span="12">
-            <pagePanel headerTitle="综合递减率" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-              <Echart :chart-data="comprehensiveDeclineRate" style="height: 100%"></Echart
-            ></pagePanel>
-          </el-col>
-        </el-row>
-        <el-row class="mt-5" :gutter="20">
-          <el-col :span="12">
-            <pagePanel headerTitle="总递减率" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-              <Echart :chart-data="totalDeclineRate" style="height: 100%"></Echart>
-            </pagePanel>
-          </el-col>
-          <el-col :span="12">
-            <pagePanel headerTitle="产量标定法" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-              <Echart :chart-data="yieldCalibrationMethod" style="height: 100%"></Echart>
-            </pagePanel>
-          </el-col>
-        </el-row>
-        <el-row class="mt-5" :gutter="20">
-          <el-col :span="12">
-            <pagePanel headerTitle="指标评价结果表" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-              <el-table :data="tableData" highlight style="margin-top: 10px">
-                <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
-                <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
-                <el-table-column prop="lastPhaseValue" label="上阶段值" align="center"></el-table-column>
-                <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center"></el-table-column>
-                <el-table-column prop="result" label="结论" align="center"></el-table-column>
-              </el-table>
-            </pagePanel>
-          </el-col>
-        </el-row>
-      </div>
-
-     </pagePanelNew> 
+      <pagePanelNew style="height: 100%; margin-top: 0px">
+        <div class="dom" style="margin-top: 0px">
+          <el-row :gutter="20" style="margin-top: -20px">
+            <el-col :span="12">
+              <pagePanel headerTitle="自然递减率" style="width: 100%; height: 380px" :isShowMaxBtn="true">
+                <Echart :chart-data="naturalDeclineRate" style="height: 100%"></Echart>
+              </pagePanel>
+            </el-col>
+            <el-col :span="12">
+              <pagePanel headerTitle="综合递减率" style="width: 100%; height: 380px" :isShowMaxBtn="true">
+                <Echart :chart-data="comprehensiveDeclineRate" style="height: 100%"></Echart
+              ></pagePanel>
+            </el-col>
+          </el-row>
+          <el-row class="mt-5" :gutter="20">
+            <el-col :span="12">
+              <pagePanel headerTitle="总递减率" style="width: 100%; height: 380px" :isShowMaxBtn="true">
+                <Echart :chart-data="totalDeclineRate" style="height: 100%"></Echart>
+              </pagePanel>
+            </el-col>
+            <el-col :span="12">
+              <pagePanel headerTitle="产量标定法" style="width: 100%; height: 380px" :isShowMaxBtn="true">
+                <Echart :chart-data="yieldCalibrationMethod" style="height: 100%"></Echart>
+              </pagePanel>
+            </el-col>
+          </el-row>
+          <el-row class="mt-5" :gutter="20">
+            <el-col :span="12">
+              <pagePanel headerTitle="指标评价结果表" style="width: 100%; height: 380px" :isShowMaxBtn="true">
+                <el-table :data="tableData" highlight style="margin-top: 10px">
+                  <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
+                  <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
+                  <el-table-column prop="lastPhaseValue" label="上阶段值" align="center"></el-table-column>
+                  <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center"></el-table-column>
+                  <el-table-column prop="result" label="结论" align="center"></el-table-column>
+                </el-table>
+              </pagePanel>
+            </el-col>
+          </el-row>
+        </div>
+      </pagePanelNew>
     </el-main>
   </el-container>
-</template> -->
+</template>
 <script>
-import * as echarts from 'echarts';
-import Echart from '@/components/tools/Echarts/index.vue';
-import { fetchFields, fetchOilFields } from '@/api/oilDeposit/rem-02/primaryinfo';
+import * as echarts from "echarts";
+import Echart from "@/components/tools/Echarts/index.vue";
+import { fetchFields, fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo";
+import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 import {
   natureDeclineChart,
   composiveDeclineChart,
   targetChart,
   declineIndicatorEveluationResult,
   generalDeclineChart,
-} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 export default {
   components: {
     Echart,
+    verticalSwitchButton,
   },
   data() {
     return {
+      dataList1: [
+        { name: "产能类", key: "developmentEffectEvaluation_capacity", isChecked: false },
+        { name: "含水类", key: "developmentEffectEvaluation_water", isChecked: false },
+        { name: "储存类", key: "developmentEffectEvaluation_reserves", isChecked: false },
+        { name: "递减类", key: "developmentEffectEvaluation_Decreasing", isChecked: true },
+      ],
       //油田
       oilField: [],
       //油田名字
-      oilFieldName: '',
+      oilFieldName: "",
       //油田选中值
-      selectOilField: '',
+      selectOilField: "",
       //区块
       block: [],
       //区块选中值
-      selectBlock: '',
+      selectBlock: "",
 
-      radio1: '递减类',
+      radio1: "递减类",
       //查询参数
       queryParams: {},
       page: 1,
@@ -139,45 +154,45 @@ export default {
       //油田列表
       oilFieldList: [
         {
-          value: 'QHD32-6',
-          label: '秦皇岛32-6油田',
+          value: "QHD32-6",
+          label: "秦皇岛32-6油田",
         },
       ],
       //区域列表
       areaList: [
         {
-          value: '',
-          label: '全部',
+          value: "",
+          label: "全部",
         },
         {
-          value: '区块1',
-          label: '区块1',
+          value: "区块1",
+          label: "区块1",
         },
       ],
       //自然递减率
       naturalDeclineRate: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         dataZoom: {
           start: 80,
-          type: 'inside',
+          type: "inside",
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '自然递减率',
+              name: "自然递减率",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         xAxis: {
-          type: 'category',
+          type: "category",
           /*data: [
               "2009",
               "2010",
@@ -193,7 +208,7 @@ export default {
               "2020",
             ],*/
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
             margin: 20,
           },
           axisTick: {
@@ -202,16 +217,16 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: {
-          name: '自然递减率(%)',
-          nameTextStyle: { color: '#8FA4CC' },
-          type: 'value',
+          name: "自然递减率(%)",
+          nameTextStyle: { color: "#8FA4CC" },
+          type: "value",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -219,13 +234,13 @@ export default {
           axisLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(151,151,151,.16)',
+              color: "rgba(151,151,151,.16)",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
@@ -233,7 +248,7 @@ export default {
           data: [
             /*-50, -10, -20, 10, -5, -10, -10, -5, 5, 10, -20, -5*/
           ],
-          type: 'bar',
+          type: "bar",
           label: {
             show: true,
           },
@@ -242,27 +257,27 @@ export default {
       //综合递减率
       comprehensiveDeclineRate: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         dataZoom: {
           start: 80,
-          type: 'inside',
+          type: "inside",
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '综合递减率',
+              name: "综合递减率",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         xAxis: {
-          type: 'category',
+          type: "category",
           /*data: [
               "2009",
               "2010",
@@ -278,7 +293,7 @@ export default {
               "2020",
             ],*/
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -286,16 +301,16 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: {
-          name: '综合递减率(%)',
-          nameTextStyle: { color: '#8FA4CC' },
-          type: 'value',
+          name: "综合递减率(%)",
+          nameTextStyle: { color: "#8FA4CC" },
+          type: "value",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -303,36 +318,36 @@ export default {
           axisLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(151,151,151,.16)',
+              color: "rgba(151,151,151,.16)",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         series: [
           {
             data: [],
-            type: 'scatter',
-            barWidth: '20',
+            type: "scatter",
+            barWidth: "20",
             label: {
               show: false,
-              position: 'top',
-              color: '#00D9EA',
+              position: "top",
+              color: "#00D9EA",
             },
             /*symbol: "none",*/
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
-                  color: '#49E1F0',
+                  color: "#49E1F0",
                 },
                 {
                   offset: 1,
-                  color: '#24DEFF',
+                  color: "#24DEFF",
                 },
               ]),
             },
@@ -342,41 +357,41 @@ export default {
       //总递减率
       totalDeclineRate: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '总递减率',
+              name: "总递减率",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         xAxis: {
-          type: 'category',
+          type: "category",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
           },
           axisLine: {
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: {
-          name: '总递减率(%)',
-          nameTextStyle: { color: '#8FA4CC' },
-          type: 'value',
+          name: "总递减率(%)",
+          nameTextStyle: { color: "#8FA4CC" },
+          type: "value",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -384,36 +399,36 @@ export default {
           axisLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(151,151,151,.16)',
+              color: "rgba(151,151,151,.16)",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         series: [
           {
             data: [],
-            type: 'scatter',
-            barWidth: '20',
+            type: "scatter",
+            barWidth: "20",
             label: {
               show: false,
-              position: 'top',
-              color: '#00D9EA',
+              position: "top",
+              color: "#00D9EA",
             },
             /* symbol: "circle",*/
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
-                  color: '#49E1F0',
+                  color: "#49E1F0",
                 },
                 {
                   offset: 1,
-                  color: '#24DEFF',
+                  color: "#24DEFF",
                 },
               ]),
             },
@@ -423,25 +438,25 @@ export default {
       //产量标定法
       yieldCalibrationMethod: {
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'shadow',
+            type: "shadow",
           },
         },
         toolbox: {
           show: true,
           feature: {
             saveAsImage: {
-              name: '产量标定法',
+              name: "产量标定法",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: '#022644',
+              backgroundColor: "#022644",
             },
           },
         },
         xAxis: {
-          type: 'category',
+          type: "category",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -449,14 +464,14 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         yAxis: {
-          type: 'value',
+          type: "value",
           axisLabel: {
-            color: '#8FA4CC',
+            color: "#8FA4CC",
           },
           axisTick: {
             show: false,
@@ -464,35 +479,35 @@ export default {
           axisLine: {
             show: false,
             lineStyle: {
-              color: 'rgba(151,151,151,.16)',
+              color: "rgba(151,151,151,.16)",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,.16)',
+              color: "rgba(255,255,255,.16)",
             },
           },
         },
         series: [
           {
             data: [],
-            type: 'scatter',
-            barWidth: '20',
+            type: "scatter",
+            barWidth: "20",
             label: {
               show: false,
-              position: 'top',
-              color: '#00D9EA',
+              position: "top",
+              color: "#00D9EA",
             },
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
-                  color: '#49E1F0',
+                  color: "#49E1F0",
                 },
                 {
                   offset: 1,
-                  color: '#24DEFF',
+                  color: "#24DEFF",
                 },
               ]),
             },
@@ -513,6 +528,16 @@ export default {
      * 设置页面初始化
      * @returns {Promise<void>}
      */
+
+    selectBtn(item) {
+      this.$router.push({
+        name: item.key,
+        params: {
+          oilFieldId: this.oilFieldId,
+          fieldId: this.fieldId,
+        },
+      });
+    },
     async initData() {
       this.canDownload = this.$route.params.canDownload;
       this.downPower(this.canDownload);
@@ -521,7 +546,7 @@ export default {
         if (res.data.code == 200) {
           this.oilField = res.data.data.oilFields;
           if (this.oilField.length == 0) {
-            this.selectOilField = '';
+            this.selectOilField = "";
           } else {
             this.selectOilField = this.oilField[0].oilFieldId;
           }
@@ -530,7 +555,7 @@ export default {
       let oilFieldId = this.$route.params.oilFieldId;
       if (oilFieldId == undefined) {
         //设置默认油田
-        this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
+        this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
       } else {
         this.selectOilField = oilFieldId;
       }
@@ -619,9 +644,9 @@ export default {
         //值大于等于0
         if (barChart[i].value >= 0) {
           barData.value = barChart[i].value;
-          let label = barChart[i].label.split('-');
-          barData.value = [label[0] + '-' + label[1], barData.value];
-          barData.name = label[0] + '-' + label[1];
+          let label = barChart[i].label.split("-");
+          barData.value = [label[0] + "-" + label[1], barData.value];
+          barData.name = label[0] + "-" + label[1];
           barData.label = {
             show: false,
             /*normal: {
@@ -631,15 +656,15 @@ export default {
               },*/
           };
           barData.itemStyle = {
-            color: '#1379F7',
+            color: "#1379F7",
           };
           seriesData.push(barData);
         } else {
           //值小于0
           barData.value = barChart[i].value;
-          let label = barChart[i].label.split('-');
-          barData.value = [label[0] + '-' + label[1], barData.value];
-          barData.name = label[0] + '-' + label[1];
+          let label = barChart[i].label.split("-");
+          barData.value = [label[0] + "-" + label[1], barData.value];
+          barData.name = label[0] + "-" + label[1];
           barData.label = {
             show: false,
             /*normal: {
@@ -649,7 +674,7 @@ export default {
               },*/
           };
           barData.itemStyle = {
-            color: '#FF7135',
+            color: "#FF7135",
           };
           seriesData.push(barData);
         }
@@ -673,8 +698,8 @@ export default {
           let seriesData = [];
           lineChart.forEach((item, index) => {
             let point = [];
-            let label = item.label.split('-');
-            point.push(label[0] + '-' + label[1]);
+            let label = item.label.split("-");
+            point.push(label[0] + "-" + label[1]);
             point.push(item.value);
             seriesData.push(point);
           });
@@ -760,7 +785,7 @@ export default {
   },
 };
 </script>
-<!-- <style lang="scss" scoped>
+<style lang="scss" scoped>
 .QU {
   padding-left: 10px;
 }
@@ -790,7 +815,7 @@ export default {
   }
 }
 ::v-deep .el-table .cell:empty::before {
-  content: '-';
+  content: "-";
 }
 .py-5 {
   display: flex;
@@ -799,4 +824,4 @@ export default {
 ::v-deep .el-radio-button:first-child .el-radio-button__inner {
   border: 1px solid #00d6ea;
 }
-</style> -->
+</style>

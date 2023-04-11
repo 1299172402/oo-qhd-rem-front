@@ -138,7 +138,9 @@ export default {
     return {
       dataList1: [
         { name: "产能类", key: "developmentEffectEvaluation_capacity", isChecked: false },
+        { name: "储存类", key: "developmentEffectEvaluation_reserves", isChecked: false },
         { name: "含水类", key: "developmentEffectEvaluation_water", isChecked: true },
+        { name: "递减类", key: "developmentEffectEvaluation_Decreasing", isChecked: false },
       ],
       //油田
       oilField: [],

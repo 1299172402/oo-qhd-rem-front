@@ -21,40 +21,46 @@ export default [
         component: () => import("@/pages/rem/developStatus/developmentTrendAnalysis.vue"),
       },
       {
-        path: 'wellGroupAnalysisAssistant',
-        name: 'wellGroupAnalysisAssistant',
-        component: () => import('@/layouts/blank.vue'),
-        meta: { title: '开发效果评价', single: false },
+        path: "developmentWarning_capacity",
+        name: "developmentWarning_capacity",
+        meta: { title: "产能类评价" },
+        component: () => import("@/pages/rem/developStatus/developmentWarning_capacity.vue"),
+      },
+      {
+        path: "wellGroupAnalysisAssistant",
+        name: "wellGroupAnalysisAssistant",
+        component: () => import("@/layouts/blank.vue"),
+        meta: { title: "开发效果评价", single: false },
         children: [
           {
-            path: 'developmentEffectEvaluation_capacity',
-            name: 'developmentEffectEvaluation_capacity',
+            path: "developmentEffectEvaluation_capacity",
+            name: "developmentEffectEvaluation_capacity",
             component: () =>
-              import('@/pages/rem/developStatus/wellGroupAnalysisAssistant/developmentEffectEvaluation_capacity.vue'),
-            meta: { title: '产能类评价', icon: 'icon' },
+              import("@/pages/rem/developStatus/wellGroupAnalysisAssistant/developmentEffectEvaluation_capacity.vue"),
+            meta: { title: "产能类评价", icon: "icon" },
           },
           //油藏管理-开发现状跟踪-开发效果评价-储量
-          // {
-          //   path: 'developmentEffectEvaluation_reserves',
-          //   component: () =>
-          //     import('@/pages/rem/developStatus/wellGroupAnalysisAssistant/developmentEffectEvaluation_reserves.vue'),
-          //   name: 'developmentEffectEvaluation_reserves',
-          //   meta: { title: '储存类评价', icon: 'icon' },
-          // },
           {
-            path: 'developmentEffectEvaluation_water',
+            path: "developmentEffectEvaluation_reserves",
             component: () =>
-              import('@/pages/rem/developStatus/wellGroupAnalysisAssistant/developmentEffectEvaluation_water.vue'),
-            name: 'developmentEffectEvaluation_water',
-            meta: { title: '含水类评价', icon: 'icon' },
+              import("@/pages/rem/developStatus/wellGroupAnalysisAssistant/developmentEffectEvaluation_reserves.vue"),
+            name: "developmentEffectEvaluation_reserves",
+            meta: { title: "储存类评价", icon: "icon" },
           },
-          // {
-          //   path: 'developmentEffectEvaluation_Decreasing',
-          //   component: () =>
-          //     import('@/pages/rem/developStatus/wellGroupAnalysisAssistant/developmentEffectEvaluation_Decreasing.vue'),
-          //   name: 'developmentEffectEvaluation_Decreasing',
-          //   meta: { title: '递减类评价', icon: 'icon' },
-          // },
+          {
+            path: "developmentEffectEvaluation_water",
+            component: () =>
+              import("@/pages/rem/developStatus/wellGroupAnalysisAssistant/developmentEffectEvaluation_water.vue"),
+            name: "developmentEffectEvaluation_water",
+            meta: { title: "含水类评价", icon: "icon" },
+          },
+          {
+            path: "developmentEffectEvaluation_Decreasing",
+            component: () =>
+              import("@/pages/rem/developStatus/wellGroupAnalysisAssistant/developmentEffectEvaluation_Decreasing.vue"),
+            name: "developmentEffectEvaluation_Decreasing",
+            meta: { title: "递减类评价", icon: "icon" },
+          },
         ],
       },
     ],

@@ -3,7 +3,7 @@
   <div class="g-w100 g-h100" :class="btnDirection === 'column' ? 'g-column-flex' : 'g-row-flex'">
     <div v-for="(item, index) in dataList" :key="index" class="btnStyle">
       <el-button
-        v-if="item.isChecked"
+        v-if="item.isChecked" 
         style="width: 200px;line-height: 0px;"
         :style="{ width: buttonWidth ,height:buttonHeight}"
         :type="item.isChecked ? 'primary' : ''"
@@ -69,9 +69,6 @@ export default {
 };
 </script>
 <style scoped>
-.el-button + .el-button {
-  /* margin-left: 0px; */
-}
 
 .btnStyle {
   margin-bottom: 20px;
