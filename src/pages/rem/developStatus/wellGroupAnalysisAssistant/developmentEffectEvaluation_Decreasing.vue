@@ -2,7 +2,7 @@
   <el-container class="layout">
     <el-header height="auto">
       <header-search class="g-w100 g-h100">
-        <div class="py-5 overflow-hidden" style="margin-top: 10px; margin-bottom: 10px">
+        <div class="py-5 overflow-hidden" style="margin-top: 10px; margin-bottom: -5px">
           <div class="fl">
             <span>油田：</span>
             <el-select v-model="selectOilField" disabled @change="getFetchFields">
@@ -132,7 +132,7 @@ export default {
       dataList1: [
         { name: "产能类", key: "developmentEffectEvaluation_capacity", isChecked: false },
         { name: "含水类", key: "developmentEffectEvaluation_water", isChecked: false },
-        { name: "储存类", key: "developmentEffectEvaluation_reserves", isChecked: false },
+        { name: "储量类", key: "developmentEffectEvaluation_reserves", isChecked: false },
         { name: "递减类", key: "developmentEffectEvaluation_Decreasing", isChecked: true },
       ],
       //油田
