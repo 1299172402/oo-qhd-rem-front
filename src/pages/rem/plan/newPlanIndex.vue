@@ -71,9 +71,9 @@
                             </template>
                         </el-table-column>
                         <el-table-column prop="status" label="措施是否达标" width="80"></el-table-column>
-                        <el-table-column prop="measureName5" label="类别" width="100">
+                        <el-table-column label="类别" width="100">
                             <template slot-scope="scope">
-                                <span>计划实际</span>
+                                <div style="line-height: 18px;">计划<br/>实际</div>
                             </template>
                         </el-table-column>
                         <el-table-column prop="measureName6" :width="width +'px'">
@@ -113,17 +113,19 @@
                                         <img src="@/assets/rem/plan/i2.png" alt="" v-if="scope.row.stimClassCode=='002'"  :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 维护性措施`">
                                     </div>
                                     <div class="vv-right">
-                                        <div class="vv-line">
-                                            <div class="line" :style="{width:scope.row.sjwidth}" v-if="Number(scope.row.realityMeasuresDayNum)">
-                                                <el-progress :class="[scope.$index==1&&dateTime=='2023'?'progress3':'progress1']" type="line" :percentage="100" :show-text="false"></el-progress>
-                                            </div>
-                                            <div class="day" :class="[scope.$index==1&&dateTime=='2023'?'day3':'']" v-if="Number(scope.row.realityMeasuresDayNum)">{{scope.row.realityMeasuresDayNum}}天</div>
-                                        </div>
+                                        <!-- 计划 -->
                                         <div class="vv-line">
                                             <div class="line" :style="{width:scope.row.jhwidth}" v-if="Number(scope.row.planMeasuresDayNum)">
                                                 <el-progress class="progress2" type="line" :percentage="100" :show-text="false"></el-progress>
                                             </div>
                                             <div class="day" v-if="Number(scope.row.planMeasuresDayNum)">{{scope.row.planMeasuresDayNum}}天</div>
+                                        </div>
+                                        <!-- 实际 -->
+                                        <div class="vv-line">
+                                            <div class="line" :style="{width:scope.row.sjwidth}" v-if="Number(scope.row.realityMeasuresDayNum)">
+                                                <el-progress :class="[scope.$index==1&&dateTime=='2023'?'progress3':'progress1']" type="line" :percentage="100" :show-text="false"></el-progress>
+                                            </div>
+                                            <div class="day" :class="[scope.$index==1&&dateTime=='2023'?'day3':'']" v-if="Number(scope.row.realityMeasuresDayNum)">{{scope.row.realityMeasuresDayNum}}天</div>
                                         </div>
                                     </div>
                                 </div>
