@@ -22,21 +22,21 @@
         <pagePanelNew headerTitle="" style="height: calc(100% - 100px)" class="g-w100"> 
             <el-tabs class="g-pageHeader" style="margin-bottom:15px;" v-model="activeName" topline @tab-click="handleClick">
                 <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
-                    <el-button v-for="(module, indexButton) in item.modules" :key="indexButton" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" style="margin-top: 5px;" @click="currentModule = module.name">{{ module.label }}</el-button>
+                    <sliderTabs :tabs="item.modules" :currentModule="currentModule"  @tabTabs="tabTabs"></sliderTabs>
                 </el-tab-pane>
             </el-tabs>
             <keep-alive :include="[]" :max="10" v-if="selectBlock">
-                <component :is="component" ref="componentCustom" :oilFieldId="selectOilField" :block-id="selectBlock" @hook:mounted="initScrollTop" @childPara="changeChildParam"></component>
+                <component :is="component" ref="componentCustom" :oilFieldId="selectOilField" :block-id="selectBlock" @childPara="changeChildParam"></component>
             </keep-alive>
         </pagePanelNew>
     </div>
 </template>
 <script>
     import { fetchFields,fetchOilFields,uploadFile} from "@/api/oilDeposit/rem-02/primaryinfo.js";
-    // import {getWidgetByAreaUser} from "@/api/rmm-01/rmm01.js";
+    import sliderTabs from "./components/slider-tabs.vue"
     export default {
-        name: "OilAuxiliaryAnalysis",
-        components: {},
+        name: "blockAnalysisAided",
+        components: {sliderTabs},
         data() {
             return {
                 fileList: [],
@@ -183,54 +183,54 @@
                             //    label: "动液面差值图",
                             //    name: "dynamicLiquidLevelDifference",
                             // },
-                            // {
-                            //     label: "液油含水差值图",
-                            //     name: "liquidOilDifferenceDiagram",
-                            // },
+                            {
+                                label: "液油含水差值图",
+                                name: "liquidOilDifferenceDiagram",
+                            },
                             {
                                 label: "地层压力分布图",
                                 name: "totalPressureDropDiagram",
                             },
-                            // {
-                            //     label: "生产压差图",
-                            //     name: "differentialPressureDiagram",
-                            // },
-                            // {
-                            //     label: "采液强度等值图",
-                            //     name: "fluidStrengthEquivalence",
-                            // },
-                            // {
-                            //     label: "注水强度等值图",
-                            //     name: "isogramOfWaterInjectionIntensity",
-                            // },
-                            // {
-                            //     label: "米采指数",
-                            //     name: "cumulativeOilProductionPerMeter",
-                            // },
-                            // {
-                            //     label: "累积水油比分布图",
-                            //     name: "distributionOfAccumulatedwateroilRatio",
-                            // },
-                            // {
-                            //     label: "注采比分布图",
-                            //     name: "injectionProductionRatioDistribution",
-                            // },
-                            // {
-                            //     label: "综合开发曲线",
-                            //     name: "comprehensiveDevelopmentCurve",
-                            // },
-                            // {
-                            //     label: "产量构成曲线",
-                            //     name: "yieldCompositionCurve",
-                            // },
-                            // {
-                            //     label: "开发现状表",
-                            //     name: "developmentStatusTable",
-                            // },
-                            // {
-                            //     label: "开发指标评价表",
-                            //     name: "developmentIndexEvaluationTable",
-                            // }
+                            {
+                                label: "生产压差图",
+                                name: "differentialPressureDiagram",
+                            },
+                            {
+                                label: "采液强度等值图",
+                                name: "fluidStrengthEquivalence",
+                            },
+                            {
+                                label: "注水强度等值图",
+                                name: "isogramOfWaterInjectionIntensity",
+                            },
+                            {
+                                label: "米采指数",
+                                name: "cumulativeOilProductionPerMeter",
+                            },
+                            {
+                                label: "累积水油比分布图",
+                                name: "distributionOfAccumulatedwateroilRatio",
+                            },
+                            {
+                                label: "注采比分布图",
+                                name: "injectionProductionRatioDistribution",
+                            },
+                            {
+                                label: "综合开发曲线",
+                                name: "comprehensiveDevelopmentCurve",
+                            },
+                            {
+                                label: "产量构成曲线",
+                                name: "yieldCompositionCurve",
+                            },
+                            {
+                                label: "开发现状表",
+                                name: "developmentStatusTable",
+                            },
+                            {
+                                label: "开发指标评价表",
+                                name: "developmentIndexEvaluationTable",
+                            }
                         ],
                     },
                 ],
@@ -350,18 +350,12 @@
                 myWidget: [],
                 userInfo: {},
                 //按钮权限组
-                //添加记录
-                canAddInfo: false,
-                //修改数据
-                canUpdateInfo: false,
-                //发布数据
-                canSendInfo: false,
-                //删除数据
-                canDeleteInfo: false,
-                //下载数据
-                canDownload: true,
-                //上传数据
-                canUpload: true,
+                canAddInfo: false,//添加记录
+                canUpdateInfo: false,//修改数据
+                canSendInfo: false,//发布数据
+                canDeleteInfo: false,//删除数据
+                canDownload: true,//下载数据
+                canUpload: true,//上传数据
             };
         },
         computed: {
@@ -386,12 +380,13 @@
                 }
             },
         },
-        mounted() {
+        created() {
             this.initData();
-            //获取权限问题内容
-            // this.getPageAuthMessage();
         },
         methods: {
+            tabTabs(name){
+                this.currentModule=name;
+            },
             //跳转到对应页面
             handleClick(tab) {
                 this.activeName = tab.name;
@@ -607,10 +602,6 @@
                 } else {
                     return true;
                 }
-            },
-            // 初始化scrollTop
-            initScrollTop() {
-                // this.$store.dispatch('APP/initScrollTop', 500);
             },
             //获取当前页面的权限内容，并处理其逻辑问题
             getPageAuthMessage() {

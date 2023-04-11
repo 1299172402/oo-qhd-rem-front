@@ -14,6 +14,17 @@
             <el-date-picker v-model="yearTime" type="month" placeholder="选择月" value-format="yyyy-MM" style="margin-right:20px;"></el-date-picker>
             <el-button type="primary" @click="OnChangeImage">确认</el-button>
             <el-button type="primary" @click="openSetUpDialog">设置底图</el-button>
+            <div class="contourLine" style="display: flex;align-items: center;margin-left:20px;" v-if="intervalNum">
+                <span>等值线颜色：</span>
+                <el-color-picker v-model="form.color1" show-alpha size="small" style="margin-right:15px;"/>
+                <el-color-picker v-model="form.color2" show-alpha size="small" style="margin-right:15px;" />
+                <el-color-picker v-model="form.color3" show-alpha size="small" style="margin-right:15px;" />
+                <el-color-picker v-model="form.color4" show-alpha size="small" style="margin-right:15px;" />
+                <span>等值线间隔：</span>
+                <el-input type="number" v-model="form.interval" style="width:150px"></el-input>
+                <span>（可设区间：大于0 且 小于{{intervalNum}}）</span>
+                <el-button type="primary" @click="openContourLineDialog">绘制</el-button>  
+            </div>
         </div>
         <div class="z-echarts">
             <H5Chart ref="H5Chart" height="100%" :url="url" width="100%" @load="frameLoad"></H5Chart>
@@ -21,8 +32,8 @@
         <el-dialog width="10px" max-height="10px" :visible.sync="dialogVisible1" style="margin-top: 98%; margin-right: 2%">
             <H5Chart1 style="z-index: -9999;" ref="downH5Chart1" :url="url1" width="4000px" height="4000px"></H5Chart1>
         </el-dialog>
-        <!-- 设置弹框 -->
-        <el-dialog title="设置" :visible.sync="setUpDialog" width="800px" :close-on-click-modal="false">
+        <!-- 设置底图 -->
+        <el-dialog title="设置底图" :visible.sync="setUpDialog" width="800px" :close-on-click-modal="false">
             <div class="uploadBox">
                 <el-upload ref="upload" class="upload-demo" action="" :multiple="false" :limit="1" :auto-upload="false" :on-change="useUploadPic" :show-file-list="false">
                     <el-button type="primary" style="height:32px;">上传底图</el-button>
@@ -87,9 +98,18 @@
                 radioType: 'LIQUID',
                 yearTime: new Date().format('yyyy-MM'),
                 csData: '',
-                //设置
+                //设置底图
                 setUpDialog: false,
                 fileTableList:[],
+                //自定义等值线
+                form: {
+                  interval: '', 
+                  color1:'',
+                  color2:'',
+                  color3:'',
+                  color4:'',
+                },
+                intervalNum:0,//等值线间隔最大值。
             };
         },
         watch: {
@@ -162,6 +182,7 @@
             },
             //切换图片
             OnChangeImage() {
+                this.intervalNum=0;
                 this.image = '';
                 let request = {
                     oilFieldId: this.oilFieldId,
@@ -184,6 +205,12 @@
                             this.image = '';
                         }
                         if (res.data.data) {
+                            if(res.data.data.areaLine){
+                                let list=res.data.data.areaLine;
+                                let max = Math.max.apply(Math, list.map(i => {return Number(i.isolineValue) }));
+                                let min = Math.min.apply(Math, list.map(i => {return Number(i.isolineValue) }));
+                                this.intervalNum=this.numSub(max,min);
+                            }
                             this.layerData = res.data.data;
                             this.sjcl(res.data.data, this.$refs.H5Chart);
                         }
@@ -191,6 +218,24 @@
                         this.image = '';
                     }
                 });
+            },
+            //两数向减
+            numSub(num1, num2) {
+                let baseNum, baseNum1, baseNum2;
+                let precision;// 精度
+                try {
+                    baseNum1 = num1.toString().split(".")[1].length;
+                } catch (e) {
+                    baseNum1 = 0;
+                }
+                try {
+                    baseNum2 = num2.toString().split(".")[1].length;
+                } catch (e) {
+                    baseNum2 = 0;
+                }
+                baseNum = Math.pow(10, Math.max(baseNum1, baseNum2));
+                precision = (baseNum1 >= baseNum2) ? baseNum1 : baseNum2;
+                return ((num1 * baseNum - num2 * baseNum) / baseNum).toFixed(precision);
             },
             //单选按钮选中改变事件
             changeRadio() {
@@ -504,6 +549,81 @@
                         this.$message.success('使用成功！');
                     }  
                 })
+            },
+            //打开自定义等值线弹框
+            openContourLineDialog(){
+                this.contourLineDialog=true;
+            },
+            //确定自定义等值线
+            sureContourLine(){
+                let colorList=[];
+                let form=JSON.parse(JSON.stringify(this.form));
+                console.log(form,88);
+                let colorNum=0;
+                for(let key in form){
+                    if(key.includes('color')&&form[key]){
+                        colorNum+=1;
+                        let a=form[key].replace('rgba(','');
+                        let b=a.substring(0,a.length-1);
+                        let c=b.split(', ');
+                        // let obj={ r:c[0],g:c[1], b:c[2],a:c[3]};
+                        colorList.push([...c]);
+                    }
+                }
+                if(colorNum<2){
+                    this.$message.warning(`最少输入两个线条颜色`);
+                    return false;
+                }
+                console.log(colorList);
+                if(form.interval!==''){
+                    if(form.interval==='0'){
+                        this.$message.warning(`可设区间：大于0 且 小于${this.intervalNum}`);
+                        return false;
+                    }else if(Number(form.interval)>this.intervalNum){
+                        this.$message.warning(`可设区间：大于0 且 小于${this.intervalNum}`);
+                        return false;
+                    }
+                }
+                // return;
+                let request = {
+                    oilFieldId: this.oilFieldId,
+                    fieldId: this.blockId,
+                    layerId: this.selectPosition,
+                    year: this.yearTime + '-01',
+                    liquidType: this.radioType,
+                    colorList,
+                    interval:this.form.interval
+                };
+                dynamicDataOilWaterContourMap(request).then((res) => {
+                    if (res.data.code == 200) {
+                        if (res.data.data.layerPics) {
+                            if (res.data.data.layerPics.length > 0) {
+                                let imageData = res.data.data.layerPics[0];
+                                let type = imageData.type;
+                                this.image = 'data:' + type + ';base64,' + imageData.data;
+                            } else {
+                                this.image = '';
+                            }
+                        } else {
+                            this.image = '';
+                        }
+                        if (res.data.data) {
+                            if(res.data.data.areaLine){
+                                let list=res.data.data.areaLine;
+                                let max = Math.max.apply(Math, list.map(i => {return Number(i.isolineValue) }));
+                                let min = Math.min.apply(Math, list.map(i => {return Number(i.isolineValue) }));
+                                console.log('max',max)
+                                console.log('min',min)
+                                this.intervalNum=this.numSub(max,min);
+                                console.log('间隔',this.intervalNum);
+                            }
+                            this.layerData = res.data.data;
+                            this.sjcl(res.data.data, this.$refs.H5Chart);
+                        }
+                    } else {
+                        this.image = '';
+                    }
+                });
             },
         }
     };

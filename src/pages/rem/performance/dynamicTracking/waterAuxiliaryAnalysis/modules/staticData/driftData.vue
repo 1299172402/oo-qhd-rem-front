@@ -20,9 +20,9 @@
       <el-table-column prop="displacement" label="位移 (m)"></el-table-column>
       <el-table-column prop="closureAzimuth" label="闭合方位 (°)"></el-table-column>
       <el-table-column prop="closureDistance" label="闭合距 (m)"></el-table-column>
-      <el-table-column prop="NSIncrement" label="坐标北南增量"></el-table-column>
-      <el-table-column prop="EWIncrement" label="坐标东西增量"></el-table-column>
-      <el-table-column prop="curvature" label="狗腿度（曲度） (°/30m)"></el-table-column>
+      <el-table-column prop="NSIncrement" label="坐标北南增量 (m)" width="140"></el-table-column>
+      <el-table-column prop="EWIncrement" label="坐标东西增量 (m)" width="140"></el-table-column>
+      <el-table-column prop="curvature" label="狗腿度（曲度） (°/30m)" width="180"></el-table-column>
       <el-table-column prop="remark" label="备注"></el-table-column>
     </el-table>
 </template>
@@ -76,10 +76,6 @@
 
 <style scoped lang="scss">
     #tableData{
-        ::v-deep .el-table__header-wrapper .cell{
-            height: auto;
-            line-height: 18px;
-        }
         ::v-deep .cell:empty{
             &::before {
                 content: '-';

@@ -15,8 +15,8 @@
       <el-table-column prop="displacement" label="位移 (m)" align="center"> </el-table-column>
       <el-table-column prop="closureAzimuth" label="闭合方位 (°)" align="center"></el-table-column>
       <el-table-column prop="closureDistance" label="闭合距 (m)" align="center"></el-table-column>
-      <el-table-column prop="NSIncrement" label="坐标北南增量" align="center"></el-table-column>
-      <el-table-column prop="EWIncrement" label="坐标东西增量" align="center"></el-table-column>
+      <el-table-column prop="NSIncrement" label="坐标北南增量 (m)" align="center" width="140"></el-table-column>
+      <el-table-column prop="EWIncrement" label="坐标东西增量 (m)" align="center" width="140"></el-table-column>
       <el-table-column prop="curvature" label="狗腿度（曲度） (°/30m)" width="180" align="center"></el-table-column>
       <el-table-column prop="remark" label="备注" min-width="180" align="center"></el-table-column>
     </el-table>

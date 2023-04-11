@@ -11,14 +11,14 @@
         <el-table-column prop="layerName" label="层号" width="120"></el-table-column>
         <el-table-column prop="topMd" label="顶界斜深 (m)" width="100"></el-table-column>
         <el-table-column prop="bottomMd" label="底界斜深 (m)" width="100"></el-table-column>
-        <el-table-column prop="mthickness" label="斜厚" width="100"></el-table-column>
+        <el-table-column prop="mthickness" label="斜厚(m)" width="70"></el-table-column>
         <el-table-column prop="topTvd" label="顶界垂深 (m)" width="100"></el-table-column>
         <el-table-column prop="bottomTvd" label="底界垂深 (m)" width="100"></el-table-column>
-        <el-table-column prop="tthickness" label="垂厚 (m)"></el-table-column>
+        <el-table-column prop="tthickness" label="垂厚 (m)" width="70"></el-table-column>
         <el-table-column prop="resistivity" label="地层电阻 (Ω·m)"></el-table-column>
         <el-table-column prop="effePorosity" label="孔隙度 (%)"></el-table-column>
-        <el-table-column prop="effePermeability" label="空气渗透率 (%)" width="120"></el-table-column>
-        <el-table-column prop="oilSaturation" label="含油饱和度 (%)" width="120"></el-table-column>
+        <el-table-column prop="effePermeability" label="空气渗透率 (mD)" width="110"></el-table-column>
+        <el-table-column prop="oilSaturation" label="含油饱和度 (%)" width="110"></el-table-column>
         <el-table-column prop="shaleContent" label="泥质含量 (%)"></el-table-column>
         <el-table-column prop="topKb" label="海拔顶深 (m)"></el-table-column>
         <el-table-column prop="bottomKb" label="海拔底深 (m)"></el-table-column>
