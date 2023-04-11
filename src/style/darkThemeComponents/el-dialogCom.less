@@ -14,9 +14,12 @@
 }
 
 .el-dialog__header {
-  background: linear-gradient(to right, rgba(2, 30, 54, 0.2), rgba(0, 144, 188, 0.8));
+  // TODO: Maybe change back，不带图标的时候放开
+  // background: linear-gradient(to right, rgba(2, 30, 54, 0.2), rgba(0, 144, 188, 0.8));
   border-bottom: 1px solid var(--light-blue-color);
   padding: 10px 20px;
+  background: var(--logo-bg) no-repeat top / contain, linear-gradient(to right, rgba(2, 30, 54, 0.2), rgba(0, 144, 188, 0.8)) !important;
+  background-size: 100% 100% !important;
   // line-height: 45px;
   .el-icon-close::before {
     color: #fff;

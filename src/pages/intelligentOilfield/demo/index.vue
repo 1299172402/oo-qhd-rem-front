@@ -5,6 +5,40 @@
       ====================================================常用组件一览大全========================================
     </div>
     <div class="headerTitle spaceMargin">
+      系统主题样式，主要用字体大小============================================================================================
+    </div>
+    <div class="spaceMargin">
+      0、深浅色系切换主题颜色
+    </div>
+    <div class="g-row-flex">
+      <div style="background: #3490d3; width: 80px; height: 80px; color: #fff" class="g-row-flex-HV">
+        浅色系
+      </div>
+      <div
+        style="background: rgba(0, 222, 240, 1); width: 80px; height: 80px; color: #fff; margin: 0 20px"
+        class="g-row-flex-HV"
+      >
+        深色系
+      </div>
+    </div>
+    <div style="color: var(--light-blue-color); font-size: 16px; margin-top: 20px; font-weight: 700">
+      代码直接使用【color:var(--light-blue-color)】可根据当前模式自动渲染颜色，其他颜色可参照src\style\theme\default.less文件定义的颜色变量
+    </div>
+    <div class="spaceMargin">
+      0.1、系统主要字体大小说明
+    </div>
+    <div>
+      <div class="primary-font-size">
+        正文一般使用14号字体，代码中直接使用【class="primary-font-size"】
+      </div>
+      <div class="big-font-size">
+        标题一般使用18号字体，代码中直接使用【class="big-font-size"】
+      </div>
+      <div style="font-weight: 700">
+        其他字体大小/或常用公共布局样式可参照src\style\common-style.less文件中公开的类名
+      </div>
+    </div>
+    <div class="headerTitle spaceMargin">
       1、按钮============================================================================================
     </div>
     <div class="spaceMargin">
@@ -68,10 +102,27 @@
       />
     </el-select>
     <div class="spaceMargin">
-      2.1.2、多选下拉框
+      2.1.2、多选下拉框(tag展示)
     </div>
     <el-select
       v-model="valueA"
+      multiple
+      placeholder="请选择"
+      clearable
+    >
+      <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      />
+    </el-select>
+    <div class="spaceMargin">
+      2.1.3、多选下拉框（合并为一段文字展示）
+    </div>
+    <el-select
+      v-model="valueA"
+      collapse-tags
       multiple
       placeholder="请选择"
       clearable
@@ -280,6 +331,7 @@
       <el-table-column prop="address" label="地址" fixed="right" />
     </el-table>
     <el-table
+      ref="mainTable"
       :data="tableData1"
       :border="false"
       :row-style="{ height: '0px' }"
@@ -296,32 +348,12 @@
         width="150"
       />
       <el-table-column label="配送信息">
-        <el-table-column
-          prop="name"
-          label="姓名"
-          width="120"
-        />
+        <el-table-column prop="name" label="姓名" width="120" />
         <el-table-column label="地址">
-          <el-table-column
-            prop="province"
-            label="省份"
-            width="120"
-          />
-          <el-table-column
-            prop="city"
-            label="市区"
-            width="120"
-          />
-          <el-table-column
-            prop="address"
-            label="地址"
-            width="300"
-          />
-          <el-table-column
-            prop="zip"
-            label="邮编"
-            width="120"
-          />
+          <el-table-column prop="province" label="省份" width="120" />
+          <el-table-column prop="city" label="市区" width="120" />
+          <el-table-column prop="address" label="地址" width="300" />
+          <el-table-column prop="zip" label="邮编" width="120" />
         </el-table-column>
       </el-table-column>
       <el-table-column
@@ -330,6 +362,34 @@
         label="操作"
         width="150"
       />
+    </el-table>
+    <el-table
+      :row-style="{ height: '0px' }"
+      :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+      :data="tableData"
+      header-cell-class-name="table_header"
+      :cell-style="{ padding: '6px', 'text-align': 'center' }"
+      style="width: 700px; margin: 20px 0"
+      :default-sort="{ prop: 'date', order: 'descending' }"
+    >
+      <el-table-column
+        prop="date"
+        label="日期"
+        sortable
+        width="180"
+        fixed
+      />
+      <el-table-column
+        prop="name"
+        label="姓名"
+        sortable
+        width="180"
+      >
+        <template slot-scope="scope">
+          {{ scope.row.name }}33
+        </template>
+      </el-table-column>
+      <el-table-column prop="address" />
     </el-table>
     <div class="headerTitle spaceMargin">
       6、分页=========================================================================================
@@ -341,7 +401,6 @@
       background
       layout="prev, pager, next,total"
       :total="1000"
-      class="paginationDiv"
     />
     <div class="spaceMargin">
       6.2、自定义封装分页器，实际页面中多个地方使用，具体看实际功能列表
@@ -367,7 +426,7 @@
       </el-radio>
     </el-radio-group>
     <div class="spaceMargin">
-      7.2、el-radio-group按钮样式
+      7.2、el-radio-group按钮样式【建议作为第三级标题】
     </div>
     <el-radio-group v-model="radio1">
       <el-radio-button label="上海" />
@@ -398,7 +457,7 @@
       <span>何时使用：需要用户处理事务，又不希望跳转</span>
       <span slot="footer" class="dialog-footer">
         <el-button class="cancelBtn" @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" class="buttonActive_primary" @click="dialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
     <div class="headerTitle spaceMargin">
@@ -469,7 +528,7 @@
         下一步(竖)
       </el-button>
     </div>
-    <div style="height: 300px" class="stepscolumn spaceMargin">
+    <div style="width: 300px; height: 300px" class="stepscolumn spaceMargin">
       <el-steps :active="activecolumn" finish-status="success" direction="vertical">
         <el-step title="步骤 1" description="这是一段很长很长很长的描述性文字" />
         <el-step title="步骤 2" description="这是一段很长很长很长的描述性文字" />
@@ -486,7 +545,7 @@
       15、tabs标签页=========================================================================================
     </div>
     <div class="spaceMargin">
-      15.1、elementUI的tabs标签页
+      15.1、elementUI的tabs标签页【建议作为第一级标题】
     </div>
     <el-tabs v-model="activeName" class="g-pageHeader">
       <el-tab-pane label="用户管理" name="first" />
@@ -501,7 +560,7 @@
       15.3、自定义的横向纵向tabs切换按钮（横向纵向都可以）
     </div>
     <div class="spaceMargin">
-      15.3.1、横向
+      15.3.1、横向<span style="color: red">【建议作为第二级标题】</span>
     </div>
     <vertical-switch-button
       :data-list="dataList1"
@@ -535,29 +594,10 @@
       <marquee>{{ val }}</marquee>
     </div>
     <div class="headerTitle spaceMargin">
-      18、echarts图表【未作封装以及大小适配】=========================================================================================
-    </div>
-    <charts-components
-      :chart-data-options="dataOption"
-      echarts-type="pie1"
-      style="width: 400px; height: 400px"
-    />
-    <charts-components
-      :chart-data-options="dataOptionLine"
-      echarts-type="line1"
-      style="width: 600px; height: 400px"
-    />
-    <charts-components
-      :chart-data-options="dataZhuzhuang"
-      echarts-type="bar1"
-      style="width: 600px; height: 400px"
-    />
-    <div id="lineContainer" ref="lineContainer" style="width: 50%; height: 410px" />
-    <div class="headerTitle spaceMargin">
-      18、上传图片/文件=========================================================================================
+      17、上传图片/文件=========================================================================================
     </div>
     <div class="spaceMargin">
-      18.1、图片上传
+      17.1、图片上传
     </div>
     <el-upload
       class="avatar-uploader imageUpload"
@@ -569,10 +609,10 @@
       <i v-else class="el-icon-plus avatar-uploader-icon" />
     </el-upload>
     <div class="spaceMargin">
-      18.2、文件上传
+      17.2、文件上传
     </div>
     <el-upload
-      style="width: 400px;"
+      style="width: 400px"
       class="upload-demo"
       drag
       action="https://jsonplaceholder.typicode.com/posts/"
@@ -592,126 +632,383 @@
     <div class="pageHeader">
       我是标题栏
     </div>
+    <div class="headerTitle spaceMargin">
+      19、进度条=========================================================================================
+    </div>
+    <div class="spaceMargin">
+      19.1、大号进度条
+    </div>
+    <el-progress :percentage="50" style="width: 400px" />
+    <el-progress :percentage="70" style="width: 400px" />
+    <el-progress :percentage="100" status="success" style="width: 400px" />
+    <el-progress :percentage="80" status="warning" style="width: 400px" />
+    <el-progress :percentage="50" status="exception" style="width: 400px" />
+    <el-progress
+      type="circle"
+      :stroke-width="4"
+      :width="80"
+      :percentage="0"
+    />
+    <el-progress
+      type="circle"
+      :stroke-width="4"
+      :width="80"
+      :percentage="68"
+    />
+    <el-progress
+      type="circle"
+      :stroke-width="4"
+      :width="80"
+      :percentage="100"
+      status="success"
+    />
+    <el-progress
+      type="circle"
+      :stroke-width="4"
+      :width="80"
+      :percentage="70"
+      status="warning"
+    />
+    <el-progress
+      type="circle"
+      :stroke-width="4"
+      :width="80"
+      :percentage="50"
+      status="exception"
+    />
+    <div class="spaceMargin">
+      19.2、小号进度条
+    </div>
+    <el-progress
+      :percentage="50"
+      style="width: 200px"
+      class="smallProgress"
+      :stroke-width="5"
+    />
+    <el-progress
+      :percentage="70"
+      style="width: 200px"
+      class="smallProgress"
+      :stroke-width="5"
+    />
+    <el-progress
+      :percentage="100"
+      status="success"
+      style="width: 200px"
+      class="smallProgress"
+      :stroke-width="5"
+    />
+    <el-progress
+      :percentage="80"
+      status="warning"
+      style="width: 200px"
+      class="smallProgress"
+      :stroke-width="5"
+    />
+    <el-progress
+      :percentage="50"
+      status="exception"
+      style="width: 200px"
+      class="smallProgress"
+      :stroke-width="5"
+    />
+    <el-progress
+      type="circle"
+      :stroke-width="2"
+      :width="40"
+      :percentage="0"
+    />
+    <el-progress
+      type="circle"
+      :stroke-width="2"
+      :width="40"
+      :percentage="68"
+    />
+    <el-progress
+      type="circle"
+      :stroke-width="2"
+      :width="40"
+      :percentage="100"
+      status="success"
+    />
+    <el-progress
+      type="circle"
+      :stroke-width="2"
+      :width="40"
+      :percentage="70"
+      status="warning"
+    />
+    <el-progress
+      type="circle"
+      :stroke-width="2"
+      :width="40"
+      :percentage="50"
+      status="exception"
+    />
+    <div class="headerTitle spaceMargin">
+      20、Result结果=========================================================================================
+    </div>
+    <div style="display: flex">
+      <el-result icon="success" title="应用创建成功" sub-title="这是一句创建成功的描述这是一句创建成功的描述">
+        <template slot="extra">
+          <el-button type="primary" class="buttonActive_primary" size="medium">
+            创建应用
+          </el-button>
+          <el-button class="cancelBtn" size="medium">
+            返回列表
+          </el-button>
+        </template>
+      </el-result>
+      <el-result icon="warning" title="应用创建失败" sub-title="这是一句创建失败的描述这是一句创建失败的描述">
+        <template slot="extra">
+          <el-button type="primary" class="buttonActive_primary" size="medium">
+            创建应用
+          </el-button>
+          <el-button class="cancelBtn" size="medium">
+            返回列表
+          </el-button>
+        </template>
+      </el-result>
+    </div>
+    <div class="headerTitle spaceMargin">
+      21、表单=========================================================================================
+    </div>
+    <el-form
+      ref="ruleForm"
+      :model="ruleForm"
+      style="width: 600px"
+      :rules="rules"
+      label-width="100px"
+      class="demo-ruleForm"
+    >
+      <el-form-item label="活动名称" prop="name">
+        <el-input v-model="ruleForm.name" />
+      </el-form-item>
+      <el-form-item label="活动区域" prop="region">
+        <el-select
+          v-model="ruleForm.region"
+          placeholder="请选择活动区域"
+          style="width: 300px"
+          clearable
+        >
+          <el-option label="区域一" value="shanghai" />
+          <el-option label="区域二" value="beijing" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="活动时间" required>
+        <el-col :span="11">
+          <el-form-item prop="date1">
+            <el-date-picker
+              v-model="ruleForm.date1"
+              type="date"
+              placeholder="选择日期"
+              style="width: 100%"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col class="lineStyle" :span="2">
+          -
+        </el-col>
+        <el-col :span="11">
+          <el-form-item prop="date2">
+            <el-time-picker v-model="ruleForm.date2" placeholder="选择时间" style="width: 100%" />
+          </el-form-item>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="即时配送" prop="delivery">
+        <el-switch v-model="ruleForm.delivery" />
+      </el-form-item>
+      <el-form-item label="活动性质" prop="type">
+        <el-checkbox-group v-model="ruleForm.type">
+          <el-checkbox label="美食/餐厅线上活动" name="type" />
+          <el-checkbox label="地推活动" name="type" />
+          <el-checkbox label="线下主题活动" name="type" />
+          <el-checkbox label="单纯品牌曝光" name="type" />
+        </el-checkbox-group>
+      </el-form-item>
+      <el-form-item label="特殊资源" prop="resource">
+        <el-radio-group v-model="ruleForm.resource">
+          <el-radio label="线上品牌商赞助" />
+          <el-radio label="线下场地免费" />
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="活动形式" prop="desc">
+        <el-input v-model="ruleForm.desc" type="textarea" />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" class="buttonActive_primary" @click="submitForm('ruleForm')">
+          立即创建
+        </el-button>
+        <el-button class="cancelBtn" @click="resetForm('ruleForm')">
+          重置
+        </el-button>
+      </el-form-item>
+    </el-form>
+    <div class="headerTitle spaceMargin">
+      22、Transfer穿梭窗=========================================================================================
+    </div>
+    <el-transfer
+      v-model="value5"
+      :left-default-checked="[2, 3]"
+      :right-default-checked="[1]"
+      :titles="['源列表', '目的列表']"
+      :data="data"
+      @change="handleChange"
+    />
+    <div class="headerTitle spaceMargin">
+      23、页面通用面板【具体使用可参照列表示例页】=========================================================================================
+    </div>
+    <div class="spaceMargin">
+      23.1、老版带标题
+    </div>
+    <page-panel header-title="我是标题" style="height: 600px" :show-btn="true">
+      <!-- <div>这里显示主内容，padding为20px</div> -->
+      <el-table
+        :row-style="{ height: '0px' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        :data="tableData"
+        header-cell-class-name="table_header"
+        :cell-style="{ padding: '6px', 'text-align': 'center' }"
+        :default-sort="{ prop: 'date', order: 'descending' }"
+      >
+        <el-table-column
+          prop="date"
+          label="日期"
+          sortable
+          width="180"
+        />
+        <el-table-column
+          prop="name"
+          label="姓名"
+          sortable
+          width="180"
+        />
+        <el-table-column prop="address" label="地址" />
+        <el-table-column
+          prop="date"
+          label="日期"
+          sortable
+          width="180"
+        />
+        <el-table-column
+          prop="name"
+          label="姓名"
+          sortable
+          width="180"
+        />
+        <el-table-column prop="address" label="地址" />
+      </el-table>
+    </page-panel>
+    <div class="spaceMargin">
+      23.2、新版不带标题
+    </div>
+    <page-panel-new style="height: 600px" :show-btn="true" />
+    <div class="headerTitle spaceMargin">
+      24、自定义info信息窗【建议只在拖拽面板页面使用】=========================================================================================
+    </div>
+    <info-window
+      info-width="400px"
+      info-height="300px"
+      header-title="开采现状分析"
+      :is-show-max-btn="true"
+    >
+      <div style="padding: 20px">
+        放主内容
+      </div>
+    </info-window>
+    <div class="headerTitle spaceMargin">
+      25、Header搜索框部分=========================================================================================
+    </div>
+    <header-search style="height: 100px" />
     <div style="margin: 40px 0">
       =================================end========================
     </div>
   </div>
 </template>
 <script>
-import { LineChart } from "echarts/charts";
-import { GridComponent, TooltipComponent, LegendComponent } from "echarts/components";
-import { mapState } from "vuex";
-import { CanvasRenderer } from "echarts/renderers";
-import * as echarts from "echarts/core";
-import { getFolderLineDataSet } from "./index";
 import { Message } from "element-ui";
 import horizontalSwitchBtn from "@/components/intelligentOilfield/horizontal-switch-button/index.vue";
 import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
-// import * as echarts from "echarts";
-import chartsComponents from "@/components/intelligentOilfield/echarts-com/index.vue";
 import marquee from "@/components/intelligentOilfield/marquee-window/index.vue";
 
-echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
-const labelName = ["总值", "合格值"];
-
-const getRate = 70;
-
-const color = [
-  {
-    type: "linear",
-    x: 0,
-    y: 0,
-    x2: 0,
-    y2: 1,
-    colorStops: [
-      {
-        offset: 0,
-        color: "rgba(242, 164, 64, 1)" // 0% 处的颜色
-      },
-      {
-        offset: 1,
-        color: "rgba(255, 213, 65, 1)" // 100% 处的颜色
-      }
-    ]
-  },
-  {
-    type: "linear",
-    x: 0,
-    y: 0,
-    x2: 0,
-    y2: 1,
-    colorStops: [
-      {
-        offset: 0,
-        color: "rgba(29, 130, 255, 1)" // 0% 处的颜色
-      },
-      {
-        offset: 1,
-        color: "rgba(0, 255, 246, 1)" // 100% 处的颜色
-      }
-    ]
-  }
-];
 export default {
   components: {
     horizontalSwitchBtn,
-    chartsComponents,
     marquee,
     verticalSwitchButton
   },
   data() {
+    const generateData = () => {
+      const data = [];
+      for (let i = 1; i <= 15; i++) {
+        data.push({
+          key: i,
+          label: `备选项 ${i}`,
+          disabled: i % 4 === 0
+        });
+      }
+      return data;
+    };
     return {
       radio1: "上海",
-      tableData1: [{
-        date: "2016-05-03",
-        name: "王小虎",
-        province: "上海",
-        city: "普陀区",
-        address: "上海市普陀区金沙江路 1518 弄",
-        zip: 200333
-      }, {
-        date: "2016-05-02",
-        name: "王小虎",
-        province: "上海",
-        city: "普陀区",
-        address: "上海市普陀区金沙江路 1518 弄",
-        zip: 200333
-      }, {
-        date: "2016-05-04",
-        name: "王小虎",
-        province: "上海",
-        city: "普陀区",
-        address: "上海市普陀区金沙江路 1518 弄",
-        zip: 200333
-      }, {
-        date: "2016-05-01",
-        name: "王小虎",
-        province: "上海",
-        city: "普陀区",
-        address: "上海市普陀区金沙江路 1518 弄",
-        zip: 200333
-      }, {
-        date: "2016-05-08",
-        name: "王小虎",
-        province: "上海",
-        city: "普陀区",
-        address: "上海市普陀区金沙江路 1518 弄",
-        zip: 200333
-      }, {
-        date: "2016-05-06",
-        name: "王小虎",
-        province: "上海",
-        city: "普陀区",
-        address: "上海市普陀区金沙江路 1518 弄",
-        zip: 200333
-      }, {
-        date: "2016-05-07",
-        name: "王小虎",
-        province: "上海",
-        city: "普陀区",
-        address: "上海市普陀区金沙江路 1518 弄",
-        zip: 200333
-      }],
+      tableData1: [
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333
+        },
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333
+        },
+        {
+          date: "2016-05-08",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333
+        },
+        {
+          date: "2016-05-06",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333
+        },
+        {
+          date: "2016-05-07",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333
+        }
+      ],
       imageUrl: "",
       dataList1: [
         { name: "生产曲线分析", isChecked: false },
@@ -1053,514 +1350,6 @@ export default {
         }
       ],
       value: "",
-      dataOption: {
-        polar: {
-          center: ["50%", "50%"],
-          radius: ["38%", "76%"]
-        },
-        angleAxis: {
-          axisLine: {
-            show: false
-          },
-          axisLabel: {
-            show: false
-          },
-          splitLine: {
-            show: false
-          },
-          axisTick: {
-            show: false
-          },
-          min: 0,
-          max: 100,
-          boundaryGap: ["0", "100"],
-          startAngle: 90
-        },
-        radiusAxis: {
-          type: "category",
-          axisLine: {
-            show: false
-          },
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            show: false
-          },
-          data: labelName,
-          z: 10
-        },
-        series: [
-          {
-            name: "",
-            hoverAnimation: false,
-            silent: true,
-            type: "pie",
-            data: [{ name: "合格值", value: 100 }],
-            z: 1,
-            center: ["50%", "50%"],
-            radius: ["27%", "68%"],
-            label: {
-              show: true,
-              position: "center",
-
-              formatter: `{total|${getRate}%}\n\n{lname|合格值}`,
-              rich: {
-                total: {
-                  fontSize: 16,
-                  fontWeight: "bold",
-                  color: "#0DDBFF"
-                },
-                lname: {
-                  fontSize: 12,
-                  color: "#FFF"
-                }
-              }
-            },
-            itemStyle: {
-              color: "rgba(62, 109, 255, 0.2)"
-            }
-          },
-          {
-            // hoverAnimation:false,
-            name: labelName[0],
-            barGap: "-100%",
-            // silent:true,
-            type: "bar",
-            data: [100],
-            coordinateSystem: "polar",
-            z: 2,
-            label: {
-              show: false
-            },
-            itemStyle: {
-              color: color[0]
-            }
-          },
-          {
-            // hoverAnimation:false,
-            roundCap: true,
-            // silent:true,
-            name: labelName[1],
-            type: "bar",
-            coordinateSystem: "polar",
-            barGap: "-100%",
-            data: [getRate],
-            z: 3,
-            label: {
-              show: false
-            },
-            itemStyle: {
-              color: color[1]
-            }
-          }
-        ]
-      },
-      dataOptionLine: {
-        // 你的代码
-        backgroundColor: "transparent",
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            lineStyle: {
-              color: {
-                type: "linear",
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [
-                  {
-                    offset: 0,
-                    color: "rgba(0, 255, 233,0)"
-                  },
-                  {
-                    offset: 0.5,
-                    color: "rgba(255, 255, 255,1)"
-                  },
-                  {
-                    offset: 1,
-                    color: "rgba(0, 255, 233,0)"
-                  }
-                ],
-                global: false
-              }
-            }
-          }
-        },
-        legend: {
-          x: "46%",
-          top: "0%",
-          textStyle: {
-            color: "gray",
-            fontSize: 12
-          },
-          data: ["历史价格"]
-        },
-
-        grid: {
-          top: "25%",
-          left: "12%",
-          right: "3%",
-          bottom: "10%"
-          // containLabel: true
-        },
-        xAxis: [
-          {
-            type: "category",
-            axisLine: {
-              show: false,
-              color: "#A582EA"
-            },
-
-            axisLabel: {
-              color: "gray",
-              width: 100
-            },
-            splitLine: {
-              show: false
-            },
-            boundaryGap: false,
-            data: [
-              "11/12",
-              "11/13",
-              "11/14",
-              "11/15",
-              "11/16",
-              "11/17",
-              "11/18",
-              "11/19",
-              "11/20",
-              "11/21",
-              "11/22",
-              "11/23",
-              "11/24",
-              "11/25",
-              "11/26",
-              "11/27",
-              "11/28",
-              "11/29",
-              "11/30",
-              "12/01",
-              "12/02",
-              "12/03",
-              "12/04",
-              "12/05",
-              "12/06",
-              "12/07",
-              "12/08",
-              "12/09",
-              "12/10",
-              "12/11"
-            ] // this.$moment(data.times).format("HH-mm") ,
-          }
-        ],
-
-        yAxis: [
-          {
-            name: "单位：元",
-            nameTextStyle: {
-              color: "gray",
-              fontSize: 12
-            },
-            type: "value",
-            min: 0,
-            splitNumber: 10,
-            splitLine: {
-              show: true,
-              lineStyle: {
-                color: "gray",
-                opacity: 0.23
-              }
-            },
-            axisLine: {
-              show: false
-            },
-            axisLabel: {
-              show: true,
-              margin: 15,
-              textStyle: {
-                color: "gray"
-              }
-            },
-            axisTick: {
-              show: false
-            }
-          }
-        ],
-        series: [
-          {
-            name: "历史价格",
-            type: "line",
-            showAllSymbol: true,
-            symbol: "circle",
-            symbolSize: 5,
-            lineStyle: {
-              normal: {
-                color: "#2CABE3"
-              }
-            },
-            label: {
-              show: true,
-              position: "top",
-              textStyle: {
-                color: "#2CABE3",
-                fontSize: 10
-              }
-            },
-            itemStyle: {
-              color: "#2CABE3",
-              borderColor: "#2CABE3",
-              borderWidth: 0
-            },
-            areaStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(
-                  0,
-                  0,
-                  0,
-                  1,
-                  [
-                    {
-                      offset: 0,
-                      color: "rgba(81,150,164,0.3)"
-                    },
-                    {
-                      offset: 1,
-                      color: "rgba(81,150,164,0)"
-                    }
-                  ],
-                  false
-                )
-              }
-            },
-            data: [
-              100.08, 136.97, 142.37, 135.04, 159.28, 157.08, 66.14, 149.27, 186.26, 0, 0, 170.3, 111.31, 54.86, 119.06,
-              109.57, 105.31, 34.87, 129.04, 35.33, 0, 31.51, 127.09, 136.76, 188.59, 142.03, 126.7, 133.33, 124.09,
-              67.43
-            ] // data.values
-          }
-        ]
-      },
-      dataZhuzhuang: {
-        backgroundColor: "transparent",
-        title: {
-          show: true,
-          text: "",
-          textStyle: {
-            align: "rigth",
-            color: "gray",
-            fontSize: 20
-          },
-          top: "3%",
-          left: "5%"
-        },
-        grid: {
-          top: "28%",
-          right: "10%",
-          bottom: "18%" // 也可设置left和right设置距离来控制图表的大小
-        },
-        tooltip: {
-          trigger: "axis",
-          backgroundColor: "rgba(17,95,182,0.5)",
-          textStyle: {
-            color: "#fff"
-          },
-          // axisPointer: {
-          //     type: "line",
-          //     label: {
-          //         show: false,
-          //     }
-          // },
-          formatter: pa => {
-            const oneDotHtml =
-              "<span style=\"display:inline-block;margin-right:5px;width:10px;height:10px;background-color:#1480C2\"></span>";
-            const twoDotHtml =
-              "<span style=\"display:inline-block;margin-right:5px;width:10px;height:10px;background-color:#8957A1\"></span>";
-            // return pa[0].name + pa[0].value
-            return `${pa[0].name}<br/>${oneDotHtml}${pa[1].seriesName}：${pa[1].value}<br>${twoDotHtml}${pa[0].seriesName}：${pa[0].value}`;
-          }
-        },
-        dataZoom: [
-          {
-            show: false,
-            xAxisIndex: 0,
-            type: "slider",
-            startValue: 0,
-            endValue: this.end
-          }
-        ],
-        legend: {
-          top: "20%",
-          left: "40%",
-          // icon: 'rect',
-          textStyle: {
-            padding: [0, 0, 0, 10],
-            color: "gray",
-            fontSize: 14,
-            lineHeight: 16
-          },
-          itemGap: 50,
-          itemHeight: 10,
-          data: ["肥料", "农药"]
-        },
-        xAxis: {
-          data: ["草堂镇", "白帝镇", "朱衣镇", "康乐镇", "永乐镇", "安坪镇"],
-          axisLine: {
-            show: true, // 隐藏X轴轴线
-            lineStyle: {
-              color: "gray"
-            }
-          },
-          axisTick: {
-            show: false // 隐藏X轴刻度
-          },
-          axisLabel: {
-            show: true,
-            textStyle: {
-              padding: [5, 0, 0, 0],
-              color: "gray" // X轴文字颜色
-            }
-          }
-        },
-        yAxis: [
-          {
-            type: "value",
-            name: "吨",
-            nameTextStyle: {
-              color: "gray",
-              fontSize: 14
-            },
-            splitLine: {
-              show: false,
-              lineStyle: {
-                color: "rgba(33,35,98,1)"
-              }
-            },
-            axisTick: {
-              show: false
-            },
-            axisLine: {
-              show: true,
-              lineStyle: {
-                color: "gray"
-              }
-            },
-            axisLabel: {
-              show: true,
-              textStyle: {
-                fontSize: 14,
-                color: "gray"
-              }
-            }
-          },
-          {
-            type: "value",
-            // name: "同比",
-            // nameTextStyle: {
-            //     show: false,
-            //     color: "#ebf8ac"
-            // },
-            position: "right",
-            splitLine: {
-              show: false
-            },
-            axisTick: {
-              show: false
-            },
-            axisLine: {
-              show: false
-            },
-            axisLabel: {
-              show: false,
-              textStyle: {
-                color: "gray"
-              }
-            }
-          }
-          // {
-          //     type: "value",
-          //     // gridIndex: 1,
-          //     min: 50,
-          //     max: 100,
-          //     splitNumber: 8,
-          //     splitLine: {
-          //         show: false
-          //     },
-          //     axisLine: {
-          //         show: false
-          //     },
-          //     axisTick: {
-          //         show: false
-          //     },
-          //     axisLabel: {
-          //         show: false
-          //     },
-          //     splitArea: {
-          //         show: true,
-          //         areaStyle: {
-          //             color: ["rgba(250,250,250,0.0)", "rgba(250,250,250,0.05)"]
-          //         }
-          //     }
-          // }
-        ],
-        series: [
-          {
-            name: "农药",
-            type: "line",
-            yAxisIndex: 1, // 使用的 y 轴的 index，在单个图表实例中存在多个 y轴的时候有用
-            smooth: false, // 平滑曲线显示
-            showAllSymbol: true, // 显示所有图形。
-            symbol: "emptyCircle", // 标记的图形为实心圆
-            symbolSize: 10, // 标记的大小
-            itemStyle: {
-              // 折线拐点标志的样式
-              color: "#8957A1"
-            },
-            lineStyle: {
-              color: "#8957A1"
-            },
-            // areaStyle:{
-            //     color: 'transparent'
-            //     // color: "rgba(5,140,255, 0.2)"
-            // },
-            data: [5, 5, 5, 5, 5, 5]
-          },
-          {
-            name: "肥料",
-            type: "bar",
-            barWidth: "30%",
-            showBackground: false,
-            itemStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
-                  {
-                    offset: 0,
-                    color: "red"
-                  },
-                  {
-                    offset: 0,
-                    color: "#1F0D5E"
-                  },
-                  {
-                    offset: 1,
-                    color: "#1480C2"
-                  }
-                ])
-              }
-            },
-            label: {
-              normal: {
-                show: false,
-                textStyle: {
-                  color: "gray"
-                }
-              }
-            },
-            data: [14, 16, 20, 7, 15, 11]
-          }
-        ]
-      },
       lineContainer: "",
       lineChart: "",
       dialogVisible: false,
@@ -1571,27 +1360,60 @@ export default {
       center: true,
       activerow: 0, // steps步骤条
       activecolumn: 0,
-      value2: 50 // slider滑块
+      value2: 50, // slider滑块
+      // 自定义进度条颜色，使用:color="colors"
+      colors: "rgba(166, 29, 36, 1)",
+      // 表单
+      ruleForm: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: ""
+      },
+      rules: {
+        name: [
+          { required: true, message: "请输入活动名称", trigger: "blur" },
+          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
+        ],
+        region: [{ required: true, message: "请选择活动区域", trigger: "change" }],
+        date1: [{ type: "date", required: true, message: "请选择日期", trigger: "change" }],
+        date2: [{ type: "date", required: true, message: "请选择时间", trigger: "change" }],
+        type: [{ type: "array", required: true, message: "请至少选择一个活动性质", trigger: "change" }],
+        resource: [{ required: true, message: "请选择活动资源", trigger: "change" }],
+        desc: [{ required: true, message: "请填写活动形式", trigger: "blur" }]
+      },
+      //   transfer穿梭窗
+      data: generateData(),
+      value5: [1],
+      value4: [1]
     };
-  },
-  computed: {
-    ...mapState("setting", ["brandTheme", "mode"])
-  },
-  watch: {
-    brandTheme() {
-      //   changeChartsTheme([this.lineChart])
-    },
-    mode() {
-      this.renderCharts();
-    }
   },
   mounted() {
     this.$nextTick(() => {
-      this.updateContainer();
+      this.$refs.mainTable.doLayout();
     });
-    this.renderCharts();
   },
   methods: {
+    filterParamsChange() {
+      // 可以在此方法中进行数据查询，通过this.filterParams获取表格header的搜索项以及值
+    },
+    format() {
+      // 有参数percentage
+      return "加载中";
+      // TODO: Maybe change back
+      // return percentage === 100 ? '满' : `${percentage}%`;
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate(() => {});
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
+    handleChange() {},
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
     },
@@ -1655,29 +1477,6 @@ export default {
     next1() {
       this.activecolumn += 1;
       if (this.activecolumn === 3) this.activecolumn = 0;
-    },
-    /** 采购商品申请趋势选择 */
-    onMaterialChange(value) {
-      const { chartColors } = this.$store.state.setting;
-
-      this.lineChart.setOption(getFolderLineDataSet({ dateTime: value, ...chartColors }));
-    },
-    updateContainer() {
-      this.lineChart.resize?.({
-        width: this.lineContainer.clientWidth,
-        height: this.lineContainer.clientHeight
-      });
-    },
-    renderCharts() {
-      const { chartColors } = this.$store.state.setting;
-
-      if (!this.lineContainer) {
-        this.lineContainer = document.getElementById("lineContainer");
-      }
-      this.lineChart = echarts.init(this.lineContainer);
-      this.lineChart.setOption(getFolderLineDataSet({ ...chartColors }));
-
-      window.addEventListener("resize", this.updateContainer, false);
     }
   }
 };
@@ -1717,5 +1516,13 @@ export default {
 
 .demoClass .spaceMargin {
   padding: 15px 0;
+}
+
+.el-progress {
+  margin: 10px;
+}
+
+.lineStyle {
+  text-align: center;
 }
 </style>

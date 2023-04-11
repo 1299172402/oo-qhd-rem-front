@@ -1,10 +1,13 @@
 .el-button--primary {
-  background: var(--primary-btn) !important;
+  // TODO: Maybe change back，不带图标的时候放开
+  // background: var(--primary-btn) !important;
   border-radius: 0;
   border: 0;
   color: #fff;
   // width: 100px;
   font-size: 14px;
+  background: var(--logo-bg) no-repeat top / contain, var(--primary-btn) !important;
+  background-size: 100% 100% !important;
 }
 
 .commonBtn,
@@ -16,6 +19,8 @@
   height: 40px;
   // width: 100px;
   font-size: 14px;
+  background-image: var(--logo-bg) !important;
+  background-size: 100% 100% !important;
 }
 
 .cancelBtn {
@@ -23,29 +28,36 @@
   border-radius: 0;
   color: var(--white-opacity7) !important;
   background: transparent !important;
+  background-image: var(--logo-bg) !important;
+  background-size: 100% 100% !important;
 }
 
 .errorBtn {
   background: #a61d24;
   color: #fff;
   border: 0;
+  background-image: var(--logo-bg) !important;
+  background-size: 100% 100% !important;
 }
 
 .errorBtnplain {
   background: transparent;
   color: #a61d24;
   border: 1px solid #a61d24;
+  background-image: var(--logo-bg) !important;
+  background-size: 100% 100% !important;
 }
 
 .disableBtn {
   color: #c0c4cc;
   cursor: not-allowed;
-  background: rgba(51,69,86,0.8) !important;
+  background: rgba(51, 69, 86, 0.8) !important;
   background-color: transparent;
   border-color: #c0c4cc !important;
-  background-image: none;
   border-radius: 0;
   opacity: 0.5;
+  background-image: var(--logo-bg) !important;
+  background-size: 100% 100% !important;
 }
 
 .el-button {
@@ -61,18 +73,28 @@
 
 //primary按钮点击时的样式按钮hover时的样式
 .buttonActive_primary:hover {
-  background: var(--primary-btn) !important;
+  // TODO: Maybe change back，不带图标的时候放开
+  // background: var(--primary-btn) !important;
   border: none;
+  background: var(--logo-bg) no-repeat top / contain, var(--primary-btn) !important;
+  background-size: 100% 100% !important;
 }
 
-.el-button--small{
+.buttonActive_primary {
+  // TODO: Maybe change back，不带图标的时候放开
+  // background: var(--primary-btn) !important;
+  background: var(--logo-bg) no-repeat top / contain, var(--primary-btn) !important;
+  background-size: 100% 100% !important;
+}
+
+.el-button--small {
   border-radius: 0;
 }
 
-.el-button--text{
+.el-button--text {
   padding: 0 !important;
 }
 
-.el-button+.el-button{
+.el-button + .el-button {
   margin-left: 20px !important;
 }

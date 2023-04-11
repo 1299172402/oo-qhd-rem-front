@@ -26,7 +26,7 @@ export default {
       layout: [
         { x: 0, y: 0, w: 9, h: 8, i: "0", name: "示例组件" },
         { x: 9, y: 0, w: 3, h: 6, i: "1", name: "XX组件" },
-        { x: 0, y: 8, w: 9, h: 12, i: "2", name: "XX组件" },
+        { x: 0, y: 8, w: 9, h: 12, i: "2", name: "示例组件2" },
         { x: 9, y: 8, w: 3, h: 6, i: "3", name: "XX组件" },
         { x: 9, y: 14, w: 3, h: 8, i: "4", name: "XX组件" }
       ]

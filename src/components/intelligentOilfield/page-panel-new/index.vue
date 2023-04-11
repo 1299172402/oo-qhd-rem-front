@@ -7,6 +7,7 @@
   >
     <div
       v-if="showBtn"
+      class="divBox"
       style="width: 100%;text-align: right"
     >
       <el-tooltip
@@ -53,6 +54,11 @@ export default {
 };
 </script>
 <style scoped>
+.divBox {
+  background-image: var(--logo-bg) !important;
+  background-size: 100% 100% !important;
+}
+
 .maxPage {
   position: absolute;
   z-index: 999;
@@ -75,7 +81,6 @@ export default {
   color: #fff;
   margin-right: 10px;
   margin-top: 10px;
-  fill: currentcolor
-
+  fill: currentcolor;
 }
 </style>

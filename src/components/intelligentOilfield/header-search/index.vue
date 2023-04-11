@@ -20,11 +20,9 @@ export default {
   height: 80px;
   border: 1px solid;
   padding: 0 20px;
+  background-image: var(--logo-bg) !important;
+  background-size: 100% 100% !important;
 
-}
-
-.searchHeader {
-  height: auto;
 }
 
 .searchHeader-light {
