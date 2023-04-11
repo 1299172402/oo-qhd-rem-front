@@ -79,7 +79,7 @@ router.beforeEach(async(to, from, next) => {
     if (whiteListRouters.indexOf(to.path) !== -1) {
       next();
     } else {
-      next(`/login?redirect=${to.fullPath}`);
+      Object.prototype.hasOwnProperty.call(to.query, "srid") ? next({ path: "/login", query: { ...to.query }}) : next(`/login?redirect=${to.fullPath}`);
     }
     NProgress.done();
   }

@@ -1,330 +1,608 @@
 <template>
   <div>
     <div class="headerTitle spaceMargin">
-      ====================================================其他组件一览大全========================================
+      ====================================================echarts/d3等组件一览大全========================================
     </div>
-    <!-- Progress进度条 -->
-    <div>=================================大号进度条=================================</div>
-    <el-progress :percentage="50" style="width: 400px" />
-    <el-progress :percentage="70" style="width: 400px" />
-    <el-progress :percentage="100" status="success" style="width: 400px" />
-    <el-progress :percentage="80" status="warning" style="width: 400px" />
-    <el-progress :percentage="50" status="exception" style="width: 400px" />
-    <el-progress
-      type="circle"
-      :stroke-width="4"
-      :width="80"
-      :percentage="0"
-    />
-    <el-progress
-      type="circle"
-      :stroke-width="4"
-      :width="80"
-      :percentage="68"
-    />
-    <el-progress
-      type="circle"
-      :stroke-width="4"
-      :width="80"
-      :percentage="100"
-      status="success"
-    />
-    <el-progress
-      type="circle"
-      :stroke-width="4"
-      :width="80"
-      :percentage="70"
-      status="warning"
-    />
-    <el-progress
-      type="circle"
-      :stroke-width="4"
-      :width="80"
-      :percentage="50"
-      status="exception"
-    />
-    <div>=================================小号进度条=================================</div>
-    <el-progress
-      :percentage="50"
-      style="width: 200px"
-      class="smallProgress"
-      :stroke-width="5"
-    />
-    <el-progress
-      :percentage="70"
-      style="width: 200px"
-      class="smallProgress"
-      :stroke-width="5"
-    />
-    <el-progress
-      :percentage="100"
-      status="success"
-      style="width: 200px"
-      class="smallProgress"
-      :stroke-width="5"
-    />
-    <el-progress
-      :percentage="80"
-      status="warning"
-      style="width: 200px"
-      class="smallProgress"
-      :stroke-width="5"
-    />
-    <el-progress
-      :percentage="50"
-      status="exception"
-      style="width: 200px"
-      class="smallProgress"
-      :stroke-width="5"
-    />
-    <el-progress
-      type="circle"
-      :stroke-width="2"
-      :width="40"
-      :percentage="0"
-    />
-    <el-progress
-      type="circle"
-      :stroke-width="2"
-      :width="40"
-      :percentage="68"
-    />
-    <el-progress
-      type="circle"
-      :stroke-width="2"
-      :width="40"
-      :percentage="100"
-      status="success"
-    />
-    <el-progress
-      type="circle"
-      :stroke-width="2"
-      :width="40"
-      :percentage="70"
-      status="warning"
-    />
-    <el-progress
-      type="circle"
-      :stroke-width="2"
-      :width="40"
-      :percentage="50"
-      status="exception"
-    />
-    <!-- Result结果 -->
-    <div style="margin: 10px 0">
-      =================================Result结果=================================
+    <div class="headerTitle spaceMargin">
+      1、echarts图表【未作封装以及大小适配】=========================================================================================
     </div>
-    <div style="display: flex">
-      <el-result icon="success" title="应用创建成功" sub-title="这是一句创建成功的描述这是一句创建成功的描述">
-        <template slot="extra">
-          <el-button type="primary" size="medium">
-            创建应用
-          </el-button>
-          <el-button class="cancelBtn" size="medium">
-            返回列表
-          </el-button>
-        </template>
-      </el-result>
-      <el-result icon="warning" title="应用创建失败" sub-title="这是一句创建失败的描述这是一句创建失败的描述">
-        <template slot="extra">
-          <el-button type="primary" size="medium">
-            创建应用
-          </el-button>
-          <el-button class="cancelBtn" size="medium">
-            返回列表
-          </el-button>
-        </template>
-      </el-result>
-    </div>
-    <!-- 表单 -->
-    <div style="margin: 10px 0">
-      =================================表单=================================
-    </div>
-    <el-form
-      ref="ruleForm"
-      :model="ruleForm"
-      style="width: 600px"
-      :rules="rules"
-      label-width="100px"
-      class="demo-ruleForm"
-    >
-      <el-form-item label="活动名称" prop="name">
-        <el-input v-model="ruleForm.name" />
-      </el-form-item>
-      <el-form-item label="活动区域" prop="region">
-        <el-select
-          v-model="ruleForm.region"
-          placeholder="请选择活动区域"
-          style="width: 300px"
-          clearable
-        >
-          <el-option label="区域一" value="shanghai" />
-          <el-option label="区域二" value="beijing" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="活动时间" required>
-        <el-col :span="11">
-          <el-form-item prop="date1">
-            <el-date-picker
-              v-model="ruleForm.date1"
-              type="date"
-              placeholder="选择日期"
-              style="width: 100%"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col class="lineStyle" :span="2">
-          -
-        </el-col>
-        <el-col :span="11">
-          <el-form-item prop="date2">
-            <el-time-picker v-model="ruleForm.date2" placeholder="选择时间" style="width: 100%" />
-          </el-form-item>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="即时配送" prop="delivery">
-        <el-switch v-model="ruleForm.delivery" />
-      </el-form-item>
-      <el-form-item label="活动性质" prop="type">
-        <el-checkbox-group v-model="ruleForm.type">
-          <el-checkbox label="美食/餐厅线上活动" name="type" />
-          <el-checkbox label="地推活动" name="type" />
-          <el-checkbox label="线下主题活动" name="type" />
-          <el-checkbox label="单纯品牌曝光" name="type" />
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="特殊资源" prop="resource">
-        <el-radio-group v-model="ruleForm.resource">
-          <el-radio label="线上品牌商赞助" />
-          <el-radio label="线下场地免费" />
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="活动形式" prop="desc">
-        <el-input v-model="ruleForm.desc" type="textarea" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">
-          立即创建
-        </el-button>
-        <el-button class="cancelBtn" @click="resetForm('ruleForm')">
-          重置
-        </el-button>
-      </el-form-item>
-    </el-form>
-    <!-- Transfer穿梭窗 -->
-    <div style="margin: 10px 0">
-      =================================Transfer穿梭窗=================================
-    </div>
-    <el-transfer
-      v-model="value"
-      :left-default-checked="[2, 3]"
-      :right-default-checked="[1]"
-      :titles="['源列表', '目的列表']"
-      :data="data"
-      @change="handleChange"
-    >
-      <!-- <el-button class="transfer-footer" slot="left-footer" size="small">操作</el-button>
-      <el-button class="transfer-footer" slot="right-footer" size="small">操作</el-button> -->
-    </el-transfer>
-
-    <div style="margin: 10px 0">
-      =================================页面通用面板【具体使用可参照列表示例页】【老版】=================================
-    </div>
-    <page-panel header-title="我是标题" style="height: 600px">
-      <!-- <div>这里显示主内容，padding为20px</div> -->
-      <el-table
-        :row-style="{ height: '0px' }"
-        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-        :data="tableData"
-        header-cell-class-name="table_header"
-        :cell-style="{ padding: '6px', 'text-align': 'center' }"
-        :default-sort="{ prop: 'date', order: 'descending' }"
-      >
-        <el-table-column
-          prop="date"
-          label="日期"
-          sortable
-          width="180"
-        />
-        <el-table-column
-          prop="name"
-          label="姓名"
-          sortable
-          width="180"
-        />
-        <el-table-column prop="address" label="地址" />
-        <el-table-column
-          prop="date"
-          label="日期"
-          sortable
-          width="180"
-        />
-        <el-table-column
-          prop="name"
-          label="姓名"
-          sortable
-          width="180"
-        />
-        <el-table-column prop="address" label="地址" />
-      </el-table>
-    </page-panel>
-    <div style="margin: 10px 0">
-      =================================页面通用面板【具体使用可参照列表示例页】【新增】=================================
-    </div>
-    <page-panel-new style="height: 600px" />
-    <!-- 自定义info信息窗 -->
-    <div style="margin: 10px 0">
-      =================================自定义info信息窗=================================
-    </div>
-    <info-window
-      info-width="400px"
-      info-height="300px"
-      header-title="开采现状分析"
-      :is-show-max-btn="true"
-    >
-      <div style="padding: 20px">
-        放主内容
-      </div>
-    </info-window>
-    <div style="margin: 40px 0">
-      =================================end========================
-    </div>
-    <!-- tab切换按钮：横向，可传值，可传背景色和border色系，可控制深浅色系颜色 -->
-    <!-- <div style="margin: 10px 0">=================================tab切换按钮：横向，可传值，可传背景色和border色系，可控制深浅色系颜色=================================</div>
-    <horizontalSwitchBtn style="margin-bottom: 10px"></horizontalSwitchBtn>
-    <horizontalSwitchBtn :colorList="colorList" :borderList="borderList" :dataList="dataList"></horizontalSwitchBtn> -->
-    <!-- Header搜索框部分 -->
-    <div style="margin: 10px 0">
-      =================================Header搜索框部分=================================
-    </div>
-    <header-search style="height: 100px" />
+    <charts-components :chart-data-options="dataOption" echarts-type="pie1" style="width: 400px; height: 400px" />
+    <charts-components :chart-data-options="dataOptionLine" echarts-type="line1" style="width: 600px; height: 400px" />
+    <charts-components :chart-data-options="dataZhuzhuang" echarts-type="bar1" style="width: 600px; height: 400px" />
+    <!-- TODO: Maybe change back -->
+    <!-- <div id="lineContainer" ref="lineContainer" style="width: 50%; height: 410px" /> -->
     <div style="margin: 40px 0">
       =================================end========================
     </div>
   </div>
 </template>
 <script>
-import infoWindow from "@/components/intelligentOilfield/info-window/index.vue";
-// import horizontalSwitchBtn from '@/components/intelligentOilfield/horizontal-switch-button/index.vue';
+import { mapState } from "vuex";
+import { GridComponent, TooltipComponent, LegendComponent } from "echarts/components";
+import * as echarts from "echarts/core";
+import { LineChart } from "echarts/charts";
+import chartsComponents from "@/components/intelligentOilfield/echarts-com/index.vue";
+import { CanvasRenderer } from "echarts/renderers";
+import { getFolderLineDataSet } from "./index";
 
+echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
+const labelName = ["总值", "合格值"];
+
+const getRate = 70;
+
+const color = [
+  {
+    type: "linear",
+    x: 0,
+    y: 0,
+    x2: 0,
+    y2: 1,
+    colorStops: [
+      {
+        offset: 0,
+        color: "rgba(242, 164, 64, 1)" // 0% 处的颜色
+      },
+      {
+        offset: 1,
+        color: "rgba(255, 213, 65, 1)" // 100% 处的颜色
+      }
+    ]
+  },
+  {
+    type: "linear",
+    x: 0,
+    y: 0,
+    x2: 0,
+    y2: 1,
+    colorStops: [
+      {
+        offset: 0,
+        color: "rgba(29, 130, 255, 1)" // 0% 处的颜色
+      },
+      {
+        offset: 1,
+        color: "rgba(0, 255, 246, 1)" // 100% 处的颜色
+      }
+    ]
+  }
+];
 export default {
   components: {
-    infoWindow
-    // horizontalSwitchBtn,
+    chartsComponents
   },
   data() {
-    const generateData = () => {
-      const data = [];
-      for (let i = 1; i <= 15; i++) {
-        data.push({
-          key: i,
-          label: `备选项 ${i}`,
-          disabled: i % 4 === 0
-        });
-      }
-      return data;
-    };
     return {
+      labelList: ["成都", "武汉", "上海", "北京", "深圳", "陕西", "山西", "甘肃"],
+      dataListD3: [100, 105, 200, 250, 230, 320, 128, 68],
+      data1: [
+        {
+          "name": "哈尔滨",
+          "value": [{ key: "2015-1-1", value: 10 }, { key: "2015-1-2", value: 12 }, { key: "2015-1-3", value: 13 }, { key: "2015-1-17", value: 17 }]
+        },
+        {
+          "name": "海南",
+          "value": [{ key: "2015-1-1", value: 9 }, { key: "2015-1-2", value: 48 }, { key: "2015-1-3", value: 5 }, { key: "2015-1-17", value: 49 }]
+        },
+        {
+          "name": "天津",
+          "value": [{ key: "2015-1-2", value: 30 }, { key: "2015-1-3", value: 1 }, { key: "2015-1-4", value: 32 }, { key: "2015-1-5", value: 10 }]
+        }
+      ],
+      dataOption: {
+        polar: {
+          center: ["50%", "50%"],
+          radius: ["38%", "76%"]
+        },
+        angleAxis: {
+          axisLine: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          min: 0,
+          max: 100,
+          boundaryGap: ["0", "100"],
+          startAngle: 90
+        },
+        radiusAxis: {
+          type: "category",
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          data: labelName,
+          z: 10
+        },
+        series: [
+          {
+            name: "",
+            hoverAnimation: false,
+            silent: true,
+            type: "pie",
+            data: [{ name: "合格值", value: 100 }],
+            z: 1,
+            center: ["50%", "50%"],
+            radius: ["27%", "68%"],
+            label: {
+              show: true,
+              position: "center",
+
+              formatter: `{total|${getRate}%}\n\n{lname|合格值}`,
+              rich: {
+                total: {
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  color: "#0DDBFF"
+                },
+                lname: {
+                  fontSize: 12,
+                  color: "#FFF"
+                }
+              }
+            },
+            itemStyle: {
+              color: "rgba(62, 109, 255, 0.2)"
+            }
+          },
+          {
+            // TODO: Maybe change back
+            // hoverAnimation:false,
+            name: labelName[0],
+            barGap: "-100%",
+            // TODO: Maybe change back
+            // silent:true,
+            type: "bar",
+            data: [100],
+            coordinateSystem: "polar",
+            z: 2,
+            label: {
+              show: false
+            },
+            itemStyle: {
+              color: color[0]
+            }
+          },
+          {
+            // TODO: Maybe change back
+            // hoverAnimation:false,
+            roundCap: true,
+            // TODO: Maybe change back
+            // silent:true,
+            name: labelName[1],
+            type: "bar",
+            coordinateSystem: "polar",
+            barGap: "-100%",
+            data: [getRate],
+            z: 3,
+            label: {
+              show: false
+            },
+            itemStyle: {
+              color: color[1]
+            }
+          }
+        ]
+      },
+      dataOptionLine: {
+        // 你的代码
+        backgroundColor: "transparent",
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            lineStyle: {
+              color: {
+                type: "linear",
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: "rgba(0, 255, 233,0)"
+                  },
+                  {
+                    offset: 0.5,
+                    color: "rgba(255, 255, 255,1)"
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(0, 255, 233,0)"
+                  }
+                ],
+                global: false
+              }
+            }
+          }
+        },
+        legend: {
+          x: "46%",
+          top: "0%",
+          textStyle: {
+            color: "gray",
+            fontSize: 12
+          },
+          data: ["历史价格"]
+        },
+
+        grid: {
+          top: "25%",
+          left: "12%",
+          right: "3%",
+          bottom: "10%"
+          // TODO: Maybe change back
+          // containLabel: true
+        },
+        xAxis: [
+          {
+            type: "category",
+            axisLine: {
+              show: false,
+              color: "#A582EA"
+            },
+
+            axisLabel: {
+              color: "gray",
+              width: 100
+            },
+            splitLine: {
+              show: false
+            },
+            boundaryGap: false,
+            data: [
+              "11/12",
+              "11/13",
+              "11/14",
+              "11/15",
+              "11/16",
+              "11/17",
+              "11/18",
+              "11/19",
+              "11/20",
+              "11/21",
+              "11/22",
+              "11/23",
+              "11/24",
+              "11/25",
+              "11/26",
+              "11/27",
+              "11/28",
+              "11/29",
+              "11/30",
+              "12/01",
+              "12/02",
+              "12/03",
+              "12/04",
+              "12/05",
+              "12/06",
+              "12/07",
+              "12/08",
+              "12/09",
+              "12/10",
+              "12/11"
+            ] // this.$moment(data.times).format("HH-mm") ,
+          }
+        ],
+
+        yAxis: [
+          {
+            name: "单位：元",
+            nameTextStyle: {
+              color: "gray",
+              fontSize: 12
+            },
+            type: "value",
+            min: 0,
+            splitNumber: 10,
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: "gray",
+                opacity: 0.23
+              }
+            },
+            axisLine: {
+              show: false
+            },
+            axisLabel: {
+              show: true,
+              margin: 15,
+              textStyle: {
+                color: "gray"
+              }
+            },
+            axisTick: {
+              show: false
+            }
+          }
+        ],
+        series: [
+          {
+            name: "历史价格",
+            type: "line",
+            showAllSymbol: true,
+            symbol: "circle",
+            symbolSize: 5,
+            lineStyle: {
+              normal: {
+                color: "#2CABE3"
+              }
+            },
+            label: {
+              show: true,
+              position: "top",
+              textStyle: {
+                color: "#2CABE3",
+                fontSize: 10
+              }
+            },
+            itemStyle: {
+              color: "#2CABE3",
+              borderColor: "#2CABE3",
+              borderWidth: 0
+            },
+            areaStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(
+                  0,
+                  0,
+                  0,
+                  1,
+                  [
+                    {
+                      offset: 0,
+                      color: "rgba(81,150,164,0.3)"
+                    },
+                    {
+                      offset: 1,
+                      color: "rgba(81,150,164,0)"
+                    }
+                  ],
+                  false
+                )
+              }
+            },
+            data: [
+              100.08, 136.97, 142.37, 135.04, 159.28, 157.08, 66.14, 149.27, 186.26, 0, 0, 170.3, 111.31, 54.86, 119.06,
+              109.57, 105.31, 34.87, 129.04, 35.33, 0, 31.51, 127.09, 136.76, 188.59, 142.03, 126.7, 133.33, 124.09,
+              67.43
+            ]
+          }
+        ]
+      },
+      dataZhuzhuang: {
+        backgroundColor: "transparent",
+        title: {
+          show: true,
+          text: "",
+          textStyle: {
+            align: "rigth",
+            color: "gray",
+            fontSize: 20
+          },
+          top: "3%",
+          left: "5%"
+        },
+        grid: {
+          top: "28%",
+          right: "10%",
+          bottom: "18%" // 也可设置left和right设置距离来控制图表的大小
+        },
+        tooltip: {
+          trigger: "axis",
+          backgroundColor: "rgba(17,95,182,0.5)",
+          textStyle: {
+            color: "#fff"
+          },
+          // TODO: Maybe change back
+          // axisPointer: {
+          //     type: "line",
+          //     label: {
+          //         show: false,
+          //     }
+          // },
+          formatter: pa => {
+            const oneDotHtml =
+              "<span style=\"display:inline-block;margin-right:5px;width:10px;height:10px;background-color:#1480C2\"></span>";
+            const twoDotHtml =
+              "<span style=\"display:inline-block;margin-right:5px;width:10px;height:10px;background-color:#8957A1\"></span>";
+            return `${pa[0].name}<br/>${oneDotHtml}${pa[1].seriesName}：${pa[1].value}<br>${twoDotHtml}${pa[0].seriesName}：${pa[0].value}`;
+          }
+        },
+        dataZoom: [
+          {
+            show: false,
+            xAxisIndex: 0,
+            type: "slider",
+            startValue: 0,
+            endValue: this.end
+          }
+        ],
+        legend: {
+          top: "20%",
+          left: "40%",
+          // icon: 'rect',
+          textStyle: {
+            padding: [0, 0, 0, 10],
+            color: "gray",
+            fontSize: 14,
+            lineHeight: 16
+          },
+          itemGap: 50,
+          itemHeight: 10,
+          data: ["肥料", "农药"]
+        },
+        xAxis: {
+          data: ["草堂镇", "白帝镇", "朱衣镇", "康乐镇", "永乐镇", "安坪镇"],
+          axisLine: {
+            show: true, // 隐藏X轴轴线
+            lineStyle: {
+              color: "gray"
+            }
+          },
+          axisTick: {
+            show: false // 隐藏X轴刻度
+          },
+          axisLabel: {
+            show: true,
+            textStyle: {
+              padding: [5, 0, 0, 0],
+              color: "gray" // X轴文字颜色
+            }
+          }
+        },
+        yAxis: [
+          {
+            type: "value",
+            name: "吨",
+            nameTextStyle: {
+              color: "gray",
+              fontSize: 14
+            },
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: "rgba(33,35,98,1)"
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: "gray"
+              }
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                fontSize: 14,
+                color: "gray"
+              }
+            }
+          },
+          {
+            type: "value",
+            // TODO: Maybe change back
+            // name: "同比",
+            // nameTextStyle: {
+            //     show: false,
+            //     color: "#ebf8ac"
+            // },
+            position: "right",
+            splitLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+            axisLine: {
+              show: false
+            },
+            axisLabel: {
+              show: false,
+              textStyle: {
+                color: "gray"
+              }
+            }
+          }
+          // TODO: Maybe change back
+          // {
+          //     type: "value",
+          //     // gridIndex: 1,
+          //     min: 50,
+          //     max: 100,
+          //     splitNumber: 8,
+          //     splitLine: {
+          //         show: false
+          //     },
+          //     axisLine: {
+          //         show: false
+          //     },
+          //     axisTick: {
+          //         show: false
+          //     },
+          //     axisLabel: {
+          //         show: false
+          //     },
+          //     splitArea: {
+          //         show: true,
+          //         areaStyle: {
+          //             color: ["rgba(250,250,250,0.0)", "rgba(250,250,250,0.05)"]
+          //         }
+          //     }
+          // }
+        ],
+        series: [
+          {
+            name: "农药",
+            type: "line",
+            yAxisIndex: 1, // 使用的 y 轴的 index，在单个图表实例中存在多个 y轴的时候有用
+            smooth: false, // 平滑曲线显示
+            showAllSymbol: true, // 显示所有图形。
+            symbol: "emptyCircle", // 标记的图形为实心圆
+            symbolSize: 10, // 标记的大小
+            itemStyle: {
+              // 折线拐点标志的样式
+              color: "#8957A1"
+            },
+            lineStyle: {
+              color: "#8957A1"
+            },
+            // areaStyle:{
+            //     color: 'transparent'
+            //     // color: "rgba(5,140,255, 0.2)"
+            // },
+            data: [5, 5, 5, 5, 5, 5]
+          },
+          {
+            name: "肥料",
+            type: "bar",
+            barWidth: "30%",
+            showBackground: false,
+            itemStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                  {
+                    offset: 0,
+                    color: "red"
+                  },
+                  {
+                    offset: 0,
+                    color: "#1F0D5E"
+                  },
+                  {
+                    offset: 1,
+                    color: "#1480C2"
+                  }
+                ])
+              }
+            },
+            label: {
+              normal: {
+                show: false,
+                textStyle: {
+                  color: "gray"
+                }
+              }
+            },
+            data: [14, 16, 20, 7, 15, 11]
+          }
+        ]
+      },
       tableData: [
         {
           date: "2016-05-02",
@@ -366,61 +644,48 @@ export default {
           name: "王小虎",
           address: "上海市普陀区金沙江路 1516 弄"
         }
-
-      ],
-      colorList: { "dark": "rgba(13,255,168,0.4)", "light": "red" },
-      borderList: { "dark": "rgba(13,255,168,1)", "light": "green" },
-      dataList: [
-        { name: "第一", isChecked: true },
-        { name: "第二", isChecked: false },
-        { name: "第三", isChecked: false }
-      ],
-      // 自定义进度条颜色，使用:color="colors"
-      colors: "rgba(166, 29, 36, 1)",
-      // 表单
-      ruleForm: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
-      rules: {
-        name: [
-          { required: true, message: "请输入活动名称", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
-        ],
-        region: [{ required: true, message: "请选择活动区域", trigger: "change" }],
-        date1: [{ type: "date", required: true, message: "请选择日期", trigger: "change" }],
-        date2: [{ type: "date", required: true, message: "请选择时间", trigger: "change" }],
-        type: [{ type: "array", required: true, message: "请至少选择一个活动性质", trigger: "change" }],
-        resource: [{ required: true, message: "请选择活动资源", trigger: "change" }],
-        desc: [{ required: true, message: "请填写活动形式", trigger: "blur" }]
-      },
-      //   transfer穿梭窗
-      data: generateData(),
-      value: [1],
-      value4: [1]
+      ]
     };
   },
-  methods: {
-    format() {
-      // 有参数percentage
-      return "加载中";
-      //   return percentage === 100 ? '满' : `${percentage}%`;
+  computed: {
+    ...mapState("setting", ["brandTheme", "mode"])
+  },
+  watch: {
+    brandTheme() {
     },
-    submitForm(formName) {
-      this.$refs[formName].validate(() => {
+    mode() {
+      this.renderCharts();
+    }
+  },
+  mounted() {
+    // TODO: Maybe change back
+    // this.$nextTick(() => {
+    //   this.updateContainer();
+    // });
+    // this.renderCharts();
+  },
+  methods: {
+    onMaterialChange(value) {
+      const { chartColors } = this.$store.state.setting;
+
+      this.lineChart.setOption(getFolderLineDataSet({ dateTime: value, ...chartColors }));
+    },
+    updateContainer() {
+      this.lineChart.resize?.({
+        width: this.lineContainer.clientWidth,
+        height: this.lineContainer.clientHeight
       });
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
-    // eslint-disable-next-line
-    handleChange(value, direction, movedKeys) {
+    renderCharts() {
+      const { chartColors } = this.$store.state.setting;
+
+      if (!this.lineContainer) {
+        this.lineContainer = document.getElementById("lineContainer");
+      }
+      this.lineChart = echarts.init(this.lineContainer);
+      this.lineChart.setOption(getFolderLineDataSet({ ...chartColors }));
+
+      window.addEventListener("resize", this.updateContainer, false);
     }
   }
 };

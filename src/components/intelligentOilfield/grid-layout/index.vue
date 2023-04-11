@@ -14,6 +14,8 @@
       </el-button>
     </div>
     <grid-layout
+      :class="$store.getters['user/getIsMax'] ? 'fullWindow' : 'smallWindow'"
+      :style="{ position: $store.getters['user/getIsMax'] ? 'absolute' : 'relative' }"
       :layout.sync="currentLayout"
       :col-num="colNum"
       :row-height="singleHeight"
@@ -38,6 +40,16 @@
         :w="item.w"
         :h="item.h"
         :i="item.i"
+        :style="{
+          display:
+            currentOpertTitle === ''
+              ? 'block'
+              : item.name === currentOpertTitle && $store.getters['user/getIsMax']
+                ? 'block'
+                : !$store.getters['user/getIsMax']
+                  ? 'block'
+                  : 'none',
+        }"
         drag-allow-from=".vue-draggable-handle"
         drag-ignore-from=".no-drag"
         @resized="resizedEvent"
@@ -62,6 +74,7 @@
 <script>
 import VueGridLayout from "vue-grid-layout";
 import demoIndex from "@/pages/intelligentOilfield/demo/demo.vue";
+import demoIndex2 from "@/pages/intelligentOilfield/demo/demo2.vue";
 import { queryByPageName, savePage } from "@/api/intelligentOilfield/system/layout";
 
 export default {
@@ -88,6 +101,7 @@ export default {
   },
   data() {
     return {
+      currentOpertTitle: "", // 当前操作放大缩小title的name，让其显示隐藏
       isDisableReset: true, // 重置是否被禁用，当接口有重置面板数据时方可点击重置按钮
       pageName: "", // 唯一标识
       currentLayout: JSON.parse(JSON.stringify(this.layout)), // 当前显示面板布局
@@ -139,11 +153,16 @@ export default {
   beforeDestroy() {
     // 注册的总线事件要在组件销毁时卸载，否则会多次挂载，造成触发一次但多个响应的情况
     this.$bus.$off("emitBus");
+    this.$bus.$off("zoomOut");
   },
   mounted() {
     this.$bus.$on("emitBus", () => {
       // 监听是否编辑面板
       this.isOperation = true;
+    });
+    this.$bus.$on("zoomOut", val => {
+      // 监听是放大缩小面板
+      this.currentOpertTitle = val;
     });
     this.computeNum();
     window.onresize = () =>
@@ -223,6 +242,8 @@ export default {
       switch (i) {
         case "示例组件":
           return demoIndex;
+        case "示例组件2":
+          return demoIndex2;
         // 增加所需要引入子组件
         default:
           break;
@@ -245,6 +266,27 @@ export default {
 </script>
 
 <style scoped>
+.vue-grid-layout {
+  position: absolute;
+  z-index: 998;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 100%;
+}
+
+.fullWindow >>> .vue-grid-item {
+  /* 最大化 */
+  width: 100% !important;
+  height: 100% !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+.smallWindow >>> .vue-grid-item {
+  /* 最小化 */
+  width: auto;
+}
+
 .aa {
   position: absolute;
   left: 0;

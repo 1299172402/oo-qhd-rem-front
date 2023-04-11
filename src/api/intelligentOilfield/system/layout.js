@@ -18,15 +18,6 @@ export function queryByPageName(pageName) {
   });
 }
 
-// 查询接口/重置接口-带租户用户id
-export function queryByPage(param) {
-  return request({
-    url: "system/page/queryByPage?pageName",
-    method: "post",
-    param
-  });
-}
-
 // 删除接口
 export function removeByPageName(pageName) {
   return request({

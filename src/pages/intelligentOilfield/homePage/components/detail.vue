@@ -125,7 +125,8 @@ export default {
       listAllData: {
         appList: [],
         boardList: [],
-        businessList: []
+        businessList: [],
+        indexList: []
       }
     };
   },
@@ -164,6 +165,8 @@ export default {
     },
     getList(i) {
       switch (i) {
+        case "统计数据":
+          return this.listAllData.indexList;
         case "应用中心":
           return this.listAllData.appList;
         case "看板中心":

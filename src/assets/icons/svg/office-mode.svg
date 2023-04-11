@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>编组 3</title>
-    <g id="页面-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="门户首页-办公模式" transform="translate(-1848.000000, -34.000000)">
-            <g id="编组-3" transform="translate(1848.000000, 34.000000)">
+<svg width="40px" height="16px" viewBox="0 0 40 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>办公模式</title>
+    <g id="门户" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="门户首页-办公模式5" transform="translate(-1734.000000, -22.000000)">
+            <g id="办公模式" transform="translate(1734.000000, 22.000000)">
                 <rect id="矩形" x="0" y="0" width="16" height="16"></rect>
-                <text id="办" font-family="PingFangSC-Medium, PingFang SC" font-size="8" font-weight="400" line-spacing="8" fill="#FFFFFF">
-                    <tspan x="4" y="12">办</tspan>
+                <text font-family="PingFangSC-Medium, PingFang SC" font-size="8" font-weight="400" line-spacing="8" fill="#FFFFFF">
+                    <tspan x="4" y="12">办公模式</tspan>
                 </text>
-                <polyline id="路径-2" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" points="1 9.46280296 1 2.8081909 15 2.8081909 13.218226 1.33199192"></polyline>
-                <polyline id="路径-2备份" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" transform="translate(8.000000, 10.397397) rotate(-180.000000) translate(-8.000000, -10.397397) " points="1 14.462803 1 7.8081909 15 7.8081909 13.218226 6.33199192"></polyline>
+                <polyline id="路径-2" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" points="1 9.46280296 1 2.8081909 39 2.8081909 37.218226 1.33199192"></polyline>
+                <polyline id="路径-2备份" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" transform="translate(20.000000, 10.397397) rotate(-180.000000) translate(-20.000000, -10.397397) " points="1 14.462803 1 7.8081909 39 7.8081909 37.218226 6.33199192"></polyline>
             </g>
         </g>
     </g>

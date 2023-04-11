@@ -145,6 +145,7 @@ export default {
           this.allowLoad = this.options.length < v.data[this.queryParamProp.totalProp];
         })
         .finally(() => {
+          this.options.unshift({ label: "无", value: undefined });
           this.loading = false;
         });
     },

@@ -1,0 +1,24 @@
+.el-radio-group {
+  .el-radio-button {
+    &.is-active {
+      .el-radio-button__inner {
+        // TODO: Maybe change back，不带图标的时候放开
+        // background: var(--primary-btn) !important;
+        border-image: var(--primary-btn);
+        background: var(--logo-bg) no-repeat top / contain, var(--primary-btn) !important;
+        background-size: 100% 100% !important;
+      }
+    }
+
+    .el-radio-button__inner {
+      background: transparent;
+      border-color: var(--light-blue-color);
+      color: var(--white-color);
+
+      &:hover {
+        background: var(--primary-btn);
+        border-image: var(--primary-btn);
+      }
+    }
+  }
+}

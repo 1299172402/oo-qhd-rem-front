@@ -18,7 +18,7 @@
         placeholder="请输入应用描述"
       />
     </el-form-item>
-    <el-form-item label="应用分类" prop="appCategory" class="app-classify">
+    <!-- <el-form-item label="应用分类" prop="appCategory" class="app-classify">
       <el-select
         v-model="model.appCategory"
         placeholder="请选择应用分类"
@@ -32,7 +32,7 @@
           :value="dict.value"
         />
       </el-select>
-    </el-form-item>
+    </el-form-item> -->
     <el-form-item label="应用类型" prop="appType" class="app-classify">
       <el-select
         v-model="model.appType"
@@ -48,7 +48,7 @@
         />
       </el-select>
     </el-form-item>
-    <el-form-item label="应用中心" prop="apply">
+    <el-form-item label="应用分类" prop="apply">
       <el-select v-model="model.apply">
         <el-option
           v-for="item in dict.type.sys_app_applyCenter"
@@ -82,10 +82,10 @@
         </el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item v-if="isPC" label="PC端入口URL" prop="appPcAccessUrl">
-      <el-input v-model="model.appPcAccessUrl" placeholder="请输入PC端入口URL" clearable />
+    <el-form-item v-if="isPC" label="网页端入口URL" prop="appPcAccessUrl">
+      <el-input v-model="model.appPcAccessUrl" placeholder="请输入网页端入口URL" clearable />
     </el-form-item>
-    <el-form-item v-if="isMobile" label="选择移动端" prop="accessType">
+    <el-form-item v-if="isMobile" label="选择PDA端" prop="accessType">
       <el-radio-group v-model="model.accessType">
         <el-radio v-for="item in dict.type.sys_app_mobile" :key="item.value" :label="item.value">
           {{ item.label }}

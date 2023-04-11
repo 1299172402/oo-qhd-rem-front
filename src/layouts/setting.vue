@@ -4,7 +4,7 @@
       size="408px"
       :footer="false"
       :visible.sync="showSettingPanel"
-      header="页面配置"
+      header="设置"
       :close-btn="true"
       :on-close-btn-click="handleCloseDrawer"
       :on-close="setpageConfigs"
@@ -19,115 +19,132 @@
           @reset="onReset"
           @submit="onSubmit"
         >
-          <div class="setting-group-title">
-            主题模式
-          </div>
-          <t-radio-group v-model="formData.mode">
-            <div v-for="(item, index) in MODE_OPTIONS" :key="index" class="setting-layout-drawer">
-              <div>
-                <t-radio-button
-                  :key="index"
-                  :value="item.type"
-                >
-                  <component
-                    :is="getModeIcon(item.type)"
-                  />
-                </t-radio-button>
-                <p :style="{ textAlign: 'center', marginTop: '8px' }">
-                  {{ item.text }}
-                </p>
+          <el-collapse v-model="activeNames">
+            <el-collapse-item name="1">
+              <template slot="title">
+                <svg-icon
+                  :icon-class="$store.state.setting.mode === 'dark' ? 'page-setting' : 'page-setting2'"
+                  class="panelIconClass"
+                />页面设置
+              </template>
+              <div class="setting-group-title">
+                主题模式
               </div>
-            </div>
-          </t-radio-group>
-          <div class="setting-group-title">
-            主题色
-          </div>
-          <t-radio-group v-model="formData.brandTheme">
-            <div
-              v-for="(item, index) in COLOR_OPTIONS.slice(0, COLOR_OPTIONS.length - 1)"
-              :key="index"
-              class="setting-layout-drawer"
-            >
-              <t-radio-button :key="index" :value="item" class="setting-layout-color-group">
-                <color-container :value="item" />
-              </t-radio-button>
-            </div>
-            <div class="setting-layout-drawer">
-              <t-popup
-                destroy-on-close
-                expand-animation
-                placement="bottom-right"
-                trigger="click"
-                :visible="isColoPickerDisplay"
-                :overlay-style="{ padding: 0 }"
-                @visible-change="onPopupVisibleChange"
-              >
-                <template #content>
-                  <t-color-picker-panel
-                    :on-change="changeColor"
-                    :color-modes="['monochrome']"
-                    format="HEX"
-                    :swatch-colors="[]"
-                  />
-                </template>
-                <t-radio-button
-                  :value="COLOR_OPTIONS[COLOR_OPTIONS.length - 1]"
-                  class="setting-layout-color-group dynamic-color-btn"
+              <t-radio-group v-model="formData.mode">
+                <div v-for="(item, index) in MODE_OPTIONS" :key="index" class="setting-layout-drawer">
+                  <div>
+                    <t-radio-button
+                      :key="index"
+                      :value="item.type"
+                    >
+                      <component
+                        :is="getModeIcon(item.type)"
+                      />
+                    </t-radio-button>
+                    <p :style="{ textAlign: 'center', marginTop: '8px' }">
+                      {{ item.text }}
+                    </p>
+                  </div>
+                </div>
+              </t-radio-group>
+              <div class="setting-group-title">
+                主题色
+              </div>
+              <t-radio-group v-model="formData.brandTheme">
+                <div
+                  v-for="(item, index) in COLOR_OPTIONS.slice(0, COLOR_OPTIONS.length - 1)"
+                  :key="index"
+                  class="setting-layout-drawer"
                 >
-                  <color-container :value="COLOR_OPTIONS[COLOR_OPTIONS.length - 1]" />
-                </t-radio-button>
-              </t-popup>
-            </div>
-          </t-radio-group>
-          <div class="setting-group-title">
-            导航布局
-          </div>
+                  <t-radio-button :key="index" :value="item" class="setting-layout-color-group">
+                    <color-container :value="item" />
+                  </t-radio-button>
+                </div>
+                <div class="setting-layout-drawer">
+                  <t-popup
+                    destroy-on-close
+                    expand-animation
+                    placement="bottom-right"
+                    trigger="click"
+                    :visible="isColoPickerDisplay"
+                    :overlay-style="{ padding: 0 }"
+                    @visible-change="onPopupVisibleChange"
+                  >
+                    <template #content>
+                      <t-color-picker-panel
+                        :on-change="changeColor"
+                        :color-modes="['monochrome']"
+                        format="HEX"
+                        :swatch-colors="[]"
+                      />
+                    </template>
+                    <t-radio-button
+                      :value="COLOR_OPTIONS[COLOR_OPTIONS.length - 1]"
+                      class="setting-layout-color-group dynamic-color-btn"
+                    >
+                      <color-container :value="COLOR_OPTIONS[COLOR_OPTIONS.length - 1]" />
+                    </t-radio-button>
+                  </t-popup>
+                </div>
+              </t-radio-group>
+              <div class="setting-group-title">
+                导航布局
+              </div>
 
-          <t-radio-group v-model="formData.layout">
-            <div v-for="(item, index) in LAYOUT_OPTION" :key="index" class="setting-layout-drawer">
-              <t-radio-button :key="index" :value="item">
-                <thumbnail :src="getThumbnailUrl(item)" />
-              </t-radio-button>
-            </div>
-          </t-radio-group>
-          <!-- TODO: Maybe change back -->
-          <!-- <t-form-item v-show="formData.layout === 'mix'" label="分割菜单（混合模式下有效）" name="splitMenu">
+              <t-radio-group v-model="formData.layout">
+                <div v-for="(item, index) in LAYOUT_OPTION" :key="index" class="setting-layout-drawer">
+                  <t-radio-button :key="index" :value="item">
+                    <thumbnail :src="getThumbnailUrl(item)" />
+                  </t-radio-button>
+                </div>
+              </t-radio-group>
+              <!-- TODO: Maybe change back -->
+              <!-- <t-form-item v-show="formData.layout === 'mix'" label="分割菜单（混合模式下有效）" name="splitMenu">
             <t-switch v-model="formData.splitMenu"></t-switch>
           </t-form-item> -->
 
-          <!-- <t-form-item v-show="formData.layout !== 'side'" label="固定 Header" name="isHeaderFixed">
+              <!-- <t-form-item v-show="formData.layout !== 'side'" label="固定 Header" name="isHeaderFixed">
             <t-switch v-model="formData.isHeaderFixed"></t-switch>
           </t-form-item>
           <t-form-item v-show="formData.layout !== 'top'" label="固定 Sidebar" name="isSidebarFixed">
             <t-switch v-model="formData.isSidebarFixed"></t-switch>
           </t-form-item> -->
 
-          <div class="setting-group-title">
-            元素开关
-          </div>
-          <t-form-item v-show="formData.layout === 'side'" label="显示 Header" name="showHeader">
-            <t-switch v-model="formData.showHeader" />
-          </t-form-item>
-          <!-- TODO: Maybe change back -->
-          <!-- <t-form-item label="显示 Breadcrumbs" name="showBreadcrumb">
+              <div class="setting-group-title">
+                元素开关
+              </div>
+              <t-form-item v-show="formData.layout === 'side'" label="显示 Header" name="showHeader">
+                <t-switch v-model="formData.showHeader" />
+              </t-form-item>
+              <!-- TODO: Maybe change back -->
+              <!-- <t-form-item label="显示 Breadcrumbs" name="showBreadcrumb">
             <t-switch v-model="formData.showBreadcrumb"></t-switch>
           </t-form-item> -->
-          <t-form-item label="显示 Footer" name="showFooter">
-            <t-switch v-model="formData.showFooter" />
-          </t-form-item>
-          <t-form-item v-show="formData.layout == 'mix'" label="显示左侧菜单栏" name="isUseMenu">
-            <t-switch v-model="formData.isUseMenu" @change="isUsemenu" />
-          </t-form-item>
-          <t-form-item label="使用 多标签Tab页" name="isUseTabsRouter">
-            <t-switch v-model="formData.isUseTabsRouter" />
-          </t-form-item>
-          <t-form-item
-            v-show="formData.showFooter && !formData.isSidebarFixed"
-            label="footer 内收"
-            name="footerPosition"
-          >
-            <t-switch v-model="formData.isFooterAside" />
-          </t-form-item>
+              <t-form-item label="显示 Footer" name="showFooter">
+                <t-switch v-model="formData.showFooter" />
+              </t-form-item>
+              <t-form-item v-show="formData.layout == 'mix'" label="显示左侧菜单栏" name="isUseMenu">
+                <t-switch v-model="formData.isUseMenu" @change="isUsemenu" />
+              </t-form-item>
+              <t-form-item label="使用 多标签Tab页" name="isUseTabsRouter">
+                <t-switch v-model="formData.isUseTabsRouter" />
+              </t-form-item>
+              <t-form-item
+                v-show="formData.showFooter && !formData.isSidebarFixed"
+                label="footer 内收"
+                name="footerPosition"
+              >
+                <t-switch v-model="formData.isFooterAside" />
+              </t-form-item>
+            </el-collapse-item>
+          </el-collapse>
+          <div class="settingBtn" @click="editPanel()">
+            <svg-icon
+              :icon-class="$store.state.setting.mode === 'dark' ? 'edit-panels' : 'edit-panels2'"
+              class="panelIconClass"
+            />
+            <p>编辑面板</p>
+          </div>
         </t-form>
         <div class="setting-info">
           <p>请复制后手动修改配置文件: /src/config/style.ts</p>
@@ -177,7 +194,8 @@ export default {
       COLOR_OPTIONS,
       visible: false,
       formData: { ...STYLE_CONFIG },
-      isColoPickerDisplay: false
+      isColoPickerDisplay: false,
+      activeNames: ["1"]
     };
   },
   computed: {
@@ -290,6 +308,24 @@ export default {
     },
     isUsemenu() {
       this.$store.commit("setting/toggleSidebarCompact");
+    },
+    editPanel() {
+      this.$bus.$emit("emitBus");
+      this.$store.commit("setting/toggleSettingPanel", false);
+    },
+    switchRouter(type) {
+      this.$store.commit("user/SETTENANTCODE", { value: "", state: false });
+      if (type === "后台") {
+        this.$store.commit("tabRouter/removeTabRouterList");
+        this.$store.commit("user/SETISGROUPLOGIN", false);
+        this.$router.push("/");
+        this.$store.commit("setting/toggleSettingPanel", false);
+      } else {
+        this.$store.dispatch("user/getUserInfo");
+        this.$router.push("/portal/projectionMode");
+        this.$store.commit("user/SETISGROUPLOGIN", true);
+        this.$store.commit("setting/toggleSettingPanel", false);
+      }
     }
   }
 };
@@ -381,7 +417,6 @@ export default {
   text-align: center;
   color: var(--td-text-color-placeholder);
   width: 100%;
-  background: var(--td-bg-color-container);
 }
 
 .setting-drawer-container {
@@ -447,6 +482,26 @@ export default {
     &:last-child {
       margin-right: 0;
     }
+  }
+}
+
+.settingBtn {
+  height: 50px;
+  line-height: 50px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+}
+
+.el-collapse-item__content {
+    font-size: 14px;
+}
+
+.el-collapse {
+  .t-form__item {
+    margin-left: 30px;
   }
 }
 </style>

@@ -3,14 +3,14 @@
   <el-upload
     ref="upload"
     :multiple="multiple"
-    :action="uploadFileUrl"
+    action=""
     :on-error="handleError"
     :on-success="handleSuccess"
     :before-upload="handleBeforeUpload"
     :show-file-list="false"
-    :headers="headers"
     :accept="accept"
     class="import-file"
+    :http-request="httpRequest"
   >
     <el-button
       :type="btnType"
@@ -23,19 +23,14 @@
   </el-upload>
 </template>
 <script>
-import proxy from "@/config/host";
+import { uploadFile } from "@/components/upload/utils/file.ts";
 
-const env = import.meta.env.MODE || "development";
 export default {
   name: "ImportFile",
   props: {
     accept: {
       type: String,
       default: ".xlsx, .xls"
-    },
-    uploadAction: {
-      type: String,
-      default: "/sys/common/upload"
     },
     btnType: {
       type: String,
@@ -69,7 +64,7 @@ export default {
     },
     baseUrl: {
       type: String,
-      default: proxy[env].API
+      default: undefined
     },
     // 上传url
     uploadUrl: {
@@ -79,12 +74,18 @@ export default {
   },
   data() {
     return {
-      loading: false,
-      uploadFileUrl: `${this.baseUrl}${this.uploadUrl}`,
-      headers: this.otherHeaders || { Authorization: `Bearer ${this.$store.getters["user/token"]}` }
+      loading: false
     };
   },
   methods: {
+    /**
+     * 使用统一的 axios 处理文件上传，方便统一拦截处理
+     */
+    httpRequest: function(val) {
+      const fd = new FormData();
+      fd.append("file", val.file, val.file.name);
+      return uploadFile(fd, this.baseUrl, this.uploadUrl);
+    },
     handleBeforeUpload() {
       this.$modal.loading("正在上传文件，请稍候...");
       this.loading = true;

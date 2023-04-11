@@ -83,3 +83,11 @@ export function delDept(deptId) {
     method: "delete"
   });
 }
+
+// 删除部门(确认)
+export function delDeptsure(deptId) {
+  return request({
+    url: `/system/dept/sureDeleteDept/${deptId}`,
+    method: "get"
+  });
+}

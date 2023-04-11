@@ -45,7 +45,12 @@
         >
           搜索
         </el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">
+        <el-button
+          icon="el-icon-refresh"
+          size="mini"
+          class="commonBtn"
+          @click="resetQuery"
+        >
           重置
         </el-button>
       </el-form-item>
@@ -93,7 +98,7 @@
       <el-button type="primary" @click="handleSelectUser">
         确 定
       </el-button>
-      <el-button @click="cancelBtn">
+      <el-button class="commonBtn" @click="cancelBtn">
         取 消
       </el-button>
     </div>

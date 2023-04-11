@@ -1,4 +1,5 @@
 import axios, { download } from "@/utils/request";
+import processAxios from "@/pages/intelligentOilfield/configurationCenter/processCenter/api/index.js";
 import { responseWhitelist } from "./responseWhiteList";
 
 /**
@@ -117,6 +118,15 @@ export function downloadTemplate(url, data) {
 export function getImgUrl(file) {
   return Promise.resolve()
     .then(() => URL.createObjectURL(file));
+}
+
+// 上传附件
+export function uploadFile(data, baseURL, url = "/file/upload") {
+  return (baseURL ? processAxios : axios)({
+    url,
+    method: "post",
+    data
+  });
 }
 
 export default {};

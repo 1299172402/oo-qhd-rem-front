@@ -23,7 +23,7 @@ export default {
       type: Object,
       default() {
         return {
-          "dark": "rgba(0, 222, 240, 0.4)", "light": "linear-gradient(180deg, rgba(0, 96, 166, 0.5) 0%, var(--only-light-blue-color) 100%)"
+          "dark": "rgba(0, 222, 240, 0.4)", "light": "var(--light-blue-color)"
         };
       }
     },
@@ -66,5 +66,7 @@ export default {
   width: 60px;
   height: 30px;
   cursor: pointer;
+  background-image: var(--logo-bg) !important;
+  background-size: 100% 100% !important;
 }
 </style>

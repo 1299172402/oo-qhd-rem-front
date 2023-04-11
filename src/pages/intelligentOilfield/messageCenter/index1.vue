@@ -4,9 +4,10 @@
     <el-dialog
       :title="title"
       :visible.sync="openDialog"
-      width="700px"
+      width="80vw"
       append-to-body
       :close-on-click-modal="false"
+      custom-class="land-dialog"
       @close="clesrSearchList"
     >
       <div style="height: 400px">

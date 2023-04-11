@@ -19,7 +19,7 @@ export default {
         this.$store.dispatch("permission/restore")
       ])
         .then(() => {
-          this.$router.replace(`/login?redirect=${this.$router.history.current.fullPath}`);
+          this.$router.replace("/login");
         });
     }
   }
