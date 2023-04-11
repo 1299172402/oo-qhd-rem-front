@@ -19,37 +19,37 @@
                 id="tableData" 
                 :data="tableData" :border="false" :row-style="{ height: '0px' }"
                 header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
-                style="width:100%;" height="240px" :default-sort="{ prop: 'date', order: 'descending' }"
+                style="width:100%;" height="250px" :default-sort="{ prop: 'date', order: 'descending' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-                <el-table-column prop="prodDate" label="日期" width="140px"></el-table-column>
-                <el-table-column prop="prodDuration" label="生产时间 (h)" width="140"></el-table-column>
-                <el-table-column prop="fluidProdDaily" label="日产液 (m³)" width="120"></el-table-column>
-                <el-table-column prop="gasProdDaily" label="日产气 (10⁴m³)" width="130"></el-table-column>
-                <el-table-column prop="oilProdDaily" label="日产油 (m³)" width="120"></el-table-column>
-                <el-table-column prop="waterRatio" label="含水 (%)" width="120"></el-table-column>
-                <el-table-column prop="waterProdDaily" label="日产水 (m³)" width="120"></el-table-column>
-                <el-table-column prop="gasOilRatio" label="气油比 (m³/m³)" width="130"></el-table-column>
-                <el-table-column prop="airliftGasCont" label="气举重 (10⁴m³)" width="130"></el-table-column>
-                <el-table-column prop="pfl" label="动液面 (m)" width="110"></el-table-column>
-                <el-table-column prop="pumpFrequency" label="泵频率 (HZ)" width="110"></el-table-column>
-                <el-table-column prop="pumpCurrent" label="泵电流 (A)" width="110"></el-table-column>
-                <el-table-column prop="nozzleDiameter" label="油嘴 (mm)" width="120"></el-table-column>
-                <el-table-column prop="oilPress" label="油压 (MPa)" width="120"></el-table-column>
+                <el-table-column prop="prodDate" label="日期"></el-table-column>  
+                <el-table-column prop="prodDuration" :label="`生产时间\n (h)`" width="140"></el-table-column>
+                <el-table-column prop="fluidProdDaily" :label="`日产液\n (m³)`" width="120"></el-table-column>
+                <el-table-column prop="gasProdDaily" :label="`日产气\n (10⁴m³)`" width="130"></el-table-column>
+                <el-table-column prop="oilProdDaily" :label="`日产油\n (m³)`" width="120"></el-table-column>
+                <el-table-column prop="waterRatio" :label="`含水\n (%)`" width="120"></el-table-column>
+                <el-table-column prop="waterProdDaily" :label="`日产水\n (m³)`" width="120"></el-table-column>
+                <el-table-column prop="gasOilRatio" :label="`气油比\n (m³/m³)`" width="130"></el-table-column>
+                <el-table-column prop="airliftGasCont" :label="`气举重\n (10⁴m³)`" width="130"></el-table-column>
+                <el-table-column prop="pfl" :label="`动液面\n (m)`" width="110"></el-table-column>
+                <el-table-column prop="pumpFrequency" :label="`泵频率\n (HZ)`" width="110"></el-table-column>
+                <el-table-column prop="pumpCurrent" :label="`泵电流\n (A)`" width="110"></el-table-column>
+                <el-table-column prop="nozzleDiameter" :label="`油嘴\n (mm)`" width="120"></el-table-column>
+                <el-table-column prop="oilPress" :label="`油压\n (MPa)`" width="120"></el-table-column>
                 <el-table-column prop="drawdownPress" label="压差"></el-table-column>
-                <el-table-column prop="dhFlowingPress" label="流压 (MPa)" width="120"></el-table-column>
-                <el-table-column prop="datumPessure" label="基准面流压 (MPa)" width="140"></el-table-column>
-                <el-table-column prop="backPress" label="回压 (MPa)" width="140"></el-table-column>
-                <el-table-column prop="pumpInletPress" label="泵入口压力 (MPa)" width="140"></el-table-column>
-                <el-table-column prop="pumpOutletPress" label="泵出口压力 (MPa)" width="140"></el-table-column>
-                <el-table-column prop="csgPress" label="套压 (MPa)" width="120"></el-table-column>
-                <el-table-column prop="techCsgPress" label="技术套压 (MPa)" width="140"></el-table-column>
-                <el-table-column prop="surfaceCsgPress" label="表层套压 (MPa)" width="140"></el-table-column>
-                <el-table-column prop="pumpMotorTemp" label="马达温度 (℃)" width="140"></el-table-column>
-                <el-table-column prop="whTemp" label="井口温度 (℃)" width="140"></el-table-column>
-                <el-table-column prop="dhFlowingTemp" label="流温 (℃)"></el-table-column>
-                <el-table-column prop="cumOilProd" label="累产油 (10m³)" width="140"></el-table-column>
-                <el-table-column prop="cumFluidProd" label="累产液 (10⁴m³)" width="140"></el-table-column>
-                <el-table-column prop="cumGasProd" label="累产气 (10⁴m³)" width="140"></el-table-column>
+                <el-table-column prop="dhFlowingPress" :label="`流压\n (MPa)`" width="120"></el-table-column>
+                <el-table-column prop="datumPessure" :label="`基准面流压\n (MPa)`" width="140"></el-table-column>
+                <el-table-column prop="backPress" :label="`回压\n (MPa)`" width="140"></el-table-column>
+                <el-table-column prop="pumpInletPress" :label="`泵入口压力\n (MPa)`" width="140"></el-table-column>
+                <el-table-column prop="pumpOutletPress" :label="`泵出口压力\n (MPa)`" width="140"></el-table-column>
+                <el-table-column prop="csgPress" :label="`套压\n (MPa)`" width="120"></el-table-column>
+                <el-table-column prop="techCsgPress" :label="`技术套压\n (MPa)`" width="140"></el-table-column>
+                <el-table-column prop="surfaceCsgPress" :label="`表层套压\n (MPa)`" width="140"></el-table-column>
+                <el-table-column prop="pumpMotorTemp" :label="`马达温度\n (℃)`" width="140"></el-table-column>
+                <el-table-column prop="whTemp" :label="`井口温度\n (℃)`" width="140"></el-table-column>
+                <el-table-column prop="dhFlowingTemp" :label="`流温\n (℃)`"></el-table-column>
+                <el-table-column prop="cumOilProd" :label="`累产油\n (10m³)`" width="140"></el-table-column>
+                <el-table-column prop="cumFluidProd" :label="`累产液\n (10⁴m³)`" width="140"></el-table-column>
+                <el-table-column prop="cumGasProd" :label="`累产气\n (10⁴m³)`" width="140"></el-table-column>
                 <el-table-column prop="closeReason" label="关停原因" width="180"></el-table-column>
                 <el-table-column prop="closeDate" label="关停时间"></el-table-column>
                 <el-table-column prop="closePlan" label="关停计划" width="180"></el-table-column>
@@ -831,6 +831,11 @@
             }
         }
         #tableData{
+            ::v-deep .el-table__header-wrapper .cell{
+                height: auto;
+                line-height: 18px;
+                white-space: pre;
+            }
             ::v-deep .cell:empty{
                 &::before {
                     content: '-';

@@ -15,7 +15,7 @@
                 <span>拟合起始时间：</span>
                 <el-date-picker v-model="selectDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="monthrange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" style="margin-right:20px">
                 </el-date-picker>
-                <el-button icon="el-icon-search" type="primary" @click="searchThing">检索</el-button>
+                <el-button icon="el-icon-search" type="primary" @click="searchThing">搜索</el-button>
                 <span style="margin-left:auto;">单位选择：</span>
                 <el-select v-model="selectUnitOfProduction" placeholder="请选择" style="width: 100px;margin-right:20px">
                     <el-option v-for="item in unitOfProduction" :key="item.value" :label="item.label" :value="item.value"></el-option>

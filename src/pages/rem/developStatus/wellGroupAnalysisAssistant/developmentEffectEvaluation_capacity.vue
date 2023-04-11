@@ -1,754 +1,423 @@
 <template>
   <el-container class="layout">
-    <el-header height="auto">
-      <header-search class="g-w100 g-h100" style="width: 100%">
-        <div class="py-5 overflow-hidden" style="margin-top: 10px; margin-bottom: -5px">
-          <div class="fl">
-            <span>油田：</span>
-            <el-select v-model="selectOilField" disabled @change="getFetchFields">
-              <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId">
-              </el-option>
-            </el-select>
-            <span class="QU" style="margin-left: 20px">区块：</span>
-            <el-select v-model="selectBlock">
-              <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId">
-              </el-option>
-            </el-select>
-            <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
-              检索
-            </el-button>
-          </div>
-          <div class="fr overflow-hidden">
-            <!-- 产能类 -->
-            <!-- <el-radio-group v-model="radio1">
-           
-              <el-button class="commonBtn" label="产能类" > 产能类 </el-button>
-     
-              <router-link
-                :to="{
-                  name: 'developmentEffectEvaluation_reserves',
-                  params: {
-                    oilFieldId: selectOilField,
-                    fieldId: selectBlock,
-                    canDownload: canDownload,
-                  },
-                }"
-              >
-               
-              </router-link>
-       
-              <router-link
-                :to="{
-                  name: 'developmentEffectEvaluation_water',
-                  params: {
-                    oilFieldId: selectOilField,
-                    fieldId: selectBlock,
-                    canDownload: canDownload,
-                  },
-                }"
-              >
-
-              </router-link>
-       
-              <router-link
-                :to="{
-                  name: 'developmentEffectEvaluation_Decreasing',
-                  params: {
-                    oilFieldId: selectOilField,
-                    fieldId: selectBlock,
-                    canDownload: canDownload,
-                  },
-                }"
-              >
-             
-              </router-link>
-            </el-radio-group> ---->
-
-            <vertical-switch-button
-              :data-list="dataList1"
-              button-width="120px"
-              button-height="40px"
-              style="width: 9%"
-              btn-direction="row"
-              @selectBtn="selectBtn"
-            />
-          </div></div
-      ></header-search>
-    </el-header>
-
-    <el-main class="el-main">
-      <!-- <pagePanelNew style="height: 100%"> -->
-      <div class="dom" style="margin-top: 20px; margin-bottom: 20px">
-        <el-row :gutter="20" style="margin-top: -20px">
-          <el-col :span="12">
-            <pagePanel headerTitle="采油速度" style="width: 100%; height: 370px" :isShowMaxBtn="true">
-              <Echart :chart-data="productionSpeed" style="height: 100%"></Echart>
-            </pagePanel>
-          </el-col>
-          <el-col :span="12">
-            <pagePanel headerTitle="采出程度" style="width: 100%; height: 370px" :isShowMaxBtn="true"
-              ><Echart :chart-data="recoveryDegree" style="height: 100%"></Echart
-            ></pagePanel>
-          </el-col>
+    <el-header height="auto"> </el-header>
+    <el-container>
+      <el-header>
+        <el-row style="margin-top: 5px">
+          <pagePanelNew class="pagePanelNew">
+            <el-radio-group v-model="radioValue" @change="qeruyAlLData">
+              <el-radio-button label="油田指标预警"></el-radio-button>
+              <el-radio-button label="区块指标预警"></el-radio-button>
+            </el-radio-group>
+          </pagePanelNew>
         </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <pagePanel headerTitle="采出程度与含水率关系图" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-              <Echart :chart-data="relationship" style="height: 100%"></Echart
-            ></pagePanel>
-          </el-col>
-          <el-col :span="12">
-            <pagePanel headerTitle="注采比" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-              <div class="infoZhu">
-                <span>合理注采比:</span>
-                <el-input-number
-                  v-model="lineStandOne"
-                  :controls="false"
-                  style="width: 180px"
-                  @change="setFirstLine"
-                ></el-input-number>
-                <el-input-number
-                  v-model="lineStandTwo"
-                  :controls="false"
-                  style="width: 180px"
-                  @change="setSecondLine"
-                ></el-input-number>
-              </div>
-              <Echart :chart-data="injectionProductionRatio" style="height: 100%"></Echart>
-            </pagePanel>
-          </el-col>
-        </el-row>
-        <el-row class="mt-5" :gutter="20">
-          <el-col :span="12">
-            <pagePanel headerTitle="地层总压降" style="width: 100%; height: 360px" :isShowMaxBtn="true">
-              <div>
-                <span>合理地层压力；</span>
-                <el-input-number
-                  v-model="lineStandThree"
-                  :controls="false"
-                  style="width: 180px"
-                  @change="setThirdLine"
-                ></el-input-number>
-              </div>
-              <Echart :chart-data="totalFormationPressureDrop" style="height: 100%"></Echart>
-            </pagePanel>
-          </el-col>
-          <el-col :span="12">
-            <pagePanel headerTitle="指标评价结果表" style="width: 100%; height: 360px" :isShowMaxBtn="true">
-              <div class="Dui" style="margin-top: 5px">
-                <span class="f1">对标油田</span>
-                <el-select v-model="fields" class="f2" style="width: 190px" disabled>
-                  <el-option
-                    v-for="item in fieldsData"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                    :disabled="item.disabled"
+        <div>
+          <el-row style="margin-top: 8px">
+            <el-button class="roundButton" size="mini" round @click="switchParam('1')"
+              >新预警（{{ alertCount }}）</el-button
+            >
+            <el-button class="roundButton" size="mini" round @click="switchParam('2')">观察</el-button>
+            <el-button class="roundButton" size="mini" round @click="switchParam('3')">历史预警</el-button>
+          </el-row>
+        </div>
+      </el-header>
+      <el-main style="margin-top: 60px">
+        <div v-if="radioValue == '油田指标预警' && switchNumber == '1'" style="height: 100%">
+          <pagePanelNew style="height: 100%; margin-top: 25px">
+            <el-table :data="tableData" highlight :row-class-name="tableRowClassName">
+              <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
+              <el-table-column prop="theDate" label="预警时间" align="center"></el-table-column>
+              <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
+              <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
+              <el-table-column prop="warningDesc" label="预警描述" align="center"></el-table-column>
+              <el-table-column label="预警分析" align="center">
+                <template slot-scope="scope">
+                  <el-button
+                    v-if="scope.row.disposalStatus == '0' || scope.row.disposalStatus == '1'"
+                    type="text"
+                    size="small"
+                    @click="warningDispose(scope.row)"
                   >
-                  </el-option>
-                </el-select>
-                <span class="f1" style="margin-left: 20px">开发阶段</span>
-                <el-select v-model="fields" class="f2" style="width: 190px">
-                  <el-option
-                    v-for="item in fieldsData"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                    :disabled="item.disabled"
+                    <span style="color: #ffffff">处理</span>
+                  </el-button>
+                  <el-button type="text" size="small" @click="warningDispose(scope.row)">
+                    <span style="color: #ffffff">查看</span>
+                  </el-button>
+                </template>
+              </el-table-column>
+              <el-table-column label="处置状态" align="center">
+                <template slot-scope="scope">
+                  {{ scope.row.status ? scope.row.status : "-" }}
+                </template>
+              </el-table-column>
+              <el-table-column v-if="false" prop="handler" label="处理人"> </el-table-column>
+            </el-table>
+            <!-- 分页器 -->
+            <pagination :total="total" :page.sync="page" :limit.sync="pageSize" />
+          </pagePanelNew>
+        </div>
+
+        <div v-if="radioValue == '油田指标预警' && switchNumber == '2'" style="height: 100%">
+          <pagePanelNew style="height: 100%; margin-top: 40px">
+            <el-table :data="tableData" highlight>
+              <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
+              <el-table-column prop="theDate" label="预警时间" align="center"></el-table-column>
+              <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
+              <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
+              <el-table-column prop="warningDesc" label="预警描述" align="center"></el-table-column>
+              <el-table-column prop="observeDays" label="加入观察室天数" align="center">
+                <template slot-scope="scope">
+                  {{ scope.row.observeDays != null ? scope.row.observeDays : "-" }}
+                </template>
+              </el-table-column>
+              <el-table-column label="预警分析" align="center">
+                <template slot-scope="scope">
+                  <el-button
+                    v-if="scope.row.disposalStatus == '0' || scope.row.disposalStatus == '1'"
+                    type="text"
+                    size="small"
+                    @click="warningDispose(scope.row)"
                   >
-                  </el-option>
-                </el-select>
-                <el-button type="primary" style="min-width: 65px" class="jia"> 检索</el-button>
-                <el-button type="primary" style="min-width: 65px"> 查看</el-button>
+                    <span style="color: #ffffff">处理</span>
+                  </el-button>
+                  <el-button type="text" size="small" @click="warningDispose(scope.row)">
+                    <span style="color: #ffffff">查看</span>
+                  </el-button>
+                </template>
+              </el-table-column>
+              <el-table-column label="处置状态" align="center">
+                <template slot-scope="scope">
+                  {{ scope.row.status ? scope.row.status : "-" }}
+                </template>
+              </el-table-column>
+            </el-table>
+            <pagination :total="total" :page.sync="page" :limit.sync="pageSize" />
+          </pagePanelNew>
+        </div>
+
+        <div v-if="radioValue == '油田指标预警' && switchNumber == '3'" style="height: 100%">
+          <el-row style="margin-top: 40px">
+            <el-col :span="6">
+              <span class="demonstration">日期：</span>
+              <el-date-picker
+                v-model="historyDateTime"
+                type="daterange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                value-format="yyyy-MM-dd"
+              >
+              </el-date-picker>
+            </el-col>
+            <el-col :span="4" style="margin-left: 20px">
+              <span class="demonstration">预警：</span>
+              <el-select v-model="warningTypeCode" class="f2" style="width: 180px">
+                <el-option
+                  v-for="item in warnings"
+                  :key="item.value"
+                  :label="item.name"
+                  :value="item.value"
+                  :disabled="item.disabled"
+                >
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="4">
+              <div class="fl">
+                <el-button
+                  type="primary"
+                  class="buttonActive_primary"
+                  style="margin-left: 20px; width: 90px"
+                  icon="el-icon-search"
+                  @click="switchParam('3')"
+                  >搜索</el-button
+                >
               </div>
-              <div style="width: 100%">
-                <el-table :data="tableData" highlight height="230px" style="margin-top: 10px">
-                  <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
-                  <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
-                  <el-table-column prop="lastPhaseValue" label="上阶段值" align="center"></el-table-column>
-                  <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center"></el-table-column>
-                  <el-table-column label="理论值" align="center">
-                    <template slot-scope="scope">
-                      <el-input-number
-                        v-model="scope.row.theoryValue"
-                        :controls="false"
-                        style="width: 80px"
-                      ></el-input-number>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="diffTheoryValue" label="与理论值对比差值" align="center">
-                    <template slot-scope="scope">
-                      <span>{{
-                        (Number(scope.row.evaluationResult) - Number(scope.row.theoryValue)) | toFixNumberFour
-                      }}</span>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    prop="diffSimilarOilField"
-                    label="与同类型油田比较"
-                    align="center"
-                    width="80"
-                  ></el-table-column>
-                  <el-table-column prop="result" label="结论" align="center" width="80"></el-table-column>
-                </el-table>
+            </el-col>
+          </el-row>
+          <pagePanelNew style="height: 100%; margin-top: 10px">
+            <el-table :data="tableData" highlight>
+              <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
+              <el-table-column prop="theDate" label="预警时间" align="center"></el-table-column>
+              <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
+              <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
+              <el-table-column prop="warningDesc" label="预警描述" align="center"></el-table-column>
+              <el-table-column prop="result" label="处置结果" align="center">
+                <template slot-scope="scope">
+                  <div v-if="scope.row.result == null || scope.row.result == ''">
+                    <span class="hrefSpan" style="cursor: pointer" href="#" @click="warningDispose(scope.row)"
+                      >关闭</span
+                    >
+                  </div>
+                  <span class="hrefSpan" style="cursor: pointer" href="#" @click="warningDispose(scope.row)">{{
+                    scope.row.result
+                  }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column prop="handler" label="处理人" align="center">
+                <template slot-scope="scope">
+                  {{ scope.row.handler ? scope.row.handler : "-" }}
+                </template>
+              </el-table-column>
+              <el-table-column v-if="false" prop="handler" label="处理人"></el-table-column>
+              <el-table-column v-if="false" prop="handler" label="处理人"></el-table-column>
+            </el-table>
+            <pagination :total="total" :page.sync="page" :limit.sync="pageSize" />
+          </pagePanelNew>
+        </div>
+        <div v-if="radioValue == '区块指标预警' && switchNumber == '1'" style="height: 100%">
+          <pagePanelNew style="height: 100%; margin-top: 25px">
+            <el-table :data="tableData" highlight :row-class-name="tableRowClassName">
+              <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
+              <el-table-column prop="theDate" label="预警时间" align="center"></el-table-column>
+              <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
+              <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
+              <el-table-column prop="warningDesc" label="预警描述" align="center"></el-table-column>
+              <el-table-column label="预警分析" align="center">
+                <template slot-scope="scope">
+                  <el-button
+                    v-if="scope.row.disposalStatus == '0' || scope.row.disposalStatus == '1'"
+                    type="text"
+                    size="small"
+                    @click="warningDispose(scope.row)"
+                  >
+                    <span style="color: #ffffff">处理</span>
+                  </el-button>
+                  <el-button type="text" size="small" @click="warningDispose(scope.row)">
+                    <span style="color: #ffffff">查看</span>
+                  </el-button>
+                </template>
+              </el-table-column>
+              <el-table-column label="处置状态" align="center">
+                <template slot-scope="scope">
+                  {{ scope.row.status ? scope.row.status : "-" }}
+                </template>
+              </el-table-column>
+              <el-table-column v-if="false" prop="handler" label="处理人"></el-table-column>
+            </el-table>
+            <pagination :total="total" :page.sync="page" :limit.sync="pageSize" />
+          </pagePanelNew>
+        </div>
+        <div v-if="radioValue == '区块指标预警' && switchNumber == '2'" style="height: 100%">
+          <pagePanelNew style="height: 100%; margin-top: 40px">
+            <el-table :data="tableData" highlight>
+              <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
+              <el-table-column prop="theDate" label="预警时间" align="center"> </el-table-column>
+              <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
+              <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
+              <el-table-column prop="warningDesc" label="预警描述" align="center"> </el-table-column>
+              <el-table-column prop="observeDays" label="加入观察室天数" align="center">
+                <template slot-scope="scope">
+                  {{ scope.row.observeDays != null ? scope.row.observeDays : "-" }}
+                </template>
+              </el-table-column>
+              <el-table-column label="预警分析" align="center">
+                <template slot-scope="scope">
+                  <el-button
+                    v-if="scope.row.disposalStatus == '0' || scope.row.disposalStatus == '1'"
+                    type="text"
+                    size="small"
+                    @click="warningDispose(scope.row)"
+                  >
+                    <span style="color: #ffffff">处理</span>
+                  </el-button>
+                  <el-button type="text" size="small" @click="warningDispose(scope.row)">
+                    <span style="color: #ffffff">查看</span>
+                  </el-button>
+                </template>
+              </el-table-column>
+              <el-table-column label="处置状态" align="center">
+                <template slot-scope="scope">
+                  {{ scope.row.status ? scope.row.status : "-" }}
+                </template>
+              </el-table-column>
+            </el-table>
+            <pagination :total="total" :page.sync="page" :limit.sync="pageSize" />
+          </pagePanelNew>
+        </div>
+        <div v-if="radioValue == '区块指标预警' && switchNumber == '3'" style="height: 100%">
+          <el-row style="margin-top: 40px">
+            <el-col :span="6">
+              <span class="demonstration">日期：</span>
+              <el-date-picker
+                v-model="historyDateTimeSec"
+                type="datetimerange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                value-format="yyyy-MM-dd"
+              >
+              </el-date-picker>
+            </el-col>
+            <el-col :span="4" style="margin-left: 20px">
+              <span class="demonstration">预警：</span>
+              <el-select v-model="warningTypeCode" class="f2" style="width: 180px">
+                <el-option
+                  v-for="item in warnings"
+                  :key="item.value"
+                  :label="item.name"
+                  :value="item.value"
+                  :disabled="item.disabled"
+                >
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="4">
+              <div class="fl">
+                <el-button
+                  type="primary"
+                  class="buttonActive_primary"
+                  icon="el-icon-search"
+                  style="margin-left: 20px; width: 90px"
+                  @click="switchParam('3')"
+                  >搜索</el-button
+                >
               </div>
-            </pagePanel>
-          </el-col>
-        </el-row>
-      </div>
-      <!-- </pagePanelNew> -->
-    </el-main>
+            </el-col>
+          </el-row>
+          <pagePanelNew style="height: 100%; margin-top: 10px">
+            <el-table :data="tableData" highlight style="margin-top: 0px">
+              <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
+              <el-table-column prop="theDate" label="预警时间" align="center"></el-table-column>
+              <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
+              <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
+              <el-table-column prop="warningDesc" label="预警描述" align="center"></el-table-column>
+              <el-table-column prop="result" label="处置结果" align="center">
+                <template slot-scope="scope">
+                  <div v-if="scope.row.result == null || scope.row.result == ''">
+                    <span class="hrefSpan" style="cursor: pointer" href="#" @click="warningDispose(scope.row)"
+                      >关闭</span
+                    >
+                  </div>
+                  <span class="hrefSpan" style="cursor: pointer" href="#" @click="warningDispose(scope.row)">{{
+                    scope.row.result
+                  }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column prop="handler" label="处理人" align="center">
+                <template slot-scope="scope">
+                  {{ scope.row.handler }}
+                </template>
+              </el-table-column>
+              <el-table-column v-if="false" prop="handler" label="处理人"></el-table-column>
+              <el-table-column v-if="false" prop="handler" label="处理人"></el-table-column>
+            </el-table>
+            <pagination :total="total" :page.sync="page" :limit.sync="pageSize" />
+          </pagePanelNew>
+        </div>
+      </el-main>
+    </el-container>
+    <el-header> </el-header>
   </el-container>
 </template>
-<script>
-import * as echarts from "echarts";
-import Echart from "@/components/tools/Echarts/index.vue";
-import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
+  <script>
 import { fetchOilFields, fetchFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import {
-  outputSpeed,
-  outputDegree,
-  outputDegreeTongChart,
-  injectionProRate,
-  generalPressure,
-  indicatorEveluationResults,
-} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+import { oilFieldDevWarnings, fieldDevWarnings } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { getWidgetByAreaUser } from "@/api/oilDeposit/rmm-01/rmm01";
 export default {
-  components: {
-    Echart,
-    verticalSwitchButton,
-  },
-  filters: {
-    toFixNumberFour(val) {
-      return val.toFixed(4);
-    },
-  },
   data() {
     return {
-      //对标油田
-      fields: "",
-      fieldsData: "",
-      //注采比 第一条标线
-      lineStandOne: 0.6,
-      //注采比 第二条标线
-      lineStandTwo: 1,
-      //地层总降压 标线
-      lineStandThree: 0,
-      //油田
-      oilField: [],
-      //油田名字
-      oilFieldName: "",
-      //油田选中值
-      selectOilField: "",
-      //区块
-      block: [],
-      //区块选中值
-      selectBlock: "",
-      radio1: "产能类",
-      dataList1: [
-        { name: "产能类", key: "developmentEffectEvaluation_reserves", isChecked: true },
-        { name: "储存类", key: "developmentEffectEvaluation_reserves", isChecked: false },
-        { name: "含水类", key: "developmentEffectEvaluation_water", isChecked: false },
-        { name: "递减类", key: "developmentEffectEvaluation_Decreasing", isChecked: false },
-
-        // { name: "产能类", key: "developmentEffectEvaluation_capacity", isChecked: false },
-        // { name: "储存类", key: "developmentEffectEvaluation_reserves", isChecked: true },
-        // { name: "含水类", key: "developmentEffectEvaluation_water", isChecked: false },
-        // { name: "递减类", key: "developmentEffectEvaluation_Decreasing", isChecked: false },
-      ],
-      //查询参数
-      queryParams: {},
+      //hwh 修改
+      oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+      //预警数量
+      alertCount: 0,
+      //分页参数总数
+      total: 10,
+      //当前页
       page: 1,
+      //当前页条数
       pageSize: 10,
-      //油田列表
-      oilFieldList: [
+      //div切换变量
+      radioValue: "",
+      //选择显示div
+      switchNumber: "",
+      //预警
+      warningTypeCode: "",
+      //搜索输入框
+      input: "",
+      //日期
+      dateTime: "",
+      //历史日期
+      historyDateTime: "",
+      //历史日期
+      historyDateTimeSec: "",
+      //缓存数据
+      tempRadio: "",
+      //切换div值缓存
+      tempSwitchNumber: "",
+      //查询参数
+      queryParams: {
+        warningCode: "WARNING",
+      },
+      //预警类型
+      warningType: "全部",
+      warningTypes: [
         {
-          value: "QHD32-6",
-          label: "秦皇岛32-6油田",
+          name: "全部",
+          value: "0",
+        },
+        {
+          name: "预测预警",
+          value: "1",
+        },
+        {
+          name: "对比预警",
+          value: "2",
         },
       ],
-      //区域列表
-      areaList: [
-        {
-          value: "",
-          label: "全部",
-        },
-        {
-          value: "区块1",
-          label: "区块1",
-        },
-      ],
-      //采油速度
-      productionSpeed: {
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow",
-          },
-        },
-        dataZoom: {
-          start: 0,
-          type: "inside",
-        },
-        toolbox: {
-          show: true,
-          feature: {
-            saveAsImage: {
-              name: "采油速度",
-              pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: "#022644",
-            },
-          },
-        },
-        legend: {
-          data: [],
-          left: 0,
-          textStyle: {
-            color: "#24DEFF",
-          },
-        },
-        xAxis: {
-          type: "category",
-          axisLabel: {
-            color: "#8FA4CC",
-          },
-          axisTick: {
-            show: false,
-          },
-          // axisLine: {
-          //   lineStyle: {
-          //     color: "rgba(255,255,255,.16)",
-          //   },
-          // },
-          axisLine: {
-            //x轴线的颜色以及宽度
-            show: true,
-            lineStyle: {
-              color: "#345ed4",
-              width: 1,
-              type: "solid",
-            },
-          },
-          axisTick: {
-            show: false,
-          },
-        },
-        color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#FF5844", "#DA835E", "#9A72FF", "#FF30AD", "#2ACAFF"],
-        yAxis: [
-          {
-            name: "地质储量采油速度%",
-            nameLocation: "center",
-            nameTextStyle: { color: "#8FA4CC" },
-            nameGap: 44,
-            type: "value",
-            minInterval: 0,
-            axisLabel: {
-              color: "#8FA4CC",
-            },
-            axisTick: {
-              show: false,
-            },
-            axisLine: {
-              show: true,
-              lineStyle: {
-                color: "#8FA4CC",
-              },
-            },
-            splitLine: {
-              show: true,
-              lineStyle: {
-                color: "#8FA4CC",
-              },
-            },
-          },
-          {
-            name: "可采、剩余可采采油速度%",
-            nameLocation: "center",
-            nameTextStyle: { color: "#8FA4CC" },
-            nameGap: 44,
-            type: "value",
-            minInterval: 0,
-            axisLabel: {
-              color: "#8FA4CC",
-            },
-            axisTick: {
-              show: false,
-            },
-            axisLine: {
-              show: false,
-              lineStyle: {
-                color: "rgba(151,151,151,.16)",
-              },
-            },
-            splitLine: {
-              show: true,
-              lineStyle: {
-                color: "rgba(255,255,255,.16)",
-              },
-            },
-          },
-        ],
-        series: [],
-      },
-      //采出程度
-      recoveryDegree: {
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow",
-          },
-        },
-        legend: {
-          left: 0,
-          textStyle: {
-            color: "#24DEFF",
-          },
-        },
-        toolbox: {
-          show: true,
-          feature: {
-            saveAsImage: {
-              name: "地质储量采出程度",
-              pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: "#022644",
-            },
-          },
-        },
-        color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#FF5844", "#DA835E", "#9A72FF", "#FF30AD", "#2ACAFF"],
-        xAxis: {
-          name: "地质储量采出程度(%)",
-          nameLocation: "center",
-          nameTextStyle: { color: "#8FA4CC" },
-          nameGap: 25,
-          //max: 60,
-          type: "value",
-          axisLabel: {
-            color: "#8FA4CC",
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: "#8FA4CC",
-            },
-          },
-          splitLine: {
-            show: true,
-            lineStyle: {
-              color: "#8FA4CC",
-            },
-          },
-        },
-        yAxis: {
-          name: "含水率(%)",
-          nameLocation: "center",
-          nameTextStyle: { color: "#8FA4CC" },
-          nameGap: 30,
-          type: "value",
-          axisLabel: {
-            color: "#8FA4CC",
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            lineStyle: {
-              //color: '#979797'
-              color: "#8FA4CC",
-            },
-          },
-          splitLine: {
-            show: true,
-            lineStyle: {
-              color: "#8FA4CC",
-            },
-          },
-        },
-
-        series: [],
-      },
-      //采出程度与含水率关系图
-      relationship: {
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow",
-          },
-          confine: true,
-        },
-        legend: {
-          left: 0,
-          textStyle: {
-            color: "#24DEFF",
-          },
-          data: [
-            /*"Rm=10", "Rm=20", "Rm=40", "Rm=60", "Rm=80", "采出程度"*/
-          ],
-          itemGap: 5,
-        },
-        toolbox: {
-          show: true,
-          feature: {
-            saveAsImage: {
-              name: "采出程度与含水率关系",
-              pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: "#022644",
-            },
-          },
-        },
-        xAxis: {
-          name: "地质储量采出程度(%)",
-          nameLocation: "center",
-          nameTextStyle: { color: "#8FA4CC" },
-          nameGap: 30,
-          type: "value",
-          axisLabel: {
-            color: "#8FA4CC",
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: "#8FA4CC",
-            },
-          },
-          splitLine: {
-            show: true,
-            lineStyle: {
-              color: "#8FA4CC",
-            },
-          },
-        },
-        yAxis: {
-          name: "综合含水率(%)",
-          nameLocation: "center",
-          nameTextStyle: { color: "#8FA4CC" },
-          nameGap: 30,
-          type: "value",
-          axisLabel: {
-            color: "#8FA4CC",
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            lineStyle: {
-              //color: '#979797'
-              color: "#8FA4CC",
-            },
-          },
-          splitLine: {
-            show: true,
-            lineStyle: {
-              color: "#8FA4CC",
-            },
-          },
-        },
-        color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#FF5844", "#DA835E", "#9A72FF", "#FF30AD", "#2ACAFF"],
-        series: [],
-      },
-      //注采比
-      injectionProductionRatio: {
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow",
-          },
-        },
-        dataZoom: {
-          start: 0,
-          type: "inside",
-        },
-        toolbox: {
-          show: true,
-          feature: {
-            saveAsImage: {
-              name: "注采比",
-              pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: "#022644",
-            },
-          },
-        },
-        xAxis: {
-          type: "category",
-          axisLabel: {
-            color: "#8FA4CC",
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            lineStyle: {
-              color: "#8FA4CC",
-            },
-          },
-        },
-        yAxis: {
-          name: "月度注采比",
-          nameLocation: "center",
-          nameTextStyle: { color: "#8FA4CC" },
-          nameGap: 30,
-          //min:90,
-          max: 1.2,
-          interval: 0.2,
-          type: "value",
-          axisLabel: {
-            color: "#8FA4CC",
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: "#8FA4CC",
-            },
-          },
-          splitLine: {
-            show: true,
-            lineStyle: {
-              color: "#8FA4CC",
-            },
-          },
-        },
-        color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#FF5844", "#DA835E", "#9A72FF", "#FF30AD", "#2ACAFF"],
-        series: [
-          {
-            name: "注采比",
-            data: [],
-            type: "line",
-            barWidth: "20",
-            markLine: {
-              symbol: "none",
-              silent: false,
-              data: [
-                {
-                  yAxis: 0.6,
-                },
-                {
-                  yAxis: 1,
-                },
-              ],
-              lineStyle: {
-                color: "orange",
-                type: "solid",
-              },
-            },
-            showSymbol: false,
-          },
-        ],
-      },
-      //地层总压降
-      totalFormationPressureDrop: {
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow",
-          },
-        },
-        legend: {
-          data: ["合理地层压力", "压力保持水平"],
-          left: 0,
-          textStyle: {
-            color: "#fff",
-          },
-        },
-        toolbox: {
-          show: true,
-          feature: {
-            saveAsImage: {
-              name: "地层总压降",
-              pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: "#022644",
-            },
-          },
-        },
-        xAxis: {
-          type: "category",
-          /*data: ["CEPI", "CEPJ", "WHPH", "WHPC"],*/
-          axisLabel: {
-            color: "#8FA4CC",
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            lineStyle: {
-              //color: '#979797'
-              color: "#8FA4CC",
-            },
-          },
-        },
-        yAxis: {
-          type: "value",
-          axisLabel: {
-            color: "#8FA4CC",
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: "#8FA4CC",
-            },
-          },
-          splitLine: {
-            show: true,
-            lineStyle: {
-              color: "#8FA4CC",
-            },
-          },
-        },
-        series: [
-          {
-            name: "压力保持水平",
-            data: [
-              /*7, 6, 7, 4, 5*/
-            ],
-            type: "bar",
-            barWidth: "20",
-            label: {
-              show: true,
-              position: "top",
-              color: "#00D9EA",
-            },
-            /*symbol: "circle",*/
-            itemStyle: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: "#00D9EA",
-                },
-                {
-                  offset: 1,
-                  color: "#0F65EA",
-                },
-              ]),
-            },
-            markLine: {
-              symbol: "none",
-              silent: false,
-              data: [
-                {
-                  yAxis: 0,
-                },
-              ],
-              lineStyle: {
-                color: "orange",
-                type: "solid",
-              },
-            },
-          },
-        ],
-      },
-      //指标评价结果表
+      //表格数据
       tableData: [],
+      //预警信息
+      warnings: [
+        {
+          name: "全部",
+          value: "",
+        },
+        {
+          name: "产液量预警",
+          value: "7",
+        },
+        {
+          name: "产油量预警",
+          value: "6",
+        },
+        {
+          name: "注水量预警",
+          value: "9",
+        },
+        {
+          name: "含水率预警",
+          value: "8",
+        },
+        {
+          name: "注采比",
+          value: "11",
+        },
+        {
+          name: "递减率预警",
+          value: "12",
+        },
+      ],
+      pickerOptions: {
+        disabledDate(time) {
+          let curDate = new Date().toString(); // 当前时间戳转为字符串
+          let curDateYear = new Date().getFullYear(); // 当前时间的年份
+          let oneYearAgoDate = curDate.replace(curDateYear, curDateYear - 1); // 字符串年份替换为一年前
+          let oneYear = new Date(oneYearAgoDate).getTime(); //一年前字符串转为时间戳
+          return time.getTime() > Date.now() || time.getTime() < oneYear;
+        },
+      },
+      //表单数据
+      increaseAndDecrease: [
+        {
+          label: "增加",
+          value: "增加",
+        },
+        {
+          label: "减少",
+          value: "减少",
+        },
+      ],
       //缓存权限数据
       myWidget: [],
       userInfo: {},
@@ -765,387 +434,288 @@ export default {
       canDownload: false,
       //上传数据
       canUpload: false,
+      //特殊管理权限
+      ycglKfyj: false,
     };
   },
-  watch: {},
-  created() {},
-  mounted() {
-    this.initData();
+  created() {
+    this.dateTime = [new Date().addDays(-30).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
+    let year = new Date().getFullYear();
+    let startDate = year + "-01-01";
+    this.historyDateTime = [new Date(startDate).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
+    this.historyDateTimeSec = [new Date(startDate).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
+  },
+  //初始化数据
+  mounted: function () {
     //获取权限问题内容
     this.getPageAuthMessage();
+    this.selectOilfieldData(this.dateTime[0], this.dateTime[1], this.oilFieldId, "WARNING");
+    if (this.$route.query == undefined) {
+      this.radioValue = "油田指标预警";
+      //二级选择重置
+      this.switchNumber = "1";
+    } else {
+      this.radioValue = this.$route.query.radioValue == undefined ? "油田指标预警" : this.$route.query.radioValue;
+      this.switchNumber = this.$route.query.switchNumber == undefined ? "1" : this.$route.query.switchNumber;
+    }
+    this.qeruyAlLData();
   },
+  //方法
   methods: {
-    selectBtn(item) {
-      // console.log(item)
-      this.$router.push({
-        name: item.key,
-        params: {
-          oilFieldId: this.selectOilField,
-          fieldId: this.selectBlock,
-          canDownload: this.canDownload,
-        },
+    //获取油田信息
+    getOilFields() {
+      let _this = this;
+      fetchOilFields().then((res) => {
+        //获得详细信息
+        let data = res.data.data;
+        //获取油田信息
+        _this.oilField = data.oilFields;
+        //选择油田默认选中第一个
+        _this.selectOilField = _this.oilField[0].oilFieldId;
       });
     },
-    /**
-     *  hwh
-     *  设置注采比的第一条标线
-     */
-    setFirstLine() {
-      let number = this.lineStandOne;
-      this.injectionProductionRatio.series[0].markLine.data[0].yAxis = number;
-    },
-    /**
-     * hwh
-     * 设置注采比的第二条标线
-     */
-    setSecondLine() {
-      let number = this.lineStandTwo;
-      this.injectionProductionRatio.series[0].markLine.data[1].yAxis = number;
-    },
-    /**
-     * hwh
-     * 地层总降压的标线
-     */
-    setThirdLine() {
-      let number = this.lineStandThree;
-      this.totalFormationPressureDrop.series[0].markLine.data[0].yAxis = number;
-    },
-    /**
-     * hwh
-     * 设置页面初始化
-     * @returns {Promise<void>}
-     */
-    async initData() {
-      //调用油田接口
-      await fetchOilFields().then((res) => {
-        if (res.data.code == 200) {
-          this.oilField = res.data.data.oilFields;
-          if (this.oilField.length == 0) {
-            this.selectOilField = "";
-          } else {
-            this.selectOilField = this.oilField[0].oilFieldId;
-          }
-        }
-      });
-      let oilFieldId = this.$route.params.oilFieldId;
-      if (oilFieldId == undefined) {
-        //设置默认油田
-        this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
-      } else {
-        this.selectOilField = oilFieldId;
-      }
-      let requestFields = {
-        oilFieldId: this.selectOilField,
-      };
-      //获得区块信息
-      await fetchFields(requestFields).then((res) => {
-        if (res.data.code == 200) {
-          this.block = res.data.data.fields;
-          //区块全部为油田的id。
-          this.selectBlock = this.selectOilField;
-        }
-      });
-      let fieldId = this.$route.params.fieldId;
-      if (fieldId) {
-        this.selectBlock = fieldId;
-      }
-      this.doSearch();
-    },
-    /**
-     * hwh
-     * 获得区块信息
-     * @param oilFieldId
-     */
-    getFetchFields(oilFieldId) {
-      let request = {
-        oilFieldId: oilFieldId,
-      };
+    //获得区块信息
+    getFieldsData(oilFieldId) {
+      let request = { oilFieldId: oilFieldId };
+      let _this = this;
       fetchFields(request).then((res) => {
-        if (res.data.code == 200) {
-          this.block = res.data.data.fields;
-          //区块全部为油田的id。
-          this.selectBlock = oilFieldId;
-        }
+        // 获得数据
+        let data = res.data.data.fields;
+        //获得区块信息
+        _this.block = data;
+        //默认选中第一个区块信息
+        _this.selectBlock = _this.block[0].fieldId;
       });
     },
-    /**
-     * hwh
-     * 搜索方法
-     */
-    doSearch() {
-      this.getOutputSpeed(this.selectOilField, this.selectBlock);
-      this.getOutputDegree(this.selectOilField, this.selectBlock);
-      this.getOutputDegreeTongChart(this.selectOilField, this.selectBlock);
-      this.getInjectionProRate(this.selectOilField, this.selectBlock);
-      this.getGeneralPressure(this.selectOilField, this.selectBlock);
-      this.getIndicatorEveluationResults(this.selectOilField, this.selectBlock);
-    },
-
-    /**
-     *  hwh
-     *  产能类 采油速度
-     * @param oilFieldId 油田id
-     * @param fieldId 区块id
-     */
-    getOutputSpeed(oilFieldId, fieldId) {
-      let request = {
-        oilFieldId: oilFieldId,
-        fieldId: fieldId,
-      };
-      outputSpeed(request).then((res) => {
-        console.log(res, "22222222222222222222222");
-        if (res.data.code == 200) {
-          let lineChart = res.data.data.chart.linearDataSets;
-          let legendData = [];
-          let seriesData = [];
-          lineChart.forEach((item, index) => {
-            legendData.push(item.label);
-            seriesData.push(this.outputSpeedLine(item));
-          });
-          this.productionSpeed.legend.data = legendData;
-          this.productionSpeed.series = seriesData;
-        } else {
-          let legendData = [];
-          let seriesData = [];
-          this.productionSpeed.legend.data = legendData;
-          this.productionSpeed.series = seriesData;
-        }
-      });
-    },
-
-    /**
-     *  hwh
-     *  采出速度 折线解析
-     * @param linearChart
-     * @returns {{}}
-     */
-    outputSpeedLine(linearChart) {
-      let series = {};
-      series.type = "line";
-      let seriesName = linearChart.label;
-      series.name = seriesName;
-      if (seriesName == "实际年采油速度") {
-        series.yAxisIndex = 0;
-      } else if (seriesName == "可采储量采油速度" || seriesName == "剩余可采储量采油速度") {
-        series.yAxisIndex = 1;
+    //配置跳转
+    /* handleClick(row) {
+            this.$router.push({name:'developmentWarningConfig',query:{radioValue:this.radioValue,switchNumber:this.switchNumber}})
+        },*/
+    switchParam(row) {
+      /*console.log(row);*/
+      this.tempRadio = this.radioValue;
+      this.tempSwitchNumber = this.switchNumber;
+      //1级选择重置
+      this.switchNumber = row;
+      var OilfieldId = this.oilFieldId;
+      if (this.radioValue == "油田指标预警" && row == "1") {
+        this.selectOilfieldData(this.dateTime[0], this.dateTime[1], OilfieldId, "WARNING");
+      } else if (this.radioValue == "油田指标预警" && row == "2") {
+        this.selectOilfieldData(this.dateTime[0], this.dateTime[1], OilfieldId, "OBSERVE");
+      } else if (this.radioValue == "油田指标预警" && row == "3") {
+        this.selectOilfieldData(this.historyDateTime[0], this.historyDateTime[1], OilfieldId, "HIS");
+      } else if (this.radioValue == "区块指标预警" && row == "1") {
+        this.selectFieldData(this.dateTime[0], this.dateTime[1], OilfieldId, "WARNING");
+      } else if (this.radioValue == "区块指标预警" && row == "2") {
+        this.selectFieldData(this.dateTime[0], this.dateTime[1], OilfieldId, "OBSERVE");
+      } else if (this.radioValue == "区块指标预警" && row == "3") {
+        this.selectFieldData(this.historyDateTimeSec[0], this.historyDateTimeSec[1], OilfieldId, "HIS");
+      } else {
+        this.tableData = [];
+        this.total = 0;
       }
-      let linearData = linearChart.linearData;
-      let seriesData = [];
-      linearData.forEach((item, index) => {
-        let point = [];
-        let label = item.label.split("-");
-        point.push(label[0] + "-" + label[1]);
-        point.push(item.value);
-        seriesData.push(point);
-      });
-      series.data = seriesData;
-      series.symbol = "none";
-      return series;
     },
-    /**
-     *  hwh
-     *  采出程度
-     * @param oilFieldId 油田id
-     * @param fieldId  区块id
-     */
-    getOutputDegree(oilFieldId, fieldId) {
-      let request = {
-        oilFieldId: oilFieldId,
-        fieldId: fieldId,
-      };
-      outputDegree(request).then((res) => {
-        if (res.data.code == 200) {
-          let seriesData = [];
-          let lineChart = res.data.data.chart.lineChartDataSets;
-          lineChart.forEach((item, index) => {
-            seriesData.push(this.outputDegreeLine(item));
-          });
-          this.recoveryDegree.series = seriesData;
-        } else {
-          let seriesData = [];
-          this.recoveryDegree.series = seriesData;
-        }
-      });
+    //div切换方法
+    closeDiv() {
+      this.radioValue = this.tempRadio;
+      this.switchNumber = this.tempSwitchNumber;
     },
-    /**
-     *  hwh
-     *  采出程度折线解析
-     * @param lineChart
-     * @returns {{}}
-     */
-    outputDegreeLine(lineChart) {
-      let series = {};
-      series.type = "scatter";
-      series.symbolSize = 4;
-      /* series.symbol = 'none';*/
-      series.name = lineChart.label;
-      series.label = {
-        show: false,
-        position: "top",
-        color: "#00D9EA",
-      };
-      let seriesData = [];
-      let lineData = lineChart.numberPoints;
-      lineData.forEach((item, index) => {
-        let point = [];
-        point.push(item.x);
-        point.push(item.y);
-        seriesData.push(point);
-      });
-      series.data = seriesData;
-      return series;
-    },
-    /**
-     *  hwh
-     *  采出程度与含水率关系图
-     * @param oilFieldId 油田id
-     * @param fieldId 区块id
-     */
-    getOutputDegreeTongChart(oilFieldId, fieldId) {
-      let request = {
-        oilFieldId: oilFieldId,
-        fieldId: fieldId,
-      };
-      let legendData = [];
-      let seriesData = [];
-      outputDegree(request).then((res) => {
-        if (res.data.code == 200) {
-          let lineChart = res.data.data.chart.lineChartDataSets;
-          lineChart.forEach((item, index) => {
-            legendData.push(item.label);
-            seriesData.push(this.outputDegreeLine(item));
-          });
-        } else {
-          legendData = [];
-          seriesData = [];
-        }
-      });
-
-      outputDegreeTongChart(request).then((res) => {
-        if (res.data.code == 200) {
-          let lineChart = res.data.data.chart.lineChartDataSets;
-          lineChart.forEach((item, index) => {
-            legendData.push("Rm=" + item.label);
-            seriesData.push(this.outputDegreeTongChart(item));
-          });
-        } else {
-          legendData = [];
-          seriesData = [];
-        }
-      });
-      this.relationship.legend.data = legendData;
-      this.relationship.series = seriesData;
-    },
-    /**
-     *  hwh
-     *  采出程度童氏图折线解析
-     * @param lineChart
-     * @returns {{}}
-     */
-    outputDegreeTongChart(lineChart) {
-      let series = {};
-      series.name = "Rm=" + lineChart.label;
-      series.type = "line";
-      series.symbol = "none";
-      /* series.symbolSize=3;*/
-      series.smooth = true;
-      let seriesData = [];
-      let lineData = lineChart.numberPoints;
-      lineData.forEach((item, index) => {
-        let point = [];
-        point.push(item.x);
-        point.push(item.y);
-        seriesData.push(point);
-      });
-      series.data = seriesData;
-      return series;
+    //数据查询方法
+    qeruyAlLData() {
+      let war = "";
+      if (this.switchNumber == "1") {
+        war = "WARNING";
+      } else if (this.switchNumber == "2") {
+        war = "OBSERVE";
+      } else {
+        war = "HIS";
+      }
+      if (this.radioValue == "油田指标预警") {
+        this.selectOilfieldData(this.dateTime[0], this.dateTime[1], this.oilFieldId, war);
+      } else if (this.radioValue == "区块指标预警") {
+        this.selectFieldData(this.dateTime[0], this.dateTime[1], this.oilFieldId, war);
+      } else {
+        this.tableData = [];
+        this.total = 0;
+      }
     },
     /**
      * hwh
-     *  注采比
-     * @param oilFieldId 油田id
-     * @param fieldId 区块id
+     * 查询历史记录信息
      */
-    getInjectionProRate(oilFieldId, fieldId) {
-      let request = {
-        oilFieldId: oilFieldId,
+    queryHistoryData() {
+      if (this.radioValue == "油田指标预警") {
+        this.selectOilfieldData(this.historyDateTime[0], this.historyDateTime[1], this.oilFieldId, "WARNING");
+      } else if (this.radioValue == "区块指标预警") {
+        this.selectFieldData(this.historyDateTimeSec[0], this.historyDateTimeSec[1], this.oilFieldId, "WARNING");
+      } else {
+        this.tableData = [];
+        this.total = 0;
+      }
+    },
+    //查询油田数据统一接口
+    selectOilfieldData(beginDate, endDate, fieldId, warningCode) {
+      /* beginDate='2020-09-01'
+            endDate='2021-03-01'*/
+      let queryParams = {
+        beginDate: beginDate,
+        endDate: endDate,
         fieldId: fieldId,
+        page: this.page,
+        pageSize: this.pageSize,
+        warningCode: warningCode,
+        warningTypeCode: this.warningTypeCode,
       };
-      injectionProRate(request).then((res) => {
-        if (res.data.code == 200) {
-          let linearChart = res.data.data.chart.linearDataSets[0].linearData;
-          let seriesData = [];
-          linearChart.forEach((item, index) => {
-            let point = [];
-            let xData = "";
-            let label = item.label.split("-");
-            xData = label[0] + "-" + label[1];
-            point.push(xData);
-            point.push(item.value);
-            seriesData.push(point);
-          });
-          this.injectionProductionRatio.series[0].data = seriesData;
-        } else {
-          let seriesData = [];
-          this.injectionProductionRatio.series[0].data = seriesData;
+      oilFieldDevWarnings(queryParams).then((data) => {
+        this.tableData = data.data.data.indicatorWarnings;
+        this.total = data.data.data.total;
+        if (warningCode == "WARNING") {
+          this.alertCount = data.data.data.total;
         }
       });
+    },
+    //查询区块数据统一接口
+    selectFieldData(beginDate, endDate, fieldId, warningCode) {
+      /*beginDate='2020-09-01'
+            endDate='2021-03-01'*/
+      let queryParams = {
+        beginDate: beginDate,
+        endDate: endDate,
+        fieldId: fieldId,
+        page: this.page,
+        pageSize: this.pageSize,
+        warningCode: warningCode,
+        warningTypeCode: this.warningTypeCode,
+      };
+      fieldDevWarnings(queryParams).then((data) => {
+        this.tableData = data.data.data.indicatorWarnings;
+        this.total = data.data.data.total;
+        if (warningCode == "WARNING") {
+          this.alertCount = data.data.data.total;
+        }
+      });
+    },
+    //处置结果
+    warningDispose(row) {
+      //6、7、8代表以油井为中心、、、9代表以水井为中心、、、11代表以油水井为中心
+      if (row.warningCode == "6" || row.warningCode == "7" || row.warningCode == "8") {
+        //oil
+        this.$router.push({
+          name: "warningDisposeOil",
+          query: {
+            warningType: row.warningType,
+            theDate: row.theDate,
+            handler: row.handler,
+            id: row.id,
+            warningCode: row.warningCode,
+            oilfieldId: this.oilFieldId,
+            ycglKfyj: this.ycglKfyj,
+          },
+        });
+      } else if (row.warningCode == "9") {
+        //water
+        this.$router.push({
+          name: "warningDisposeWater",
+          query: {
+            warningType: row.warningType,
+            theDate: row.theDate,
+            handler: row.handler,
+            id: row.id,
+            warningCode: row.warningCode,
+            oilfieldId: this.oilFieldId,
+            ycglKfyj: this.ycglKfyj,
+          },
+        });
+      } else if (row.warningCode == "11") {
+        //oil+water
+        this.$router.push({
+          name: "warningDispose",
+          query: {
+            warningType: row.warningType,
+            theDate: row.theDate,
+            handler: row.handler,
+            id: row.id,
+            warningCode: row.warningCode,
+            oilfieldId: this.oilFieldId,
+            ycglKfyj: this.ycglKfyj,
+          },
+        });
+      } else {
+        this.$router.push({
+          name: "warningDispose",
+          query: {
+            warningType: row.warningType,
+            theDate: row.theDate,
+            handler: row.handler,
+            id: row.id,
+            warningCode: row.warningCode,
+            oilfieldId: this.oilFieldId,
+            ycglKfyj: this.ycglKfyj,
+          },
+        });
+      }
     },
     /**
      *  hwh
-     *  地层总压降
-     * @param oilFieldId
-     * @param fieldId
+     *  改变当前页 跳转下一页
+     * @param pageValue 当前页数
      */
-    getGeneralPressure(oilFieldId, fieldId) {
-      let request = {
-        oilFieldId: oilFieldId,
-        fieldId: fieldId,
-      };
-      generalPressure(request).then((res) => {
-        if (res.data.code == 200) {
-          let barChart = res.data.data.chart.barDataSets[0].barDatas;
-          let seriesData = [];
-          barChart.forEach((item, index) => {
-            let point = [];
-            point.push(item.label.substring(0, 4));
-            point.push(item.value);
-            seriesData.push(point);
-          });
-          this.totalFormationPressureDrop.series[0].data = seriesData;
-        } else {
-          let seriesData = [];
-          this.totalFormationPressureDrop.series[0].data = seriesData;
-        }
-      });
+    handleChangePage(pageValue) {
+      this.page = pageValue;
+      let war = "";
+      if (this.switchNumber == "1") {
+        war = "WARNING";
+      } else if (this.switchNumber == "2") {
+        war = "OBSERVE";
+      } else {
+        war = "HIS";
+      }
+      if (this.radioValue == "油田指标预警") {
+        this.selectOilfieldData(this.dateTime[0], this.dateTime[1], this.oilFieldId, war);
+      } else if (this.radioValue == "区块指标预警") {
+        this.selectFieldData(this.dateTime[0], this.dateTime[1], this.oilFieldId, war);
+      } else {
+        this.tableData = [];
+        this.total = 0;
+      }
     },
     /**
-     * hwh
-     * 指标评价结果
-     * @param oilFieldId
-     * @param fieldId
+     *  hwh
+     *  改变当前页大小
+     * @param rowsValue 当前页大小
      */
-    getIndicatorEveluationResults(oilFieldId, fieldId) {
-      var request = {
-        oilFieldId: oilFieldId,
-        fieldId: fieldId,
-      };
-      indicatorEveluationResults(request).then((res) => {
-        console.log(res, "66666666666666666666");
-        if (res.data.code == 200) {
-          this.tableData = res.data.data.indicatorEvaluationResults;
-          // this.tableData = [...res.data.data.indicatorEvaluationResults, ...res.data.data.indicatorEvaluationResults];
-        } else {
-          this.tableData = [];
-        }
-      });
+    handleChangePageSize(rowsValue) {
+      this.pageSize = rowsValue;
+      let war = "";
+      if (this.switchNumber == "1") {
+        war = "WARNING";
+      } else if (this.switchNumber == "2") {
+        war = "OBSERVE";
+      } else {
+        war = "HIS";
+      }
+      if (this.radioValue == "油田指标预警") {
+        this.selectOilfieldData(this.dateTime[0], this.dateTime[1], this.oilFieldId, war);
+      } else if (this.radioValue == "区块指标预警") {
+        this.selectFieldData(this.dateTime[0], this.dateTime[1], this.oilFieldId, war);
+      } else {
+        this.tableData = [];
+        this.total = 0;
+      }
+    },
+    //行间样式
+    tableRowClassName({ row, rowIndex }) {
+      if (!row.status) {
+        return "warning-row";
+      }
+      return "";
     },
     /**
      * hwh
      * 获取当前页面的权限内容，并处理其逻辑问题
      */
     getPageAuthMessage() {
-      this.downPower(false);
+      // this.userInfo = VSAuth.getAuthInfo();
       let myPath = this.$route.path;
       //该值可以为空
       let areaCode = "znytglxt";
@@ -1177,13 +747,13 @@ export default {
                     this.canDeleteInfo = true;
                     break;
                   case "download":
-                    {
-                      this.canDownload = true;
-                      this.downPower(this.canDownload);
-                    }
+                    this.canDownload = true;
                     break;
                   case "upload":
                     this.canUpload = true;
+                    break;
+                  case "YCGL_KFYJ":
+                    this.ycglKfyj = true;
                     break;
                   default:
                 }
@@ -1195,85 +765,61 @@ export default {
         }
       });
     },
-    /**
-     * 下载echarts 隐藏 显示
-     * @param flag
-     */
-    downPower(flag) {
-      this.productionSpeed.toolbox.show = flag;
-      this.recoveryDegree.toolbox.show = flag;
-      this.relationship.toolbox.show = flag;
-      this.injectionProductionRatio.toolbox.show = flag;
-      this.totalFormationPressureDrop.toolbox.show = flag;
-    },
   },
 };
 </script>
-<style lang="scss" scoped>
-::v-deep .el-main {
-  overflow: hidden;
+  <style scoped lang="scss">
+.fl {
+  margin-left: 10px;
 }
-.el-header {
-  padding: 0px 0px 0px 0px;
+.m1 {
+  margin-top: 10px;
 }
-.g-w10 {
-  text-align: center;
-}
-.Dui {
-  .f2 {
-    padding-left: 10px;
-  }
-}
-::v-deep .el-card__body,
-.el-main {
-  padding: 0;
-}
-::v-deep .jia {
-  margin-left: 20px;
-}
-.infoZhu {
-  ::v-deep .el-input-number {
-    padding-left: 10px;
-  }
-}
-.formBox {
-  & > div:not(:first-child) {
-    margin-left: 20px;
-  }
-}
-
-::v-deep .el-radio-button__inner {
+.roundButton {
+  margin-left: 10px;
+  width: 80px;
+  height: 25px;
+  font-size: 12px;
+  color: #409eff;
   background-color: #031527;
-  color: #02c8d3;
-  border: 1px solid #00cbdd;
+  border: 1px solid #409eff;
 }
-.py-5 {
-  display: flex;
-  justify-content: space-between;
+.hrefSpan {
+  color: #24deff;
 }
-.basicTable {
-  height: auto;
+.editbox {
+  width: 45%;
+  height: 80%;
 }
-
-.el-card {
-  border-image: linear-gradient(90deg, rgba(116, 190, 243, 0), rgba(75, 241, 255, 0.5), rgba(116, 190, 243, 0)) 1 1;
-  color: #00d6ea;
-  font-weight: bold;
-  background: rgba(143, 164, 204, 0.16);
-
-  ::v-deep .el-card__body {
-    padding: 0;
-    line-height: 40px;
+.el-table >>> .warning-row {
+  -webkit-animation: mymove 1s infinite; /* Chrome, Safari, Opera */
+  animation: mymove 3s infinite;
+}
+@keyframes mymove {
+  50% {
+    background-color: #ff5844;
   }
 }
 ::v-deep .el-table .cell:empty::before {
   content: "-";
 }
 
-::v-deep .el-radio-button:first-child .el-radio-button__inner {
-  border: 1px solid #00d6ea;
+.radioButton {
+  background-color: #031527;
 }
-.QU {
-  padding-left: 10px;
+
+//::v-deep .el-radio-button__inner {
+//background-color: #031527;
+//}
+
+::v-deep .el-radio-button__inner {
+  background: #031527;
+  border: 1px solid #ffffff;
+  border: 1px solid #409eff;
+  color: #fff;
+}
+::v-depp .el-radio-button:first-child .el-radio-button__inner {
+  border: 1px solid #409eff;
 }
 </style>
+  

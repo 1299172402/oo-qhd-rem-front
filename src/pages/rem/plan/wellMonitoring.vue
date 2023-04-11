@@ -48,26 +48,26 @@
                     </headerSearch>
                 </div>
                 <div class="main">
-                    <el-row :gutter="20" style="height: 132px">
+                    <el-row :gutter="20" style="height: 135px">
                         <el-col :span="24">
-                            <div style="height: 112px;padding-top:0;" class="svg">
-                                <el-table v-show="type == 0" highlight :data="oilWellTableData" style="width: 100%" height="190">
-                                    <el-table-column type="index" align="center" width="60" label="序号"></el-table-column>
-                                    <el-table-column prop="wellNo" align="center" label="井号" width="160"></el-table-column>
+                            <div style="height: 125px;padding-top:0;" class="svg">
+                                <el-table v-show="type == 0" highlight :data="oilWellTableData" style="width: 100%" height="100%">
+                                    <el-table-column type="index" align="center" width="50" label="序号"></el-table-column>
+                                    <el-table-column prop="wellName" align="center" label="井号" width="130"></el-table-column>
                                     <el-table-column prop="beginDate" align="center" label="措施开始日期" width="110px"></el-table-column>
                                     <el-table-column prop="endDate" align="center" label="措施结束日期" width="110px"></el-table-column>
                                     <el-table-column align="center" label="措施前生产情况">
-                                        <el-table-column align="center" label="日产液 m³/d" width="80" prop="bmLiquidDaily"></el-table-column>
-                                        <el-table-column align="center" label="日产油 m³/d" width="80" prop="bmOilDaily"> </el-table-column>
-                                        <el-table-column align="center" label="含水率 %" width="80" prop="bmWaterCut"></el-table-column>
+                                        <el-table-column align="center" label="日产液 (m³)" width="80" prop="bmLiquidDaily"></el-table-column>
+                                        <el-table-column align="center" label="日产油 (m³)" width="80" prop="bmOilDaily"> </el-table-column>
+                                        <el-table-column align="center" label="含水率 (%)" width="80" prop="bmWaterCut"></el-table-column>
                                     </el-table-column>
                                     <el-table-column align="center" label="措施效果">
-                                        <el-table-column align="center" label="当日日增油 m³/d" :render-header="renderHeader" width="120" prop="incOilDaily"></el-table-column>
-                                        <el-table-column align="center" label="累增油 m³" min-width="100" prop="sumOilDaily"></el-table-column>
-                                        <el-table-column prop="days" align="center" label="增产有效期 d" width="110"></el-table-column>
-                                        <el-table-column prop="geoDesignOilDaily" align="center" label="地质设计日增油 m³/d" :render-header="renderHeader" width="120"></el-table-column>
-                                        <el-table-column prop="avgOilDaily" align="center" label="平均日增油 m³/d" :render-header="renderHeader" width="120"></el-table-column>
-                                        <el-table-column prop="" align="center" label="滚动预测日增油 m³/d" :render-header="renderHeader" width="120"></el-table-column>
+                                        <el-table-column align="center" label="当日日增油 (m³)" width="110" prop="incOilDaily"></el-table-column>
+                                        <el-table-column align="center" label="累增油 (m³)" width="80" prop="sumOilDaily"></el-table-column>
+                                        <el-table-column prop="days" align="center" label="增产有效期 (d)" width="100"></el-table-column>
+                                        <el-table-column prop="geoDesignOilDaily" align="center" label="地质设计日增油 (m³)" width="130"></el-table-column>
+                                        <el-table-column prop="avgOilDaily" align="center" label="平均日增油 (m³/d)" width="100"></el-table-column>
+                                        <el-table-column prop="" align="center" label="滚动预测日增油 (m³/d)" width="140"></el-table-column>
                                     </el-table-column>
                                     <el-table-column label="地质设计" align="center">
                                         <template slot-scope="scope">
@@ -142,11 +142,16 @@
                             </div>
                         </el-col>
                     </el-row>
-                    <el-row class="main-row" v-if="type == 0" style="height: 50px">
-                        <verticalSwitchButton @selectBtn="selectBtn" :dataList="dataList" buttonWidth="120px" buttonHeight="40px" style="width: 9%" btnDirection="row"></verticalSwitchButton>
+                    <el-row class="main-row" v-if="type == 0" style="height: 46px">
+                        <el-tabs class="g-pageHeader" v-model="oilTabType" topline @tab-click="selectBtn">
+                            <el-tab-pane v-for="(item, index) in dataList" :key="index" :label="item.name" :name="item.oilTabType"></el-tab-pane>
+                        </el-tabs>
                     </el-row>
-                    <el-row class="main-row" v-if="type == 1" style="height: 50px">
-                        <verticalSwitchButton @selectBtn="selectBtn2" :dataList="dataList2" buttonWidth="120px" buttonHeight="40px" style="width: 9%" btnDirection="row"></verticalSwitchButton>
+                    <el-row class="main-row" v-if="type == 1" style="height: 46px">
+                        <el-tabs class="g-pageHeader" v-model="waterTabType" topline @tab-click="selectBtn2">
+                            <el-tab-pane v-for="(item, index) in dataList2" :key="index" :label="item.name" :name="item.waterTabType"></el-tab-pane>
+                        </el-tabs>
+                        <!-- <verticalSwitchButton @selectBtn="selectBtn2" :dataList="dataList2" buttonWidth="120px" buttonHeight="40px" style="width: 9%" btnDirection="row"></verticalSwitchButton> -->
                     </el-row>
                     <el-row class="main-row2" v-if="type == 0">
                         <div class="svg" v-if="oilTabType == '0'">
@@ -203,13 +208,12 @@
                             </div>
                         </div>
                         <div class="svg" v-else-if="oilTabType == '4'">
-                            <div class="table-view">
-                                <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;">
-                                    现场作业进度表
-                                    <!-- <el-button type="primary" style="height:30px;">下载</el-button> -->
-                                </div>
-                                <!-- <info-window infoWidth="100%" infoHeight="calc(100% - 86px)" headerTitle="现场作业进度表"> -->
-                                    <el-table :data="getWorkProgressData" highlight style="width: 100%" height="calc( 100% - 33px)"
+                            <!-- <div class="table-view"> -->
+                                <info-window infoWidth="100%" infoHeight="100%" headerTitle="现场作业进度表">
+                                    <!-- <template name="titleContent">
+                                        <el-button type="primary" style="height:30px;">下载</el-button>
+                                    </template> -->
+                                    <el-table :data="getWorkProgressData" highlight style="width: 100%" height="calc( 100% - 10px)"
                                         :row-style="{ height: '0px' }"
                                         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                                         header-cell-class-name="table_header"
@@ -220,8 +224,8 @@
                                         <el-table-column label="当前作业内容" prop="workContent"></el-table-column>
                                     </el-table>
                                     <pagination v-show="pageTotal2 > 0" :pageSizes="[15, 20, 40]" :total="pageTotal2" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />
-                                <!-- </info-window> -->
-                            </div>
+                                </info-window>
+                            <!-- </div> -->
                         </div>
                     </el-row>
                     <el-row class="main-row2" v-if="type == 1">
@@ -1650,17 +1654,11 @@
             this.initSearchSelect();
         },
         methods: {
-            selectBtn(item) {
-                if (this.oilTabType != item.oilTabType) {
-                    this.oilTabType = item.oilTabType;
-                    this.doSearchCharts();
-                }
+            selectBtn() {
+                this.doSearchCharts();
             },
-            selectBtn2(item) {
-                if (this.waterTabType != item.waterTabType) {
-                    this.waterTabType = item.waterTabType;
-                    this.doSearchCharts();
-                }
+            selectBtn2() {
+                this.doSearchCharts();
             },
             //初始化
             async initData() {  
@@ -2699,7 +2697,7 @@
                 display: flex;
                 flex-direction: column;
                 .main-row2 {
-                    height: calc( 100% - 182px );
+                    height: calc( 100% - 181px );
                     flex: 1;
                     display: flex;
                     flex-direction: column;
@@ -2708,7 +2706,6 @@
                 .svg {
                     flex: 1;
                     height:0;
-                    padding-top: 10px;
                     display: flex;
                     flex-direction: column;
             
@@ -2730,8 +2727,13 @@
             }
         }
     }
-
-
+    
+    ::v-deep .el-table__header-wrapper .cell{
+        line-height: 20px!important;
+        height:auto!important;
+        padding:5px 10px!important;
+    }
+    
     ::v-deep .el-table .cell:empty::before {
         content: '-';
     }

@@ -25,7 +25,7 @@
                     <el-table-column prop="freezePoint" label="凝固点 (℃)" min-width="140"></el-table-column>
                     <el-table-column prop="waxContent" label="蜡量 (%)" min-width="140"></el-table-column>
                     <el-table-column prop="bitumen" label="沥青质 (%)" min-width="100"></el-table-column>
-                    <el-table-column prop="resin" label="胶质 (%)" min-width="100"></el-table-column>
+                    <el-table-column prop="resin" label="胶质 (%)" min-width="110"></el-table-column>
                 </el-table>
             </info-window>
         </div>
@@ -53,7 +53,7 @@
                     <el-table-column prop="cationContent" label="阳离子总量 (mg/L)" min-width="140"></el-table-column>
                     <el-table-column prop="totalAlkalinity" label="总碱度 (mmol/L)" min-width="140"></el-table-column>
                     <el-table-column prop="cumHardness" label="总硬度" min-width="100"></el-table-column>
-                    <el-table-column prop="resis" label="电阻率 (Ωm)" min-width="100"></el-table-column>
+                    <el-table-column prop="resis" label="电阻率 (Ωm)" min-width="110"></el-table-column>
                 </el-table>
             </info-window>
         </div>

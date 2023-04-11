@@ -12,11 +12,11 @@
                 <el-select v-show="!(currentModule=='yieldCompositionCurve'||currentModule=='developmentStatusTable')" v-model="selectBlock" placeholder="请选择" filterable clearable @change="onChangeBlock">
                     <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                 </el-select>
-                <el-button type="primary" icon="el-icon-search" style="margin-left: 20px;" @click="doSearch">检索</el-button>
+                <el-button type="primary" icon="el-icon-search" style="margin-left: 20px;" @click="doSearch">搜索</el-button>
                 <el-upload ref="upload" style="margin-left: 20px;" class="upload-demo" action="" :auto-upload="false" :on-change="useUploadPic" :show-file-list="false" v-show="canUpload">
                     <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
                 </el-upload>
-                <el-button style="margin-left: 20px;" type="primary" icon="el-icon-download" @click="doDownLoad" v-show="canDownload"> 下载</el-button>
+                <el-button style="margin-left: 20px;" type="primary" icon="el-icon-download" @click="doDownLoad" v-show="canDownload">下载</el-button>
             </div>
         </headerSearch>
         <pagePanelNew headerTitle="" style="height: calc(100% - 100px)" class="g-w100"> 

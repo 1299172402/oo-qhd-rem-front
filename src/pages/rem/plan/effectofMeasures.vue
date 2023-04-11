@@ -34,7 +34,7 @@
           </el-select>
         </el-form-item>
         <el-button size="medium" type="primary" @click="retrieval" icon="el-icon-search" style="margin-left: 10px"
-          >检索</el-button
+          >搜索</el-button
         >
       </el-form>
     </headerSearch>
