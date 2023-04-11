@@ -180,18 +180,15 @@
   </el-container>
 </template>
 <script>
-// import {
-  // getUnicomInjSplit, //平面注水量劈分结果
-  // postCoefficientConnectionpreserve, //保存
-  // getoilfield, //油田下拉
-  // getCorrectionOperation, //运算与修正
-  // postCoefficientconnectivity, //油田列表
-  // getblock, //区块下拉
-  // downLoadUnicomModeloperationDto
-// } from "@/api/ipm-04/r-wellConnectEvaluate.js";
-// import {
-//     getBlock,//区块下拉
-// } from "@/api/oilDeposit/ipm-01/effectevaluation"
+import {
+  getUnicomInjSplit, //平面注水量劈分结果
+  postCoefficientConnectionpreserve, //保存
+  getoilfield, //油田下拉
+  getCorrectionOperation, //运算与修正
+  postCoefficientconnectivity, //油田列表
+  getblock, //区块下拉
+  downLoadUnicomModeloperationDto
+} from "@/api/rem/r-wellConnectEvaluate.js";
 
 import {
     fetchOilFields,//油田下拉
@@ -223,15 +220,21 @@ export default {
     }
     return {
       queryData: {
-        ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
-        blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
+        ogfId: '68B63EC37E3649B38F7C0219C9BB0948',
+        blockId: '106F9FE6A23F433CBD4AD47199C1C67D',
         dateTime: this.eeee(), 
         deptId :'715AD1CD60484BB59E737CD18A9DE44A',
       },
         oilList:[
             {
-                name: '秦皇岛32-6渤中作业公司',
-                oilFieldId: '715AD1CD60484BB59E737CD18A9DE44A',
+                name: '秦皇岛32-6',
+                oilFieldId: '68B63EC37E3649B38F7C0219C9BB0948',
+            }
+        ],
+        blockList:[
+            {
+                blockId:'106F9FE6A23F433CBD4AD47199C1C67D',
+                blockName:'秦皇岛32-6油田'
             }
         ],
         deptSelect: [
@@ -338,26 +341,22 @@ export default {
       ]);
     },
     // 获取油田下拉数据
-    selectData () {
-        fetchOilFields().then((res) => {
-        console.log(res.data.data.oilFields)
-        this.oilList = res.data.data.oilFields;
-      });
-    },
-    // 获取区块下拉数据
-    selectblock () {
-      fetchFields({
-        oilFieldId: this.queryData.ogfId
-      }).then((res) => {
-          console.log(res);
-          // this.blockList = blockList;
-      });
-        // fetchFields({
-        //     oilFieldId: this.query.selectField,
-        // }).then((res) => {
-        //     this.blanks = res.data.data.fields
-        // });
-    },
+      selectData () {
+          getoilfield().then(({ ogfId }) => {
+              console.log(ogfId);
+              this.oilList = ogfId;
+          });
+      },
+      // 获取区块下拉数据
+      selectblock () {
+          // if (!this.selectField) return;
+          getblock({
+              ogfId: this.queryData.ogfId
+          }).then(({ blockList }) => {
+              this.blockList = blockList;
+          });
+          //   }
+      },
     // 油田下拉点击事件
     changeOilfield () {
       this.selectblock();
@@ -448,7 +447,7 @@ export default {
     },
     // 查看连通系数计算基础数据
     examine () {
-      if (this.queryData.blockId && this.queryData.dateTime && this.queryData.ogfId) {
+        if (this.queryData.blockId && this.queryData.dateTime && this.queryData.ogfId) {
         let ogfName = this.oilList.length? this.oilList.find(
           (item) => item.ogfId == this.queryData.ogfId
         ).ogfName : '';

@@ -194,18 +194,19 @@
   </el-container>
 </template>
 <script>
-// import NormalCard from "@/components/tools/NormalCard";
+
+
 import { exportExcel } from "@/lib/exportExcel";
-// import {
-//   postCoefficientconnectivity,
-//   postWellgroupRevise,
-//   getselectWellGroup //井组下拉
-// } from "@/api/ipm-04/r-wellConnectEvaluate.js";
-// import HelpHint from "@/components/waterInjection/tooltig.vue"
+import {
+  postCoefficientconnectivity,
+  postWellgroupRevise,
+  getselectWellGroup //井组下拉
+} from "@/api/rem/r-wellConnectEvaluate.js";
+
 
 export default {
   components: {
-    // HelpHint
+
   },
   data () {
     return {
