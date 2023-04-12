@@ -259,14 +259,12 @@
 </template>
 
 <script>
-    /*
+    
      // import { exportExcel } from "@/lib/exportExcel";
-    import { postdividingCoefficient, postdividingCoefficientSave, exportDividingCoefficient} from "@/api/ipm-04/r-wellConnectEvaluate.js"
-    import { getChopSection, exportChopSection } from '@/api/ipm-04/r-intelligentIPA.js';
+    import { postdividingCoefficient, postdividingCoefficientSave, exportDividingCoefficient, getChopSection, exportChopSection} from "@/api/rem/r-wellConnectEvaluate.js"
     import { v4 as uuidv4 } from 'uuid';
     import FileSaver from "file-saver";
-*/
-    import {v4 as uuidv4} from 'uuid';
+     
 
     export default {
         components: {},
@@ -477,12 +475,12 @@
             }
         },
         mounted() {
-         /*   const params = JSON.parse(localStorage.getItem('PRODUCTION_SPLIT'))
+            const params = JSON.parse(localStorage.getItem('PRODUCTION_SPLIT'))
             if (params) {
                 this.params = {...params, ogfList: [params.ogfId], blockList: [params.blockId]}
                 this.well = params.wellId
                 this.wellId = params.wellId[0].wellId
-            }*/
+            }
             this.OilfieldBut()
         },
         created() {
@@ -625,12 +623,12 @@
 
             // 保存
             submitSave(data) {
-            /*    return postdividingCoefficientSave(data).then(() => {
+                return postdividingCoefficientSave(data).then(() => {
                     this.OilfieldBut()
                     this.$message.success("提交成功")
                 }).catch(() => {
                     this.$message.error("提交失败")
-                })*/
+                })
             },
 
             // 下载
@@ -680,60 +678,8 @@
                 this.type = 1
                 this.OilfieldBut()
             },
-
-
-            OilfieldBut() {
-                let wellName = undefined
-                if (Array.isArray(this.params.wellId)) {
-                    for (const item of this.params.wellId) {
-                        if (item.wellId == this.wellId) {
-                            wellName = item.wellName
-                            break
-                        }
-                    }
-                }
-
-                if (this.params.wellCategory === "01") {
-                    var res = this.tData
-                    this.tableData = res.map(item => {
-                        item.id = uuidv4();
-                        item.name = item.intervNo;
-                        item.stateDate = item.stateDate ? item.stateDate.replaceAll('-', '/') : ''
-                        item.airPermeability = Math.floor(item.airPermeability)
-                        item.ratio = Number(item.ratio).toFixed(2)
-                        if (Array.isArray(item.layerData) && item.layerData.length) {
-                            item.layerData.forEach(layer => {
-                                layer.stateDate = layer.stateDate ? layer.stateDate.replaceAll('-', '/') : ''
-                                layer.airPermeability = Math.floor(layer.airPermeability)
-                                layer.ratio = Number(layer.ratio).toFixed(2)
-                                layer.id = uuidv4();
-                                layer.name = layer.layerNo;
-                            })
-                        }
-                        return item;
-                    })
-                    this.getdata()
-                    this.type = 0
-                } else {
-                    var res = this.tData
-                    this.tableData = res.map(item => {
-                        item.id = item.intervId;
-                        item.name = item.intervNo;
-                        item.waterLayerData.forEach(layer => {
-                            layer.id = layer.layerId;
-                            layer.name = layer.layerName;
-                        })
-                        return item;
-                    })
-                    this.getdata()
-
-                }
-
-            },
-
-
             // 通过井号下拉获取表格数据
-            /*     OilfieldBut() {
+                 OilfieldBut() {
                      let wellName = undefined
                      if (Array.isArray(this.params.wellId)) {
                          for (const item of this.params.wellId) {
@@ -801,7 +747,7 @@
      
                      }
      
-                 },*/
+                 },
             // 返回按钮
             returned() {
                 this.$router.go(-1)

@@ -367,8 +367,9 @@ export default {
     // 获取油田列表数据
     tableOilfield () {
       let params = {
-        blockId: this.queryData.blockId,
-        type: 0,
+        // blockId: this.queryData.blockId,
+          blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
+          type: 1,
         dateTime: this.queryData.dateTime,
       };
       this.form.wellGroupIds = []

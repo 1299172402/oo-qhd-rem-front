@@ -2,7 +2,7 @@
   <!-- 配置方案与评估查看页 -->
   <el-container class="layout">
     <el-header height="auto">
-      <div class="my-5" align="left">
+      <div class="my-5" align="left" style="height: 50px">
         <router-link to="waterPrediction" class="route">吸水能力预测</router-link>
         <router-link to="schemePrediction" class="route router-link-active">配注方案分析与评估</router-link>
       </div>

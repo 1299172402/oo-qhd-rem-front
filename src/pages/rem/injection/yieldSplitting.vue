@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
 
-        <headerSearch  height="auto">
+<!--        <headerSearch  height="auto">-->
           <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 20px">
             <div style="display: flex; align-items: center">
               <div>
@@ -62,7 +62,7 @@
                 ></el-date-picker>
               </div>
             </div>
-            <div class="fr">
+            <div class="fr" style="display:flex;">
               <el-button type="primary" icon="el-icon-search" style="margin-left: 20px" @click="doSearch"
                 >检索</el-button
               >
@@ -71,7 +71,7 @@
               >
             </div>
           </div>
-        </headerSearch>
+<!--        </headerSearch>-->
         <pagePanelNew>
             <div
               title="产量劈分"

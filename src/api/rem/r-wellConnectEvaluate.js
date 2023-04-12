@@ -133,6 +133,35 @@ export function postCoefficientconnectivity (data) {
     });
 }
 
+
+
+/**
+ * 产量劈分 - 剖面 - 表格
+ */
+export function getChopSection (params) {
+    return request({
+        url: `${baseUrl}/injectionProductionDeploy/chopSection`,
+        method: "post",
+        params
+    }).then((res) => {
+        return res.data.data
+    })
+        ;
+}
+
+/**
+ * 劈分系数-水井下载
+ */
+export function exportChopSection (params) {
+    return request({
+        url: `${baseUrl}/injectionProductionDeploy/exportChopSection`,
+        method: "post",
+        params,
+        responseType: "blob",
+    })
+}
+
+
 /**
  * 井组自定义-更改-回显
  * @param {ogfId:'油田id',blockId: '区块id',dataTime: '时间 2022-04'} data

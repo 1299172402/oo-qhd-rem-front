@@ -15,7 +15,7 @@
               <el-option :label="Select.blockName" :value="Select.block"></el-option>
             </el-select>
           </div>
-          <div class="f3">
+          <div>
             <span>时间：</span>
             <el-date-picker
               v-model="Select.dateTime"
@@ -31,7 +31,7 @@
       </div>
     </el-header>
     <el-main class="Table">
-      <pagePanel headerTitle="井组参数配置" style="height: 450px; width: 100%" class="g-w100">
+      <pagePanel headerTitle="井组参数配置" style=" width: 100%" class="g-w100">
           <div style="display: flex;justify-content: space-between;align-items: center;">
           <div>
             <span>井组名称：</span>

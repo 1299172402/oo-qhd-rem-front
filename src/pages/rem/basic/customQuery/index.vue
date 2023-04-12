@@ -147,8 +147,8 @@
                 >
                     <template slot-scope="scope">
                         <el-select v-model="scope.row.type" size="small">
-                            <el-option label="且" value="0"/>
-                            <el-option label="或" value="1"/>
+                            <el-option label="且" value="AND"/>
+                            <el-option label="或" value="OR"/>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -160,7 +160,7 @@
                 >
                     <template slot-scope="scope">
                         <el-select v-model="scope.row.name" size="small">
-                            <el-option :label="item.name" :value="item.name" v-for="item in headerText"/>
+                            <el-option :label="item.name" :value="item.val" v-for="item in headerText"/>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -292,15 +292,15 @@ export default {
                     }
                 }else{
                     switch (Nval) {
-                        case '日':
+                        case 3:
                             this.activeTabIndexData = '生产指标'
                             this.dataTypes = ['生产指标','核实生产指标','油田措施日指标'] 
                             break;
-                        case '月':
+                        case 2:
                             this.activeTabIndexData = '油田月指标'
                             this.dataTypes = ['油田月指标','核实生产月指标']
                             break;
-                        case '年':
+                        case 1:
                             this.activeTabIndexData = '生产指标'
                             this.dataTypes = ['生产指标','核实生产年指标']
                             break;
@@ -333,28 +333,36 @@ export default {
                 //日
                 
             case '井口生产指标':
-                this.stateList = [{val:'proddate',name:'生产时间'},{val:'nozzlediameter',name :'油嘴直径'},{val:'whtemp',name :'井口温度'},{val:'dhflowingtemp',name :'流温'},{val:'oilpress',name :'油压'},{val:'csgpress',name :'套压'},{val:'backpress',name :'回压'},{val:'datumpessure',name :'折算基准面流压'},{val:'dhflowingpress',name :'井底流压'},{val:'pumpfrequency',name :'泵频率'},{val:'pumpcurrent',name :'泵电流'},{val:'pumpvoltage',name :'泵电压'},{val:'pumpinletpress',name :'泵吸入口压力'},{val:'pumpoutletpress',name :'泵出口压力'},{val:'pumpmotortemp',name :'马达温度'}],
-                    this.productList = [{val:'fluidproddaily',name:'日产液'},{val:'oilproddaily',name:'日产油'},{val:'waterproddaily',name:'日产水'},{val:'gasproddaily',name:'日产气'},{val:'waterratio',name:'含水'},{val:'oilgasratio',name:'气油比'}],
+                this.stateList = [
+                    { val: 'proddate', name :'生产时间' },
+                    { val: 'nozzlediameter', name :'油嘴直径' },
+                    { val: 'whtemp', name :'井口温度' },
+                    { val: 'dhflowingtemp', name :'流温' },
+                    { val: 'oilpress', name :'油压' },
+                    { val: 'csgpress', name :'套压' },
+                    { val: 'backpress', name :'回压' },
+                    { val: 'datumpessure', name :'折算基准面流压' },
+                    { val: 'dhflowingpress', name :'井底流压' },
+                    { val: 'pumpfrequency', name :'泵频率' },
+                    { val: 'pumpcurrent', name :'泵电流' },
+                    { val: 'pumpvoltage', name :'泵电压' },
+                    { val: 'pumpinletpress', name :'泵吸入口压力' },
+                    { val: 'pumpoutletpress', name :'泵出口压力' },
+                    { val: 'pumpmotortemp', name :'马达温度' }
+                ],
+                    this.productList = [
+                        { val :'fluidproddaily', name :'日产液' },
+                        { val :'oilproddaily', name :'日产油' },
+                        { val :'waterproddaily', name :'日产水' },
+                        { val :'gasproddaily', name :'日产气' },
+                        { val :'waterratio', name :'含水' },
+                        { val :'oilgasratio', name :'气油比' }
+                    ],
                     this.totalList = ['月累生产时间','年累生产时间','总累生产时间','月累产液','月累产油','月累产水','年累产液','年累产油','年累产水','年累产气','总累产液','总累产油','总累产水','总累产气'],
                     this.injectList=[],
                     this.managerList=[]
                 break;
 
-            // [
-            //     { val :'fluidproddaily', name :'日产液量' },
-            //     { val :'oilproddaily', name :'日产油量' },
-            //     { val :'waterproddaily', name :'日产水量' },
-            //     { val :'gasproddaily', name :'日产气量' },
-            //     { val :'fluidproddaily', name :'日产液量' },
-            //     { val :'oilproddaily', name :'日产油量' },
-            //     { val :'waterproddaily', name :'日产水量' },
-            //     { val :'gasproddaily', name :'日产气量' },
-            //     { val :'waterratio', name :'含水率' },
-            //     { val :'gasoilratio', name :'气油比' },
-            //     { val :'oilgasratio', name :'油气比' },
-            //     { val :'watergasratio', name :'水气比' }
-            // ]
-        
             case '计量生产指标':
                 this.stateList = [
                     { val :'暂无', name :'计量时间' },
@@ -516,7 +524,7 @@ export default {
                 let tableArr = []
                 for(let i=0;i<newArr.length;i++){
                     tableArr.push({
-                        type: "且",
+                        type: "AND",
                         name: newArr[i],
                         model: ">",
                         val: ""
@@ -537,9 +545,28 @@ export default {
             }
         },
         confirm(){
+            let sqlList = []
+            this.tableRow.forEach((item)=>{
+                console.log(item.name);
+                sqlList.push(`${item.type} ${item.name} ${item.model} ${item.val}`)
+            })
+            // function strChange(arg) {
+            //     var str=arg.split('');
+            //     for(var i = 0; i < str.length; i++) {
+            //         if (str[i].charAt() >= "a" && str[i].charAt() <= "z") {
+            //             str[i] = str[i].toUpperCase();
+            //             // console.log(str[i].toLowerCase());
+            //         } else {
+            //             str[i] = str[i].toLowerCase();
+            //         }
+            //     }
+            //     return str.join('');
+            // }
+            // return;
             this.dialogVisible = false
             this.activeEchart = !this.activeEchart
-            queryCustomQueryList({
+            let params = {
+                sqlList:sqlList,//拼接sql
                 targetType: this.activeTabIndex, //目标类型 井：1  油田 ：2
                 dataType:  'wellhead' , //数据类型 （井口指标，计量指标等）
                 timeType:  this.activeTabIndexDate , //时间类型 1 年 2月 3 日
@@ -550,7 +577,8 @@ export default {
                 endTime: this.selectDate[0],//结束时间
                 // dataId:'BE6D76EC53E54A1E9B4F41DB1C204DDF',//油井或油田idn
                 dataId:this.ogfId
-            }).then((res)=>{
+            }
+            queryCustomQueryList( params ).then((res)=>{
                 this.queryData = res.data.data.data
                 console.log(this.queryData);
                 console.log(this.tableData);
