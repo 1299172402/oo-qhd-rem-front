@@ -39,7 +39,7 @@
       </el-form>
     </header-search>
     <!-- </el-header> -->
-    <pagePanel headerTitle="井组自定义" style="height: 100%">
+    <pagePanel headerTitle="井组自定义" style="height: 100%" :show-btn="true">
       <div>
         <div style="text-align: right">
           <el-button type="primary" style="font-size: 12px; padding: 5px 10px 5px 10px; width: 85px" @click="saveBut">
@@ -54,7 +54,7 @@
             <i class="el-icon-s-platform el-icon--left" />
             运行计算
           </el-button>
-          <el-button type="primary" @click="preserve" style="font-size: 12px; padding: 5px 10px 5px 10px; width: 85px">
+          <el-button type="primary" class="commonBtn" @click="preserve" style="font-size: 12px; padding: 5px 10px 5px 10px; width: 85px">
             <i class="el-icon-download el-icon--left" />
             下载
           </el-button>
@@ -63,7 +63,7 @@
 
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-table :data="tableData" highlight style="margin-top: 10px" height="550" :header-cell-style="wipeborder">
+          <el-table :data="tableData" highlight style="margin-top: 10px" height="550">
             <el-table-column label="井组关系" align="center">
               <el-table-column prop="injWellNo" show-overflow-tooltip label="水井" align="center"></el-table-column>
               <el-table-column prop="proWellNo" label="油井" show-overflow-tooltip align="center"></el-table-column>
@@ -79,7 +79,6 @@
               border
               style="margin-top: 10px"
               height="550"
-              :header-cell-style="wipeborder"
               :span-method="mergeTable"
             >
               <el-table-column label="小层井组定义" align="center">

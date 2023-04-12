@@ -49,10 +49,10 @@
             style="color: #66ffff;"
             size="mini"
             @click="tableOilfield"
-          >确认</el-button>
+          >搜索</el-button>
           <el-button
             type="primary"
-            class="confirmBut"
+            class="commonBtn"
             style="color: #66ffff;"
             size="mini"
             icon="el-icon-download"

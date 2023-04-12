@@ -32,10 +32,10 @@
             </div>
            
         </el-row>
-        <page-panel-new v-if="!activeEchart" style="height:auto">
+        <page-panel-new :show-btn="true" v-if="!activeEchart" style="height:auto">
             <el-row>
                 <el-col :span="6" style="margin-left: 20px;margin-right: 20px">
-                    <pagePanel headerTitle="目标类型">
+                    <page-panel-new :show-btn="true" headerTitle="目标类型">
                         <el-radio-group v-model="activeTabIndex">
                             <el-radio :label="1">
                                 单井
@@ -44,72 +44,72 @@
                                 油田(区块)
                             </el-radio>
                         </el-radio-group>
-                    </pagePanel>
+                    </page-panel-new>
                 </el-col>
                 <el-col :span="6" style="margin-left: 20px;margin-right: 20px">
-                    <pagePanel headerTitle="时间类型">
+                    <page-panel-new :show-btn="true" headerTitle="时间类型">
                         <el-radio-group v-model="activeTabIndexDate">
                             <el-radio :label="3">日</el-radio>
                             <el-radio :label="2">月</el-radio>
                             <el-radio :label="1">年</el-radio>
                         </el-radio-group>
-                    </pagePanel>
+                    </page-panel-new>
                 </el-col>
                 <el-col :span="9" style="margin-left: 20px;margin-right: 20px">
-                    <pagePanel headerTitle="数据类型">
+                    <page-panel-new :show-btn="true" headerTitle="数据类型">
                         <el-radio-group v-model="activeTabIndexData">
                             <el-radio :label="dataType" v-for="dataType in dataTypes"></el-radio>
                         </el-radio-group>
-                    </pagePanel>
+                    </page-panel-new>
                 </el-col>
             </el-row>
 
             <el-row>
                 <el-col :span="8" style="margin-left: 20px;margin-right: 20px">
-                    <pagePanel headerTitle="状态指标" style="min-height: 250px" v-show="stateList.length != 0">
+                    <page-panel-new :show-btn="true" headerTitle="状态指标" style="min-height: 250px" v-show="stateList.length != 0">
                         <el-checkbox-group v-model="stateValue">
                             <el-checkbox :label="item.val" :value="item.val" v-for="item in stateList">{{ item.name?item.name:item }}</el-checkbox>
                         </el-checkbox-group>
-                    </pagePanel>
+                    </page-panel-new>
                 </el-col>
                 <el-col :span="5" style="margin-left: 20px;margin-right: 20px">
-                    <pagePanel headerTitle="生产指标" style="min-height: 250px" v-show="productList.length != 0">
+                    <page-panel-new :show-btn="true" headerTitle="生产指标" style="min-height: 250px" v-show="productList.length != 0">
                         <el-checkbox-group v-model="productValue">
-                            <el-checkbox :label="item.val":value="item.val" v-for="item in productList">{{ item.name?item.name:item }}</el-checkbox>
+                            <el-checkbox :label="item.val" :value="item.val" v-for="item in productList">{{ item.name?item.name:item }}</el-checkbox>
                         </el-checkbox-group>
-                    </pagePanel>
+                    </page-panel-new>
                 </el-col>
                 <el-col :span="8" style="margin-left: 20px;margin-right: 20px">
-                    <pagePanel headerTitle="累产指标" style="min-height: 250px" v-show="totalList.length != 0">
+                    <page-panel-new :show-btn="true" headerTitle="累产指标" style="min-height: 250px" v-show="totalList.length != 0">
                         <el-checkbox-group v-model="totalValue">
-                            <el-checkbox :label="item" v-for="item in totalList"/>
+                            <el-checkbox :label="item.val" :value="item.val" v-for="item in totalList">{{ item.name?item.name:item }}</el-checkbox>
                         </el-checkbox-group>
-                    </pagePanel>
+                    </page-panel-new>
                 </el-col>
                 <el-col :span="8" style="margin-left: 20px;margin-right: 20px">
-                    <pagePanel headerTitle="注入指标" style="min-height: 250px" v-show="injectList.length != 0">
+                    <page-panel-new :show-btn="true" headerTitle="注入指标" style="min-height: 250px" v-show="injectList.length != 0">
                         <el-checkbox-group v-model="injectValue">
                             <el-checkbox :label="item" v-for="item in injectList"/>
                         </el-checkbox-group>
-                    </pagePanel>
+                    </page-panel-new>
                 </el-col>
                 <el-col :span="8" style="margin-left: 20px;margin-right: 20px">
-                    <pagePanel headerTitle="管理指标" style="min-height: 250px" v-show="managerList.length != 0">
+                    <page-panel-new :show-btn="true" headerTitle="管理指标" style="min-height: 250px" v-show="managerList.length != 0">
                         <el-checkbox-group v-model="managerValue">
                             <el-checkbox :label="item" v-for="item in managerList"/>
                         </el-checkbox-group>
-                    </pagePanel>
+                    </page-panel-new>
                 </el-col>
                 <el-col :span="8" style="margin-left: 20px;margin-right: 20px">
-                    <pagePanel headerTitle="储采指标" style="min-height: 250px" v-show="storeList.length != 0">
+                    <page-panel-new :show-btn="true" headerTitle="储采指标" style="min-height: 250px" v-show="storeList.length != 0">
                         <el-checkbox-group v-model="storeValue">
                             <el-checkbox :label="item" v-for="item in storeList"/>
                         </el-checkbox-group>
-                    </pagePanel>
+                    </page-panel-new>
                 </el-col>
             </el-row>
         </page-panel-new>
-        <page-panel-new v-else-if="activeEchart" style="height:auto">
+        <page-panel-new :show-btn="true" v-else-if="activeEchart" style="height:auto">
 <!--            <ProductionData></ProductionData>-->
             <el-table
                 :row-style="{ height: '0px' }"
@@ -242,9 +242,43 @@ export default {
                 }
             ],
             dataTypes:['井口生产指标','计量生产指标','核实生产指标','注入指标'],
-            stateList : [{val:'proddate',name:'生产时间'},{val:'nozzlediameter',name :'油嘴直径'},{val:'whtemp',name :'井口温度'},{val:'dhflowingtemp',name :'流温'},{val:'oilpress',name :'油压'},{val:'csgpress',name :'套压'},{val:'backpress',name :'回压'},{val:'datumpessure',name :'折算基准面流压'},{val:'dhflowingpress',name :'井底流压'},{val:'pumpfrequency',name :'泵频率'},{val:'pumpcurrent',name :'泵电流'},{val:'pumpvoltage',name :'泵电压'},{val:'pumpinletpress',name :'泵吸入口压力'},{val:'pumpoutletpress',name :'泵出口压力'},{val:'pumpmotortemp',name :'马达温度'}],
-            productList : [{val:'fluidproddaily',name:'日产液'},{val:'oilproddaily',name:'日产油'},{val:'waterproddaily',name:'日产水'},{val:'gasproddaily',name:'日产气'},{val:'waterratio',name:'含水'},{val:'oilgasratio',name:'气油比'}],
-            totalList:['月累生产时间','年累生产时间','总累生产时间','月累产液','月累产油','月累产水','年累产液','年累产油','年累产水','年累产气','总累产液','总累产油','总累产水','总累产气'],
+            stateList : 
+                [
+                        { val:'PROD_DATE', name :'生产日期' },
+                        { val:'NOZZLE_DIAMETER', name :'油嘴直径' },
+                        { val:'WH_TEMP', name :'井口温度' },
+                        { val:'DH_FLOWING_TEMP', name :'油压' },
+                        { val:'CSG_PRESS', name :'套压' },
+                        { val:'BACK_PRESS', name :'回压' },
+                        { val:'DH_FLOWING_PRESS', name :'井底流压' },
+                        { val:'PUMP_FREQUENCY', name :'泵频率' },
+                        { val:'PUMP_CURRENT', name :'泵电流' },
+                        { val:'PUMP_VOLTAGE', name :'泵电压' },
+                        { val:'PUMP_INLET_PRESS', name :'泵吸入口压力' },
+                        { val:'PUMP_OUTLET_PRESS', name :'泵出口压力' }
+                ],
+            productList :
+                    [
+                        { val:'FLUID_PROD_DAILY', name :'日产液' },
+                        { val:'OIL_PROD_DAILY', name :'日产油' },
+                        { val:'WATER_PROD_DAILY', name :'日产水' },
+                        { val:'GAS_PROD_DAILY', name :'日产气' },
+                        { val:'WATER_RATIO', name :'含水' },
+                        { val:'OIL_GAS_RATIO', name :'气油比' }
+                    ],
+            totalList : [
+                { val:'MONTH_PROD_DURATION', name :'月累生产时间' },
+                { val:'YEAR_PROD_DURATION', name :'年累生产时间' },
+                { val:'MONTHLY_CUMU_FLUID_PROD', name :'月累产液' },
+                { val:'MONTHLY_CUMU_OIL_PROD', name :'月累产油' },
+                { val:'MONTHLY_ACCUM_WATER_PROD', name :'月累产水' },
+                { val:'MONTHLY_CUMU_GAS_PROD', name :'月累产气' },
+                { val:'YEAR_CUMU_FLUID_PROD', name :'年累产液' },
+                { val:'YEAR_CUMU_OIL_PROD', name :'年累产油' },
+                { val:'YEAR_ACCUM_WATER_PROD', name :'年累产水' },
+                { val:'YEAR_CUMU_GAS_PROD', name :'年累产气' },
+                { val:'REMAKE', name :'备注' }
+            ],
             injectList:[],
             managerList:[],//管理指标
             storeList:[],//储采指标
@@ -331,61 +365,69 @@ export default {
             this.storeList = []
             switch (Nval) {
                 //日
-                
-            case '井口生产指标':
-                this.stateList = [
-                    { val: 'proddate', name :'生产时间' },
-                    { val: 'nozzlediameter', name :'油嘴直径' },
-                    { val: 'whtemp', name :'井口温度' },
-                    { val: 'dhflowingtemp', name :'流温' },
-                    { val: 'oilpress', name :'油压' },
-                    { val: 'csgpress', name :'套压' },
-                    { val: 'backpress', name :'回压' },
-                    { val: 'datumpessure', name :'折算基准面流压' },
-                    { val: 'dhflowingpress', name :'井底流压' },
-                    { val: 'pumpfrequency', name :'泵频率' },
-                    { val: 'pumpcurrent', name :'泵电流' },
-                    { val: 'pumpvoltage', name :'泵电压' },
-                    { val: 'pumpinletpress', name :'泵吸入口压力' },
-                    { val: 'pumpoutletpress', name :'泵出口压力' },
-                    { val: 'pumpmotortemp', name :'马达温度' }
-                ],
-                    this.productList = [
-                        { val :'fluidproddaily', name :'日产液' },
-                        { val :'oilproddaily', name :'日产油' },
-                        { val :'waterproddaily', name :'日产水' },
-                        { val :'gasproddaily', name :'日产气' },
-                        { val :'waterratio', name :'含水' },
-                        { val :'oilgasratio', name :'气油比' }
+                case '井口生产指标':
+                    this.stateList = [
+                        { val:'PROD_DATE', name :'生产日期' },
+                        { val:'NOZZLE_DIAMETER', name :'油嘴直径' },
+                        { val:'WH_TEMP', name :'井口温度' },
+                        { val:'DH_FLOWING_TEMP', name :'油压' },
+                        { val:'CSG_PRESS', name :'套压' },
+                        { val:'BACK_PRESS', name :'回压' },
+                        { val:'DH_FLOWING_PRESS', name :'井底流压' },
+                        { val:'PUMP_FREQUENCY', name :'泵频率' },
+                        { val:'PUMP_CURRENT', name :'泵电流' },
+                        { val:'PUMP_VOLTAGE', name :'泵电压' },
+                        { val:'PUMP_INLET_PRESS', name :'泵吸入口压力' },
+                        { val:'PUMP_OUTLET_PRESS', name :'泵出口压力' }
                     ],
-                    this.totalList = ['月累生产时间','年累生产时间','总累生产时间','月累产液','月累产油','月累产水','年累产液','年累产油','年累产水','年累产气','总累产液','总累产油','总累产水','总累产气'],
+                    this.productList = [
+                        { val:'FLUID_PROD_DAILY', name :'日产液' },
+                        { val:'OIL_PROD_DAILY', name :'日产油' },
+                        { val:'WATER_PROD_DAILY', name :'日产水' },
+                        { val:'GAS_PROD_DAILY', name :'日产气' },
+                        { val:'WATER_RATIO', name :'含水' },
+                        { val:'OIL_GAS_RATIO', name :'气油比' }
+                    ],
+                    this.totalList = [
+                        { val:'MONTH_PROD_DURATION', name :'月累生产时间' },
+                        { val:'YEAR_PROD_DURATION', name :'年累生产时间' },
+                        { val:'MONTHLY_CUMU_FLUID_PROD', name :'月累产液' },
+                        { val:'MONTHLY_CUMU_OIL_PROD', name :'月累产油' },
+                        { val:'MONTHLY_ACCUM_WATER_PROD', name :'月累产水' },
+                        { val:'MONTHLY_CUMU_GAS_PROD', name :'月累产气' },
+                        { val:'YEAR_CUMU_FLUID_PROD', name :'年累产液' },
+                        { val:'YEAR_CUMU_OIL_PROD', name :'年累产油' },
+                        { val:'YEAR_ACCUM_WATER_PROD', name :'年累产水' },
+                        { val:'YEAR_CUMU_GAS_PROD', name :'年累产气' },
+                        { val:'REMAKE', name :'备注' }
+                    ],
                     this.injectList=[],
                     this.managerList=[]
                 break;
 
-            case '计量生产指标':
-                this.stateList = [
-                    { val :'暂无', name :'计量时间' },
-                    { val :'nozzlediameter', name :'油嘴直径' },
-                    { val :'whtemp', name :'井口温度' },
-                    { val :'oilpress', name :'油压' },
-                    { val :'csgpress', name :'套压' },
-                    { val :'dhflowingtemp', name :'井底流温' },
-                    { val :'dhflowingpress', name :'井底流压' },
-                    { val :'pumpfrequency', name :'泵频率' },
-                    { val :'pumpcurrent', name :'泵电流' },
-                    { val :'pumpvoltage', name :'泵电压' },
-                    { val :'pumpinlettemp', name :'泵入口温度' },
-                    { val :'pumpmotortemp', name :'泵马达温度' },
-                    { val :'pumpinletpress', name :'泵入口压力' },
-                    { val :'pumpoutletpress', name :'泵出口压力' },
-                    { val :'gasliftchokediameter', name :'气举嘴直径' },
-                    { val :'gasliftpress', name :'气举压力' }
-                ],
-                this.productList = ['实际日产液','实际日产油','实际日产水','实际日产气','折算日产液','折算日产油','折算日产水','折算日产气','含水','气油比','油气比','水气比'],
-                this.totalList=[],
-                this.injectList=[],
-                this.managerList=[]
+                case '计量生产指标':
+                    this.stateList = [
+                        { val :'暂无', name :'计量时间' },
+                        { val :'nozzlediameter', name :'油嘴直径' },
+                        { val :'whtemp', name :'井口温度' },
+                        { val :'oilpress', name :'油压' },
+                        { val :'csgpress', name :'套压' },
+                        { val :'dhflowingtemp', name :'井底流温' },
+                        { val :'dhflowingpress', name :'井底流压' },
+                        { val :'pumpfrequency', name :'泵频率' },
+                        { val :'pumpcurrent', name :'泵电流' },
+                        { val :'pumpvoltage', name :'泵电压' },
+                        { val :'pumpinlettemp', name :'泵入口温度' },
+                        { val :'pumpmotortemp', name :'泵马达温度' },
+                        { val :'pumpinletpress', name :'泵入口压力' },
+                        { val :'pumpoutletpress', name :'泵出口压力' },
+                        { val :'gasliftchokediameter', name :'气举嘴直径' },
+                        { val :'gasliftpress', name :'气举压力' }
+                    ],
+                    this.productList = ['实际日产液','实际日产油','实际日产水','实际日产气','折算日产液','折算日产油','折算日产水','折算日产气','含水','气油比','油气比','水气比'],
+                    this.totalList=[],
+                    this.injectList=[],
+                    this.managerList=[]
                 break;
             case '核实生产指标':
                 if(this.activeTabIndex == '1'){
@@ -530,7 +572,7 @@ export default {
                         val: ""
                     })
                 }
-                let header = this.stateList.concat(this.productList)
+                let header = this.stateList.concat(this.productList,this.totalList,this.injectList,this.managerList,this.storeList)
                 console.log(header);
                 console.log(this.tableData);
                 this.headerText = []
@@ -547,36 +589,25 @@ export default {
         confirm(){
             let sqlList = []
             this.tableRow.forEach((item)=>{
-                console.log(item.name);
-                sqlList.push(`${item.type} ${item.name} ${item.model} ${item.val}`)
+                sqlList.push(`( ${item.type} ${item.name} ${item.model} ${item.val} )`)
             })
-            // function strChange(arg) {
-            //     var str=arg.split('');
-            //     for(var i = 0; i < str.length; i++) {
-            //         if (str[i].charAt() >= "a" && str[i].charAt() <= "z") {
-            //             str[i] = str[i].toUpperCase();
-            //             // console.log(str[i].toLowerCase());
-            //         } else {
-            //             str[i] = str[i].toLowerCase();
-            //         }
-            //     }
-            //     return str.join('');
-            // }
-            // return;
+            let condList = this.stateValue.concat(this.productValue,this.totalValue,this.injectValue,this.managerValue,this.storeValue)
+            let condListFormat = []
+            condList.forEach((item)=>{
+                condListFormat.push(item.toLowerCase().replace(/_/g,''))
+            })
             this.dialogVisible = false
             this.activeEchart = !this.activeEchart
             let params = {
-                sqlList:sqlList,//拼接sql
+                condList:condListFormat,//字段名字
+                sqlSent:sqlList,//拼接sql
                 targetType: this.activeTabIndex, //目标类型 井：1  油田 ：2
                 dataType:  'wellhead' , //数据类型 （井口指标，计量指标等）
                 timeType:  this.activeTabIndexDate , //时间类型 1 年 2月 3 日
-                statusList: this.stateValue ,//状态指标
-                productList: this.productValue ,//生产指标
-                accumList:  this.totalValue,//累产指标
                 startTime:  this.selectDate[0], //开始时间
                 endTime: this.selectDate[0],//结束时间
-                // dataId:'BE6D76EC53E54A1E9B4F41DB1C204DDF',//油井或油田idn
-                dataId:this.ogfId
+                dataId:'BE6D76EC53E54A1E9B4F41DB1C204DDF',//油井或油田idn
+                // dataId:this.ogfId
             }
             queryCustomQueryList( params ).then((res)=>{
                 this.queryData = res.data.data.data
