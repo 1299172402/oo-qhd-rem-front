@@ -4,7 +4,7 @@ export default [
   {
     path: '/yield',
     name: 'yield',
-    hidden: true,
+    hidden: false,
     component: Layout,
     meta: { title: '产量管理', icon: 'client', single: false },
     children: [

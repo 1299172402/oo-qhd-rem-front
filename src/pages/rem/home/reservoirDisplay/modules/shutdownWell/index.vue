@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <Echart  :chart-data="histogram" width="100%" height="380px"></Echart>
+    <Echart :chart-data="histogram" width="100%" height="380px"></Echart>
   </div>
 </template>
 <script>
@@ -50,7 +50,7 @@ export default {
           data: ["关停影响产量", "关停井数"],
           top: "5%",
           textStyle: {
-            color: "#747474",
+            color: "",
           },
         },
         xAxis: {
@@ -170,15 +170,15 @@ export default {
               borderWidth: "2",
               borderColor: "#f3454b",
             },
-           itemStyle: {
+            itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
-                  color: '#00D9EA',
+                  color: "#00D9EA",
                 },
                 {
                   offset: 1,
-                  color: '#0F65EA',
+                  color: "#0F65EA",
                 },
               ]),
             },
@@ -190,6 +190,24 @@ export default {
   },
   mounted() {},
   methods: {},
+  computed: {
+    getGlobeTheme(val) {
+      return this.$store.state.setting.mode;
+    },
+  },
+  watch: {
+    getGlobeTheme: {
+      immediate: true,
+      handler(Nval) {
+        if (Nval == "dark") {
+          this.histogram.legend.textStyle.color = "#ffffff";
+        } else {
+          this.histogram.legend.textStyle.color = "#000000";
+        }
+      },
+      deep: true,
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
