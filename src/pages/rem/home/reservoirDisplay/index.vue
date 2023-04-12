@@ -2,16 +2,18 @@
   <div>
     <div class="topBanner">油藏看版</div>
     <el-row :gutter="20">
-      <el-col :span="14">
-        <pagePanel headerTitle="秦皇岛32-6油田日度产量跟踪" style="height: 450px; width: 100%" class="g-w100">
+      <el-col :span="17">
+        <pagePanel headerTitle="秦皇岛32-6油田日度产量跟踪" style="height: 600px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('fault')">详细</button>
+          <outputTracking></outputTracking>
         </pagePanel>
       </el-col>
-      <el-col :span="10">
-        <pagePanel headerTitle="剩余油情况" style="height: 230px; width: 100%" class="g-w100">
+      <el-col :span="7">
+        <pagePanel headerTitle="剩余油情况" style="height: 330px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('operationOverview')">详细</button>
+          <remainingOil></remainingOil>
         </pagePanel>
-        <pagePanel headerTitle="油田大事件" style="height: 200px; width: 100%" class="g-w100">
+        <pagePanel headerTitle="油田大事件" style="height: 250px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('operationOverview')">详细</button>
           <ol>
             <li> 1 2022年9月3日-4日停产检修  2022-08-30</li>
@@ -22,30 +24,33 @@
       </el-col>
     </el-row>
     <el-row :gutter="20">
-      <el-col :span="14">
+      <el-col :span="17">
         <pagePanel headerTitle="秦皇岛32-6油田月度产量对比图" style="height: 450px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('fault')">详细</button>
           <monthContrast></monthContrast>
         </pagePanel>
       </el-col>
-      <el-col :span="10">
+      <el-col :span="7">
         <pagePanel headerTitle="产量构成详情" style="height: 450px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('operationOverview')">详细</button>
+          <yieldComponects></yieldComponects>
         </pagePanel>
       </el-col>
     </el-row>
     <el-row :gutter="20">
-      <el-col :span="8">
-        <pagePanel headerTitle="产能波动" style="height: 230px; width: 100%" class="g-w100">
+      <el-col :span="9">
+        <pagePanel headerTitle="产能波动" style="height: 450px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('fault')">详细</button>
+          <capacityFluctuations></capacityFluctuations>
         </pagePanel>
       </el-col>
       <el-col :span="8">
-        <pagePanel headerTitle="问题井统计" style="height: 230px; width: 100%" class="g-w100">
+        <pagePanel headerTitle="问题井统计" style="height: 450px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('operationOverview')">详细</button>
+          <problemStatistics></problemStatistics>
         </pagePanel>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="7">
         <pagePanel headerTitle="关停井统计" style="height: 450px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('operationOverview')">详细</button>
           <shutdownWell></shutdownWell>
@@ -53,7 +58,7 @@
       </el-col>
     </el-row>
     <el-row :gutter="20">
-      <el-col :span="8">
+      <el-col :span="9">
         <pagePanel headerTitle="秦皇岛32-6南区" style="height: 750px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>
           <exhibition></exhibition>
@@ -65,11 +70,11 @@
           <stratifiedInjection></stratifiedInjection>
         </pagePanel>
       </el-col>
-      <el-col :span="8">
-        <pagePanel headerTitle="措施效果跟踪表" style="height: 450px; width: 100%" class="g-w100">
+      <el-col :span="7">
+        <pagePanel headerTitle="措施效果跟踪表" style="height: 370px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('measuresPumpWellRecovery')">详细</button>
         </pagePanel>
-        <pagePanel headerTitle="超欠注情况统计" style="height: 450px; width: 100%" class="g-w100">
+        <pagePanel headerTitle="超欠注情况统计" style="height: 370px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('measuresPumpWellRecovery')">详细</button>
         </pagePanel>
       </el-col>
@@ -88,6 +93,7 @@
       <el-col :span="8">
         <pagePanel headerTitle="采油速度" style="height: 750px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>
+          <recoveryRate></recoveryRate>
         </pagePanel>
           <pagePanel headerTitle="含水上升" style="height: 750px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>

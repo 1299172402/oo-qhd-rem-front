@@ -63,7 +63,15 @@
 
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-table :data="tableData" highlight style="margin-top: 10px" height="550" :header-cell-style="wipeborder">
+          <el-table
+            :data="tableData"
+            highlight
+            style="margin-top: 10px"
+            :row-style="{ height: '0px' }"
+            :cell-style="{ padding: '3px', 'text-align': 'center' }"
+            height="550"
+            :header-cell-style="wipeborder"
+          >
             <el-table-column label="井组关系" align="center">
               <el-table-column prop="injWellNo" show-overflow-tooltip label="水井" align="center"></el-table-column>
               <el-table-column prop="proWellNo" label="油井" show-overflow-tooltip align="center"></el-table-column>
@@ -328,7 +336,7 @@ export default {
       }
 
       if (rowIndex === 0) {
-        return "border-bottom:1px solid #66ffff;box-shadow:0px -1px 5px #66ffff inset";
+        return "border-bottom:1px solid ;box-shadow:0px -1px 5px  inset";
       }
     },
     // 新增/修改提交

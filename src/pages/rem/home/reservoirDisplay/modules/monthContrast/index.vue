@@ -1,6 +1,6 @@
 <template>
-  <div class="app-container">
-    <Echart :chart-data="histogram" height="100%"></Echart>
+  <div class="app-container" style="height:100%">
+    <Echart :chart-data="histogram" style="height:600px"></Echart>
   </div>
 </template>
 <script>

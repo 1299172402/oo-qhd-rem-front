@@ -3,60 +3,18 @@
   <div class="app-container">
     <headerSearch class="g-w100 g-h100" style="height: auto">
       <el-form :model="queryParams" :inline="true" style="margin-top: 18px">
-        <el-form-item label="作业公司：">
-          <el-select v-model="queryParams.orgId" disabled>
-            <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.deptName" :value="item.deptId">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="油田：">
-          <el-select @change="getInfo()" v-model="queryParams.ogfId">
-            <el-option
-              v-for="(item, index) in oilFields"
-              :key="index"
-              :label="item.oilFieldName"
-              :value="item.oilFieldId"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="产品类型：">
-          <el-select
-            v-model="queryParams.productTypeCode"
-            placeholder="请选择产品类型"
-            clearable
-            size="small"
-            @change="getInfo()"
-            style="width: 240px"
-          >
-            <el-option
-              v-for="(item, index) in producttype"
-              :key="index"
-              :label="item.appendixValueName"
-              :value="item.appendixValueCode"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="年份：">
-          <el-date-picker
-            type="year"
-            placeholder="选择年份"
-            @change="getInfo()"
-            value-format="yyyy"
-            v-model="queryParams.year"
-          ></el-date-picker>
-        </el-form-item>
-        <el-form-item>
-          <el-button icon="el-icon-edit-outline" size="mini" @click="redact" type="primary">编辑</el-button>
-          <el-button icon="el-icon-document-checked" size="mini" @click="save" type="primary">保存</el-button>
-          <el-button icon="el-icon-s-platform" size="mini" @click="dialogVisible = true" type="primary"
-            >运行计算
-          </el-button>
-        </el-form-item>
+
+          <el-button size="mini" @click="getInfo" type="primary">搜索 </el-button>
+          <el-button size="mini" class="commonBtn">重置 </el-button>
       </el-form>
     </headerSearch>
 
-    <info-window style="padding-top:20px" :is-show-max-btn="true" infoWidth="100%" infoHeight="100%" headerTitle="密度信息维护">
+    <pagePanel headerTitle="密度信息维护" style="height: calc(100% - 100px)" :is-show-max-btn="true" class="g-w100">
+      <div class="btnPosition g-row-flex" style="width: 100%">
+        <el-button icon="el-icon-edit-outline" size="mini" @click="redact" type="primary">编辑</el-button>
+        <el-button icon="el-icon-document-checked" size="mini" @click="save" type="primary">保存</el-button>
+      </div>
+
       <el-table
         :data="noticeList"
         @current-change="handleCurrentChange"
@@ -66,7 +24,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
         header-cell-class-name="table_header"
         :cell-style="{ 'text-align': 'center', padding: '2px' }"
-        style="width: auto; height: 100%"
+        style="width: auto; height: 100%; margin-top: 20px"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column label="油气田" width="130px" prop="ogfName" align="center"></el-table-column>
@@ -186,107 +144,28 @@
           </el-table-column>
         </el-table-column>
       </el-table>
-    </info-window>
-    <el-dialog title="模型运行结果通知" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false">
-      <span>
-        AC-20井组指标变化趋势评价模型（日度）、AC-25井组注采平衡分析、AC-23井组措施推荐模型全部运行成功。AC-22井组注水受效分析运行失败。</span
-      >
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false" class="cancelBtn">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
+    </pagePanel>
   </div>
 </template>
 
 <script>
-import { getOilFieldList, queryProductList } from "@/api/rem/workcompanydesignate";
-import { queryDensityInfo, save } from "@/api/rem/density.js";
-import { mapGetters } from 'vuex'
 export default {
-  name: "Notice",
-  dicts: ["sys_normal_disable"],
   data() {
     return {
-      open: false, // 新增弹框
-      dialogVisible: false, //运行计算展示弹窗
-      oilfield: [],
-      producttype: [],
-      deptSelect: [
-        {
-          deptId: "715AD1CD60484BB59E737CD18A9DE44A",
-          deptName: "秦皇岛32-6渤中作业公司",
-        },
-      ], //作业公司
       oilFields: [],
       // 表格数据
       noticeList: [],
       // 是否展开，默认全部展开
       isExpandAll: true,
-      deptList: [],
-      // 显示搜索条件
-      showSearch: true,
-      // 总条数
-      total: 0,
-      tableList: ["oilFieldName"],
       ids: [],
       // 保存数组
       savelist: [],
       // 查询参数
-      queryParams: {
-        productTypeCode: "002001",
-        year: "",
-        ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
-        orgId: "715AD1CD60484BB59E737CD18A9DE44A",
-      },
       isDisabled: [true, true, true, true, true, true, true, true, true, true, true, true],
     };
   },
-  created() {
-    var data = new Date();
-    var y = data.getFullYear();
-    var m = data.getMonth() + 1;
-    if (m >= 1 && m <= 9) {
-      m = "0" + m;
-    }
-    this.queryParams.year = String(y);
-    this.getList();
-    this.getInfo();
-    // this.choiceDepts(); // 获取组织机构
-  },
-  computed:{
-    ...mapGetters(["mapboxMap"]),
-    maxboxMap1(){
-      return this.mapboxMap;
-    }
-  },
   methods: {
-    /**
-     *   获取下拉框数据
-     * @param orgId 作业公司id
-     * @param oilFieldId 油田id
-     * @param oilfield 油田数据数组
-     */
-    getList() {
-      // debugger
-      getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
-        if (res.data.code == 200) {
-          this.oilFields = res.data.data;
-        }
-      });
-      queryProductList().then((res) => {
-        if (res.data.code == 200) {
-          this.producttype = res.data.data;
-        }
-      });
-    },
-    getInfo() {
-      queryDensityInfo(this.queryParams).then((res) => {
-        if (res.data.code == 200) {
-          this.noticeList = [res.data.data];
-        } 
-      });
-    },
+
     // 编辑
     /**
      *  选中表格事件
@@ -295,7 +174,6 @@ export default {
     handleCurrentChange(val) {
       this.ids = [];
       this.ids = val;
-      console.log(this.ids);
     },
     /**
      *  编辑
@@ -304,7 +182,6 @@ export default {
     redact() {
       var data = new Date();
       var m = data.getMonth() + 1;
-
       for (let i = 0; i < m; i++) {
         this.$set(this.isDisabled, i, false);
       }
@@ -315,19 +192,12 @@ export default {
       let densityModelInfo = this.noticeList[0];
       save({ densityModelInfo, densityInfoQueryVo }).then((res) => {
         if (res.data.code == 200) {
-          // this.producttype = res.data.data;
           this.$message.success("保存成功！");
         }
       });
-
       for (let i = 0; i < 12; i++) {
         this.$set(this.isDisabled, i, true);
       }
-      // if (this.savelist) {
-      //   this.noticeList[this.savelist.index].state = '0';
-      //   this.$message.warning('修改成功');
-      //   this.savelist = [];
-      // }
     },
     inputChange(monthNum) {
       let month = this.noticeList[0];
@@ -397,11 +267,6 @@ export default {
       }
     },
   },
-  watch: {
-      maxboxMap1(nwData,oldData){
-        console(12121)
-      }
-  }
 };
 </script>
 <style lang="less" scoped>

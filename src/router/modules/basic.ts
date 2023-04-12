@@ -34,13 +34,13 @@ export default [
         hidden:process.env.NODE_ENV !== 'development',
         component: () => import('@/pages/rem/basic/customQuery/index.vue'),
         meta: { title: '自定义查询' }
-      }
-      // {
-      //     path: 'effectofMeasures',
-      //     name: 'effectofMeasures',
-      //     component: () => import('@/pages/rem/plan/effectofMeasures.vue'),
-      //     meta: {title: '人员措施'},
-      // },
+      },
+      {
+          path: 'effectofMeasures',
+          name: 'effectofMeasures',
+          component: () => import('@/pages/rem/plan/effectofMeasures.vue'),
+          meta: {title: '人员措施'},
+      },
     ],
   },
 ];
