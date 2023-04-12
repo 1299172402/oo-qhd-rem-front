@@ -8,12 +8,14 @@
       style="background: var(--bottom-light); margin-right: 0"
     >
       <template #logo>
-        <span v-if="showLogo" class="header-logo-container" style="font-size: 20px; width: 226px;caret-color: transparent">
+        <span v-if="showLogo" class="header-logo-container" style="font-size: 20px; width: 275px;caret-color: transparent">
+          <!-- <span class="logoText">智能油田管理系统</span> -->
+          <!-- TODO: 内网 Maybe change back -->
           <logo-full
             class="t-logo"
-            style="width: 49px; height: 44px; margin-top: -10px; margin-right: 10px;"
+            style="width: 49px; height: 44px; margin-top: 8px; margin-right: 10px;"
           />
-          <span class="headerText">智能油田管理系统</span>
+          <span class="logoText">天津分公司秦皇岛<br>智能油田管理系统</span>
         </span>
         <!-- TODO: Maybe change back -->
         <!-- <div v-if="layout !== 'top' && !$store.getters['user/isGroupLogin']" class="header-operate-left">
@@ -26,11 +28,12 @@
           {{ $store.getters["user/tenantName"] }}
         </div>
         <!-- <el-select
+          v-if="tenantOptions.length > 1 && $store.getters['user/isGroupLogin']"
           v-model="valueA"
           :disabled="!!appId"
           placeholder="请选择所属机构"
           class="noBgBorderTree whiteNoBorderSelect"
-          style="width: 185px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;"
+          style="width: 185px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden"
         >
           <el-option
             v-for="item in tenantOptions"
@@ -61,14 +64,6 @@
           <message />
           <!-- 全局通知，通告 -->
           <notice />
-          <el-tooltip
-            class="item"
-            effect="dark"
-            content="编辑面板"
-            placement="bottom"
-          >
-            <svg-icon icon-class="edit-panel" class="panelIconClass" @clickIcon="editPanel" />
-          </el-tooltip>
           <!-- <t-button v-show="$store.getters['user/isGroupLogin']" theme="default" variant="text" @click="switchMode" style="color: var(--white-color)"
             ><swap-icon style="color: var(--white-color)" />{{ currentMode }}</t-button
           > -->
@@ -101,7 +96,7 @@
                 <user-circle-icon class="header-user-avatar" style="color: var(--white-color)" />
               </template>
               <div class="header-user-account" style="color: var(--white-color)">
-                {{ $store.getters['user/name'] }}
+                {{ $store.state.user.userInfo.nickName }}
                 <chevron-down-icon />
               </div>
             </t-button>
@@ -779,20 +774,26 @@ export default Vue.extend({
 
 .header-logo-container {
   width: 184px;
-  height: 26px;
+//   height: 26px;
+  // TODO: 内网 Maybe change back
+  height: 55px;
   display: flex;
   margin-left: 24px;
-  //   color: var(--td-text-color-primary);
+  // color: var(--td-text-color-primary);
   color: var(--white-color);
 
-  .headerText {
-    width: 146px;
-    height: 25px;
+  .logoText {
+    // width: 160px;
+    // TODO: 内网 Maybe change back
+    width: 216px;
+    height: 28px;
+    // font-size: 20px;
+    // TODO: 内网 Maybe change back
     font-size: 18px;
     font-family: PingFangSC-Semibold, "PingFang SC";
     font-weight: 600;
     color: #fff;
-    line-height: 25px;
+    line-height: 28px;
   }
 
   .t-logo {
@@ -843,7 +844,7 @@ export default Vue.extend({
     --ripple-color: var(--td-gray-color-10) !important;
 
     &:hover {
-      background: var(--td-gray-color-12) !important;
+      background: transparent !important;
     }
   }
 }
@@ -879,17 +880,16 @@ export default Vue.extend({
     }
   }
 }
-
 </style>
 <style scoped>
 .panelIconClass {
-  width: 40px !important;
+  width: 93px !important;
   height: 25px !important;
   cursor: pointer;
   color: #fff;
 }
 
-.scrollicon{
+.scrollicon {
   display: flex;
   justify-content: center;
   align-items: center;

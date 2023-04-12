@@ -2,7 +2,7 @@
   <el-container class="layout">
     <el-header height="auto">
       <header-search class="g-w100 g-h100" style="width: 100%">
-        <div class="py-5 overflow-hidden" style="margin-top: 10px; margin-bottom: 10px">
+        <div class="py-5 overflow-hidden" style="margin-top: 10px; margin-bottom: -5px">
           <div class="fl">
             <span>油田：</span>
             <el-select v-model="selectOilField" disabled @change="getFetchFields">
@@ -110,7 +110,7 @@ export default {
     return {
       dataList1: [
         { name: "产能类", key: "developmentEffectEvaluation_capacity", isChecked: false },
-        { name: "储存类", key: "developmentEffectEvaluation_reserves", isChecked: true },
+        { name: "储量类", key: "developmentEffectEvaluation_reserves", isChecked: true },
         { name: "含水类", key: "developmentEffectEvaluation_water", isChecked: false },
         { name: "递减类", key: "developmentEffectEvaluation_Decreasing", isChecked: false },
       ],
@@ -885,7 +885,6 @@ export default {
       waterDriveUseDegreeChart(request).then((res) => {
         if (res.data.code == 200) {
           let seriesData = [];
-          //let barChart=res.data.data.chart.barDataSets;
           let barData = res.data.data.chart.barDataSets[0].barDatas;
           barData.forEach((item, index) => {
             let point = [];
@@ -912,7 +911,6 @@ export default {
       waterControlDegreeChart(request).then((res) => {
         if (res.data.code == 200) {
           let seriesData = [];
-          //let barChart=res.data.data.chart.barDataSets;
           let barData = res.data.data.chart.barDataSets[0].barDatas;
           barData.forEach((item, index) => {
             let point = [];

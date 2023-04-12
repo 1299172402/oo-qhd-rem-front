@@ -241,7 +241,7 @@ export function dynamicDataInjectionProductionRatioDistribution(request) {
  */
 export function dynamicDataIsogramOfFluidProductionStrength(request) {
   return Axios({
-    url: 'remfieldDynamicAnalysisController/dynamicDataIsogramOfFluidProductionStrength',
+    url: `${baseUrl}/fieldDynamicAnalysisController/dynamicDataIsogramOfFluidProductionStrength`,
     method: "post",
     data: request,
   });

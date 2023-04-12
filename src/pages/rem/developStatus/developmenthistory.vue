@@ -11,7 +11,7 @@
                 <el-select v-model="block" style="margin-right:20px">
                     <el-option v-for="item in blockoptions" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                 </el-select>
-                <el-button icon="el-icon-search" type="primary" @click="doSearch">检索</el-button>
+                <el-button icon="el-icon-search" type="primary" @click="doSearch">搜索</el-button>
                 <el-button style="margin-left:auto!important;" type="primary" @click="development(oilfield, block)">开发现状表</el-button>
             </div>
         </headerSearch>
@@ -23,27 +23,27 @@
                 </div>
             </pagePanel>
             <pagePanel headerTitle="油田综合开发历程表" style="height: 300px;position: relative;">
-                <el-button type="primary" style="position:absolute;right:0;top:0;;height:26px;margin-right:20px;" @click="doDownExcel('#ytkflc', '油田综合开发历程')" v-show="canDownload">下载</el-button>
+                <el-button type="primary" style="position:absolute;right:0;top:0;;height:26px;margin-right:20px;" @click="doDownExcel('#tableData', '油田综合开发历程')" v-show="canDownload">下载</el-button>
                 <div style="padding-bottom:5px;height:100%;">
-                    <el-table id="ytkflc" :data="tableData" highlight height="100%">
+                    <el-table id="tableData" :data="tableData" highlight height="100%">
                         <el-table-column prop="phase" label="开发阶段" align="center" width="180px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="beginDate" label="阶段开始时间" align="center" width="120px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="endDate" label="阶段结束时间" align="center" width="120px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="interval" label="阶段历程时间（天)" align="center" width="160px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="pwellsTotal" label="阶段末油井总井数（口)" align="center" width="180px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="pwellsOpen" label="阶段末油井开井数（口）" align="center" width="190px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="liquidDaily" label="阶段末日产液（m³/d）" align="center" width="180px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="oilDaily" label="阶段末日产油量（m³/d）" align="center" width="190px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="waterCut" label="阶段末综合含水（%）" align="center" width="170px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="injectionTotal" label="阶段末水井总井数（口)" align="center" width="180px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="injectionOpen" label="阶段末水井开井数（口）" align="center" width="190px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="injection" label="阶段末注水量（10⁴m³）" align="center" min-width="200px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="interval" :label="`阶段历程时间\n (天)`" align="center" width="160px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="pwellsTotal" :label="`阶段末油井总井数\n (口)`" align="center" width="180px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="pwellsOpen" :label="`阶段末油井开井数\n (口)`" align="center" width="190px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="liquidDaily" :label="`阶段末日产液\n (m³/d)`" align="center" width="180px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="oilDaily" :label="`阶段末日产油量\n (m³/d)`" align="center" width="190px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="waterCut" :label="`阶段末综合含水\n (%)`" align="center" width="170px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="injectionTotal" :label="`阶段末水井总井数\n (口)`" align="center" width="180px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="injectionOpen" :label="`阶段末水井开井数\n (口)`" align="center" width="190px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="injection" :label="`阶段末注水量\n (10⁴m³)`" align="center" min-width="200px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="proInjectionRate" label="阶段末注采比" align="center" width="180px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="proInjectionRateSum" label="累计注采比" align="center" width="140px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="produceDegress" label="阶段采出程度（%）" align="center" width="160px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="oilSum" label="阶段累计产油（10⁴m³）" align="center" min-width="200px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="liquidSum" label="阶段累计产液（10⁴m³）" align="center" min-width="200px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="waterSum" label="阶段累注水（10⁴m³）" align="center" min-width="170px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="produceDegress" :label="`阶段采出程度\n (%)`" align="center" width="160px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="oilSum" :label="`阶段累计产油\n (10⁴m³)`" align="center" min-width="200px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="liquidSum" :label="`阶段累计产液\n (10⁴m³)`" align="center" min-width="200px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="waterSum" :label="`阶段累注水\n (10⁴m³)`" align="center" min-width="170px" show-overflow-tooltip></el-table-column>
                     </el-table>
                 </div>
             </pagePanel>
@@ -1627,7 +1627,16 @@
         padding-top:0!important;
         overflow-y: scroll; 
     }
-    ::v-deep .el-table .cell:empty::before {
-        content: '-';
-    }
+    #tableData{
+        ::v-deep .el-table__header-wrapper .cell{
+            height: auto;
+            line-height: 18px;
+            white-space: pre;
+        }
+        ::v-deep .cell:empty{
+            &::before {
+                content: '-';
+            } 
+        }
+    } 
 </style>

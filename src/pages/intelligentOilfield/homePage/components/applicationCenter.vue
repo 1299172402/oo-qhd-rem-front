@@ -41,29 +41,38 @@
           ></el-input>
         </div>
                             </template> -->
-      <div style="padding: 10px 20px">
-        <div class="g-row-flex g-h100 divBox" style="flex-wrap: no-wrap;overflow: auto">
-          <div
-            v-for="(item, index) in list"
-            :key="index"
-            class="g-column-flex-H"
-            style="position: relative; justify-content: center; align-items: center; flex-wrap: wrap; cursor: pointer; width: 102px; height: 102px;min-width: 102px"
-            @click="toClick(item)"
+      <div>
+        <div class="g-row-flex g-h100 divBox" style="display: block;">
+          <el-carousel
+            :interval="5000"
+            trigger="click"
+            :autoplay="false"
+            :arrow="carouselList.length > 1 ? 'always' : 'never'"
           >
-            <img
-              v-if="item.appImg"
-              :src="item.appImg ? item.appImg : ''"
-              alt=""
-              class="imgSetting"
-              style="width: 40px;height: 40px"
-              @error="imgError(item)"
-            >
-            <!-- 增加未上传图标显示默认图标+首字母 -->
-            <div v-else class="bgImage g-row-flex-HV" style="width: 40px;height: 40px">
-              {{ item.appName[0] }}
-            </div>
-            <span class="textSpan">{{ item.appName }}</span>
-          </div>
+            <el-carousel-item v-for="(item, index) in carouselList" :key="index">
+              <div
+                v-for="(items, index1) in item"
+                :key="index1"
+                class="g-column-flex-H"
+                style="position: relative; justify-content: center; align-items: center; flex-wrap: wrap; cursor: pointer; width: 6.6%; height: 102px;min-width: 6.6%"
+                @click="toClick(items)"
+              >
+                <img
+                  v-if="items.appImg"
+                  :src="items.appImg ? items.appImg : ''"
+                  alt=""
+                  class="imgSetting"
+                  style="width: 40px;height: 40px"
+                  @error="imgError(items)"
+                >
+                <!-- 增加未上传图标显示默认图标+首字母 -->
+                <div v-else class="bgImage g-row-flex-HV" style="width: 40px;height: 40px">
+                  {{ items.appName[0] }}
+                </div>
+                <span class="textSpan">{{ items.appName }}</span>
+              </div>
+            </el-carousel-item>
+          </el-carousel>
         </div>
       <!-- <el-tabs
           @tab-click="handleClick"
@@ -113,6 +122,8 @@ export default {
       activeName: "1", // 1，开发生产中心;2，安全管理中心;3，设备设施中心;4，通用支持中心
       openDialog: false,
       allList: [],
+      lists: [],
+      carouselList: [],
       selectedList: [
         // { id: 4, img: '', name: '其它应用' },
         // { id: 5, img: '', name: '船体管理' },
@@ -144,6 +155,16 @@ export default {
           this.openDialog = newVal;
           this.getDataList("");
           this.getNum = 0;
+        }
+      },
+      deep: true,
+      immediate: true
+    },
+    "list": {
+      handler(newVal) {
+        if (newVal) {
+          this.lists = newVal;
+          this.carousel();
         }
       },
       deep: true,
@@ -258,6 +279,11 @@ export default {
         this.openDialog = false;
         this.$emit("change-content-setting", false);
       });
+    },
+    carousel() {
+      for (let i = 0; i < this.lists.length;) {
+        this.carouselList.push(this.lists.slice(i, (i += 15)));
+      }
     }
   }
 };
@@ -294,8 +320,8 @@ export default {
 }
 </style>
 
-<style scoped>
-.myHeader>>>.el-tabs__item {
+<style scoped lang="less">
+.el-tabs__item {
   padding: 0 10px;
 }
 
@@ -309,5 +335,44 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.el-carousel {
+  height: 100%;
+
+  ::v-deep .el-carousel__arrow {
+    background-color: rgba(144, 144, 144, 0.4);
+  }
+
+  ::v-deep .el-carousel__container {
+    height: 126px !important;
+  }
+
+  ::v-deep.el-carousel__button {
+    background-color: #eff0f4;
+  }
+
+  ::v-deep .el-carousel__indicator--horizontal .el-carousel__button {
+    width: 10px;
+    height: 10px;
+    background: rgb(144, 144, 144);
+    border: 1px solid rgb(144, 144, 144);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+
+  ::v-deep .el-carousel__indicator--horizontal.is-active .el-carousel__button {
+    width: 10px;
+    height: 10px;
+    background: var(--light-blue-color);
+    border-radius: 50%;
+    opacity: 1;
+  }
+}
+
+.el-carousel__item {
+  display: flex;
+  align-items: center;
+  padding: 0 60px;
 }
 </style>

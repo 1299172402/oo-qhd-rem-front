@@ -38,13 +38,14 @@
       :model="tempUser"
       :rules="rules"
       label-width="80px"
+      class="userInfo"
     >
       <div class="headerinfo" style="margin-bottom: 30px">
-        基础信息
+        账号
       </div>
       <el-row>
         <el-col :span="8">
-          <el-form-item label="用户名称" prop="nickName">
+          <el-form-item label="用户姓名" prop="nickName">
             <el-input
               v-model="tempUser.nickName"
               disabled
@@ -55,50 +56,48 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="用户角色" prop="roleIds">
-            <el-tooltip
-              class="item"
-              effect="dark"
-              :content="showroleIds"
-              placement="top"
-            >
-              <el-input
-                v-model="showroleIds"
-                disabled
-                placeholder="暂无数据"
-                maxlength="30"
-                @input="refreshSelect"
-              />
-            </el-tooltip>
+          <el-form-item label="用户账号" prop="userName">
+            <el-input
+              v-model="tempUser.userName"
+              disabled
+              placeholder="暂无数据"
+              maxlength="30"
+              @input="refreshSelect"
+            />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="用户岗位">
-            <el-tooltip
-              class="item"
-              effect="dark"
-              :content="showpostIds"
-              placement="top"
-            >
-              <el-input
-                v-model="showpostIds"
-                disabled
-                placeholder="暂无数据"
-                maxlength="30"
-                @input="refreshSelect"
-              />
-            </el-tooltip>
+          <el-form-item label="账号类型" prop="userType">
+            <el-input
+              v-model="tempUser.userType"
+              disabled
+              placeholder="暂无数据"
+              maxlength="11"
+              @input="refreshSelect"
+            />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="8">
-          <el-form-item label="所属机构" prop="deptId">
+          <el-form-item label="账号邮箱" prop="email">
             <el-input
-              v-model="tempUser.deptName"
+              v-model="tempUser.email"
               disabled
               placeholder="暂无数据"
-              maxlength="30"
+              maxlength="50"
+              @input="refreshSelect"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="用户手机" prop="phonenumber">
+            <el-input
+              v-model="tempUser.phonenumber"
+              disabled
+              placeholder="暂无数据"
+              maxlength="11"
+              @input="refreshSelect"
             />
           </el-form-item>
         </el-col>
@@ -124,54 +123,68 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <div class="headerinfo" style="margin-bottom: 30px">
-        账号信息
-      </div>
       <el-row>
         <el-col :span="8">
-          <el-form-item label="用户账号" prop="userName">
+          <el-form-item label="所属机构" prop="deptId">
             <el-input
-              v-model="tempUser.userName"
+              v-model="tempUser.deptName"
               disabled
               placeholder="暂无数据"
               maxlength="30"
-              @input="refreshSelect"
             />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="账号邮箱" prop="email">
+          <el-form-item label="所属租户" prop="deptId">
             <el-input
-              v-model="tempUser.email"
+              v-model="tempUser.tenantName"
               disabled
               placeholder="暂无数据"
-              maxlength="50"
-              @input="refreshSelect"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label="用户手机" prop="phonenumber">
-            <el-input
-              v-model="tempUser.phonenumber"
-              disabled
-              placeholder="暂无数据"
-              maxlength="11"
-              @input="refreshSelect"
+              maxlength="30"
             />
           </el-form-item>
         </el-col>
       </el-row>
+      <div class="headerinfo" style="margin-bottom: 30px">
+        角色与岗位信息
+      </div>
       <el-row>
-        <el-col :span="8">
-          <el-form-item label="账号类型" prop="userType">
-            <el-input
-              v-model="tempUser.userType"
+        <el-col :span="24">
+          <el-form-item label="用户角色" prop="roleIds">
+            <el-select
+              v-model="tempUser.roleIds"
               disabled
-              placeholder="暂无数据"
-              maxlength="11"
-              @input="refreshSelect"
-            />
+              multiple
+              class="customSelect"
+              placeholder="暂无角色"
+            >
+              <el-option
+                v-for="item in roleOptions"
+                :key="item.roleId"
+                :label="item.roleName"
+                :value="item.roleId"
+              />
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="用户岗位">
+            <el-select
+              v-model="tempUser.postIds"
+              disabled
+              multiple
+              class="customSelect"
+              placeholder="暂无岗位"
+            >
+              <el-option
+                v-for="item in postOptions"
+                :key="item.roleId"
+                :label="item.roleName"
+                :value="item.roleId"
+              />
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
@@ -199,11 +212,16 @@ export default {
     // 角色选项
     roleOptions: {
       type: Array,
-      default: undefined
+      default: () => []
     },
     postOptions: {
       type: Array,
-      default: undefined
+      default: () => []
+    },
+    // 租户信息
+    sysTenants: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
@@ -235,14 +253,8 @@ export default {
       // 表单校验
       rules: {
         userName: [
-          { required: true, message: "用户账号不能为空", trigger: "blur" },
           { min: 2, max: 20, message: "用户账号长度必须介于 2 和 20 之间", trigger: "blur" }
         ],
-
-        nickName: [{ required: true, message: "用户名称不能为空", trigger: "blur" }],
-        deptId: [{ required: true, message: "所属机构不能为空", trigger: "blur" }],
-        roleIds: [{ required: true, message: "用户角色不能为空", trigger: "blur" }],
-        userType: [{ required: true, message: "账号类型不能为空", trigger: "blur" }],
         email: [
           {
             type: "email",
@@ -258,7 +270,6 @@ export default {
           }
         ],
         idCard: [
-          { required: true, message: "身份证不能为空", trigger: "blur" },
           //   { min: 8, max: 20, message: '用户密码长度必须介于 8 和 20 之间', trigger: 'blur' },
           {
             pattern:
@@ -342,7 +353,8 @@ export default {
           postIds: newVal.postIds.length === 0 ? [] : newVal.postIds?.toLocaleString().split(","),
           roleIds: newVal.roleIds.length === 0 ? [] : newVal.roleIds?.toLocaleString().split(","),
           //   tempPostId: String(newVal.tempPostId.toLocaleString()), // 临时的用户岗位
-          userType: newVal.data?.userType // 账号类型
+          userType: newVal.data?.userType, // 账号类型
+          tenantName: newVal.tenants.length === 0 ? [] : newVal.tenants?.map(item => item.tenantName).toLocaleString().split(",")
         };
       },
       deep: true,
@@ -431,7 +443,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style scoped lang="less">
 .searchStyle {
   position: absolute;
   top: 10px;
@@ -443,12 +455,58 @@ export default {
   z-index: 1;
 }
 
-.spanshow{
+.spanshow {
   display: inline-block;
   width: 100%;
   height: 40px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.el-form {
+  /deep/ .el-input.is-disabled .el-input__inner {
+    color: var(--td-text-color-primary);
+  }
+}
+
+/deep/ .customSelect {
+  max-height: 96px !important;
+  width: 100% !important;
+}
+
+/deep/ .customSelect .el-select__tags .el-tag.el-tag--info {
+  background: var(--select-tag-info) !important;
+  border: unset !important;
+  color: #83939b;
+}
+
+/deep/ .customSelect .el-select__tags {
+  max-width: unset !important;
+  padding: 0 5px !important;
+  max-height: 86px !important;
+  overflow: auto !important;
+  align-content: flex-start !important;
+}
+
+/deep/ .el-tag {
+  color: #6f858f
+}
+
+/deep/ .customSelect .el-input--suffix {
+  max-height: 96px !important;
+}
+
+/deep/ .el-select .el-input {
+  background: rgba(22, 53, 70, 1) !important;
+  border: 1px solid var(--select-input-border) !important;
+}
+
+/deep/ .el-select .el-input .el-select__caret {
+  color: transparent !important;
+}
+
+/deep/ .customSelect .el-input.is-disabled .el-input__inner {
+  border: unset !important;
 }
 </style>

@@ -9,19 +9,19 @@
     <div class="app-info">
       <p>
         应用类型：
-        <span class="info-span__deep" style="display: inline-block;">
+        <span :class="`info-span__deep ${ $store.state.setting.mode === 'dark' ? 'dark-color' : '' }`" style="display: inline-block;">
           <dict-tag :options="dictText" :value="applicationInfo.appType" />
         </span>
       </p>
       <p>
         支持终端：
-        <span class="info-span__deep"> {{ applicationInfo.isPc === 1 ? "PC" : "" }} </span>
-        <span v-if="applicationInfo.isPc === 1 && applicationInfo.isMobile === 1" class="info-span__deep"> / </span>
-        <span class="info-span__deep"> {{ applicationInfo.isMobile === 1 ? "移动端" : "" }} </span>
+        <span :class="`info-span__deep ${ $store.state.setting.mode === 'dark' ? 'dark-color' : '' }`"> {{ applicationInfo.isPc === 1 ? "网页端" : "" }} </span>
+        <span v-if="applicationInfo.isPc === 1 && applicationInfo.isMobile === 1" :class="`info-span__deep ${ $store.state.setting.mode === 'dark' ? 'dark-color' : '' }`"> / </span>
+        <span :class="`info-span__deep ${ $store.state.setting.mode === 'dark' ? 'dark-color' : '' }`"> {{ applicationInfo.isMobile === 1 ? "PDA端" : "" }} </span>
       </p>
       <div class="info-user">
         <p>授权租户：</p>
-        <p class="user-info" :title="applicationInfo.tenants">
+        <p :class="`user-info ${ $store.state.setting.mode === 'dark' ? 'dark-color' : '' }`" :title="applicationInfo.tenants">
           {{ applicationInfo.tenants }}
         </p>
       </div>
@@ -166,6 +166,10 @@ div.info-window {
 
     p {
       line-height: 2.2;
+    }
+
+    .dark-color {
+      color: #fff !important;
     }
 
     .info-span__deep {

@@ -1,7 +1,7 @@
 <!--开发现状表-->
 <template>
     <el-table
-        id="tableData1" 
+        id="tableData" 
         :data="tableData" :border="false" :row-style="{ height: '0px' }"
         header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
         style="width:100%;" height="calc(100% - 101px)" :default-sort="{ prop: 'date', order: 'descending' }"
@@ -9,51 +9,51 @@
         <el-table-column prop="date" label="时间" align="center" show-overflow-tooltip min-width="200" fixed="left">
             <template slot-scope="scope">{{ scope.row.date | dateFormat }}</template>
         </el-table-column>
-        <el-table-column prop="ogfName" label="区块" align="center" show-overflow-tooltip min-width="180" fixed="left"></el-table-column>
-        <el-table-column label="油井（口）" align="center">
-            <el-table-column prop="proWellCount" label="总井" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-            <el-table-column prop="proWellOpen" label="开井" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+        <el-table-column prop="ogfName" label="区块" show-overflow-tooltip min-width="180" fixed="left"></el-table-column>
+        <el-table-column :label="`油井\n (口)`">
+            <el-table-column prop="proWellCount" label="总井" show-overflow-tooltip min-width="120"></el-table-column>
+            <el-table-column prop="proWellOpen" label="开井" show-overflow-tooltip min-width="120"></el-table-column>
         </el-table-column>
-        <el-table-column label="月均日产水平（m³/d）" align="center">
-            <el-table-column prop="liquidDailySum" label="液量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-            <el-table-column prop="oilDailySum" label="油量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+        <el-table-column :label="`月均日产水平\n (m³/d)`">
+            <el-table-column prop="liquidDailySum" label="液量" show-overflow-tooltip min-width="120"></el-table-column>
+            <el-table-column prop="oilDailySum" label="油量" show-overflow-tooltip min-width="120"></el-table-column>
         </el-table-column>
-        <el-table-column label="平均单井日产（m³/d）" align="center">
-            <el-table-column prop="liquidDailyAvg" label="液量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-            <el-table-column prop="oilDailyAvg" label="油量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+        <el-table-column :label="`平均单井日产\n (m³/d)`">
+            <el-table-column prop="liquidDailyAvg" label="液量" show-overflow-tooltip min-width="120"></el-table-column>
+            <el-table-column prop="oilDailyAvg" label="油量" show-overflow-tooltip min-width="120"></el-table-column>
         </el-table-column>
-        <el-table-column label="注水井（口）" align="center">
-            <el-table-column prop="injectionWellCount" label="总井" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-            <el-table-column prop="injectionWellOpen" label="开井" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+        <el-table-column :label="`注水井\n (口)`">
+            <el-table-column prop="injectionWellCount" label="总井" show-overflow-tooltip min-width="120"></el-table-column>
+            <el-table-column prop="injectionWellOpen" label="开井" show-overflow-tooltip min-width="120"></el-table-column>
         </el-table-column>
-        <el-table-column label="日注水（m³/d）" align="center">
-            <el-table-column prop="injectionDailySum" label="合计" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-            <el-table-column prop="injectionDailyAvg" label="平均单井" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+        <el-table-column :label="`日注水\n (m³/d)`">
+            <el-table-column prop="injectionDailySum" label="合计" show-overflow-tooltip min-width="120"></el-table-column>
+            <el-table-column prop="injectionDailyAvg" label="平均单井" show-overflow-tooltip min-width="120"></el-table-column>
         </el-table-column>
-        <el-table-column prop="compressiveWaterCut" label="综合含水(%)" align="center" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="cumOilProdYearly" label="截止当月年产油（m³）" align="center" min-width="140" show-overflow-tooltip></el-table-column>
-        <el-table-column label="注采比" align="center">
-            <el-table-column prop="injectionProduceRateMonth" label="月" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-            <el-table-column prop="injectionProduceRateSum" label="累计" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+        <el-table-column prop="compressiveWaterCut" :label="`综合含水\n (%)`" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="cumOilProdYearly" :label="`截止当月年产油\n (m³)`" min-width="140" show-overflow-tooltip></el-table-column>
+        <el-table-column label="注采比">
+            <el-table-column prop="injectionProduceRateMonth" label="月" show-overflow-tooltip min-width="120"></el-table-column>
+            <el-table-column prop="injectionProduceRateSum" label="累计" show-overflow-tooltip min-width="120"></el-table-column>
         </el-table-column>
-        <el-table-column label="采油速度（%）" align="center">
-            <el-table-column prop="reservoirsProduceSpeed" label="地质储量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-            <el-table-column prop="reservoirsProduceSpeedAvaliable" label="可采储量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+        <el-table-column :label="`采油速度\n (%)`">
+            <el-table-column prop="reservoirsProduceSpeed" label="地质储量" show-overflow-tooltip min-width="120"></el-table-column>
+            <el-table-column prop="reservoirsProduceSpeedAvaliable" label="可采储量" show-overflow-tooltip min-width="120"></el-table-column>
         </el-table-column>
-        <el-table-column label="累计产量（×10⁴m³）" align="center">
-            <el-table-column prop="oilSum" label="油量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-            <el-table-column prop="waterSum" label="水量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+        <el-table-column :label="`累计产量\n (×10⁴m³)`">
+            <el-table-column prop="oilSum" label="油量" show-overflow-tooltip min-width="120"></el-table-column>
+            <el-table-column prop="waterSum" label="水量" show-overflow-tooltip min-width="120"></el-table-column>
         </el-table-column>
-        <el-table-column label="采出程度（%）" align="center">
-            <el-table-column prop="reservoirsProduceDegree" label="地质储量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-            <el-table-column prop="reservoirsProduceDegreeAvaliable" label="可采储量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+        <el-table-column :label="`采出程度\n (%)`">
+            <el-table-column prop="reservoirsProduceDegree" label="地质储量" show-overflow-tooltip min-width="120"></el-table-column>
+            <el-table-column prop="reservoirsProduceDegreeAvaliable" label="可采储量" show-overflow-tooltip min-width="120"></el-table-column>
         </el-table-column>
-        <el-table-column label="递减率（%）" align="center">
-            <el-table-column prop="natureDeclineRate" label="自然递减率" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-            <el-table-column prop="compressveDeclineRate" label="综合递减率" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+        <el-table-column :label="`递减率\n (%)`">
+            <el-table-column prop="natureDeclineRate" label="自然递减率" show-overflow-tooltip min-width="120"></el-table-column>
+            <el-table-column prop="compressveDeclineRate" label="综合递减率" show-overflow-tooltip min-width="120"></el-table-column>
         </el-table-column>
-        <el-table-column prop="waterContainRaiseRate" label="含水上升率" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-        <el-table-column prop="waterOilRateSum" label="累计水油比" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+        <el-table-column prop="waterContainRaiseRate" label="含水上升率" show-overflow-tooltip min-width="120"></el-table-column>
+        <el-table-column prop="waterOilRateSum" label="累计水油比" show-overflow-tooltip min-width="120"></el-table-column>
     </el-table>
 </template>
 
@@ -111,14 +111,20 @@ export default {
         //下载
         doDownLoad() {
             let fileName1 = '开发现状';
-            exportExcel('#tableData1', fileName1);
+            exportExcel('#tableData', fileName1);
         }
     }
 };
 </script>
 
 <style scoped lang="scss">
-    #tableData1{
+    #tableData{
+        ::v-deep .el-table__header-wrapper .cell{
+            height: auto;
+            line-height: 18px;
+            padding:3.5px 10px;
+            white-space: pre;
+        }
         ::v-deep .cell:empty{
             &::before {
                 content: '-';

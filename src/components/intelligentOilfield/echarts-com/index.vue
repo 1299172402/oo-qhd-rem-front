@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isDispose" :id="echartsComponents" class="g-w100 g-h100" />
+  <div v-if="!isDispose" :id="echartsComponents" class="g-w100 g-h100 chartsComponentClass" />
 </template>
 
 <script>
@@ -114,8 +114,8 @@ export default {
 </script>
 
 <style scoped>
-/* .chartsComponentClass {
-    width: 100%;
-    height: 100%;
-} */
+.chartsComponentClass {
+  background-image: var(--logo-bg) !important;
+  background-size: 100% 100% !important;
+}
 </style>

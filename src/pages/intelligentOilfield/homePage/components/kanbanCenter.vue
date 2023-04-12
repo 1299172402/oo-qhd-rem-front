@@ -38,7 +38,7 @@
       header-title="已授权看板"
       :header-style="$store.state.setting.mode === 'dark'?{}:{color:'#3490D3'}"
     >
-      <div style="padding: 10px 20px" class="g-w100 g-h100 g-column-flex">
+      <div class="g-w100 g-h100 g-column-flex">
         <!-- <el-tabs
           @tab-click="handleClick"
           v-model="activeName"
@@ -48,28 +48,37 @@
           <el-tab-pane label="专业看板" name="professionalKanban"></el-tab-pane>
           <el-tab-pane label="协同看板" name="collaborativeKanban"></el-tab-pane>
                       </el-tabs> -->
-        <div class="g-row-flex g-h100 divBox" style="flex-wrap: no-wrap;overflow: auto">
-          <div
-            v-for="(item, index) in list"
-            :key="index"
-            class="g-column-flex-H"
-            style="position: relative; justify-content: center; align-items: center; flex-wrap: wrap; cursor: pointer; width: 102px; height: 102px;min-width: 102px"
-            @click="toClick(item.boardUrl)"
+        <div class="g-row-flex g-h100 divBox" style="display: block;">
+          <el-carousel
+            :interval="5000"
+            trigger="click"
+            :autoplay="false"
+            :arrow="carouselList.length > 1 ? 'always' : 'never'"
           >
-            <img
-              v-if="item.boardImg"
-              :src="item.boardImg?item.boardImg:''"
-              alt=""
-              class="imgSetting"
-              style="width: 40px"
-              @error="imgError(item)"
-            >
-            <!-- 增加未上传图标显示默认图标+首字母 -->
-            <div v-else class="bgImage g-row-flex-HV" style="width: 40px;height: 40px">
-              {{ item.boardName[0] }}
-            </div>
-            <span class="textSpan">{{ item.boardName }}</span>
-          </div>
+            <el-carousel-item v-for="(item, index) in carouselList" :key="index">
+              <div
+                v-for="(items, index1) in item"
+                :key="index1"
+                class="g-column-flex-H"
+                style="position: relative; justify-content: center; align-items: center; flex-wrap: wrap; cursor: pointer; width: 6.6%; height: 102px;min-width: 6.6%"
+                @click="toClick(items.boardUrl)"
+              >
+                <img
+                  v-if="items.boardImg"
+                  :src="items.boardImg?items.boardImg:''"
+                  alt=""
+                  class="imgSetting"
+                  style="width: 40px"
+                  @error="imgError(items)"
+                >
+                <!-- 增加未上传图标显示默认图标+首字母 -->
+                <div v-else class="bgImage g-row-flex-HV" style="width: 40px;height: 40px">
+                  {{ items.boardName[0] }}
+                </div>
+                <span class="textSpan">{{ items.boardName }}</span>
+              </div>
+            </el-carousel-item>
+          </el-carousel>
         </div>
       <!-- <div class="g-w100 g-row-flex-HV" style="height: 85%;">
         <circularPanel
@@ -120,7 +129,9 @@ export default {
       linkUrl: "",
       activeName: "professionalKanban",
       selectedList: [],
-      allList: []
+      allList: [],
+      lists: [],
+      carouselList: []
     };
   },
   watch: {
@@ -133,6 +144,16 @@ export default {
       handler(newVal) {
         if (newVal) {
           this.openDialog = newVal;
+        }
+      },
+      deep: true,
+      immediate: true
+    },
+    "list": {
+      handler(newVal) {
+        if (newVal) {
+          this.lists = newVal;
+          this.carousel();
         }
       },
       deep: true,
@@ -217,12 +238,17 @@ export default {
         element.mozRequestFullScreen();
         // 写全屏后的执行函数
       }
+    },
+    carousel() {
+      for (let i = 0; i < this.lists.length;) {
+        this.carouselList.push(this.lists.slice(i, (i += 15)));
+      }
     }
   }
 };
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .bottomBtn {
   position: absolute;
   bottom: 0;
@@ -237,5 +263,44 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.el-carousel {
+  height: 100%;
+
+  ::v-deep .el-carousel__arrow {
+    background-color: rgba(144, 144, 144, 0.4);
+  }
+
+  ::v-deep .el-carousel__container {
+    height: 126px !important;
+  }
+
+  ::v-deep.el-carousel__button {
+    background-color: #eff0f4;
+  }
+
+  ::v-deep .el-carousel__indicator--horizontal .el-carousel__button {
+    width: 10px;
+    height: 10px;
+    background: rgb(144, 144, 144);
+    border: 1px solid rgb(144, 144, 144);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+
+  ::v-deep .el-carousel__indicator--horizontal.is-active .el-carousel__button {
+    width: 10px;
+    height: 10px;
+    background: var(--light-blue-color);
+    border-radius: 50%;
+    opacity: 1;
+  }
+}
+
+.el-carousel__item {
+  display: flex;
+  align-items: center;
+  padding: 0 60px;
 }
 </style>

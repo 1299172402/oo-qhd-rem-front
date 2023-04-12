@@ -52,7 +52,34 @@
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
-            <el-form-item label="用户角色" prop="roleId">
+            <el-form-item label="用户名" prop="nickName">
+              <el-input
+                v-model="queryParams.nickName"
+                placeholder="请输入用户名"
+                clearable
+                size="medium"
+                style="width: 240px; height: 40px"
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="租户" prop="tenantName">
+              <el-select
+                v-model="queryParams.tenantName"
+                style="width: 240px"
+                placeholder="请选择用户岗位"
+                collapse-tags
+                clearable
+              >
+                <el-option
+                  v-for="item in teantOptions"
+                  :key="item.tenantId"
+                  :label="item.tenantName"
+                  :value="item.tenantName"
+                />
+              </el-select>
+            </el-form-item>
+            <!-- TODO: Maybe change back -->
+            <!-- <el-form-item label="用户角色" prop="roleId">
               <el-select
                 v-model="queryParams.roleId"
                 style="width: 240px"
@@ -84,7 +111,7 @@
                   :disabled="item.status == 1"
                 />
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
             <!-- <el-form-item label="所属机构" prop="deptId">
               <treeselect v-model="queryParams.deptId" style="width: 240px" :options="deptOptions" :show-count="true" placeholder="请选择所属机构" />
                     </el-form-item> -->
@@ -231,28 +258,42 @@
               :show-overflow-tooltip="true"
             />
             <el-table-column
+              v-if="columns[4].visible"
+              key="nickName"
+              label="用户名称"
+              align="center"
+              prop="nickName"
+              :show-overflow-tooltip="true"
+            />
+            <el-table-column
               v-if="columns[1].visible"
               label="用户角色"
               align="center"
               :show-overflow-tooltip="true"
+              width="173"
             >
               <template slot-scope="scope">
                 <div class="textOverFlow">
-                  <div v-for="(item, indexRow) in scope.row.roles" :key="indexRow">
+                  <span v-for="(item, indexRow) in scope.row.roles" :key="indexRow">
                     {{ item.roleName + (indexRow === scope.row.roles.length - 1 ? '' : '，') }}
-                  </div>
+                  </span>
                 </div>
               </template>
             </el-table-column>
             <el-table-column
               v-if="columns[2].visible"
-              key="postName"
               label="用户岗位"
               align="center"
-              prop="posts[0].postName"
               :show-overflow-tooltip="true"
-            />
-
+            >
+              <template slot-scope="scope">
+                <div class="textOverFlow">
+                  <span v-for="(item, indexRow) in scope.row.posts" :key="indexRow">
+                    {{ item.postName + (indexRow === scope.row.posts.length - 1 ? '' : '，') }}
+                  </span>
+                </div>
+              </template>
+            </el-table-column>
             <!-- <el-table-column label="用户昵称" align="center" key="nickName" prop="nickName" v-if="columns[2].visible" :show-overflow-tooltip="true" /> -->
             <el-table-column
               v-if="columns[3].visible"
@@ -262,9 +303,28 @@
               prop="dept.deptName"
               :show-overflow-tooltip="true"
             />
+            <el-table-column
+              v-if="columns[5].visible"
+              key="deptName1"
+              label="用户租户"
+              align="center"
+              prop="tenantName"
+              :show-overflow-tooltip="true"
+            >
+              <template slot-scope="scope">
+                <div v-if="scope.row.sysTenants.length > 1" style="height: auto;">
+                  <p v-for="(item,index) in scope.row.sysTenants" :key="index">
+                    {{ item.tenantName }} <br>
+                  </p>
+                </div>
+                <div v-else>
+                  {{ scope.row.sysTenants.length === 1 ? scope.row.sysTenants[0].tenantName : "" }}
+                </div>
+              </template>
+            </el-table-column>
             <!-- <el-table-column label="手机号码" align="center" key="phonenumber" prop="phonenumber" v-if="columns[4].visible" width="120" /> -->
             <el-table-column
-              v-if="columns[4].visible"
+              v-if="columns[6].visible"
               key="status"
               label="用户状态"
               align="center"
@@ -283,7 +343,8 @@
               <span>{{ parseTime(scope.row.createTime) }}</span>
             </template>
                   </el-table-column> -->
-            <el-table-column
+            <!-- TODO: Maybe change back -->
+            <!-- <el-table-column
               label="账号信息"
               align="center"
               width="160"
@@ -299,14 +360,22 @@
                   查看账号信息
                 </el-button>
               </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
               label="操作"
               align="center"
-              width="220"
+              width="280"
               class-name="small-padding fixed-width"
             >
               <template slot-scope="scope">
+                <el-button
+                  v-hasPermi="['system:user:edit']"
+                  size="mini"
+                  type="text"
+                  @click="seeDetail(scope.row)"
+                >
+                  查看账号信息
+                </el-button>
                 <el-button
                   v-hasPermi="['system:user:edit']"
                   size="mini"
@@ -374,7 +443,7 @@
     <el-dialog
       :title="title"
       :visible.sync="open"
-      width="800px"
+      width="900px"
       append-to-body
       :close-on-click-modal="false"
       @close="closeDialog('form')"
@@ -386,76 +455,49 @@
         label-width="80px"
       >
         <div class="headerinfo">
-          基础信息
+          账号
         </div>
-        <el-row>
-          <el-col :span="11">
+        <el-row type="flex" justify="start" style="margin-top: 30px">
+          <el-col :span="8">
             <el-form-item label="用户名称" prop="nickName">
               <el-input v-model="form.nickName" placeholder="请输入用户名称" maxlength="30" />
             </el-form-item>
           </el-col>
-          <el-col :span="11">
-            <el-form-item label="用户角色" prop="roleIds">
+          <el-col :span="8">
+            <el-form-item label="用户账号" prop="userName">
+              <el-input v-model="form.userName" placeholder="请输入用户账号" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="账号类型" prop="userType">
               <el-select
-                v-model="form.roleIds"
-                multiple
-                placeholder="请选择用户角色"
-                collapse-tags
+                v-model="form.userType"
+                placeholder="请选择账号类型"
                 clearable
+                class="g-w100"
               >
                 <el-option
-                  v-for="item in roleOptions"
-                  :key="item.roleId"
-                  :label="item.roleName"
-                  :value="item.roleId"
-                  :disabled="item.status == 1"
+                  v-for="dict in dict.type.sys_user_account_type"
+                  :key="dict.value"
+                  :label="dict.label"
+                  :value="dict.label"
                 />
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
-          <el-col :span="11">
-            <el-form-item label="用户岗位">
-              <el-select
-                v-model="form.postIds"
-                multiple
-                collapse-tags
-                placeholder="请选择用户岗位"
-                clearable
-                style="width: 100%"
-                @change="changePost"
-              >
-                <el-option
-                  v-for="item in postOptions"
-                  :key="item.postId"
-                  :label="item.postName"
-                  :value="item.postId"
-                  :disabled="item.status == 1"
-                />
-              </el-select>
+        <el-row type="flex" justify="start" style="margin: 15px 0">
+          <el-col :span="8">
+            <el-form-item label="账号邮箱" prop="email">
+              <el-input v-model="form.email" placeholder="请输入账号邮箱" maxlength="50" />
             </el-form-item>
           </el-col>
-          <el-col :span="11">
-            <el-form-item label="" class="addwork">
-              <el-button type="primary" @click="addPost">
-                新增岗位
-              </el-button>
+          <el-col :span="8">
+            <el-form-item label="用户手机" prop="phonenumber">
+              <el-input v-model="form.phonenumber" placeholder="请输入手机号码" maxlength="11" />
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="11">
-            <el-form-item label="所属机构" prop="deptId">
-              <treeselect
-                v-model="form.deptId"
-                :options="deptOptions"
-                :show-count="true"
-                placeholder="请选择所属机构"
-              />
-            </el-form-item>
-          </el-col>
-          <el-col :span="11">
+          <el-col :span="8">
             <el-form-item label="身份证" prop="idCard">
               <div v-if="form.userId===$store.getters['user/userDetail'].user.userId||title==='新增用户'">
                 <el-input
@@ -478,56 +520,19 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <div class="headerinfo">
-          账号信息
-        </div>
-        <el-row>
-          <el-col :span="11">
-            <el-form-item label="用户账号" prop="userName">
-              <el-input v-model="form.userName" placeholder="请输入用户账号" />
+        <el-row />
+        <el-row type="flex" justify="start">
+          <el-col :span="8">
+            <el-form-item label="所属机构" prop="deptId">
+              <treeselect
+                v-model="form.deptId"
+                :options="deptOptions"
+                :show-count="true"
+                placeholder="请选择所属机构"
+              />
             </el-form-item>
           </el-col>
-
-          <el-col :span="11">
-            <el-form-item label="账号邮箱" prop="email">
-              <el-input v-model="form.email" placeholder="请输入账号邮箱" maxlength="50" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="11">
-            <el-form-item label="用户手机" prop="phonenumber">
-              <el-input v-model="form.phonenumber" placeholder="请输入手机号码" maxlength="11" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="11">
-            <el-form-item label="账号类型" prop="userType">
-              <!-- <el-select v-model="form.userType" placeholder="请选择账号类型" clearable class="g-w100">
-                <el-option
-                  v-for="(item, index) in accountType"
-                  :key="index"
-                  :label="item.label"
-                  :value="item.label"
-                ></el-option>
-                      </el-select> -->
-              <el-select
-                v-model="form.userType"
-                placeholder="请选择账号类型"
-                clearable
-                class="g-w100"
-              >
-                <el-option
-                  v-for="dict in dict.type.sys_user_account_type"
-                  :key="dict.value"
-                  :label="dict.label"
-                  :value="dict.label"
-                />
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col v-if="form.userId == undefined" :span="11">
+          <el-col v-if="form.userId == undefined" :span="8">
             <el-form-item label="用户密码" prop="password">
               <el-input
                 v-model="form.password"
@@ -538,7 +543,7 @@
               />
             </el-form-item>
           </el-col>
-          <el-col :span="11">
+          <el-col :span="8">
             <el-form-item v-if="form.userId == undefined" label="确认密码" prop="surePassword">
               <el-input
                 v-model="form.surePassword"
@@ -549,35 +554,48 @@
               />
             </el-form-item>
           </el-col>
-        <!-- <el-col :span="12">
-            <el-form-item label="用户性别">
-              <el-select v-model="form.sex" placeholder="请选择">
-                <el-option
-                  v-for="dict in dict.type.sys_user_sex"
-                  :key="dict.value"
-                  :label="dict.label"
-                  :value="dict.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-                  </el-col> -->
-        <!-- <el-col :span="12">
-            <el-form-item label="状态">
-              <el-radio-group v-model="form.status">
-                <el-radio v-for="dict in dict.type.sys_normal_disable" :key="dict.value" :label="dict.value">{{
-                  dict.label
-                }}</el-radio>
-              </el-radio-group>
-            </el-form-item>
-                  </el-col> -->
         </el-row>
-      <!-- <el-row>
-          <el-col :span="24">
-            <el-form-item label="备注">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
-            </el-form-item>
-          </el-col>
-                </el-row> -->
+        <div class="headerinfo" style="margin-bottom: 30px">
+          角色与岗位信息
+        </div>
+        <el-form-item label="用户角色" prop="roleIds">
+          <el-select
+            v-model="form.roleIds"
+            style="margin-bottom: 20px"
+            filterable
+            class="customSelect"
+            multiple
+            placeholder="请选择用户角色"
+            clearable
+          >
+            <el-option
+              v-for="item in roleOptions"
+              :key="item.roleId"
+              :label="item.roleName"
+              :value="item.roleId"
+              :disabled="item.status == 1"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="用户岗位">
+          <el-select
+            v-model="form.postIds"
+            filterable
+            class="customSelect"
+            multiple
+            placeholder="请选择用户岗位"
+            clearable
+            @change="changePost"
+          >
+            <el-option
+              v-for="item in postOptions"
+              :key="item.postId"
+              :label="item.postName"
+              :value="item.postId"
+              :disabled="item.status == 1"
+            />
+          </el-select>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">
@@ -814,6 +832,8 @@ export default {
       postOptions: [],
       // 角色选项
       roleOptions: [],
+      // 租户
+      teantOptions: [],
       // 账号类型
       // accountType: [
       //   { label: '集团账号', value: 0 },
@@ -877,7 +897,9 @@ export default {
         status: undefined,
         deptId: undefined,
         roleId: undefined,
-        postId: undefined
+        postId: undefined,
+        nickName: undefined,
+        tenantName: undefined
       },
       // 列信息
       columns: [
@@ -885,7 +907,9 @@ export default {
         { key: 1, label: "用户角色", visible: true },
         { key: 2, label: "用户岗位", visible: true },
         { key: 3, label: "所属机构", visible: true },
-        { key: 4, label: "用户状态", visible: true }
+        { key: 4, label: "用户名", visible: true },
+        { key: 5, label: "租户", visible: true },
+        { key: 6, label: "用户状态", visible: true }
       ],
       // 岗位表单校验
       postRules: {
@@ -920,7 +944,7 @@ export default {
           { required: true, message: "邮箱地址能为空", trigger: "blur" },
           {
             type: "email",
-            message: "'请输入正确的邮箱地址",
+            message: "请输入正确的邮箱地址",
             trigger: ["blur", "change"]
           }
         ],
@@ -1151,6 +1175,7 @@ export default {
       getUser().then(response => {
         // this.postOptions = response.data.posts;
         this.roleOptions = response.data.roles;
+        this.teantOptions = response.data.tenants;
       });
     },
     /** 获取用户岗位 */
@@ -1372,6 +1397,21 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+/deep/ .customSelect {
+  max-height: 96px !important;
+  width: 100% !important;
+}
+
+/deep/ .customSelect .el-select__tags {
+  max-height: 86px !important;
+  overflow: auto !important;
+  align-content: flex-start !important;
+}
+
+/deep/ .customSelect .el-input--suffix {
+  max-height: 96px !important;
+}
+
 .searchStyle {
   position: absolute;
   top: 10px;
@@ -1384,14 +1424,23 @@ export default {
 }
 
 .textOverFlow {
-  display: flex;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 173px;
 }
 
 .el-dialog__body .el-row {
   display: flex;
   justify-content: space-between;
+}
+
+.el-table {
+  /deep/ .el-table__body {
+    .cell {
+      height: unset !important;
+      line-height: unset !important;
+    }
+  }
 }
 </style>

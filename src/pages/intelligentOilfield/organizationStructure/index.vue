@@ -293,7 +293,7 @@
 </template>
 
 <script>
-import { listDept, selectDepts, getDept, delDept, addDept, updateDept, listDeptExcludeChild } from "@/api/intelligentOilfield/system/dept";
+import { listDept, selectDepts, getDept, delDept, addDept, updateDept, listDeptExcludeChild, delDeptsure } from "@/api/intelligentOilfield/system/dept";
 // import { listRole } from '@/api/intelligentOilfield/system/role';
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
@@ -489,9 +489,17 @@ export default {
         .confirm(`是否确认删除名称为"${row.deptName}"的数据项？（无法删除有下属部门的部门）`)
         .then(() => delDept(row.deptId))
         .then(res => {
-          if (res ? res.data.code === 200 : false) {
+          if (res ? res.data.msg === "操作成功" : false) {
             this.getList();
             this.$modal.msgSuccess("删除成功");
+          } else {
+            this.$modal
+              .confirm("该部门下存在用户，是否确认删除该数据项？").then(() => delDeptsure(row.deptId)).then(res1 => {
+                if (res1 ? res1.data.code === 200 : false) {
+                  this.getList();
+                  this.$modal.msgSuccess("删除成功");
+                }
+              });
           }
         })
         .catch(() => {});

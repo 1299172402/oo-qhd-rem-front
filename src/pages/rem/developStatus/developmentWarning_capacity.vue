@@ -3,21 +3,29 @@
     <el-header height="auto"> </el-header>
     <el-container>
       <el-header>
-        <el-row style="margin-top: 5px">
-          <pagePanelNew class="pagePanelNew">
-            <el-radio-group v-model="radioValue" @change="qeruyAlLData">
+        <el-row style="margin-top: 5px; padding: 0px">
+          <pagePanelNew class="pagePanelNew" style="">
+            <!-- <el-radio-group v-model="radioValue" @change="qeruyAlLData">
               <el-radio-button label="油田指标预警"></el-radio-button>
               <el-radio-button label="区块指标预警"></el-radio-button>
-            </el-radio-group>
+            </el-radio-group> -->
+            <vertical-switch-button
+              :data-list="dataList1"
+              btn-direction="row"
+              @selectBtn="selectBtn"
+              style="width: 100px; height: 40px"
+            />
           </pagePanelNew>
         </el-row>
         <div>
           <el-row style="margin-top: 8px">
-            <el-button class="roundButton" size="mini" round @click="switchParam('1')"
-              >新预警（{{ alertCount }}）</el-button
-            >
-            <el-button class="roundButton" size="mini" round @click="switchParam('2')">观察</el-button>
-            <el-button class="roundButton" size="mini" round @click="switchParam('3')">历史预警</el-button>
+            <div>
+              <el-button class="roundButton" size="mini" round @click="switchParam('1')"
+                >新预警（{{ alertCount }}）</el-button
+              >
+              <el-button class="roundButton" size="mini" round @click="switchParam('2')">观察</el-button>
+              <el-button class="roundButton" size="mini" round @click="switchParam('3')">历史预警</el-button>
+            </div>
           </el-row>
         </div>
       </el-header>
@@ -165,6 +173,7 @@
             <pagination :total="total" :page.sync="page" :limit.sync="pageSize" />
           </pagePanelNew>
         </div>
+
         <div v-if="radioValue == '区块指标预警' && switchNumber == '1'" style="height: 100%">
           <pagePanelNew style="height: 100%; margin-top: 25px">
             <el-table :data="tableData" highlight :row-class-name="tableRowClassName">
@@ -198,6 +207,7 @@
             <pagination :total="total" :page.sync="page" :limit.sync="pageSize" />
           </pagePanelNew>
         </div>
+
         <div v-if="radioValue == '区块指标预警' && switchNumber == '2'" style="height: 100%">
           <pagePanelNew style="height: 100%; margin-top: 40px">
             <el-table :data="tableData" highlight>
@@ -235,6 +245,7 @@
             <pagination :total="total" :page.sync="page" :limit.sync="pageSize" />
           </pagePanelNew>
         </div>
+
         <div v-if="radioValue == '区块指标预警' && switchNumber == '3'" style="height: 100%">
           <el-row style="margin-top: 40px">
             <el-col :span="6">
@@ -314,9 +325,17 @@
 import { fetchOilFields, fetchFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { oilFieldDevWarnings, fieldDevWarnings } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { getWidgetByAreaUser } from "@/api/oilDeposit/rmm-01/rmm01";
+import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 export default {
+  components: {
+    verticalSwitchButton,
+  },
   data() {
     return {
+      dataList1: [
+        { name: "油田指标预警", key: "", isChecked: true },
+        { name: "区块指标预警", key: "", isChecked: false },
+      ],
       //hwh 修改
       oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
       //预警数量
@@ -462,6 +481,34 @@ export default {
   },
   //方法
   methods: {
+    // 头部按钮样式
+    selectBtn(item) {
+      console.log(item);
+      this.$router.push({
+        name: item.key,
+        params: {
+          radioValue: this.radioValue,
+          switchNumber: this.switchNumber,
+        },
+      });
+      let war = "";
+      if (this.switchNumber == "1") {
+        war = "WARNING";
+      } else if (this.switchNumber == "2") {
+        war = "OBSERVE";
+      } else {
+        war = "HIS";
+      }
+      if (this.radioValue == "油田指标预警") {
+        this.selectOilfieldData(this.dateTime[0], this.dateTime[1], this.oilFieldId, war);
+      } else if (this.radioValue == "区块指标预警") {
+        this.selectFieldData(this.dateTime[0], this.dateTime[1], this.oilFieldId, war);
+      } else {
+        this.tableData = [];
+        this.total = 0;
+      }
+    },
+
     //获取油田信息
     getOilFields() {
       let _this = this;
@@ -555,8 +602,6 @@ export default {
     },
     //查询油田数据统一接口
     selectOilfieldData(beginDate, endDate, fieldId, warningCode) {
-      /* beginDate='2020-09-01'
-            endDate='2021-03-01'*/
       let queryParams = {
         beginDate: beginDate,
         endDate: endDate,
@@ -576,8 +621,6 @@ export default {
     },
     //查询区块数据统一接口
     selectFieldData(beginDate, endDate, fieldId, warningCode) {
-      /*beginDate='2020-09-01'
-            endDate='2021-03-01'*/
       let queryParams = {
         beginDate: beginDate,
         endDate: endDate,
@@ -715,55 +758,56 @@ export default {
      * 获取当前页面的权限内容，并处理其逻辑问题
      */
     getPageAuthMessage() {
-      // this.userInfo = VSAuth.getAuthInfo();
       let myPath = this.$route.path;
       //该值可以为空
       let areaCode = "znytglxt";
       let loginName = this.userInfo.userName;
-      getWidgetByAreaUser({ areaCode: areaCode, loginName: loginName }).then((res) => {
-        let myList = res.data.dataList;
-        if (myList) {
-          let pageMes = myList.find((item) => {
-            return item.resPvalue == myPath;
-          });
-          if (pageMes) {
-            this.myWidget = pageMes.widgetList;
-          }
-          if (this.myWidget) {
-            for (let indexNum in this.myWidget) {
-              try {
-                let myWidgetItem = this.myWidget[indexNum];
-                switch (myWidgetItem.widgetCode) {
-                  case "addInfo":
-                    this.canAddInfo = true;
-                    break;
-                  case "updateInfo":
-                    this.canUpdateInfo = true;
-                    break;
-                  case "sendInfo":
-                    this.canSendInfo = true;
-                    break;
-                  case "deleteInfo":
-                    this.canDeleteInfo = true;
-                    break;
-                  case "download":
-                    this.canDownload = true;
-                    break;
-                  case "upload":
-                    this.canUpload = true;
-                    break;
-                  case "YCGL_KFYJ":
-                    this.ycglKfyj = true;
-                    break;
-                  default:
+      getWidgetByAreaUser({ areaCode: areaCode, loginName: loginName })
+        .then((res) => {
+          let myList = res.data.dataList;
+          if (myList) {
+            let pageMes = myList.find((item) => {
+              return item.resPvalue == myPath;
+            });
+            if (pageMes) {
+              this.myWidget = pageMes.widgetList;
+            }
+            if (this.myWidget) {
+              for (let indexNum in this.myWidget) {
+                try {
+                  let myWidgetItem = this.myWidget[indexNum];
+                  switch (myWidgetItem.widgetCode) {
+                    case "addInfo":
+                      this.canAddInfo = true;
+                      break;
+                    case "updateInfo":
+                      this.canUpdateInfo = true;
+                      break;
+                    case "sendInfo":
+                      this.canSendInfo = true;
+                      break;
+                    case "deleteInfo":
+                      this.canDeleteInfo = true;
+                      break;
+                    case "download":
+                      this.canDownload = true;
+                      break;
+                    case "upload":
+                      this.canUpload = true;
+                      break;
+                    case "YCGL_KFYJ":
+                      this.ycglKfyj = true;
+                      break;
+                    default:
+                  }
+                } catch (e) {
+                  continue;
                 }
-              } catch (e) {
-                continue;
               }
             }
           }
-        }
-      });
+        })
+        .catch((error) => {});
     },
   },
 };
@@ -780,9 +824,9 @@ export default {
   width: 80px;
   height: 25px;
   font-size: 12px;
-  color: #409eff;
+  color: #00def0;
   background-color: #031527;
-  border: 1px solid #409eff;
+  border: 1px solid #00def0;
 }
 .hrefSpan {
   color: #24deff;
@@ -791,9 +835,13 @@ export default {
   width: 45%;
   height: 80%;
 }
-.el-table >>> .warning-row {
+.el-table .warning-row {
   -webkit-animation: mymove 1s infinite; /* Chrome, Safari, Opera */
   animation: mymove 3s infinite;
+}
+
+::v-deep .el-col-6 {
+  width: 28%;
 }
 @keyframes mymove {
   50% {
@@ -820,6 +868,12 @@ export default {
 }
 ::v-depp .el-radio-button:first-child .el-radio-button__inner {
   border: 1px solid #409eff;
+}
+
+::v-deep [data-v-7e723922] .el-radio-button__inner {
+  color: #00def0;
+  background-color: #031527;
+  border: 1px solid #00def0;
 }
 </style>
   

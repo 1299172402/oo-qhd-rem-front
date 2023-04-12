@@ -15,7 +15,7 @@
                 <el-select v-model="selectWellId" class="f2" filterable clearable @change="onChangeWell" style="width:180px;margin-right: 20px">
                     <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled"></el-option>
                 </el-select>
-                <el-button type="primary" icon="el-icon-search" style="margin-left: 20px;" @click="doSearch">检索</el-button>
+                <el-button type="primary" icon="el-icon-search" style="margin-left: 20px;" @click="doSearch">搜索</el-button>
                 <el-upload ref="upload" style="margin-left: 20px;"  class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess" v-show="canUpload && !ljpmTag">
                     <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
                 </el-upload>
@@ -612,6 +612,6 @@ export default {
         height: auto !important;
     }
     .activeOther{
-       height: calc(100% - 100px); 
+       height: calc(100% - 100px)!important; 
     }
 </style>

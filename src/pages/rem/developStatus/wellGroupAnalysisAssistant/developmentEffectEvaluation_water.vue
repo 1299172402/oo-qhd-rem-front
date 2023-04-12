@@ -15,7 +15,7 @@
               </el-option>
             </el-select>
             <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
-              检索
+              搜索
             </el-button>
           </div>
           <div class="fr overflow-hidden">
@@ -138,7 +138,7 @@ export default {
     return {
       dataList1: [
         { name: "产能类", key: "developmentEffectEvaluation_capacity", isChecked: false },
-        { name: "储存类", key: "developmentEffectEvaluation_reserves", isChecked: false },
+        { name: "储量类", key: "developmentEffectEvaluation_reserves", isChecked: false },
         { name: "含水类", key: "developmentEffectEvaluation_water", isChecked: true },
         { name: "递减类", key: "developmentEffectEvaluation_Decreasing", isChecked: false },
       ],
@@ -590,7 +590,6 @@ export default {
         fieldId: fieldId,
       };
       waterIndicatorChart(request).then((res) => {
-        console.log(res, "没有出现数据");
         if (res.data.code == 200) {
           let legendData = [];
           let seriesData = [];

@@ -1,3 +1,4 @@
+<!-- 产能类 -->
 <template>
   <el-container class="layout">
     <el-header height="auto">
@@ -248,14 +249,9 @@ export default {
       radio1: "产能类",
       dataList1: [
         { name: "产能类", key: "developmentEffectEvaluation_reserves", isChecked: true },
-        { name: "储存类", key: "developmentEffectEvaluation_reserves", isChecked: false },
+        { name: "储量类", key: "developmentEffectEvaluation_reserves", isChecked: false },
         { name: "含水类", key: "developmentEffectEvaluation_water", isChecked: false },
         { name: "递减类", key: "developmentEffectEvaluation_Decreasing", isChecked: false },
-
-        // { name: "产能类", key: "developmentEffectEvaluation_capacity", isChecked: false },
-        // { name: "储存类", key: "developmentEffectEvaluation_reserves", isChecked: true },
-        // { name: "含水类", key: "developmentEffectEvaluation_water", isChecked: false },
-        // { name: "递减类", key: "developmentEffectEvaluation_Decreasing", isChecked: false },
       ],
       //查询参数
       queryParams: {},
@@ -893,7 +889,6 @@ export default {
         fieldId: fieldId,
       };
       outputSpeed(request).then((res) => {
-        console.log(res, "22222222222222222222222");
         if (res.data.code == 200) {
           let lineChart = res.data.data.chart.linearDataSets;
           let legendData = [];
@@ -1131,7 +1126,6 @@ export default {
         fieldId: fieldId,
       };
       indicatorEveluationResults(request).then((res) => {
-        console.log(res, "66666666666666666666");
         if (res.data.code == 200) {
           this.tableData = res.data.data.indicatorEvaluationResults;
           // this.tableData = [...res.data.data.indicatorEvaluationResults, ...res.data.data.indicatorEvaluationResults];
@@ -1150,50 +1144,52 @@ export default {
       //该值可以为空
       let areaCode = "znytglxt";
       let loginName = this.userInfo.userName;
-      getWidgetByAreaUser({ areaCode: areaCode, loginName: loginName }).then((res) => {
-        let myList = res.data.dataList;
-        if (myList) {
-          let pageMes = myList.find((item) => {
-            return item.resPvalue == myPath;
-          });
-          if (pageMes) {
-            this.myWidget = pageMes.widgetList;
-          }
-          if (this.myWidget) {
-            for (let indexNum in this.myWidget) {
-              try {
-                let myWidgetItem = this.myWidget[indexNum];
-                switch (myWidgetItem.widgetCode) {
-                  case "addInfo":
-                    this.canAddInfo = true;
-                    break;
-                  case "updateInfo":
-                    this.canUpdateInfo = true;
-                    break;
-                  case "sendInfo":
-                    this.canSendInfo = true;
-                    break;
-                  case "deleteInfo":
-                    this.canDeleteInfo = true;
-                    break;
-                  case "download":
-                    {
-                      this.canDownload = true;
-                      this.downPower(this.canDownload);
-                    }
-                    break;
-                  case "upload":
-                    this.canUpload = true;
-                    break;
-                  default:
+      getWidgetByAreaUser({ areaCode: areaCode, loginName: loginName })
+        .then((res) => {
+          let myList = res.data.dataList;
+          if (myList) {
+            let pageMes = myList.find((item) => {
+              return item.resPvalue == myPath;
+            });
+            if (pageMes) {
+              this.myWidget = pageMes.widgetList;
+            }
+            if (this.myWidget) {
+              for (let indexNum in this.myWidget) {
+                try {
+                  let myWidgetItem = this.myWidget[indexNum];
+                  switch (myWidgetItem.widgetCode) {
+                    case "addInfo":
+                      this.canAddInfo = true;
+                      break;
+                    case "updateInfo":
+                      this.canUpdateInfo = true;
+                      break;
+                    case "sendInfo":
+                      this.canSendInfo = true;
+                      break;
+                    case "deleteInfo":
+                      this.canDeleteInfo = true;
+                      break;
+                    case "download":
+                      {
+                        this.canDownload = true;
+                        this.downPower(this.canDownload);
+                      }
+                      break;
+                    case "upload":
+                      this.canUpload = true;
+                      break;
+                    default:
+                  }
+                } catch (e) {
+                  continue;
                 }
-              } catch (e) {
-                continue;
               }
             }
           }
-        }
-      });
+        })
+        .catch((error) => {});
     },
     /**
      * 下载echarts 隐藏 显示

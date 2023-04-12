@@ -156,7 +156,13 @@ const actions = {
     await axios
       .get(`system/menu/getRouters${appId ? `?appId=${appId}` : ""}`).then(res => {
         if (res.data.code === 200) {
-          const sidebarRoutes = filterAsyncRouter(res.data.data);
+          const data = res.data.data.map(item => {
+            if (item.path === "/" && item.children.length) {
+              item.meta = item.children[0].meta;
+            }
+            return item;
+          });
+          const sidebarRoutes = filterAsyncRouter(data);
           // single:true代表只有一级路由；分割菜单的时候需要redirect到菜单默认项
           const mapList = sidebarRoutes.map(item => ({
             ...item,

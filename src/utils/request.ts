@@ -61,7 +61,7 @@ function hideLoading() {
 
 const instance = axios.create({
   baseURL: API_HOST,
-  timeout: 10000,
+  timeout: 20000,
   withCredentials: true
 });
 
@@ -98,6 +98,10 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   response => {
+    if (response.headers.ntk) {
+      // 相应的 headers 中有 ntk 时，更换 token
+      store.commit("user/setToken", response.headers.ntk);
+    }
     if (response.config.returnAll) {
       hideLoading();
       return response;
@@ -167,9 +171,21 @@ instance.interceptors.response.use(
     hideLoading();
     // }
     if (!config || !config.retry) {
-      MessageBox.alert(err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错", "系统提示", {
-        type: "error"
-      });
+      if (err.response.data.code === 401) {
+        MessageBox.confirm("登录状态已过期，您可以继续留在该页面，或者重新登录", "系统提示", {
+          confirmButtonText: "重新登录",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(() => {
+          router.replace({ path: "/" });
+          store.dispatch("user/logout");
+          store.dispatch("permission/restore");
+        });
+      } else {
+        MessageBox.alert(err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错", "系统提示", {
+          type: "error"
+        });
+      }
       return Promise.reject(err);
     }
 

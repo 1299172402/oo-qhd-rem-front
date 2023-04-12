@@ -19,7 +19,7 @@
                 <el-select v-model="selectWellGroup" placeholder="请选择" filterable clearable style="margin-right: 20px">
                     <el-option v-for="item in wellGroup" :key="item.wellGroupId" :label="item.name" :value="item.wellGroupId"></el-option>
                 </el-select>
-                <el-button type="primary" icon="el-icon-search" style="margin-right: 20px" @click="doSearch">检索</el-button>
+                <el-button type="primary" icon="el-icon-search" style="margin-right: 20px" @click="doSearch">搜索</el-button>
                 <el-upload ref="upload" style="margin-right: 20px" class="upload-demo" action="" :auto-upload="false" :on-change="useUploadPic" :show-file-list="false" v-show="canUpload">
                     <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
                 </el-upload>

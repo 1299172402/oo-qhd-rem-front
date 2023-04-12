@@ -1,6 +1,6 @@
 <!--自定义info信息窗-->
 <template>
-  <div :style="{width: infoWidth,height:infoHeight,boxShadow: $store.state.setting.mode==='dark'?'': '0px 0px 10px 0px rgba(144,147,153,0.3)'}" class="g-w100" :class="$store.getters['user/getIsMax']? 'maxPage':'minPage'">
+  <div :style="{width: infoWidth,height:infoHeight,boxShadow: $store.state.setting.mode==='dark'?'': '0px 0px 10px 0px rgba(144,147,153,0.3)'}" class="g-w100" :class="isFull ? 'maxPage' : 'minPage'">
     <div class="g-w100 g-h100" style="background: white; position: absolute;z-index: -1" :style="{background: $store.state.setting.mode==='dark'?'rgba(3, 21, 39, 1)':'#fff'}" />
     <!-- TODO: Maybe change back -->
     <!-- <div class="infoHeader g-row-flex-V" :style="{background: $store.state.setting.mode==='dark'?'linear-gradient(to right, rgba(0, 202, 255, 0.4), var(--opacity-blue-bg2))':'linear-gradient(to right, var(--only-light-blue-color), rgba(0, 96, 166, 0.2))',color:$store.state.setting.mode==='dark'?'var(--light-blue-color)':'var(--white-color)'}"> -->
@@ -103,10 +103,12 @@ export default {
   font-weight: 500;
 
   /* border: 1px solid #ddd; */
-  border-image: linear-gradient(to left, rgba(116, 190, 243, 0), rgba(0, 180, 255, 0.6)) 1 1
+  border-image: linear-gradient(to left, rgba(116, 190, 243, 0), rgba(0, 180, 255, 0.6)) 1 1;
 }
 
 .infoBody {
+  background-image: var(--logo-bg) !important;
+  background-size: 100% 100% !important;
   height: calc(100% - 40px);
   font-size: 16px;
 
