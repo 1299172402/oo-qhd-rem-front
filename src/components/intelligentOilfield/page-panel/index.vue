@@ -56,7 +56,7 @@ export default {
 </script>
 <style scoped>
 .maxPage {
-  position: absolute !important;
+  position: fixed;
   z-index: 999 !important;
   top: 0 !important;
   left: 0 !important;
