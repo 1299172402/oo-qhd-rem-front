@@ -68,6 +68,12 @@ export default [
         component: () => import('@/pages/rem/plan/planmessage.vue'),
         meta: { title: '措施计划情况' },
       },
+      {
+        path: 'effectofMeasures',
+        name: 'effectofMeasures',
+        component: () => import('@/pages/rem/plan/effectofMeasures.vue'),
+        meta: {title: '人员措施'},
+      },
     ],
   },
 ];
