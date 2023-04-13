@@ -39,16 +39,11 @@
       </el-form>
     </headerSearch>
     <div>
-      <verticalSwitchButton
-        @selectBtn="selectBtn"
-        :dataList="dataList"
-        buttonWidth="120px"
-        buttonHeight="30px"
-        style="width: 9%; padding-top: 20px"
-        btnDirection="row"
-      ></verticalSwitchButton>
+        <el-tabs v-model="activeName" class="g-pageHeader"  @tab-click="selectBtn(activeName)">
+            <el-tab-pane :label="item.name" :name="item.value" v-for="(item,index) in dataList"/>
+        </el-tabs>
     </div>
-    <components ref="modal" style="margin-top: -15px; height: 730px" :infodata="1" :is="currentTab" />
+    <components ref="modal" style="margin-top: -15px; height: 100%" :infodata="1" :is="currentTab" />
   </div>
 </template>
 <script>
@@ -85,6 +80,7 @@ export default {
       queryParams: { endTime: "", selectPlatform: "", selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F" },
       oilFields: [],
       platforms: [],
+      activeName:'personnelplan'
     };
   },
   mounted() {
@@ -104,7 +100,7 @@ export default {
   },
   methods: {
     selectBtn(item) {
-      this.currentTab = item.value;
+      this.currentTab = item;
     },
     // 搜索按钮
     retrieval() {
