@@ -1,114 +1,44 @@
- <template>
-  <el-container class="layout">
-    <el-header height="auto">
-      <header-search class="g-w100 g-h100">
-        <div class="py-5 overflow-hidden" style="margin-top: 10px; margin-bottom: -5px">
-          <div class="fl">
-            <span>油田：</span>
-            <el-select v-model="selectOilField" disabled @change="getFetchFields">
-              <el-option
-                v-for="item in oilField"
-                :key="item.oilFieldId"
-                :label="item.name"
-                :value="item.oilFieldId"
-                style="color: #fff"
-              >
-              </el-option>
-            </el-select>
-            <span class="QU" style="margin-left: 20px">区块：</span>
-            <el-select v-model="selectBlock">
-              <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId">
-              </el-option>
-            </el-select>
-            <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
-              搜索
-            </el-button>
-          </div>
-          <div class="fr overflow-hidden">
-            <!-- <el-radio-group v-model="radio1">
-              <router-link
-                :to="{
-                  name: 'developmentEffectEvaluation_capacity',
-                  params: { oilFieldId: selectOilField, fieldId: selectBlock, canDownload: canDownload },
-                }"
-              >
-                <el-radio-button label="产能类"></el-radio-button>
-              </router-link>
-              <router-link
-                :to="{
-                  name: 'developmentEffectEvaluation_reserves',
-                  params: { oilFieldId: selectOilField, fieldId: selectBlock, canDownload: canDownload },
-                }"
-              >
-                <el-radio-button label="储量类"></el-radio-button>
-              </router-link>
-              <router-link
-                :to="{
-                  name: 'developmentEffectEvaluation_water',
-                  params: { oilFieldId: selectOilField, fieldId: selectBlock, canDownload: canDownload },
-                }"
-              >
-                <el-radio-button label="含水类"></el-radio-button>
-              </router-link>
-              <el-radio-button label="递减类"></el-radio-button>
-            </el-radio-group> -->
-
-            <vertical-switch-button
-              :data-list="dataList1"
-              button-width="120px"
-              button-height="40px"
-              style="width: 9%"
-              btn-direction="row"
-              @selectBtn="selectBtn"
-            />
-          </div>
-        </div>
-      </header-search>
-    </el-header>
-    <el-main>
-      <pagePanelNew style="height: 100%; margin-top: 0px">
-        <div class="dom" style="margin-top: 0px">
-          <el-row :gutter="20" style="margin-top: -20px">
-            <el-col :span="12">
-              <pagePanel headerTitle="自然递减率" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-                <Echart :chart-data="naturalDeclineRate" style="height: 100%"></Echart>
-              </pagePanel>
-            </el-col>
-            <el-col :span="12">
-              <pagePanel headerTitle="综合递减率" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-                <Echart :chart-data="comprehensiveDeclineRate" style="height: 100%"></Echart
-              ></pagePanel>
-            </el-col>
-          </el-row>
-          <el-row class="mt-5" :gutter="20">
-            <el-col :span="12">
-              <pagePanel headerTitle="总递减率" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-                <Echart :chart-data="totalDeclineRate" style="height: 100%"></Echart>
-              </pagePanel>
-            </el-col>
-            <el-col :span="12">
-              <pagePanel headerTitle="产量标定法" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-                <Echart :chart-data="yieldCalibrationMethod" style="height: 100%"></Echart>
-              </pagePanel>
-            </el-col>
-          </el-row>
-          <el-row class="mt-5" :gutter="20">
-            <el-col :span="12">
-              <pagePanel headerTitle="指标评价结果表" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-                <el-table :data="tableData" highlight style="margin-top: 10px">
-                  <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
-                  <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
-                  <el-table-column prop="lastPhaseValue" label="上阶段值" align="center"></el-table-column>
-                  <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center"></el-table-column>
-                  <el-table-column prop="result" label="结论" align="center"></el-table-column>
-                </el-table>
-              </pagePanel>
-            </el-col>
-          </el-row>
-        </div>
-      </pagePanelNew>
-    </el-main>
-  </el-container>
+<!-- 递减类 -->
+<template>
+  <div class="dom" style="margin-top: 0px">
+    <el-row :gutter="20" style="margin-top: -20px">
+      <el-col :span="12">
+        <pagePanel headerTitle="自然递减率" style="width: 100%; height: 380px" :isShowMaxBtn="true" :show-btn="true">
+          <Echart :chart-data="naturalDeclineRate" style="height: 100%"></Echart>
+        </pagePanel>
+      </el-col>
+      <el-col :span="12">
+        <pagePanel headerTitle="综合递减率" style="width: 100%; height: 380px" :isShowMaxBtn="true" :show-btn="true">
+          <Echart :chart-data="comprehensiveDeclineRate" style="height: 100%"></Echart
+        ></pagePanel>
+      </el-col>
+    </el-row>
+    <el-row class="mt-5" :gutter="20">
+      <el-col :span="12">
+        <pagePanel headerTitle="总递减率" style="width: 100%; height: 380px" :isShowMaxBtn="true" :show-btn="true">
+          <Echart :chart-data="totalDeclineRate" style="height: 100%"></Echart>
+        </pagePanel>
+      </el-col>
+      <el-col :span="12">
+        <pagePanel headerTitle="产量标定法" style="width: 100%; height: 380px" :isShowMaxBtn="true" :show-btn="true">
+          <Echart :chart-data="yieldCalibrationMethod" style="height: 100%"></Echart>
+        </pagePanel>
+      </el-col>
+    </el-row>
+    <el-row class="mt-5" :gutter="20">
+      <el-col :span="12">
+        <pagePanel headerTitle="指标评价结果表" style="width: 100%; height: 380px" :isShowMaxBtn="true" :show-btn="true">
+          <el-table :data="tableData" highlight style="margin-top: 10px">
+            <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
+            <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
+            <el-table-column prop="lastPhaseValue" label="上阶段值" align="center"></el-table-column>
+            <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center"></el-table-column>
+            <el-table-column prop="result" label="结论" align="center"></el-table-column>
+          </el-table>
+        </pagePanel>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 <script>
 import * as echarts from "echarts";
@@ -127,48 +57,26 @@ export default {
     Echart,
     verticalSwitchButton,
   },
+  props: {
+    selectOilField: {
+      type: String,
+      default: "",
+    },
+    selectBlock: {
+      type: String,
+      default: "",
+    },
+  },
   data() {
     return {
-      dataList1: [
-        { name: "产能类", key: "developmentEffectEvaluation_capacity", isChecked: false },
-        { name: "含水类", key: "developmentEffectEvaluation_water", isChecked: false },
-        { name: "储量类", key: "developmentEffectEvaluation_reserves", isChecked: false },
-        { name: "递减类", key: "developmentEffectEvaluation_Decreasing", isChecked: true },
-      ],
       //油田
       oilField: [],
-      //油田名字
-      oilFieldName: "",
-      //油田选中值
-      selectOilField: "",
       //区块
       block: [],
-      //区块选中值
-      selectBlock: "",
-
-      radio1: "递减类",
       //查询参数
       queryParams: {},
       page: 1,
       pageSize: 10,
-      //油田列表
-      oilFieldList: [
-        {
-          value: "QHD32-6",
-          label: "秦皇岛32-6油田",
-        },
-      ],
-      //区域列表
-      areaList: [
-        {
-          value: "",
-          label: "全部",
-        },
-        {
-          value: "区块1",
-          label: "区块1",
-        },
-      ],
       //自然递减率
       naturalDeclineRate: {
         tooltip: {
@@ -232,15 +140,15 @@ export default {
             show: false,
           },
           axisLine: {
-            show: false,
+            show: true,
             lineStyle: {
-              color: "rgba(151,151,151,.16)",
+              color: "#35546d",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#35546d",
             },
           },
         },
@@ -316,15 +224,15 @@ export default {
             show: false,
           },
           axisLine: {
-            show: false,
+            show: true,
             lineStyle: {
-              color: "rgba(151,151,151,.16)",
+              color: "#35546d",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#35546d",
             },
           },
         },
@@ -397,15 +305,15 @@ export default {
             show: false,
           },
           axisLine: {
-            show: false,
+            show: true,
             lineStyle: {
-              color: "rgba(151,151,151,.16)",
+              color: "#35546d",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#35546d",
             },
           },
         },
@@ -477,15 +385,15 @@ export default {
             show: false,
           },
           axisLine: {
-            show: false,
+            show: true,
             lineStyle: {
-              color: "rgba(151,151,151,.16)",
+              color: "#35546d",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "rgba(255,255,255,.16)",
+              color: "#35546d",
             },
           },
         },
@@ -528,16 +436,6 @@ export default {
      * 设置页面初始化
      * @returns {Promise<void>}
      */
-
-    selectBtn(item) {
-      this.$router.push({
-        name: item.key,
-        params: {
-          oilFieldId: this.oilFieldId,
-          fieldId: this.fieldId,
-        },
-      });
-    },
     async initData() {
       this.canDownload = this.$route.params.canDownload;
       this.downPower(this.canDownload);

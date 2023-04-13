@@ -28,6 +28,7 @@ export default [
       },
 
       {
+        alwaysShow: true,
         path: "developmentEffectEvaluation_capacity",
         name: "developmentEffectEvaluation_capacity",
         component: () =>

@@ -15,6 +15,11 @@
               @selectBtn="selectBtn"
               style="width: 100px; height: 40px"
             />
+
+
+
+
+
           </pagePanelNew>
         </el-row>
         <div>
@@ -332,6 +337,7 @@ export default {
   },
   data() {
     return {
+      activeName: "developmentWarning_capacity",
       dataList1: [
         { name: "油田指标预警", key: "", isChecked: true },
         { name: "区块指标预警", key: "", isChecked: false },

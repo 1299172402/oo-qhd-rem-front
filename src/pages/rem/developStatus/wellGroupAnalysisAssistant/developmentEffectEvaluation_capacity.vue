@@ -1,204 +1,226 @@
 <!-- 产能类 -->
 <template>
   <el-container class="layout">
-    <el-header height="auto">
-      <header-search class="g-w100 g-h100" style="width: 100%">
-        <div class="py-5 overflow-hidden" style="margin-top: 10px; margin-bottom: -5px">
-          <div class="fl">
-            <span>油田：</span>
-            <el-select v-model="selectOilField" disabled @change="getFetchFields">
-              <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId">
-              </el-option>
-            </el-select>
-            <span class="QU" style="margin-left: 20px">区块：</span>
-            <el-select v-model="selectBlock">
-              <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId">
-              </el-option>
-            </el-select>
-            <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
-              搜索
-            </el-button>
+    <div style="width: 100%">
+      <el-header height="auto">
+        <header-search class="g-w100 g-h100" style="width: 100%">
+          <div class="g-row-flex-V g-w100 g-h100">
+            <div class="fl">
+              <span>油田：</span>
+              <el-select v-model="selectOilField" disabled @change="getFetchFields">
+                <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId">
+                </el-option>
+              </el-select>
+              <span class="QU" style="margin-left: 20px">区块：</span>
+              <el-select v-model="selectBlock">
+                <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId">
+                </el-option>
+              </el-select>
+              <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
+                检索
+              </el-button>
+            </div>
           </div>
+        </header-search>
+      </el-header>
+      <el-main class="el-main">
+        <page-panel-new style="height: 100%;position:inherit;">
           <div class="fr overflow-hidden">
-            <!-- 产能类 -->
-            <!-- <el-radio-group v-model="radio1">
-           
-              <el-button class="commonBtn" label="产能类" > 产能类 </el-button>
-     
-              <router-link
-                :to="{
-                  name: 'developmentEffectEvaluation_reserves',
-                  params: {
-                    oilFieldId: selectOilField,
-                    fieldId: selectBlock,
-                    canDownload: canDownload,
-                  },
-                }"
+            <el-tabs class="g-pageHeader" v-model="radio1" topline @tab-click="handleClick">
+              <el-tab-pane
+                style="height: auto"
+                v-for="(item, index) in tabs"
+                :key="index"
+                :label="item.label"
+                :name="item.name"
               >
-               
-              </router-link>
-       
-              <router-link
-                :to="{
-                  name: 'developmentEffectEvaluation_water',
-                  params: {
-                    oilFieldId: selectOilField,
-                    fieldId: selectBlock,
-                    canDownload: canDownload,
-                  },
-                }"
-              >
-
-              </router-link>
-       
-              <router-link
-                :to="{
-                  name: 'developmentEffectEvaluation_Decreasing',
-                  params: {
-                    oilFieldId: selectOilField,
-                    fieldId: selectBlock,
-                    canDownload: canDownload,
-                  },
-                }"
-              >
-             
-              </router-link>
-            </el-radio-group> ---->
-
-            <vertical-switch-button
-              :data-list="dataList1"
-              button-width="120px"
-              button-height="40px"
-              style="width: 9%"
-              btn-direction="row"
-              @selectBtn="selectBtn"
-            />
-          </div></div
-      ></header-search>
-    </el-header>
-
-    <el-main class="el-main">
-      <!-- <pagePanelNew style="height: 100%"> -->
-      <div class="dom" style="margin-top: 20px; margin-bottom: 20px">
-        <el-row :gutter="20" style="margin-top: -20px">
-          <el-col :span="12">
-            <pagePanel headerTitle="采油速度" style="width: 100%; height: 370px" :isShowMaxBtn="true">
-              <Echart :chart-data="productionSpeed" style="height: 100%"></Echart>
-            </pagePanel>
-          </el-col>
-          <el-col :span="12">
-            <pagePanel headerTitle="采出程度" style="width: 100%; height: 370px" :isShowMaxBtn="true"
-              ><Echart :chart-data="recoveryDegree" style="height: 100%"></Echart
-            ></pagePanel>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <pagePanel headerTitle="采出程度与含水率关系图" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-              <Echart :chart-data="relationship" style="height: 100%"></Echart
-            ></pagePanel>
-          </el-col>
-          <el-col :span="12">
-            <pagePanel headerTitle="注采比" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-              <div class="infoZhu">
-                <span>合理注采比:</span>
-                <el-input-number
-                  v-model="lineStandOne"
-                  :controls="false"
-                  style="width: 180px"
-                  @change="setFirstLine"
-                ></el-input-number>
-                <el-input-number
-                  v-model="lineStandTwo"
-                  :controls="false"
-                  style="width: 180px"
-                  @change="setSecondLine"
-                ></el-input-number>
-              </div>
-              <Echart :chart-data="injectionProductionRatio" style="height: 100%"></Echart>
-            </pagePanel>
-          </el-col>
-        </el-row>
-        <el-row class="mt-5" :gutter="20">
-          <el-col :span="12">
-            <pagePanel headerTitle="地层总压降" style="width: 100%; height: 360px" :isShowMaxBtn="true">
-              <div>
-                <span>合理地层压力；</span>
-                <el-input-number
-                  v-model="lineStandThree"
-                  :controls="false"
-                  style="width: 180px"
-                  @change="setThirdLine"
-                ></el-input-number>
-              </div>
-              <Echart :chart-data="totalFormationPressureDrop" style="height: 100%"></Echart>
-            </pagePanel>
-          </el-col>
-          <el-col :span="12">
-            <pagePanel headerTitle="指标评价结果表" style="width: 100%; height: 360px" :isShowMaxBtn="true">
-              <div class="Dui" style="margin-top: 5px">
-                <span class="f1">对标油田</span>
-                <el-select v-model="fields" class="f2" style="width: 190px" disabled>
-                  <el-option
-                    v-for="item in fieldsData"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                    :disabled="item.disabled"
+                <div class="tab-view">
+                  <el-button
+                    v-for="(module, index) in item.modules"
+                    :key="index"
+                    :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'"
+                    @click="currentModule = module.name"
                   >
-                  </el-option>
-                </el-select>
-                <span class="f1" style="margin-left: 20px">开发阶段</span>
-                <el-select v-model="fields" class="f2" style="width: 190px">
-                  <el-option
-                    v-for="item in fieldsData"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                    :disabled="item.disabled"
-                  >
-                  </el-option>
-                </el-select>
-                <el-button type="primary" style="min-width: 65px" class="jia"> 搜索</el-button>
-                <el-button type="primary" style="min-width: 65px"> 查看</el-button>
-              </div>
-              <div style="width: 100%">
-                <el-table :data="tableData" highlight height="230px" style="margin-top: 10px">
-                  <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
-                  <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
-                  <el-table-column prop="lastPhaseValue" label="上阶段值" align="center"></el-table-column>
-                  <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center"></el-table-column>
-                  <el-table-column label="理论值" align="center">
-                    <template slot-scope="scope">
-                      <el-input-number
-                        v-model="scope.row.theoryValue"
-                        :controls="false"
-                        style="width: 80px"
-                      ></el-input-number>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="diffTheoryValue" label="与理论值对比差值" align="center">
-                    <template slot-scope="scope">
-                      <span>{{
-                        (Number(scope.row.evaluationResult) - Number(scope.row.theoryValue)) | toFixNumberFour
-                      }}</span>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    prop="diffSimilarOilField"
-                    label="与同类型油田比较"
-                    align="center"
-                    width="80"
-                  ></el-table-column>
-                  <el-table-column prop="result" label="结论" align="center" width="80"></el-table-column>
-                </el-table>
-              </div>
-            </pagePanel>
-          </el-col>
-        </el-row>
-      </div>
-      <!-- </pagePanelNew> -->
-    </el-main>
+                    {{ module.label }}
+                  </el-button>
+                </div>
+              </el-tab-pane>
+            </el-tabs>
+          </div>
+          <div
+            class="dom"
+            style="margin-top: 20px; margin-bottom: 20px"
+            v-if="radio1 == 'developmentEffectEvaluation_capacity'"
+          >
+            <el-row :gutter="20" style="margin-top: -20px">
+              <el-col :span="12">
+                <pagePanel headerTitle="采油速度" style="height: 370px;margin-top:0;" :show-btn="true">
+                  <Echart :chart-data="productionSpeed" style="height: 100%"></Echart>
+                </pagePanel>
+              </el-col>
+              <el-col :span="12">
+                <pagePanel
+                  headerTitle="采出程度"
+                  style="width: 100%; height: 370px;margin-top:0;"
+                  :isShowMaxBtn="true"
+                  :show-btn="true"
+                  ><Echart :chart-data="recoveryDegree" style="height: 100%;"></Echart
+                ></pagePanel>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :span="12">
+                <pagePanel
+                  headerTitle="采出程度与含水率关系图"
+                  style="width: 100%; height: 380px"
+                  :isShowMaxBtn="true"
+                  :show-btn="true"
+                >
+                  <Echart :chart-data="relationship" style="height: 100%"></Echart
+                ></pagePanel>
+              </el-col>
+              <el-col :span="12">
+                <pagePanel
+                  headerTitle="注采比"
+                  style="width: 100%; height: 380px"
+                  :isShowMaxBtn="true"
+                  :show-btn="true"
+                >
+                  <div class="infoZhu">
+                    <span>合理注采比:</span>
+                    <el-input-number
+                      v-model="lineStandOne"
+                      :controls="false"
+                      style="width: 180px"
+                      @change="setFirstLine"
+                    ></el-input-number>
+                    <el-input-number
+                      v-model="lineStandTwo"
+                      :controls="false"
+                      style="width: 180px"
+                      @change="setSecondLine"
+                    ></el-input-number>
+                  </div>
+                  <Echart :chart-data="injectionProductionRatio" style="height: 100%"></Echart>
+                </pagePanel>
+              </el-col>
+            </el-row>
+            <el-row class="mt-5" :gutter="20">
+              <el-col :span="12">
+                <pagePanel
+                  headerTitle="地层总压降"
+                  style="width: 100%; height: 360px"
+                  :isShowMaxBtn="true"
+                  :show-btn="true"
+                >
+                  <div style="margin-bottom: 20px">
+                    <span>合理地层压力；</span>
+                    <el-input-number
+                      v-model="lineStandThree"
+                      :controls="false"
+                      style="width: 180px"
+                      @change="setThirdLine"
+                    ></el-input-number>
+                  </div>
+                  <Echart :chart-data="totalFormationPressureDrop" style="height: 100%"></Echart>
+                </pagePanel>
+              </el-col>
+              <el-col :span="12">
+                <pagePanel
+                  headerTitle="指标评价结果表"
+                  style="width: 100%; height: 360px"
+                  :isShowMaxBtn="true"
+                  :show-btn="true"
+                >
+                  <div class="Dui" style="margin-top: 5px">
+                    <span class="f1">对标油田</span>
+                    <el-select v-model="fields" class="f2" style="width: 190px" disabled>
+                      <el-option
+                        v-for="item in fieldsData"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                        :disabled="item.disabled"
+                      >
+                      </el-option>
+                    </el-select>
+                    <span class="f1" style="margin-left: 20px">开发阶段</span>
+                    <el-select v-model="fields" class="f2" style="width: 190px">
+                      <el-option
+                        v-for="item in fieldsData"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                        :disabled="item.disabled"
+                      >
+                      </el-option>
+                    </el-select>
+                    <el-button type="primary" style="min-width: 65px" class="jia"> 检索</el-button>
+                    <el-button type="primary" style="min-width: 65px"> 查看</el-button>
+                  </div>
+                  <div style="width: 100%">
+                    <el-table :data="tableData" highlight height="230px" style="margin-top: 10px">
+                      <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
+                      <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
+                      <el-table-column prop="lastPhaseValue" label="上阶段值" align="center"></el-table-column>
+                      <el-table-column
+                        prop="diffLastPhaseValue"
+                        label="与上阶段对比差值"
+                        align="center"
+                      ></el-table-column>
+                      <el-table-column label="理论值" align="center">
+                        <template slot-scope="scope">
+                          <el-input-number
+                            v-model="scope.row.theoryValue"
+                            :controls="false"
+                            style="width: 70px"
+                          ></el-input-number>
+                        </template>
+                      </el-table-column>
+                      <el-table-column prop="diffTheoryValue" label="与理论值对比差值" align="center">
+                        <template slot-scope="scope">
+                          <span>{{
+                            (Number(scope.row.evaluationResult) - Number(scope.row.theoryValue)) | toFixNumberFour
+                          }}</span>
+                        </template>
+                      </el-table-column>
+                      <el-table-column
+                        prop="diffSimilarOilField"
+                        label="与同类型油田比较"
+                        align="center"
+                        width="80"
+                      ></el-table-column>
+                      <el-table-column prop="result" label="结论" align="center" width="80"></el-table-column>
+                    </el-table>
+                  </div>
+                </pagePanel>
+              </el-col>
+            </el-row>
+          </div>
+          <div v-if="radio1 == 'developmentEffectEvaluation_reserves'">
+            <developmentEffectEvaluation_reserves
+              ref="childComponents"
+              :selectOilField="selectOilField"
+              :selectBlock="selectBlock"
+            ></developmentEffectEvaluation_reserves>
+          </div>
+          <div v-if="radio1 == 'developmentEffectEvaluation_Decreasing'">
+            <developmentEffectEvaluation_Decreasing
+              ref="childComponents"
+              :selectOilField="selectOilField"
+              :selectBlock="selectBlock"
+            ></developmentEffectEvaluation_Decreasing>
+          </div>
+          <div v-if="radio1 == 'developmentEffectEvaluation_water'">
+            <developmentEffectEvaluation_water
+              ref="childComponents"
+              :selectOilField="selectOilField"
+              :selectBlock="selectBlock"
+            ></developmentEffectEvaluation_water>
+          </div>
+        </page-panel-new>
+      </el-main>
+    </div>
   </el-container>
 </template>
 <script>
@@ -215,10 +237,17 @@ import {
   indicatorEveluationResults,
 } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { getWidgetByAreaUser } from "@/api/oilDeposit/rmm-01/rmm01";
+import developmentEffectEvaluation_reserves from "@/pages/rem/developStatus/wellGroupAnalysisAssistant/developmentEffectEvaluation_reserves.vue";
+import developmentEffectEvaluation_Decreasing from "@/pages/rem/developStatus/wellGroupAnalysisAssistant/developmentEffectEvaluation_Decreasing.vue";
+import developmentEffectEvaluation_water from "@/pages/rem/developStatus/wellGroupAnalysisAssistant/developmentEffectEvaluation_water.vue";
+
 export default {
   components: {
     Echart,
     verticalSwitchButton,
+    developmentEffectEvaluation_reserves,
+    developmentEffectEvaluation_Decreasing,
+    developmentEffectEvaluation_water,
   },
   filters: {
     toFixNumberFour(val) {
@@ -238,43 +267,34 @@ export default {
       lineStandThree: 0,
       //油田
       oilField: [],
-      //油田名字
-      oilFieldName: "",
-      //油田选中值
-      selectOilField: "",
       //区块
       block: [],
       //区块选中值
+      selectOilField: "",
       selectBlock: "",
-      radio1: "产能类",
-      dataList1: [
-        { name: "产能类", key: "developmentEffectEvaluation_reserves", isChecked: true },
-        { name: "储量类", key: "developmentEffectEvaluation_reserves", isChecked: false },
-        { name: "含水类", key: "developmentEffectEvaluation_water", isChecked: false },
-        { name: "递减类", key: "developmentEffectEvaluation_Decreasing", isChecked: false },
+      radio1: "developmentEffectEvaluation_capacity",
+      tabs: [
+        {
+          label: "产能类",
+          name: "developmentEffectEvaluation_capacity",
+        },
+        {
+          label: "储量类",
+          name: "developmentEffectEvaluation_reserves",
+        },
+        {
+          label: "含水量",
+          name: "developmentEffectEvaluation_water",
+        },
+        {
+          label: "递减量",
+          name: "developmentEffectEvaluation_Decreasing",
+        },
       ],
       //查询参数
       queryParams: {},
       page: 1,
       pageSize: 10,
-      //油田列表
-      oilFieldList: [
-        {
-          value: "QHD32-6",
-          label: "秦皇岛32-6油田",
-        },
-      ],
-      //区域列表
-      areaList: [
-        {
-          value: "",
-          label: "全部",
-        },
-        {
-          value: "区块1",
-          label: "区块1",
-        },
-      ],
       //采油速度
       productionSpeed: {
         tooltip: {
@@ -293,7 +313,7 @@ export default {
             saveAsImage: {
               name: "采油速度",
               pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: "#022644",
+              backgroundColor: "#698398",
             },
           },
         },
@@ -307,7 +327,7 @@ export default {
         xAxis: {
           type: "category",
           axisLabel: {
-            color: "#8FA4CC",
+            color: "#698398",
           },
           axisTick: {
             show: false,
@@ -321,7 +341,7 @@ export default {
             //x轴线的颜色以及宽度
             show: true,
             lineStyle: {
-              color: "#345ed4",
+              color: "#698398",
               width: 1,
               type: "solid",
             },
@@ -348,13 +368,13 @@ export default {
             axisLine: {
               show: true,
               lineStyle: {
-                color: "#8FA4CC",
+                color: "#2a4e6a",
               },
             },
             splitLine: {
               show: true,
               lineStyle: {
-                color: "#8FA4CC",
+                color: "#2a4e6a",
               },
             },
           },
@@ -366,21 +386,21 @@ export default {
             type: "value",
             minInterval: 0,
             axisLabel: {
-              color: "#8FA4CC",
+              color: "#698398",
             },
             axisTick: {
               show: false,
             },
             axisLine: {
-              show: false,
+              show: true,
               lineStyle: {
-                color: "rgba(151,151,151,.16)",
+                color: "#2a4e6a",
               },
             },
             splitLine: {
               show: true,
               lineStyle: {
-                color: "rgba(255,255,255,.16)",
+                color: "#2a4e6a",
               },
             },
           },
@@ -428,13 +448,13 @@ export default {
           axisLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#2a4e6a",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#2a4e6a",
             },
           },
         },
@@ -453,13 +473,13 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: "#8FA4CC",
+              color: "#2a4e6a",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#2a4e6a",
             },
           },
         },
@@ -510,13 +530,13 @@ export default {
           axisLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#2a4e6a",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#2a4e6a",
             },
           },
         },
@@ -535,13 +555,13 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: "#8FA4CC",
+              color: "#2a4e6a",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#2a4e6a",
             },
           },
         },
@@ -573,14 +593,14 @@ export default {
         xAxis: {
           type: "category",
           axisLabel: {
-            color: "#8FA4CC",
+            color: "#8fa4cc",
           },
           axisTick: {
             show: false,
           },
           axisLine: {
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#2a4e6a",
             },
           },
         },
@@ -602,13 +622,13 @@ export default {
           axisLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#2a4e6a",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#2a4e6a",
             },
           },
         },
@@ -630,11 +650,13 @@ export default {
                   yAxis: 1,
                 },
               ],
+
               lineStyle: {
                 color: "orange",
                 type: "solid",
               },
             },
+
             showSymbol: false,
           },
         ],
@@ -691,13 +713,13 @@ export default {
           axisLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#2a4e6a",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#2a4e6a",
             },
           },
         },
@@ -763,24 +785,15 @@ export default {
       canUpload: false,
     };
   },
-  watch: {},
-  created() {},
   mounted() {
     this.initData();
     //获取权限问题内容
     this.getPageAuthMessage();
   },
   methods: {
-    selectBtn(item) {
-      // console.log(item)
-      this.$router.push({
-        name: item.key,
-        params: {
-          oilFieldId: this.selectOilField,
-          fieldId: this.selectBlock,
-          canDownload: this.canDownload,
-        },
-      });
+    handleClick(tab) {
+      console.log(tab);
+      this.radio1 = tab.name;
     },
     /**
      *  hwh
@@ -869,12 +882,16 @@ export default {
      * 搜索方法
      */
     doSearch() {
-      this.getOutputSpeed(this.selectOilField, this.selectBlock);
-      this.getOutputDegree(this.selectOilField, this.selectBlock);
-      this.getOutputDegreeTongChart(this.selectOilField, this.selectBlock);
-      this.getInjectionProRate(this.selectOilField, this.selectBlock);
-      this.getGeneralPressure(this.selectOilField, this.selectBlock);
-      this.getIndicatorEveluationResults(this.selectOilField, this.selectBlock);
+      if (this.radio1 == "developmentEffectEvaluation_capacity") {
+        this.getOutputSpeed(this.selectOilField, this.selectBlock);
+        this.getOutputDegree(this.selectOilField, this.selectBlock);
+        this.getOutputDegreeTongChart(this.selectOilField, this.selectBlock);
+        this.getInjectionProRate(this.selectOilField, this.selectBlock);
+        this.getGeneralPressure(this.selectOilField, this.selectBlock);
+        this.getIndicatorEveluationResults(this.selectOilField, this.selectBlock);
+      } else {
+        this.$refs.childComponents.doSearch();
+      }
     },
 
     /**
@@ -1206,6 +1223,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+::v-deep .svg-icon {
+}
 ::v-deep .el-main {
   overflow: hidden;
 }
@@ -1271,5 +1290,10 @@ export default {
 }
 .QU {
   padding-left: 10px;
+}
+
+::v-deep .el-input__inner {
+  height: 34px;
+  border: 1px solid #35546d;
 }
 </style>

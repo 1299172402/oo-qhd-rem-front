@@ -903,6 +903,11 @@
       23.2、新版不带标题
     </div>
     <page-panel-new style="height: 600px" :show-btn="true" />
+
+
+
+
+    
     <div class="headerTitle spaceMargin">
       24、自定义info信息窗【建议只在拖拽面板页面使用】=========================================================================================
     </div>

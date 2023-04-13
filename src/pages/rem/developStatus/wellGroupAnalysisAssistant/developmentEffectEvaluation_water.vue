@@ -1,118 +1,60 @@
+<!-- 含水量 -->
 <template>
-  <el-container class="layout">
-    <el-header height="auto">
-      <header-search class="g-w100 g-h100">
-        <div class="py-5 overflow-hidden" style="margin-top: 10px; margin-bottom: -5px">
-          <div class="fl">
-            <span>油田：</span>
-            <el-select v-model="selectOilField" disabled @change="getFetchFields">
-              <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId">
-              </el-option>
-            </el-select>
-            <span class="QU" style="margin-left: 20px">区块：</span>
-            <el-select v-model="selectBlock">
-              <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId">
-              </el-option>
-            </el-select>
-            <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
-              搜索
-            </el-button>
-          </div>
-          <div class="fr overflow-hidden">
-            <!-- <el-radio-group v-model="radio1">
-              <router-link
-                :to="{
-                  name: 'developmentEffectEvaluation_capacity',
-                  params: { oilFieldId: selectOilField, fieldId: selectBlock, canDownload: canDownload },
-                }"
-              >
-                <el-button class="commonBtn" label="产能类" style="margin-right: -20px"> 产能类 </el-button>
-              </router-link>
-              <router-link
-                :to="{
-                  name: 'developmentEffectEvaluation_reserves',
-                  params: { oilFieldId: selectOilField, fieldId: selectBlock, canDownload: canDownload },
-                }"
-              >
-              </router-link>
-
-              <el-button class="commonBtn" label="含水类" style="margin-right: 10px"> 含水类 </el-button>
-
-              <router-link
-                :to="{
-                  name: 'developmentEffectEvaluation_Decreasing',
-                  params: { oilFieldId: selectOilField, fieldId: selectBlock, canDownload: canDownload },
-                }"
-              >
-              </router-link>
-            </el-radio-group> -->
-
-            <vertical-switch-button
-              :data-list="dataList1"
-              button-width="120px"
-              button-height="40px"
-              style="width: 9%"
-              btn-direction="row"
-              @selectBtn="selectBtn"
-            />
-          </div>
-        </div>
-      </header-search>
-    </el-header>
-    <el-main>
-      <!-- <pagePanelNew style="height: 100%; margin-top: 0px"> -->
-      <div class="dom" style="margin-top: 0px">
-        <el-row :gutter="20" style="margin-top: -20px">
-          <el-col :span="12">
-            <pagePanel headerTitle="含水上升率" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-              <Echart :chart-data="rateOfWaterCutRise" style="height: 100%"></Echart>
-            </pagePanel>
-          </el-col>
-          <el-col :span="12">
-            <pagePanel headerTitle="水驱指数" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-              <Echart :chart-data="recoveryDegree" style="height: 100%"></Echart>
-            </pagePanel>
-          </el-col>
-        </el-row>
-        <el-row class="mt-5" :gutter="20">
-          <el-col :span="12">
-            <pagePanel headerTitle="存水率" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-              <Echart :chart-data="waterRate" style="height: 100%"></Echart>
-            </pagePanel>
-          </el-col>
-          <el-col :span="12">
-            <pagePanel headerTitle="指标评价结果表" style="width: 100%; height: 380px" :isShowMaxBtn="true">
-              <div>
-                <el-table :data="tableData" highlight style="margin-top: 10px" height="260">
-                  <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
-                  <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
-                  <el-table-column prop="lastPhaseValue" label="上阶段值" align="center"></el-table-column>
-                  <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center"></el-table-column>
-                  <el-table-column label="理论值" align="center">
-                    <template slot-scope="scope">
-                      <el-input-number
-                        v-model="scope.row.theoryValue"
-                        :controls="false"
-                        style="width: 80px"
-                      ></el-input-number>
-                    </template>
-                  </el-table-column>
-                  <el-table-column label="与理论值对比差值" align="center">
-                    <template slot-scope="scope">
-                      <span>{{
-                        (Number(scope.row.evaluationResult) - Number(scope.row.theoryValue)) | toFixNumberFour
-                      }}</span>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="result" label="结论" align="center"></el-table-column>
-                </el-table></div
-            ></pagePanel>
-          </el-col>
-        </el-row>
-      </div>
-      <!-- </pagePanelNew> -->
-    </el-main>
-  </el-container>
+  <div class="dom">
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <pagePanel headerTitle="含水上升率" style="width: 100%; height: 380px;margin-top:0;" :isShowMaxBtn="true" :show-btn="true">
+          <Echart :chart-data="rateOfWaterCutRise" style="height: 100%"></Echart>
+        </pagePanel>
+      </el-col>
+      <el-col :span="12">
+        <pagePanel headerTitle="水驱指数" style="width: 100%; height: 380px;margin-top:0;" :isShowMaxBtn="true" :show-btn="true">
+          <Echart :chart-data="recoveryDegree" style="height: 100%"></Echart>
+        </pagePanel>
+      </el-col>
+    </el-row>
+    <el-row class="mt-5" :gutter="20">
+      <el-col :span="12">
+        <pagePanel headerTitle="存水率" style="width: 100%; height: 380px" :isShowMaxBtn="true" :show-btn="true">
+          <Echart :chart-data="waterRate" style="height: 100%"></Echart>
+        </pagePanel>
+      </el-col>
+      <!--含水类表格 -->
+      <el-col :span="12">
+        <pagePanel
+          headerTitle="指标评价结果表"
+          style="width: 100%; height: 380px"
+          :isShowMaxBtn="true"
+          :show-btn="true"
+        >
+          <div>
+            <el-table :data="tableData" highlight style="margin-top: 10px" height="260">
+              <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
+              <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
+              <el-table-column prop="lastPhaseValue" label="上阶段值" align="center"></el-table-column>
+              <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center"></el-table-column>
+              <el-table-column label="理论值" align="center">
+                <template slot-scope="scope">
+                  <el-input-number
+                    v-model="scope.row.theoryValue"
+                    :controls="false"
+                    style="width: 80px"
+                  ></el-input-number>
+                </template>
+              </el-table-column>
+              <el-table-column label="与理论值对比差值" align="center">
+                <template slot-scope="scope">
+                  <span>{{
+                    (Number(scope.row.evaluationResult) - Number(scope.row.theoryValue)) | toFixNumberFour
+                  }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column prop="result" label="结论" align="center"></el-table-column>
+            </el-table></div
+        ></pagePanel>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
@@ -129,6 +71,16 @@ export default {
     Echart,
     verticalSwitchButton,
   },
+  props: {
+    selectOilField: {
+      type: String,
+      default: "",
+    },
+    selectBlock: {
+      type: String,
+      default: "",
+    },
+  },
   filters: {
     toFixNumberFour(val) {
       return val.toFixed(4);
@@ -136,45 +88,15 @@ export default {
   },
   data() {
     return {
-      dataList1: [
-        { name: "产能类", key: "developmentEffectEvaluation_capacity", isChecked: false },
-        { name: "储量类", key: "developmentEffectEvaluation_reserves", isChecked: false },
-        { name: "含水类", key: "developmentEffectEvaluation_water", isChecked: true },
-        { name: "递减类", key: "developmentEffectEvaluation_Decreasing", isChecked: false },
-      ],
       //油田
       oilField: [],
-      //油田名字
-      oilFieldName: "",
-      //油田选中值
-      selectOilField: "",
       //区块
       block: [],
       //区块选中值
-      selectBlock: "",
-      radio1: "含水类",
       //查询参数
       queryParams: {},
       page: 1,
       pageSize: 10,
-      //油田列表
-      oilFieldList: [
-        {
-          value: "QHD32-6",
-          label: "秦皇岛32-6油田",
-        },
-      ],
-      //区域列表
-      areaList: [
-        {
-          value: "",
-          label: "全部",
-        },
-        {
-          value: "区块1",
-          label: "区块1",
-        },
-      ],
       //含水上升率
       rateOfWaterCutRise: {
         tooltip: {
@@ -222,13 +144,13 @@ export default {
           axisLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#35546d",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#35546d",
             },
           },
         },
@@ -247,13 +169,13 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: "#8FA4CC",
+              color: "#35546d",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#35546d",
             },
           },
         },
@@ -301,13 +223,13 @@ export default {
           axisLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#35546d",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#35546d",
             },
           },
         },
@@ -327,13 +249,13 @@ export default {
             axisLine: {
               lineStyle: {
                 //color: '#979797'
-                color: "#8FA4CC",
+                color: "#35546d",
               },
             },
             splitLine: {
               show: true,
               lineStyle: {
-                color: "#8FA4CC",
+                color: "#35546d",
               },
             },
           },
@@ -405,13 +327,13 @@ export default {
           axisLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#35546d",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#35546d",
             },
           },
         },
@@ -430,13 +352,13 @@ export default {
           axisLine: {
             lineStyle: {
               //color: '#979797'
-              color: "#8FA4CC",
+              color: "#35546d",
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#8FA4CC",
+              color: "#35546d",
             },
           },
         },
@@ -449,80 +371,19 @@ export default {
     };
   },
   mounted() {
-    this.initData();
+    this.doSearch();
   },
   methods: {
-    selectBtn(item) {
-      this.$router.push({
-        name: item.key,
-        params: { oilFieldId: this.selectOilField, fieldId: this.selectBlock, canDownload: this.canDownload },
-      });
-    },
     /**
      * hwh
      * 设置页面初始化
      * @returns {Promise<void>}
      */
-    async initData() {
-      this.canDownload = this.$route.params.canDownload;
-      this.downPower(this.canDownload);
-      //调用油田接口
-      await fetchOilFields().then((res) => {
-        if (res.data.code == 200) {
-          this.oilField = res.data.data.oilFields;
-          if (this.oilField.length == 0) {
-            this.selectOilField = "";
-          } else {
-            this.selectOilField = this.oilField[0].oilFieldId;
-          }
-        }
-      });
-      let oilFieldId = this.$route.params.oilFieldId;
-      if (oilFieldId == undefined) {
-        //设置默认油田
-        this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
-      } else {
-        this.selectOilField = oilFieldId;
-      }
-      let requestFields = {
-        oilFieldId: this.selectOilField,
-      };
-      //获得区块信息
-      await fetchFields(requestFields).then((res) => {
-        if (res.data.code == 200) {
-          this.block = res.data.data.fields;
-          //区块全部为油田的id。
-          this.selectBlock = this.selectOilField;
-        }
-      });
-      let fieldId = this.$route.params.fieldId;
-      if (fieldId) {
-        this.selectBlock = fieldId;
-      }
-      this.doSearch();
-    },
-    doSearch() {
+     doSearch() {
       this.getWaterContainRaiseChart(this.selectOilField, this.selectBlock);
       this.getWaterIndicatorChart(this.selectOilField, this.selectBlock);
       this.getWaterSotreRateChart(this.selectOilField, this.selectBlock);
       this.getIndicatorResult(this.selectOilField, this.selectBlock);
-    },
-    /**
-     * hwh
-     * 获得区块信息
-     * @param oilFieldId
-     */
-    getFetchFields(oilFieldId) {
-      let request = {
-        oilFieldId: oilFieldId,
-      };
-      fetchFields(request).then((res) => {
-        if (res.data.code == 200) {
-          this.block = res.data.data.fields;
-          //区块全部为油田的id。
-          this.selectBlock = oilFieldId;
-        }
-      });
     },
     /**
      * hwh
@@ -729,11 +590,8 @@ export default {
 }
 .basicTable {
   height: auto;
-  // padding-bottom: 10px;
 }
 .el-card {
-  //border-width: 1px 0;
-  //border-radius: 0;
   border-image: linear-gradient(90deg, rgba(116, 190, 243, 0), rgba(75, 241, 255, 0.5), rgba(116, 190, 243, 0)) 1 1;
   color: #00d6ea;
   font-weight: bold;
@@ -759,5 +617,10 @@ export default {
 }
 ::v-deep .el-radio-button:first-child .el-radio-button__inner {
   border: 1px solid #00d6ea;
+}
+
+::v-deep .el-input__inner {
+  height: 34px;
+  border: 1px solid #35546d;
 }
 </style>
