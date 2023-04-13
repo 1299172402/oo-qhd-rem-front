@@ -123,7 +123,7 @@
                     </div>
                 </div>
                 <info-window infoWidth="100%" infoHeight="100%">
-                    <el-table id="kfxz" :data="tableData2" :header-cell-style="{ background: 'transparent', color: '#fff' }" highlight height="400px">
+                    <el-table id="kfxz" :data="tableData2" highlight height="400px">
                         <el-table-column prop="date" label="时间" align="center" show-overflow-tooltip min-width="200" fixed="left">
                             <template slot-scope="scope">
                                 {{ scope.row.date | dateFormat }}

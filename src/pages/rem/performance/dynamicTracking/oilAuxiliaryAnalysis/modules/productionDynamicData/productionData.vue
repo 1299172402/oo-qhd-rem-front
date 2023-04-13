@@ -14,12 +14,12 @@
         <div class="develop">
             <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
         </div>
-        <info-window infoWidth="100%" infoHeight="250px" headerTitle="单井动态分析" v-show="isDevelop">
+        <info-window infoWidth="100%" infoHeight="190px" headerTitle="单井动态分析" v-show="isDevelop">
             <el-table
                 id="tableData" 
                 :data="tableData" :border="false" :row-style="{ height: '0px' }"
                 header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
-                style="width:100%;" height="250px" :default-sort="{ prop: 'date', order: 'descending' }"
+                style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column prop="prodDate" label="日期"></el-table-column>  
                 <el-table-column prop="prodDuration" :label="`生产时间\n (h)`" width="140"></el-table-column>
@@ -138,7 +138,7 @@
                             left: "14%",
                             top: "68%",
                             width: "74%",
-                            height: "28%"
+                            height: "26%"
                         },
                     ],
                     xAxis: [
@@ -803,7 +803,7 @@
         }
         
         .z-echarts-active{
-            height:calc(100% - 60px - 40px - 250px);
+            height:calc(100% - 60px - 40px - 190px);
         }
         
         .develop{

@@ -41,7 +41,6 @@ export default [
         meta: { title: "观察" },
         component: () => import("@/pages/rem/developStatus/developmentWarning/radioValue.vue"),
       },
-
       {
         hidden: true,
         path: "developmaenWamingterOne",
@@ -49,11 +48,6 @@ export default [
         meta: { title: "历史预警" },
         component: () => import("@/pages/rem/developStatus/developmentWarning/developmaenWamingterOne.vue"),
       },
-
-
-
-
-
       //油藏-开发现状跟踪-开发预警-预警处理
       {
         hidden: true,
@@ -62,7 +56,6 @@ export default [
         name: "warningDisposeOil",
         meta: { title: "预警处理" },
       },
-
       //油藏-开发现状跟踪-开发预警-预警处理1
       {
         hidden: true,
@@ -71,12 +64,11 @@ export default [
         name: "warningDisposeWater",
         meta: { title: "预警处理1" },
       },
-
       {
-        path: "developmentEffectEvaluation_capacity",
-        name: "developmentEffectEvaluation_capacity",
+        path: "developmentEffectEvaluation",
+        name: "developmentEffectEvaluation",
         component: () =>
-          import("@/pages/rem/developStatus/wellGroupAnalysisAssistant/developmentEffectEvaluation_capacity.vue"),
+          import("@/pages/rem/developStatus/developmentEffectEvaluation/index.vue"),
         meta: { title: "开发效果评价" },
       },
     ],
