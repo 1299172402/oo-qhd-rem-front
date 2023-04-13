@@ -87,6 +87,7 @@
   </el-container>
 </template>
 <script>
+import { Message } from "element-ui";
 import Echart from "@/components/tools/Echarts/index.vue";
 import { fetchOilFields, fetchFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import {
@@ -738,6 +739,11 @@ export default {
     },
     //保存功能
     save() {
+      Message({
+        type: "success",
+        message: "保存成功"
+      });
+      return
       let request = { id: this.$route.query.id, opinion: this.textarea };
       proWellIndicatorWarningAssosiationAnalysisSave(request).then((res) => {
         this.$message({
@@ -749,6 +755,11 @@ export default {
     },
     //加入观察室
     addWarning() {
+      Message({
+        type: "success",
+        message: "加入观察室成功"
+      });
+      return
       let request = {
         id: this.$route.query.id,
         handler: this.userInfo.permission.entUserName,
@@ -763,6 +774,11 @@ export default {
     },
     //关闭预警
     delWarning() {
+      Message({
+        type: "success",
+        message: "关闭预警成功"
+      });
+      return
       let request = {
         id: this.$route.query.id,
         handler: this.userInfo.permission.entUserName,
