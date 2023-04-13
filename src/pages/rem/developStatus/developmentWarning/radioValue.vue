@@ -1,254 +1,82 @@
+<!-- 历史预警 -->
 <template>
-  <el-container class="layout">
-    <el-header height="auto"> </el-header>
-    <el-container>
-      <el-header>
-        <el-row style="margin-top: 5px; padding: 0px">
-          <pagePanelNew class="g-row-flex-V g-w100 g-h100">
-            <vertical-switch-button
-              :data-list="dataList1"
-              btn-direction="row"
-              @selectBtn="selectBtn"
-              style="width: 100px; height: 40px; padding: 10px 0px 10px"
-            />
-          </pagePanelNew>
-        </el-row>
-        <div>
-          <el-row style="margin-top: 8px">
-            <div>
-              <!-- <el-button type="primary" class="roundButton" size="mini" round @click="switchParam('1')">
-                新预警（{{ alertCount }})
-              </el-button>
-              <el-button type="primary" class="roundButton" size="mini" round @click="switchParam('2')">
-                预警
-              </el-button>
-              <el-button type="primary" class="roundButton" size="mini" round @click="switchParam('3')">
-                历史预警
-              </el-button> -->
-              <div class="fr overflow-hidden">
-                <el-tabs class="g-pageHeader" v-model="radio1" topline @tab-click="handleClick">
-                  <el-tab-pane
-                    style="height: auto"
-                    v-for="(item, index) in tabs"
-                    :key="index"
-                    :label="item.label"
-                    :name="item.name"
-                  >
-                    <div class="tab-view">
-                      <el-button
-                        v-for="(module, index) in item.modules"
-                        :key="index"
-                        :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'"
-                        @click="currentModule = module.name"
-                      >
-                        {{ module.label }}
-                      </el-button>
-                    </div>
-                  </el-tab-pane>
-                </el-tabs>
-              </div>
+  <div>
+    <el-row>
+      <el-col :span="6">
+        <span class="demonstration">日期：</span>
+        <el-date-picker
+          v-model="historyDateTime"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          value-format="yyyy-MM-dd"
+        >
+        </el-date-picker>
+      </el-col>
+      <el-col :span="4" style="margin-left: 20px">
+        <span class="demonstration">预警：</span>
+        <el-select v-model="warningTypeCode" class="f2" style="width: 180px">
+          <el-option
+            v-for="item in warnings"
+            :key="item.value"
+            :label="item.name"
+            :value="item.value"
+            :disabled="item.disabled"
+          >
+          </el-option>
+        </el-select>
+      </el-col>
+      <el-col :span="4">
+        <div class="fl">
+          <el-button
+            type="primary"
+            class="buttonActive_primary"
+            style="margin-left: 20px; width: 90px"
+            icon="el-icon-search"
+            @click="switchParam('3')"
+            >检索</el-button
+          >
+        </div>
+      </el-col>
+    </el-row>
+    <pagePanelNew style="height: 100%; margin-top: 10px">
+      <el-table  id="tableData" :data="tableData" highlight style="margin-top: 10px">
+        <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
+        <el-table-column prop="theDate" :label="`预警时间 \n(yyyy/mm/dd)`" align="center"></el-table-column>
+        <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
+        <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
+        <el-table-column prop="warningDesc" label="预警描述" align="center"></el-table-column>
+        <el-table-column prop="result" label="处置结果" align="center">
+          <template slot-scope="scope">
+            <div v-if="scope.row.result == null || scope.row.result == ''">
+              <span class="hrefSpan" style="cursor: pointer" href="#" @click="warningDispose(scope.row)">关闭</span>
             </div>
-          </el-row>
-        </div>
-      </el-header>
-
-      <el-main style="margin-top: 60px">
-        <div v-if="radio1 == 'developmaenWamingter'">
-          <developmaenWamingter :beginDate="beginDate" :fieldId="fieldId"></developmaenWamingter>
-        </div>
-
-        <div v-if="radio1 == 'developmaenWamingterOne'">
-          <developmaenWamingterOne></developmaenWamingterOne>
-        </div>
-        <div v-if="radio1 == 'radioValue'">
-          <radioValue></radioValue>
-        </div>
-
-        <div v-if="radioValue == '区块指标预警' && switchNumber == '1'" style="height: 100%">
-          <pagePanelNew style="height: 100%; margin-top: 25px">
-            <el-table :data="tableData" highlight :row-class-name="tableRowClassName">
-              <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
-              <el-table-column prop="theDate" label="预警时间" align="center"></el-table-column>
-              <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
-              <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
-              <el-table-column prop="warningDesc" label="预警描述" align="center"></el-table-column>
-              <el-table-column label="预警分析" align="center">
-                <template slot-scope="scope">
-                  <el-button
-                    v-if="scope.row.disposalStatus == '0' || scope.row.disposalStatus == '1'"
-                    type="text"
-                    size="small"
-                    @click="warningDispose(scope.row)"
-                  >
-                    <span style="color: #ffffff">处理</span>
-                  </el-button>
-                  <el-button type="text" size="small" @click="warningDispose(scope.row)">
-                    <span style="color: #ffffff">查看</span>
-                  </el-button>
-                </template>
-              </el-table-column>
-              <el-table-column label="处置状态" align="center">
-                <template slot-scope="scope">
-                  {{ scope.row.status ? scope.row.status : "-" }}
-                </template>
-              </el-table-column>
-              <el-table-column v-if="false" prop="handler" label="处理人"></el-table-column>
-            </el-table>
-            <pagination :total="total" :page.sync="page" :limit.sync="pageSize" />
-          </pagePanelNew>
-        </div>
-
-        <div v-if="radioValue == '区块指标预警' && switchNumber == '2'" style="height: 100%">
-          <pagePanelNew style="height: 100%; margin-top: 40px">
-            <el-table :data="tableData" highlight>
-              <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
-              <el-table-column prop="theDate" label="预警时间" align="center"> </el-table-column>
-              <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
-              <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
-              <el-table-column prop="warningDesc" label="预警描述" align="center"> </el-table-column>
-              <el-table-column prop="observeDays" label="加入观察室天数" align="center">
-                <template slot-scope="scope">
-                  {{ scope.row.observeDays != null ? scope.row.observeDays : "-" }}
-                </template>
-              </el-table-column>
-              <el-table-column label="预警分析" align="center">
-                <template slot-scope="scope">
-                  <el-button
-                    v-if="scope.row.disposalStatus == '0' || scope.row.disposalStatus == '1'"
-                    type="text"
-                    size="small"
-                    @click="warningDispose(scope.row)"
-                  >
-                    <span style="color: #ffffff">处理</span>
-                  </el-button>
-                  <el-button type="text" size="small" @click="warningDispose(scope.row)">
-                    <span style="color: #ffffff">查看</span>
-                  </el-button>
-                </template>
-              </el-table-column>
-              <el-table-column label="处置状态" align="center">
-                <template slot-scope="scope">
-                  {{ scope.row.status ? scope.row.status : "-" }}
-                </template>
-              </el-table-column>
-            </el-table>
-            <pagination :total="total" :page.sync="page" :limit.sync="pageSize" />
-          </pagePanelNew>
-        </div>
-
-        <div v-if="radioValue == '区块指标预警' && switchNumber == '3'" style="height: 100%">
-          <el-row style="margin-top: 40px">
-            <el-col :span="6">
-              <span class="demonstration">日期：</span>
-              <el-date-picker
-                v-model="historyDateTimeSec"
-                type="datetimerange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-                value-format="yyyy-MM-dd"
-              >
-              </el-date-picker>
-            </el-col>
-            <el-col :span="4" style="margin-left: 20px">
-              <span class="demonstration">预警：</span>
-              <el-select v-model="warningTypeCode" class="f2" style="width: 180px">
-                <el-option
-                  v-for="item in warnings"
-                  :key="item.value"
-                  :label="item.name"
-                  :value="item.value"
-                  :disabled="item.disabled"
-                >
-                </el-option>
-              </el-select>
-            </el-col>
-            <el-col :span="4">
-              <div class="fl">
-                <el-button
-                  type="primary"
-                  class="buttonActive_primary"
-                  icon="el-icon-search"
-                  style="margin-left: 20px; width: 90px"
-                  @click="switchParam('3')"
-                  >搜索</el-button
-                >
-              </div>
-            </el-col>
-          </el-row>
-          <pagePanelNew style="height: 100%; margin-top: 10px">
-            <el-table :data="tableData" highlight style="margin-top: 0px">
-              <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
-              <el-table-column prop="theDate" label="预警时间" align="center"></el-table-column>
-              <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
-              <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
-              <el-table-column prop="warningDesc" label="预警描述" align="center"></el-table-column>
-              <el-table-column prop="result" label="处置结果" align="center">
-                <template slot-scope="scope">
-                  <div v-if="scope.row.result == null || scope.row.result == ''">
-                    <span class="hrefSpan" style="cursor: pointer" href="#" @click="warningDispose(scope.row)"
-                      >关闭</span
-                    >
-                  </div>
-                  <span class="hrefSpan" style="cursor: pointer" href="#" @click="warningDispose(scope.row)">{{
-                    scope.row.result
-                  }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column prop="handler" label="处理人" align="center">
-                <template slot-scope="scope">
-                  {{ scope.row.handler }}
-                </template>
-              </el-table-column>
-              <el-table-column v-if="false" prop="handler" label="处理人"></el-table-column>
-              <el-table-column v-if="false" prop="handler" label="处理人"></el-table-column>
-            </el-table>
-            <pagination :total="total" :page.sync="page" :limit.sync="pageSize" />
-          </pagePanelNew>
-        </div>
-      </el-main>
-    </el-container>
-    <el-header> </el-header>
-  </el-container>
+            <span class="hrefSpan" style="cursor: pointer" href="#" @click="warningDispose(scope.row)">{{
+              scope.row.result
+            }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="handler" label="处理人" align="center">
+          <template slot-scope="scope">
+            {{ scope.row.handler ? scope.row.handler : "-" }}
+          </template>
+        </el-table-column>
+        <el-table-column v-if="false" prop="handler" label="处理人"></el-table-column>
+        <el-table-column v-if="false" prop="handler" label="处理人"></el-table-column>
+      </el-table>
+      <pagination :total="total" :page.sync="page" :limit.sync="pageSize" />
+    </pagePanelNew>
+  </div>
 </template>
+
 <script>
 import { fetchOilFields, fetchFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { oilFieldDevWarnings, fieldDevWarnings } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
-import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
-import developmaenWamingter from "@/pages/rem/developStatus/developmentWarning/developmaenWamingter.vue";
-import developmaenWamingterOne from "@/pages/rem/developStatus/developmentWarning/developmaenWamingterOne.vue";
-import radioValue from "@/pages/rem/developStatus/developmentWarning/radioValue.vue";
+import { getWidgetByAreaUser } from "@/api/oilDeposit/rmm-01/rmm01";
 export default {
-  components: {
-    verticalSwitchButton,
-    developmaenWamingter,
-    developmaenWamingterOne,
-    radioValue,
-  },
   data() {
     return {
-      activeName: "developmentWarning_capacity",
-      dataList1: [
-        { name: "油田指标预警", key: "", isChecked: true },
-        { name: "区块指标预警", key: "", isChecked: false },
-      ],
-
-      // 开发预警
-      radio1: "developmaenWamingter",
-      tabs: [
-        {
-          label: "新预警()",
-          name: "developmaenWamingter",
-        },
-        {
-          label: "观察",
-          name: "developmaenWamingterOne",
-        },
-        {
-          label: "历史预警",
-          name: "radioValue",
-        },
-      ],
       //hwh 修改
       oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
       //预警数量
@@ -258,6 +86,7 @@ export default {
       //当前页
       page: 1,
       //当前页条数
+      selectBtn: "",
       pageSize: 10,
       //div切换变量
       radioValue: "",
@@ -379,6 +208,8 @@ export default {
   },
   //初始化数据
   mounted: function () {
+    //获取权限问题内容
+    this.getPageAuthMessage();
     this.selectOilfieldData(this.dateTime[0], this.dateTime[1], this.oilFieldId, "WARNING");
     if (this.$route.query == undefined) {
       this.radioValue = "油田指标预警";
@@ -395,11 +226,6 @@ export default {
     handleClick(tab) {
       console.log(tab);
       this.radio1 = tab.name;
-    },
-
-    selectBtn(item) {
-      console.log(item);
-      this.activeName = item.name;
     },
 
     //获取油田信息
@@ -704,7 +530,8 @@ export default {
   },
 };
 </script>
-  <style scoped lang="scss">
+
+<style lang='scss' scoped>
 .fl {
   margin-left: 10px;
 }
@@ -767,5 +594,21 @@ export default {
   background-color: #031527;
   border: 1px solid #00def0;
 }
+
+::v-deep .el-form-item__label {
+  white-space: pre-line;
+}
+
+#tableData {
+  ::v-deep .el-table__header-wrapper .cell {
+    height: auto;
+    line-height: 18px;
+    white-space: pre;
+  }
+  ::v-deep .cell:empty {
+    &::before {
+      content: "-";
+    }
+  }
+}
 </style>
-  
