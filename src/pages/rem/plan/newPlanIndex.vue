@@ -49,18 +49,18 @@
             </div>
         </headerSearch>
         <div class="z-container">
-            <pagePanelNew headerTitle="措施管理" style="height:100%;margin-top:0;">
+            <pagePanelNew headerTitle="措施管理" style="height:100%;margin-top:0;padding-top:10px;">
                 <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
                     <span>秦皇岛32-6油田作业计划跟踪</span>
                     <el-button type="primary" icon="el-icon-download" style="height:30px;" @click="doExportFile" v-show="canDownload">下载</el-button>
                 </div>
-                <div class="tableBox" id="tableBox" style="height:calc(100% - 108px)">
+                <div class="tableBox" id="tableBox" style="height:calc(100% - 75px)">
                     <el-table id="csgl"
                         :data="tableData.slice((queryParams.page - 1) * queryParams.pageSize, queryParams.page * queryParams.pageSize)"
                         height="calc(100% - 44px)" :row-style="{ height: '0px' }"
                         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                         header-cell-class-name="table_header" :cell-style="{ padding: '2px', 'text-align': 'center' }"
-                        style="width: 100%; height: 100%;">
+                        style="width: 100%;overflow-x: hidden;">
                         <el-table-column prop="wellNo" label="井号" width="130"></el-table-column>
                         <el-table-column prop="measureName" label="作业类型" width="80"></el-table-column>
                         <el-table-column prop="measureName3" label="措施作业天数(计划/实际)" width="110">
