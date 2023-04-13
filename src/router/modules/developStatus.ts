@@ -54,7 +54,7 @@ export default [
         path: "warningDisposeOil",
         component: () => import("@/pages/rem/developStatus/warningDisposeOil.vue"),
         name: "warningDisposeOil",
-        meta: { title: "预警处理" },
+        meta: { title: "油井预警处理" },
       },
       //油藏-开发现状跟踪-开发预警-预警处理1
       {
@@ -62,7 +62,7 @@ export default [
         path: "warningDisposeWater",
         component: () => import("@/pages/rem/developStatus/warningDisposeWater.vue"),
         name: "warningDisposeWater",
-        meta: { title: "预警处理1" },
+        meta: { title: "水井预警处理" },
       },
       {
         path: "developmentEffectEvaluation",
