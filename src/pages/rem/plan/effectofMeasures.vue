@@ -1,6 +1,6 @@
 <template>
-  <div class="app-container">
-    <headerSearch class="g-w100 g-h100" style="width: 100%; height: calc(100% - 143px)">
+  <div class="app-container" style="height: 100%">
+    <headerSearch class="g-w100 g-h100" style="width: 100%;">
       <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 18px">
         <el-form-item label="日期：">
           <el-date-picker v-model="queryParams.endTime" value-format="yyyy-MM-dd" type="date" placeholder="年/月/日">
@@ -38,12 +38,12 @@
         >
       </el-form>
     </headerSearch>
-    <div>
+    <div style="height: calc(100% - 92px)">
         <el-tabs v-model="activeName" class="g-pageHeader"  @tab-click="selectBtn(activeName)">
             <el-tab-pane :label="item.name" :name="item.value" v-for="(item,index) in dataList"/>
         </el-tabs>
+        <components ref="modal" style="margin-top: -15px; height: 100%" :infodata="1" :is="currentTab" />
     </div>
-    <components ref="modal" style="margin-top: -15px; height: 100%" :infodata="1" :is="currentTab" />
   </div>
 </template>
 <script>
