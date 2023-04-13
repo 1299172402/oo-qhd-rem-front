@@ -3,7 +3,7 @@
     <el-header height="auto"> </el-header>
     <el-container>
       <el-header>
-        <el-row style="margin-top: 5px; padding: 0px">
+        <el-row style="margin-top: -20px; padding: 0px">
           <pagePanelNew class="g-row-flex-V g-w100 g-h100">
             <vertical-switch-button
               :data-list="dataList1"
@@ -52,7 +52,7 @@
         </div>
       </el-header>
 
-      <el-main style="margin-top: 60px">
+      <el-main style="margin-top: 40px">
         <div v-if="radio1 == 'developmaenWamingter'">
           <developmaenWamingter :beginDate="beginDate" :fieldId="fieldId"></developmaenWamingter>
         </div>
@@ -65,7 +65,7 @@
         </div>
 
         <div v-if="radioValue == '区块指标预警' && switchNumber == '1'" style="height: 100%">
-          <pagePanelNew style="height: 100%; margin-top: 25px">
+          <pagePanelNew style="height: 100%">
             <el-table :data="tableData" highlight :row-class-name="tableRowClassName">
               <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
               <el-table-column prop="theDate" label="预警时间" align="center"></el-table-column>

@@ -68,13 +68,9 @@
               </el-input>
             </el-row>
             <div style="margin-top: 20px">
-              <el-button type="primary" class="buttonActive_primary" @click="save()" v-show="ycglKfyj">保存</el-button>
-              <el-button type="primary" class="buttonActive_primary" @click="addWarning()" v-show="ycglKfyj"
-                >加入观察室</el-button
-              >
-              <el-button type="primary" class="buttonActive_primary" @click="delWarning()" v-show="ycglKfyj"
-                >关闭预警</el-button
-              >
+              <el-button type="primary" @click="save()">保存</el-button>
+              <el-button type="primary" class="buttonActive_primary" @click="addWarning()">加入观察室</el-button>
+              <el-button type="primary" class="buttonActive_primary" @click="delWarning()">关闭预警</el-button>
             </div>
           </page-panel-new>
         </el-row>
@@ -618,6 +614,7 @@ export default {
     let warningTypeCode = this.$route.query.warningCode;
     let theDate = this.$route.query.theDate;
     let oilfieldId = this.$route.query.oilfieldId;
+
     if (oilfieldId) {
       this.oilFieldId = oilfieldId;
     }
@@ -796,6 +793,7 @@ export default {
         });
       });
     },
+
     //加入观察室
     addWarning() {
       let request = {

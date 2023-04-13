@@ -27,9 +27,56 @@ export default [
         component: () => import("@/pages/rem/developStatus/developmentWarningCapacity.vue"),
       },
       {
-        path: "developmentEffectEvaluation",
-        name: "developmentEffectEvaluation",
-        component: () => import("@/pages/rem/developStatus/developmentEffectEvaluation/index.vue"),
+        hidden: true,
+        path: "developmaenWamingter",
+        name: "developmaenWamingter",
+        meta: { title: "新预警" },
+        component: () => import("@/pages/rem/developStatus/developmentWarning/developmaenWamingter.vue"),
+      },
+
+      {
+        hidden: true,
+        path: "radioValue",
+        name: "radioValue",
+        meta: { title: "观察" },
+        component: () => import("@/pages/rem/developStatus/developmentWarning/radioValue.vue"),
+      },
+
+      {
+        hidden: true,
+        path: "developmaenWamingterOne",
+        name: "developmaenWamingterOne",
+        meta: { title: "历史预警" },
+        component: () => import("@/pages/rem/developStatus/developmentWarning/developmaenWamingterOne.vue"),
+      },
+
+
+
+
+
+      //油藏-开发现状跟踪-开发预警-预警处理
+      {
+        hidden: true,
+        path: "warningDisposeOil",
+        component: () => import("@/pages/rem/developStatus/warningDisposeOil.vue"),
+        name: "warningDisposeOil",
+        meta: { title: "预警处理" },
+      },
+
+      //油藏-开发现状跟踪-开发预警-预警处理1
+      {
+        hidden: true,
+        path: "warningDisposeWater",
+        component: () => import("@/pages/rem/developStatus/warningDisposeWater.vue"),
+        name: "warningDisposeWater",
+        meta: { title: "预警处理1" },
+      },
+
+      {
+        path: "developmentEffectEvaluation_capacity",
+        name: "developmentEffectEvaluation_capacity",
+        component: () =>
+          import("@/pages/rem/developStatus/wellGroupAnalysisAssistant/developmentEffectEvaluation_capacity.vue"),
         meta: { title: "开发效果评价" },
       },
     ],
