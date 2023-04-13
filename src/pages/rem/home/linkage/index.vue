@@ -1,26 +1,25 @@
 <template>
-    <div class="app-container">
-
-        <div style="margin-top: 20px; height: 200px;">
-            <el-collapse-transition>
+    <div class="container">
+        <div style="position:absolute;left: 32%;">
+            <transition name="el-zoom-in-bottom">
                 <div v-show="show">
                     <div class="transition-box">
+                        <div class="transition-box-content">
 
+                        </div>
                     </div>
                 </div>
-            </el-collapse-transition>
-        </div>
-        <p @mouseover="show = !show" class="textBox">注水设备能力</p>
-        <div style="margin-top: 20px; height: 200px;">
-            <el-collapse-transition>
+            </transition>
+            <p @mouseover="show = !show" style="position: absolute;top: 250px" class="textBox">注水设备能力</p>
+            <transition name="el-zoom-in-top">
                 <div v-show="show">
                     <div class="transition-box-bottom">
-
+                        动设备健康管理模型
                     </div>
                 </div>
-            </el-collapse-transition>
-        </div>
+            </transition>
 
+        </div>
     </div>
 </template>
 
@@ -35,26 +34,43 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.container{
+    height: calc(100% - 20px);
+    background-image: url("@/assets/linkage/liandong-bg.jpg");
+    background-size: 100% 100%;
+}
 .transition-box {
+    background-image: url("@/assets/linkage/linkageBlock.png");
+    background-size: 100% 100%;
     margin-bottom: 10px;
-    width: 300px;
-    height: 200px;
+    width: 400px;
+    height: 300px;
     border-radius: 4px;
-    background-color: #409EFF;
     text-align: center;
     color: #fff;
     padding: 40px 20px;
     box-sizing: border-box;
-    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+}
+.transition-box-content{
+    width:40%;
+    height: 50%;
+    margin-top: 13%;
+    background-image: url("@/assets/linkage/linkageContent1.gif");
+    background-size: 100% 100%;
 }
 .transition-box-bottom {
     margin-bottom: 10px;
+    background-image: url("@/assets/linkage/linkageMessage.png");
+    background-size: 100% 100%;
     width: 300px;
     height: 30px;
     border-radius: 4px;
-    background-color: #409EFF;
     text-align: center;
-    color: #fff;
+    line-height: 15px;
+    font-size: 16px;
+    color: #ccc5c5;
     padding: 40px 20px;
     box-sizing: border-box;
     margin-left: 50px;
