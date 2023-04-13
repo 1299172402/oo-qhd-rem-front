@@ -31,8 +31,8 @@ export default [
       },
       {
         path: 'customQuery',
-        name: 'customQuery',
-        hidden:process.env.NODE_ENV !== 'development',
+        name: 'customQuery', 
+        hidden: env == "development" ? false : true,
         component: () => import('@/pages/rem/basic/customQuery/index.vue'),
         meta: { title: '自定义查询' }
       },
