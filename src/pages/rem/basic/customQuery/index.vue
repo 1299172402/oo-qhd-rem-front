@@ -32,7 +32,7 @@
             </div>
            
         </el-row>
-        <page-panel-new :show-btn="true" v-if="!activeEchart" style="height:auto">
+        <page-panel-new :show-btn="true" v-if="!activeEchart" style="height:calc(100% - 62px)">
             <el-row>
                 <el-col :span="6" style="margin-left: 20px;margin-right: 20px">
                     <page-panel-new :show-btn="true" headerTitle="目标类型">
@@ -58,7 +58,7 @@
                 <el-col :span="9" style="margin-left: 20px;margin-right: 20px">
                     <page-panel-new :show-btn="true" headerTitle="数据类型">
                         <el-radio-group v-model="activeTabIndexData">
-                            <el-radio :label="dataType" v-for="dataType in dataTypes"></el-radio>
+                            <el-radio :label="dataType.val" v-for="dataType in dataTypes">{{dataType.name}}</el-radio>
                         </el-radio-group>
                     </page-panel-new>
                 </el-col>
@@ -109,7 +109,7 @@
                 </el-col>
             </el-row>
         </page-panel-new>
-        <page-panel-new :show-btn="true" v-else-if="activeEchart" style="height:auto">
+        <page-panel-new :show-btn="true" v-else-if="activeEchart" style="height:calc(100% - 62px)">
 <!--            <ProductionData></ProductionData>-->
             <el-table
                 :row-style="{ height: '0px' }"
@@ -117,10 +117,10 @@
                 :data="queryData"
                 header-cell-class-name="table_header"
                 :cell-style="{ padding: '6px', 'text-align': 'center' }"
-                style="margin: 20px 0"
+                style="margin: 20px 0;height: calc(100% - 125px)"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column :key="index" :prop="item.val" :label="item.name" width="110" v-for="(item,index) in headerText"></el-table-column>
+                <el-table-column :key="index" :prop="item.val" :label="item.name" width="110" v-for="(item,index) in headerTextLower"></el-table-column>
             </el-table>
         </page-panel-new>
         <el-dialog
@@ -226,7 +226,7 @@ export default {
             activeEchart:false,
             activeTabIndex: 1,
             activeTabIndexDate:3,
-            activeTabIndexData:'井口生产指标',
+            activeTabIndexData:'wellhead',
             stateValue:[],//状态指标
             productValue:[],//生产指标
             totalValue:[],//累产指标
@@ -234,14 +234,19 @@ export default {
             managerValue:[],//管理指标
             storeValue:[],//储采指标
             dialogVisible: false,
-            ogfId: "",
+            ogfId: "8AE237EBADA04DD59963F1A9F5BF09CE",
             oilFields: [
                 {
-                    oilFieldId: "715AD1CD60484BB59E737CD18A9DE44A",
+                    oilFieldId: "8AE237EBADA04DD59963F1A9F5BF09CE",
                     oilFieldName: "秦皇岛32-6"
                 }
             ],
-            dataTypes:['井口生产指标','计量生产指标','核实生产指标','注入指标'],
+            dataTypes:[
+                { val:'wellhead' ,name:'井口生产指标'},
+                { val:'proProDic' ,name:'计量生产指标'},
+                { val:'verifyPro' ,name:'核实生产指标'},
+                { val:'inject' ,name:'注入指标'}
+            ],
             stateList : 
                 [
                         { val:'PROD_DATE', name :'生产日期' },
@@ -285,26 +290,38 @@ export default {
             tableData:[],//弹窗表格数据
             tableRow:[],
             headerText:[],//生成标题数据
+            headerTextLower:[]
         };
     },
     computed: {
         
     },
+
     watch: {
         // 监听目标类型
         activeTabIndex:{
             handler(Nval){
                 this.activeTabIndexDate = 3
                 if(Nval == 0){
-                    this.activeTabIndexData = '井口生产指标'
-                    this.dataTypes = ['井口生产指标','计量生产指标','核实生产指标','注入指标']
+                    this.activeTabIndexData = 'wellhead'//'井口生产指标'
+                    this.dataTypes = [
+                        { val:'wellhead' ,name:'井口生产指标' },
+                        { val:'proProDic' ,name:'计量生产指标' },
+                        { val:'verifyPro' ,name:'核实生产指标' },
+                        { val:'inject' ,name:'注入指标' }
+                    ]
                 }else{
-                    this.activeTabIndexData = '生产指标'
-                    this.dataTypes = ['生产指标','核实生产指标','油田措施日指标']
+                    this.activeTabIndexData = 'proProDic'//'生产指标'
+                    this.dataTypes =[
+                        { val:'proProDic', name:'生产指标' },
+                        { val:'verifyPro', name:'核实生产指标' },
+                        { val:'暂无字段', name:'油田措施日指标' }
+                    ]
                 }
                 this.changeList()
             }
         },
+        
         //监听年月日
         activeTabIndexDate:{
             handler(Nval){
@@ -312,31 +329,54 @@ export default {
                 if(this.activeTabIndex == 1){
                     switch (Nval) {
                         case 3:
-                            this.activeTabIndexData = '井口生产指标'
-                            this.dataTypes = ['井口生产指标','计量生产指标','核实生产指标','注入指标'] 
+                            this.activeTabIndexData = 'wellhead'//井口生产指标
+                            this.dataTypes = [
+                                { val:'wellhead' ,name:'井口生产指标'},
+                                { val:'proProDic' ,name:'计量生产指标'},
+                                { val:'verifyPro' ,name:'核实生产指标'},
+                                { val:'inject' ,name:'注入指标'}
+                            ] 
                             break;
                         case 2:
-                            this.activeTabIndexData = '井口月生产'
-                            this.dataTypes = ['井口月生产','核实月生产','注入月指标']
+                            this.activeTabIndexData = 'Mwellhead'//'井口月生产'
+                            this.dataTypes = [
+                                { val:'Mwellhead', name:'井口月生产' },
+                                { val:'MverifyPro', name:'核实月生产' },
+                                { val:'Minject', name:'注入月指标' }
+                            ]
                             break;
-                        case 1:
-                            this.activeTabIndexData = '生产指标'
-                            this.dataTypes = ['生产指标','核实生产','注入指标']
+                    case 1:
+                            this.activeTabIndexData = 'YproProDic'//'生产指标'
+                            this.dataTypes = [
+                                { val:'YproProDic', name:'生产指标' },
+                                { val:'YverifyPro', name:'核实生产' },
+                                { val:'Yinject', name:'注入指标' }
+                            ]
                             break;
                     }
                 }else{
                     switch (Nval) {
                         case 3:
-                            this.activeTabIndexData = '生产指标'
-                            this.dataTypes = ['生产指标','核实生产指标','油田措施日指标'] 
+                            this.activeTabIndexData = 'proProDic' //'生产指标'
+                            this.dataTypes = [
+                                { val:'proProDic', name:'生产指标' },
+                                { val:'verifyPro', name:'核实生产指标' },
+                                { val:'暂无字段', name:'油田措施日指标' }
+                            ] 
                             break;
                         case 2:
-                            this.activeTabIndexData = '油田月指标'
-                            this.dataTypes = ['油田月指标','核实生产月指标']
+                            this.activeTabIndexData = 'MproProDic'//'油田月指标'
+                            this.dataTypes = [
+                                { val:'MproProDic', name:'油田月指标' },
+                                { val:'MverifyPro', name:'核实生产月指标' }
+                            ]
                             break;
                         case 1:
-                            this.activeTabIndexData = '生产指标'
-                            this.dataTypes = ['生产指标','核实生产年指标']
+                            this.activeTabIndexData = 'YproProDic'//'生产指标'
+                            this.dataTypes = [
+                                { val:'YproProDic',name:'生产指标' },
+                                { val:'YverifyPro',name:'核实生产年指标' }
+                            ]
                             break;
                     }
                 }
@@ -365,7 +405,7 @@ export default {
             this.storeList = []
             switch (Nval) {
                 //日
-                case '井口生产指标':
+                case 'wellhead'://'井口生产指标':
                     this.stateList = [
                         { val:'PROD_DATE', name :'生产日期' },
                         { val:'NOZZLE_DIAMETER', name :'油嘴直径' },
@@ -405,35 +445,52 @@ export default {
                     this.managerList=[]
                 break;
 
-                case '计量生产指标':
+                case 'proProDic'://'计量生产指标':
                     this.stateList = [
-                        { val :'暂无', name :'计量时间' },
-                        { val :'nozzlediameter', name :'油嘴直径' },
-                        { val :'whtemp', name :'井口温度' },
-                        { val :'oilpress', name :'油压' },
-                        { val :'csgpress', name :'套压' },
-                        { val :'dhflowingtemp', name :'井底流温' },
-                        { val :'dhflowingpress', name :'井底流压' },
-                        { val :'pumpfrequency', name :'泵频率' },
-                        { val :'pumpcurrent', name :'泵电流' },
-                        { val :'pumpvoltage', name :'泵电压' },
-                        { val :'pumpinlettemp', name :'泵入口温度' },
-                        { val :'pumpmotortemp', name :'泵马达温度' },
-                        { val :'pumpinletpress', name :'泵入口压力' },
-                        { val :'pumpoutletpress', name :'泵出口压力' },
-                        { val :'gasliftchokediameter', name :'气举嘴直径' },
-                        { val :'gasliftpress', name :'气举压力' }
+                        { val:'CALCUL_DATE',name: '计量时间' },
+                        { val:'NOZZLE_DIAMETER',name: '油嘴直径' },
+                        { val:'WH_TEMP',name: '井口温度' },
+                        { val:'OIL_PRESS',name: '油压' },
+                        { val:'CSG_PRESS',name: '套压' },
+                        { val:'DH_FLOWING_TEMP',name: '井底流温' },
+                        { val:'DH_FLOWING_PRESS',name: '井底流压' },
+                        { val:'PUMP_FREQUENCY',name: '泵频率' },
+                        { val:'PUMP_CURRENT',name: '泵电流' },
+                        { val:'PUMP_VOLTAGE',name: '泵电压' },
+                        { val:'PUMP_INLET_TEMP',name: '泵入口温度' },
+                        { val:'PUMP_MOTOR_TEMP',name: '泵马达温度' },
+                        { val:'PUMP_INLET_PRESS',name: '泵入口压力' },
+                        { val:'PUMP_OUTLET_PRESS',name: '泵出口压力' },
+                        { val:'GAS_LIFT_CHOKE_DIAMETER',name: '气举嘴直径' },
+                        { val:'GAS_LIFT_PRESS',name: '气举压力' }
                     ],
-                    this.productList = ['实际日产液','实际日产油','实际日产水','实际日产气','折算日产液','折算日产油','折算日产水','折算日产气','含水','气油比','油气比','水气比'],
+                    this.productList = [
+                        { val: 'ACTUAL_DAILY_LIQUID_PROD', name: '实际日产液' },
+                        { val: 'ACTUAL_DAILY_OIL_PROD', name: '实际日产油' },
+                        { val: 'ACTUAL_DAILY_WATER_PROD', name: '实际日产水' },
+                        { val: 'ACTUAL_DAILY_GAS_PROD', name: '实际日产气' },
+                        { val: 'WATER_RATIO', name: '含水' },
+                        { val: 'GAS_OIL_RATIO', name: '气油比' },
+                        { val: 'OIL_GAS_RATIO', name: '油气比' },
+                        { val: 'WATER_GAS_RATIO', name: '水气比' }
+                    ],
                     this.totalList=[],
                     this.injectList=[],
                     this.managerList=[]
                 break;
-            case '核实生产指标':
+            case 'verifyPro'://'核实生产指标':
                 if(this.activeTabIndex == '1'){
                     this.stateList = [],
-                    this.productList = ['日核实产量','日核实油当量','日权益产量','日权益油当量','日净产量','日净产油当量'],
-                    this.totalList=['月累核实产量','月累核实油当量','月累权益产量','月累权益油当量','月累净产量','月累净产油当量','年累核实产量','年累核实油当量','年累权益产量','年累权益油当量','年累净产量','年累净产油当量'],
+                    this.productList = [
+                        { val: 'DAILY_VE_PROD', name: '日核实产量' },
+                        { val: 'DAILY_CUMU_NET_PROD', name: '日净产量' }
+                    ],
+                    this.totalList=[
+                        { val: 'MONTHLY_VE_PROD', name: '月累核实产量' },
+                        { val: 'MONTHLY_CUMU_NET_PROD', name: '月累净产量' },
+                        { val: 'YEAR_VE_PROD', name: '年累核实产量' },
+                        { val: 'YEAR_CUMU_NET_PROD', name: '年累净产量' }
+                    ],
                     this.injectList=[],
                     this.managerList=[]
                 }else{
@@ -445,48 +502,110 @@ export default {
                 }
                 break;
 
-            case '注入指标':
-                this.stateList = ['生产时间','水嘴直径','干线压力','油压','套压','静压','流压','日注入量','日配注量'],
-                    this.productList = ['月累生产时间','年累生产时间','总累生产时间','月累注入量','年累注入量','总累注入量'],
-                    this.totalList=[],
-                    this.injectList=[],
-                    this.managerList=[]
-                break;
-            case '措施日增产':
-                this.stateList = ['生产时间','水嘴直径','干线压力','油压','套压','静压','流压','日注入量','日配注量'],
-                    this.productList = ['月累生产时间','年累生产时间','总累生产时间','月累注入量','年累注入量','总累注入量'],
-                    this.totalList=[],
-                    this.injectList=[],
-                    this.managerList=[]
+            case 'inject'://'注入指标':
+                this.stateList = [
+                    { val:'PROD_DATE', name: '生产时间' },
+                    { val:'WATER_NOZZLE_DIAMETER', name: '水嘴直径' },
+                    { val:'MAINLINE_PRESSURE', name: '干线压力' },
+                    { val:'DH_FLOWING_TEMP', name: '油压' },
+                    { val:'CSG_PRESS', name: '套压' },
+                    { val:'STATIC_PRESS', name: '静压' },
+                    { val:'FLOW_PRESS', name: '流压' },
+                    { val:'DAILY_INJECTION_VOLUME', name: '日注入量' },
+                    { val:'DAILY_INJECTION_VOLUME', name: '日配注量' }
+                ],
+                this.productList = [
+                    { val:'MONTHLY_CUMULATIVE_PRODUCTION_TIME', name:'月累生产时间'},
+                    { val:'YEAR_CUMULATIVE_PRODUCTION_TIME', name:'年累生产时间'},
+                    { val:'MONTHLY_CUMULATIVE_INJECTION_VOLUME', name:'月累注入量'},
+                    { val:'YEAR_CUMULATIVE_INJECTION_VOLUME', name:'年累注入量'},
+                    { val:'REMARK', name:'备注'}
+                ],
+                this.totalList=[],
+                this.injectList=[],
+                this.managerList=[]
                 break;
                 //月   
-            case '井口月生产':
-                this.stateList = ['月生产天数','油嘴','井口温度','油压','套压','回压','泵吸入口压力','泵出口压力'],
-                    this.productList = ['月产液','月产油','月产水','月产气','日产液水平','日产油水平','日产水水平','日产气水平','日产液能力','日产油能力','日产水能力','日产气能力','气油比','油气比','水气比','含水'],
-                    this.totalList=['年累生产天数','总累生产天数','年累产液','年累产油','年累产水','年累产气','总累产液','总累产油','总累产水','总累产气'],
-                    this.injectList=[],
-                    this.managerList=[]
+            case 'Mwellhead'://'井口月生产':
+                this.stateList = [
+                    { val:'MONTHLY_PROD_DAYS', name:'月生产天数' },
+                    { val:'OIL_NOZZLE', name:'油嘴' },
+                    { val:'WH_TEMP', name:'井口温度' },
+                    { val:'DH_FLOWING_TEMP', name:'油压' },
+                    { val:'CSG_PRESS', name:'套压' },
+                    { val:'BACK_PRESS', name:'回压' },
+                    { val:'PUMP_INLET_PRESS', name:'泵吸入口压力' },
+                    { val:'PUMP_OUTLET_PRESS', name:'泵出口压力' }
+                ],
+                this.productList = [
+                    { val:'MONTHLY_LIQUID_PROD_',name:'月产液' },
+                    { val:'MONTHLY_OIL_PROD_',name:'月产油' },
+                    { val:'MONTHLY_WATER_PROD_',name:'月产水' },
+                    { val:'MONTHLY_GAS_PROD_',name:'月产气' },
+                    { val:'DAILY_LIQUID_PROD__LEVEL',name:'日产液水平' },
+                    { val:'DAILY_OIL_PROD__LEVEL',name:'日产油水平' },
+                    { val:'DAILY_WATER_PROD__LEVEL',name:'日产水水平' },
+                    { val:'DAILY_GAS_PROD__LEVEL',name:'日产气水平' },
+                    { val:'DAILY_LIQUID_PROD__CAP',name:'日产液能力' },
+                    { val:'DAILY_OIL_PROD__CAP',name:'日产油能力' },
+                    { val:'DAILY_WATER_PROD__CAP',name:'日产水能力' },
+                    { val:'DAILY_GAS_PROD__CAP',name:'日产气能力' },
+                    { val:'GAS_OIL_RATIO',name:'气油比' },
+                    { val:'OIL_GAS_RATIO',name:'油气比' },
+                    { val:'WATER_GAS_RATIO',name:'水气比' },
+                    { val:'WATER_RATIO',name:'含水' }
+
+                ],
+                this.totalList=[
+                    { val:'YEAR_CUMU_PROD_DAILY', name:'年累生产天数' },
+                    { val:'YEAR_CUMU_FLUID_PROD', name:'年累产液' },
+                    { val:'YEAR_CUMU_OIL_PROD', name:'年累产油' },
+                    { val:'YEAR_ACCUM_WATER_PROD', name:'年累产水' },
+                    { val:'YEAR_CUMU_GAS_PROD', name:'年累产气' }
+                ],
+                this.injectList=[],
+                this.managerList=[]
                 break;
-            case '核实月生产':
+            case 'MverifyPro'://'核实月生产':
                 this.stateList = [],
-                    this.productList = [],
-                    this.totalList = ['月累核实产量','月累核实油当量','月累权益产量','月累权益油当量','月累净产量','月累净产油当量'],
-                    this.injectList=[],
-                    this.managerList=[]
+                this.productList = [],
+                this.totalList = [
+                    { val:'MONTHLY_VE_PROD', name:'月累核实产量' },
+                    { val:'MONTHLY_CUMU_NET_PROD', name:'月累净产量' }
+                ],
+                this.injectList=[],
+                this.managerList=[]
                 break;
-            case '注入月指标':
-                this.stateList = ['月生产天数','水嘴直径','干线压力','油压','套压','日配注入量','日均注入量'],
-                    this.productList = [],
-                    this.totalList = [],
-                    this.injectList = ['年累生产天数','总累生产天数','月注入量','年累注入量','总累注入量'],
-                    this.managerList=[]
+            case 'Minject'://'注入月指标':
+                this.stateList = [
+                    { val:'MONTHLY_PROD_DAYS',name:'月生产天数' },
+                    { val:'WATER_NOZZLE_DIAMETER',name:'水嘴直径' },
+                    { val:'MAINLINE_PRESSURE',name:'干线压力' },
+                    { val:'DH_FLOWING_TEMP',name:'油压' },
+                    { val:'CSG_PRESS',name:'套压' },
+                    { val:'DAILY_INJ_VOL',name:'日配注入量' },
+                    { val:'DAILY_AVG_INJ_VOL',name:'日均注入量' }
+                ],
+                this.productList = [],
+                this.totalList = [],
+                this.injectList = [
+                    { val:'YEAR_CUMU_PROD_DAILY', name:'年累生产天数' },
+                    { val:'MONTHLY_INJECT_VOL', name:'月注入量' },
+                    { val:'YEAR_CUMUL_INJ_VOLUME', name:'年累注入量' }
+                ],
+                this.managerList=[]
                 break;
                 //年
-            case '生产指标':
-                console.log(this.activeTabIndexDate);
+            case 'YproProDic'://'生产指标':
                 if(this.activeTabIndex == '1'){
                     this.stateList = [],
-                        this.productList = ['年累生产天数','总累生产天数','年产液','年产油','年产水','累产液','累产油','累产水','累产气'],
+                        this.productList = [
+                            { val:'YEAR_CUMU_PROD_DAILY', name:'年累生产天数' },
+                            { val:'FLUID_PROD_YEAR', name:'年产液' },
+                            { val:'OIL_PROD_YEAR', name:'年产油' },
+                            { val:'WATER_PROD_YEAR', name:'年产水' },
+                            { val:'GAS_PROD_YEAR', name:'年产气' }
+                        ],
                         this.totalList = [],
                         this.injectList = [],
                         this.managerList=[]
@@ -505,29 +624,53 @@ export default {
                 }
 
                 break;
-            case '核实生产':
+            case 'YverifyPro'://'核实生产':
                 this.stateList = [],
                     this.productList = [],
-                    this.totalList = ['年累核实产量','年累核实油当量','年累权益产量','年累权益油当量','年累净产量','年累净产油当量'],
+                    this.totalList = [
+                        { val:'MONTHLY_VE_PROD', name:'年累核实产量' },
+                        { val:'MONTHLY_CUMU_NET_PROD', name:'年累净产量' }
+                    ],
                     this.injectList = [],
                     this.managerList=[]
                 break;
-            case '注入指标':
+            case 'Yinject'://'注入指标':
                 this.stateList = [],
-                    this.productList = ['年累生产天数','总累生产天数','年累注入量','总累注入量'],
+                    this.productList = [
+                        { val:'YEAR_CUMU_PROD_DAILY', name:'年累生产天数' },
+                        { val:'YEAR_CUMUL_INJ_VOLUME', name:'年累注入量' }
+                    ],
                     this.totalList = [],
                     this.injectList = [],
                     this.managerList=[]
                 break;
             case '油田措施日指标':
                 this.stateList = [],
-                    this.productList = ['日增产液','日增产油','日增产水','日增产气'],
-                    this.totalList = ['月累增产液','月累增产油','月累增产水','月累增产气','年累增产液','年累增产油','年累增产水','年累增产气'],
+                    this.productList = [
+                        { val:'DAILY_PROD_LIQUID', name:'日增产液'},
+                        { val:'DAILY_INCOIL_PROD', name:'日增产油'},
+                        { val:'DAILY_INCWATER_PROD', name:'日增产水'},
+                        { val:'DAILY_INCGAS_PROD', name:'日增产气'}
+                    ],
+                    this.totalList = [
+                        { val:'MONTHLY_ACCUM_PROD_SOLUT', name:'月累增产液'},
+                        { val:'MONTHLY_CUMUL_INC_OIL_PROD', name:'月累增产油'},
+                        { val:'MONTHLY_CUMUL_INC_WATER_PROD', name:'月累增产水'},
+                        { val:'MONTHLY_CUMUL_INC_GAS_PROD', name:'月累增产气'},
+                        { val:'YEAR_CUMUL_YIELD_INCREASE_LIQUID', name:'年累增产液'},
+                        { val:'YEAR_CUMUL_INCR_OIL_PROD', name:'年累增产油'},
+                        { val:'YEAR_CUMUL_INCR_WATER_PROD', name:'年累增产水'},
+                        { val:'YEAR_CUMUL_INCR_GAS_PROD', name:'年累增产气'}
+                    ],
                     this.injectList = [],
-                    this.managerList=['日措施井次','月累措施井次','年累措施井次']
+                    this.managerList=[
+                        { val:'DAILY_MEASURE_WELLS', name:'日措施井次' },
+                        { val:'MONTHLY_CUMUL_COUNT', name:'月累措施井次' },
+                        { val:'YEAR_CUMUL_COUNT', name:'年累措施井次' }
+                    ]
                 break;
                 //文档不全
-            case '油田月指标':
+            case 'MproProDic'://'油田月指标':
                 this.stateList = [],
                     this.productList = ['综合含水','含水上升率','综合气油比','总递减率','老井自然递减率','老井综合递减率','平均单井开井天数','日均产液','日均产油','日均产水','日均产气','日产液水平','日产油水平','日产水水平','日产气水平','日产液能力','日产油能力','日产水能力','日产气能力','平均单井日产液','平均单井日产油','平均单井日产水','平均单井日产气','平均单井日产液水平','平均单井日产油水平','平均单井日产水水平','平均单井日产气水平','平均单井日产液能力','平均单井日产水能力','平均单井日产气能力'],
                     this.totalList = [],
@@ -535,14 +678,14 @@ export default {
                     this.managerList=[],
                     this.storeList = ['井口储采比','井口采油速度','井口采出油速度','剩余油储量','剩余气储量','剩余油采出速度','剩余气采出速度','剩余油采出程度','剩余气采出程度']
                 break;
-            case '核实生产月指标':
+            case 'MverifyPro'://'核实生产月指标':
                     this.stateList = [],
                     this.productList = [],
                     this.totalList = ['月累核实生产','月累核实油当量','月累权益产量','月累权益油当量','月累净产量','月累净产油当量'],
                     this.injectList = [],
                     this.managerList=[]
                 break;
-            case '核实生产年指标':
+            case 'YverifyPro'://'核实生产年指标':
                 this.stateList = [],
                     this.productList = [],
                     this.totalList = ['年累核实产量','年累核实油当量','年累权益产量','年累权益油当量','年累净产量','年累净产油当量'],
@@ -559,7 +702,6 @@ export default {
             if(this.activeEchart){
                 this.activeEchart = false
             }else{
-                // this.$message.success("点击了查询" + this.stateValue);
                 this.dialogVisible = true
                 this.tableData = []
                 let newArr = this.stateValue.concat(this.productValue,this.totalValue,this.injectValue,this.managerValue,this.storeValue)
@@ -573,24 +715,33 @@ export default {
                     })
                 }
                 let header = this.stateList.concat(this.productList,this.totalList,this.injectList,this.managerList,this.storeList)
-                console.log(header);
-                console.log(this.tableData);
                 this.headerText = []
                 for(let i = 0;i<tableArr.length;i++){
                     this.headerText.push(header.filter((item) =>{
                         return item.val == tableArr[i].name
                     })[0])
                 }
-                console.log(this.headerText);
+                this.headerTextLower = []
+                this.headerText.forEach((item)=>{
+                    this.headerTextLower.push({val:item.val.toLowerCase().replace(/_/g,''),name:item.name})
+                })
+                console.log(this.headerTextLower);
                 this.tableData = tableArr
-                console.log(process.env.NODE_ENV);
             }
         },
         confirm(){
-            let sqlList = []
+            let sqlStrAnd = '',sqlStrOr = ''
             this.tableRow.forEach((item)=>{
-                sqlList.push(`( ${item.type} ${item.name} ${item.model} ${item.val} )`)
+                if(item.type == 'AND'){
+                    sqlStrAnd+=`${item.type} ${item.name} ${item.model} ${item.val} `                    
+                }else{
+                    sqlStrOr+=`${item.type} ${item.name} ${item.model} ${item.val} `
+                }
             })
+            let sqlStr = sqlStrAnd + sqlStrOr
+            if (sqlStrOr) {sqlStr =  sqlStr.slice(0, sqlStr.lastIndexOf('AND')) + '( ' + sqlStr.slice(sqlStr.lastIndexOf('AND')) + ')'}else{
+                sqlStr = sqlStrAnd
+            }
             let condList = this.stateValue.concat(this.productValue,this.totalValue,this.injectValue,this.managerValue,this.storeValue)
             let condListFormat = []
             condList.forEach((item)=>{
@@ -600,19 +751,18 @@ export default {
             this.activeEchart = !this.activeEchart
             let params = {
                 condList:condListFormat,//字段名字
-                sqlSent:sqlList,//拼接sql
+                sqlSent:sqlStr,//拼接sql
                 targetType: this.activeTabIndex, //目标类型 井：1  油田 ：2
-                dataType:  'wellhead' , //数据类型 （井口指标，计量指标等）
+                dataType:  this.activeTabIndexData , //数据类型 （井口指标，计量指标等）
                 timeType:  this.activeTabIndexDate , //时间类型 1 年 2月 3 日
                 startTime:  this.selectDate[0], //开始时间
-                endTime: this.selectDate[0],//结束时间
-                dataId:'BE6D76EC53E54A1E9B4F41DB1C204DDF',//油井或油田idn
-                // dataId:this.ogfId
+                endTime: this.selectDate[1],//结束时间
+                // dataId:'BE6D76EC53E54A1E9B4F41DB1C204DDF',//油井或油田idn
+                dataId:this.ogfId
             }
             queryCustomQueryList( params ).then((res)=>{
-                this.queryData = res.data.data.data
-                console.log(this.queryData);
-                console.log(this.tableData);
+                console.log(res);
+                this.queryData = res.data
             })
         },
         addRow(val){
