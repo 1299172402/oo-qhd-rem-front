@@ -8,13 +8,13 @@
                 <el-option :label="item.name" :value="item.code" v-for="(item,index) in selectAllocOrCalculate" :key="index"></el-option>
             </el-select>
         </div> 
-        <div class="z-echarts">
+        <div class="z-echarts" :class="[isDevelop?'z-echarts-active':'']">
             <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
         </div>   
         <div class="develop">
             <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
         </div>
-        <info-window infoWidth="100%" infoHeight="300px" headerTitle="单井动态分析" v-show="isDevelop">
+        <info-window infoWidth="100%" infoHeight="250px" headerTitle="单井动态分析" v-show="isDevelop">
             <el-table
                 id="tableData" 
                 :data="tableData" :border="false" :row-style="{ height: '0px' }"
@@ -778,11 +778,9 @@
             //展示|收缩
             tapDevelop(){
                 this.isDevelop=!this.isDevelop;
-                if(this.isDevelop){
-                    this.$nextTick(()=>{
-                        this.$refs.zMain.scrollTop=10000;
-                    })
-                }
+                this.$nextTick(()=>{
+                    this.$refs.echartDown.chart.resize();
+                })
             },
         }
     }
@@ -792,15 +790,22 @@
     .z-main{
         width: 100%;
         height:calc(100% - 101px);
-        overflow-x: hidden;
-        overflow-y: scroll;
+        // overflow-x: hidden;
+        // overflow-y: scroll;
         .z-search{
             height:60px;
         }
+        
         .z-echarts{
             width:100%;
-            height:490px;
+            // height:490px;
+            height:calc(100% - 60px - 40px);
         }
+        
+        .z-echarts-active{
+            height:calc(100% - 60px - 40px - 250px);
+        }
+        
         .develop{
             height:40px;
             display: flex;
@@ -830,6 +835,7 @@
                 100% {transform: translate(0px, 0px);}
             }
         }
+        
         #tableData{
             ::v-deep .el-table__header-wrapper .cell{
                 height: auto;

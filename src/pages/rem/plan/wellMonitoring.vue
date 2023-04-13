@@ -1,256 +1,247 @@
 <!-- 措施效果跟踪 -->
 <template>
     <div class="app-container">
-        <pagePanelNew headerTitle="措施效果跟踪" style="height:100%;marginTop:0;">
-            <div class="layout">
-                <div class="searchBox">
-                    <div class="titleBox">
-                        <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;">
-                            措施效果跟踪
-                            <el-button type="primary" style="height:30px;" @click="switchToBack">返回</el-button>
+        <div class="titleBox">
+            <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;">
+                措施效果跟踪
+                <el-button type="primary" style="height:30px;" @click="switchToBack">返回</el-button>
+            </div>
+        </div>
+        <headerSearch style="height:80px;margin-bottom:14px;">
+            <div class="g-row-flex-V g-w100 g-h100">
+                <div style="margin-right:15px;">
+                    <span>油田：</span>
+                    <el-select v-model="selectOilField" class="f2" disabled @change="onFieldChange">
+                       <el-option v-for="(item, index) in oilFields" :key="index" :label="item.name" :value="item.oilFieldId"></el-option>
+                    </el-select>
+                </div>
+                <div style="margin-right:15px;">
+                    <span>平台：</span>
+                    <el-select v-model="selectPlatform" class="f2" style="width: 220px;" @change="onPlatfromChange">
+                       <el-option v-for="(item, index) in platforms" :key="index" :label="item.platName" :value="item.platFormId"></el-option>
+                    </el-select>
+                </div>
+                <div style="margin-right:15px;">
+                    <span>井号：</span>
+                    <el-select v-model="selectWellId" filterable class="f2">
+                       <el-option v-for="(item, index) in wells" :key="index" :label="item.wellName" :value="item.wellId"></el-option>
+                    </el-select>
+                </div>
+                <div style="margin-right:15px;">
+                    <span>措施事件：</span>
+                    <el-select v-model="measuresType" class="f2">
+                      <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name" :value="item.code">
+                      </el-option>
+                    </el-select>
+                </div>
+                <div style="margin-right:15px;">
+                    <span>时间:</span>
+                    <el-date-picker class="f3" v-model="dateTime" style="margin-left:10px" type="year" placeholder="选择日期" value-format="yyyy"></el-date-picker>
+                </div>
+                <el-button type="primary" icon="el-icon-search" size="mini" @click="doSearch">搜索</el-button>
+            </div>
+        </headerSearch>
+        <div style="height: 125px;padding-top:0;margin-bottom:14px;" class="svg">
+            <el-table v-show="type == 0" highlight :data="oilWellTableData" style="width: 100%" height="100%">
+                <el-table-column type="index" align="center" width="50" label="序号"></el-table-column>
+                <el-table-column prop="wellName" align="center" label="井号" width="130"></el-table-column>
+                <el-table-column prop="beginDate" align="center" label="措施开始日期" width="110px"></el-table-column>
+                <el-table-column prop="endDate" align="center" label="措施结束日期" width="110px"></el-table-column>
+                <el-table-column align="center" label="措施前生产情况">
+                    <el-table-column align="center" label="日产液 (m³)" width="80" prop="bmLiquidDaily"></el-table-column>
+                    <el-table-column align="center" label="日产油 (m³)" width="80" prop="bmOilDaily"> </el-table-column>
+                    <el-table-column align="center" label="含水率 (%)" width="80" prop="bmWaterCut"></el-table-column>
+                </el-table-column>
+                <el-table-column align="center" label="措施效果">
+                    <el-table-column align="center" label="当日日增油 (m³)" width="110" prop="incOilDaily"></el-table-column>
+                    <el-table-column align="center" label="累增油 (m³)" width="80" prop="sumOilDaily"></el-table-column>
+                    <el-table-column prop="days" align="center" label="增产有效期 (d)" width="100"></el-table-column>
+                    <el-table-column prop="geoDesignOilDaily" align="center" label="地质设计日增油 (m³)" width="130"></el-table-column>
+                    <el-table-column prop="avgOilDaily" align="center" label="平均日增油 (m³/d)" width="100"></el-table-column>
+                    <el-table-column prop="" align="center" label="滚动预测日增油 (m³/d)" width="140"></el-table-column>
+                </el-table-column>
+                <el-table-column label="地质设计" align="center">
+                    <template slot-scope="scope">
+                        <div v-if="scope.row.geoDesg" class="chicked">
+                            <el-button type="text" @click="switchToPlan(scope.row.geoDesg, scope.row.geoDesgSl)" :disabled="!canDownload">方案查看</el-button>
+                        </div>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="工艺设计" align="center">
+                    <template slot-scope="scope">
+                        <div v-if="scope.row.oprgProcDesg" class="chicked">
+                            <el-button type="text"
+                                @click="switchToPlan(scope.row.oprgProcDesg, scope.row.oprgProcDesgSl)"
+                                :disabled="!canDownload">方案查看
+                            </el-button>
+                        </div>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="施工设计" align="center">
+                    <template slot-scope="scope">
+                        <div v-if="scope.row.oprgDesg" class="chicked">
+                            <el-button type="text"
+                                @click="switchToPlan(scope.row.oprgDesg, scope.row.oprgDesgSl)"
+                                :disabled="!canDownload">方案查看
+                            </el-button>
+                        </div>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <el-table v-show="type == 1" highlight :data="waterWellTableData" style="width: 100%" height="100%">
+                <el-table-column type="index" align="center" width="60" label="序号"></el-table-column>
+                <el-table-column prop="wellNo" align="center" label="井号" width="160"></el-table-column>
+                <el-table-column prop="beginDate" align="center" label="措施开始日期" min-width="110px"></el-table-column>
+                <el-table-column prop="endDate" align="center" label="措施结束日期" min-width="110px"></el-table-column>
+                <el-table-column align="center" label="措施前注入情况" min-width="100">
+                    <el-table-column align="center" label="日注水量 m³/d" min-width="100" prop="bmInjWater"></el-table-column>
+                </el-table-column>
+                <el-table-column align="center" label="措施效果">
+                    <el-table-column prop="injDaily" align="center" label="当日日增注 m³/d" min-width="100"></el-table-column>
+                    <el-table-column align="center" label="累增注 m³" min-width="100" prop="sumInjDaily"></el-table-column>
+                    <el-table-column align="center" label="增注有效期 d" min-width="100" prop="days"></el-table-column>
+                    <el-table-column align="center" label="地质设计日配注 m³/d" min-width="120" prop="geoDesignInjDaily"></el-table-column>
+                </el-table-column>
+                <el-table-column label="地质设计" align="center">
+                    <template slot-scope="scope">
+                        <div v-if="scope.row.geoDesg" class="chicked">
+                            <el-button type="text" @click="switchToPlan(scope.row.geoDesg, scope.row.geoDesgSl)" :disabled="!canDownload">方案查看</el-button>
+                        </div>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="工艺设计" align="center">
+                    <template slot-scope="scope">
+                        <div v-if="scope.row.oprgProcDesg" class="chicked">
+                            <el-button type="text" @click="switchToPlan(scope.row.oprgProcDesg, scope.row.oprgProcDesgSl)" :disabled="!canDownload">方案查看</el-button>
+                        </div>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="施工设计" align="center">
+                    <template slot-scope="scope">
+                        <div v-if="scope.row.oprgDesg" class="chicked">
+                            <el-button type="text" @click="switchToPlan(scope.row.oprgDesg, scope.row.oprgDesgSl)" :disabled="!canDownload">方案查看</el-button>
+                        </div>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </div>
+        <pagePanelNew headerTitle="措施效果跟踪" class="pagePanelNew" style="marginTop:0;" show-btn>
+            <div class="main" v-if="type==0">
+                <el-row class="main-row" v-if="type == 0" style="height: 46px">
+                    <el-tabs class="g-pageHeader" v-model="oilTabType" topline @tab-click="selectBtn">
+                        <el-tab-pane v-for="(item, index) in dataList" :key="index" :label="item.name" :name="item.oilTabType"></el-tab-pane>
+                    </el-tabs>
+                </el-row>
+                <el-row class="main-row2" v-if="type == 0">
+                    <div class="svg" v-if="oilTabType == '0'">
+                        <div class="search-date">
+                            <span>日期：</span>
+                            <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
+                            <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">搜索</el-button>
+                        </div>
+                        <div class="echarts-view">
+                            <echarts :chart-data="oilOption" height="100%"></echarts>
                         </div>
                     </div>
-                    <headerSearch style="height:80px;">
-                        <div style="padding-top:20px;display: flex;align-items: center;">
-                            <div class="fl">
-                                <span>油田：</span>
-                                <el-select v-model="selectOilField" class="f2" disabled @change="onFieldChange">
-                                   <el-option v-for="(item, index) in oilFields" :key="index" :label="item.name" :value="item.oilFieldId"></el-option>
-                                </el-select>
-                            </div>
-                            <div class="fl mg">
-                                <span>平台：</span>
-                                <el-select v-model="selectPlatform" class="f2" style="width: 220px;" @change="onPlatfromChange">
-                                   <el-option v-for="(item, index) in platforms" :key="index" :label="item.platName" :value="item.platFormId"></el-option>
-                                </el-select>
-                            </div>
-                            <div class="fl mg">
-                                <span>井号：</span>
-                                <el-select v-model="selectWellId" filterable class="f2">
-                                   <el-option v-for="(item, index) in wells" :key="index" :label="item.wellName" :value="item.wellId"></el-option>
-                                </el-select>
-                            </div>
-                            <div class="fl mg">
-                                <span>措施事件：</span>
-                                <el-select v-model="measuresType" class="f2">
-                                  <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name" :value="item.code">
-                                  </el-option>
-                                </el-select>
-                            </div>
-                            <div class="fl mg">
-                                <span>时间:</span>
-                                <el-date-picker class="f3" v-model="dateTime" style="margin-left:10px" type="year" placeholder="选择日期" value-format="yyyy"></el-date-picker>
-                            </div>
-                            <div class="fr mg">
-                                <el-button type="primary" icon="el-icon-search" size="mini" @click="doSearch">搜索</el-button>
-                            </div>
+                    <div class="svg" v-else-if="oilTabType == '1'">
+                        <div class="search-date">
+                            <span>日期：</span>
+                            <el-date-picker v-model="dateDetail" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"  @change="createChange"></el-date-picker>
+                            <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doSearchCharts">搜索</el-button>
                         </div>
-                    </headerSearch>
-                </div>
-                <div class="main">
-                    <el-row :gutter="20" style="height: 135px">
-                        <el-col :span="24">
-                            <div style="height: 125px;padding-top:0;" class="svg">
-                                <el-table v-show="type == 0" highlight :data="oilWellTableData" style="width: 100%" height="100%">
-                                    <el-table-column type="index" align="center" width="50" label="序号"></el-table-column>
-                                    <el-table-column prop="wellName" align="center" label="井号" width="130"></el-table-column>
-                                    <el-table-column prop="beginDate" align="center" label="措施开始日期" width="110px"></el-table-column>
-                                    <el-table-column prop="endDate" align="center" label="措施结束日期" width="110px"></el-table-column>
-                                    <el-table-column align="center" label="措施前生产情况">
-                                        <el-table-column align="center" label="日产液 (m³)" width="80" prop="bmLiquidDaily"></el-table-column>
-                                        <el-table-column align="center" label="日产油 (m³)" width="80" prop="bmOilDaily"> </el-table-column>
-                                        <el-table-column align="center" label="含水率 (%)" width="80" prop="bmWaterCut"></el-table-column>
-                                    </el-table-column>
-                                    <el-table-column align="center" label="措施效果">
-                                        <el-table-column align="center" label="当日日增油 (m³)" width="110" prop="incOilDaily"></el-table-column>
-                                        <el-table-column align="center" label="累增油 (m³)" width="80" prop="sumOilDaily"></el-table-column>
-                                        <el-table-column prop="days" align="center" label="增产有效期 (d)" width="100"></el-table-column>
-                                        <el-table-column prop="geoDesignOilDaily" align="center" label="地质设计日增油 (m³)" width="130"></el-table-column>
-                                        <el-table-column prop="avgOilDaily" align="center" label="平均日增油 (m³/d)" width="100"></el-table-column>
-                                        <el-table-column prop="" align="center" label="滚动预测日增油 (m³/d)" width="140"></el-table-column>
-                                    </el-table-column>
-                                    <el-table-column label="地质设计" align="center">
-                                        <template slot-scope="scope">
-                                            <div v-if="scope.row.geoDesg" class="chicked">
-                                                <el-button type="text" @click="switchToPlan(scope.row.geoDesg, scope.row.geoDesgSl)" :disabled="!canDownload">方案查看</el-button>
-                                            </div>
-                                            <span v-else>-</span>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column label="工艺设计" align="center">
-                                        <template slot-scope="scope">
-                                            <div v-if="scope.row.oprgProcDesg" class="chicked">
-                                                <el-button type="text"
-                                                    @click="switchToPlan(scope.row.oprgProcDesg, scope.row.oprgProcDesgSl)"
-                                                    :disabled="!canDownload">方案查看
-                                                </el-button>
-                                            </div>
-                                            <span v-else>-</span>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column label="施工设计" align="center">
-                                        <template slot-scope="scope">
-                                            <div v-if="scope.row.oprgDesg" class="chicked">
-                                                <el-button type="text"
-                                                    @click="switchToPlan(scope.row.oprgDesg, scope.row.oprgDesgSl)"
-                                                    :disabled="!canDownload">方案查看
-                                                </el-button>
-                                            </div>
-                                            <span v-else>-</span>
-                                        </template>
-                                    </el-table-column>
-                                </el-table>
-                                <el-table v-show="type == 1" highlight :data="waterWellTableData" style="width: 100%" height="180">
-                                    <el-table-column type="index" align="center" width="60" label="序号"></el-table-column>
-                                    <el-table-column prop="wellNo" align="center" label="井号" width="160"></el-table-column>
-                                    <el-table-column prop="beginDate" align="center" label="措施开始日期" min-width="110px"></el-table-column>
-                                    <el-table-column prop="endDate" align="center" label="措施结束日期" min-width="110px"></el-table-column>
-                                    <el-table-column align="center" label="措施前注入情况" min-width="100">
-                                        <el-table-column align="center" label="日注水量 m³/d" min-width="100" prop="bmInjWater"></el-table-column>
-                                    </el-table-column>
-                                    <el-table-column align="center" label="措施效果">
-                                        <el-table-column prop="injDaily" align="center" label="当日日增注 m³/d" min-width="100"></el-table-column>
-                                        <el-table-column align="center" label="累增注 m³" min-width="100" prop="sumInjDaily"></el-table-column>
-                                        <el-table-column align="center" label="增注有效期 d" min-width="100" prop="days"></el-table-column>
-                                        <el-table-column align="center" label="地质设计日配注 m³/d" min-width="120" prop="geoDesignInjDaily"></el-table-column>
-                                    </el-table-column>
-                                    <el-table-column label="地质设计" align="center">
-                                        <template slot-scope="scope">
-                                            <div v-if="scope.row.geoDesg" class="chicked">
-                                                <el-button type="text" @click="switchToPlan(scope.row.geoDesg, scope.row.geoDesgSl)" :disabled="!canDownload">方案查看</el-button>
-                                            </div>
-                                            <span v-else>-</span>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column label="工艺设计" align="center">
-                                        <template slot-scope="scope">
-                                            <div v-if="scope.row.oprgProcDesg" class="chicked">
-                                                <el-button type="text" @click="switchToPlan(scope.row.oprgProcDesg, scope.row.oprgProcDesgSl)" :disabled="!canDownload">方案查看</el-button>
-                                            </div>
-                                            <span v-else>-</span>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column label="施工设计" align="center">
-                                        <template slot-scope="scope">
-                                            <div v-if="scope.row.oprgDesg" class="chicked">
-                                                <el-button type="text" @click="switchToPlan(scope.row.oprgDesg, scope.row.oprgDesgSl)" :disabled="!canDownload">方案查看</el-button>
-                                            </div>
-                                            <span v-else>-</span>
-                                        </template>
-                                    </el-table-column>
-                                </el-table>
+                        <el-row v-for="(item, index) in checkList.filter((item) => {return item.isRealTime == 0;})" :key="index">
+                            <div style="width: 100px; display: inline-block">
+                                <span>{{ item.paramName }}</span>
                             </div>
-                        </el-col>
-                    </el-row>
-                    <el-row class="main-row" v-if="type == 0" style="height: 46px">
-                        <el-tabs class="g-pageHeader" v-model="oilTabType" topline @tab-click="selectBtn">
-                            <el-tab-pane v-for="(item, index) in dataList" :key="index" :label="item.name" :name="item.oilTabType"></el-tab-pane>
-                        </el-tabs>
-                    </el-row>
-                    <el-row class="main-row" v-if="type == 1" style="height: 46px">
-                        <el-tabs class="g-pageHeader" v-model="waterTabType" topline @tab-click="selectBtn2">
-                            <el-tab-pane v-for="(item, index) in dataList2" :key="index" :label="item.name" :name="item.waterTabType"></el-tab-pane>
-                        </el-tabs>
-                        <!-- <verticalSwitchButton @selectBtn="selectBtn2" :dataList="dataList2" buttonWidth="120px" buttonHeight="40px" style="width: 9%" btnDirection="row"></verticalSwitchButton> -->
-                    </el-row>
-                    <el-row class="main-row2" v-if="type == 0">
-                        <div class="svg" v-if="oilTabType == '0'">
-                            <div class="search-date">
-                                <span>日期：</span>
-                                <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
-                                <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">检索</el-button>
-                            </div>
-                            <div class="echarts-view">
-                                <echarts :chart-data="oilOption" height="100%"></echarts>
-                            </div>
+                            <el-checkbox-group v-model="queryParams.paramCodes" style="display: inline-block">
+                                <el-checkbox v-for="(it, i) in item.childParams" :key="i" :label="it.paramCode" style="color: #ffffff" @change="isDisabled">{{ it.paramName }}</el-checkbox>
+                            </el-checkbox-group>
+                        </el-row>
+                        <div class="echarts-view">
+                            <echarts :chart-data="optionRealData" height="100%"></echarts>
                         </div>
-                        <div class="svg" v-else-if="oilTabType == '1'">
-                            <div class="search-date">
-                                <span>日期：</span>
-                                <el-date-picker v-model="dateDetail" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"  @change="createChange"></el-date-picker>
-                                <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doSearchCharts">检索</el-button>
-                            </div>
-                            <el-row v-for="(item, index) in checkList.filter((item) => {return item.isRealTime == 0;})" :key="index">
-                                <div style="width: 100px; display: inline-block">
-                                    <span>{{ item.paramName }}</span>
-                                </div>
-                                <el-checkbox-group v-model="queryParams.paramCodes" style="display: inline-block">
-                                    <el-checkbox v-for="(it, i) in item.childParams" :key="i" :label="it.paramCode" style="color: #ffffff" @change="isDisabled">{{ it.paramName }}</el-checkbox>
-                                </el-checkbox-group>
-                            </el-row>
-                            <div class="echarts-view">
-                                <echarts :chart-data="optionRealData" height="100%"></echarts>
-                            </div>
+                    </div>
+                    <div class="svg" v-else-if="oilTabType == '2'">
+                        <div class="search-date">
+                            <span>日期：</span>
+                            <el-date-picker v-model="selectDateTime" type="datetime" placeholder="选择日期时间" format="yyyy-MM-dd hh:mm"></el-date-picker>
+                            <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doWellFluxLastDayHour">搜索</el-button>
                         </div>
-                        <div class="svg" v-else-if="oilTabType == '2'">
-                            <div class="search-date">
-                                <span>日期：</span>
-                                <el-date-picker v-model="selectDateTime" type="datetime" placeholder="选择日期时间" format="yyyy-MM-dd hh:mm"></el-date-picker>
-                                <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doWellFluxLastDayHour">检索</el-button>
-                            </div>
-                            <div class="echarts-view">
-                                <echarts :chart-data="oilOption2" height="100%"></echarts>
-                            </div>
+                        <div class="echarts-view">
+                            <echarts :chart-data="oilOption2" height="100%"></echarts>
                         </div>
-                        <div class="svg" v-else-if="oilTabType == '3'">
-                            <div class="table-view">
-                                <el-table :data="chemicalTableData" highlight style="width: 100%" height="446px"
+                    </div>
+                    <div class="svg" v-else-if="oilTabType == '3'">
+                        <div class="table-view">
+                            <el-table :data="chemicalTableData" highlight style="width: 100%" height="446px"
+                                :row-style="{ height: '0px' }"
+                                :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                                header-cell-class-name="table_header"
+                                :cell-style="{ padding: '2px', 'text-align': 'center' }">
+                                <el-table-column label="序号" type="index"></el-table-column>
+                                <el-table-column label="日期" prop="startTime"></el-table-column>
+                                <el-table-column label="含水" prop="waterCut"></el-table-column>
+                                <el-table-column label="含砂" prop="sand"></el-table-column>
+                                <el-table-column label="备注" prop="remark"></el-table-column>
+                            </el-table>
+                        </div>
+                    </div>
+                    <div class="svg" v-else-if="oilTabType == '4'">
+                        <!-- <div class="table-view"> -->
+                            <info-window infoWidth="100%" infoHeight="100%" headerTitle="现场作业进度表">
+                                <!-- <template name="titleContent">
+                                    <el-button type="primary" style="height:30px;">下载</el-button>
+                                </template> -->
+                                <el-table :data="getWorkProgressData" highlight style="width: 100%" height="calc( 100% - 10px)"
                                     :row-style="{ height: '0px' }"
                                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                                     header-cell-class-name="table_header"
                                     :cell-style="{ padding: '2px', 'text-align': 'center' }">
-                                    <el-table-column label="序号" type="index"></el-table-column>
-                                    <el-table-column label="日期" prop="startTime"></el-table-column>
-                                    <el-table-column label="含水" prop="waterCut"></el-table-column>
-                                    <el-table-column label="含砂" prop="sand"></el-table-column>
-                                    <el-table-column label="备注" prop="remark"></el-table-column>
+                                    <el-table-column label="井号" prop="wellNo" width="150"></el-table-column>
+                                    <el-table-column label="开始时间" prop="beginTime" width="150"></el-table-column>
+                                    <el-table-column label="预计结束时间" prop="endTime" width="150"></el-table-column>
+                                    <el-table-column label="当前作业内容" prop="workContent"></el-table-column>
                                 </el-table>
-                            </div>
+                                <pagination v-show="pageTotal2 > 0" :pageSizes="[15, 20, 40]" :total="pageTotal2" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />
+                            </info-window>
+                        <!-- </div> -->
+                    </div>
+                </el-row>
+            </div>
+            <div class="main" v-if="type==1">
+                <el-row class="main-row" v-if="type == 1" style="height: 46px">
+                    <el-tabs class="g-pageHeader" v-model="waterTabType" topline @tab-click="selectBtn2">
+                        <el-tab-pane v-for="(item, index) in dataList2" :key="index" :label="item.name" :name="item.waterTabType"></el-tab-pane>
+                    </el-tabs>
+                </el-row>
+                <el-row class="main-row2" v-if="type == 1">
+                    <div class="svg" v-if="waterTabType == '0'">
+                        <div class="search-date">
+                            <span>日期：</span>
+                            <el-date-picker v-model="selectData" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
+                            <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">搜索</el-button>
                         </div>
-                        <div class="svg" v-else-if="oilTabType == '4'">
-                            <!-- <div class="table-view"> -->
-                                <info-window infoWidth="100%" infoHeight="100%" headerTitle="现场作业进度表">
-                                    <!-- <template name="titleContent">
-                                        <el-button type="primary" style="height:30px;">下载</el-button>
-                                    </template> -->
-                                    <el-table :data="getWorkProgressData" highlight style="width: 100%" height="calc( 100% - 10px)"
-                                        :row-style="{ height: '0px' }"
-                                        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-                                        header-cell-class-name="table_header"
-                                        :cell-style="{ padding: '2px', 'text-align': 'center' }">
-                                        <el-table-column label="井号" prop="wellNo" width="150"></el-table-column>
-                                        <el-table-column label="开始时间" prop="beginTime" width="150"></el-table-column>
-                                        <el-table-column label="预计结束时间" prop="endTime" width="150"></el-table-column>
-                                        <el-table-column label="当前作业内容" prop="workContent"></el-table-column>
-                                    </el-table>
-                                    <pagination v-show="pageTotal2 > 0" :pageSizes="[15, 20, 40]" :total="pageTotal2" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />
-                                </info-window>
-                            <!-- </div> -->
+                        <div class="echarts-view">
+                            <echarts :chart-data="waterOption" height="100%"></echarts>
                         </div>
-                    </el-row>
-                    <el-row class="main-row2" v-if="type == 1">
-                        <div class="svg" v-if="waterTabType == '0'">
-                            <div class="search-date">
-                                <span>日期：</span>
-                                <el-date-picker v-model="selectData" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
-                                <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">检索</el-button>
-                            </div>
-                            <div class="echarts-view">
-                                <echarts :chart-data="waterOption" height="100%"></echarts>
-                            </div>
+                    </div>
+                    <div class="svg" v-if="waterTabType == '1'">
+                        <div class="search-date">
+                            <span>日期：</span>
+                            <el-date-picker v-model="selectRealData" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
+                            <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">搜索</el-button>
                         </div>
-                        <div class="svg" v-if="waterTabType == '1'">
-                            <div class="search-date">
-                                <span>日期：</span>
-                                <el-date-picker v-model="selectRealData" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
-                                <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">检索</el-button>
-                            </div>
-                            <div class="echarts-view">
-                                <echarts :chart-data="waterRealOption" height="100%"></echarts>
-                            </div>
+                        <div class="echarts-view">
+                            <echarts :chart-data="waterRealOption" height="100%"></echarts>
                         </div>
-                    </el-row>
-                </div>
+                    </div>
+                </el-row>
             </div>
         </pagePanelNew>
     </div>
@@ -1830,7 +1821,7 @@
                 });
                 this.selectWellId='';
             },
-            //检索文件
+            //搜索文件
             doSearch() {
                 this.doSearchCharts();
                 this.getFetchMeasureStatInfos(
@@ -2188,7 +2179,7 @@
                     console.log('this.waterOption', this.waterOption)
                 });
             },
-            //检索图形
+            //搜索图形
             doSearchCharts() {
                 if (this.type == '0') {
                     switch (this.oilTabType) {
@@ -2684,46 +2675,43 @@
 <style lang="scss" scoped>
     .app-container {
         height: 100%;
-       .layout {
+        display:flex;
+        flex-direction: column;
+        .pagePanelNew{
+            flex:1;
+            height:0;
+        }
+        .main {
+            // flex:1;
             height: 100%;
-            display:flex;
+            display: flex;
             flex-direction: column;
-            .searchBox{
-                height:140px;
-            }
-            .main {
-                flex:1;
-                height: 0;
+            .main-row2 {
+                height: calc( 100% - 181px );
+                flex: 1;
                 display: flex;
                 flex-direction: column;
-                .main-row2 {
-                    height: calc( 100% - 181px );
-                    flex: 1;
-                    display: flex;
-                    flex-direction: column;
+            }
+        
+            .svg {
+                flex: 1;
+                height:0;
+                display: flex;
+                flex-direction: column;
+        
+                .search-date {
+                    padding-bottom: 15px;
                 }
-            
-                .svg {
+        
+                .echarts-view {
+                    flex: 1;
+                }
+        
+                .table-view {
                     flex: 1;
                     height:0;
-                    display: flex;
-                    flex-direction: column;
-            
-                    .search-date {
-                        padding-bottom: 15px;
-                    }
-            
-                    .echarts-view {
-                        flex: 1;
-                    }
-            
-                    .table-view {
-                        flex: 1;
-                        height:0;
-                        padding-bottom: 75px;
-                    }
-            
                 }
+        
             }
         }
     }

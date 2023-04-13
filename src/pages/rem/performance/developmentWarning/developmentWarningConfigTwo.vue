@@ -52,9 +52,9 @@
                 >
                 </el-option>
               </el-select>
-              <!-- 检索按钮 -->
+              <!-- 搜索按钮 -->
               <el-button type="primary" class="buttonActive_primary" icon="el-icon-search" style="margin-left: 20px"
-                >检索</el-button
+                >搜索</el-button
               >
             </div>
 

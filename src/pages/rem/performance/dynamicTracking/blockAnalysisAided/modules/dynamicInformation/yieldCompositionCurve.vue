@@ -19,10 +19,10 @@
                     <el-table id="tableData1" highlight :data="tableDataStruct" height="100%">
                         <el-table-column type="index" label="序号" align="center"></el-table-column>
                         <el-table-column prop="theDate" label="时间" align="center"></el-table-column>
-                        <el-table-column prop="baseOutput" label="基础产量" align="center"></el-table-column>
-                        <el-table-column prop="adjustWells" label="调整井" align="center"></el-table-column>
-                        <el-table-column prop="newWells" label="开发新井" align="center"></el-table-column>
-                        <el-table-column prop="measureOutput" label="措施产量" align="center"></el-table-column>
+                        <el-table-column prop="baseOutput" :label="`基础产量\n (m³)`" align="center"></el-table-column>
+                        <el-table-column prop="adjustWells" :label="`调整井\n (m³)`" align="center"></el-table-column>
+                        <el-table-column prop="newWells" :label="`开发新井\n (m³)`" align="center"></el-table-column>
+                        <el-table-column prop="measureOutput" :label="`措施产量\n (m³)`" align="center"></el-table-column>
                     </el-table>
                 </info-window>
             </div>
@@ -31,10 +31,10 @@
                     <el-table id="tableData2" highlight :data="tableDataProduct" height="100%">
                         <el-table-column type="index" label="序号" align="center"></el-table-column>
                         <el-table-column prop="theDate" label="时间" align="center"></el-table-column>
-                        <el-table-column prop="acidize" label="酸化" align="center"></el-table-column>
-                        <el-table-column prop="crushing" label="压裂" align="center"></el-table-column>
-                        <el-table-column prop="profile" label="调剖" align="center"></el-table-column>
-                        <el-table-column prop="sideTrack" label="侧钻" align="center"></el-table-column>
+                        <el-table-column prop="acidize" :label="`酸化\n (m³)`" align="center"></el-table-column>
+                        <el-table-column prop="crushing" :label="`压裂\n (m³)`" align="center"></el-table-column>
+                        <el-table-column prop="profile" :label="`调剖\n (m³)`" align="center"></el-table-column>
+                        <el-table-column prop="sideTrack" :label="`侧钻\n (m³)`" align="center"></el-table-column>
                     </el-table>
                 </info-window>
             </div>
@@ -102,7 +102,7 @@ export default {
                 yAxis: {
                     splitNumber: 6,
                     //min: 0,
-                    name: '产量',
+                    name: '产量 (m³)',
                     nameLocation: 'center',
                     nameTextStyle: { color: '#8FA4CC' },
                     nameGap:50,
@@ -295,7 +295,7 @@ export default {
                 yAxis: {
                     splitNumber: 6,
                     //min: 0,
-                    name: '产量',
+                    name: '产量 (m³)',
                     nameLocation: 'center',
                     nameTextStyle: { color: '#8FA4CC' },
                     nameGap: 35,
@@ -573,12 +573,16 @@ export default {
             }
         }
     }
-    #tableData1,
-    #tableData2 {
-        ::v-deep .cell:empty {
+    #tableData1,#tableData2{
+        ::v-deep .el-table__header-wrapper .cell{
+            height: auto;
+            line-height: 18px;
+            white-space: pre;
+        }
+        ::v-deep .cell:empty{
             &::before {
                 content: '-';
-            }
+            } 
         }
-    }
+    } 
 </style>

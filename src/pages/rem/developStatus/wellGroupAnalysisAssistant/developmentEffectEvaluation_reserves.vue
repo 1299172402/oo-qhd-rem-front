@@ -15,7 +15,7 @@
               </el-option>
             </el-select>
             <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
-              检索
+              搜索
             </el-button>
           </div>
           <div class="fr overflow-hidden">
@@ -764,7 +764,7 @@ export default {
     },
     /**
      * hwh
-     * 检索方法
+     * 搜索方法
      */
     doSearch() {
       this.getReservoirsProRateChart(this.selectOilField, this.selectBlock);

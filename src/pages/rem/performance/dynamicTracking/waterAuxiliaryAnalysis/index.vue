@@ -22,7 +22,10 @@
                 <el-button style="margin-left: 20px;" type="primary" icon="el-icon-download" @click="doDownLoad" v-show="canDownload">下载</el-button>
             </div>
         </headerSearch>
-        <pagePanelNew headerTitle="" :class="activeSelect" class="g-w100">
+        <pagePanelNew 
+            :style="{ height: this.currentModule == 'waterReport' ? 'auto' : 'calc(100% - 100px)' }" 
+            class="g-w100" 
+            show-btn>
             <el-tabs class="g-pageHeader" style="margin-bottom:15px;" v-model="activeName" topline @tab-click="handleClick">
                 <el-tab-pane style="height: auto" v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
                     <div class="tab-view">
@@ -42,7 +45,7 @@
             </keep-alive>
         </pagePanelNew>
     </div>
-</template>
+</template> 
 
 <script>
 import { fetchOilFields, fetchPlatforms, fetchInjectionWells, fetchInjectionWellsByPlatform, uploadFile } from '@/api/oilDeposit/rem-02/primaryinfo.js';
@@ -230,10 +233,8 @@ export default {
                 this.ljpmTag = false;
             }
             if(this.currentModule == 'waterReport'){
-                this.activeSelect = 'activeWaterReport'
                 return () => import(`../waterReport/index.vue`);
             }else{
-                this.activeSelect = 'activeOther'
                 return () => import(`./modules/${this.activeName}/${this.currentModule}.vue`);
             }
         }
@@ -451,7 +452,7 @@ export default {
             this.childParam = val;
             console.log(this.childParam);
         },
-        //检索功能
+        //搜索功能
         doSearch() {
             this.$refs.componentCustom.wellId = this.selectWellId;
             this.$refs.componentCustom.oilFeildId = this.selectOilField;
@@ -607,11 +608,5 @@ export default {
 
     ::v-deep .el-upload-list {
         display: none;
-    }
-    .activeWaterReport{
-        height: auto !important;
-    }
-    .activeOther{
-       height: calc(100% - 100px)!important; 
     }
 </style>

@@ -16,7 +16,7 @@
               </el-option>
             </el-select>
             <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
-              检索
+              搜索
             </el-button>
           </div>
           <div class="fr overflow-hidden">
@@ -159,7 +159,7 @@
                   >
                   </el-option>
                 </el-select>
-                <el-button type="primary" style="min-width: 65px" class="jia"> 检索</el-button>
+                <el-button type="primary" style="min-width: 65px" class="jia"> 搜索</el-button>
                 <el-button type="primary" style="min-width: 65px"> 查看</el-button>
               </div>
               <div style="width: 100%">

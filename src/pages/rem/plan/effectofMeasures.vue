@@ -106,7 +106,7 @@ export default {
     selectBtn(item) {
       this.currentTab = item.value;
     },
-    // 检索按钮
+    // 搜索按钮
     retrieval() {
       this.$refs.modal.show(this.queryParams);
     },

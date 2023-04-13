@@ -54,7 +54,7 @@
 
 
                 <el-button type="primary" class="confirmBut" style="margin-left: 20px" icon="el-icon-search" disabled>
-                    检索
+                    搜索
                 </el-button>
                 <el-button type="primary" class="confirmBut" style="margin-left: 20px" @click="returned">返回</el-button>
             </div>

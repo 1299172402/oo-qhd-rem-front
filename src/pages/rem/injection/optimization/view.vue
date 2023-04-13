@@ -40,7 +40,7 @@
           type="primary"
           style="margin-left: 20px"
           @click="queryBut"
-        >检索</el-button>
+        >搜索</el-button>
         <span class="fangan">
           <!-- <el-radio v-model="radio" label="1">小层配注优先</el-radio>
           <el-radio v-model="radio" label="2">整井配注优先</el-radio>-->

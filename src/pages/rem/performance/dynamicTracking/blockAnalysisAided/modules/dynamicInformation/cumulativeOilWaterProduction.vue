@@ -14,7 +14,7 @@
                 <el-button :class="[picType=='BUBBLE'?'':'commonBtn']" :type="picType=='BUBBLE'?'primary':''" @click="doPicTypeSwitch('BUBBLE')">泡泡图</el-button>
             </div>
             <span>时间：</span>
-            <el-date-picker v-model="yearTime" type="year" placeholder="选择年" value-format="yyyy" style="margin-right:20px;" :clearable="false"></el-date-picker>
+            <el-date-picker v-model="yearTime" type="month" placeholder="选择年月" value-format="yyyy-MM" style="margin-right:20px;" :clearable="false"></el-date-picker>
             <el-button type="primary" @click="doYesEvent">确认</el-button>
         </div> 
         <div class="z-echarts">
@@ -65,7 +65,7 @@
                 //图类型
                 picType: "COLUMN",
                 //年份
-                yearTime: new Date().format('yyyy'),
+                yearTime: new Date().format('yyyy-MM'),
                 oilWaterChartData: {},
             };
         },

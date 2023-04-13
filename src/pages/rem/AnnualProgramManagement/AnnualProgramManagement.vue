@@ -20,7 +20,7 @@
               style="background: #164052"
             >
             </el-date-picker>
-            <el-button icon="el-icon-search" type="primary" @click="doSearch" style="margin-left: 20px">检索</el-button>
+            <el-button icon="el-icon-search" type="primary" @click="doSearch" style="margin-left: 20px">搜索</el-button>
 
 
 

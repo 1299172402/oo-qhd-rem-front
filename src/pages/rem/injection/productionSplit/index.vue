@@ -80,7 +80,7 @@
                         </div>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" icon="el-icon-search" size="mini" @click="doSearch">检索</el-button>
+                        <el-button type="primary" icon="el-icon-search" size="mini" @click="doSearch">搜索</el-button>
                         <el-button type="primary" size="mini" style="width: 70px" @click="doExportFile">下载</el-button>
                     </el-form-item>
                 </el-form>

@@ -25,16 +25,15 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="interceptLayer" label="层位" width="140"></el-table-column>
-                    <el-table-column prop="topDepth" label="段顶深 (m)" width="140"></el-table-column>
-                    <el-table-column prop="bottomDepth" label="段底深 (m)" width="140"></el-table-column>
+                    <el-table-column prop="topDepth" :label="`段顶深\n (m)`" width="140"></el-table-column>
+                    <el-table-column prop="bottomDepth" :label="`段底深\n (m)`" width="140"></el-table-column>
                     <el-table-column prop="checkPosition" label="计量位置"></el-table-column>
-                    <el-table-column prop="oilDaily" label="日产油量 (m³)" width="140"></el-table-column>
-                    <el-table-column prop="gasDaily" label="日产气量 (m³)" width="140"></el-table-column>
-                    <el-table-column prop="waterDaily" label="日产水量 (m³)" width="140"></el-table-column>
-                    <!-- 新加内容 不全 待补充 -->
-                    <el-table-column prop="waterRatio" label="含水率 (%)" width="140"></el-table-column>
-                    <el-table-column prop="fluidDailyRatio" label="日产液占比 (%)" width="140"></el-table-column>
-                    <el-table-column prop="gasProdUnderWell" label="井下产气 (m³)" width="140"></el-table-column>
+                    <el-table-column prop="oilDaily" :label="`日产油量\n (m³)`" width="140"></el-table-column>
+                    <el-table-column prop="gasDaily" :label="`日产气量\n (m³)`" width="140"></el-table-column>
+                    <el-table-column prop="waterDaily" :label="`日产水量\n (m³)`" width="140"></el-table-column>
+                    <el-table-column prop="waterRatio" :label="`含水率\n (%)`" width="140"></el-table-column>
+                    <el-table-column prop="fluidDailyRatio" :label="`日产液占比\n (%)`" width="140"></el-table-column>
+                    <el-table-column prop="gasProdUnderWell" :label="`井下产气\n (m³)`" width="140"></el-table-column>
                     <el-table-column prop="interceptResult" label="解释结论" width="240"></el-table-column>
                     <el-table-column prop="remark" label="备注" width="240"></el-table-column>
                 </el-table>
@@ -160,6 +159,11 @@
         }
     }
     #tableData{
+        ::v-deep .el-table__header-wrapper .cell{
+            height: auto;
+            line-height: 18px;
+            white-space: pre;
+        }
         ::v-deep .cell:empty{
             &::before {
                 content: '-';

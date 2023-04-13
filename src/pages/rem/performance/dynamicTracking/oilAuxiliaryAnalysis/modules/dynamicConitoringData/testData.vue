@@ -17,15 +17,15 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="sampleId" label="流体样品类型" min-width="140"></el-table-column>
-                    <el-table-column prop="den" label="原油密度 (g/cm³)" min-width="140"></el-table-column>
-                    <el-table-column prop="" label="粘度 (mPa.s)" min-width="120"></el-table-column>
+                    <el-table-column prop="den" :label="`原油密度\n (g/cm³)`" min-width="140"></el-table-column>
+                    <el-table-column prop="" :label="`粘度\n (mPa.s)`" min-width="120"></el-table-column>
                     <el-table-column prop="api60F" label="API_60F" min-width="100"></el-table-column>
-                    <el-table-column prop="waterContent" label="含水 (%)" min-width="100"></el-table-column>
-                    <el-table-column prop="scontent" label="含硫量 (%)" min-width="140"></el-table-column>
-                    <el-table-column prop="freezePoint" label="凝固点 (℃)" min-width="140"></el-table-column>
-                    <el-table-column prop="waxContent" label="蜡量 (%)" min-width="140"></el-table-column>
-                    <el-table-column prop="bitumen" label="沥青质 (%)" min-width="100"></el-table-column>
-                    <el-table-column prop="resin" label="胶质 (%)" min-width="110"></el-table-column>
+                    <el-table-column prop="waterContent" :label="`含水\n (%)`" min-width="100"></el-table-column>
+                    <el-table-column prop="scontent" :label="`含硫量\n (%)`" min-width="140"></el-table-column>
+                    <el-table-column prop="freezePoint" :label="`凝固点\n (℃)`" min-width="140"></el-table-column>
+                    <el-table-column prop="waxContent" :label="`蜡量\n (%)`" min-width="140"></el-table-column>
+                    <el-table-column prop="bitumen" :label="`沥青质\n (%)`" min-width="100"></el-table-column>
+                    <el-table-column prop="resin" :label="`胶质\n (%)`" min-width="110"></el-table-column>
                 </el-table>
             </info-window>
         </div>
@@ -48,12 +48,12 @@
                     <el-table-column prop="fluidPH" label="PH值/酸碱度" min-width="140"></el-table-column>
                     <el-table-column prop="color" label="颜色" min-width="120"></el-table-column>
                     <el-table-column prop="waterValue" label="水型" min-width="100"></el-table-column>
-                    <el-table-column prop="" label="地层水矿化度 (mg/L)  " min-width="100"></el-table-column>
-                    <el-table-column prop="anionContent" label="阴离子总量 (mg/L)" min-width="140"></el-table-column>
-                    <el-table-column prop="cationContent" label="阳离子总量 (mg/L)" min-width="140"></el-table-column>
-                    <el-table-column prop="totalAlkalinity" label="总碱度 (mmol/L)" min-width="140"></el-table-column>
+                    <el-table-column prop="" :label="`地层水矿化度\n (mg/L)`" min-width="100"></el-table-column>
+                    <el-table-column prop="anionContent" :label="`阴离子总量\n (mg/L)`" min-width="140"></el-table-column>
+                    <el-table-column prop="cationContent" :label="`阳离子总量\n (mg/L)`" min-width="140"></el-table-column>
+                    <el-table-column prop="totalAlkalinity" :label="`总碱度\n (mmol/L)`" min-width="140"></el-table-column>
                     <el-table-column prop="cumHardness" label="总硬度" min-width="100"></el-table-column>
-                    <el-table-column prop="resis" label="电阻率 (Ωm)" min-width="110"></el-table-column>
+                    <el-table-column prop="resis" :label="`电阻率\n (Ωm)`" min-width="110"></el-table-column>
                 </el-table>
             </info-window>
         </div>
@@ -132,7 +132,16 @@
             flex:1;
         }
     }
-    ::v-deep .el-table .cell:empty::before {
-        content: '-';
-    }
+    #tableData,#tableData1{
+        ::v-deep .el-table__header-wrapper .cell{
+            height: auto;
+            line-height: 18px;
+            white-space: pre;
+        }
+        ::v-deep .cell:empty{
+            &::before {
+                content: '-';
+            } 
+        }
+    } 
 </style>

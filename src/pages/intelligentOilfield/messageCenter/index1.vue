@@ -95,7 +95,7 @@
         v-model="input"
         prefix-icon="aa"
         style="width: 400px"
-        placeholder="请输入检索项目"
+        placeholder="请输入搜索项目"
       />
       <el-button
         type="primary"
@@ -811,7 +811,7 @@ export default {
     clickItem(val, type, titletype) {
       this.dialogType = type;
       if (this.dialogType === "搜索") {
-        this.title = "检索结果";
+        this.title = "搜索结果";
         const queryParams = {
           equipmentName: this.input
         };

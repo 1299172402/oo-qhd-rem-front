@@ -92,6 +92,7 @@
             },
             reverse: {
                 handler(val) {
+                    console.log('??')
                     this.setOptions();
                     this.$nextTick(() => {
                         // 解决加载时父元素大小变化问题

@@ -821,7 +821,7 @@ export default {
   methods: {
     /**
      * hwh
-     * 检索
+     * 搜索
      */
     doSearch() {
       let beginDate = this.selectDate[0];

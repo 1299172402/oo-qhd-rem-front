@@ -19,7 +19,7 @@
                 <el-button style="margin-left: 20px;" type="primary" icon="el-icon-download" @click="doDownLoad" v-show="canDownload">下载</el-button>
             </div>
         </headerSearch>
-        <pagePanelNew headerTitle="" style="height: calc(100% - 100px)" class="g-w100"> 
+        <pagePanelNew style="height: calc(100% - 100px)" class="g-w100" show-btn> 
             <el-tabs class="g-pageHeader" style="margin-bottom:15px;" v-model="activeName" topline @tab-click="handleClick">
                 <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
                     <sliderTabs :tabs="item.modules" :currentModule="currentModule"  @tabTabs="tabTabs"></sliderTabs>
@@ -527,7 +527,7 @@
                     });
                 }))
             },
-            //检索功能
+            //搜索功能
             doSearch() {
                 // this.$refs.componentCustom.wellId = this.selectWellId;
                 // this.$refs.componentCustom.oilFieldId = this.selectOilField;

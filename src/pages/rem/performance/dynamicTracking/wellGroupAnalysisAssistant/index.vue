@@ -26,7 +26,7 @@
                 <el-button  type="primary" icon="el-icon-download" @click="doDownLoad" v-show="canDownload">下载</el-button>
             </div>
         </headerSearch>
-        <pagePanelNew headerTitle="" style="height: calc(100% - 100px)" class="g-w100">
+        <pagePanelNew style="height: calc(100% - 100px)" class="g-w100" show-btn>
             <el-tabs class="g-pageHeader" style="margin-bottom:15px;" v-model="activeName" topline @tab-click="handleClick">
                 <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
                     <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="currentModule = module.name">{{ module.label }}</el-button>
@@ -423,7 +423,7 @@
                     });
                 }))
             },
-            //检索功能
+            //搜索功能
             doSearch() {
                 this.$refs.componentCustom.wellId = this.selectWellId;
                 this.$refs.componentCustom.oilFeildId = this.selectOilField;

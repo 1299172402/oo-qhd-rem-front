@@ -100,7 +100,7 @@
                     </el-row>
                 </el-checkbox-group>
                 <el-row>
-                    <el-button icon="el-icon-search" size="mini" style="margin-left: 130px" type="primary">检索</el-button>
+                    <el-button icon="el-icon-search" size="mini" style="margin-left: 130px" type="primary">搜索</el-button>
                 </el-row>
             </el-dialog>
             <!-- 开发先状表 -->
@@ -115,7 +115,7 @@
                         <el-date-picker v-model="dateFirst" type="month" placeholder="对比时间1" value-format="yyyy-MM-dd"></el-date-picker>
                         <span>~</span>
                         <el-date-picker v-model="dateSecond" type="month" placeholder="对比时间2" value-format="yyyy-MM-dd"></el-date-picker>
-                        <el-button icon="el-icon-search" style="margin-left: 15px" type="primary" @click="doSearchDialog">检索</el-button>
+                        <el-button icon="el-icon-search" style="margin-left: 15px" type="primary" @click="doSearchDialog">搜索</el-button>
                     </div>
                     <div class="fr" style="margin-borttom: 10px">
                         <el-button type="primary" class="qhuan" @click="doSwitchUnit"> 单位切换{{ currentUnit == 'm' ? 't' : 'm³' }}</el-button>
@@ -1142,7 +1142,7 @@
                     }
                 });
             },
-            //弹框中检索操作
+            //弹框中搜索操作
             doSearchDialog() {
                 let oilFieldId = this.oilfield1;
                 let fieldId = this.block1;
@@ -1174,7 +1174,7 @@
                     }
                 });
             },
-            //检索-油田综合开发曲线-综合开发历程表
+            //搜索-油田综合开发曲线-综合开发历程表
             doSearch() {
                 let oilFieldId = this.oilfield;
                 let fieldId = this.block;

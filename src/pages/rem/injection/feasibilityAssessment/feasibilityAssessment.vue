@@ -61,7 +61,7 @@
               value-format="yyyy-MM"
             ></el-date-picker>
           </div>
-          <el-button type="primary" @click="searchBut">检索</el-button>
+          <el-button type="primary" @click="searchBut">搜索</el-button>
         </div>
         <div>
           <returnBut></returnBut>
@@ -514,7 +514,7 @@ export default {
       this.getProbability(data)
       this.getequipment(data)
     },
-    // 检索
+    // 搜索
     searchBut () {
       this.gettans()
     },

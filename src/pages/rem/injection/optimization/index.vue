@@ -335,7 +335,7 @@ export default {
         this.queryTable()
         this.queryTableData()
       } else {
-        this.$message.error("检索条件不足")
+        this.$message.error("搜索条件不足")
       }
     },
     // 可行性评估

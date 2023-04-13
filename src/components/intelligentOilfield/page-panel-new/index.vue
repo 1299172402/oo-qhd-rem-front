@@ -23,7 +23,7 @@
         />
       </el-tooltip>
     </div>
-    <div style="padding: 20px;height: calc(100%);" class="g-w100" :style="{height: isMax ? 'calc(100%  - 31px)' : '100%'}">
+    <div style="padding: 20px;padding-top:0;height: calc(100% - 31px);" class="g-w100" :style="{height: isMax ? 'calc(100%  - 31px)' : 'calc(100% - 31px)'}">
       <slot />
     </div>
   </div>
