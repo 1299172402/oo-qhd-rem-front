@@ -55,7 +55,8 @@
                     <el-button type="primary" icon="el-icon-download" style="height:30px;" @click="doExportFile" v-show="canDownload">下载</el-button>
                 </div>
                 <div class="tableBox" id="tableBox" style="height:calc(100% - 75px)">
-                    <el-table id="csgl"
+                    <el-table 
+                        id="csgl"
                         :data="tableData.slice((queryParams.page - 1) * queryParams.pageSize, queryParams.page * queryParams.pageSize)"
                         height="calc(100% - 44px)" :row-style="{ height: '0px' }"
                         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
@@ -76,7 +77,7 @@
                                 <div style="line-height: 18px;">计划<br/>实际</div>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="measureName6" :width="width +'px'">
+                        <el-table-column :width="width +'px'">
                             <template slot="header" slot-scope="scope">
                                 <div class="header-titlts">
                                     <div class="icon0">
@@ -155,12 +156,13 @@
     import {getMeasureVersion,getFetchMeasureInfos} from '@/api/oilDeposit/rem-04/plan.js';  
     import {exportExcel} from '@/lib/exportExcel.js';
     export default {
-        name: 'planIndex',
+        name: 'newPlanIndex',
         components: {
             fieldOperations
         },
         data() {
             return {
+                screenWidth:'',//界面宽度
                 width:'',//table最后一列的宽度
                 spacing:'',//日期间距
                 mcWidth:'0px',
@@ -222,19 +224,37 @@
         mounted() {
             this.$nextTick(()=>{
                 let width=document.getElementById('tableBox').clientWidth -500;
-                this.width=width;
-                console.log('table最后一列的宽度',width)
+                this.width=width;//table最后一列的宽度
                 //计算日期 间距 
                 console.log('日期宽度',Math.floor(this.width-44-20))    
                 this.spacing=Math.floor((this.width-936-44-20) / 11);
                 console.log('日期间距',this.spacing)
                 this.initData();
+                
+                //监听页面缩放
+                this.screenWidth = document.body.clientWidth; 
+                window.onresize = () => {
+                  return (() => {
+                    this.screenWidth = document.body.clientWidth;
+                  })();
+                };
             })
+        },
+        watch: {
+            screenWidth() {
+              let width=document.getElementById('tableBox').clientWidth -500;
+              this.width=width;//table最后一列的宽度
+              //计算日期 间距 
+              this.spacing=Math.floor((this.width-936-44-20) / 11);
+              this.initData2();
+              this.mcMarginLeft();
+              console.log(this.screenWidth); //浏览器窗口变化时，打印宽度。
+            },
         },
         methods: {
             //页面初始化信息
             async initData() {
-                // 油田
+                //油田
                 await fetchOilFields().then((res) => {
                     if (res.data.code == 200) {
                         this.oilFields = res.data.data.oilFields;
@@ -741,10 +761,9 @@
     }
   
     //蒙层
-    .tableBox {
+    ::v-deep .tableBox {
         overflow-x: hidden;
         position: relative;
-
         .mcBox {
             position: absolute;
             top:66px;
