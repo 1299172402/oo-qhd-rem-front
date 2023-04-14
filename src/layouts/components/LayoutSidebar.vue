@@ -34,7 +34,7 @@ export default Vue.extend({
       return this.$store.state.setting;
     },
     isGroupLogin():boolean {
-      return sessionStorage.getItem("isGroupLogin") === "true";
+      return localStorage.getItem("isGroupLogin") === "true";
     },
     sideMenu() {
       const { layout, splitMenu } = this.$store.state.setting;

@@ -1,6 +1,6 @@
 <!-- 看板中心组件 -->
 <template>
-  <div style="font-size: 20px" class="g-w100 g-h100">
+  <div style="font-size: 20px;margin: 20px 0;" class="g-w100 g-h100">
     <div id="fullScreen_panorama">
       <bottom-button v-if="linkUrl !== ''" class="bottomBtn" @bigScreenMode="fullExit" />
       <iframe
@@ -75,7 +75,13 @@
                 <div v-else class="bgImage g-row-flex-HV" style="width: 40px;height: 40px">
                   {{ items.boardName[0] }}
                 </div>
-                <span class="textSpan">{{ items.boardName }}</span>
+                <el-tooltip
+                  effect="dark"
+                  :content="items.boardName"
+                  placement="top"
+                >
+                  <span class="textSpan">{{ items.boardName }}</span>
+                </el-tooltip>
               </div>
             </el-carousel-item>
           </el-carousel>

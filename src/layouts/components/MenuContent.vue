@@ -11,7 +11,7 @@
           :value="item.meta?.single ? item.redirect : item.path"
         >
           <template #icon>
-            <svg-icon v-if="typeof item.icon === 'string' && item.icon" class="svgIconClass" :icon-class="item.icon" />
+            <svg-icon v-if="typeof item.icon === 'string' && item.icon && item.icon !== '#'" class="svgIconClass" :icon-class="item.icon" />
             <!-- <t-icon v-if="typeof item.icon === 'string' && item.icon" :name="item.icon" /> -->
             <render-fn-icon :item="item" />
           </template>
@@ -32,8 +32,8 @@
         >
           <template #icon>
             <!-- 只要不是一级路由就占位儿 -->
-            <span style="color: transparent">{{ item.meta.single ? "" : "####" }}</span>
-            <svg-icon v-if="typeof item.icon === 'string' && item.icon" class="svgIconClass" :icon-class="item.icon" />
+            <span style="color: transparent">{{ item.meta.hasOwnProperty("single") ? "" : "##" }}</span>
+            <svg-icon v-if="typeof item.icon === 'string' && item.icon && item.icon !== '#'" class="svgIconClass" :icon-class="item.icon" />
             <!-- <t-icon v-if="typeof item.icon === 'string' && item.icon" :name="item.icon" /> -->
             <render-fn-icon :item="item" />
           </template>
@@ -49,7 +49,7 @@
         >
           <template #icon>
             <!-- 只要不是一级路由就占位儿 -->
-            <span style="color: transparent">{{ item.meta.single ? "" : "##" }}</span>
+            <span style="color: transparent">{{ item.meta.hasOwnProperty("single") ? "" : "##" }}</span>
             <!-- 三级路由最后一项占位儿 -->
             <span v-if="item.isThirdRouter" style="color: transparent">##</span>
             <svg-icon
@@ -191,6 +191,16 @@ export default Vue.extend({
       prefix
     };
   },
+  mounted() {
+    this.addTip();
+  },
+  watch: {
+    "$store.state.setting.isSidebarCompact": {
+      handler() {
+        this.addTip();
+      }
+    }
+  },
   computed: {
     list(): Array<MenuRoute> {
       return getMenuList(this.navData);
@@ -229,11 +239,22 @@ export default Vue.extend({
     },
     getHref(item: MenuRoute) {
       return item.path.match(/(http|https):\/\/([\w.]+\/?)\S*/);
+    },
+    addTip() {
+      if(this.$store.state.setting.isSidebarCompact) {
+        return;
+      }
+      const list = document.querySelectorAll(".t-menu__content");
+      list.forEach(item => {
+        if(item.scrollWidth > item.offsetWidth) {
+          item.setAttribute("title", item.innerText); 
+        }
+      });
     }
   }
 });
 </script>
-<style scoped>
+<style lang="less" scoped>
 .svgIconClass {
   width: 2.5em !important;
   height: 1.3em !important;
@@ -295,5 +316,9 @@ a {
 .nolink{
   pointer-events: none;
   cursor: default;
+}
+
+/deep/ .t-menu__content {
+  max-width: 70%;
 }
 </style>

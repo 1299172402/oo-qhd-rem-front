@@ -143,9 +143,13 @@ export default {
             this.options.push(...re);
           }
           this.allowLoad = this.options.length < v.data[this.queryParamProp.totalProp];
+          if (this.options.length > 0) {
+            if (this.options[0].label !== "无") {
+              this.options.unshift({ label: "无", value: undefined });
+            }
+          }
         })
         .finally(() => {
-          this.options.unshift({ label: "无", value: undefined });
           this.loading = false;
         });
     },

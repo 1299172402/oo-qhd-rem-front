@@ -16,7 +16,7 @@
         <el-button type="primary" icon="el-icon-search" @click="searchQuery">
           查询
         </el-button>
-        <el-button icon="el-icon-refresh" @click="searchReset">
+        <el-button icon="el-icon-refresh" class="commonBtn" @click="searchReset">
           重置
         </el-button>
       </div>
@@ -29,23 +29,12 @@
         @ok="searchQuery"
       />
       <el-button
-        class="gap--left"
-        type="warning"
-        icon="el-icon-download"
-        plain
+        class="gap--left commonBtn"
         @click="handleExport(modelId)"
       >
         导出
       </el-button>
     </el-form>
-    <el-button
-      style="margin: 10px 0;width: 140px"
-      type="info"
-      icon="el-icon-back"
-      @click="$emit('cancel')"
-    >
-      返回详情
-    </el-button>
     <el-collapse v-model="activeNames" class="coll">
       <el-collapse-item v-for="item in dataSource" :key="item.actKey" :name="item.actKey">
         <template slot="title">

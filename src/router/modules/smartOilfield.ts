@@ -27,7 +27,7 @@ export default [
     meta: { title: "首页详情", icon: "", single: true },
     children: [
       {
-        path: "homeDetail",
+        path: "homeDetail/:tenantId",
         name: "homeDetail",
         component: () => import("@/pages/intelligentOilfield/homePage/components/detail.vue"),
         meta: { title: "首页详情" }
@@ -103,7 +103,7 @@ export default [
       {
         path: "demoIndex5",
         name: "demoIndex5",
-        component: () => import("@/pages/intelligentOilfield/demo/index5.vue"),
+        component: () => import("@/pages/intelligentOilfield/demo/demo3.vue"),
         meta: { title: "拖拽组件" }
       }
     ]

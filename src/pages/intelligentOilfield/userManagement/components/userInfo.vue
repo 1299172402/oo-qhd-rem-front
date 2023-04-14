@@ -350,11 +350,11 @@ export default {
           remark: newVal.data?.remark,
           idCard: newVal.data?.idCard,
           //   postIds: newVal.postIds,
-          postIds: newVal.postIds.length === 0 ? [] : newVal.postIds?.toLocaleString().split(","),
-          roleIds: newVal.roleIds.length === 0 ? [] : newVal.roleIds?.toLocaleString().split(","),
+          postIds: newVal.postIds?.length === 0 ? [] : newVal.postIds?.toLocaleString().split(","),
+          roleIds: newVal.roleIds?.length === 0 ? [] : newVal.roleIds?.toLocaleString().split(","),
           //   tempPostId: String(newVal.tempPostId.toLocaleString()), // 临时的用户岗位
           userType: newVal.data?.userType, // 账号类型
-          tenantName: newVal.tenants.length === 0 ? [] : newVal.tenants?.map(item => item.tenantName).toLocaleString().split(",")
+          tenantName: newVal.tenants?.length === 0 ? "" : newVal.tenants?.map(item => item.tenantName).toLocaleString()
         };
       },
       deep: true,

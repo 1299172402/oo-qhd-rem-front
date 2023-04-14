@@ -26,7 +26,10 @@
     </header-search>
     <!-- 租户卡片 -->
     <page-panel-new header-title="租户管理" style="height: calc(100% - 100px);">
-      <div class="footer-box container-box--background">
+      <div
+        class="footer-box container-box--background"
+        :style="{ background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff' }"
+      >
         <div>
           <div v-if="dataSource.length > 0" class="body-style list-height">
             <div v-for="(item, index) in dataSource" :key="index">
@@ -90,10 +93,17 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.Process-container {
+  height: 100%;
+}
+
 .body-style {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  min-height: calc(100% - 60px);
   box-sizing: border-box;
+  position: relative;
+  gap: 20px;
 }
 </style>

@@ -70,7 +70,7 @@
                 type="primary"
                 size="mini"
                 style="width: 80px; height: 32px"
-                @click="handleAuth(item.tenantId)"
+                @click="handleAuth(item.tenantId, item.tenantName)"
               >
                 查看
               </el-button>
@@ -78,7 +78,7 @@
                 v-else
                 size="mini"
                 style="width: 80px;height: 32px;color: #fff;background: #3490d3"
-                @click="handleAuth(item.tenantId)"
+                @click="handleAuth(item.tenantId, item.tenantName)"
               >
                 查看
               </el-button>
@@ -97,9 +97,7 @@ export default {
   data() {
     return {
       val: "",
-      listNumData: [
-        { depName: "秦皇岛326作业分公司", appNum: 0, boardNum: 2, businessNum: 3, userNum: 5, userLonginNum: 1 }
-      ]
+      listNumData: []
     };
   },
   created() {
@@ -114,9 +112,9 @@ export default {
         this.listNumData = response;
       });
     },
-    handleAuth(tenantId) {
+    handleAuth(tenantId, tenantName) {
       //   this.$router.push({ name: `homeDetail`, query: { id } });
-      this.$router.push({ name: "homeDetail", query: { tenantId }});
+      this.$router.push({ name: "homeDetail", query: { tenantId, pathName: tenantName }, params: { tenantId }});
     },
     noticeList() {
       noticeList(this.$store.getters["user/tenantId"]).then(response => {

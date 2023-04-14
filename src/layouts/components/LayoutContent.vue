@@ -108,7 +108,7 @@ export default Vue.extend({
       return this.$store.state.setting;
     },
     isGroupLogin():boolean {
-      return sessionStorage.getItem("isGroupLogin") === "true";
+      return localStorage.getItem("isGroupLogin") === "true";
     }
   },
   methods: {
@@ -162,7 +162,7 @@ export default Vue.extend({
             nextRouteIdx = tabRouters.length - 1;
             break;
           case "other":
-            nextRouteIdx = 0;
+            nextRouteIdx = this.tabRouterList.length - 1;
             break;
           case "ahead":
             nextRouteIdx = 1;

@@ -19,14 +19,14 @@
         <el-input v-model="form.title" :title="form.title" placeholder="请输入主题名称" />
       </el-form-item>
       <el-form-item label="触达类型：" prop="triggerType">
-        <el-radio-group v-model="form.triggerType">
+        <el-radio-group v-model="form.triggerType" @change="handleTriggerType">
           <el-radio v-for="item in options.triggerTypes" :key="item.value" :label="item.value">
             {{ item.label }}
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="消息类型：" prop="messageType">
-        <el-radio-group v-if="form.triggerType === 'USER'" v-model="form.messageType">
+      <el-form-item v-if="userTrigger" label="消息类型：" prop="messageType">
+        <el-radio-group v-model="form.messageType">
           <el-radio
             v-for="item in options.userMessageTypes"
             :key="item.value"
@@ -36,14 +36,23 @@
             {{ item.label }}
           </el-radio>
         </el-radio-group>
-        <el-radio-group v-else v-model="form.messageType">
+      </el-form-item>
+      <!-- 服务触达显示绑定应用 -->
+      <el-form-item
+        v-else
+        label="绑定应用："
+        prop="appId"
+        class="form-layout__item-col1"
+      >
+        <el-radio-group v-model="form.appId" @input="changeApp">
           <el-radio
-            v-for="item in options.serviceMessageTypes"
-            :key="item.value"
-            :label="item.value"
-            :disabled="item.disabled"
+            v-for="item in appList"
+            :key="item.appId"
+            :label="item.appId"
+            :title="item.appName"
+            class="radio-type"
           >
-            {{ item.label }}
+            {{ item.appName }}
           </el-radio>
         </el-radio-group>
       </el-form-item>
@@ -105,6 +114,7 @@
 import SelectTenant from "../components/selectTenant.vue";
 import CommonDialog from "@/components/intelligentOilfield/dialog/CommonDialog.vue";
 import { saveConfig, getConfig } from "@/api/intelligentOilfield/messaging";
+import { listApp } from "@/api/intelligentOilfield/system/applicationCenter/applicationCenter.js";
 
 export default {
   components: {
@@ -116,6 +126,7 @@ export default {
       visible: false,
       formId: null,
       action: "",
+      appList: [],
       form: {
         descr: undefined,
         exposeKey: undefined,
@@ -124,7 +135,9 @@ export default {
         messageType: undefined,
         title: undefined,
         triggerType: "USER",
-        active: true
+        active: true,
+        appId: undefined,
+        requestType: undefined
       },
       options: {
         triggerTypes: [
@@ -132,14 +145,10 @@ export default {
           { label: "服务触达", value: "SERVICE" }
         ],
         userMessageTypes: [
-          { value: "SMS", label: "短信" },
+          /* { value: "SMS", label: "短信" }, */
           { value: "MAIL", label: "邮件" },
-          { value: "PUSH", label: "移动云推送", disabled: true },
-          { value: "LETTER", label: "站内信" }
-        ],
-        serviceMessageTypes: [
-          { value: "EQUIPMENT", label: "设备状态", disabled: true },
-          { value: "FORWARDING", label: "服务转发", disabled: true }
+          { value: "LETTER", label: "站内信" },
+          { value: "PUSH", label: "移动云推送", disabled: true }
         ],
         activeTypes: [
           { value: 0, label: "正常" },
@@ -152,7 +161,8 @@ export default {
           { min: 1, max: 64, message: "长度在 1 到 64 个字符", trigger: "blur" }
         ],
         triggerType: [{ required: true, message: "请选择触达类型", trigger: "change" }],
-        messageType: [{ required: true, message: "请选择消息类型", trigger: "change" }],
+        messageType: [{ required: true, message: "请选择", trigger: "change" }],
+        appId: [{ required: true, message: "请选择", trigger: "change" }],
         exposeKey: [
           { required: true, message: "请输入消息接收标识", trigger: "blur" },
           { min: 1, max: 16, message: "长度在 1 到 16 个字符", trigger: "blur" }
@@ -168,6 +178,10 @@ export default {
     // 是否查看
     isView() {
       return this.action === "View";
+    },
+    // 是否用户触达
+    userTrigger() {
+      return this.form.triggerType === "USER";
     }
   },
   methods: {
@@ -192,9 +206,17 @@ export default {
           messageType: undefined,
           title: undefined,
           triggerType: "USER",
-          active: true
+          active: true,
+          appId: undefined,
+          requestType: undefined
         };
       }
+      const params = { pageNum: 1, pageSize: 30 };
+      listApp(params).then(res => {
+        if (res.data.code === 200) {
+          this.appList = res.data.rows;
+        }
+      });
     },
     /** 租户弹窗显示 */
     handleTenant() {
@@ -235,6 +257,18 @@ export default {
           return false;
         }
       });
+    },
+    /**
+     * 触达类型切换，清空选项
+     */
+    handleTriggerType() {
+      this.form.appId = null;
+      this.form.messageType = null;
+      this.form.messageType = this.userTrigger ? this.form.messageType : "SERVICE";
+    },
+    changeApp(appId) {
+      const app = this.appList.find(item => item.appId === appId);
+      this.form.requestType = app && app.appType === "0" ? "INNER" : "HTTP";
     }
   }
 };
@@ -245,5 +279,11 @@ export default {
   max-width: 1000px;
   min-height: calc(100vh - 280px);
   padding: 20px;
+}
+
+.radio-type {
+  line-height: 2;
+  width: 150px;
+  overflow: hidden;
 }
 </style>

@@ -1,7 +1,6 @@
 <template>
   <common-dialog
     v-model="visible"
-    :loading="loading"
     label
     :view-only="true"
     :fullscreen="false"
@@ -97,7 +96,6 @@ export default {
   },
   data() {
     return {
-      loading: false,
       taskInfo: {
         processInstanceId: undefined,
         businessKey: undefined,
@@ -206,6 +204,11 @@ export default {
 
   .el-table {
     overflow: scroll;
+  }
+
+  /deep/ .pagination-container {
+    position: relative !important;
+    padding: 10px 0 !important;
   }
 }
 </style>

@@ -11,6 +11,12 @@
     <charts-components :chart-data-options="dataZhuzhuang" echarts-type="bar1" style="width: 600px; height: 400px" />
     <!-- TODO: Maybe change back -->
     <!-- <div id="lineContainer" ref="lineContainer" style="width: 50%; height: 410px" /> -->
+    <div class="headerTitle spaceMargin">
+      2、d3图表深浅色系切换示例（适合数据比较多的时候使用）
+    </div>
+    <d-pie :dataset="[30, 10, 43, 55, 13]" />
+    <d-line id="line" :dataset="data1" />
+    <d-bar :label-list="labelList" :data-list="dataListD3" />
     <div style="margin: 40px 0">
       =================================end========================
     </div>
@@ -24,6 +30,9 @@ import { LineChart } from "echarts/charts";
 import chartsComponents from "@/components/intelligentOilfield/echarts-com/index.vue";
 import { CanvasRenderer } from "echarts/renderers";
 import { getFolderLineDataSet } from "./index";
+import dPie from "@/components/intelligentOilfield/d3/dPie.vue";
+import dLine from "@/components/intelligentOilfield/d3/dLine.vue";
+import dBar from "@/components/intelligentOilfield/d3/dBar.vue";
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 const labelName = ["总值", "合格值"];
@@ -68,7 +77,7 @@ const color = [
 ];
 export default {
   components: {
-    chartsComponents
+    chartsComponents, dPie, dLine, dBar
   },
   data() {
     return {

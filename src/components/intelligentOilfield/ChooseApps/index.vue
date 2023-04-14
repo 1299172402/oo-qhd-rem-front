@@ -15,14 +15,14 @@
         :model="queryParams"
         :inline="true"
       >
-        <el-form-item label="应用类型：" prop="appType">
+        <el-form-item label="应用分类：" prop="apply">
           <el-select
-            v-model="queryParams.appType"
-            placeholder="请选择应用类型"
+            v-model="queryParams.apply"
+            placeholder="请选择应用分类"
             clearable
           >
             <el-option
-              v-for="dict in dict.type.sys_app_category"
+              v-for="dict in dict.type.sys_app_applyCenter"
               :key="dict.value"
               :label="dict.label"
               :value="dict.value"
@@ -56,11 +56,19 @@
         :data="dataSource"
         :row-key="getRowKey"
         @selection-change="handleSelectionChange"
+        @cell-click="handleSelectCell"
       >
         <el-table-column
+          v-if="multiple"
           :reserve-selection="true"
           type="selection"
           width="55"
+          align="center"
+        />
+        <el-table-column
+          type="index"
+          :index="indexMethod"
+          label="序号"
           align="center"
         />
         <el-table-column
@@ -72,8 +80,8 @@
           align="center"
         >
           <template slot-scope="scope">
-            <span v-if="item.props === 'appType'">
-              <dict-tag :options="dict.type.sys_app_category" :value="scope.row.appType" list-class="default" />
+            <span v-if="item.props === 'apply'">
+              <dict-tag :options="dict.type.sys_app_applyCenter" :value="scope.row.apply" list-class="default" />
             </span>
             <span v-else-if="item.props === 'supportTerminal'">
               <span> {{ scope.row.isPc === 1 ? "PC" : "" }} </span>
@@ -104,7 +112,7 @@ import { listApp } from "@/api/intelligentOilfield/system/app";
 
 export default {
   name: "ChooseTenant",
-  dicts: ["sys_app_category"],
+  dicts: ["sys_app_applyCenter"],
   components: {
     CommonDialog
   },
@@ -113,13 +121,16 @@ export default {
     tableData: {
       type: Array,
       default: () => ([])
+    },
+    multiple: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     const columns = [
-      { props: "appId", label: "应用编号" },
       { props: "appName", label: "应用名称" },
-      { props: "appType", label: "应用类型" },
+      { props: "apply", label: "应用分类" },
       { props: "supportTerminal", label: "支持终端" }
     ];
     return {
@@ -128,7 +139,7 @@ export default {
         list: listApp
       },
       queryParams: {
-        appType: "",
+        apply: "",
         appName: ""
       },
       columns,
@@ -136,6 +147,15 @@ export default {
     };
   },
   methods: {
+    indexMethod(index) {
+      return index + 1 + (this.ipagination.pageNum - 1) * this.ipagination.pageSize;
+    },
+    handleSelectCell(data) {
+      if (!this.multiple) {
+        this.$emit("on-select-app", data);
+        this.visible = false;
+      }
+    },
     /**
      * 弹窗打开操作
      */

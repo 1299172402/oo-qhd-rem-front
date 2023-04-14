@@ -5,7 +5,9 @@ const config = {
   PROCESS_TENANT_TYPE: "tenant",
   // rsa公钥
   PROCESS_PULBIC_KEY: "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKsr9kM6vJHJb8KgWhY6xVaYCkLEr+QKeuYUoZ2uX3+t4lzbxdf1JeJ2jUs26jWWgkpe3W1UHxXUaapyTG9sFbECAwEAAQ==",
-  LOGIN_TYPES: ["password", "corp_oauth"]
+  LOGIN_TYPES: ["password", "corp_oauth"],
+  // 右上角报警点击“查看跳转”路径
+  MESSAGEURL: "http://10.77.78.250:8085/#/reportlnformation/source"
 };
 
 export default {
@@ -25,7 +27,6 @@ export default {
     // 开发环境 cdn 路径
     CDN: "",
     appId: null
-
   },
   test: {
     ...config,

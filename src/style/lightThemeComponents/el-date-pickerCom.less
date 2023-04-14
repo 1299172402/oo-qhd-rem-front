@@ -153,3 +153,23 @@
 .el-year-table td .cell:hover {
   color: var(--light-blue-color);
 }
+
+// 月份范围选择器
+.el-month-table td.today .cell {
+  color: var(--light-blue-color);
+  border: 1px solid var(--light-blue-color);
+  font-weight: 600;
+}
+
+.el-month-table td.in-range div, .el-month-table td.in-range div:hover {
+  background-color: #ccdfed;
+}
+
+.el-month-table td .cell {
+  width: 45px;
+  border-radius: 8px;
+}
+
+.el-month-table td.end-date .cell, .el-month-table td.start-date .cell {
+  background-color: var(--light-blue-color);
+}

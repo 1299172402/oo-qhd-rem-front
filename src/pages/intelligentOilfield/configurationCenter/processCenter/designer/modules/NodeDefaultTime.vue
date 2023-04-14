@@ -3,139 +3,137 @@
     ref="form"
     :model="model"
   >
-    <el-card style="margin-bottom: 20px;">
-      <el-form-item label="处理期限">
-        <question-info slot="label" label="处理期限" tip="flow_node_designer_urge_rule_due" />
-        <div class="default-time">
-          <aside>
-            <el-input-number
-              v-model="model.urgeModel.dueDay"
-              controls-position="right"
-              :precision="0"
-              :min="0"
-            />
-            <span class="span-time">天</span>
-          </aside>
-          <aside>
-            <el-input-number
-              v-model="model.urgeModel.dueHours"
-              controls-position="right"
-              :precision="0"
-              :min="0"
-            />
-            <span class="span-time">小时</span>
-          </aside>
-          <aside>
-            <el-input-number
-              v-model="model.urgeModel.dueMinute"
-              controls-position="right"
-              :precision="0"
-              :min="0"
-            />
-            <span class="span-time">分钟</span>
-          </aside>
-        </div>
-      </el-form-item>
-      <el-form-item label="提前提醒">
-        <question-info slot="label" label="提前提醒" tip="flow_node_designer_urge_rule_before" />
-        <div class="default-time">
-          <aside>
-            <el-input-number
-              v-model="model.urgeModel.alertDateDay"
-              controls-position="right"
-              :precision="0"
-              :min="0"
-            />
-            <span class="span-time">天</span>
-          </aside>
-          <aside>
-            <el-input-number
-              v-model="model.urgeModel.alertDateHours"
-              controls-position="right"
-              :precision="0"
-              :min="0"
-            />
-            <span class="span-time">小时</span>
-          </aside>
-          <aside>
-            <el-input-number
-              v-model="model.urgeModel.alertDateMinute"
-              controls-position="right"
-              :precision="0"
-              :min="0"
-            />
-            <span class="span-time">分钟</span>
-          </aside>
-        </div>
-      </el-form-item>
-      <el-form-item label="之后每隔">
-        <question-info slot="label" label="之后每隔" tip="flow_node_designer_urge_rule_interval" />
-        <div class="default-time">
-          <aside>
-            <el-input-number
-              v-model="model.urgeModel.intervalDay"
-              controls-position="right"
-              :precision="0"
-              :min="0"
-            />
-            <span class="span-time">天</span>
-          </aside>
-          <aside>
-            <el-input-number
-              v-model="model.urgeModel.intervalHours"
-              controls-position="right"
-              :precision="0"
-              :min="0"
-            />
-            <span class="span-time">小时</span>
-          </aside>
-          <aside>
-            <el-input-number
-              v-model="model.urgeModel.intervalMinute"
-              controls-position="right"
-              :precision="0"
-              :min="0"
-            />
-            <span class="span-time">分钟</span>
-          </aside>
-        </div>
-      </el-form-item>
-      <el-form-item label="提醒方式">
-        <question-info slot="label" label="提醒方式" tip="flow_node_designer_urge_rule_method" />
-        <el-checkbox-group v-model="model.urgeModel.tipMethod" @change="handleChange($event, 'method')">
-          <el-checkbox label="sms" name="tipMethod" border>
-            短信
-          </el-checkbox>
-          <el-checkbox label="email" name="tipMethod" border>
-            邮件
-          </el-checkbox>
-          <el-checkbox label="inSite" name="tipMethod" border>
-            站内信
-          </el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="提醒次数">
-        <question-info slot="label" label="提醒次数" tip="flow_node_designer_urge_rule_times" />
-        <el-input-number
-          v-model="model.urgeModel.maxAlertTimes"
-          style="width: 100%;"
-          controls-position="right"
-          :precision="0"
-          :min="-1"
-        />
-      </el-form-item>
-    </el-card>
+    <el-form-item label="处理期限">
+      <question-info slot="label" label="处理期限" tip="flow_node_designer_urge_rule_due" />
+      <div class="default-time">
+        <aside>
+          <el-input-number
+            v-model="model.urgeModel.dueDay"
+            controls-position="right"
+            :precision="0"
+            :min="0"
+          />
+          <span class="span-time">天</span>
+        </aside>
+        <aside>
+          <el-input-number
+            v-model="model.urgeModel.dueHours"
+            controls-position="right"
+            :precision="0"
+            :min="0"
+          />
+          <span class="span-time">小时</span>
+        </aside>
+        <aside>
+          <el-input-number
+            v-model="model.urgeModel.dueMinute"
+            controls-position="right"
+            :precision="0"
+            :min="0"
+          />
+          <span class="span-time">分钟</span>
+        </aside>
+      </div>
+    </el-form-item>
+    <el-form-item label="提前提醒">
+      <question-info slot="label" label="提前提醒" tip="flow_node_designer_urge_rule_before" />
+      <div class="default-time">
+        <aside>
+          <el-input-number
+            v-model="model.urgeModel.alertDateDay"
+            controls-position="right"
+            :precision="0"
+            :min="0"
+          />
+          <span class="span-time">天</span>
+        </aside>
+        <aside>
+          <el-input-number
+            v-model="model.urgeModel.alertDateHours"
+            controls-position="right"
+            :precision="0"
+            :min="0"
+          />
+          <span class="span-time">小时</span>
+        </aside>
+        <aside>
+          <el-input-number
+            v-model="model.urgeModel.alertDateMinute"
+            controls-position="right"
+            :precision="0"
+            :min="0"
+          />
+          <span class="span-time">分钟</span>
+        </aside>
+      </div>
+    </el-form-item>
+    <el-form-item label="之后每隔">
+      <question-info slot="label" label="之后每隔" tip="flow_node_designer_urge_rule_interval" />
+      <div class="default-time">
+        <aside>
+          <el-input-number
+            v-model="model.urgeModel.intervalDay"
+            controls-position="right"
+            :precision="0"
+            :min="0"
+          />
+          <span class="span-time">天</span>
+        </aside>
+        <aside>
+          <el-input-number
+            v-model="model.urgeModel.intervalHours"
+            controls-position="right"
+            :precision="0"
+            :min="0"
+          />
+          <span class="span-time">小时</span>
+        </aside>
+        <aside>
+          <el-input-number
+            v-model="model.urgeModel.intervalMinute"
+            controls-position="right"
+            :precision="0"
+            :min="0"
+          />
+          <span class="span-time">分钟</span>
+        </aside>
+      </div>
+    </el-form-item>
+    <el-form-item label="提醒次数">
+      <question-info slot="label" label="提醒次数" tip="flow_node_designer_urge_rule_times" />
+      <el-input-number
+        v-model="model.urgeModel.maxAlertTimes"
+        class="remind-count"
+        controls-position="right"
+        :precision="0"
+        :min="-1"
+      />
+    </el-form-item>
+    <el-form-item label="催办提醒方式">
+      <question-info slot="label" label="催办提醒方式" tip="flow_node_designer_urge_rule_method" />
+      <el-checkbox-group v-model="model.urgeModel.tipMethod" @change="handleChange($event, 'method')">
+        <el-checkbox label="sms" name="tipMethod">
+          短信
+        </el-checkbox>
+        <el-checkbox label="email" name="tipMethod">
+          邮件
+        </el-checkbox>
+        <el-checkbox label="inSite" name="tipMethod">
+          站内信
+        </el-checkbox>
+      </el-checkbox-group>
+    </el-form-item>
     <template v-if="needReminderMode">
       <el-form-item label="待办提醒方式">
         <question-info slot="label" label="待办提醒方式" tip="flow_add_edit_assign_task_alert" />
         <el-checkbox-group v-model="model.cbxAssignAlertMethod" @change="handleChange($event, 'assignAlertMethod')">
-          <el-checkbox label="sms" name="cbxAssignAlertMethod" border>
+          <el-checkbox label="sms" name="cbxAssignAlertMethod">
             短信
           </el-checkbox>
-          <el-checkbox label="email" name="cbxAssignAlertMethod" border>
+          <el-checkbox label="email" name="cbxAssignAlertMethod">
             邮件
           </el-checkbox>
-          <el-checkbox label="inSite" name="cbxAssignAlertMethod" border>
+          <el-checkbox label="inSite" name="cbxAssignAlertMethod">
             站内信
           </el-checkbox>
         </el-checkbox-group>
@@ -143,13 +141,13 @@
       <el-form-item label="告知提醒方式">
         <question-info slot="label" label="告知提醒方式" tip="flow_add_edit_notify_alert" />
         <el-checkbox-group v-model="model.cbxCcAlertMethod" @change="handleChange($event, 'ccAlertMethod')">
-          <el-checkbox label="sms" name="cbxCcAlertMethod" border>
+          <el-checkbox label="sms" name="cbxCcAlertMethod">
             短信
           </el-checkbox>
-          <el-checkbox label="email" name="cbxCcAlertMethod" border>
+          <el-checkbox label="email" name="cbxCcAlertMethod">
             邮件
           </el-checkbox>
-          <el-checkbox label="inSite" name="cbxCcAlertMethod" border>
+          <el-checkbox label="inSite" name="cbxCcAlertMethod">
             站内信
           </el-checkbox>
         </el-checkbox-group>

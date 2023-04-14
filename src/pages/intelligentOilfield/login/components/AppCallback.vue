@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading" />
+  <div v-loading="loading" style="width: 100vw; height: 100vh;" />
 </template>
 <script>
 import router from "@/router";

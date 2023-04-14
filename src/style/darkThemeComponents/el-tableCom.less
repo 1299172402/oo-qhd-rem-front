@@ -56,7 +56,31 @@
 .el-table .el-table__cell.gutter {
   background: transparent;
 }
+// 表头显示双行（带单位）
+.doubleHeader .el-table__header-wrapper {
+  .cell {
+    height: auto !important;
+    line-height: 24px;
+  }
+}
 
+.twoRowHeader {
+  height: 58px;
+
+  .sort-caret.descending {
+    bottom: -6px !important;
+  }
+
+  .sort-caret.ascending {
+    top: 18px !important;
+  }
+}
+
+.headerSortRow1 {
+  max-width: calc(100% - 24px);
+  display: inline-table;
+  text-align: center;
+}
 //表头
 .el-table__header-wrapper {
   .cell {

@@ -20,20 +20,22 @@
 </template>
 
 <script>
+import { getGoOtherLogin } from "@/api/intelligentOilfield/login.js";
+
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     goCallBack() {
-    //   getGoOtherLogin({ redirect: this.$route.query.redirect, srid: this.$route.query.srid }).then((response) => {
-    //     if (response.status === 200) {
-    //       window.location.href = response.data.data;
-    //     }
-    //   });
-    // 仅供双因素测试使用，不提供真实功能
-      window.location.href = "https://devau.cnooc.cn/idp/authcenter/ActionAuthChain?entityld=znytgxt";
+      getGoOtherLogin({ redirect: this.$route.query.redirect, srid: this.$route.query.srid }).then(response => {
+        if (response.status === 200) {
+          window.location.href = response.data.data;
+        }
+      });
+      // TODO: Maybe change back
+      // 仅供双因素测试使用，不提供真实功能
+      // window.location.href = "https://devau.cnooc.cn/idp/authcenter/ActionAuthChain?entityld=znytgxt";
     }
   }
 };

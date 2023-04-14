@@ -71,8 +71,12 @@ export default ({ mode }) => {
       proxy: {
         "/dev-api": {
           // 用于开发环境下的转发请求
-          // target: "http://10.77.79.57:8080",
-          target: "http://10.77.79.57:8080",
+          // 更多请参考：https://vitejs.dev/config/#server-proxy
+          // target: 'http://114.116.211.6:8080', // 旧地址
+          target: "http://114.115.233.247:38085/prod-api", //
+          // target: "http://10.77.79.57:8080", // 新地址
+          // target: "https://tjioms-dev.tjltd.cnooc", // 新地址
+          // target: "https://3196n899m4.zicp.fun", // zhangbin地址
           changeOrigin: true,
           rewrite: path => path.replace(/^\/dev-api/, "")
         }

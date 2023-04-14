@@ -33,7 +33,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="消息类型">
+        <el-form-item v-if="queryParams.triggerType === 'USER'" label="消息类型">
           <el-select
             v-model="queryParams.messageType"
             style="width: 240px;"
@@ -68,16 +68,8 @@
     </header-search>
 
     <page-panel-new header-title="消息主题" style="height: calc(100% - 100px)">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
-        <el-col :span="1.5">
-          <el-button
-            v-hasPermi="['messageConfig:export']"
-            type="primary"
-            plain
-            @click="handleExport"
-          >
-            导出
-          </el-button>
+      <el-row style="margin-bottom: 20px">
+        <el-col :span="20">
           <el-button
             v-hasPermi="['messageConfig:add']"
             type="primary"
@@ -86,16 +78,18 @@
           >
             新增
           </el-button>
+        </el-col>
+        <el-col :span="4" style="text-align: right;">
           <el-button
-            type="warning"
+            v-hasPermi="['messageConfig:export']"
+            style="margin-right: 4px"
+            type="primary"
             plain
-            class="commonBtn"
-            @click="handleBack"
+            @click="handleExport"
           >
-            返回
+            导出
           </el-button>
         </el-col>
-      <!-- <right-toolbar :show-search.sync="showSearch" @queryTable="getList" /> -->
       </el-row>
       <el-table
         :data="data"
@@ -123,7 +117,7 @@
         >
           <template slot-scope="scope">
             <span v-if="item.props === 'active'">
-              <el-tag :type="scope.row.active ? 'success' : 'info'">{{ scope.row.active ? "正常" : "离线" }}</el-tag>
+              <el-tag :type="scope.row.active === 0 ? 'success' : 'info'">{{ scope.row.active === 0 ? "正常" : "离线" }}</el-tag>
             </span>
             <span v-else>{{ columnsFormatter(scope.row, item.props) }}</span>
           </template>
@@ -182,14 +176,11 @@ export default {
       data: [],
       columns,
       showSearch: true,
-      messageTypes: [],
-      totalMessageTypes: [
+      messageTypes: [
         { type: "SMS", text: "短信" },
         { type: "MAIL", text: "邮件" },
         { type: "PUSH", text: "移动云推送" },
-        { type: "LETTER", text: "站内信" },
-        { type: "EQUIPMENT", text: "设备状态" },
-        { type: "FORWARDING", text: "服务转发" }
+        { type: "LETTER", text: "站内信" }
       ],
       triggerTypes: [
         { type: "USER", text: "用户触达" },
@@ -233,23 +224,10 @@ export default {
       this.$nextTick(() => {
         this.handleQuery();
       });
-      this.messageTypes = this.totalMessageTypes;
     },
     /** 根据触达类型切换不同的消息状态 */
     handleType() {
       delete this.queryParams.messageType;
-      this.messageTypes =
-        this.queryParams.triggerType === "USER"
-          ? [
-            { type: "SMS", text: "短信" },
-            { type: "MAIL", text: "邮件" },
-            { type: "PUSH", text: "移动云推送" },
-            { type: "LETTER", text: "站内信" }
-          ]
-          : [
-            { type: "EQUIPMENT", text: "设备状态" },
-            { type: "FORWARDING", text: "服务转发" }
-          ];
     },
     /** * 表格展示特殊格式化 */
     columnsFormatter(row, prop) {

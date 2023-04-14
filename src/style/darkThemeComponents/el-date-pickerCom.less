@@ -182,3 +182,24 @@
 .el-year-table td .cell:hover {
   color: #177ddc;
 }
+
+// 月份范围选择器
+.el-month-table td.today .cell {
+  color: #177ddc;;
+  border: 1px solid #177ddc;;
+  font-weight: 600;
+}
+
+.el-month-table td.end-date .cell, .el-month-table td.start-date .cell {
+  background-color: #177ddc;
+}
+
+.el-month-table td .cell {
+  color: var(--white-color);
+  width: 45px;
+  border-radius: 8px;
+}
+
+.el-month-table td.in-range div, .el-month-table td.in-range div:hover {
+  background-color: rgba(10, 31, 50, 1);
+}
