@@ -77,20 +77,11 @@
               </el-input>
             </el-row>
             <div style="margin-top: 20px" class="displat">
-              <el-button
-                type="primary"
-                class="buttonActive_primary"
-                @click="save()"
-                v-show="ycglKfyj"
-                style="margin-left: 20px"
+              <el-button type="primary" class="buttonActive_primary" @click="save()" style="margin-left: 20px"
                 >保存</el-button
               >
-              <el-button type="primary" class="buttonActive_primary" @click="addWarning()" v-show="ycglKfyj"
-                >加入观察室</el-button
-              >
-              <el-button type="primary" class="buttonActive_primary" @click="delWarning()" v-show="ycglKfyj"
-                >关闭预警</el-button
-              >
+              <el-button type="primary" class="buttonActive_primary" @click="addWarning()">加入观察室</el-button>
+              <el-button type="primary" class="buttonActive_primary" @click="delWarning()">关闭预警</el-button>
             </div>
           </page-panel-new>
         </el-row>
