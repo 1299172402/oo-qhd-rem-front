@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%; height: 100%" class="pageBox">
     <header-search class="g-w100 g-h100">
-      <div class="g-row-flex-V g-w100 g-h100" style="margin-top: 20px;padding-bottom: 40px;">
+      <div class="g-row-flex-V g-w100 g-h100" style="margin-top: 20px;padding-bottom: 22px;">
         <div>角色名称：<el-input v-model="input" style="width: 200px" placeholder="请输入角色名称" /></div>
         <div style="margin: 0 10px">
           状态：<el-select v-model="value" placeholder="请选择" clearable>
@@ -24,12 +24,23 @@
       </div>
     </header-search>
     <page-panel-new header-title="角色列表" style="height: calc(100% - 100px);" class="g-w100">
-      <!-- <gradientBox></gradientBox> -->
-      <div class="btnPosition g-row-flex">
-        <el-button class="" type="primary">
-          新增
-        </el-button>
-      </div>
+      <el-row style="margin-bottom: 20px">
+        <el-col :span="20">
+          <el-button class="" type="primary">
+            新增
+          </el-button>
+        </el-col>
+        <el-col :span="4" style="text-align: right">
+          <el-button
+            v-hasPermi="['system:logininfor:export']"
+            type="primary"
+            plain
+            size="mini"
+          >
+            导出
+          </el-button>
+        </el-col>
+      </el-row>
       <el-table
         height="calc(100% - 113px)"
         :row-style="{ height: '0px' }"

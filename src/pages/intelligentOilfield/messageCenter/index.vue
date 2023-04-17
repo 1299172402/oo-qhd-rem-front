@@ -71,16 +71,8 @@
     </header-search>
 
     <page-panel-new header-title="消息日志" style="height: calc(100% - 100px)">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
-        <el-col :span="1.5">
-          <el-button
-            v-hasPermi="['message:export']"
-            type="primary"
-            plain
-            @click="handleExport"
-          >
-            导出
-          </el-button>
+      <el-row style="margin-bottom: 20px">
+        <el-col :span="20">
           <el-button
             v-hasPermi="['message:config']"
             type="primary"
@@ -90,7 +82,16 @@
             配置
           </el-button>
         </el-col>
-      <!-- <right-toolbar :show-search.sync="showSearch" @queryTable="getList" /> -->
+        <el-col :span="4" style="text-align: right">
+          <el-button
+            v-hasPermi="['message:export']"
+            type="primary"
+            plain
+            @click="handleExport"
+          >
+            导出
+          </el-button>
+        </el-col>
       </el-row>
       <el-table
         :data="data"

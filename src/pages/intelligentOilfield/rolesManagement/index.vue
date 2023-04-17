@@ -45,7 +45,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item v-if="showAppSearch" label="appId" prop="appId">
+        <el-form-item v-if="showAppSearch" label="所属应用" prop="appId">
           <search-select v-model="queryParams.appId" />
         </el-form-item>
         <!-- <el-form-item label="创建时间">
@@ -163,6 +163,16 @@
           width="160"
         />
         <el-table-column label="角色排序" prop="roleSort" width="120" />
+        <el-table-column
+          prop="menuType"
+          label="所属应用"
+          width="100"
+          align="center"
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.appId | filterAppId() }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="分配用户" align="center" width="180">
           <template v-if="scope.row.roleId !== '1'" slot-scope="scope">
             <el-button
@@ -422,11 +432,22 @@ import { listRole, getRole, delRole, addRole, updateRole, dataScope, changeRoleS
 import { treeselect as menuTreeselect, roleMenuTreeselect, roleMenuTreeSelectByAppId } from "@/api/intelligentOilfield/system/menu";
 import { treeselect as deptTreeselect, roleDeptTreeselect } from "@/api/intelligentOilfield/system/dept";
 import SearchSelect from "@/components/intelligentOilfield/searchSelect/AppSearchSelect.vue";
+import { appList } from "@/api/intelligentOilfield/system/dataper";
 
+var that;
 export default {
   name: "Roles",
   dicts: ["sys_normal_disable", "sys_role_type"],
   components: { SearchSelect },
+  filters: {
+    filterAppId(value) {
+      if (value) {
+        const temp = that.appSelect.filter(item => item.appId === value);
+        return temp.length > 0 ? temp[0].appName : "";
+      }
+      return "";
+    }
+  },
   props: {
     showAppSearch: {
       type: Boolean,
@@ -439,6 +460,7 @@ export default {
   },
   data() {
     return {
+      appSelect: [],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -528,8 +550,11 @@ export default {
       }
     };
   },
+  beforeCreate() {
+    that = this;
+  },
   created() {
-    this.getList();
+    this.getAppList();
   },
   activated() {
     this.getList();
@@ -537,6 +562,14 @@ export default {
   methods: {
     // 查看使用该角色的用户
     queryUserDetail() {},
+    getAppList() {
+      appList().then(res => {
+        if (res.data.code === 200) {
+          this.appSelect = res.data.rows;
+          this.getList();
+        }
+      });
+    },
     /** 查询角色列表 */
     getList() {
       this.loading = true;
@@ -782,8 +815,8 @@ export default {
     },
     /** 分配用户操作 */
     handleAuthUser(row) {
-      const { roleId } = row;
-      this.$router.push({ name: "rolesDetail", params: { roleId }});
+      const { roleId, roleName } = row;
+      this.$router.push({ name: "rolesDetail", params: { roleId }, query: { pathName: roleName }});
       //   this.$router.push(`/system/role-auth/user/${roleId}`);
     },
     /** 提交按钮 */

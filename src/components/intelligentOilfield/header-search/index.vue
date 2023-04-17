@@ -17,12 +17,11 @@ export default {
 </script>
 <style scoped>
 .commonHeader {
-  height: 80px;
+  height: auto;
   border: 1px solid;
   padding: 0 20px;
   background-image: var(--logo-bg) !important;
   background-size: 100% 100% !important;
-
 }
 
 .searchHeader-light {

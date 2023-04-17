@@ -685,7 +685,7 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      if (this.form.icon === "") {
+      if (this.form.icon === "" || Number(this.form.parentId) !== 0) {
         this.clearIcon();
       }
       this.$refs.form.validate(valid => {

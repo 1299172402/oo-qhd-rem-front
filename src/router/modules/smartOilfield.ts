@@ -1,6 +1,6 @@
 // 智能油田一级页面
 import Layout from "@/layouts/index.vue";
-const env = import.meta.env.MODE;
+
 export default [
   // 静态本地路由【首页，组件样例，页面样例，门户页面】
 //   {
@@ -27,7 +27,7 @@ export default [
     meta: { title: "首页详情", icon: "", single: true },
     children: [
       {
-        path: "homeDetail",
+        path: "homeDetail/:tenantId",
         name: "homeDetail",
         component: () => import("@/pages/intelligentOilfield/homePage/components/detail.vue"),
         meta: { title: "首页详情" }
@@ -94,7 +94,6 @@ export default [
   //     ]
   //   },
   {
-    hidden: env=='development'?false:true,
     path: "/demo5",
     name: "demo5",
     component: Layout,
@@ -104,7 +103,7 @@ export default [
       {
         path: "demoIndex5",
         name: "demoIndex5",
-        component: () => import("@/pages/intelligentOilfield/demo/index5.vue"),
+        component: () => import("@/pages/intelligentOilfield/demo/demo3.vue"),
         meta: { title: "拖拽组件" }
       }
     ]

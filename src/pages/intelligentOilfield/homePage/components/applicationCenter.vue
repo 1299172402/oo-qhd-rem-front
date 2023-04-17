@@ -1,6 +1,6 @@
 <!-- 应用中心组件 -->
 <template>
-  <div style="font-size: 20px" class="g-w100 g-h100">
+  <div style="font-size: 20px;margin-top: 20px;" class="g-w100 g-h100">
     <el-dialog
       title="内容设置-应用中心"
       :visible.sync="openDialog"
@@ -69,7 +69,13 @@
                 <div v-else class="bgImage g-row-flex-HV" style="width: 40px;height: 40px">
                   {{ items.appName[0] }}
                 </div>
-                <span class="textSpan">{{ items.appName }}</span>
+                <el-tooltip
+                  effect="dark"
+                  :content="items.appName"
+                  placement="top"
+                >
+                  <span class="textSpan">{{ items.appName }}</span>
+                </el-tooltip>
               </div>
             </el-carousel-item>
           </el-carousel>

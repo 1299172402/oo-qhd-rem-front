@@ -62,11 +62,11 @@
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
-            <el-form-item label="租户" prop="tenantName">
+            <el-form-item label="用户租户" prop="tenantName">
               <el-select
                 v-model="queryParams.tenantName"
                 style="width: 240px"
-                placeholder="请选择用户岗位"
+                placeholder="请选择用户租户"
                 collapse-tags
                 clearable
               >
@@ -177,8 +177,8 @@
 
         <!-- v-loading="loading" -->
         <page-panel-new header-title="用户管理" style="height: calc(100% - 106px);">
-          <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
-            <el-col :span="1.5">
+          <el-row style="margin-bottom: 20px">
+            <el-col :span="20">
               <el-button
                 v-hasPermi="['system:user:add']"
                 type="primary"
@@ -189,31 +189,7 @@
                 新增
               </el-button>
             </el-col>
-            <!-- <el-col :span="1.5">
-            <el-button
-              type="success"
-              plain
-              icon="el-icon-edit"
-              size="mini"
-              :disabled="single"
-              @click="handleUpdate"
-              v-hasPermi="['system:user:edit']"
-              >修改</el-button
-            >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button
-              type="danger"
-              plain
-              icon="el-icon-delete"
-              size="mini"
-              :disabled="multiple"
-              @click="handleDelete"
-              v-hasPermi="['system:user:remove']"
-              >删除</el-button
-            >
-                  </el-col> -->
-            <el-col :span="1.5">
+            <el-col :span="4" style="text-align: right">
               <el-button
                 v-hasPermi="['system:user:import']"
                 class="commonBtn"
@@ -222,8 +198,6 @@
               >
                 导入
               </el-button>
-            </el-col>
-            <el-col :span="1.5">
               <el-button
                 v-hasPermi="['system:user:export']"
                 class="commonBtn"
@@ -233,7 +207,6 @@
                 导出
               </el-button>
             </el-col>
-            <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList" :columns="columns"></right-toolbar> -->
           </el-row>
           <el-table
             :data="userList"
@@ -305,7 +278,7 @@
             />
             <el-table-column
               v-if="columns[5].visible"
-              key="deptName1"
+              key="userTenant"
               label="用户租户"
               align="center"
               prop="tenantName"
@@ -1131,6 +1104,7 @@ export default {
     resetQuery() {
       this.dateRange = [];
       this.resetForm("queryForm");
+      this.queryParams.deptId = undefined;
       this.$nextTick(() => {
         this.handleQuery();
       });
@@ -1265,7 +1239,8 @@ export default {
       const { userId } = row;
       this.$router.push({
         name: "AuthRole/:userId",
-        params: { userId }
+        params: { userId },
+        query: { pathName: row.userName }
       });
     },
     /** 分配应用角色操作 */
@@ -1273,7 +1248,8 @@ export default {
       const { userId } = row;
       this.$router.push({
         name: "AppRole/:id",
-        params: { id: userId }
+        params: { id: userId },
+        query: { pathName: row.userName }
       });
     },
     /** 提交按钮 */

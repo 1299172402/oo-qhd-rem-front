@@ -342,6 +342,7 @@ export const ListMixins = {
     handleListResult(res) {
       this.dataSource = res.data.rows;
       this.ipagination.total = res.data.total;
+      this.loadAfterwards();
     },
     /**
      * 查询
@@ -363,7 +364,8 @@ export const ListMixins = {
       this.$set(this.ipagination, "current", pageInfo.page);
       this.$set(this.ipagination, "pageSize", pageInfo.limit);
       this.loadData();
-    }
+    },
+    loadAfterwards() {}
   }
 };
 export const DeleteMixin = {

@@ -4,19 +4,18 @@
       <h4 class="form-header h4">
         基本信息
       </h4>
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-row>
-          <el-col :span="8" :offset="2">
-            <el-form-item label="用户昵称" prop="nickName">
-              <el-input v-model="form.nickName" disabled />
-            </el-form-item>
-          </el-col>
-          <el-col :span="8" :offset="2">
-            <el-form-item label="登录账号" prop="userName">
-              <el-input v-model="form.userName" disabled />
-            </el-form-item>
-          </el-col>
-        </el-row>
+      <el-form
+        ref="form"
+        :model="form"
+        label-width="80px"
+        :inline="true"
+      >
+        <el-form-item label="用户昵称" prop="nickName">
+          <el-input v-model="form.nickName" disabled />
+        </el-form-item>
+        <el-form-item label="登录账号" prop="userName">
+          <el-input v-model="form.userName" disabled />
+        </el-form-item>
       </el-form>
 
       <h4 class="form-header h4">
@@ -27,7 +26,7 @@
           ref="table"
           :row-key="getRowKey"
           :data="roles.slice((pageNum-1)*pageSize,pageNum*pageSize)"
-          height="470px"
+          height="510px"
           @row-click="clickRow"
           @selection-change="handleSelectionChange"
         >
@@ -148,6 +147,10 @@ export default {
 .el-dialog__body .el-row {
   display: flex;
   justify-content: space-between;
+}
+
+/deep/ .el-table-column--selection div.cell {
+  text-align: center;
 }
 
 </style>

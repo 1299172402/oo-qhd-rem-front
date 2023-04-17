@@ -33,7 +33,8 @@ const GenerateRouter = {
   "MessageSubject": () => import("@/pages/intelligentOilfield/messageCenter/messageConfig/index.vue"),
   "DemoIndex": () => import("@/pages/intelligentOilfield/demo/index.vue"),
   "DemoIndex2": () => import("@/pages/intelligentOilfield/demo/index2.vue"),
-  "DemoIndex3": () => import("@/pages/intelligentOilfield/demo/index3.vue")
+  "DemoIndex3": () => import("@/pages/intelligentOilfield/demo/index3.vue"),
+  "DemoIndex5": () => import("@/pages/intelligentOilfield/demo/index5.vue")
 };
 
 export default GenerateRouter;

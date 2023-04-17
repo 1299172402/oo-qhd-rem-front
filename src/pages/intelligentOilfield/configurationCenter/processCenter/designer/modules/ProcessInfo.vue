@@ -1,8 +1,8 @@
 <template>
   <common-dialog
     v-model="visible"
-    :loading="loading"
     v-bind="$attrs"
+    width="60%"
     height="1"
     :dialog-title="(model.id ? '编辑' : '新建') + '流程模型'"
     @ok="toValidate"
@@ -13,6 +13,7 @@
       ref="formAutoCreate"
       :model="model"
       :items="items"
+      label-width="160px"
       form-class="form-layout--160 column"
       @ok="handleOk"
     >
@@ -28,7 +29,7 @@
             <question-info tip="flow_add_edit_urge_rule" />
             节点默认时限设置
           </legend>
-          <node-default-time :default-time-model="model" />
+          <node-default-time class="node-default-time" :default-time-model="model" />
         </div>
       </template>
       <template #appSelect="{ item }">
@@ -258,6 +259,7 @@ export default {
 <style scoped lang="less">
 div.time-set {
   position: relative;
+  display: flex;
 
   legend.legend-title {
     box-sizing: border-box;
@@ -265,6 +267,25 @@ div.time-set {
     height: 40px;
     line-height: 40px;
     padding: 0 12px 0 0;
+    width: 160px;
+    text-align: end;
+  }
+
+  .node-default-time {
+    width: calc(100% - 160px);
+
+    /deep/ .el-card {
+      border: none;
+      box-shadow: none;
+
+      .el-card__body {
+        padding: 0;
+
+        .remind-count {
+          width: auto !important;
+        }
+      }
+    }
   }
 }
 </style>

@@ -3,7 +3,7 @@
     v-loading="loading"
     :class="{'form-section__view-only': isView}"
     :element-loading-text="loadingText"
-    class="form-section"
+    class="form-section panelBox"
   >
     <el-card class="box-margin" :class="{'form-view-hide-star': isView, 'form-section__main': true, 'no-border': !border}" style="height: 100%">
       <div class="form-section__content">
@@ -13,7 +13,6 @@
         <div class="border-top">
           <el-button
             v-if="cancelText"
-            icon="el-icon-close"
             class="cancelBtn"
             @click="handleCancel"
           >
@@ -23,7 +22,6 @@
           <template v-if="!isView">
             <el-button
               v-if="saveText"
-              icon="el-icon-check"
               type="primary"
               @click="$emit('save', 'save')"
             >
@@ -100,18 +98,12 @@ export default {
 };
 </script>
   <style scoped lang="less">
-  .submit-btns-box {
-    margin-top: 20px;
-  }
-
   .border-top {
-    border-top: 1px solid #e9e9e9;
     display: flex;
-    // flex: 1;
     flex-wrap: nowrap;
     justify-content: flex-end;
     width: 100%;
-    padding: 20px 0 0;
+    margin-top: 20px;
   }
 
   .form-section__view-only {
@@ -140,8 +132,20 @@ export default {
     }
   }
 
-  .form-section > .el-card ::v-deep .el-card__body {
-    padding: 20px;
+  .form-section > .el-card {
+    border: none;
+
+    ::v-deep .el-card__body {
+      padding: 20px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      .form-section__content {
+        flex: 1;
+        overflow-y: auto;
+      }
+    }
   }
 
   .form-section__main {
@@ -158,7 +162,7 @@ export default {
     }
   }
 
-  .form-section {
+  .form-section.panelBox {
     width: 100%;
     height: 100%;
     overflow-y: auto;

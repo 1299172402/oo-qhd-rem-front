@@ -8,7 +8,12 @@
         label-width="240px"
       >
         <el-form-item label="租户code：" prop="tenantCode">
-          <el-input v-model="model.tenantCode" :title="model.tenantCode" placeholder="请输入租户code" />
+          <el-input
+            v-model="model.tenantCode"
+            :disabled="isView"
+            :title="model.tenantCode"
+            placeholder="请输入租户code"
+          />
         </el-form-item>
         <el-form-item label="租户名称：" prop="tenantName">
           <el-input v-model="model.tenantName" :title="model.tenantName" placeholder="请输入租户名称" />
@@ -74,13 +79,25 @@ export default {
       },
       deptOptions: [],
       rules: {
-        tenantCode: [{ required: true, message: "请输入租户code", trigger: "blur" }],
+        tenantCode: [
+          { required: true, message: "请输入租户code", trigger: "blur" },
+          {
+            pattern: /^[A-Za-z0-9_-]{1,15}$/,
+            message: "仅能包含大写字母、小写字母、数字、短横线和下划线,且最长不能超过15个字符",
+            trigger: "blur"
+          }
+        ],
         tenantName: [{ required: true, message: "请输入租户名称", trigger: "blur" }],
         deptId: [{ required: true, message: "请输入分配组织机构", trigger: "change" }],
         status: [{ required: true, message: "请输入租户状态", trigger: "change" }]
       },
       returnPath: "Tenant"
     };
+  },
+  computed: {
+    isView() {
+      return Boolean(this.$route.params && this.$route.params.id);
+    }
   },
   mounted() {
     this.getTreeselect();

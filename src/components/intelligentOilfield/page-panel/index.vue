@@ -49,6 +49,7 @@ export default {
   },
   methods: {
     maximizeCom() {
+      this.$emit("zoom-out-com", this.isMax);
       this.isMax = !this.isMax;
     }
   }

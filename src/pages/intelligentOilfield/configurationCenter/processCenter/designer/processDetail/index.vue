@@ -1,29 +1,35 @@
 
 <template>
-  <form-section submit-text="" save-text="" cancel-text="">
+  <form-section
+    class="form-section"
+    :border="false"
+    submit-text=""
+    save-text=""
+    cancel-text=""
+  >
     <div class="display-flex process-detail-main">
       <form-auto-create
         :ref="refName"
-        style="width: 300px; min-width: 300px; flex-wrap: nowrap; overflow-y: scroll;"
+        style="width: 300px; min-width: 300px; flex-wrap: nowrap; overflow-y: scroll; border: 1px solid #3490d3; padding: 20px;"
         :view-only="true"
         :model="model"
         :items="items"
         form-class="form-layout--140 column"
         @ok="handleOk('save')"
       />
-      <div v-show="showImg" class="flex-1">
-        <p class="tip">
-          注：
-          <br>1. 只有可视化编辑器页面中的修改需要发布流程才能生效，其它页面的修改即刻生效。
-          <br>2. 此界面的导出功能仅导出流程图，即可视化在线编辑器中的内容，本界面导出的文件在流程列表页进行导入。
-          <br>3. 节点设计器中的数据请在节点设计器界面执行导出/导入操作。
-        </p>
+      <div v-show="showImg" class="flex-1 detail-container">
         <div class="img-container">
           <img
             v-if="modelId"
             :src="`${imgSrc}`"
           >
         </div>
+        <p class="tip">
+          注：
+          <br>1. 只有可视化编辑器页面中的修改需要发布流程才能生效，其它页面的修改即刻生效。
+          <br>2. 此界面的导出功能仅导出流程图，即可视化在线编辑器中的内容，本界面导出的文件在流程列表页进行导入。
+          <br>3. 节点设计器中的数据请在节点设计器界面执行导出/导入操作。
+        </p>
       </div>
       <node-setting
         v-if="!showImg"
@@ -57,49 +63,72 @@
       @ok="getModel(modelId)"
       @closed="editModelId = undefined"
     />
-    <div v-show="showImg" slot="btn" class="gap-container text-right ">
-      <el-button :disabled="loading" icon="el-icon-back" @click="handleBack">
-        取消
-      </el-button>
+    <template slot="btn">
+      <div v-show="showImg" class="gap-container text-right">
+        <el-button :disabled="loading" class="commonBtn" @click="handleBack">
+          取消
+        </el-button>
+        <el-button
+          type="danger"
+          :disabled="loading"
+          @click="handleDelete"
+        >
+          删除
+        </el-button>
+        <el-button
+          :disabled="loading"
+          type="primary"
+          @click="editModelId = modelId"
+        >
+          修改
+        </el-button>
+        <el-button
+          :disabled="loading"
+          type="primary"
+          @click="handleCopy"
+        >
+          复制
+        </el-button>
+        <el-button
+          :disabled="loading"
+          type="primary"
+          @click="handlePublish"
+        >
+          发布
+        </el-button>
+        <el-button
+          :disabled="loading"
+          type="primary"
+          @click="handleExport(modelId)"
+        >
+          导出
+        </el-button>
+        <el-button
+          :disabled="loading"
+          type="primary"
+          @click="showImg = false;"
+        >
+          节点设计器
+        </el-button>
+        <node-editor
+          :btn="{
+            type: 'primary',
+            icon: 'el-icon-edit',
+            disabled: loading
+          }"
+          :model-id="modelId"
+          :tenant-id="model.tenantId"
+          @refresh="getModel(modelId); $emit('ok')"
+        />
+      </div>
       <el-button
-        type="danger"
-        icon="el-icon-delete"
-        :disabled="loading"
-        @click="handleDelete"
+        v-show="!showImg"
+        class="commonBtn"
+        @click="showImg = true"
       >
-        删除
+        返回详情
       </el-button>
-      <el-button :disabled="loading" icon="el-icon-edit" @click="editModelId = modelId">
-        修改
-      </el-button>
-      <el-button :disabled="loading" icon="el-icon-copy-document" @click="handleCopy">
-        复制
-      </el-button>
-      <el-button :disabled="loading" icon="el-icon-files" @click="handlePublish">
-        发布
-      </el-button>
-      <el-button :disabled="loading" icon="el-icon-download" @click="handleExport(modelId)">
-        导出
-      </el-button>
-      <el-button
-        :disabled="loading"
-        icon="el-icon-edit"
-        type="primary"
-        @click="showImg = false;"
-      >
-        节点设计器
-      </el-button>
-      <node-editor
-        :btn="{
-          type: 'primary',
-          icon: 'el-icon-edit',
-          disabled: loading
-        }"
-        :model-id="modelId"
-        :tenant-id="model.tenantId"
-        @refresh="getModel(modelId); $emit('ok')"
-      />
-    </div>
+    </template>
   </form-section>
 </template>
 <script>
@@ -318,6 +347,59 @@ export default {
 };
 </script>
 <style scoped lang="less">
+.form-section {
+  /deep/ .form-section__main {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /deep/ .node-setting {
+    border: 1px solid #3490d3;
+    margin-left: 20px;
+
+    .coll {
+      flex: 1;
+      overflow-y: auto;
+    }
+  }
+
+  /deep/ .el-card {
+    height: 100%;
+
+    .el-card__body {
+      position: relative;
+      height: 100%;
+
+      .submit-btns-box {
+        position: absolute;
+        top: 0;
+        margin-top: 0;
+
+        button {
+          border-radius: 0;
+        }
+
+        .border-top {
+          border: none;
+        }
+      }
+
+      .form-section__content {
+        height: calc(100% - 60px);
+        margin-top: 60px;
+      }
+    }
+  }
+
+  .detail-container {
+    margin-left: 20px;
+
+    .img-container {
+      border: 1px solid #3490d3;
+    }
+  }
+}
+
 .display-flex {
   display: flex;
 
@@ -339,16 +421,26 @@ export default {
   text-align: right;
 }
 
+.gap-container.text-right {
+  padding-left: 0;
+
+  button:first-child {
+    margin-left: 0;
+  }
+}
+
 .process-detail-main {
   height: 100%;
 
   > div:last-child {
-    border-left: 1px solid #ddd;
     display: flex;
     flex-direction: column;
 
     .tip {
       padding: 20px;
+      margin-top: 20px;
+      border: 1px solid #3490d3;
+      height: 130px;
     }
 
     .img-container {
@@ -356,6 +448,7 @@ export default {
       align-items: center;
       justify-content: center;
       flex: 1;
+      height: calc(100% - 150px);
 
       img {
         min-width: 600px;

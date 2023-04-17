@@ -1,16 +1,17 @@
 <template>
   <common-dialog
     v-model="visible"
-    :loading="loading"
     v-bind="$attrs"
     dialog-title="启动测试流程"
     @ok="toValidate"
   >
     <form-auto-create
       ref="formAutoCreate"
+      class="form-auto"
       :model="form"
       :items="items"
       form-class="column"
+      label-width="220px"
       @ok="handleClose"
     />
   </common-dialog>
@@ -101,8 +102,7 @@ export default {
           dict: "lc_design_complete_callback",
           options: []
         }
-      ],
-      loading: false
+      ]
     };
   },
   methods: {
@@ -126,6 +126,20 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="less">
+/deep/ .form-auto-create {
+  .el-form-item {
+    margin-bottom: 22px;
+    width: 100%;
+    margin-right: 0;
 
+    .el-form-item__label {
+      float: left;
+    }
+
+    .el-form-item__content {
+      display: block;
+    }
+  }
+}
 </style>

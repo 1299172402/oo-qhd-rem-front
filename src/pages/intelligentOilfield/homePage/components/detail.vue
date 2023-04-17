@@ -88,7 +88,7 @@
       <div style="width: 100%; margin-top: 20px"></div>
                                                       </pagePanel> -->
     <div v-for="(item, index) in panelTypeOptions" :key="index">
-      <component :is="getContent(item.name)" :list="getList(item.name)" style="margin-top: 20px" />
+      <component :is="getContent(item.name)" :list="getList(item.name)" />
     </div>
     <div style="margin-top: 20px;color: transparent">
       占位

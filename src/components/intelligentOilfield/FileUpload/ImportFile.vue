@@ -15,7 +15,7 @@
     <el-button
       :type="btnType"
       :icon="btnIcon"
-      plain
+      class="commonBtn"
       :loading="loading"
     >
       {{ btnText }}
@@ -34,11 +34,11 @@ export default {
     },
     btnType: {
       type: String,
-      default: "warning"
+      default: "default"
     },
     btnIcon: {
       type: String,
-      default: "el-icon-upload2"
+      default: ""
     },
     btnText: {
       type: String,

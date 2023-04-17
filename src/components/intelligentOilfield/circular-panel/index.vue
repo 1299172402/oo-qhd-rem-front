@@ -182,17 +182,16 @@ export default {
       if (this.jumpType === "iframe") {
         this.$emit("linkIframe", item);
       } else if (this.modelName === "application") { // 应用中心
-        if (item.appType === "0") { // 内部跳转的逻辑
-          // <!-- TODO: Maybe change back -->
+        // 内部跳转的逻辑
+        // <!-- TODO: Maybe change back -->
         //   const paramQuery = {
         //     appId: item.appId,
         //     appName: item.appName,
         //     userId: this.$store.getters["user/userDetail"].user.userId
         //   };
         //   addAccessinfo(paramQuery).then(() => {});
-          window.open(item.appPcAccessUrl);
-          // document.getElementById(`hrefText${index}`).click();
-        }
+        window.open(item.appPcAccessUrl);
+        // document.getElementById(`hrefText${index}`).click();
       } else if (this.modelName === "enter") { // 快捷入口
         window.open(item.enterUrl);
       }

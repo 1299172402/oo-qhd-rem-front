@@ -56,7 +56,31 @@
 .el-table .el-table__cell.gutter {
   background: transparent;
 }
+// 表头显示双行（带单位）
+.doubleHeader .el-table__header-wrapper {
+  .cell {
+    height: auto !important;
+    line-height: 24px;
+  }
+}
 
+.twoRowHeader {
+  height: 58px;
+
+  .sort-caret.descending {
+    bottom: -6px !important;
+  }
+
+  .sort-caret.ascending {
+    top: 18px !important;
+  }
+}
+
+.headerSortRow1 {
+  max-width: calc(100% - 24px);
+  display: inline-table;
+  text-align: center;
+}
 //表头
 .el-table__header-wrapper {
   .cell {
@@ -80,8 +104,9 @@
   font-size: 14px;
   color: var(--white-color);
   padding: 0 0 0 20px;
-  background: linear-gradient(270deg, rgba(0, 96, 166, 0.5) 0%, #0060a6 100%);
-  background-image: var(--logo-bg) !important;
+  // TODO: Maybe change back，不带图标的时候放开
+  // background: linear-gradient(270deg, rgba(0, 96, 166, 0.5) 0%, #0060a6 100%);
+  background: var(--logo-bg) no-repeat top / contain, linear-gradient(270deg, rgba(0, 96, 166, 0.5) 0%, #0060a6 100%) !important;
   background-size: 100% 100% !important;
 }
 

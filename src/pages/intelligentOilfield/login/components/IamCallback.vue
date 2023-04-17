@@ -37,31 +37,29 @@ export default {
           params = { srid: result.srid };
         }
         callBackLogin(data, params).then(res => {
-          console.error("test：IamCallback", res);
+          this.$store.commit("user/setToken", res.data.data.access_token);
           if (params.srid && res.data.data.redirectUrl) {
             // 参数携带srid需要直接进行跳转
             let baseURL = "";
             if (env === "development") {
-              baseURL = `${window.location.origin}/${proxy[env].API}`;
+              baseURL = `${window.location.origin}${proxy[env].API}`;
             } else {
               baseURL = proxy[env].API;
             }
             baseURL = `${baseURL}/auth${res.data.data.redirectUrl}`;
             window.location.href = baseURL;
-            this.loading = false;
+          } else if (result.redirect) {
+            router.push(result.redirect);
           } else {
-            this.$store.commit("user/setToken", res.data.data.access_token);
-            if (result.redirect) {
-              router.push(result.redirect);
-              this.loading = false;
-            } else {
-              this.$router.push("/");
-              this.loading = false;
-            }
+            this.$router.push("/");
           }
-        });
+        })
+          .finally(() => {
+            this.loading = false;
+          });
       }
     } else {
+      this.loading = false;
       this.$message.error("参数不全");
     }
   },

@@ -184,6 +184,16 @@
       2.5、Cascader 级联选择器
     </div>
     <el-cascader v-model="valueC" :options="optionsC" />
+    <div class="spaceMargin">
+      2.6、下拉框（内容为树形控件）
+    </div>
+    <treeselect
+      v-model="selectValue"
+      style="width: 200px;"
+      :options="deptOptions"
+      :show-count="true"
+      placeholder="请选择"
+    />
     <div class="headerTitle spaceMargin">
       3、输入框=========================================================================================
     </div>
@@ -241,6 +251,17 @@
       end-placeholder="结束时间"
     />
     <div class="spaceMargin">
+      4.1.3、月份范围选择器
+    </div>
+    <el-date-picker
+      v-model="value1"
+      type="monthrange"
+      style="width: 400px"
+      range-separator="-"
+      start-placeholder="开始月份"
+      end-placeholder="结束月份"
+    />
+    <div class="spaceMargin">
       4.2、日期选择器
     </div>
     <el-date-picker
@@ -265,6 +286,9 @@
 
     <div class="headerTitle spaceMargin">
       5、table表格=========================================================================================
+    </div>
+    <div class="spaceMargin">
+      5.1、普通表格（列固定）
     </div>
     <el-table
       :row-style="{ height: '0px' }"
@@ -330,6 +354,9 @@
       />
       <el-table-column prop="address" label="地址" fixed="right" />
     </el-table>
+    <div class="spaceMargin">
+      5.2、表格头部合并
+    </div>
     <el-table
       ref="mainTable"
       :data="tableData1"
@@ -363,6 +390,9 @@
         width="150"
       />
     </el-table>
+    <div class="spaceMargin">
+      5.3、头部带筛选的表格
+    </div>
     <el-table
       :row-style="{ height: '0px' }"
       :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
@@ -380,6 +410,7 @@
         fixed
       />
       <el-table-column
+        :render-header="renderSpecNameHeader"
         prop="name"
         label="姓名"
         sortable
@@ -389,7 +420,163 @@
           {{ scope.row.name }}33
         </template>
       </el-table-column>
-      <el-table-column prop="address" />
+      <el-table-column prop="address" :render-header="renderSpecNameHeader" label="地址" />
+    </el-table>
+    <div class="spaceMargin">
+      5.4、头部两行展示
+    </div>
+    <el-table
+      class="doubleHeader"
+      :row-style="{ height: '0px' }"
+      :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+      :data="tableData"
+      header-cell-class-name="table_header"
+      :cell-style="{ padding: '6px', 'text-align': 'center' }"
+      style="width: 700px; margin: 20px 0"
+      :default-sort="{ prop: 'date', order: 'descending' }"
+    >
+      <el-table-column
+        prop="date"
+        label="日期"
+        sortable
+        width="180"
+        fixed
+      />
+      <el-table-column
+        label-class-name="twoRowHeader"
+        prop="name"
+        label="姓名"
+        width="180"
+      >
+        <template #header>
+          <div>
+            <span>试算当前吸水指数</span>
+            <br>
+            <span>[m/(d·MPa)]</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="address" label="地址" align="left" />
+      <el-table-column
+        label-class-name="twoRowHeader"
+        prop="date"
+        label="日期"
+        sortable
+        width="180"
+        align="left"
+      >
+        <template #header>
+          <div class="headerSortRow1">
+            <span>试算当前吸水指数</span>
+            <br>
+            <span>[[m/(d·MPa)]]</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="姓名"
+        sortable
+        width="180"
+      />
+      <el-table-column prop="address" label="地址" />
+      <el-table-column
+        prop="date"
+        label="日期"
+        sortable
+        width="180"
+      />
+      <el-table-column
+        prop="name"
+        label="姓名"
+        sortable
+        width="180"
+      />
+      <el-table-column prop="address" label="地址" />
+
+      <el-table-column
+        prop="date"
+        label="日期"
+        sortable
+        width="180"
+      />
+      <el-table-column
+        prop="name"
+        label="姓名"
+        sortable
+        width="180"
+      />
+      <el-table-column prop="address" label="地址" fixed="right" />
+    </el-table>
+    <div class="spaceMargin">
+      5.5、行内编辑表格
+    </div>
+    <el-button
+      icon="el-icon-edit-outline"
+      size="mini"
+      type="primary"
+      @click="redact"
+    >
+      编辑
+    </el-button>
+    <el-button
+      icon="el-icon-document-checked"
+      size="mini"
+      type="primary"
+      @click="save"
+    >
+      保存
+    </el-button>
+    <el-table
+      :row-style="{ height: '0px' }"
+      :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+      :data="tableData"
+      header-cell-class-name="table_header"
+      :cell-style="{ padding: '6px', 'text-align': 'center' }"
+      style="width: 1000px; margin: 20px 0"
+      :default-sort="{ prop: 'date', order: 'descending' }"
+    >
+      <el-table-column
+        prop="date"
+        label="日期"
+        sortable
+        width="180"
+      >
+        <template slot-scope="scope">
+          <span v-if="isDisabled[scope.$index]">{{ scope.row.date }}</span>
+          <span v-else> <el-input v-model="scope.row.date" size="small" /></span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="姓名"
+        sortable
+        width="180"
+      >
+        <template slot-scope="scope">
+          <span v-if="isDisabled[scope.$index]">{{ scope.row.name }}</span>
+          <span v-else> <el-input v-model="scope.row.name" size="small" /></span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="address" label="地址">
+        <template slot-scope="scope">
+          <span v-if="isDisabled[scope.$index]">{{ scope.row.address }}</span>
+          <span v-else> <el-input v-model="scope.row.address" size="small" /></span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="date"
+        label="日期"
+        sortable
+        width="180"
+      />
+      <el-table-column
+        prop="name"
+        label="姓名"
+        sortable
+        width="180"
+      />
+      <el-table-column prop="address" label="地址" />
     </el-table>
     <div class="headerTitle spaceMargin">
       6、分页=========================================================================================
@@ -401,6 +588,7 @@
       background
       layout="prev, pager, next,total"
       :total="1000"
+      class="paginationDiv"
     />
     <div class="spaceMargin">
       6.2、自定义封装分页器，实际页面中多个地方使用，具体看实际功能列表
@@ -560,7 +748,7 @@
       15.3、自定义的横向纵向tabs切换按钮（横向纵向都可以）
     </div>
     <div class="spaceMargin">
-      15.3.1、横向<span style="color: red">【建议作为第二级标题】</span>
+      15.3.1、横向【建议作为第二级标题】
     </div>
     <vertical-switch-button
       :data-list="dataList1"
@@ -599,33 +787,25 @@
     <div class="spaceMargin">
       17.1、图片上传
     </div>
-    <el-upload
-      class="avatar-uploader imageUpload"
-      action="https://jsonplaceholder.typicode.com/posts/"
-      :show-file-list="false"
-      :on-success="handleAvatarSuccess"
-    >
-      <img v-if="imageUrl" :src="imageUrl" class="avatar">
-      <i v-else class="el-icon-plus avatar-uploader-icon" />
-    </el-upload>
+    <file-upload
+      v-model="model1.appImg"
+      :limit="1"
+      :is-picture-card="true"
+      :is-show-tip="false"
+      biz-path="picture"
+      bucket-name="zhy"
+    />
     <div class="spaceMargin">
       17.2、文件上传
     </div>
-    <el-upload
+    <file-upload
+      v-model="model2.appImg"
       style="width: 400px"
-      class="upload-demo"
-      drag
-      action="https://jsonplaceholder.typicode.com/posts/"
-      multiple
-    >
-      <i class="el-icon-upload" />
-      <div class="el-upload__text">
-        将文件拖到此处，或<em>点击上传</em>
-      </div>
-      <div slot="tip" class="el-upload__tip">
-        只能上传jpg/png文件，且不超过500kb
-      </div>
-    </el-upload>
+      :limit="1"
+      :is-show-tip="false"
+      biz-path="picture"
+      bucket-name="zhy"
+    />
     <div class="headerTitle spaceMargin">
       18、标题栏=========================================================================================
     </div>
@@ -861,7 +1041,12 @@
     <div class="spaceMargin">
       23.1、老版带标题
     </div>
-    <page-panel header-title="我是标题" style="height: 600px" :show-btn="true">
+    <page-panel
+      header-title="我是标题"
+      style="height: 600px"
+      :show-btn="true"
+      @zoom-out-com="zoomOutCom"
+    >
       <!-- <div>这里显示主内容，padding为20px</div> -->
       <el-table
         :row-style="{ height: '0px' }"
@@ -902,12 +1087,7 @@
     <div class="spaceMargin">
       23.2、新版不带标题
     </div>
-    <page-panel-new style="height: 600px" :show-btn="true" />
-
-
-
-
-    
+    <page-panel-new style="height: 600px" :show-btn="true" @zoom-out-com="zoomOutComNew" />
     <div class="headerTitle spaceMargin">
       24、自定义info信息窗【建议只在拖拽面板页面使用】=========================================================================================
     </div>
@@ -925,6 +1105,42 @@
       25、Header搜索框部分=========================================================================================
     </div>
     <header-search style="height: 100px" />
+    <div class="headerTitle spaceMargin">
+      26、树形控件=========================================================================================
+    </div>
+    <div class="spaceMargin">
+      26.1、普通树形控件
+    </div>
+    <div style="width: 20%">
+      <el-tree
+        ref="tree"
+        :data="deptOptions"
+        :props="defaultProps"
+        :expand-on-click-node="false"
+        default-expand-all
+      />
+    </div>
+    <div class="spaceMargin">
+      26.2、带搜索树形控件
+    </div>
+    <div style="width: 20%">
+      <el-input
+        v-model="treeSelectName"
+        placeholder="请输入"
+        clearable
+        size="small"
+        prefix-icon="el-icon-search"
+        style="margin-bottom: 10px; height: 40px"
+      />
+      <el-tree
+        ref="tree"
+        :data="deptOptions"
+        :props="defaultProps"
+        :expand-on-click-node="false"
+        :filter-node-method="filterNode"
+        default-expand-all
+      />
+    </div>
     <div style="margin: 40px 0">
       =================================end========================
     </div>
@@ -935,13 +1151,20 @@ import { Message } from "element-ui";
 import horizontalSwitchBtn from "@/components/intelligentOilfield/horizontal-switch-button/index.vue";
 import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 import marquee from "@/components/intelligentOilfield/marquee-window/index.vue";
+import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
+import searchTableMixin from "@/pages/common/mixins/searchTableMixin";
+import Treeselect from "@riophae/vue-treeselect";
+import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
 export default {
   components: {
     horizontalSwitchBtn,
     marquee,
-    verticalSwitchButton
+    verticalSwitchButton,
+    FileUpload,
+    Treeselect
   },
+  mixins: [searchTableMixin],
   data() {
     const generateData = () => {
       const data = [];
@@ -955,6 +1178,44 @@ export default {
       return data;
     };
     return {
+      selectValue: undefined,
+      treeSelectName: "",
+      deptOptions: [
+        {
+          id: "1",
+          label: "一级 1",
+          children: [{
+            id: "2",
+            label: "二级 1-1",
+            children: [{
+              label: "三级 1-1-1",
+              id: "3"
+            }]
+          }]
+        }, {
+          id: "4",
+          label: "一级 2",
+          children: [{
+            id: "5",
+            label: "二级 2-1",
+            children: [{
+              id: "6",
+              label: "三级 2-1-1"
+            }]
+          }, {
+            id: "7",
+            label: "二级 2-2",
+            children: [{
+              id: "8",
+              label: "三级 2-2-1"
+            }]
+          }]
+        }
+      ],
+      defaultProps: {
+        children: "children",
+        label: "label"
+      },
       radio1: "上海",
       tableData1: [
         {
@@ -1331,6 +1592,7 @@ export default {
           address: "上海市普陀区金沙江路 1516 弄"
         }
       ],
+      isDisabled: [true, true, true, true],
       value1: "",
       options: [
         {
@@ -1366,6 +1628,12 @@ export default {
       activerow: 0, // steps步骤条
       activecolumn: 0,
       value2: 50, // slider滑块
+      model1: {
+        appImg: ""
+      },
+      model2: {
+        appImg: ""
+      },
       // 自定义进度条颜色，使用:color="colors"
       colors: "rgba(166, 29, 36, 1)",
       // 表单
@@ -1397,12 +1665,34 @@ export default {
       value4: [1]
     };
   },
+  watch: {
+    treeSelectName(val) {
+      this.$refs.tree.filter(val);
+    }
+  },
   mounted() {
     this.$nextTick(() => {
       this.$refs.mainTable.doLayout();
     });
   },
   methods: {
+    zoomOutCom() {},
+    zoomOutComNew() {},
+    // 筛选节点
+    filterNode(value, data) {
+      if (!value) return true;
+      return data.label.indexOf(value) !== -1;
+    },
+    redact() {
+      for (let i = 0; i < this.isDisabled.length - 1; i++) {
+        this.$set(this.isDisabled, i, false);
+      }
+    },
+    save() {
+      for (let i = 0; i < this.isDisabled.length - 1; i++) {
+        this.$set(this.isDisabled, i, true);
+      }
+    },
     filterParamsChange() {
       // 可以在此方法中进行数据查询，通过this.filterParams获取表格header的搜索项以及值
     },

@@ -32,7 +32,7 @@
           >
             搜索
           </el-button>
-          <el-button icon="el-icon-refresh" @click="searchReset">
+          <el-button icon="el-icon-refresh" class="commonBtn" @click="searchReset">
             重置
           </el-button>
         </el-form-item>
@@ -41,7 +41,7 @@
     <page-panel-new header-title="分配用户" style="height: calc(100% - 100px);">
       <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
         <el-col v-show="isBindUser" :span="1.5">
-          <select-user ref="select" :data-sources="dataSource" @ok="loadData" />
+          <select-user ref="select" :data-sources="allSelectUser" @ok="loadData" />
         </el-col>
         <el-col :span="1.5">
           <el-button
@@ -137,7 +137,8 @@ export default {
       fn: {
         list: tenantUserList
       },
-      showSearch: true
+      showSearch: true,
+      allSelectUser: []
     };
   },
   computed: {
@@ -192,6 +193,16 @@ export default {
     searchReset() {
       this.queryParams = { tenantId: this.dataId };
       this.loadData();
+    },
+    loadAfterwards() {
+      this.fn.list({
+        tenantId: this.dataId,
+        pageNum: 1,
+        pageSize: 9999
+      })
+        .then(res => {
+          this.allSelectUser = res.data.rows;
+        });
     }
   }
 };

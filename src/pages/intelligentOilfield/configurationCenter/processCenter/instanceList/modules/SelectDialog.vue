@@ -26,10 +26,10 @@
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button icon="el-icon-close" @click="visibleDialog = false">
+      <el-button class="cancelBtn" @click="visibleDialog = false">
         取 消
       </el-button>
-      <el-button icon="el-icon-check" type="primary" @click="handleClose">
+      <el-button type="primary" @click="handleClose">
         确 定
       </el-button>
     </div>
