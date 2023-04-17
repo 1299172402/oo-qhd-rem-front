@@ -23,6 +23,7 @@ export default Vue.extend({
     }
   },
   mounted() {
+    
     this.$store.dispatch("setting/changeTheme", { ...config });
   },
   methods: {

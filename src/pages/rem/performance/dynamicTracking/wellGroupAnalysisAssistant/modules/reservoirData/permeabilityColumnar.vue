@@ -1,6 +1,6 @@
 <!--渗透率柱状图-->
 <template>
-  <el-container class="mt-2">
+  <el-container class="z-main">
     <el-main>
       <div>
         <el-row style="height: 600px;overflow: auto;">
