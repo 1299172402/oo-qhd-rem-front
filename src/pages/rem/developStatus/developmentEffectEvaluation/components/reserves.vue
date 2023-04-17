@@ -3,19 +3,19 @@
     <div class="z-main">
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="剩余储采比" style="height: 380px;margin-top:0;" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="剩余储采比" style="height: 380px;margin-top:0;" show-btn>
                     <Echart :chart-data="reserveProductionRatio" style="height: 100%"></Echart>
                 </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="水驱动用程度" style="height: 380px;margin-top:0;" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="水驱动用程度" style="height: 380px;margin-top:0;" show-btn>
                     <Echart :chart-data="degreeOfWaterDrive" style="height: 100%"></Echart>
                 </pagePanel>
             </div>
         </div>
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="水驱控制程度" style="height: 380px;" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="水驱控制程度" style="height: 380px;" show-btn>
                     <Echart :chart-data="waterDriveControlDegree" style="height: 100%"></Echart>
                 </pagePanel>
             </div>

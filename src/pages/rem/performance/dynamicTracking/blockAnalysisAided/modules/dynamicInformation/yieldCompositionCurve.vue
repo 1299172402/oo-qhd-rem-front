@@ -3,19 +3,19 @@
     <div class="z-main">
         <div class="row1">
             <div class="flex-1" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="330px" headerTitle="产量构成曲线">
-                    <Echart ref="echartDown1" :chart-data="option" height="300px"></Echart>
-                </info-window>
+                <pagePanel style="height:330px;" headerTitle="产量构成曲线" show-btn>
+                    <Echart ref="echartDown1" :chart-data="option" height="100%"></Echart>
+                </pagePanel>
             </div>
             <div class="flex-1">
-                <info-window infoWidth="100%" infoHeight="330px" headerTitle="措施产量构成曲线">
-                    <Echart ref="echartDown2" :chart-data="option1" height="300px"></Echart>
-                </info-window>
+                <pagePanel style="height:330px;" headerTitle="措施产量构成曲线" show-btn>
+                    <Echart ref="echartDown2" :chart-data="option1" height="100%"></Echart>
+                </pagePanel>
             </div>
         </div>
         <div class="row2">
             <div class="flex-1" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="100%" headerTitle="产量构成表">
+                <pagePanel style="height:100%;" headerTitle="产量构成表" show-btn>
                     <el-table id="tableData1" highlight :data="tableDataStruct" height="100%">
                         <el-table-column type="index" label="序号" align="center"></el-table-column>
                         <el-table-column prop="theDate" label="时间" align="center"></el-table-column>
@@ -24,10 +24,10 @@
                         <el-table-column prop="newWells" :label="`开发新井\n (m³)`" align="center"></el-table-column>
                         <el-table-column prop="measureOutput" :label="`措施产量\n (m³)`" align="center"></el-table-column>
                     </el-table>
-                </info-window>
+                </pagePanel>
             </div>
             <div class="flex-1">
-                <info-window infoWidth="100%" infoHeight="100%" headerTitle="措施产量构成表">
+                <pagePanel style="height:100%;" headerTitle="措施产量构成表" show-btn>
                     <el-table id="tableData2" highlight :data="tableDataProduct" height="100%">
                         <el-table-column type="index" label="序号" align="center"></el-table-column>
                         <el-table-column prop="theDate" label="时间" align="center"></el-table-column>
@@ -36,7 +36,7 @@
                         <el-table-column prop="profile" :label="`调剖\n (m³)`" align="center"></el-table-column>
                         <el-table-column prop="sideTrack" :label="`侧钻\n (m³)`" align="center"></el-table-column>
                     </el-table>
-                </info-window>
+                </pagePanel>
             </div>
         </div>
     </div>

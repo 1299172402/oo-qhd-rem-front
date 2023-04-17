@@ -1,14 +1,12 @@
 <!--综合开发曲线-->
 <template>
     <div class="z-main">  
-        <info-window infoWidth="100%" infoHeight="100%" headerTitle="综合开发曲线">
-            <template slot="titleContent">
-                <div style="float: right;">
-                    <el-button type="primary" style="height:30px;" size="mini" @click="dialogVisible = true">选择指标信息</el-button>
-                </div>
-            </template>
+        <pagePanel style="height:100%;" headerTitle="综合开发曲线" show-btn>
+            <div class="positionBtn">
+                <el-button type="primary" style="height:30px;" size="mini" @click="dialogVisible = true">选择指标信息</el-button>
+            </div>
             <Echart ref="echartDown" :chart-data="option" style="height: 100%"></Echart>
-        </info-window>
+        </pagePanel>
         <el-dialog title="选择查看指标信息" :visible.sync="dialogVisible" width="400px">
             <el-checkbox-group v-model="selectIndexList" style="display: flex;flex-direction: column">
                 <el-checkbox v-for="(item, index) in indexList" :key="index" :label="item.label" :value="item.value" style="margin-left: 10px;"></el-checkbox>
@@ -1152,5 +1150,10 @@
 <style lang="scss" scoped>
     .z-main{
         height:calc(100% - 101px);
+        .positionBtn{
+            position: absolute;
+            right:56px;
+            top:0;
+        }
     }
 </style>

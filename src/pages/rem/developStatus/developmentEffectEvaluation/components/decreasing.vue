@@ -3,31 +3,31 @@
     <div class="z-main">
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="自然递减率" style="height: 380px;margin-top:0;" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="自然递减率" style="height: 380px;margin-top:0;" show-btn>
                     <Echart :chart-data="naturalDeclineRate" style="height: 100%"></Echart>
                 </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="综合递减率" style="height: 380px;margin-top:0;" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="综合递减率" style="height: 380px;margin-top:0;" show-btn>
                     <Echart :chart-data="comprehensiveDeclineRate" style="height: 100%"></Echart>
                 </pagePanel>
             </div>
         </div>
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="总递减率" style="width: 100%; height: 380px" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="总递减率" style="width: 100%; height: 380px" show-btn>
                     <Echart :chart-data="totalDeclineRate" style="height: 100%"></Echart>
                 </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="产量标定法" style="width: 100%; height: 380px" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="产量标定法" style="width: 100%; height: 380px" show-btn>
                     <Echart :chart-data="yieldCalibrationMethod" style="height: 100%"></Echart>
                 </pagePanel>
             </div>
         </div>
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="指标评价结果表" style="height: 380px" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="指标评价结果表" style="height: 380px" show-btn>
                     <el-table :data="tableData" highlight height="100%">
                         <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
                         <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>

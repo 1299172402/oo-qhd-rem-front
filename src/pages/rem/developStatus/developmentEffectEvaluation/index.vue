@@ -242,7 +242,9 @@
             margin-bottom:10px;
         }
         .childContent{
+            width:100%;
             height:calc(100% - 50px);
+            overflow-x: hidden;
             overflow-y: scroll;
         }
     }

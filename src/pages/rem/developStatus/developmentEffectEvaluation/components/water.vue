@@ -3,25 +3,25 @@
     <div class="z-main">
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="含水上升率" style="height: 380px;margin-top:0;" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="含水上升率" style="height: 380px;margin-top:0;" show-btn>
                     <Echart :chart-data="rateOfWaterCutRise" style="height: 100%"></Echart>
                 </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="水驱指数" style="height: 380px;margin-top:0;" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="水驱指数" style="height: 380px;margin-top:0;" show-btn>
                     <Echart :chart-data="recoveryDegree" style="height: 100%"></Echart>
                 </pagePanel>
             </div>
         </div>
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="存水率" style="height: 380px" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="存水率" style="height: 380px" show-btn>
                     <Echart :chart-data="waterRate" style="height: 100%"></Echart>
                 </pagePanel>
             </div>
             <!--含水类表格 -->
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="指标评价结果表" style="height: 380px" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="指标评价结果表" style="height: 380px" show-btn>
                     <el-table :data="tableData" highlight height="100%">
                         <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
                         <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>

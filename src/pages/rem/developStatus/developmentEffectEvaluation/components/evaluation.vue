@@ -3,24 +3,24 @@
     <div class="z-main">
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="采油速度" style="height: 370px;margin-top:0;" :show-btn="true">
+                <pagePanel headerTitle="采油速度" style="height: 370px;margin-top:0;" show-btn>
                     <Echart :chart-data="productionSpeed" style="height: 100%"></Echart>
                 </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="采出程度" style="height: 370px;margin-top:0;" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="采出程度" style="height: 370px;margin-top:0;" show-btn>
                     <Echart :chart-data="recoveryDegree" style="height: 100%;"></Echart>
                 </pagePanel>
             </div>
         </div>
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="采出程度与含水率关系图" style="height: 380px" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="采出程度与含水率关系图" style="height: 380px" show-btn>
                     <Echart :chart-data="relationship" style="height: 100%"></Echart>
                 </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="注采比" style="height: 380px" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="注采比" style="height: 380px" show-btn>
                     <div class="search">
                         <span>合理注采比：</span>
                         <el-input-number v-model="lineStandOne" :controls="false" style="width: 180px;margin-right:15px;" @change="setFirstLine"></el-input-number>
@@ -32,7 +32,7 @@
         </div>
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="地层总压降" style="height: 360px" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="地层总压降" style="height: 360px" show-btn>
                     <div class="search">
                         <span>合理地层压力：</span>
                         <el-input-number v-model="lineStandThree" :controls="false" style="width: 180px" @change="setThirdLine"></el-input-number>
@@ -41,7 +41,7 @@
                 </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="指标评价结果表" style="width: 100%; height: 360px" :isShowMaxBtn="true" :show-btn="true">
+                <pagePanel headerTitle="指标评价结果表" style="width: 100%; height: 360px" show-btn>
                     <div class="search">
                         <span>对标油田：</span>
                         <el-select v-model="fields" style="width:180px;height:30px;margin-right:15px;" disabled>
