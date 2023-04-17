@@ -15,10 +15,6 @@ export default [
         component: () => import("@/pages/rem/AnnualProgramManagement/longTermPlanSearchLongTermPlan.vue"),
         meta: { title: "中长期开发规划", icon: "icon" },
       },
-
-
-
-      
       {
         hidden: false,
         path: "newPlanIndex",
