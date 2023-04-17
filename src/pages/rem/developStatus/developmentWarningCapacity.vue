@@ -1,59 +1,45 @@
-<!-- 开发预计 -->
+<!-- 开发预警 -->
 <template>
   <el-container class="layout">
-    <el-header height="auto"> </el-header>
+    <!-- <el-header height="auto"> </el-header> -->
     <el-container>
       <el-header>
-        <el-row style="margin-top: -20px; padding: 0px">
-          <pagePanelNew class="g-row-flex-V g-w100 g-h100">
-            <vertical-switch-button
-              :data-list="dataList1"
-              btn-direction="row"
-              @selectBtn="selectBtn"
-              style="width: 100px; height: 40px; padding: 10px 0px 10px"
-            />
-          </pagePanelNew>
+        <el-row>
+          <div>
+            <pagePanelNew class="g-row-flex-V g-w100 g-h100" style="height:80px">
+              <vertical-switch-button :data-list="dataList1" btn-direction="row" @selectBtn="selectBtn" />
+            </pagePanelNew>
+          </div>
         </el-row>
         <div>
           <el-row style="margin-top: 8px">
-            <div>
-              <!-- <el-button type="primary" class="roundButton" size="mini" round @click="switchParam('1')">
-                新预警（{{ alertCount }})
-              </el-button>
-              <el-button type="primary" class="roundButton" size="mini" round @click="switchParam('2')">
-                预警
-              </el-button>
-              <el-button type="primary" class="roundButton" size="mini" round @click="switchParam('3')">
-                历史预警
-              </el-button> -->
-              <div class="fr overflow-hidden">
-                <el-tabs class="g-pageHeader" v-model="radio1" topline @tab-click="handleClick">
-                  <el-tab-pane
-                    style="height: auto"
-                    v-for="(item, index) in tabs"
-                    :key="index"
-                    :label="item.label"
-                    :name="item.name"
-                  >
-                    <div class="tab-view">
-                      <el-button
-                        v-for="(module, index) in item.modules"
-                        :key="index"
-                        :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'"
-                        @click="currentModule = module.name"
-                      >
-                        {{ module.label }}
-                      </el-button>
-                    </div>
-                  </el-tab-pane>
-                </el-tabs>
-              </div>
+            <div class="fr overflow-hidden">
+              <el-tabs class="g-pageHeader" v-model="radio1" topline @tab-click="handleClick">
+                <el-tab-pane
+                  style="height: auto"
+                  v-for="(item, index) in tabs"
+                  :key="index"
+                  :label="item.label"
+                  :name="item.name"
+                >
+                  <div class="tab-view">
+                    <el-button
+                      v-for="(module, index) in item.modules"
+                      :key="index"
+                      :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'"
+                      @click="currentModule = module.name"
+                    >
+                      {{ module.label }}
+                    </el-button>
+                  </div>
+                </el-tab-pane>
+              </el-tabs>
             </div>
           </el-row>
         </div>
       </el-header>
 
-      <el-main style="margin-top: 40px">
+      <el-main style="margin-top: 80px">
         <div v-if="radio1 == 'developmaenWamingter'">
           <developmaenWamingter :beginDate="beginDate" :fieldId="fieldId"></developmaenWamingter>
         </div>

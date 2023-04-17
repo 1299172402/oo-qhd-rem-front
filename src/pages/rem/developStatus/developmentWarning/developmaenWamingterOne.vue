@@ -34,7 +34,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <pagination :total="total" :page.sync="page" :limit.sync="pageSize" />
+      <pagination :total="total" :page.sync="page" :limit.sync="pageSize" v-if="tableData.length" />
     </pagePanelNew>
   </div>
 </template>

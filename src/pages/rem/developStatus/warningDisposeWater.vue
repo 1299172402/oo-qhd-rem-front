@@ -18,7 +18,7 @@
           <div style="float: right; color: #24deff; font-size: 14px">
             <span>预警原因：{{ $route.query.warningType }}</span>
             <br />
-            <span>时间：{{ $route.query.theTime }} &nbsp;&nbsp; 处理人：{{ $route.query.handler }}</span>
+            <span>时间：{{ $route.query.theDate }} &nbsp;&nbsp; 处理人：{{ $route.query.handler }}</span>
           </div>
         </el-row>
       </el-header>
@@ -44,7 +44,7 @@
                 <el-table id="tableData" style="margin-top: 10px" :data="tableDataWater" highlight height="550px">
                   <el-table-column type="index" label="序号" width="60px" align="center"></el-table-column>
                   <el-table-column prop="borepipeId" label="井号" min-width="120px" align="center"></el-table-column>
-                  <el-table-column prop="injDaysMonthly" label="月注入天数" align="center"></el-table-column>
+                  <el-table-column prop="injDaysMonthly" :label="`月注入天数\n(d)`" align="center"></el-table-column>
                   <el-table-column prop="injMonthly" :label="`月注入变化量\n(10⁴m³)`" align="center"></el-table-column>
                   <el-table-column prop="whInjPress" :label="`井口注入压力\n(MPa)`" align="center">
                     <template slot-scope="scope">
@@ -68,8 +68,8 @@
               >
               </el-input>
             </el-row>
-            <div style="margin-top: 20px">
-              <el-button type="primary" @click="save()">保存</el-button>
+            <div style="margin-top: 20px" class="displat">
+              <el-button type="primary" @click="save()" style="margin-left: 20px">保存</el-button>
               <el-button type="primary" class="buttonActive_primary" @click="addWarning()">加入观察室</el-button>
               <el-button type="primary" class="buttonActive_primary" @click="delWarning()">关闭预警</el-button>
             </div>
@@ -658,8 +658,6 @@ export default {
       };
       proWellIndicatorWarningAssosiationAnalysisForProWell(queryParams).then((data) => {
         let rows = data.data.data.wellGroupForProWells;
-      
-        console.log(rows);
         this.tableDataOil = rows;
       });
     },
@@ -673,7 +671,7 @@ export default {
         warningTypeCode: this.$route.query.warningCode,
       };
       oilFieldOutputVaryChart(queryParams).then((data) => {
-        console.log(data);
+        console.log(data, "12121212");
         //产液
         let liquidChart = data.data.data.charts[0].linearDataSets[0];
         console.log(liquidChart);
@@ -787,54 +785,39 @@ export default {
     },
     //保存功能
     save() {
-      Message({
-        type: "success",
-        message: "保存成功"
-      });
-      return
       let request = { id: this.$route.query.id, opinion: this.textarea };
       proWellIndicatorWarningAssosiationAnalysisSave(request).then((res) => {
-  
+        Message({
+          showClose: true,
+          message: "保存成功",
+          type: "success",
+        });
+        this.textarea = "";
       });
     },
-
     //加入观察室
     addWarning() {
-      Message({
-        type: "success",
-        message: "加入观察室成功"
-      });
-      return
-      let request = {
-        id: this.$route.query.id,
-        handler: this.userInfo.permission.entUserName,
-      };
-      proWellIndicatorWarningAssosiationAnalysisToObserve(request).then((res) => {
-        this.$message({
+      let request = { id: this.$route.query.id, opinion: this.textarea };
+      proWellIndicatorWarningAssosiationAnalysisSave(request).then((res) => {
+        Message({
           showClose: true,
           message: "加入观察室成功",
           type: "success",
         });
       });
+      this.textarea = "";
     },
     //关闭预警
     delWarning() {
-      Message({
-        type: "success",
-        message: "关闭预警成功"
-      });
-      return
-      let request = {
-        id: this.$route.query.id,
-        handler: this.userInfo.permission.entUserName,
-      };
-      proWellIndicatorWarningAssosiationAnalysisClose(request).then((res) => {
-        this.$message({
+      let request = { id: this.$route.query.id, opinion: this.textarea };
+      proWellIndicatorWarningAssosiationAnalysisSave(request).then((res) => {
+        Message({
           showClose: true,
           message: "关闭预警成功",
           type: "success",
         });
       });
+      this.textarea = "";
     },
     /**
      *返回上一级
@@ -881,6 +864,11 @@ export default {
       content: "-";
     }
   }
+}
+
+.displat {
+  display: flex;
+  flex-direction: row-reverse;
 }
 </style>
   

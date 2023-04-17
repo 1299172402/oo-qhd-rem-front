@@ -18,7 +18,7 @@
           <div style="float: right; color: #24deff; font-size: 14px">
             <span>预警原因：{{ $route.query.warningType }}</span>
             <br />
-            <span>时间：{{ $route.query.theTime }} &nbsp; &nbsp; 处理人：{{ $route.query.handler }}</span>
+            <span>时间：{{ $route.query.theDate }} &nbsp; &nbsp; 处理人：{{ $route.query.handler }}</span>
           </div>
         </el-row>
       </el-header>
@@ -76,10 +76,21 @@
               >
               </el-input>
             </el-row>
-            <div style="margin-top: 20px">
-              <el-button type="primary" class="buttonActive_primary" @click="save()">保存</el-button>
-              <el-button type="primary" class="buttonActive_primary" @click="addWarning()">加入观察室</el-button>
-              <el-button type="primary" class="buttonActive_primary" @click="delWarning()">关闭预警</el-button>
+            <div style="margin-top: 20px" class="displat">
+              <el-button
+                type="primary"
+                class="buttonActive_primary"
+                @click="save()"
+                v-show="ycglKfyj"
+                style="margin-left: 20px"
+                >保存</el-button
+              >
+              <el-button type="primary" class="buttonActive_primary" @click="addWarning()" v-show="ycglKfyj"
+                >加入观察室</el-button
+              >
+              <el-button type="primary" class="buttonActive_primary" @click="delWarning()" v-show="ycglKfyj"
+                >关闭预警</el-button
+              >
             </div>
           </page-panel-new>
         </el-row>
@@ -614,7 +625,7 @@ export default {
         let rows = data.data.data.wellGroupForProWells;
         console.log(rows);
         this.tableDataOil = rows;
-      });tiuktikh 
+      });
     },
     //折线图
     charts(fieldId, oilFieldId, endDate) {
@@ -626,7 +637,7 @@ export default {
         warningTypeCode: this.$route.query.warningCode,
       };
       oilFieldOutputVaryChart(queryParams).then((data) => {
-        console.log(data);
+        console.log(data, "12122133333333333");
         //产液
         let liquidChart = data.data.data.charts[0].linearDataSets[0];
         console.log(liquidChart);
@@ -738,60 +749,58 @@ export default {
         _this.selectBlock = _this.block[0].fieldId;
       });
     },
+    // //保存功能
+    // save() {
+    //   Message({
+    //     type: "success",
+    //     message: "保存成功",
+    //   });
+    //   return;
+    //   let request = { id: this.$route.query.id, opinion: this.textarea };
+    //   proWellIndicatorWarningAssosiationAnalysisSave(request).then((res) => {
+    //     this.$message({
+    //       showClose: true,
+    //       message: "保存成功",
+    //       type: "success",
+    //     });
+    //   });
+    // },
+
     //保存功能
     save() {
-      Message({
-        type: "success",
-        message: "保存成功"
-      });
-      return
       let request = { id: this.$route.query.id, opinion: this.textarea };
       proWellIndicatorWarningAssosiationAnalysisSave(request).then((res) => {
-        this.$message({
+        Message({
           showClose: true,
           message: "保存成功",
           type: "success",
         });
+        this.textarea = "";
       });
     },
     //加入观察室
     addWarning() {
-      Message({
-        type: "success",
-        message: "加入观察室成功"
-      });
-      return
-      let request = {
-        id: this.$route.query.id,
-        handler: this.userInfo.permission.entUserName,
-      };
-      proWellIndicatorWarningAssosiationAnalysisToObserve(request).then((res) => {
-        this.$message({
+      let request = { id: this.$route.query.id, opinion: this.textarea };
+      proWellIndicatorWarningAssosiationAnalysisSave(request).then((res) => {
+        Message({
           showClose: true,
           message: "加入观察室成功",
           type: "success",
         });
       });
+      this.textarea = "";
     },
     //关闭预警
     delWarning() {
-      Message({
-        type: "success",
-        message: "关闭预警成功"
-      });
-      return
-      let request = {
-        id: this.$route.query.id,
-        handler: this.userInfo.permission.entUserName,
-      };
-      proWellIndicatorWarningAssosiationAnalysisClose(request).then((res) => {
-        console.log(res, "关闭");
-        this.$message({
+      let request = { id: this.$route.query.id, opinion: this.textarea };
+      proWellIndicatorWarningAssosiationAnalysisSave(request).then((res) => {
+        Message({
           showClose: true,
           message: "关闭预警成功",
           type: "success",
         });
       });
+      this.textarea = "";
     },
     /**
      *返回上一级
@@ -838,6 +847,10 @@ export default {
       content: "-";
     }
   }
+}
+.displat {
+  display: flex;
+  flex-direction: row-reverse;
 }
 </style>
   

@@ -30,7 +30,7 @@
         </el-table-column>
         <el-table-column v-if="false" prop="handler" label="处理人"> </el-table-column>
       </el-table>
-      <pagination :total="total" :page.sync="page" :limit.sync="pageSize" />
+      <pagination :total="total" :page.sync="page" :limit.sync="pageSize" v-if="tableData.length" />
     </pagePanelNew>
   </div>
 </template>
