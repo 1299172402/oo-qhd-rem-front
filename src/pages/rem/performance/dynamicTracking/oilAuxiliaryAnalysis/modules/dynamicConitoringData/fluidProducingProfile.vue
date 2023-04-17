@@ -158,6 +158,7 @@
             width:0;
         }
     }
+    
     #tableData{
         ::v-deep .el-table__header-wrapper .cell{
             height: auto;
