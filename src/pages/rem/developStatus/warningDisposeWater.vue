@@ -656,11 +656,12 @@ export default {
         oilFieldId: this.oilFieldId,
         warningTypeCode: warningTypeCode,
       };
-      //proWellIndicatorWarningAssosiationAnalysisForProWell(queryParams).then((data) => {
-      //  let rows = data.data.data.wellGroupForProWells;
-      //  console.log(rows);
-      //  this.tableDataOil = rows;
-      //});
+      proWellIndicatorWarningAssosiationAnalysisForProWell(queryParams).then((data) => {
+        let rows = data.data.data.wellGroupForProWells;
+      
+        console.log(rows);
+        this.tableDataOil = rows;
+      });
     },
     //折线图
     charts(fieldId, oilFieldId, endDate) {

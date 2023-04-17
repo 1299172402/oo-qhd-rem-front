@@ -26,7 +26,6 @@
     </el-main>
   </el-container>
 </template>
-
 <script>
 import {conectionPlot} from "@/api/oilDeposit/rem-01/wellgroupdynamicanalysis.js";
 import {downFile} from "@/lib/remBase64Download.js";
