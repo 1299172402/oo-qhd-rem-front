@@ -1,75 +1,37 @@
 <!-- 开发效果评价 -->
 <template>
-  <div class="app-container">
-    <header-search class="g-w100 g-h100" style="width: 100%">
-      <div class="g-row-flex-V g-w100 g-h100">
-        <div class="fl">
-          <span>油田：</span>
-          <el-select v-model="selectOilField" disabled @change="getFetchFields">
-            <el-option
-              v-for="item in oilField"
-              :key="item.oilFieldId"
-              :label="item.name"
-              :value="item.oilFieldId"
-            ></el-option>
-          </el-select>
-          <span class="QU" style="margin-left: 20px">区块：</span>
-          <el-select v-model="selectBlock"
-            ><el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option
-          ></el-select>
-          <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
-        </div>
-      </div>
-    </header-search>
-    <page-panel-new style="height: calc(100% - 100px); padding-top: 20px">
-      <el-tabs class="g-pageHeader" v-model="tabsValue" topline @tab-click="handleClick">
-        <el-tab-pane
-          style="height: auto"
-          v-for="(item, index) in tabs"
-          :key="index"
-          :label="item.label"
-          :name="item.name"
-        >
-          <div class="tab-view">
-            <el-button
-              v-for="(module, index) in item.modules"
-              :key="index"
-              :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'"
-              @click="currentModule = module.name"
-            >
-              {{ module.label }}
-            </el-button>
-          </div>
-        </el-tab-pane>
-      </el-tabs>
-      <div class="childContent">
-        <evaluation
-          v-if="tabsValue == 'evaluation' && selectOilField && selectBlock"
-          ref="childComponents"
-          :selectOilField="selectOilField"
-          :selectBlock="selectBlock"
-        ></evaluation>
-        <reserves
-          v-if="tabsValue == 'reserves'"
-          ref="childComponents"
-          :selectOilField="selectOilField"
-          :selectBlock="selectBlock"
-        ></reserves>
-        <water
-          v-if="tabsValue == 'water'"
-          ref="childComponents"
-          :selectOilField="selectOilField"
-          :selectBlock="selectBlock"
-        ></water>
-        <decreasing
-          v-if="tabsValue == 'decreasing'"
-          ref="childComponents"
-          :selectOilField="selectOilField"
-          :selectBlock="selectBlock"
-        ></decreasing>
-      </div>
-    </page-panel-new>
-  </div>
+    <div class="app-container">
+        <header-search style="height: 80px">
+            <div class="g-row-flex-V g-w100 g-h100">
+                <div class="fl">
+                    <span>油田：</span>
+                    <el-select v-model="selectOilField" disabled @change="getFetchFields">
+                        <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
+                    </el-select>
+                    <span class="QU" style="margin-left: 20px">区块：</span>
+                    <el-select v-model="selectBlock"><el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option></el-select>
+                    <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
+                </div>
+            </div>
+        </header-search>
+        <page-panel-new style="height: calc(100% - 100px);">
+            <el-tabs class="g-pageHeader" v-model="tabsValue" topline @tab-click="handleClick">
+                <el-tab-pane style="height: auto" v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
+                    <div class="tab-view">
+                        <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="currentModule = module.name">
+                            {{ module.label }}
+                        </el-button>
+                    </div>
+                </el-tab-pane>
+            </el-tabs>
+            <div class="childContent">
+                <evaluation v-if="tabsValue == 'evaluation'&&selectOilField&&selectBlock" ref="childComponents" :selectOilField="selectOilField" :selectBlock="selectBlock"></evaluation>
+                <reserves v-if="tabsValue == 'reserves'" ref="childComponents" :selectOilField="selectOilField" :selectBlock="selectBlock"></reserves>
+                <water v-if="tabsValue == 'water'" ref="childComponents" :selectOilField="selectOilField" :selectBlock="selectBlock"></water>
+                <decreasing v-if="tabsValue == 'decreasing'" ref="childComponents" :selectOilField="selectOilField" :selectBlock="selectBlock"></decreasing>
+            </div>
+        </page-panel-new>
+    </div>
 </template>
 
 <script>
@@ -289,6 +251,7 @@ export default {
   .childContent {
     height: calc(100% - 50px);
     overflow-y: scroll;
+    overflow-x: hidden;
   }
 }
 </style>

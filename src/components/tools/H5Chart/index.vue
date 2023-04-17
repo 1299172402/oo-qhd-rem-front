@@ -178,7 +178,7 @@
         display: block;
     }
     #iframe{
-        border: 1px solid #ddd;
-        border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
+        /* border: 1px solid #ddd;
+        border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1; */
     }
 </style>
