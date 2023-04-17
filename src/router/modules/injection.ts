@@ -54,6 +54,14 @@ export default [
         component: () => import('@/pages/rem/injection/optimization/result.vue'),
         meta: { title: '方案详情',icon: 'icon' },
       },
+    //油藏管理-注采调配优化-查看详情
+      {
+        path: "optimizationDetail",
+        name: "optimizationDetail",
+        component: () => import("@/pages/rem/injection/optimization/view.vue"),
+        hidden: true,
+        meta: { title: "查看详情" },
+      },
       {
         path: 'feasibilityAssessment',
         name: 'feasibilityAssessment',
