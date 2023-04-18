@@ -132,6 +132,18 @@
                                 label: "措施效果",
                                 name: "effectOfMeasures",
                             },
+                             {
+                                label: "井组配注变化曲线",
+                                name: "dynamicsInjection",
+                            },
+                             {
+                                label: "井组连通性变化动态",
+                                name: "changingDynamics",
+                            },
+                              {
+                                label: "注采井网状态变化",
+                                name: "stateChange",
+                            },
                         ],
                     },
                 ],
