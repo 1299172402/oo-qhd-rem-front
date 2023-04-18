@@ -5,11 +5,10 @@
       infoHeight="100%"
       headerTitle="附表7 秦皇岛32-6/渤中作业公司年自然递减率作业因素分解"
       :isShowMaxBtn="true"
-      style="margin-top: 10px"
+      style="margin-top:10px"
     >
       <el-table
         :data="tableData"
-        id="tableData"
         border
         :header-cell-style="{ background: 'transparent', color: '#fff' }"
         :span-method="objectSpanMethodOne"
@@ -22,23 +21,23 @@
         <el-table-column prop="years" label="年" align="center"></el-table-column>
         <el-table-column
           prop="annualnaturaldecline"
-          :label="`年自然递减\n（%）`"
+          label="年自然递减（%）"
           align="center"
           width="140"
         ></el-table-column>
-        <el-table-column prop="affectyield" :label="`影响产量\n（m³）`" align="center" width="140"></el-table-column>
+        <el-table-column prop="affectyield" label="影响产量（m³）" align="center" width="140"></el-table-column>
         <el-table-column label="作业因素分解" align="center">
           <el-table-column label="有修井机平台举升系统故障" align="center">
             <el-table-column label="故障待修" align="center">
               <el-table-column
                 prop="organicmalfunctionsannualnaturaldecrease"
-                :label="`年自然递减\n（%）`"
+                label="年自然递减（%）"
                 width="100"
                 align="center"
               ></el-table-column>
               <el-table-column
                 prop="organicmalfunctionsaffectyield"
-                :label="`影响产量\n（m³）`"
+                label="影响产量（m³）"
                 align="center"
                 width="100"
               ></el-table-column>
@@ -46,13 +45,13 @@
             <el-table-column label="检修作业" align="center">
               <el-table-column
                 prop="organicoverhaulingannualnaturaldecrease"
-                :label="`年自然递减\n（%）`"
+                label="年自然递减（%）"
                 width="100"
                 align="center"
               ></el-table-column>
               <el-table-column
                 prop="organicoverhaulingaffectyield"
-                :label="`影响产量\n（m³）`"
+                label="影响产量（m³）"
                 align="center"
                 width="100"
               ></el-table-column>
@@ -60,13 +59,13 @@
             <el-table-column label="检修后产量下降" align="center">
               <el-table-column
                 prop="organicyieldannualnaturaldecrease"
-                :label="`年自然递减\n（%）`"
+                label="年自然递减（%）"
                 width="100"
                 align="center"
               ></el-table-column>
               <el-table-column
                 prop="organicyieldaffectyield"
-                :label="`影响产量\n（m³）`"
+                label="影响产量（m³）"
                 align="center"
                 width="100"
               ></el-table-column>
@@ -76,13 +75,13 @@
             <el-table-column label="故障待修" align="center">
               <el-table-column
                 prop="inorganicsmalfunctionsannualnaturaldecrease"
-                :label="`年自然递减\n（%）`"
+                label="年自然递减（%）"
                 width="100"
                 align="center"
               ></el-table-column>
               <el-table-column
                 prop="inorganicsmalfunctionsaffectyield"
-                :label="`影响产量\n（m³）`"
+                label="影响产量（m³）"
                 width="100"
                 align="center"
               ></el-table-column>
@@ -90,13 +89,13 @@
             <el-table-column label="检修作业" align="center">
               <el-table-column
                 prop="inorganicsoverhaulingannualnaturaldecrease"
-                :label="`年自然递减\n（%）`"
+                label="年自然递减（%）"
                 width="100"
                 align="center"
               ></el-table-column>
               <el-table-column
                 prop="inorganicsoverhaulingaffectyield"
-                :label="`影响产量\n（m³）`"
+                label="影响产量（m³）"
                 width="100"
                 align="center"
               ></el-table-column>
@@ -104,13 +103,13 @@
             <el-table-column label="检修后产量下降" align="center">
               <el-table-column
                 prop="inorganicsyieldannualnaturaldecrease"
-                :label="`年自然递减\n（%）`"
+                label="年自然递减（%）"
                 width="100"
                 align="center"
               ></el-table-column>
               <el-table-column
                 prop="inorganicsyieldaffectyield"
-                :label="`影响产量\n（m³）`"
+                label="影响产量（m³）"
                 align="center"
                 width="100"
               ></el-table-column>
@@ -120,13 +119,13 @@
             <el-table-column label="作业期间损失" align="center">
               <el-table-column
                 prop="operationallossannualnaturaldecrease"
-                :label="`年自然递减\n（%）`"
+                label="年自然递减（%）"
                 width="100"
                 align="center"
               ></el-table-column>
               <el-table-column
                 prop="operationallossaffectyield"
-                :label="`影响产量\n（m³）`"
+                label="影响产量（m³）"
                 align="center"
                 width="100"
               ></el-table-column>
@@ -134,13 +133,13 @@
             <el-table-column label="作业后效果变差" align="center">
               <el-table-column
                 prop="aftertheworkannualnaturaldecrease"
-                :label="`年自然递减\n（%）`"
+                label="年自然递减（%）"
                 width="100"
                 align="center"
               ></el-table-column>
               <el-table-column
                 prop="aftertheworkaffectyield"
-                :label="`影响产量\n（m³）`"
+                label="影响产量（m³）"
                 align="center"
                 width="100"
               ></el-table-column>
@@ -149,13 +148,13 @@
           <el-table-column label="测试" align="center">
             <el-table-column
               prop="testingannualnaturaldecrease"
-              :label="`年自然递减\n（%）`"
+              label="年自然递减（%）"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
               prop="testingaffectyield"
-              :label="`影响产量\n（m³）`"
+              label="影响产量（m³）"
               align="center"
               width="100"
             ></el-table-column>
@@ -163,13 +162,13 @@
           <el-table-column label="其他因素" align="center">
             <el-table-column
               prop="otherannualnaturaldecrease"
-              :label="`年自然递减\n（%）`"
+              label="年自然递减（%）"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
               prop="otheraffectyield"
-              :label="`影响产量\n （m³）`"
+              label="影响产量（m³）"
               align="center"
               width="100"
             ></el-table-column>
@@ -187,99 +186,99 @@ export default {
       page: 1,
       pageSize: 10,
       spanArrOne: [],
-      pos: "",
+      pos: '',
       tableData: [
         {
-          operationarea: "秦皇岛",
-          oilField: "QHD32-6",
-          years: "2017",
-          annualnaturaldecline: "0.89",
-          affectyield: "21962",
-          organicmalfunctionsannualnaturaldecrease: "0.3124",
-          organicmalfunctionsaffectyield: "7734",
-          organicoverhaulingannualnaturaldecrease: "0.2012",
-          inorganicsoverhaulingaffectyield: "4982",
-          inorganicsyieldannualnaturaldecrease: "0.1364",
-          inorganicsyieldaffectyield: "3378",
-          inorganicsmalfunctionsannualnaturaldecrease: "",
-          inorganicsmalfunctionsaffectyield: "",
-          operationallossannualnaturaldecrease: "0.158",
-          operationallossaffectyield: "3912",
-          aftertheworkannualnaturaldecrease: "0.0476",
-          aftertheworkaffectyield: "1179",
-          testingannualnaturaldecrease: "0.0314",
-          testingaffectyield: "777",
-          otherannualnaturaldecrease: "",
-          otheraffectyield: "",
+          operationarea: '秦皇岛',
+          oilField: 'QHD32-6',
+          years: '2017',
+          annualnaturaldecline: '0.89',
+          affectyield: '21962',
+          organicmalfunctionsannualnaturaldecrease: '0.3124',
+          organicmalfunctionsaffectyield: '7734',
+          organicoverhaulingannualnaturaldecrease: '0.2012',
+          inorganicsoverhaulingaffectyield: '4982',
+          inorganicsyieldannualnaturaldecrease: '0.1364',
+          inorganicsyieldaffectyield: '3378',
+          inorganicsmalfunctionsannualnaturaldecrease: '',
+          inorganicsmalfunctionsaffectyield: '',
+          operationallossannualnaturaldecrease: '0.158',
+          operationallossaffectyield: '3912',
+          aftertheworkannualnaturaldecrease: '0.0476',
+          aftertheworkaffectyield: '1179',
+          testingannualnaturaldecrease: '0.0314',
+          testingaffectyield: '777',
+          otherannualnaturaldecrease: '',
+          otheraffectyield: '',
         },
         {
-          operationarea: "秦皇岛",
-          oilField: "QHD32-6",
-          years: "2018",
-          annualnaturaldecline: "0.91",
-          affectyield: "21559",
-          organicmalfunctionsannualnaturaldecrease: "0.5327",
-          organicmalfunctionsaffectyield: "12649",
-          organicoverhaulingannualnaturaldecrease: "0.0307",
-          inorganicsoverhaulingaffectyield: "730",
-          inorganicsyieldannualnaturaldecrease: "0.1069",
-          inorganicsyieldaffectyield: "2537",
-          inorganicsmalfunctionsannualnaturaldecrease: "",
-          inorganicsmalfunctionsaffectyield: "",
-          operationallossannualnaturaldecrease: "0.1017",
-          operationallossaffectyield: "2414",
-          aftertheworkannualnaturaldecrease: "0.0639",
-          aftertheworkaffectyield: "1518",
-          testingannualnaturaldecrease: "0.0449",
-          testingaffectyield: "1066",
-          otherannualnaturaldecrease: "0.0272",
-          otheraffectyield: "645",
+          operationarea: '秦皇岛',
+          oilField: 'QHD32-6',
+          years: '2018',
+          annualnaturaldecline: '0.91',
+          affectyield: '21559',
+          organicmalfunctionsannualnaturaldecrease: '0.5327',
+          organicmalfunctionsaffectyield: '12649',
+          organicoverhaulingannualnaturaldecrease: '0.0307',
+          inorganicsoverhaulingaffectyield: '730',
+          inorganicsyieldannualnaturaldecrease: '0.1069',
+          inorganicsyieldaffectyield: '2537',
+          inorganicsmalfunctionsannualnaturaldecrease: '',
+          inorganicsmalfunctionsaffectyield: '',
+          operationallossannualnaturaldecrease: '0.1017',
+          operationallossaffectyield: '2414',
+          aftertheworkannualnaturaldecrease: '0.0639',
+          aftertheworkaffectyield: '1518',
+          testingannualnaturaldecrease: '0.0449',
+          testingaffectyield: '1066',
+          otherannualnaturaldecrease: '0.0272',
+          otheraffectyield: '645',
         },
         {
-          operationarea: "秦皇岛",
-          oilField: "QHD32-6",
-          years: "2019",
-          annualnaturaldecline: "0.77",
-          affectyield: "18317",
-          organicmalfunctionsannualnaturaldecrease: "0.5013",
-          organicmalfunctionsaffectyield: "11969",
-          organicoverhaulingannualnaturaldecrease: "0.0652",
-          inorganicsoverhaulingaffectyield: "1557",
-          inorganicsyieldannualnaturaldecrease: "0.0277",
-          inorganicsyieldaffectyield: "662",
-          inorganicsmalfunctionsannualnaturaldecrease: "",
-          inorganicsmalfunctionsaffectyield: "",
-          operationallossannualnaturaldecrease: "0.0728",
-          operationallossaffectyield: "1738",
-          aftertheworkannualnaturaldecrease: "0.071",
-          aftertheworkaffectyield: "1696",
-          testingannualnaturaldecrease: "0.0291",
-          testingaffectyield: "695",
-          otherannualnaturaldecrease: "",
-          otheraffectyield: "",
+          operationarea: '秦皇岛',
+          oilField: 'QHD32-6',
+          years: '2019',
+          annualnaturaldecline: '0.77',
+          affectyield: '18317',
+          organicmalfunctionsannualnaturaldecrease: '0.5013',
+          organicmalfunctionsaffectyield: '11969',
+          organicoverhaulingannualnaturaldecrease: '0.0652',
+          inorganicsoverhaulingaffectyield: '1557',
+          inorganicsyieldannualnaturaldecrease: '0.0277',
+          inorganicsyieldaffectyield: '662',
+          inorganicsmalfunctionsannualnaturaldecrease: '',
+          inorganicsmalfunctionsaffectyield: '',
+          operationallossannualnaturaldecrease: '0.0728',
+          operationallossaffectyield: '1738',
+          aftertheworkannualnaturaldecrease: '0.071',
+          aftertheworkaffectyield: '1696',
+          testingannualnaturaldecrease: '0.0291',
+          testingaffectyield: '695',
+          otherannualnaturaldecrease: '',
+          otheraffectyield: '',
         },
         {
-          operationarea: "秦皇岛",
-          oilField: "QHD32-6",
-          years: "2020",
-          annualnaturaldecline: "0.83",
-          affectyield: "21940",
-          organicmalfunctionsannualnaturaldecrease: "0.356",
-          organicmalfunctionsaffectyield: "9365",
-          organicoverhaulingannualnaturaldecrease: "0.074",
-          inorganicsoverhaulingaffectyield: "1947",
-          inorganicsyieldannualnaturaldecrease: "0.1809",
-          inorganicsyieldaffectyield: "4759",
-          inorganicsmalfunctionsannualnaturaldecrease: "0.0002",
-          inorganicsmalfunctionsaffectyield: "6",
-          operationallossannualnaturaldecrease: "0.1634",
-          operationallossaffectyield: "4298",
-          aftertheworkannualnaturaldecrease: "0.0344",
-          aftertheworkaffectyield: "904",
-          testingannualnaturaldecrease: "0.0226",
-          testingaffectyield: "594",
-          otherannualnaturaldecrease: "0.0025",
-          otheraffectyield: "67",
+          operationarea: '秦皇岛',
+          oilField: 'QHD32-6',
+          years: '2020',
+          annualnaturaldecline: '0.83',
+          affectyield: '21940',
+          organicmalfunctionsannualnaturaldecrease: '0.356',
+          organicmalfunctionsaffectyield: '9365',
+          organicoverhaulingannualnaturaldecrease: '0.074',
+          inorganicsoverhaulingaffectyield: '1947',
+          inorganicsyieldannualnaturaldecrease: '0.1809',
+          inorganicsyieldaffectyield: '4759',
+          inorganicsmalfunctionsannualnaturaldecrease: '0.0002',
+          inorganicsmalfunctionsaffectyield: '6',
+          operationallossannualnaturaldecrease: '0.1634',
+          operationallossaffectyield: '4298',
+          aftertheworkannualnaturaldecrease: '0.0344',
+          aftertheworkaffectyield: '904',
+          testingannualnaturaldecrease: '0.0226',
+          testingaffectyield: '594',
+          otherannualnaturaldecrease: '0.0025',
+          otheraffectyield: '67',
         },
       ],
     };
@@ -292,12 +291,12 @@ export default {
     addLine() {
       //添加行数
       var newValue = {
-        operationarea: "说明",
-        organicmalfunctionsannualnaturaldecrease: "故障停产至队伍上平台之前",
-        organicoverhaulingannualnaturaldecrease: "队伍上平台至启泵生产",
-        inorganicsmalfunctionsannualnaturaldecrease: "故障停产至队伍上平台之前",
-        inorganicsoverhaulingannualnaturaldecrease: "队伍上平台至启泵生产",
-        operationallossannualnaturaldecrease: "停产至复产",
+        operationarea: '说明',
+        organicmalfunctionsannualnaturaldecrease: '故障停产至队伍上平台之前',
+        organicoverhaulingannualnaturaldecrease: '队伍上平台至启泵生产',
+        inorganicsmalfunctionsannualnaturaldecrease: '故障停产至队伍上平台之前',
+        inorganicsoverhaulingannualnaturaldecrease: '队伍上平台至启泵生产',
+        operationallossannualnaturaldecrease: '停产至复产',
       };
       //添加新的行数
       this.tableData.push(newValue);
@@ -362,7 +361,7 @@ export default {
     },
     // 因为要合并的行数是不固定的，此函数是实现合并随意行数的功能
     getSpanArrOne(data) {
-      console.log("zmmm--", data); //从后台获取的数据
+      console.log('zmmm--', data); //从后台获取的数据
       this.spanArrOne = [];
       this.pos = 0;
       for (var i = 0; i < data.length; i++) {
@@ -407,19 +406,6 @@ export default {
   flex-direction: column; /* 按照列column(垂直方向)排列*/
 }
 ::v-deep .el-table .cell:empty::before {
-  content: "-";
-}
-
-#tableData {
-  ::v-deep .el-table__header-wrapper .cell {
-    height: auto;
-    line-height: 18px;
-    white-space: pre;
-  }
-  ::v-deep .cell:empty {
-    &::before {
-      content: "-";
-    }
-  }
+  content: '-';
 }
 </style>

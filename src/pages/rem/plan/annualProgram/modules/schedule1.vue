@@ -15,7 +15,7 @@
         highlight
         height="calc(100% - 40px)"
       >
-        <el-table-column type="index" label="序号" align="center" width="50px;"></el-table-column>
+        <el-table-column type="index" label="序号" align="center"></el-table-column>
         <el-table-column prop="operationarea" label="作业公司" align="center" min-width="140"></el-table-column>
         <el-table-column prop="oilField" label="油田" align="center" min-width="120"></el-table-column>
         <el-table-column
@@ -25,57 +25,57 @@
           min-width="160"
         ></el-table-column>
         <el-table-column label="油井总数" align="center">
-          <el-table-column prop="proWellCount" label="(口)" align="center"></el-table-column>
+          <el-table-column prop="proWellCount" label="口" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="油井开井数" align="center">
-          <el-table-column prop="proWellOpen" label="(口)" align="center" min-width="120"></el-table-column>
+          <el-table-column prop="proWellOpen" label="口" align="center" min-width="120"></el-table-column>
         </el-table-column>
         <el-table-column label="油井利用率" align="center">
-          <el-table-column prop="wellUtilization" label="(%)" align="center" min-width="100"></el-table-column>
+          <el-table-column prop="wellUtilization" label="%" align="center" min-width="100"></el-table-column>
         </el-table-column>
         <el-table-column label="生产井时率" align="center">
-          <el-table-column prop="productionrate" label="(%)" align="center" min-width="100"></el-table-column>
+          <el-table-column prop="productionrate" label="%" align="center" min-width="100"></el-table-column>
         </el-table-column>
         <el-table-column label="综合时率" align="center">
-          <el-table-column prop="combinedtimerate" label="(%)" align="center" min-width="100"></el-table-column>
+          <el-table-column prop="combinedtimerate" label="%" align="center" min-width="100"></el-table-column>
         </el-table-column>
         <el-table-column label="注水井总数" align="center">
-          <el-table-column prop="waterWellCount" label="(口)" align="center" min-width="100"></el-table-column>
+          <el-table-column prop="waterWellCount" label="口" align="center" min-width="100"></el-table-column>
         </el-table-column>
         <el-table-column label="注水井开井数" align="center">
-          <el-table-column prop="waterWellOpen" label="(口)" align="center" min-width="120"></el-table-column>
+          <el-table-column prop="waterWellOpen" label="口" align="center" min-width="120"></el-table-column>
         </el-table-column>
         <el-table-column label="月产油量" align="center">
-          <el-table-column prop="oilproduction" label="(10⁴m³)" align="center" min-width="100"></el-table-column>
+          <el-table-column prop="oilproduction" label="10⁴m³" align="center" min-width="100"></el-table-column>
         </el-table-column>
         <el-table-column label="日产油水平" align="center">
-          <el-table-column prop="dailyoillevel" label="(m³/d)" align="center" min-width="100"></el-table-column>
+          <el-table-column prop="dailyoillevel" label="m³/d" align="center" min-width="100"></el-table-column>
         </el-table-column>
         <el-table-column label="日产油能力" align="center">
-          <el-table-column prop="dailyfuelcapacity" label="(m³/d)" align="center" min-width="100"></el-table-column>
+          <el-table-column prop="dailyfuelcapacity" label="m³/d" align="center" min-width="100"></el-table-column>
         </el-table-column>
         <el-table-column label="综合气油比" align="center">
           <el-table-column
             prop="Comprehensivegasoilratio"
-            label="(m³/d)"
+            label="m³/d"
             align="center"
             min-width="100"
           ></el-table-column>
         </el-table-column>
         <el-table-column label="综合含水" align="center">
-          <el-table-column prop="compressiveWaterCut" label="(%)" align="center"></el-table-column>
+          <el-table-column prop="compressiveWaterCut" label="%" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="动用地质储量" align="center">
-          <el-table-column prop="workingreserve" label="(10⁴t)" align="center" min-width="120"></el-table-column>
+          <el-table-column prop="workingreserve" label="10⁴t" align="center" min-width="120"></el-table-column>
         </el-table-column>
         <el-table-column label="采油速度" align="center">
-          <el-table-column prop="outputSpeed" label="(%)" align="center"></el-table-column>
+          <el-table-column prop="outputSpeed" label="%" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="采出程度" align="center">
-          <el-table-column prop="outputDegree" label="(%)" align="center"></el-table-column>
+          <el-table-column prop="outputDegree" label="%" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="当前井网标定采收率" align="center">
-          <el-table-column prop="Designatedrecoveryfactor" label="(%)" align="center" min-width="100"></el-table-column>
+          <el-table-column prop="Designatedrecoveryfactor" label="%" align="center" min-width="100"></el-table-column>
         </el-table-column>
       </el-table>
     </info-window>

@@ -33,7 +33,6 @@
                 image: '',
                 imageList: [],
                 fitInfo: 'contain',
-                baseUrl: process.env.NODE_ENV === 'production' ? config.publicRootPath : config.devRootPath
             };
         },
         mounted() {
