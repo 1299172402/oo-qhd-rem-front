@@ -1,11 +1,12 @@
 import Layout from '@/layouts/index.vue';
-
+const env = import.meta.env.MODE;
 
 export default [
   // 基础数据维护
   {
     path: '/basic',
-    name: 'basic',
+    name: 'basic', 
+    hidden: env == "development" ? false : true,
     component: Layout,
     redirect: '/basic/density',
     meta: { title: '基础数据维护', icon: 'client', single: false },
@@ -30,16 +31,10 @@ export default [
       },
       {
         path: 'customQuery',
-        name: 'customQuery',
-        hidden:process.env.NODE_ENV !== 'development',
+        name: 'customQuery', 
+        hidden: env == "development" ? false : true,
         component: () => import('@/pages/rem/basic/customQuery/index.vue'),
         meta: { title: '自定义查询' }
-      },
-      {
-          path: 'effectofMeasures',
-          name: 'effectofMeasures',
-          component: () => import('@/pages/rem/plan/effectofMeasures.vue'),
-          meta: {title: '人员措施'},
       },
     ],
   },

@@ -240,7 +240,7 @@ jQuery.fn = jQuery.prototype = {
 
 	toArray: function() {
 		///	<summary>
-		///		以数组的形式检索 jQuery 集中包含的所有 DOM 元素。
+		///		以数组的形式搜索 jQuery 集中包含的所有 DOM 元素。
 		///	</summary>
 		///	<returns type="Array" />
 		return slice.call( this, 0 );

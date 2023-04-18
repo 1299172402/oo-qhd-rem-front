@@ -8,14 +8,19 @@
       style="background: var(--bottom-light); margin-right: 0"
     >
       <template #logo>
-        <span v-if="showLogo" class="header-logo-container" style="font-size: 20px; width: 275px;caret-color: transparent">
+        <span
+          v-if="showLogo"
+          class="header-logo-container"
+          style="font-size: 20px; width: 288px;caret-color: transparent"
+          @click="goPage"
+        >
           <!-- <span class="logoText">智能油田管理系统</span> -->
           <!-- TODO: 内网 Maybe change back -->
           <logo-full
             class="t-logo"
-            style="width: 49px; height: 44px; margin-top: 8px; margin-right: 10px;"
+            style="width: 49px; height: 44px; margin-right: 10px;"
           />
-          <span class="logoText">天津分公司秦皇岛<br>智能油田管理系统</span>
+          <span class="logoText">天津分公司智能油田管理系统</span>
         </span>
         <!-- TODO: Maybe change back -->
         <!-- <div v-if="layout !== 'top' && !$store.getters['user/isGroupLogin']" class="header-operate-left">
@@ -109,7 +114,10 @@
               style="background: transparent;border: 0;"
               @click="toggleSettingPanel"
             >
-              <setting-icon />
+              <svg-icon
+                icon-class="my-setting"
+                class="panelIconClass"
+              />
             </t-button>
           </t-tooltip>
         </div>
@@ -273,7 +281,6 @@ import {
   //   HelpCircleIcon,
   UserCircleIcon,
   PoweroffIcon,
-  SettingIcon,
   ChevronDownIcon
   //   EditIcon,
   //   SwapIcon,
@@ -292,6 +299,7 @@ import { getTenantsByUserId } from "@/api/intelligentOilfield/system/dept";
 import { noticeList } from "@/api/intelligentOilfield/system/home";
 import { exchangeTenant } from "@/api/intelligentOilfield/system/tenant";
 import { encryptlogin } from "@/utils/jsencrypt";
+import { goNewPage } from "@/api/intelligentOilfield/system/layout.js";
 
 const env = import.meta.env.MODE || "development";
 
@@ -306,7 +314,6 @@ export default Vue.extend({
     // HelpCircleIcon,
     UserCircleIcon,
     PoweroffIcon,
-    SettingIcon,
     ChevronDownIcon
     // EditIcon,
     // SwapIcon,
@@ -470,6 +477,13 @@ export default Vue.extend({
       handler() {
         this.containerWidth();
       },
+      immediate: true
+    },
+    "$store.state.user.isGroupLogin": {
+      handler() {
+        this.getInitDeptds();
+      },
+      deep: true,
       immediate: true
     }
   },
@@ -719,6 +733,13 @@ export default Vue.extend({
         open: false
       };
       this.resetForm("updatePwdForm");
+    },
+    goPage() {
+      goNewPage().then(res => {
+        if (res.data?.data) {
+          window.location.href = res.data.data;
+        }
+      });
     }
   }
 });
@@ -777,6 +798,7 @@ export default Vue.extend({
 //   height: 26px;
   // TODO: 内网 Maybe change back
   height: 55px;
+  align-items: center;
   display: flex;
   margin-left: 24px;
   // color: var(--td-text-color-primary);
@@ -785,7 +807,7 @@ export default Vue.extend({
   .logoText {
     // width: 160px;
     // TODO: 内网 Maybe change back
-    width: 216px;
+    width: 261px;
     height: 28px;
     // font-size: 20px;
     // TODO: 内网 Maybe change back
@@ -794,6 +816,7 @@ export default Vue.extend({
     font-weight: 600;
     color: #fff;
     line-height: 28px;
+    text-align: center;
   }
 
   .t-logo {
@@ -883,7 +906,7 @@ export default Vue.extend({
 </style>
 <style scoped>
 .panelIconClass {
-  width: 93px !important;
+  width: 60px !important;
   height: 25px !important;
   cursor: pointer;
   color: #fff;

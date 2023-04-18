@@ -33,7 +33,7 @@
 <!--          </el-select>-->
 <!--        </el-form-item>-->
 <!--        <el-form-item>-->
-<!--          <el-button icon="el-icon-search" @click="getData" size="mini" type="primary">检索</el-button>-->
+<!--          <el-button icon="el-icon-search" @click="getData" size="mini" type="primary">搜索</el-button>-->
 <!--        </el-form-item>-->
 <!--      </el-form>-->
 <!--    </headerSearch>-->

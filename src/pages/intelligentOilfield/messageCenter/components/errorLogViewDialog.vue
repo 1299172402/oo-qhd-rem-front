@@ -18,7 +18,7 @@
       </el-table>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button icon="el-icon-close" class="cancel-btn" @click="close">
+      <el-button class="cancel-btn" @click="close">
         取消
       </el-button>
     </div>

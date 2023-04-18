@@ -67,7 +67,7 @@
                         style="margin-left: 20px"
                         @click="doSearch"
                         disabled
-                    >检索</el-button>
+                    >搜索</el-button>
                 </div>
             </div>
         </el-header>
@@ -78,7 +78,7 @@
                 style="position: relative; margin-top: 20px;height: 100%;"
                 align="center"
             >
-                <el-button type="primary" @click="back" style="position: absolute; right: 50px; top: 0">返回</el-button>
+                <el-button type="primary" @click="back" style="position: absolute; right: 50px; top: 50px">返回</el-button>
                 <el-container class="layout">
                     <el-header height="auto" align="left">
                         <span>井号：</span>

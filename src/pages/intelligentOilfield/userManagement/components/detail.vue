@@ -113,8 +113,8 @@ export default {
       roleGroup: "",
       postGroup: "",
       activeTab: "userinfo",
-      roleOptions: {},
-      postOptions: {},
+      roleOptions: [],
+      postOptions: [],
       allDatas: {},
       userName: this.$route.query.userName
     };

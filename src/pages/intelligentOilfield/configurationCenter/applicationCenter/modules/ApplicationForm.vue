@@ -65,6 +65,8 @@
         :is-picture-card="true"
         :file-type="fileType"
         :is-show-tip="false"
+        biz-path="picture"
+        bucket-name="zhy"
       />
     </el-form-item>
 
@@ -85,7 +87,7 @@
     <el-form-item v-if="isPC" label="网页端入口URL" prop="appPcAccessUrl">
       <el-input v-model="model.appPcAccessUrl" placeholder="请输入网页端入口URL" clearable />
     </el-form-item>
-    <el-form-item v-if="isMobile" label="选择PDA端" prop="accessType">
+    <el-form-item v-if="isMobile" label="选择移动端" prop="accessType">
       <el-radio-group v-model="model.accessType">
         <el-radio v-for="item in dict.type.sys_app_mobile" :key="item.value" :label="item.value">
           {{ item.label }}

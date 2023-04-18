@@ -1,9 +1,9 @@
 <template>
   <info-window
     class="info-window"
-    info-width="350px"
-    info-height="250px"
-    header-align="space-between"
+    info-width="373px"
+    info-height="230px"
+    header-align="center"
     :header-title="processCenterInfo.tenantName || processCenterInfo.appName"
   >
     <template #headerTag>
@@ -18,46 +18,46 @@
       <div v-if="processCenterInfo.tenantId">
         <div class="card-info-item">
           租户key：
-          <span> {{ processCenterInfo.tenantCode }} </span>
+          <span :class="`info-span__deep ${ $store.state.setting.mode === 'dark' ? 'dark-color' : '' }`"> {{ processCenterInfo.tenantCode }} </span>
         </div>
       </div>
       <div v-else>
         <div class="card-info-item">
           应用分类：
-          <span style="display: inline-block;">
+          <span :class="`info-span__deep ${ $store.state.setting.mode === 'dark' ? 'dark-color' : '' }`" style="display: inline-block;">
             <dict-tag :options="dictText" :value="processCenterInfo.appCategory" />
           </span>
         </div>
         <div class="card-info-item">
           支持终端：
-          <span> {{ processCenterInfo.isPc === 1 ? 'PC' : '' }} </span>
-          <span v-if="processCenterInfo.isPc === 1 && processCenterInfo.isMobile === 1"> / </span>
-          <span> {{ processCenterInfo.isMobile === 1 ? '移动端' : '' }} </span>
+          <span :class="`info-span__deep ${ $store.state.setting.mode === 'dark' ? 'dark-color' : '' }`"> {{ processCenterInfo.isPc === 1 ? 'PC' : '' }} </span>
+          <span v-if="processCenterInfo.isPc === 1 && processCenterInfo.isMobile === 1" :class="`info-span__deep ${ $store.state.setting.mode === 'dark' ? 'dark-color' : '' }`"> / </span>
+          <span :class="`info-span__deep ${ $store.state.setting.mode === 'dark' ? 'dark-color' : '' }`"> {{ processCenterInfo.isMobile === 1 ? '移动端' : '' }} </span>
         </div>
         <div class="card-info-item">
           授权租户：
-          <span class="user-info" :title="processCenterInfo.tenants">
+          <span :class="`info-span__deep user-info ${ $store.state.setting.mode === 'dark' ? 'dark-color' : '' }`" :title="processCenterInfo.tenants">
             {{ processCenterInfo.tenants }}
           </span>
         </div>
       </div>
     </div>
     <div class="card-button">
-      <el-tooltip effect="dark" content="租户管理配置">
+      <el-tooltip content="租户管理配置">
         <el-button
           :disabled="disable"
           class="card-button-item"
           @click="handleTenantInfoClick"
         >
-          <svg-icon class="svg-icon-class" icon-class="people" />
+          <svg-icon class="svg-icon-class" icon-class="tenant-manage" />
         </el-button>
       </el-tooltip>
-      <el-tooltip v-if="isShow" effect="dark" content="新建流程">
+      <el-tooltip v-if="isShow" content="新建流程">
         <el-button :disabled="disable" class="card-button-item" @click="handleVisible(true)">
-          <svg-icon class="svg-icon-class" icon-class="form" />
+          <svg-icon class="svg-icon-class" icon-class="new-process" />
         </el-button>
       </el-tooltip>
-      <el-tooltip v-if="isShow" effect="dark" content="流程设计中心">
+      <el-tooltip v-if="isShow" content="流程设计中心">
         <el-button
           :disabled="disable"
           class="card-button-item"
@@ -65,10 +65,10 @@
             handleSystemInfoClick('Designer', processCenterInfo.tenantCode || processCenterInfo.appId)
           "
         >
-          <svg-icon class="svg-icon-class" icon-class="cascader" />
+          <svg-icon class="svg-icon-class" icon-class="process-design" />
         </el-button>
       </el-tooltip>
-      <el-tooltip v-if="isShow" effect="dark" content="流程实例清单">
+      <el-tooltip v-if="isShow" content="流程实例清单">
         <el-button
           :disabled="disable"
           class="card-button-item"
@@ -76,15 +76,15 @@
             handleSystemInfoClick('InstanceList', processCenterInfo.tenantCode || processCenterInfo.appId)
           "
         >
-          <svg-icon class="svg-icon-class" icon-class="component" />
+          <svg-icon class="svg-icon-class" icon-class="lnstance-list" />
         </el-button>
       </el-tooltip>
-      <el-tooltip v-if="isShow" effect="dark" :content="!disable ? '禁用' : '启用'">
+      <el-tooltip v-if="isShow" :content="!disable ? '禁用' : '启用'">
         <el-button
           class="card-button-item"
           @click="handleDisable(processCenterInfo.tenantCode || processCenterInfo.appId)"
         >
-          <svg-icon class="svg-icon-class" :icon-class="!disable ? 'lock' : 'rate'" />
+          <svg-icon class="svg-icon-class" :icon-class="!disable ? 'forbidden' : 'rate'" />
         </el-button>
       </el-tooltip>
     </div>
@@ -204,8 +204,6 @@ export default {
 }
 
 .info-window {
-  position: relative;
-  margin: 0 30px 30px;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 10%);
 
   ::v-deep .info-body {
@@ -222,27 +220,37 @@ export default {
   padding: 10px 20px;
 
   .card-info-item {
-    line-height: 2.5;
-    color: #808695;
+    line-height: 2.2;
+    color: rgba(0, 96, 166, 1);
+
+    .info-span__deep {
+      font-weight: 700;
+    }
+
+    .dark-color {
+      color: #fff !important;
+    }
   }
 }
 
 .card-button {
   position: absolute;
-  width: 99%;
-  border-top: 1px solid #f5f6f7;
+  width: 100%;
   bottom: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 60px;
+  height: 50px;
+  background-color: rgba(52, 144, 211, 0.10);
 
   .card-button-item {
     border: none;
+    background-color: transparent;
+    font-size: 18px;
+    color: rgba(52, 144, 211, 1);
 
-    .svg-icon-class {
-      font-size: 16px;
-      color: #808695;
+    &:hover {
+      color: var(--light-blue-color);
     }
   }
 }

@@ -5,6 +5,7 @@
     :model="model"
     class="form-auto-create"
     :class="formClass"
+    v-bind="$attrs"
   >
     <template v-for="item in items">
       <el-form-item

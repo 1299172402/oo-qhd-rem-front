@@ -8,6 +8,7 @@ import router from "@/router";
 import proxy from "@/config/host";
 import STYLE_CONFIG from "@/config/style";
 import { LIGHT_CHART_COLORS, DARK_CHART_COLORS } from "@/config/color";
+import path from "path-browserify";
 // import { getToken, setToken, removeToken } from '@/utils/auth'
 // import { getToken, setToken, setExpiresIn, removeToken } from '@/utils/auth'
 const env = import.meta.env.MODE || "development";
@@ -15,6 +16,16 @@ const env = import.meta.env.MODE || "development";
 const InitUserInfo = {
   roles: []
 };
+
+function handlerFirstMenuPath(obj, paths = []) {
+  if (obj.path) {
+    paths.push(obj.path);
+  }
+  if (obj.children?.length) {
+    handlerFirstMenuPath(obj.children[0], paths);
+  }
+  return paths;
+}
 
 // 定义的state初始值
 const state = {
@@ -205,7 +216,11 @@ const actions = {
               //   commit('setToken', res.data.data.access_token)
               //   setExpiresIn(res.data.data.expires_in)
               //   commit('SET_EXPIRES_IN', res.data.data.expires_in)
-              dispatch("getUserInfo", "firstLogin");
+              if (res.data.data.tenant_role_key) {
+                dispatch("getUserInfo", "firstLogin");
+              } else {
+                message.error("该用户未分配租户，请联系管理员进行租户分配!");
+              }
             }
           } else {
             message.error(res.data.msg);
@@ -263,8 +278,17 @@ const actions = {
           }
           const firstMenu = res.data.firstMenu;
           // 如果有菜单走菜单【菜单为本用户第一个可跳转的菜单】,没有则走404页面
-          const firstRoputer = firstMenu ? `${firstMenu.path}/${firstMenu.children?.[0]?.path}` : "/pageInfo/error";
+          const firstRoputer = firstMenu ? path.join(...handlerFirstMenuPath(firstMenu)) : "/pageInfo/error";
           store.commit("permission/setDefaultTo", firstRoputer);
+          if (firstRoputer !== "/pageInfo/error") {
+            const route = {
+              path: firstRoputer,
+              routeIdx: 0,
+              title: firstMenu.meta.title,
+              isHome: true
+            };
+            store.commit("tabRouter/initHomeRoute", route);
+          }
           const { user } = res.data;
           // const avatar = user.avatar === "" ? require("@/assets/images/profile.jpg") : user.avatar;
           const avatar = user?.avatar === "" ? "" : user?.avatar;

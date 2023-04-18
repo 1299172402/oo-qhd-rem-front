@@ -40,7 +40,7 @@
           type="primary"
           style="margin-left: 20px"
           @click="queryBut"
-        >检索</el-button>
+        >搜索</el-button>
         <span class="fangan">
           <!-- <el-radio v-model="radio" label="1">小层配注优先</el-radio>
           <el-radio v-model="radio" label="2">整井配注优先</el-radio>-->
@@ -55,7 +55,7 @@
     <el-main style="height: auto">
       <el-row :gutter="20" style="margin: 20px 20px">
         <el-col :span="6">
-          <NormalCard title="指定单井产量" style="height: 820px;" align="center">
+          <pagePanel headerTitle="指定单井产量" style="height: 820px;" align="center">
             <div align="right">
               <el-button type="primary" align="left" icon="el-icon-edit" @click="modify1 = true">修改</el-button>
               <el-button type="primary" :loading="saveWellLoad" icon="el-icon-bank-card" @click="handleSubmit1">保存</el-button>
@@ -97,11 +97,11 @@
                 </template>
               </el-table-column>
             </el-table>
-          </NormalCard>
+          </pagePanel>
         </el-col>
 
         <el-col :span="10">
-          <NormalCard title="指定注采比" style="height: 820px;" align="center">
+          <pagePanel headerTitle="指定注采比" style="height: 820px;" align="center">
             <div class="buttonBox" align="right">
               <el-button type="primary" icon="el-icon-edit" @click="queryEdit">修改</el-button>
               <el-button type="primary" icon="el-icon-bank-card" @click="handleSubmit2('form')" :loading="saveInLoad">保存</el-button>
@@ -205,11 +205,11 @@
                 </el-table>
               </el-form>
             </div>
-          </NormalCard>
+          </pagePanel>
         </el-col>
 
         <el-col :span="8">
-          <NormalCard title="预测结果" style="min-height: 350px;max-height: 520px;margin-bottom: 20px;overflow-y: hidden" align="center">
+          <pagePanel headerTitle="预测结果" style="min-height: 350px;max-height: 520px;margin-bottom: 20px;overflow-y: hidden" align="center">
             <template slot="header">
               <div style="display: flex; margin: 3px 10px 0 10px;justify-content: end;">
                 <el-button
@@ -237,27 +237,25 @@
               </el-table-column>
               <el-table-column prop="layerRatio" label="层注采比" align="center"></el-table-column>
             </el-table>
-          </NormalCard>
-          <NormalCard style="height: 280px;">
+          </pagePanel>
+          <pagePanel headerTitle="" style="height: 280px;">
             <el-button type="text" class="foreBtn">预测结果</el-button>
             <Echart :chart-data="getEchart()"></Echart>
-          </NormalCard>
+          </pagePanel>
         </el-col>
       </el-row>
     </el-main>
   </el-container>
 </template>
 <script>
-import NormalCard from "@/components/tools/NormalCard";
-import echarts from "echarts";
-import Echart from "@/components/tools/Echarts";
-import { getWellAvgFluidProdAlloc, getWellInjRatio, getWellGuessResult, wellAvgFluidProdAllocUpdate, wellInjRatioUpdate } from '@/api/ipm-04/r-intelligentIPA.js'
+
+import Echart from "@/components/tools/Echarts/index.vue";
+import { getWellAvgFluidProdAlloc, getWellInjRatio, getWellGuessResult } from '@/api/rem/r-intelligentIPA.js'
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
-import {arrayFindAll} from "@/lib/arrayFind";
+import {arrayFindAll} from "@/lib/arrayFind.js";
 
 export default {
   components: {
-    NormalCard,
     Echart
   },
   mixins: [queryConditionMixin],

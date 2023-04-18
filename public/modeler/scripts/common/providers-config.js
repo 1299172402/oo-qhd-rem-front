@@ -16,20 +16,30 @@
  */
 
 flowableModule.factory('NotPermittedInterceptor', [ '$q', '$window', function($q, $window) {
-    return {
-        responseError: function ( response ) {
-
-            if (response.status === 403) {
-                // 重新登录
-                $window.location.href = FLOWABLE.CONFIG.loginPage;
-                // $window.location.reload();
-                return $q.reject(response);
-            }
-            else{
-                return $q.reject(response);
+        const interceptors = {
+            responseError: function ( response ) {
+                if (response.status === 403) {
+                    // 重新登录
+                    $window.location.href = FLOWABLE.CONFIG.loginPage;
+                    // $window.location.reload();
+                    return $q.reject(response);
+                }
+                else{
+                    return $q.reject(response);
+                }
+            },
+            request: function(request) {
+                request.headers.Authorization = localStorage.getItem('current_user_token')
+                return request
+            },
+            response: function(res) {
+              if(res.headers().ntk){
+                localStorage.setItem('current_user_token', res.headers().ntk)
+              }
+              return res
             }
         }
-    }
+          return interceptors
 }]);
 
 flowableModule.config(['$httpProvider', function($httpProvider) {

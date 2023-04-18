@@ -67,7 +67,7 @@
             <el-button
               type="primary"
               size="mini"
-              class="confirmBut"
+              class="commonBtn"
               icon="el-icon-download"
               @click="downloadTable"
             >下载</el-button>

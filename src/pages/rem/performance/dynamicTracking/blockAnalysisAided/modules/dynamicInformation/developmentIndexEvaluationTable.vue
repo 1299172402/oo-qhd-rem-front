@@ -40,7 +40,16 @@ export default {
             //调用接口方法
             await dynamicDataDevelopmentIndexTable(request).then((res) => {
                 if (res.data.code == 200) {
-                    this.tableData = res.data.data.dynamicDataDevelopments;
+                    if(res.data.data&&res.data.data.dynamicDataDevelopments&&res.data.data.dynamicDataDevelopments.length){
+                        let dynamicDataDevelopments = res.data.data.dynamicDataDevelopments;
+                        dynamicDataDevelopments.forEach((el,i)=>{
+                            if(el.evaluationResult&&el.evaluationResult.includes('.')){
+                                let index=el.evaluationResult.indexOf('.');
+                                dynamicDataDevelopments[i].evaluationResult=el.evaluationResult.substring(0,index+4);
+                            }
+                        })
+                        this.tableData = dynamicDataDevelopments;
+                    }
                 }
             });
         },

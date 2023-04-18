@@ -82,9 +82,6 @@
                 <el-table-column label="用户账号" prop="userName" :show-overflow-tooltip="true" />
                 <el-table-column label="用户名称" prop="nickName" :show-overflow-tooltip="true" />
                 <el-table-column label="所属机构" prop="dept.deptName" :show-overflow-tooltip="true" />
-                <el-table-column label="用户岗位" prop="posts[0].postName" :show-overflow-tooltip="true" />
-                <el-table-column label="用户邮箱" prop="email" :show-overflow-tooltip="true" />
-                <el-table-column label="用户手机" prop="phonenumber" :show-overflow-tooltip="true" />
                 <el-table-column label="状态" align="center" prop="status">
                   <template slot-scope="scope">
                     <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status" />
@@ -113,7 +110,6 @@
     <el-button
       slot="footer"
       v-hasPermi="['system:tenant:bind']"
-      icon="el-icon-check"
       :loading="loading"
       type="primary"
       style="margin: 20px;"
@@ -145,7 +141,6 @@ export default {
   },
   data() {
     return {
-      tableData: [],
       visible: false,
       // 选中数组值
       userIds: [],
@@ -156,6 +151,7 @@ export default {
         deptId: undefined
       },
       selectedUser: [],
+      selectedUserId: [],
       // 部门树选项
       deptOptions: undefined,
       deptId: "",
@@ -169,6 +165,26 @@ export default {
     // 根据名称筛选部门树
     deptName(val) {
       this.$refs.tree.filter(val);
+    },
+    dataSources: {
+      handler() {
+        this.selectedUser = this.dataSources;
+        this.selectedUserId = this.dataSources.map(i => i.userId);
+      }
+    },
+    dataSource: {
+      handler() {
+        this.$nextTick(() => {
+          const userIds = this.selectedUser.map(v => v.userId);
+          this.dataSource.forEach(row => {
+            if (userIds.indexOf(row.userId) >= 0) {
+              this.$refs.table?.toggleRowSelection(row, true);
+            } else {
+              this.$refs.table?.toggleRowSelection(row, false);
+            }
+          });
+        });
+      }
     }
   },
   created() {
@@ -176,23 +192,13 @@ export default {
   },
   methods: {
     selectable(row) {
-      if (this.tableData.indexOf(row.userId) >= 0) {
+      if (this.selectedUserId.indexOf(row.userId) >= 0) {
         return false;
       }
       return true;
     },
     handleOpen() {
       this.loadData();
-      this.$nextTick(() => {
-        this.tableData = this.dataSources.map(v => v.userId);
-        this.dataSource.forEach(row => {
-          if (this.tableData.indexOf(row.userId) >= 0) {
-            this.$refs.table.toggleRowSelection(row, true);
-          } else {
-            this.$refs.table.toggleRowSelection(row, false);
-          }
-        });
-      });
     },
     /**
      * 查询部门下拉树结构
@@ -206,7 +212,8 @@ export default {
      * 多选框选中数据
      */
     handleSelectionChange(selection) {
-      this.selectedUser = selection;
+      const data = selection.filter(item => !this.selectedUserId.includes(item.userId));
+      this.selectedUser = [...this.dataSources, ...data];
     },
     /**
      * 返回行数据key

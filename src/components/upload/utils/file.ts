@@ -1,4 +1,5 @@
-import axios, { download } from "@/utils/request";
+import axios from "@/utils/request";
+import { download } from "./api";
 import processAxios from "@/pages/intelligentOilfield/configurationCenter/processCenter/api/index.js";
 import { responseWhitelist } from "./responseWhiteList";
 
@@ -39,7 +40,7 @@ export function upload(data) {
  */
 export function downFile(id) {
   return axios({
-    url: `/sys/common/static/${id}`,
+    url: `/file/download/${id}`,
     method: "get",
     responseType: "blob"
   });
@@ -101,8 +102,9 @@ export function downloadTemplate(url, data) {
   responseWhitelist.use(url, res => res);
   return axios({
     url,
-    method: "post",
+    method: "get",
     responseType: "blob",
+    returnAll: true,
     data
   }).then(({ data: blobParts, headers }) => {
     download(blobParts, decodeURI(headers.downloadfilename), blobParts.type);
@@ -126,6 +128,14 @@ export function uploadFile(data, baseURL, url = "/file/upload") {
     url,
     method: "post",
     data
+  });
+}
+
+// 文件预览
+export function filePreview(attachmentId) {
+  return axios({
+    url: `/file/preview/${attachmentId}`,
+    method: "get"
   });
 }
 

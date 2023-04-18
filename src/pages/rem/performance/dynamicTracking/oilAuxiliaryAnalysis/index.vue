@@ -46,7 +46,7 @@
             :disabled="item.disabled"
           ></el-option>
         </el-select>
-        <el-button type="primary" icon="el-icon-search" style="margin-left: 20px" @click="doSearch">检索</el-button>
+        <el-button type="primary" icon="el-icon-search" style="margin-left: 20px" @click="doSearch">搜索</el-button>
         <el-upload
           ref="upload"
           style="margin-left: 20px"
@@ -81,7 +81,8 @@
     </headerSearch>
     <!-- :style="{ height: calc(100% - 100px)}" -->
     <pagePanelNew
-      headerTitle=""
+      headerTitle="油井辅助分析"
+       show-btn
       :style="{ height: this.currentModule == 'oilReport' ? 'auto' : 'calc(100% - 100px)' }"
       class="g-w100"
     >
@@ -277,6 +278,10 @@ export default {
               label: "油井分析报告",
               name: "oilReport",
             },
+            {
+              label: "连井剖面图",
+              name: "connecting",
+            },
           ],
         },
         {
@@ -390,6 +395,10 @@ export default {
           name: "wellTestReport",
           pathName: "WELL_TEST_REPORT",
         }, //试井报告
+        {
+          name: "connecting",
+          pathName: "CONNECTING",
+        }, // 连井剖面图
       ],
       //子组件返回数据
       childParam: "",
@@ -823,7 +832,7 @@ export default {
                 }
                 return new Blob([u8arr], { type: mime });
               },*/
-    //检索功能
+    //搜索功能
     doSearch() {
       this.$refs.componentCustom.oilFeildId = this.selectOilField;
       this.$refs.componentCustom.platform = this.selectPlatform;

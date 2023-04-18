@@ -1,7 +1,7 @@
 <!-- 井组辅助分析 -->
 <template>
     <div class="app-container">
-        <headerSearch style="height:80px;">
+        <headerSearch style="height: 80px">
             <div class="g-row-flex-V g-w100 g-h100">
                 <span class="title">油田：</span>
                 <el-select v-model="selectOilField" placeholder="请选择" filterable clearable disabled @change="changeSelectOilField" style="margin-right: 20px">
@@ -14,22 +14,23 @@
                 <!-- <span class="title">层系：</span>
                 <el-select v-model="selectLayer" style="width: 10%" filterable  clearable>
                    <el-option v-for="item in layer" :key="item.fieldLayerId" :label="item.layerName" :value="item.fieldLayerId"></el-option>
-                </el-select> --> 
+                </el-select> -->
                 <span class="title">井组：</span>
                 <el-select v-model="selectWellGroup" placeholder="请选择" filterable clearable style="margin-right: 20px">
                     <el-option v-for="item in wellGroup" :key="item.wellGroupId" :label="item.name" :value="item.wellGroupId"></el-option>
                 </el-select>
-                <el-button type="primary" icon="el-icon-search" style="margin-right: 20px" @click="doSearch">搜索</el-button>
+                <el-button type="primary" icon="el-icon-search" style="margin-right: 20px" @click="doSearch">搜索
+                </el-button>
                 <el-upload ref="upload" style="margin-right: 20px" class="upload-demo" action="" :auto-upload="false" :on-change="useUploadPic" :show-file-list="false" v-show="canUpload">
                     <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
                 </el-upload>
-                <el-button  type="primary" icon="el-icon-download" @click="doDownLoad" v-show="canDownload">下载</el-button>
+                <el-button type="primary" icon="el-icon-download" @click="doDownLoad" v-show="canDownload">下载</el-button>
             </div>
         </headerSearch>
-        <pagePanelNew headerTitle="" style="height: calc(100% - 100px)" class="g-w100">
-            <el-tabs class="g-pageHeader" style="margin-bottom:15px;" v-model="activeName" topline @tab-click="handleClick">
+        <pagePanelNew style="height: calc(100% - 100px)" class="g-w100">
+            <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
                 <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
-                    <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="currentModule = module.name">{{ module.label }}</el-button>
+                    <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'"  @click="currentModule = module.name">{{ module.label }}</el-button>
                 </el-tab-pane>
             </el-tabs>
             <keep-alive :include="[]" :max="10" v-if="selectWellGroup">
@@ -40,7 +41,13 @@
 </template>
 
 <script>
-    import {fetchOilFields, fetchFields,fieldLayers, wellGroups,uploadFile,} from '@/api/oilDeposit/rem-02/primaryinfo.js';
+    import {
+        fetchOilFields,
+        fetchFields,
+        fieldLayers,
+        wellGroups,
+        uploadFile,
+    } from "@/api/oilDeposit/rem-02/primaryinfo.js";
     export default {
         name: "WellGroupAnalysisAssistant",
         data() {
@@ -57,11 +64,11 @@
                 //区块选中值
                 selectBlock: "",
                 //层系选中值
-                selectLayer: '',
+                selectLayer: "",
                 //层系列表
                 layer: [],
                 //井组选中值
-                selectWellGroup: '',
+                selectWellGroup: "",
                 //井组列表
                 wellGroup: [],
                 queryParams: {},
@@ -75,8 +82,7 @@
                     {
                         label: "储层资料",
                         name: "reservoirData",
-                        modules: [
-                            {
+                        modules: [{
                                 label: "小层顶面构造图",
                                 name: "smallLayerStructureDiagram",
                             },
@@ -92,80 +98,80 @@
                                 label: "有效厚层图",
                                 name: "effectiveThickness",
                             },
-                            // {
-                            //     label: "渗透率分布图",
-                            //     name: "permeabilityDistribution",
-                            // },
-                            // {
-                            //     label: "井组连通图",
-                            //     name: "wellGroupConnection",
-                            // },
+                            {
+                                label: "渗透率分布图",
+                                name: "permeabilityDistribution",
+                            },
+                            {
+                                label: "井组连通图",
+                                name: "wellGroupConnection",
+                            },
                             /*  {
                                 label: "渗透率柱状图",
                                 name: "permeabilityColumnar",
-                              },*/
+                            },*/
                         ],
                     },
-                    // {
-                    //     label: "动态资料",
-                    //     name: "dynamicData",
-                    //     modules: [
-                    //         {
-                    //             label: "井组开发曲线",
-                    //             name: "wellGroupDevelopment",
-                    //         },
-                    //         {
-                    //             label: "注采对应曲线",
-                    //             name: "injectionProductionCorresponding",
-                    //         },
-                    //         {
-                    //             label: "示踪剂",
-                    //             name: "tracer",
-                    //         },
-                    //         {
-                    //             label: "措施效果",
-                    //             name: "effectOfMeasures",
-                    //         },
-                    //     ],
-                    // },
+                    {
+                        label: "动态资料",
+                        name: "dynamicData",
+                        modules: [
+                            {
+                                label: "井组开发曲线",
+                                name: "wellGroupDevelopment",
+                            },
+                            {
+                                label: "注采对应曲线",
+                                name: "injectionProductionCorresponding",
+                            },
+                            {
+                                label: "示踪剂",
+                                name: "tracer",
+                            },
+                            {
+                                label: "措施效果",
+                                name: "effectOfMeasures",
+                            },
+                        ],
+                    },
                 ],
                 //文件名称对应项
                 tabsPathName: [
                     {
-                        name: 'smallLayerStructureDiagram',
-                        pathName: "STRUCTURE"
+                        name: "smallLayerStructureDiagram",
+                        pathName: "STRUCTURE",
                     }, //小层顶面构造图
                     {
-                        name: 'seismicAttributes',
-                        pathName: 'SEISMIC_ATTRIBUTES'
+                        name: "seismicAttributes",
+                        pathName: "SEISMIC_ATTRIBUTES",
                     }, //地震属性图
                     {
-                        name: 'wellGroupConnection',
-                        pathName: 'WELL_GROUP_CONNECTION'
+                        name: "wellGroupConnection",
+                        pathName: "WELL_GROUP_CONNECTION",
                     }, //井组连通图
                     {
-                        name: 'thicknessOfSandLayer',
-                        pathName: 'THICKNESS_SAND_LAYER'
+                        name: "thicknessOfSandLayer",
+                        pathName: "THICKNESS_SAND_LAYER",
                     }, //砂层厚度图
                     {
-                        name: 'effectiveThickness',
-                        pathName: 'EFFECTIVE_THICKNESS'
+                        name: "effectiveThickness",
+                        pathName: "EFFECTIVE_THICKNESS",
                     }, //有效厚度图
                     {
-                        name: 'permeabilityDistribution',
-                        pathName: 'PERMEABILITY_DISTRIBUTION'
+                        name: "permeabilityDistribution",
+                        pathName: "PERMEABILITY_DISTRIBUTION",
                     }, //渗透率分布图
                     {
-                        name: 'permeabilityColumnar',
-                        pathName: 'PERMEABILITY_COLUMNAR'
+                        name: "permeabilityColumnar",
+                        pathName: "PERMEABILITY_COLUMNAR",
                     }, //渗透率分布图
                     {
-                        name: 'tracer',
-                        pathName: 'TRACER'
+                        name: "tracer",
+                        pathName: "TRACER",
                     }, //示踪剂
                 ],
                 //子组件返回数据
-                childParam: '',
+                childParam: "",
                 //缓存权限数据
                 myWidget: [],
                 userInfo: {},
@@ -193,24 +199,16 @@
             },
         },
         watch: {
-            //监视当前module
             currentModule: {
                 immediate: true,
                 handler(newName, oldName) {
                     this.loader().then(() => {
                         this.component = () => this.loader();
-                    }).catch(() => {
-                        this.component = () => import("./modules/reservoirData/seismicAttributes.vue");
-                    });
+                    }).catch(()=>{
+                        console.log('走catch')
+                    })
                 },
             },
-            /*selectOilField(val) {
-              this.getFetchFields(val);
-              this.getFieldLayers(val);
-            },
-            selectBlock(val){
-              this.getWellGroups();
-            },*/
         },
         mounted() {
             this.initData();
@@ -242,13 +240,13 @@
                 });
                 //默认qhd32-6
                 if (oilFeildId == undefined || oilFeildId == null) {
-                    this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
+                    this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
                 } else {
                     this.selectOilField = oilFeildId;
                 }
                 //区块信息初始化
                 let requestField = {
-                    oilFieldId: this.selectOilField
+                    oilFieldId: this.selectOilField,
                 };
                 await fetchFields(requestField).then((res) => {
                     if (res.data.code == 200) {
@@ -258,13 +256,13 @@
                     }
                 });
                 if (blockId == undefined || blockId == null) {
-                    this.selectBlock = '3FC9A818F5BC43B88270DB80BBB3018F';
+                    this.selectBlock = "3FC9A818F5BC43B88270DB80BBB3018F";
                 } else {
                     this.selectBlock = blockId;
                 }
                 //层系
                 let requestLayer = {
-                    oilFieldId: this.selectOilField
+                    oilFieldId: this.selectOilField,
                 };
                 fieldLayers(requestLayer).then((res) => {
                     if (res.data.code == 200) {
@@ -280,7 +278,7 @@
                     blockGroup.push(this.selectBlock);
                 }
                 let requestWellGroups = {
-                    oilFieldId: blockGroup
+                    oilFieldId: blockGroup,
                 };
                 //井组
                 await wellGroups(requestWellGroups).then((res) => {
@@ -301,19 +299,19 @@
             getFetchFields(oilFieldId) {
                 let request = {
                     oilFieldId: oilFieldId,
-                }
+                };
                 fetchFields(request).then((res) => {
                     if (res.data.code == 200) {
                         this.block = res.data.data.fields;
                         //区块 全部默认为 油田id
                         this.selectBlock = this.selectOilField;
                     }
-                })
+                });
             },
             //获得层位信息
             getFieldLayers(oilFieldId) {
                 let request = {
-                    oilFieldId: oilFieldId
+                    oilFieldId: oilFieldId,
                 };
                 fieldLayers(request).then((res) => {
                     if (res.data.code == 200) {
@@ -333,7 +331,7 @@
                 }
                 let request = {
                     oilFieldId: oilFieldId,
-                }
+                };
                 wellGroups(request).then((res) => {
                     if (res.data.code == 200) {
                         this.wellGroup = res.data.data.wellGroups;
@@ -342,8 +340,14 @@
             },
             //上传图片文件
             async useUploadPic(file, fileList) {
-                if (this.currentModule == 'smallLayerStructureDiagram' || this.currentModule =='seismicAttributes' || this.currentModule == 'thicknessOfSandLayer' ||this.currentModule == 'effectiveThickness' || this.currentModule == 'permeabilityDistribution') {
-                    this.$message.error('该部分内容需要通过区块辅助分析进行上传');
+                if (
+                    this.currentModule == "smallLayerStructureDiagram" ||
+                    this.currentModule == "seismicAttributes" ||
+                    this.currentModule == "thicknessOfSandLayer" ||
+                    this.currentModule == "effectiveThickness" ||
+                    this.currentModule == "permeabilityDistribution"
+                ) {
+                    this.$message.error("该部分内容需要通过区块辅助分析进行上传");
                     return;
                 }
                 if (fileList.length > 1) {
@@ -358,7 +362,7 @@
                 //获得井组
                 let wellGroup = this.selectWellGroup;
                 //一级目录 油井目录
-                let firstPath = 'well-group';
+                let firstPath = "well-group";
                 //文件类型
                 let fileType = file.raw.type;
                 if (this.isCorrectFileType(fileType)) {
@@ -368,30 +372,28 @@
                 const fileData = await this.selectImageFile(file.raw);
                 let fileDataNew = fileData.replace(/^data:\w+\/[a-zA-Z-]+;base64,/, "");
                 //获得当前选项中的映射关系
-                let tabName = this.tabsPathName.find(
-                    (item) => item.name == this.currentModule
-                );
+                let tabName = this.tabsPathName.find((item) => item.name == this.currentModule);
                 if (tabName === null || tabName === undefined) {
-                    this.$message.error('该标签无法上传文件或图片,请切换标签');
-                    return
+                    this.$message.error("该标签无法上传文件或图片,请切换标签");
+                    return;
                 }
                 let position = this.childParam;
-                let fileName = '';
-                if (!wellGroup || wellGroup == '') {
-                    this.$message.error('请选择井组');
+                let fileName = "";
+                if (!wellGroup || wellGroup == "") {
+                    this.$message.error("请选择井组");
                     return;
                 }
                 //有井层的情况
-                if (tabName.pathName == 'TRACER') {
+                if (tabName.pathName == "TRACER") {
                     if (position.length <= 0) {
-                        this.$message.error('请选择示踪剂的某项进行上传');
+                        this.$message.error("请选择示踪剂的某项进行上传");
                         return;
                     }
                     //文件名称拼接
-                    fileName = position + '_' + wellGroup;
+                    fileName = position + "_" + wellGroup;
                 } else {
                     //文件名称拼接
-                    fileName = tabName.pathName + '_' + wellGroup;
+                    fileName = tabName.pathName + "_" + wellGroup;
                 }
                 //请求参数
                 let request = {
@@ -399,31 +401,31 @@
                     data: fileDataNew,
                     fieldId: block,
                     fileName: fileName,
-                    operatingCompanyId: '',
+                    operatingCompanyId: "",
                     path: firstPath,
-                    platformId: '',
+                    platformId: "",
                     wellGroupId: wellGroup,
-                    wellId: '',
-                    wellTypeCode: '',
+                    wellId: "",
+                    wellTypeCode: "",
                 };
                 uploadFile(request).then((res) => {
                     if (res.data.code == 0) {
-                        this.$message.success('文件上传成功');
+                        this.$message.success("文件上传成功");
                         this.doSearch();
                     }
                 });
             },
             //解析图片文件 图片文件转二进制流
             selectImageFile(file) {
-                return new Promise(((resolve, reject) => {
+                return new Promise((resolve, reject) => {
                     let reader = new FileReader();
                     reader.readAsDataURL(file);
-                    reader.onload = ((result) => {
-                        resolve(reader.result)
-                    });
-                }))
+                    reader.onload = (result) => {
+                        resolve(reader.result);
+                    };
+                });
             },
-            //检索功能
+            //搜索功能
             doSearch() {
                 this.$refs.componentCustom.wellId = this.selectWellId;
                 this.$refs.componentCustom.oilFeildId = this.selectOilField;
@@ -440,39 +442,54 @@
             //下载
             doDownLoad() {
                 let wellGroupThing = this.wellGroup.find((item) => {
-                    return item.wellGroupId == this.selectWellGroup
+                    return item.wellGroupId == this.selectWellGroup;
                 });
                 this.$refs.componentCustom.wellGroupName = wellGroupThing.name;
                 this.$refs.componentCustom.doDownLoad();
             },
             //判断上传文件是否是正确的类型
             isCorrectFileType(type) {
-                if (this.currentModule == 'seismicAttributes' || this.currentModule == 'wellGroupConnection' || this
-                    .currentModule == 'thicknessOfSandLayer' || this.currentModule == 'effectiveThickness' || this
-                    .currentModule == 'permeabilityDistribution' ||
-                    this.currentModule == 'permeabilityColumnar'
+                if (
+                    this.currentModule == "seismicAttributes" ||
+                    this.currentModule == "wellGroupConnection" ||
+                    this.currentModule == "thicknessOfSandLayer" ||
+                    this.currentModule == "effectiveThickness" ||
+                    this.currentModule == "permeabilityDistribution" ||
+                    this.currentModule == "permeabilityColumnar"
                 ) {
-                    if (type == 'image/bmp' || type == 'image/gif' || type == 'image/x-icon' || type == 'image/pipeg' ||
-                        type == 'image/jpeg' || type == 'image/png') {
+                    if (
+                        type == "image/bmp" ||
+                        type == "image/gif" ||
+                        type == "image/x-icon" ||
+                        type == "image/pipeg" ||
+                        type == "image/jpeg" ||
+                        type == "image/png"
+                    ) {
                         return false;
                     } else {
-                        this.$message.error('请上传正确图片类型');
+                        this.$message.error("请上传正确图片类型");
                         return true;
                     }
-                } else if (this.currentModule == 'tracer') {
-                    if (this.childParam == 'TRACER_REPORT') {
-                        if (type == 'application/pdf') {
+                } else if (this.currentModule == "tracer") {
+                    if (this.childParam == "TRACER_REPORT") {
+                        if (type == "application/pdf") {
                             return false;
                         } else {
-                            this.$message.error('请上传pdf类型文件');
+                            this.$message.error("请上传pdf类型文件");
                             return true;
                         }
-                    } else if (this.childParam == 'TRACER_RESULTS' || this.childParam == 'TRACER_INFORMATION') {
-                        if (type == 'image/bmp' || type == 'image/gif' || type == 'image/x-icon' || type ==
-                            'image/pipeg' || type == 'image/jpeg' || type == 'image/png') {
+                    } else if (this.childParam == "TRACER_RESULTS" || this.childParam == "TRACER_INFORMATION") {
+                        if (
+                            type == "image/bmp" ||
+                            type == "image/gif" ||
+                            type == "image/x-icon" ||
+                            type == "image/pipeg" ||
+                            type == "image/jpeg" ||
+                            type == "image/png"
+                        ) {
                             return false;
                         } else {
-                            this.$message.error('请上传正确图片类型');
+                            this.$message.error("请上传正确图片类型");
                             return true;
                         }
                     }
@@ -495,11 +512,14 @@
                     this.canDownload = true;
                     this.canUpload = true;
                 }
-                getWidgetByAreaUser({"areaCode": areaCode,"loginName": loginName}).then(res => {
+                getWidgetByAreaUser({
+                    areaCode: areaCode,
+                    loginName: loginName
+                }).then((res) => {
                     let myList = res.data.dataList;
                     if (myList) {
                         let pageMes = myList.find((item) => {
-                            return item.resPvalue == myPath
+                            return item.resPvalue == myPath;
                         });
                         if (pageMes) {
                             this.myWidget = pageMes.widgetList;
@@ -539,13 +559,13 @@
             },
             //改变选中油田内容
             changeSelectOilField(val) {
-                this.selectLayer = '';
+                this.selectLayer = "";
                 this.getFetchFields(val);
                 this.getFieldLayers(val);
             },
             //改变选中区块内容
             changeSelectBlock(val) {
-                this.selectWellGroup = '';
+                this.selectWellGroup = "";
                 this.getWellGroups();
             },
         },
@@ -553,10 +573,10 @@
 </script>
 
 <style lang="scss" scoped>
-    .app-container{
-        height:100%;
+    .app-container {
+        height: 100%;
     }
-    
+
     ::v-deep .upload-demo {
         .el-upload {
             margin-top: 0;

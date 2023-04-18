@@ -38,14 +38,14 @@
               </el-date-picker>
             </el-form-item> -->
             <el-form-item>
-              <el-button type="primary" @click="queryserch()" icon="el-icon-search">检索</el-button>
+              <el-button type="primary" @click="queryserch()" icon="el-icon-search">搜索</el-button>
             </el-form-item>
           </el-form>
         </div>
       </div>
     </header-search>
 
-    <pagePanel headerTitle="单井储量信息维护" style="height: calc(100% - 100px)" class="g-w100">
+    <pagePanel headerTitle="单井储量信息维护" style="height: calc(100% - 100px)" class="g-w100" :show-btn="true">
       <div class="smart-energy-item">
         <el-form
           :model="djclForm"

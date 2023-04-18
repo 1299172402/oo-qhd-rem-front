@@ -1,11 +1,19 @@
-<!--注水强度等值图-->
+<!--生产压差图-->
 <template>
     <div class="z-main">
         <div class="z-search">
             <el-select v-model="selectPosition" style="width: 220px;margin-right:20px;" placeholder="请选择" filterable clearable>
                 <el-option v-for="(item, index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
-            <span>时间：</span>
+            <el-radio-group v-model="radioYear" style="margin-right:20px;">
+                <el-radio :label="1">近一年压力发布</el-radio>
+                <el-radio :label="3">近三年压力发布</el-radio>
+            </el-radio-group>
+            <div class="btns" style="margin-right:20px;">
+                <el-button :class="[picType=='COLUMN'?'':'commonBtn']" :type="picType=='COLUMN'?'primary':''" @click="doPicTypeSwitch('COLUMN')">柱状图</el-button>
+                <el-button :class="[picType=='BUBBLE'?'':'commonBtn']" :type="picType=='BUBBLE'?'primary':''" @click="doPicTypeSwitch('BUBBLE')">泡泡图</el-button>
+            </div>
+            <span>选择年份：</span>
             <el-date-picker v-model="yearTime" type="year" placeholder="选择年" value-format="yyyy" style="margin-right:20px;"></el-date-picker>
             <el-button type="primary" @click="doYesEvent">确定</el-button>
         </div>
@@ -24,7 +32,6 @@
     import { downFile } from '@/lib/remBase64Download.js';
     import H5Chart from '@/components/tools/H5Chart/index.vue';
     import H5Chart1 from '@/components/tools/H5Chart/index1.vue';
-    let _this;
     export default {
         components: {
             H5Chart,
@@ -36,16 +43,20 @@
         },
         data() {
             return {
-                dialogVisible1: false,
+                url: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-yscl.html',
                 url1: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
-                url: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-paopao.html',
-                radio: 1,
-                src: '../../static/img/blockAnalysisAided/dynamicInformation/liquidOilWaterDifference.png',
+                zztUrl: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-yscl.html',
+                pptUrl: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-paopao.html',
+                dialogVisible1: false,
                 //选中层位
                 selectPosition: '',
                 //层位所选择内容信息
                 position: [],
                 image: '',
+                //类型点
+                radioYear: 1,
+                //图类型
+                picType: "COLUMN",
                 yearTime: new Date().format('yyyy'),
                 oilWaterChartData: {}
             };
@@ -58,7 +69,6 @@
             }
         },
         mounted() {
-            _this = this;
             //this.initData();
             this.doSearch();
         },
@@ -94,7 +104,9 @@
                     oilFieldId: this.oilFieldId,
                     fieldId: this.blockId,
                     layerId: this.selectPosition,
-                    year: this.yearTime
+                    year:Number(this.yearTime)-this.radioYear,
+                    endYear: this.yearTime,
+                    pictureType: this.picType,
                 };
                 //获取图片组信息
                 await dynamicDataDifferentialPressureDiagram(request).then((res) => {
@@ -110,9 +122,12 @@
                         } else {
                             this.image = '';
                         }
-                        //this.bubblePic(res.data.data.oilWaterChart);
                         this.oilWaterChartData = res.data.data.oilWaterChart;
-                        this.bubblePic(this.oilWaterChartData, this.$refs.H5Chart);
+                        if (this.picType == 'COLUMN') {
+                            this.columnPic(this.oilWaterChartData, this.$refs.H5Chart);
+                        } else if (this.picType == 'BUBBLE') {
+                            this.bubblePic(this.oilWaterChartData, this.$refs.H5Chart);
+                        }
                     } else {
                         this.image = '';
                     }
@@ -125,7 +140,9 @@
                     oilFieldId: this.oilFieldId,
                     fieldId: this.blockId,
                     layerId: this.selectPosition,
-                    year: this.yearTime
+                    year:Number(this.yearTime)-this.radioYear,
+                    endYear: this.yearTime,
+                    pictureType: this.picType,
                 };
                 dynamicDataDifferentialPressureDiagram(request).then((res) => {
                     if (res.data.code == 200) {
@@ -140,9 +157,12 @@
                         } else {
                             this.image = '';
                         }
-                        //this.bubblePic(res.data.data.oilWaterChart);
-                        this.oilWaterChartData = res.data.data.oilWaterChart;
-                        this.bubblePic(this.oilWaterChartData, this.$refs.H5Chart);
+                        this.oilWaterChartData = res.data.data.oilWaterChart
+                        if (this.picType == 'COLUMN') {
+                            this.columnPic(this.oilWaterChartData, this.$refs.H5Chart);
+                        } else if (this.picType == 'BUBBLE') {
+                            this.bubblePic(this.oilWaterChartData, this.$refs.H5Chart);
+                        }
                     } else {
                         this.image = '';
                     }
@@ -167,16 +187,34 @@
                 //this.$refs.H5Chart.downLoadAllPicture();
                 this.dialogVisible1 = true;
                 setTimeout(() => {
-                    _this.bubblePic(this.oilWaterChartData, _this.$refs.downH5Chart1);
-                    //this.sjcl(this.layerData, this.$refs.downH5Chart1)
+                    if (this.picType == 'COLUMN') {
+                         // this.url1 = this.zztUrl;
+                        this.columnPic(this.oilWaterChartData, this.$refs.downH5Chart1);
+                    } else if (this.picType == 'BUBBLE') {
+                        // this.url1 = this.pptUrl;
+                        this.bubblePic(this.oilWaterChartData, this.$refs.downH5Chart1);
+                    }
+                    //this.columnPic(this.oilWaterChartData, this.$refs.downH5Chart1)
                     this.dialogVisible1 = false;
                     setTimeout(() => {
-                        _this.$refs.downH5Chart1.downLoadAllPicture();
+                        this.$refs.downH5Chart1.downLoadAllPicture();
                     }, 2000);
                 }, 1000);
             },
+            //图片类型切换
+            doPicTypeSwitch(val) {
+                if(this.picType!=val){
+                    this.picType=val;
+                    if (val == 'COLUMN') {
+                        this.url = this.zztUrl;
+                    } else if (val == 'BUBBLE') {
+                        this.url = this.pptUrl;
+                    }
+                    this.doYesEvent();
+                }
+            },
             //柱状图解析
-            columnPic(oilWaterChart) {
+            columnPic(oilWaterChart, refObj) {
                 let MinXMap = oilWaterChart.minXmap;
                 let MaxXMap = oilWaterChart.maxXmap;
                 let MinYMap = oilWaterChart.minYmap;
@@ -247,7 +285,7 @@
                 columnLayer.Objects = Objects;
                 h5data.Layers = [];
                 h5data.Layers.push(columnLayer);
-                this.$refs.H5Chart.setSampleDate(h5data);
+                refObj.setSampleDate(h5data);
             },
             //泡泡图解析
             bubblePic(oilWaterChart, refObj) {
@@ -319,7 +357,9 @@
                     oilFieldId: this.oilFieldId,
                     fieldId: this.blockId,
                     layerId: this.selectPosition,
-                    year: this.yearTime
+                    year:Number(this.yearTime)-this.radioYear,
+                    endYear: this.yearTime,
+                    pictureType: this.picType,
                 };
                 //获取图片组信息
                 dynamicDataDifferentialPressureDiagram(request).then((res) => {
@@ -337,7 +377,11 @@
                         }
                         //this.bubblePic(res.data.data.oilWaterChart);
                         this.oilWaterChartData = res.data.data.oilWaterChart;
-                        this.bubblePic(this.oilWaterChartData, this.$refs.H5Chart);
+                        if (this.picType == 'COLUMN') {
+                            this.columnPic(this.oilWaterChartData, this.$refs.H5Chart);
+                        } else if (this.picType == 'BUBBLE') {
+                            this.bubblePic(this.oilWaterChartData, this.$refs.H5Chart);
+                        }
                     } else {
                         this.image = '';
                     }

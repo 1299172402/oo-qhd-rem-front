@@ -14,7 +14,7 @@
             <span style="margin-left: 20px">时间：</span>
             <el-date-picker v-model="selectYear" type="year" format="yyyy" value-format="yyyy" placeholder="选择年">
             </el-date-picker>
-            <el-button icon="el-icon-search" type="primary" @click="doSearch" style="margin-left: 20px">检索</el-button>
+            <el-button icon="el-icon-search" type="primary" @click="doSearch" style="margin-left: 20px">搜索</el-button>
             <el-radio-group v-model="pageType" style="margin-left: 10px" @change="changeTab">
               <el-radio-button
                 label="原油产量"

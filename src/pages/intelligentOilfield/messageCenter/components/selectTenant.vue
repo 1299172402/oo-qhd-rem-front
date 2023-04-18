@@ -40,8 +40,8 @@
         />
       </el-table>
       <span slot="footer" class="dialog-footer">
-        <el-button icon="el-icon-close" @click="dialogVisible = false">取 消</el-button>
-        <el-button icon="el-icon-check" type="primary" @click="addTenement">确 定</el-button>
+        <el-button class="cancelBtn" @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addTenement">确 定</el-button>
       </span>
       <pagination
         v-show="ipagination.total > 0"

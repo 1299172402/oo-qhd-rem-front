@@ -33,7 +33,7 @@
           <el-button icon="el-icon-edit-outline" size="mini"  class="commonBtn">下载</el-button>
           <el-button icon="el-icon-document-checked" size="mini" class="commonBtn">上传文档</el-button>
           <el-button icon="el-icon-s-platform" size="mini"  class="commonBtn"
-            >检索</el-button
+            >搜索</el-button
           >
         </el-form-item>
       </el-form>

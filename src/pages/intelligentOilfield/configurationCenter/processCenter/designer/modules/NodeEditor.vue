@@ -10,6 +10,7 @@
     width="80%"
     dialog-title="流程编辑器"
     custom-class="dialog__body--no-padding"
+    @close="onDialogClose"
   >
     <iframe
       v-if="modelId"
@@ -25,6 +26,7 @@
 import CommonDialog from "@/components/intelligentOilfield/dialog/CommonDialog.vue";
 import proxy from "@/config/host";
 import JSEncrypt from "jsencrypt/bin/jsencrypt";
+import { TOKEN_NAME } from "@/config/global";
 
 const env = import.meta.env.MODE || "development";
 // 加密
@@ -76,6 +78,12 @@ export default {
           this.visible = false;
         }
       }
+    },
+    /**
+     * 关闭弹窗时，更新一下 vuex 中的 token，以防 ntk 更换了 localStorage 而没有换 vuex
+     */
+    onDialogClose: function() {
+      this.$store.commit("user/setToken", localStorage.getItem(TOKEN_NAME));
     }
   }
 };

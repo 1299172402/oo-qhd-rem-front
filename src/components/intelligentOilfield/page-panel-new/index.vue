@@ -23,7 +23,7 @@
         />
       </el-tooltip>
     </div>
-    <div style="padding: 20px;height: calc(100%);" class="g-w100" :style="{height: isMax ? 'calc(100%  - 31px)' : '100%'}">
+    <div style="padding: 0 20px 20px;height: 100%;" class="g-w100" :style="{height: showBtn ? 'calc(100%  - 32px)' : '100%', padding: showBtn ? '0 20px 20px 20px' : '20px'}">
       <slot />
     </div>
   </div>
@@ -48,6 +48,7 @@ export default {
   },
   methods: {
     maximizeCom() {
+      this.$emit("zoom-out-com", this.isMax);
       this.isMax = !this.isMax;
     }
   }
@@ -60,7 +61,7 @@ export default {
 }
 
 .maxPage {
-  position: absolute;
+  position: fixed;
   z-index: 999;
   top: 0;
   left: 0;

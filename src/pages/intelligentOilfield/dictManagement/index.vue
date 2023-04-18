@@ -79,8 +79,8 @@
     </header-search>
 
     <page-panel-new header-title="字典管理" style="height: calc(100% - 100px);">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
-        <el-col :span="1.5">
+      <el-row style="margin-bottom: 20px">
+        <el-col :span="20">
           <el-button
             v-hasPermi="['system:dict:add']"
             type="primary"
@@ -91,31 +91,7 @@
             新增
           </el-button>
         </el-col>
-        <!-- <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['system:dict:edit']"
-          >修改</el-button
-        >
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['system:dict:remove']"
-          >删除</el-button
-        >
-      </el-col> -->
-        <el-col :span="1.5">
+        <el-col :span="4" style="text-align: right;padding-right: 2px">
           <el-button
             v-hasPermi="['system:dict:export']"
             class="commonBtn"
@@ -127,18 +103,6 @@
             导出
           </el-button>
         </el-col>
-      <!-- <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-refresh"
-          size="mini"
-          @click="handleRefreshCache"
-          v-hasPermi="['system:dict:remove']"
-          >刷新缓存</el-button
-        >
-      </el-col> -->
-        <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
       </el-row>
       <el-table
         :data="typeList"

@@ -1,6 +1,6 @@
 <template>
-  <div class="app-container">
-    <headerSearch class="g-w100 g-h100" style="width: 100%; height: calc(100% - 143px)">
+  <div class="app-container" style="height: 100%">
+    <headerSearch class="g-w100 g-h100" style="width: 100%;">
       <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 18px">
         <el-form-item label="日期：">
           <el-date-picker v-model="queryParams.endTime" value-format="yyyy-MM-dd" type="date" placeholder="年/月/日">
@@ -38,17 +38,12 @@
         >
       </el-form>
     </headerSearch>
-    <div>
-      <verticalSwitchButton
-        @selectBtn="selectBtn"
-        :dataList="dataList"
-        buttonWidth="120px"
-        buttonHeight="30px"
-        style="width: 9%; padding-top: 20px"
-        btnDirection="row"
-      ></verticalSwitchButton>
+    <div style="height: calc(100% - 92px)">
+        <el-tabs v-model="activeName" class="g-pageHeader"  @tab-click="selectBtn(activeName)">
+            <el-tab-pane :label="item.name" :name="item.value" v-for="(item,index) in dataList"/>
+        </el-tabs>
+        <components ref="modal" style="margin-top: -15px; height: 100%" :infodata="1" :is="currentTab" />
     </div>
-    <components ref="modal" style="margin-top: -15px; height: 730px" :infodata="1" :is="currentTab" />
   </div>
 </template>
 <script>
@@ -85,6 +80,7 @@ export default {
       queryParams: { endTime: "", selectPlatform: "", selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F" },
       oilFields: [],
       platforms: [],
+      activeName:'personnelplan'
     };
   },
   mounted() {
@@ -104,9 +100,9 @@ export default {
   },
   methods: {
     selectBtn(item) {
-      this.currentTab = item.value;
+      this.currentTab = item;
     },
-    // 检索按钮
+    // 搜索按钮
     retrieval() {
       this.$refs.modal.show(this.queryParams);
     },

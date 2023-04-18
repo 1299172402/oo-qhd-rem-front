@@ -8,18 +8,18 @@
                 <el-option :label="item.name" :value="item.code" v-for="(item,index) in selectAllocOrCalculate" :key="index"></el-option>
             </el-select>
         </div> 
-        <div class="z-echarts">
+        <div class="z-echarts" :class="[isDevelop?'z-echarts-active':'']">
             <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
         </div>   
         <div class="develop">
             <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
         </div>
-        <info-window infoWidth="100%" infoHeight="300px" headerTitle="单井动态分析" v-show="isDevelop">
+        <info-window infoWidth="100%" infoHeight="190px" headerTitle="单井动态分析" v-show="isDevelop">
             <el-table
                 id="tableData" 
                 :data="tableData" :border="false" :row-style="{ height: '0px' }"
                 header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
-                style="width:100%;" height="250px" :default-sort="{ prop: 'date', order: 'descending' }"
+                style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column prop="prodDate" label="日期"></el-table-column>  
                 <el-table-column prop="prodDuration" :label="`生产时间\n (h)`" width="140"></el-table-column>
@@ -138,7 +138,7 @@
                             left: "14%",
                             top: "68%",
                             width: "74%",
-                            height: "28%"
+                            height: "26%"
                         },
                     ],
                     xAxis: [
@@ -778,11 +778,9 @@
             //展示|收缩
             tapDevelop(){
                 this.isDevelop=!this.isDevelop;
-                if(this.isDevelop){
-                    this.$nextTick(()=>{
-                        this.$refs.zMain.scrollTop=10000;
-                    })
-                }
+                this.$nextTick(()=>{
+                    this.$refs.echartDown.chart.resize();
+                })
             },
         }
     }
@@ -792,15 +790,22 @@
     .z-main{
         width: 100%;
         height:calc(100% - 101px);
-        overflow-x: hidden;
-        overflow-y: scroll;
+        // overflow-x: hidden;
+        // overflow-y: scroll;
         .z-search{
             height:60px;
         }
+        
         .z-echarts{
             width:100%;
-            height:490px;
+            // height:490px;
+            height:calc(100% - 60px - 40px);
         }
+        
+        .z-echarts-active{
+            height:calc(100% - 60px - 40px - 190px);
+        }
+        
         .develop{
             height:40px;
             display: flex;
@@ -830,6 +835,7 @@
                 100% {transform: translate(0px, 0px);}
             }
         }
+        
         #tableData{
             ::v-deep .el-table__header-wrapper .cell{
                 height: auto;

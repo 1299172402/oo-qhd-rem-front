@@ -47,7 +47,7 @@
                   </div>
                 </div>
               </t-radio-group>
-              <div class="setting-group-title">
+              <!-- <div class="setting-group-title">
                 主题色
               </div>
               <t-radio-group v-model="formData.brandTheme">
@@ -86,7 +86,7 @@
                     </t-radio-button>
                   </t-popup>
                 </div>
-              </t-radio-group>
+              </t-radio-group> -->
               <div class="setting-group-title">
                 导航布局
               </div>
@@ -496,7 +496,7 @@ export default {
 }
 
 .el-collapse-item__content {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .el-collapse {

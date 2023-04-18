@@ -161,9 +161,11 @@ export default {
     },
     // 显示弹框
     show() {
-      this.queryParams.roleId = this.roleId;
-      this.getList();
       this.visible = true;
+      this.queryParams.roleId = this.roleId;
+      this.$nextTick(() => {
+        this.getList();
+      });
     },
     clickRow(row) {
       this.$refs.table.toggleRowSelection(row);

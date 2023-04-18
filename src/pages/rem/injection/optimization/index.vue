@@ -3,10 +3,10 @@
     <el-container  class="layout">
       <el-header height="auto">
         <div class="titleBox">
-          <el-tabs v-model="activeName">
+          <el-tabs v-model="activeName" class="g-pageHeader">
             <el-tab-pane label="定产配注" name="first"></el-tab-pane>
             <el-tab-pane label="智能配注" name="second">
-              <!-- <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> -->
+               <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> 
             </el-tab-pane>
           </el-tabs>
         </div>
@@ -41,8 +41,13 @@
             type="primary"
             style="margin-left: 20px;background: rgba(0, 0, 0, 0);border: 1px solid #00b4ff;"
             @click="doSearch"
-          >确认</el-button>
-
+          >搜索</el-button>
+            <el-button
+                icon="el-icon-download"
+                type="primary"
+                class="commonBtn"
+                @click="doDownLoadExcelh"
+            >下载</el-button>
           <span class="fangan">
             <span style="color: #00b4ff;">{{ queryData.dateTime }}月配产配注方案</span>
             <el-button type="primary" @click="viewDetail">
@@ -62,7 +67,7 @@
                 element-loading-text="数据加载中"
                 element-loading-spinner="el-icon-loading"
                 :data="tableData1"
-                id="indexscv"
+                id="indexscvFirst"
                 highlight
                 style="margin-top: 10px"
                 height="620"
@@ -81,7 +86,6 @@
           </el-col>
           <el-col :span="18">
             <pagePanel :headerTitle="title2" class="g-w100">
-                <template slot="header">
                 <div class="buttonBox">
                   <el-button class="button" icon="el-icon-search" @click="assessBut">可行性评估</el-button>
                   <!-- @click="modify = true" -->
@@ -93,11 +97,10 @@
                     @click="handleSubmit('form')"
                   >保存</el-button>
                 </div>
-              </template>
               <el-form ref="form" :rules="rules" label-width="100px" :model="form">
                 <el-table
                   :data="form.tableData2"
-                  id="indexscv"
+                  id="indexscvSecond"
                   highlight
                   height="620"
                   style="margin-top: 10px"
@@ -207,12 +210,15 @@
   </div>
 </template>
 <script>
-// import { getWellMonthAllocation, getWellMonthInj, wellAvgFluidProdAllocUpdate } from "@/api/ipm-04/r-intelligentIPA.js";
+import queryConditionMixin from "@/mixins/queryConditionMixin.js";
+import { getWellMonthAllocation, getWellMonthInj, wellAvgFluidProdAllocUpdate } from "@/api/rem/r-intelligentIPA.js";
+import { exportExcel } from '@/lib/exportExcel.js';
 import Iframe from '@/components/rem/tools/iframe.vue'
 export default {
   components: {
     Iframe
-  },
+  }, 
+  mixins:[queryConditionMixin],
   data () {
     return {
       queryData: {
@@ -335,7 +341,7 @@ export default {
         this.queryTable()
         this.queryTableData()
       } else {
-        this.$message.error("检索条件不足")
+        this.$message.error("搜索条件不足")
       }
     },
     // 可行性评估
@@ -345,7 +351,8 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$router.push({ name: "schemePrediction" })
+        // this.$router.push({ name: "schemePrediction" })
+          window.location.href = 'http://localhost:8081/#/waterManagement/schemePrediction'
       })
     },
     // 保存
@@ -447,6 +454,9 @@ export default {
           }
         }
       }
+    },
+    doDownLoadExcelh(){
+        exportExcel("#indexscvSecond",this.title2);
     }
   },
   created () {

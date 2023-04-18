@@ -96,3 +96,20 @@ export function getInitiatedList(data) {
     data
   });
 }
+
+// 我的事项-物联网待办
+export function getInternetList(data) {
+  return request({
+    url: "system/supOS/todo/paginate",
+    method: "get",
+    data
+  });
+}
+
+// 我的事项-物联网待办处理
+export function getInternetDeal(taskId, processId, url) {
+  return request({
+    url: `system/supOS/todo/skipUrl?taskId=${taskId}&processId=${processId}&pageUrl=${url}`,
+    method: "get"
+  });
+}

@@ -64,9 +64,9 @@
             </div>
             <div class="fr" style="display:flex;">
               <el-button type="primary" icon="el-icon-search" style="margin-left: 20px" @click="doSearch"
-                >检索</el-button
+                >搜索</el-button
               >
-              <el-button type="primary" style="width: 70px" @click="doExportFile" icon="el-icon-download"
+              <el-button class="commonBtn" type="primary" style="width: 70px" @click="doExportFile" icon="el-icon-download"
                 >下载</el-button
               >
             </div>

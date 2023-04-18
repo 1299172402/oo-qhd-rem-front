@@ -31,7 +31,7 @@ const env = import.meta.env.MODE || "development";
 //           childRouter.children?.forEach((sonChild) => {
 //             const sonChildRoleCode = sonChild.meta?.roleCode || sonChild.name;
 //             if (roles.indexOf(sonChildRoleCode) === -1) {
-//               // 三级菜单检索
+//               // 三级菜单搜索
 //               children.forEach((el, index3) => {
 //                 el.children.forEach((element, index4) => {
 //                   if (element.name === sonChild.name) {

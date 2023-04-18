@@ -4,7 +4,7 @@
       v-if="label"
       v-bind="btn"
       :icon="btnIcon"
-      :type="btnType"
+      :type="btn.type || btnType"
       plain
       @click="visible = true; $emit('open')"
     >

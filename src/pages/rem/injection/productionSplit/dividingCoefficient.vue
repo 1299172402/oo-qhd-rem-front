@@ -54,7 +54,7 @@
 
 
                 <el-button type="primary" class="confirmBut" style="margin-left: 20px" icon="el-icon-search" disabled>
-                    检索
+                    搜索
                 </el-button>
                 <el-button type="primary" class="confirmBut" style="margin-left: 20px" @click="returned">返回</el-button>
             </div>
@@ -75,7 +75,7 @@
                 <div>
                     <el-button type="primary" @click="handleAllSave">保存</el-button>
                     <el-button type="primary" @click="handleOperation">运行计算</el-button>
-                    <el-button type="primary" icon="el-icon-download" @click="downloadTable">下载</el-button>
+                    <el-button class="commonBtn" type="primary" icon="el-icon-download" @click="downloadTable">下载</el-button>
                 </div>
             </div>
             <el-table

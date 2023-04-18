@@ -34,3 +34,11 @@ export function setDefaultPage(data) {
     data
   });
 }
+
+// 点击顶部logo跳转页面
+export function goNewPage() {
+  return request({
+    url: "auth/portal/indexUrl",
+    method: "get"
+  });
+}

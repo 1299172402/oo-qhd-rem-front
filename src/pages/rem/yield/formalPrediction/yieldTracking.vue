@@ -14,7 +14,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="searchinfo" icon="el-icon-search">检索</el-button>
+          <el-button type="primary" @click="searchinfo" icon="el-icon-search">搜索</el-button>
         </el-form-item>
         <el-form-item style="float: right">
           <el-button type="primary" icon="el-icon-download" @click="doDownExcel()">下载</el-button>

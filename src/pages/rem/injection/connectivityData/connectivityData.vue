@@ -1,7 +1,7 @@
 <template>
   <!-- 井间联通性评价 -->
   <el-container class="layout">
-    <el-header height="auto">
+    <el-header >
       <div class="case2">
         <div>
           <span>作业公司：</span>
@@ -49,10 +49,10 @@
             style="color: #66ffff;"
             size="mini"
             @click="tableOilfield"
-          >确认</el-button>
+          >搜索</el-button>
           <el-button
             type="primary"
-            class="confirmBut"
+            class="commonBtn"
             style="color: #66ffff;"
             size="mini"
             icon="el-icon-download"
@@ -64,7 +64,7 @@
         </div>
       </div>
     </el-header>
-    <el-main>
+    <el-main style="height: calc(100% - 60px)">
       <div class="case4" style="height: 100%;">
         <pagePanel headerTitle="连通系数计算" style="height: 450px; width: 100%" class="g-w100">
           <div style="float: right">
@@ -368,8 +368,8 @@ export default {
     tableOilfield () {
       let params = {
         // blockId: this.queryData.blockId,
-          blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
-          type: 1,
+        blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
+        type: 0,
         dateTime: this.queryData.dateTime,
       };
       this.form.wellGroupIds = []
@@ -398,7 +398,8 @@ export default {
     Correction (type) {
       this.btnLoad = true
       let params = {
-        blockId: this.queryData.blockId,
+        // blockId: this.queryData.blockId,
+          blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
         type: type,
         dateTime: this.queryData.dateTime,
       };
@@ -456,7 +457,8 @@ export default {
           (item) => item.blockId == this.queryData.blockId
         ).blockName : '';
         const params = {
-            blockId: this.queryData.blockId, //区块id
+            // blockId: this.queryData.blockId, //区块id
+            blockId:'6CD7342CA6DD418183A4B3BC38584F7C',
             blockName: blockName,
             ogfId: this.queryData.ogfId, //油田id
             ogfName: ogfName,

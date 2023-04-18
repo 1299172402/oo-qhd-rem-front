@@ -23,7 +23,7 @@
                 <span>等值线间隔：</span>
                 <el-input type="number" v-model="form.interval" style="width:150px"></el-input>
                 <span>（可设区间：大于0 且 小于{{intervalNum}}）</span>
-                <el-button type="primary" @click="openContourLineDialog">绘制</el-button>  
+                <el-button type="primary" @click="sureContourLine">绘制</el-button>  
             </div>
         </div>
         <div class="z-echarts">
@@ -549,10 +549,6 @@
                         this.$message.success('使用成功！');
                     }  
                 })
-            },
-            //打开自定义等值线弹框
-            openContourLineDialog(){
-                this.contourLineDialog=true;
             },
             //确定自定义等值线
             sureContourLine(){

@@ -208,7 +208,6 @@ div.application-register {
     flex: 0 0 50%;
     padding-right: 40px;
     box-sizing: border-box;
-    border-right: 1px solid #ccc;
   }
 
   div.application-table {
@@ -223,7 +222,6 @@ div.application-register {
       flex: 1;
       padding: 0 30px 20px;
       box-sizing: border-box;
-      border-bottom: 1px solid #ccc;
     }
 
     section {

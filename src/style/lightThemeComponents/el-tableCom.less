@@ -54,11 +54,36 @@
 
 .el-table td.el-table__cell,
 .el-table th.el-table__cell.is-leaf {
-  border-bottom: 1px solid rgba(242,244,246,1);
+  border-bottom: 1px solid #e7e1e1;
+}
+// 表头显示双行（带单位）
+.doubleHeader .el-table__header-wrapper {
+  .cell{
+    height: auto !important;
+    line-height: 24px;
+  }
+}
+
+.twoRowHeader {
+  height: 58px;
+
+  .sort-caret.descending {
+    bottom: -6px !important;
+  }
+
+  .sort-caret.ascending {
+    top: 18px !important;
+  }
+}
+
+.headerSortRow1 {
+  max-width: calc(100% - 24px);
+  display: inline-table;
+  text-align: center;
 }
 //表头
 .el-table__header-wrapper {
-  .cell{
+  .cell {
     // background: #FAFAFA;
     background: transparent;
     color: #303133;
@@ -83,8 +108,6 @@
   color: var(--white-color);
   padding: 0 0 0 20px;
   background: #3490d3;
-  background-image: var(--logo-bg) !important;
-  background-size: 100% 100% !important;
 }
 
 .footerBox {
@@ -128,15 +151,15 @@
 }
 
 .el-table--border .el-table__cell, .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed {
-  border-right: 1px solid rgba(242,244,246,1);
+  border-right: 1px solid #e7e1e1;
 }
 
 .el-table--border th.el-table__cell, .el-table__fixed-right-patch {
-  border-bottom: 1px solid rgba(242,244,246,1);
+  border-bottom: 1px solid #e7e1e1;
 }
 
 .el-table--border, .el-table--group {
-  border: 1px solid rgba(242,244,246,1) !important;
+  border: 1px solid #e7e1e1 !important;
 }
 
 .el-table--border::after, .el-table--group::after, .el-table::before {
@@ -159,4 +182,9 @@
 .el-table__fixed-right,
 .el-table__fixed {
   height: calc(100% - 6px) !important;
+}
+
+.el-table__fixed-header-wrapper .cell {
+  height: 34px;
+  line-height: 34px;
 }

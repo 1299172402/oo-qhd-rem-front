@@ -47,7 +47,7 @@
           </el-form-item>
           <!-- <el-date-picker v-model="conditions.yearMonth" type="month" format="yyyyMM" value-format="yyyyMM"></el-date-picker> -->
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="searchDataFromServer">检索</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="searchDataFromServer">搜索</el-button>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" icon="el-icon-add" @click="save">保存</el-button>
@@ -150,7 +150,7 @@ export default {
      * 查询数据
      * 触发方式
      * 1、页面初始化加载
-     * 2、点击检索按钮触发
+     * 2、点击搜索按钮触发
      */
     async searchDataFromServer() {
       if (!this.conditions.ogfId) {

@@ -10,7 +10,8 @@
       <div class="header-msg">
         <div class="header-msg-top">
           <p>通知</p>
-          <t-button
+          <!-- TODO: Maybe change back -->
+          <!-- <t-button
             v-if="tableData.length > 0"
             class="clear-btn"
             variant="text"
@@ -18,7 +19,7 @@
             @click="setRead('all')"
           >
             清空
-          </t-button>
+          </t-button> -->
         </div>
         <t-list v-if="tableData.length > 0" class="narrow-scrollbar" :split="true">
           <t-list-item v-for="(item, index) in tableData" :key="index">
@@ -80,7 +81,9 @@ import {
   queryAlcAlarmByParam, updateAlcAlarmCheckTag
 } from "@/api/intelligentOilfield/portal/projectionMode";
 import { NotificationItem } from "@/interface";
+import proxy from "@/config/host";
 
+const env = import.meta.env.MODE;
 export default Vue.extend({
   components: {
     // NotificationIcon,
@@ -133,8 +136,7 @@ export default Vue.extend({
       this.isNoticeVisible = visible;
     },
     goDetail() {
-      // 地址等待更新
-      window.open("", "_blank");
+      window.open(proxy[env].MESSAGEURL, "_blank");
       this.isNoticeVisible = false;
     },
     setRead(type: string, item?: NotificationItem) {
