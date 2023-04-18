@@ -39,10 +39,6 @@ export default {
       image: "",
       imageList: [],
       fitInfo: "contain",
-<<<<<<< Updated upstream
-      // baseUrl: process.env.NODE_ENV === "production" ? config.publicRootPath : config.devRootPath,
-=======
->>>>>>> Stashed changes
     };
   },
   mounted() {
