@@ -31,6 +31,14 @@ export function getFetchMeasureInfos(request) {
     data: request,
   });
 }
- 
+
+//年度计划管理-滚动预测下拉框-数据源
+export function getRollForecastVersion(request) {
+  return Axios({
+    url: `${baseUrl}/oilFieldManagePlanController/getRollForecastVersion`,
+    method: "post",
+    data: request,
+  });
+}
 
 

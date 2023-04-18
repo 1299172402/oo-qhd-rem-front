@@ -65,10 +65,6 @@ export default {
           "../../static/img/oilAuxiliaryAnalysis/productionDynamicData/fluidProducingProfile.jpg",
       tableData: [],
       image: '',
-      baseUrl:
-          process.env.NODE_ENV === "production"
-              ? config.publicRootPath
-              : config.devRootPath,
     };
   },
   mounted() {

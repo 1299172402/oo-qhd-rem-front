@@ -3,54 +3,42 @@
     <info-window
       infoWidth="100%"
       infoHeight="100%"
-      headerTitle="附表18 秦皇岛32-6/渤中作业公司示范油田概况"
+      headerTitle="附表2-2 2019年秦皇岛作业区探明地质储量规划动用情况"
       :isShowMaxBtn="true"
       style="margin-top: 10px"
     >
       <el-table
         :data="tableData"
         border
-        id="tableData"
         :header-cell-style="{ background: 'transparent', color: '#fff' }"
         :span-method="objectSpanMethodOne"
         highlight
+        height="calc(100% - 40px)"
       >
-        <!--   height="calc(100% - 150px)"-->
         <el-table-column type="index" label="序号" align="center" width="50px"></el-table-column>
-        <el-table-column prop="operationarea" label="作业公司" align="center" width="120"></el-table-column>
-        <el-table-column prop="oilField" label="示范油田" align="center" width="120"></el-table-column>
+        <el-table-column prop="workingarea" label="作业区" align="center" width="120"></el-table-column>
+        <el-table-column prop="oilField" label="油田" align="center" width="120"></el-table-column>
+        <el-table-column prop="provedreserves" label="探明地质储量(10⁴t)" align="center" width="160"></el-table-column>
+        <el-table-column label="规划动用探明地质储量(10⁴t)" align="center" width="160">
+          <el-table-column prop="useengineering" label="工程" align="center" width="100"></el-table-column>
+          <el-table-column prop="useheavyoil" label="稠油" align="center" width="100"></el-table-column>
+          <el-table-column prop="usethreelow" label="三低" align="center" width="100"></el-table-column>
+          <el-table-column prop="useother" label="其他" align="center" width="100"></el-table-column>
+          <el-table-column prop="usesubtotal" label="小计" align="center" width="100"></el-table-column>
+        </el-table-column>
+        <el-table-column label="规划未动用探明地质储量(10⁴t)" align="center">
+          <el-table-column prop="notuseengineering" label="工程" align="center" width="100"></el-table-column>
+          <el-table-column prop="notuseheavyoil" label="稠油" align="center" width="100"></el-table-column>
+          <el-table-column prop="notusethreelow" label="三低" align="center" width="100"></el-table-column>
+          <el-table-column prop="notuseother" label="其他" align="center" width="100"></el-table-column>
+          <el-table-column prop="notusesubtotal" label="小计" align="center" width="100"></el-table-column>
+        </el-table-column>
         <el-table-column
-          prop="kfjd"
-          :label="`开发阶段\n（在生产、在建设、\n开发评价）`"
+          prop="nonutilizationofplanning"
+          label="规划未动用主要原因"
           align="center"
-          width="160"
+          width="240"
         ></el-table-column>
-        <el-table-column label="开发现状" align="center">
-          <el-table-column prop="dydzcl" :label="'动用地质储量\n(10⁴t)'" align="center" width="140"></el-table-column>
-          <el-table-column prop="bdcsl" :label="'当前标定采收率\n(%)'" align="center" width="140"></el-table-column>
-          <el-table-column prop="sycl" :label="'2019年石油产量\n(10⁴t)'" align="center" width="140"></el-table-column>
-        </el-table-column>
-        <el-table-column label="示范工程简况" align="center">
-          <el-table-column
-            prop="sfnr"
-            :label="`重点示范内容\n（综合调整、二次加密、稠油热采、\n低渗压裂、注气开发等)`"
-            align="center"
-            width="340"
-          ></el-table-column>
-          <el-table-column
-            prop="gfdycl"
-            :label="'规划动用地质储量\n(10⁴t)'"
-            align="center"
-            width="140"
-          ></el-table-column>
-          <el-table-column prop="kccl" :label="'增加石油可采储量\n(10⁴t)'" align="center" width="140"></el-table-column>
-          <el-table-column prop="cslfd" :label="'提高采收率幅度\n(%)'" align="center" width="140"></el-table-column>
-          <el-table-column prop="ssjs" :label="'规划实施井数\n(口)'" align="center" width="140"></el-table-column>
-          <el-table-column prop="gfcn" :label="'高峰产能\n(10⁴t)'" align="center" width="140"></el-table-column>
-          <el-table-column prop="kftz" :label="'预计开发投资\n(亿元)'" align="center" width="140"></el-table-column>
-          <el-table-column prop="ssnf" label="规划实施年份" align="center" width="140"></el-table-column>
-        </el-table-column>
-        <el-table-column prop="csjk" label="配套措施简况" align="center" width="500"></el-table-column>
       </el-table>
     </info-window>
   </el-container>
@@ -62,21 +50,17 @@ export default {
       page: 1,
       pageSize: 10,
       spanArrOne: [],
-      pos: "",
+      pos: '',
       tableData: [
         {
-          operationarea: "秦皇岛",
-          oilField: "QHD32-6",
-          dydzcl: "15879",
-          bdcsl: "36.8",
-          sycl: "233.03196095",
-          sfnr: "海上大型河流相稠油油田“双特高”期稳油控水关键技术示范",
-          gfdycl: "16864.37",
-          cslfd: "6.25",
-          gfcn: "233.46",
-          kftz: "11.92",
-          ssnf: "2020",
-          csjk: "1、2020年完成H平台内挂改造、2021年完成G平台内挂改造，2020-2030年通过内、外挂和低效井侧钻实施调整井128口；2、转注30口，年调驱井次8~10口；3、2021年8月完成扩容改造；4、2026年开始实施化学驱",
+          oilField: 'QHD32-6',
+          provedreserves: '18756.486',
+          workingarea: '秦皇岛',
+          usethreelow: '4465.386',
+          usesubtotal: '4465.386',
+          notusethreelow: '886.833',
+          notusesubtotal: '886.833',
+          nonutilizationofplanning: '非主力砂体薄、差、小、散',
         },
       ],
     };
@@ -88,7 +72,7 @@ export default {
     //合并
     objectSpanMethodOne({ row, column, rowIndex, columnIndex }) {
       // columnIndex === xx 找到第xx列，实现合并随机出现的行数
-      if (columnIndex >= 0 && columnIndex < 3) {
+      if (columnIndex >= 0 && columnIndex < 4) {
         if (!this.tableData[rowIndex]) {
           //1列 1行
           return {
@@ -146,7 +130,7 @@ export default {
     },
     // 因为要合并的行数是不固定的，此函数是实现合并随意行数的功能
     getSpanArrOne(data) {
-      console.log("zmmm--", data); //从后台获取的数据
+      console.log('zmmm--', data); //从后台获取的数据
       this.spanArrOne = [];
       this.pos = 0;
       for (var i = 0; i < data.length; i++) {
@@ -170,13 +154,7 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-::v-deep .el-table .el-table__body-wrapper .cell {
-  height: auto;
-  line-height: 40px;
-}
-
+  <style lang="scss" scoped>
 .formBox {
   & > div:not(:first-child) {
     margin-left: 20px;
@@ -196,22 +174,12 @@ export default {
   display: flex;
   flex-direction: column; /* 按照列column(垂直方向)排列*/
 }
-::v-deep .el-table .cell {
-  white-space: pre-line;
+
+.image {
+  width: 100px;
+  display: block;
 }
 ::v-deep .el-table .cell:empty::before {
-  content: "-";
-}
-#tableData {
-  ::v-deep .el-table__header-wrapper .cell {
-    height: auto;
-    line-height: 18px;
-    white-space: pre;
-  }
-  ::v-deep .cell:empty {
-    &::before {
-      content: "-";
-    }
-  }
+  content: '-';
 }
 </style>
