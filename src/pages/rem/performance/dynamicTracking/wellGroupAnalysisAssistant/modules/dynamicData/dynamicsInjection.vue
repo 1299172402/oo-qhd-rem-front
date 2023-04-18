@@ -27,7 +27,7 @@
         </el-date-picker>
       </el-form-item>
     </div>
-    <el-table highlight :data="tableData" height="500px" style="margin-top: -30px">
+    <el-table highlight :data="tableData"  :cell-style="{ padding: '3px', 'text-align': 'center' }" height="500px" style="margin-top: -30px">
       <el-table-column type="index" label="序号" width="50px" header-align="center"></el-table-column>
       <el-table-column prop="wellNo" label="井号" header-align="center"></el-table-column>
       <el-table-column prop="layerName" label="层位" width="200px" header-align="center"></el-table-column>
