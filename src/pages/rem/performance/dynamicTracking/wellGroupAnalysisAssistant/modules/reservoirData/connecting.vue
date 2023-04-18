@@ -39,7 +39,7 @@ export default {
       image: "",
       imageList: [],
       fitInfo: "contain",
-      // baseUrl: process.env.NODE_ENV === "production" ? config.publicRootPath : config.devRootPath,
+    //   baseUrl: process.env.NODE_ENV === "production" ? config.publicRootPath : config.devRootPath,
     };
   },
   mounted() {
@@ -82,53 +82,56 @@ export default {
      * 调用图片
      */
     doSearch() {
+      //   let request = {
+      //     //"fileName": "string",
+      //     ogfId: this.oilFeildId,
+      //     //"path": "string",
+      //     platformId: this.platform,
+      //     wellId: this.wellId,
+      //     //"wellTypeCode": "string"
+      //   };
       let request = {
-        //"fileName": "string",
-        ogfId: this.oilFeildId,
-        //"path": "string",
-        platformId: this.platform,
-        wellId: this.wellId,
-        //"wellTypeCode": "string"
+        ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+        platformId: "3FC9A818F5BC43B88270DB80BBB3018F",
+        wellId: "09D30C16BD1D4F759D53F74941701307",
       };
-      /*let request= {
-        "ogfId": "3FC9A818F5BC43B88270DB80BBB3018F",
-        "platformId": "3FC9A818F5BC43B88270DB80BBB3018F",
-        "wellId": "09D30C16BD1D4F759D53F74941701307"
-      }*/
       this.imageList = [];
-      getSectionWell(request).then((res) => {
-        if (res.data.code == 200) {
-          let imgData = res.data.data.data;
-          let type = res.data.data.type;
-          let firstParty = "data:" + type + ";base64,";
-          if (imgData) {
-            this.imageList.push(firstParty + imgData);
-          }
-          let wellIds = res.data.data.wellIds;
-          if (wellIds != null && wellIds.length > 0) {
-            wellIds.forEach((item, index) => {
-              if (item != this.wellId) {
-                var queryParam = {
-                  ogfId: this.oilFeildId,
-                  platformId: this.platform,
-                  wellId: item,
-                };
-                getSectionWell(queryParam).then((res) => {
-                  if (res.data.code == 200) {
-                    let imgDataChild = res.data.data.data;
-                    let typeChild = res.data.data.type;
-                    let firstPartyChild = "data:" + typeChild + ";base64,";
-                    if (imgDataChild) {
-                      this.imageList.push(firstPartyChild + imgDataChild);
+        getSectionWell(request).then((res) => {
+          if (res.data.code == 200) {
+            let imgData = res.data.data.data;
+            let type = res.data.data.type;
+            let firstParty = "data:" + type + ";base64,";
+            if (imgData) {
+              this.imageList.push(firstParty + imgData);
+            }
+            let wellIds = res.data.data.wellIds;
+            if (wellIds != null && wellIds.length > 0) {
+              wellIds.forEach((item, index) => {
+                if (item != this.wellId) {
+                    console.log(item)
+                  var queryParam = {
+                    ogfId: this.oilFeildId,
+                    platformId: this.platform,
+                    wellId: item,
+                  };
+                  getSectionWell(queryParam).then((res) => {
+                    if (res.data.code == 200) {
+                        console.log(res)
+                      let imgDataChild = res.data.data.data;
+                      let typeChild = res.data.data.type;
+                      let firstPartyChild = "data:" + typeChild + ";base64,";
+                      if (imgDataChild) {
+                        this.imageList.push(firstPartyChild + imgDataChild);
+                      }
                     }
-                  }
-                });
-              }
-            });
+                  });
+                }
+              });
+            }
+            console.log(this.imageList);
+
           }
-          console.log(this.imageList);
-        }
-      });
+        });
     },
     /**
      * hwh

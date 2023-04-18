@@ -21,6 +21,13 @@ export function selectProWellByGroup(data) {
     data
   });
 }
+export function updateWellGroup(data) {
+  return request({
+    url: `${baseUrl}/wellGroupInforMaintenance/wellConnectivityEval/updateWellGroup`,
+    method: "post",
+    data
+  });
+}
 export function wellGroupList(data) {
   return request({
     url: `${baseUrl}/wellGroupInforMaintenance/wellConnectivityEval/wellGroupList`,

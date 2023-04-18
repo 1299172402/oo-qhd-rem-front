@@ -31,6 +31,7 @@
     </el-row>
     <el-table  highlight :data="tableData" height="calc(100% - 101px)" style="margin-top:-30px">
       <el-table-column type="index" label="序号" width="50px" header-align="center"></el-table-column>
+      <el-table-column prop="wellNo" label="井组" header-align="center"></el-table-column>
       <el-table-column prop="wellNo" label="时间" header-align="center"></el-table-column>
       <el-table-column prop="fieldName" label="总井数" header-align="center"></el-table-column>
        <el-table-column prop="fieldName" label="油井数" header-align="center"></el-table-column>
