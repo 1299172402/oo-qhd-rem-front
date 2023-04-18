@@ -8,6 +8,7 @@
       style="margin-top: 10px"
     >
       <el-table
+        id="tableData"
         :data="tableData"
         border
         :header-cell-style="{ background: 'transparent', color: '#fff' }"
@@ -30,19 +31,19 @@
           show-overflow-tooltip
           width="120"
         ></el-table-column>
-        <el-table-column label="纳入规划地质储量(10⁴t)" align="center">
+        <el-table-column :label="`纳入规划地质储量\n(10⁴t)`" align="center">
           <el-table-column prop="nrghtm" label="探明" align="center" width="120"></el-table-column>
           <el-table-column prop="string-affectyield" label="控制" align="center" width="120"></el-table-column>
           <el-table-column prop="string-affectyield" label="预测" align="center" width="120"></el-table-column>
           <el-table-column prop="nrghhj" label="合计" align="center" width="120"></el-table-column>
         </el-table-column>
-        <el-table-column label="规划动用地质储量(10⁴t)" align="center">
+        <el-table-column :label="`规划动用地质储量\n(10⁴t)`" align="center">
           <el-table-column prop="ghdytm" label="探明" align="center" width="120"></el-table-column>
           <el-table-column prop="string-affectyield" label="控制" align="center" width="120"></el-table-column>
           <el-table-column prop="string-affectyield" label="预测" align="center" width="120"></el-table-column>
           <el-table-column prop="ghdyhj" label="合计" align="center" width="120"></el-table-column>
         </el-table-column>
-        <el-table-column label="动用程度(%)" align="center">
+        <el-table-column :label="`动用程度\n(%)`" align="center">
           <el-table-column prop="dycdtm" label="探明" align="center" width="120"></el-table-column>
           <el-table-column prop="string-affectyield" label="控制" align="center" width="120"></el-table-column>
           <el-table-column prop="string-affectyield" label="预测" align="center" width="120"></el-table-column>
@@ -63,21 +64,21 @@ export default {
       page: 1,
       pageSize: 10,
       spanArrOne: [],
-      pos: '',
+      pos: "",
       tableData: [
         {
-          operationarea: '秦皇岛',
-          oilField: 'QHD32-6',
-          nrghtm: '18756.486',
-          nrghhj: '18756.486',
-          ghdytm: '14888.565',
-          ghdyhj: '14888.565',
-          dycdtm: '71.442',
-          dycdhj: '71.442',
-          ghkccl: '6188.688',
-          ghcsl: '37.413',
-          ljcl: '3116.007',
-          sykccl: '3072.681',
+          operationarea: "秦皇岛",
+          oilField: "QHD32-6",
+          nrghtm: "18756.486",
+          nrghhj: "18756.486",
+          ghdytm: "14888.565",
+          ghdyhj: "14888.565",
+          dycdtm: "71.442",
+          dycdhj: "71.442",
+          ghkccl: "6188.688",
+          ghcsl: "37.413",
+          ljcl: "3116.007",
+          sykccl: "3072.681",
         },
       ],
     };
@@ -147,7 +148,7 @@ export default {
     },
     // 因为要合并的行数是不固定的，此函数是实现合并随意行数的功能
     getSpanArrOne(data) {
-      console.log('zmmm--', data); //从后台获取的数据
+      console.log("zmmm--", data); //从后台获取的数据
       this.spanArrOne = [];
       this.pos = 0;
       for (var i = 0; i < data.length; i++) {
@@ -195,6 +196,18 @@ export default {
   white-space: pre-line;
 }
 ::v-deep .el-table .cell:empty::before {
-  content: '-';
+  content: "-";
+}
+#tableData {
+  ::v-deep .el-table__header-wrapper .cell {
+    height: auto;
+    line-height: 18px;
+    white-space: pre;
+  }
+  ::v-deep .cell:empty {
+    &::before {
+      content: "-";
+    }
+  }
 }
 </style>

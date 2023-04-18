@@ -5,9 +5,10 @@
       infoHeight="100%"
       headerTitle="附表6 秦皇岛32-6/渤中作业公司年自然递减率井筒因素分解"
       :isShowMaxBtn="true"
-      style="margin-top:10px"
+      style="margin-top: 10px"
     >
       <el-table
+        id="tableData"
         :data="tableData"
         border
         :header-cell-style="{ background: 'transparent', color: '#fff' }"
@@ -21,22 +22,22 @@
         <el-table-column prop="years" label="年" align="center"></el-table-column>
         <el-table-column
           prop="annualnaturaldecline"
-          label="年自然递减（%）"
+          :label="`年自然递减\n（%）`"
           align="center"
           width="140"
         ></el-table-column>
-        <el-table-column prop="affectyield" label="影响产量（m³）" align="center" width="140"></el-table-column>
+        <el-table-column prop="affectyield" :label="`影响产量\n（m³）`" align="center" width="140"></el-table-column>
         <el-table-column label="井筒因素分解" align="center">
           <el-table-column label="管柱问题" align="center">
             <el-table-column
               prop="stringannualnaturaldecrease"
-              label="年自然递减（%）"
+              :label="`年自然递减\n（%）`"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
               prop="stringaffectyield"
-              label="影响产量（m³）"
+              :label="`影响产量\n（m³）`"
               align="center"
               width="100"
             ></el-table-column>
@@ -44,13 +45,13 @@
           <el-table-column label="结垢结蜡" align="center">
             <el-table-column
               prop="scalingannualnaturaldecrease"
-              label="年自然递减（%）"
+              :label="`年自然递减\n（%）`"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
               prop="scalingaffectyield"
-              label="影响产量（m³）"
+              :label="`影响产量\n（m³）`"
               align="center"
               width="100"
             ></el-table-column>
@@ -58,13 +59,13 @@
           <el-table-column label="井下落物" align="center">
             <el-table-column
               prop="fallingobjectsannualnaturaldecrease"
-              label="年自然递减（%）"
+              :label="`年自然递减\n（%）`"
               width="100"
               align="center"
             ></el-table-column>
             <el-table-column
               prop="fallingobjectsaffectyield"
-              label="影响产量（m³）"
+              :label="`影响产量\n（m³）`"
               align="center"
               width="100"
             ></el-table-column>
@@ -72,13 +73,13 @@
           <el-table-column label="污染" align="center">
             <el-table-column
               prop="pollutionannualnaturaldecrease"
-              label="年自然递减（%）"
+              :label="`年自然递减\n（%）`"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
               prop="pollutionaffectyield"
-              label="影响产量（m³）"
+              :label="`影响产量\n（m³）`"
               align="center"
               width="100"
             ></el-table-column>
@@ -86,13 +87,13 @@
           <el-table-column label="出砂" align="center">
             <el-table-column
               prop="productionannualnaturaldecrease"
-              label="年自然递减（%）"
+              :label="`年自然递减\n（%）`"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
               prop="productionaffectyield"
-              label="影响产量（m³）"
+              :label="`影响产量\n（m³）`"
               align="center"
               width="100"
             ></el-table-column>
@@ -100,13 +101,13 @@
           <el-table-column label="其他因素" align="center">
             <el-table-column
               prop="otherannualnaturaldecrease"
-              label="年自然递减（%）"
+              :label="`年自然递减\n（%）`"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
               prop="otheraffectyield"
-              label="影响产量（m³）"
+              :label="`影响产量\n（m³）`"
               align="center"
               width="100"
             ></el-table-column>
@@ -124,59 +125,59 @@ export default {
       page: 1,
       pageSize: 10,
       spanArrOne: [],
-      pos: '',
+      pos: "",
       tableData: [
         {
-          operationarea: '秦皇岛',
-          oilField: 'QHD32-6',
-          years: '2017',
-          annualnaturaldecline: '2.46',
-          affectyield: '60980',
-          stringannualnaturaldecrease: '0.0025',
-          stringaffectyield: '63',
-          fallingobjectsannualnaturaldecrease: '',
-          pollutionaffectyield: '',
-          productionannualnaturaldecrease: '2.4605',
-          productionaffectyield: '60917',
+          operationarea: "秦皇岛",
+          oilField: "QHD32-6",
+          years: "2017",
+          annualnaturaldecline: "2.46",
+          affectyield: "60980",
+          stringannualnaturaldecrease: "0.0025",
+          stringaffectyield: "63",
+          fallingobjectsannualnaturaldecrease: "",
+          pollutionaffectyield: "",
+          productionannualnaturaldecrease: "2.4605",
+          productionaffectyield: "60917",
         },
         {
-          operationarea: '秦皇岛',
-          oilField: 'QHD32-6',
-          years: '2018',
-          annualnaturaldecline: '2.72',
-          affectyield: '64596',
-          stringannualnaturaldecrease: '',
-          stringaffectyield: '',
-          fallingobjectsannualnaturaldecrease: '0.0219',
-          pollutionaffectyield: '519',
-          productionannualnaturaldecrease: '2.6987',
-          productionaffectyield: '64077',
+          operationarea: "秦皇岛",
+          oilField: "QHD32-6",
+          years: "2018",
+          annualnaturaldecline: "2.72",
+          affectyield: "64596",
+          stringannualnaturaldecrease: "",
+          stringaffectyield: "",
+          fallingobjectsannualnaturaldecrease: "0.0219",
+          pollutionaffectyield: "519",
+          productionannualnaturaldecrease: "2.6987",
+          productionaffectyield: "64077",
         },
         {
-          operationarea: '秦皇岛',
-          oilField: 'QHD32-6',
-          years: '2019',
-          annualnaturaldecline: '2.62',
-          affectyield: '62501',
-          stringannualnaturaldecrease: '',
-          stringaffectyield: '',
-          fallingobjectsannualnaturaldecrease: '',
-          pollutionaffectyield: '',
-          productionannualnaturaldecrease: '2.6176',
-          productionaffectyield: '62501',
+          operationarea: "秦皇岛",
+          oilField: "QHD32-6",
+          years: "2019",
+          annualnaturaldecline: "2.62",
+          affectyield: "62501",
+          stringannualnaturaldecrease: "",
+          stringaffectyield: "",
+          fallingobjectsannualnaturaldecrease: "",
+          pollutionaffectyield: "",
+          productionannualnaturaldecrease: "2.6176",
+          productionaffectyield: "62501",
         },
         {
-          operationarea: '秦皇岛',
-          oilField: 'QHD32-6',
-          years: '2020',
-          annualnaturaldecline: '2.48',
-          affectyield: '65126',
-          stringannualnaturaldecrease: '',
-          stringaffectyield: '',
-          fallingobjectsannualnaturaldecrease: '0',
-          pollutionaffectyield: '1',
-          productionannualnaturaldecrease: '2.4757',
-          productionaffectyield: '65125',
+          operationarea: "秦皇岛",
+          oilField: "QHD32-6",
+          years: "2020",
+          annualnaturaldecline: "2.48",
+          affectyield: "65126",
+          stringannualnaturaldecrease: "",
+          stringaffectyield: "",
+          fallingobjectsannualnaturaldecrease: "0",
+          pollutionaffectyield: "1",
+          productionannualnaturaldecrease: "2.4757",
+          productionaffectyield: "65125",
         },
       ],
     };
@@ -246,7 +247,7 @@ export default {
     },
     // 因为要合并的行数是不固定的，此函数是实现合并随意行数的功能
     getSpanArrOne(data) {
-      console.log('zmmm--', data); //从后台获取的数据
+      console.log("zmmm--", data); //从后台获取的数据
       this.spanArrOne = [];
       this.pos = 0;
       for (var i = 0; i < data.length; i++) {
@@ -291,6 +292,19 @@ export default {
   flex-direction: column; /* 按照列column(垂直方向)排列*/
 }
 ::v-deep .el-table .cell:empty::before {
-  content: '-';
+  content: "-";
+}
+
+#tableData {
+  ::v-deep .el-table__header-wrapper .cell {
+    height: auto;
+    line-height: 18px;
+    white-space: pre;
+  }
+  ::v-deep .cell:empty {
+    &::before {
+      content: "-";
+    }
+  }
 }
 </style>

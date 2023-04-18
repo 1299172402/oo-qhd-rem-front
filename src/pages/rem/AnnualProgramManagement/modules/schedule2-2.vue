@@ -8,6 +8,7 @@
       style="margin-top: 10px"
     >
       <el-table
+        id="tableData"
         :data="tableData"
         border
         :header-cell-style="{ background: 'transparent', color: '#fff' }"
@@ -18,15 +19,15 @@
         <el-table-column type="index" label="序号" align="center" width="50px"></el-table-column>
         <el-table-column prop="workingarea" label="作业区" align="center" width="120"></el-table-column>
         <el-table-column prop="oilField" label="油田" align="center" width="120"></el-table-column>
-        <el-table-column prop="provedreserves" label="探明地质储量(10⁴t)" align="center" width="160"></el-table-column>
-        <el-table-column label="规划动用探明地质储量(10⁴t)" align="center" width="160">
+        <el-table-column prop="provedreserves" :label="`探明地质储量\n(10⁴t)`" align="center" width="160"></el-table-column>
+        <el-table-column :label="`规划动用探明地质储量\n(10⁴t)`" align="center" width="160">
           <el-table-column prop="useengineering" label="工程" align="center" width="100"></el-table-column>
           <el-table-column prop="useheavyoil" label="稠油" align="center" width="100"></el-table-column>
           <el-table-column prop="usethreelow" label="三低" align="center" width="100"></el-table-column>
           <el-table-column prop="useother" label="其他" align="center" width="100"></el-table-column>
           <el-table-column prop="usesubtotal" label="小计" align="center" width="100"></el-table-column>
         </el-table-column>
-        <el-table-column label="规划未动用探明地质储量(10⁴t)" align="center">
+        <el-table-column :label="`规划未动用探明地质储量\n(10⁴t)`" align="center">
           <el-table-column prop="notuseengineering" label="工程" align="center" width="100"></el-table-column>
           <el-table-column prop="notuseheavyoil" label="稠油" align="center" width="100"></el-table-column>
           <el-table-column prop="notusethreelow" label="三低" align="center" width="100"></el-table-column>
@@ -50,17 +51,17 @@ export default {
       page: 1,
       pageSize: 10,
       spanArrOne: [],
-      pos: '',
+      pos: "",
       tableData: [
         {
-          oilField: 'QHD32-6',
-          provedreserves: '18756.486',
-          workingarea: '秦皇岛',
-          usethreelow: '4465.386',
-          usesubtotal: '4465.386',
-          notusethreelow: '886.833',
-          notusesubtotal: '886.833',
-          nonutilizationofplanning: '非主力砂体薄、差、小、散',
+          oilField: "QHD32-6",
+          provedreserves: "18756.486",
+          workingarea: "秦皇岛",
+          usethreelow: "4465.386",
+          usesubtotal: "4465.386",
+          notusethreelow: "886.833",
+          notusesubtotal: "886.833",
+          nonutilizationofplanning: "非主力砂体薄、差、小、散",
         },
       ],
     };
@@ -130,7 +131,7 @@ export default {
     },
     // 因为要合并的行数是不固定的，此函数是实现合并随意行数的功能
     getSpanArrOne(data) {
-      console.log('zmmm--', data); //从后台获取的数据
+      console.log("zmmm--", data); //从后台获取的数据
       this.spanArrOne = [];
       this.pos = 0;
       for (var i = 0; i < data.length; i++) {
@@ -155,6 +156,18 @@ export default {
 };
 </script>
   <style lang="scss" scoped>
+#tableData {
+  ::v-deep .el-table__header-wrapper .cell {
+    height: auto;
+    line-height: 18px;
+    white-space: pre;
+  }
+  ::v-deep .cell:empty {
+    &::before {
+      content: "-";
+    }
+  }
+}
 .formBox {
   & > div:not(:first-child) {
     margin-left: 20px;
@@ -180,6 +193,6 @@ export default {
   display: block;
 }
 ::v-deep .el-table .cell:empty::before {
-  content: '-';
+  content: "-";
 }
 </style>
