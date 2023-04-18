@@ -286,6 +286,24 @@ export default {
         //         }
         //     ]
         // }
+         {
+          label: "钻完井资料",
+          name: "drillingCompletion",
+          modules: [
+            {
+              label: "钻完井报告",
+              name: "drillingReport",
+            },
+            {
+              label: "完井完工报告",
+              name: "completionReport",
+            },
+            {
+              label: "完井地质总结",
+              name: "geologicalSummary",
+            },
+          ],
+        },
       ],
       //文件名称对应项
       tabsPathName: [
