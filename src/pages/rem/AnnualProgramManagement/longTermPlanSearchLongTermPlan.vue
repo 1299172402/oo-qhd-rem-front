@@ -7,7 +7,7 @@
         <el-select v-model="selectOilField" disabled>
           <el-option
             v-for="item in oilField"
-            :key="item.oilFieldId"  
+            :key="item.oilFieldId"
             :label="item.name"
             :value="item.oilFieldId"
           ></el-option>
@@ -36,7 +36,6 @@
 <script>
 import { fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { searchLongTermPlan } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
-// import { getWidgetByAreaUser } from "@/api/oilDeposit/rmm-01/rmm01";
 export default {
   data() {
     return {
@@ -252,7 +251,7 @@ export default {
       };
       searchLongTermPlan(request).then((res) => {
         this.tableData = [];
-        if (res.data.code == "200") {
+        if (res.data.code == 200) {
           this.tableData = res.data.data.oilTermPlans;
           this.pageCount = res.data.data.total;
         } else {

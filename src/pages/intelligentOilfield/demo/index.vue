@@ -1046,7 +1046,7 @@
     <page-panel
       header-title="我是标题"
       style="height: 600px"
-      :show-btn="true"
+      :show-btn="true"    
       @zoom-out-com="zoomOutCom"
     >
       <!-- <div>这里显示主内容，padding为20px</div> -->
