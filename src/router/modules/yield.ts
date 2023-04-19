@@ -22,12 +22,12 @@ export default [
         meta: { title: "产量波动预警分析", icon: "icon" },
       },
       //油藏管理-产量管理-产量管理-归因分析-正常
-      {
-        path: "NormalAttributionReporting",
-        component: () => import("@/views/rem/yield/production-management/NormalAttributionReporting.vue"),
-        name: "NormalAttributionReporting",
-        meta: { title: "产量管理-归因分析-正常", icon: "icon" },
-      },
+      // {
+      //   path: "NormalAttributionReporting",
+      //   component: () => import("@/pages/rem/yield/production-management/NormalAttributionReporting.vue"),
+      //   name: "NormalAttributionReporting",
+      //   meta: { title: "产量管理-归因分析-正常", icon: "icon" },
+      // },
     ],
   },
 ];
