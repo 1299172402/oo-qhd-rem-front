@@ -158,8 +158,10 @@ export default {
       };
       getWellGroupInjectionDynamic(request).then((res) => {
         if (res.data.code == 200) {
-          console.log(res);
-          this.tableData = res.data.data.data;
+          this.tableData = res.data.data.rows;
+          this.total = res.data.data.total;
+        }else{
+            this.$message.error("系统错误请重新尝试或联系运维人员！");
         }
       });
     },

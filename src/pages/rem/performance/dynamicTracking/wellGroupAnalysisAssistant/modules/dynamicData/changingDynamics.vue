@@ -143,6 +143,8 @@ export default {
       getWellGroupCommunicateDynamic(request).then((res) => {
         if (res.data.code == 200) {
           this.tableData = res.data.data;
+        }else{
+            this.$message.error("系统错误请重新尝试或联系运维人员！");
         }
       });
     },

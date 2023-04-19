@@ -13,3 +13,9 @@ export function getWellGroupInjectionDynamic({ blockId, firstMonth, ogfId, secon
     method: "get",
   });
 }
+export function queryInjectionWellNetworkConditionsList({ blockId, firstMonth, ogfId, pageNum, pageSize, secondMonth, wellGroupId } = {}) {
+  return request({
+    url: `${baseUrl}/oilWellAuxiliaryAnalysis/queryInjectionWellNetworkConditionsList?blockId=${ blockId || "" }&firstMonth=${ firstMonth || "" }&ogfId=${ ogfId || "" }&pageNum=${ pageNum || "" }&pageSize=${ pageSize || "" }&secondMonth=${ secondMonth || "" }&wellGroupId=${ wellGroupId || "" }`,
+    method: "get",
+  });
+}

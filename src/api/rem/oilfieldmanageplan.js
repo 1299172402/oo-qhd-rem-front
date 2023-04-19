@@ -148,6 +148,13 @@ export function getFetchMeasureInfos(data) {
     data
   });
 }
+export function getGasTable(data) {
+  return request({
+    url: `${baseUrl}/oilFieldManagePlanController/getGasTable`,
+    method: "post",
+    data
+  });
+}
 export function getMeasureType() {
   return request({
     url: `${baseUrl}/oilFieldManagePlanController/getMeasureType`,
@@ -164,6 +171,13 @@ export function getReportFroms({ date, unitType } = {}) {
   return request({
     url: `${baseUrl}/oilFieldManagePlanController/getReportFroms?date=${ date || "" }&unitType=${ unitType || "" }`,
     method: "get",
+  });
+}
+export function getRollForecastVersion(data) {
+  return request({
+    url: `${baseUrl}/oilFieldManagePlanController/getRollForecastVersion`,
+    method: "post",
+    data
   });
 }
 export function getWorkProgress(data) {
