@@ -8,6 +8,7 @@
       style="margin-top: 10px"
     >
       <el-table
+      id="tableData"
         :data="tableData"
         border
         :header-cell-style="{ background: 'transparent', color: '#fff' }"
@@ -22,22 +23,22 @@
         <el-table-column prop="years" label="年" align="center"></el-table-column>
         <el-table-column
           prop="annualnaturaldecline"
-          label="年自然递减（%）"
+          :label="`年自然递减\n（%）`"
           align="center"
           width="140"
         ></el-table-column>
-        <el-table-column prop="affectyield" label="影响产量（m³）" align="center" width="140"></el-table-column>
+        <el-table-column prop="affectyield" :label="`影响产量\n（m³）`" align="center" width="140"></el-table-column>
         <el-table-column label="各主控因素分解" align="center">
           <el-table-column label="地质油藏因素" align="center">
             <el-table-column
               prop="geologyannualnaturaldecrease"
-              label="年自然递减（%）"
+              :label="`年自然递减\n（%）`"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
               prop="geologyaffectyield"
-              label="影响产量（m³）"
+              :label="`影响产量\n（m³）`"
               align="center"
               width="100"
             ></el-table-column>
@@ -45,13 +46,13 @@
           <el-table-column label="井筒因素" align="center">
             <el-table-column
               prop="wellboreannualnaturaldecrease"
-              label="年自然递减（%）"
+              :label="`年自然递减\n（%）`"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
               prop="wellboreaffectyield"
-              label="影响产量（m³）"
+              :label="`影响产量\n（m³）`"
               align="center"
               width="100"
             ></el-table-column>
@@ -59,22 +60,22 @@
           <el-table-column label="作业因素" align="center">
             <el-table-column
               prop="workannualnaturaldecrease"
-              label="年自然递减（%）"
+              :label="`年自然递减\n（%）`"
               align="center"
               width="100"
             ></el-table-column>
-            <el-table-column prop="workaffectyield" label="影响产量（m³）" align="center" width="100"></el-table-column>
+            <el-table-column prop="workaffectyield" :label="`影响产量\n（m³）`" align="center" width="100"></el-table-column>
           </el-table-column>
           <el-table-column label="工程因素" align="center">
             <el-table-column
               prop="projectannualnaturaldecrease"
-              label="年自然递减（%）"
+              :label="`年自然递减\n（%）`"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
               prop="projectaffectyield"
-              label="影响产量（m³）"
+              :label="`影响产量\n（m³）`"
               align="center"
               width="100"
             ></el-table-column>
@@ -82,13 +83,13 @@
           <el-table-column label="生产运行因素" align="center">
             <el-table-column
               prop="productionannualnaturaldecrease"
-              label="年自然递减（%）"
+              :label="`年自然递减\n（%）`"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
               prop="productionaffectyield"
-              label="影响产量（m³）"
+              :label="`影响产量\n（m³）`"
               align="center"
               width="100"
             ></el-table-column>
@@ -96,13 +97,13 @@
           <el-table-column label="其他因素" align="center">
             <el-table-column
               prop="otherannualnaturaldecrease"
-              label="年自然递减（%）"
+              :label="`年自然递减\n（%）`"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
               prop="otheraffectyield"
-              label="影响产量（m³）"
+              :label="`影响产量\n（m³）`"
               align="center"
               width="100"
             ></el-table-column>
@@ -305,4 +306,17 @@ export default {
 ::v-deep .el-table .cell:empty::before {
   content: '-';
 }
+#tableData {
+  ::v-deep .el-table__header-wrapper .cell {
+    height: auto;
+    line-height: 18px;
+    white-space: pre;
+  }
+  ::v-deep .cell:empty {
+    &::before {
+      content: "-";
+    }
+  }
+}
+
 </style>

@@ -5,9 +5,10 @@
       infoHeight="100%"
       headerTitle="附表8 秦皇岛32-6/渤中作业公司年自然递减率工程因素分解"
       :isShowMaxBtn="true"
-      style="margin-top:10px"
+      style="margin-top: 10px"
     >
       <el-table
+        id="tableData"
         :data="tableData"
         border
         :header-cell-style="{ background: 'transparent', color: '#fff' }"
@@ -21,54 +22,69 @@
         <el-table-column prop="years" label="年" align="center"></el-table-column>
         <el-table-column
           prop="annualnaturaldecline"
-          label="年自然递减（%）"
+          :label="`年自然递减\n（%）`"
           align="center"
           width="140"
         ></el-table-column>
-        <el-table-column prop="affectyield" label="影响产量（m³）" align="center" width="140"></el-table-column>
+        <el-table-column prop="affectyield" :label="`影响产量\n（m³）`" align="center" width="140"></el-table-column>
         <el-table-column label="工程因素分解" align="center">
           <el-table-column label="计划内检修" align="center">
-            <el-table-column prop="jhnzrdj" label="年自然递减（%）" align="center" width="100"></el-table-column>
-            <el-table-column prop="jhnyxcl" label="影响产量（m³）" align="center" width="100"></el-table-column>
+            <el-table-column prop="jhnzrdj" :label="`年自然递减\n（%）`" align="center" width="100"></el-table-column>
+            <el-table-column prop="jhnyxcl" :label="`影响产量\n（m³）`" align="center" width="100"></el-table-column>
           </el-table-column>
           <el-table-column label="计划外停产" align="center">
             <el-table-column label="电力系统故障" align="center">
-              <el-table-column prop="dlxtzrdj" label="年自然递减（%）" align="center" width="100"></el-table-column>
-              <el-table-column prop="dlxtyxcl" label="影响产量（m³）" align="center" width="100"></el-table-column>
+              <el-table-column
+                prop="dlxtzrdj"
+                :label="`年自然递减\n（%）`"
+                align="center"
+                width="100"
+              ></el-table-column>
+              <el-table-column prop="dlxtyxcl" :label="`影响产量\n（m³）`" align="center" width="100"></el-table-column>
             </el-table-column>
             <el-table-column label="仪器仪表" align="center">
-              <el-table-column prop="yqybzrdj" label="年自然递减（%）" align="center" width="100"></el-table-column>
-              <el-table-column prop="yqybyxcl" label="影响产量（m³）" align="center" width="100"></el-table-column>
+              <el-table-column
+                prop="yqybzrdj"
+                :label="`年自然递减\n（%）`"
+                align="center"
+                width="100"
+              ></el-table-column>
+              <el-table-column prop="yqybyxcl" :label="`影响产量\n（m³）`" align="center" width="100"></el-table-column>
             </el-table-column>
             <el-table-column label="流程跑冒" align="center">
               <el-table-column
                 prop="string-affectyield"
-                label="年自然递减（%）"
+                :label="`年自然递减\n（%）`"
                 align="center"
                 width="100"
               ></el-table-column>
               <el-table-column
                 prop="string-affectyield"
-                label="影响产量（m³）"
+                :label="`影响产量\n（m³）`"
                 align="center"
                 width="100"
               ></el-table-column>
             </el-table-column>
             <el-table-column label="井口装置故障" align="center">
-              <el-table-column prop="jkzzzrdj" label="年自然递减（%）" align="center" width="100"></el-table-column>
-              <el-table-column prop="jkzzyxcl" label="影响产量（m³）" align="center" width="100"></el-table-column>
+              <el-table-column
+                prop="jkzzzrdj"
+                :label="`年自然递减\n（%）`"
+                align="center"
+                width="100"
+              ></el-table-column>
+              <el-table-column prop="jkzzyxcl" :label="`影响产量\n（m³）`" align="center" width="100"></el-table-column>
             </el-table-column>
           </el-table-column>
           <el-table-column label="其他因素" align="center">
             <el-table-column
               prop="string-affectyield"
-              label="年自然递减（%）"
+              :label="`年自然递减\n（%）`"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
               prop="string-affectyield"
-              label="影响产量（m³）"
+              :label="`影响产量\n（m³）`"
               align="center"
               width="100"
             ></el-table-column>
@@ -76,7 +92,6 @@
         </el-table-column>
         <el-table-column prop="note" label="备注" align="center" width="240"></el-table-column>
       </el-table>
-      
     </info-window>
   </el-container>
 </template>
@@ -87,67 +102,67 @@ export default {
       page: 1,
       pageSize: 10,
       spanArrOne: [],
-      pos: '',
+      pos: "",
       tableData: [
         {
-          operationarea: '秦皇岛',
-          oilField: 'QHD32-6',
-          years: '2017',
-          annualnaturaldecline: '0.2',
-          affectyield: '5047',
-          jhnzrdj: '0.0208',
-          jhnyxcl: '515',
-          dlxtzrdj: '0.1473',
-          dlxtyxcl: '3648',
-          yqybzrdj: '0.0188',
-          yqybyxcl: '466',
-          jkzzzrdj: '0.0169',
-          jkzzyxcl: '418',
+          operationarea: "秦皇岛",
+          oilField: "QHD32-6",
+          years: "2017",
+          annualnaturaldecline: "0.2",
+          affectyield: "5047",
+          jhnzrdj: "0.0208",
+          jhnyxcl: "515",
+          dlxtzrdj: "0.1473",
+          dlxtyxcl: "3648",
+          yqybzrdj: "0.0188",
+          yqybyxcl: "466",
+          jkzzzrdj: "0.0169",
+          jkzzyxcl: "418",
         },
         {
-          operationarea: '秦皇岛',
-          oilField: 'QHD32-6',
-          years: '2018',
-          annualnaturaldecline: '0.01',
-          affectyield: '297',
-          jhnzrdj: '0.0006',
-          jhnyxcl: '14',
-          dlxtzrdj: '0.0118',
-          dlxtyxcl: '280',
-          yqybzrdj: '',
-          yqybyxcl: '',
-          jkzzzrdj: '0.0001',
-          jkzzyxcl: '3',
+          operationarea: "秦皇岛",
+          oilField: "QHD32-6",
+          years: "2018",
+          annualnaturaldecline: "0.01",
+          affectyield: "297",
+          jhnzrdj: "0.0006",
+          jhnyxcl: "14",
+          dlxtzrdj: "0.0118",
+          dlxtyxcl: "280",
+          yqybzrdj: "",
+          yqybyxcl: "",
+          jkzzzrdj: "0.0001",
+          jkzzyxcl: "3",
         },
         {
-          operationarea: '秦皇岛',
-          oilField: 'QHD32-6',
-          years: '2019',
-          annualnaturaldecline: '0.19',
-          affectyield: '4589',
-          jhnzrdj: '0.1913',
-          jhnyxcl: '4568',
-          dlxtzrdj: '0.0009',
-          dlxtyxcl: '21',
-          yqybzrdj: '',
-          yqybyxcl: '',
-          jkzzzrdj: '',
-          jkzzyxcl: '',
+          operationarea: "秦皇岛",
+          oilField: "QHD32-6",
+          years: "2019",
+          annualnaturaldecline: "0.19",
+          affectyield: "4589",
+          jhnzrdj: "0.1913",
+          jhnyxcl: "4568",
+          dlxtzrdj: "0.0009",
+          dlxtyxcl: "21",
+          yqybzrdj: "",
+          yqybyxcl: "",
+          jkzzzrdj: "",
+          jkzzyxcl: "",
         },
         {
-          operationarea: '秦皇岛',
-          oilField: 'QHD32-6',
-          years: '2020',
-          annualnaturaldecline: '0.45',
-          affectyield: '11814',
-          jhnzrdj: '0.0325',
-          jhnyxcl: '854',
-          dlxtzrdj: '0.4166',
-          dlxtyxcl: '10960',
-          yqybzrdj: '',
-          yqybyxcl: '',
-          jkzzzrdj: '',
-          jkzzyxcl: '',
+          operationarea: "秦皇岛",
+          oilField: "QHD32-6",
+          years: "2020",
+          annualnaturaldecline: "0.45",
+          affectyield: "11814",
+          jhnzrdj: "0.0325",
+          jhnyxcl: "854",
+          dlxtzrdj: "0.4166",
+          dlxtyxcl: "10960",
+          yqybzrdj: "",
+          yqybyxcl: "",
+          jkzzzrdj: "",
+          jkzzyxcl: "",
         },
       ],
     };
@@ -217,7 +232,7 @@ export default {
     },
     // 因为要合并的行数是不固定的，此函数是实现合并随意行数的功能
     getSpanArrOne(data) {
-      console.log('zmmm--', data); //从后台获取的数据
+      console.log("zmmm--", data); //从后台获取的数据
       this.spanArrOne = [];
       this.pos = 0;
       for (var i = 0; i < data.length; i++) {
@@ -262,6 +277,19 @@ export default {
   flex-direction: column; /* 按照列column(垂直方向)排列*/
 }
 ::v-deep .el-table .cell:empty::before {
-  content: '-';
+  content: "-";
+}
+
+#tableData {
+  ::v-deep .el-table__header-wrapper .cell {
+    height: auto;
+    line-height: 18px;
+    white-space: pre;
+  }
+  ::v-deep .cell:empty {
+    &::before {
+      content: "-";
+    }
+  }
 }
 </style>

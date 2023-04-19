@@ -251,7 +251,7 @@ export default {
       };
       searchLongTermPlan(request).then((res) => {
         this.tableData = [];
-        if (res.data.code == 200) {
+        if (res.data.code == "200") {
           this.tableData = res.data.data.oilTermPlans;
           this.pageCount = res.data.data.total;
         } else {
