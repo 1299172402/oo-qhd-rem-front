@@ -3,12 +3,11 @@
     <info-window
       infoWidth="100%"
       infoHeight="100%"
-      headerTitle="附表4 秦皇岛32-6/渤中作业公司年自然递减率主控因素分析"
+      headerTitle="附表5 秦皇岛32-6/渤中作业公司年自然递减率地质油藏因素分解"
       :isShowMaxBtn="true"
       style="margin-top: 10px"
     >
       <el-table
-        id="tableData"
         :data="tableData"
         border
         :header-cell-style="{ background: 'transparent', color: '#fff' }"
@@ -18,83 +17,82 @@
       >
         <el-table-column type="index" label="序号" align="center" width="50px"></el-table-column>
         <el-table-column prop="operationarea" label="作业公司" align="center" width="100"></el-table-column>
-
         <el-table-column prop="oilField" label="油田" align="center" width="100"></el-table-column>
         <el-table-column prop="years" label="年" align="center"></el-table-column>
         <el-table-column
           prop="annualnaturaldecline"
-          :label="`年自然递减\n（%）`"
+          label="年自然递减（%）"
           align="center"
           width="140"
         ></el-table-column>
-        <el-table-column prop="affectyield" :label="`影响产量\n（m³）`" align="center" width="140"></el-table-column>
-        <el-table-column label="各主控因素分解" align="center">
-          <el-table-column label="地质油藏因素" align="center">
+        <el-table-column prop="affectyield" label="影响产量（m³）" align="center" width="140"></el-table-column>
+        <el-table-column label="地质油藏因素分解" align="center">
+          <el-table-column label="转注影响" align="center">
             <el-table-column
-              prop="geologyannualnaturaldecrease"
-              :label="`年自然递减\n（%）`"
+              prop="conversionannualnaturaldecrease"
+              label="年自然递减（%）"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
-              prop="geologyaffectyield"
-              :label="`影响产量\n（m³）`"
-              align="center"
-              width="100"
-            ></el-table-column>
-          </el-table-column>
-          <el-table-column label="井筒因素" align="center">
-            <el-table-column
-              prop="wellboreannualnaturaldecrease"
-              :label="`年自然递减\n（%）`"
-              align="center"
-              width="100"
-            ></el-table-column>
-            <el-table-column
-              prop="wellboreaffectyield"
-              :label="`影响产量\n（m³）`"
+              prop="conversionaffectyield"
+              label="影响产量（m³）"
               align="center"
               width="100"
             ></el-table-column>
           </el-table-column>
-          <el-table-column label="作业因素" align="center">
+          <el-table-column label="侧钻影响" align="center">
             <el-table-column
-              prop="workannualnaturaldecrease"
-              :label="`年自然递减\n（%）`"
+              prop="sidetrackannualnaturaldecrease"
+              label="年自然递减（%）"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
-              prop="workaffectyield"
-              :label="`影响产量\n（m³）`"
-              align="center"
-              width="100"
-            ></el-table-column>
-          </el-table-column>
-          <el-table-column label="工程因素" align="center">
-            <el-table-column
-              prop="projectannualnaturaldecrease"
-              :label="`年自然递减\n（%）`"
-              align="center"
-              width="100"
-            ></el-table-column>
-            <el-table-column
-              prop="projectaffectyield"
-              :label="`影响产量\n（m³）`"
+              prop="sidetrackaffectyield"
+              label="影响产量（m³）"
               align="center"
               width="100"
             ></el-table-column>
           </el-table-column>
-          <el-table-column label="生产运行因素" align="center">
+          <el-table-column label="含水上升影响" align="center">
+            <el-table-column
+              prop="waterannualnaturaldecrease"
+              label="年自然递减（%）"
+              align="center"
+              width="100"
+            ></el-table-column>
+            <el-table-column
+              prop="wateraffectyield"
+              label="影响产量（m³）"
+              align="center"
+              width="100"
+            ></el-table-column>
+          </el-table-column>
+          <el-table-column label="产液结构优化" align="center">
             <el-table-column
               prop="productionannualnaturaldecrease"
-              :label="`年自然递减\n（%）`"
+              label="年自然递减（%）"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
               prop="productionaffectyield"
-              :label="`影响产量\n（m³）`"
+              label="影响产量（m³）"
+              align="center"
+              width="100"
+            ></el-table-column>
+          </el-table-column>
+          <el-table-column label="能量不足" align="center">
+            <el-table-column
+              prop="energyannualnaturaldecrease"
+              label="年自然递减（%）"
+              align="center"
+              width="100"
+            ></el-table-column>
+            <el-table-column
+              prop="energyaffectyield"
+              label="影响产量（m³）"
               align="center"
               width="100"
             ></el-table-column>
@@ -102,13 +100,13 @@
           <el-table-column label="其他因素" align="center">
             <el-table-column
               prop="otherannualnaturaldecrease"
-              :label="`年自然递减\n（%）`"
+              label="年自然递减（%）"
               align="center"
               width="100"
             ></el-table-column>
             <el-table-column
               prop="otheraffectyield"
-              :label="`影响产量\n（m³）`"
+              label="影响产量（m³）"
               align="center"
               width="100"
             ></el-table-column>
@@ -126,75 +124,83 @@ export default {
       page: 1,
       pageSize: 10,
       spanArrOne: [],
-      pos: "",
+      pos: '',
       tableData: [
         {
-          operationarea: "秦皇岛",
-          oilField: "QHD32-6",
-          years: "2017",
-          annualnaturaldecline: "14.26",
-          affectyield: "353012",
-          geologyannualnaturaldecrease: "10.6464",
-          geologyaffectyield: "263586",
-          wellboreannualnaturaldecrease: "2.463",
-          wellboreaffectyield: "60980",
-          workannualnaturaldecrease: "0.887",
-          workaffectyield: "21962",
-          projectannualnaturaldecrease: "0.2038",
-          projectaffectyield: "5047",
-          productionannualnaturaldecrease: "0.058",
-          productionaffectyield: "1437",
+          operationarea: '秦皇岛',
+          oilField: 'QHD32-6',
+          years: '2017',
+          annualnaturaldecline: '10.65',
+          affectyield: '263586',
+          conversionannualnaturaldecrease: '0.3772',
+          conversionaffectyield: '9338',
+          sidetrackannualnaturaldecrease: '0.1654',
+          sidetrackaffectyield: '4094',
+          waterannualnaturaldecrease: '26.9173',
+          wateraffectyield: '666428',
+          productionannualnaturaldecrease: '-18.7638',
+          productionaffectyield: '-464560',
+          energyannualnaturaldecrease: '1.9502',
+          energyaffectyield: '48284',
+          otherannualnaturaldecrease: '0.0001',
+          otheraffectyield: '2',
         },
         {
-          operationarea: "秦皇岛",
-          oilField: "QHD32-6",
-          years: "2018",
-          annualnaturaldecline: "11",
-          affectyield: "261081",
-          geologyannualnaturaldecrease: "7.1253",
-          geologyaffectyield: "169179",
-          wellboreannualnaturaldecrease: "2.7206",
-          wellboreaffectyield: "64596",
-          workannualnaturaldecrease: "0.908",
-          workaffectyield: "21559",
-          projectannualnaturaldecrease: "0.0125",
-          projectaffectyield: "297",
-          productionannualnaturaldecrease: "0.2295",
-          productionaffectyield: "5450",
+          operationarea: '秦皇岛',
+          oilField: 'QHD32-6',
+          years: '2018',
+          annualnaturaldecline: '7.13',
+          affectyield: '169179',
+          conversionannualnaturaldecrease: '0.2075',
+          conversionaffectyield: '4926',
+          sidetrackannualnaturaldecrease: '0.1725',
+          sidetrackaffectyield: '4096',
+          waterannualnaturaldecrease: '23.9347',
+          wateraffectyield: '568292',
+          productionannualnaturaldecrease: '-19.6549',
+          productionaffectyield: '-466674',
+          energyannualnaturaldecrease: '2.4535',
+          energyaffectyield: '58254',
+          otherannualnaturaldecrease: '0.012',
+          otheraffectyield: '285',
         },
         {
-          operationarea: "秦皇岛",
-          oilField: "QHD32-6",
-          years: "2019",
-          annualnaturaldecline: "9.07",
-          affectyield: "216557",
-          geologyannualnaturaldecrease: "5.0635",
-          geologyaffectyield: "120901",
-          wellboreannualnaturaldecrease: "2.6176",
-          wellboreaffectyield: "62501",
-          workannualnaturaldecrease: "0.7671",
-          workaffectyield: "18317",
-          projectannualnaturaldecrease: "0.1922",
-          projectaffectyield: "4589",
-          productionannualnaturaldecrease: "0.4292",
-          productionaffectyield: "10249",
+          operationarea: '秦皇岛',
+          oilField: 'QHD32-6',
+          years: '2019',
+          annualnaturaldecline: '5.06',
+          affectyield: '120901',
+          conversionannualnaturaldecrease: '0.0581',
+          conversionaffectyield: '1388',
+          sidetrackannualnaturaldecrease: '0.2881',
+          sidetrackaffectyield: '6880',
+          waterannualnaturaldecrease: '14.401',
+          wateraffectyield: '343849',
+          productionannualnaturaldecrease: '-13.7579',
+          productionaffectyield: '-328494',
+          energyannualnaturaldecrease: '4.0309',
+          energyaffectyield: '96245',
+          otherannualnaturaldecrease: '0.0433',
+          otheraffectyield: '1033',
         },
         {
-          operationarea: "秦皇岛",
-          oilField: "QHD32-6",
-          years: "2020",
-          annualnaturaldecline: "15",
-          affectyield: "394584",
-          geologyannualnaturaldecrease: "11.0429",
-          geologyaffectyield: "290495",
-          wellboreannualnaturaldecrease: "2.4757",
-          wellboreaffectyield: "65126",
-          workannualnaturaldecrease: "0.834",
-          workaffectyield: "21940",
-          projectannualnaturaldecrease: "0.4491",
-          projectaffectyield: "11814",
-          productionannualnaturaldecrease: "0.198",
-          productionaffectyield: "5209",
+          operationarea: '秦皇岛',
+          oilField: 'QHD32-6',
+          years: '2020',
+          annualnaturaldecline: '11.04',
+          affectyield: '290495',
+          conversionannualnaturaldecrease: '0.0468',
+          conversionaffectyield: '1230',
+          sidetrackannualnaturaldecrease: '0.3134',
+          sidetrackaffectyield: '8245',
+          waterannualnaturaldecrease: '26.0599',
+          wateraffectyield: '685538',
+          productionannualnaturaldecrease: '-20.4522',
+          productionaffectyield: '-538020',
+          energyannualnaturaldecrease: '4.6809',
+          energyaffectyield: '123136',
+          otherannualnaturaldecrease: '0.368',
+          otheraffectyield: '9680',
         },
       ],
     };
@@ -264,7 +270,7 @@ export default {
     },
     // 因为要合并的行数是不固定的，此函数是实现合并随意行数的功能
     getSpanArrOne(data) {
-      console.log("zmmm--", data); //从后台获取的数据
+      console.log('zmmm--', data); //从后台获取的数据
       this.spanArrOne = [];
       this.pos = 0;
       for (var i = 0; i < data.length; i++) {
@@ -309,18 +315,6 @@ export default {
   flex-direction: column; /* 按照列column(垂直方向)排列*/
 }
 ::v-deep .el-table .cell:empty::before {
-  content: "-";
-}
-#tableData {
-  ::v-deep .el-table__header-wrapper .cell {
-    height: auto;
-    line-height: 18px;
-    white-space: pre;
-  }
-  ::v-deep .cell:empty {
-    &::before {
-      content: "-";
-    }
-  }
+  content: '-';
 }
 </style>

@@ -136,7 +136,7 @@
       </keep-alive>
     </pagePanelNew>
   </div>
-</template> 
+</template>
 
 <script>
 import {
@@ -236,6 +236,10 @@ export default {
               label: "连井剖面图",
               name: "connecting",
             },
+            {
+              label: "视吸水指数",
+              name: "injectivityIndex",
+            },
           ],
         },
         {
@@ -286,7 +290,7 @@ export default {
         //         }
         //     ]
         // }
-         {
+        {
           label: "钻完井资料",
           name: "drillingCompletion",
           modules: [
@@ -340,6 +344,8 @@ export default {
       canDownload: true,
       //上传数
       canUpload: false,
+      aName: "",
+      ctModule: "",
     };
   },
   computed: {
@@ -353,8 +359,15 @@ export default {
         this.ljpmTag = false;
       }
       if (this.currentModule == "waterReport") {
+        this.aName = this.activeName;
+        this.ctModule = this.currentModule;
         return () => import(`../waterReport/index.vue`);
+      } else if (this.currentModule == "injectivityIndex") {
+        window.open("http://10.77.78.250:9108/#/plucking/mechanical/overviewIndicators", "_blank");
+        return () => import(`./modules/${this.aName}/${this.ctModule}.vue`);
       } else {
+        this.aName = this.activeName;
+        this.ctModule = this.currentModule;
         return () => import(`./modules/${this.activeName}/${this.currentModule}.vue`);
       }
     },

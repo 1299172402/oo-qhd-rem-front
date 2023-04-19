@@ -2,28 +2,20 @@
 <template>
   <el-container class="mt-2">
     <pagePanel headerTitle="井网图">
-    <el-row style="padding-top: 20px;height:600px;overflow: auto;">
-<!--          <el-image style="height: 400px" :src="src"></el-image>-->
-<!--          <el-image :src="image">-->
-<!--            <div slot="error">-->
-<!--            </div>-->
-<!--          </el-image>-->
-    </el-row>
+		<el-row style="padding-top: 20px;height:600px;overflow: auto;">
+			<el-image :src="image">
+			   <div slot="error"></div>
+			</el-image>
+		</el-row>
     </pagePanel>
   </el-container>
 </template>
-<style lang="scss" scoped>
 
-</style>
 <script>
 import { wellNetDiagram } from "@/api/oilDeposit/rem-01/welldynamicanalysis.js";
-// import {downFile} from "@/lib/remBase64Download";
-// import config from "@/config";
+import {downFile} from "@/lib/remBase64Download.js";
 
 export default {
-  components: {
-
-  },
   props: {
     //选择油田
     oilFeildId: {
@@ -40,13 +32,7 @@ export default {
   },
   data() {
     return {
-      src: '../../static/img/oilAuxiliaryAnalysis/productionDynamicData/wellNetworkDiagram.jpg',
-      //图片数据
       image: '',
-    //   baseUrl:
-    //       process.env.NODE_ENV === "production"
-    //           ? config.publicRootPath
-    //           : config.devRootPath,
     };
   },
   mounted() {

@@ -22,6 +22,20 @@ export function dividingCoefficientSave(data) {
     data
   });
 }
+export function downLoadUnicomModeloperationDto(data) {
+  return request({
+    url: `${baseUrl}/injectionProductionDeploy/downLoadUnicomModeloperationDto`,
+    method: "post",
+    data
+  });
+}
+export function exportChopSection(data) {
+  return request({
+    url: `${baseUrl}/injectionProductionDeploy/exportChopSection`,
+    method: "post",
+    data
+  });
+}
 export function exportDividingCoefficient(data) {
   return request({
     url: `${baseUrl}/injectionProductionDeploy/exportDividingCoefficient`,
@@ -59,6 +73,47 @@ export function getBlockList(data) {
 export function productionSplit(data) {
   return request({
     url: `${baseUrl}/injectionProductionDeploy/productionAplit`,
+    method: "post",
+    data
+  });
+}
+export function calculateUpdate({ groupParamDTO } = {}) {
+  return request({
+    url: `${baseUrl}/injectionProductionDeploy/wellConnectivityEval/calculateUpdate`,
+    method: "get",
+          data: groupParamDTO,
+  });
+}
+export function calculateUpdate(data) {
+  return request({
+    url: `${baseUrl}/injectionProductionDeploy/wellConnectivityEval/calculateUpdate`,
+    method: "post",
+    data
+  });
+}
+export function calculateUpdate({ groupParamDTO } = {}) {
+  return request({
+    url: `${baseUrl}/injectionProductionDeploy/wellConnectivityEval/calculateUpdate`,
+    method: "delete",
+          data: groupParamDTO,
+  });
+}
+export function calculateUpdate({ groupParamDTO } = {}) {
+  return request({
+    url: `${baseUrl}/injectionProductionDeploy/wellConnectivityEval/calculateUpdate`,
+    method: "put",
+          data: groupParamDTO,
+  });
+}
+export function selectWellGroup({ blockId, dateTime, ogfId } = {}) {
+  return request({
+    url: `${baseUrl}/injectionProductionDeploy/wellConnectivityEval/selectWellGroup?blockId=${ blockId || "" }&dateTime=${ dateTime || "" }&ogfId=${ ogfId || "" }`,
+    method: "get",
+  });
+}
+export function unicomModelOperation(data) {
+  return request({
+    url: `${baseUrl}/injectionProductionDeploy/wellConnectivityEval/unicomModelOperation`,
     method: "post",
     data
   });

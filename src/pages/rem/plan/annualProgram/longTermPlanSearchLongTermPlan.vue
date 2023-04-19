@@ -19,7 +19,7 @@
     </header-search>
     <page-panel-new class="tablebox" :show-btn="true">
       <div class="tableTitle">{{ oilFieldName }} 中长期计划表</div>
-      <el-table :data="tableData2" id="tableData" height="calc(100% - 40px)" highlight style="width: 100%">
+      <el-table :data="tableData" id="tableData" height="calc(100% - 40px)" highlight style="width: 100%">
         <el-table-column prop="theYear" align="center" label="年份"></el-table-column>
         <el-table-column prop="baseProduct" align="center" :label="`基础产量\n(10⁴m³)`"></el-table-column>
         <el-table-column prop="newJustWellNum" align="center" :label="`新增调整井井数\n(口)`"></el-table-column>
@@ -55,6 +55,17 @@ export default {
       tableData: [],
       //表格假数据
       tableData2: [
+        {
+          theYear: "2022",
+          baseProduct: "190.78",
+          newJustWellNum: "15",
+          oldWellProduct: "25.66",
+          oilWellIncNum: "33",
+          measureProduct: "11.24",
+          chemicalWellNum: "-",
+          chemicalProduct: "-",
+          productAll: "227.68",
+        },
         {
           theYear: "2023",
           baseProduct: "172.05",

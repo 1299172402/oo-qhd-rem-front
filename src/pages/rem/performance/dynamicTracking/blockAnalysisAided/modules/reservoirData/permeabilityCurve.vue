@@ -174,10 +174,6 @@ export default {
       //层位所选择内容信息
       position: [],
       image: '',
-      baseUrl:
-          process.env.NODE_ENV === "production"
-              ? config.publicRootPath
-              : config.devRootPath,
     };
   },
   watch: {

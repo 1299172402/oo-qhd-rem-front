@@ -3,36 +3,44 @@
     <info-window
       infoWidth="100%"
       infoHeight="100%"
-      headerTitle="附表17 秦皇岛32-6/渤中作业公司控制递减综合治理专项工作"
+      headerTitle="附表2-1 2019年秦皇岛32-6/渤中作业公司探明地质储量动用情况"
       :isShowMaxBtn="true"
       style="margin-top: 10px"
     >
       <el-table
         :data="tableData"
-        id="tableData"
         border
         :header-cell-style="{ background: 'transparent', color: '#fff' }"
         :span-method="objectSpanMethodOne"
         highlight
         height="calc(100% - 40px)"
       >
-        <el-table-column type="index" label="序号" align="center" width="50px"></el-table-column>
-        <el-table-column prop="operationarea" label="作业公司" align="center" width="120"></el-table-column>
-        <el-table-column prop="oilField" label="油田" align="center" width="120"></el-table-column>
-        <el-table-column prop="yxjj" label="优先解决的问题" align="center" width="340"></el-table-column>
-        <el-table-column prop="jjtj" label="主要解决途径" align="center" width="460"></el-table-column>
+        <el-table-column type="index" label="序号" align="center"></el-table-column>
+        <el-table-column prop="operationarea" label="作业公司" align="center" width="100"></el-table-column>
+        <el-table-column prop="oilField" label="油田" align="center" width="100"></el-table-column>
+        <el-table-column prop="provedreserves" label="探明地质储量(10⁴t)" align="center" width="160"></el-table-column>
         <el-table-column
-          prop="jdmb"
-          :label="`阶段目标\n（油水井数比、阶段注采比、压力保持水平、\n含水上升率、自然递减率）`"
+          prop="useprovengeologicalreserves"
+          label="动用探明地质储量(10⁴t)"
           align="center"
-          width="340"
+          width="180"
         ></el-table-column>
-        <el-table-column
-          prop="zxgz"
-          :label="`控制递减综合治理专项工作\n（1~2年期）`"
-          align="center"
-          width="460"
-        ></el-table-column>
+        <el-table-column label="未动用探明地质储量(10⁴t)" align="center">
+          <el-table-column prop="reservesengineering1" label="工程" align="center" width="100"></el-table-column>
+          <el-table-column prop="reservesheavyoil" label="稠油" align="center" width="100"></el-table-column>
+          <el-table-column prop="reservesthreelow" label="三低" align="center" width="100"></el-table-column>
+          <el-table-column prop="reservesother" label="其他" align="center" width="100"></el-table-column>
+          <el-table-column prop="reservessubtotal" label="小计" align="center" width="100"></el-table-column>
+        </el-table-column>
+        <el-table-column label="未动用探明地质储量规划/计划动用(10⁴t)" align="center">
+          <el-table-column prop="plansengineering" label="工程" align="center" width="100"></el-table-column>
+          <el-table-column prop="plansheavyoil" label="稠油" align="center" width="100"></el-table-column>
+          <el-table-column prop="plansthreelow" label="三低" align="center" width="100"></el-table-column>
+          <el-table-column prop="plansother" label="其他" align="center" width="100"></el-table-column>
+          <el-table-column prop="planssubtotal" label="小计" align="center" width="100"></el-table-column>
+        </el-table-column>
+        <el-table-column prop="plannedusage" label="规划/计划动用方式" align="center" width="200"></el-table-column>
+        <el-table-column prop="remainingunused" label="剩余未动用主要原因" align="center" width="240"></el-table-column>
       </el-table>
     </info-window>
   </el-container>
@@ -44,15 +52,19 @@ export default {
       page: 1,
       pageSize: 10,
       spanArrOne: [],
-      pos: "",
+      pos: '',
       tableData: [
         {
-          operationarea: "秦皇岛",
-          oilField: "QHD32-6",
-          yxjj: "1、液量受限；2、水驱不均、优势渗流通道发育；3、局部井网不完善",
-          jjtj: "1、扩容改造；2、优化注水及调剖调驱；3、转注及实施调整井完善井网",
-          jdmb: "油水井数比降至2.1，阶段注采比保持在0.8，地层压力保持水平在90%以上，含水上升率降至1.0%，自然递减率控制11%以内，油田采收率提高1.54%",
-          zxgz: "1、2021年8月完成全油田扩容改造；\n2、2020-2021年完成优化注水310井次，其中调驱调剖18井次；3、2020-2021年完成转注25井次，实施调整井36井次",
+          oilField: 'QHD32-6',
+          provedreserves: '18756.486',
+          operationarea: '秦皇岛',
+          useprovengeologicalreserves: '14291.1',
+          reservesthreelow: '4465.386',
+          reservessubtotal: '4465.386',
+          plansthreelow: '886.833',
+          planssubtotal: '886.833',
+          plannedusage: '后期低产低效井侧钻',
+          remainingunused: '非主力砂体薄、差、小、散',
         },
       ],
     };
@@ -64,7 +76,7 @@ export default {
     //合并
     objectSpanMethodOne({ row, column, rowIndex, columnIndex }) {
       // columnIndex === xx 找到第xx列，实现合并随机出现的行数
-      if (columnIndex >= 0 && columnIndex < 3) {
+      if (columnIndex >= 0 && columnIndex < 4) {
         if (!this.tableData[rowIndex]) {
           //1列 1行
           return {
@@ -122,7 +134,7 @@ export default {
     },
     // 因为要合并的行数是不固定的，此函数是实现合并随意行数的功能
     getSpanArrOne(data) {
-      console.log("zmmm--", data); //从后台获取的数据
+      console.log('zmmm--', data); //从后台获取的数据
       this.spanArrOne = [];
       this.pos = 0;
       for (var i = 0; i < data.length; i++) {
@@ -147,10 +159,6 @@ export default {
 };
 </script>
   <style lang="scss" scoped>
-::v-deep .el-table .el-table__body-wrapper .cell {
-  height: auto;
-  line-height: 40px;
-}
 .formBox {
   & > div:not(:first-child) {
     margin-left: 20px;
@@ -170,20 +178,12 @@ export default {
   display: flex;
   flex-direction: column; /* 按照列column(垂直方向)排列*/
 }
-::v-deep .el-table .cell:empty::before {
-  content: "-";
-}
 
-#tableData {
-  ::v-deep .el-table__header-wrapper .cell {
-    height: auto;
-    line-height: 18px;
-    white-space: pre;
-  }
-  ::v-deep .cell:empty {
-    &::before {
-      content: "-";
-    }
-  }
+.image {
+  width: 100px;
+  display: block;
+}
+::v-deep .el-table .cell:empty::before {
+  content: '-';
 }
 </style>

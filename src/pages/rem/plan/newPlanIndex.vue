@@ -829,7 +829,7 @@
         .z-date {
             padding-right: 10px;
             margin-left: 554px;
-            padding-top: 20px;
+            padding-top: 10px;
             display: flex;
             align-items: center;
 

@@ -7,20 +7,6 @@ export function getOnSiteWork({ actionEvent, assetCode, month, ogfId, wellNo } =
     method: "get",
   });
 }
-export function getPeoplePlan(data) {
-  return request({
-    url: `${baseUrl}/actionPlanManagement/peoplePlan`,
-    method: "post",
-    data
-  });
-}
-export function getProjectPeople(data) {
-  return request({
-    url: `${baseUrl}/actionPlanManagement/projectPeople`,
-    method: "post",
-    data
-  });
-}
 export function queryMeasurePlanList(data) {
   return request({
     url: `${baseUrl}/actionPlanManagement/queryMeasurePlanList`,

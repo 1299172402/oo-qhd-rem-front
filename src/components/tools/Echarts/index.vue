@@ -69,21 +69,20 @@ export default {
             dbFixed: 0
         };
     },
-    directives: { // 使用局部注册指令的方式
-        resize: { // 指令的名称
-            bind (el, binding) { // el为绑定的元素，binding为绑定给指令的对象
+    directives: {
+        resize: { 
+            bind (el, binding) {
                 let width = '',
                     height = '';
-
                 function isReize () {
                     const style = document.defaultView.getComputedStyle(el);
                     if (width !== style.width || height !== style.height) {
-                        binding.value(); // 关键
+                        binding.value();
                     }
                     width = style.width;
                     height = style.height;
                 }
-                el.__vueSetInterval__ = setInterval(isReize, 300);
+                el.__vueSetInterval__ = setInterval(isReize, 0);
             },
             unbind (el) {
                 clearInterval(el.__vueSetInterval__);

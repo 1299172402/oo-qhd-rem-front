@@ -77,10 +77,6 @@ export default {
         },],
       //单选按钮选中项
       selectPosition: '',
-      // baseUrl:
-      //     process.env.NODE_ENV === "production"
-      //         ? config.publicRootPath
-      //         : config.devRootPath,
     };
   },
   watch: {
