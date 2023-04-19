@@ -2,10 +2,11 @@
   <el-form
     ref="form"
     :model="model"
-    style="width: 700px;"
+    style="width: 800px;"
     :rules="rules"
-    label-width="160px"
+    label-width="180px"
     class="demo-ruleForm"
+    :disabled="onlyRead"
   >
     <el-form-item label="应用名称" prop="appName">
       <el-input v-model="model.appName" placeholder="请输入应用名称" clearable />
@@ -66,7 +67,7 @@
         :file-type="fileType"
         :is-show-tip="false"
         biz-path="picture"
-        bucket-name="zhy"
+        bucket-name="picture-qhd326"
       />
     </el-form-item>
 
@@ -121,6 +122,10 @@ export default {
     formModel: {
       type: Object,
       default: () => ({})
+    },
+    onlyRead: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

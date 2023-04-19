@@ -111,7 +111,12 @@ export default {
         status: "0"
       },
       fn: {
-        save,
+        save: data => save({
+          ...data,
+          maxSize: data.maxSize === undefined ? null : data.maxSize,
+          imageWidth: data.imageWidth === undefined ? null : data.imageWidth,
+          imageHeight: data.imageHeight === undefined ? null : data.imageHeight
+        }),
         findById
       },
       rules: {
@@ -120,7 +125,7 @@ export default {
         uploadType: [{ required: true, message: "请选择上传类型", trigger: "change" }],
         bucketName: [{ required: true, message: "请输入minio桶", trigger: "change" }],
         allowFileExtensions: [{ required: true, message: "请输入扩展名", trigger: "change" }],
-        maxSize: [{ required: true, message: "请输入允许图片的最大大小", trigger: "change" }]
+        maxSize: [{ required: true, message: "请输入允许文件的最大大小", trigger: "change" }]
       }
     };
   },

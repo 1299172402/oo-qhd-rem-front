@@ -24,7 +24,7 @@
           拖拽或者点击上传
         </div>
       </el-upload>
-      <el-dialog :visible.sync="dialogVisible">
+      <el-dialog :visible.sync="dialogVisible" :class="$store.getters['setting/mode'] === 'dark' ? 'dark-dialog' : 'light-dialog'">
         <img width="100%" :src="dialogImageUrl" alt="">
       </el-dialog>
     </template>
@@ -72,7 +72,7 @@
           的文件
         </div>
       </el-upload>
-      <el-dialog :visible.sync="dialogVisible">
+      <el-dialog :visible.sync="dialogVisible" :class="$store.getters['setting/mode'] === 'dark' ? 'dark-dialog' : 'light-dialog'">
         <img width="100%" :src="dialogImageUrl" alt="">
       </el-dialog>
       <!-- 文件列表 -->
@@ -114,6 +114,8 @@ import { uploadFile, getImgUrl, downFile, downloadTemplate, filePreview } from "
 import proxy from "@/config/host";
 
 const env = import.meta.env.MODE || "development";
+const defaultPictureType = ["bmp", "jpg", "jpeg", "png", "gif"];
+const defaultVideoType = ["mpg", "mpeg", "avi", "rm", "rmvb", "mov", "wmv", "asf", "dat"];
 export default {
   name: "FileUpload",
   props: {
@@ -165,6 +167,12 @@ export default {
     bucketName: {
       type: String
     },
+    videoBucketName: {
+      type: String
+    },
+    pictureBucketName: {
+      type: String
+    },
     uploadType: {
       type: String,
       default: "minio"
@@ -181,8 +189,9 @@ export default {
       dialogVisible: false,
       accept: "",
       myFileType: undefined,
-      defaultPictureType: ["bmp", "jpg", "jpeg", "png", "gif"],
-      defaultFileType: ["doc", "xls", "ppt", "txt", "pdf"]
+      defaultFileType: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "pdf", ...defaultPictureType, ...defaultVideoType],
+      defaultPictureType,
+      defaultVideoType
     };
   },
   computed: {
@@ -232,12 +241,30 @@ export default {
      * 使用统一的 axios 处理文件上传，方便统一拦截处理
      */
     httpRequest: function(val) {
+      const type = val.file.name.split(".").pop();
       const fd = new FormData();
+      if (this.pictureBucketName && this.defaultPictureType.includes(type)) {
+        fd.append("bucketName", this.pictureBucketName);
+      } else if (this.videoBucketName && this.defaultVideoType.includes(type)) {
+        fd.append("bucketName", this.videoBucketName);
+      } else {
+        fd.append("bucketName", this.bucketName);
+      }
       fd.append("file", val.file, val.file.name);
       fd.append("bizPath", this.bizPath);
-      fd.append("bucketName", this.bucketName);
       fd.append("uploadType", this.uploadType);
-      return uploadFile(fd);
+      return new Promise((reslove, reject) => {
+        uploadFile(fd).then(res => {
+          if (res.data.code === 200) {
+            reslove(res);
+          } else {
+            reject(res);
+          }
+        })
+          .catch(e => {
+            reject(e);
+          });
+      });
     },
     /**
      * 初始化文件
@@ -517,6 +544,24 @@ export default {
 
   ::v-deep .el-upload--picture-card {
     background-color: transparent;
+  }
+}
+
+.dark-dialog {
+  ::v-deep .el-dialog__header {
+    background: none;
+    border: none;
+  }
+}
+
+.light-dialog {
+  ::v-deep .el-dialog__header {
+    background: none;
+    border: none;
+
+    .el-icon-close::before {
+      color: #908291;
+    }
   }
 }
 </style>
