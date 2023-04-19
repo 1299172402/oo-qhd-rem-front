@@ -7,6 +7,7 @@
           value-format="yyyy-MM"
           :clearable="false"
           :picker-options="picker"
+          @change="choiceendtime"
           v-model="queryData.firstMonth"
           type="month"
           placeholder="选择月"
@@ -27,43 +28,53 @@
         </el-date-picker>
       </el-form-item>
     </div>
-    <el-table highlight :data="tableData"  :cell-style="{ padding: '3px', 'text-align': 'center' }" height="500px" style="margin-top: -30px">
+    <el-table
+      highlight
+      :data="tableData"
+      :cell-style="{ padding: '3px', 'text-align': 'center' }"
+      height="500px"
+      style="margin-top: -30px"
+      :key="itemKey"
+    >
       <el-table-column type="index" label="序号" width="50px" header-align="center"></el-table-column>
       <el-table-column prop="wellNo" label="井号" header-align="center"></el-table-column>
       <el-table-column prop="layerName" label="层位" width="200px" header-align="center"></el-table-column>
       <el-table-column header-align="center">
         <template slot="header">
-          <div>{{tableData[0]?tableData[0].yearMonth01:queryData.firstMonth}}</div>
+          <div>{{ firstMonth }}</div>
         </template>
         <el-table-column prop="dosage01" :label="`配注量\n(m³/d)`" header-align="center"> </el-table-column>
-        <el-table-column  prop="injectionRatio01" label="注采比" header-align="center"> </el-table-column>
-        <el-table-column prop="injectionStrength01" :label="`注水强度\n(m³*d.m)`" header-align="center"> </el-table-column>
+        <el-table-column prop="injectionRatio01" label="注采比" header-align="center"> </el-table-column>
+        <el-table-column prop="injectionStrength01" :label="`注水强度\n(m³*d.m)`" header-align="center">
+        </el-table-column>
       </el-table-column>
       <el-table-column header-align="center">
         <template slot="header">
-          <div>{{tableData[0]? tableData[0].yearMonth02:queryData.secondMonth}}</div>
+          <div>{{ secondMonth }}</div>
         </template>
         <el-table-column prop="dosage02" :label="`配注量\n(m³/d)`" header-align="center"> </el-table-column>
         <el-table-column prop="injectionRatio02" label="注采比" header-align="center"> </el-table-column>
-        <el-table-column prop="injectionStrength02" :label="`注水强度\n(m³*d.m)`" header-align="center"> </el-table-column>
+        <el-table-column prop="injectionStrength02" :label="`注水强度\n(m³*d.m)`" header-align="center">
+        </el-table-column>
       </el-table-column>
       <el-table-column header-align="center">
         <template slot="header">
           <div>调整幅度</div>
         </template>
-        <el-table-column :label="`配注量\n(m³/d)`" header-align="center"> 
-        <template  slot-scope="scoped">
-            {{scoped.row.dosage02 - scoped.row.dosage01 }}
-        </template>
+        <el-table-column :label="`配注量\n(m³/d)`" header-align="center">
+          <template slot-scope="scoped">
+            {{ scoped.row.dosage02 - scoped.row.dosage01 }}
+          </template>
         </el-table-column>
         <el-table-column prop="injectionRatio02" label="注采比" header-align="center">
-             <template slot-scope="scoped">
-            {{scoped.row.injectionRatio02 - scoped.row.injectionRatio01 }}
-        </template> </el-table-column>
-        <el-table-column :label="`注水强度\n(m³*d.m)`" header-align="center"> 
-             <template slot-scope="scoped">
-            {{scoped.row.injectionStrength02 - scoped.row.injectionStrength01 }}
-        </template>
+          <template slot-scope="scoped">
+            {{ scoped.row.injectionRatio02 - scoped.row.injectionRatio01 }}
+          </template>
+        </el-table-column>
+        <el-table-column :label="`注水强度\n(m³*d.m)`" header-align="center">
+          <template slot-scope="scoped">
+            {{ scoped.row.injectionStrength02 - scoped.row.injectionStrength01 }}
+          </template>
         </el-table-column>
       </el-table-column>
       <el-table-column prop="fieldName" label="备注" header-align="center"></el-table-column>
@@ -88,6 +99,9 @@ export default {
   data() {
     return {
       tableData: [],
+      secondMonth: "",
+      firstMonth: "",
+      itemKey: 0,
       queryData: {
         month: "",
         secondMonth: "",
@@ -125,10 +139,15 @@ export default {
     }
     this.queryData.secondMonth = y + "-" + m.substr(m.length - 2, 2);
     this.queryData.firstMonth = y + "-" + x.substr(m.length - 2, 2);
+    this.secondMonth = y + "-" + m.substr(m.length - 2, 2);
+    this.firstMonth = y + "-" + x.substr(m.length - 2, 2);
     this.doSearch();
   },
   methods: {
     doSearch() {
+      this.secondMonth = this.queryData.secondMonth;
+      this.firstMonth = this.queryData.firstMonth;
+      this.itemKey++;
       let request = {
         ogfId: this.oilFieldId,
         blockId: this.blockId,
@@ -139,8 +158,8 @@ export default {
       };
       getWellGroupInjectionDynamic(request).then((res) => {
         if (res.data.code == 200) {
-            console.log(res)
-          this.tableData = res.data.data.data
+          console.log(res);
+          this.tableData = res.data.data.data;
         }
       });
     },

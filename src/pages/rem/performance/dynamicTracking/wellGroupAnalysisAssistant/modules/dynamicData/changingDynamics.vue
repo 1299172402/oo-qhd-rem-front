@@ -27,7 +27,14 @@
         </el-date-picker>
       </el-form-item>
     </div>
-    <el-table highlight :cell-style="{ padding: '3px', 'text-align': 'center' }" :data="tableData" height="500px" style="margin-top: -30px">
+    <el-table
+      highlight
+      :key="itemKey"
+      :cell-style="{ padding: '3px', 'text-align': 'center' }"
+      :data="tableData"
+      height="500px"
+      style="margin-top: -30px"
+    >
       <el-table-column type="index" label="序号" width="50px" header-align="center"></el-table-column>
       <el-table-column prop="waterWellName" label="水井" header-align="center"></el-table-column>
       <el-table-column prop="layerName" label="层位" header-align="center"></el-table-column>
@@ -55,10 +62,16 @@
         <template slot="header">
           <div>调整幅度</div>
         </template>
-        <el-table-column label="连通系数" align="cnter" prop="adjustRangeInjCoeff" header-align="center"> </el-table-column>
+        <el-table-column label="连通系数" align="cnter" prop="adjustRangeInjCoeff" header-align="center">
+        </el-table-column>
         <el-table-column label="注水劈分量" align="cnter" prop="adjustRangeSplittingInjectWater" header-align="center">
         </el-table-column>
-        <el-table-column label="产液劈分量" align="cnter" prop="adjustRangeSplittingSplittingFluid" header-align="center">
+        <el-table-column
+          label="产液劈分量"
+          align="cnter"
+          prop="adjustRangeSplittingSplittingFluid"
+          header-align="center"
+        >
         </el-table-column>
       </el-table-column>
       <el-table-column align="cnter" prop="remark" label="备注" header-align="center"></el-table-column>
@@ -87,6 +100,7 @@ export default {
           return time.getTime() > Date.now();
         },
       },
+      itemKey: 0,
       tableData: [],
       queryData: {
         month: "",
@@ -115,6 +129,9 @@ export default {
   },
   methods: {
     doSearch() {
+      this.secondMonth = this.queryData.secondMonth;
+      this.firstMonth = this.queryData.firstMonth;
+      this.itemKey++;
       let request = {
         oilFieldId: this.oilFieldId,
         blockId: this.blockId,
@@ -125,7 +142,7 @@ export default {
       };
       getWellGroupCommunicateDynamic(request).then((res) => {
         if (res.data.code == 200) {
-          this.tableData = res.data.data
+          this.tableData = res.data.data;
         }
       });
     },
