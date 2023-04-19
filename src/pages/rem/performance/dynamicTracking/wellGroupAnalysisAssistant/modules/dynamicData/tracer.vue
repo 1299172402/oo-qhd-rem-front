@@ -7,20 +7,38 @@
             </el-radio-group>
         </div>
         <div class="z-container">
-            <div class="v1">
-                <pagePanel headerTitle="示踪剂结果" class="z-pagePanel" style="margin-right:20px;" show-btn>
-                    <el-image :src="imageFirst">
-                        <div slot="error"></div>
-                    </el-image>
-                </pagePanel>
-                <pagePanel headerTitle="示踪剂报告" class="z-pagePanel" style="margin-right:20px;" show-btn>
-                    <iframe :src="imageSecond?(imageSecond+'#toolbar=0'):''" style="width: 100%;height: 100%;" v-if="imageSecond"></iframe>
-                </pagePanel>
+            <div class="z-row">
+                <div class="z-col">
+                    <info-window infoWidth="100%" infoHeight="100%" headerTitle="示踪剂结果" isShowMaxBtn>
+                        <el-image :src="imageFirst" style="height:100%;display: block;margin:0 auto;">
+                            <div slot="error"></div>
+                        </el-image>
+                    </info-window>
+                </div>
+                <div class="z-col">
+                    <info-window infoWidth="100%" infoHeight="100%" headerTitle="示踪剂报告" isShowMaxBtn>
+                        <iframe :src="imageSecond?(imageSecond+'#toolbar=0'):''" style="width: 100%;height: 100%;" v-if="imageSecond"></iframe>
+                    </info-window>
+                </div>
             </div>
-            <div class="v2">
-                <pagePanel headerTitle="示踪剂信息" class="z-pagePanel" show-btn>
-                    <el-image :src="imageThird"><div slot="error"></div></el-image>
-                </pagePanel>
+            <div class="z-row">
+                <div class="z-col">
+                    <info-window infoWidth="100%" infoHeight="100%" headerTitle="示踪剂信息" isShowMaxBtn>
+                        <!-- <el-image :src="imageThird"><div slot="error"></div></el-image> -->
+                        <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;"
+                            height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+                            <el-table-column type="index" label="序号"></el-table-column>
+                            <el-table-column prop="wellNo" label="井号"></el-table-column>
+                            <el-table-column prop="days" :label="`见剂时间\n(d)`"></el-table-column>
+                            <el-table-column prop="wellKm" :label="`井距\n(m)`"></el-table-column>
+                            <el-table-column prop="tracerSpeed" :label="`见剂速度\n(m/d)`"></el-table-column>
+                            <el-table-column prop="summitThickness" :label="`峰值浓度\n(ug/L)`"></el-table-column>
+                            <el-table-column prop="peakWidth" :label="`峰值宽度\n(d)`"></el-table-column>
+                            <el-table-column prop="recoveryRatio" :label="`回采率\n(%)`"></el-table-column>
+                            <el-table-column prop="recoveryRat" :label="`回采率比例\n(%)`"></el-table-column>
+                        </el-table>
+                    </info-window>
+                </div>
             </div>
         </div>
     </div>
@@ -56,6 +74,8 @@
                 ],
                 //单选按钮选中项
                 selectPosition: '',
+                
+                tableData:[],
             };
         },
         watch: {
@@ -76,6 +96,7 @@
                 };
                 tracer(request).then((res) => {
                     if (res.data.code == 200) {
+                        this.tableData=res.data.data.tracerInfos;
                         let first = res.data.data.tracePic;
                         let firstType = res.data.data.tracePicType;
                         let second = res.data.data.report;
@@ -104,7 +125,7 @@
             doDownLoad(){
                 if (this.imageFirst) downFile(this.imageFirst, fileName + '示踪剂结果');
                 if (this.imageSecond) downFile(this.imageSecond, fileName + '示踪剂报告');
-                if (this.imageThird) downFile(this.imageThird, fileName + '示踪剂信息');
+                // if (this.imageThird) downFile(this.imageThird, fileName + '示踪剂信息');
             }
         }
     };
@@ -123,22 +144,28 @@
             width:100%;
             height:calc(100% - 60px);
             overflow-y: scroll;
-            .v1{
-                height: 600px;
+            overflow-x: hidden;
+            .z-row{
+                height: 500px;
                 display: flex;
+                .z-col{
+                    flex:1;
+                    margin-right:20px;
+                }
                 margin-bottom:20px;
             }
-            .v2{
-                margin-right:20px;
-                height:600px;
-                overflow: auto;
-            }
-            .z-pagePanel{
-                flex:1;
-                margin-top:0!important;
-                height: 100%;
-                overflow: auto;
-            }
+            #tableData{
+                ::v-deep .el-table__header-wrapper .cell{
+                    height: auto;
+                    line-height: 18px;
+                    white-space: pre;
+                }
+                ::v-deep .cell:empty{
+                    &::before {
+                        content: '-';
+                    } 
+                }
+            } 
         }
     }
 </style>

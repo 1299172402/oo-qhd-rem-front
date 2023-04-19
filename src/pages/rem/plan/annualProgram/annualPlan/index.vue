@@ -11,7 +11,7 @@
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>时间：</span>
-                    <el-date-picker v-model="searchForm.selectDate" :clearable="false" unlink-panels type="daterange" format="yyyy-MM-dd" value-format="yyyy-MM-dd" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+                    <el-date-picker v-model="searchForm.selectDate" :clearable="false" unlink-panels type="daterange" format="yyyy-MM-dd" value-format="yyyy-MM-dd" range-separator="至 " start-placeholder="开始日期" end-placeholder="结束日期" style="width:260px;"></el-date-picker>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>产量计划类型：</span>
@@ -31,14 +31,14 @@
                         <el-option v-for="(item,index) in rollingForecastSelect" :key="index" :label="item.rollForecastName" :value="item.rollForecastVersion"></el-option>
                     </el-select>
                 </div>
-                <div style="margin-right:15px;margin-bottom:10px;" v-if="pageType == '原油产量'">
+                <div style="margin-right:15px;margin-bottom:10px;">
+                    <el-button icon="el-icon-search" type="primary" style="margin-left:10px;" @click="doSearch">搜索</el-button>
+                </div>
+                <div style="margin-left:auto;margin-bottom:10px;" v-if="pageType == '原油产量'">
                     <span>单位选择：</span>
-                    <el-select v-model="searchForm.selectUnitOfProduction" placeholder="请选择" style="width: 100px;">
+                    <el-select v-model="searchForm.selectUnitOfProduction" placeholder="请选择" style="width: 100px;" @change="doSearch">
                         <el-option v-for="(item,index) in unitOfProduction" :key="index" :label="item.label" :value="item.value"></el-option>
                     </el-select>
-                </div>
-                <div style="margin-bottom:10px;">
-                    <el-button icon="el-icon-search" type="primary" style="margin-left:10px;" @click="doSearch">搜索</el-button>
                 </div>
             </div>
         </headerSearch>
@@ -46,7 +46,11 @@
             <pagePanelNew class="pagePanelNew" id="pagePanelNew">
                 <el-tabs class="g-pageHeader" v-model="pageType" topline v-if="isLoadChildCommon">
                     <el-tab-pane label="原油产量" name="原油产量">
-                        <crudeOil v-if="pageType=='原油产量'" :searchForm="searchForm" ref="childComponent"></crudeOil>
+                        <crudeOil v-if="pageType=='原油产量'&&searchForm.theYieldComponentsValue==1" :searchForm="searchForm" ref="childComponent"></crudeOil>
+                        <basicYield v-if="pageType=='原油产量'&&searchForm.theYieldComponentsValue==2" :searchForm="searchForm" ref="childComponent"></basicYield>
+                        <measureProduction v-if="pageType=='原油产量'&&searchForm.theYieldComponentsValue==3" :searchForm="searchForm" ref="childComponent"></measureProduction>
+                        <adjustingWellProduction v-if="pageType=='原油产量'&&searchForm.theYieldComponentsValue==4" :searchForm="searchForm" ref="childComponent"></adjustingWellProduction>
+                        <devWellProduction v-if="pageType=='原油产量'&&searchForm.theYieldComponentsValue==5" :searchForm="searchForm" ref="childComponent"></devWellProduction>
                     </el-tab-pane>
                     <el-tab-pane label="天然气产量" name="天然气产量">
                         <naturalGas v-if="pageType=='天然气产量'" :searchForm="searchForm" ref="childComponent"></naturalGas>
@@ -63,14 +67,23 @@
 <script>
     import { fetchOilFields } from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import { getRollForecastVersion } from '@/api/oilDeposit/rem-04/plan.js';
-    import crudeOil from './components/crudeOil.vue'
-    import naturalGas from './components/naturalGas.vue'
-    import waterInjectionVolume from './components/waterInjectionVolume.vue'
+    import crudeOil from './crudeOil/index.vue'
+    import naturalGas from './naturalGas/index.vue'
+    import waterInjectionVolume from './waterInjectionVolume/index.vue'
+    
+    import basicYield from './crudeOil/basicYield.vue'
+    import measureProduction from './crudeOil/measureProduction.vue'
+    import adjustingWellProduction from './crudeOil/adjustingWellProduction.vue'
+    import devWellProduction from './crudeOil/devWellProduction.vue'
     export default {
         components: {
             crudeOil,
             naturalGas,
             waterInjectionVolume,
+            basicYield,
+            measureProduction,
+            adjustingWellProduction,
+            devWellProduction
         },
         data() {
             return {

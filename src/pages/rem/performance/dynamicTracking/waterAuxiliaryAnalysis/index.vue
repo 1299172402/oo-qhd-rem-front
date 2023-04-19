@@ -85,7 +85,6 @@
     <pagePanelNew
       :style="{ height: this.currentModule == 'waterReport' ? 'auto' : 'calc(100% - 100px)' }"
       class="g-w100"
-      show-btn
     >
       <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
         <el-tab-pane

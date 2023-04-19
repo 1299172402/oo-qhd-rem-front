@@ -6,6 +6,7 @@
 import * as echarts from "echarts";
 import { mapState } from "vuex";
 import resize from './mixins/resize'
+import FileSaver from "file-saver";
 export default {
     mixins: [resize],
     props: {
@@ -200,7 +201,15 @@ export default {
                     return false
                 }
             }
-        }
+        },
+        chartDownLoad(fileName) {
+          let res = this.chart.getDataURL({
+              type: 'png',
+              pixelRatio:1.5,
+              backgroundColor: '#022644'
+          })
+          FileSaver.saveAs(res, fileName);
+        },
     },
     beforeDestroy () {
         if (!this.chart) {

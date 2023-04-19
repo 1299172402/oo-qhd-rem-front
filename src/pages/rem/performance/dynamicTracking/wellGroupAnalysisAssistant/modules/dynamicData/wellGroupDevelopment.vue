@@ -1,12 +1,33 @@
 <!--井组开发曲线-->
 <template>
-    <div class="z-main" ref="zMain">
+    <div class="z-main">
         <div class="z-search">
             <span>日期：</span>
             <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
         </div> 
         <div class="z-echarts">
-            <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
+            <info-window infoWidth="100%" :infoHeight="height+'px'" headerTitle="井组开发曲线图" isShowMaxBtn style="margin-top:0;">
+                <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
+            </info-window>
+            <div class="develop">
+                <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
+            </div>
+            <info-window infoWidth="100%" infoHeight="500px" headerTitle="井组开发曲线" isShowMaxBtn v-show="isDevelop">
+                <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;"
+                    height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+                    <el-table-column type="index" label="序号"></el-table-column>
+                    <el-table-column prop="time" label="时间"> </el-table-column>
+                    <el-table-column prop="fluidProdDaily" :label="`日产液\n(m3)`"></el-table-column>
+                    <el-table-column prop="oilProdDail" :label="`日产油\n(m3)`"></el-table-column>
+                    <el-table-column prop="waterRatio" :label="`含水率\n(%)`"></el-table-column>
+                    <el-table-column prop="gasOilRatio" :label="`气油比\n(m3/m3)`"></el-table-column>
+                    <el-table-column prop="wellSumtOil" :label="`油井总井数\n(口)`"></el-table-column>
+                    <el-table-column prop="wellStartOil" :label="`油井开井数\n(口)`"></el-table-column>
+                    <el-table-column prop="wellSumInj" :label="`水井总井数\n(口)`"></el-table-column>
+                    <el-table-column prop="wellStartInj" :label="`水井开井数\n(口)`"></el-table-column>
+                    <el-table-column prop="injData" :label="`日注水\n(m3)`"></el-table-column>
+                </el-table>
+            </info-window>
         </div>   
     </div>
 </template>
@@ -15,6 +36,7 @@
     import Echarts from "@/components/tools/Echarts/index.vue";
     import {wellGroupDevLineCharts,} from '@/api/oilDeposit/rem-01/wellgroupdynamicanalysis.js';
     import FileSaver from "file-saver";
+    import {exportExcel} from '@/lib/exportExcel.js';
     export default {
         components: {
             Echarts,
@@ -24,16 +46,15 @@
             oilFieldId: {},
             //区块id
             blockId: {},
-            //层系id
-            layerId: {},
+            //井组切换
+            wellCentre:{},
             //井组id
             wellGroupId: {}
         },
         data() {
             return {
-                //选择时间
-                selectData: [new Date('2021-01-01').format('yyyy-MM-dd'), new Date('2021-03-01').format('yyyy-MM-dd')],
-                src: "static/img/wellGroupAnalysisAssistant/permeabilityDistribution.png",
+                height:'',
+                selectData: [],
                 option: {
                     title: {},
                     tooltip: {
@@ -514,118 +535,19 @@
                     ],
                     series: []
                 },
+                isDevelop:false,//是否展示表格
+                tableData: [],
             };
         },
         mounted() {
+            this.height=document.getElementsByClassName('z-echarts')[0].scrollHeight -50;
+            console.log(this.height);
+            
             let year = new Date().getFullYear();
             this.selectData = [new Date(year + '-01-01').format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
-            //初始化调用搜索
             this.doSearch();
         },
         methods: {
-            //根据信息生成Echarts图 yMessage y轴信息 xMessage x轴信息 dataMessage 数据信息
-            generateEcharts(yMessage, xMessage, dataMessage) {
-                //图例模块
-                let legend = {
-                    data: [yMessage],
-                    left: "4%",
-                    textStyle: {
-                        color: "#8FA4CC",
-                        fontSize: 14,
-                    },
-                    icon: 'rect',
-                    itemWidth: 12,
-                    itemHeight: 6,
-                    itemGap: 14,
-                };
-                //提示框
-                let tooltip = {
-                    trigger: "axis",
-                    axisPointer: {
-                        type: "shadow",
-                    },
-                };
-                //x轴信息
-                let xAxis = {
-                    type: "category",
-                    data: xMessage,
-                    axisLabel: {
-                        show: true,
-                        color: "#8FA4CC",
-                        textStyle: {
-                            fontSize: 14,
-                        },
-                    },
-                    axisTick: {
-                        show: false,
-                    },
-                    axisLine: {
-                        lineStyle: {
-                            color: "rgba(255,255,255,.16)",
-                        },
-                    },
-                };
-                //y轴信息
-                let yAxis = {
-                    name: yMessage,
-                    nameLocation: "center",
-                    nameRotate: 0,
-                    nameTextStyle: {
-                        color: "#fff",
-                    },
-                    axisLabel: {
-                        show: false,
-                        color: "#8FA4CC",
-                    },
-                    axisTick: {
-                        show: false,
-                    },
-                    axisLine: {
-                        show: false,
-                        lineStyle: {
-                            color: "#979797",
-                        },
-                    },
-                    splitLine: {
-                        show: true,
-                        lineStyle: {
-                            color: "rgba(255,255,255,.16)",
-                            type: "dashed",
-                        },
-                    },
-                };
-                //数据信息
-                let series = {
-                    name: yMessage,
-                    type: "line",
-                    data: dataMessage,
-                    label: {
-                        show: false,
-                        color: "#fff",
-                        fontSize: 14,
-                    },
-                    lineStyle: {
-                        color: "#24DEFF",
-                    },
-                    symbol: "circle",
-                    symbolSize: 5,
-                    itemStyle: {
-                        color: "#24DEFF",
-                        borderColor: "rgba(255,255,255,0.32)",
-                        borderWidth: 2,
-                        borderType: "solid",
-                    },
-                };
-                //Echarts 对象
-                let option = {
-                    legend: legend,
-                    tooltip: tooltip,
-                    xAxis: xAxis,
-                    yAxis: yAxis,
-                    series: series,
-                };
-                return option;
-            },
             //根据条件搜索 - 生成相应的图形 
             doSearch() {
                 let beginDate = this.selectData[0];
@@ -633,9 +555,9 @@
                 let request = {
                     beginDate: beginDate,
                     endDate: endDate,
-                    fieldId: this.blockId,
-                    fieldLayerId: this.layerId,
                     oilFieldId: this.oilFieldId,
+                    fieldId: this.blockId,
+                    wellCentre:this.wellCentre,
                     wellGroupId: this.wellGroupId,
                 }
                 wellGroupDevLineCharts(request).then((res) => {
@@ -643,6 +565,9 @@
                     //let legendData = [];
                     let xSet = new Set();
                     if (res.data.code == 200) {
+                        if(res.data.data&&res.data.data.wellGroupTableList.length){
+                            this.tableData=res.data.data.wellGroupTableList;
+                        }
                         let lineCharts = res.data.data.charts;
                         lineCharts.forEach((chart, index) => {
                             let line = chart.linearDataSets;
@@ -724,7 +649,21 @@
                     fileName = this.wellGroupName + fileName;
                 }
                 FileSaver.saveAs(res, fileName);
-            }
+            },
+            //表格-展示||隐藏
+            tapDevelop(){
+                this.isDevelop=!this.isDevelop;
+                if(this.isDevelop){
+                    this.$nextTick(()=>{
+                        let parentDom=document.getElementsByClassName('z-echarts')[0];
+                        parentDom.scrollBy({top:this.height,behavior: 'smooth'});
+                    })
+                }
+            },
+            //表格导出
+            doDownTable() {
+                exportExcel('#tableData', '原油产量');
+            },
         },
     };
 </script>
@@ -739,6 +678,8 @@
         .z-echarts{
             width:100%;
             height:calc(100% - 60px);
+            overflow-y: scroll;
+            padding-right:20px;
         }
         
         #tableData{

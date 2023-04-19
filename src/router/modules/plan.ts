@@ -16,40 +16,23 @@ export default [
                 meta: { title: "中长期开发规划", icon: "icon" },
             },
             {
+                path: "annualProgramManagement",
+                name: "annualProgramManagement",
+                component: () => import("@/pages/rem/plan/annualProgram/annualPlan/index.vue"),
+                meta: { title: "年度计划管理", icon: "icon" },
+            },
+            {
+                hidden: true,
+                path: "waterInjectionVolumeDetail",
+                name: "waterInjectionVolumeDetail",
+                component: () => import("@/pages/rem/plan/annualProgram/annualPlan/waterInjectionVolume/detail.vue"),
+                meta: { title: "油田注水量详情", icon: "icon" },
+            },
+            {
                 path: "newPlanIndex",
                 name: "newPlanIndex",
                 component: () => import("@/pages/rem/plan/newPlanIndex.vue"),
                 meta: { title: "措施管理", icon: "icon" },
-            },
-            {
-                path: "annualProgramManagement",
-                name: "annualProgramManagement",
-                component: () => import("@/pages/rem/plan/annualProgram/AnnualProgramManagement.vue"),
-                meta: { title: "年度计划管理", icon: "icon" },
-            },
-            //油藏管理-规划计划管理-年度计划管理-原油产量详情
-            {
-                hidden: false,
-                path: "CrudeOutput",
-                name: "CrudeOutput",
-                component: () => import("@/pages/rem/plan/annualProgram/CrudeOutput.vue"),
-                meta: { title: "原油产量详情", icon: "icon" },
-            },
-            //油藏管理-规划计划管理-年度计划管理-油田注水量详情
-            {
-                hidden: false,
-                path: "OilfieldWaterInjectionManagement",
-                name: "OilfieldWaterInjectionManagement",
-                component: () => import("@/pages/rem/plan/annualProgram/OilfieldWaterInjectionManagement.vue"),
-                meta: { title: "油田注水量详情", icon: "icon" },
-            },
-            //油藏管理-规划计划管理-年度计划管理-两提一降
-            {
-                hidden: false,
-                path: "index",
-                name: "index",
-                component: () => import("@/pages/rem/plan/annualProgram/index.vue"),
-                meta: { title: "两提一降", icon: "icon" },
             },
             {
                 hidden: true,
@@ -78,6 +61,14 @@ export default [
                 component: () => import("@/pages/rem/plan/effectofMeasures.vue"),
                 meta: { title: "人员措施" },
             },
+            //油藏管理-规划计划管理-年度计划管理-两提一降
+            {
+                path: "index",
+                name: "index",
+                component: () => import("@/pages/rem/plan/annualProgram/index.vue"),
+                meta: { title: "两提一降", icon: "icon" },
+            },
+            
         ],
     },
 ];

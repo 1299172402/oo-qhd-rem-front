@@ -9,9 +9,44 @@
             </el-radio-group>
         </div> 
         <div class="z-echarts">
-            <div v-for="(chart,index) in wellOptions" :key="chart.wellId">
-                <Echart :chart-data="chart.option" :ref="'echartDown'+index" style="height: 500px"></Echart>
-            </div>  
+            <div v-for="(chart,index) in wellOptions" :key="index" >
+                <info-window infoWidth="100%" infoHeight="600px" :headerTitle="chart.wellNo+'对应曲线图'" isShowMaxBtn style="margin-top:0;margin-bottom:10px;">
+                    <Echart :ref="'echartDown'+index" :chart-data="chart.option" height="100%"></Echart>
+                </info-window>
+            </div>
+            <div class="develop">
+                <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
+            </div>
+            <info-window infoWidth="100%" infoHeight="450px" headerTitle="水井对应曲线表" isShowMaxBtn v-show="isDevelop" style="margin-top:10px;">
+                <el-table id="tableData1" :data="wellInjCurves" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;"
+                    height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+                    <el-table-column type="index" label="序号"></el-table-column>
+                    <el-table-column prop="time" label="时间"> </el-table-column>
+                    <el-table-column prop="injDaily" :label="`日注水量\n(m³)`"></el-table-column>
+                    <el-table-column prop="cgsPress" :label="`套压\n(Mpa)`"></el-table-column>
+                    <el-table-column prop="whInjPress" :label="`井口压力\n(Mpa)`"></el-table-column>
+                    <el-table-column prop="injDuration" :label="`注入时间\n(h)`"></el-table-column>
+                    <el-table-column prop="juSum" :label="`水聚总量\n(m³)`"></el-table-column>
+                    <el-table-column prop="injPlan" :label="`日配注量\n(m³)`"></el-table-column>
+                </el-table>
+            </info-window>
+            <info-window infoWidth="100%" infoHeight="450px" headerTitle="油井对应曲线表" isShowMaxBtn v-show="isDevelop" style="margin-top:10px;">
+                <el-table id="tableData2" :data="wellOilCurves" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;"
+                    height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+                    <el-table-column type="index" label="序号"></el-table-column>
+                    <el-table-column prop="time" label="时间"> </el-table-column>
+                    <el-table-column prop="flowingPress" :label="`流压\n(Mpa)`"></el-table-column>
+                    <el-table-column prop="oilPress" :label="`油压\n(Mpa)`"></el-table-column>
+                    <el-table-column prop="pumpFreq" :label="`泵频率\n(Hz)`"></el-table-column>
+                    <el-table-column prop="whTemp" :label="`井口温度\n(OC)`"></el-table-column>
+                    <el-table-column prop="prodDuration" :label="`生产时间\n(h)`"></el-table-column>
+                    <el-table-column prop="waterRatio" :label="`含水\n(%)`"></el-table-column>
+                    <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`"></el-table-column>
+                    <el-table-column prop="oilProdDaily" :label="`日产油\n(m³)`"></el-table-column>
+                    <el-table-column prop="gasProdDaily" :label="`日产气\n(万方)`"></el-table-column>
+                    <el-table-column prop="gasOilRatio" :label="`气油比\n(m³/m³)`"></el-table-column>
+                </el-table>
+            </info-window>
         </div>
     </div>
 </template>
@@ -20,6 +55,7 @@
     import Echart from "@/components/tools/Echarts/index.vue";
     import { proInjectLineCharts } from '@/api/oilDeposit/rem-01/wellgroupdynamicanalysis.js';
     import FileSaver from "file-saver";
+    import {exportExcel} from '@/lib/exportExcel.js';
     export default {
         components: {
             Echart,
@@ -29,8 +65,8 @@
             oilFieldId: {},
             //区块id
             blockId: {},
-            //层系id
-            layerId: {},
+            //井组切换
+            wellCentre:{},
             //井组id
             wellGroupId: {}
         },
@@ -803,13 +839,15 @@
                 },
                 //井组中井信息
                 wellOptions: [],
-                wellList: []
+                wellList: [],
+                isDevelop:false,//是否展示表格
+                wellInjCurves:[],//水井对应表
+                wellOilCurves:[],//油井对应表
             };
         },
         mounted() {
             let year = new Date().getFullYear();
             this.selectDate = [new Date(year + '-01-01').format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
-            //初始化调用搜索
             this.doSearch();
         },
         methods: {
@@ -821,14 +859,16 @@
                     beginDate: beginDate,
                     endDate: endDate,
                     fieldId: this.blockId,
-                    fieldLayerId: this.layerId,
                     oilFieldId: this.oilFieldId,
                     wellGroupId: this.wellGroupId,
+                    wellCentre:this.wellCentre
                 }
                 this.wellOptions = [];
                 this.wellList = [];
                 proInjectLineCharts(request).then((res) => {
                     if (res.data.code == 200) {
+                        this.wellInjCurves=res.data.data.wellInjCurves;
+                        this.wellOilCurves=res.data.data.wellOilCurves;
                         let resList = res.data.data.productionInjectionList;
                         resList.forEach((resItem, index) => {
                             let arrItem = {};
@@ -943,7 +983,7 @@
                     })
                 }
                 let xData = Array.from(xSet);
-                resOption.title = title;
+                // resOption.title = title;
                 resOption.legend.data = legendOil;
                 resOption.xAxis[0].data = xData;
                 resOption.xAxis[1].data = xData;
@@ -1035,12 +1075,22 @@
                     })
                 }
                 let xData = Array.from(xSet);
-                resOption.title = title;
+                // resOption.title = title;
                 resOption.legend.data = legendInj;
                 resOption.xAxis[0].data = xData;
                 resOption.xAxis[1].data = xData;
                 resOption.series = seriesDataInj;
                 return resOption;
+            },
+            //表格-展示||隐藏
+            tapDevelop(){
+                this.isDevelop=!this.isDevelop;
+                if(this.isDevelop){
+                    this.$nextTick(()=>{
+                        let parentDom=document.getElementsByClassName('z-echarts')[0];
+                        parentDom.scrollBy({top:520,behavior: 'smooth'});
+                    })
+                }
             },
             //点击 切换数组顺序
             changeWell(wellId) {
@@ -1070,7 +1120,12 @@
                     fileName = this.wellOptions[i].wellNo + '—' + fileName;
                     FileSaver.saveAs(res, fileName);
                 }
-            }
+            },
+            //表格导出
+            doDownTable() {
+                exportExcel('#tableData1', '水井对应曲线表');
+                exportExcel('#tableData2', '油井对应曲线表');
+            },
         },
     };
 </script>
@@ -1088,6 +1143,19 @@
             width:100%;
             height:calc(100% - 60px);
             overflow-y: scroll;
+            padding-right:20px;
         }
+        #tableData1,#tableData2{
+            ::v-deep .el-table__header-wrapper .cell{
+                height: auto;
+                line-height: 18px;
+                white-space: pre;
+            }
+            ::v-deep .cell:empty{
+                &::before {
+                    content: '-';
+                } 
+            }
+        } 
     }
 </style>

@@ -2,19 +2,25 @@
 <template>
     <page-panel-new style="height:100%;margin-top:0;">
         <div class="pageHeader"  style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
-            <span>{{ oilFeildName }}注水计划管理</span>
+            <span>{{ searchForm.oilFeildName }}注水计划管理</span>
             <el-button type="primary" style="height:30px;" @click="switchToBack">返回</el-button>
         </div>
         <div class="z-main">
             <div class="rowBox">
                 <div class="row" style="margin-right:20px;">
                     <info-window style="margin-top:0;" infoWidth="100%" infoHeight="500px" :headerTitle="'老井转注 井次：' +(oldWellCount ? oldWellCount : 0) +'口 注入量：' +(oldInjectionCount ? oldInjectionCount : 0) + 'm³' " isShowMaxBtn>
-                        <Echart :chart-data="oldWellLineChart" height="100%"></Echart>
+                        <div slot-name="titleContent">
+                            <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downEchart(1)">下载</el-button>
+                        </div>
+                        <Echart ref="echartChart1" :chart-data="oldWellLineChart" height="100%"></Echart>
                     </info-window>
                 </div>
                 <div class="row">
                     <info-window style="margin-top:0;" infoWidth="100%" infoHeight="500px" :headerTitle="'新井投注 新井：' +(newWellCount ? newWellCount : 0) +'口 注入量：' +(newInjectionCount ? newInjectionCount : 0) +'m³'" isShowMaxBtn>
-                        <Echart :chart-data="newWellLineChart" height="100%"></Echart>
+                        <div slot-name="titleContent">
+                            <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downEchart(2)">下载</el-button>
+                        </div>
+                        <Echart ref="echartChart2" :chart-data="newWellLineChart" height="100%"></Echart>
                     </info-window>
                 </div>
             </div>
@@ -31,12 +37,7 @@
         },
         data() {
             return {
-                //油田id
-                oilFieldId: '',
-                //油田名
-                oilFeildName: '',
-                //选择单位
-                unitType: '',
+                searchForm:{},
                 //老井转注 井数
                 oldWellCount: 0,
                 //老井转注 注入量
@@ -45,8 +46,6 @@
                 newWellCount: 0,
                 //新井转注 注入量
                 newInjectionCount: 0,
-                //年份
-                selectYear: new Date().format('yyyy'),
                 //老井转注 折线图1
                 oldWellLineChart: {
                     color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#9A72FF', '#DA835E'],
@@ -54,16 +53,6 @@
                         trigger: 'axis',
                         axisPointer: {
                             type: 'shadow',
-                        },
-                    },
-                    toolbox: {
-                        show: true,
-                        feature: {
-                            saveAsImage: {
-                                name: '老井转注',
-                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-                                backgroundColor: '#022644',
-                            },
                         },
                     },
                     legend: {
@@ -174,16 +163,6 @@
                             type: 'shadow',
                         },
                     },
-                    toolbox: {
-                        show: true,
-                        feature: {
-                            saveAsImage: {
-                                name: '新井投注',
-                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-                                backgroundColor: '#022644',
-                            },
-                        },
-                    },
                     legend: {
                         data: [],
                         textStyle: {
@@ -283,37 +262,28 @@
                     ],
                     series: [],
                 },
-                canDownload: false,
             };
         },
         mounted() {
+            this.searchForm=this.$route.params;
             this.initData();
         },
         methods: {
-            //返回
-            switchToBack() {
-                this.$router.go(-1);
-            },
             async initData() {
-                //获得油田id
-                this.oilFieldId = this.$route.params.oilFieldId;
-                //获得油田名称
-                this.oilFeildName = this.$route.params.oilFieldName;
-                //获得单位
-                this.unitType = this.$route.params.unitType;
-                //获得下载权限
-                this.canDownload = this.$route.params.canDownload;
-                this.selectYear = this.$route.params.selectYear;
-                //控制权限内容
-                this.downPower(this.canDownload);
-                this.getOldToInjectionChart(this.oilFieldId);
-                this.getNewToInjectionChart(this.oilFieldId);
+                this.getOldToInjectionChart();
+                this.getNewToInjectionChart();
             },
             //获得老井转注的折线图
-            getOldToInjectionChart(oilFieldId) {
+            getOldToInjectionChart() {
+                let date=this.searchForm.selectDate[1];
                 let request = {
-                    oilFieldId: oilFieldId,
-                    year: this.selectYear,
+                    oilFieldId: this.searchForm.selectOilField,
+                    oilFieldName: this.searchForm.oilFieldName,
+                    year:date.split('-')[0],
+                    beginDate: this.searchForm.selectDate[0],
+                    endDate: this.searchForm.selectDate[1],
+                    planTypeCode:this.searchForm.planTypeCode,
+                    rollForecastVersion:this.searchForm.rollForecastVersion
                 };
                 oldToInjectionChart(request).then((res) => {
                     if (res.data.code == 200) {
@@ -321,7 +291,6 @@
                         let legendData = [];
                         //数据数据
                         let seriesData = [];
-
                         //获得调数据
                         let chartDataS = res.data.data.chart.linearDataSets;
                         if (chartDataS != null) {
@@ -334,7 +303,6 @@
                         //图例数据
                         this.oldWellLineChart.legend.data = legendData;
                         this.oldWellLineChart.series = seriesData;
-
                         //井口次
                         this.oldWellCount = res.data.data.times;
                         //增油量
@@ -343,10 +311,16 @@
                 });
             },
             //获得新井转注数据
-            getNewToInjectionChart(oilFieldId) {
+            getNewToInjectionChart() {
+                let date=this.searchForm.selectDate[1];
                 let request = {
-                    oilFieldId: oilFieldId,
-                    year: this.selectYear,
+                    oilFieldId: this.searchForm.selectOilField,
+                    oilFieldName: this.searchForm.oilFieldName,
+                    year:date.split('-')[0],
+                    beginDate: this.searchForm.selectDate[0],
+                    endDate: this.searchForm.selectDate[1],
+                    planTypeCode:this.searchForm.planTypeCode,
+                    rollForecastVersion:this.searchForm.rollForecastVersion
                 };
                 newToInjectionChart(request).then((res) => {
                     if (res.data.code == 200) {
@@ -404,10 +378,19 @@
                 series.data = seriesData;
                 return series;
             },
-            //下载echarts 隐藏 显示
-            downPower(flag) {
-                this.oldWellLineChart.toolbox.show = flag;
-                this.newWellLineChart.toolbox.show = flag;
+            //返回
+            switchToBack() {
+                this.$router.go(-1);
+            },
+            //下载echarts
+            downEchart(type) {
+                if(type==1){
+                    let fileName='老井转注 井次：' +(this.oldWellCount ? this.oldWellCount : 0) +'口 注入量：' +(this.oldInjectionCount ? this.oldInjectionCount : 0) + 'm³';
+                    this.$refs.echartChart1.chartDownLoad(fileName);
+                }else{
+                    let fileName='新井投注 新井：' +(this.newWellCount ? this.newWellCount : 0) +'口 注入量：' +(this.newInjectionCount ? this.newInjectionCount : 0) +'m³';
+                    this.$refs.echartChart2.chartDownLoad(fileName);
+                }
             },
         },
     };

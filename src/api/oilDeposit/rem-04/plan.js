@@ -42,3 +42,44 @@ export function getRollForecastVersion(request) {
 }
 
 
+//年度计划管理-天然气产量跟踪表格
+export function getGasTable(request) {
+  return Axios({
+    url: `${baseUrl}//oilFieldManagePlanController/getGasTable`,
+    method: "post",
+    data: request,
+  });
+}
+//年度计划管理-基础产量表格
+export function oldWellTable(request) {
+  return Axios({
+    url: `${baseUrl}//oilFieldManagePlanController/oldWellTable`,
+    method: "post",
+    data: request,
+  });
+}
+//年度计划管理-措施井产量表格
+export function measureTable(request) {
+  return Axios({
+    url: `${baseUrl}/oilFieldManagePlanController/measureTable`,
+    method: "post",
+    data: request,
+  });
+}
+//年度计划管理-措施井产量表格
+export function adjustWellTable(request) {
+  return Axios({
+    url: `${baseUrl}/oilFieldManagePlanController/adjustWellTable`,
+    method: "post",
+    data: request,
+  });
+}
+//年度计划管理-措施井产量表格
+export function devWellTable(request) {
+  return Axios({
+    url: `${baseUrl}/oilFieldManagePlanController/devWellTable`,
+    method: "post",
+    data: request,
+  });
+}
+
