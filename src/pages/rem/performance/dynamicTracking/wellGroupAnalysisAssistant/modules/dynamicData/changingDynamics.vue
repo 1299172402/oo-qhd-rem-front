@@ -100,6 +100,12 @@ export default {
           return time.getTime() > Date.now();
         },
       },
+      picker: {
+        disabledDate: (time) => {
+          let data = new Date(this.queryData.secondMonth).getTime();
+          return time.getTime() > data - 24 * 60 * 60 * 1000;
+        },
+      },
       itemKey: 0,
       tableData: [],
       queryData: {
@@ -149,7 +155,7 @@ export default {
       });
     },
     choiceendtime() {
-      if (new Date(this.queryData.secondMonth) < new Date(this.queryData.firstMonth)) {
+      if (new Date(this.queryData.secondMonth) <= new Date(this.queryData.firstMonth)) {
         let sj = new Date(this.queryData.secondMonth).getTime() - 24 * 60 * 60 * 1000;
         var m = new Date(sj).getMonth() + 1;
         var y = new Date(sj).getFullYear();

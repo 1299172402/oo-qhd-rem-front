@@ -28,9 +28,9 @@
         </el-date-picker>
       </el-form-item>
     </div>
-    <el-table highlight :key="itemKey" :data="tableData" height="calc(100% - 101px)" style="margin-top: -30px">
+    <el-table highlight :key="itemKey"  :cell-style="{ padding: '3px', 'text-align': 'center' }" :data="tableData" height="500px" style="margin-top: -30px">
       <el-table-column type="index" label="序号" width="50px" header-align="center"></el-table-column>
-      <el-table-column prop="wellGroupName" label="井组" header-align="center"></el-table-column>
+      <el-table-column prop="wellGroupName" label="井组" width="230px" header-align="center"></el-table-column>
       <el-table-column prop="yearMonth" label="时间" header-align="center"></el-table-column>
       <el-table-column prop="wellCount" label="总井数" header-align="center"></el-table-column>
       <el-table-column prop="oilWellsCount" label="油井数" header-align="center"></el-table-column>
@@ -42,8 +42,12 @@
         <el-table-column prop="effectOneWay" label="单向" header-align="center"> </el-table-column>
         <el-table-column prop="effectDoubleWay" label="双向" header-align="center"> </el-table-column>
         <el-table-column prop="effectManyWay" label="多向" header-align="center"> </el-table-column>
-        <el-table-column prop="waterWellsCount" label="小计" header-align="center"> </el-table-column>
-        <el-table-column prop="effectControlledWayCount" label="受控率(%)" header-align="center"> </el-table-column>
+        <el-table-column prop="effectControlledWayCount" label="小计" header-align="center"> </el-table-column>
+        <el-table-column prop="effectControlledWayRate" label="受控率(%)" header-align="center"> 
+          <template slot-scope="scoped" >
+            {{scoped.row.effectControlledWayRate * 100}}
+          </template>
+        </el-table-column>
       </el-table-column>
       <el-table-column prop="effectUncontrolledWay" label="非受控井" header-align="center"></el-table-column>
     </el-table>
@@ -119,7 +123,7 @@ export default {
       this.firstMonth = this.queryData.firstMonth;
       this.itemKey++;
       let request = {
-        ogfId: this.oilFieldId,
+        // ogfId: this.oilFieldId,
         blockId: this.blockId,
         fieldLayerId: this.layerId,
         wellGroupId: this.wellGroupId,
@@ -130,18 +134,19 @@ export default {
       };
       queryInjectionWellNetworkConditionsList(request).then((res) => {
         if (res.data.code == 200) {
-          console.log(res);
-          this.tableData = res.data.data.data;
+          this.tableData = res.data.data.rows;
+          this.total = res.data.data.total;
+
         } else {
           this.$message.error("系统错误请重新尝试或联系运维人员！");
         }
       });
     },
     changepage(){
-      this.doSearch
+      this.doSearch()
     },
     choiceendtime() {
-      if (new Date(this.queryData.secondMonth) < new Date(this.queryData.firstMonth)) {
+      if (new Date(this.queryData.secondMonth) <= new Date(this.queryData.firstMonth)) {
         let sj = new Date(this.queryData.secondMonth).getTime() - 24 * 60 * 60 * 1000;
         var m = new Date(sj).getMonth() + 1;
         var y = new Date(sj).getFullYear();

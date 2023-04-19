@@ -158,15 +158,14 @@ export default {
       };
       getWellGroupInjectionDynamic(request).then((res) => {
         if (res.data.code == 200) {
-          this.tableData = res.data.data.rows;
-          this.total = res.data.data.total;
+           this.tableData = res.data.data.data;
         }else{
             this.$message.error("系统错误请重新尝试或联系运维人员！");
         }
       });
     },
     choiceendtime() {
-      if (new Date(this.queryData.secondMonth) < new Date(this.queryData.firstMonth)) {
+      if (new Date(this.queryData.secondMonth) <= new Date(this.queryData.firstMonth)) {
         let sj = new Date(this.queryData.secondMonth).getTime() - 24 * 60 * 60 * 1000;
         var m = new Date(sj).getMonth() + 1;
         var y = new Date(sj).getFullYear();
