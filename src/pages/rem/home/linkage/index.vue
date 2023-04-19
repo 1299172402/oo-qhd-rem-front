@@ -17,7 +17,8 @@
 
 <script>
 import linkageBox from "./linkageBox/index.vue";
-
+const env = import.meta.env.MODE;
+const baseUrl = env == "development"?'/src':''
 export default {
     components:{
         linkageBox
@@ -39,8 +40,12 @@ export default {
             },1000)
         }
     },
+    created() {
+        console.log(env);
+    },
     data(){
         return {
+            baseUrl : env == "development"?'/src':'',
             loopNum: 0,
             show: true,
             currentLists: [
@@ -51,7 +56,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:11vw',
                     },
-                    imgUrl: 'background:url(/src/assets/linkage/topBox/23.png)'
+                    imgUrl: 'background:url('+baseUrl+'/assets/linkage/topBox/23.png)'
                 },
                 {
                     style: 'position:absolute;left: 69%;top: 26%;width:20%;height:40%;',
@@ -61,7 +66,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:11vw',
                     },
-                    imgUrl: 'background:url(/src/assets/linkage/topBox/22.png)'
+                    imgUrl: 'background:url('+baseUrl+'/assets/linkage/topBox/22.png)'
                 },
 
                 {
@@ -72,7 +77,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:11vw'
                     },
-                    imgUrl: 'background:url(/src/assets/linkage/topBox/24.png)'
+                    imgUrl: 'background:url('+baseUrl+'/assets/linkage/topBox/24.png)'
                 },
                 {
                     style: 'position:absolute;left: 43%;top: 56%;width:20%;height:40%;',
@@ -82,7 +87,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
-                    imgUrl: 'background:url(/src/assets/linkage/topBox/13.png)'//暂无图片
+                    imgUrl: 'background:url('+baseUrl+'/assets/linkage/topBox/13.png)'//暂无图片
                 },
                 {
                     style: 'position:absolute;left: 30%;top: 60%;width:20%;height:40%;',
@@ -91,7 +96,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
-                    imgUrl: 'background:url(/src/assets/linkage/topBox/11.png)'
+                    imgUrl: 'background:url('+baseUrl+'/assets/linkage/topBox/11.png)'
                 },
                 {
                     style: 'position:absolute;left: 17%;top: 56%;width:20%;height:40%;',
@@ -100,7 +105,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
-                    imgUrl: 'background:url(/src/assets/linkage/topBox/25.png)'
+                    imgUrl: 'background:url('+baseUrl+'/assets/linkage/topBox/25.png)'
                 },
                 {
                     style: 'position:absolute;left: 2%;top: 60%;width:20%;height:40%;',
@@ -110,7 +115,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
-                    imgUrl: 'background:url(/src/assets/linkage/topBox/21.png)'
+                    imgUrl: 'background:url('+baseUrl+'/assets/linkage/topBox/21.png)'
                 },
                 {
                     style: 'position:absolute;left: 20%;top: 0%;width:20%;height:40%;',
@@ -119,7 +124,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
-                    imgUrl: 'background:url(/src/assets/linkage/topBox/12.png)'
+                    imgUrl: 'background:url('+baseUrl+'/assets/linkage/topBox/12.png)'
                 },
                 {
                     style: 'position:absolute;left: 58%;top: 36%;width:20%;height:40%;',
@@ -129,7 +134,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:11vw'
                     },
-                    imgUrl: 'background:url(/src/assets/linkage/topBox/26.png)'
+                    imgUrl: 'background:url('+baseUrl+'/assets/linkage/topBox/26.png)'
                 },
                 {
                     style: 'position:absolute;left: 55%;top: 2%;width:20%;height:40%;',
@@ -139,7 +144,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:7vw'
                     },
-                    imgUrl: 'background:url(/src/assets/linkage/topBox/10.png)'
+                    imgUrl: 'background:url('+baseUrl+'/assets/linkage/topBox/10.png)'
                 },
                 {
                     style: 'position:absolute;left: 72%;top: 0%;width:20%;height:40%;',
@@ -149,7 +154,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:7vw',
                     },
-                    imgUrl: 'background:url(/src/assets/linkage/topBox/28.png)'
+                    imgUrl: 'background:url('+baseUrl+'/assets/linkage/topBox/28.png)'
                 },
             ]
         }
