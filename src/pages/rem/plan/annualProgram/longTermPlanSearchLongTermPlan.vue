@@ -56,17 +56,6 @@ export default {
       //表格假数据
       tableData2: [
         {
-          theYear: "2022",
-          baseProduct: "190.78",
-          newJustWellNum: "15",
-          oldWellProduct: "25.66",
-          oilWellIncNum: "33",
-          measureProduct: "11.24",
-          chemicalWellNum: "-",
-          chemicalProduct: "-",
-          productAll: "227.68",
-        },
-        {
           theYear: "2023",
           baseProduct: "172.05",
           newJustWellNum: "16",

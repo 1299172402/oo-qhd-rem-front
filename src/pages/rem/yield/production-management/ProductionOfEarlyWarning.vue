@@ -938,6 +938,7 @@ export default {
         },
       });
     },
+
     //跳转归因分析正常
     switchUpPage() {
       //当前时间
