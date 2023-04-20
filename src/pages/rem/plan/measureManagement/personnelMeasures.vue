@@ -48,9 +48,9 @@
 </template>
 <script>
 import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
-import personnelplan from "@/pages/rem/plan/personnelplan.vue";
-import operationplan from "@/pages/rem/plan/operationplan.vue";
-import planmessage from "@/pages/rem/plan/planmessage.vue";
+import personnelplan from "./components/personnelplan.vue";
+import operationplan from "./components/operationplan.vue";
+import planmessage from "./components/planmessage.vue";
 import { getOilFieldList, queryProductList } from "@/api/rem/workcompanydesignate";
 import {
   fetchOilFields,

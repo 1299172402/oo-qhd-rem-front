@@ -172,7 +172,7 @@
 </template>
 
 <script>
-    import fieldOperations from './components/components-fieldOperations.vue';
+    import fieldOperations from './popups/fieldOperations.vue';
     import moment from "dayjs";
     import {
         fetchOilFields,
@@ -571,13 +571,13 @@
                 console.log(1111, selectWellId)
                 if (this.dateTime == '2023' && index == 1) {
                     this.$router.push({
-                        path: '/plan/effectofMeasures',
+                        path: '/plan/personnelMeasures',
                     });
                     return false
                 }
                 // 跳转到重点项目页面  
                 this.$router.push({
-                    path: '/plan/wellMonitoring',
+                    path: '/plan/measureEffectTracking',
                     query: {
                         oilFieldId, //油田id
                         platformId, //平台id

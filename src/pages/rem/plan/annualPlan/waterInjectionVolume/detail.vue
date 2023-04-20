@@ -69,7 +69,7 @@
                     xAxis: {
                         name: '时间/日期',
                         nameTextStyle: {
-                            color: '#fff',
+                            color: '#8FA4CC',
                             fontSize: 14,
                         },
                         nameLocation: 'center',
@@ -92,7 +92,7 @@
                         },
                         axisLine: {
                             lineStyle: {
-                                color: 'rgba(255,255,255,.16)',
+                                color: '#8FA4CC',
                             },
                         },
                     },
@@ -101,7 +101,7 @@
                             type: 'value',
                             name: '措施井次/口',
                             nameTextStyle: {
-                                color: '#fff',
+                                color: '#8FA4CC',
                                 fontSize: 14,
                             },
                             axisLabel: {
@@ -114,13 +114,13 @@
                             axisLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: 'rgba(151,151,151,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
                                 show: false,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },
@@ -128,7 +128,7 @@
                             type: 'value',
                             name: '注入量/m³',
                             nameTextStyle: {
-                                color: '#fff',
+                                color: '#8FA4CC',
                                 fontSize: 14,
                             },
                             axisLabel: {
@@ -141,13 +141,13 @@
                             axisLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: 'rgba(151,151,151,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
                                 show: false,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },
@@ -177,7 +177,7 @@
                     xAxis: {
                         name: '时间/日期',
                         nameTextStyle: {
-                            color: '#fff',
+                            color: '#8FA4CC',
                             fontSize: 14,
                         },
                         nameGap: 30,
@@ -200,7 +200,7 @@
                         },
                         axisLine: {
                             lineStyle: {
-                                color: 'rgba(255,255,255,.16)',
+                                color: '#8FA4CC',
                             },
                         },
                     },
@@ -209,7 +209,7 @@
                             type: 'value',
                             name: '措施井次/口',
                             nameTextStyle: {
-                                color: '#fff',
+                                color: '#8FA4CC',
                                 fontSize: 14,
                             },
                             axisLabel: {
@@ -222,13 +222,13 @@
                             axisLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: 'rgba(151,151,151,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
                                 show: false,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },
@@ -236,7 +236,7 @@
                             type: 'value',
                             name: '注入量/m³',
                             nameTextStyle: {
-                                color: '#fff',
+                                color: '#8FA4CC',
                                 fontSize: 14,
                             },
                             axisLabel: {
@@ -249,13 +249,13 @@
                             axisLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: 'rgba(151,151,151,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
                                 show: false,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },

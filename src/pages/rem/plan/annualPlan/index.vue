@@ -109,7 +109,7 @@
                 //滚动预测版本数据
                 rollingForecastSelect:[],
                 //产量单位数据
-                unitOfProduction: [{label: 'm³/d',value: 'm',},{label: 't/d',value: 't'}],
+                unitOfProduction: [{label: 'm³',value: 'm',},{label: 't',value: 't'}],
                 //tabs-绑定值
                 pageType: '原油产量',
                 //搜索对象

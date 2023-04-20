@@ -1,16 +1,16 @@
-<!-- 措施产量 -->
+<!-- 调整井产量 -->
 <template>
     <div class="tab-container">
-        <info-window infoWidth="100%" :infoHeight="height+'px'" :headerTitle="searchForm.oilFieldName + '措施产量图'" isShowMaxBtn style="margin-top:0;">
+        <info-window infoWidth="100%" :infoHeight="height+'px'" :headerTitle="searchForm.oilFieldName + '调整井产量图'" isShowMaxBtn style="margin-top:0;">
             <div slot-name="titleContent">
                 <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downEchart">下载</el-button>
             </div>
-            <Echart ref="echartChart" :chart-data="productLineChart" height="100%"></Echart>
+            <Echart ref="echartChart" :chart-data="resetProLineChart" height="100%"></Echart>
         </info-window>
         <div class="develop">
             <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
         </div>
-        <info-window infoWidth="100%" infoHeight="500px" :headerTitle="searchForm.oilFieldName + '措施产量表'" isShowMaxBtn v-show="isDevelop">
+        <info-window infoWidth="100%" infoHeight="500px" :headerTitle="searchForm.oilFieldName + '调整井产量表'" isShowMaxBtn v-show="isDevelop">
             <div slot-name="titleContent">
                 <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downTable">下载</el-button>
             </div>
@@ -47,8 +47,9 @@
 
 <script>
     import Echart from '@/components/tools/Echarts/index.vue';
-    import {measureChart} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
-    import {measureTable} from '@/api/oilDeposit/rem-04/plan.js';
+    import {adjustWellChart} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+    import {adjustWellTable} from '@/api/oilDeposit/rem-04/plan.js';
+    import FileSaver from "file-saver";
     import {exportExcel} from '@/lib/exportExcel.js';
     export default {
         components: {
@@ -72,13 +73,7 @@
         data() {
             return {
                 height: '',
-                productLineChart: {
-                    grid: {
-                        top: '8%',
-                        left: '10%',
-                        width: '80%',
-                        height: '70%',
-                    },
+                resetProLineChart: {
                     color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#9A72FF', '#DA835E'],
                     tooltip: {
                         trigger: 'axis',
@@ -97,15 +92,17 @@
                         itemHeight: 6,
                         itemGap: 14,
                     },
-                    xAxis: {
+                    xAxis: [{
                         name: '时间/日',
                         nameTextStyle: {
-                            color: '#fff',
+                            color: '#8FA4CC',
                             fontSize: 14,
+                            align: 'center',
                         },
                         nameLocation: 'center',
                         nameGap: 30,
                         type: 'category',
+                        boundaryGap: false,
                         axisLabel: {
                             color: '#8FA4CC',
                             fontSize: 10,
@@ -123,16 +120,16 @@
                         },
                         axisLine: {
                             lineStyle: {
-                                color: 'rgba(255,255,255,.16)',
+                                color: '#8FA4CC',
                             },
                         },
-                    },
+                    }, ],
                     yAxis: [
                         {
                             type: 'value',
                             name: '产油量/m³',
                             nameTextStyle: {
-                                color: '#fff',
+                                color: '#8FA4CC',
                                 fontSize: 14,
                             },
                             nameLocation: 'center',
@@ -148,13 +145,13 @@
                             axisLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: 'rgba(151,151,151,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
                                 show: false,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },
@@ -162,7 +159,7 @@
                             type: 'value',
                             name: '措施井次/口',
                             nameTextStyle: {
-                                color: '#fff',
+                                color: '#8FA4CC',
                                 fontSize: 14,
                             },
                             nameLocation: 'center',
@@ -178,13 +175,13 @@
                             axisLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: 'rgba(151,151,151,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
                                 show: false,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },
@@ -205,12 +202,12 @@
         methods: {
             async initData() {
                 this.$nextTick(() => {
-                    this.getMeasureChart();
-                    this.getMeasureTable();
+                    this.getAdjustWellChart();
+                    this.getAdjustWellTable();
                 })
             },
             //echart数据获取
-            getMeasureChart() {
+            getAdjustWellChart() {
                 let request = {
                     oilFieldId: this.searchForm.selectOilField,
                     unitType: this.searchForm.selectUnitOfProduction,
@@ -219,7 +216,8 @@
                     planTypeCode: this.searchForm.planTypeCode,
                     rollForecastVersion: this.searchForm.rollForecastVersion,
                 };
-                measureChart(request).then((res) => {
+                //请求接口方法 调整井产量
+                adjustWellChart(request).then((res) => {
                     if (res.data.code == 200) {
                         //图例数据
                         let legendData = [];
@@ -266,25 +264,20 @@
                         }
                         //set 集合转数组
                         let xData = Array.from(xSet).sort();
-                        this.productLineChart.xAxis.data = xData;
-                        //console.log(xData);
+                        this.resetProLineChart.xAxis.data = xData;
                         if (this.searchForm.selectUnitOfProduction == 't') {
-                            this.productLineChart.yAxis[0].name = '产油量/t';
+                            this.resetProLineChart.yAxis[0].name = '产油量/t';
                         } else if (this.searchForm.selectUnitOfProduction == 'm') {
-                            this.productLineChart.yAxis[0].name = '产油量/m³';
+                            this.resetProLineChart.yAxis[0].name = '产油量/m³';
                         }
                         //图例数据
-                        this.productLineChart.legend.data = legendData;
-                        this.productLineChart.series = seriesData;
-                        //井口次
-                        this.productWellCount = res.data.data.times;
-                        //增油量
-                        this.productionOilCount = res.data.data.injection;
+                        this.resetProLineChart.legend.data = legendData;
+                        this.resetProLineChart.series = seriesData;
                     }
                 });
             },
             //表格数据获取
-            getMeasureTable() {
+            getAdjustWellTable() {
                 let request = {
                     oilFieldId: this.searchForm.selectOilField,
                     unitType: this.searchForm.selectUnitOfProduction,
@@ -295,7 +288,7 @@
                     pageNum: this.page,
                     pageSize: this.pageSize,
                 };
-                measureTable(request).then((res) => {
+                adjustWellTable(request).then((res) => {
                     if (res.data.code == 200) {
                         this.tableData = res.data.rows;
                         this.total = res.data.total;
@@ -332,7 +325,7 @@
                 } else {
                     this.page = obj.page;
                 }
-                this.getMeasureTable();
+                this.getAdjustWellTable();
             },
             //表格-展示||隐藏
             tapDevelop(){
@@ -340,17 +333,18 @@
                 if(this.isDevelop){
                     this.$nextTick(()=>{
                         let parentDom=document.getElementsByClassName('tab-container')[0];
+                        // parentDom.scrollTop=this.height;
                         parentDom.scrollBy({top: this.height,behavior: 'smooth'});
                     })
                 }
             },
             //下载echarts
             downEchart() {
-                this.$refs.echartChart.chartDownLoad(this.searchForm.oilFieldName +'措施产量图');
+                this.$refs.echartChart.chartDownLoad(this.searchForm.oilFieldName +'调整井产量图');
             },
             //导出table
             downTable() {
-                exportExcel('#tableData', this.searchForm.oilFieldName + '措施产量表');
+                exportExcel('#tableData', this.searchForm.oilFieldName + '调整井产量表');
             },
         }
     };

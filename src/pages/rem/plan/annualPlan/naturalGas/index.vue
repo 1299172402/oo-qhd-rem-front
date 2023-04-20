@@ -98,7 +98,7 @@
                     xAxis: {
                         name: '时间/日',
                         nameTextStyle: {
-                            color: '#fff',
+                            color: '#8FA4CC',
                             fontSize: 14,
                         },
                         nameGap: 55,
@@ -119,14 +119,14 @@
                         },
                         axisLine: {
                             lineStyle: {
-                                color: 'rgba(255,255,255,.16)',
+                                color: '#8FA4CC',
                             },
                         },
                     },
                     yAxis: [{
                             name: '产气量/10⁴m³',
                             nameTextStyle: {
-                                color: '#fff',
+                                color: '#8FA4CC',
                                 fontSize: 14,
                             },
                             scale: true,
@@ -141,20 +141,20 @@
                             axisLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: 'rgba(151,151,151,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
                                 show: false,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },
                         {
                             name: '油当量(折算)/10⁴m³',
                             nameTextStyle: {
-                                color: '#fff',
+                                color: '#8FA4CC',
                                 fontSize: 14,
                             },
                             minInterval: 0.01,
@@ -170,13 +170,13 @@
                             axisLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: 'rgba(151,151,151,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
                                 show: false,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },

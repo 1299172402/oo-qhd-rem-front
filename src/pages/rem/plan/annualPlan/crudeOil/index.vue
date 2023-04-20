@@ -104,7 +104,7 @@
                     yAxis: [{
                             name: '日产m³/d',
                             nameTextStyle: {
-                                color: '#fff',
+                                color: '#8FA4CC',
                                 fontSize: 14,
                             },
                             type: 'value',
@@ -119,20 +119,20 @@
                             axisLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: 'rgba(151,151,151,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
                                 show: false,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },
                         {
                             name: '年产10⁴m³',
                             nameTextStyle: {
-                                color: '#fff',
+                                color: '#8FA4CC',
                                 fontSize: 14,
                             },
                             scale: true,
@@ -147,13 +147,13 @@
                             axisLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: 'rgba(151,151,151,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
                                 show: false,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },

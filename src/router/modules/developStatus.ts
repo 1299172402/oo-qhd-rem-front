@@ -64,9 +64,6 @@ export default [
         name: "warningDisposeWater",
         meta: { title: "水井预警处理" },
       },
-
-
-      
       {
         path: "developmentEffectEvaluation",
         name: "developmentEffectEvaluation",
