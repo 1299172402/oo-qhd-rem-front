@@ -1,10 +1,10 @@
 import Layout from "@/layouts/index.vue";
-
+const env = import.meta.env.MODE;
 export default [
   {
+    hidden: env == "development" ? false : true,
     path: "/yield",
     name: "yield",
-    hidden: false,
     component: Layout,
     meta: { title: "产量管理", icon: "client", single: false },
     children: [

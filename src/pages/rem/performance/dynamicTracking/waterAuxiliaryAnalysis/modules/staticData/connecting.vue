@@ -1,11 +1,11 @@
-<!--地震属性图-->
+<!--连井剖面图-->
 <template>
-    <div style="height: 100%">
-        <page-panel-new show-btn>
-            <div style="height: 100%; overflow: auto">
-                <el-carousel :interval="4000" height="600px" :autoplay="false">
-                    <el-carousel-item v-for="(item, index) in imageList" ref="imageCaeousel" :key="index" style="height: 600px; overflow-y: auto; display: block">
-                        <el-image :src="item" fit="contain" style="width: 100%" :preview-src-list="imageList">
+    <div class="z-main">
+        <page-panel-new style="height:100%;margin-top:0;" show-btn>
+            <div class="z-container">
+                <el-carousel :interval="4000" :autoplay="false" indicator-position="none" arrow="hover">
+                    <el-carousel-item v-for="(item, index) in imageList" ref="imageCaeousel" :key="index" style="height: 100%; overflow-y: auto;">
+                        <el-image :src="item" fit="contain" style="width: 100%;height:100%;">
                             <div slot="error"></div>
                         </el-image>
                     </el-carousel-item>
@@ -14,6 +14,7 @@
         </page-panel-new>
     </div>
 </template>
+
 <script>
     import { getSectionWell, seismicAttributePlot} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
     import { downFile, downFileList} from "@/lib/remBase64Download.js";
@@ -61,12 +62,9 @@
             //调用图片
             doSearch() {
                 let request = {
-                    //"fileName": "string",
                     ogfId: this.oilFeildId,
-                    //"path": "string",
                     platformId: this.platform,
                     wellId: this.wellId,
-                    //"wellTypeCode": "string"
                 };
                 this.imageList = [];
                 getSectionWell(request).then((res) => {
@@ -99,7 +97,6 @@
                                 }
                             });
                         }
-                        console.log(this.imageList);
                     }
                 });
             },
@@ -115,3 +112,27 @@
         },
     };
 </script>
+
+<style lang="scss" scoped>
+    .z-main {
+        width: 100%;
+        height: calc(100% - 101px);
+        display: flex;
+        flex-direction: column;
+        .z-container{
+            height: 100%; 
+            ::v-deep .el-carousel{
+                height:100%;
+                .el-carousel__container{
+                    height:100%;
+                    .el-carousel__item{
+                        overflow: hidden!important;
+                    }
+                    .el-carousel__arrow{
+                        background-color: rgba(31,45,61,.5);
+                    }
+                }
+            }
+        }
+    }
+</style>

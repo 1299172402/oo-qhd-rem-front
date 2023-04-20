@@ -14,7 +14,9 @@
                     <el-date-picker v-model="searchForm.selectDate" :clearable="false" unlink-panels type="daterange" format="yyyy-MM-dd" value-format="yyyy-MM-dd" range-separator="至 " start-placeholder="开始日期" end-placeholder="结束日期" style="width:260px;"></el-date-picker>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
-                    <span>产量计划类型：</span>
+                    <span v-if="pageType=='原油产量'">产量计划类型：</span>
+                    <span v-if="pageType=='天然气产量'">天然气计划类型：</span>
+                    <span v-if="pageType=='油田注水量'">注水量计划类型：</span>
                     <el-select v-model="searchForm.planTypeCode" placeholder="请选择" style="width:150px;">
                         <el-option v-for="(item,index) in planTypeSelect" :key="index" :label="item.label" :value="item.value"></el-option>
                     </el-select>

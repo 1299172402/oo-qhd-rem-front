@@ -18,12 +18,12 @@
                 height="calc(100% - 75px)" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
                 <el-table-column prop="prodDate" align="center" label="时间"> </el-table-column>
-                <el-table-column prop="measureWellNumReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际措施井次\n(10⁴m³)' : '实际措施井次\n(10⁴t)'">
+                <el-table-column prop="measureWellNumReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际措施井次\n(次)' : '实际措施井次\n(次)'">
                     <template slot-scope="scope">
                         {{filterNumFixed4(scope.row.measureWellNumReal)}}
                     </template>
                 </el-table-column>
-                <el-table-column prop="measureWellNumPlan" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '计划措施井次\n(10⁴m³)' : '计划措施井次\n(10⁴t)'">
+                <el-table-column prop="measureWellNumPlan" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '计划措施井次\n(次)' : '计划措施井次\n(次)'">
                     <template slot-scope="scope">
                         {{filterNumFixed4(scope.row.measureWellNumPlan)}}
                     </template>

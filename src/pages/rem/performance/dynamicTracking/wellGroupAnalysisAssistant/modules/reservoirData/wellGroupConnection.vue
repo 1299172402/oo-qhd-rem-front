@@ -3,9 +3,13 @@
     <div class="z-main">
         <div class="z-container">
             <div class="v1">
-                <el-image :src="image">
-                    <div slot="error"></div>
-                </el-image>
+                <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                    <div class="v1-con">
+                        <el-image :src="image">
+                            <div slot="error"></div>
+                        </el-image>
+                    </div>
+                </page-panel-new>
             </div>
             <div class="v2">
                 <el-table id="tableData" highlight :data="tableData" style="width: 100%" height="100%">
@@ -96,6 +100,11 @@
             .v1{
                 flex:2;
                 margin-right:20px;
+                .v1-con{
+                    width:100%;
+                    height:100%;
+                    overflow-y: scroll;
+                }
             }
             .v2{
                 flex:1;

@@ -76,7 +76,7 @@
                         },
                     },
                     dataZoom: {
-                        start: 80,
+                        start: 95,
                         type: "inside",
                     },
                     toolbox: {
@@ -92,20 +92,6 @@
                     },
                     xAxis: {
                         type: "category",
-                        /*data: [
-                      "2009",
-                      "2010",
-                      "2011",
-                      "2012",
-                      "2013",
-                      "2014",
-                      "2015",
-                      "2016",
-                      "2017",
-                      "2018",
-                      "2019",
-                      "2020",
-                    ],*/
                         axisLabel: {
                             color: "#8FA4CC",
                             margin: 20,
@@ -164,7 +150,7 @@
                         },
                     },
                     dataZoom: {
-                        start: 80,
+                        start: 95,
                         type: "inside",
                     },
                     toolbox: {
@@ -195,6 +181,7 @@
                       "2020",
                     ],*/
                         axisLabel: {
+                            margin: 20,
                             color: "#8FA4CC",
                         },
                         axisTick: {
@@ -278,6 +265,7 @@
                     xAxis: {
                         type: "category",
                         axisLabel: {
+                            margin: 20,
                             color: "#8FA4CC",
                         },
                         axisTick: {
@@ -360,6 +348,7 @@
                     xAxis: {
                         type: "category",
                         axisLabel: {
+                            margin: 20,
                             color: "#8FA4CC",
                         },
                         axisTick: {

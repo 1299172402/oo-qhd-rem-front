@@ -220,7 +220,8 @@
                             },
                         },
                     ],
-                    yAxis: [{
+                    yAxis: [
+                        {
                             gridIndex: 0,
                             name: "流\n压\n︵\nM\nP\na\n︶", //0
                             nameLocation: "center",
@@ -311,6 +312,8 @@
                             nameLocation: "center",
                             nameRotate: 0,
                             nameGap: 50,
+                            min:0,
+                            max:50,
                             nameTextStyle: {
                                 color: "#fff",
                                 fontSize: 14,
@@ -400,6 +403,8 @@
                                 color: "#fff",
                                 fontSize: 14,
                             },
+                            min:0,
+                            max:24,
                             position: 'right',
                             scale: true,
                             axisLabel: {
@@ -563,17 +568,18 @@
                             }
                         }
                     },
-                    grid: [{
+                    grid: [
+                        {
                             left: "14%",
-                            top: "8%",
+                            top: "7%",
                             width: "74%",
-                            height: "42%"
+                            height: "38%"
                         },
                         {
                             left: "14%",
-                            top: "52%",
+                            top: "50%",
                             width: "74%",
-                            height: "42%"
+                            height: "38%"
                         },
                     ],
                     xAxis: [{
@@ -642,7 +648,8 @@
                             },
                         }
                     ],
-                    yAxis: [{
+                    yAxis: [
+                        {
                             gridIndex: 0,
                             name: "注\n入\n时\n间\n︵\nh\n︶",
                             nameLocation: "center",
@@ -652,6 +659,8 @@
                                 color: "#fff",
                                 fontSize: 14,
                             },
+                            min:0,
+                            max:24,
                             axisLabel: {
                                 show: true,
                                 color: "#8FA4CC",
@@ -949,6 +958,7 @@
                             } else if (lineSet.label == '泵频率') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 3;
+                                
                             } else if (lineSet.label == '含水') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 4;
@@ -989,7 +999,8 @@
                 resOption.xAxis[1].data = xData;
                 resOption.xAxis[2].data = xData;
                 resOption.series = seriesDataOil;
-                console.log(123)
+                
+                console.log(resOption,888)
                 return resOption;
             },
             //生成水井图表信息
