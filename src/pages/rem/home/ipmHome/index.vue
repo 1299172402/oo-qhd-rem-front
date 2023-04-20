@@ -56,7 +56,7 @@ export default {
                         boxStyle: {
                             pWidth: 'width:8.5vw'
                         },
-                        imgUrl: 'background:url(/src/assets/ipmHome/04.png)',//暂无图片
+                        imgUrl: new URL('./ipmHome/04.png', import.meta.url).href,//暂无图片
                         down:true,
                     },
                     {
@@ -66,7 +66,7 @@ export default {
                         boxStyle: {
                             pWidth: 'width:8.5vw'
                         },
-                        imgUrl: 'background:url(/src/assets/ipmHome/05.png)',
+                        imgUrl: new URL('./ipmHome/05.png', import.meta.url).href,
                         down:true,
                     },
                     {
@@ -76,7 +76,7 @@ export default {
                         boxStyle: {
                             pWidth: 'width:8.5vw'
                         },
-                        imgUrl: 'background:url(/src/assets/ipmHome/06.png)',
+                        imgUrl: new URL('./ipmHome/06.png', import.meta.url).href,
                         down:true,
                     },
                 ],
@@ -88,7 +88,7 @@ export default {
                         boxStyle: {
                             pWidth: 'width:11vw',
                         },
-                        imgUrl: 'background:url(/src/assets/ipmHome/01.png)',
+                        imgUrl: new URL('./ipmHome/01.png', import.meta.url).href,
                         down:false,
                     },
                     {
@@ -99,7 +99,7 @@ export default {
                         boxStyle: {
                             pWidth: 'width:11vw',
                         },
-                        imgUrl: 'background:url(/src/assets/ipmHome/02.gif)',
+                        imgUrl: new URL('./ipmHome/02.gif', import.meta.url).href,
                         down:false,
                     },
     
@@ -110,7 +110,7 @@ export default {
                         boxStyle: {
                             pWidth: 'width:11vw'
                         },
-                        imgUrl: 'background:url(/src/assets/ipmHome/03.png)',
+                        imgUrl: new URL('./ipmHome/03.png', import.meta.url).href,
                         down:false,
                     },
                 ]

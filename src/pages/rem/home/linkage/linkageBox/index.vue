@@ -3,7 +3,7 @@
         <el-collapse-transition>
             <div v-show="show||remHome">
                 <div class="transition-box">
-                    <div class="transition-box-content" :style="currentList.imgUrl">
+                    <div class="transition-box-content" :style="{'background-image':`url(${currentList.imgUrl})` }">
                     </div>
                 </div>
             </div>
@@ -46,6 +46,9 @@ export default {
            default:()=>{}
        },
        remHome:false 
+    },
+    created() {
+        console.log(this.currentList.imgUrl);
     },
     data() {
         return {

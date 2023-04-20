@@ -2,7 +2,7 @@
     <div class="box" @mouseenter="show(true)" @mouseleave="show(false)">
         <div class="warp" :style="!currentList.down?'overflow:visible':'overflow:hidden'">
             <div class="transition-box">
-                <div class="transition-box-content" :style="currentList.imgUrl">
+                <div class="transition-box-content" :style="{'background-image':`url(${currentList.imgUrl})`}">
                 </div>
             </div>
             <p  class="textBox" :style="currentList.boxStyle.pWidth">

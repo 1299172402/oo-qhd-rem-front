@@ -56,7 +56,7 @@ export default {
                         boxStyle: {
                             pWidth: 'width:8.5vw'
                         },
-                        imgUrl: 'background:url(/src/assets/remHome/04.png)',//暂无图片
+                        imgUrl: new URL('./remHome/04.png', import.meta.url).href ,//暂无图片
                         down:true,
                     },
                     {
@@ -67,7 +67,7 @@ export default {
                         boxStyle: {
                             pWidth: 'width:8.5vw'
                         },
-                        imgUrl: 'background:url(/src/assets/remHome/05.png)',
+                        imgUrl: new URL('./remHome/05.png', import.meta.url).href ,
                         down:true,
                     },
                     {
@@ -78,7 +78,7 @@ export default {
                         boxStyle: {
                             pWidth: 'width:8.5vw'
                         },
-                        imgUrl: 'background:url(/src/assets/remHome/06.png)',
+                        imgUrl: new URL('./remHome/06.png', import.meta.url).href ,
                         down:true,
                     },
                 ],
@@ -90,7 +90,7 @@ export default {
                         boxStyle: {
                             pWidth: 'width:11vw',
                         },
-                        imgUrl: 'background:url(/src/assets/remHome/01.png)',
+                        imgUrl: new URL('./remHome/01.png', import.meta.url).href ,
                         down:false,
                     },
                     {
@@ -101,7 +101,7 @@ export default {
                         boxStyle: {
                             pWidth: 'width:11vw',
                         },
-                        imgUrl: 'background:url(/src/assets/remHome/02.png)',
+                        imgUrl: new URL('./remHome/02.png', import.meta.url).href ,
                         down:false,
                     },
     
@@ -112,7 +112,7 @@ export default {
                         boxStyle: {
                             pWidth: 'width:11vw'
                         },
-                        imgUrl: 'background:url(/src/assets/remHome/03.png)',
+                        imgUrl: new URL('./remHome/03.png', import.meta.url).href ,
                         down:false,
                     },
                 ]
