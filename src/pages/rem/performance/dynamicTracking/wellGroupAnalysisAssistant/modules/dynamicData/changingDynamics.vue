@@ -27,17 +27,17 @@
         </el-date-picker>
       </el-form-item>
     </div>
+    <div style="height:100%">
     <el-table
       highlight
       :key="itemKey"
       :cell-style="{ padding: '3px', 'text-align': 'center' }"
       :data="tableData"
-      height="500px"
       style="margin-top: -30px"
     >
       <el-table-column type="index" label="序号" width="50px" header-align="center"></el-table-column>
-      <el-table-column prop="waterWellName" label="水井" header-align="center"></el-table-column>
-      <el-table-column prop="layerName" label="层位" header-align="center"></el-table-column>
+      <el-table-column prop="waterWellName" label="水井" min-width="100" header-align="center"></el-table-column>
+      <el-table-column prop="layerName" label="层位" min-width="180" header-align="center"></el-table-column>
       <el-table-column prop="oilWellName" label="油井" header-align="center"></el-table-column>
       <el-table-column prop="effectivenessSituation" label="受效情况" header-align="center"></el-table-column>
       <el-table-column header-align="center">
@@ -76,6 +76,7 @@
       </el-table-column>
       <el-table-column align="cnter" prop="remark" label="备注" header-align="center"></el-table-column>
     </el-table>
+    </div>
   </el-form>
 </template>
 
@@ -149,8 +150,8 @@ export default {
       getWellGroupCommunicateDynamic(request).then((res) => {
         if (res.data.code == 200) {
           this.tableData = res.data.data;
-        }else{
-            this.$message.error("系统错误请重新尝试或联系运维人员！");
+        } else {
+          this.$message.error("系统错误请重新尝试或联系运维人员！");
         }
       });
     },

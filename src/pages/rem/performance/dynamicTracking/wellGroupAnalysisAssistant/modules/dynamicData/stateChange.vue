@@ -28,7 +28,14 @@
         </el-date-picker>
       </el-form-item>
     </div>
-    <el-table highlight :key="itemKey"  :cell-style="{ padding: '3px', 'text-align': 'center' }" :data="tableData" height="500px" style="margin-top: -30px">
+    <el-table
+      highlight
+      :key="itemKey"
+      :cell-style="{ padding: '3px', 'text-align': 'center' }"
+      :data="tableData"
+      id="#zcjwzkbh"
+      style="margin-top: -30px"
+    >
       <el-table-column type="index" label="序号" width="50px" header-align="center"></el-table-column>
       <el-table-column prop="wellGroupName" label="井组" width="230px" header-align="center"></el-table-column>
       <el-table-column prop="yearMonth" label="时间" header-align="center"></el-table-column>
@@ -43,15 +50,21 @@
         <el-table-column prop="effectDoubleWay" label="双向" header-align="center"> </el-table-column>
         <el-table-column prop="effectManyWay" label="多向" header-align="center"> </el-table-column>
         <el-table-column prop="effectControlledWayCount" label="小计" header-align="center"> </el-table-column>
-        <el-table-column prop="effectControlledWayRate" label="受控率(%)" header-align="center"> 
-          <template slot-scope="scoped" >
-            {{scoped.row.effectControlledWayRate * 100}}
+        <el-table-column prop="effectControlledWayRate" label="受控率(%)" header-align="center">
+          <template slot-scope="scoped">
+            {{ scoped.row.effectControlledWayRate * 100 }}
           </template>
         </el-table-column>
       </el-table-column>
       <el-table-column prop="effectUncontrolledWay" label="非受控井" header-align="center"></el-table-column>
     </el-table>
-     <pagination :total="total" v-show="total > 0"  @pagination="changepage" :page.sync="pageNum" :limit.sync="pageSize" />
+    <pagination
+      :total="total"
+      v-show="total > 0"
+      @pagination="changepage"
+      :page.sync="pageNum"
+      :limit.sync="pageSize"
+    />
   </el-form>
 </template>
 
@@ -72,7 +85,7 @@ export default {
   data() {
     return {
       tableData: [],
-      itemKey:0,
+      itemKey: 0,
       queryData: {
         month: "",
         secondMonth: "",
@@ -129,21 +142,20 @@ export default {
         wellGroupId: this.wellGroupId,
         secondMonth: this.queryData.secondMonth,
         firstMonth: this.queryData.firstMonth,
-        pageNum:this.pageNum,
-        pageSize:this.pageSize
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
       };
       queryInjectionWellNetworkConditionsList(request).then((res) => {
         if (res.data.code == 200) {
           this.tableData = res.data.data.rows;
           this.total = res.data.data.total;
-
         } else {
           this.$message.error("系统错误请重新尝试或联系运维人员！");
         }
       });
     },
-    changepage(){
-      this.doSearch()
+    changepage() {
+      this.doSearch();
     },
     choiceendtime() {
       if (new Date(this.queryData.secondMonth) <= new Date(this.queryData.firstMonth)) {
@@ -154,11 +166,11 @@ export default {
       }
     },
     doDownLoad() {
-      let fileName = "措施效果";
+      let fileName = "注采井网状况变化";
       if (this.wellGroupName) {
         fileName = this.wellGroupName + fileName;
       }
-      exportExcel("#tableData", fileName);
+      exportExcel("#zcjwzkbh", fileName);
     },
   },
 };

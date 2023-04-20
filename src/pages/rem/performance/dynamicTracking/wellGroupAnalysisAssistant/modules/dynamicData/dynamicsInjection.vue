@@ -32,7 +32,6 @@
       highlight
       :data="tableData"
       :cell-style="{ padding: '3px', 'text-align': 'center' }"
-      height="500px"
       style="margin-top: -30px"
       :key="itemKey"
     >
