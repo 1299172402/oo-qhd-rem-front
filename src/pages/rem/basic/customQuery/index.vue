@@ -146,7 +146,7 @@
                 style="margin: 20px 0;height: calc(100% - 125px)"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column :key="index" :prop="item.val" :label="item.name" width="140" v-for="(item,index) in headerTextLower"></el-table-column>
+                <el-table-column :key="index" :prop="item.val" :label="item.name" min-width="140" v-for="(item,index) in headerTextLower"></el-table-column>
             </el-table>
         </page-panel-new>
         <el-dialog
