@@ -17,15 +17,15 @@
                     height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                     <el-table-column type="index" label="序号"></el-table-column>
                     <el-table-column prop="time" label="时间"> </el-table-column>
-                    <el-table-column prop="fluidProdDaily" :label="`日产液\n(m3)`"></el-table-column>
-                    <el-table-column prop="oilProdDail" :label="`日产油\n(m3)`"></el-table-column>
+                    <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`"></el-table-column>
+                    <el-table-column prop="oilProdDail" :label="`日产油\n(m³)`"></el-table-column>
                     <el-table-column prop="waterRatio" :label="`含水率\n(%)`"></el-table-column>
-                    <el-table-column prop="gasOilRatio" :label="`气油比\n(m3/m3)`"></el-table-column>
+                    <el-table-column prop="gasOilRatio" :label="`气油比\n(m³/m³)`"></el-table-column>
                     <el-table-column prop="wellSumtOil" :label="`油井总井数\n(口)`"></el-table-column>
                     <el-table-column prop="wellStartOil" :label="`油井开井数\n(口)`"></el-table-column>
                     <el-table-column prop="wellSumInj" :label="`水井总井数\n(口)`"></el-table-column>
                     <el-table-column prop="wellStartInj" :label="`水井开井数\n(口)`"></el-table-column>
-                    <el-table-column prop="injData" :label="`日注水\n(m3)`"></el-table-column>
+                    <el-table-column prop="injData" :label="`日注水\n(m³)`"></el-table-column>
                 </el-table>
             </info-window>
         </div>   

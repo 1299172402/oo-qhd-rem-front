@@ -8,7 +8,7 @@
                     <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
                 </el-select>
                 <span class="title">区块：</span>
-                <el-select v-model="selectBlock" placeholder="请选择" filterable clearable @change="changeSelectBlock" style="margin-right:15px">
+                <el-select v-model="selectBlock" placeholder="请选择" filterable  @change="changeSelectBlock" style="margin-right:15px">
                     <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                 </el-select>
                 <span class="title" v-if="currentModule=='wellGroupDevelopment'||currentModule=='injectionProductionCorresponding'">井组切换：</span>

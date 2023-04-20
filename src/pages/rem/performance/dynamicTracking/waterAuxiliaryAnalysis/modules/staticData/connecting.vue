@@ -5,7 +5,7 @@
             <div class="z-container">
                 <el-carousel :interval="4000" :autoplay="false" indicator-position="none" arrow="hover">
                     <el-carousel-item v-for="(item, index) in imageList" ref="imageCaeousel" :key="index" style="height: 100%; overflow-y: auto;">
-                        <el-image :src="item" fit="contain" style="width: 100%;height:100%;">
+                        <el-image :src="item" style="width: 100%;">
                             <div slot="error"></div>
                         </el-image>
                     </el-carousel-item>
@@ -125,12 +125,13 @@
                 height:100%;
                 .el-carousel__container{
                     height:100%;
-                    .el-carousel__item{
-                        overflow: hidden!important;
-                    }
-                    .el-carousel__arrow{
-                        background-color: rgba(31,45,61,.5);
-                    }
+                }
+                .el-carousel__item{
+                    overflow-x: hidden!important;
+                    overflow-y: scroll!important;
+                }
+                .el-carousel__arrow{
+                    background-color: rgba(31,45,61,.5);
                 }
             }
         }

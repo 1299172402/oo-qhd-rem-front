@@ -58,7 +58,7 @@
         <el-table-column label="综合气油比" align="center">
           <el-table-column
             prop="Comprehensivegasoilratio"
-            :label="`(m³/d)`"
+            :label="`(m³/m³)`"
             align="center"
             min-width="100"
           ></el-table-column>

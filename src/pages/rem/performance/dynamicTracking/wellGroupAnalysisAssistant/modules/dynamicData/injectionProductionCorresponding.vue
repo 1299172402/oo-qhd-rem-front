@@ -14,7 +14,7 @@
                     <Echart :ref="'echartDown'+index" :chart-data="chart.option" height="100%"></Echart>
                 </info-window>
             </div>
-            <div class="develop">
+            <div class="develop" v-if="wellOptions.length">
                 <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
             </div>
             <info-window infoWidth="100%" infoHeight="450px" headerTitle="水井对应曲线表" isShowMaxBtn v-show="isDevelop" style="margin-top:10px;">
@@ -38,7 +38,7 @@
                     <el-table-column prop="flowingPress" :label="`流压\n(Mpa)`"></el-table-column>
                     <el-table-column prop="oilPress" :label="`油压\n(Mpa)`"></el-table-column>
                     <el-table-column prop="pumpFreq" :label="`泵频率\n(Hz)`"></el-table-column>
-                    <el-table-column prop="whTemp" :label="`井口温度\n(OC)`"></el-table-column>
+                    <el-table-column prop="whTemp" :label="`井口温度\n(℃)`"></el-table-column>
                     <el-table-column prop="prodDuration" :label="`生产时间\n(h)`"></el-table-column>
                     <el-table-column prop="waterRatio" :label="`含水\n(%)`"></el-table-column>
                     <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`"></el-table-column>
