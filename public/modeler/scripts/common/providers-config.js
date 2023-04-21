@@ -29,7 +29,7 @@ flowableModule.factory('NotPermittedInterceptor', [ '$q', '$window', function($q
                 }
             },
             request: function(request) {
-                request.headers.Authorization = localStorage.getItem('current_user_token')
+                request.headers.Authorization = `Bearer ${localStorage.getItem('current_user_token')}`
                 return request
             },
             response: function(res) {

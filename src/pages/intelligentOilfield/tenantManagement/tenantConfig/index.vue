@@ -8,18 +8,18 @@
         style="margin-top: 20px"
         @keyup.enter.native="searchQuery"
       >
-        <el-form-item label="用户名称：" prop="userName">
+        <el-form-item label="用户账号：" prop="userName">
           <el-input
             v-model="queryParams.userName"
-            placeholder="请输入用户名称"
+            placeholder="请输入用户账号"
             clearable
             style="width: 240px;"
           />
         </el-form-item>
-        <el-form-item label="用户昵称：" prop="phonenumber">
+        <el-form-item label="用户名：" prop="phonenumber">
           <el-input
             v-model="queryParams.nickName"
-            placeholder="请输入用户昵称"
+            placeholder="请输入用户名"
             clearable
             style="width: 240px;"
           />
@@ -47,7 +47,6 @@
           <el-button
             v-hasPermi="['system:tenant:unbind']"
             type="danger"
-            plain
             :disabled="multiple"
             @click="cancelBind(userIds)"
           >
@@ -55,7 +54,6 @@
           </el-button>
           <el-button
             type="warning"
-            plain
             class="commonBtn"
             @click="handleBack"
           >
@@ -75,8 +73,8 @@
             width="55"
             align="center"
           />
-          <el-table-column label="用户名称" prop="userName" :show-overflow-tooltip="true" />
-          <el-table-column label="用户昵称" prop="nickName" :show-overflow-tooltip="true" />
+          <el-table-column label="用户账号" prop="userName" :show-overflow-tooltip="true" />
+          <el-table-column label="用户名" prop="nickName" :show-overflow-tooltip="true" />
           <el-table-column label="所属部门" prop="deptName" :show-overflow-tooltip="true" />
           <el-table-column label="创建时间" prop="createTime" :show-overflow-tooltip="true" />
           <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -104,7 +102,7 @@
         <pagination
           v-show="ipagination.total > 0"
           :total="ipagination.total"
-          :page.sync="ipagination.pageNum"
+          :page.sync="ipagination.current"
           :limit.sync="ipagination.pageSize"
           @pagination="handlePage"
         />
@@ -115,6 +113,7 @@
 
 <script>
 import selectUser from "../components/selectUser.vue";
+import returnPaterPage from "@/utils/returnPaterPage";
 import { ListMixins } from "@/components/mixins/ListMixin";
 import { tenantUserList, unbindTenantUser, bindTenantManager, unbindTenantManager } from "@/api/intelligentOilfield/system/applicationCenter/tenant";
 
@@ -154,7 +153,7 @@ export default {
   methods: {
     /** 返回按钮 */
     handleBack() {
-      this.$router.push({ name: "Tenant" });
+      returnPaterPage(this.$route.path, "Tenant");
     },
     /**
      * 多选框选中数据

@@ -5,7 +5,9 @@
   border-radius: 0;
   color: var(--light-blue-color);
   background-image: var(--logo-bg) !important;
-  background-size: 100% 100% !important;
+  background-size: unset !important;
+  background-repeat: no-repeat !important;
+  background-position: right top !important;
 }
 
 .el-form-item__content,.left{
@@ -19,6 +21,16 @@
 }
 
 .el-input.is-disabled .el-input__inner{
+  color: rgba(207, 207, 207, 1);
+  background: rgba(245, 245, 245, 1);
+  border: 1px solid #c0c4cc;
+  background-image: var(--logo-bg) !important;
+  background-size: unset !important;
+  background-repeat: no-repeat !important;
+  background-position: right top !important;
+}
+
+.el-textarea.is-disabled .el-textarea__inner {
   color: rgba(207, 207, 207, 1);
   background: rgba(245, 245, 245, 1);
   border: 1px solid #c0c4cc;

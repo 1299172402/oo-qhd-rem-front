@@ -203,3 +203,12 @@ export function setpageConfig(data) {
     data
   });
 }
+
+// 应用访问统计列表
+export function appAccessList(query) {
+  return request({
+    url: "/system/app/getAppAccessList",
+    method: "get",
+    params: query
+  });
+}

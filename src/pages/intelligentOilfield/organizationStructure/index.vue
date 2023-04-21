@@ -16,6 +16,7 @@
             placeholder="请输入组织机构名称"
             clearable
             size="small"
+            style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -28,12 +29,12 @@
             @keyup.enter.native="handleQuery"
           />
                                                 </el-form-item> -->
-        <el-form-item label="部门状态" prop="status">
+        <el-form-item label="状态" prop="status">
           <el-select
             v-model="queryParams.status"
-            placeholder="请选择部门状态"
+            placeholder="请选择状态"
             clearable
-            size="small"
+            style="width: 240px"
           >
             <el-option
               v-for="dict in dict.type.sys_normal_disable"
@@ -43,8 +44,13 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="部门类型" prop="type">
-          <el-select v-model="queryParams.type" placeholder="请选择部门类型" clearable>
+        <el-form-item label="组织机构类型" prop="type">
+          <el-select
+            v-model="queryParams.type"
+            placeholder="请选择组织机构类型"
+            clearable
+            style="width: 240px"
+          >
             <el-option
               v-for="dict in dict.type.sys_department_type"
               :key="dict.value"
@@ -89,7 +95,6 @@
         <el-col :span="1.5">
           <el-button
             type="info"
-            plain
             size="mini"
             class="commonBtn"
             @click="toggleExpandAll"
@@ -116,9 +121,15 @@
       >
         <el-table-column
           prop="deptName"
-          label="部门名称"
+          label="组织机构名称"
           width="260"
           align="left"
+        />
+        <el-table-column
+          prop="deptShort"
+          label="组织机构简称"
+          width="260"
+          align="center"
         />
         <el-table-column
           prop="orderNum"
@@ -128,7 +139,7 @@
         />
         <el-table-column
           prop="type"
-          label="部门类型"
+          label="类型"
           width="240"
           align="center"
         >
@@ -138,7 +149,7 @@
         </el-table-column>
         <el-table-column
           prop="status"
-          label="部门状态"
+          label="状态"
           width="220"
           align="center"
         >
@@ -189,7 +200,7 @@
       </el-table>
     </page-panel-new>
 
-    <!-- 添加或修改部门对话框 -->
+    <!-- 添加或修改组织机构对话框 -->
     <el-dialog
       :title="title"
       :visible.sync="open"
@@ -205,18 +216,23 @@
       >
         <el-row :gutter="20">
           <el-col v-if="form.parentId !== '0'" :span="24">
-            <el-form-item label="上级部门" prop="parentId">
+            <el-form-item label="上级机构" prop="parentId">
               <treeselect
                 v-model="form.parentId"
                 :options="deptOptions"
                 :normalizer="normalizer"
-                placeholder="选择上级部门"
+                placeholder="选择上级机构"
               />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="部门名称" prop="deptName">
-              <el-input v-model="form.deptName" placeholder="请输入部门名称" />
+            <el-form-item label="机构名称" prop="deptName">
+              <el-input v-model="form.deptName" placeholder="请输入机构名称" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="机构简称">
+              <el-input v-model="form.deptShort" placeholder="请输入机构简称" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -240,8 +256,8 @@
               </el-form-item>
                                                     </el-col> -->
           <el-col :span="12">
-            <el-form-item label="部门类型" prop="type">
-              <el-select v-model="form.type" placeholder="请选择部门类型" clearable>
+            <el-form-item label="机构类型" prop="type">
+              <el-select v-model="form.type" placeholder="请选择机构类型" clearable>
                 <el-option
                   v-for="dict in dict.type.sys_department_type"
                   :key="dict.value"
@@ -252,7 +268,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="部门状态" prop="status">
+            <el-form-item label="机构状态" prop="status">
               <el-radio-group v-model="form.status">
                 <el-radio v-for="dict in dict.type.sys_normal_disable" :key="dict.value" :label="dict.value">
                   {{
@@ -304,17 +320,13 @@ export default {
   components: { Treeselect },
   data() {
     return {
-      departmentOptions: [
-        { label: "公司", value: "公司" },
-        { label: "职能部门", value: "职能部门" }
-      ],
       // 遮罩层
       loading: true,
       // 显示搜索条件
       showSearch: true,
       // 表格树数据
       deptList: [],
-      // 部门树选项
+      // 组织机构树选项
       deptOptions: [],
       // 弹出层标题
       title: "",
@@ -335,8 +347,8 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        parentId: [{ required: true, message: "上级部门不能为空", trigger: "blur" }],
-        deptName: [{ required: true, message: "部门名称不能为空", trigger: "blur" }],
+        parentId: [{ required: true, message: "上级机构不能为空", trigger: "blur" }],
+        deptName: [{ required: true, message: "机构名称不能为空", trigger: "blur" }],
         orderNum: [{ required: true, message: "显示排序不能为空", trigger: "blur" }],
         email: [
           {
@@ -352,8 +364,8 @@ export default {
             trigger: "blur"
           }
         ],
-        type: [{ required: true, message: "部门类型不能为空", trigger: "change" }],
-        status: [{ required: true, message: "部门状态不能为空", trigger: "change" }],
+        type: [{ required: true, message: "机构类型不能为空", trigger: "change" }],
+        status: [{ required: true, message: "机构状态不能为空", trigger: "change" }],
         // isTenant: [{ required: true, message: '是否租户不能为空', trigger: 'change' }],
         tenantRoleId: [{ required: true, message: "选择角色不能为空", trigger: "change" }]
       },
@@ -374,7 +386,7 @@ export default {
     //     this.roleList = response.data.rows;
     //   });
     // },
-    /** 查询部门列表 */
+    /** 查询组织机构列表 */
     getList() {
       this.loading = true;
       selectDepts(this.queryParams).then(response => {
@@ -382,7 +394,7 @@ export default {
         this.loading = false;
       });
     },
-    /** 转换部门数据结构 */
+    /** 转换组织机构数据结构 */
     normalizer(node) {
       if (node.children && !node.children.length) {
         delete node.children;
@@ -404,13 +416,14 @@ export default {
         deptId: undefined,
         parentId: undefined,
         deptName: undefined,
+        deptShort: undefined,
         orderNum: undefined,
         leader: undefined,
         phone: undefined,
         email: undefined,
         status: "0",
         isPlatform: "0", // "0":是,"1":否
-        type: "", // 部门类型
+        type: "", // 组织机构类型
         // isTenant: '0',
         tenantRoleId: undefined
       };
@@ -434,7 +447,7 @@ export default {
         this.form.parentId = row.deptId;
       }
       this.open = true;
-      this.title = "新增部门";
+      this.title = "新增组织机构";
       listDept().then(response => {
         this.deptOptions = this.handleTree(response.data.data, "deptId");
       });
@@ -453,7 +466,7 @@ export default {
       getDept(row.deptId).then(response => {
         this.form = response.data.data;
         this.open = true;
-        this.title = "编辑部门";
+        this.title = "编辑组织机构";
       });
       listDeptExcludeChild(row.deptId).then(response => {
         this.deptOptions = this.handleTree(response.data.data, "deptId");
@@ -486,7 +499,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       this.$modal
-        .confirm(`是否确认删除名称为"${row.deptName}"的数据项？（无法删除有下属部门的部门）`)
+        .confirm(`是否确认删除名称为"${row.deptName}"的数据项？（无法删除有下属机构的组织机构）`)
         .then(() => delDept(row.deptId))
         .then(res => {
           if (res ? res.data.msg === "操作成功" : false) {
@@ -494,7 +507,7 @@ export default {
             this.$modal.msgSuccess("删除成功");
           } else {
             this.$modal
-              .confirm("该部门下存在用户，是否确认删除该数据项？").then(() => delDeptsure(row.deptId)).then(res1 => {
+              .confirm("该组织机构下存在用户，是否确认删除该数据项？").then(() => delDeptsure(row.deptId)).then(res1 => {
                 if (res1 ? res1.data.code === 200 : false) {
                   this.getList();
                   this.$modal.msgSuccess("删除成功");
@@ -507,7 +520,7 @@ export default {
   }
 };
 </script>
-  <style lang="less" scoped>
+<style lang="less" scoped>
   .app-container {
     height: 100%;
 
@@ -515,4 +528,4 @@ export default {
       overflow: scroll;
     }
   }
-  </style>
+</style>

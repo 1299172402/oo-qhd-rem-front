@@ -160,9 +160,10 @@
 
 <script>
 import dayjs from "dayjs";
-import { getAction, postAction } from "@/api/common/manage";
+import { postAction } from "@/api/common/manage";
 import "@/assets/styles/pages/handleBusinessListStyle.less";
 import OpenOtherTab from "@/pages/common/mixins/commonMixin";
+import { getApp } from "@/api/intelligentOilfield/system/applicationCenter/applicationCenter.js";
 
 export default {
   name: "DoneBusinessList",
@@ -266,7 +267,6 @@ export default {
   },
   methods: {
     searchQuery() {
-      this.dataSource = [];
       this.ipagination.current = 1;
       this.lazyLoad();
     },
@@ -293,23 +293,20 @@ export default {
       if (this.isWindowOpenOther(record)) {
         return;
       }
-      const params = {
-        businessKey: record.businessKey, // 交接单id
-        processInstanceId: record.processInstanceId // 流程实例id
-      };
-      getAction(`/system/flow/instance/${record.processInstanceId}/view-component`, {}).then(res => {
-        if (res.success) {
-          if (res.viewComponent) {
-            this.$router.push({
-              name: res.viewComponent,
-              query: params,
-              params: {
-                action: "View"
-              }
-            });
+      const { appId, businessKey, id, processInstanceId } = record;
+      if (!appId) {
+        this.$message.error("缺少appId!");
+        return;
+      }
+      getApp(appId)
+        .then(res => {
+          const url = res.data.data.appPcAccessUrl ? res.data.data.appPcAccessUrl.split("?")[0] : "";
+          if (!url) {
+            this.$message.error("路径错误!");
+            return;
           }
-        }
-      });
+          window.open(`${url}?businessKey=${businessKey}&taskId=${id}&processInstanceId=${processInstanceId}&action=View`, "_blank");
+        });
     },
     handleTableChange(pagination) {
       // 分页、排序、筛选变化时触发

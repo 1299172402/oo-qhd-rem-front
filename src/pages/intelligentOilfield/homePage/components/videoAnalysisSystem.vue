@@ -56,7 +56,12 @@
             :xl="4"
           >
             <div class="g-w100" style="font-size: 16px; cursor: pointer;display: flex;flex-direction: column" @click="toClick(item.businessUrl)">
-              <img :src="item.businessImg" alt="" class="g-w100">
+              <img
+                :src="item.businessImg"
+                alt=""
+                class="g-w100"
+                style="width: 100%;height: 150px"
+              >
               <div style="text-align: center;line-height: 32px">
                 {{ item.businessName }}
               </div>

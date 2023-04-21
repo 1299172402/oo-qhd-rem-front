@@ -2,7 +2,7 @@
   <div>
     <div class="user-info-head" @click="editCropper()">
       <img
-        :src="imgUrl2"
+        :src="imgUrl1"
         title="点击上传头像"
         style="width: 150px;height: 198px"
         class="img-circle img-lg"
@@ -11,77 +11,43 @@
     <el-dialog
       :title="title"
       :visible.sync="open"
-      width="800px"
+      width="400px"
       append-to-body
       :close-on-click-modal="false"
       @opened="modalOpened"
       @close="closeDialog"
     >
-      <el-row>
-        <el-col :xs="24" :md="12" :style="{ height: '350px' }">
-          <vue-cropper
-            v-if="visible"
-            ref="cropper"
-            :img="options.img"
-            :info="true"
-            :auto-crop="options.autoCrop"
-            :auto-crop-width="options.autoCropWidth"
-            :auto-crop-height="options.autoCropHeight"
-            :fixed-box="options.fixedBox"
-            @realTime="realTime"
-          />
-        </el-col>
-        <el-col :xs="24" :md="12" :style="{ height: '350px' }">
-          <div class="avatar-upload-preview">
-            <img :src="previews.url" :style="previews.img">
-          </div>
-        </el-col>
-      </el-row>
-      <br>
-      <el-row>
-        <el-col :lg="2" :md="2">
-          <el-upload
-            action="#"
-            :http-request="requestUpload"
-            :show-file-list="false"
-            :before-upload="beforeUpload"
-          >
-            <el-button size="small">
-              选择
-              <i class="el-icon-upload el-icon--right" />
-            </el-button>
-          </el-upload>
-        </el-col>
-        <el-col :lg="{ span: 1, offset: 2 }" :md="2">
-          <el-button icon="el-icon-plus" size="small" @click="changeScale(1)" />
-        </el-col>
-        <el-col :lg="{ span: 1, offset: 1 }" :md="2">
-          <el-button icon="el-icon-minus" size="small" @click="changeScale(-1)" />
-        </el-col>
-        <el-col :lg="{ span: 1, offset: 1 }" :md="2">
-          <el-button icon="el-icon-refresh-left" size="small" @click="rotateLeft()" />
-        </el-col>
-        <el-col :lg="{ span: 1, offset: 1 }" :md="2">
-          <el-button icon="el-icon-refresh-right" size="small" @click="rotateRight()" />
-        </el-col>
-        <el-col :lg="{ span: 2, offset: 6 }" :md="2">
-          <el-button type="primary" size="small" @click="uploadImg()">
-            提 交
-          </el-button>
-        </el-col>
-      </el-row>
+      <div style="text-align: center">
+        <file-upload
+          v-model="imgUrl2"
+          :limit="1"
+          :is-picture-card="true"
+          :is-show-tip="false"
+          biz-path="portal/oo-csc-upp-system-atom"
+          bucket-name="picture-qhd326"
+        />
+      </div>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" size="small" @click="uploadImg()">
+          提 交
+        </el-button>
+        <el-button class="cancelBtn" @click="open = false">
+          取 消
+        </el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import store from "@/store";
-import { VueCropper } from "vue-cropper";
-import { uploadAvatar } from "@/api/intelligentOilfield/system/user";
-import imgUrl from "@/assets/profile.jpg"; // 引入图片方法一
+import { updateUser } from "@/api/intelligentOilfield/system/user";
+import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
+import { downFile } from "@/components/upload/utils/file.ts";
 
 export default {
-  components: { VueCropper },
+  components: { FileUpload },
   props: {
     user: {
       type: Object
@@ -89,7 +55,7 @@ export default {
   },
   data() {
     return {
-      imgUrl1: imgUrl, // 引入图片方法一
+      imgUrl1: "", // 引入图片方法一
       imgUrl2: undefined, // 引入图片方法二
       // 是否显示弹出层
       open: false,
@@ -107,10 +73,29 @@ export default {
       previews: {}
     };
   },
-  mounted() {
-    this.imgUrl2 = new URL("../../../../assets/person.png", import.meta.url).href; // 引入图片方法二
+  watch: {
+    user: {
+      handler(newVal) {
+        this.imgUrl2 = newVal ? newVal.data?.avatar : "";
+        if (this.imgUrl2 === "无") {
+          this.imgUrl2 = "";
+        }
+        if (this.imgUrl2) {
+          this.previewImg(this.imgUrl2.split(":")[0]);
+        } else {
+          this.imgUrl1 = new URL("../../../../assets/darkPerson.png", import.meta.url).href;
+        }
+      },
+      deep: true,
+      immediate: true
+    }
   },
   methods: {
+    previewImg(id) {
+      downFile(id).then(res => {
+        this.imgUrl1 = window.URL.createObjectURL(res);
+      });
+    },
     // 编辑头像
     editCropper() {
       this.open = true;
@@ -148,18 +133,22 @@ export default {
     },
     // 上传图片
     uploadImg() {
-      this.$refs.cropper.getCropBlob(data => {
-        const formData = new FormData();
-        formData.append("avatarfile", data);
-        uploadAvatar(formData).then(res => {
-          if (res ? res.data.code === 200 : false) {
-            this.open = false;
-            this.options.img = res.imgUrl;
-            store.commit("SET_AVATAR", this.options.img);
-            this.$modal.msgSuccess("修改成功");
-            this.visible = false;
+      const params = {
+        userId: this.user.data.userId,
+        postIds: this.user.postIds,
+        roleIds: this.user.roleIds,
+        avatar: this.imgUrl2 ? this.imgUrl2 : "无",
+        userName: this.user.data.userName
+      };
+      updateUser(params).then(res => {
+        if (res ? res.data.code === 200 : false) {
+          if (this.imgUrl2) {
+            this.previewImg(this.imgUrl2.split(":")[0]);
+          } else {
+            this.imgUrl1 = new URL("../../../../assets/darkPerson.png", import.meta.url).href;
           }
-        });
+          this.open = false;
+        }
       });
     },
     // 实时预览
@@ -168,9 +157,7 @@ export default {
     },
     // 关闭窗口
     closeDialog() {
-      //   this.options.img = store.getters.avatar
-      this.options.img = "/assets/profile.jpg";
-      this.visible = false;
+      this.open = false;
     }
   }
 };

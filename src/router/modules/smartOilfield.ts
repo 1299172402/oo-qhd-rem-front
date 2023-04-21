@@ -187,6 +187,21 @@ export default [
       }
     ]
   },
+  {
+    path: "/messageCenter",
+    component: Layout,
+    hidden: true,
+    redirect: "/messageCenter/platFormEquMon/:platName",
+    meta: { title: "平台设备监控", icon: "", single: true },
+    children: [
+      {
+        path: "platFormEquMon/:platName",
+        name: "platFormEquMon",
+        component: () => import("@/pages/intelligentOilfield/messageCenter/platFormEquMon/index.vue"),
+        meta: { title: "平台设备监控" }
+      }
+    ]
+  },
   // 指标中心小组件路由
   // 蓬勃产量指标
   {

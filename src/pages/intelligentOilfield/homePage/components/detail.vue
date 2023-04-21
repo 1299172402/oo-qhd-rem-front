@@ -137,7 +137,7 @@ export default {
   },
   methods: {
     listAll() {
-      listAll(this.$route.query.tenantId).then(response => {
+      listAll(this.$route.params.tenantId).then(response => {
         this.listAllData = response;
       });
     },

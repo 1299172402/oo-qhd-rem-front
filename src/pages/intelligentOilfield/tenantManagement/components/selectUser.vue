@@ -91,7 +91,7 @@
               <pagination
                 v-show="ipagination.total > 0"
                 :total="ipagination.total"
-                :page.sync="ipagination.pageNum"
+                :page.sync="ipagination.current"
                 :limit.sync="ipagination.pageSize"
                 style="position: relative; margin-top: 20px;"
                 @pagination="handlePage"

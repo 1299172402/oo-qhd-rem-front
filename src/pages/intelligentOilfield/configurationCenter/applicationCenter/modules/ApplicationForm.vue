@@ -66,7 +66,8 @@
         :is-picture-card="true"
         :file-type="fileType"
         :is-show-tip="false"
-        biz-path="picture"
+        :view-only="onlyRead"
+        biz-path="portal/oo-csc-upp-system-atom"
         bucket-name="picture-qhd326"
       />
     </el-form-item>

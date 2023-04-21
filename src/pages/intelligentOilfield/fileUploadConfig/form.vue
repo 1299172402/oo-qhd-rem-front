@@ -62,7 +62,13 @@
         </span>
         <el-input v-model="model.allowFileExtensions" :title="model.allowFileExtensions" placeholder="请输入扩展名" />
       </el-form-item>
-      <el-form-item label="允许文件的最大大小：" prop="maxSize" class="form-layout__item-col2">
+      <el-form-item prop="maxSize" class="form-layout__item-col2">
+        <span slot="label">
+          <el-tooltip content="单位为MB" placement="top">
+            <i class="el-icon-question" />
+          </el-tooltip>
+          允许文件的最大大小：
+        </span>
         <el-input-number v-model="model.maxSize" :title="model.maxSize" placeholder="请输入允许文件的最大大小" />
       </el-form-item>
       <el-form-item label="允许图片的宽度：" prop="imageWidth" class="form-layout__item-col2">

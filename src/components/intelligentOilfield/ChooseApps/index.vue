@@ -96,7 +96,7 @@
       </el-table>
       <pagination
         :total="ipagination.total"
-        :page.sync="ipagination.pageNum"
+        :page.sync="ipagination.current"
         :limit.sync="ipagination.pageSize"
         @pagination="handlePage"
       />
@@ -148,7 +148,7 @@ export default {
   },
   methods: {
     indexMethod(index) {
-      return index + 1 + (this.ipagination.pageNum - 1) * this.ipagination.pageSize;
+      return index + 1 + (this.ipagination.current - 1) * this.ipagination.pageSize;
     },
     handleSelectCell(data) {
       if (!this.multiple) {

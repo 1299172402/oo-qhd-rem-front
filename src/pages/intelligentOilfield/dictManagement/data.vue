@@ -9,22 +9,13 @@
         :inline="true"
         label-width="68px"
       >
-        <el-form-item label="字典名称" prop="dictType">
-          <el-select v-model="queryParams.dictType" size="small" clearable>
-            <el-option
-              v-for="item in typeOptions"
-              :key="item.dictId"
-              :label="item.dictName"
-              :value="item.dictType"
-            />
-          </el-select>
-        </el-form-item>
         <el-form-item label="字典标签" prop="dictLabel">
           <el-input
             v-model="queryParams.dictLabel"
             placeholder="请输入字典标签"
             clearable
             size="small"
+            style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -33,7 +24,7 @@
             v-model="queryParams.status"
             placeholder="数据状态"
             clearable
-            size="small"
+            style="width: 240px"
           >
             <el-option
               v-for="dict in dict.type.sys_normal_disable"
@@ -64,23 +55,21 @@
       </el-form>
     </header-search>
     <page-panel-new header-title="字典数据" style="height: calc(100% - 100px);">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
-        <el-col :span="1.5">
+      <el-row style="margin-bottom: 20px">
+        <el-col :span="20">
           <el-button
             v-hasPermi="['system:dict:add']"
             type="primary"
-            plain
             size="mini"
             @click="handleAdd"
           >
             新增
           </el-button>
         </el-col>
-        <el-col :span="1.5">
+        <el-col :span="4" style="text-align: right;padding-right: 2px">
           <el-button
             v-hasPermi="['system:dict:export']"
-            plain
-            class="commonBtn"
+            type="primary"
             size="mini"
             @click="handleExport"
           >
@@ -215,7 +204,7 @@
         <el-button type="primary" @click="submitForm">
           确 定
         </el-button>
-        <el-button @click="cancel">
+        <el-button class="cancelBtn" @click="cancel">
           取 消
         </el-button>
       </div>
@@ -225,7 +214,7 @@
 
 <script>
 import { listData, getData, delData, addData, updateData } from "@/api/intelligentOilfield/system/dict/data";
-import { listType, getType } from "@/api/intelligentOilfield/system/dict/type";
+import { getType } from "@/api/intelligentOilfield/system/dict/type";
 
 export default {
   name: "Data",
@@ -279,8 +268,6 @@ export default {
           label: "危险"
         }
       ],
-      // 类型数据字典
-      typeOptions: [],
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -302,7 +289,6 @@ export default {
   created() {
     const dictId = this.$route.params && this.$route.params.dictId;
     this.getType(dictId);
-    this.getTypeList();
   },
   activated() {
     const dictId = this.$route.params && this.$route.params.dictId;
@@ -315,12 +301,6 @@ export default {
         this.queryParams.dictType = response.data.data.dictType;
         this.defaultDictType = response.data.data.dictType;
         this.getList();
-      });
-    },
-    /** 查询字典类型列表 */
-    getTypeList() {
-      listType().then(response => {
-        this.typeOptions = response.rows;
       });
     },
     /** 查询字典数据列表 */
@@ -364,7 +344,6 @@ export default {
     /** 重置按钮操作 */
     resetQuery() {
       this.resetForm("queryForm");
-      this.queryParams.dictType = this.defaultDictType;
       this.$nextTick(() => {
         this.handleQuery();
       });
@@ -374,7 +353,7 @@ export default {
       this.reset();
       this.open = true;
       this.title = "添加字典数据";
-      this.form.dictType = this.queryParams.dictType;
+      this.form.dictType = this.defaultDictType;
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -397,14 +376,16 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           if (this.form.dictCode !== undefined) {
-            updateData(this.form).then(() => {
-              this.$modal.msgSuccess("修改成功");
+            updateData(this.form).then(res => {
+              if (res?.data.code === 200) {
+                this.$modal.msgSuccess("修改成功");
+              }
               this.open = false;
               this.getList();
             });
           } else {
             addData(this.form).then(res => {
-              if (res?.code === 200) {
+              if (res?.data.code === 200) {
                 this.$modal.msgSuccess("新增成功");
               }
               this.open = false;
@@ -415,12 +396,12 @@ export default {
       });
     },
     /** 删除按钮操作 */
-    handleDelete(row, index) {
+    handleDelete(row) {
       const dictCodes = row.dictCode || this.ids;
       // this.$modal
       //   .confirm(`是否确认删除字典编码为"${  dictCodes  }"的数据项？`)
       this.$modal
-        .confirm(`是否确认删除序号为"${index + 1}"的数据项？`)
+        .confirm("是否确认删除该条数据？")
         .then(() => delData(dictCodes))
         .then(() => {
           this.getList();

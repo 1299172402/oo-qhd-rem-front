@@ -72,6 +72,7 @@
         :value="item.path"
         :title="$store.state.setting.layout === 'mix' ? item.title : null"
         @mouseover.native="onmouseoverRight"
+        @mouseleave.native="onmouseleave"
       >
         <template #icon v-if="$store.state.setting.layout === 'mix'">
           <svg-icon
@@ -96,29 +97,34 @@
           {{ item.title }}
         </template>
         <!-- :style="{'margin-left':item.icon==='#'? '0px' : item.icon==='icon' ? '0px': '10px'}"  -->
-        <menu-content
+        <!-- TODO: Maybe change back -->
+        <!-- <menu-content
           v-if="
             item.children && $store.state.setting.isSidebarCompact == false && $store.state.setting.layout === 'mix'
           "
           :nav-data="item.children"
-        />
-        <div
-          class="menuselect"
-          v-if="
-            (item.children && $store.state.setting.isSidebarCompact == true) ||
-            (item.children && $store.state.setting.layout === 'top')
-          "
-        >
+        /> -->
+        <div class="menuselect">
+          <div class="menuTitle">
+            <svg-icon
+              v-if="typeof item.icon === 'string' && item.icon && item.icon !== '#'"
+              class="svgIconClass svgIconTitle"
+              :icon-class="item.icon"
+            />
+            <span>{{ item.title }}</span>
+          </div>
           <div class="secondmenu" v-for="items in item.children">
-            <router-link :to="{ path: items.path }">
-              <div>{{ items.title }}</div>
-            </router-link>
-            <div style="display: flex; flex-wrap: wrap;">
-                <div class="thirdmenu" v-if="items.children" v-for="itemss in items.children">
-                    <router-link :to="{ path: itemss.path }">
-                        <div>{{ itemss.title }}</div>
-                    </router-link>
+            <div :class="{ secondTitle: true, secondDefault: items.children.length > 0 }" @click="secondMenu(items)">
+              {{ items.title }}
+            </div>
+            <div style="display: flex; flex-wrap: wrap">
+              <template v-if="items.children">
+                <div class="thirdmenu" v-for="itemss in items.children">
+                  <router-link :to="{ path: itemss.path }">
+                    <div>{{ itemss.title }}</div>
+                  </router-link>
                 </div>
+              </template>
             </div>
           </div>
         </div>
@@ -208,23 +214,35 @@ export default Vue.extend({
   },
   methods: {
     onmouseoverRight(e) {
-      if (this.$store.state.setting.layout === "top") {
-        if (e.target.tagName === "DIV") {
-          e.srcElement.parentNode.lastElementChild.style.left = `${e.target.getBoundingClientRect().left - 140}px`;
-          const b = Number(e.target.getBoundingClientRect().left) + 146;
-          //二级菜单需设置靠左
-          if (
-            e.target.className.indexOf("t-menu__item") > -1 &&
-            e.target.parentNode.parentNode.className !== "header-menu"
-          ) {
-            // TODO: Maybe change back
-            // e.srcElement.parentNode.lastElementChild.lastElementChild.lastElementChild.lastElementChild.lastElementChild.style.top = e.target.getBoundingClientRect().top + 'px';
-            e.target.nextSibling.style.top = `${e.target.getBoundingClientRect().top - 7}px`;
-            // TODO: Maybe change back
-            // e.srcElement.parentNode.lastElementChild.lastElementChild.style.top = e.target.getBoundingClientRect().top + 'px';
-            e.target.nextSibling.style.left = `${b}px`;
+      const circle = document.getElementsByClassName("el-carousel__arrow");
+      for(let i = 0; i < circle.length; i++){
+          circle[i].style.zIndex = "0"
+      }
+      if (e.target.className === "t-menu__item t-is-opened" || e.target.className === "t-menu__item") {
+        if (this.$store.state.setting.layout === "top" && e.target.tagName !== "LI") {
+          if (e.target.tagName === "DIV") {
+            e.srcElement.parentNode.lastElementChild.style.left = `${e.target.getBoundingClientRect().left - 140}px`;
+            const b = Number(e.target.getBoundingClientRect().left) + 146;
+            //二级菜单需设置靠左
+            if (
+              e.target.className.indexOf("t-menu__item") > -1 &&
+              e.target.parentNode.parentNode.className !== "header-menu"
+            ) {
+              // TODO: Maybe change back
+              // e.srcElement.parentNode.lastElementChild.lastElementChild.lastElementChild.lastElementChild.lastElementChild.style.top = e.target.getBoundingClientRect().top + 'px';
+              e.target.nextSibling.style.top = `${e.target.getBoundingClientRect().top - 7}px`;
+              // TODO: Maybe change back
+              // e.srcElement.parentNode.lastElementChild.lastElementChild.style.top = e.target.getBoundingClientRect().top + 'px';
+              e.target.nextSibling.style.left = `${b}px`;
+            }
           }
         }
+      }
+    },
+    onmouseleave(){
+      const circle = document.getElementsByClassName("el-carousel__arrow");
+      for(let i = 0; i < circle.length; i++){
+          circle[i].style.zIndex = ""
       }
     },
     changeMenu(value: MenuRoute) {
@@ -250,8 +268,13 @@ export default Vue.extend({
           item.setAttribute("title", item.innerText); 
         }
       });
-    }
-  }
+    },
+    secondMenu(item) {
+      if (item.children.length === 0) {
+        this.$router.push({ path: item.path });
+      }
+    },
+  },
 });
 </script>
 <style lang="less" scoped>
@@ -269,24 +292,29 @@ export default Vue.extend({
   padding-bottom: 6px;
 }
 
-.menuselect .secondmenu:nth-last-child(1) {
+.menuselect .secondTitle:nth-last-child(1) {
   border: none;
   margin-bottom: 0;
   padding-bottom: 0;
 }
 
-.secondmenu > a {
+.secondmenu > .secondTitle {
   font-weight: 900;
   line-height: 32px;
   margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.secondDefault {
+  cursor: default !important;
 }
 
 .thirdmenu {
-  width: 32%;
+  width: 30%;
   max-width: 300px;
   display: flex;
   flex-wrap: wrap;
-  margin-right: 6px;
+  margin: 0 6px;
 }
 
 .thirdmenu a {
@@ -313,12 +341,18 @@ a {
   display: none;
 }
 
-.nolink{
-  pointer-events: none;
-  cursor: default;
-}
-
 /deep/ .t-menu__content {
   max-width: 70%;
+}
+
+.menuTitle {
+  margin: 10px 0;
+  padding-bottom: 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.svgIconTitle {
+  margin-left: -10px;
 }
 </style>

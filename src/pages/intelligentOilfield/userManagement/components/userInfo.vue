@@ -106,7 +106,7 @@
             <div>
               <el-input
                 v-model="convertIdCard"
-                placeholder="请输入身份证"
+                placeholder="暂无数据"
                 maxlength="30"
                 disabled
               />

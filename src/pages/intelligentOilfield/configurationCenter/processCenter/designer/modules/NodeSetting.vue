@@ -47,10 +47,10 @@
           <question-info tip="flow_node_designer_node_list_header" style="margin-left: 5px;" />
         </template>
         <div class="gap-container">
-          <el-button @click="actKey = item.actKey; showDetail = true;">
+          <el-button type="primary" @click="actKey = item.actKey; showDetail = true;">
             添加规则
           </el-button>
-          <el-button @click="handleEditSort(item)">
+          <el-button class="commonBtn" @click="handleEditSort(item)">
             编辑顺序
             <question-info tip="flow_node_designer_sequence" />
           </el-button>

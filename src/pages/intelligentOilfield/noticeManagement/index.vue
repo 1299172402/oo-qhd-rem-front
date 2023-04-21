@@ -9,12 +9,11 @@
         :inline="true"
         style="margin-top: 18px"
       >
-        <el-form-item label="组织机构筛选" prop="tenantId">
+        <el-form-item label="通知租户" prop="tenantId">
           <el-select
             v-model="queryParams.tenantId"
             placeholder="请选择"
             clearable
-            size="small"
             style="width: 240px"
           >
             <el-option
@@ -31,6 +30,7 @@
             placeholder="请输入通知内容"
             clearable
             size="small"
+            style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -40,6 +40,7 @@
             placeholder="请输入操作人员"
             clearable
             size="small"
+            style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -48,7 +49,6 @@
             v-model="queryParams.noticeType"
             placeholder="请选择"
             clearable
-            size="small"
             style="width: 240px"
           >
             <el-option
@@ -126,7 +126,7 @@
           align="center"
         />
         <el-table-column
-          label="通知机构"
+          label="通知租户"
           prop="tenantName"
           width="200"
           align="center"
@@ -499,7 +499,7 @@ export default {
     handleDelete(row) {
       const dataIds = row.noticeId;
       this.$modal
-        .confirm(`是否确认删除编号为"${row.noticeId}"的数据项？`)
+        .confirm("是否确认删除该条通知公告？")
         .then(() => deldataNotice(dataIds))
         .then(res => {
           if (res ? res.data.code === 200 : false) {

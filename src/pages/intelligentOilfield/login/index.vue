@@ -1,6 +1,6 @@
 <template>
   <div class="login-wrapper">
-    <div style="display: flex;align-items: center;height: 77px;padding-left: 23px;">
+    <div style="display: flex; align-items: center; height: 77px; padding-left: 30px;">
       <div class="logoDiv" />
       <!-- TODO: 内网 Maybe change back -->
       <p class="titleDiv">
@@ -31,7 +31,9 @@
       </div>
     </div>
     <div class="bottom-Div">
-      中国石油（中国）有限公司天津分公司版权所有
+      <!-- XXXX石油集团有限公司版权所有 -->
+      <!-- TODO: Maybe change back -->
+      中国海洋石油集团有限公司版权所有
     </div>
   </div>
 </template>

@@ -53,6 +53,8 @@
   border-radius: 3px;
 }
 
+*::-webkit-scrollbar-corner{background: transparent}
+
 .el-table .el-table__cell.gutter {
   background: transparent;
 }
@@ -83,6 +85,11 @@
 }
 //表头
 .el-table__header-wrapper {
+  background-image: var(--logo-bg) !important;
+  background-size: unset !important;
+  background-repeat: no-repeat !important;
+  background-position: right top !important;
+
   .cell {
     // background: var(--el-dialog-color);
     background: transparent;
@@ -104,10 +111,15 @@
   font-size: 14px;
   color: var(--white-color);
   padding: 0 0 0 20px;
-  // TODO: Maybe change back，不带图标的时候放开
-  // background: linear-gradient(270deg, rgba(0, 96, 166, 0.5) 0%, #0060a6 100%);
-  background: var(--logo-bg) no-repeat top / contain, linear-gradient(270deg, rgba(0, 96, 166, 0.5) 0%, #0060a6 100%) !important;
-  background-size: 100% 100% !important;
+  // TODO: Maybe change back，带图标的时候放开
+  background: var(--logo-bg) no-repeat top right, linear-gradient(270deg, rgba(0, 96, 166, 0.5) 0%, #0060a6 100%) !important;
+}
+
+.infoHeaderBg{
+//   background: linear-gradient(to right, rgba(0, 202, 255, 0.4), var(--opacity-blue-bg2));
+  // TODO: Maybe change back，带图标的时候放开
+  background: var(--logo-bg) no-repeat top right, linear-gradient(to right, rgba(0, 202, 255, 0.4), var(--opacity-blue-bg2)) !important;
+    
 }
 
 .footerBox {
@@ -216,9 +228,17 @@
   background: var(--opacity-blue-bg) !important;
 }
 
-.el-table__fixed-header-wrapper .cell {
-  height: 34px;
-  line-height: 34px;
+.el-table__fixed-header-wrapper {
+  background: transparent;
+  background-image: var(--logo-bg) !important;
+  background-size: unset !important;
+  background-repeat: no-repeat !important;
+  background-position: right top !important;
+
+  .cell {
+    height: 34px;
+    line-height: 34px;
+  }
 }
 
 .t-layout {

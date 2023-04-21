@@ -112,20 +112,19 @@
         label-width="0"
         @validate="onValidate"
       >
-        <t-tabs
-          :value="tabValue"
-          @change="(newValue) => (tabValue = newValue)"
-        >
-          <t-tab-panel value="corp" label="内部人员登录" class="neibuLogin">
+        <t-tabs theme="card" :value="tabValue" @change="(newValue) => (tabValue = newValue)">
+          <t-tab-panel
+            value="corp"
+            label="集团用户"
+            class="neibuLogin"
+            :style="{ padding: tabValue === 'password' ? '50px 35px 20px' : '0px' }"
+          >
             <components-company-login />
           </t-tab-panel>
-          <t-tab-panel value="password" label="外部人员登录">
-            <t-form-item name="username" style="margin-top: 7%">
+          <t-tab-panel value="password" label="系统用户" style="padding: 50px 35px 20px">
+            <t-form-item name="username">
               <div class="textDiv">
-                用户名
-              </div>
-              <div class="borderDiv">
-                |
+                用户名&nbsp;|
               </div>
               <el-input
                 v-model="formData.username"
@@ -136,12 +135,9 @@
               <div class="bottomBorderDiv" />
             </t-form-item>
 
-            <t-form-item name="password" style="margin: 10% 0">
+            <t-form-item name="password">
               <div class="textDiv">
-                密 码
-              </div>
-              <div class="borderDiv">
-                |
+                密&nbsp;&nbsp;&nbsp;码&nbsp;|
               </div>
               <el-input
                 v-model="formData.password"
@@ -155,10 +151,7 @@
 
             <t-form-item name="yzm">
               <div class="textDiv">
-                验证码
-              </div>
-              <div class="borderDiv">
-                |
+                验证码&nbsp;|
               </div>
               <el-input
                 v-model="formData.code"
@@ -177,20 +170,21 @@
                 >
               </div>
             </t-form-item>
-            <div class="pwdDiv">
+            <!-- TODO: Maybe change back -->
+            <!-- <div class="pwdDiv">
               <div class="check-container remember-pwd checkBox">
-                <!-- TODO: Maybe change back -->
-                <!-- <t-checkbox>自动登录</t-checkbox>
+                <t-checkbox>自动登录</t-checkbox>
                 <t-checkbox v-model="formData.rememberMe">
                   记住密码
-                </t-checkbox> -->
+                </t-checkbox>
               </div>
-            </div>
+            </div> -->
           </t-tab-panel>
         </t-tabs>
         <div class="loginBtn">
-          <t-form-item v-if="tabValue === 'password'" class="btn-container" style="margin-top: 5%">
+          <t-form-item v-if="tabValue === 'password'" class="btn-container">
             <t-button
+              style="height: 49px; margin: 0 32px; border-radius: 4px; font-size: 18px; width: 350px"
               block
               size="large"
               type="submit"
@@ -352,14 +346,15 @@ export default Vue.extend({
     },
     async onSubmit(type) {
       //   if (validateResult === true) {
-    //   await this.$store.dispatch('user/login', this.formData);
+      //   await this.$store.dispatch('user/login', this.formData);
       this.checkUrl();
       if (type === "登录") {
         this.$store
           .dispatch("user/login", this.formData)
           .then(() => {
             this.getCode();
-          }).catch(() => {
+          })
+          .catch(() => {
             this.getCode();
           });
       }
@@ -482,20 +477,17 @@ export default Vue.extend({
 .loginDiv {
   width: 100%;
   height: auto;
-  padding: 5px 40px;
-  background: white;
-  border-radius: 4px;
   display: flex;
   flex-direction: column;
   position: relative;
 
   .tabline {
     width: 100%;
-    height: 1px;
-    background: #D8D8D8;
+    height: 0px;
+    background: #d8d8d8;
     position: absolute;
     left: 0;
-    top: 55px;
+    top: 60px;
   }
 
   .headerDiv {
@@ -503,7 +495,7 @@ export default Vue.extend({
     font-size: 22px;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 700;
-    color: #0061a7;
+    color: #0075e9;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -514,17 +506,17 @@ export default Vue.extend({
       height: 100%;
 
       .textDiv {
-        font-size: 16px;
-        font-family: PingFangSC-Regular, PingFang SC;
+        font-size: 14px;
+        font-family: "STHeiti", "Microsoft YaHei", "宋体", "arial";
         font-weight: 400;
-        color: #303133;
-        margin-right: 10px;
+        color: #566570;
+        margin-right: 0px;
         width: 70px;
       }
       .borderDiv {
         width: 1px;
         height: 20px;
-        color: #aeaeae;
+        color: #566570;
         margin-right: 10px;
       }
       .bottomBorderDiv {
@@ -535,6 +527,9 @@ export default Vue.extend({
       }
       .login-code {
         width: 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
       }
       .pwdDiv {
         height: 8%;
@@ -543,10 +538,6 @@ export default Vue.extend({
           display: flex;
           justify-content: space-between;
         }
-      }
-      .loginBtn {
-        height: 15%;
-        margin: 26px 0 45px 0;
       }
     }
   }
@@ -563,7 +554,7 @@ export default Vue.extend({
     align-items: center;
   }
   .erweimaBg {
-    background-image: url('@/assets/qr-code.png');
+    background-image: url("@/assets/qr-code.png");
     width: 64px;
     height: 64px;
     margin-bottom: 2%;
@@ -575,64 +566,91 @@ export default Vue.extend({
     color: #909399;
   }
 
-  .t-tabs{
+  .t-tabs {
     background-color: #fff;
     color: rgba(0, 0, 0, 0.9);
+    border-radius: 4px;
   }
 
   .t-tabs__nav-wrap {
     flex: 1;
     padding-bottom: 20px;
-    border-bottom: 1px solid #D8D8D8;
+    border-bottom: 1px solid #d8d8d8;
   }
+
+  ::v-deep .el-input__inner {
+    padding: 2px 8px;
+  }
+
   ::v-deep .t-tabs__header {
-    margin-bottom: 18px;
+    background: #0075e9;
+    color: #fff;
   }
-  ::v-deep .t-is-smooth {
-    transform: translate(20px, 0px) !important;
-  }
+
   ::v-deep .t-tabs__nav-item-text-wrapper {
-    color: rgba(0, 0, 0, 0.6);
     font-size: 17px;
   }
 
-  ::v-deep .t-tabs__nav-item {
-    height: 50px !important;
-    line-height: 50px !important;
+  ::v-deep .t-tabs__nav--card.t-tabs__nav-item:not(:first-of-type) {
+    border-left: 0px;
   }
 
-  ::v-deep .t-tabs__nav-item-wrapper{
+  ::v-deep .t-tabs__nav--card.t-tabs__nav-item {
+    border-bottom: 0px;
+  }
+
+  ::v-deep .t-tabs__nav--card.t-tabs__nav-item:last-of-type {
+    border-right: 0px;
+  }
+
+  ::v-deep .t-tabs__nav--card.t-tabs__nav-item:hover {
+    color: unset !important;
+    background-color: unset !important;
+  }
+  ::v-deep .t-tabs__nav-item {
+    height: 60px !important;
+    line-height: 60px !important;
+    color: unset;
+  }
+
+  ::v-deep .t-tabs__nav-item-wrapper {
     background-color: #fff !important;
   }
 
-  ::v-deep .t-tabs__bar{
+  ::v-deep .t-tabs__bar {
     color: #0060a6 !important;
     background: #0060a6 !important;
   }
-  ::v-deep .t-tabs__nav-container.t-is-top::after{
+  ::v-deep .t-tabs__nav-container.t-is-top::after {
     content: none;
+  }
+  ::v-deep .t-tabs__nav--card.t-tabs__nav-item.t-is-active:hover {
+    background: #fff !important;
+  }
+
+  ::v-deep .t-tabs__nav--card.t-tabs__nav-item.t-is-active {
+    color: #0075e9 !important;
+    background: #fff !important;
   }
 
   ::v-deep .t-button {
-    background: #0061a7 !important;
+    background: #0075e9 !important;
   }
-
 }
-
 </style>
 <style scoped>
 .loginInput >>> .el-input__inner {
   border: 1px solid transparent !important;
-  color: var(--only-light-blue-color) !important;
+  color: #696969 !important;
 }
 
 .loginInput >>> .t-checkbox__input {
-  border: 1px solid #0061a7 !important;
+  border: 1px solid #0075e9 !important;
   background-color: #fff;
 }
 
 .loginInput >>> .t-checkbox.t-is-checked .t-checkbox__input {
-  background-color: #0061a7 !important;
+  background-color: #0075e9 !important;
 }
 
 .loginInput >>> .t-checkbox__label {
@@ -643,7 +661,7 @@ export default Vue.extend({
 }
 
 .loginBtn >>> .t-button {
-  background: #0061a7;
+  background: #0075e9;
   border-radius: 6px;
 }
 </style>

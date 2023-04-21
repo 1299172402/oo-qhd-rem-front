@@ -87,7 +87,6 @@
           <el-button
             v-hasPermi="['system:role:add']"
             type="primary"
-            plain
             size="mini"
             @click="handleAdd"
           >
@@ -866,7 +865,7 @@ export default {
     handleDelete(row) {
       const roleIds = row.roleId || this.ids;
       this.$modal
-        .confirm(`是否确认删除角色编号为"${roleIds}"的数据项？`)
+        .confirm("是否确认删除该角色？")
         .then(() => delRole(roleIds))
         .then(res => {
           if (res ? res.data.code === 200 : false) {

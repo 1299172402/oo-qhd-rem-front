@@ -1,5 +1,5 @@
 <template>
-  <form-section submit-text="" @save="handleOk">
+  <form-section submit-text="" :return-name="returnName" @save="handleOk">
     <div class="app-role-container">
       <el-table
         :data="authorizedAppList"
@@ -98,7 +98,8 @@ export default {
         userRoles: [],
         // 所有角色信息
         allRoles: []
-      }
+      },
+      returnName: "User"
     };
   },
   computed: {

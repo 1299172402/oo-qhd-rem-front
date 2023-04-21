@@ -1,24 +1,23 @@
 <!-- 后台——站内信列表 -->
 <template>
   <div class="app-container">
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          v-hasPermi="['system:role:add']"
-          type="primary"
-          plain
-          size="mini"
-          @click="updateAllStatus"
-        >
-          全部已读({{ num }})
-        </el-button>
-      </el-col>
-    </el-row>
-    <page-panel header-title="站内信" style="height: calc(100% - 60px); margin-top: 20px">
+    <page-panel header-title="站内信" style="height: 100%; margin-top: 0">
       <!-- <el-tabs v-model="activeName" class="g-pageHeader" @tab-click="handleClick">
         <el-tab-pane label="消息列表" name="first"></el-tab-pane>
         <el-tab-pane label="报警列表" name="second"></el-tab-pane>
                                   </el-tabs> -->
+      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px;">
+        <el-col :span="1.5">
+          <el-button
+            v-hasPermi="['system:role:add']"
+            type="primary"
+            size="mini"
+            @click="updateAllStatus"
+          >
+            全部已读({{ num }})
+          </el-button>
+        </el-col>
+      </el-row>
       <el-table
         :data="dataList"
         height="calc(100% - 56px)"
@@ -163,6 +162,8 @@ export default {
   created() {
     // tab页显示初始化，路由传参
     this.activeName = this.$route.params.activeName ? this.$route.params.activeName : "first";
+  },
+  mounted() {
     this.getList();
   },
   methods: {
@@ -179,7 +180,7 @@ export default {
           this.total = response.data.total;
           this.loading = false;
         });
-        getList().then(res => {
+        getList({ userId: this.$store.getters["user/userDetail"].user.userId }).then(res => {
           this.num = res.data.rows.filter(item => Number(item.status) === 0).length;
         });
       } else {

@@ -411,5 +411,10 @@ export default {
   display: flex;
   align-items: center;
   padding: 0 60px;
+  z-index: 0;
+
+  .indexCenter:nth-last-child(1) {
+    margin-right: 0 !important;
+  }
 }
 </style>

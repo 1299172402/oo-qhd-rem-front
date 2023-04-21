@@ -255,7 +255,7 @@ export default Vue.extend({
       if (this.returnName && typeof this.returnName === "string") {
         returnPaterPage(this.$route.path, this.returnName);
       } else {
-        console.error("AuditContainer:请确认returnPath路径配置正确");
+        console.error("AuditContainer:请确认returnName配置正确");
       }
     }
   },

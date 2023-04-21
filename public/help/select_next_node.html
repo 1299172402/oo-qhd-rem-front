@@ -1,0 +1,71 @@
+<!--
+  ~ Copyright (c) 2019 - 2021. Boya Triz Co.,Ltd. All rights reserved. 博雅创智版权所有
+  ~ 项目名称：cup-parent
+  ~ 文件名称：select_next_node.html
+  ~ 版本：1.0
+  -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <title>节点规则帮助</title>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+    }
+
+    td,
+    th {
+      border: 1px solid #DDDDDD;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #DDDDDD;
+    }
+    </style>
+</head>
+<body class="layui-layout-body">
+    <a name="select-next"><h1>手选后续节点的配置</h1></a>
+    <ul>
+        <li>使用排它网关</li>
+        <li>在出线表达式上使用表达式${nextAct == '下一节点的id'}。</li>
+        <li>在节点设计器中打开“手选后续节点”的选项。</li>
+    </ul>
+    <p>如下图所示：网关使用的是排它网关（菱形中间是叉）<br/>
+        节点“已指派人的”的id为"predefined"<br/>
+        节点“要手选人的”的id为"needManualSelect"<br/>
+        因此连接到“已指派人的”出线的表达式为 ${nextAct == 'predefined'}，同理将连接“要手选人的”的表达式为 ${nextAct == 'needManualSelect'}。</p>
+    <img src="image/select_next_act.png" alt="手选后续节点配置" width="800px" />
+
+    <h1>网关说明</h1>
+    <p>当流程需要根据条件走不同的路线时我们就需要用到网关，网关有三种：排它网关、兼容网关、并行网关。判断走哪条路的条件需要在网关的出线上配置表达式。</p>
+
+    <h2>网关出线表达式</h2>
+    <p>网关出线的表达式是Java的Juel表达式，详细语法参见<a href="https://docs.oracle.com/javaee/5/tutorial/doc/bnahq.html" target="_blank">Oracle官网资料</a><br/>
+        表达式在网关的出线上配置流表达式如下图所示：</p>
+    在下面的面板上有一个“流条件”点击后有弹出框如后面那个图片，在左侧还有一个“默认值”的选项，勾上时表示此出线为默认出线，默认出线不用配置表达式，一个网关最多只能有一条默认出线</p>
+    <img src="image/gateway_condition_1.png" alt="配置流表达式" width="1600px">
+    <p>如下图的Juel表达式的语义为优质工程的走这条出线。bizData是类型为Json的流程变量，goodQuality是一个属性表示优质工程，当值为1时表示真。<br/>
+        流程变量可以在启动流程和完成任务流程的Api传到流程平台。流程变量的生命周期是整个流程，后调用的接口传的同名流程变量将被覆盖。<br/>
+        <img src="image/gateway_condition_2.png" alt="配置流表达式" width="800px">
+
+    <h2>排它网关</h2>
+    <p>排它网关顾名思义，只找到一条出线的网关。排它网关的逻辑是按照出线的顺序依次判断出线上的条件，找到满足的条件便停止并走这条出来，若没有满足条件的出线再查找有没有默认出线，有则走默认出线，否则抛出异常。<br/>
+        如下图排它网关的图标是菱形中间有个叉，这个图标是BPMN的规范。在下面的面板上有一个出线顺序的选项。</p>
+    <img src="image/exclusive_gateway_1.png" alt="配置出线顺序" width="1600px">
+    <p>点开会弹出设置出线顺序的面板，在这个面板可以手动调整出线的顺序，上面的会优先判断。</p>
+    <img src="image/exclusive_gateway_2.png" alt="配置出线顺序" width="600px">
+
+    <h2>兼容网关</h2>
+    <p>兼容网关，找到所有满足条件出线的网关。兼容网关的逻辑是依次判断出线上的条件，找到所有满足条件的出来，若找到了有满足条件的出线则走这些出线，若没有满足条件的出线再查找有没有默认出线，有则走默认出线，否则抛出异常。兼容网关的图标是菱形中间有个圆。<br/>
+
+    <h2>并行网关</h2>
+    <p>兼容网关，走所有出线的网关。兼容网关的逻辑是找到并走所有出线，出线上的条件被忽略。并行网关的图标是菱形中间有个加号。<br/>
+</body>
+</html>

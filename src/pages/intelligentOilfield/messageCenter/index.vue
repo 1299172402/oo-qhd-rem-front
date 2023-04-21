@@ -43,7 +43,7 @@
         <el-form-item label="送达时间" prop="postId">
           <el-date-picker
             v-model="dataTimeRange"
-            style="width: 260px;"
+            style="width: 240px;"
             type="daterange"
             range-separator="-"
             value-format="yyyy-MM-dd HH:mm:ss"
@@ -76,7 +76,6 @@
           <el-button
             v-hasPermi="['message:config']"
             type="primary"
-            plain
             @click="onMessageConfig"
           >
             配置
@@ -86,7 +85,6 @@
           <el-button
             v-hasPermi="['message:export']"
             type="primary"
-            plain
             @click="handleExport"
           >
             导出

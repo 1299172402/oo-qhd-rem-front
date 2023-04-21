@@ -22,8 +22,7 @@
   // background: linear-gradient(to right, rgba(0,96,166,0.3), transparent, transparent);
   width: 100%;
   height: 100%;
-  background-image: var(--logo-bg) !important;
-  background-size: 100% 100% !important;
+  z-index: 0;
 }
 
 .g-pageHeader .el-tabs__active-bar {
@@ -42,6 +41,10 @@
   color: rgba(179, 189, 202, 1);
   height: 100%;
   line-height: 32px;
+  background-image: var(--logo-bg) !important;
+  background-size: unset !important;
+  background-repeat: no-repeat !important;
+  background-position: right top !important;
 }
 
 .g-pageHeader .el-tabs__nav-scroll {

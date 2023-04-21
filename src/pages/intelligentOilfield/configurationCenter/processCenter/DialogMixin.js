@@ -77,7 +77,7 @@ export const dialogAutoCreateMixin = {
      * 弹窗关闭之后，清空校验，清空数据
      */
     onClosed() {
-      this.model = { ...this.modelSchema };
+      this.model = JSON.parse(JSON.stringify(this.modelSchema));
       this.$nextTick(() => {
         this.$refs[this.refName].clearValidate();
       });

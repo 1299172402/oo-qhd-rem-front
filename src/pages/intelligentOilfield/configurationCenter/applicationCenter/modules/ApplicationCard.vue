@@ -43,6 +43,7 @@
           placement="bottom"
         >
           <svg-icon
+            v-if="item.icon"
             :class="['svg-icon-class',item.className]"
             :icon-class="item.icon"
           />

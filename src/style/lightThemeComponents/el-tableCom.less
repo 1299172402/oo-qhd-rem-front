@@ -1,5 +1,6 @@
 .el-table tr {
   //   color: rgba(0, 0, 0, 0.6);
+  background: unset;
   color: #606266;
   font-size: 14px;
   font-weight: 400;
@@ -49,7 +50,8 @@
 
 .el-table th.el-table__cell,
 .el-table th.el-table__cell.is-leaf{
-  background: #fafafa !important;
+  background: unset !important;
+  //opacity: 0.1;
 }
 
 .el-table td.el-table__cell,
@@ -83,6 +85,11 @@
 }
 //表头
 .el-table__header-wrapper {
+  background-image: var(--logo-bg) !important;
+  background-size: unset !important;
+  background-repeat: no-repeat !important;
+  background-position: right top !important;
+
   .cell {
     // background: #FAFAFA;
     background: transparent;
@@ -108,6 +115,12 @@
   color: var(--white-color);
   padding: 0 0 0 20px;
   background: #3490d3;
+}
+
+.infoHeaderBg{
+//   background: #fff;
+  // TODO: Maybe change back，带图标的时候放开
+  background: var(--logo-bg) no-repeat top right, linear-gradient(to right, #fff, #fff) !important;
 }
 
 .footerBox {
@@ -175,8 +188,7 @@
 
 .el-table__cell{
   padding: 0 !important;
-  background-image: var(--logo-bg) !important;
-  background-size: 100% 100% !important;
+  background: #fff;  
 }
 //固定的表头表尾背景色
 .el-table__fixed-right,
@@ -184,7 +196,16 @@
   height: calc(100% - 6px) !important;
 }
 
-.el-table__fixed-header-wrapper .cell {
-  height: 34px;
-  line-height: 34px;
+.el-table__fixed-header-wrapper {
+  background: #fff;
+  background-image: var(--logo-bg) !important;
+  background-size: unset !important;
+  background-repeat: no-repeat !important;
+  background-position: right top !important;
+
+  .cell {
+    height: 34px;
+    line-height: 34px;
+  }
+    
 }

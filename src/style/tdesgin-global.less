@@ -42,17 +42,17 @@
   position: fixed;
   top: 63px;
   min-width: 153px;
-  width: 640px;
-  height: 600px;
+  width: 404px;
+  overflow: auto;
 }
 
 .t-head-menu .t-is-opened,
 .t-layout__sider .t-is-opened {
-  max-height: var(--popup-max-height, 1000px);
+  max-height: var(--popup-max-height, 600px);
 }
 
 .t-layout__sider .t-menu__popup.t-is-opened.t-is-vertical {
-  width: var(--popup-width, 340px) !important;
+  width: var(--popup-width, 404px) !important;
 }
 
 .t-menu__popup .t-menu__popup-wrapper div li:last-of-type {
@@ -82,21 +82,18 @@
 
 //左侧菜单收起，下拉框样式
 .t-default-menu.t-menu--dark .t-menu__popup {
-  background: linear-gradient(
-    360deg,
-    rgba(0, 68, 115, 0.6) 0%,
-    rgba(0, 69, 117, 0.79) 50%,
-    rgba(0, 69, 117, 0.9) 97%,
-    rgba(0, 69, 117, 0.5) 100%
-  );
-  border: 1px solid;
-  border-image: linear-gradient(180deg, rgba(116, 190, 243, 0.5), rgba(0, 180, 255, 1)) 1 1;
+  background: #004575;
   height: 100vh;
   overflow: auto;
 
   .t-menu__item {
     padding-left: 8px;
   }
+}
+
+.t-default-menu.t-menu--dark .t-submenu .t-is-opened:last-child {
+  border: 1px solid;
+  border-image: linear-gradient(180deg, rgba(116, 190, 243, 0.5), rgba(0, 180, 255, 1)) 1 1;
 }
 
 .t-default-menu.t-menu--light .t-menu__popup {
@@ -119,12 +116,15 @@
     rgba(0, 69, 117, 0.9) 97%,
     rgba(0, 69, 117, 0.5) 100%
   );
-  border: 1px solid;
-  border-image: linear-gradient(180deg, rgba(116, 190, 243, 0.5), rgba(0, 180, 255, 1)) 1 1;
 
   .t-menu__item {
     padding-left: 8px;
   }
+}
+
+.t-menu--dark.t-head-menu .t-submenu .t-is-opened:last-child {
+  border: 1px solid;
+  border-image: linear-gradient(180deg, rgba(116, 190, 243, 0.5), rgba(0, 180, 255, 1)) 1 1;
 }
 
 .t-menu--light.t-head-menu .t-menu__popup {
@@ -139,5 +139,19 @@
 .t-default-menu .t-menu__popup {
   position: fixed;
   top: 96px;
-  left: 66px;
+  left: 230px;
+  max-height: 100vh !important;
+  z-index: 999;
+}
+
+.t-is-collapsed .t-menu__popup {
+  left: 66px !important;
+}
+
+.t-default-menu .t-submenu {
+  width: 222px;
+}
+
+.tdesign-starter-sidebar-compact .t-submenu {
+  width: 48px !important;
 }

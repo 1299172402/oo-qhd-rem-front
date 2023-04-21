@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-file">
+  <div class="upload-file" :class="{'view-only': viewOnly}">
     <template v-if="isPictureCard">
       <el-upload
         ref="upload"
@@ -13,16 +13,18 @@
         :on-exceed="handleExceed"
         :on-success="handleUploadSuccess"
         :on-preview="handlePictureCardPreview"
-        :on-remove="handleRemove"
-        :file-list="imageList"
+        :on-remove="handleDelete"
+        :file-list="fileList"
         :http-request="httpRequest"
         class="upload-demo upload-file-uploader upload-file-picture"
         :class="[fileList.length >= limit ? 'hide-upload' : '', $store.getters['setting/mode'] === 'dark' ? 'picture-card' : undefined]"
       >
-        <i class="el-icon-upload" />
-        <div :class="$store.getters['setting/mode'] === 'dark' ? 'dark-hover-style' : 'light-hover-style'">
-          拖拽或者点击上传
-        </div>
+        <template v-if="!viewOnly">
+          <i class="el-icon-upload" />
+          <div :class="$store.getters['setting/mode'] === 'dark' ? 'dark-hover-style' : 'light-hover-style'">
+            拖拽或者点击上传
+          </div>
+        </template>
       </el-upload>
       <el-dialog :visible.sync="dialogVisible" :class="$store.getters['setting/mode'] === 'dark' ? 'dark-dialog' : 'light-dialog'">
         <img width="100%" :src="dialogImageUrl" alt="">
@@ -48,18 +50,20 @@
         :show-file-list="false"
         :class="[fileList.length >= limit ? 'hide-upload' : '', drag ? 'text-align-center' : 'upload-file-text']"
       >
-        <div v-if="!drag">
-          <!-- 上传按钮 -->
-          <el-button :type="buttonType">
-            选取文件
-          </el-button>
-        </div>
-        <div v-else>
-          <i class="el-icon-upload" />
-          <div class="el-upload__text">
-            将文件拖到此处，或<em :class="$store.getters['setting/mode'] === 'dark' ? 'dark-text-style' : 'light-text-style'">点击上传</em>
+        <template v-if="!viewOnly">
+          <div v-if="!drag">
+            <!-- 上传按钮 -->
+            <el-button :type="buttonType">
+              选取文件
+            </el-button>
           </div>
-        </div>
+          <div v-else>
+            <i class="el-icon-upload" />
+            <div class="el-upload__text">
+              将文件拖到此处，或<em :class="$store.getters['setting/mode'] === 'dark' ? 'dark-text-style' : 'light-text-style'">点击上传</em>
+            </div>
+          </div>
+        </template>
         <!-- 上传提示 -->
         <div v-if="showTip" slot="tip" class="el-upload__tip">
           请上传
@@ -86,8 +90,13 @@
           <el-link :underline="false">
             <span class="el-icon-document"> {{ file.name }} </span>
           </el-link>
-          <div v-if="!viewOnly" class="ele-upload-list__item-content-action">
-            <el-link :underline="false" type="danger" @click="handleDelete(file)">
+          <div class="ele-upload-list__item-content-action">
+            <el-link
+              v-if="!viewOnly"
+              :underline="false"
+              type="danger"
+              @click="handleDelete(file)"
+            >
               删除
             </el-link>
             <el-link :underline="false" type="primary" @click="handleLoad(file)">
@@ -182,7 +191,6 @@ export default {
     return {
       number: 0,
       uploadList: [],
-      imageList: [],
       baseUrl: `${proxy[env].API}`,
       fileList: [],
       dialogImageUrl: "",
@@ -191,7 +199,8 @@ export default {
       myFileType: undefined,
       defaultFileType: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "pdf", ...defaultPictureType, ...defaultVideoType],
       defaultPictureType,
-      defaultVideoType
+      defaultVideoType,
+      isMyEmit: false
     };
   },
   computed: {
@@ -205,18 +214,19 @@ export default {
       handler(val) {
         if (val) {
           // 首先将值转为数组
-          const list = Array.isArray(val) ? val : this.value.split("|");
+          const list = Array.isArray(val) ? val : val.split("|");
           // 然后将数组转为对象数组
-          this.fileList = list.map(item => {
-            if (typeof item === "string") {
-              const [id, name] = item.split(":");
-              item = { id, name };
-            }
-            return item;
-          });
-          this.$nextTick(() => {
-            this.initFileList(val);
-          });
+          if (!this.isMyEmit) {
+            this.initFileList(list.map(item => {
+              if (typeof item === "string") {
+                const [id, name] = item.split(":");
+                item = { id, name };
+              }
+              return item;
+            }));
+          } else {
+            this.isMyEmit = false;
+          }
         } else {
           this.fileList = [];
           return [];
@@ -269,27 +279,17 @@ export default {
     /**
      * 初始化文件
      */
-    initFileList(paths) {
-      this.loading = true;
-      if (!paths || paths.length === 0) {
+    initFileList(list) {
+      if (this.isPictureCard && list.length > 0) {
         this.fileList = [];
-        this.loading = false;
-        return;
-      }
-      if (this.isPictureCard && this.fileList.length > 0) {
-        let len = this.fileList.length;
-        this.imageList = [];
-        this.fileList.forEach(file => downFile(file.id)
+        list.forEach(file => downFile(file.id)
           .then(v => getImgUrl(v))
           .then(v => {
-            this.imageList.push({ url: v, id: file.id, name: file.name });
-            len -= 1;
-            if (len === 0) {
-              this.loading = false;
-            }
+            this.$set(file, "url", v);
+            this.fileList.push(file);
           }));
       } else {
-        this.loading = false;
+        this.fileList = list;
       }
     },
     /**
@@ -338,29 +338,18 @@ export default {
     /**
      * 上传成功回调
      */
-    handleUploadSuccess(res) {
+    handleUploadSuccess(res, file) {
       const [id, name] = res.data.data.split(":");
       if (res.data.code === 200) {
-        this.uploadList.push({ name, id });
+        this.uploadList.push({ name, id, url: file.url });
         if (this.uploadList.length === this.number) {
-          this.fileList = this.fileList.concat(this.uploadList);
+          this.fileList.push(...this.uploadList);
           this.uploadList = [];
           this.number = 0;
-          this.$emit("input", this.listToString(this.fileList));
-          this.$emit("change", this.fileList);
-          this.validateFile();
+          this.handleEmit();
           this.$modal.closeLoading();
         }
       }
-    },
-    /**
-     * 删除文件
-     */
-    handleDelete(file) {
-      this.fileList = this.fileList.filter(item => item.id !== file?.id);
-      this.$emit("input", this.listToString(this.fileList));
-      this.$emit("change", this.fileList);
-      this.validateFile();
     },
     /**
      * 对象转成指定字符串分隔
@@ -377,12 +366,11 @@ export default {
       this.dialogVisible = true;
     },
     /**
-     * 删除图片
+     * 删除文件
      */
-    handleRemove(file, fileList) {
-      this.fileList = fileList?.map(item => ({ name: item.name, url: item.name, id: item.id })) || [];
-      this.$emit("input", this.listToString(this.fileList));
-      this.validateFile();
+    handleDelete(file) {
+      this.fileList.splice(this.fileList.findIndex(v => v.id === file.id), 1);
+      this.handleEmit();
     },
     /**
      * 校验方法
@@ -429,6 +417,12 @@ export default {
           window.open(res.data.data);
         });
       }
+    },
+    handleEmit: function() {
+      this.isMyEmit = true;
+      this.$emit("input", this.listToString(this.fileList));
+      this.$emit("change", this.fileList);
+      this.validateFile();
     }
   }
 };
@@ -461,11 +455,6 @@ export default {
 ::v-deep .upload-file-picture {
   width: 100%;
 
-  .el-upload-list--picture-card {
-    display: inline-block;
-    margin-top: 10px;
-  }
-
   .el-upload--picture-card {
     width: 148px;
     height: 148px;
@@ -490,6 +479,7 @@ export default {
   line-height: 2;
   margin-bottom: 10px;
   position: relative;
+  padding-left: 5px;
 
   .el-icon-document {
     color: rgb(52, 144, 211);
@@ -562,6 +552,23 @@ export default {
     .el-icon-close::before {
       color: #908291;
     }
+  }
+}
+
+.upload-file {
+  /deep/ .el-upload {
+    margin-top: 0;
+  }
+
+  &.view-only {
+    /deep/ .el-upload {
+      display: none;
+    }
+  }
+
+  /deep/ .el-upload-list__item.is-ready,
+  /deep/ .el-upload-list__item.is-uploading {
+    display: none !important;
   }
 }
 </style>

@@ -1,26 +1,55 @@
 <template>
-  <form-section submit-text="" :return-name="returnName" @save="handleOk">
-    <div class="application-register">
-      <div class="application-form">
-        <application-form ref="ruleForm" :form-model="model" />
-        <section v-if="action === 'add'">
-          <application-info ref="appForm" :action="action" :application-info="applicationInfo" />
-        </section>
+  <form-section
+    submit-text=""
+    :save-text="isLastStep ? '保存': ''"
+    :return-name="returnName"
+    @save="handleOk"
+  >
+    <div style="width: 100%" class="stepsrow">
+      <el-steps :active="active" align-center finish-status="success">
+        <el-step v-for="(item, index) in stepList" :key="index" :title="item" />
+      </el-steps>
+    </div>
+    <div
+      :class="{
+        'application-form': true,
+        'show-all': isLastStep
+      }"
+    >
+      <div>
+        <application-form
+          v-show="active === 0 || isLastStep"
+          ref="ruleForm"
+          :form-model="model"
+          :only-read="isLastStep"
+        />
+        <application-info
+          v-show="active === 1 || isLastStep"
+          ref="appForm"
+          :action="action"
+          :application-info="applicationInfo"
+          :only-read="isLastStep"
+        />
       </div>
-      <div class="application-table">
+      <div v-show="action === 'add' && (active === 2 || isLastStep)" class="application-table">
         <aside>
-          <div v-if="action === 'add'">
-            <choose-tenement :tenant-ids="tenantIds" @add-user="chooseDept" />
-            <tenant-auth-table :table-data="tableData" :config-columns="false" />
-            <choose-role :role-ids="roleIds" @add-role="chooseRole" />
-            <role-table :table-data="tableRoleData" />
-          </div>
-          <div v-else>
-            <application-info ref="appForm" :action="action" :application-info="applicationInfo" />
-          </div>
+          <choose-tenement v-if="!isLastStep" :tenant-ids="tenantIds" @add-user="chooseDept" />
+          <tenant-auth-table :only-read="isLastStep" :table-data="tableData" :config-columns="false" />
+        </aside>
+        <aside>
+          <choose-role v-if="!isLastStep" :role-ids="roleIds" @add-role="chooseRole" />
+          <role-table :only-read="isLastStep" :table-data="tableRoleData" />
         </aside>
       </div>
     </div>
+    <template #btn>
+      <el-button v-if="active > 0" type="primary" @click="active--">
+        上一步
+      </el-button>
+      <el-button v-if="active >= 0 && !isLastStep" type="primary" @click="next">
+        下一步
+      </el-button>
+    </template>
   </form-section>
 </template>
 
@@ -60,7 +89,8 @@ export default {
         save: addApp
       },
       tableRoleData: [],
-      returnName: "ApplicationList"
+      returnName: "ApplicationList",
+      active: 0
     };
   },
   computed: {
@@ -75,6 +105,21 @@ export default {
     },
     action() {
       return this.$route.query.action || "";
+    },
+    stepList() {
+      return this.$route.params.id ? [
+        "填写应用信息",
+        "确认接口信息",
+        "完成应用修改"
+      ] : [
+        "填写应用信息",
+        "确认接口信息",
+        "绑定租户与角色",
+        "完成应用新增"
+      ];
+    },
+    isLastStep() {
+      return this.active === this.stepList.length - 1;
     }
   },
   created() {
@@ -140,7 +185,7 @@ export default {
       if (this.returnName && typeof this.returnName === "string") {
         returnPaterPage(this.$route.path, this.returnName);
       } else {
-        console.error("AuditContainer:请确认returnPath路径配置正确");
+        console.error("AuditContainer:请确认returnName配置正确");
       }
     },
     /**
@@ -191,43 +236,53 @@ export default {
       if (arr.length >= 0) {
         this.tableRoleData = arr;
       }
+    },
+    next() {
+      if (this.active === 0) {
+        this.validateRuleForm().then(() => {
+          this.active += 1;
+        });
+      } else if (this.active === 1) {
+        this.validateAppForm().then(() => {
+          this.active += 1;
+        });
+      } else {
+        this.active += 1;
+      }
     }
-
   }
 };
 </script>
 
 <style scoped lang="less">
-div.application-register {
+.application-form {
   width: 100%;
-  min-height: calc(100vh - 280px);
+  height: calc(100% - 100px);
   overflow-y: auto;
   display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
 
-  div.application-form {
-    flex: 0 0 50%;
-    padding-right: 40px;
-    box-sizing: border-box;
-  }
+.application-table {
+  display: flex;
+  width: 80%;
+  justify-content: space-around;
+  gap: 10px;
 
-  div.application-table {
+  aside {
     flex: 1;
-    overflow: hidden;
-    box-sizing: border-box;
-    display: flex;
+  }
+}
+
+.show-all {
+  gap: 10px;
+  justify-content: space-evenly;
+
+  .application-table {
+    width: 40%;
     flex-direction: column;
-
-    aside,
-    section {
-      flex: 1;
-      padding: 0 30px 20px;
-      box-sizing: border-box;
-    }
-
-    section {
-      padding: 20px 30px;
-      border: none;
-    }
+    justify-content: start;
   }
 }
 </style>

@@ -58,7 +58,6 @@
         <el-button
           v-hasPermi="['tool:gen:code']"
           type="primary"
-          plain
           size="mini"
           @click="handleGenTable"
         >
@@ -69,7 +68,6 @@
         <el-button
           v-hasPermi="['tool:gen:import']"
           type="info"
-          plain
           size="mini"
           @click="openImportTable"
         >
@@ -80,7 +78,6 @@
         <el-button
           v-hasPermi="['tool:gen:edit']"
           type="success"
-          plain
           size="mini"
           :disabled="single"
           @click="handleEditTable"
@@ -92,7 +89,6 @@
         <el-button
           v-hasPermi="['tool:gen:remove']"
           type="danger"
-          plain
           size="mini"
           :disabled="multiple"
           class="delbutton"

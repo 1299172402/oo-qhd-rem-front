@@ -14,6 +14,7 @@
       :data="dataSource"
       :row-key="row => row.roleId"
       border
+      height="50vh"
       @selection-change="val => {selectRole = val}"
     >
       <el-table-column

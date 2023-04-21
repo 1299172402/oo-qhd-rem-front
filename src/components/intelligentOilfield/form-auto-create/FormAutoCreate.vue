@@ -20,7 +20,7 @@
         <span v-if="item.tip" slot="label">
           <slot name="label" :item="item" />
         </span>
-        <span v-if="viewOnly || item.isView">{{ item.translate ? item.translate(model[item.prop]) : model[item.prop] }}</span>
+        <span v-if="viewOnly || item.isView" :title="item.translate ? item.translate(model[item.prop]) : model[item.prop]">{{ item.translate ? item.translate(model[item.prop]) : model[item.prop] }}</span>
         <slot v-else-if="item.showSlot && $slots[item.prop]" :name="item.prop" />
         <el-input
           v-else-if="!item.type || item.type === 'textarea'"
@@ -120,4 +120,9 @@ export default {
 };
 </script>
 <style scoped lang="less">
+/deep/ .el-input-number {
+  min-width: 160px;
+  max-width: 220px;
+  width: auto;
+}
 </style>

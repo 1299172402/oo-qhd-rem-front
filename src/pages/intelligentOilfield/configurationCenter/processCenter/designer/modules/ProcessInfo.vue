@@ -36,6 +36,8 @@
         <el-form-item
           :label="item.label"
           :name="item.prop"
+          :prop="item.required ? item.prop : ''"
+          :rules="item.required ? item.rules: []"
         >
           <el-select
             v-model="model[item.prop]"
@@ -114,9 +116,7 @@ export default {
     };
     return {
       modelSchema,
-      model: {
-        ...modelSchema
-      },
+      model: JSON.parse(JSON.stringify(modelSchema)),
       queryParams: {
         pageNum: 1,
         pageSize: 30
@@ -143,6 +143,7 @@ export default {
           label: "应用",
           prop: "appId",
           itemSlot: "appSelect",
+          required: true,
           rules: [{ required: true, message: "必填", trigger: ["change"] }],
           options: []
         },

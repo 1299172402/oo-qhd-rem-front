@@ -1,0 +1,190 @@
+<!--
+  ~ Copyright (c) 2019 - 2021. Boya Triz Co.,Ltd. All rights reserved. 博雅创智版权所有
+  ~ 项目名称：cup-parent
+  ~ 文件名称：flow_node_helper.html
+  ~ 版本：1.0
+  -->
+
+  <!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+      <title>节点规则帮助</title>
+      <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+      }
+
+      td,
+      th {
+        border: 1px solid #DDDDDD;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #DDDDDD;
+      }
+      </style>
+  </head>
+  <body class="layui-layout-body">
+      <h1>流程设计器相关接口文档</h1>
+      <table>
+          <thead>
+          <tr>
+              <th>接口名称</th>
+              <th>接口说明</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+              <td>流程节点设计器取人员</td>
+              <td><a href="desinger_fetch_user_api.html" target="_blank">查看</a></td>
+          </tr>
+          <tr>
+              <td>流程节点设计器取组</td>
+              <td><a href="desinger_fetch_group_api.html" target="_blank">查看</a></td>
+          </tr>
+          <tr>
+              <td>流程节点设计器取适用范围</td>
+              <td><a href="desinger_fetch_apply_scope_api.html" target="_blank">查看</a></td>
+          </tr>
+          </tbody>
+      </table>
+
+      <h1>流程设计器相关接口实现示例</h1>
+      代码示例使用SpringMvc + Mybatis Plus
+      <pre class="layui-code" lay-title="设计器选项Controller">
+@Api(tags = "流程节点设计器选项服务")
+@RestController
+@RequestMapping(value = "/flow/design")
+public class SelectionController {
+
+    @Autowired
+    private SelectionService selectionService;
+
+    @ApiOperation("流程节点设计器取人员")
+    @GetMapping(value = "user-search")
+    public PageInfo&lt;UserSelectionModel&gt; filterUsersForDesigner(@RequestParam(value = "filter", required = false) String filter,
+                                                               @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                                               @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+        Page&lt;SysUser&gt; page = new Page&lt;&gt;(pageNo, pageSize);
+        return selectionService.fetchUsersByFilter(page, filter);
+    }
+
+    @ApiOperation("流程节点设计器取组")
+    @GetMapping(value = "group-search")
+    public PageInfo&lt;GroupSelectionModel&gt; filterGroupsForDesigner(@RequestParam(value = "filter", required = false) String filter,
+                                                                 @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                                                 @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+        Page&lt;SysRole&gt; page = new Page&lt;&gt;(pageNo, pageSize);
+        return selectionService.fetchGroupByFilter(page, filter);
+    }
+
+    @ApiOperation("流程节点设计器取适用范围")
+    @GetMapping(value = "apply-scope-search")
+    public PageInfo&lt;ApplyScopeSelectionModel&gt; filterApplyScopesForDesigner(@RequestParam(value = "filter", required = false)  String filter,
+                                                                           @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                                                           @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+        Page&lt;SysDepart&gt; page = new Page&lt;&gt;(pageNo, pageSize);
+        return selectionService.fetchApplyScopeByFilter(page, filter);
+    }
+}
+      </pre>
+
+      <pre class="layui-code" lay-title="取用户列表Service">
+    public PageInfo&lt;UserSelectionModel&gt; fetchUsersByFilter(Page&lt;SysUser&gt; page, String filter) {
+        // 查询用户信息
+        LambdaQueryWrapper&lt;SysUser&gt; query = Wrappers.lambdaQuery();
+        query.and(p -&gt; p.like(SysUser::getUsername, filter).or().like(SysUser::getRealname, filter))
+                .eq(SysUser::getDelFlag, CommonConstant.DEL_FLAG_0)
+                .eq(SysUser::getStatus, CommonConstant.USER_UNFREEZE);
+        IPage&lt;SysUser&gt; result = sysUserService.page(page, query);
+        // 封装回参
+        PageInfo&lt;UserSelectionModel&gt; pageInfo = new PageInfo&lt;UserSelectionModel&gt;();
+        List&lt;UserSelectionModel&gt; users = new ArrayList&lt;&gt;();
+        pageInfo.setSuccess(true);
+        pageInfo.setTotal(result.getTotal());
+        result.getRecords().forEach(recode -&gt; {
+            UserSelectionModel userSelectionModel = new UserSelectionModel();
+            userSelectionModel.setId(recode.getId());
+            userSelectionModel.setPhone(recode.getPhone());
+            userSelectionModel.setRecipient(recode.getEmail());
+            userSelectionModel.setName(recode.getRealname());
+            users.add(userSelectionModel);
+        });
+
+        pageInfo.setData(users);
+
+        return pageInfo;
+    }
+      </pre>
+
+      <pre class="layui-code" lay-title="取组列表Service">
+    public PageInfo&lt;GroupSelectionModel&gt; fetchGroupByFilter(Page&lt;SysRole&gt; page, String filter) {
+        // 实现取组接口 (角色上加一个属性，流程使用，流程使用的角色才在这里显示，按角色代码或角色名称过滤)
+        LambdaQueryWrapper&lt;SysRole&gt; query = Wrappers.lambdaQuery();
+        query.and(p -&gt; p.like(SysRole::getRoleCode, filter).or().like(SysRole::getRoleName, filter))
+                .eq(SysRole::getProcessUse, BpmClientConstants.ProcessUse.YES);
+        IPage&lt;SysRole&gt; result = sysRoleService.page(page, query);
+        PageInfo&lt;GroupSelectionModel&gt; pageInfo = new PageInfo&lt;GroupSelectionModel&gt;();
+        List&lt;GroupSelectionModel&gt; groups = new ArrayList&lt;&gt;();
+        pageInfo.setSuccess(true);
+        pageInfo.setTotal(result.getTotal());
+        result.getRecords().forEach(record -&gt; {
+            GroupSelectionModel groupSelectionModel = new GroupSelectionModel();
+            groupSelectionModel.setId(record.getRoleCode());
+            groupSelectionModel.setName(record.getRoleName());
+            groupSelectionModel.setDescription(record.getDescription());
+            groups.add(groupSelectionModel);
+        });
+
+        pageInfo.setData(groups);
+
+        return pageInfo;
+    }
+      </pre>
+
+      <pre class="layui-code" lay-title="取适用范围列表Service">
+    public PageInfo&lt;ApplyScopeSelectionModel&gt; fetchApplyScopeByFilter(Page&lt;SysDepart&gt; page, String filter) {
+        //  实现取适用范围接口 (返回机构（公司或部门），按机构编码或机构名称过滤)
+        LambdaQueryWrapper&lt;SysDepart&gt; query = Wrappers.lambdaQuery();
+        query.and(p -&gt; p.like(SysDepart::getOrgCode, filter).or()
+                        .like(SysDepart::getDepartName, filter).or()
+                        .like(SysDepart::getDepartNameCn, filter))
+                .eq(SysDepart::getDelFlag, CommonConstant.DEL_FLAG_0);
+        IPage&lt;SysDepart&gt; result = sysDepartService.page(page, query);
+        PageInfo&lt;ApplyScopeSelectionModel&gt; pageInfo = new PageInfo&lt;ApplyScopeSelectionModel&gt;();
+        List&lt;ApplyScopeSelectionModel&gt; scopes = new ArrayList&lt;&gt;();
+        pageInfo.setSuccess(true);
+        pageInfo.setTotal(result.getTotal());
+        result.getRecords().forEach(record -&gt; {
+            ApplyScopeSelectionModel applyScopeSelectionModel = new ApplyScopeSelectionModel();
+            applyScopeSelectionModel.setId(record.getId());
+            applyScopeSelectionModel.setName(record.getDepartName());
+            applyScopeSelectionModel.setDescription(record.getDescription() == null ? null : record.getDescription().toString());
+            scopes.add(applyScopeSelectionModel);
+        });
+
+        pageInfo.setData(scopes);
+
+        return pageInfo;
+    }
+      </pre>
+
+      <script src="../common/layui/layui.js"></script>
+      <script>
+          //JavaScript代码区域
+          layui.use('code', function(){
+              layui.code({
+                  title : '代码示例',
+                  about : false
+              });
+
+          });
+      </script>
+  </body>
+  </html>
