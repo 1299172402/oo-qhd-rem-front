@@ -1,244 +1,104 @@
-<!--压力测试-->
+<!--压降测试-->
 <template>
-    <el-row>
-      <span class="tableTitle"> 压力数据</span>
-      <el-table
-          id="tableData"
-          highlight
-          :data="tableData"
-          style="width: 100%"
-          height="600"
-      >
-        <el-table-column
-            type="index"
-            label="序号"
-            align="center"
-        >
-        </el-table-column>
-        <el-table-column
-            prop="borepipeName"
-            label="井管"
-            align="center"
-            width="140"
-        >
-        </el-table-column>
-        <el-table-column
-            prop="wellInterceptType"
-            label="试井项目解析类型"
-            width="140"
-            align="center"
-        >
-        </el-table-column>
-        <!--<el-table-column
-            prop="layerName"
-            label="油气组"
-            align="center"
-        >
-        </el-table-column>-->
-        <el-table-column
-            prop="reducePressure"
-            :render-header="renderHeader"
-            label="折算压力梯度 (MPa/100m)"
-            width="140"
-            align="center"
-        >
-        </el-table-column>
-        <el-table-column
-            prop="reduceTemperature"
-            :render-header="renderHeader"
-            label="折算温度梯度 (℃/100m)"
-            width="140"
-            align="center"
-        >
-        </el-table-column>
-        <el-table-column
-            prop="midMD"
-            :render-header="renderHeader"
-            label="油层中部斜深 (m)"
-            width="140"
-            align="center"
-        >
-        </el-table-column>
-        <el-table-column
-            prop="midTVD"
-            :render-header="renderHeader"
-            label="油层中部垂深 (m)"
-            width="140"
-            align="center"
-        >
-        </el-table-column>
-        <el-table-column
-            prop="midTemperature"
-            :render-header="renderHeader"
-            label="油层中部温度 (℃)"
-            width="140"
-            align="center"
-        >
-        </el-table-column>
-        <el-table-column
-            prop="midFlowPressure"
-            :render-header="renderHeader"
-            label="油层中部流压 (MPa)"
-            width="140"
-            align="center"
-        >
-        </el-table-column>
-        <el-table-column
-            prop="midStaticPressure"
-            :render-header="renderHeader"
-            label="油层中部静压 (MPa)"
-            width="140"
-            align="center"
-        >
-        </el-table-column>
-        <el-table-column
-            prop="baseLevelTVD"
-            :render-header="renderHeader"
-            label="基准面垂深 (m)"
-            width="140"
-            align="center"
-        >
-        </el-table-column>
-        <el-table-column
-            prop="baseLevelTemperature"
-            :render-header="renderHeader"
-            label="基准面温度 (℃)"
-            width="140"
-            align="center"
-        >
-        </el-table-column>
-        <el-table-column
-            prop="baseStaticPressure"
-            :render-header="renderHeader"
-            label="基准面静压 (MPa)"
-            width="140"
-            align="center"
-        >
-        </el-table-column>
-        <el-table-column
-            prop="baseFlowPressure"
-            :render-header="renderHeader"
-            label="基准面流压 (MPa)"
-            width="140"
-            align="center"
-        >
-        </el-table-column>
-        <el-table-column
-            prop="owTVD"
-            :render-header="renderHeader"
-            label="油水界面垂深 (m)"
-            width="140"
-            align="center"
-        >
-        </el-table-column>
-        <el-table-column
-            prop="goTVD"
-            :render-header="renderHeader"
-            label="气油界面垂深 (m)"
-            width="140"
-            align="center"
-
-        >
-        </el-table-column>
-        <el-table-column
-            prop="gwTVD"
-            :render-header="renderHeader"
-            label="气水界面垂深 (m)"
-            width="140"
-            align="center"
-        >
-        </el-table-column>
-        <el-table-column
-            prop="baseLevelAltitude"
-            :render-header="renderHeader"
-            label="基准面海拔 (m)"
-            width="140"
-            align="center"
-        >
-        </el-table-column>
-        <el-table-column
-            prop="remark"
-            width="200"
-            label="备注">
-        </el-table-column>
-      </el-table>
-    </el-row>
+    <div class="z-main">
+        <page-panel style="height:100%;margin-top:0;" headerTitle="压力数据">
+            <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+                <el-table-column type="index" label="序号" width="80"></el-table-column>
+                <el-table-column prop="borepipeName" label="井管" width="140"></el-table-column>
+                <el-table-column prop="wellInterceptType" label="试井项目解析类型" width="140"></el-table-column>
+                <el-table-column prop="reducePressure" :label="`折算压力梯度\n(MPa/100m)`" width="140"></el-table-column>
+                <el-table-column prop="reduceTemperature" :label="`折算温度梯度\n(℃/100m)`" width="140"></el-table-column>
+                <el-table-column prop="midMD" :label="`油层中部斜深\n(m)`" width="140"></el-table-column>
+                <el-table-column prop="midTVD" :label="`油层中部垂深\n(m)`" width="140"></el-table-column>
+                <el-table-column prop="midTemperature" :label="`油层中部温度\n(℃)`" width="140"></el-table-column>
+                <el-table-column prop="midFlowPressure" :label="`油层中部流压\n(MPa)`" width="140"></el-table-column>
+                <el-table-column prop="midStaticPressure" :label="`油层中部静压\n(MPa)`" width="140"></el-table-column>
+                <el-table-column prop="baseLevelTVD" :label="`基准面垂深\n(m)`" width="140"></el-table-column>
+                <el-table-column prop="baseLevelTemperature" :label="`基准面温度\n(℃)`" width="140"></el-table-column>
+                <el-table-column prop="baseStaticPressure" :label="`基准面静压\n(MPa)`" width="140"></el-table-column>
+                <el-table-column prop="baseFlowPressure" :label="`基准面流压\n(MPa)`" width="140"></el-table-column>
+                <el-table-column prop="owTVD" :label="`油水界面垂深\n(m)`" width="140"></el-table-column>
+                <el-table-column prop="goTVD" :label="`气油界面垂深\n(m)`" width="140"></el-table-column>
+                <el-table-column prop="gwTVD" :label="`气水界面垂深\n(m)`" width="140"></el-table-column>
+                <el-table-column prop="baseLevelAltitude" :label="`基准面海拔\n(m)`" width="140"></el-table-column>
+                <el-table-column prop="remark" width="240" label="备注"></el-table-column>
+            </el-table>
+        </page-panel>
+    </div>
 </template>
-<style lang="scss" scoped>
-.tableTitle {
-  font-size: 1.5em;
-  text-align: center;
-  display: block;
-}
-</style>
-<script>
-import {pressure} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
-import {exportExcel} from "@/lib/exportExcel.js";
 
-export default {
-  props: {
-    //选择油田
-    oilFeildId: {},
-    //选择平台
-    platform: {},
-    //选择井号
-    wellId: {}
-  },
-  data() {
-    return {
-      tableData: [],
-    };
-  },
-  mounted() {
-    //初始化调用搜索
-    this.doSearch();
-  },
-  methods: {
-    /**
-     * hwh
-     * 根据父组件传递过来的参数进行查询
-     */
-    doSearch() {
-      let request = {
-        ogfId: this.oilFeildId,
-        platformId: this.platform,
-        wellId: this.wellId,
-      };
-      pressure(request).then((res) => {
-        if (res.data.code == 0) {
-          this.tableData = res.data.data.pressureTest;
-        }
-      })
-    },
-    /**
-     * hwh
-     * 下载
-     */
-    doDownLoad(){
-      let fileName = '压力测试';
-      if(this.wellName){
-        fileName = this.wellName + fileName;
-      }
-      exportExcel('#tableData',fileName);
-    },
-    /**
-     * hwh el table 表格头 标题单位样式
-     * @param h
-     * @param column
-     * @returns {*[]}
-     */
-    renderHeader (h, {column}) {
-      let header = column.label.split(' ');
-      return [h('p', [
-        h('p', {}, header[0]),
-        h('span', {}, header[1])
-      ])];
+<script>
+    import { pressure} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
+    import { exportExcel } from "@/lib/exportExcel.js";
+    export default {
+        props: {
+            //选择油田
+            oilFeildId: {},
+            //选择平台
+            platform: {},
+            //选择井号
+            wellId: {}
+        },
+        data() {
+            return {
+                tableData: [],
+            };
+        },
+        mounted() {
+            this.doSearch();
+        },
+        methods: {
+            doSearch() {
+                let request = {
+                    ogfId: this.oilFeildId,
+                    platformId: this.platform,
+                    wellId: this.wellId,
+                };
+                pressure(request).then((res) => {
+                    if (res.data.code == 200) {
+                        this.tableData = res.data.data.pressureTest;
+                    }
+                })
+            },
+            doDownLoad() {
+                let fileName = '压力测试';
+                if (this.wellName) {
+                    fileName = this.wellName + fileName;
+                }
+                exportExcel('#tableData', fileName);
+            },
+        },
     }
-  },
-}
 </script>
+
 <style scoped lang="scss">
-::v-deep .el-table .cell:empty::before{
-  content: '-';
-}
+    .z-main{
+        height:calc(100% - 101px);
+        #tableData{
+            ::v-deep .el-table__body{
+                .el-table__row{
+                    td{
+                        &:last-child {
+                            .cell{
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                line-height: 18px;
+                            }
+                        }
+                    }
+                }
+            }
+            ::v-deep .el-table__header-wrapper .cell{
+                height: auto;
+                line-height: 18px;
+                white-space: pre;
+            }
+            ::v-deep .cell:empty{
+                &::before {
+                    content: '-';
+                } 
+            }
+        } 
+    }
 </style>

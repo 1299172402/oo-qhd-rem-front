@@ -1,181 +1,46 @@
 <!-- 井组辅助分析 -->
 <template>
-  <div class="app-container">
-    <headerSearch style="height: 80px">
-      <div class="g-row-flex-V g-w100 g-h100">
-        <span class="title">油田：</span>
-        <el-select
-          v-model="selectOilField"
-          placeholder="请选择"
-          filterable
-          clearable
-          disabled
-          @change="changeSelectOilField"
-          style="margin-right: 15px"
-        >
-          <el-option
-            v-for="item in oilField"
-            :key="item.oilFieldId"
-            :label="item.name"
-            :value="item.oilFieldId"
-          ></el-option>
-        </el-select>
-        <span class="title">区块：</span>
-        <el-select
-          v-model="selectBlock"
-          placeholder="请选择"
-          filterable
-          @change="changeSelectBlock"
-          style="margin-right: 15px"
-        >
-          <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
-        </el-select>
-        <span
-          class="title"
-          v-if="currentModule == 'wellGroupDevelopment' || currentModule == 'injectionProductionCorresponding'"
-          >井组切换：</span
-        >
-        <el-select
-          v-model="wellCentre"
-          placeholder="请选择"
-          @change="changeSelectWellCentre"
-          style="margin-right: 15px"
-          v-if="currentModule == 'wellGroupDevelopment' || currentModule == 'injectionProductionCorresponding'"
-        >
-          <el-option label="以水井为中心" value="WATERCENTRE"></el-option>
-          <el-option label="以油井为中心" value="OILCENTRE"></el-option>
-        </el-select>
-        <span class="title">井组：</span>
-        <el-select
-          v-if="
-            currentModule != 'dynamicsInjection' &&
-            currentModule != 'changingDynamics' &&
-            currentModule != 'stateChange'
-          "
-          v-model="selectWellGroup"
-          placeholder="请选择"
-          filterable
-          clearable
-          style="margin-right: 15px"
-        >
-          <el-option
-            v-for="item in wellGroup"
-            :key="item.wellGroupId"
-            :label="item.name"
-            :value="item.wellGroupId"
-          ></el-option>
-        </el-select>
-        <el-select
-          v-else
-          v-model="selectWellGroup"
-          placeholder="请选择"
-          filterable
-          clearable
-          style="margin-right: 15px"
-        >
-          <el-option
-            v-for="item in newWellGroup"
-            :key="item.wellGroupId"
-            :label="item.wellGroupName"
-            :value="item.wellGroupId"
-          ></el-option>
-        </el-select>
-        <el-button type="primary" icon="el-icon-search" style="margin-right: 20px" @click="doSearch">搜索 </el-button>
-        <el-button
-          type="primary"
-          icon="el-icon-upload2"
-          @click="ljpmUploadDialog"
-          style="margin-left: 0px !important"
-          v-if="currentModule == 'connecting'"
-          >上传文档</el-button
-        >
-        <el-upload
-          ref="upload"
-          v-else
-          class="upload-demo"
-          action=""
-          :auto-upload="false"
-          :on-change="useUploadPic"
-          :show-file-list="false"
-        >
-          <el-button type="primary"  icon="el-icon-upload2">上传文档</el-button>
-        </el-upload>
-        <el-button type="primary" style="margin-left:20px !important" icon="el-icon-download" @click="doDownLoad">下载</el-button>
-      </div>
-    </headerSearch>
-    <pagePanelNew style="height: calc(100% - 100px)" class="g-w100" :show-btn="true">
-      <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
-        <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
-          <el-button
-            v-for="(module, index) in item.modules"
-            :key="index"
-            :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'"
-            @click="handleTwoClicj(module)"
-            >{{ module.label }}</el-button
-          >
-        </el-tab-pane>
-      </el-tabs>
-      <keep-alive :include="[]" :max="10" v-if="selectWellGroup">
-        <component
-          :is="component"
-          ref="componentCustom"
-          :oil-field-id="selectOilField"
-          :block-id="selectBlock"
-          :wellCentre="wellCentre"
-          :well-group-id="selectWellGroup"
-          @childPara="changeChildParam"
-        ></component>
-      </keep-alive>
-    </pagePanelNew>
-    <el-dialog
-      custom-class="border"
-      title="连井剖面图上传"
-      :visible.sync="ljpmDialog"
-      width="50%"
-      :before-close="ljpmDialogClose"
-    >
-      <el-form ref="form" :model="ljUploadForm" label-width="80px">
-        <el-form-item label="图片上传" style="width: 88px">
-          <el-upload
-            ref="ljpmUpload"
-            class="upload-demo"
-            action=""
-            :on-preview="handlePreview"
-            :before-remove="beforeRemove"
-            :on-change="ljpmChange"
-            :on-exceed="handleExceed"
-            :file-list="ljpmFileList"
-            :http-request="httpRequest"
-            :auto-upload="false"
-          >
-            <el-button slot="trigger" type="primary">选取文件</el-button>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="纵横方向">
-          <el-select v-model="ljUploadForm.direction" class="f2" style="width: 200px" clearable>
-            <el-option v-for="item in directionList" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="井号">
-          <el-transfer
-            filterable
-            :titles="['未选中', '已选中']"
-            :filter-method="filterMethod"
-            filter-placeholder="请输入"
-            :props="props"
-            v-model="ljUploadForm.chooseWell"
-            :data="ljpmWellData"
-          >
-          </el-transfer>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="ljpmDialogClose">取 消</el-button>
-        <el-button type="primary" @click="ljpmUploadSave">确 定</el-button>
-      </span>
-    </el-dialog>
-  </div>
+    <div class="app-container">
+        <headerSearch style="height: 80px">
+            <div class="g-row-flex-V g-w100 g-h100">
+                <span class="title">油田：</span>
+                <el-select v-model="selectOilField" placeholder="请选择" filterable clearable disabled @change="changeSelectOilField" style="margin-right:15px">
+                    <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
+                </el-select>
+                <span class="title">区块：</span>
+                <el-select v-model="selectBlock" placeholder="请选择" filterable  @change="changeSelectBlock" style="margin-right:15px">
+                    <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
+                </el-select>
+                <span class="title" v-if="currentModule=='wellGroupDevelopment'||currentModule=='injectionProductionCorresponding'">井组切换：</span>
+                <el-select v-model="wellCentre" placeholder="请选择"  @change="changeSelectWellCentre" style="margin-right:15px" v-if="currentModule=='wellGroupDevelopment'||currentModule=='injectionProductionCorresponding'">
+                    <el-option label="以水井为中心" value="WATERCENTRE"></el-option>
+                    <el-option label="以油井为中心" value="OILCENTRE"></el-option>
+                </el-select>
+                <span class="title">井组：</span>
+                <el-select v-if="currentModule!='dynamicsInjection'&&currentModule!='changingDynamics'&&currentModule!='stateChange'" v-model="selectWellGroup" placeholder="请选择" filterable clearable style="margin-right:15px">
+                    <el-option v-for="item in wellGroup" :key="item.wellGroupId" :label="item.name" :value="item.wellGroupId"></el-option>
+                </el-select>
+                <el-select v-else v-model="selectWellGroup" placeholder="请选择" filterable clearable style="margin-right:15px">
+                    <el-option v-for="item in newWellGroup" :key="item.wellGroupId" :label="item.wellGroupName" :value="item.wellGroupId"></el-option>
+                </el-select>
+                <el-button type="primary" icon="el-icon-search" style="margin-right: 20px" @click="doSearch">搜索 </el-button>
+                <el-upload ref="upload" style="margin-right: 20px" class="upload-demo" action="" :auto-upload="false" :on-change="useUploadPic" :show-file-list="false">
+                    <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
+                </el-upload>
+                <el-button type="primary" icon="el-icon-download" @click="doDownLoad">下载</el-button>
+            </div>
+        </headerSearch>
+        <pagePanelNew style="height: calc(100% - 100px)" class="g-w100">
+            <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
+                <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
+                    <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="handleTwoClicj(module)">{{ module.label }}</el-button>
+                </el-tab-pane>
+            </el-tabs>
+            <keep-alive :include="[]" :max="10" v-if="wellGroup.length">
+                <component :is="component" ref="componentCustom" :oil-field-id="selectOilField" :block-id="selectBlock" :wellCentre="wellCentre" :well-group-id="selectWellGroup" @childPara="changeChildParam"></component>
+            </keep-alive>
+        </pagePanelNew>
+    </div>
 </template>
 
 <script>

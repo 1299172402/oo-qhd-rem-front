@@ -1,13 +1,8 @@
 <!--井网图-->
 <template>
-    <el-container class="mt-2">
-        <el-main>
-            <el-row style="padding-top: 20px;height:600px;overflow: auto;">
-                <!--<el-image style="height: 600px" :src="src"></el-image>-->
-                <el-image :src="image"><div slot="error"></div></el-image>
-            </el-row>
-        </el-main>
-    </el-container>
+    <div class="z-container">
+        <el-image :src="image" style="width:100%;"><div slot="error"></div></el-image>
+    </div>
 </template>
 
 <script>
@@ -24,8 +19,6 @@
         },
         data() {
             return {
-                src: '../../static/img/oilAuxiliaryAnalysis/productionDynamicData/wellNetworkDiagram.jpg',
-                //图片数据
                 image: ''
             };
         },
@@ -36,14 +29,13 @@
         methods: {
             //调用图片
             doSearch() {
-                //let wellId = this.wellId;
                 let request = {
                     ogfId: this.oilFeildId,
                     platformId: this.platform,
                     wellId: this.wellId
                 };
                 wellNetDiagram(request).then((res) => {
-                    if (res.data.code == 0) {
+                    if (res.data.code == 200) {
                         let imgData = res.data.data.data;
                         let type = res.data.data.type;
                         let firstParty = 'data:' + type + ';base64,';
@@ -66,3 +58,11 @@
         }
     };
 </script>
+
+<style lang="scss" scoped>
+    .z-container{
+        padding-right:20px;
+        height:calc(100% - 101px);
+        overflow-y: scroll;
+    }
+</style>

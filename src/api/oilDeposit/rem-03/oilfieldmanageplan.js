@@ -728,7 +728,7 @@ export function techIndicatorStat(request){
 
 /**
  *  hwh
- *  0502-10-注水指标管理-注水指标统计
+ *  0502-10-注水指标管理-注水指标统    计
  * @param request
  * @returns {AxiosPromise}
  */
@@ -750,7 +750,7 @@ export function nameAndCode(request){
 /**
  * 作业公司产量跟踪
  */
-export function queryOutputTraccking(params) {
+export function getReportFroms(params) {
   const url = `${baseUrl}/oilFieldManagePlanController/getReportFroms`;
   return Axios.get(url, {params});
 }

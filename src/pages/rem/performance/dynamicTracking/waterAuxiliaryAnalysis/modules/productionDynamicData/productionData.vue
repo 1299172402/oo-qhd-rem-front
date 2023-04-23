@@ -1,20 +1,24 @@
+<!-- 生产数据 -->
 <template>
-    <el-row class="mt-2" style="height: 100%;">
-        <span>日期</span>
-        <el-date-picker
-            v-model="selectData"
-            type="daterange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            value-format="yyyy-MM-dd"
-        ></el-date-picker>
-        <Echarts ref="echartDown" :chart-data="option" :height="echartsHeight"></Echarts>
-    </el-row>
+    <div class="z-container">
+        <div class="searchBox">
+            <span>日期：</span>
+            <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" style="margin-right:15px;"></el-date-picker>
+            <el-select v-model="selectPosition" placeholder="请选择" filterable clearable style="width: 220px;margin-right:15px;">
+                <el-option v-for="item in position" :key="item.fieldLayerId" :label="item.layerName" :value="item.fieldLayerId"></el-option>
+            </el-select>
+            <el-button type="primary" icon="el-icon-search" @click="doSearch">检索</el-button>
+        </div>
+        <div class="echartBox">
+            <Echarts ref="echartDown" :chart-data="option" style="height:100%;"></Echarts>
+        </div>
+    </div>
 </template>
+
 <script>
-    import Echarts from '@/components/tools/Echarts/index.vue';
+    import { fieldLayers } from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import { produceData } from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
+    import Echarts from '@/components/tools/Echarts/index.vue';
     import FileSaver from 'file-saver';
     export default {
         components: {
@@ -30,6 +34,9 @@
         },
         data() {
             return {
+                position:[],
+                selectPosition:'',
+                
                 echartsHeight: '600px',
                 selectData: [],
                 option: {
@@ -320,15 +327,20 @@
         mounted() {
             let year = new Date().getFullYear();
             this.selectData = [new Date(year + '-01-01').format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
-            let heightP1 = this.$refs.zmain.$el.clientHeight;
-            this.$nextTick(() => {
-                this.echartsHeight = heightP1 - 40 + 'px';
-            });
-            this.doSearch();
+            this.fieldLayersApi();
         },
         methods: {
-            //执行搜索
-            doSearch() {
+            async fieldLayersApi(){
+                await fieldLayers({oilFieldId:this.oilFeildId,wellId:this.wellId}).then((res) => {
+                    if (res.data.code == 200 && res.data.data && res.data.data.fieldLayers && res.data.data.fieldLayers.length) {
+                        this.position = res.data.data.fieldLayers;
+                        this.selectPosition = this.position[0].fieldLayerId;
+                        this.$emit('childPara', this.selectPosition);
+                        this.doSearch();
+                    }
+                });
+            },
+            async doSearch() {
                 let startDate = this.selectData[0];
                 let endDate = this.selectData[1];
                 let request = {
@@ -336,14 +348,15 @@
                     endDate: endDate,
                     ogfId: this.oilFeildId,
                     platformId: this.platformId,
-                    wellId: this.wellId
+                    wellId: this.wellId,
+                    layerId:this.selectPosition
                 };
                 produceData(request).then((res) => {
                     let seriesData = [];
                     let legendData = [];
                     //获取x轴数据信息
                     let xSet = new Set();
-                    if (res.data.code == 0) {
+                    if (res.data.code == 200) {
                         let chartDataS = res.data.data.charts;
                         for (let i = 0; i < chartDataS.length; i++) {
                             if (chartDataS[i].linearDataSets == null || chartDataS[i].linearDataSets == undefined) {
@@ -461,40 +474,6 @@
                 this.option.series[3].data = yData;
                 this.option.series[3].name = '日注入量';
             },
-
-            /*getLinearCharts(linearChart) {
-          let series = {};
-          let lineName = linearChart.label;
-          series.type = 'line';
-          //数据所属图像
-          if (lineName == '注水量') {
-            series.xAxisIndex = 4;
-            series.yAxisIndex = 4;
-          } else if (lineName == '配注量') {
-            series.xAxisIndex = 3;
-            series.yAxisIndex = 3;
-          } else if (lineName == '套压') {
-            series.xAxisIndex = 2;
-            series.yAxisIndex = 2;
-          } else if (lineName == '注水压力') {
-            series.xAxisIndex = 1;
-            series.yAxisIndex = 1;
-          } else if (lineName == '地层破裂压力') {
-            series.xAxisIndex = 0;
-            series.yAxisIndex = 0;
-          }
-          //折线数据
-          let lineData = linearChart.linearData;
-          let seriesData=[];
-          for (let i = 0; i < lineData.length; i++) {
-            let point=[];
-            point.push(lineData[i].label);
-            point.push(lineData[i].value);
-            seriesData.push(point);
-          }
-          series.data=seriesData;
-          return series;
-        }*/
             //下载echarts
             doDownLoad() {
                 let res = this.$refs['echartDown'].chart.getDataURL({
@@ -511,3 +490,17 @@
         }
     };
 </script>
+
+<style lang="scss" scoped>
+    .z-container{
+        height:calc(100% - 101px);
+        .searchBox{
+            display: flex;
+            align-items: center;
+            margin-bottom:15px;
+        }
+        .echartBox{
+            height:calc(100% - 58px);
+        }
+    }
+</style>

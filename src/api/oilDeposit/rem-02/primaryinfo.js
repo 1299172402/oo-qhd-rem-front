@@ -138,3 +138,11 @@ export function getLjpmWells(params) {
     params,
   });
 }
+
+//获取全部油田选项（SC-03-01）
+export function fetchALLOilFields() {
+  return Axios({
+    url: `${baseUrl}/primaryInfo/fetchALLOilFields`,
+    method: "get",
+  });
+}

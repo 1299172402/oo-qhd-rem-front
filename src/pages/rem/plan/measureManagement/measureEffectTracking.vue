@@ -131,7 +131,7 @@
                 </el-table-column>
             </el-table>
         </div>
-        <pagePanelNew headerTitle="措施效果跟踪" class="pagePanelNew" style="marginTop:0;" show-btn>
+        <pagePanelNew headerTitle="措施效果跟踪" class="pagePanelNew" style="marginTop:0;" >
             <div class="main" v-if="type==0">
                 <el-row class="main-row" v-if="type == 0" style="height: 46px">
                     <el-tabs class="g-pageHeader" v-model="oilTabType" topline @tab-click="selectBtn">
@@ -193,12 +193,11 @@
                         </div>
                     </div>
                     <div class="svg" v-else-if="oilTabType == '4'">
-                        <!-- <div class="table-view"> -->
                             <info-window infoWidth="100%" infoHeight="100%" headerTitle="现场作业进度表">
                                 <!-- <template name="titleContent">
                                     <el-button type="primary" style="height:30px;">下载</el-button>
                                 </template> -->
-                                <el-table :data="getWorkProgressData" highlight style="width: 100%" height="calc( 100% - 10px)"
+                                <el-table :data="getWorkProgressData" highlight style="width: 100%" height="calc( 100% - 75px)"
                                     :row-style="{ height: '0px' }"
                                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                                     header-cell-class-name="table_header"
@@ -210,7 +209,6 @@
                                 </el-table>
                                 <pagination v-show="pageTotal2 > 0" :pageSizes="[15, 20, 40]" :total="pageTotal2" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />
                             </info-window>
-                        <!-- </div> -->
                     </div>
                 </el-row>
             </div>

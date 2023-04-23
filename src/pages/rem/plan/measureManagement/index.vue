@@ -41,8 +41,8 @@
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>措施版本：</span>
                     <el-select filterable v-model="measureVersion" style="width:170px;">
-                        <el-option v-for="(item, index) in measureVersionSelect" :key="index" :label="item.planTypeName"
-                            :value="item.planTypeCode"></el-option>
+                        <el-option v-for="(item, index) in measureVersionSelect" :key="index" :label="item.label"
+                            :value="item.value"></el-option>
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
@@ -248,7 +248,13 @@
                 ],
                 //措施版本
                 measureVersion: '',
-                measureVersionSelect: [],
+                measureVersionSelect: [
+                    {label: '全部',value: ''},
+                    {label:'分公司考核',value:'002003'},
+                    {label:'分公司奋斗',value:'001003'},
+                    {label:'有限考核',value:'002002'},
+                    {label:'有限奋斗',value:'001002'},
+                ],
                 // table表格数据
                 tableData: [
                     // {
@@ -349,15 +355,15 @@
                 //措施事件
                 this.getMeasureNameAndCode();
                 //措施版本
-                await getMeasureVersion().then(res => {
-                    if (res.data.code == 200) {
-                        this.measureVersionSelect = res.data.data;
-                        this.measureVersionSelect.unshift({
-                            planTypeName: '全部',
-                            planTypeCode: ''
-                        });
-                    }
-                })
+                // await getMeasureVersion().then(res => {
+                //     if (res.data.code == 200) {
+                //         this.measureVersionSelect = res.data.data;
+                //         this.measureVersionSelect.unshift({
+                //             planTypeName: '全部',
+                //             planTypeCode: ''
+                //         });
+                //     }
+                // })
                 //措施列表数据
                 this.getFetchMeasureInfos();
             },

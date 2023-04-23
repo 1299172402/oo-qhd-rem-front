@@ -4,8 +4,8 @@
         <div class="z-search">
             <span>日期：</span>
             <el-date-picker v-model="selectDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
-            <el-radio-group @input="changeWell" style="margin-left:20px;">
-              <el-radio-button :label="well.wellId" v-for="well in wellList" :key="well.wellId">{{well.wellNo}}</el-radio-button>
+            <el-radio-group v-model="wellValue" @input="changeWell" style="margin-left:20px;">
+              <el-radio-button v-for="well in wellList" :key="well.wellId" :label="well.wellId" >{{well.wellNo}}</el-radio-button>
             </el-radio-group>
         </div> 
         <div class="z-echarts">
@@ -54,7 +54,6 @@
 <script>
     import Echart from "@/components/tools/Echarts/index.vue";
     import { proInjectLineCharts } from '@/api/oilDeposit/rem-01/wellgroupdynamicanalysis.js';
-    import FileSaver from "file-saver";
     import {exportExcel} from '@/lib/exportExcel.js';
     export default {
         components: {
@@ -93,7 +92,7 @@
                         itemGap: 14,
                     },
                     toolbox: {
-                        show: true,
+                        show: false,
                         feature: {
                             saveAsImage: {
                                 name: '油井曲线对比分析',
@@ -559,7 +558,7 @@
                         itemGap: 14,
                     },
                     toolbox: {
-                        show: true,
+                        show: false,
                         feature: {
                             saveAsImage: {
                                 name: '水井曲线对比分析图',
@@ -849,6 +848,7 @@
                 //井组中井信息
                 wellOptions: [],
                 wellList: [],
+                wellValue:'',
                 isDevelop:false,//是否展示表格
                 wellInjCurves:[],//水井对应表
                 wellOilCurves:[],//油井对应表
@@ -874,30 +874,28 @@
                 }
                 this.wellOptions = [];
                 this.wellList = [];
+                this.wellValue='';
                 proInjectLineCharts(request).then((res) => {
                     if (res.data.code == 200) {
                         this.wellInjCurves=res.data.data.wellInjCurves;
                         this.wellOilCurves=res.data.data.wellOilCurves;
                         let resList = res.data.data.productionInjectionList;
-                        resList.forEach((resItem, index) => {
-                            let arrItem = {};
-                            arrItem.wellId = resItem.wellId;
-                            arrItem.wellNo = resItem.wellName;
-                            if (resItem.charts.length && (resItem.wellType == '002002001') || (resItem.wellType == '003002001')) {
-                                arrItem.option = this.createOilWellOption(resItem.charts, resItem.wellName);
-                            } else if (resItem.charts.length && (resItem.wellType == '002003001' || resItem.wellType == '003003001')) {
-                                arrItem.option = this.createWaterWellOption(resItem.charts, resItem.wellName);
-                            }
-                            this.wellOptions.push(arrItem);
-                            this.wellList.push({wellId: resItem.wellId,wellNo: resItem.wellName});
-                        })
-                    } else {
-                        this.wellOptions = [];
-                        this.wellList = [];
+                        if(resList.length){
+                            resList.forEach((resItem, index) => {
+                                let arrItem = {};
+                                arrItem.wellId = resItem.wellId;
+                                arrItem.wellNo = resItem.wellName;
+                                if (resItem.charts.length && (resItem.wellType == '002002001') || (resItem.wellType == '003002001')) {
+                                    arrItem.option = this.createOilWellOption(resItem.charts, resItem.wellName);
+                                } else if (resItem.charts.length && (resItem.wellType == '002003001' || resItem.wellType == '003003001')) {
+                                    arrItem.option = this.createWaterWellOption(resItem.charts, resItem.wellName);
+                                }
+                                this.wellOptions.push(arrItem);
+                                this.wellList.push({wellId: resItem.wellId,wellNo: resItem.wellName});
+                            })
+                            this.wellValue=this.wellList[0].wellId;
+                        }
                     }
-                }).catch((error) => {
-                    this.wellOptions = [];
-                    this.wellList = [];
                 })
             },
             //生成油井图表信息
@@ -1119,23 +1117,12 @@
             //下载echarts
             doDownLoad() {
                 for (let i = 0; i < this.wellOptions.length; i++) {
-                    let res = this.$refs['echartDown' + i][0].chart.getDataURL({
-                        type: 'png',
-                        pixelRatio: 14,
-                        backgroundColor: '#022644'
-                    })
-                    let fileName = '井组开发曲线';
-                    if (this.wellGroupName) {
-                        fileName = this.wellGroupName + fileName;
-                    }
-                    fileName = this.wellOptions[i].wellNo + '—' + fileName;
-                    FileSaver.saveAs(res, fileName);
+                    this.$refs['echartDown' + i][0].chartDownLoad(this.wellOptions[i].wellNo + '—井组开发曲线');
                 }
-            },
-            //表格导出
-            doDownTable() {
-                exportExcel('#tableData1', '水井对应曲线表');
-                exportExcel('#tableData2', '油井对应曲线表');
+                if(isDevelop){
+                    exportExcel('#tableData1', '水井对应曲线表');
+                    exportExcel('#tableData2', '油井对应曲线表');
+                }
             },
         },
     };
