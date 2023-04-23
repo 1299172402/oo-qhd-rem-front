@@ -167,7 +167,7 @@ export default {
               name: "tracer",
             },
             {
-              label: "措施效果",
+              label: "调驱/调剖",
               name: "effectOfMeasures",
             },
             {
