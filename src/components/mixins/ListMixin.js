@@ -234,7 +234,7 @@ export default {
           if (res.firstTaskId) {
             this.$router.push({
               name: this.routerInfo.view.name,
-              params: this.routerInfo?.view?.parmas,
+              params: this.routerInfo?.view?.parmas || { action: "audit" },
               query: {
                 ...this.routerInfo?.view?.query,
                 businessKey: id, // 交接单id

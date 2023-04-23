@@ -9,6 +9,7 @@
         :before-upload="handleBeforeUpload"
         :limit="limit"
         drag
+        :disabled="viewOnly"
         :on-error="handleUploadError"
         :on-exceed="handleExceed"
         :on-success="handleUploadSuccess"
@@ -23,6 +24,16 @@
           <i class="el-icon-upload" />
           <div :class="$store.getters['setting/mode'] === 'dark' ? 'dark-hover-style' : 'light-hover-style'">
             拖拽或者点击上传
+          </div>
+          <div v-if="showTip" slot="tip" class="el-upload__tip">
+            请上传
+            <template v-if="fileSize">
+              大小不超过 <b style="color: #f56c6c;">{{ fileSize }}MB</b>
+            </template>
+            <template v-if="fileType">
+              格式为 <b style="color: #f56c6c;">{{ fileType.join("/") }}</b>
+            </template>
+            的文件
           </div>
         </template>
       </el-upload>
@@ -570,5 +581,10 @@ export default {
   /deep/ .el-upload-list__item.is-uploading {
     display: none !important;
   }
+}
+
+::v-deep .hide-upload .el-upload__tip {
+  display: none;
+  transition: all 0.5s;
 }
 </style>

@@ -17,7 +17,7 @@
 }
 
 .el-picker-panel {
-  background: linear-gradient(to bottom, rgba(0,75,128,1), black); // header背景色
+  background: linear-gradient(to bottom, rgba(0, 75, 128, 1), black); // header背景色
   border: 1px solid transparent;
 }
 
@@ -35,7 +35,7 @@
 
 .el-date-table th {
   color: var(--white-color);
-  border-bottom: solid 1px rgba(27,87,130,1);
+  border-bottom: solid 1px rgba(27, 87, 130, 1);
 }
 
 .el-date-table td.in-range div {
@@ -43,7 +43,7 @@
 }
 
 .el-date-range-picker__content.is-left {
-  border-right: solid 1px rgba(27,87,130,1);
+  border-right: solid 1px rgba(27, 87, 130, 1);
 }
 
 .el-date-table td.available:hover {
@@ -67,10 +67,9 @@
 // 时间选择器
 .el-time-panel {
   // background: linear-gradient(to bottom, rgba(0, 162, 218, 0.6), black); // header背景色
-  background: linear-gradient(to bottom, rgba(0,75,128,1), black); // header背景色
+  background: linear-gradient(to bottom, rgba(0, 75, 128, 1), black); // header背景色
   // border: 1px solid red;
   border: 1px solid #007db4;
-
 }
 
 .el-time-spinner__item {
@@ -98,7 +97,7 @@
 
 .el-time-panel__footer {
   // border: 1px solid gray;
-  border: 1px solid rgba(27,87,130,1);
+  border: 1px solid rgba(27, 87, 130, 1);
 }
 
 // el-form表单
@@ -132,7 +131,7 @@
 .el-picker-panel__footer {
   background: linear-gradient(to bottom, rgba(0, 162, 218, 0.6), black);
 
-  .el-button:nth-of-type(2){
+  .el-button:nth-of-type(2) {
     background: var(--primary-btn);
     border-radius: 0;
     border: 0;
@@ -141,12 +140,12 @@
   }
 }
 
-.el-picker-panel__body{
+.el-picker-panel__body {
   // border: 1px solid var(--light-blue-color);
   border: 1px solid rgba(0, 125, 180, 1);
 }
 
-.el-date-table td span{
+.el-date-table td span {
   border-radius: 0;
 }
 
@@ -187,21 +186,39 @@
 
 // 月份范围选择器
 .el-month-table td.today .cell {
-  color: #177ddc;;
-  border: 1px solid #177ddc;;
+  color: #177ddc;
+  border: 1px solid #177ddc;
   font-weight: 600;
 }
 
-.el-month-table td.end-date .cell, .el-month-table td.start-date .cell {
+.el-month-table td.end-date .cell,
+.el-month-table td.start-date .cell {
   background-color: #177ddc;
 }
 
 .el-month-table td .cell {
   color: var(--white-color);
   width: 45px;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
-.el-month-table td.in-range div, .el-month-table td.in-range div:hover {
+.el-month-table td.in-range div,
+.el-month-table td.in-range div:hover {
   background-color: rgba(10, 31, 50, 1);
+}
+
+.el-year-table td.disabled .cell {
+  background-color: rgba(51, 69, 86, 0.8);
+  border-radius: 4px;
+  color: gray;
+}
+
+.el-date-table td.disabled div {
+  background-color: rgba(51, 69, 86, 0.5);
+  color: gray;
+}
+
+.el-month-table td.disabled .cell {
+  background-color: rgba(51, 69, 86, 0.8);
+  color: gray;
 }

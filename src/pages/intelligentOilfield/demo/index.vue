@@ -262,6 +262,13 @@
       end-placeholder="结束月份"
     />
     <div class="spaceMargin">
+      4.1.3、年份范围选择器
+    </div>
+    <year-range
+      v-model="yearRange"
+      @year-changed="handleYearChanged"
+    />
+    <div class="spaceMargin">
       4.2、日期选择器
     </div>
     <el-date-picker
@@ -1155,6 +1162,7 @@ import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
 import searchTableMixin from "@/pages/common/mixins/searchTableMixin";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
+import yearRange from "@/components/intelligentOilfield/year-range/index.vue";
 
 export default {
   components: {
@@ -1162,7 +1170,8 @@ export default {
     marquee,
     verticalSwitchButton,
     FileUpload,
-    Treeselect
+    Treeselect,
+    yearRange
   },
   mixins: [searchTableMixin],
   data() {
@@ -1178,6 +1187,7 @@ export default {
       return data;
     };
     return {
+      yearRange: [],
       selectValue: undefined,
       treeSelectName: "",
       deptOptions: [
@@ -1676,6 +1686,9 @@ export default {
     });
   },
   methods: {
+    handleYearChanged(val) {
+      this.yearRange = val;
+    },
     zoomOutCom() {},
     zoomOutComNew() {},
     // 筛选节点
