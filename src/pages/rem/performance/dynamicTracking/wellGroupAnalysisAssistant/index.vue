@@ -103,7 +103,6 @@
         <el-button type="primary" style="margin-left: 20px !important" icon="el-icon-download" @click="doDownLoad"
           >下载</el-button
         >
-        <el-button type="primary" icon="el-icon-download" @click="doDownLoad">下载</el-button>
       </div>
     </headerSearch>
     <pagePanelNew style="height: calc(100% - 100px)" class="g-w100">
