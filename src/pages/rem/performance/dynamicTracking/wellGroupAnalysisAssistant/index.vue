@@ -103,7 +103,7 @@
         <el-button type="primary" style="margin-left:20px !important" icon="el-icon-download" @click="doDownLoad">下载</el-button>
       </div>
     </headerSearch>
-    <pagePanelNew style="height: calc(100% - 100px)" class="g-w100">
+    <pagePanelNew style="height: calc(100% - 100px)" class="g-w100" :show-btn="true">
       <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
         <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
           <el-button

@@ -37,23 +37,32 @@
     >
       <el-table-column type="index" label="序号" width="50px" header-align="center"></el-table-column>
       <el-table-column prop="wellNo" label="井号" header-align="center"></el-table-column>
-      <el-table-column prop="layerName" label="层位" width="200px" header-align="center"></el-table-column>
+      <el-table-column prop="layerName" label="层位" min-width="110" header-align="center"></el-table-column>
       <el-table-column header-align="center">
         <template slot="header">
-          <div>{{ firstMonth }}</div>
+          <div>{{ firstMonth }}注水情况</div>
         </template>
         <el-table-column prop="dosage01" :label="`配注量\n(m³/d)`" header-align="center"> </el-table-column>
-        <el-table-column prop="injectionRatio01" label="注采比" header-align="center"> </el-table-column>
-        <el-table-column prop="injectionStrength01" :label="`注水强度\n(m³*d.m)`" header-align="center">
+        <el-table-column prop="injectionRatio01" label="注采比"  header-align="center">
+          <template slot-scope="scoped">
+            <div v-if = "scoped.row.injectionRatio01 != '.00'">{{ scoped.row.injectionRatio01 }}</div>
+            <div v-else> - </div>
+          </template>
+           </el-table-column>
+        <el-table-column prop="injectionStrength01" min-width="90" :label="`注水强度\n(m³*d.m)`" header-align="center">
         </el-table-column>
       </el-table-column>
       <el-table-column header-align="center">
         <template slot="header">
-          <div>{{ secondMonth }}</div>
+          <div>{{ secondMonth }}注水情况</div>
         </template>
         <el-table-column prop="dosage02" :label="`配注量\n(m³/d)`" header-align="center"> </el-table-column>
-        <el-table-column prop="injectionRatio02" label="注采比" header-align="center"> </el-table-column>
-        <el-table-column prop="injectionStrength02" :label="`注水强度\n(m³*d.m)`" header-align="center">
+        <el-table-column prop="injectionRatio02" label="注采比" header-align="center">
+              <template slot-scope="scoped">
+            <div v-if = "scoped.row.injectionRatio02 != '.00'">{{ scoped.row.injectionRatio01 }}</div>
+            <div v-else> - </div>
+          </template> </el-table-column>
+        <el-table-column prop="injectionStrength02"  min-width="90" :label="`注水强度\n(m³*d.m)`" header-align="center">
         </el-table-column>
       </el-table-column>
       <el-table-column header-align="center">
@@ -67,10 +76,10 @@
         </el-table-column>
         <el-table-column prop="injectionRatio02" label="注采比" header-align="center">
           <template slot-scope="scoped">
-            {{ scoped.row.injectionRatio02 - scoped.row.injectionRatio01 }}
+            {{ (scoped.row.injectionRatio02 - scoped.row.injectionRatio01).toFixed(2) }}
           </template>
         </el-table-column>
-        <el-table-column :label="`注水强度\n(m³*d.m)`" header-align="center">
+        <el-table-column :label="`注水强度\n(m³*d.m)`"  min-width="90" header-align="center">
           <template slot-scope="scoped">
             {{ scoped.row.injectionStrength02 - scoped.row.injectionStrength01 }}
           </template>
