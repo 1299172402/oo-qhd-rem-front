@@ -7,6 +7,12 @@ export function evaluationResultStatistics({ dateTime, ogfId } = {}) {
     method: "get",
   });
 }
+export function getSeparateTypeInfo() {
+  return request({
+    url: `${baseUrl}/injectAssessAnalyse/getSeparateTypeInfo`,
+    method: "get",
+  });
+}
 export function injPlanAnalyzeAssessment({ dateTime, ogfId } = {}) {
   return request({
     url: `${baseUrl}/injectAssessAnalyse/injPlanAnalyzeAssessment?dateTime=${ dateTime || "" }&ogfId=${ ogfId || "" }`,

@@ -8,6 +8,13 @@ export function adjustWellChart(data) {
     data
   });
 }
+export function adjustWellTable(data) {
+  return request({
+    url: `${baseUrl}/oilFieldManagePlanController/adjustWellTable`,
+    method: "post",
+    data
+  });
+}
 export function chart(data) {
   return request({
     url: `${baseUrl}/oilFieldManagePlanController/chart`,
@@ -60,6 +67,13 @@ export function devStatusInfos(data) {
 export function devWellChart(data) {
   return request({
     url: `${baseUrl}/oilFieldManagePlanController/devWellChart`,
+    method: "post",
+    data
+  });
+}
+export function devWellTable(data) {
+  return request({
+    url: `${baseUrl}/oilFieldManagePlanController/devWellTable`,
     method: "post",
     data
   });
@@ -250,6 +264,13 @@ export function measureStatus(data) {
     data
   });
 }
+export function measureTable(data) {
+  return request({
+    url: `${baseUrl}/oilFieldManagePlanController/measureTable`,
+    method: "post",
+    data
+  });
+}
 export function nameAndCode(data) {
   return request({
     url: `${baseUrl}/oilFieldManagePlanController/nameAndCode`,
@@ -337,6 +358,13 @@ export function oldToInjectionChart(data) {
 export function oldWellChart(data) {
   return request({
     url: `${baseUrl}/oilFieldManagePlanController/oldWellChart`,
+    method: "post",
+    data
+  });
+}
+export function oldWellTable(data) {
+  return request({
+    url: `${baseUrl}/oilFieldManagePlanController/oldWellTable`,
     method: "post",
     data
   });

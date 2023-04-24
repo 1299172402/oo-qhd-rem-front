@@ -7,6 +7,12 @@ export function deleteFile({ remFileRecordId } = {}) {
     method: "delete",
   });
 }
+export function fetchALLOilFields() {
+  return request({
+    url: `${baseUrl}/primaryInfo/fetchALLOilFields`,
+    method: "get",
+  });
+}
 export function fetchAidInfo(data) {
   return request({
     url: `${baseUrl}/primaryInfo/fetchAidInfo`,

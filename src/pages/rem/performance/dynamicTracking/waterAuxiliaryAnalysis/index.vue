@@ -140,6 +140,10 @@
                                 label: "视吸水指数",
                                 name: "injectivityIndex",
                             },
+                              {
+              label: "示踪迹",
+              name: "tracer",
+            },
                         ],
                     },
                     {

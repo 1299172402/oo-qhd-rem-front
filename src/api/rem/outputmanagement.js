@@ -8,6 +8,20 @@ export function dailyMainEvent(data) {
     data
   });
 }
+export function getProdDailyTable(data) {
+  return request({
+    url: `${baseUrl}/outputManagement/getProdDailyTable`,
+    method: "post",
+    data
+  });
+}
+export function getWellOutputWaveTable(data) {
+  return request({
+    url: `${baseUrl}/outputManagement/getWellOutputWaveTable`,
+    method: "post",
+    data
+  });
+}
 export function outputTracing(data) {
   return request({
     url: `${baseUrl}/outputManagement/outputTracing`,
