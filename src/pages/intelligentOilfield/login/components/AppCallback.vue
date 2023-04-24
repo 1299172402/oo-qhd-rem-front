@@ -39,11 +39,11 @@ export default {
                 name: res.viewComponent,
                 query: {
                   taskId: query.taskId,
-                  processInstanceId: query.processInstanceId
+                  processInstanceId: query.processInstanceId,
+                  businessKey: query.businessKey
                 },
                 params: {
-                  action: query.action || "Audit",
-                  id: query.businessKey
+                  action: query.action || "Audit"
                 }
               });
             }

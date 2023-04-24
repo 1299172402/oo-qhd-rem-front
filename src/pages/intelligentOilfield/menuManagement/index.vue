@@ -19,7 +19,20 @@
           />
         </el-form-item>
         <el-form-item v-if="showAppSearch" label="所属应用" prop="appId">
-          <search-select v-model="queryParams.appId" />
+          <el-select
+            v-model="queryParams.appId"
+            size="small"
+            style="width: 240px"
+            placeholder="请选择"
+            clearable
+          >
+            <el-option
+              v-for="item in searchOption"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-select
@@ -63,7 +76,6 @@
           <el-button
             v-hasPermi="['system:menu:add']"
             type="primary"
-            plain
             size="mini"
             @click="handleAdd({}, '外层新增')"
           >
@@ -110,7 +122,7 @@
           width="100"
         >
           <template slot-scope="scope">
-            <svg-icon :icon-class="scope.row.icon" />
+            <svg-icon v-if="scope.row.icon" :icon-class="scope.row.icon" />
           </template>
         </el-table-column>
         <el-table-column
@@ -458,14 +470,14 @@ import { listMenu, getMenu, delMenu, addMenu, updateMenu } from "@/api/intellige
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import IconSelect from "@/components/intelligentOilfield/icon-select/index.vue";
-import SearchSelect from "@/components/intelligentOilfield/searchSelect/AppSearchSelect.vue";
 import { appList } from "@/api/intelligentOilfield/system/dataper";
+import { applicationAllList } from "@/api/intelligentOilfield/portal/officeMode";
 
 var that;
 export default {
   name: "Menu",
   dicts: ["sys_show_hide", "sys_normal_disable"],
-  components: { Treeselect, IconSelect, SearchSelect },
+  components: { Treeselect, IconSelect },
   filters: {
     filterType(value) {
       switch (value) {
@@ -500,6 +512,7 @@ export default {
   },
   data() {
     return {
+      searchOption: [],
       appSelect: [],
       isShowRadioBtn: false,
       isShowRadioBtnM: true,
@@ -540,6 +553,7 @@ export default {
   created() {
     this.getList();
     this.getAppList();
+    this.getSelectOptions();
   },
   beforeCreate() {
     that = this;
@@ -548,6 +562,18 @@ export default {
     this.getList();
   },
   methods: {
+    getSelectOptions() {
+      this.searchOption = [];
+      applicationAllList().then(response => {
+        response.data.data.forEach(el => {
+          this.searchOption.push({
+            label: el.appName,
+            value: el.appId
+          });
+        });
+        this.searchOption.unshift({ label: "无", value: undefined });
+      });
+    },
     getAppList() {
       appList().then(res => {
         if (res.data.code === 200) {

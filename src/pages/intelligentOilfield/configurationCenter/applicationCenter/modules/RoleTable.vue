@@ -13,6 +13,7 @@
       :show-overflow-tooltip="true"
     />
     <el-table-column
+      v-if="!onlyRead"
       label="操作"
       width="120"
       align="center"
@@ -34,6 +35,10 @@ export default {
     tableData: {
       type: Array,
       default: () => ([])
+    },
+    onlyRead: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {

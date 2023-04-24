@@ -1,5 +1,16 @@
 import request from "@/utils/request";
 
+import { encrypt } from "@/utils/jsencrypt";
+import proxy from "@/config/host";
+
+function getDataWithEncryptAppId(data) {
+  const env = import.meta.env.MODE;
+  if (proxy[env].appId) {
+    data.appId = encrypt(proxy[env].appId);
+  }
+  return data;
+}
+
 // 登录方法
 export function login(data, params) {
   return request({
@@ -8,7 +19,7 @@ export function login(data, params) {
       isToken: false
     },
     method: "post",
-    data,
+    data: getDataWithEncryptAppId(data),
     params
   });
 }
@@ -93,7 +104,7 @@ export function callBackLogin(data, params) {
     },
     url: "/auth/login",
     method: "post",
-    data,
+    data: getDataWithEncryptAppId(data),
     params
   });
 }

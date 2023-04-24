@@ -51,6 +51,7 @@
         ref="formAutoCreateCopy"
         :model="copyModel"
         :items="copyItems"
+        label-width="80px"
         form-class="form-layout--140 column"
         @ok="handleCopyOk"
       />
@@ -213,7 +214,7 @@ export default {
         {
           label: "完成是否回调",
           prop: "processCompleteCallback",
-          translate: val => (val === "false" ? "否" : "是")
+          translate: val => (val ? "是" : "否")
         },
         {
           label: "流程结束回调处理类",

@@ -297,5 +297,9 @@ export const helperData = {
   "flow_add_edit_notify_alert": {
     content: "流程告知是否开启提醒，设提醒方式，可复选。在节点设计器中有流程告知相关的设置，流程平台的接口中有流程告知的相关接口。",
     width: 200
+  },
+  "message_config_form_api": {
+    content: "如果为内部应用,请使用服务名称进行调用\neg: http://cnooc-system/api\n如果为外部应用请求使用域名或IP进行调用\neg: http://127.0.0.1:8080/api",
+    width: 250
   }
 };

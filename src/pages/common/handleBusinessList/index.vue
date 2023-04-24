@@ -143,10 +143,11 @@
 
 <script>
 import dayjs from "dayjs";
-import { getAction, postAction } from "@/api/common/manage";
+import { postAction } from "@/api/common/manage";
 import "@/assets/styles/pages/handleBusinessListStyle.less";
 import OpenOtherTab from "@/pages/common/mixins/commonMixin";
 import { mapGetters } from "vuex";
+import { getApp } from "@/api/intelligentOilfield/system/applicationCenter/applicationCenter.js";
 /* eslint-disable */
 function routeWatch(val) {
   if (val.path === "/bpm/personalOffice/HandleBusinessList" && this.closeTabKey) {
@@ -218,7 +219,6 @@ export default {
   },
   methods: {
     searchQuery() {
-      this.dataSource = [];
       this.ipagination.current = 1;
       this.lazyLoad();
     },
@@ -250,24 +250,20 @@ export default {
       if (this.isWindowOpenOther(record)) {
         return;
       }
-      const params = {
-        businessKey: record.businessKey, // 交接单id
-        taskId: record.id, // 任务id
-        processInstanceId: record.processInstanceId // 流程实例id
-      };
-      getAction(`/system/flow/task/${record.id}/view-component`, {}).then((res) => {
-        if (res.success) {
-          if (res.viewComponent) {
-            this.$router.push({
-              name: res.viewComponent,
-              query: params,
-              params: {
-                action: "Audit"
-              }
-            });
+      const { appId, businessKey, id, processInstanceId } = record;
+      if (!appId) {
+        this.$message.error("缺少appId!");
+        return;
+      }
+      getApp(appId)
+        .then(res => {
+          const url = res.data.data.appPcAccessUrl ? res.data.data.appPcAccessUrl.split("?")[0] : "";
+          if (!url) {
+            this.$message.error("路径错误!");
+            return;
           }
-        }
-      });
+          window.open(`${url}?businessKey=${businessKey}&taskId=${id}&processInstanceId=${processInstanceId}&action=Audit`, "_blank");
+        });
     },
     /**
      * 默认显示处理，有特殊需求的特殊显示按钮

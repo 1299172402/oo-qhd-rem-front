@@ -1,7 +1,7 @@
 <!-- 后台——用户管理 -->
 <template>
   <div class="app-container">
-    <el-row :gutter="20">
+    <el-row>
       <!--部门数据-->
       <el-col
         :span="4"
@@ -9,7 +9,7 @@
         class="left"
         style="overflow: scroll;"
       >
-        <div class="head-container">
+        <div class="head-container" style="padding: 0 10px">
           <el-input
             v-model="deptName"
             placeholder="请输入部门名称"
@@ -32,7 +32,12 @@
         </div>
       </el-col>
       <!--用户数据-->
-      <el-col :span="20" :xs="24" class="right">
+      <el-col
+        :span="20"
+        :xs="24"
+        class="right"
+        style="padding-left: 20px"
+      >
         <header-search class="g-w100 g-h100">
           <el-form
             v-show="showSearch"
@@ -64,7 +69,7 @@
             </el-form-item>
             <el-form-item label="用户租户" prop="tenantName">
               <el-select
-                v-model="queryParams.tenantName"
+                v-model="queryParams.tenantId"
                 style="width: 240px"
                 placeholder="请选择用户租户"
                 collapse-tags
@@ -74,7 +79,7 @@
                   v-for="item in teantOptions"
                   :key="item.tenantId"
                   :label="item.tenantName"
-                  :value="item.tenantName"
+                  :value="item.tenantId"
                 />
               </el-select>
             </el-form-item>
@@ -178,7 +183,7 @@
         <!-- v-loading="loading" -->
         <page-panel-new header-title="用户管理" style="height: calc(100% - 106px);">
           <el-row style="margin-bottom: 20px">
-            <el-col :span="20">
+            <el-col :span="16">
               <el-button
                 v-hasPermi="['system:user:add']"
                 type="primary"
@@ -189,10 +194,18 @@
                 新增
               </el-button>
             </el-col>
-            <el-col :span="4" style="text-align: right">
+            <el-col :span="8" style="text-align: right">
               <el-button
                 v-hasPermi="['system:user:import']"
                 class="commonBtn"
+                size="mini"
+                @click="importTemplate"
+              >
+                导入模板
+              </el-button>
+              <el-button
+                v-hasPermi="['system:user:import']"
+                type="primary"
                 size="mini"
                 @click="handleImport"
               >
@@ -200,7 +213,7 @@
               </el-button>
               <el-button
                 v-hasPermi="['system:user:export']"
-                class="commonBtn"
+                type="primary"
                 size="mini"
                 @click="handleExport"
               >
@@ -472,7 +485,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="身份证" prop="idCard">
-              <div v-if="form.userId===$store.getters['user/userDetail'].user.userId||title==='新增用户'">
+              <div>
                 <el-input
                   v-model="convertIdCard"
                   placeholder="请输入身份证"
@@ -488,8 +501,6 @@
                   <i v-if="title!=='新增用户'" class="searchStyle el-icon-view" @click="showOrHidden" />
                 </el-tooltip>
               </div>
-
-              <span v-else>{{ form.idCard?form.idCard:'暂无数据' | filterShow }}</span>
             </el-form-item>
           </el-col>
         </el-row>
@@ -669,14 +680,6 @@
             <el-checkbox v-model="upload.updateSupport" /> 是否更新已经存在的用户数据
           </div>
           <span>仅允许导入xls、xlsx格式文件。</span>
-          <el-link
-            type="primary"
-            :underline="false"
-            style="font-size: 12px; vertical-align: baseline"
-            @click="importTemplate"
-          >
-            下载模板
-          </el-link>
         </div>
       </el-upload>
       <div slot="footer" class="dialog-footer">
@@ -872,7 +875,7 @@ export default {
         roleId: undefined,
         postId: undefined,
         nickName: undefined,
-        tenantName: undefined
+        tenantId: undefined
       },
       // 列信息
       columns: [
@@ -981,6 +984,9 @@ export default {
     this.getConfigKey("sys.user.initPassword").then(response => {
       this.initPassword = response.data.msg;
     });
+  },
+  activated() {
+    this.getTreeselect();
   },
   methods: {
     changePost() {
@@ -1150,6 +1156,7 @@ export default {
         // this.postOptions = response.data.posts;
         this.roleOptions = response.data.roles;
         this.teantOptions = response.data.tenants;
+        this.teantOptions.unshift({ tenantName: "未分配", tenantId: "00" });
       });
     },
     /** 获取用户岗位 */
@@ -1316,7 +1323,7 @@ export default {
     handleDelete(row) {
       const userIds = row.userId || this.ids;
       this.$modal
-        .confirm(`是否确认删除用户编号为"${userIds}"的数据项？`)
+        .confirm("是否确认删除该用户？")
         .then(() => delUser(userIds))
         .then(res => {
           if (res ? res.data.code === 200 : false) {

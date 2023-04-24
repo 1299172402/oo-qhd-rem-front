@@ -11,7 +11,7 @@
         >
           <div style="padding: 10px 20px;overflow: scroll" class="g-w100 g-h100">
             <div class="text-center">
-              <user-avatar :user="user" />
+              <user-avatar :user="allDatas" />
               <div style="margin-bottom: 20px">
                 {{ user.nickName ? user.nickName : "无" }}
               </div>

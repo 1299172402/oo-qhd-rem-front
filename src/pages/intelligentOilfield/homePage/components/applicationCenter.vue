@@ -54,7 +54,7 @@
                 v-for="(items, index1) in item"
                 :key="index1"
                 class="g-column-flex-H"
-                style="position: relative; justify-content: center; align-items: center; flex-wrap: wrap; cursor: pointer; width: 6.6%; height: 102px;min-width: 6.6%"
+                style="position: relative; justify-content: center; align-items: center; flex-wrap: wrap; cursor: pointer; width: 6.7%; height: 102px;min-width: 6.6%"
                 @click="toClick(items)"
               >
                 <img
@@ -380,5 +380,6 @@ export default {
   display: flex;
   align-items: center;
   padding: 0 60px;
+  z-index: 0;
 }
 </style>

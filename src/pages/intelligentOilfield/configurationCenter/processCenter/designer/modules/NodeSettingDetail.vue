@@ -906,9 +906,7 @@ export default {
       simpleRequired,
       arrayRequired,
       modelSchema,
-      model: {
-        ...modelSchema
-      },
+      model: JSON.parse(JSON.stringify(modelSchema)),
       applyScopesOptions: [],
       assignResourcesTypeOptions: [],
       assignResourcesUserSelectionsOptions: [],

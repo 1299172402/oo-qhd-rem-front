@@ -1,7 +1,6 @@
 <template>
   <common-dialog
     v-model="visible"
-    :loading="loading"
     v-bind="$attrs"
     :dialog-title="(isEdit ? '编辑' : '配置') + '租户'"
     :body-scroll="true"

@@ -5,6 +5,7 @@
       :visible.sync="dialogVisible"
       width="40%"
       append-to-body
+      @open="handChangeSelection"
     >
       <el-table
         ref="table"
@@ -46,7 +47,7 @@
       <pagination
         v-show="ipagination.total > 0"
         :total="ipagination.total"
-        :page.sync="ipagination.pageNum"
+        :page.sync="ipagination.current"
         :limit.sync="ipagination.pageSize"
         @pagination="handlePage"
       />
@@ -76,21 +77,30 @@ export default {
       }
     };
   },
+  watch: {
+    dataSource: {
+      handler() {
+        this.handChangeSelection();
+      }
+    }
+  },
   methods: {
     // 自定义索引
     indexMethod(index) {
-      return index + 1 + (this.ipagination.pageNum - 1) * this.ipagination.pageSize;
+      return index + 1 + (this.ipagination.current - 1) * this.ipagination.pageSize;
     },
     /**
      * 设置已有用户选中状态
      */
     handChangeSelection() {
-      this.dataSource.forEach(row => {
-        if (this.tenantIds.indexOf(row.tenantId) >= 0) {
-          this.$refs.table.toggleRowSelection(row, true);
-        } else {
-          this.$refs.table.toggleRowSelection(row, false);
-        }
+      this.$nextTick(() => {
+        this.dataSource.forEach(row => {
+          if (this.tenantIds.find(item => (item.tenantKey || item.tenantCode) === row.tenantCode)) {
+            this.$refs.table?.toggleRowSelection(row, true);
+          } else {
+            this.$refs.table?.toggleRowSelection(row, false);
+          }
+        });
       });
     },
     handChooseUser() {

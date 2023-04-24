@@ -116,6 +116,8 @@ export default {
 <style scoped>
 .chartsComponentClass {
   background-image: var(--logo-bg) !important;
-  background-size: 100% 100% !important;
+  background-size: unset !important;
+  background-repeat: no-repeat !important;
+  background-position: right top !important;
 }
 </style>

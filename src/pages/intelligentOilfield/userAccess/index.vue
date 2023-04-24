@@ -9,12 +9,11 @@
         style="margin-top: 20px"
         :inline="true"
       >
-        <el-form-item label="组织机构" prop="deptId">
+        <el-form-item v-show="activeName === 'first'" label="组织机构" prop="deptId">
           <el-select
             v-model="queryParams.deptId"
             placeholder="请选择"
             clearable
-            size="small"
             style="width: 240px"
           >
             <el-option
@@ -25,7 +24,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="用户名称" prop="nickName">
+        <el-form-item v-show="activeName === 'first'" label="用户名称" prop="nickName">
           <el-input
             v-model="queryParams.nickName"
             placeholder="请输入用户名称"
@@ -35,10 +34,9 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="时间">
+        <el-form-item v-show="activeName === 'first'" label="时间">
           <el-date-picker
             v-model="queryParams.loginDate"
-            size="small"
             style="width: 240px"
             value-format="yyyy-MM-dd"
             type="date"
@@ -46,10 +44,9 @@
             @change="dateRange = []"
           />
         </el-form-item>
-        <el-form-item label="自定义时间">
+        <el-form-item v-show="activeName === 'first'" label="自定义时间">
           <el-date-picker
             v-model="dateRange"
-            size="small"
             style="width: 240px"
             value-format="yyyy-MM-dd"
             type="daterange"
@@ -58,6 +55,46 @@
             end-placeholder="结束日期"
             @change="queryParams.loginDate = undefined"
           />
+        </el-form-item>
+        <el-form-item v-show="activeName === 'second'" label="应用名称" prop="appName">
+          <el-input
+            v-model="queryParams.appName"
+            placeholder="请输入应用名称"
+            clearable
+            size="small"
+            style="width: 240px"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item v-show="activeName === 'second'" label="应用分类" prop="appCategory">
+          <el-select
+            v-model="queryParams.appCategory"
+            placeholder="请选择"
+            clearable
+            style="width: 240px"
+          >
+            <el-option
+              v-for="(item, index) in dict.type.sys_app_applyCenter"
+              :key="index"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item v-show="activeName === 'second'" label="绑定租户" prop="tenantId">
+          <el-select
+            v-model="queryParams.tenantId"
+            placeholder="请选择"
+            clearable
+            style="width: 240px"
+          >
+            <el-option
+              v-for="(item, index) in deptList"
+              :key="index"
+              :label="item.tenantName"
+              :value="item.tenantId"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button
@@ -81,8 +118,14 @@
     </header-search>
 
     <page-panel-new header-title="用户访问" style="height: calc(100% - 118px);">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
-        <el-col :span="1.5">
+      <el-row>
+        <el-col :span="20">
+          <el-tabs v-model="activeName" class="g-pageHeader" @tab-click="handleClick">
+            <el-tab-pane label="用户访问记录" name="first" />
+            <el-tab-pane label="应用访问统计" name="second" />
+          </el-tabs>
+        </el-col>
+        <el-col v-if="activeName === 'first'" :span="4" style="text-align: right">
           <el-button
             v-hasPermi="['system:userAccess:export']"
             type="primary"
@@ -94,8 +137,9 @@
         </el-col>
       </el-row>
       <el-table
+        v-if="activeName === 'first'"
         :data="userList"
-        height="calc(100% - 290px)"
+        height="calc(100% - 113px)"
         :row-style="{ height: '0px' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
@@ -104,12 +148,11 @@
         :default-sort="{ prop: 'date', order: 'descending' }"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="65" align="center" />
         <el-table-column label="序号" type="index" width="65" />
         <el-table-column label="组织机构" prop="dept.deptName" />
         <el-table-column label="用户账号" prop="userName" />
         <el-table-column label="用户名称" prop="nickName" />
-        <el-table-column label="登录时间" align="center" prop="loginDate">
+        <el-table-column label="访问时间" align="center" prop="loginDate">
           <template slot-scope="scope">
             <span>{{ parseTime(scope.row.loginDate) }}</span>
           </template>
@@ -122,8 +165,53 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-table
+        v-show="activeName === 'second'"
+        class="doubleHeader"
+        :data="userList"
+        height="calc(100% - 113px)"
+        :row-style="{ height: '0px' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        header-cell-class-name="table_header"
+        :cell-style="{ padding: '10px', 'text-align': 'center' }"
+        style="width: 100%; height: 100%;"
+        :default-sort="{ prop: 'date', order: 'descending' }"
+        @selection-change="handleSelectionChange"
+      >
+        <el-table-column label="序号" type="index" width="65" />
+        <el-table-column label="应用名称" prop="appName" />
+        <el-table-column label="应用类型">
+          <template slot-scope="scope">
+            {{ dict.type.sys_app_type?.find((dict) => dict.value == scope.row.appType)?.label }}
+          </template>
+        </el-table-column>
+        <el-table-column label="应用分类">
+          <template slot-scope="scope">
+            {{ dict.type.sys_app_applyCenter?.find((dict) => dict.value == scope.row.appCategory)?.label }}
+          </template>
+        </el-table-column>
+        <el-table-column label="绑定租户" prop="tenants" />
+        <el-table-column label="更新时间" align="center" prop="updateTime">
+          <template slot-scope="scope">
+            <span>{{ parseTime(scope.row.updateTime) }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          label-class-name="twoRowHeader"
+          prop="num"
+          width="150"
+          sortable
+        >
+          <template #header>
+            <div class="headerSortRow1">
+              <span>应用访问统计</span>
+              <br>
+              <span>(次)</span>
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
       <div style="width: 100%">
-        <charts-components :chart-data-options="dataZhuzhuang" echarts-type="bar1" style="width: 600px; height: 250px" />
         <pagination
           :total="total"
           :page.sync="queryParams.pageNum"
@@ -136,23 +224,22 @@
 </template>
 <script>
 
-import { listUseraccess, getAccessCount } from "@/api/intelligentOilfield/system/user";
+import { listUseraccess, getAccessCount, appAccessList } from "@/api/intelligentOilfield/system/user";
 import { listDept } from "@/api/intelligentOilfield/system/dept";
 import { LineChart } from "echarts/charts";
 import { GridComponent, TooltipComponent, LegendComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
 import * as echarts from "echarts/core";
-import chartsComponents from "@/components/intelligentOilfield/echarts-com/index.vue";
+import { listTenant } from "@/api/intelligentOilfield/messaging";
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 export default {
   name: "UserAccess",
-  components: {
-    chartsComponents
-  },
-  dicts: ["sys_normal_disable"],
+  components: {},
+  dicts: ["sys_normal_disable", "sys_app_applyCenter", "sys_app_type"],
   data() {
     return {
+      activeName: "first",
       dataZhuzhuang: {
         xAxis: {
           data: [],
@@ -229,22 +316,44 @@ export default {
         nickName: undefined,
         loginDate: undefined,
         beginTime: undefined,
-        endTime: undefined
+        endTime: undefined,
+        appName: undefined,
+        appCategory: undefined,
+        tenantId: undefined
       },
       deptSelect: [],
       // 表单参数
-      form: {}
+      form: {},
+      deptList: [],
+      searchOption: []
     };
   },
   created() {
     this.getList();
     this.choiceDepts(); // 获取组织机构
     this.getAccessCount();
-  },
-  activated() {
-    this.getList();
+    this.getOrgTreeData();
   },
   methods: {
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
+    handleClick() {
+      this.queryParams.pageNum = 1;
+      this.queryParams.pageSize = 10;
+      this.dateRange = [];
+      this.resetForm("queryForm");
+      this.getList();
+    },
+    /** 查询组织机构树形数据列表 */
+    getOrgTreeData() {
+      listTenant({
+        pageNum: 1,
+        pageSize: 1000
+      }).then(response => {
+        this.deptList = response.data.rows;
+      });
+    },
     // 查询统计表信息
     getAccessCount() {
       getAccessCount().then(response => {
@@ -266,14 +375,36 @@ export default {
     /** 查询用户访问列表 */
     getList() {
       this.loading = true;
-      const [beginTime, endTime] = this.dateRange;
-      this.queryParams.beginTime = beginTime;
-      this.queryParams.endTime = endTime;
-      listUseraccess(this.queryParams).then(response => {
-        this.userList = response.data.rows;
-        this.total = response.data.total;
-        this.loading = false;
-      });
+      if (this.activeName === "first") {
+        if (this.dateRange) {
+          const [beginTime, endTime] = this.dateRange;
+          this.queryParams.beginTime = beginTime;
+          this.queryParams.endTime = endTime;
+        } else {
+          this.queryParams.beginTime = undefined;
+          this.queryParams.endTime = undefined;
+        }
+        listUseraccess(this.queryParams).then(response => {
+          this.userList = response.data.rows;
+          this.total = response.data.total;
+          this.loading = false;
+        });
+      } else {
+        const param = {
+          pageNum: this.queryParams.pageNum,
+          pageSize: this.queryParams.pageSize,
+          appName: this.queryParams.appName ? this.queryParams.appName : undefined,
+          appCategory: this.queryParams.appCategory ? this.queryParams.appCategory : undefined,
+          tenantId: this.queryParams.tenantId ? this.queryParams.tenantId : undefined
+        };
+        appAccessList(param).then(response => {
+          this.$nextTick(() => {
+            this.userList = response.data.rows;
+            this.total = response.data.total;
+            this.loading = false;
+          });
+        });
+      }
     },
     // 表单重置
     reset() {

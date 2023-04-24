@@ -80,7 +80,6 @@
           <el-button
             v-hasPermi="['system:role:remove']"
             type="danger"
-            plain
             size="mini"
             :disabled="multiple"
             :class="multiple === true ? 'commonBtn' : 'errorBtn'"

@@ -73,7 +73,6 @@
           <el-button
             v-hasPermi="['messageConfig:add']"
             type="primary"
-            plain
             @click="handleDatil(null, 'Add')"
           >
             新增
@@ -84,7 +83,6 @@
             v-hasPermi="['messageConfig:export']"
             style="margin-right: 4px"
             type="primary"
-            plain
             @click="handleExport"
           >
             导出
@@ -117,7 +115,7 @@
         >
           <template slot-scope="scope">
             <span v-if="item.props === 'active'">
-              <el-tag :type="scope.row.active === 0 ? 'success' : 'info'">{{ scope.row.active === 0 ? "正常" : "离线" }}</el-tag>
+              <el-tag :type="scope.row.active ? 'success' : 'info'">{{ dict.type.sys_active_type?.find((dict) => dict.value == scope.row.active)?.label }}</el-tag>
             </span>
             <span v-else>{{ columnsFormatter(scope.row, item.props) }}</span>
           </template>
@@ -168,6 +166,7 @@ const columns = [
 ];
 export default {
   name: "MessageSubject",
+  dicts: ["sys_active_type"],
   components: {
     ConfigForm
   },
@@ -177,9 +176,9 @@ export default {
       columns,
       showSearch: true,
       messageTypes: [
-        { type: "SMS", text: "短信" },
+        /* { type: "SMS", text: "短信" }, */
         { type: "MAIL", text: "邮件" },
-        { type: "PUSH", text: "移动云推送" },
+        /* { type: "PUSH", text: "移动云推送" }, */
         { type: "LETTER", text: "站内信" }
       ],
       triggerTypes: [

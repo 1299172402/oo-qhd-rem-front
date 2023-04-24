@@ -60,7 +60,7 @@
                 v-for="(items, index1) in item"
                 :key="index1"
                 class="g-column-flex-H"
-                style="position: relative; justify-content: center; align-items: center; flex-wrap: wrap; cursor: pointer; width: 6.6%; height: 102px;min-width: 6.6%"
+                style="position: relative; justify-content: center; align-items: center; flex-wrap: wrap; cursor: pointer; width: 6.7%; height: 102px;min-width: 6.6%"
                 @click="toClick(items.boardUrl)"
               >
                 <img
@@ -68,7 +68,7 @@
                   :src="items.boardImg?items.boardImg:''"
                   alt=""
                   class="imgSetting"
-                  style="width: 40px"
+                  style="width: 40px;height: 40px"
                   @error="imgError(items)"
                 >
                 <!-- 增加未上传图标显示默认图标+首字母 -->
@@ -308,5 +308,6 @@ export default {
   display: flex;
   align-items: center;
   padding: 0 60px;
+  z-index: 0;
 }
 </style>

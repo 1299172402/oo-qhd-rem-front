@@ -268,7 +268,7 @@ export default {
 <style scoped>
 .vue-grid-layout {
   position: absolute;
-  z-index: 998;
+  z-index: 0;
   top: 0;
   left: 0;
   width: 1920px;

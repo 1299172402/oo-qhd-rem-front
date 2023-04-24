@@ -29,6 +29,7 @@
         </template>
       </el-table-column>
       <el-table-column
+        v-if="!onlyRead"
         label="操作"
         width="120"
         align="center"
@@ -68,6 +69,10 @@ export default {
     configColumns: {
       type: Boolean,
       default: true
+    },
+    onlyRead: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

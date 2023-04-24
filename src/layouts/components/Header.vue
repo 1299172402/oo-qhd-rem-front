@@ -96,7 +96,12 @@
                 </t-dropdown-item>
               </t-dropdown-menu>
             </template>
-            <t-button class="header-user-btn" theme="default" variant="text">
+            <t-button
+              class="header-user-btn"
+              theme="default"
+              variant="text"
+              style="margin-bottom: 4px;"
+            >
               <template #icon>
                 <user-circle-icon class="header-user-avatar" style="color: var(--white-color)" />
               </template>
@@ -750,6 +755,14 @@ export default Vue.extend({
 .header-menu {
   flex: 1 1 1;
   display: inline-flex;
+  align-items: center;
+
+  li {
+    height: 63px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .operations-container {

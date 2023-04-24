@@ -8,6 +8,7 @@
     <!-- <div class="english-name">这个公司的Englishname</div> -->
     <!-- </div> -->
     <t-button
+      style="height: 49px; border-radius: 4px; width: 350px; font-size: 18px"
       block
       size="large"
       class="login__submit-btn"
@@ -15,7 +16,6 @@
     >
       集团登录
     </t-button>
-    <div>仅供双因素测试使用，不提供真实功能</div>
   </div>
 </template>
 
@@ -46,7 +46,8 @@ export default {
   height: 187px;
   background: url("@/assets/login-welcome.png") no-repeat;
   background-size: 100%;
-  margin-bottom: 44px;
+  margin-bottom: 16px;
+  margin-top: 35px;
 }
 
 .first-tab-body {

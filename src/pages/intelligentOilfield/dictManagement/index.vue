@@ -34,7 +34,6 @@
             v-model="queryParams.status"
             placeholder="字典状态"
             clearable
-            size="small"
             style="width: 240px"
           >
             <el-option
@@ -48,7 +47,6 @@
         <el-form-item label="创建时间">
           <el-date-picker
             v-model="dateRange"
-            size="small"
             style="width: 240px"
             value-format="yyyy-MM-dd"
             type="daterange"
@@ -84,7 +82,6 @@
           <el-button
             v-hasPermi="['system:dict:add']"
             type="primary"
-            plain
             size="mini"
             @click="handleAdd"
           >
@@ -94,9 +91,7 @@
         <el-col :span="4" style="text-align: right;padding-right: 2px">
           <el-button
             v-hasPermi="['system:dict:export']"
-            class="commonBtn"
-            type="warning"
-            plain
+            type="primary"
             size="mini"
             @click="handleExport"
           >
@@ -159,7 +154,7 @@
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <router-link :to="'/dictManagement/dict-data/index/' + scope.row.dictId + '?pathName=' + scope.row.dictName" class="link-type">
-              <span>编辑字典值</span>
+              <span style="color: var(--light-blue-color);">编辑字典值</span>
             </router-link>
             <el-button
               v-hasPermi="['system:dict:edit']"
@@ -174,7 +169,7 @@
               size="mini"
               type="text"
               class="delbutton"
-              @click="handleDelete(scope.row,scope.$index)"
+              @click="handleDelete(scope.row)"
             >
               删除
             </el-button>
@@ -227,7 +222,7 @@
         <el-button type="primary" @click="submitForm">
           确 定
         </el-button>
-        <el-button @click="cancel">
+        <el-button class="cancelBtn" @click="cancel">
           取 消
         </el-button>
       </div>
@@ -291,14 +286,11 @@ export default {
   created() {
     this.getList();
   },
-  activated() {
-    this.getList();
-  },
   methods: {
     /** 查询字典类型列表 */
     getList() {
       this.loading = true;
-      const [beginTime, endTime] = this.dateRange;
+      const [beginTime, endTime] = this.dateRange === null ? [] : this.dateRange;
       this.queryParams.beginTime = beginTime;
       this.queryParams.endTime = endTime;
       listType(this.queryParams).then(response => {
@@ -363,14 +355,18 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           if (this.form.dictId !== undefined) {
-            updateType(this.form).then(() => {
-              this.$modal.msgSuccess("修改成功");
+            updateType(this.form).then(res => {
+              if (res?.data.code === 200) {
+                this.$modal.msgSuccess("修改成功");
+              }
               this.open = false;
               this.getList();
             });
           } else {
-            addType(this.form).then(() => {
-              this.$modal.msgSuccess("新增成功");
+            addType(this.form).then(res => {
+              if (res?.data.code === 200) {
+                this.$modal.msgSuccess("新增成功");
+              }
               this.open = false;
               this.getList();
             });
@@ -379,12 +375,12 @@ export default {
       });
     },
     /** 删除按钮操作 */
-    handleDelete(row, index) {
+    handleDelete(row) {
       const dictIds = row.dictId || this.ids;
       // this.$modal
       //   .confirm(`是否确认删除字典编号为"${dictIds}"的数据项？`)
       this.$modal
-        .confirm(`是否确认删除序号为"${index + 1}"的数据项？`)
+        .confirm("是否确认删除改字典？")
         .then(() => delType(dictIds))
         .then(() => {
           this.getList();

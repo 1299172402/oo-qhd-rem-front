@@ -62,7 +62,13 @@
         </span>
         <el-input v-model="model.allowFileExtensions" :title="model.allowFileExtensions" placeholder="请输入扩展名" />
       </el-form-item>
-      <el-form-item label="允许文件的最大大小：" prop="maxSize" class="form-layout__item-col2">
+      <el-form-item prop="maxSize" class="form-layout__item-col2">
+        <span slot="label">
+          <el-tooltip content="单位为MB" placement="top">
+            <i class="el-icon-question" />
+          </el-tooltip>
+          允许文件的最大大小：
+        </span>
         <el-input-number v-model="model.maxSize" :title="model.maxSize" placeholder="请输入允许文件的最大大小" />
       </el-form-item>
       <el-form-item label="允许图片的宽度：" prop="imageWidth" class="form-layout__item-col2">
@@ -111,7 +117,12 @@ export default {
         status: "0"
       },
       fn: {
-        save,
+        save: data => save({
+          ...data,
+          maxSize: data.maxSize === undefined ? null : data.maxSize,
+          imageWidth: data.imageWidth === undefined ? null : data.imageWidth,
+          imageHeight: data.imageHeight === undefined ? null : data.imageHeight
+        }),
         findById
       },
       rules: {
@@ -120,7 +131,7 @@ export default {
         uploadType: [{ required: true, message: "请选择上传类型", trigger: "change" }],
         bucketName: [{ required: true, message: "请输入minio桶", trigger: "change" }],
         allowFileExtensions: [{ required: true, message: "请输入扩展名", trigger: "change" }],
-        maxSize: [{ required: true, message: "请输入允许图片的最大大小", trigger: "change" }]
+        maxSize: [{ required: true, message: "请输入允许文件的最大大小", trigger: "change" }]
       }
     };
   },

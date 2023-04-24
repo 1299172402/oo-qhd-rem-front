@@ -2,7 +2,9 @@
   background: transparent;
   color: var(--light-blue-color);
   background-image: var(--logo-bg) !important;
-  background-size: 100% 100% !important;
+  background-size: unset !important;
+  background-repeat: no-repeat !important;
+  background-position: right top !important;
 }
 
 // .loginInput .el-input__inner {
@@ -19,6 +21,16 @@
 }
 
 .el-input.is-disabled .el-input__inner{
+  background: rgba(51,69,86,0.8);
+  border: 1px solid #c0c4cc;
+  opacity: 0.5;
+  background-image: var(--logo-bg) !important;
+  background-size: unset !important;
+  background-repeat: no-repeat !important;
+  background-position: right top !important;
+}
+
+.el-textarea.is-disabled .el-textarea__inner {
   background: rgba(51,69,86,0.8);
   border: 1px solid #c0c4cc;
   opacity: 0.5;

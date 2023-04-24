@@ -21,7 +21,9 @@ export default {
   border: 1px solid;
   padding: 0 20px;
   background-image: var(--logo-bg) !important;
-  background-size: 100% 100% !important;
+  background-size: unset !important;
+  background-repeat: no-repeat !important;
+  background-position: right top !important;
 }
 
 .searchHeader-light {

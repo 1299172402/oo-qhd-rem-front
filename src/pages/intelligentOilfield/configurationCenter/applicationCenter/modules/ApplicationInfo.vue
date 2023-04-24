@@ -3,93 +3,48 @@
     ref="form"
     :model="appInfo"
     :rules="rules"
-    label-width="220px"
+    style="width: 800px;"
+    label-width="180px"
     class="demo-ruleForm"
+    :disabled="onlyRead"
   >
-    <table
-      class="el-table"
-      width="100%"
-      height="100%"
-      cellpadding="0"
-      cellspacing="0"
-    >
-      <tbody>
-        <tr>
-          <td class="header">
-            AppID
-          </td>
-          <td colspan="2">
-            {{ appInfo.appId || "自动生成" }}
-          </td>
-        </tr>
-        <tr>
-          <td class="header">
-            AppSecret
-          </td>
-          <td colspan="2">
-            <aside style="display: flex; justify-content: space-between;">
-              <span v-if="!newAppSecret">******************</span>
-              <span v-else>{{ appInfo.appSecret || "自动生成" }}</span>
-              <el-button type="text" @click="handleRebuild">
-                重新生成
-              </el-button>
-            </aside>
-          </td>
-        </tr>
-        <tr>
-          <td rowspan="6" class="header app-api">
-            应用API信息
-          </td>
-          <td>
-            <el-form-item label="应用API根路径" prop="appOauthApiUrl">
-              <el-input
-                v-model="appInfo.appOauthApiUrl"
-                :title="appInfo.appOauthApiUrl"
-                placeholder="请输入应用API根路径"
-                clearable
-                @input="handleInput"
-              />
-            </el-form-item>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <el-form-item label="应用OauthAPI登出地址" prop="oauthLogoutApiUrl">
-              <el-input
-                v-model="appInfo.oauthLogoutApiUrl"
-                :title="appInfo.oauthLogoutApiUrl"
-                placeholder="请输入应用OauthAPI登出地址"
-                clearable
-              />
-            </el-form-item>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <el-form-item label="应用OauthAPI回调地址" prop="oauthCallbackApiUrl">
-              <el-input
-                v-model="appInfo.oauthCallbackApiUrl"
-                :title="appInfo.oauthCallbackApiUrl"
-                placeholder="请输入应用OauthAPI回调地址"
-                clearable
-              />
-            </el-form-item>
-          </td>
-        </tr>
-        <!-- <tr>
-          <td>
-            <el-form-item label="应用日志查询API地址" prop="appLogApiUrl">
-              <el-input
-                v-model="appInfo.appLogApiUrl"
-                :title="appInfo.appLogApiUrl"
-                placeholder="请输入应用日志查询API地址"
-                clearable
-              />
-            </el-form-item>
-          </td>
-        </tr> -->
-      </tbody>
-    </table>
+    <el-form-item label="AppID">
+      {{ appInfo.appId || "自动生成" }}
+    </el-form-item>
+    <el-form-item label="AppSecret">
+      <aside style="display: flex; justify-content: space-between;">
+        <span v-if="!newAppSecret">******************</span>
+        <span v-else>{{ appInfo.appSecret || "自动生成" }}</span>
+        <el-button type="text" @click="handleRebuild">
+          重新生成
+        </el-button>
+      </aside>
+    </el-form-item>
+    <el-form-item label="应用API根路径" prop="appOauthApiUrl">
+      <el-input
+        v-model="appInfo.appOauthApiUrl"
+        :title="appInfo.appOauthApiUrl"
+        placeholder="请输入应用API根路径"
+        clearable
+        @input="handleInput"
+      />
+    </el-form-item>
+    <el-form-item label="应用OauthAPI登出地址" prop="oauthLogoutApiUrl">
+      <el-input
+        v-model="appInfo.oauthLogoutApiUrl"
+        :title="appInfo.oauthLogoutApiUrl"
+        placeholder="请输入应用OauthAPI登出地址"
+        clearable
+      />
+    </el-form-item>
+    <el-form-item label="应用OauthAPI回调地址" prop="oauthCallbackApiUrl">
+      <el-input
+        v-model="appInfo.oauthCallbackApiUrl"
+        :title="appInfo.oauthCallbackApiUrl"
+        placeholder="请输入应用OauthAPI回调地址"
+        clearable
+      />
+    </el-form-item>
   </el-form>
 </template>
 
@@ -107,6 +62,10 @@ export default {
     action: {
       type: String,
       default: ""
+    },
+    onlyRead: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

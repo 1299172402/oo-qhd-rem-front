@@ -4,7 +4,6 @@
     v-loadmore="loadData"
     v-bind="$attrs"
     filterable
-    remote
     :placeholder="placeholder"
     :remote-method="handleSearch"
     v-on="$listeners"
@@ -168,3 +167,9 @@ export default {
   }
 };
 </script>
+<style lang="less" scoped>
+.el-select {
+  width: 240px;
+}
+
+</style>

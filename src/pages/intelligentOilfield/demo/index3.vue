@@ -34,7 +34,6 @@
           <el-button
             v-hasPermi="['system:logininfor:export']"
             type="primary"
-            plain
             size="mini"
           >
             导出

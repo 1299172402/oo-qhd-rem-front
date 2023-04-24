@@ -19,7 +19,7 @@
         <el-input v-model="form.title" :title="form.title" placeholder="请输入主题名称" />
       </el-form-item>
       <el-form-item label="触达类型：" prop="triggerType">
-        <el-radio-group v-model="form.triggerType" @change="handleTriggerType">
+        <el-radio-group v-model="form.triggerType" :disabled="!!formId" @change="handleTriggerType">
           <el-radio v-for="item in options.triggerTypes" :key="item.value" :label="item.value">
             {{ item.label }}
           </el-radio>
@@ -56,7 +56,13 @@
           </el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item v-if="form.requestType && !userTrigger" label="应用类型：">
+        {{ form.requestType === "INNER" ? "内部应用" : "外部应用" }}
+      </el-form-item>
       <el-form-item label="消息接收处理API地址：" class="is-required">
+        <template #label>
+          <question-info tip="message_config_form_api" />消息接收处理API地址：
+        </template>
         <div style="display: flex;">
           <el-form-item prop="exposeUri" style="flex: 1;">
             <el-input v-model="form.exposeUri" :title="form.exposeUri" placeholder="http://xxxxx/api/message/" />
@@ -68,8 +74,8 @@
       </el-form-item>
       <el-form-item label="运行状态：" class="is-required">
         <el-radio-group v-model="form.active">
-          <el-radio v-for="item in options.activeTypes" :key="item.value" :label="item.value">
-            {{ item.label }}
+          <el-radio v-for="dict in dict.type.sys_active_type" :key="dict.value" :label="dict.value">
+            {{ dict.label }}
           </el-radio>
         </el-radio-group>
       </el-form-item>
@@ -106,21 +112,24 @@
         </el-table>
       </el-form-item>
     </el-form>
-    <select-tenant ref="selectTenant" :tenants-ids="form.grantedTenants" @ok="handleGrantedTenants" />
+    <select-tenant ref="selectTenant" :tenant-ids="form.grantedTenants" @ok="handleGrantedTenants" />
   </common-dialog>
 </template>
 
 <script>
 import SelectTenant from "../components/selectTenant.vue";
 import CommonDialog from "@/components/intelligentOilfield/dialog/CommonDialog.vue";
+import QuestionInfo from "@/pages/intelligentOilfield/configurationCenter/processCenter/designer/modules/QuestionInfo.vue";
 import { saveConfig, getConfig } from "@/api/intelligentOilfield/messaging";
 import { listApp } from "@/api/intelligentOilfield/system/applicationCenter/applicationCenter.js";
 
 export default {
   components: {
     CommonDialog,
-    SelectTenant
+    SelectTenant,
+    QuestionInfo
   },
+  dicts: ["sys_active_type"],
   data() {
     return {
       visible: false,
@@ -135,7 +144,7 @@ export default {
         messageType: undefined,
         title: undefined,
         triggerType: "USER",
-        active: true,
+        active: "1",
         appId: undefined,
         requestType: undefined
       },
@@ -147,12 +156,8 @@ export default {
         userMessageTypes: [
           /* { value: "SMS", label: "短信" }, */
           { value: "MAIL", label: "邮件" },
-          { value: "LETTER", label: "站内信" },
-          { value: "PUSH", label: "移动云推送", disabled: true }
-        ],
-        activeTypes: [
-          { value: 0, label: "正常" },
-          { value: 1, label: "离线" }
+          { value: "LETTER", label: "站内信" }/* ,
+          { value: "PUSH", label: "移动云推送", disabled: true } */
         ]
       },
       rules: {
@@ -196,6 +201,9 @@ export default {
       if (this.formId) {
         getConfig(this.formId).then(data => {
           this.form = data;
+          if (typeof this.form.active === "number") {
+            this.form.active = String(this.form.active);
+          }
         });
       } else {
         this.form = {
@@ -206,7 +214,7 @@ export default {
           messageType: undefined,
           title: undefined,
           triggerType: "USER",
-          active: true,
+          active: "1",
           appId: undefined,
           requestType: undefined
         };
@@ -246,6 +254,7 @@ export default {
               item.tenantKey = item.tenantCode || item.tenantKey;
               return item;
             });
+            this.form.active = Number(this.form.active);
             saveConfig(this.form).then(() => {
               this.$modal.msgSuccess("保存成功");
               this.close();
@@ -262,8 +271,6 @@ export default {
      * 触达类型切换，清空选项
      */
     handleTriggerType() {
-      this.form.appId = null;
-      this.form.messageType = null;
       this.form.messageType = this.userTrigger ? this.form.messageType : "SERVICE";
     },
     changeApp(appId) {
