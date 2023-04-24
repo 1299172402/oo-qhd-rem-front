@@ -3,20 +3,20 @@
     <div class="app-container">
         <pagePanelNew style="height:100%;margin-top:0;" headerTitle="" >
             <div class="pagePane-container">
-                <el-tabs class="g-pageHeader" v-model="tabsValue" topline @tab-click="tabsTab">
+                <el-tabs class="g-pageHeader" v-model="tabsValue" topline>
                     <el-tab-pane label="作业公司产量跟踪" name="作业公司产量跟踪"></el-tab-pane>
                     <el-tab-pane label="油田预测产量" name="油田预测产量"></el-tab-pane>
                     <el-tab-pane label="作业公司产量总览" name="作业公司产量总览"></el-tab-pane>
                     <el-tab-pane label="单井产量预测" name="单井产量预测"></el-tab-pane>
                 </el-tabs>
                 <div v-if="tabsValue=='作业公司产量跟踪'" style="height:calc(100% - 46px);padding-bottom:10px;">
-                    <one ref="childComponent" :searchForm="searchForm"></one>
+                    <one ref="childComponent"></one>
                 </div>
                 <div v-if="tabsValue=='油田预测产量'" style="height:calc(100% - 46px);overflow-y: scroll;padding-right: 20px;">
-                    <two ref="childComponent" :searchForm="searchForm"></two>
+                    <two ref="childComponent"></two>
                 </div>
                 <div v-if="tabsValue=='作业公司产量总览'" style="height:calc(100% - 46px);overflow-y: scroll;">
-                    <three ref="childComponent" :searchForm="searchForm"></three>
+                    <three ref="childComponent"></three>
                 </div>
                 <div v-if="tabsValue=='单井产量预测'">
                     <four ref="childComponent" ></four>

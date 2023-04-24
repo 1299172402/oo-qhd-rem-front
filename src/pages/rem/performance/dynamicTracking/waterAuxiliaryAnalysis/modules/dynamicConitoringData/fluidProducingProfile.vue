@@ -13,13 +13,13 @@
                 <el-table id="tableData" highlight :data="tableData" style="width: 100%" height="calc(100% - 10px)">
                     <el-table-column prop="testWellTime" label="测井日期" align="center" width="120"></el-table-column>
                     <el-table-column prop="layerName" label="解释层位" min-width="100" align="center"></el-table-column>
-                    <el-table-column prop="" :label="`测水量\n(m³)`" min-width="80" align="center"></el-table-column>
+                    <el-table-column prop="dailyInj" :label="`吸水量\n(m³)`" min-width="80" align="center"></el-table-column>
                     <el-table-column prop="topDepth" :label="`顶界深度\n(m)`" min-width="80" align="center"></el-table-column>
                     <el-table-column prop="bottomDepth" :label="`底界深度\n(m)`" align="center" min-width="80"></el-table-column>
                     <el-table-column prop="startPress" :label="`启动压力\n(MPa)`" align="center" min-width="80"></el-table-column>
                     <el-table-column prop="apparentInjectivityIndex" :label="`视吸水指数\n(m³/(MPa·d))`" align="center" min-width="130"></el-table-column>
                     <el-table-column prop="waterInjectivityIndex" :label="`吸水指数\n(m³/(MPa·d))`" align="center" min-width="130"></el-table-column>
-                    <el-table-column prop="remark" label="备注" align="center" min-width="180"></el-table-column>
+                    <!-- <el-table-column prop="remark" label="备注" align="center" min-width="180"></el-table-column> -->
                 </el-table>
             </info-window>
         </div>
