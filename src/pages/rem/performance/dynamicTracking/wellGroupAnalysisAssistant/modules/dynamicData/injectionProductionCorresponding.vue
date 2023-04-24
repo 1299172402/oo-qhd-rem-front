@@ -1135,7 +1135,6 @@
         .z-search{
             height:60px;
             display: flex;
-            align-items: center;
         }
         .z-echarts{
             width:100%;

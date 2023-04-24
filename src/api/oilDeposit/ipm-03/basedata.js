@@ -1,6 +1,6 @@
 import Axios from '@/utils/request'
 
-const baseUrl = process.env.NODE_ENV == "production" ? "/ipm03/api" : "/ipm03/api"
+const baseUrl = process.env.NODE_ENV == "production" ? "/ipm/api" : "/ipm/api"
 export function getOgfInfo(orgId) {
   return Axios({
     url: `${baseUrl}/baseData/getOgfInfo?orgId=${orgId}`,

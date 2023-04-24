@@ -1,6 +1,19 @@
 <!-- 油田预测产量 -->
 <template>
-    <div>
+    <div class="z-main" style="height:100%;">
+        <div style="display: flex;align-items: center;margin-bottom:15px;">
+            <span>滚动预测：</span>
+            <el-select v-model="searchForm.rollingForecastDate" placeholder="请选择" style="width:200px;margin-right:15px;">
+                <el-option v-for="item in rollingForecastDateList" :key="item.source_ID" :label="item.source_NAME" :value="item.source_ID"></el-option>
+            </el-select>
+            <span>日期：</span>
+            <el-date-picker v-model="searchForm.date" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" :picker-options="pickerOptions" style="margin-right:15px;"></el-date-picker>
+            <span>产量单位选择：</span>
+            <el-select v-model="searchForm.unitType" placeholder="请选择" style="width:100px;margin-right:15px;">
+                <el-option v-for="item in unitTypeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
+            </el-select>
+            <el-button type="primary" icon="el-icon-search" @click="doSearch">检索</el-button>
+        </div>
         <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="油田产量影响因素" isShowMaxBtn>
             <div slot-name="titleContent" style="position: absolute;right:52px;top:5px;">
                 <el-button type="primary" style="height:30px;" @click="saveEditRow">保存修改</el-button>
@@ -73,23 +86,46 @@
 </template>
 
 <script>
-    import {getOilFieldInfo,getOilForecastProd,getOilResidueLevel,saveInfluencingFactorsOfOilfieldProduction} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+    import {getForecastDate,getOilFieldInfo,getOilForecastProd,getOilResidueLevel,saveInfluencingFactorsOfOilfieldProduction} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
     import { exportExcel} from '@/lib/exportExcel.js';
     export default {
-        props:{
-            searchForm:{
-                type:Object,
-                default:()=>{
-                    return {
-                        rollingForecastDate:'',//滚动预测
-                        date:new Date().getFullYear() + '-12-31',//日期
-                        unitType:'m',//单位
-                    }
-                }
-            }
-        },
         data() {
             return {
+                oilFieldData: ['QHD32-6', 'QHD33-1', 'NB35-2', 'QHD33-1S', 'CFD6-4', 'BZ3-2'],
+                //滚动预测数据源
+                rollingForecastDateList:[],
+                //产量单位数据源
+                unitTypeList: [
+                  {
+                    label: "m³",
+                    value: "m",
+                  },
+                  {
+                    label: "t",
+                    value: "t",
+                  },
+                ],
+                pickerOptions: {
+                  disabledDate(time) {
+                    // 油田预测产量
+                    var date = new Date();
+                    var year = date.getFullYear();
+                    var end_date = new Date(year, 12, 0);
+                    var begin_date = new Date(year, date.getMonth(), date.getDate());
+                    if (time >= begin_date && time <= end_date) {
+                      return false;
+                    } else {
+                      return true;
+                    }
+                  },
+                },
+                searchForm:{
+                    rollingForecastDate:'',//滚动预测
+                    date:new Date().addDays(-1).format('yyyy-MM-dd'),//日期
+                    unitType:'m',//单位
+                },
+                
+                
                 unitName: 'm³',
                 //油田产量影响因素
                 show:false,
@@ -124,9 +160,19 @@
             };
         },
         mounted(){
-            this.doSearch();
+            this.getForecastDate();
         },
         methods: {
+            //获取滚动预测下拉框数据源
+            getForecastDate() {
+                getForecastDate().then((res) => {
+                    if (res.data.code==200) {
+                        this.rollingForecastDateList = res.data.data;
+                        this.searchForm.rollingForecastDate = this.rollingForecastDateList[0].source_ID;
+                    }
+                    this.doSearch();
+                });
+            },
             doSearch() {
                 if (this.searchForm.rollingForecastDate == 'm') {
                     this.unitName = '10⁴m³';

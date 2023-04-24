@@ -23,6 +23,14 @@ export default [
             },
             {
                 hidden:true,
+                path: "analysisAbnormal",
+                name: "analysisAbnormal",
+                component: () => import("@/pages/rem/yield/fluctuationWarningAnalysis/analysisAbnormal.vue"),
+                meta: { title: "产量异常归因分析报告" },
+            },
+            
+            {
+                hidden:true,
                 path: "statisticalTableProduction",
                 name: "statisticalTableProduction",
                 component: () => import("@/pages/rem/yield/fluctuationWarningAnalysis/statisticalTableProduction.vue"),

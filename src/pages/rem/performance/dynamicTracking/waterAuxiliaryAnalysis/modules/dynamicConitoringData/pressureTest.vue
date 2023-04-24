@@ -1,8 +1,8 @@
 <!--压降测试-->
 <template>
     <div class="z-main">
-        <page-panel style="height:100%;margin-top:0;" headerTitle="压力数据">
-            <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+        <info-window style="margin-top:0;" infoWidth="100%" infoHeight="100%" headerTitle="压力数据" isShowMaxBtn>
+            <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;" height="calc(100% - 10px)" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column type="index" label="序号" width="80"></el-table-column>
                 <el-table-column prop="borepipeName" label="井管" width="140"></el-table-column>
                 <el-table-column prop="wellInterceptType" label="试井项目解析类型" width="140"></el-table-column>
@@ -23,7 +23,7 @@
                 <el-table-column prop="baseLevelAltitude" :label="`基准面海拔\n(m)`" width="140"></el-table-column>
                 <el-table-column prop="remark" width="240" label="备注"></el-table-column>
             </el-table>
-        </page-panel>
+        </info-window>
     </div>
 </template>
 

@@ -1,104 +1,123 @@
 <!-- 作业公司产量跟踪 -->
 <template>
-    <el-table id="tableData" :data="tableData" highlight style="width:100%;" height="100%">
-        <el-table-column fixed style="overflow-x:hidden;" prop="type" :label="outputTrackingTableDate" align="center" width="300"></el-table-column>
-        <el-table-column label="作业公司" align="center">
-            <el-table-column prop="zygsjc" label="基础" align="center" width="100">
+    <div class="z-main" style="height:100%;">
+        <div style="display: flex;align-items: center;margin-bottom:15px;">
+            <span>日期：</span>
+            <el-date-picker v-model="searchForm.date" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" :picker-options="pickerOptions" style="margin-right:15px;"></el-date-picker>
+            <span>产量单位选择：</span>
+            <el-select v-model="searchForm.unitType" placeholder="请选择" style="width:100px;margin-right:15px;">
+                <el-option v-for="item in unitTypeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
+            </el-select>
+            <el-button type="primary" icon="el-icon-search" @click="doSearch">检索</el-button>
+        </div>
+        <el-table id="tableData" :data="tableData" highlight style="width:100%;" height="calc(100% - 58px)">
+            <el-table-column fixed style="overflow-x:hidden;" prop="type" :label="outputTrackingTableDate" align="center" width="300"></el-table-column>
+            <el-table-column label="作业公司" align="center">
+                <el-table-column prop="zygsjc" label="基础" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="zygscs" label="措施" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="zygstz" label="调整井" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="zygskf" label="开发井" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="zygshj" label="合计" align="center" width="100">
+                </el-table-column>
             </el-table-column>
-            <el-table-column prop="zygscs" label="措施" align="center" width="100">
+            <!-- QHD32-6 -->
+            <el-table-column label="QHD32-6" align="center">
+                <el-table-column prop="qhd326jc" label="基础" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="qhd326cs" label="措施" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="qhd326tz" label="调整井" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="qhd326hj" label="合计" align="center" width="100">
+                </el-table-column>
             </el-table-column>
-            <el-table-column prop="zygstz" label="调整井" align="center" width="100">
+            <el-table-column label="CFD6-4" align="center">
+                <el-table-column prop="cfd64jc" label="基础" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="cfd64cs" label="措施" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="cfd64tz" label="调整井" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="cfd64hj" label="合计" align="center" width="100">
+                </el-table-column>
             </el-table-column>
-            <el-table-column prop="zygskf" label="开发井" align="center" width="100">
+            <!-- NB35-2 -->
+            <el-table-column label="NB35-2" align="center">
+                <el-table-column prop="nb352jc" label="基础" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="nb352cs" label="措施" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="nb352tz" label="调整井" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="nb352hj" label="合计" align="center" width="100">
+                </el-table-column>
             </el-table-column>
-            <el-table-column prop="zygshj" label="合计" align="center" width="100">
+            <el-table-column label="BZ3-2" align="center">
+                <el-table-column prop="bz32jc" label="基础" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="bz32cs" label="措施" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="bz32tz" label="调整井" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="bz32hj" label="合计" align="center" width="100">
+                </el-table-column>
             </el-table-column>
-        </el-table-column>
-        <!-- QHD32-6 -->
-        <el-table-column label="QHD32-6" align="center">
-            <el-table-column prop="qhd326jc" label="基础" align="center" width="100">
+            <el-table-column label="QHD33-1" align="center">
+                <el-table-column prop="qhd331jc" label="基础" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="qhd331cs" label="措施" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="qhd331tz" label="调整井" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="qhd331kf" label="开发井" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="qhd331hj" label="合计" align="center" width="100">
+                </el-table-column>
             </el-table-column>
-            <el-table-column prop="qhd326cs" label="措施" align="center" width="100">
+            <el-table-column label="QHD33-1S" align="center">
+                <el-table-column prop="qhd331sjc" label="基础" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="qhd331scs" label="措施" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="qhd331stj" label="调整井" align="center" width="100">
+                </el-table-column>
+                <el-table-column prop="qhd331shj" label="合计" align="center" width="100">
+                </el-table-column>
             </el-table-column>
-            <el-table-column prop="qhd326tz" label="调整井" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="qhd326hj" label="合计" align="center" width="100">
-            </el-table-column>
-        </el-table-column>
-        <el-table-column label="CFD6-4" align="center">
-            <el-table-column prop="cfd64jc" label="基础" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="cfd64cs" label="措施" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="cfd64tz" label="调整井" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="cfd64hj" label="合计" align="center" width="100">
-            </el-table-column>
-        </el-table-column>
-        <!-- NB35-2 -->
-        <el-table-column label="NB35-2" align="center">
-            <el-table-column prop="nb352jc" label="基础" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="nb352cs" label="措施" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="nb352tz" label="调整井" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="nb352hj" label="合计" align="center" width="100">
-            </el-table-column>
-        </el-table-column>
-        <el-table-column label="BZ3-2" align="center">
-            <el-table-column prop="bz32jc" label="基础" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="bz32cs" label="措施" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="bz32tz" label="调整井" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="bz32hj" label="合计" align="center" width="100">
-            </el-table-column>
-        </el-table-column>
-        <el-table-column label="QHD33-1" align="center">
-            <el-table-column prop="qhd331jc" label="基础" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="qhd331cs" label="措施" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="qhd331tz" label="调整井" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="qhd331kf" label="开发井" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="qhd331hj" label="合计" align="center" width="100">
-            </el-table-column>
-        </el-table-column>
-        <el-table-column label="QHD33-1S" align="center">
-            <el-table-column prop="qhd331sjc" label="基础" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="qhd331scs" label="措施" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="qhd331stj" label="调整井" align="center" width="100">
-            </el-table-column>
-            <el-table-column prop="qhd331shj" label="合计" align="center" width="100">
-            </el-table-column>
-        </el-table-column>
-    </el-table>
+        </el-table>
+    </div>
 </template>
 
 <script>
     import {getReportFroms} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
     export default {
-        props:{
-            searchForm:{
-                type:Object,
-                default:()=>{
-                    return {
-                        rollingForecastDate:'',//滚动预测
-                        date:new Date().getFullYear() + '-12-31',//日期
-                        unitType:'m',//单位
-                    }
-                }
-            }
-        },
         data() {
             return {
                 oilFieldData: ['QHD32-6', 'QHD33-1', 'NB35-2', 'QHD33-1S', 'CFD6-4', 'BZ3-2'],
+                unitTypeList: [{label: "m³",value: "m",},{label: "t",value: "t",}],
+                searchForm:{
+                    rollingForecastDate:'',//滚动预测
+                    date:new Date().addDays(-1).format('yyyy-MM-dd'),//日期
+                    unitType:'m',//单位
+                },
+                pickerOptions: {
+                  disabledDate(time) {
+                    // 油田预测产量
+                    var date = new Date();
+                    var year = date.getFullYear();
+                    var end_date = new Date(year, 12, 0);
+                    var begin_date = new Date(year, date.getMonth(), date.getDate());
+                    if (time >= begin_date && time <= end_date) {
+                      return false;
+                    } else {
+                      return true;
+                    }
+                  },
+                },
                 tableData: [],
                 outputTrackingTableDate: '',
                 allTableData: [

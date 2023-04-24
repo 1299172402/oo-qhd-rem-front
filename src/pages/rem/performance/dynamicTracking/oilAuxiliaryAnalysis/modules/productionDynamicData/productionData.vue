@@ -790,8 +790,6 @@
     .z-main{
         width: 100%;
         height:calc(100% - 101px);
-        // overflow-x: hidden;
-        // overflow-y: scroll;
         .z-search{
             height:60px;
         }
@@ -804,36 +802,6 @@
         
         .z-echarts-active{
             height:calc(100% - 60px - 40px - 190px);
-        }
-        
-        .develop{
-            height:40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding-top:25px;
-            span{
-                cursor: pointer;
-                width:0;
-                height:0;
-                border:15px solid var(--td-text-color-primary);
-                border-right-color:transparent;
-                border-left-color:transparent;
-                border-bottom-color:transparent;
-            }
-            .top-span{
-                border-top:0;
-                border-bottom:15px solid var(--td-text-color-primary);
-                margin-bottom:15px;
-            }
-            .active-span{
-                animation:mymove 1.5s infinite;
-            }
-            @keyframes mymove{
-                0% {transform: translate(0px, 0px);}
-                50% {transform: translate(0px, -10px);}
-                100% {transform: translate(0px, 0px);}
-            }
         }
         
         #tableData{

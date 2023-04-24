@@ -30,29 +30,34 @@
                             <info-window infoWidth="100%" infoHeight="456px" :headerTitle="oilFieldName + '产量跟踪预警分析'" isShowMaxBtn style="margin-top:0;">
                                 <div style="position: absolute;top: 8%;left: 12%;">
                                     <div style="display:inline-block;margin: 10px">
-                                        <div style="border-radius: 50%;height: 8px;width: 7.4px;background-color: #FF5844;display:inline-block"></div>
+                                        <div style="border-radius: 50%;height: 8px;width: 7.4px;background-color: #FF5844;display:inline-block;margin-right:4px;"></div>
                                         <span style="font-size: 14px;color: #8FA4CC">红色预警</span>
                                     </div>
                                     <div style="display:inline-block;margin: 10px">
-                                        <div style="border-radius: 50%;height: 8px;width: 7.4px;background-color: #1379F7;display:inline-block"></div>
+                                        <div style="border-radius: 50%;height: 8px;width: 7.4px;background-color: #1379F7;display:inline-block;margin-right:4px;"></div>
                                         <span style="font-size: 14px;color: #8FA4CC">蓝色预警</span>
                                     </div>
                                     <div style="display:inline-block;margin: 10px">
-                                        <div style="border-radius: 50%;height: 8px;width: 7.4px;background-color: #F5BE43;display:inline-block"></div>
+                                        <div style="border-radius: 50%;height: 8px;width: 7.4px;background-color: #F5BE43;display:inline-block;margin-right:4px;"></div>
                                         <span style="font-size: 14px;color: #8FA4CC">黄色预警</span>
                                     </div>
                                 </div>
-                                <Echart :chart-data="echartOption" height="400px" :events="['click']"></Echart>
+                                <Echart :chart-data="echartOption" height="400px" :events="['click']" @click="clickCall"></Echart>
                             </info-window>
                         </div>
                     </div>
                     <div style="margin-right:20px;margin-bottom:20px;">
-                        <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;">
-                            <span class="title">{{ oilFieldName }}产量跟踪分析 {{ currentDate }}</span>
+                        <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;" v-if="!isShowTable">
+                            <span class="title">{{oilFieldName}}产量跟踪分析 {{currentDate}}</span>
                             <el-button type="primary" size="medium" style="height:30px;" @click="switchUpPage">产量运行分析报告下载</el-button>
                         </div>
+                        <div class="pageHeader" style="width:100%;display: flex;align-items: center;" v-if="isShowTable">
+                            <span class="title">{{currentDate}}产量异常智能归因分析</span>
+                            <el-button type="primary" size="medium" style="margin-left:auto;height:30px;" @click="switchUpPage">产量运行分析报告下载</el-button>
+                            <el-button type="primary" size="medium" style="margin-left:10px!important;height:30px;" @click="switchDownPage">产量异常归因分析报告下载</el-button>
+                        </div>
                     </div>
-                    <div class="rowBox" style="margin-bottom:20px;">
+                    <div class="rowBox" style="margin-bottom:20px;" v-if="!isShowTable">
                         <div class="row" style="margin-right:20px;">
                             <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="产量跟踪分析" isShowMaxBtn>
                                 <div class="row-container">
@@ -135,7 +140,7 @@
                             </info-window>
                         </div>
                     </div>
-                    <div class="rowBox">
+                    <div class="rowBox" v-if="!isShowTable">
                         <div class="row" style="margin-right:20px;">
                             <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="单井产量波动分析" isShowMaxBtn>
                                 <div class="row-container">
@@ -159,6 +164,19 @@
                                     <el-table highlight :data="eventData" style="width: 100%" height="100%" empty-text="当日无大事件">
                                         <el-table-column prop="eventType" label="事件类型" align="center" width="180"></el-table-column>
                                         <el-table-column prop="content" label="井号" align="center"></el-table-column>
+                                    </el-table>
+                                </div>
+                            </info-window>
+                        </div>
+                    </div>
+                    <div class="rowBox" v-if="isShowTable">
+                        <div class="row" style="margin-right:20px;">
+                            <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="当日关键事件" isShowMaxBtn>
+                                <div class="row-container">
+                                    <el-table class="z-table" highlight :data="reasonAnalysises" border :span-method="objectSpanMethod" style="width: 100%;align:center;" height="100%">
+                                      <el-table-column prop="platformName" label="各平台产量下降情况" align="center" width="250"></el-table-column>
+                                      <el-table-column prop="evalDim" label="原因分类情况" align="center" width="250"></el-table-column>
+                                      <el-table-column prop="content" label="异常井情况" align="center"></el-table-column>
                                     </el-table>
                                 </div>
                             </info-window>
@@ -695,24 +713,6 @@
             this.initData();
         },
         methods: {
-            //判断表格数据中 技术指标的重复进行合并 获得合并的行信息
-            getSpanArr(data) {
-                this.spanArr = [];
-                for (var i = 0; i < data.length; i++) {
-                    if (i === 0) {
-                        this.spanArr.push(1)
-                        this.pos = 0
-                    } else {
-                        if (data[i].platformName === data[i - 1].platformName) { //platformName可以根据你要合并的列更改
-                            this.spanArr[this.pos] += 1
-                            this.spanArr.push(0)
-                        } else {
-                            this.spanArr.push(1)
-                            this.pos = i
-                        }
-                    }
-                }
-            },
             //表格合并单元格
             objectSpanMethod({row,column,rowIndex,columnIndex}) {
                 if (columnIndex === 0) {
@@ -735,13 +735,7 @@
                 //选中单位
                 let unitType = this.selectUnitOfProduction;
                 if (item.seriesName == "实际产量") {
-
-                    if (
-                        item.color == "#FF5844" ||
-                        item.color == "#1379F7" ||
-                        item.color == "#F5BE43"
-                    ) {
-
+                    if ( item.color == "#FF5844" ||item.color == "#1379F7" ||item.color == "#F5BE43") {
                         //这里是点击切换回去普通和归因分析进行
                         if (this.isShowTable == false) {
                             //归因分析事件
@@ -752,19 +746,9 @@
                             this.isShowTable = true;
                         } else {
                             //产量跟踪分析
-                            this.getOutputTracing(
-                                fieldId,
-                                oilFieldId,
-                                theDate,
-                                unitType
-                            );
+                            this.getOutputTracing(fieldId, oilFieldId,theDate,unitType);
                             //平台产量动态分析
-                            this.getContributeAnalysis(
-                                fieldId,
-                                oilFieldId,
-                                theDate,
-                                unitType, false
-                            );
+                            this.getContributeAnalysis( fieldId, oilFieldId, theDate,unitType, false);
                             //单井产量波动分析
                             this.getWellOutputWave(fieldId, oilFieldId, theDate, unitType, this.setParaValue);
                             //当日关键事件
@@ -776,20 +760,9 @@
                         }
                     } else {
                         //产量跟踪分析
-                        this.getOutputTracing(
-                            fieldId,
-                            oilFieldId,
-                            theDate,
-                            unitType
-                        );
+                        this.getOutputTracing(fieldId,oilFieldId,theDate,unitType);
                         //平台产量动态分析
-                        this.getContributeAnalysis(
-                            fieldId,
-                            oilFieldId,
-                            theDate,
-                            unitType,
-                            false
-                        );
+                        this.getContributeAnalysis(fieldId,oilFieldId,theDate,unitType,false);
                         //单井产量波动分析
                         this.getWellOutputWave(fieldId, oilFieldId, theDate, unitType, this.setParaValue);
                         //当日关键事件
@@ -868,7 +841,7 @@
                 //油田名称
                 let oilFieldName = this.oilFieldName;
                 this.$router.push({
-                    name: "ExceptionalAttributionReporting",
+                    path: "/yield/analysisAbnormal",
                     query: {
                         block: block,
                         oilField: oilField,
@@ -1093,16 +1066,33 @@
                     theDate: theDate,
                     outputUnit: outputUnit,
                 };
-                let _this = this;
                 reasonAnalysis(request).then((res) => {
                     //获取归因数据
                     let data = res.data.data;
                     //数组赋值于变量
-                    _this.reasonAnalysises = data.reasonAnalysises;
-                    _this.getSpanArr(_this.reasonAnalysises);
+                    this.reasonAnalysises = data.reasonAnalysises;
+                    this.getSpanArr(this.reasonAnalysises);
                 });
             },
-
+            //判断表格数据中 技术指标的重复进行合并 获得合并的行信息
+            getSpanArr(data) {
+                this.spanArr = [];
+                for (var i = 0; i < data.length; i++) {
+                    if (i === 0) {
+                        this.spanArr.push(1)
+                        this.pos = 0
+                    } else {
+                        if (data[i].platformName === data[i - 1].platformName) { //platformName可以根据你要合并的列更改
+                            this.spanArr[this.pos] += 1
+                            this.spanArr.push(0)
+                        } else {
+                            this.spanArr.push(1)
+                            this.pos = i
+                        }
+                    }
+                }
+            },
+            
             //获取产量跟踪分析信息
             getOutputTracing(fieldId, oilFieldId, theDate, unitType) {
                 let request = {
@@ -1156,7 +1146,6 @@
                     }
                 });
             },
-
             //获取平台产量贡献分析信息
             getContributeAnalysis(fieldId, oilFieldId, theDate, unitType, platformDetail) {
                 let request = {
@@ -1211,7 +1200,6 @@
                     }
                 });
             },
-
             //获取单井产量波动分析
             getWellOutputWave(fieldId, oilFieldId, theDate, unitType, waveSetting) {
                 let request = {
@@ -1288,7 +1276,6 @@
                 }
                 return seriesData;
             },
-
             //获取当日关键事件
             getDailyMainEvent(fieldId, oilFieldId, theDate, unitType) {
                 let request = {
@@ -1307,6 +1294,7 @@
                     }
                 });
             },
+            
             //显示作业
             showOutputTracking() {
                 this.outputTracking = true;
@@ -1314,17 +1302,7 @@
                 this.outputTrackingForm.selectUnitOfProduction = 't';
                 this.queryOutputTrackingTableData();
             },
-            // 页面数据条数改变时
-            handleSizeChange(val) {
-                this.page = 1;
-                this.pageSize = val;
-                this.queryOutputTrackingTableData();
-            },
-            // 翻页
-            handleCurrentChange(val) {
-                this.page = val;
-                this.queryOutputTrackingTableData();
-            },
+           
             //查询作业公司产量跟踪表格数据
             queryOutputTrackingTableData() {
                 let queryParams = {
@@ -1860,7 +1838,6 @@
                 //当日关键事件（区块，油田，当前日期，单位）
                 this.getDailyMainEvent(fieldId, oilFieldId, currentDate, unitType);
             },
-
             //根据波动值来进行查询，单井波动数据查询
             searchWellOutputWave() {
                 //选中区块值
@@ -1880,7 +1857,6 @@
                     this.setParaValue
                 );
             },
-
             //下载echarts 隐藏 显示
             downPower(flag) {
                 this.echartOption.toolbox.show = flag;
@@ -1930,6 +1906,12 @@
                                     flex:1;
                                     height:0;
                                 }
+                                .z-table{
+                                    ::v-deep .cell{
+                                        height:60px;
+                                        line-height: inherit;
+                                    }
+                                }
                             }
                         }
                     }
@@ -1937,6 +1919,7 @@
             }
         }
     }
+    
     .bt2 {
         float: right;
         margin: 2px 14px;
@@ -1953,8 +1936,6 @@
         line-height: 30px;
         margin-bottom: 5px;
     }
-
-
     .el-card {
         border-width: 1px 0;
         border-radius: 0;

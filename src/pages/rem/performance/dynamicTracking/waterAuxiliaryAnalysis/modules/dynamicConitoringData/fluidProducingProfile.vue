@@ -1,27 +1,29 @@
 <!--吸水剖面-->
 <template>
-    <el-row style="height: 600px;" :gutter="10">
-        <el-col :span="12" style="overflow: auto;">
-            <el-image :src="image">
-                <div slot="error"></div>
-            </el-image>
-        </el-col>
-        <el-col :span="12">
-            <span class="tableTitle"> 吸水剖面测井结果</span>
-            <el-table id="tableData" highlight :data="tableData" style="width: 100%" height="600">
-                <el-table-column type="index" label="序号" align="center"></el-table-column>
-                <el-table-column prop="borepipeName" label="井名称" align="center" width="140"></el-table-column>
-                <el-table-column prop="wellTestProjectInterpId" label="试井项目解释标识" width="140" align="center"></el-table-column>
-                <el-table-column prop="layerName" label="解释层位" width="140" align="center"></el-table-column>
-                <el-table-column prop="topDepth" :label="`顶界深度\n(m)`" width="120" align="center"></el-table-column>
-                <el-table-column prop="bottomDepth" :label="`底界深度\n(m)`" align="center" width="120"></el-table-column>
-                <el-table-column prop="startPress" :label="`启动压力\n(MPa)`" align="center" width="120"></el-table-column>
-                <el-table-column prop="apparentInjectivityIndex" :label="`视吸水指数\n(m³/(MPa·d))`" align="center" width="140"></el-table-column>
-                <el-table-column prop="waterInjectivityIndex" :label="`吸水指数\n(m³/(MPa·d))`" align="center" width="140"></el-table-column>
-                <el-table-column prop="remark" label="备注" align="center" min-width="180"></el-table-column>
-            </el-table>
-        </el-col>
-    </el-row>
+    <div class="z-main">
+        <div class="z-row" style="margin-right:20px;">
+            <info-window infoWidth="100%" infoHeight="100%" headerTitle="吸水剖面测井结果图" isShowMaxBtn>
+                <div class="z-draw">
+                    
+                </div>
+            </info-window>
+        </div>
+        <div class="z-row">
+            <info-window infoWidth="100%" infoHeight="100%" headerTitle="吸水剖面测井结果表" isShowMaxBtn>
+                <el-table id="tableData" highlight :data="tableData" style="width: 100%" height="calc(100% - 10px)">
+                    <el-table-column prop="testWellTime" label="测井日期" align="center" width="120"></el-table-column>
+                    <el-table-column prop="layerName" label="解释层位" min-width="100" align="center"></el-table-column>
+                    <el-table-column prop="" :label="`测水量\n(m³)`" min-width="80" align="center"></el-table-column>
+                    <el-table-column prop="topDepth" :label="`顶界深度\n(m)`" min-width="80" align="center"></el-table-column>
+                    <el-table-column prop="bottomDepth" :label="`底界深度\n(m)`" align="center" min-width="80"></el-table-column>
+                    <el-table-column prop="startPress" :label="`启动压力\n(MPa)`" align="center" min-width="80"></el-table-column>
+                    <el-table-column prop="apparentInjectivityIndex" :label="`视吸水指数\n(m³/(MPa·d))`" align="center" min-width="130"></el-table-column>
+                    <el-table-column prop="waterInjectivityIndex" :label="`吸水指数\n(m³/(MPa·d))`" align="center" min-width="130"></el-table-column>
+                    <el-table-column prop="remark" label="备注" align="center" min-width="180"></el-table-column>
+                </el-table>
+            </info-window>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -83,9 +85,26 @@
 </script>
 
 <style scoped lang="scss">
-    .tableTitle {
-        font-size: 1.5em;
-        text-align: center;
-        display: block;
+    .z-main{
+        display: flex;
+        height:calc(100% - 101px);
+        .z-row{
+            width:0;
+            flex:1;
+            ::v-deep .el-table__header-wrapper .cell{
+                height: auto;
+                line-height: 18px;
+                white-space: pre;
+            }
+            ::v-deep .cell:empty{
+                &::before {
+                    content: '-';
+                } 
+            }
+            .z-draw{
+                height:100%;
+                background-color: #b4c7e7;
+            }
+        }
     }
 </style>

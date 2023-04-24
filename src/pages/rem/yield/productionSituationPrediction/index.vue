@@ -1,22 +1,7 @@
 <!-- 产量形势预测 -->
 <template>
     <div class="app-container">
-        <headerSearch class="g-w100 g-h100" style="height:80px;margin-bottom:20px;">
-            <div style="height:100%;display: flex;align-items: center;">   
-                <span v-if="tabsValue!='作业公司产量跟踪'">滚动预测：</span>
-                <el-select v-model="searchForm.rollingForecastDate" placeholder="请选择" style="width:200px;margin-right:15px;" v-if="tabsValue!='作业公司产量跟踪'">
-                    <el-option v-for="item in rollingForecastDateList" :key="item.source_ID" :label="item.source_NAME" :value="item.source_ID"></el-option>
-                </el-select>
-                <span>日期：</span>
-                <el-date-picker v-model="searchForm.date" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" :picker-options="pickerOptions" style="margin-right:15px;"></el-date-picker>
-                <span>产量单位选择：</span>
-                <el-select v-model="searchForm.unitType" placeholder="请选择" style="width:100px;margin-right:15px;">
-                    <el-option v-for="item in unitTypeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                </el-select>
-                <el-button type="primary" icon="el-icon-search" @click="doSearch">检索</el-button>
-            </div>
-        </headerSearch>
-        <pagePanelNew style="height:calc(100% - 100px)" headerTitle="油井辅助分析" >
+        <pagePanelNew style="height:100%;margin-top:0;" headerTitle="" >
             <div class="pagePane-container">
                 <el-tabs class="g-pageHeader" v-model="tabsValue" topline @tab-click="tabsTab">
                     <el-tab-pane label="作业公司产量跟踪" name="作业公司产量跟踪"></el-tab-pane>
@@ -25,16 +10,16 @@
                     <el-tab-pane label="单井产量预测" name="单井产量预测"></el-tab-pane>
                 </el-tabs>
                 <div v-if="tabsValue=='作业公司产量跟踪'" style="height:calc(100% - 46px);padding-bottom:10px;">
-                    <one :searchForm="searchForm"></one>
+                    <one ref="childComponent" :searchForm="searchForm"></one>
                 </div>
                 <div v-if="tabsValue=='油田预测产量'" style="height:calc(100% - 46px);overflow-y: scroll;padding-right: 20px;">
-                    <two :searchForm="searchForm"></two>
+                    <two ref="childComponent" :searchForm="searchForm"></two>
                 </div>
                 <div v-if="tabsValue=='作业公司产量总览'" style="height:calc(100% - 46px);overflow-y: scroll;">
-                    <three :searchForm="searchForm"></three>
+                    <three ref="childComponent" :searchForm="searchForm"></three>
                 </div>
                 <div v-if="tabsValue=='单井产量预测'">
-                  <four></four>
+                    <four ref="childComponent" ></four>
                 </div>
             </div>
         </pagePanelNew>
@@ -42,7 +27,6 @@
 </template>
 
 <script>
-    import { getForecastDate,getOilFieldInfo,getReportFroms } from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
     import { exportExcel,exportComplexHeaderExcelFromJson } from '@/lib/exportExcel.js';
     import one from "./components/one.vue";
     import two from "./components/two.vue";
@@ -58,66 +42,10 @@
         },
         data() {
             return {
-                oilFieldData: ['QHD32-6', 'QHD33-1', 'NB35-2', 'QHD33-1S', 'CFD6-4', 'BZ3-2'],
-                //滚动预测数据源
-                rollingForecastDateList:[],
-                //产量单位数据源
-                unitTypeList: [
-                  {
-                    label: "m³",
-                    value: "m",
-                  },
-                  {
-                    label: "t",
-                    value: "t",
-                  },
-                ],
-                pickerOptions: {
-                  disabledDate(time) {
-                    // 油田预测产量
-                    var date = new Date();
-                    var year = date.getFullYear();
-                    var end_date = new Date(year, 12, 0);
-                    var begin_date = new Date(year, date.getMonth(), date.getDate());
-                    if (time >= begin_date && time <= end_date) {
-                      return false;
-                    } else {
-                      return true;
-                    }
-                  },
-                },
-                searchForm:{
-                    rollingForecastDate:'',//滚动预测
-                    date:new Date().addDays(-1).format('yyyy-MM-dd'),//日期
-                    unitType:'m',//单位
-                },
                 tabsValue: '作业公司产量跟踪',
             };
         },
-        mounted(){
-            this.getForecastDate();
-        },
         methods: {
-            //获取滚动预测下拉框数据源
-            getForecastDate() {
-                getForecastDate().then((res) => {
-                    if (res.data.code==200) {
-                        this.rollingForecastDateList = res.data.data;
-                        this.searchForm.rollingForecastDate = this.rollingForecastDateList[0].source_ID;
-                    }
-                });
-            },
-            //搜索
-            doSearch() {
-               
-            },
-            tabsTab(){
-                if(this.tabsValue=='油田预测产量'){
-                    this.searchForm.date=new Date().getFullYear() + '-12-31';
-                }else{
-                    this.searchForm.date=new Date().addDays(-1).format('yyyy-MM-dd');
-                }
-            },
             //下载
             doDownLoad(index) {
                 if (index === 2) {
@@ -734,5 +662,4 @@
             height:100%;
         }
     }
-    
 </style>

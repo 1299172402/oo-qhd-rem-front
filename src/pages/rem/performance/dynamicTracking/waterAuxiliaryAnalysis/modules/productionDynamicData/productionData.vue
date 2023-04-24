@@ -1,7 +1,7 @@
 <!-- 生产数据 -->
 <template>
     <div class="z-container">
-        <div class="searchBox">
+        <div class="z-search">
             <span>日期：</span>
             <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" style="margin-right:15px;"></el-date-picker>
             <el-select v-model="selectPosition" placeholder="请选择" filterable clearable style="width: 220px;margin-right:15px;">
@@ -9,9 +9,27 @@
             </el-select>
             <el-button type="primary" icon="el-icon-search" @click="doSearch">检索</el-button>
         </div>
-        <div class="echartBox">
+        <div class="z-echarts" :class="[isDevelop?'z-echarts-active':'']">
             <Echarts ref="echartDown" :chart-data="option" style="height:100%;"></Echarts>
         </div>
+        <div class="develop">
+            <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
+        </div>
+        <info-window infoWidth="100%" infoHeight="190px" headerTitle="单井动态分析" v-show="isDevelop">
+            <el-table
+                id="tableData" 
+                :data="tableData" :border="false" :row-style="{ height: '0px' }"
+                header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
+                style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }"
+                :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+                <el-table-column prop="injDuration" label="注入时间"></el-table-column>
+                <el-table-column prop="injDaily" :label="`日注水量\n (m³)`"></el-table-column>
+                <el-table-column prop="csgPress" :label="`套压\n (Mpa)`"></el-table-column>
+                <el-table-column prop="whInjPress" :label="`井口压力\n (Mpa)`"></el-table-column>
+                <el-table-column prop="injDailySum" :label="`水聚总量\n (m³)`"></el-table-column>
+                <el-table-column prop="injMonthly" :label="`日配注量\n (m³)`"></el-table-column>
+            </el-table>
+        </info-window>
     </div>
 </template>
 
@@ -34,11 +52,9 @@
         },
         data() {
             return {
+                selectData: [],
                 position:[],
                 selectPosition:'',
-                
-                echartsHeight: '600px',
-                selectData: [],
                 option: {
                     title: {},
                     tooltip: {
@@ -321,7 +337,9 @@
                         }
                     ],
                     series: []
-                }
+                },
+                isDevelop:false,
+                tableData:[],
             };
         },
         mounted() {
@@ -352,6 +370,7 @@
                     layerId:this.selectPosition
                 };
                 produceData(request).then((res) => {
+                    this.tableData=res.data.data.proDatas;                    
                     let seriesData = [];
                     let legendData = [];
                     //获取x轴数据信息
@@ -474,6 +493,13 @@
                 this.option.series[3].data = yData;
                 this.option.series[3].name = '日注入量';
             },
+            //展示|收缩
+            tapDevelop(){
+                this.isDevelop=!this.isDevelop;
+                this.$nextTick(()=>{
+                    this.$refs.echartDown.chart.resize();
+                })
+            },
             //下载echarts
             doDownLoad() {
                 let res = this.$refs['echartDown'].chart.getDataURL({
@@ -494,13 +520,30 @@
 <style lang="scss" scoped>
     .z-container{
         height:calc(100% - 101px);
-        .searchBox{
+        .z-search{
+            height:60px;
             display: flex;
             align-items: center;
             margin-bottom:15px;
         }
-        .echartBox{
-            height:calc(100% - 58px);
+        .z-echarts{
+            width:100%;
+            height:calc(100% - 60px - 40px);
         }
+        .z-echarts-active{
+            height:calc(100% - 60px - 40px - 190px);
+        }
+        #tableData{
+            ::v-deep .el-table__header-wrapper .cell{
+                height: auto;
+                line-height: 18px;
+                white-space: pre;
+            }
+            ::v-deep .cell:empty{
+                &::before {
+                    content: '-';
+                } 
+            }
+        } 
     }
 </style>
