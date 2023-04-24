@@ -11,42 +11,11 @@
         >
           信息维护
         </el-button>
-<<<<<<< HEAD
-      </div>
-    </el-dialog>
-    <div
-      style="height: 63.19px; position: relative; display: flex; justify-content: space-between"
-      class="g-row-flex-V"
-    >
-      <i class="el-icon-search searchStyle" @click="clickItem(input, '搜索')" />
-      <el-input
-        v-model="input"
-        prefix-icon="aa"
-        style="width: 400px"
-        placeholder="请输入搜索项目"
-      />
-      <el-button
-        type="primary"
-        plain
-        size="mini"
-        @click="handleToPage()"
-      >
-        设备维护
-      </el-button>
-    </div>
-    <div
-      style="height: 728.8px; position: relative"
-      :style="{ marginTop: isFullScreen ? '25px' : '5px' }"
-      class="g-row-flex"
-    >
-      <div style="height: calc(100% - 0px)" class="g-column-flex leftBgStyle">
-=======
         <div class="g-row-flex" style="margin-top: 40px">
           <div class="topPage1" style="position: relative" />
           <div class="topPage2" style="position: relative" />
           <div class="topPage3" style="position: relative" />
         </div>
->>>>>>> kjSystem
         <div
           class="legend g-column-flex-HV"
           :style="{ background: $store.state.setting.mode === 'dark' ? 'rgba(0,96,166,0.3)' : '#e9f3fa' }"
@@ -423,102 +392,12 @@ export default {
       listByLike().then(res => {
         this.rightLegend = res.data.data;
       });
-<<<<<<< HEAD
-    },
-    differFBL() {
-      if (document.body.clientHeight === 1080) {
-        // this.verticalLine = '12,10 12,10 11,58';
-        // this.topLine = '0,20 120,20 120,35 290 35,290,58';
-        // this.bottomLine = '0,40 120,40 120,25 290 25,290,0';
-        // this.wwLink = '265px';
-        // this.wwlinkTop = '-210px';
-        // this.wwLinkLine = '0,235 200,235 200,0';
-        // this.wtLine = '5,0 5,245 105,245';
-        // this.fyLinkHeight = '80px';
-        // this.fyLinkTop = '170px';
-        // this.fyPoint = '65,80 65,0 64,0'
-        this.isFullScreen = true;
-      } else {
-        // this.verticalLine = '12,10 12,10 11,37';
-        // this.topLine = '0,20 120,20 120,35 290 35,290,50';
-        // this.bottomLine = '0,40 120,40 120,25 290 25,290,4';
-        // this.wwLink = '218px';
-        // this.wwlinkTop = '-167px';
-        // this.wwLinkLine = '0,190 200,190 200,0';
-        // this.wtLine = '5,0 5,193 105,193';
-        // this.fyLinkHeight = '37px';
-        // this.fyLinkTop = '150px';
-        // this.fyPoint = '65,37 65,0 64,0'
-        this.isFullScreen = false;
-      }
-    },
-    // 关闭
-    submitForm() {
-      this.openDialog = false;
-      this.statusModel = "";
-      this.activeName = "电气类";
-      this.searchList = [];
-      this.nameInput = "";
-      this.indicatorSource = "I平台";
-    },
-    clesrSearchList() {
-      this.statusModel = "";
-      this.activeName = "电气类";
-      this.searchList = [];
-      this.nameInput = "";
-      this.indicatorSource = "I平台";
-    },
-    clickItem(val, type, titletype) {
-      this.dialogType = type;
-      if (this.dialogType === "搜索") {
-        this.title = "搜索结果";
-        const queryParams = {
-          equipmentName: this.input
-        };
-        this.searchequipment(queryParams);
-      } else if (this.dialogType === "平台") {
-        this.title = val.target.innerHTML;
-        const queryParams = {
-          terrace: this.title,
-          type: this.activeName,
-          equipmentName: this.nameInput,
-          status: this.statusModel
-        };
-        this.searchequipment(queryParams);
-      } else if (this.dialogType === "工作项") {
-        this.title = `${titletype}-${val.name}`;
-        const queryParams = {
-          terrace: titletype, // 平台名
-          type: val.name,
-          equipmentName: this.nameInput,
-          status: this.statusModel
-        };
-        this.searchequipment(queryParams);
-      } else {
-        // Flink集群
-        this.title = "Flink集群";
-        const queryParams = {
-          type: this.activeName,
-          equipmentName: this.input,
-          status: this.statusModel,
-          clusterStatus: 1
-        };
-        this.searchequipment(queryParams);
-      }
-      this.openDialog = true;
-    },
-    // 搜索封装
-    searchequipment(queryParams) {
-      searchequipment(queryParams).then(res => {
-        this.searchList = res.data.data;
-=======
       terraceState().then(res => {
         this.initList = res.data.data;
         Object.keys(this.initList).forEach(key => {
           this.parentSignList.push(key.split("-"));
           this.keys.push(key);
         });
->>>>>>> kjSystem
       });
     }
   }
