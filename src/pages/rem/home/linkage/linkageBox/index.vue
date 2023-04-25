@@ -1,7 +1,7 @@
 <template>
     <div class="box" @mouseenter="show = true" @mouseleave="show = false">
         <el-collapse-transition>
-            <div v-show="show||remHome">
+            <div v-show="show||remHome || showFlag">
                 <div class="transition-box">
                     <div class="transition-box-content" :style="{'background-image':`url(${currentList.imgUrl})` }">
                     </div>
@@ -13,19 +13,19 @@
             <span class="btnGo"></span>
         </p>
         <el-collapse-transition>
-            <div v-show="show" :style="currentList.boxStyle.bottomMargin">
+            <div v-show="show || showFlag" :style="currentList.boxStyle.bottomMargin">
                 <div class="transition-box-bottom">
                     <div class="pad">
                         <div>
                             <p v-show="!content" :key="index" v-for="(item,index) in currentList.boxBottomText">
-                                <span>{{item}}</span>
+                                <span @click="linkTo(item.url)">{{item.name?item.name:item}}</span>
                                 <span v-if="currentList.boxBottomContent" class="btnContent" @click="btnContent(index)">{{currentList.boxBottomContent[index].length>0?'>>':''}}</span>
                                 <span v-else class="btnBack" @click="btnBack"></span>
                             </p>
                         </div>
                         <div>
                             <p v-show="content" :key="index" v-for="(item,index) in selectObj[selectIndex]">
-                                <span>{{item}}</span>
+                                <span @click="linkTo(item.url)">{{item.name?item.name:item}}</span>
                                 <span class="btnBack" @click="btnBack"></span>
                             </p>
                         </div>
@@ -45,17 +45,21 @@ export default {
            type:Object,
            default:()=>{}
        },
-       remHome:false 
+       remHome:false,
+        showFlag: {
+            type : Boolean,
+            default : false
+        }
     },
     created() {
         console.log(this.currentList.imgUrl);
     },
     data() {
         return {
-            show: false,
+            show:false,
             content:false,
             selectIndex:0,
-            selectObj:this.currentList.boxBottomContent?this.currentList.boxBottomContent:[1]
+            selectObj:this.currentList.boxBottomContent?this.currentList.boxBottomContent:[]
         }
     },
     methods:{
@@ -69,6 +73,10 @@ export default {
         btnContent:function(index){
             this.selectIndex = index
             this.content = !this.content
+        },
+        linkTo:function(url){
+            if(!url) return
+            window.open(url,'_blank');
         }
     }
 }

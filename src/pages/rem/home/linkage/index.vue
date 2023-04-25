@@ -1,12 +1,13 @@
 <template>
     <div class="container" style="position: relative">
         <div class="topBanner">注采联动</div>
-        <linkageBox :style="item.style" :currentList="item" :key="index" v-for="(item,index) in currentLists"></linkageBox>
+        <linkageBox :style="item.style" :showFlag="item.showFlag" :currentList="item" :key="index" v-for="(item,index) in currentLists"></linkageBox>
         <div class="studySelf">
             <div class="studySelfInside"></div>
             <span>模型自学习</span>
         </div>
-        <img class="downArrow" style="display: block" src="@/assets/linkage/arrow-left.png" alt="">
+        <img class="downArrow" style="display: block;z-index:-1" src="@/assets/linkage/arrow-left.png" alt="">
+        <img class="downArrow" style="z-index:-1" src="@/assets/linkage/arrow-left.png" alt="">
         <img class="rightArrow" src="@/assets/linkage/arrow-left.png" alt="">
         <img class="upArrow" src="@/assets/linkage/arrow-left.png" alt="">
         <img class="leftUpArrow" src="@/assets/linkage/arrow-left.png" alt="">
@@ -29,25 +30,28 @@ export default {
     methods: {
         arrowFun(){
             setInterval(()=>{
-                this.loopNum ++
-                for(let i=0;i<6;i++){
+                if(this.loopNum!= -1 && this.loopNum < 5) this.currentLists[this.loopImgNum[this.loopNum ]].showFlag = true
+                if(this.loopNum!= -1 && this.loopNum < 5) this.currentLists[this.loopImgNumClose[this.loopNum ]].showFlag = false
+                this.loopNum ++                
+                for(let i=0;i<7;i++){
                     this.$el.querySelectorAll('img')[i].style.display = 'none'
                 }
                 this.$el.querySelectorAll('img')[this.loopNum].style.display = 'block'
-                if(this.loopNum == 5){
+                if(this.loopNum == 6){
                    this.loopNum = -1
                 }
-            },1000)
+            },2000)
         }
     },
     created() {
-        console.log(env);
     },
     data(){
         return {
             baseUrl : env == "development"?'/src':'',
             loopNum: 0,
-            show: true,
+            loopImgNum: [6,4,1,10,7],
+            loopImgNumClose: [7,6,4,1,10],
+            showFlag: true,
             currentLists: [
                 {
                     style: 'position:absolute;left: 80%;top: 21%;width:20%;height:40%;',
@@ -56,7 +60,8 @@ export default {
                     boxStyle: {
                         pWidth: 'width:11vw',
                     },
-                    imgUrl: new URL('./topBox/23.png', import.meta.url).href
+                    imgUrl: new URL('./topBox/23.png', import.meta.url).href,
+                    showFlag:false
                 },
                 {
                     style: 'position:absolute;left: 69%;top: 26%;width:20%;height:40%;',
@@ -66,7 +71,8 @@ export default {
                     boxStyle: {
                         pWidth: 'width:11vw',
                     },
-                    imgUrl: new URL('./topBox/22.png', import.meta.url).href
+                    imgUrl: new URL('./topBox/22.png', import.meta.url).href,
+                    showFlag:false
                 },
 
                 {
@@ -77,7 +83,8 @@ export default {
                     boxStyle: {
                         pWidth: 'width:11vw'
                     },
-                    imgUrl: new URL('./topBox/24.png', import.meta.url).href
+                    imgUrl: new URL('./topBox/24.png', import.meta.url).href,
+                    showFlag:false
                 },
                 {
                     style: 'position:absolute;left: 43%;top: 56%;width:20%;height:40%;',
@@ -87,7 +94,8 @@ export default {
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
-                    imgUrl: new URL('./topBox/13.png', import.meta.url).href//暂无图片
+                    imgUrl: new URL('./topBox/13.png', import.meta.url).href,//暂无图片
+                    showFlag:false
                 },
                 {
                     style: 'position:absolute;left: 30%;top: 60%;width:20%;height:40%;',
@@ -96,7 +104,8 @@ export default {
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
-                    imgUrl: new URL('./topBox/11.png', import.meta.url).href
+                    imgUrl: new URL('./topBox/11.png', import.meta.url).href,
+                    showFlag:false
                 },
                 {
                     style: 'position:absolute;left: 17%;top: 56%;width:20%;height:40%;',
@@ -105,26 +114,38 @@ export default {
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
-                    imgUrl: new URL('./topBox/25.png', import.meta.url).href
+                    imgUrl: new URL('./topBox/25.png', import.meta.url).href,
+                    showFlag:false
                 },
                 {
                     style: 'position:absolute;left: 2%;top: 60%;width:20%;height:40%;',
                     boxText: '产量运行监控',
-                    boxBottomText: ['年度产量运行预警'],
-                    boxBottomContent: [['年度产量趋势预测']],
+                    boxBottomText: [
+                        {name:'年度产量运行预警',url:''}
+                    ],
+                    boxBottomContent: [
+                        [{name:'年度产量趋势预测',url:'http://10.77.78.250:9107/#/yield/fluctuationWarningAnalysis'}]
+                    ],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
-                    imgUrl: new URL('./topBox/21.png', import.meta.url).href
+                    imgUrl: new URL('./topBox/21.png', import.meta.url).href,
+                    showFlag:false
                 },
                 {
                     style: 'position:absolute;left: 20%;top: 0%;width:20%;height:40%;',
                     boxText: '注水设备能力',
-                    boxBottomText: ['动设备健康管理模型'],
+                    boxBottomText: [
+                        {
+                            name: '动设备健康管理模型',
+                            url: 'http://10.77.78.250:9104/#/equipment/mechanical'
+                        }
+                    ],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
-                    imgUrl: new URL('./topBox/12.png', import.meta.url).href
+                    imgUrl: new URL('./topBox/12.png', import.meta.url).href,
+                    showFlag:false
                 },
                 {
                     style: 'position:absolute;left: 58%;top: 36%;width:20%;height:40%;',
@@ -134,27 +155,42 @@ export default {
                     boxStyle: {
                         pWidth: 'width:11vw'
                     },
-                    imgUrl: new URL('./topBox/26.png', import.meta.url).href
+                    imgUrl: new URL('./topBox/26.png', import.meta.url).href,
+                    showFlag:false
                 },
                 {
                     style: 'position:absolute;left: 55%;top: 2%;width:20%;height:40%;',
                     boxText: '海管能力',
-                    boxBottomText: ['混输海管设计输量', '注水海管设计输量'],
-                    boxBottomContent: [['管输动态模型'], ['管输动态模型']],
+                    boxBottomText: [
+                        {name:'混输海管设计输量',url:''},
+                        {name:'注水海管设计输量',url:''}
+                    ],
+                    boxBottomContent: [
+                        [{ name:'管输动态模型', url:'http://10.77.78.250:9105/#/home/pipe' }],
+                        [{ name:'管输动态模型', url:'http://10.77.78.250:9105/#/home/pipe' }]
+                    ],
                     boxStyle: {
                         pWidth: 'width:7vw'
                     },
-                    imgUrl: new URL('./topBox/10.png', import.meta.url).href
+                    imgUrl: new URL('./topBox/10.png', import.meta.url).href,
+                    showFlag:false
                 },
                 {
                     style: 'position:absolute;left: 72%;top: 0%;width:20%;height:40%;',
                     boxText: '处理能力',
-                    boxBottomText: ['混输液处理能力', '生产水处理能力'],
-                    boxBottomContent: [['地面平衡调配-流程监控模型'], ['地面平衡调配-流程监控模型']],
+                    boxBottomText: [
+                        {name:'混输液处理能力',url:''},
+                        {name:'生产水处理能力',url:''}
+                    ],
+                    boxBottomContent: [
+                        [{name:'地面平衡调配-流程监控模型',url:'http://10.77.78.250:9105/#/home/plat'}],
+                        [{name:'地面平衡调配-流程监控模型',url:'http://10.77.78.250:9105/#/home/plat'}]
+                    ],
                     boxStyle: {
                         pWidth: 'width:7vw',
                     },
-                    imgUrl: new URL('./topBox/28.png', import.meta.url).href
+                    imgUrl: new URL('./topBox/28.png', import.meta.url).href,
+                    showFlag:false
                 },
             ]
         }
@@ -213,7 +249,7 @@ export default {
     }
     .leftDownArrow{
         transform: rotate(315deg);
-        animation:leftDownArrow 1s linear infinite;
+        animation:leftDownArrow 2s linear infinite;
         position:absolute;
         left: 18%;top: 38%
     }
@@ -229,7 +265,7 @@ export default {
     }
     .downArrow{
         transform: rotate(270deg);
-        animation:downArrow 1s linear infinite;
+        animation:downArrow 2s linear infinite;
         position:absolute;
         left: 7%;top: 70%
     }
@@ -244,7 +280,7 @@ export default {
     }
     .rightArrow{
         transform: rotate(180deg);
-        animation:rightArrow 1s linear infinite;
+        animation:rightArrow 2s linear infinite;
         position:absolute;
         left: 45%;bottom: 2%;
     }
@@ -259,7 +295,7 @@ export default {
     }
     .upArrow{
         transform: rotate(90deg);
-        animation:upArrow 1s linear infinite;
+        animation:upArrow 2s linear infinite;
         position:absolute;
         left: 85%;bottom: 20%;
     }
@@ -274,7 +310,7 @@ export default {
     }
     .leftUpArrow{
         transform: rotate(45deg);
-        animation:leftUpArrow 1s linear infinite;
+        animation:leftUpArrow 2s linear infinite;
         position:absolute;
         left: 85%;top: 30%;
     }
@@ -288,7 +324,7 @@ export default {
         }
     }
     .leftArrow{
-        animation:leftArrow 1s linear infinite;
+        animation:leftArrow 2s linear infinite;
         position:absolute;
         left: 40%;top: 30%;
     }
