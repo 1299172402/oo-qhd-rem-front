@@ -1,6 +1,6 @@
 <template>
   <div class="app-container" style="height: 100%">
-    <headerSearch class="g-w100 g-h100" style="width: 100%;">
+    <headerSearch class="g-w100 g-h100" style="width: 100%">
       <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 18px">
         <el-form-item label="日期：">
           <el-date-picker v-model="queryParams.endTime" value-format="yyyy-MM-dd" type="date" placeholder="年/月/日">
@@ -39,10 +39,10 @@
       </el-form>
     </headerSearch>
     <div style="height: calc(100% - 92px)">
-        <el-tabs v-model="activeName" class="g-pageHeader"  @tab-click="selectBtn(activeName)">
-            <el-tab-pane :label="item.name" :name="item.value" v-for="(item,index) in dataList"/>
-        </el-tabs>
-        <components ref="modal" style="margin-top: -15px; height: 100%" :infodata="1" :is="currentTab" />
+      <el-tabs v-model="activeName" class="g-pageHeader" @tab-click="selectBtn(activeName)">
+        <el-tab-pane :label="item.name" :name="item.value" v-for="(item, index) in dataList" :key="index" />
+      </el-tabs>
+      <components ref="modal" style="margin-top: -15px; height: 100%" :infodata="1" :is="currentTab" />
     </div>
   </div>
 </template>
@@ -77,10 +77,13 @@ export default {
       ],
       currentTab: "personnelplan",
       infodata: this.queryParams,
-      queryParams: { endTime: "", selectPlatform: "", selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F" },
+      queryParams: { endTime: "", 
+      selectPlatform: '',
+      selectOilField:"3FC9A818F5BC43B88270DB80BBB3018F"},
       oilFields: [],
       platforms: [],
-      activeName:'personnelplan'
+      platform:[],
+      activeName: "personnelplan",
     };
   },
   mounted() {
@@ -114,18 +117,16 @@ export default {
             oilFieldId: this.queryParams.selectOilField,
           };
           fetchPlatforms(paraPlatForm).then((res) => {
-            //判断联通状态
             if (res.data.code == 200) {
               this.platform = res.data.data.platform;
-              if (this.platform.length == 0) {
-                this.selectPlatform = "";
-              } else {
-                this.selectPlatform = this.platform[0].platFormId;
-                this.queryParams.selectPlatform = "3FC9A818F5BC43B88270DB80BBB3018F";
-
+              this.platform.map((n)=>{
+                if(n.platName =='全部'){
+                  n.platFormId = ''
+                }
+              })
+                this.queryParams.selectPlatform = '';
                 this.$refs.modal.show(this.queryParams);
               }
-            }
           });
         } else {
           this.$message.error("系统错误请重新尝试或联系运维人员！");
