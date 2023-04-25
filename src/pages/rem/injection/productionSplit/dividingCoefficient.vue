@@ -633,7 +633,7 @@
 
             // 下载
             downloadTable() {
-                let wellName = undefined
+                let wellName = ''
                 if (Array.isArray(this.params.wellId)) {
                     for (const item of this.params.wellId) {
                         if (item.wellId == this.wellId) {
@@ -653,7 +653,7 @@
                         startTime: this.params.value[0],
                         type: 0,
                     }).then((res) => {
-                        const aBlob = new Blob([res.data]);
+                        const aBlob = new Blob([res]);
                         FileSaver.saveAs(aBlob, `${wellName}单井劈分系数结果.xls`);
                     })
                 } else if (this.params.wellCategory === '02') {
@@ -665,7 +665,7 @@
                         ogfId: this.params.ogfId.value,
                         wellId: this.wellId,
                     }).then((res) => {
-                        const aBlob = new Blob([res.data]);
+                        const aBlob = new Blob([res]);
                         FileSaver.saveAs(aBlob, `${wellName}单井劈分系数结果.xls`);
                     })
                 }

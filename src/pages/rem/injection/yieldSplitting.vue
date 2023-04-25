@@ -439,8 +439,7 @@ export default {
         wellIdList: this.queryData.wellId.join(','),
         wellType: this.queryData.wellCategory,
       }).then((res) => {
-          console.log(res)
-        const aBlob = new Blob([res.data]);
+        const aBlob = new Blob([res]);
         FileSaver.saveAs(aBlob, `产量劈分.xls`);
       });
     },
