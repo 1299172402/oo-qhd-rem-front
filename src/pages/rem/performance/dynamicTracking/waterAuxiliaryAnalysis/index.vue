@@ -303,7 +303,7 @@
                     this.ctModule = this.currentModule;
                     return () => import(`../waterReport/index.vue`);
                 } else if (this.currentModule == "injectivityIndex") {
-                    window.open("http://10.77.78.250:9108/#/plucking/mechanical/overviewIndicators", "_blank");
+                    window.open("https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/waterRunningControl", "_blank");
                     return () => import(`./modules/${this.aName}/${this.ctModule}.vue`);
                 } else {
                     this.aName = this.activeName;
