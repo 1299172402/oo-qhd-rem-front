@@ -141,7 +141,7 @@
                                 name: "injectivityIndex",
                             },
                               {
-              label: "示踪迹",
+              label: "示踪剂",
               name: "tracer",
             },
                         ],
