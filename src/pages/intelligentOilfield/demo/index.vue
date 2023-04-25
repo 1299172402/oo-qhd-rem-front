@@ -266,7 +266,6 @@
     </div>
     <year-range
       v-model="yearRange"
-      @year-changed="handleYearChanged"
     />
     <div class="spaceMargin">
       4.2、日期选择器
@@ -1686,9 +1685,6 @@ export default {
     });
   },
   methods: {
-    handleYearChanged(val) {
-      this.yearRange = val;
-    },
     zoomOutCom() {},
     zoomOutComNew() {},
     // 筛选节点
