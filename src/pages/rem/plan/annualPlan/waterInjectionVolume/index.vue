@@ -23,10 +23,10 @@
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
                 <el-table-column prop="theDate" align="center" label="时间"> </el-table-column>
-                <el-table-column prop="injectionDailyReal" align="center" :label="`实际日注入量\n(m³/d)`"></el-table-column>
-                <el-table-column prop="injectionDailyPlan" align="center" :label="`计划日注入量\n(m³/d)`"></el-table-column>
-                <el-table-column property="injectionSumReal" align="center" :label="`实际年累注\n(10⁴m³)`" :formatter="numberToTwo"></el-table-column>
-                <el-table-column prop="injectionSumPlan" align="center" :label="`计划年累注\n(10⁴m³)`"></el-table-column>
+                <el-table-column prop="injectionDailyReal" align="center" :label="`实际日注入量\n(m³/d)`" :formatter="numberToTwo"></el-table-column>
+                <el-table-column prop="injectionDailyPlan" align="center" :label="`计划日注入量\n(m³/d)`" :formatter="numberToTwo"></el-table-column>
+                <el-table-column property="injectionSumReal" align="center" :label="`实际年累注\n(10⁴m³)`" :formatter="numberToFour"></el-table-column>
+                <el-table-column prop="injectionSumPlan" align="center" :label="`计划年累注\n(10⁴m³)`" :formatter="numberToFour"></el-table-column>
             </el-table>
             <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination"/>
         </info-window>
@@ -298,10 +298,18 @@
                 params: this.searchForm
               });
             },
-            //保留四位小数
+            //保留两位小数
             numberToTwo(row, column, cellValue, index) {
                 if (cellValue) {
-                    return parseFloat(Number(cellValue).toFixed(4));
+                    return Number(cellValue).toFixed(2);
+                } else {
+                    return '-';
+                }
+            },
+            //保留四位小数
+            numberToFour(row, column, cellValue, index) {
+                if (cellValue) {
+                    return Number(cellValue).toFixed(4);
                 } else {
                     return '-';
                 }

@@ -171,17 +171,15 @@
                     this.$message.error('请选择预测年月')
                     return
                 }
-                this.loading = true
                 let params = {
                     rollingForecastDate: this.conditions.yearMonth,
                     ogfId: this.conditions.ogfId,
                     platform_id: this.conditions.platformId
                 }
                 getWellDailyMeasureInfo(params).then(res => {
-                    this.tableData = res.data.data
-                    this.loading = false
-                    // 动态设置表格高度
-                    this.dynamicHeight = window.innerHeight - 350
+                    if(res.data.code==200){
+                        this.tableData = res.data.data?res.data.data:[];
+                    }
                 })
                 // 查询油田数据
                 this.searchWellList()

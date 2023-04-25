@@ -14,30 +14,13 @@
             <div slot-name="titleContent">
                 <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downTable">下载</el-button>
             </div>
-            <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;"
-                height="calc(100% - 75px)" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+            <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;" height="calc(100% - 75px)" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
                 <el-table-column prop="prodDate" align="center" label="时间"> </el-table-column>
-                <el-table-column prop="measureWellNumReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际措施井次\n(次)' : '实际措施井次\n(次)'">
-                    <template slot-scope="scope">
-                        {{filterNumFixed4(scope.row.measureWellNumReal)}}
-                    </template>
-                </el-table-column>
-                <el-table-column prop="measureWellNumPlan" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '计划措施井次\n(次)' : '计划措施井次\n(次)'">
-                    <template slot-scope="scope">
-                        {{filterNumFixed4(scope.row.measureWellNumPlan)}}
-                    </template>
-                </el-table-column>
-                <el-table-column prop="oilprodReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际产量\n(m³/d)' : '实际产量\n(t/d)'">
-                    <template slot-scope="scope">
-                        {{filterNumFixed4(scope.row.oilprodReal)}}
-                    </template>
-                </el-table-column>
-                <el-table-column prop="oilprodPlan" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '计划产量\n(m³/d)' : '计划产量\n(t/d)'">
-                    <template slot-scope="scope">
-                        {{filterNumFixed4(scope.row.oilprodPlan)}}
-                    </template>
-                </el-table-column>
+                <el-table-column prop="measureWellNumReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际措施井次\n(次)' : '实际措施井次\n(次)'"></el-table-column>
+                <el-table-column prop="measureWellNumPlan" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '计划措施井次\n(次)' : '计划措施井次\n(次)'"></el-table-column>
+                <el-table-column prop="oilprodReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际产量\n(m³/d)' : '实际产量\n(t/d)'" :formatter="numberToTwo"></el-table-column>
+                <el-table-column prop="oilprodPlan" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '计划产量\n(m³/d)' : '计划产量\n(t/d)'" :formatter="numberToTwo"></el-table-column>
                 <!-- <el-table-column prop="oilprodRollForecast" align="center" label="滚动预测"></el-table-column> -->
             </el-table>
             <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination" />
@@ -305,18 +288,20 @@
                     }
                 });
             },
-            //数字保留4为小数
-            filterNumFixed4(num){
-                if(num){
-                    let x = String(num).indexOf('.') + 1;
-                    let y = String(num).length - x;  
-                    if(y>4){
-                        return num.toFixed(4);
-                    }else{
-                        return num
-                    }
-                }else{
-                    return '-'
+            //保留两位小数
+            numberToTwo(row, column, cellValue, index) {
+                if (cellValue) {
+                    return Number(cellValue).toFixed(2);
+                } else {
+                    return '-';
+                }
+            },
+            //保留四位小数
+            numberToFour(row, column, cellValue, index) {
+                if (cellValue) {
+                    return Number(cellValue).toFixed(4);
+                } else {
+                    return '-';
                 }
             },
             //表格自定义索引

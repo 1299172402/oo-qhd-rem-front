@@ -5,50 +5,45 @@
             <div style="display: flex;align-items: center;flex-wrap:wrap;">
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>油田：</span>
-                    <el-select v-model="selectOilField" disabled @change="onFieldChange" style="width:165px;">
+                    <el-select v-model="searchForm.ogfId" disabled @change="onFieldChange" style="width:165px;">
                         <el-option v-for="(item, index) in oilFields" :key="index" :label="item.name" :value="item.oilFieldId"></el-option>
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>平台：</span>
-                    <el-select v-model="selectPlatform" @change="onPlatfromChange" style="width: 220px;">
+                    <el-select v-model="searchForm.platId" @change="onPlatfromChange" style="width: 220px;">
                         <el-option v-for="(item, index) in platforms" :key="index" :label="item.platName" :value="item.platFormId"></el-option>
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>井号：</span>
-                    <el-select v-model="wellId" filterable @change="getMeasureNameAndCode" style="width:170px;">
+                    <el-select v-model="searchForm.wellId" filterable style="width:170px;">
                         <el-option v-for="(item, index) in wells" :key="index" :label="item.wellName" :value="item.wellId"></el-option>
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>对比基准日期：</span>
-                    <el-date-picker v-model="dateTime" :clearable="false" style="width:160px;" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="searchForm.prodDate" :clearable="false" style="width:160px;" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>对比日期：</span>
-                    <el-date-picker v-model="dateTime2" :clearable="false" style="width:160px;" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="searchForm.prodDateCompare" :clearable="false" style="width:160px;" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>影响因素：</span>
-                    <el-select v-model="measureId" style="width:170px;">
-                        <el-option label="全部" value="全部"></el-option>
-                        <el-option label="含水上升" value="含水上升"></el-option>
-                        <el-option label="产液下降" value="产液下降"></el-option>
-                        <el-option label="转注" value="转注"></el-option>
-                        <el-option label="降频控制" value="降频控制"></el-option>
-                        <el-option label="机组故障" value="机组故障"></el-option>
+                    <el-select v-model="searchForm.influenceFactor" style="width:170px;">
+                        <el-option label="全部" value=""></el-option>
+                        <el-option :label="item" :value="item" v-for="(item,index) in measures" :key="index"></el-option>
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
-                    <el-button type="primary" icon="el-icon-search" @click="getFetchMeasureInfos">检索</el-button>
+                    <el-button type="primary" icon="el-icon-search" @click="getWellOutputWaveTable">检索</el-button>
                 </div>
             </div>
         </headerSearch>
         <div class="z-container">
             <pagePanelNew style="height:100%;margin-top:0;">
-                <div class="pageHeader"
-                    style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
+                <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
                     <span>秦皇岛32-6油田单井产量变化</span>
                 </div>
                 <div class="tableBox" id="tableBox" style="height:calc(100% - 75px)">
@@ -63,27 +58,47 @@
                       height="100%" 
                       :default-sort="{ prop: 'date', order: 'descending' }" 
                       :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-                      <el-table-column prop="" label="井号" width="150"/>
-                      <el-table-column label="2022-05-31">
-                        <el-table-column prop="name" :label="`日产液\n(m³/d)`" width="110" />
-                        <el-table-column prop="province" :label="`日产油\n(m³/d)`" width="110" />
-                        <el-table-column prop="city" :label="`含水\n(%)`" width="110" />
-                        <el-table-column prop="address" :label="`井底流压\n(Mpa)`" width="120" />
-                        <el-table-column prop="zip" :label="`泵频率\n(Hz)`" width="110" />
+                      <el-table-column prop="wellNo" label="井号" width="150"/>
+                      <el-table-column :label="searchForm.prodDate">
+                        <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³/d)`" width="110" />      
+                        <el-table-column prop="oilProdDaily" :label="`日产油\n(m³/d)`" width="110" />
+                        <el-table-column prop="waterRatio" :label="`含水\n(%)`" width="110" />
+                        <el-table-column prop="dhFlowingPress" :label="`井底流压\n(Mpa)`" width="120" />
+                        <el-table-column prop="pumpFrequency" :label="`泵频率\n(Hz)`" width="110" />
                       </el-table-column>
-                      <el-table-column label="2022-08-31">
-                        <el-table-column prop="name" :label="`日产液\n(m³/d)`" width="110" />
-                        <el-table-column prop="province" :label="`日产油\n(m³/d)`" width="110" />
-                        <el-table-column prop="city" :label="`含水\n(%)`" width="110" />
-                        <el-table-column prop="address" :label="`井底流压\n(Mpa)`" width="120" />
-                        <el-table-column prop="zip" :label="`泵频率\n(Hz)`" width="110" />
+                      <el-table-column :label="searchForm.prodDateCompare">
+                        <el-table-column prop="fluidProdDailyCompare" :label="`日产液\n(m³/d)`" width="110" />
+                        <el-table-column prop="oilProdDailyCompare" :label="`日产油\n(m³/d)`" width="110" />
+                        <el-table-column prop="waterRatioCompare" :label="`含水\n(%)`" width="110" />
+                        <el-table-column prop="dhFlowingPressCompare" :label="`井底流压\n(Mpa)`" width="120" />
+                        <el-table-column prop="pumpFrequencyCompare" :label="`泵频率\n(Hz)`" width="110" />
                       </el-table-column>
                       <el-table-column label="变化量">
-                        <el-table-column prop="name" :label="`产液对比\n(m³/d)`" width="160" />
-                        <el-table-column prop="province" :label="`产油对比\n(m³/d)`" width="160" />
-                        <el-table-column prop="city" :label="`含水对比\n(%)`" width="160" />
-                        <el-table-column prop="address" :label="`井底流压对比\n(Mpa)`" width="170" />
-                        <el-table-column prop="zip" :label="`泵频率对比\n(Hz)`" width="160" />
+                        <el-table-column :label="`产液对比\n(m³/d)`" width="160">
+                            <template slot-scope="scope">
+                                {{scope.row.fluidProdDaily!==null?numReduce(scope.row.fluidProdDaily,scope.row.fluidProdDailyCompare):'-'}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column :label="`产油对比\n(m³/d)`" width="160">
+                            <template slot-scope="scope">
+                                {{scope.row.oilProdDaily!==null?numReduce(scope.row.oilProdDaily,scope.row.oilProdDailyCompare):'-'}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column :label="`含水对比\n(%)`" width="160">
+                            <template slot-scope="scope">
+                                {{scope.row.waterRatio!==null?numReduce(scope.row.waterRatio,scope.row.waterRatioCompare):'-'}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column :label="`井底流压对比\n(Mpa)`" width="170">
+                            <template slot-scope="scope">
+                                {{scope.row.dhFlowingPress!==null?numReduce(scope.row.dhFlowingPress,scope.row.dhFlowingPressCompare):'-'}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column :label="`泵频率对比\n(Hz)`" width="160">
+                            <template slot-scope="scope">
+                                {{scope.row.pumpFrequency!==null?numReduce(scope.row.pumpFrequency,scope.row.pumpFrequencyCompare):'-'}}
+                            </template>
+                        </el-table-column>
                       </el-table-column>
                       <el-table-column prop="remark" label="备注" width="250"/>
                     </el-table>
@@ -96,46 +111,62 @@
 <script>
     import { fetchOilFields, fetchPlatforms,fetchInjectionWells, fetchInjectionWellsByPlatform,fetchProductionWells, fetchProductionWellsByPlatform} from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import { fetchMeasureInfos,nameAndCode} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+    import { getWellOutputWaveTable } from "@/api/oilDeposit/rem-04/yieId.js"
     import { exportExcel } from '@/lib/exportExcel.js';
     export default {
-        name: 'statisticalTableProduction',
+        // name: 'statisticalTableProduction',
         data() {
             return {
                 //油田下拉框
                 oilFields: [],
-                selectOilField: '',
                 //平台下拉框
                 platforms: [],
-                selectPlatform: '',
                 //井号下拉框
                 wells: [],
-                wellId: '',
-                //对比基准
-                dateTime: new Date().format('yyyy-MM-dd'),
-                //对比日期
-                dateTime2:new Date().format('yyyy-MM-dd'),
                 //影响因素
-                measureId:'全部',
-                //表格数据
-                tableData: [
-                  {
-                    date: "2016-05-03",
-                    name: "王小虎",
-                    province: "上海",
-                    city: "普陀区",
-                    address: "上海市普陀区金沙江路 1518 弄",
-                    remark: '啊实打实大苏打倒萨大啊啊啊啊啊啊啊啊啊'
-                  },
+                measures:[
+                    '弃井&转注',
+                    '新井',
+                    '水井&弃井',
+                    '关停',
+                    '启井',
+                    '阶段关井',
+                    '提频扩油嘴',
+                    '提频缩油嘴',
+                    '降频扩油嘴',
+                    '降频缩油嘴',
+                    '扩油嘴',
+                    '缩油嘴',
+                    '提频',
+                    '降频',
+                    '产液上升',
+                    '含水上升',
+                    '含水下降',
+                    '产液下降',
                 ],
-                pageTotal: 0,
-                queryParams: {
-                    page: 1,
-                    pageSize: 15,
+                //参数
+                searchForm:{
+                    ogfId:'',
+                    platId:'',
+                    wellId:'',
+                    wellIds:[],//井标识集合
+                    prodDate:new Date().addDays(-1).format('yyyy-MM-dd'),//对比基准日期
+                    prodDateCompare:new Date().format('yyyy-MM-dd'),//对比日期
+                    influenceFactor:''//影响因素
                 },
+                //表格数据
+                tableData: [],
             };
         },
         mounted() {
-            console.log('this.dateTime2',this.dateTime2)
+            if(Object.keys(this.$route.query).length){
+                let wellIds=JSON.parse(this.$route.query.wellIds);
+                if(wellIds.length){
+                    this.searchForm.wellIds=wellIds.map(el=>el.borepipeId);
+                }
+                this.searchForm.prodDate=this.$route.query.prodDate,
+                this.searchForm.prodDateCompare=this.$route.query.prodDateCompare
+            }
             this.initData();
         },
         methods: {
@@ -145,58 +176,45 @@
                 await fetchOilFields().then((res) => {
                     if (res.data.code == 200) {
                         this.oilFields = res.data.data.oilFields;
-                        this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
+                        this.searchForm.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F';
                     }
                 });
                 //平台
-                await fetchPlatforms({
-                    oilFieldId: this.selectOilField
-                }).then((res) => {
+                await fetchPlatforms({oilFieldId: this.searchForm.ogfId}).then((res) => {
                     if (res.data.code == 200) {
-                        this.platforms = res.data.data.platform;
-                        this.selectPlatform = this.selectOilField;
-                    }
+                        let platforms=res.data.data.platform;
+                        platforms[0].platFormId=this.searchForm.ogfId;
+                        this.searchForm.platId=this.searchForm.ogfId;
+                        this.platforms =platforms;
+                    } 
                 });
                 //井号
-                await fetchProductionWells({
-                    oilFieldId: this.selectOilField
-                }).then((res) => {
+                await fetchProductionWells({oilFieldId: this.searchForm.ogfId}).then((res) => {
                     if (res.data.code == 200) {
                         const wellData = res.data.data.productionWells;
                         const wellList = wellData.filter(el => el.wellName);
                         this.wells = [...wellList];
                     }
                 });
-                // this.getFetchMeasureInfos();
+                this.getWellOutputWaveTable();
             },
             //油田下拉-change
             onFieldChange(val) {
-                this.getFetchPlatforms(val);
-                this.getMeasureNameAndCode();
-            },
-            //通过油田查询平台
-            getFetchPlatforms(oilFieldId) {
                 const request = {
-                    oilFieldId,
+                    oilFieldId:val,
                 };
                 fetchPlatforms(request).then((res) => {
                     if (res.data.code == 200) {
                         this.platforms = res.data.data.platform;
-                        this.selectPlatform = request.oilFieldId;
                     }
                 });
             },
             //平台下拉-change
             onPlatfromChange(val) {
-                this.getFetchWells(this.selectOilField, val);
-                this.getMeasureNameAndCode();
-            },
-            //通过油田 或 平台 获得井
-            getFetchWells(oilFieldId, platformId) {
                 this.wells = [];
-                if (oilFieldId == platformId) {
+                if (this.searchForm.ogfId == this.searchForm.platId) {
                     const request = {
-                        oilFieldId
+                        oilFieldId:this.searchForm.ogfId
                     };
                     fetchProductionWells(request).then((res) => {
                         if (res.data.code == 200) {
@@ -215,7 +233,7 @@
                     });
                 } else {
                     const request = {
-                        platformId
+                        platformId:this.searchForm.platId
                     };
                     fetchProductionWellsByPlatform(request).then((res) => {
                         if (res.data.code == 200) {
@@ -233,34 +251,27 @@
                         }
                     });
                 }
-                this.wells.unshift({
-                    wellId: '',
-                    wellName: '全部'
-                });
-                this.wellId = '';
+                this.wells.unshift({wellId: '', wellName: '全部'});
+                this.searchForm.wellId = '';
             },
-            //措施事件下拉框数据源
-            getMeasureNameAndCode() {
-                let params = {
-                    oilFieldId: this.selectOilField, //油田id
-                    platformId: this.selectPlatform, //平台id
-                    wellId: [this.wellId], //井号id
-                    measureId: this.measuresType, //措施事件
-                    year: this.dateTime, //时间-年
-                    page: 1,
-                    pageSize: 1000,
+            //产量波动统计表
+            getWellOutputWaveTable() {
+                if(this.searchForm.wellId){
+                    this.searchForm.wellIds=[];
                 }
-                nameAndCode(params).then((res) => {
+                getWellOutputWaveTable(this.searchForm).then((res) => {
                     if (res.data.code == 200) {
-                        this.measuresTypes = res.data.data.namesAndCodes;
-                        this.measuresTypes.unshift({
-                            code: '',
-                            name: '全部'
-                        });
-                        this.measureId = '';
+                       this.tableData=res.data.data;
                     }
                 });
             },
+            //两数相减
+            numReduce(num1, num2){
+            	const num1Digits = (num1.toString().split('.')[1] || '').length;
+            	const num2Digits = (num2.toString().split('.')[1] || '').length;
+            	const baseNum = Math.pow(10, Math.max(num1Digits, num2Digits));
+            	return (num1 * baseNum - num2 * baseNum) / baseNum;
+            }
         },
     };
 </script>

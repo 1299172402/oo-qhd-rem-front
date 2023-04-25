@@ -197,14 +197,14 @@
                                 <!-- <template name="titleContent">
                                     <el-button type="primary" style="height:30px;">下载</el-button>
                                 </template> -->
-                                <el-table :data="getWorkProgressData" highlight style="width: 100%" height="calc( 100% - 75px)"
+                                <el-table :data="getWorkProgressData" highlight height="calc( 100% - 75px)"
                                     :row-style="{ height: '0px' }"
                                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                                     header-cell-class-name="table_header"
                                     :cell-style="{ padding: '2px', 'text-align': 'center' }">
-                                    <el-table-column label="井号" prop="wellNo" width="150"></el-table-column>
-                                    <el-table-column label="开始时间" prop="beginTime" width="150"></el-table-column>
-                                    <el-table-column label="预计结束时间" prop="endTime" width="150"></el-table-column>
+                                    <el-table-column label="井号" prop="wellNo" width="180"></el-table-column>
+                                    <el-table-column label="开始时间" prop="beginTime" width="250"></el-table-column>
+                                    <el-table-column label="预计结束时间" prop="endTime" width="250"></el-table-column>
                                     <el-table-column label="当前作业内容" prop="workContent"></el-table-column>
                                 </el-table>
                                 <pagination v-show="pageTotal2 > 0" :pageSizes="[15, 20, 40]" :total="pageTotal2" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />

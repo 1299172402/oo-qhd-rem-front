@@ -20,7 +20,7 @@
                     <el-table-column prop="den" :label="`原油密度\n (g/cm³)`" min-width="140"></el-table-column>
                     <el-table-column prop="" :label="`粘度\n (mPa.s)`" min-width="120"></el-table-column>
                     <el-table-column prop="api60F" label="API_60F" min-width="100"></el-table-column>
-                    <el-table-column prop="waterContent" :label="`含水\n (%)`" min-width="100"></el-table-column>
+                    <el-table-column prop="waterContent" :label="`含水\n (%)`" min-width="130"></el-table-column>
                     <el-table-column prop="scontent" :label="`含硫量\n (%)`" min-width="140"></el-table-column>
                     <el-table-column prop="freezePoint" :label="`凝固点\n (℃)`" min-width="140"></el-table-column>
                     <el-table-column prop="waxContent" :label="`蜡量\n (%)`" min-width="140"></el-table-column>
@@ -48,7 +48,7 @@
                     <el-table-column prop="fluidPH" label="PH值/酸碱度" min-width="140"></el-table-column>
                     <el-table-column prop="color" label="颜色" min-width="120"></el-table-column>
                     <el-table-column prop="waterValue" label="水型" min-width="100"></el-table-column>
-                    <el-table-column prop="" :label="`地层水矿化度\n (mg/L)`" min-width="100"></el-table-column>
+                    <el-table-column prop="" :label="`地层水矿化度\n (mg/L)`" min-width="130"></el-table-column>
                     <el-table-column prop="anionContent" :label="`阴离子总量\n (mg/L)`" min-width="140"></el-table-column>
                     <el-table-column prop="cationContent" :label="`阳离子总量\n (mg/L)`" min-width="140"></el-table-column>
                     <el-table-column prop="totalAlkalinity" :label="`总碱度\n (mmol/L)`" min-width="140"></el-table-column>

@@ -316,7 +316,7 @@
                 await fetchOilFields().then((res) => {
                     if (res.data.code == 200) {
                         this.oilFields = res.data.data.oilFields;
-                        this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
+                        this.selectOilField = this.oilFields[0].oilFieldId;
                     }
                 });
                 //平台
@@ -325,6 +325,7 @@
                 }).then((res) => {
                     if (res.data.code == 200) {
                         this.platforms = res.data.data.platform;
+                        this.platforms[0].platFormId=this.selectOilField;
                         this.selectPlatform = this.selectOilField;
                     }
                 });

@@ -36,20 +36,16 @@
               <el-row>
                 <span>油井指标变化排名</span>
                 <el-table id="tableData" :data="tableDataOil" highlight height="550px" style="margin-top: 10px">
-                  <el-table-column type="index" label="序号" width="60px" align="center"></el-table-column>
-                  <el-table-column prop="borepipeId" label="井号" min-width="120px" align="center"></el-table-column>
-                  <el-table-column prop="yearMonth" :label="`生产时间 \n(yyyy/mm/dd)`" align="center">
+                  <el-table-column type="index" label="序号" align="center" min-width="80"></el-table-column>
+                  <el-table-column prop="borepipeId" label="井号" align="center" min-width="120"></el-table-column>
+                  <el-table-column prop="yearMonth" :label="`生产时间\n(yyyy/mm/dd)`" align="center" min-width="130">
                     <template slot-scope="scope">
                       <span>{{ scope.row.yearMonth.substr(0, 7) }}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column
-                    prop="fluidMonthly"
-                    :label="`月产液变化量 \n(10⁴m³)`"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column prop="oilMonthly" :label="`月产油变化量\n(10⁴m³)`" align="center"></el-table-column>
-                  <el-table-column prop="waterRatio" :label="`含水率变化量\n(%)`" align="center">
+                  <el-table-column prop="fluidMonthly" :label="`月产液变化量\n(10⁴m³)`" align="center" min-width="120"></el-table-column>
+                  <el-table-column prop="oilMonthly" :label="`月产油变化量\n(10⁴m³)`" align="center" min-width="120"></el-table-column>
+                  <el-table-column prop="waterRatio" :label="`含水率变化量\n(%)`" align="center" min-width="120">
                     <template slot-scope="scope">
                       <span>{{ scope.row.waterRatio | isNullTableNumber }}</span>
                     </template>

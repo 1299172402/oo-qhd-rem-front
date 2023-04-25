@@ -12,7 +12,7 @@
                     <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                 </el-select>
                 <span>预警分析日期设置：</span>
-                <el-date-picker v-model="selectDate" unlink-panels type="daterange" range-separator="至" start-placeholder="开始月份" end-placeholder="结束月份" value-format="yyyy-MM-dd" style="margin-right:15px;">
+                <el-date-picker v-model="selectDate" :clearable="false" unlink-panels type="daterange" range-separator="至" start-placeholder="开始月份" end-placeholder="结束月份" value-format="yyyy-MM-dd" style="margin-right:15px;">
                 </el-date-picker>
                 <span>产量单位选择：</span>
                 <el-select v-model="selectUnitOfProduction" placeholder="请选择" style="width:100px;margin-right:15px;">
@@ -150,7 +150,7 @@
                                         <el-input v-model="setParaValue" style="width:80px;margin-right:10px;" type="text" size="medium" oninput="value=value.replace(/[^0-9.]/g,'')"></el-input>
                                         <el-input v-model="unitValue" style="width:50px;margin-right:10px;" size="medium" :readonly="true"></el-input>
                                         <el-button type="primary" style="height:36px;" @click="searchWellOutputWave">查询</el-button>
-                                        <el-button type="primary" style="height:36px;margin-left:10px!important;" @click="$router.push({path:'/yield/statisticalTableProduction'})">更多</el-button>
+                                        <el-button type="primary" style="height:36px;margin-left:10px!important;" @click="jumpMore">更多</el-button>
                                     </div>
                                     <div class="echartBox">
                                         <Echart :chart-data="barChart" height="300px"></Echart>
@@ -278,7 +278,7 @@
     import {getReportFroms} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js'
     import {exportComplexHeaderExcelFromJson} from '@/lib/exportExcel.js';
     export default {
-        name: 'fluctuationWarningAnalysis',
+        // name: 'fluctuationWarningAnalysis',
         components: {
             Echart,
         },
@@ -304,8 +304,7 @@
                 //区块选中值
                 selectBlock: "",
                 //预警分析日期
-                //选择时间
-                selectDate: "",
+                selectDate:[],
                 //产量单位
                 unitOfProduction: [{label: "m³/d",value: "m",},{label: "t/d",value: "t",},],
                 //产量单位选择值
@@ -828,7 +827,23 @@
                     this.selectUnitOfProduction
                 );
             },
-            //跳转归因分析异常
+            //跳转产量运行分析报告
+            switchUpPage() {
+                this.$router.push({
+                    path: "/yield/productionOperationAnalysisReport",
+                    query: {
+                        oilFieldName: this.oilFieldName,//油田名称
+                        oilField: this.selectOilField,
+                        block: this.selectBlock,
+                        theDate: this.currentDate,//当前时间
+                        unitType: this.selectUnitOfProduction,//单元名称
+                        selectDate: this.selectDate.join(','),
+                        unitValue: this.setParaValue,//波动值
+                        wellIds:JSON.stringify(this.productAnaysisTable)
+                    }
+                });
+            },
+            //跳转产量异常归因分析报告
             switchDownPage() {
                 //当前时间
                 let theDate = this.currentDate;
@@ -852,35 +867,16 @@
                     },
                 });
             },
-            //跳转归因分析正常
-            switchUpPage() {
-                //当前时间
-                let theDate = this.currentDate;
-                //区块
-                let block = this.selectBlock;
-                //油田id
-                let oilField = this.selectOilField;
-                //单元名称
-                let unitType = this.selectUnitOfProduction;
-                //油田名称
-                let oilFieldName = this.oilFieldName;
-                //选择时间
-                let selectDate = this.selectDate;
-                //波动值
-                let unitValue = this.setParaValue;
+            //跳转更多
+            jumpMore(){
                 this.$router.push({
-                    path: "/yield/productionOperationAnalysisReport",
-                    query: {
-                        block: block,
-                        oilField: oilField,
-                        theDate: theDate,
-                        unitType: unitType,
-                        oilFieldName: oilFieldName,
-                        selectDate: selectDate,
-                        unitValue: unitValue,
-                        canDownload: this.canDownload,
-                    },
-                });
+                    path:'/yield/statisticalTableProduction',
+                    query:{
+                        wellIds:JSON.stringify(this.productAnaysisTable),
+                        prodDate:this.selectDate[1],
+                        prodDateCompare:new Date(this.selectDate[1]).addDays(-1).format('yyyy-MM-dd'),
+                    }
+                })
             },
             //获取油田信息
             getOilFields() {
@@ -1236,6 +1232,7 @@
                         _this.barChart.yAxis.name = "产油量变化/m³";
                         _this.unitValue = "m³";
                     }
+                   
                 });
             },
             //柱状图

@@ -11,7 +11,7 @@
         height="calc(100% - 101px)" 
         :default-sort="{ prop: 'date', order: 'descending' }" 
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-        <el-table-column type="index" label="序号"></el-table-column>
+        <el-table-column type="index" label="序号" width="80"></el-table-column>
         <el-table-column prop="wellNo" label="井号" width="130"></el-table-column>
         <el-table-column prop="perfLayer" label="小层" width="200"></el-table-column>
         <el-table-column prop="topDepth" :label="`井段顶斜深\n (m)`"  width="120"></el-table-column>

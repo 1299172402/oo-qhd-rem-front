@@ -185,9 +185,9 @@
             },
             //查询油田产量影响因素表格数据
             queryTableData() {
-                getOilFieldInfo().then((data) => {
-                    if (!data.data.code) {
-                        this.tableData = data.data.data;
+                getOilFieldInfo().then(res => {
+                    if (res.data.code==200) {
+                        this.tableData = res.data.data;
                     }
                 })
             },
@@ -198,9 +198,9 @@
                     date: this.searchForm.date,
                     unitType: this.searchForm.unitType,
                 };
-                getOilForecastProd(queryParams).then((data) => {
-                    if (!data.data.code) {
-                        data.data.data.forEach((item, index) => {
+                getOilForecastProd(queryParams).then(res => {
+                    if (res.data.code==200&&res.data.data.length) {
+                        res.data.data.forEach((item, index) => {
                             if (item.ogfNo == 'QHD32-6') {
                                 this.tableData1[0].qhd326 = item.forecastProd;
                             } else if (item.ogfNo == 'CFD6-4') {
@@ -226,10 +226,9 @@
                     date: this.searchForm.date,
                     unitType: this.searchForm.unitType,
                 };
-                getOilResidueLevel(queryParams).then((data) => {
-                    console.log("getOilResidueLevel==>", data);
-                    if (!data.data.code) {
-                        data.data.data.forEach((item, index) => {
+                getOilResidueLevel(queryParams).then(res => {
+                    if (res.data.code==200&&res.data.data.length) {
+                        res.data.data.forEach((item, index) => {
                             if (item.ogfNo == 'QHD32-6') {
                                 this.tableData2[0].qhd326 = item.oilNeedAfterStruggle;
                                 this.tableData2[1].qhd326 = item.oilNeedAfterExamine;
@@ -262,7 +261,6 @@
                 var keys = Object.keys(this.tableData);
                 if (keys != null || keys.length != 0) {
                     keys.forEach((item, index) => {
-                        // console.log("11111111=>",item)
                         var lineObj = {
                             'ogfId': this.tableData[item]['ogfId'],
                             'ogfNo': this.tableData[item]['ogfNo'],
@@ -276,9 +274,9 @@
                 }
                 console.log("this.tableData==>", params);
                 saveInfluencingFactorsOfOilfieldProduction(params).then((res) => {
-                    if (!res.data.code) {
-                        this.$message.error("保存成功");
-                        this.queryForecastOutputTableData();
+                    if (res.data.code==200&&res.data.data) {
+                        this.$message.success("保存成功");
+                        this.queryTableData();
                     } else {
                         this.$message.error("保存失败");
                     }

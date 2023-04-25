@@ -493,7 +493,9 @@
                                         yAxis: 1
                                     }
                                 ],
-
+                                label:{
+                                    color:'#8FA4CC'
+                                },
                                 lineStyle: {
                                     color: 'orange',
                                     type: 'solid'
@@ -606,6 +608,9 @@
                                         yAxis: 0
                                     }
                                 ],
+                                label:{
+                                    color:'#8FA4CC'
+                                },
                                 lineStyle: {
                                     color: 'orange',
                                     type: 'solid'

@@ -370,75 +370,81 @@
                     layerId:this.selectPosition
                 };
                 produceData(request).then((res) => {
-                    this.tableData=res.data.data.proDatas;                    
-                    let seriesData = [];
-                    let legendData = [];
-                    //获取x轴数据信息
-                    let xSet = new Set();
-                    if (res.data.code == 200) {
-                        let chartDataS = res.data.data.charts;
-                        for (let i = 0; i < chartDataS.length; i++) {
-                            if (chartDataS[i].linearDataSets == null || chartDataS[i].linearDataSets == undefined) {
-                                continue;
+                    if(res.data.code==200){
+                        this.tableData=res.data.data.proDatas?res.data.data.proDatas:[];    
+                        if(res.data.data.charts){
+                            let seriesData = [];
+                            let legendData = [];
+                            //获取x轴数据信息
+                            let xSet = new Set();
+                            let chartDataS = res.data.data.charts;
+                            for (let i = 0; i < chartDataS.length; i++) {
+                                if (chartDataS[i].linearDataSets == null || chartDataS[i].linearDataSets == undefined) {
+                                    continue;
+                                }
+                                let chartData = chartDataS[i].linearDataSets[0];
+                                let chartDatalabel = chartData.label;
+                                let series = {};
+                                let lineName = chartData.label;
+                                series.type = 'line';
+                                series.name = lineName;
+                                legendData.push(series.name);
+                                //数据所属图像
+                                if (chartDatalabel == '套压') {
+                                    series.xAxisIndex = 0;
+                                    series.yAxisIndex = 2;
+                                    series.color = '#ba55d3';
+                                } else if (chartDatalabel == '日注水量') {
+                                    series.xAxisIndex = 1;
+                                    series.yAxisIndex = 5;
+                                    series.color = '#8bc813';
+                                } else if (chartDatalabel == '井口压力') {
+                                    series.xAxisIndex = 0;
+                                    series.yAxisIndex = 1;
+                                    series.color = '#c8b71a';
+                                } else if (chartDatalabel == '注入时间') {
+                                    series.xAxisIndex = 0;
+                                    series.yAxisIndex = 0;
+                                    series.color = '#ff631f';
+                                } else if (chartDatalabel == '日配注量') {
+                                    series.xAxisIndex = 1;
+                                    series.yAxisIndex = 3;
+                                    series.color = '#be5028';
+                                } else if (chartDatalabel == '水聚总量') {
+                                    series.xAxisIndex = 1;
+                                    series.yAxisIndex = 3;
+                                    series.color = '#00ffff';
+                                } else if (chartDatalabel == '日注聚量') {
+                                    series.xAxisIndex = 1;
+                                    series.yAxisIndex = 5;
+                                    series.color = '#8b4513';
+                                } else {
+                                    continue;
+                                }
+                                //折线数据
+                                let lineData = chartData.linearData;
+                                let pointData = [];
+                                for (let i = 0; i < lineData.length; i++) {
+                                    let point = [];
+                                    point.push(lineData[i].label);
+                                    xSet.add(lineData[i].label);
+                                    point.push(lineData[i].value);
+                                    pointData.push(point);
+                                }
+                                series.data = pointData;
+                                series.showSymbol = false;
+                                seriesData.push(series);
                             }
-                            let chartData = chartDataS[i].linearDataSets[0];
-                            let chartDatalabel = chartData.label;
-                            let series = {};
-                            let lineName = chartData.label;
-                            series.type = 'line';
-                            series.name = lineName;
-                            legendData.push(series.name);
-                            //数据所属图像
-                            if (chartDatalabel == '套压') {
-                                series.xAxisIndex = 0;
-                                series.yAxisIndex = 2;
-                                series.color = '#ba55d3';
-                            } else if (chartDatalabel == '日注水量') {
-                                series.xAxisIndex = 1;
-                                series.yAxisIndex = 5;
-                                series.color = '#8bc813';
-                            } else if (chartDatalabel == '井口压力') {
-                                series.xAxisIndex = 0;
-                                series.yAxisIndex = 1;
-                                series.color = '#c8b71a';
-                            } else if (chartDatalabel == '注入时间') {
-                                series.xAxisIndex = 0;
-                                series.yAxisIndex = 0;
-                                series.color = '#ff631f';
-                            } else if (chartDatalabel == '日配注量') {
-                                series.xAxisIndex = 1;
-                                series.yAxisIndex = 3;
-                                series.color = '#be5028';
-                            } else if (chartDatalabel == '水聚总量') {
-                                series.xAxisIndex = 1;
-                                series.yAxisIndex = 3;
-                                series.color = '#00ffff';
-                            } else if (chartDatalabel == '日注聚量') {
-                                series.xAxisIndex = 1;
-                                series.yAxisIndex = 5;
-                                series.color = '#8b4513';
-                            } else {
-                                continue;
-                            }
-                            //折线数据
-                            let lineData = chartData.linearData;
-                            let pointData = [];
-                            for (let i = 0; i < lineData.length; i++) {
-                                let point = [];
-                                point.push(lineData[i].label);
-                                xSet.add(lineData[i].label);
-                                point.push(lineData[i].value);
-                                pointData.push(point);
-                            }
-                            series.data = pointData;
-                            series.showSymbol = false;
-                            seriesData.push(series);
+                            let xData = Array.from(xSet).sort();
+                            this.option.xAxis[0].data = xData;
+                            this.option.xAxis[1].data = xData;
+                            this.option.series = seriesData;
+                        }else{
+                            this.option.xAxis[0].data = [];
+                            this.option.xAxis[1].data = [];
+                            this.option.series = [];
                         }
                     }
-                    let xData = Array.from(xSet).sort();
-                    this.option.xAxis[0].data = xData;
-                    this.option.xAxis[1].data = xData;
-                    this.option.series = seriesData;
                 });
             },
             //干线压力
