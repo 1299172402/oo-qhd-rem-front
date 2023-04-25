@@ -118,9 +118,9 @@
 }
 
 .infoHeaderBg{
-//   background: #fff;
+  background: #fff;
   // TODO: Maybe change back，带图标的时候放开
-  background: var(--logo-bg) no-repeat top right, linear-gradient(to right, #fff, #fff) !important;
+  //background: var(--logo-bg) no-repeat top right, linear-gradient(to right, #fff, #fff) !important;
 }
 
 .footerBox {
@@ -137,6 +137,7 @@
   height: calc(100% - 125px);
   width: 100%;
   box-shadow: 0 0 10px 0 rgba(144,147,153,0.3);
+  border: 1px solid transparent;
 }
 
 .right{
@@ -194,6 +195,7 @@
 .el-table__fixed-right,
 .el-table__fixed {
   height: calc(100% - 6px) !important;
+  z-index: 0
 }
 
 .el-table__fixed-header-wrapper {
