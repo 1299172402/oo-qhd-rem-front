@@ -146,7 +146,7 @@
                 style="margin: 20px 0;height: calc(100% - 125px)"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column :key="index" :prop="item.val" :label="item.name" min-width="140" v-for="(item,index) in headerTextLower"></el-table-column>
+                <el-table-column :key="index" :prop="item.val" :label="item.name" min-width="160" v-for="(item,index) in headerTextLower"></el-table-column>
             </el-table>
         </page-panel-new>
         <el-dialog
@@ -277,42 +277,39 @@ export default {
                 { val:'verifyPro' ,name:'核实生产指标'},
                 { val:'inject' ,name:'注入指标'}
             ],
-            stateList : 
-                [
-                    // { val:'PROD_DATE', name :'生产日期' },
-                    { val:'NOZZLE_DIAMETER', name :'油嘴直径' },
-                    { val:'WH_TEMP', name :'井口温度' },
-                    { val:'DH_FLOWING_TEMP', name :'油压' },
-                    { val:'CSG_PRESS', name :'套压' },
-                    { val:'BACK_PRESS', name :'回压' },
-                    { val:'DH_FLOWING_PRESS', name :'井底流压' },
-                    { val:'PUMP_FREQUENCY', name :'泵频率' },
-                    { val:'PUMP_CURRENT', name :'泵电流' },
-                    { val:'PUMP_VOLTAGE', name :'泵电压' },
-                    { val:'PUMP_INLET_PRESS', name :'泵吸入口压力' },
-                    { val:'PUMP_OUTLET_PRESS', name :'泵出口压力' }
+            stateList : [
+                    { val:'NOZZLE_DIAMETER', name :'油嘴直径' ,unit:'mm'},
+                    { val:'WH_TEMP', name :'井口温度' ,unit:'℃'},
+                    { val:'DH_FLOWING_TEMP', name :'油压' ,unit:'MPa'},
+                    { val:'CSG_PRESS', name :'套压' ,unit:'MPa'},
+                    { val:'BACK_PRESS', name :'回压' ,unit:'MPa'},
+                    { val:'DH_FLOWING_PRESS', name :'井底流压' ,unit:'MPa'},
+                    { val:'PUMP_FREQUENCY', name :'泵频率' ,unit:'HZ'},
+                    { val:'PUMP_CURRENT', name :'泵电流' ,unit:'A'},
+                    { val:'PUMP_VOLTAGE', name :'泵电压' ,unit:'V'},
+                    { val:'PUMP_INLET_PRESS', name :'泵吸入口压力' ,unit:'MPa'},
+                    { val:'PUMP_OUTLET_PRESS', name :'泵出口压力' ,unit:'MPa'}
                 ],
-            productList :
-                [
-                    { val:'FLUID_PROD_DAILY', name :'日产液' },
-                    { val:'OIL_PROD_DAILY', name :'日产油' },
-                    { val:'WATER_PROD_DAILY', name :'日产水' },
-                    { val:'GAS_PROD_DAILY', name :'日产气' },
-                    { val:'WATER_RATIO', name :'含水' },
-                    { val:'OIL_GAS_RATIO', name :'气油比' }
-                ],
+            productList : [
+                { val:'FLUID_PROD_DAILY', name :'日产液' ,unit:'m³'},
+                { val:'OIL_PROD_DAILY', name :'日产油' ,unit:'m³'},
+                { val:'WATER_PROD_DAILY', name :'日产水' ,unit:'m³'},
+                { val:'GAS_PROD_DAILY', name :'日产气' ,unit:'m³'},
+                { val:'WATER_RATIO', name :'含水' ,unit:'%'},
+                { val:'OIL_GAS_RATIO', name :'气油比' ,unit:'m³/m³'}
+            ],
             totalList : [
-                { val:'MONTH_PROD_DURATION', name :'月累生产时间' },
-                { val:'YEAR_PROD_DURATION', name :'年累生产时间' },
-                { val:'MONTHLY_CUMU_FLUID_PROD', name :'月累产液' },
-                { val:'MONTHLY_CUMU_OIL_PROD', name :'月累产油' },
-                { val:'MONTHLY_ACCUM_WATER_PROD', name :'月累产水' },
-                { val:'MONTHLY_CUMU_GAS_PROD', name :'月累产气' },
-                { val:'YEAR_CUMU_FLUID_PROD', name :'年累产液' },
-                { val:'YEAR_CUMU_OIL_PROD', name :'年累产油' },
-                { val:'YEAR_ACCUM_WATER_PROD', name :'年累产水' },
-                { val:'YEAR_CUMU_GAS_PROD', name :'年累产气' },
-                { val:'REMAKE', name :'备注' }
+                { val:'MONTH_PROD_DURATION', name :'月累生产时间' ,unit:'h'},
+                { val:'YEAR_PROD_DURATION', name :'年累生产时间' ,unit:'h'},
+                { val:'MONTHLY_CUMU_FLUID_PROD', name :'月累产液' ,unit:'m³'},
+                { val:'MONTHLY_CUMU_OIL_PROD', name :'月累产油' ,unit:'m³'},
+                { val:'MONTHLY_ACCUM_WATER_PROD', name :'月累产水' ,unit:'m³'},
+                { val:'MONTHLY_CUMU_GAS_PROD', name :'月累产气' ,unit:'m³'},
+                { val:'YEAR_CUMU_FLUID_PROD', name :'年累产液' ,unit:'m³'},
+                { val:'YEAR_CUMU_OIL_PROD', name :'年累产油' ,unit:'m³'},
+                { val:'YEAR_ACCUM_WATER_PROD', name :'年累产水' ,unit:'m³'},
+                { val:'YEAR_CUMU_GAS_PROD', name :'年累产气' ,unit:'m³'},
+                { val:'REMAKE', name :'备注' ,unit:''}
             ],
             injectList:[],
             managerList:[],//管理指标
@@ -461,39 +458,38 @@ export default {
                 //日
                 case 'wellhead'://'井口生产指标':
                     this.stateList = [
-                        // { val:'PROD_DATE', name :'生产日期' },
-                        { val:'NOZZLE_DIAMETER', name :'油嘴直径' },
-                        { val:'WH_TEMP', name :'井口温度' },
-                        { val:'DH_FLOWING_TEMP', name :'油压' },
-                        { val:'CSG_PRESS', name :'套压' },
-                        { val:'BACK_PRESS', name :'回压' },
-                        { val:'DH_FLOWING_PRESS', name :'井底流压' },
-                        { val:'PUMP_FREQUENCY', name :'泵频率' },
-                        { val:'PUMP_CURRENT', name :'泵电流' },
-                        { val:'PUMP_VOLTAGE', name :'泵电压' },
-                        { val:'PUMP_INLET_PRESS', name :'泵吸入口压力' },
-                        { val:'PUMP_OUTLET_PRESS', name :'泵出口压力' }
+                        { val:'NOZZLE_DIAMETER', name :'油嘴直径' ,unit:'mm'},
+                        { val:'WH_TEMP', name :'井口温度' ,unit:'℃'},
+                        { val:'DH_FLOWING_TEMP', name :'油压' ,unit:'MPa'},
+                        { val:'CSG_PRESS', name :'套压' ,unit:'MPa'},
+                        { val:'BACK_PRESS', name :'回压' ,unit:'MPa'},
+                        { val:'DH_FLOWING_PRESS', name :'井底流压' ,unit:'MPa'},
+                        { val:'PUMP_FREQUENCY', name :'泵频率' ,unit:'HZ'},
+                        { val:'PUMP_CURRENT', name :'泵电流' ,unit:'A'},
+                        { val:'PUMP_VOLTAGE', name :'泵电压' ,unit:'V'},
+                        { val:'PUMP_INLET_PRESS', name :'泵吸入口压力' ,unit:'MPa'},
+                        { val:'PUMP_OUTLET_PRESS', name :'泵出口压力' ,unit:'MPa'}
                     ],
                     this.productList = [
-                        { val:'FLUID_PROD_DAILY', name :'日产液' },
-                        { val:'OIL_PROD_DAILY', name :'日产油' },
-                        { val:'WATER_PROD_DAILY', name :'日产水' },
-                        { val:'GAS_PROD_DAILY', name :'日产气' },
-                        { val:'WATER_RATIO', name :'含水' },
-                        { val:'OIL_GAS_RATIO', name :'气油比' }
+                        { val:'FLUID_PROD_DAILY', name :'日产液' ,unit:'m³'},
+                        { val:'OIL_PROD_DAILY', name :'日产油' ,unit:'m³'},
+                        { val:'WATER_PROD_DAILY', name :'日产水' ,unit:'m³'},
+                        { val:'GAS_PROD_DAILY', name :'日产气' ,unit:'m³'},
+                        { val:'WATER_RATIO', name :'含水' ,unit:'%'},
+                        { val:'OIL_GAS_RATIO', name :'气油比' ,unit:'m³/m³'}
                     ],
                     this.totalList = [
-                        { val:'MONTH_PROD_DURATION', name :'月累生产时间' },
-                        { val:'YEAR_PROD_DURATION', name :'年累生产时间' },
-                        { val:'MONTHLY_CUMU_FLUID_PROD', name :'月累产液' },
-                        { val:'MONTHLY_CUMU_OIL_PROD', name :'月累产油' },
-                        { val:'MONTHLY_ACCUM_WATER_PROD', name :'月累产水' },
-                        { val:'MONTHLY_CUMU_GAS_PROD', name :'月累产气' },
-                        { val:'YEAR_CUMU_FLUID_PROD', name :'年累产液' },
-                        { val:'YEAR_CUMU_OIL_PROD', name :'年累产油' },
-                        { val:'YEAR_ACCUM_WATER_PROD', name :'年累产水' },
-                        { val:'YEAR_CUMU_GAS_PROD', name :'年累产气' },
-                        { val:'REMAKE', name :'备注' }
+                        { val:'MONTH_PROD_DURATION', name :'月累生产时间' ,unit:'h'},
+                        { val:'YEAR_PROD_DURATION', name :'年累生产时间' ,unit:'h'},
+                        { val:'MONTHLY_CUMU_FLUID_PROD', name :'月累产液' ,unit:'m³'},
+                        { val:'MONTHLY_CUMU_OIL_PROD', name :'月累产油' ,unit:'m³'},
+                        { val:'MONTHLY_ACCUM_WATER_PROD', name :'月累产水' ,unit:'m³'},
+                        { val:'MONTHLY_CUMU_GAS_PROD', name :'月累产气' ,unit:'m³'},
+                        { val:'YEAR_CUMU_FLUID_PROD', name :'年累产液' ,unit:'m³'},
+                        { val:'YEAR_CUMU_OIL_PROD', name :'年累产油' ,unit:'m³'},
+                        { val:'YEAR_ACCUM_WATER_PROD', name :'年累产水' ,unit:'m³'},
+                        { val:'YEAR_CUMU_GAS_PROD', name :'年累产气' ,unit:'m³'},
+                        { val:'REMAKE', name :'备注' ,unit:''}
                     ],
                     this.injectList=[],
                     this.managerList=[]
@@ -501,32 +497,32 @@ export default {
 
                 case 'proProDic'://'计量生产指标':
                     this.stateList = [
-                        { val:'CALCUL_DATE',name: '计量时间' },
-                        { val:'NOZZLE_DIAMETER',name: '油嘴直径' },
-                        { val:'WH_TEMP',name: '井口温度' },
-                        { val:'DH_FLOWING_TEMP',name: '油压' },
-                        { val:'CSG_PRESS',name: '套压' },
-                        { val:'DH_FLOWING_TEMP',name: '井底流温' },
-                        { val:'DH_FLOWING_PRESS',name: '井底流压' },
-                        { val:'PUMP_FREQUENCY',name: '泵频率' },
-                        { val:'PUMP_CURRENT',name: '泵电流' },
-                        { val:'PUMP_VOLTAGE',name: '泵电压' },
-                        { val:'PUMP_INLET_TEMP',name: '泵入口温度' },
-                        { val:'PUMP_MOTOR_TEMP',name: '泵马达温度' },
-                        { val:'PUMP_INLET_PRESS',name: '泵入口压力' },
-                        { val:'PUMP_OUTLET_PRESS',name: '泵出口压力' },
-                        { val:'GAS_LIFT_CHOKE_DIAMETER',name: '气举嘴直径' },
-                        { val:'GAS_LIFT_PRESS',name: '气举压力' }
+                        { val:'CALCUL_DATE',name: '计量时间' ,unit:'h'},
+                        { val:'NOZZLE_DIAMETER',name: '油嘴直径' ,unit:'mm'},
+                        { val:'WH_TEMP',name: '井口温度' ,unit:'℃'},
+                        { val:'DH_FLOWING_TEMP',name: '油压' ,unit:'MPa'},
+                        { val:'CSG_PRESS',name: '套压' ,unit:'MPa'},
+                        { val:'DH_FLOWING_TEMP',name: '井底流温' ,unit:'℃'},
+                        { val:'DH_FLOWING_PRESS',name: '井底流压' ,unit:'MPa'},
+                        { val:'PUMP_FREQUENCY',name: '泵频率' ,unit:'HZ'},
+                        { val:'PUMP_CURRENT',name: '泵电流' ,unit:'A'},
+                        { val:'PUMP_VOLTAGE',name: '泵电压' ,unit:'V'},
+                        { val:'PUMP_INLET_TEMP',name: '泵入口温度' ,unit:'℃'},
+                        { val:'PUMP_MOTOR_TEMP',name: '泵马达温度' ,unit:'℃'},
+                        { val:'PUMP_INLET_PRESS',name: '泵入口压力' ,unit:'MPa'},
+                        { val:'PUMP_OUTLET_PRESS',name: '泵出口压力' ,unit:'MPa'},
+                        { val:'GAS_LIFT_CHOKE_DIAMETER',name: '气举嘴直径' ,unit:'mm'},
+                        { val:'GAS_LIFT_PRESS',name: '气举压力' ,unit:'MPa'}
                     ],
                     this.productList = [
-                        { val: 'ACTUAL_DAILY_LIQUID_PROD', name: '实际日产液' },
-                        { val: 'ACTUAL_DAILY_OIL_PROD', name: '实际日产油' },
-                        { val: 'ACTUAL_DAILY_WATER_PROD', name: '实际日产水' },
-                        { val: 'ACTUAL_DAILY_GAS_PROD', name: '实际日产气' },
-                        { val: 'WATER_RATIO', name: '含水' },
-                        { val: 'GAS_OIL_RATIO', name: '气油比' },
-                        { val: 'OIL_GAS_RATIO', name: '油气比' },
-                        { val: 'WATER_GAS_RATIO', name: '水气比' }
+                        { val: 'ACTUAL_DAILY_LIQUID_PROD', name: '实际日产液' ,unit:'m³'},
+                        { val: 'ACTUAL_DAILY_OIL_PROD', name: '实际日产油' ,unit:'m³'},
+                        { val: 'ACTUAL_DAILY_WATER_PROD', name: '实际日产水' ,unit:'m³'},
+                        { val: 'ACTUAL_DAILY_GAS_PROD', name: '实际日产气' ,unit:'m³'},
+                        { val: 'WATER_RATIO', name: '含水' ,unit:'%'},
+                        { val: 'GAS_OIL_RATIO', name: '气油比' ,unit:'m³/m³'},
+                        { val: 'OIL_GAS_RATIO', name: '油气比' ,unit:'m³/m³'},
+                        { val: 'WATER_GAS_RATIO', name: '水气比' ,unit:'m³/m³'}
                     ],
                     this.totalList=[],
                     this.injectList=[],
@@ -536,14 +532,14 @@ export default {
                 if(this.activeTabIndex == '1'){
                     this.stateList = [],
                     this.productList = [
-                        { val: 'DAILY_VE_PROD', name: '日核实产量' },
-                        { val: 'DAILY_CUMU_NET_PROD', name: '日净产量' }
+                        { val: 'DAILY_VE_PROD', name: '日核实产量' ,unit:'m³'},
+                        { val: 'DAILY_CUMU_NET_PROD', name: '日净产量' ,unit:'m³'}
                     ],
                     this.totalList=[
-                        { val: 'MONTHLY_VE_PROD', name: '月累核实产量' },
-                        { val: 'MONTHLY_CUMU_NET_PROD', name: '月累净产量' },
-                        { val: 'YEAR_VE_PROD', name: '年累核实产量' },
-                        { val: 'YEAR_CUMU_NET_PROD', name: '年累净产量' }
+                        { val: 'MONTHLY_VE_PROD', name: '月累核实产量' ,unit:'m³'},
+                        { val: 'MONTHLY_CUMU_NET_PROD', name: '月累净产量' ,unit:'m³'},
+                        { val: 'YEAR_VE_PROD', name: '年累核实产量' ,unit:'m³'},
+                        { val: 'YEAR_CUMU_NET_PROD', name: '年累净产量' ,unit:'m³'}
                     ],
                     this.injectList=[],
                     this.managerList=[]
@@ -551,20 +547,20 @@ export default {
                     //油田日核实生产指标
                     this.stateList = [],
                     this.productList = [
-                        { val:'DAILY_VE_PROD', name:'日核实产量' },
-                        { val:'DAILY_CUMU_NET_PROD', name:'日净产量' }
+                        { val:'DAILY_VE_PROD', name:'日核实产量' ,unit:'m³'},
+                        { val:'DAILY_CUMU_NET_PROD', name:'日净产量' ,unit:'m³'}
                     ],
                     this.totalList=[
-                        { val:'MONTHLY_VE_PROD', name:'月累核实产量' },
-                        { val:'MONTHLY_CUMU_NET_PROD', name:'月累净产量' },
-                        { val:'MONTHLY_VERIFICA_AIR_DEFENSE_VOLUME', name:'月累核实放空量' },
-                        { val:'MONTHLY_VERI_VOLUME', name:'月累核实外输量' },
-                        { val:'YEAR_VE_PROD', name:'年累核实产量' },
-                        { val:'YEAR_VE_OIL_EQUI', name:'年累核实油当量' },
-                        { val:'YEAR_CUMU_NET_PROD', name:'年累净产量' },
-                        { val:'YEAR_VER_SELF_CONSUMPTION', name:'年累核实自用量' },
-                        { val:'YEAR_VER_RELEASE_VOLUME', name:'年累核实放空量' },
-                        { val:'YEAR_VER_EXPORT_VOLUME', name:'年累核实外输量' }
+                        { val:'MONTHLY_VE_PROD', name:'月累核实产量' ,unit:'m³'},
+                        { val:'MONTHLY_CUMU_NET_PROD', name:'月累净产量' ,unit:'m³'},
+                        { val:'MONTHLY_VERIFICA_AIR_DEFENSE_VOLUME', name:'月累核实放空量' ,unit:'m³'},
+                        { val:'MONTHLY_VERI_VOLUME', name:'月累核实外输量' ,unit:'m³'},
+                        { val:'YEAR_VE_PROD', name:'年累核实产量' ,unit:'m³'},
+                        { val:'YEAR_VE_OIL_EQUI', name:'年累核实油当量' ,unit:'m³'},
+                        { val:'YEAR_CUMU_NET_PROD', name:'年累净产量' ,unit:'m³'},
+                        { val:'YEAR_VER_SELF_CONSUMPTION', name:'年累核实自用量' ,unit:'m³'},
+                        { val:'YEAR_VER_RELEASE_VOLUME', name:'年累核实放空量' ,unit:'m³'},
+                        { val:'YEAR_VER_EXPORT_VOLUME', name:'年累核实外输量' ,unit:'m³'}
                     ],
                     this.injectList=[],
                     this.managerList=[]
@@ -573,22 +569,22 @@ export default {
 
             case 'inject'://'注入指标':
                 this.stateList = [
-                    { val:'PROD_DATE', name: '生产时间' },
-                    { val:'WATER_NOZZLE_DIAMETER', name: '水嘴直径' },
-                    { val:'MAINLINE_PRESSURE', name: '干线压力' },
-                    { val:'DH_FLOWING_TEMP', name: '油压' },
-                    { val:'CSG_PRESS', name: '套压' },
-                    { val:'STATIC_PRESS', name: '静压' },
-                    { val:'FLOW_PRESS', name: '流压' },
-                    { val:'DAILY_INJ_POUR_VOLUME', name: '日注入量' },
-                    { val:'DAILY_INJECTION_VOLUME', name: '日配注量' }
+                    { val:'PROD_DATE', name: '生产时间' ,unit:'h'},
+                    { val:'WATER_NOZZLE_DIAMETER', name: '水嘴直径' ,unit:'mm'},
+                    { val:'MAINLINE_PRESSURE', name: '干线压力' ,unit:'MPa'},
+                    { val:'DH_FLOWING_TEMP', name: '油压' ,unit:'MPa'},
+                    { val:'CSG_PRESS', name: '套压' ,unit:'MPa'},
+                    { val:'STATIC_PRESS', name: '静压' ,unit:'MPa'},
+                    { val:'FLOW_PRESS', name: '流压' ,unit:'MPa'},
+                    { val:'DAILY_INJ_POUR_VOLUME', name: '日注入量' ,unit:'m³'},
+                    { val:'DAILY_INJECTION_VOLUME', name: '日配注量' ,unit:'m³'}
                 ],
                 this.productList = [
-                    { val:'MONTHLY_CUMULATIVE_PRODUCTION_TIME', name:'月累生产时间'},
-                    { val:'YEAR_CUMULATIVE_PRODUCTION_TIME', name:'年累生产时间'},
-                    { val:'MONTHLY_CUMULATIVE_INJECTION_VOLUME', name:'月累注入量'},
-                    { val:'YEAR_CUMULATIVE_INJECTION_VOLUME', name:'年累注入量'},
-                    { val:'REMARK', name:'备注'}
+                    { val:'MONTHLY_CUMULATIVE_PRODUCTION_TIME', name:'月累生产时间',unit:'h'},
+                    { val:'YEAR_CUMULATIVE_PRODUCTION_TIME', name:'年累生产时间',unit:'h'},
+                    { val:'MONTHLY_CUMULATIVE_INJECTION_VOLUME', name:'月累注入量',unit:'m³'},
+                    { val:'YEAR_CUMULATIVE_INJECTION_VOLUME', name:'年累注入量',unit:'m³'},
+                    { val:'REMARK', name:'备注',unit:''}
                 ],
                 this.totalList=[],
                 this.injectList=[],
@@ -597,40 +593,40 @@ export default {
                 //月   
             case 'Mwellhead'://'井口月生产':
                 this.stateList = [
-                    { val:'MONTHLY_PROD_DAYS', name:'月生产天数' },
-                    { val:'OIL_NOZZLE', name:'油嘴' },
-                    { val:'WH_TEMP', name:'井口温度' },
-                    { val:'DH_FLOWING_TEMP', name:'油压' },
-                    { val:'CSG_PRESS', name:'套压' },
-                    { val:'BACK_PRESS', name:'回压' },
-                    { val:'PUMP_INLET_PRESS', name:'泵吸入口压力' },
-                    { val:'PUMP_OUTLET_PRESS', name:'泵出口压力' }
+                    { val:'MONTHLY_PROD_DAYS', name:'月生产天数' ,unit:'d'},
+                    { val:'OIL_NOZZLE', name:'油嘴' ,unit:'mm'},
+                    { val:'WH_TEMP', name:'井口温度' ,unit:'℃'},
+                    { val:'DH_FLOWING_TEMP', name:'油压' ,unit:'MPa'},
+                    { val:'CSG_PRESS', name:'套压' ,unit:'MPa'},
+                    { val:'BACK_PRESS', name:'回压' ,unit:'MPa'},
+                    { val:'PUMP_INLET_PRESS', name:'泵吸入口压力' ,unit:'MPa'},
+                    { val:'PUMP_OUTLET_PRESS', name:'泵出口压力' ,unit:'MPa'}
                 ],
                 this.productList = [
-                    { val:'MONTHLY_LIQUID_PROD',name:'月产液' },
-                    { val:'MONTHLY_OIL_PROD',name:'月产油' },
-                    { val:'MONTHLY_WATER_PROD',name:'月产水' },
-                    { val:'MONTHLY_GAS_PROD',name:'月产气' },
-                    { val:'DAILY_LIQUID_PROD_LEVEL',name:'日产液水平' },
-                    { val:'DAILY_OIL_PROD_LEVEL',name:'日产油水平' },
-                    { val:'DAILY_WATER_PROD_LEVEL',name:'日产水水平' },
-                    { val:'DAILY_GAS_PROD_LEVEL',name:'日产气水平' },
-                    { val:'DAILY_LIQUID_PROD_CAP',name:'日产液能力' },
-                    { val:'DAILY_OIL_PROD_CAP',name:'日产油能力' },
-                    { val:'DAILY_WATER_PROD_CAP',name:'日产水能力' },
-                    { val:'DAILY_GAS_PROD_CAP',name:'日产气能力' },
-                    { val:'GAS_OIL_RATIO',name:'气油比' },
-                    { val:'OIL_GAS_RATIO',name:'油气比' },
-                    { val:'WATER_GAS_RATIO',name:'水气比' },
-                    { val:'WATER_RATIO',name:'含水' }
+                    { val:'MONTHLY_LIQUID_PROD',name:'月产液' ,unit:'m³'},
+                    { val:'MONTHLY_OIL_PROD',name:'月产油' ,unit:'m³'},
+                    { val:'MONTHLY_WATER_PROD',name:'月产水' ,unit:'m³'},
+                    { val:'MONTHLY_GAS_PROD',name:'月产气' ,unit:'m³'},
+                    { val:'DAILY_LIQUID_PROD_LEVEL',name:'日产液水平' ,unit:'m³/d'},
+                    { val:'DAILY_OIL_PROD_LEVEL',name:'日产油水平' ,unit:'m³/d'},
+                    { val:'DAILY_WATER_PROD_LEVEL',name:'日产水水平' ,unit:'m³/d'},
+                    { val:'DAILY_GAS_PROD_LEVEL',name:'日产气水平' ,unit:'m³/d'},
+                    { val:'DAILY_LIQUID_PROD_CAP',name:'日产液能力' ,unit:'m³/d'},
+                    { val:'DAILY_OIL_PROD_CAP',name:'日产油能力' ,unit:'m³/d'},
+                    { val:'DAILY_WATER_PROD_CAP',name:'日产水能力' ,unit:'m³/d'},
+                    { val:'DAILY_GAS_PROD_CAP',name:'日产气能力' ,unit:'m³/d'},
+                    { val:'GAS_OIL_RATIO',name:'气油比' ,unit:'m³/m³'},
+                    { val:'OIL_GAS_RATIO',name:'油气比' ,unit:'m³/m³'},
+                    { val:'WATER_GAS_RATIO',name:'水气比' ,unit:'m³/m³'},
+                    { val:'WATER_RATIO',name:'含水' ,unit:'%'}
 
                 ],
                 this.totalList=[
-                    { val:'YEAR_CUMU_PROD_DAILY', name:'年累生产天数' },
-                    { val:'YEAR_CUMU_FLUID_PROD', name:'年累产液' },
-                    { val:'YEAR_CUMU_OIL_PROD', name:'年累产油' },
-                    { val:'YEAR_ACCUM_WATER_PROD', name:'年累产水' },
-                    { val:'YEAR_CUMU_GAS_PROD', name:'年累产气' }
+                    { val:'YEAR_CUMU_PROD_DAILY', name:'年累生产天数' ,unit:'d'},
+                    { val:'YEAR_CUMU_FLUID_PROD', name:'年累产液' ,unit:'m³'},
+                    { val:'YEAR_CUMU_OIL_PROD', name:'年累产油' ,unit:'m³'},
+                    { val:'YEAR_ACCUM_WATER_PROD', name:'年累产水' ,unit:'m³'},
+                    { val:'YEAR_CUMU_GAS_PROD', name:'年累产气' ,unit:'m³'}
                 ],
                 this.injectList=[],
                 this.managerList=[]
@@ -639,63 +635,63 @@ export default {
                 this.stateList = [],
                 this.productList = [],
                 this.totalList = [
-                    { val:'MONTHLY_VE_PROD', name:'月累核实产量' },
-                    { val:'MONTHLY_CUMU_NET_PROD', name:'月累净产量' }
+                    { val:'MONTHLY_VE_PROD', name:'月累核实产量' ,unit:'m³'},
+                    { val:'MONTHLY_CUMU_NET_PROD', name:'月累净产量' ,unit:'m³'}
                 ],
                 this.injectList=[],
                 this.managerList=[]
                 break;
             case 'Minject'://'注入月指标':
                 this.stateList = [
-                    { val:'MONTHLY_PROD_DAYS',name:'月生产天数' },
-                    { val:'WATER_NOZZLE_DIAMETER',name:'水嘴直径' },
-                    { val:'MAINLINE_PRESSURE',name:'干线压力' },
-                    { val:'DH_FLOWING_TEMP',name:'油压' },
-                    { val:'CSG_PRESS',name:'套压' },
-                    { val:'DAILY_INJ_VOL',name:'日配注入量' },
-                    { val:'DAILY_AVG_INJ_VOL',name:'日均注入量' }
+                    { val:'MONTHLY_PROD_DAYS',name:'月生产天数' ,unit:'d'},
+                    { val:'WATER_NOZZLE_DIAMETER',name:'水嘴直径' ,unit:'mm'},
+                    { val:'MAINLINE_PRESSURE',name:'干线压力' ,unit:'MPa'},
+                    { val:'DH_FLOWING_TEMP',name:'油压' ,unit:'MPa'},
+                    { val:'CSG_PRESS',name:'套压' ,unit:'MPa'},
+                    { val:'DAILY_INJ_VOL',name:'日配注入量' ,unit:'m³'},
+                    { val:'DAILY_AVG_INJ_VOL',name:'日均注入量' ,unit:'m³'}
                 ],
                 this.productList = [],
                 this.totalList = [],
                 this.injectList = [
-                    { val:'YEAR_CUMU_PROD_DAILY', name:'年累生产天数' },
-                    { val:'MONTHLY_INJECT_VOL', name:'月注入量' },
-                    { val:'YEAR_CUMUL_INJ_VOLUME', name:'年累注入量' }
+                    { val:'YEAR_CUMU_PROD_DAILY', name:'年累生产天数' ,unit:'m³'},
+                    { val:'MONTHLY_INJECT_VOL', name:'月注入量' ,unit:'m³'},
+                    { val:'YEAR_CUMUL_INJ_VOLUME', name:'年累注入量' ,unit:'m³'}
                 ],
                 this.managerList=[]
                 break;
             case 'YTproProDic'://'生产指标'://油田日的生产指标
                     this.stateList = [],
                     this.productList = [
-                        { val:'DAILY_LIQUID_PROD', name:'日产液'},
-                        { val:'DAILY_OIL_PROD', name:'日产油'},
-                        { val:'DAILY_WATER_PROD', name:'日产水'},
-                        { val:'DAILY_GAS_PROD', name:'日产气'},
-                        { val:'WATER_RATIO', name:'含水'},
-                        { val:'OIL_GAS_RATIO', name:'气油比'},
-                        { val:'MONTHLY_CUMU_FLUID_PROD', name:'月累产液'},
-                        { val:'MONTHLY_CUMU_OIL_PROD', name:'月累产油'},
-                        { val:'MONTHLY_ACCUM_WATER_PROD', name:'月累产水'},
-                        { val:'MONTHLY_CUMU_GAS_PROD', name:'月累产气'}
+                        { val:'DAILY_LIQUID_PROD', name:'日产液',unit:'m³'},
+                        { val:'DAILY_OIL_PROD', name:'日产油',unit:'m³'},
+                        { val:'DAILY_WATER_PROD', name:'日产水',unit:'m³'},
+                        { val:'DAILY_GAS_PROD', name:'日产气',unit:'m³'},
+                        { val:'WATER_RATIO', name:'含水',unit:'%'},
+                        { val:'OIL_GAS_RATIO', name:'气油比',unit:'m³/m³'},
+                        { val:'MONTHLY_CUMU_FLUID_PROD', name:'月累产液',unit:'m³'},
+                        { val:'MONTHLY_CUMU_OIL_PROD', name:'月累产油',unit:'m³'},
+                        { val:'MONTHLY_ACCUM_WATER_PROD', name:'月累产水',unit:'m³'},
+                        { val:'MONTHLY_CUMU_GAS_PROD', name:'月累产气',unit:'m³'}
                     ],
                     this.totalList = [
-                        { val:'YEAR_CUMU_FLUID_PROD', name:'年累产液' },
-                        { val:'YEAR_CUMU_OIL_PROD', name:'年累产油' },
-                        { val:'YEAR_ACCUM_WATER_PROD', name:'年累产水' },
-                        { val:'YEAR_CUMU_GAS_PROD', name:'年累产气' }
+                        { val:'YEAR_CUMU_FLUID_PROD', name:'年累产液' ,unit:'m³'},
+                        { val:'YEAR_CUMU_OIL_PROD', name:'年累产油' ,unit:'m³'},
+                        { val:'YEAR_ACCUM_WATER_PROD', name:'年累产水' ,unit:'m³'},
+                        { val:'YEAR_CUMU_GAS_PROD', name:'年累产气' ,unit:'m³'}
                     ],
                     this.injectList = [
-                        { val:'AVERAGE_OIL_PRESS', name:'平均油压'},
-                        { val:'AVERAGE_MAINLINE_PRESS', name:'平均干线压力'},
-                        { val:'DAILY_WATER_INJECT_AMOUNT', name:'日注水聚总量'},
-                        { val:'MONTHLY_CUMUL_WATER_INJECT_AMOUNT', name:'月累注水聚总量'},
-                        { val:'YEAR_CUMUL_WATER_INJECT_AMOUNT', name:'年累注水聚总量'}
+                        { val:'AVERAGE_OIL_PRESS', name:'平均油压' ,unit:'MPa'},
+                        { val:'AVERAGE_MAINLINE_PRESS', name:'平均干线压力' ,unit:'MPa'},
+                        { val:'DAILY_WATER_INJECT_AMOUNT', name:'日注水聚总量' ,unit:'m³'},
+                        { val:'MONTHLY_CUMUL_WATER_INJECT_AMOUNT', name:'月累注水聚总量' ,unit:'m³'},
+                        { val:'YEAR_CUMUL_WATER_INJECT_AMOUNT', name:'年累注水聚总量' ,unit:'m³'}
                     ],
                     this.managerList=[
-                        { val:'DAY_TOTAL_NUMBER_WELLS_PER', name:'日总井数'},
-                        { val:'DAY_NUMBER_WELLS_OPENED_PER', name:'日开井数'},
-                        { val:'TOTAL_DAILY_INJECTION_WELLS', name:'日注入总井数'},
-                        { val:'NUMBER_DAILY_INJECTION_WELLS_OPENED', name:'日注入开井数'}
+                        { val:'DAY_TOTAL_NUMBER_WELLS_PER', name:'日总井数' ,unit:'口'},
+                        { val:'DAY_NUMBER_WELLS_OPENED_PER', name:'日开井数' ,unit:'口'},
+                        { val:'TOTAL_DAILY_INJECTION_WELLS', name:'日注入总井数' ,unit:'口'},
+                        { val:'NUMBER_DAILY_INJECTION_WELLS_OPENED', name:'日注入开井数' ,unit:'口'}
                     ]
                     break;
                 //年
@@ -703,11 +699,11 @@ export default {
                 if(this.activeTabIndex == '1'){
                     this.stateList = [],
                     this.productList = [
-                        { val:'YEAR_CUMU_PROD_DAILY', name:'年累生产天数' },
-                        { val:'FLUID_PROD_YEAR', name:'年产液' },
-                        { val:'OIL_PROD_YEAR', name:'年产油' },
-                        { val:'WATER_PROD_YEAR', name:'年产水' },
-                        { val:'GAS_PROD_YEAR', name:'年产气' }
+                        { val:'YEAR_CUMU_PROD_DAILY', name:'年累生产天数' ,unit:'d'},
+                        { val:'FLUID_PROD_YEAR', name:'年产液' ,unit:'m3'},
+                        { val:'OIL_PROD_YEAR', name:'年产油' ,unit:'m3'},
+                        { val:'WATER_PROD_YEAR', name:'年产水' ,unit:'m3'},
+                        { val:'GAS_PROD_YEAR', name:'年产气' ,unit:'m3'}
                     ],
                     this.totalList = [],
                     this.injectList = [],
@@ -717,11 +713,11 @@ export default {
                     this.stateList = [],
                         this.productList = [],
                         this.totalList = [
-                            { val:'INJ_WATER_YEAR', name:'年注水聚总量' },
-                            { val:'YEAR_LIQUID_PRODUCT', name:'年产液' },
-                            { val:'OIL_PRODUCTION_YEAR', name:'年产油' },
-                            { val:'PROD_WATER_YEAR', name:'年产水' },
-                            { val:'GAS_PRODUCTION_YEAR', name:'年产气' }
+                            { val:'INJ_WATER_YEAR', name:'年注水聚总量' ,unit:'m³'},
+                            { val:'YEAR_LIQUID_PRODUCT', name:'年产液' ,unit:'m³'},
+                            { val:'OIL_PRODUCTION_YEAR', name:'年产油' ,unit:'m³'},
+                            { val:'PROD_WATER_YEAR', name:'年产水' ,unit:'m³'},
+                            { val:'GAS_PRODUCTION_YEAR', name:'年产气' ,unit:'m³'}
                         ],
                         this.injectList = [],
                         this.managerList=[]
@@ -732,8 +728,8 @@ export default {
                 this.stateList = [],
                     this.productList = [],
                     this.totalList = [
-                        { val:'MONTHLY_VE_PROD', name:'年累核实产量' },
-                        { val:'MONTHLY_CUMU_NET_PROD', name:'年累净产量' }
+                        { val:'MONTHLY_VE_PROD', name:'年累核实产量' ,unit:'m³'},
+                        { val:'MONTHLY_CUMU_NET_PROD', name:'年累净产量' ,unit:'m³'}
                     ],
                     this.injectList = [],
                     this.managerList=[]
@@ -741,8 +737,8 @@ export default {
             case 'Yinject'://'注入指标':
                 this.stateList = [],
                     this.productList = [
-                        { val:'YEAR_CUMU_PROD_DAILY', name:'年累生产天数' },
-                        { val:'YEAR_CUMUL_INJ_VOLUME', name:'年累注入量' }
+                        { val:'YEAR_CUMU_PROD_DAILY', name:'年累生产天数' ,unit:'d'},
+                        { val:'YEAR_CUMUL_INJ_VOLUME', name:'年累注入量' ,unit:'m3'}
                     ],
                     this.totalList = [],
                     this.injectList = [],
@@ -753,51 +749,51 @@ export default {
             case 'measure'://'油田措施日指标':
                 this.stateList = [],
                     this.productList = [
-                        { val:'DAILY_PROD_LIQUID', name:'日增产液'},
-                        { val:'DAILY_INCOIL_PROD', name:'日增产油'},
-                        { val:'DAILY_INCWATER_PROD', name:'日增产水'},
-                        { val:'DAILY_INCGAS_PROD', name:'日增产气'}
+                        { val:'DAILY_PROD_LIQUID', name:'日增产液' ,unit:'m³'},
+                        { val:'DAILY_INCOIL_PROD', name:'日增产油' ,unit:'m³'},
+                        { val:'DAILY_INCWATER_PROD', name:'日增产水' ,unit:'m³'},
+                        { val:'DAILY_INCGAS_PROD', name:'日增产气' ,unit:'m³'}
                     ],
                     this.totalList = [
-                        { val:'MONTHLY_ACCUM_PROD_SOLUT', name:'月累增产液'},
-                        { val:'MONTHLY_CUMUL_INC_OIL_PROD', name:'月累增产油'},
-                        { val:'MONTHLY_CUMUL_INC_WATER_PROD', name:'月累增产水'},
-                        { val:'MONTHLY_CUMUL_INC_GAS_PROD', name:'月累增产气'},
-                        { val:'YEAR_CUMUL_YIELD_INCREASE_LIQUID', name:'年累增产液'},
-                        { val:'YEAR_CUMUL_INCR_OIL_PROD', name:'年累增产油'},
-                        { val:'YEAR_CUMUL_INCR_WATER_PROD', name:'年累增产水'},
-                        { val:'YEAR_CUMUL_INCR_GAS_PROD', name:'年累增产气'}
+                        { val:'MONTHLY_ACCUM_PROD_SOLUT', name:'月累增产液' ,unit:'m³'},
+                        { val:'MONTHLY_CUMUL_INC_OIL_PROD', name:'月累增产油' ,unit:'m³'},
+                        { val:'MONTHLY_CUMUL_INC_WATER_PROD', name:'月累增产水' ,unit:'m³'},
+                        { val:'MONTHLY_CUMUL_INC_GAS_PROD', name:'月累增产气' ,unit:'m³'},
+                        { val:'YEAR_CUMUL_YIELD_INCREASE_LIQUID', name:'年累增产液' ,unit:'m³'},
+                        { val:'YEAR_CUMUL_INCR_OIL_PROD', name:'年累增产油' ,unit:'m³'},
+                        { val:'YEAR_CUMUL_INCR_WATER_PROD', name:'年累增产水' ,unit:'m³'},
+                        { val:'YEAR_CUMUL_INCR_GAS_PROD', name:'年累增产气' ,unit:'m³'}
                     ],
                     this.injectList = [],
                     this.managerList=[
-                        { val:'DAILY_MEASURE_WELLS', name:'日措施井次' },
-                        { val:'MONTHLY_CUMUL_COUNT', name:'月累措施井次' },
-                        { val:'YEAR_CUMUL_COUNT', name:'年累措施井次' }
+                        { val:'DAILY_MEASURE_WELLS', name:'日措施井次' ,unit:'次'},
+                        { val:'MONTHLY_CUMUL_COUNT', name:'月累措施井次' ,unit:'次'},
+                        { val:'YEAR_CUMUL_COUNT', name:'年累措施井次' ,unit:'次'}
                     ]
                 break;
                 //文档不全
             case 'MproProDic'://'油田月指标':
                 this.stateList = [],
                     this.productList = [
-                        { val:'SYN_WATER_RATIO', name:'综合含水'},
-                        { val:'SYN_OIL_GAS_RATIO', name:'综合气油比'},
-                        { val:'DAILY_LIQUID_PROD_LEVEL', name:'日产液水平'},
-                        { val:'DAILY_OIL_PROD_LEVEL', name:'日产油水平'},
-                        { val:'DAILY_WATER_PROD_LEVEL', name:'日产水水平'},
-                        { val:'DAILY_GAS_PROD_LEVEL', name:'日产气水平'},
-                        { val:'DAILY_LIQUID_PROD_CAP', name:'日产液能力'},
-                        { val:'DAILY_OIL_PROD_CAP', name:'日产油能力'},
-                        { val:'DAILY_WATER_PROD_CAP', name:'日产水能力'},
-                        { val:'DAILY_GAS_PROD_CAP', name:'日产气能力'}
+                        { val:'SYN_WATER_RATIO', name:'综合含水' ,unit:'%'},
+                        { val:'SYN_OIL_GAS_RATIO', name:'综合气油比' ,unit:'m³/m³'},
+                        { val:'DAILY_LIQUID_PROD_LEVEL', name:'日产液水平' ,unit:'m³/d'},
+                        { val:'DAILY_OIL_PROD_LEVEL', name:'日产油水平' ,unit:'m³/d'},
+                        { val:'DAILY_WATER_PROD_LEVEL', name:'日产水水平' ,unit:'m³/d'},
+                        { val:'DAILY_GAS_PROD_LEVEL', name:'日产气水平' ,unit:'m³/d'},
+                        { val:'DAILY_LIQUID_PROD_CAP', name:'日产液能力' ,unit:'m³/d'},
+                        { val:'DAILY_OIL_PROD_CAP', name:'日产油能力' ,unit:'m³/d'},
+                        { val:'DAILY_WATER_PROD_CAP', name:'日产水能力' ,unit:'m³/d'},
+                        { val:'DAILY_GAS_PROD_CAP', name:'日产气能力' ,unit:'m³/d'}
                     ],
                     this.totalList = [],
                     this.injectList = [
-                        { val:'DAILY_LIQUID_INJ_LEVEL', name:'日注液水平'},
-                        { val:'DAILY_WATER_INJ_LEVEL', name:'日注水水平'},
-                        { val:'DAILY_GAS_INJ_LEVEL', name:'日注气水平'},
-                        { val:'DAILY_LIQUID_INJ_CAPACITY', name:'日注液能力'},
-                        { val:'DAILY_WATER_INJ_CAPACITY', name:'日注水能力'},
-                        { val:'DAILY_GAS_INJ_CAPACITY', name:'日注气能力'}
+                        { val:'DAILY_LIQUID_INJ_LEVEL', name:'日注液水平' ,unit:'m³/d'},
+                        { val:'DAILY_WATER_INJ_LEVEL', name:'日注水水平' ,unit:'m³/d'},
+                        { val:'DAILY_GAS_INJ_LEVEL', name:'日注气水平' ,unit:'m³/d'},
+                        { val:'DAILY_LIQUID_INJ_CAPACITY', name:'日注液能力' ,unit:'m³/d'},
+                        { val:'DAILY_WATER_INJ_CAPACITY', name:'日注水能力' ,unit:'m³/d'},
+                        { val:'DAILY_GAS_INJ_CAPACITY', name:'日注气能力' ,unit:'m³/d'}
                     ],
                     this.managerList=[]
                     // this.storeList = ['井口储采比','井口采油速度','井口采出油速度','剩余油储量','剩余气储量','剩余油采出速度','剩余气采出速度','剩余油采出程度','剩余气采出程度']
@@ -806,8 +802,8 @@ export default {
                     this.stateList = [],
                     this.productList = [],
                     this.totalList = [
-                        { val:'MONTHLY_VE_PROD', name:'月累核实产量' },
-                        { val:'MONTHLY_CUMU_NET_PROD', name:'月累净产量' }
+                        { val:'MONTHLY_VE_PROD', name:'月累核实产量' ,unit:'m³'},
+                        { val:'MONTHLY_CUMU_NET_PROD', name:'月累净产量' ,unit:'m³'}
                     ],
                     this.injectList = [],
                     this.managerList=[]
@@ -816,8 +812,8 @@ export default {
                 this.stateList = [],
                     this.productList = [],
                     this.totalList = [
-                        { val:'MONTHLY_VE_PROD',name:'年累核实产量' },
-                        { val:'MONTHLY_CUMU_NET_PROD',name:'年累净产量' }
+                        { val:'MONTHLY_VE_PROD',name:'年累核实产量' ,unit:'m³'},
+                        { val:'MONTHLY_CUMU_NET_PROD',name:'年累净产量' ,unit:'m³'}
                     ],
                     this.injectList = [],
                     this.managerList=[]
@@ -853,9 +849,9 @@ export default {
                 }
                 this.headerTextLower = []
                 this.headerText.forEach((item)=>{
-                    this.headerTextLower.push({val:item.val.toLowerCase().replace(/_/g,''),name:item.name})
+                    this.headerTextLower.push({val:item.val.toLowerCase().replace(/_/g,''),name:`${item.name}${item.unit?'('+item.unit+')':''}`})
                 })
-                this.headerTextLower.unshift({name:'井名',val:'name'},{name:'生产时间',val:'proddate'})
+                this.headerTextLower.unshift({name:'井名',val:'name'},{name:'生产时间(h)',val:'proddate'})
                 this.tableData = tableArr
             }
         },
