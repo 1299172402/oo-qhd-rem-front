@@ -60,7 +60,7 @@
         <page-panel-new :show-btn="true" v-if="!activeEchart" style="height:calc(100% - 62px)">
             <el-row>
                 <el-col :span="6" style="margin-left: 20px;margin-right: 20px">
-                    <page-panel-new :show-btn="true" headerTitle="目标类型">
+                    <page-panel :show-btn="true" headerTitle="目标类型">
                         <el-radio-group v-model="activeTabIndex">
                             <el-radio :label="1">
                                 单井
@@ -69,72 +69,72 @@
                                 油田(区块)
                             </el-radio>
                         </el-radio-group>
-                    </page-panel-new>
+                    </page-panel>
                 </el-col>
                 <el-col :span="6" style="margin-left: 20px;margin-right: 20px">
-                    <page-panel-new :show-btn="true" headerTitle="时间类型">
+                    <page-panel :show-btn="true" headerTitle="时间类型">
                         <el-radio-group v-model="activeTabIndexDate">
                             <el-radio :label="3">日</el-radio>
                             <el-radio :label="2">月</el-radio>
                             <el-radio :label="1">年</el-radio>
                         </el-radio-group>
-                    </page-panel-new>
+                    </page-panel>
                 </el-col>
                 <el-col :span="9" style="margin-left: 20px;margin-right: 20px">
-                    <page-panel-new :show-btn="true" headerTitle="数据类型">
+                    <page-panel :show-btn="true" headerTitle="数据类型">
                         <el-radio-group v-model="activeTabIndexData">
                             <el-radio :label="dataType.val" v-for="dataType in dataTypes">{{dataType.name}}</el-radio>
                         </el-radio-group>
-                    </page-panel-new>
+                    </page-panel>
                 </el-col>
             </el-row>
 
             <el-row>
                 <el-col :span="8" style="margin-left: 20px;margin-right: 20px">
-                    <page-panel-new :show-btn="true" headerTitle="状态指标" style="min-height: 250px" v-show="stateList.length != 0">
+                    <page-panel :show-btn="true" headerTitle="状态指标" style="min-height: 250px" v-show="stateList.length != 0">
                         <el-checkbox-group v-model="stateValue">
                             <el-checkbox :label="item.val" :value="item.val" v-for="item in stateList">{{ item.name?item.name:item }}</el-checkbox>
                         </el-checkbox-group>
-                    </page-panel-new>
+                    </page-panel>
                 </el-col>
                 <el-col :span="5" style="margin-left: 20px;margin-right: 20px">
-                    <page-panel-new :show-btn="true" headerTitle="生产指标" style="min-height: 250px" v-show="productList.length != 0">
+                    <page-panel :show-btn="true" headerTitle="生产指标" style="min-height: 250px" v-show="productList.length != 0">
                         <el-checkbox-group v-model="productValue">
                             <el-checkbox :label="item.val" :value="item.val" v-for="item in productList">{{ item.name?item.name:item }}</el-checkbox>
                         </el-checkbox-group>
-                    </page-panel-new>
+                    </page-panel>
                 </el-col>
                 <el-col :span="8" style="margin-left: 20px;margin-right: 20px">
-                    <page-panel-new :show-btn="true" headerTitle="累产指标" style="min-height: 250px" v-show="totalList.length != 0">
+                    <page-panel :show-btn="true" headerTitle="累产指标" style="min-height: 250px" v-show="totalList.length != 0">
                         <el-checkbox-group v-model="totalValue">
                             <el-checkbox :label="item.val" :value="item.val" v-for="item in totalList">{{ item.name?item.name:item }}</el-checkbox>
                         </el-checkbox-group>
-                    </page-panel-new>
+                    </page-panel>
                 </el-col>
                 <el-col :span="8" style="margin-left: 20px;margin-right: 20px">
-                    <page-panel-new :show-btn="true" headerTitle="注入指标" style="min-height: 250px" v-show="injectList.length != 0">
+                    <page-panel :show-btn="true" headerTitle="注入指标" style="min-height: 250px" v-show="injectList.length != 0">
                         <el-checkbox-group v-model="injectValue">
                             <el-checkbox :label="item.val" :value="item.val" v-for="item in injectList">{{ item.name?item.name:item }}</el-checkbox>
                         </el-checkbox-group>
-                    </page-panel-new>
+                    </page-panel>
                 </el-col>
                 <el-col :span="8" style="margin-left: 20px;margin-right: 20px">
-                    <page-panel-new :show-btn="true" headerTitle="管理指标" style="min-height: 250px" v-show="managerList.length != 0">
+                    <page-panel :show-btn="true" headerTitle="管理指标" style="min-height: 250px" v-show="managerList.length != 0">
                         <el-checkbox-group v-model="managerValue">
                             <el-checkbox :label="item.val" :value="item.val" v-for="item in managerList">{{ item.name?item.name:item }}</el-checkbox>
                         </el-checkbox-group>
-                    </page-panel-new>
+                    </page-panel>
                 </el-col>
                 <el-col :span="8" style="margin-left: 20px;margin-right: 20px">
-                    <page-panel-new :show-btn="true" headerTitle="储采指标" style="min-height: 250px" v-show="storeList.length != 0">
+                    <page-panel :show-btn="true" headerTitle="储采指标" style="min-height: 250px" v-show="storeList.length != 0">
                         <el-checkbox-group v-model="storeValue">
                             <el-checkbox :label="item.val" :value="item.val" v-for="item in storeList">{{ item.name?item.name:item }}</el-checkbox>
                         </el-checkbox-group>
-                    </page-panel-new>
+                    </page-panel>
                 </el-col>
             </el-row>
         </page-panel-new>
-        <page-panel-new :show-btn="true" v-else-if="activeEchart" style="height:calc(100% - 62px)">
+        <page-panel :show-btn="true" v-else-if="activeEchart" style="height:calc(100% - 62px)">
 <!--            <ProductionData></ProductionData>-->
             <el-table
                 :row-style="{ height: '0px' }"
@@ -148,7 +148,7 @@
             >
                 <el-table-column :key="index" :prop="item.val" :label="item.name" min-width="160" v-for="(item,index) in headerTextLower"></el-table-column>
             </el-table>
-        </page-panel-new>
+        </page-panel>
         <el-dialog
             title="查询"
             :visible.sync="dialogVisible"
