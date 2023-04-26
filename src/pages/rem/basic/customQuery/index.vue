@@ -134,7 +134,7 @@
                 </el-col>
             </el-row>
         </page-panel-new>
-        <page-panel :show-btn="true" v-else-if="activeEchart" style="height:calc(100% - 62px)">
+        <page-panel headerTitle="" :show-btn="true" v-else-if="activeEchart" style="height:calc(100% - 62px)">
 <!--            <ProductionData></ProductionData>-->
             <el-table
                 :row-style="{ height: '0px' }"
