@@ -22,11 +22,11 @@
                 <el-button style="margin-left: 15px" type="primary" icon="el-icon-download" @click="doDownLoad">下载</el-button>
             </div>
         </headerSearch>
-        <pagePanelNew :style="{ height: this.currentModule == 'waterReport' ? 'auto' : 'calc(100% - 100px)' }" class="g-w100">
+        <pagePanelNew :style="{ height: currentModule == 'waterReport' ? 'auto' : 'calc(100% - 100px)' }" class="g-w100">
             <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
                 <el-tab-pane style="height: auto" v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
                     <div class="tab-view">
-                        <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="currentModule = module.name">
+                        <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="tabsClick(module)">
                             {{ module.label }}
                         </el-button>
                         <div class="select-view" v-if="currentModule == 'homeworkWellHistory'">
@@ -44,7 +44,7 @@
         </pagePanelNew>
     </div>
 </template>
-
+    
 <script>
     import { fetchOilFields,fetchPlatforms,fetchInjectionWells,fetchInjectionWellsByPlatform,uploadFile } from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import { getMajorEventsBriefly } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
@@ -140,11 +140,11 @@
                                 label: "视吸水指数",
                                 name: "injectivityIndex",
                             },
-                              {
-              label: "示踪剂",
-              name: "tracer",
-            },
-                        ],
+                            {
+                                label: "示踪剂",
+                                name: "tracer",
+                            }
+                        ]
                     },
                     {
                         label: "生产动态资料",
@@ -174,10 +174,7 @@
                     {
                         label: '动态监测资料',
                         name: 'dynamicConitoringData',
-                        modules: [{
-                                label: '分层调配数据',
-                                name: 'stratificationTesting'
-                            },
+                        modules: [
                             {
                                 label: '吸水剖面',
                                 name: 'fluidProducingProfile'
@@ -189,7 +186,11 @@
                             {
                                 label: '试井',
                                 name: 'wellTestReport'
-                            }
+                            },
+                            {
+                                label: '分层调配数据',
+                                name: 'stratificationTesting'
+                            },
                         ]
                     },
                     {
@@ -345,6 +346,15 @@
             },
             beforeRemove(file, fileList) {
                 return this.$confirm(`确定移除 ${file.name}？`);
+            },
+            //点击二级菜单
+            tabsClick(module){
+                if(module.name=='stratificationTesting'){//分层调配
+                    let url=`https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/waterRunningControl?selectOilField=${this.selectOilField}&selectPlatform=${this.selectPlatform}&selectWellId=${this.selectWellId}`;
+                    window.open(url,'_blank');
+                }else{
+                    this.currentModule = module.name;
+                }
             },
             //初始化 数据
             async initData() {

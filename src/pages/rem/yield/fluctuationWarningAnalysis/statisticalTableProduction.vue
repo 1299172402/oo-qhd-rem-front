@@ -76,18 +76,29 @@
                       </el-table-column>
                       <el-table-column label="变化量">
                         <el-table-column :label="`产液对比\n(m³/d)`" width="160">
-                            <template slot-scope="scope">
-                                {{scope.row.fluidProdDaily!==null?numReduce(scope.row.fluidProdDaily,scope.row.fluidProdDailyCompare):'-'}}
+                            <template slot-scope="{ row }">
+                                <span style="display: flex;align-items: center;justify-content: center;">
+                                    {{ row.fluidProdDaily!==null?numReduce(row.fluidProdDaily,row.fluidProdDailyCompare):'-' }}
+                                    <img src="@/assets/rem/yieId/upTriangle.png" alt="" v-if="row.fluidProdDaily!==null&&numReduce(row.fluidProdDaily,row.fluidProdDailyCompare)>0" style="width:20px;height:20px;">
+                                    <span v-if="row.fluidProdDaily!==null&&numReduce(row.fluidProdDaily,row.fluidProdDailyCompare)===0"  style="width:12px;height:3px;background-color: #ffe706;margin-left:8px;"></span>
+                                    <img src="@/assets/rem/yieId/downTriangle.png" alt="" v-if="row.fluidProdDaily!==null&&numReduce(row.fluidProdDaily,row.fluidProdDailyCompare)<0" style="width:20px;height:20px;">
+                                </span>
                             </template>
                         </el-table-column>
                         <el-table-column :label="`产油对比\n(m³/d)`" width="160">
-                            <template slot-scope="scope">
-                                {{scope.row.oilProdDaily!==null?numReduce(scope.row.oilProdDaily,scope.row.oilProdDailyCompare):'-'}}
+                            <template slot-scope="{row,$index}">
+                                {{row.oilProdDaily!==null?numReduce(row.oilProdDaily,row.oilProdDailyCompare):'-'}}
+                                <span v-if="row.oilProdDaily!==null" :style="{width:Math.abs(numReduce(row.oilProdDaily,row.oilProdDailyCompare))*100+'px',height:'3px',backgroundColor:'#ff9716'}"></span>
                             </template>
                         </el-table-column>
                         <el-table-column :label="`含水对比\n(%)`" width="160">
-                            <template slot-scope="scope">
-                                {{scope.row.waterRatio!==null?numReduce(scope.row.waterRatio,scope.row.waterRatioCompare):'-'}}
+                            <template slot-scope="{ row }">
+                                <span style="display: flex;align-items: center;justify-content: center;">
+                                    {{ row.waterRatio!==null?numReduce(row.waterRatio,row.waterRatioCompare):'-' }}
+                                    <img src="@/assets/rem/yieId/UP.png" alt="" v-if="row.waterRatio!==null&&numReduce(row.waterRatio,row.waterRatioCompare)>0" style="width:20px;height:20px;">
+                                    <img src="@/assets/rem/yieId/equation.png" alt="" v-if="row.waterRatio!==null&&numReduce(row.waterRatio,row.waterRatioCompare)==0" style="width:20px;height:20px;margin-left:8px;">
+                                    <img src="@/assets/rem/yieId/DOWN.png" alt="" v-if="row.waterRatio!==null&&numReduce(row.waterRatio,row.waterRatioCompare)<0" style="width:20px;height:20px;">
+                                </span>
                             </template>
                         </el-table-column>
                         <el-table-column :label="`井底流压对比\n(Mpa)`" width="170">
@@ -96,8 +107,13 @@
                             </template>
                         </el-table-column>
                         <el-table-column :label="`泵频率对比\n(Hz)`" width="160">
-                            <template slot-scope="scope">
-                                {{scope.row.pumpFrequency!==null?numReduce(scope.row.pumpFrequency,scope.row.pumpFrequencyCompare):'-'}}
+                            <template slot-scope="{ row }">
+                                <span style="display: flex;align-items: center;justify-content: center;">
+                                    {{ row.pumpFrequency!==null?numReduce(row.pumpFrequency,row.pumpFrequencyCompare):'-' }}
+                                    <img src="@/assets/rem/yieId/UP.png" alt="" v-if="row.pumpFrequency!==null&&numReduce(row.pumpFrequency,row.pumpFrequencyCompare)>0" style="width:20px;height:20px;">
+                                    <img src="@/assets/rem/yieId/equation.png" alt="" v-if="row.pumpFrequency!==null&&numReduce(row.pumpFrequency,row.pumpFrequencyCompare)==0" style="width:20px;height:20px;margin-left:8px;">
+                                    <img src="@/assets/rem/yieId/DOWN.png" alt="" v-if="row.pumpFrequency!==null&&numReduce(row.pumpFrequency,row.pumpFrequencyCompare)<0" style="width:20px;height:20px;">
+                                </span>
                             </template>
                         </el-table-column>
                       </el-table-column>
@@ -271,7 +287,11 @@
             	const num1Digits = (num1.toString().split('.')[1] || '').length;
             	const num2Digits = (num2.toString().split('.')[1] || '').length;
             	const baseNum = Math.pow(10, Math.max(num1Digits, num2Digits));
-            	return (num1 * baseNum - num2 * baseNum) / baseNum;
+                
+                const num=(num1 * baseNum - num2 * baseNum) / baseNum;
+                const rnum= num.toFixed(2);
+                return Number(rnum);
+            	// return (num1 * baseNum - num2 * baseNum) / baseNum;
             }
         },
     };
