@@ -87,8 +87,10 @@
                         </el-table-column>
                         <el-table-column :label="`产油对比\n(m³/d)`" width="160">
                             <template slot-scope="{row,$index}">
-                                {{row.oilProdDaily!==null?numReduce(row.oilProdDaily,row.oilProdDailyCompare):'-'}}
-                                <span v-if="row.oilProdDaily!==null" :style="{width:Math.abs(numReduce(row.oilProdDaily,row.oilProdDailyCompare))*100+'px',height:'3px',backgroundColor:'#ff9716'}"></span>
+                                <span style="display: flex;align-items: center;justify-content: center;">
+                                    {{row.oilProdDaily!==null?row.comparisonOilProduction:'-'}}
+                                    <span v-if="row.oilProdDaily!==null" :style="{width:row.comparisonOilWidth+'px',height:'13px',backgroundColor:'#ff9716',marginLeft:'4px'}"></span>
+                                </span>
                             </template>
                         </el-table-column>
                         <el-table-column :label="`含水对比\n(%)`" width="160">
@@ -130,6 +132,7 @@
     import { fetchMeasureInfos,nameAndCode} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
     import { getWellOutputWaveTable } from "@/api/oilDeposit/rem-04/yieId.js"
     import { exportExcel } from '@/lib/exportExcel.js';
+    import * as D3 from "d3"
     export default {
         // name: 'statisticalTableProduction',
         data() {
@@ -173,6 +176,12 @@
                 },
                 //表格数据
                 tableData: [],
+                //产油对比-实际值
+                min:0,
+                max:0,
+                //产油对比-宽度
+                min2:10,
+                max2:30,
             };
         },
         mounted() {
@@ -278,7 +287,30 @@
                 }
                 getWellOutputWaveTable(this.searchForm).then((res) => {
                     if (res.data.code == 200) {
-                       this.tableData=res.data.data;
+                        let tableData=res.data.data;
+                        let minMax=[];
+                        if(tableData.length){
+                            tableData.forEach((el,i)=>{
+                                if(el.oilProdDaily!==null){//产油对比
+                                    let comparisonOilProduction=this.numReduce(el.oilProdDaily,el.oilProdDailyCompare);
+                                    tableData[i].comparisonOilProduction=comparisonOilProduction;
+                                    minMax.push(comparisonOilProduction)
+                                }
+                            })
+                            this.min=Math.min(...minMax);   
+                            this.max=Math.max(...minMax);
+                            let numScale=D3.scaleLinear();
+                            let linearScale=numScale.domain([this.min,this.max]).range([this.min2,this.max2]);
+                            tableData.forEach((el,i)=>{
+                                if(el.oilProdDaily!==null){//产油对比
+                                    tableData[i].comparisonOilWidth=linearScale(el.comparisonOilProduction);
+                                }
+                            })
+                            console.log('table数据',tableData);
+                            this.tableData=tableData;
+                        }else{
+                            this.tableData=[];
+                        }
                     }
                 });
             },
@@ -287,12 +319,41 @@
             	const num1Digits = (num1.toString().split('.')[1] || '').length;
             	const num2Digits = (num2.toString().split('.')[1] || '').length;
             	const baseNum = Math.pow(10, Math.max(num1Digits, num2Digits));
-                
                 const num=(num1 * baseNum - num2 * baseNum) / baseNum;
                 const rnum= num.toFixed(2);
                 return Number(rnum);
-            	// return (num1 * baseNum - num2 * baseNum) / baseNum;
-            }
+            },
+            //两数相乘
+            accMul(arg1,arg2){
+            	var m = 0,
+            		s1 = arg1.toString(),
+            		s2 = arg2.toString();
+            	try {
+            		m += s1.split(".")[1].length
+            	} catch (e) {}
+            	try {
+            		m += s2.split(".")[1].length
+            	} catch (e) {}
+            	return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
+            },
+            //两数相除
+            numExcept(a, b) {
+                a = isNaN(a) ? 0 : a
+                b = isNaN(b) ? 0 : b
+                var c, d, e = 0,
+                    f = 0;
+                try {
+                    e = a.toString().split(".")[1].length;
+                } catch (g) {
+                    g == g
+                }
+                try {
+                    f = b.toString().split(".")[1].length;
+                } catch (g) {
+                    g == g
+                }
+                return c = Number(a.toString().replace(".", "")), d = Number(b.toString().replace(".", "")), this.accMul(c / d, Math.pow(10, f - e));
+            },
         },
     };
 </script>
