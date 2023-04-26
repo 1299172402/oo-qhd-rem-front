@@ -85,7 +85,7 @@
                                         <el-col :span="12" style="height: 100%;">
                                             <div align="center" style="height: 100%;display: flex;align-items: center;justify-content: center;">
                                                 <el-card class="cardLeft" shadow="always">
-                                                    计划产量
+                                                    计划产量(分公司奋斗)
                                                 </el-card>
                                             </div>
                                         </el-col>
@@ -101,7 +101,7 @@
                                         <el-col :span="12" style="height: 100%;">
                                             <div align="center" style="height: 100%;display: flex;align-items: center;justify-content: center;">
                                                 <el-card class="cardLeft" shadow="always">
-                                                    剩余水平
+                                                    剩余水平(分公司奋斗)
                                                 </el-card>
                                             </div>
                                         </el-col>
@@ -117,7 +117,7 @@
                                         <el-col :span="12" style="height: 100%;">
                                             <div align="center" style="height: 100%;display: flex;align-items: center;justify-content: center;">
                                                 <el-card class="cardLeft" shadow="always">
-                                                    滚动预测产量
+                                                    滚动预测产量({{new Date().getMonth()}}+{{12-new Date().getMonth()}})
                                                 </el-card>
                                             </div>
                                         </el-col>
@@ -306,7 +306,7 @@
                 //预警分析日期
                 selectDate:[],
                 //产量单位
-                unitOfProduction: [{label: "m³/d",value: "m",},{label: "t/d",value: "t",},],
+                unitOfProduction: [{label: "m³",value: "m",},{label: "t",value: "t",},],
                 //产量单位选择值
                 selectUnitOfProduction: "m",
                 //异常分析原因

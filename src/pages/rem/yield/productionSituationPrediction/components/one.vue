@@ -446,34 +446,34 @@
                 var lineTitle = '';
                 switch (value) {
                     case "baoBiao":
-                        lineTitle = '报表产量/' + unit1;
+                        lineTitle = '报表产量(' + unit1+')';
                         break;
                     case "下舱产量/":
-                        lineTitle = '下舱产量/' + unit1;
+                        lineTitle = '下舱产量(' + unit1+')';
                         break;
                     case "baoBiaoYesterday":
-                        lineTitle = '前一日报表产量/' + unit1;
+                        lineTitle = '前一日报表产量(' + unit1+')';
                         break;
                     case "前一日下舱产量/":
-                        lineTitle = '前一日下舱产量/' + unit1;
+                        lineTitle = '前一日下舱产量(' + unit1+')';
                         break;
                     case "yuCe":
-                        lineTitle = '滚动预测/' + unit2;
+                        lineTitle = '滚动预测(' + unit2+')';
                         break;
                     case "fenDou":
-                        lineTitle = '分公司奋斗/' + unit2;
+                        lineTitle = '分公司奋斗(' + unit2+')';
                         break;
                     case "kaoHe":
-                        lineTitle = '分公司考核/' + unit2;
+                        lineTitle = '分公司考核(' + unit2+')';
                         break;
                     case "当日-前一日产量":
-                        lineTitle = '当日-前一日产量';
+                        lineTitle = '当日-前一日产量(' + unit2 + ')';
                         break;
                     case "下舱产量-滚动预测(/":
-                        lineTitle = '下舱产量-滚动预测(/' + unit2 + ')';
+                        lineTitle = '下舱产量-滚动预测(' + unit2 + ')';
                         break;
                     case "下舱产量-滚动预测奋斗(/":
-                        lineTitle = '下舱产量-滚动预测奋斗(/' + unit2 + ')';
+                        lineTitle = '下舱产量-滚动预测奋斗(' + unit2 + ')';
                         break;
                     case "下舱产量-分公司奋斗":
                         lineTitle = '下舱产量-分公司奋斗';
@@ -482,7 +482,7 @@
                         lineTitle = '下舱产量-分公司考核';
                         break;
                     case "baoBiaoYuCeDiff":
-                        lineTitle = '报表产量-滚动预测产量';
+                        lineTitle = '报表产量-滚动预测产量(' + unit2 + ')';
                         break;
                 }
                 return lineTitle;

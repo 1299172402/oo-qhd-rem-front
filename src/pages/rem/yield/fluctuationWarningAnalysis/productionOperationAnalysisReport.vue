@@ -6,46 +6,46 @@
                 <div class="pagePane-container">
                     <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
                         <span>{{ oilFieldName }}产量分析报告</span>
-                        <!-- <el-button class="fr" @click="doPicture" v-show="canDownload">下载</el-button> -->
+                        <el-button type="primary" style="height:30px;" @click="$router.go(-1)">返回</el-button>
                     </div>
                     <div class="rowBox">
                         <div class="row" style="margin-right:20px;">
                             <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="" isShowMaxBtn>
-                                <el-table :data="tableDataPtOne" highlight height="100%">
-                                    <el-table-column prop="platformName" label="平台" align="center" min-width="20%"></el-table-column>
-                                    <el-table-column prop="dayOutput" :label="'当日'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="20%">
+                                <el-table id="tableData0" :data="tableDataPtOne" highlight height="100%">
+                                    <el-table-column prop="platformName" label="平台" align="center" min-width="140"></el-table-column>
+                                    <el-table-column prop="dayOutput" :label="'当日\n'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="140">
                                         <template slot-scope="{ row }">
-                                            {{ row.dayOutput | getFixNumberTwo }}
-                                            <span>
-                                                <svg-icon v-if="row.dayState=='UP'" icon-class="0-down-arrow" class-name="up-arrow"></svg-icon>
-                                                <svg-icon v-if="row.dayState=='DOWN'" icon-class="0-down-arrow" class-name="down-arrow"></svg-icon>
+                                            <span style="display: flex;align-items: center;justify-content: center;">
+                                                {{ row.dayOutput | getFixNumberTwo }}
+                                                <img src="@/assets/rem/yieId/UP.png" alt="" v-if="row.dayState=='UP'" style="width:26px;height:20px;">
+                                                <img src="@/assets/rem/yieId/DOWN.png" alt="" v-if="row.dayState=='DOWN'" style="width:26px;height:20px;">
                                             </span>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="yesterdayOutput" :label="'前日'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="20%">
+                                    <el-table-column prop="yesterdayOutput" :label="'与前日对比差值\n'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="160">
                                         <template slot-scope="{ row }">
-                                            {{ row.yesterdayOutput |getFixNumberTwo }}
-                                            <span>
-                                                <svg-icon v-if="row.yesterdayState=='UP'" icon-class="0-down-arrow" class-name="up-arrow"></svg-icon>
-                                                <svg-icon v-if="row.yesterdayState=='DOWN'" icon-class="0-down-arrow" class-name="down-arrow"></svg-icon>
+                                            <span style="display: flex;align-items: center;justify-content: center;">
+                                                {{ row.yesterdayOutput |getFixNumberTwo }}
+                                                <img src="@/assets/rem/yieId/UP.png" alt="" v-if="row.yesterdayState=='UP'" style="width:26px;height:20px;">
+                                                <img src="@/assets/rem/yieId/DOWN.png" alt="" v-if="row.yesterdayState=='DOWN'" style="width:26px;height:20px;">
                                             </span>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="tenDaysOutput" :label="'上旬'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="20%">
+                                    <el-table-column prop="tenDaysOutput" :label="'与前10日对比差值\n'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="160">
                                         <template slot-scope="{ row }">
-                                            {{ row.tenDaysOutput |getFixNumberTwo }}
-                                            <span>
-                                                <svg-icon v-if="row.tenDaysState=='UP'" icon-class="0-down-arrow" class-name="up-arrow"></svg-icon>
-                                                <svg-icon v-if="row.tenDaysState=='DOWN'" icon-class="0-down-arrow" class-name="down-arrow"></svg-icon>
+                                            <span style="display: flex;align-items: center;justify-content: center;">
+                                                {{ row.tenDaysOutput |getFixNumberTwo }}
+                                                <img src="@/assets/rem/yieId/UP.png" alt="" v-if="row.tenDaysState=='UP'" style="width:26px;height:20px;">
+                                                <img src="@/assets/rem/yieId/DOWN.png" alt="" v-if="row.tenDaysState=='DOWN'" style="width:26px;height:20px;">
                                             </span>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="lastMonthOutput" :label="'上月'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="20%">
+                                    <el-table-column prop="lastMonthOutput" :label="'与前30日对比差值\n'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="160">
                                         <template slot-scope="{ row }">
-                                            {{ row.lastMonthOutput |getFixNumberTwo }}
-                                            <span>
-                                                <svg-icon v-if="row.lastMonthState=='UP'" icon-class="0-down-arrow" class-name="up-arrow"></svg-icon>
-                                                <svg-icon v-if="row.lastMonthState=='DOWN'" icon-class="0-down-arrow" class-name="down-arrow"></svg-icon>
+                                            <span style="display: flex;align-items: center;justify-content: center;">
+                                                {{ row.lastMonthOutput |getFixNumberTwo }}
+                                                <img src="@/assets/rem/yieId/UP.png" alt="" v-if="row.lastMonthState=='UP'" style="width:26px;height:20px;">
+                                                <img src="@/assets/rem/yieId/DOWN.png" alt="" v-if="row.lastMonthState=='DOWN'" style="width:26px;height:20px;">
                                             </span>
                                         </template>
                                     </el-table-column>
@@ -54,41 +54,41 @@
                         </div>
                         <div class="row" style="margin-right:20px;">
                             <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="" isShowMaxBtn>
-                                <el-table :data="tableDataPtTwo" highlight height="100%">
-                                    <el-table-column prop="platformName" label="平台" align="center" min-width="20%"></el-table-column>
-                                    <el-table-column prop="dayOutput" :label="'当日'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="20%">
+                                <el-table id="tableData1" :data="tableDataPtTwo" highlight height="100%">
+                                    <el-table-column prop="platformName" label="平台" align="center" min-width="140"></el-table-column>
+                                    <el-table-column prop="dayOutput" :label="'当日\n'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="140">
                                         <template slot-scope="{ row }">
-                                            {{ row.dayOutput |getFixNumberTwo }}
-                                            <span>
-                                                <svg-icon v-if="row.dayState=='UP'" icon-class="0-down-arrow" class-name="up-arrow"></svg-icon>
-                                                <svg-icon v-if="row.dayState=='DOWN'" icon-class="0-down-arrow" class-name="down-arrow"></svg-icon>
+                                            <span style="display: flex;align-items: center;justify-content: center;">
+                                                {{ row.dayOutput | getFixNumberTwo }}
+                                                <img src="@/assets/rem/yieId/UP.png" alt="" v-if="row.dayState=='UP'" style="width:26px;height:20px;">
+                                                <img src="@/assets/rem/yieId/DOWN.png" alt="" v-if="row.dayState=='DOWN'" style="width:26px;height:20px;">
                                             </span>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="yesterdayOutput" :label="'前日'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="20%">
+                                    <el-table-column prop="yesterdayOutput" :label="'与前日对比差值\n'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="160">
                                         <template slot-scope="{ row }">
-                                            {{ row.yesterdayOutput |getFixNumberTwo }}
-                                            <span>
-                                                <svg-icon v-if="row.yesterdayState=='UP'" icon-class="0-down-arrow" class-name="up-arrow"></svg-icon>
-                                                <svg-icon v-if="row.yesterdayState=='DOWN'" icon-class="0-down-arrow" class-name="down-arrow"></svg-icon>
+                                            <span style="display: flex;align-items: center;justify-content: center;">
+                                                {{ row.yesterdayOutput |getFixNumberTwo }}
+                                                <img src="@/assets/rem/yieId/UP.png" alt="" v-if="row.yesterdayState=='UP'" style="width:26px;height:20px;">
+                                                <img src="@/assets/rem/yieId/DOWN.png" alt="" v-if="row.yesterdayState=='DOWN'" style="width:26px;height:20px;">
                                             </span>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="tenDaysOutput" :label="'上旬'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="20%">
+                                    <el-table-column prop="tenDaysOutput" :label="'与前10日对比差值\n'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="160">
                                         <template slot-scope="{ row }">
-                                            {{ row.tenDaysOutput |getFixNumberTwo }}
-                                            <span>
-                                                <svg-icon v-if="row.tenDaysState=='UP'" icon-class="0-down-arrow" class-name="up-arrow"></svg-icon>
-                                                <svg-icon v-if="row.tenDaysState=='DOWN'" icon-class="0-down-arrow" class-name="down-arrow"></svg-icon>
+                                            <span style="display: flex;align-items: center;justify-content: center;">
+                                                {{ row.tenDaysOutput |getFixNumberTwo }}
+                                                <img src="@/assets/rem/yieId/UP.png" alt="" v-if="row.tenDaysState=='UP'" style="width:26px;height:20px;">
+                                                <img src="@/assets/rem/yieId/DOWN.png" alt="" v-if="row.tenDaysState=='DOWN'" style="width:26px;height:20px;">
                                             </span>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="lastMonthOutput" :label="'上月'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="20%">
+                                    <el-table-column prop="lastMonthOutput" :label="'与前30日对比差值\n'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="160">
                                         <template slot-scope="{ row }">
-                                            {{ row.lastMonthOutput |getFixNumberTwo }}
-                                            <span>
-                                                <svg-icon v-if="row.lastMonthState=='UP'" icon-class="0-down-arrow" class-name="up-arrow"></svg-icon>
-                                                <svg-icon v-if="row.lastMonthState=='DOWN'" icon-class="0-down-arrow" class-name="down-arrow"></svg-icon>
+                                            <span style="display: flex;align-items: center;justify-content: center;">
+                                                {{ row.lastMonthOutput |getFixNumberTwo }}
+                                                <img src="@/assets/rem/yieId/UP.png" alt="" v-if="row.lastMonthState=='UP'" style="width:26px;height:20px;">
+                                                <img src="@/assets/rem/yieId/DOWN.png" alt="" v-if="row.lastMonthState=='DOWN'" style="width:26px;height:20px;">
                                             </span>
                                         </template>
                                     </el-table-column>
@@ -113,13 +113,13 @@
                                     <el-table-column prop="wellNo" label="井号" width="120"></el-table-column>
                                     <el-table-column prop="prodDate" label="日期" width="120"></el-table-column>
                                     <el-table-column prop="prodDuration" :label="`生产时间\n(h)`" width=""></el-table-column>
-                                    <el-table-column prop="fluidProdDaily" :label="`日产液\n(m^3)`" width=""></el-table-column>
-                                    <el-table-column prop="gasProdDaily" :label="`日产气\n(10^4/m^3)`" width="130"></el-table-column>
-                                    <el-table-column prop="oilProdDaily" :label="`日产油\n(m^3)`" width=""></el-table-column>
+                                    <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`" width=""></el-table-column>
+                                    <el-table-column prop="gasProdDaily" :label="`日产气\n(10⁴/m³)`" width="130"></el-table-column>
+                                    <el-table-column prop="oilProdDaily" :label="`日产油\n(m³)`" width=""></el-table-column>
                                     <el-table-column prop="waterRatio" :label="`含水\n(%)`" width=""></el-table-column>
-                                    <el-table-column prop="waterProdDaily" :label="`日产水\n(m^3)`" width=""></el-table-column>
-                                    <el-table-column prop="gasOilRatio" :label="`气油比\n(m^3/m^3)`" width="130"></el-table-column>
-                                    <el-table-column prop="airliftGasCont" :label="`气举量\n(10^4/m^3)`" width="130"></el-table-column>
+                                    <el-table-column prop="waterProdDaily" :label="`日产水\n(m³)`" width=""></el-table-column>
+                                    <el-table-column prop="gasOilRatio" :label="`气油比\n(m³/m³)`" width="130"></el-table-column>
+                                    <el-table-column prop="airliftGasCont" :label="`气举量\n(10⁴/m³)`" width="130"></el-table-column>
                                     <el-table-column prop="pfl" :label="`动液面\n(m)`" width=""></el-table-column>
                                     <el-table-column prop="pumpFrequency" :label="`泵频率\n(Hz)`" width=""></el-table-column>
                                     <el-table-column prop="pumpCurrent" :label="`泵电流\n(A)`" width=""></el-table-column>
@@ -381,7 +381,7 @@
             }
         }
     }
-    #tableData{
+    #tableData0,#tableData1,#tableData{
         ::v-deep .el-table__header-wrapper{
             .el-table__header{
                 thead {

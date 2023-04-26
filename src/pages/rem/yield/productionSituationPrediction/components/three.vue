@@ -14,22 +14,22 @@
             </el-select>
             <el-button type="primary" icon="el-icon-search" @click="doSearch">检索</el-button>
         </div>
-        <el-table id="TaskOutputTrackingTable" :data="tableData" highlight height="calc(100% - 58px)" show-summary :summary-method="getSummaries">
-            <el-table-column prop="wellType" label="累产/10⁴m³" align="center"></el-table-column>
-            <el-table-column prop="branchStruggle" label="分公司奋斗" align="center"></el-table-column>
-            <el-table-column prop="branchAssessment" label="分公司考核" align="center"></el-table-column>
-            <el-table-column prop="rollingForecast" label="滚动预测" align="center"></el-table-column>
-            <el-table-column prop="branchStruggleInventoryTime" label="截至盘库时间分公司奋斗" align="center"></el-table-column>
-            <el-table-column prop="branchAssessmentInventoryTime" label="截至盘库时间分公司考核" align="center"></el-table-column>
-            <el-table-column prop="secondQuarterProdPlan" align="center">
+        <el-table id="TaskOutputTrackingTable" :data="tableData" highlight height="calc(100% - 74px)" show-summary :summary-method="getSummaries">
+            <el-table-column prop="wellType" label="累产/10⁴m³" align="center" min-width="130"></el-table-column>
+            <el-table-column prop="branchStruggle" label="分公司奋斗" align="center" min-width="130"></el-table-column>
+            <el-table-column prop="branchAssessment" label="分公司考核" align="center" min-width="130"></el-table-column>
+            <el-table-column prop="rollingForecast" label="滚动预测" align="center" min-width="130"></el-table-column>
+            <el-table-column prop="branchStruggleInventoryTime" label="截至盘库时间分公司奋斗" align="center" min-width="180"></el-table-column>
+            <el-table-column prop="branchAssessmentInventoryTime" label="截至盘库时间分公司考核" align="center" min-width="180"></el-table-column>
+            <el-table-column prop="secondQuarterProdPlan" align="center" min-width="130">
                 <template slot="header">
                     <div>当季度产量计划</div>
                     <div>(暂未有目标)</div>
                 </template>
             </el-table-column>
-            <el-table-column prop="actualOutputOfInventory" label="盘库实际产量" align="center"></el-table-column>
-            <el-table-column prop="branchActualSubStruggle" label="实际-分公司奋斗" align="center"></el-table-column>
-            <el-table-column prop="branchActualSubAssessment" label="实际-分公司考核" align="center"></el-table-column>
+            <el-table-column prop="actualOutputOfInventory" label="盘库实际产量" align="center" min-width="130"></el-table-column>
+            <el-table-column prop="branchActualSubStruggle" label="实际-分公司奋斗" align="center" min-width="130"></el-table-column>
+            <el-table-column prop="branchActualSubAssessment" label="实际-分公司考核" align="center" min-width="130"></el-table-column>
         </el-table>
     </div>
 </template>
@@ -145,3 +145,14 @@
         }
     };
 </script>
+
+<style lang="scss" scoped>
+    ::v-deep .el-table__body-wrapper{
+        height:inherit!important;
+    }
+    ::v-deep .el-table__footer-wrapper{
+        .cell{
+            color:var(--white-opacity7);
+        }
+    }
+</style>

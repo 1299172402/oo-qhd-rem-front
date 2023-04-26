@@ -117,7 +117,7 @@
                 queryParams: {},
                 page: 1,
                 pageSize: 10,
-                //采油速
+                //采油速度
                 productionSpeed: {
                     tooltip: {
                         trigger: 'axis',
@@ -156,7 +156,6 @@
                             show: false
                         },
                         axisLine: {
-                            //x轴线的颜色以及宽度
                             show: true,
                             lineStyle: {
                                 color: '#698398',
@@ -166,6 +165,12 @@
                         },
                         axisTick: {
                             show: false
+                        },
+                        splitLine:{
+                            show:false,
+                            lineStyle: {
+                                color: 'rgba(143,164,204,.5)'
+                            }
                         }
                     },
                     color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#FF5844', '#DA835E', '#9A72FF', '#FF30AD', '#2ACAFF'],
@@ -186,7 +191,7 @@
                                 show: false
                             },
                             axisLine: {
-                                show: true,
+                                // show: true,
                                 lineStyle: {
                                     color: '#2a4e6a'
                                 }
@@ -194,7 +199,7 @@
                             splitLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: '#2a4e6a'
+                                    color: 'rgba(143,164,204,.3)'
                                 }
                             }
                         },
@@ -214,7 +219,7 @@
                                 show: false
                             },
                             axisLine: {
-                                show: true,
+                                show: false,
                                 lineStyle: {
                                     color: '#2a4e6a'
                                 }
@@ -222,7 +227,7 @@
                             splitLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: '#2a4e6a'
+                                    color: 'rgba(143,164,204,.3)'
                                 }
                             }
                         },
@@ -271,7 +276,7 @@
                             show: false
                         },
                         axisLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
                                 color: '#2a4e6a'
                             }
@@ -279,7 +284,8 @@
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: '#2a4e6a'
+                                // color: '#2a4e6a',
+                                color: 'rgba(143,164,204,.3)'
                             }
                         }
                     },
@@ -298,6 +304,7 @@
                             show: false
                         },
                         axisLine: {
+                            show:false,
                             lineStyle: {
                                 //color: '#979797'
                                 color: '#2a4e6a'
@@ -306,7 +313,8 @@
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: '#2a4e6a'
+                                // color: '#2a4e6a'
+                                color: 'rgba(143,164,204,.3)'
                             }
                         }
                     },
@@ -365,13 +373,13 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: '#2a4e6a'
+                                color: 'rgba(143,164,204,.5)'
                             }
                         },
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: '#2a4e6a'
+                                 color: 'rgba(143,164,204,.5)'
                             }
                         }
                     },
@@ -391,14 +399,13 @@
                         },
                         axisLine: {
                             lineStyle: {
-                                //color: '#979797'
-                                color: '#2a4e6a'
+                                 color: 'rgba(143,164,204,.5)'
                             }
                         },
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: '#2a4e6a'
+                                 color: 'rgba(143,164,204,.5)'
                             }
                         }
                     },
@@ -443,7 +450,7 @@
                         },
                         axisLine: {
                             lineStyle: {
-                                color: '#2a4e6a'
+                                color: 'rgba(143,164,204,.5)'
                             }
                         }
                     },
@@ -465,13 +472,13 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: '#2a4e6a'
+                                 color: 'rgba(143,164,204,.5)'
                             }
                         },
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: '#2a4e6a'
+                                 color: 'rgba(143,164,204,.5)'
                             }
                         }
                     },
@@ -539,7 +546,6 @@
                     },
                     xAxis: {
                         type: 'category',
-                        /*data: ["CEPI", "CEPJ", "WHPH", "WHPC"],*/
                         axisLabel: {
                             color: '#8FA4CC'
                         },
@@ -547,9 +553,9 @@
                             show: false
                         },
                         axisLine: {
+                            show:true,
                             lineStyle: {
-                                //color: '#979797'
-                                color: '#8FA4CC'
+                                color: 'rgba(143,164,204,.3)'
                             }
                         }
                     },
@@ -564,13 +570,13 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: '#2a4e6a'
+                                 color: 'rgba(143,164,204,.5)'
                             }
                         },
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: '#2a4e6a'
+                                 color: 'rgba(143,164,204,.5)'
                             }
                         }
                     },

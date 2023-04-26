@@ -134,7 +134,7 @@
         <pagePanelNew headerTitle="措施效果跟踪" class="pagePanelNew" style="marginTop:0;" >
             <div class="main" v-if="type==0">
                 <el-row class="main-row" v-if="type == 0" style="height: 46px">
-                    <el-tabs class="g-pageHeader" v-model="oilTabType" topline @tab-click="selectBtn">
+                    <el-tabs class="g-pageHeader" v-model="oilTabType" topline @tab-click="doSearchCharts">
                         <el-tab-pane v-for="(item, index) in dataList" :key="index" :label="item.name" :name="item.oilTabType"></el-tab-pane>
                     </el-tabs>
                 </el-row>
@@ -214,7 +214,7 @@
             </div>
             <div class="main" v-if="type==1">
                 <el-row class="main-row" v-if="type == 1" style="height: 46px">
-                    <el-tabs class="g-pageHeader" v-model="waterTabType" topline @tab-click="selectBtn2">
+                    <el-tabs class="g-pageHeader" v-model="waterTabType" topline @tab-click="doSearchCharts">
                         <el-tab-pane v-for="(item, index) in dataList2" :key="index" :label="item.name" :name="item.waterTabType"></el-tab-pane>
                     </el-tabs>
                 </el-row>
@@ -222,7 +222,7 @@
                     <div class="svg" v-if="waterTabType == '0'">
                         <div class="search-date">
                             <span>日期：</span>
-                            <el-date-picker v-model="selectData" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
+                            <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
                             <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">搜索</el-button>
                         </div>
                         <div class="echarts-view">
@@ -1643,12 +1643,6 @@
             this.initSearchSelect();
         },
         methods: {
-            selectBtn() {
-                this.doSearchCharts();
-            },
-            selectBtn2() {
-                this.doSearchCharts();
-            },
             //初始化
             async initData() {  
                 const {oilFieldId} = this.$route.query;
@@ -1661,9 +1655,9 @@
                 this.canDownload = this.$route.query.canDownload;   
                 console.log(this.$route.query.wellType);
                 const { wellType} = this.$route.query;
-                if (wellType == '002002001') {
+                if (wellType == '002002001' || wellType=='003002001') {
                     this.type = 0;
-                } else if (wellType == '002003001' || wellType == '002005001') {
+                } else if (wellType == '002003001' || wellType == '002004003001' || wellType == '003003001') {               
                     this.type = 1;
                 }
                 this.wellType = wellType;
@@ -1674,8 +1668,6 @@
                 this.measuresDate = measuresDate;
                 this.wellNameNano = wellNameNano;
                 this.wellBoreName = wellBoreName;
-                // this.selectData.push(new Date(this.measuresDate).format('yyyy-MM-dd'));
-                // this.selectData.push(new Date(this.measuresDate).addDays(30).format('yyyy-MM-dd'));
                 // 获得年份
                 const year = new Date().getFullYear();
                 this.selectData = [new Date(`${year}-01-01`).format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
@@ -1707,28 +1699,9 @@
                 //平台
                 this.getFetchPlatforms(this.selectOilField);
                 //初始化需要根据油田
-                const requestWell = {
-                    oilFieldId: this.selectOilField,
-                };
-                await fetchProductionWells(requestWell).then((res) => {
-                    if (res.data.code == 200) {
-                        let wellData=res.data.data.productionWells;
-                        if(wellData.length){
-                            const wellList = wellData.filter(el=>el.wellName);
-                            this.wells = [...wellList];
-                        }
-                    }
-                });
-                await fetchInjectionWells(requestWell).then((res) => {
-                    if (res.data.code == 200) {
-                        const wellList = res.data.data.injectionWell;
-                        this.wells = [...this.wells, ...wellList];
-                    }
-                });
-                this.wells.unshift({
-                    wellId: '',
-                    wellName: '全部'
-                });
+                console.log('this.selectOilField,this.selectWellI',this.selectOilField,this.selectWellI)
+                this.getFetchWells(this.selectOilField,this.selectWellId);
+                console.log('this.wells',this.wells.length)
                 //措施事件
                 this.getMeasureNameAndCode(this.selectOilField, this.selectPlatform, this.wellId, this.measuresType, this.dateTime, this.page, this.pageSize, 0);
             },
@@ -1762,7 +1735,9 @@
               const request = {oilFieldId};
               fetchPlatforms(request).then((res) => {
                 if (res.data.code == 200) {
-                  this.platforms = res.data.data.platform;
+                    let platforms=res.data.data.platform;
+                    platforms[0].platFormId=platforms[0].oilFieldId;
+                    this.platforms = platforms;
                 }
               });
             },
@@ -1771,13 +1746,10 @@
               this.getFetchWells(this.selectOilField, val);
             },
             //通过油田或平台-查井号
-            getFetchWells(oilFieldId, platformId) {
+            async getFetchWells(oilFieldId, platformId) {
                 this.wells = [];
                 if (oilFieldId == platformId) {
-                    const request = {
-                        oilFieldId,
-                    };
-                    fetchProductionWells(request).then((res) => {
+                    await fetchProductionWells({oilFieldId}).then((res) => {
                         if (res.data.code == 200) {
                             let wellData=res.data.data.productionWells||[];
                             if(wellData.length){
@@ -1786,7 +1758,7 @@
                             }
                         }
                     });
-                    fetchInjectionWells(request).then((res) => {
+                    await fetchInjectionWells({oilFieldId}).then((res) => {
                         if (res.data.code == 200) {
                             const waterWellList = res.data.data.injectionWell || [];
                             this.wells = this.wells.concat(waterWellList);
@@ -1794,18 +1766,15 @@
                     });
             
                 } else {
-                    const request = {
-                        platformId,
-                    };
-                    fetchProductionWellsByPlatform(request).then((res) => {
+                    await fetchProductionWellsByPlatform({platformId}).then((res) => {
                         if (res.data.code == 200) {
                             const oilWellList = res.data.data.productionWells || [];
                             this.wells = this.wells.concat(oilWellList);
                         }
                     });
-                    fetchInjectionWellsByPlatform(request).then((res) => {
+                    await fetchInjectionWellsByPlatform({platformId}).then((res) => {
                         if (res.data.code == 200) {
-                            let wellData=res.data.data.productionWells||[];
+                            let wellData=res.data.data.injectionWell||[];
                             if(wellData.length){
                                 const wellList = wellData.filter(el=>el.wellName);
                                 this.wells = this.wells.concat(wellList);
@@ -1813,14 +1782,28 @@
                         }
                     });
                 }
-                this.wells.unshift({
-                    wellId: '',
-                    wellName: '全部'
-                });
-                this.selectWellId='';
+                console.log('this.wells.length',this.wells.length)
+                if(this.wells.length){
+                    this.selectWellId=this.wells[0].wellId;
+                }else{
+                    this.selectWellId='';
+                }
             },
             //搜索文件
             doSearch() {
+                let wellItem=this.wells.filter(el=> this.selectWellId ==el.wellId);
+                console.log(wellItem,123);
+                if(wellItem.length){
+                    let wellTypeCode=wellItem[0].wellTypeCode;
+                    if (wellTypeCode == '002002001' || wellTypeCode=='003002001') {
+                        this.type = 0;
+                    } else if (wellTypeCode == '002003001' || wellTypeCode == '002004003001' || wellTypeCode == '003003001') {               
+                        this.type = 1;
+                    }
+                }else{
+                    this.type=3;
+                    return false;
+                }
                 this.doSearchCharts();
                 this.getFetchMeasureStatInfos(
                     this.selectOilField,

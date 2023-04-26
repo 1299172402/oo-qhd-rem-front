@@ -50,7 +50,7 @@
             <el-table id="ForecastProductionTable" :data="tableData1" highlight style="font-size:15px;font-weight:500" :cell-style="{padding:'25px'}">
                 <el-table-column label="油田" align="center">
                     <template>
-                        <span>预测年产量(/{{unitName}})</span>
+                        <span>预测年产量(10⁴{{unitName}})</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="qhd326" label="QHD32-6" align="center"></el-table-column>
@@ -67,10 +67,10 @@
                 <el-button type="primary" style="height:30px;" @click="doDownLoad(3)">下载</el-button>
             </div>
             <el-table id="ResidualLevelTable" :data="tableData2" highlight style="width:100%;font-size:15px;font-weight:500" :cell-style="{padding:'25px'}">
-                <el-table-column label="油田" align="center">
+                <el-table-column label="油田" align="center" min-width="150">
                     <template slot-scope="scope">
-                        <span v-show="scope.$index==0">分公司奋斗，后续需日产(/{{unitName}})</span>
-                        <span v-show="scope.$index==1">分公司考核，后续需日产(/{{unitName}})</span>
+                        <span v-show="scope.$index==0">分公司奋斗，后续需日产({{unitName}})</span>
+                        <span v-show="scope.$index==1">分公司考核，后续需日产({{unitName}})</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="qhd326" label="QHD32-6" align="center"></el-table-column>

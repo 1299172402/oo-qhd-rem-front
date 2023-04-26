@@ -76,20 +76,6 @@
                         },
                         nameGap: 25,
                         type: "category",
-                        /*data: [
-                      "2009",
-                      "2010",
-                      "2011",
-                      "2012",
-                      "2013",
-                      "2014",
-                      "2015",
-                      "2016",
-                      "2017",
-                      "2018",
-                      "2019",
-                      "2020",
-                    ],*/
                         axisLabel: {
                             color: "#8FA4CC",
                         },
@@ -98,8 +84,7 @@
                         },
                         axisLine: {
                             lineStyle: {
-                                //color: '#979797'
-                                color: "rgba(255,255,255,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
@@ -121,31 +106,18 @@
                         axisLine: {
                             show: false,
                             lineStyle: {
-                                color: "rgba(151,151,151,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
                     series: [{
-                        data: [
-                        /*  ["2009",99.0],
-                        ["2010",99.1],
-                        ["2011",99.7],
-                        ["2012",99.5],
-                        ["2013",99.5],
-                        ["2014",99.6],
-                        ["2015",99.4],
-                        ["2016",99.5],
-                        ["2017",99.3],
-                        ["2018",99.8],
-                        ["2019",99.7],
-                        ["2020",99.6],*/
-                        ],
+                        data: [],
                         type: "bar",
                         barWidth: "20",
                         label: {
@@ -194,20 +166,6 @@
                         },
                         nameGap: 25,
                         type: "category",
-                        /*data: [
-                      "2009",
-                      "2010",
-                      "2011",
-                      "2012",
-                      "2013",
-                      "2014",
-                      "2015",
-                      "2016",
-                      "2017",
-                      "2018",
-                      "2019",
-                      "2020",
-                    ],*/
                         axisLabel: {
                             color: "#8FA4CC",
                         },
@@ -216,8 +174,7 @@
                         },
                         axisLine: {
                             lineStyle: {
-                                //color: '#979797'
-                                color: "rgba(255,255,255,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
@@ -239,31 +196,18 @@
                         axisLine: {
                             show: false,
                             lineStyle: {
-                                color: "rgba(151,151,151,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
                     series: [{
-                        data: [
-                        /* ["2009",99.0],
-                        ["2010",99.1],
-                        ["2011",99.7],
-                        ["2012",99.5],
-                        ["2013",99.5],
-                        ["2014",99.6],
-                        ["2015",99.4],
-                        ["2016",99.5],
-                        ["2017",99.3],
-                        ["2018",99.8],
-                        ["2019",99.7],
-                        ["2020",99.6],*/
-                        ],
+                        data: [],
                         type: "bar",
                         barWidth: "20",
                         label: {
@@ -312,7 +256,6 @@
                             color: "#8FA4CC"
                         },
                         nameGap: 25,
-                        /*data: ["0", "5", "10", "15", "20", "25", "30", "35", "40", "45"],*/
                         axisLabel: {
                             color: "#8FA4CC",
                         },
@@ -322,13 +265,12 @@
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: "#35546d",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                         axisLine: {
                             lineStyle: {
-                                //color: '#979797'
-                                color: "rgba(255,255,255,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
@@ -349,13 +291,13 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: "#35546d",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: "#35546d",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
@@ -412,20 +354,6 @@
                         },
                         nameGap: 25,
                         type: "category",
-                        /*data: [
-                     /!* "2009",
-                      "2010",
-                      "2011",
-                      "2012",
-                      "2013",
-                      "2014",
-                      "2015",
-                      "2016",
-                      "2017",
-                      "2018",
-                      "2019",
-                      "2020",*!/
-                    ],*/
                         axisLabel: {
                             color: "#8FA4CC",
                         },
@@ -434,8 +362,7 @@
                         },
                         axisLine: {
                             lineStyle: {
-                                //color: '#979797'
-                                color: "rgba(255,255,255,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
@@ -457,31 +384,18 @@
                         axisLine: {
                             show: false,
                             lineStyle: {
-                                color: "rgba(151,151,151,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
                     series: [{
-                        data: [
-                        /*99.0,
-                        99.1,
-                        99.7,
-                        99.5,
-                        99.6,
-                        99.4,
-                        99.5,
-                        99.3,
-                        99.8,
-                        99.7,
-                        99.6,
-                        99.1,*/
-                        ],
+                        data: [],
                         type: "bar",
                         barWidth: "20",
                         label: {
@@ -530,20 +444,6 @@
                         },
                         nameGap: 25,
                         type: "category",
-                        /* data: [
-                      /!*"2009",
-                      "2010",
-                      "2011",
-                      "2012",
-                      "2013",
-                      "2014",
-                      "2015",
-                      "2016",
-                      "2017",
-                      "2018",
-                      "2019",
-                      "2020",*!/
-                    ],*/
                         axisLabel: {
                             color: "#8FA4CC",
                         },
@@ -552,8 +452,7 @@
                         },
                         axisLine: {
                             lineStyle: {
-                                //color: '#979797'
-                                color: "rgba(255,255,255,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
@@ -575,31 +474,18 @@
                         axisLine: {
                             show: false,
                             lineStyle: {
-                                color: "rgba(151,151,151,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
                     series: [{
-                        data: [
-                        /*99.0,
-                        99.1,
-                        99.7,
-                        99.5,
-                        99.6,
-                        99.4,
-                        99.5,
-                        99.3,
-                        99.8,
-                        99.7,
-                        99.6,
-                        99.1,*/
-                        ],
+                        data: [],
                         type: "bar",
                         barWidth: "20",
                         label: {

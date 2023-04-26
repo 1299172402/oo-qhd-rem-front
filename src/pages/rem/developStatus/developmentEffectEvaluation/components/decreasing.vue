@@ -101,8 +101,7 @@
                         },
                         axisLine: {
                             lineStyle: {
-                                //color: '#979797'
-                                color: "rgba(255,255,255,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
@@ -121,20 +120,18 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: "#35546d",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: "#35546d",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
                     series: {
-                        data: [
-                        /*-50, -10, -20, 10, -5, -10, -10, -5, 5, 10, -20, -5*/
-                        ],
+                        data: [],
                         type: "bar",
                         label: {
                             show: true,
@@ -166,20 +163,6 @@
                     },
                     xAxis: {
                         type: "category",
-                        /*data: [
-                      "2009",
-                      "2010",
-                      "2011",
-                      "2012",
-                      "2013",
-                      "2014",
-                      "2015",
-                      "2016",
-                      "2017",
-                      "2018",
-                      "2019",
-                      "2020",
-                    ],*/
                         axisLabel: {
                             margin: 20,
                             color: "#8FA4CC",
@@ -189,8 +172,7 @@
                         },
                         axisLine: {
                             lineStyle: {
-                                //color: '#979797'
-                                color: "rgba(255,255,255,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
@@ -209,13 +191,13 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: "#35546d",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: "#35546d",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
@@ -228,7 +210,6 @@
                             position: "top",
                             color: "#00D9EA",
                         },
-                        /*symbol: "none",*/
                         itemStyle: {
                             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                                 offset: 0,
@@ -273,7 +254,7 @@
                         },
                         axisLine: {
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
@@ -292,13 +273,13 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: "#35546d",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: "#35546d",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
@@ -356,8 +337,7 @@
                         },
                         axisLine: {
                             lineStyle: {
-                                //color: '#979797'
-                                color: "rgba(255,255,255,.16)",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
@@ -372,13 +352,13 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: "#35546d",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: "#35546d",
+                                color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },

@@ -152,13 +152,13 @@ export default {
           axisLine: {
             show: true,
             lineStyle: {
-              color: "#35546d",
+              color: 'rgba(143,164,204,.5)'
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#35546d",
+              color: 'rgba(143,164,204,.5)'
             },
           },
         },
@@ -178,14 +178,13 @@ export default {
           },
           axisLine: {
             lineStyle: {
-              //color: '#979797'
-              color: "#35546d",
+              color: 'rgba(143,164,204,.5)'
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#35546d",
+              color: 'rgba(143,164,204,.5)'
             },
           },
         },
@@ -236,13 +235,13 @@ export default {
           axisLine: {
             show: true,
             lineStyle: {
-              color: "#35546d",
+              color: 'rgba(143,164,204,.5)'
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#35546d",
+              color: 'rgba(143,164,204,.5)'
             },
           },
         },
@@ -263,14 +262,13 @@ export default {
             },
             axisLine: {
               lineStyle: {
-                //color: '#979797'
-                color: "#35546d",
+                color: 'rgba(143,164,204,.5)'
               },
             },
             splitLine: {
               show: true,
               lineStyle: {
-                color: "#35546d",
+                color: 'rgba(143,164,204,.5)'
               },
             },
           },
@@ -290,14 +288,13 @@ export default {
             },
             axisLine: {
               lineStyle: {
-                //color: '#979797'
-                color: "rgba(255,255,255,.16)",
+                color: 'rgba(143,164,204,.5)'
               },
             },
             splitLine: {
               show: false,
               lineStyle: {
-                color: "rgba(255,255,255,.16)",
+                color: 'rgba(143,164,204,.5)'
               },
             },
           },
@@ -347,13 +344,13 @@ export default {
           axisLine: {
             show: true,
             lineStyle: {
-              color: "#35546d",
+              color: 'rgba(143,164,204,.5)'
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#35546d",
+              color: 'rgba(143,164,204,.5)'
             },
           },
         },
@@ -373,14 +370,13 @@ export default {
           },
           axisLine: {
             lineStyle: {
-              //color: '#979797'
-              color: "#35546d",
+              color: 'rgba(143,164,204,.5)'
             },
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#35546d",
+              color: 'rgba(143,164,204,.5)'
             },
           },
         },
