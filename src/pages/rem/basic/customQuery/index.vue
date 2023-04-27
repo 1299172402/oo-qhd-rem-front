@@ -910,6 +910,10 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+    ::v-deep .el-table .cell {
+        height: 48px!important;
+        line-height: 40px!important;
+    }
     .app-container {
         height: 100%;
 
