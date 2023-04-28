@@ -75,8 +75,8 @@ export default ({ mode }) => {
           // target: 'http://10.247.187.28:8080/dev-api/',
           // target: 'http://10.178.118.181:9220',
           // target: 'http://10.178.118.184:9229', //姜
-          // target: "http://10.178.118.189:9207", //小黄
-          target: 'http://10.178.118.181:9207', //飞龙
+          target: "http://10.178.118.189:9207", //小黄
+          // target: 'http://10.178.118.181:9207', //飞龙
           // target: 'http://10.178.118.184:8080',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, ""),
