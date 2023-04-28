@@ -905,7 +905,7 @@ export default {
             })
             this.dialogVisible = false
             this.activeEchart = !this.activeEchart
-            
+            console.log(this.selectDate);
             let params = {
                 condList:condListFormat,//字段名字
                 // sqlSent:sqlStr,//拼接sql
@@ -913,7 +913,7 @@ export default {
                 targetType: this.activeTabIndex, //目标类型 井：1  油田 ：2
                 dataType:  this.activeTabIndexData , //数据类型 （井口指标，计量指标等）
                 timeType:  this.activeTabIndexDate , //时间类型 1 年 2月 3 日
-                startTime:  this.selectDate.length > 1?this.selectDate[0]:this.selectDate, //开始时间
+                startTime:  this.activeTabIndexDate != 1?this.selectDate[0]:this.selectDate, //开始时间
                 endTime: this.selectDate[1],//结束时间
                 dataId:this.activeTabIndex == 2?this.ogfId:this.wellId,
                 pageNum:this.page,
