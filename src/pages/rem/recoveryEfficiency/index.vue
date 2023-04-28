@@ -173,12 +173,10 @@
                                         </el-table>
                                     </div>
                                 </el-row>
-                                <el-row>
-                                    <div style="background-image: linear-gradient(0deg, #004473 0%, rgba(0, 72, 122, 0.36) 100%);box-shadow: inset 0 -4px 13px 0 rgba(36, 222, 255, 0.5);width:100%;height:35px;backgroup:red">
-                                        <span style="line-height:35px;margin-left:10px">计算结果</span>
-                                    </div>
-                                </el-row>
-                                <el-row style="height:120px;text-align:center;margin-top:10px">
+                                <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-top:10px;margin-bottom:10px;margin-left: 0;">
+                                    <span>计算结果</span>
+                                </div>
+                                <el-row style="height:60px;text-align:center;margin-top:10px">
                                     <el-col :span="12">
                                         <el-row>
                                             <el-col><span style="font-size:30px;color:#24DEFF">{{ djproOutputRate | toFixedTwo }}</span></el-col>
@@ -248,12 +246,10 @@
                                         </el-table>
                                     </div>
                                 </el-row>
-                                <el-row>
-                                    <div style="background-image: linear-gradient(0deg, #004473 0%, rgba(0, 72, 122, 0.36) 100%);box-shadow: inset 0 -4px 13px 0 rgba(36, 222, 255, 0.5);width:100%;height:35px;backgroup:red">
-                                        <span style="line-height:35px;margin-left:10px">计算结果</span>
-                                    </div>
-                                </el-row>
-                                <el-row style="height:120px;text-align:center;margin-top:10px">
+                                <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-top:10px;margin-bottom:10px;margin-left: 0;">
+                                    <span>计算结果</span>
+                                </div>
+                                <el-row style="height:60px;text-align:center;margin-top:10px">
                                     <el-col :span="12">
                                         <el-row>
                                             <el-col><span style="font-size:30px;color:#24DEFF">{{ tsproOutputRate | toFixedTwo }}</span></el-col>
