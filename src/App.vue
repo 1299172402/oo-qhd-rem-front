@@ -5,8 +5,14 @@
 <script>
 import Vue from "vue";
 import config from "@/config/style";
+import refreshTokenMixin from "@/components/mixins/RefreshTokenMixin.js";
+import { TOKEN_NAME, USER_NAME } from "@/config/global";
+import proxy from "@/config/host.ts";
+
+const env = import.meta.env.MODE;
 
 export default Vue.extend({
+  mixins: [refreshTokenMixin],
   provide() {
     return {
       reload: this.reload
@@ -14,7 +20,13 @@ export default Vue.extend({
   },
   data() {
     return {
-      isRouterAlive: true
+      isRouterAlive: true,
+      refreshTokenData: {
+        USER_NAME,
+        TOKEN_NAME,
+        env,
+        proxy
+      }
     };
   },
   computed: {

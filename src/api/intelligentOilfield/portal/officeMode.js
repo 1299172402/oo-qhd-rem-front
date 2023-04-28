@@ -98,11 +98,11 @@ export function getInitiatedList(data) {
 }
 
 // 我的事项-物联网待办
-export function getInternetList(data) {
+export function getInternetList(query) {
   return request({
     url: "system/supOS/todo/paginate",
     method: "get",
-    data
+    params: query
   });
 }
 

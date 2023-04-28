@@ -23,7 +23,12 @@
           <el-input v-model="taskInfo.startUserRealName" placeholder="请输入业务名称" readonly />
         </el-form-item>
         <div class="search-button">
-          <el-button v-if="!Boolean(taskInfo.endDate)" type="primary" @click="variableView('add')">
+          <el-button
+            v-if="!Boolean(taskInfo.endDate)"
+            v-hasPermi="['process:example:addVariable']"
+            type="primary"
+            @click="variableView('add')"
+          >
             添加变量
           </el-button>
         </div>

@@ -7,7 +7,8 @@ const config = {
   PROCESS_PULBIC_KEY: "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKsr9kM6vJHJb8KgWhY6xVaYCkLEr+QKeuYUoZ2uX3+t4lzbxdf1JeJ2jUs26jWWgkpe3W1UHxXUaapyTG9sFbECAwEAAQ==",
   LOGIN_TYPES: ["password", "corp_oauth"],
   // 右上角报警点击“查看跳转”路径
-  MESSAGEURL: "http://10.77.78.250:8085/#/reportlnformation/source"
+  MESSAGEURL: "http://10.77.78.250:8085/#/reportlnformation/source",
+  appId: "$system$"
 };
 
 export default {
@@ -25,8 +26,7 @@ export default {
     API: "/dev-api",
     // API: '',
     // 开发环境 cdn 路径
-    CDN: "",
-    appId: null
+    CDN: ""
   },
   test: {
     ...config,
@@ -40,8 +40,7 @@ export default {
     // 测试环境接口地址
     API: "",
     // 测试环境 cdn 路径
-    CDN: "",
-    appId: null
+    CDN: ""
   },
   stage: {
     ...config,
@@ -65,7 +64,6 @@ export default {
     API: "http://10.77.78.250:80/prod-api/",
     // 正式环境 cdn 路径
     CDN: "",
-    appId: null,
     LOGIN_TYPES: ["corp_oauth", "password"]
   }
 };

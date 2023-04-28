@@ -27,7 +27,7 @@ export default {
 }
 
 .searchHeader-light {
-  border: unset;
+  border: 1px solid transparent;
   padding-top: 2px;
   box-shadow: 0 0 10px 0 rgba(144,147,153,0.3);
 }

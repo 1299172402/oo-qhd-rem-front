@@ -62,6 +62,7 @@
 <script>
 // <!-- TODO: Maybe change back -->
 // import { addAccessinfo } from "@/api/intelligentOilfield/system/user";
+import jumpSupApp from "@/utils/jumpSupApp.js";
 
 export default {
   props: {
@@ -190,10 +191,10 @@ export default {
         //     userId: this.$store.getters["user/userDetail"].user.userId
         //   };
         //   addAccessinfo(paramQuery).then(() => {});
-        window.open(item.appPcAccessUrl);
+        jumpSupApp(item.appPcAccessUrl);
         // document.getElementById(`hrefText${index}`).click();
       } else if (this.modelName === "enter") { // 快捷入口
-        window.open(item.enterUrl);
+        jumpSupApp(item.enterUrl);
       }
     }
   }

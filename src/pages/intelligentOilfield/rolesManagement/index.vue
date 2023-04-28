@@ -34,7 +34,6 @@
             v-model="queryParams.status"
             placeholder="角色状态"
             clearable
-            size="small"
             style="width: 240px"
           >
             <el-option
@@ -46,7 +45,20 @@
           </el-select>
         </el-form-item>
         <el-form-item v-if="showAppSearch" label="所属应用" prop="appId">
-          <search-select v-model="queryParams.appId" />
+          <el-select
+            v-model="queryParams.appId"
+            style="width: 240px"
+            placeholder="请选择"
+            clearable
+            filterable
+          >
+            <el-option
+              v-for="item in searchOption"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
         </el-form-item>
         <!-- <el-form-item label="创建时间">
         <el-date-picker
@@ -81,7 +93,7 @@
       </el-form>
     </header-search>
 
-    <page-panel-new header-title="角色管理" style="height: calc(100% - 100px);">
+    <page-panel-new header-title="角色管理" style="height: calc(100% - 105px);">
       <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
         <el-col :span="1.5">
           <el-button
@@ -141,41 +153,34 @@
         :default-sort="{ prop: 'date', order: 'descending' }"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="序号" type="index" width="120" />
         <!-- <el-table-column label="角色编号" prop="roleId" width="120" /> -->
         <el-table-column
           label="角色名称"
           prop="roleName"
           :show-overflow-tooltip="true"
-          min-width="40"
+          min-width="140"
         />
-        <el-table-column label="角色类型" prop="roleType" width="100">
+        <el-table-column label="角色类型" prop="roleType" width="120">
           <template slot-scope="scope">
             <dict-tag :options="dict.type.sys_role_type" :value="scope.row.roleType" />
           </template>
         </el-table-column>
-        <el-table-column
-          label="权限字符"
-          prop="roleKey"
-          :show-overflow-tooltip="true"
-          width="160"
-        />
         <el-table-column label="角色排序" prop="roleSort" width="120" />
         <el-table-column
           prop="menuType"
           label="所属应用"
-          width="100"
+          width="120"
           align="center"
         >
           <template slot-scope="scope">
             <span>{{ scope.row.appId | filterAppId() }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="分配用户" align="center" width="180">
+        <el-table-column label="分配用户" align="center" width="120">
           <template v-if="scope.row.roleId !== '1'" slot-scope="scope">
             <el-button
-              v-hasPermi="['system:role:edit']"
+              v-hasPermi="['system:role:detail']"
               size="mini"
               type="text"
               @click="handleAuthUser(scope.row)"
@@ -185,7 +190,7 @@
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column label="状态" align="center" width="160">
+        <el-table-column label="状态" align="center" width="120">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.status"
@@ -199,39 +204,68 @@
           label="创建时间"
           align="center"
           prop="createTime"
-          width="260"
+          width="190"
         >
           <template slot-scope="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <el-table-column
+          label="操作"
+          align="center"
+          class-name="small-padding"
+          width="240"
+        >
           <template v-if="scope.row.roleId !== '1'" slot-scope="scope">
-            <el-button
-              v-hasPermi="['system:role:edit']"
-              size="mini"
-              type="text"
-              @click="handleUpdate(scope.row)"
+            <el-tooltip
+              effect="dark"
+              content="请到相关应用下进行操作"
+              placement="top-start"
+              :disabled="!disabledHandle"
             >
-              修改
-            </el-button>
-            <el-button
-              v-hasPermi="['system:role:remove']"
-              size="mini"
-              type="text"
-              class="delbutton"
-              @click="handleDelete(scope.row)"
+              <el-button
+                v-hasPermi="['system:role:edit']"
+                size="mini"
+                type="text"
+                :disabled="disabledHandle"
+                @click="handleUpdate(scope.row)"
+              >
+                修改
+              </el-button>
+            </el-tooltip>
+            <el-tooltip
+              effect="dark"
+              content="请到相关应用下进行操作"
+              placement="top-start"
+              :disabled="!disabledHandle"
             >
-              删除
-            </el-button>
-            <el-button
-              v-hasPermi="['system:role:dataPermission']"
-              size="mini"
-              type="text"
-              @click="handleDataScope(scope.row)"
+              <el-button
+                v-hasPermi="['system:role:remove']"
+                size="mini"
+                type="text"
+                class="delbutton"
+                :disabled="disabledHandle"
+                @click="handleDelete(scope.row)"
+              >
+                删除
+              </el-button>
+            </el-tooltip>
+            <el-tooltip
+              effect="dark"
+              content="请到相关应用下进行操作"
+              placement="top-start"
+              :disabled="!disabledHandle"
             >
-              数据权限
-            </el-button>
+              <el-button
+                v-hasPermi="['system:role:dataPermission']"
+                size="mini"
+                type="text"
+                :disabled="disabledHandle"
+                @click="handleDataScope(scope.row)"
+              >
+                数据权限
+              </el-button>
+            </el-tooltip>
           <!-- <el-dropdown size="mini" @command="(command) => handleCommand(command, scope.row)" v-hasPermi="['system:role:edit']">
             <span class="el-dropdown-link">
               <i class="el-icon-d-arrow-right el-icon--right"></i>更多
@@ -290,7 +324,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="角色类型" prop="roleType">
-              <el-select v-model="form.roleType" :disabled="!!($route.params.id || form.appId)">
+              <el-select v-model="form.roleType" :disabled="!!($route.params.id || form.appId !== '$system$' )">
                 <el-option
                   v-for="item in dict.type.sys_role_type"
                   :key="item.value"
@@ -430,14 +464,15 @@
 import { listRole, getRole, delRole, addRole, updateRole, dataScope, changeRoleStatus } from "@/api/intelligentOilfield/system/role";
 import { treeselect as menuTreeselect, roleMenuTreeselect, roleMenuTreeSelectByAppId } from "@/api/intelligentOilfield/system/menu";
 import { treeselect as deptTreeselect, roleDeptTreeselect } from "@/api/intelligentOilfield/system/dept";
-import SearchSelect from "@/components/intelligentOilfield/searchSelect/AppSearchSelect.vue";
 import { appList } from "@/api/intelligentOilfield/system/dataper";
+import { applicationAllList } from "@/api/intelligentOilfield/portal/officeMode";
+import proxy from "@/config/host";
 
 var that;
+const env = import.meta.env.MODE || "development";
 export default {
   name: "Roles",
   dicts: ["sys_normal_disable", "sys_role_type"],
-  components: { SearchSelect },
   filters: {
     filterAppId(value) {
       if (value) {
@@ -454,7 +489,7 @@ export default {
     },
     appId: {
       type: String,
-      default: undefined
+      default: proxy[env].appId || "$system$"
     }
   },
   data() {
@@ -487,6 +522,7 @@ export default {
       deptNodeAll: false,
       // 日期范围
       dateRange: [],
+      searchOption: [],
       // 数据范围选项
       dataScopeOptions: [
         {
@@ -521,7 +557,7 @@ export default {
         roleName: undefined,
         roleKey: undefined,
         status: undefined,
-        appId: undefined
+        appId: this.appId
       },
       options: [],
       // 下拉appid分页查询
@@ -546,7 +582,8 @@ export default {
         roleSort: [{ required: true, message: "角色顺序不能为空", trigger: "blur" }],
         status: [{ required: true, message: "角色状态不能为空", trigger: "change" }]
         // isTenant: [{ required: true, message: '是否租户不能为空', trigger: 'change' }],
-      }
+      },
+      disabledHandle: false
     };
   },
   beforeCreate() {
@@ -554,6 +591,7 @@ export default {
   },
   created() {
     this.getAppList();
+    this.getSelectOptions();
   },
   activated() {
     this.getList();
@@ -571,6 +609,11 @@ export default {
     },
     /** 查询角色列表 */
     getList() {
+      if (this.appId !== this.queryParams.appId) {
+        this.disabledHandle = true;
+      } else {
+        this.disabledHandle = false;
+      }
       this.loading = true;
       listRole(this.addDateRange({ ...this.queryParams, appId: this.queryParams.appId || this.appId }, this.dateRange)).then(response => {
         this.roleList = response.data.rows;
@@ -688,10 +731,22 @@ export default {
         menuCheckStrictly: true,
         deptCheckStrictly: true,
         remark: undefined,
-        appId: undefined
+        appId: this.$route.params.id || this.appId
         // isTenant: '0'
       };
       this.resetForm("form");
+    },
+    // 所属应用
+    getSelectOptions() {
+      this.searchOption = [];
+      applicationAllList().then(response => {
+        response.data.data.forEach(el => {
+          this.searchOption.push({
+            label: el.appName,
+            value: el.appId
+          });
+        });
+      });
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -795,7 +850,7 @@ export default {
     /** 分配数据权限操作 */
     handleDataScope(row) {
       this.reset();
-      if (this.appId !== undefined) {
+      if (this.appId !== "$system$") {
         this.isFromApp = true;
       } else {
         this.isFromApp = false;

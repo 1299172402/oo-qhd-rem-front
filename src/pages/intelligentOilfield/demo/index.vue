@@ -135,6 +135,24 @@
       />
     </el-select>
     <div class="spaceMargin">
+      2.1.4、多选下拉框（文字过长时展示：添加class="collapseTags"如下）
+    </div>
+    <el-select
+      v-model="valueA"
+      class="collapseTags"
+      collapse-tags
+      multiple
+      placeholder="请选择"
+      clearable
+    >
+      <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      />
+    </el-select>
+    <div class="spaceMargin">
       2.2、无border下拉框
     </div>
     <el-select
@@ -1606,7 +1624,7 @@ export default {
       options: [
         {
           value: "选项1",
-          label: "黄金糕"
+          label: "黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕"
         },
         {
           value: "选项2",

@@ -301,7 +301,7 @@ export default Vue.extend({
       this.currentTab = item.name;
     },
     async onValidate({ validateResult }) {
-      if (validateResult) {
+      if (validateResult && typeof validateResult === "boolean") {
         await this.onSubmit(this.loginType);
       }
     },
@@ -511,7 +511,8 @@ export default Vue.extend({
         font-weight: 400;
         color: #566570;
         margin-right: 0px;
-        width: 70px;
+        width: 75px;
+        padding-left: 9px;
       }
       .borderDiv {
         width: 1px;
@@ -588,7 +589,7 @@ export default Vue.extend({
   }
 
   ::v-deep .t-tabs__nav-item-text-wrapper {
-    font-size: 17px;
+    font-size: 16px;
   }
 
   ::v-deep .t-tabs__nav--card.t-tabs__nav-item:not(:first-of-type) {
@@ -597,6 +598,7 @@ export default Vue.extend({
 
   ::v-deep .t-tabs__nav--card.t-tabs__nav-item {
     border-bottom: 0px;
+    padding: 0 12px;
   }
 
   ::v-deep .t-tabs__nav--card.t-tabs__nav-item:last-of-type {

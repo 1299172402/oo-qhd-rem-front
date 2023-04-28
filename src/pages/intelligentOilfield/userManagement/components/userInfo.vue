@@ -180,9 +180,9 @@
             >
               <el-option
                 v-for="item in postOptions"
-                :key="item.roleId"
-                :label="item.roleName"
-                :value="item.roleId"
+                :key="item.postId"
+                :label="item.postName"
+                :value="item.postId"
               />
             </el-select>
           </el-form-item>

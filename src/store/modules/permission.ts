@@ -154,7 +154,7 @@ const actions = {
     // commit('setRouters', asyncRouterList);
     const { appId } = proxy[env];
     await axios
-      .get(`system/menu/getRouters${appId ? `?appId=${appId}` : ""}`).then(res => {
+      .get(`system/menu/getRouters${appId !== "$system$" ? `?appId=${appId}` : ""}`).then(res => {
         if (res.data.code === 200) {
           const data = res.data.data.map(item => {
             if (item.path === "/" && item.children.length) {
@@ -175,7 +175,7 @@ const actions = {
           mapList.push({ "path": "*", "redirect": "/pageInfo/error", "hidden": true });
           // 本地路由+动态路由整合
           const concatRouters = asyncRouterList.concat(mapList);
-          commit("setRouters", concatRouters);
+          commit("setRouters", concatRouters.filter(v => !v.appId || v.appId === proxy[env].appId));
           router.addRoutes(concatRouters);
         }
       });

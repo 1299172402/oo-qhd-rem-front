@@ -54,7 +54,7 @@
             icon="el-icon-search"
             @click="handleQuery"
           >
-            查询
+            搜索
           </el-button>
           <el-button
             icon="el-icon-refresh"
@@ -69,7 +69,7 @@
 
     <page-panel-new header-title="消息主题" style="height: calc(100% - 100px)">
       <el-row style="margin-bottom: 20px">
-        <el-col :span="20">
+        <el-col class="height-placeholder" :span="20">
           <el-button
             v-hasPermi="['messageConfig:add']"
             type="primary"
@@ -126,10 +126,10 @@
           align="center"
         >
           <template slot-scope="scope">
-            <el-button type="text" @click="handleDatil(scope.row.id, 'View')">
+            <el-button v-hasPermi="['messageConfig:view']" type="text" @click="handleDatil(scope.row.id, 'View')">
               查看
             </el-button>
-            <el-button type="text" @click="handleDatil(scope.row.id, 'Edit')">
+            <el-button v-hasPermi="['messageConfig:edit']" type="text" @click="handleDatil(scope.row.id, 'Edit')">
               编辑
             </el-button>
           </template>

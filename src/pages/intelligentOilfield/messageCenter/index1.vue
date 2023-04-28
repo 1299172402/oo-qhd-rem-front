@@ -11,6 +11,11 @@
         >
           信息维护
         </el-button>
+        <div style="position: absolute; right: 0; color: var(--light-blue-color)">
+          <!-- TODO: Maybe change back -->
+          <!-- {{ $store.getters["user/tenantName"] }} -->
+          秦皇岛作业公司
+        </div>
         <div class="g-row-flex" style="margin-top: 40px">
           <div class="topPage1" style="position: relative" />
           <div class="topPage2" style="position: relative" />
@@ -30,10 +35,10 @@
               marginTop: index === 0 ? '0px' : '15px',
             }"
           >
-            <div class="legendText">
+            <div class="legendText" style="text-align: right;">
               {{ item.startPoint }}
             </div>
-            <div style="position: relative; width: 70px; margin: 0 10px">
+            <div style="position: relative; width: 70px; margin: 0 10px;">
               <line-svg
                 :linear-id="item.linkId"
                 class="svgClass"
@@ -47,7 +52,7 @@
                 set-points="0,10 70,10 70,11"
               />
             </div>
-            <div class="legendText">
+            <div class="legendText" style="width: 100px">
               {{ item.endPoint }}
             </div>
           </div>
@@ -143,14 +148,14 @@
               {{ parentSignList[0]?.[2] }}
             </div>
             <div
-              :class="initList[keys[0]]?.[0].terraceState === '0' ? 'redSign' : 'greenSign'"
+              :class="initList[keys[0]]?.[0]?.terraceState === '0' ? 'redSign' : 'greenSign'"
               style="position: absolute; left: 180px; top: -52px"
             >
-              <span @click="jumpDetail(initList[keys[0]]?.[0])">{{ initList[keys[0]]?.[0].terraceCode }}</span>
+              <span @click="jumpDetail(initList[keys[0]]?.[0])">{{ initList[keys[0]]?.[0]?.terraceCode }}</span>
               <line-svg
-                :linear-id="initList[keys[0]]?.[0].terraceCode"
-                :start-color="initList[keys[0]]?.[0].terraceState === '0' ? 'red' : '#32cd32'"
-                :end-color="initList[keys[0]]?.[0].terraceState === '0' ? 'red' : '#32cd32'"
+                :linear-id="initList[keys[0]]?.[0]?.terraceCode"
+                :start-color="initList[keys[0]]?.[0]?.terraceState === '0' ? 'red' : '#32cd32'"
+                :end-color="initList[keys[0]]?.[0]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
                 style="left: -180px; top: -20%"
                 div-stroke-width="6"
@@ -162,40 +167,78 @@
               />
             </div>
             <div
-              :class="initList[keys[0]]?.[1].terraceState === '0' ? 'redSign' : 'greenSign'"
-              style="position: absolute; left: -91px; top: 48px"
+              :class="initList[keys[0]]?.[1]?.terraceState === '0' ? 'redSign' : 'greenSign'"
+              style="position: absolute; left: -101px; top: 48px"
             >
-              <span @click="jumpDetail(initList[keys[0]]?.[1])">{{ initList[keys[0]]?.[1].terraceCode }}</span>
+              <span @click="jumpDetail(initList[keys[0]]?.[1])">{{ initList[keys[0]]?.[1]?.terraceCode }}</span>
               <line-svg
-                :linear-id="initList[keys[0]]?.[1].terraceCode"
-                :start-color="initList[keys[0]]?.[1].terraceState === '0' ? 'red' : '#32cd32'"
-                :end-color="initList[keys[0]]?.[1].terraceState === '0' ? 'red' : '#32cd32'"
+                :linear-id="initList[keys[0]]?.[1]?.terraceCode"
+                :start-color="initList[keys[0]]?.[1]?.terraceState === '0' ? 'red' : '#32cd32'"
+                :end-color="initList[keys[0]]?.[1]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
                 style="top: -10px; left: 60px"
                 div-stroke-width="6"
                 ball-stroke-width="5"
-                svg-width="90px"
+                svg-width="65px"
                 svg-height="55px"
                 set-points="0,25 58,25 58,0"
                 @click-line="linkPage"
               />
             </div>
             <div
-              :class="initList[keys[0]]?.[2].terraceState === '0' ? 'redSign' : 'greenSign'"
-              style="position: absolute; left: 181px; top: 49px"
+              :class="initList[keys[0]]?.[2]?.terraceState === '0' ? 'redSign' : 'greenSign'"
+              style="position: absolute; left: 181px; top: 5px"
             >
-              <span @click="jumpDetail(initList[keys[0]]?.[2])">{{ initList[keys[0]]?.[2].terraceCode }}</span>
+              <span @click="jumpDetail(initList[keys[0]]?.[2])">{{ initList[keys[0]]?.[2]?.terraceCode }}</span>
               <line-svg
-                :linear-id="initList[keys[0]]?.[2].terraceCode"
-                :start-color="initList[keys[0]]?.[2].terraceState === '0' ? 'red' : '#32cd32'"
-                :end-color="initList[keys[0]]?.[2].terraceState === '0' ? 'red' : '#32cd32'"
+                :linear-id="initList[keys[0]]?.[2]?.terraceCode"
+                :start-color="initList[keys[0]]?.[2]?.terraceState === '0' ? 'red' : '#32cd32'"
+                :end-color="initList[keys[0]]?.[2]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
-                style="left: -127px; top: -53px"
+                style="left: -127px; top: -11px"
                 div-stroke-width="6"
                 ball-stroke-width="5"
                 svg-width="125px"
-                svg-height="100px"
-                set-points="125,68 0,25 0,26"
+                svg-height="50px"
+                set-points="125,27 0,27 0,26"
+                @click-line="linkPage"
+              />
+            </div>
+            <div
+              :class="initList[keys[0]]?.[3]?.terraceState === '0' ? 'redSign' : 'greenSign'"
+              style="position: absolute; left: -120px; top: -0"
+            >
+              <span @click="jumpDetail(initList[keys[0]]?.[3])">{{ initList[keys[0]]?.[3]?.terraceCode }}</span>
+              <line-svg
+                :linear-id="initList[keys[0]]?.[3]?.terraceCode"
+                :start-color="initList[keys[0]]?.[3]?.terraceState === '0' ? 'red' : '#32cd32'"
+                :end-color="initList[keys[0]]?.[3]?.terraceState === '0' ? 'red' : '#32cd32'"
+                class="svgClass"
+                style="top: -10px; left: 68px"
+                div-stroke-width="6"
+                ball-stroke-width="5"
+                svg-width="52px"
+                svg-height="55px"
+                set-points="0,25 52,25 54,22"
+                @click-line="linkPage"
+              />
+            </div>
+            <div
+              :class="initList[keys[0]]?.[4]?.terraceState === '0' ? 'redSign' : 'greenSign'"
+              style="position: absolute; left: 151px; top: 59px"
+            >
+              <span @click="jumpDetail(initList[keys[0]]?.[4])">{{ initList[keys[0]]?.[4]?.terraceCode }}</span>
+              <line-svg
+                :linear-id="initList[keys[0]]?.[4]?.terraceCode"
+                :start-color="initList[keys[0]]?.[4]?.terraceState === '0' ? 'red' : '#32cd32'"
+                :end-color="initList[keys[0]]?.[4]?.terraceState === '0' ? 'red' : '#32cd32'"
+                class="svgClass"
+                style="left: -127px; top: -21px;"
+                div-stroke-width="6"
+                ball-stroke-width="5"
+                svg-width="125px"
+                svg-height="70px"
+                set-points="125,40 10,40 10,0"
                 @click-line="linkPage"
               />
             </div>
@@ -209,15 +252,16 @@
             >
               {{ parentSignList[1]?.[2] }}
             </div>
-            <div
-              :class="initList[keys[1]]?.[0].terraceState === '0' ? 'redSign' : 'greenSign'"
+            <!-- TODO: Maybe change back -->
+            <!-- <div
+              :class="initList[keys[1]]?.[0]?.terraceState === '0' ? 'redSign' : 'greenSign'"
               style="position: absolute; left: 180px; top: -52px"
             >
-              <span @click="jumpDetail(initList[keys[1]]?.[0])">{{ initList[keys[1]]?.[0].terraceCode }}</span>
+              <span @click="jumpDetail(initList[keys[1]]?.[0])">{{ initList[keys[1]]?.[0]?.terraceCode }}</span>
               <line-svg
-                :linear-id="initList[keys[1]]?.[0].terraceCode"
-                :start-color="initList[keys[1]]?.[0].terraceState === '0' ? 'red' : '#32cd32'"
-                :end-color="initList[keys[1]]?.[0].terraceState === '0' ? 'red' : '#32cd32'"
+                :linear-id="initList[keys[1]]?.[0]?.terraceCode"
+                :start-color="initList[keys[1]]?.[0]?.terraceState === '0' ? 'red' : '#32cd32'"
+                :end-color="initList[keys[1]]?.[0]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
                 style="left: -180px; top: -20%"
                 div-stroke-width="6"
@@ -229,14 +273,14 @@
               />
             </div>
             <div
-              :class="initList[keys[1]]?.[1].terraceState === '0' ? 'redSign' : 'greenSign'"
+              :class="initList[keys[1]]?.[1]?.terraceState === '0' ? 'redSign' : 'greenSign'"
               style="position: absolute; left: -100px; top: 48px"
             >
-              <span @click="jumpDetail(initList[keys[1]]?.[1])">{{ initList[keys[1]]?.[1].terraceCode }}</span>
+              <span @click="jumpDetail(initList[keys[1]]?.[1])">{{ initList[keys[1]]?.[1]?.terraceCode }}</span>
               <line-svg
-                :linear-id="initList[keys[1]]?.[1].terraceCode"
-                :start-color="initList[keys[1]]?.[1].terraceState === '0' ? 'red' : '#32cd32'"
-                :end-color="initList[keys[1]]?.[1].terraceState === '0' ? 'red' : '#32cd32'"
+                :linear-id="initList[keys[1]]?.[1]?.terraceCode"
+                :start-color="initList[keys[1]]?.[1]?.terraceState === '0' ? 'red' : '#32cd32'"
+                :end-color="initList[keys[1]]?.[1]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
                 style="top: -10px; left: 60px"
                 div-stroke-width="6"
@@ -248,14 +292,14 @@
               />
             </div>
             <div
-              :class="initList[keys[1]]?.[2].terraceState === '0' ? 'redSign' : 'greenSign'"
+              :class="initList[keys[1]]?.[2]?.terraceState === '0' ? 'redSign' : 'greenSign'"
               style="position: absolute; left: 161px; top: 49px"
             >
-              <span @click="jumpDetail(initList[keys[1]]?.[2])">{{ initList[keys[1]]?.[2].terraceCode }}</span>
+              <span @click="jumpDetail(initList[keys[1]]?.[2])">{{ initList[keys[1]]?.[2]?.terraceCode }}</span>
               <line-svg
-                :linear-id="initList[keys[1]]?.[2].terraceCode"
-                :start-color="initList[keys[1]]?.[2].terraceState === '0' ? 'red' : '#32cd32'"
-                :end-color="initList[keys[1]]?.[2].terraceState === '0' ? 'red' : '#32cd32'"
+                :linear-id="initList[keys[1]]?.[2]?.terraceCode"
+                :start-color="initList[keys[1]]?.[2]?.terraceState === '0' ? 'red' : '#32cd32'"
+                :end-color="initList[keys[1]]?.[2]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
                 style="left: -105px; top: -53px"
                 div-stroke-width="6"
@@ -265,7 +309,7 @@
                 set-points="100,68 0,25 0,26"
                 @click-line="linkPage"
               />
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="rightSystem g-w100 g-h100">
@@ -277,14 +321,14 @@
               {{ parentSignList[2]?.[2] }}
             </div>
             <div
-              :class="initList[keys[2]]?.[0].terraceState === '0' ? 'redSign' : 'greenSign'"
-              style="position: absolute; left: 180px; top: -52px"
+              :class="initList[keys[2]]?.[0]?.terraceState === '0' ? 'redSign' : 'greenSign'"
+              style="position: absolute; left: 195px; top: -52px"
             >
-              <span @click="jumpDetail(initList[keys[2]]?.[0])">{{ initList[keys[2]]?.[0].terraceCode }}</span>
+              <span @click="jumpDetail(initList[keys[2]]?.[0])">{{ initList[keys[2]]?.[0]?.terraceCode }}</span>
               <line-svg
-                :linear-id="initList[keys[2]]?.[0].terraceCode"
-                :start-color="initList[keys[2]]?.[0].terraceState === '0' ? 'red' : '#32cd32'"
-                :end-color="initList[keys[2]]?.[0].terraceState === '0' ? 'red' : '#32cd32'"
+                :linear-id="initList[keys[2]]?.[0]?.terraceCode"
+                :start-color="initList[keys[2]]?.[0]?.terraceState === '0' ? 'red' : '#32cd32'"
+                :end-color="initList[keys[2]]?.[0]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
                 style="left: -180px; top: -20%"
                 div-stroke-width="6"
@@ -296,14 +340,14 @@
               />
             </div>
             <div
-              :class="initList[keys[2]]?.[1].terraceState === '0' ? 'redSign' : 'greenSign'"
+              :class="initList[keys[2]]?.[1]?.terraceState === '0' ? 'redSign' : 'greenSign'"
               style="position: absolute; left: -100px; top: 48px"
             >
-              <span @click="jumpDetail(initList[keys[2]]?.[1])">{{ initList[keys[2]]?.[1].terraceCode }}</span>
+              <span @click="jumpDetail(initList[keys[2]]?.[1])">{{ initList[keys[2]]?.[1]?.terraceCode }}</span>
               <line-svg
-                :linear-id="initList[keys[2]]?.[1].terraceCode"
-                :start-color="initList[keys[2]]?.[1].terraceState === '0' ? 'red' : '#32cd32'"
-                :end-color="initList[keys[2]]?.[1].terraceState === '0' ? 'red' : '#32cd32'"
+                :linear-id="initList[keys[2]]?.[1]?.terraceCode"
+                :start-color="initList[keys[2]]?.[1]?.terraceState === '0' ? 'red' : '#32cd32'"
+                :end-color="initList[keys[2]]?.[1]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
                 style="top: -10px; left: 70px"
                 div-stroke-width="6"
@@ -315,21 +359,78 @@
               />
             </div>
             <div
-              :class="initList[keys[2]]?.[2].terraceState === '0' ? 'redSign' : 'greenSign'"
-              style="position: absolute; left: 161px; top: 49px"
+              :class="initList[keys[2]]?.[2]?.terraceState === '0' ? 'redSign' : 'greenSign'"
+              style="position: absolute; left: 181px; top: 5px"
             >
-              <span @click="jumpDetail(initList[keys[2]]?.[2])"> {{ initList[keys[2]]?.[2].terraceCode }}</span>
+              <span @click="jumpDetail(initList[keys[2]]?.[2])"> {{ initList[keys[2]]?.[2]?.terraceCode }}</span>
               <line-svg
-                :linear-id="initList[keys[2]]?.[2].terraceCode"
-                :start-color="initList[keys[2]]?.[2].terraceState === '0' ? 'red' : '#32cd32'"
-                :end-color="initList[keys[2]]?.[2].terraceState === '0' ? 'red' : '#32cd32'"
+                :linear-id="initList[keys[2]]?.[2]?.terraceCode"
+                :start-color="initList[keys[2]]?.[2]?.terraceState === '0' ? 'red' : '#32cd32'"
+                :end-color="initList[keys[2]]?.[2]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
-                style="left: -98px; top: -53px"
+                style="left: -127px; top: -11px"
                 div-stroke-width="6"
                 ball-stroke-width="5"
-                svg-width="95px"
-                svg-height="100px"
-                set-points="95,68 0,25 0,26"
+                svg-width="125px"
+                svg-height="50px"
+                set-points="125,27 0,27 0,26"
+                @click-line="linkPage"
+              />
+            </div>
+            <div
+              :class="initList[keys[2]]?.[3]?.terraceState === '0' ? 'redSign' : 'greenSign'"
+              style="position: absolute; left: -120px; top: -0"
+            >
+              <span @click="jumpDetail(initList[keys[2]]?.[3])"> {{ initList[keys[2]]?.[3]?.terraceCode }}</span>
+              <line-svg
+                :linear-id="initList[keys[2]]?.[3]?.terraceCode"
+                :start-color="initList[keys[2]]?.[3]?.terraceState === '0' ? 'red' : '#32cd32'"
+                :end-color="initList[keys[2]]?.[3]?.terraceState === '0' ? 'red' : '#32cd32'"
+                class="svgClass"
+                style="top: -10px; left: 68px"
+                div-stroke-width="6"
+                ball-stroke-width="5"
+                svg-width="52px"
+                svg-height="55px"
+                set-points="0,25 52,25 54,22"
+                @click-line="linkPage"
+              />
+            </div>
+            <div
+              :class="initList[keys[2]]?.[4]?.terraceState === '0' ? 'redSign' : 'greenSign'"
+              style="position: absolute; left: 160px; top: 59px"
+            >
+              <span @click="jumpDetail(initList[keys[2]]?.[4])"> {{ initList[keys[2]]?.[4]?.terraceCode }}</span>
+              <line-svg
+                :linear-id="initList[keys[2]]?.[4]?.terraceCode"
+                :start-color="initList[keys[2]]?.[4]?.terraceState === '0' ? 'red' : '#32cd32'"
+                :end-color="initList[keys[2]]?.[4]?.terraceState === '0' ? 'red' : '#32cd32'"
+                class="svgClass"
+                style="left: -127px; top: -21px;"
+                div-stroke-width="6"
+                ball-stroke-width="5"
+                svg-width="125px"
+                svg-height="70px"
+                set-points="125,40 10,40 10,0"
+                @click-line="linkPage"
+              />
+            </div>
+            <div
+              :class="initList[keys[2]]?.[5]?.terraceState === '0' ? 'redSign' : 'greenSign'"
+              style="position: absolute; left: -110px; top: -50px"
+            >
+              <span @click="jumpDetail(initList[keys[2]]?.[5])"> {{ initList[keys[2]]?.[5]?.terraceCode }}</span>
+              <line-svg
+                :linear-id="initList[keys[2]]?.[5]?.terraceCode"
+                :start-color="initList[keys[2]]?.[5]?.terraceState === '0' ? 'red' : '#32cd32'"
+                :end-color="initList[keys[2]]?.[5]?.terraceState === '0' ? 'red' : '#32cd32'"
+                class="svgClass"
+                style="top: -10px; left: 70px"
+                div-stroke-width="6"
+                ball-stroke-width="5"
+                svg-width="90px"
+                svg-height="55px"
+                set-points="0,25 58,25 58,55"
                 @click-line="linkPage"
               />
             </div>
@@ -398,6 +499,7 @@ export default {
           this.parentSignList.push(key.split("-"));
           this.keys.push(key);
         });
+        // 编号-名称-code-状态
       });
     }
   }
@@ -405,6 +507,10 @@ export default {
 </script>
 
 <style scoped>
+.minPage {
+  margin: 0;
+}
+
 .redSign {
   width: fit-content;
   padding: 0 10px;
@@ -430,7 +536,6 @@ export default {
 }
 
 .legend {
-  width: 254px;
   height: 155px;
   background: #e9f3fa;
   position: absolute;
@@ -442,6 +547,7 @@ export default {
   font-size: 18px;
   font-family: PingFangSC-Medium, "PingFang SC";
   font-weight: 500;
+  width: 92px;
 }
 
 .svgClass {

@@ -23,7 +23,7 @@
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button class="cancel-btn" @click="close">
+      <el-button class="commonBtn" @click="close">
         取消
       </el-button>
     </div>

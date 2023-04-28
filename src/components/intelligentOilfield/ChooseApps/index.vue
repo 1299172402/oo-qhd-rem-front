@@ -6,6 +6,7 @@
       label="选择应用"
       btn-type="primary"
       dialog-title="选择应用"
+      :append-to-body="true"
       @closed="visible=false"
       @ok="handleApplication"
       @open="handleOpen"

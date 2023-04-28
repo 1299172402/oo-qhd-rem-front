@@ -7,7 +7,13 @@
         :rules="rules"
         label-width="240px"
       >
-        <el-form-item label="租户code：" prop="tenantCode">
+        <el-form-item prop="tenantCode">
+          <span slot="label">
+            <el-tooltip content="租户code应具备明显的区分表示 eg:秦皇岛32-6code为QHD32-6" placement="top">
+              <i class="el-icon-question" />
+            </el-tooltip>
+            租户code：
+          </span>
           <el-input
             v-model="model.tenantCode"
             :disabled="isView"

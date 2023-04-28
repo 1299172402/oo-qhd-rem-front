@@ -62,7 +62,10 @@ function hideLoading() {
 const instance = axios.create({
   baseURL: API_HOST,
   timeout: 10000,
-  withCredentials: true
+  withCredentials: true,
+  headers: {
+    "App-Id": proxy[env].appId
+  }
 });
 
 // eslint-disable-next-line

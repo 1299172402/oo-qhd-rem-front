@@ -1,6 +1,6 @@
 <template>
-  <result title="404 Not Found" tip="抱歉，您访问的页面不存在" type="404">
-    <t-button @click="logoutPage">
+  <result title="" tip="当前用户无该模块访问权限" type="404">
+    <t-button style="background: #409eff" @click="logoutPage">
       返回登录页
     </t-button>
   </result>

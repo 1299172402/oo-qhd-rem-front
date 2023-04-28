@@ -43,3 +43,11 @@ export function getModel(modelId) {
     method: "get"
   });
 }
+
+export function uploadFile(updateSupport, data) {
+  return request({
+    url: `/system/model/importData/?updateSupport=${updateSupport}`,
+    method: "post",
+    data
+  });
+}

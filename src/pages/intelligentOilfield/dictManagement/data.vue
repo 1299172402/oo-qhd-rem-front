@@ -56,9 +56,9 @@
     </header-search>
     <page-panel-new header-title="字典数据" style="height: calc(100% - 100px);">
       <el-row style="margin-bottom: 20px">
-        <el-col :span="20">
+        <el-col class="height-placeholder" :span="20">
           <el-button
-            v-hasPermi="['system:dict:add']"
+            v-hasPermi="['system:dict:data:add']"
             type="primary"
             size="mini"
             @click="handleAdd"
@@ -68,7 +68,7 @@
         </el-col>
         <el-col :span="4" style="text-align: right;padding-right: 2px">
           <el-button
-            v-hasPermi="['system:dict:export']"
+            v-hasPermi="['system:dict:data:export']"
             type="primary"
             size="mini"
             @click="handleExport"
@@ -122,7 +122,7 @@
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button
-              v-hasPermi="['system:dict:edit']"
+              v-hasPermi="['system:dict:data:edit']"
               size="mini"
               type="text"
               @click="handleUpdate(scope.row)"
@@ -130,7 +130,7 @@
               修改
             </el-button>
             <el-button
-              v-hasPermi="['system:dict:remove']"
+              v-hasPermi="['system:dict:data:remove']"
               size="mini"
               type="text"
               class="delbutton"

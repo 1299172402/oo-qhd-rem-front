@@ -14,8 +14,13 @@
   color: #72818b;
 }
 
+.vue-treeselect__placeholder {
+  line-height: 40px !important;
+}
+
 .vue-treeselect__single-value{
   color: var(--light-blue-color);
+  line-height: 40px !important;  
 }
 
 .vue-treeselect__input {
@@ -49,4 +54,16 @@
     color: rgba(255, 255, 255, 0.8);
   }
     
+}
+
+.vue-treeselect--disabled .vue-treeselect__control {
+  color: #cfcfcf;
+  background: #f5f5f5;
+  border: 1px solid #c0c4cc;
+  cursor: no-drop;
+    
+}
+
+.vue-treeselect--disabled .vue-treeselect__single-value{
+  color: #cfcfcf !important;
 }

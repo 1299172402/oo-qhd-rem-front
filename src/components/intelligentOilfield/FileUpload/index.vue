@@ -37,7 +37,7 @@
           </div>
         </template>
       </el-upload>
-      <el-dialog :visible.sync="dialogVisible" :class="$store.getters['setting/mode'] === 'dark' ? 'dark-dialog' : 'light-dialog'">
+      <el-dialog :visible.sync="dialogVisible" :append-to-body="true" :class="$store.getters['setting/mode'] === 'dark' ? 'dark-dialog' : 'light-dialog'">
         <img width="100%" :src="dialogImageUrl" alt="">
       </el-dialog>
     </template>

@@ -299,7 +299,7 @@ const actions = {
 
           commit("SETISGROUPLOGIN", false);
           if (firstLogin === "firstLogin") {
-            if (!proxy[env].appId || env === "development") {
+            if (proxy[env].appId === "$system$" || env === "development") {
               router.push("/");
             }
           }

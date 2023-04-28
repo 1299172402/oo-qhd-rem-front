@@ -222,6 +222,7 @@ export default {
     getSaveModel() {
       this.$set(this.model, "tenantIds", this.tableData.map(item => item.tenantId));
       this.$set(this.model, "roleIds", this.tableRoleData.map(item => item.roleId));
+      this.model.appCategory = this.model.appCategory ? this.model.appCategory : "0";
       return { ...this.model, ...this.applicationInfo };
     },
     /**

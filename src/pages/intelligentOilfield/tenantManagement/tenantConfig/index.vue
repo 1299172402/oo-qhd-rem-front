@@ -41,7 +41,12 @@
     <page-panel-new header-title="分配用户" style="height: calc(100% - 100px);">
       <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
         <el-col v-show="isBindUser" :span="1.5">
-          <select-user ref="select" :data-sources="allSelectUser" @ok="loadData" />
+          <select-user
+            ref="select"
+            v-hasPermi="['system:tenant:bind']"
+            :data-sources="allSelectUser"
+            @ok="loadData"
+          />
         </el-col>
         <el-col :span="1.5">
           <el-button

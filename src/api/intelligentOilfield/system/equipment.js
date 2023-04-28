@@ -149,7 +149,22 @@ export function terraceState() {
 // 搜索
 export function searchEquipmentByLink(query) {
   return request({
-    url: `/system/equipment/listByLike?systemId=${query.systemId}&equipmentType=${query.equipmentType}`,
+    url: `/system/equipment/listByLike?systemId=${query.systemId}&equipmentType=${query.equipmentType}&equipmentCode=${query.equipmentCode}`,
     method: "post"
+  });
+}
+
+export function uploadFile1(updateSupport, data) {
+  return request({
+    url: `/system/eqSystem/importData?updateSupport=${updateSupport}`,
+    method: "post",
+    data
+  });
+}
+export function uploadFile2(updateSupport, data) {
+  return request({
+    url: `/system/equipment/importData?updateSupport=${updateSupport}`,
+    method: "post",
+    data
   });
 }

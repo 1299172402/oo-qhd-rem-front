@@ -148,6 +148,7 @@ import "@/assets/styles/pages/handleBusinessListStyle.less";
 import OpenOtherTab from "@/pages/common/mixins/commonMixin";
 import { mapGetters } from "vuex";
 import { getApp } from "@/api/intelligentOilfield/system/applicationCenter/applicationCenter.js";
+import jumpSupApp from "@/utils/jumpSupApp.js";
 /* eslint-disable */
 function routeWatch(val) {
   if (val.path === "/bpm/personalOffice/HandleBusinessList" && this.closeTabKey) {
@@ -257,12 +258,13 @@ export default {
       }
       getApp(appId)
         .then(res => {
-          const url = res.data.data.appPcAccessUrl ? res.data.data.appPcAccessUrl.split("?")[0] : "";
-          if (!url) {
-            this.$message.error("路径错误!");
-            return;
-          }
-          window.open(`${url}?businessKey=${businessKey}&taskId=${id}&processInstanceId=${processInstanceId}&action=Audit`, "_blank");
+          const query = {
+            businessKey,
+            processInstanceId,
+            taskId: id,
+            action: "Audit"
+          };
+          jumpSupApp(res.data.data.appPcAccessUrl, query);
         });
     },
     /**
