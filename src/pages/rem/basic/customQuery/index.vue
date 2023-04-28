@@ -12,7 +12,7 @@
                     />
                 </el-select>
                 <span v-show="activeTabIndex == 1" style="padding-left: 20px">井号：</span>
-                <el-select v-show="activeTabIndex == 1" v-model="wellId">
+                <el-select v-show="activeTabIndex == 1" v-model="wellId" :disabled="activeEchart">
                     <el-option
                         v-for="(item, index) in wellData"
                         :key="index"
@@ -29,6 +29,7 @@
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
                     value-format="yyyy-MM-dd"
+                    :disabled="activeEchart"
                 />
                 <el-date-picker
                     v-show="activeTabIndexDate == 2"
@@ -38,12 +39,14 @@
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
                     value-format="yyyy-MM"
+                    :disabled="activeEchart"
                 />
                 <el-date-picker
                     v-show="activeTabIndexDate == 1"
                     v-model="selectDate"
                     type="year"
                     placeholder="选择年份"
+                    :disabled="activeEchart"
                 />
             </div>
        
@@ -134,7 +137,7 @@
                 </el-col>
             </el-row>
         </page-panel-new>
-        <page-panel headerTitle="" :show-btn="true" v-else-if="activeEchart" style="height:calc(100% - 62px)">
+        <page-panel headerTitle="" :show-btn="true" v-else-if="activeEchart" style="height:calc(100% - 112px);padding-bottom: 60px">
 <!--            <ProductionData></ProductionData>-->
             <el-table
                 :row-style="{ height: '0px' }"
@@ -148,6 +151,8 @@
             >
                 <el-table-column :key="index" :prop="item.val" :label="item.name" min-width="160" v-for="(item,index) in headerTextLower"></el-table-column>
             </el-table>
+            <pagination v-if="pageTotal" :pageSizes="[15, 20, 40, 100]" :total="pageTotal" :page.sync="page" :limit.sync="pageSize" @pagination="pagination" />
+
         </page-panel>
         <el-dialog
             title="查询"
@@ -197,10 +202,10 @@
                 >
                     <template slot-scope="scope">
                         <el-select v-model="scope.row.model" size="small">
-                            <el-option label=">" value=">"/>
-                            <el-option label="<" value="<"/>
-                            <el-option label=">=" value=">="/>
-                            <el-option label="<=" value="<="/>
+                            <el-option label=">" value="gt"/>
+                            <el-option label="<" value="lt"/>
+                            <el-option label=">=" value="gteq"/>
+                            <el-option label="<=" value="lteq"/>
                         </el-select>
                     </template>
                 </el-table-column>
@@ -248,6 +253,10 @@ export default {
     },
     data() {
         return {
+            params:'',
+            pageTotal: 0,
+            page: 1,
+            pageSize: 15,
             queryData:[],
             typeVal:0,
             selectDate:[],//时间选择
@@ -870,6 +879,17 @@ export default {
                     flag = false
                 }
             })
+            let sqlObj = []
+            this.tableRow.forEach((item)=>{
+                if(item.type && item.name && item.model && item.val) {
+                    sqlObj.push( {
+                        "link": item.type,
+                        "index": item.name,
+                        "condition": item.model,
+                        "value": item.val
+                    })
+                }
+            })
             if(!flag){
                 this.$message.error('请填写完整查询条件！');
                 return 
@@ -885,19 +905,25 @@ export default {
             })
             this.dialogVisible = false
             this.activeEchart = !this.activeEchart
+            
             let params = {
                 condList:condListFormat,//字段名字
-                sqlSent:sqlStr,//拼接sql
+                // sqlSent:sqlStr,//拼接sql
+                sqlSent:sqlObj,//拼接sql
                 targetType: this.activeTabIndex, //目标类型 井：1  油田 ：2
                 dataType:  this.activeTabIndexData , //数据类型 （井口指标，计量指标等）
                 timeType:  this.activeTabIndexDate , //时间类型 1 年 2月 3 日
                 startTime:  this.selectDate.length > 1?this.selectDate[0]:this.selectDate, //开始时间
                 endTime: this.selectDate[1],//结束时间
-                dataId:this.activeTabIndex == 2?this.ogfId:this.wellId
+                dataId:this.activeTabIndex == 2?this.ogfId:this.wellId,
+                pageNum:this.page,
+                pageSize:this.pageSize
             }
+            this.params = params
             this.queryData = []
             queryCustomQueryList( params ).then((res)=>{
-                this.queryData = res.data.data.data
+                this.queryData = res.data.data.rows
+                this.pageTotal = res.data.data.total
             })
         },
         addRow(val){
@@ -905,7 +931,16 @@ export default {
         },
         deleteRow(val){
             this.tableRow.splice(val.$index,1)
-        }
+        },
+        //切换分页
+        pagination(e) {
+            this.params.pageNum = e.page;
+            this.params.pageSize = e.limit;
+            queryCustomQueryList( this.params ).then((res)=>{
+                this.queryData = res.data.data.rows
+                this.pageTotal = res.data.data.total
+            })
+        },
     }
 };
 </script>
