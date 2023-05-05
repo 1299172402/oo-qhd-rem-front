@@ -31,7 +31,7 @@
         </header-search>
         <page-panel-new style="height: calc(100% - 100px);">
             <div style="height:100%">
-                <el-row style="height:150px;margin-bottom:10px;">
+                <el-row style="height:126px;margin-bottom:20px;">
                     <el-table highlight :data="wellPerformanceAnalysis" style="width: 100%" height="calc(100% - 0px)" class="doubleHeader">
                         <el-table-column align="center" prop="name" label="油田(区块)" show-overflow-tooltip></el-table-column>
                         <el-table-column align="center" label="储量状况">
@@ -40,7 +40,7 @@
                                     <div>
                                         <span>地质储量</span>
                                         <br />
-                                        <span>(万吨)</span>
+                                        <span>(10⁴t)</span>
                                     </div>
                                 </template>
                                 <template slot-scope="scoped">
@@ -52,7 +52,7 @@
                                     <div>
                                         <span>可采储量</span>
                                         <br />
-                                        <span>(万吨)</span>
+                                        <span>(10⁴t)</span>
                                     </div>
                                 </template>
                                 <template slot-scope="scoped">
@@ -76,7 +76,7 @@
                                     <div>
                                         <span>累产油</span>
                                         <br />
-                                        <span>(万吨)</span>
+                                        <span>(10⁴t)</span>
                                     </div>
                                 </template>
                                 <template slot-scope="scoped">
@@ -88,7 +88,7 @@
                                     <div>
                                         <span>目前剩余可采储量</span>
                                         <br />
-                                        <span>(万吨)</span>
+                                        <span>(10⁴t)</span>
                                     </div>
                                 </template>
                                 <template slot-scope="scoped">
@@ -138,15 +138,15 @@
                         </el-table-column>
                     </el-table>
                 </el-row>
-                <el-row style="height:32px;margin-bottom:10px;">
+                <el-row style="height:32px;margin-bottom:20px;">
                     <el-tabs class="g-pageHeader" v-model="activeName" topline @tab-click="handleClick">
                         <el-tab-pane style="height: auto" v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name"></el-tab-pane>
                     </el-tabs>
                 </el-row>
                 <div v-if="activeName=='waterDrive'" style="height:calc(100% - 202px);overflow-y: scroll;overflow-x: hidden;">
-                    <div style="display: flex;align-items: center;margin-bottom:15px;">
+                    <div style="display: flex;align-items: center;margin-bottom:20px;">
                         <span>拟合起始时间：</span>
-                        <el-date-picker v-model="dateTime" type="monthrange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
+                        <el-date-picker v-model="dateTime" type="monthrange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" @change="sqtzChart"></el-date-picker>
                         <el-radio-group v-model="radio1" style="margin-left:10px;">
                             <el-radio-button label="图表"></el-radio-button>
                             <el-radio-button label="数据"></el-radio-button>
@@ -173,7 +173,7 @@
                                     <el-table-column align="center" prop="y" :label="radioType=='A'?'lgWp':radioType=='B'?'lgLp':radioType=='C'?'Lp/Np':radioType=='D'?'Lp/Np':radioType=='YUQITAI'?'logNp':'y'" :formatter="toPrecise"></el-table-column>
                                 </el-table>
                             </info-window>
-                            <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-top:10px;margin-bottom:10px;margin-left: 0;">
+                            <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-top:20px;margin-bottom:20px;margin-left: 0;">
                                 <span>计算结果</span>
                             </div>
                             <el-row style="height:60px;text-align:center;">
@@ -214,7 +214,7 @@
                                 <el-row>
                                     <div style="display: flex;align-items: center;">
                                         <span>拟合起始时间：</span>
-                                        <el-date-picker v-model="dateTime1" type="monthrange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM"></el-date-picker>
+                                        <el-date-picker v-model="dateTime1" type="monthrange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" @change="djqxChart"></el-date-picker>
                                         <el-radio-group v-model="radio2" style="margin-left:15px;">
                                             <el-radio-button label="图表"></el-radio-button>
                                             <el-radio-button label="数据"></el-radio-button>
@@ -224,7 +224,7 @@
                                         <span>月</span>
                                     </div>
                                 </el-row>
-                                <el-row style="margin:10px 0;">
+                                <el-row style="margin:20px 0;">
                                     <el-radio-group v-model="radio3" @change="djqxChart()">
                                         <el-radio :label="1">指数递减</el-radio>
                                         <el-radio :label="2">调和递减</el-radio>
@@ -260,10 +260,10 @@
                                         </el-table>
                                     </div>
                                 </el-row>
-                                <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-top:10px;margin-bottom:10px;margin-left: 0;">
+                                <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-top:20px;margin-bottom:20px;margin-left: 0;">
                                     <span>计算结果</span>
                                 </div>
-                                <el-row style="height:60px;text-align:center;margin-top:10px">
+                                <el-row style="height:60px;text-align:center;margin-top:20px">
                                     <el-col :span="12">
                                         <el-row>
                                             <el-col><span style="font-size:30px;color:#24DEFF">{{ djproOutputRate | toFixedTwo }}</span></el-col>
@@ -310,10 +310,10 @@
                         <!---左下-->
                         <el-col :span="24" style="height:100%">
                             <div height="100%">
-                                <el-row style="margin-bottom:10px;">
+                                <el-row style="margin-bottom:20px;">
                                     <div style="display: flex;align-items: center;">
                                         <span>拟合起始时间：</span>
-                                        <el-date-picker v-model="dateTime2" type="monthrange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM"></el-date-picker>
+                                        <el-date-picker v-model="dateTime2" type="monthrange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" @change="tstbChart"></el-date-picker>
                                         <el-radio-group v-model="radio4" style="margin-left:15px;">
                                             <el-radio-button label="图表"></el-radio-button>
                                             <el-radio-button label="数据"></el-radio-button>
@@ -357,10 +357,10 @@
                                         </el-table>
                                     </div>
                                 </el-row>
-                                <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-top:10px;margin-bottom:10px;margin-left: 0;">
+                                <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-top:20px;margin-bottom:20px;margin-left: 0;">
                                     <span>计算结果</span>
                                 </div>
-                                <el-row style="height:60px;text-align:center;margin-top:10px">
+                                <el-row style="height:60px;text-align:center;margin-top:20px">
                                     <el-col :span="12">
                                         <el-row>
                                             <el-col><span style="font-size:30px;color:#24DEFF">{{ tsproOutputRate | toFixedTwo }}</span></el-col>
@@ -385,7 +385,7 @@
                             <div height="100%">
                                 <el-row style="height:90%">
                                     <el-col :span="18" style="margin-left:60px">
-                                        <table class="border" style="width:100%;margin-top:20px">
+                                        <table class="border" style="width:100%;">
                                             <thead>
                                                 <tr>
                                                     <td colspan="2">参数名称</td>
@@ -499,7 +499,7 @@
                                         </table>
                                     </el-col>
                                 </el-row>
-                                <el-row style="height:10%;margin-top:10px">
+                                <el-row style="height:10%;margin-top: 20px;">
                                     <el-col style="margin-left:140px" :span="6">
                                         <el-button type="primary" @click="getExperienceFormulaParameter()">参数读取</el-button>
                                     </el-col>
@@ -511,8 +511,8 @@
                         </el-col>
                         <!---右下-->
                         <el-col :span="12" style="height:100%">
-                            <pagePanelNew style="height: 100%">
-                                <el-table height="850px" :data="computingData" highlight class="doubleHeader">
+                            <pagePanelNew style="height: 830px;margin-top: 2px;">
+                                <el-table height="100%" :data="computingData" highlight class="doubleHeader">
                                     <el-table-column align="center" prop="formulaName" label="采收率计算方法"></el-table-column>
                                     <el-table-column align="center" prop="recoveryRatio" label-class-name="twoRowHeader">
                                         <template slot="header">
@@ -528,7 +528,7 @@
                                             <div>
                                                 <span>可采储量</span>
                                                 <br />
-                                                <span>(万吨)</span>
+                                                <span>(10⁴t)</span>
                                             </div>
                                         </template>
                                     </el-table-column>
@@ -658,13 +658,13 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: "rgba(151,151,151,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                     },
@@ -684,13 +684,13 @@
                         },
                         axisLine: {
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
 
@@ -776,13 +776,13 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: "rgba(151,151,151,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                     },
@@ -802,14 +802,15 @@
                             show: false,
                         },
                         axisLine: {
+                            show: true,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                     },
@@ -876,13 +877,13 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: "rgba(151,151,151,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                     },
@@ -901,14 +902,15 @@
                             show: false,
                         },
                         axisLine: {
+                            show: true,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                     },
@@ -1069,10 +1071,10 @@
             this.dateTime = [mon1, mon];
             this.dateTime1 = [mon1, mon];
             this.dateTime2 = [mon1, mon];
-            this.activeName = 'waterDrive';
             this.dateTime = [new Date().addDays(-365).format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
             this.dateTime1 = [new Date().addDays(-365).format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
             this.dateTime2 = [new Date().addDays(-365).format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
+            this.activeName = 'waterDrive';
             console.log(this.mode)
             console.log(this.$store.state.setting.mode)
         },
@@ -1159,8 +1161,8 @@
             sqtzChart() {
                 let predictDays = "0";
                 let request = {
-                    beginDate: this.dateTime[0],
-                    endDate: this.dateTime[1],
+                    beginDate:  this.dateTime.length >=2 ? this.dateTime[0] : "",
+                    endDate: this.dateTime.length >=2 ? this.dateTime[1] : "",
                     fieldId: this.selectBlock,
                     oilFieldId: this.selectOilField,
                     timeGranularityTypeCode: this.radioMonth,
@@ -1209,8 +1211,8 @@
                 let predictDays = "0";
                 predictDays = this.num1;
                 let request = {
-                    beginDate: this.dateTime1[0] + '-01',
-                    endDate: this.dateTime1[1] + '-01',
+                    beginDate: this.dateTime1.length >=2 ? this.dateTime1[0] : "",
+                    endDate: this.dateTime1.length >=2 ? this.dateTime1[1] : "",
                     declineTypeCode: this.radio3,
                     fieldId: this.selectBlock,
                     oilFieldId: this.selectOilField,
@@ -1247,8 +1249,8 @@
             //童氏图版法
             tstbChart() {
                 let request = {
-                    beginDate: this.dateTime1[0] + '-01',
-                    endDate: this.dateTime1[1] + '-01',
+                    beginDate: this.dateTime2.length >=2 ? this.dateTime2[0] : "",
+                    endDate: this.dateTime2.length >=2 ? this.dateTime2[1] : "",
                     fieldId: this.selectBlock,
                     oilFieldId: this.selectOilField,
 
@@ -1315,8 +1317,8 @@
                 /*this.paramater.k=1.1;
                 this.paramater.kplus=1.1;*/
                 let request = {
-                    beginDate: this.dateTime2[0] + '-01',
-                    endDate: this.dateTime2[1] + '-01',
+                    beginDate: this.dateTime2.length >=2 ? this.dateTime2[0] : "",
+                    endDate: this.dateTime2.length >=2 ? this.dateTime2[1] : "",
                     experienceFormulaParameter: this.paramater,
                     fieldId: this.selectBlock,
                     oilFieldId: this.selectOilField,
@@ -1400,7 +1402,7 @@
         padding-top:20px;
         padding-left:20px;
         .el-radio{
-            margin-bottom:10px;
+            margin-bottom:20px;
         }
         .remark{
             color:#CD3D00;
