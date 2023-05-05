@@ -56,7 +56,7 @@
         </el-button>
       </div>
     </el-row>
-    <page-panel-new :show-btn="true" v-if="!activeEchart" style="height: calc(100% - 62px)">
+    <page-panel-new :show-btn="true" v-if="!activeEchart" style="height: calc(100% - 32px)">
       <el-row>
         <el-col :span="6" style="margin-left: 20px; margin-right: 20px">
           <page-panel :show-btn="true" headerTitle="目标类型">
@@ -98,7 +98,7 @@
             </el-row>
           </page-panel>
         </el-col>
-        <el-col :span="5" style="margin-left: 20px; margin-right: 20px">
+        <el-col :span="6" style="margin-left: 20px; margin-right: 20px">
           <page-panel
             :show-btn="true"
             headerTitle="生产指标"
@@ -107,7 +107,7 @@
           >
           <el-row :gutter="10">
               <el-checkbox-group v-model="productValue">
-                <el-col v-for="item in productList" :key="item.val" :span="6">
+                <el-col v-for="item in productList" :key="item.val" :span="8">
                 <el-checkbox :label="item.val" :value="item.val">
                   {{ item.name ? item.name : item }}
                 </el-checkbox>
