@@ -1,8 +1,8 @@
 <template>
     <div class="container" style="position: relative">
         <div class="topBanner">智能注采调配</div>
-        <linkageBoxBot :style="item.style" :remHome="true" :currentList="item" :key="index" v-for="(item,index) in currentLists[0]"></linkageBoxBot>
-        <linkageBoxTop :style="item.style" :remHome="true" :currentList="item" :key="index" v-for="(item,index) in currentLists[1]"></linkageBoxTop>
+        <linkageBoxBot :style="item.style" :showFlag="item.showFlag" :remHome="true" :currentList="item" :key="index" v-for="(item,index) in currentLists[0]"></linkageBoxBot>
+        <linkageBoxTop :style="item.style" :showFlag="item.showFlag" :mcShow="item.mcShow" :remHome="true" :currentList="item" :key="index" v-for="(item,index) in currentLists[1]"></linkageBoxTop>
         <div class="studySelf">
             <div class="studySelfInside"></div>
             <span>模型自学习</span>
@@ -32,6 +32,31 @@ export default {
     methods: {
         arrowFun(){
             setInterval(()=>{
+                // console.log(this.currentLists[this.loopNum]);
+                console.log(this.loopNum);
+                if(this.loopNum!= -1 && this.loopNum <3 ) { this.currentLists[1][this.loopNum].showFlag = true }
+                if(this.loopNum > 0 && this.loopNum <4 ) { this.currentLists[1][this.loopNum-1].showFlag = false }
+                if(this.loopNum == 2) this.currentLists[1][this.loopNum].mcShow = true
+
+
+                if(this.loopNum == 3 ) {
+                    this.currentLists[0][2].showFlag = true
+                }
+                if(this.loopNum == 4 ) {
+                    this.currentLists[0][2].showFlag = false
+                    this.currentLists[0][1].showFlag = true
+                }
+                if(this.loopNum == 5 ) {
+                    this.currentLists[0][1].showFlag = false
+                    this.currentLists[0][0].showFlag = true
+                }
+                if(this.loopNum == -1 ) {
+                    this.currentLists[0][0].showFlag = false
+                }
+                // if(this.loopNum != 2 && this.loopNum > 3 ) this.currentLists[0][this.loopNum-4].showFlag = false
+                
+                // if(this.loopNum > 2 && this.loopNum <6 ) { this.currentLists[0][this.loopNum-3].showFlag = true }
+                // if(this.loopNum > 2 && this.loopNum <7 ) { this.currentLists[0][this.loopNum-4].showFlag = false }
                 this.loopNum ++
                 for(let i=0;i<7;i++){
                     this.$el.querySelectorAll('img')[i].style.display = 'none'
@@ -40,7 +65,7 @@ export default {
                 if(this.loopNum == 6){
                    this.loopNum = -1
                 }
-            },1000)
+            },2000)
         }
     },
     data(){
@@ -58,6 +83,7 @@ export default {
                         },
                         imgUrl: new URL('./ipmHome/04.png', import.meta.url).href,//暂无图片
                         down:true,
+                        showFlag:false
                     },
                     {
                         style: 'position:absolute;left: 40%;top: 55%;width:20%;height:40%;',
@@ -68,6 +94,7 @@ export default {
                         },
                         imgUrl: new URL('./ipmHome/05.png', import.meta.url).href,
                         down:true,
+                        showFlag:false
                     },
                     {
                         style: 'position:absolute;left: 70%;top: 55%;width:20%;height:40%;',
@@ -78,6 +105,7 @@ export default {
                         },
                         imgUrl: new URL('./ipmHome/06.png', import.meta.url).href,
                         down:true,
+                        showFlag:false
                     },
                 ],
                 [
@@ -90,6 +118,8 @@ export default {
                         },
                         imgUrl: new URL('./ipmHome/01.png', import.meta.url).href,
                         down:false,
+                        showFlag:false,
+                        mcShow:false
                     },
                     {
                         style: 'position:absolute;left: 40%;top: 8%;width:20%;height:40%;',
@@ -101,6 +131,8 @@ export default {
                         },
                         imgUrl: new URL('./ipmHome/02.gif', import.meta.url).href,
                         down:false,
+                        showFlag:false,
+                        mcShow:false
                     },
     
                     {
@@ -112,6 +144,8 @@ export default {
                         },
                         imgUrl: new URL('./ipmHome/03.png', import.meta.url).href,
                         down:false,
+                        showFlag:false,
+                        mcShow:false
                     },
                 ]
             ]
@@ -171,7 +205,7 @@ export default {
     }
     .rightUpArrow{
         transform: rotate(135deg);
-        animation:rightUpArrow 1s linear infinite;
+        animation:rightUpArrow 2s linear infinite;
         position:absolute;
         left: 11%;top: 38%
     }
@@ -187,7 +221,7 @@ export default {
     }
     .lUpArrow{
         transform: rotate(45deg);
-        animation:lUpArrow 1s linear infinite;
+        animation:lUpArrow 2s linear infinite;
         position:absolute;
         left: 9%;top: 58%
     }
@@ -203,7 +237,7 @@ export default {
     }
     .rightArrow{
         transform: rotate(180deg);
-        animation:rightArrow 1s linear infinite;
+        animation:rightArrow 2s linear infinite;
         position:absolute;
         left: 35%;top: 30%;
     }
@@ -218,7 +252,7 @@ export default {
     }
     .rightArrow2{
         transform: rotate(180deg);
-        animation:rightArrow2 1s linear infinite;
+        animation:rightArrow2 2s linear infinite;
         position:absolute;
         left: 65%;top: 30%;
     }
@@ -233,7 +267,7 @@ export default {
     }
     .downArrow{
         transform: rotate(270deg);
-        animation:downArrow 1s linear infinite;
+        animation:downArrow 2s linear infinite;
         position:absolute;
         left: 80%;bottom: 43%;
     }
@@ -247,7 +281,7 @@ export default {
         }
     }
     .leftArrow{
-        animation:leftArrow 1s linear infinite;
+        animation:leftArrow 2s linear infinite;
         position:absolute;
         left: 35%;top: 80%;
     }
@@ -261,7 +295,7 @@ export default {
         }
     }
     .leftArrow2{
-        animation:leftArrow2 1s linear infinite;
+        animation:leftArrow2 2s linear infinite;
         position:absolute;
         left: 65%;top: 80%;
     }

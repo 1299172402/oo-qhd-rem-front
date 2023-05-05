@@ -1,6 +1,6 @@
 <template>
     <div class="box" @mouseenter="show(true)" @mouseleave="show(false)">
-        <div class="warp" :style="!currentList.down?'overflow:visible':'overflow:hidden'">
+        <div class="warp" :style="!currentList.down ?'overflow:visible':'overflow:hidden'">
             <div class="transition-box">
                 <div class="transition-box-content" :style="{'background-image':`url(${currentList.imgUrl})`}">
                 </div>
@@ -27,7 +27,7 @@
 <!--                    </div>-->
 <!--                </div>-->
 <!--            </div>-->
-            <div v-show="currentList.down" :style="showStyle" class="transition-box-bottom bo2">
+            <div v-show="currentList.down || showFlag" :style="showStyle" class="transition-box-bottom bo2">
                 <div class="pad">
                     <div>
                         <p v-show="!content" :key="index" v-for="(item,index) in currentList.boxBottomText">
@@ -57,8 +57,21 @@ export default {
            type:Object,
            default:()=>{}
        },
-       remHome:false 
+       remHome:false ,
+        showFlag: {
+            type : Boolean,
+            default : false
+        }
     },
+    watch:{
+        showFlag:{
+            handler(Nval){
+                this.show(Nval)
+            },
+            deep:true
+        },
+    },
+
     mounted() {
         console.log(this.currentList);
     },

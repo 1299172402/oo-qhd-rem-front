@@ -1,10 +1,14 @@
 <template>
     <div class="box" @mouseenter="show = true" @mouseleave="show = false">
         <el-collapse-transition>
-            <div v-show="show||remHome">
+            <div v-show="show||remHome||showFlag">
                 <div class="transition-box">
                     <div class="transition-box-content" :style="{'background-image':`url(${currentList.imgUrl})`}">
+                        <div v-show="mcShow" class="mcBox" style="">
+
+                        </div>
                     </div>
+                    
                 </div>
             </div>
         </el-collapse-transition>
@@ -13,7 +17,7 @@
             <span class="btnGo"></span>
         </p>
         <el-collapse-transition>
-            <div v-show="show" :style="currentList.boxStyle.bottomMargin">
+            <div v-show="show||showFlag" :style="currentList.boxStyle.bottomMargin">
                 <div class="transition-box-bottom">
                     <div class="pad">
                         <div>
@@ -41,11 +45,19 @@
 
 export default {
     props:{
-       currentList:{
+        currentList:{
            type:Object,
            default:()=>{}
-       },
-       remHome:false 
+        },
+        remHome:false ,
+        showFlag: {
+            type : Boolean,
+            default : false
+        },
+        mcShow:{
+            type : Boolean,
+            default : false
+        }
     },
     data() {
         return {
@@ -91,6 +103,7 @@ export default {
             margin-top: 4.5vw!important;
             margin-left: 0.6vw!important;
             background-size: cover!important;
+            position: relative;
         }
     }
     .textBox{
@@ -155,6 +168,22 @@ export default {
                 font-weight: 900;
             }
         }
+    }
+}
+
+.mcBox{
+    animation:mcBox 1s linear infinite;
+    background:rgba(255,0,0,0.56);height:100%;width:100%;position:absolute;
+    //left: 20%;top:10%;
+    //border-radius: 60px;
+}
+
+@keyframes mcBox{
+    0%{
+        opacity:0;
+    }
+    100% {
+        opacity: 1;
     }
 }
 
