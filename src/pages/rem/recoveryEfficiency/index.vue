@@ -32,46 +32,109 @@
         <page-panel-new style="height: calc(100% - 100px);">
             <div style="height:100%">
                 <el-row style="height:150px;margin-bottom:10px;">
-                    <el-table highlight :data="wellPerformanceAnalysis" style="width: 100%" height="calc(100% - 0px)">
+                    <el-table highlight :data="wellPerformanceAnalysis" style="width: 100%" height="calc(100% - 0px)" class="doubleHeader">
                         <el-table-column align="center" prop="name" label="油田(区块)" show-overflow-tooltip></el-table-column>
-                        <el-table-column align="center" label="储备状况">
-                            <el-table-column align="center" show-overflow-tooltip>
-                                <template slot="header">地质储量(10<sup>4</sup>t)</template>
+                        <el-table-column align="center" label="储量状况">
+                            <el-table-column align="center" show-overflow-tooltip label-class-name="twoRowHeader">
+                                <template slot="header">
+                                    <div>
+                                        <span>地质储量</span>
+                                        <br />
+                                        <span>(万吨)</span>
+                                    </div>
+                                </template>
                                 <template slot-scope="scoped">
                                     <span>{{ scoped.row.geologyReservoirs!=null ? scoped.row.geologyReservoirs :'-'}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column align="center" show-overflow-tooltip>
-                                <template slot="header">可采储量(10<sup>4</sup>t)</template>
+                            <el-table-column align="center" show-overflow-tooltip label-class-name="twoRowHeader">
+                                <template slot="header">
+                                    <div>
+                                        <span>可采储量</span>
+                                        <br />
+                                        <span>(万吨)</span>
+                                    </div>
+                                </template>
                                 <template slot-scope="scoped">
                                     <span>{{ scoped.row.recoverableReserves!= null ? scoped.row.recoverableReserves :'-'}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column align="center" label="采收率(%)" prop="recoveryRatio" show-overflow-tooltip>
+                            <el-table-column align="center" prop="recoveryRatio" show-overflow-tooltip label-class-name="twoRowHeader">
+                                <template slot="header">
+                                    <div>
+                                        <span>采收率</span>
+                                        <br />
+                                        <span>(%)</span>
+                                    </div>
+                                </template>
                                 <template slot-scope="scoped">
                                     <span>{{scoped.row.recoveryRatio | toFixedTwo}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column align="center" show-overflow-tooltip>
-                                <template slot="header">累产油(10<sup>4</sup>t)</template>
+                            <el-table-column align="center" show-overflow-tooltip label-class-name="twoRowHeader">
+                                <template slot="header">
+                                    <div>
+                                        <span>累产油</span>
+                                        <br />
+                                        <span>(万吨)</span>
+                                    </div>
+                                </template>
                                 <template slot-scope="scoped">
                                     <span>{{ scoped.row.oilSum | toFixedTwo}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column align="center" width="120px" show-overflow-tooltip>
-                                <template slot="header">目前剩余可采储量(10<sup>4</sup>t)</template>
+                            <el-table-column align="center" show-overflow-tooltip label-class-name="twoRowHeader">
+                                <template slot="header">
+                                    <div>
+                                        <span>目前剩余可采储量</span>
+                                        <br />
+                                        <span>(万吨)</span>
+                                    </div>
+                                </template>
                                 <template slot-scope="scoped">
                                     <span>{{ scoped.row.remainCurrent | toFixedTwo }}</span>
                                 </template>
                             </el-table-column>
                         </el-table-column>
                         <el-table-column align="center" label="采出程度">
-                            <el-table-column align="center" label="地质储量(%)" prop="geologyReservoirsForOutput" show-overflow-tooltip></el-table-column>
-                            <el-table-column align="center" label="可采储量(%)" prop="recoverableReservesForOutput" show-overflow-tooltip></el-table-column>
+                            <el-table-column align="center" prop="geologyReservoirsForOutput" show-overflow-tooltip label-class-name="twoRowHeader">
+                                <template slot="header">
+                                    <div>
+                                        <span>地质储量</span>
+                                        <br />
+                                        <span>(%)</span>
+                                    </div>
+                                </template>
+                            </el-table-column>
+                            <el-table-column align="center" prop="recoverableReservesForOutput" show-overflow-tooltip label-class-name="twoRowHeader">
+                                <template slot="header">
+                                    <div>
+                                        <span>可采储量</span>
+                                        <br />
+                                        <span>(%)</span>
+                                    </div>
+                                </template>
+                            </el-table-column>
                         </el-table-column>
                         <el-table-column align="center" label="采油速度">
-                            <el-table-column align="center" label="可采储量(%)" prop="recoverableReservesForProSpeed" show-overflow-tooltip></el-table-column>
-                            <el-table-column align="center" label="剩余可采储量(%)" prop="recoverableReservesRemainForProSpeed" show-overflow-tooltip></el-table-column>
+                            <el-table-column align="center" prop="recoverableReservesForProSpeed" show-overflow-tooltip label-class-name="twoRowHeader">
+                                <template slot="header">
+                                    <div>
+                                        <span>可采储量</span>
+                                        <br />
+                                        <span>(%)</span>
+                                    </div>
+                                </template>
+                            </el-table-column>
+                            <el-table-column align="center" prop="recoverableReservesRemainForProSpeed" show-overflow-tooltip label-class-name="twoRowHeader">
+                                <template slot="header">
+                                    <div>
+                                        <span>剩余可采储量</span>
+                                        <br />
+                                        <span>(%)</span>
+                                    </div>
+                                </template>
+                            </el-table-column>
                         </el-table-column>
                     </el-table>
                 </el-row>
@@ -95,11 +158,19 @@
                                 <div style="height:100%" v-if="radio1=='图表'">
                                     <Echart :chart-data="option" height="100%"></Echart>
                                 </div>
-                                <el-table highlight :data="sjtableDate" height="100%" v-if="radio1=='数据'">
+                                <el-table highlight :data="sjtableDate" height="100%" v-if="radio1=='数据'" class="doubleHeader">
                                     <el-table-column align="center" type="index" label="序号"></el-table-column>
-                                    <el-table-column align="center" prop="theDate" label="日期" show-overflow-tooltip></el-table-column>
-                                    <el-table-column align="center" prop="x" :label="radioType=='A'?'Np':radioType=='B'?'Np':radioType=='C'?'Lp':radioType=='D'?'Wp':radioType=='YUQITAI'?'lg(Lp/Wp)':'x'"></el-table-column>
-                                    <el-table-column align="center" prop="y" :label="radioType=='A'?'lgWp':radioType=='B'?'lgLp':radioType=='C'?'Lp/Np':radioType=='D'?'Lp/Np':radioType=='YUQITAI'?'logNp':'y'"></el-table-column>
+                                    <el-table-column align="center" prop="theDate" show-overflow-tooltip label-class-name="twoRowHeader">
+                                        <template slot="header">
+                                            <div>
+                                                <span>日期</span>
+                                                <br />
+                                                <span>(yyyy/mm/dd)</span>
+                                            </div>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column align="center" prop="x" :label="radioType=='A'?'Np':radioType=='B'?'Np':radioType=='C'?'Lp':radioType=='D'?'Wp':radioType=='YUQITAI'?'lg(Lp/Wp)':'x'" :formatter="toPrecise"></el-table-column>
+                                    <el-table-column align="center" prop="y" :label="radioType=='A'?'lgWp':radioType=='B'?'lgLp':radioType=='C'?'Lp/Np':radioType=='D'?'Lp/Np':radioType=='YUQITAI'?'logNp':'y'" :formatter="toPrecise"></el-table-column>
                                 </el-table>
                             </info-window>
                             <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-top:10px;margin-bottom:10px;margin-left: 0;">
@@ -122,7 +193,7 @@
                         </el-col>
                         <el-col :span="10" style="height:100%">
                             <el-row style="height:100%">
-                                <info-window style="margin-top:0;" infoWidth="100%" infoHeight="340px" headerTitle="驱潜类型" isShowMaxBtn>
+                                <info-window style="margin-top:0;" infoWidth="100%" infoHeight="340px" headerTitle="驱替类型" isShowMaxBtn>
                                     <div class="z-radioBox">
                                         <el-radio v-model="radioType" label="A" @change="sqtzChart">甲型---lgWp=a+bNp</el-radio>
                                         <el-radio v-model="radioType" label="B" @change="sqtzChart">乙型---lgLp=a+bNp</el-radio>
@@ -165,11 +236,27 @@
                                 </el-row>
                                 <el-row v-if="radio2=='数据'">
                                     <div style="height:300px">
-                                        <el-table highlight :data="djtableDate" height="calc(100% - 40px)">
+                                        <el-table highlight :data="djtableDate" height="calc(100% - 40px)" class="doubleHeader">
                                             <el-table-column align="center" type="index" label="序号"></el-table-column>
-                                            <el-table-column align="center" prop="theDate" label="日期" show-overflow-tooltip></el-table-column>
-                                            <el-table-column align="center" prop="x" label="x"></el-table-column>
-                                            <el-table-column align="center" prop="y" label="y"></el-table-column>
+                                            <el-table-column align="center" prop="theDate" show-overflow-tooltip label-class-name="twoRowHeader">
+                                                <template slot="header">
+                                                    <div>
+                                                        <span>日期</span>
+                                                        <br />
+                                                        <span>(yyyy/mm/dd)</span>
+                                                    </div>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column align="center" prop="x" label="x" :formatter="toPrecise"></el-table-column>
+                                            <el-table-column align="center" prop="y" label-class-name="twoRowHeader" :formatter="toPrecise">
+                                                <template slot="header">
+                                                    <div>
+                                                        <span>y</span>
+                                                        <br />
+                                                        <span>(10⁴m³)</span>
+                                                    </div>
+                                                </template>
+                                            </el-table-column>
                                         </el-table>
                                     </div>
                                 </el-row>
@@ -238,11 +325,35 @@
                                 </el-row>
                                 <el-row v-if="radio4 == '数据'">
                                     <div style="height:300px">
-                                        <el-table highlight :data="tstableDate" height="calc(100% - 40px)">
+                                        <el-table highlight :data="tstableDate" height="calc(100% - 40px)" class="doubleHeader">
                                             <el-table-column align="center" type="index" label="序号"></el-table-column>
-                                            <el-table-column align="center" prop="theDate" label="日期" show-overflow-tooltip></el-table-column>
-                                            <el-table-column align="center" prop="x" label="x"></el-table-column>
-                                            <el-table-column align="center" prop="y" label="y"></el-table-column>
+                                            <el-table-column align="center" prop="theDate" show-overflow-tooltip label-class-name="twoRowHeader">
+                                                <template slot="header">
+                                                    <div>
+                                                        <span>日期</span>
+                                                        <br />
+                                                        <span>(yyyy/mm/dd)</span>
+                                                    </div>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column align="center" prop="x" :formatter="toPrecise" label-class-name="twoRowHeader">
+                                                <template slot="header">
+                                                    <div>
+                                                        <span>x</span>
+                                                        <br />
+                                                        <span>(%)</span>
+                                                    </div>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column align="center" prop="y" :formatter="toPrecise" label-class-name="twoRowHeader">
+                                                <template slot="header">
+                                                    <div>
+                                                        <span>y</span>
+                                                        <br />
+                                                        <span>(%)</span>
+                                                    </div>
+                                                </template>
+                                            </el-table-column>
                                         </el-table>
                                     </div>
                                 </el-row>
@@ -283,13 +394,13 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="2">原油粘度<br>(mPa.s)</td>
+                                                    <td colspan="2">原油粘度(mPa.s)</td>
                                                     <td>
                                                         <el-input v-model="paramater.thickness" type="text" width="50px"></el-input>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="2">水平渗透率(10¯²um²)</td>
+                                                    <td colspan="2">水平渗透率(10²um²)</td>
                                                     <td>
                                                         <el-input v-model="paramater.permeability" type="text" width="50px"></el-input>
                                                     </td>
@@ -307,13 +418,13 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="2">油层温度</td>
+                                                    <td colspan="2">油层温度(℃)</td>
                                                     <td>
                                                         <el-input v-model="paramater.layerTemperature" type="text" width="50px"></el-input>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="2">油气比(m²/t)</td>
+                                                    <td colspan="2">油气比(m³/m³)</td>
                                                     <td>
                                                         <el-input v-model="paramater.gasOilRatio" type="text" width="50px"></el-input>
                                                     </td>
@@ -325,7 +436,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="2">地层束缚水饱和度</td>
+                                                    <td colspan="2">地层束缚水饱和度(%)</td>
                                                     <td>
                                                         <el-input v-model="paramater.layerWaterSaturation" type="text" width="50px"></el-input>
                                                     </td>
@@ -337,13 +448,13 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="2">有效厚度</td>
+                                                    <td colspan="2">有效厚度(m)</td>
                                                     <td>
                                                         <el-input v-model="paramater.validThickness" type="text" width="50px"></el-input>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="2">原始地层压力</td>
+                                                    <td colspan="2">原始地层压力(MPa)</td>
                                                     <td>
                                                         <el-input v-model="paramater.originalLayerPressure" type="text" width="50px"></el-input>
                                                     </td>
@@ -373,13 +484,13 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="2">废弃压力MPa</td>
+                                                    <td colspan="2">废弃压力(MPa)</td>
                                                     <td>
                                                         <el-input v-model="paramater.pa" type="text" width="50px"></el-input>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="2">井控面积</td>
+                                                    <td colspan="2">井控面积(m²)</td>
                                                     <td>
                                                         <el-input v-model="paramater.ssmall" type="text" width="50px"></el-input>
                                                     </td>
@@ -400,13 +511,29 @@
                         </el-col>
                         <!---右下-->
                         <el-col :span="12" style="height:100%">
-                            <NormalCard height="100%">
-                                <el-table height="850px" :data="computingData" highlight>
+                            <pagePanelNew style="height: 100%">
+                                <el-table height="850px" :data="computingData" highlight class="doubleHeader">
                                     <el-table-column align="center" prop="formulaName" label="采收率计算方法"></el-table-column>
-                                    <el-table-column align="center" prop="recoveryRatio" label="采收率(%)"></el-table-column>
-                                    <el-table-column align="center" prop="recoverableReserves" label="可采储量(万吨)"></el-table-column>
+                                    <el-table-column align="center" prop="recoveryRatio" label-class-name="twoRowHeader">
+                                        <template slot="header">
+                                            <div>
+                                                <span>采收率</span>
+                                                <br />
+                                                <span>(%)</span>
+                                            </div>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column align="center" prop="recoverableReserves" label-class-name="twoRowHeader">
+                                        <template slot="header">
+                                            <div>
+                                                <span>可采储量</span>
+                                                <br />
+                                                <span>(万吨)</span>
+                                            </div>
+                                        </template>
+                                    </el-table-column>
                                 </el-table>
-                            </NormalCard>
+                            </pagePanelNew>
                         </el-col>
                     </el-row>
                 </div>
@@ -1254,6 +1381,15 @@
                 this.cx = '';
                 this.position = [];
                 this.getFieldOilLayers();
+            },
+            // 表格格式化方法 - 数值只保留四位小数
+            toPrecise(row, column) {
+                console.log(typeof row[column.property] == "number");
+                if (typeof row[column.property] == "number") {
+                    return row[column.property] ? parseFloat(row[column.property]).toFixed(4) : "";
+                } else {
+                    return row[column.property] ? row[column.property] : "";
+                }
             },
         }
     }
