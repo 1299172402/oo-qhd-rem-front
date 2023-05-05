@@ -21,18 +21,18 @@ export default [
         component: () => import('@/pages/rem/home/reservoirDisplay/index.vue'),
         meta: { title: '油藏看板',icon: 'icon' },
       },
-      // {
-      //   path: 'remHome',
-      //   name: 'remHome',
-      //   component: () => import('@/pages/rem/home/remHome/index.vue'),
-      //   meta: { title: '油藏动态分析',icon: 'icon' },
-      // },
-      // {
-      //   path: 'ipmHome',
-      //   name: 'ipmHome',
-      //   component: () => import('@/pages/rem/home/ipmHome/index.vue'),
-      //   meta: { title: '智能注采调配',icon: 'icon' },
-      // },
+      {
+        path: 'remHome',
+        name: 'remHome',
+        component: () => import('@/pages/rem/home/remHome/index.vue'),
+        meta: { title: '油藏动态分析',icon: 'icon' },
+      },
+      {
+        path: 'ipmHome',
+        name: 'ipmHome',
+        component: () => import('@/pages/rem/home/ipmHome/index.vue'),
+        meta: { title: '智能注采调配',icon: 'icon' },
+      },
     ],
     
   },
