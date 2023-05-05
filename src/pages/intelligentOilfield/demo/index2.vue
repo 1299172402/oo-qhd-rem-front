@@ -6,30 +6,90 @@
     <div class="headerTitle spaceMargin">
       1、echarts图表【未作封装以及大小适配】=========================================================================================
     </div>
-    <charts-components :chart-data-options="dataOption" echarts-type="pie1" style="width: 400px; height: 400px" />
+    <div class="spaceMargin">
+      1.1、折线图
+    </div>
     <charts-components :chart-data-options="dataOptionLine" echarts-type="line1" style="width: 600px; height: 400px" />
-    <charts-components :chart-data-options="dataZhuzhuang" echarts-type="bar1" style="width: 600px; height: 400px" />
-    <charts-components :chart-data-options="char1" style="width: 600px; height: 400px" />
-    <charts-components :chart-data-options="char2" style="width: 600px; height: 400px" />
-    <charts-components :chart-data-options="char3" style="width: 600px; height: 400px" />
-    <charts-components :chart-data-options="char4" style="width: 600px; height: 400px" />
-    <charts-components :chart-data-options="char5" style="width: 600px; height: 400px" />
-    <charts-components :chart-data-options="char6" style="width: 600px; height: 400px" />
-    <charts-components :chart-data-options="char7" style="width: 1000px; height: 400px" />
+    <div class="spaceMargin">
+      1.2、多Y轴折线图
+    </div>
     <charts-components :chart-data-options="char8" style="width: 600px; height: 400px" />
+    <div class="spaceMargin">
+      1.3、柱状折线混合图（设置了x轴文字过长显示）
+    </div>
+    <charts-components :chart-data-options="dataZhuzhuang" echarts-type="bar1" style="width: 600px; height: 400px" />
+    <div class="spaceMargin">
+      1.4、散点图
+    </div>
+    <charts-components :chart-data-options="char4" style="width: 600px; height: 400px" />
+    <div class="spaceMargin">
+      1.5、横线柱状单一堆叠图
+    </div>
+    <charts-components :chart-data-options="char5" style="width: 600px; height: 400px" />
+    <div class="spaceMargin">
+      1.6、横向柱状图
+    </div>
+    <charts-components :chart-data-options="char6" style="width: 600px; height: 400px" />
+    <div class="spaceMargin">
+      1.7、多柱柱状图
+    </div>
+    <charts-components :chart-data-options="char7" style="width: 1000px; height: 400px" />
+    <div class="spaceMargin">
+      1.8、横向堆叠柱状图
+    </div>
     <charts-components :chart-data-options="char10" style="width: 600px; height: 400px" />
+    <div class="spaceMargin">
+      1.9、环形图
+    </div>
+    <charts-components :chart-data-options="dataOption" echarts-type="pie1" style="width: 400px; height: 400px" />
+    <div class="spaceMargin">
+      1.10、半环形图
+    </div>
+    <charts-components :chart-data-options="char3" style="width: 600px; height: 400px" />
+    <div class="spaceMargin">
+      1.11、雷达图A（单维度）
+    </div>
+    <charts-components :chart-data-options="char1" style="width: 600px; height: 400px" />
+    <div class="spaceMargin">
+      1.12、雷达图B（多维度）
+    </div>
+    <charts-components :chart-data-options="char2" style="width: 600px; height: 400px" />
+    <div class="spaceMargin">
+      1.13、仪表盘A
+    </div>
     <charts-components :chart-data-options="char9" style="width: 600px; height: 400px" />
+    <div class="spaceMargin">
+      1.14、仪表盘B
+    </div>
     <charts-components :chart-data-options="char11" style="width: 600px; height: 400px" />
+    <div class="spaceMargin">
+      1.15、仪表盘C
+    </div>
     <charts-components :chart-data-options="char12" style="width: 600px; height: 400px" />
+    <div class="spaceMargin">
+      1.16、水球图A
+    </div>
     <charts-components :chart-data-options="char13" style="width: 600px; height: 400px" />
+    <div class="spaceMargin">
+      1.17、水球图B
+    </div>
     <charts-components :chart-data-options="char14" style="width: 600px; height: 400px" />
     <!-- TODO: Maybe change back -->
     <!-- <div id="lineContainer" ref="lineContainer" style="width: 50%; height: 410px" /> -->
     <div class="headerTitle spaceMargin">
       2、d3图表深浅色系切换示例（适合数据比较多的时候使用）
     </div>
+    <div class="spaceMargin">
+      2.1、d3饼图
+    </div>
     <d-pie :dataset="[30, 10, 43, 55, 13]" />
+    <div class="spaceMargin">
+      2.2、d3折线图
+    </div>
     <d-line id="line" :dataset="data1" />
+    <div class="spaceMargin">
+      2.1、d3柱状图
+    </div>
     <d-bar :label-list="labelList" :data-list="dataListD3" />
     <div style="margin: 40px 0">
       =================================end========================
@@ -53,7 +113,17 @@ import "echarts-liquidfill";
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 const labelName = ["总值", "合格值"];
 
-const colors = ["#FC6310", "#21AD7F", "#3662EC"];
+const colors = [getComputedStyle(document.documentElement).getPropertyValue("--chart1"),
+  getComputedStyle(document.documentElement).getPropertyValue("--chart2"),
+  getComputedStyle(document.documentElement).getPropertyValue("--chart3"),
+  getComputedStyle(document.documentElement).getPropertyValue("--chart4"),
+  getComputedStyle(document.documentElement).getPropertyValue("--chart5"),
+  getComputedStyle(document.documentElement).getPropertyValue("--chart6"),
+  getComputedStyle(document.documentElement).getPropertyValue("--chart7"),
+  getComputedStyle(document.documentElement).getPropertyValue("--chart8"),
+  getComputedStyle(document.documentElement).getPropertyValue("--chart9"),
+  getComputedStyle(document.documentElement).getPropertyValue("--chart10")
+];
 const getRate = 70;
 const getxb1 = 650; // 男生人数
 const getxb2 = 350; // 女生人数
@@ -1284,75 +1354,70 @@ export default {
           { "name": "瑞斯", "type": "bar", "stack": "total", "barWidth": "30px", "label": { "show": true }, "emphasis": { "focus": "series" }, "data": [150] }] },
       char6: {
         backgroundColor: "transparent",
-        title: {
-          text: "上月话务处理量排行",
-          textStyle: {
-            color: "#088AD5"
+        "color": [
+          "#1c9a4c"
+        ],
+        "grid": {
+          "left": "8%",
+          "right": "10%",
+          "top": "12%",
+          "bottom": "18%",
+          "containLabel": true
+        },
+        "yAxis": {
+          "data": [
+            "用户撞车",
+            "SQL注入检测",
+            "机器人登录",
+            "账号盗用",
+            "web高频攻击",
+            "端口扫描",
+            "内网连接…",
+            "邮件外发"
+          ],
+          "axisTick": {
+            "show": false
           }
         },
-        // tooltip: {
-        //   trigger: "axis",
-        //   formatter: "{b} <br> 数量: {c}"
-        // },
-        grid: {
-          left: "7%",
-          right: "4%",
-          bottom: "2%",
-          top: "8%",
-          containLabel: true
-        },
-        xAxis: {
-          show: false,
-          splitLine: {
-            show: false
-          },
-          type: "value",
-          min: 0,
-          axisLine: {
-            lineStyle: {
-              color: "#088AD5"
+        "xAxis": [
+          {
+            "axisTick": {
+              "show": false
+            },
+            "type": "value",
+            "splitNumber": 5,
+            "axisLabel": {
+              "formatter": "{value}%"
             }
           }
-        },
-        yAxis: {
-          show: false,
-          splitLine: {
-            show: false
-          },
-          type: "category",
-          data: ["赵广川", "张敏", "梁丽嫦", "孟军", "黄华军", "黄海鲜", "刘艳轩", "冯志鹏"],
-          axisLine: {
-            lineStyle: {
-              color: "grey"
-            }
-          },
-          axisLabel: {
-            show: false
-          }
-        },
-        series: [{
-          type: "bar",
-          barWidth: "16",
-          label: {
-            normal: {
-              show: false,
-              formatter: function(v) {
-                const val = v.data;
-                if (val === 0) {
-                  return "";
+        ],
+        "series": [
+          {
+            "name": "销量",
+            "type": "bar",
+            "barWidth": "55%",
+            "label": {
+              "normal": {
+                "show": true,
+                "position": "right",
+                "formatter": "{c}%",
+                "textStyle": {
+                  "color": "black"
                 }
-                return val;
-              },
-              color: "#088AD5"
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: "#088AD5"
-            }
-          },
-          data: [289, 369, 469, 526, 623, 763, 865, 965]
-        }]
+              }
+            },
+            "data": [
+              "23.61",
+              "4.29",
+              "7.73",
+              "2.15",
+              "10.73",
+              "17.17",
+              "21.46",
+              "12.88"
+            ]
+          }
+        ]
       },
       char7: {
         backgroundColor: "transparent",
@@ -1473,7 +1538,6 @@ export default {
       },
       char8: {
         title: {
-          text: "Gradient Stacked Area Chart",
           textStyle: {
             color: "#088AD5"
           }
@@ -1483,7 +1547,7 @@ export default {
           trigger: "axis"
         },
         grid: {
-          left: "20%"
+          left: "25%"
         },
         toolbox: {
           feature: {

@@ -17,10 +17,14 @@
     </template>
     <template v-else>
       <t-layout key="mix">
-        <t-header><layout-header /></t-header>
+        <t-header v-if="!isInIframe">
+          <layout-header />
+        </t-header>
         <t-layout>
-          <t-aside><layout-sidebar /></t-aside>
-          <t-content :style="{'--padding-num': paddingNum}">
+          <t-aside v-if="!isInIframe">
+            <layout-sidebar />
+          </t-aside>
+          <t-content :class="{'is-in-iframe': isInIframe}">
             <layout-content />
           </t-content>
         </t-layout>
@@ -65,6 +69,9 @@ export default Vue.extend({
     }),
     setting(): SettingType {
       return this.$store.state.setting;
+    },
+    isInIframe: function() {
+      return window.self !== window.top;
     }
   },
   watch: {

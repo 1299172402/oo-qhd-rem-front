@@ -138,7 +138,8 @@ export default {
         postIds: this.user.postIds,
         roleIds: this.user.roleIds,
         avatar: this.imgUrl2 ? this.imgUrl2 : "无",
-        userName: this.user.data.userName
+        userName: this.user.data.userName,
+        deptId: this.user.data.deptId
       };
       updateUser(params).then(res => {
         if (res ? res.data.code === 200 : false) {

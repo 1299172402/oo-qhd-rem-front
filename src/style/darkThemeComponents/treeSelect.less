@@ -11,8 +11,13 @@
   color: #fff;
 }
 
+.vue-treeselect__placeholder {
+  line-height: 40px !important;
+}
+
 .vue-treeselect__single-value{
   color: var(--light-blue-color);
+  line-height: 40px !important;
 }
 
 .vue-treeselect__option--highlight {
@@ -57,4 +62,11 @@
 
 .el-icon-arrow-right::before {
   color: rgba(255,255,255,0.8);
+}
+
+.vue-treeselect--disabled .vue-treeselect__control {
+  background: rgba(51, 69, 86, 0.8);
+  border: 1px solid #c0c4cc;
+  opacity: 0.5;
+  cursor: no-drop;
 }

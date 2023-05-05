@@ -164,6 +164,7 @@ import { postAction } from "@/api/common/manage";
 import "@/assets/styles/pages/handleBusinessListStyle.less";
 import OpenOtherTab from "@/pages/common/mixins/commonMixin";
 import { getApp } from "@/api/intelligentOilfield/system/applicationCenter/applicationCenter.js";
+import jumpSupApp from "@/utils/jumpSupApp.js";
 
 export default {
   name: "DoneBusinessList",
@@ -300,12 +301,13 @@ export default {
       }
       getApp(appId)
         .then(res => {
-          const url = res.data.data.appPcAccessUrl ? res.data.data.appPcAccessUrl.split("?")[0] : "";
-          if (!url) {
-            this.$message.error("路径错误!");
-            return;
-          }
-          window.open(`${url}?businessKey=${businessKey}&taskId=${id}&processInstanceId=${processInstanceId}&action=View`, "_blank");
+          const query = {
+            businessKey,
+            processInstanceId,
+            taskId: id,
+            action: "View"
+          };
+          jumpSupApp(res.data.data.appPcAccessUrl, query);
         });
     },
     handleTableChange(pagination) {

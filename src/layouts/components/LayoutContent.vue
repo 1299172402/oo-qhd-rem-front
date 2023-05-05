@@ -1,7 +1,7 @@
 <template>
   <t-layout :class="[`${prefix}-layout`]">
     <t-tabs
-      v-if="isUseTabsRouter&&!$store.getters['user/isGroupLogin']"
+      v-if="isUseTabsRouter && !$store.getters['user/isGroupLogin'] && !isInIframe"
       theme="card"
       :class="`${prefix}-layout-tabs-nav`"
       :value="$route.path"
@@ -109,6 +109,9 @@ export default Vue.extend({
     },
     isGroupLogin():boolean {
       return localStorage.getItem("isGroupLogin") === "true";
+    },
+    isInIframe: function() {
+      return window.self !== window.top;
     }
   },
   methods: {

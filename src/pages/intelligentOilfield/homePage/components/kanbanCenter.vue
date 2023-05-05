@@ -18,19 +18,20 @@
       :close-on-click-modal="false"
       :show-close="false"
     >
-      <div>
-        <data-transfer
-          search-name="看板来源"
-          :search-option="dict.type.sys_app_type"
-          :all-list="allList"
-          :selected-list="selectedList"
-          :header-name-list="headerNameList"
-          @submitForm="submitForm"
-          @cancel="cancel"
-          @changeData="changeData"
-          @changeSource="changeSource"
-        />
-      </div>
+      <!-- TODO: Maybe change back -->
+      <!--      <div>-->
+      <!--        <data-transfer-->
+      <!--          search-name="看板来源"-->
+      <!--          :search-option="dict.type.sys_app_type"-->
+      <!--          :all-list="allList"-->
+      <!--          :selected-list="selectedList"-->
+      <!--          :header-name-list="headerNameList"-->
+      <!--          @submitForm="submitForm"-->
+      <!--          @cancel="cancel"-->
+      <!--          @changeData="changeData"-->
+      <!--          @changeSource="changeSource"-->
+      <!--        />-->
+      <!--      </div>-->
     </el-dialog>
     <info-window
       info-width="100%"
@@ -65,7 +66,7 @@
               >
                 <img
                   v-if="items.boardImg"
-                  :src="items.boardImg?items.boardImg:''"
+                  :src="items.imgUrl?items.imgUrl:''"
                   alt=""
                   class="imgSetting"
                   style="width: 40px;height: 40px"
@@ -101,14 +102,11 @@
 <script>
 // import circularPanel from '@/components/intelligentOilfield/circular-panel/index.vue';
 import bottomButton from "@/components/intelligentOilfield/bottom-button/index.vue";
-import dataTransfer from "@/components/intelligentOilfield/data-transfer/index.vue";
 
 export default {
-  dicts: ["sys_app_type"],
   components: {
     // circularPanel,
-    bottomButton,
-    dataTransfer
+    bottomButton
   },
   props: {
     // 缩放组件至某一宽度newWPx，目的是换展现形式
@@ -246,6 +244,7 @@ export default {
       }
     },
     carousel() {
+      this.carouselList = [];
       for (let i = 0; i < this.lists.length;) {
         this.carouselList.push(this.lists.slice(i, (i += 15)));
       }

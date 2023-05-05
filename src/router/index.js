@@ -1,5 +1,5 @@
 import VueRouter from "vue-router";
-
+import { MessageBox } from "element-ui";
 // import baseRouters from './modules/base';
 // import componentsRouters from './modules/components';
 // import othersRouters from './modules/others';
@@ -53,7 +53,10 @@ const defaultRouterList = [
     path: "/login",
     name: "login",
     beforeEnter: (to, from, next) => {
-      if (proxy[env].appId && env !== "development") {
+      if (window.self !== window.top) {
+        // 在 iframe 中，直接提示
+        MessageBox.alert("当前数据有误，请刷新浏览器后再操作");
+      } else if (proxy[env].appId !== "$system$" && env !== "development") {
         next(`/appCallback?redirect=${to.query?.redirect}`);
       } else {
         next();

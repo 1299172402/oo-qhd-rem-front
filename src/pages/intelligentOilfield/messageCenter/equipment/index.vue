@@ -18,6 +18,16 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
+        <el-form-item v-show="activeName === 'first'" label="系统编号">
+          <el-input
+            v-model="queryParams.systemCode"
+            placeholder="请输入系统编号"
+            clearable
+            size="small"
+            style="width: 240px"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
         <el-form-item v-show="activeName === 'first'" label="系统平台">
           <el-select
             v-model="queryParams.terraceId"
@@ -42,6 +52,32 @@
             style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
+        </el-form-item>
+        <el-form-item v-show="activeName !== 'first'" label="设备编号">
+          <el-input
+            v-model="queryParams.equipmentCode"
+            placeholder="请输入系统编号"
+            clearable
+            size="small"
+            style="width: 240px"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item v-show="activeName !== 'first'" label="设备所属平台">
+          <el-select
+            v-model="queryParams.terraceId"
+            placeholder="请选择"
+            clearable
+            style="width: 240px"
+            @change="changeTerrace2"
+          >
+            <el-option
+              v-for="(item, index2) in systemPlatformList"
+              :key="index2"
+              :label="item.terraceName"
+              :value="item.terraceId"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item v-show="activeName !== 'first'" label="设备所属系统">
           <el-select
@@ -96,7 +132,15 @@
             新增
           </el-button>
         </el-col>
-        <el-col :span="8" style="text-align: right">
+        <el-col :span="8" style="text-align: right; float: right">
+          <el-button
+            v-hasPermi="['system:equipment:import']"
+            class="commonBtn"
+            size="mini"
+            @click="importTemplate"
+          >
+            导入模板
+          </el-button>
           <el-button
             v-hasPermi="['system:equipment:import']"
             type="primary"
@@ -135,12 +179,23 @@
           align="center"
         />
         <el-table-column
+          prop="systemCode"
+          label="系统编号"
+          width="300"
+          align="center"
+        />
+        <el-table-column
           prop="terraceName"
           label="系统平台"
           width="300"
           align="center"
         />
-        <el-table-column label="创建时间" align="center" prop="createTime">
+        <el-table-column
+          label="创建时间"
+          align="center"
+          prop="createTime"
+          width="150"
+        >
           <template slot-scope="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>
@@ -179,11 +234,23 @@
         :default-sort="{ prop: 'date', order: 'descending' }"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column label="序号" type="index" width="120" />
+        <el-table-column label="序号" type="index" width="100" />
         <el-table-column
           prop="equipmentType"
           label="设备名称"
           width="300"
+          align="center"
+        />
+        <el-table-column
+          prop="equipmentCode"
+          label="设备编号"
+          width="300"
+          align="center"
+        />
+        <el-table-column
+          prop="terraceName"
+          label="设备所属平台"
+          width="200"
           align="center"
         />
         <el-table-column
@@ -192,7 +259,12 @@
           width="300"
           align="center"
         />
-        <el-table-column label="创建时间" align="center" prop="createTime">
+        <el-table-column
+          label="创建时间"
+          align="center"
+          prop="createTime"
+          width="200"
+        >
           <template slot-scope="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>
@@ -261,6 +333,11 @@
               </el-select>
             </el-form-item>
           </el-col>
+          <el-col :span="24">
+            <el-form-item label="系统编号" prop="systemCode">
+              <el-input v-model="addSysForm.systemCode" style="width: 300px" placeholder="请输入系统编号" />
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
       <el-form
@@ -277,15 +354,32 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="设备所属系统" prop="systemId">
-              <el-select v-model="addEquForm.systemId" style="width: 300px">
+            <el-form-item label="设备所属平台" prop="terraceId">
+              <el-select v-model="addEquForm.terraceId" style="width: 300px" @change="changeTerrace">
                 <el-option
-                  v-for="(item, index1) in deviceSysList"
-                  :key="index1"
+                  v-for="item in systemPlatformList"
+                  :key="item.terraceId"
+                  :label="item.terraceName"
+                  :value="item.terraceId"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="设备所属系统" prop="systemId">
+              <el-select v-model="addEquForm.systemId" style="width: 300px" @change="changeSystem">
+                <el-option
+                  v-for="(item) in deviceSysList"
+                  :key="item.systemId"
                   :label="item.systemName"
                   :value="item.systemId"
                 />
               </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="设备编号" prop="equipmentCode">
+              <el-input v-model="addEquForm.equipmentCode" style="width: 300px" placeholder="请输入系统编号" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -318,10 +412,11 @@
     >
       <el-upload
         ref="upload"
+        :http-request="httpRequest"
         :limit="1"
         accept=".xlsx, .xls"
         :headers="upload.headers"
-        :action="activeName === 'first'? upload.sysUrl + '?updateSupport=' + upload.updateSupport : upload.url + '?updateSupport=' + upload.updateSupport"
+        action=""
         :disabled="upload.isUploading"
         :on-progress="handleFileUploadProgress"
         :on-success="handleFileSuccess"
@@ -334,17 +429,9 @@
         </div>
         <div slot="tip" class="el-upload__tip text-center">
           <div slot="tip" class="el-upload__tip">
-            <el-checkbox v-model="upload.updateSupport" /> 是否更新已经存在的用户数据
+            <el-checkbox v-model="upload.updateSupport" /> 是否更新已经存在的设备数据
           </div>
           <span>仅允许导入xls、xlsx格式文件。</span>
-          <el-link
-            type="primary"
-            :underline="false"
-            style="font-size: 12px; vertical-align: baseline"
-            @click="importTemplate"
-          >
-            下载模板
-          </el-link>
         </div>
       </el-upload>
       <div slot="footer" class="dialog-footer">
@@ -361,7 +448,7 @@
 
 <script>
 
-import { eqSystemList, addEqSystem, editEqSystem, eqSystemListNoPage, queryEqSystem, getTerrace, removeEqSystem, equipmentList, addEquipment, editEquipment, queryEquipment, removeEquipment } from "@/api/intelligentOilfield/system/equipment";
+import { eqSystemList, addEqSystem, editEqSystem, eqSystemListNoPage, queryEqSystem, getTerrace, removeEqSystem, equipmentList, addEquipment, editEquipment, queryEquipment, removeEquipment, uploadFile1, uploadFile2 } from "@/api/intelligentOilfield/system/equipment";
 import proxy from "@/config/host";
 
 export default {
@@ -377,11 +464,14 @@ export default {
       // 表单校验
       rules: {
         systemName: [{ required: true, message: "系统名称不能为空", trigger: "blur" }],
-        terraceId: [{ required: true, message: "所属平台不能为空", trigger: "blur" }]
+        terraceId: [{ required: true, message: "所属平台不能为空", trigger: "blur" }],
+        systemCode: [{ required: true, message: "系统编号不能为空", trigger: "blur" }]
       },
       equRules: {
         equipmentType: [{ required: true, message: "设备名称不能为空", trigger: "blur" }],
-        systemId: [{ required: true, message: "设备所属系统不能为空", trigger: "blur" }]
+        systemId: [{ required: true, message: "设备所属系统不能为空", trigger: "blur" }],
+        equipmentCode: [{ required: true, message: "设备编号不能为空", trigger: "blur" }],
+        terraceId: [{ required: true, message: "所属平台不能为空", trigger: "blur" }]
       },
       activeName: "first", // first:设备系统列表；second:设备名称列表
       systemPlatformList: [],
@@ -401,7 +491,9 @@ export default {
         systemName: undefined,
         terraceId: undefined,
         equipmentType: undefined,
-        systemId: undefined
+        systemId: undefined,
+        systemCode: undefined,
+        equipmentCode: undefined
       },
       // 表单参数
       form: {},
@@ -441,9 +533,31 @@ export default {
       getTerrace().then(response => {
         this.systemPlatformList = response.data.data;
       });
-      // 获取设备所属系统下拉来源
-      eqSystemListNoPage("").then(response => {
+    },
+    changeTerrace(val) {
+      this.addEquForm.systemId = undefined;
+      if (val) {
+        this.getEqSystemList(val);
+      } else {
+        this.deviceSysList = [];
+      }
+    },
+    changeSystem() {
+      this.$forceUpdate();
+    },
+    changeTerrace2(val) {
+      this.queryParams.systemId = undefined;
+      if (val) {
+        this.getEqSystemList(val);
+      } else {
+        this.deviceSysList = [];
+      }
+    },
+    // 根据平台id获取系统
+    getEqSystemList(id) {
+      eqSystemListNoPage(id).then(response => {
         this.deviceSysList = response.data.data;
+        this.$forceUpdate();
       });
     },
     handleUpdate(row) {
@@ -460,6 +574,8 @@ export default {
         queryEquipment(this.addEquForm.equipmentId).then(response => {
           this.addEquForm = response.data.data;
         });
+        // 获取平台系统
+        this.changeTerrace(row.terraceId);
       }
     },
     handleDelete(row) {
@@ -546,6 +662,7 @@ export default {
     },
     handleAdd() {
       this.resetCurrentFields();
+      this.deviceSysList = [];
       this.dialogOpen = true;
       this.currentTitle = this.activeName === "first" ? "新增设备系统" : "新增设备列表";
     },
@@ -556,7 +673,9 @@ export default {
         systemName: undefined,
         terraceId: undefined,
         equipmentType: undefined,
-        systemId: undefined
+        systemId: undefined,
+        systemCode: undefined,
+        equipmentCode: undefined
       };
       this.getList();
       this.resetCurrentFields();
@@ -580,7 +699,9 @@ export default {
         systemName: undefined,
         terraceId: undefined,
         equipmentType: undefined,
-        systemId: undefined
+        systemId: undefined,
+        systemCode: undefined,
+        equipmentCode: undefined
       };
       this.$nextTick(() => {
         this.handleQuery();
@@ -633,12 +754,25 @@ export default {
     handleFileUploadProgress() {
       this.upload.isUploading = true;
     },
+    httpRequest: function(val) {
+      const fd = new FormData();
+      fd.append("file", val.file, val.file.name);
+      if (this.activeName === "first") {
+        uploadFile1(this.upload.updateSupport, fd).then(res => {
+          this.handleFileSuccess(res);
+        });
+      } else {
+        uploadFile2(this.upload.updateSupport, fd).then(res => {
+          this.handleFileSuccess(res);
+        });
+      }
+    },
     // 文件上传成功处理
     handleFileSuccess(response) {
       this.upload.open = false;
       this.upload.isUploading = false;
       this.$refs.upload.clearFiles();
-      this.$alert(response.msg, "导入结果", { dangerouslyUseHTMLString: true });
+      this.$alert(response.data.msg, "导入结果", { dangerouslyUseHTMLString: true });
       this.queryParams.pageNum = 1;
       this.getList();
     },

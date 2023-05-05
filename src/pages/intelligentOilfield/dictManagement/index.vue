@@ -78,7 +78,7 @@
 
     <page-panel-new header-title="字典管理" style="height: calc(100% - 100px);">
       <el-row style="margin-bottom: 20px">
-        <el-col :span="20">
+        <el-col class="height-placeholder" :span="20">
           <el-button
             v-hasPermi="['system:dict:add']"
             type="primary"
@@ -154,7 +154,7 @@
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <router-link :to="'/dictManagement/dict-data/index/' + scope.row.dictId + '?pathName=' + scope.row.dictName" class="link-type">
-              <span style="color: var(--light-blue-color);">编辑字典值</span>
+              <span v-hasPermi="['system:dictSon:edit']" style="color: var(--light-blue-color);">编辑字典值</span>
             </router-link>
             <el-button
               v-hasPermi="['system:dict:edit']"

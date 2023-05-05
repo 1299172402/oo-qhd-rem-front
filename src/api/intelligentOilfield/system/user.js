@@ -212,3 +212,19 @@ export function appAccessList(query) {
     params: query
   });
 }
+
+// 获取编辑用户时的不可编辑项
+export function getNoEditable() {
+  return request({
+    url: "/system/user/nonEditable",
+    method: "get"
+  });
+}
+
+export function uploadFile(updateSupport, data) {
+  return request({
+    url: `/system/user/importData?updateSupport=${updateSupport}`,
+    method: "post",
+    data
+  });
+}

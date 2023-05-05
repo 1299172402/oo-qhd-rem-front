@@ -11,16 +11,18 @@
     >
       <!-- :before-close="cancel" -->
       <div>
-        <data-transfer
-          search-name="应用来源"
-          :search-option="dict.type.sys_app_type"
-          :all-list="allList"
-          :selected-list="selectedList"
-          @submitForm="submitForm"
-          @cancel="cancel"
-          @changeData="changeData"
-          @changeSource="changeSource"
-        />
+        <!-- TODO: Maybe change back -->
+        <!--        <data-transfer-->
+      <!--          search-name="应用来源"-->
+      <!--          :search-option="dict.type.sys_app_type"-->
+      <!--          :all-list="allList"-->
+      <!--          :selected-list="selectedList"-->
+      <!--          @submitForm="submitForm"-->
+      <!--          @cancel="cancel"-->
+      <!--          @changeData="changeData"-->
+      <!--          @changeSource="changeSource"-->
+      <!--        />-->
+      <!--      </div>-->
       </div>
     </el-dialog>
     <info-window
@@ -59,7 +61,7 @@
               >
                 <img
                   v-if="items.appImg"
-                  :src="items.appImg ? items.appImg : ''"
+                  :src="items.imgUrl ? items.imgUrl : ''"
                   alt=""
                   class="imgSetting"
                   style="width: 40px;height: 40px"
@@ -98,16 +100,11 @@
 </template>
 <script>
 // import circularPanel from '@/components/intelligentOilfield/circular-panel/index.vue';
-import dataTransfer from "@/components/intelligentOilfield/data-transfer/index.vue";
 import { applicationCenterList, batchUpdateApp, updateApp } from "@/api/intelligentOilfield/portal/officeMode";
 import { addAccessinfo } from "@/api/intelligentOilfield/system/user";
+import jumpSupApp from "@/utils/jumpSupApp.js";
 
 export default {
-  dicts: ["sys_app_type"],
-  components: {
-    // circularPanel,
-    dataTransfer
-  },
   props: {
     // componentItem.content(解视：default:有默认面板内容 ，newPanel：新创建面板，内容为空)
     // componentItem.contentSetting(解释：内容设置，true:正在设置，false：未设置)
@@ -197,7 +194,7 @@ export default {
           userId: this.$store.getters["user/userDetail"].user.userId
         };
         addAccessinfo(paramQuery).then(() => {});
-        window.open(item.appPcAccessUrl);
+        jumpSupApp(item.appPcAccessUrl);
       }
     },
     initData() {
@@ -287,6 +284,7 @@ export default {
       });
     },
     carousel() {
+      this.carouselList = [];
       for (let i = 0; i < this.lists.length;) {
         this.carouselList.push(this.lists.slice(i, (i += 15)));
       }

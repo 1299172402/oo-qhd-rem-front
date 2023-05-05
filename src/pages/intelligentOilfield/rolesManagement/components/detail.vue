@@ -78,7 +78,7 @@
       <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
         <el-col :span="1.5">
           <el-button
-            v-hasPermi="['system:role:remove']"
+            v-hasPermi="['system:roleUser:unbind']"
             type="danger"
             size="mini"
             :disabled="multiple"
@@ -90,7 +90,7 @@
         </el-col>
         <el-col :span="1.5">
           <el-button
-            v-hasPermi="['system:role:add']"
+            v-hasPermi="['system:roleUser:add']"
             type="primary"
             size="mini"
             @click="openSelectUser"
@@ -135,7 +135,7 @@
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button
-              v-hasPermi="['system:role:remove']"
+              v-hasPermi="['system:roleUser:unbind']"
               size="mini"
               type="text"
               style="color: #a61d24"

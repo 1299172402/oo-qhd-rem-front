@@ -149,17 +149,30 @@
         <el-row>
           <el-col :span="11">
             <el-form-item label="用户名称" prop="nickName">
-              <el-input v-model="form.nickName" placeholder="请输入用户名称" maxlength="30" />
+              <el-input
+                v-model="form.nickName"
+                placeholder="请输入用户名称"
+                maxlength="30"
+                :disabled="form.ehr === '0' ? false : keys.includes('nickName')"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="11">
             <el-form-item label="身份证" prop="idCard">
               <div>
                 <el-input
+                  v-if="form.ehr === '0' "
                   v-model="convertIdCard"
                   placeholder="请输入身份证"
                   maxlength="30"
                   :disabled="isInputDisable"
+                />
+                <el-input
+                  v-else
+                  v-model="convertIdCard"
+                  placeholder="请输入身份证"
+                  maxlength="30"
+                  :disabled="keys.includes('idCard') || isInputDisable"
                 />
                 <el-tooltip
                   class="item"
@@ -179,19 +192,29 @@
         <el-row>
           <el-col :span="11">
             <el-form-item label="用户账号" prop="userName">
-              <el-input v-model="form.userName" placeholder="请输入用户账号" />
+              <el-input v-model="form.userName" placeholder="请输入用户账号" :disabled="form.ehr === '0' ? false : keys.includes('userName')" />
             </el-form-item>
           </el-col>
           <el-col :span="11">
             <el-form-item label="账号邮箱" prop="email">
-              <el-input v-model="form.email" placeholder="请输入账号邮箱" maxlength="50" />
+              <el-input
+                v-model="form.email"
+                placeholder="请输入账号邮箱"
+                maxlength="50"
+                :disabled="form.ehr === '0' ? false : keys.includes('email')"
+              />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="11">
             <el-form-item label="用户手机" prop="phonenumber">
-              <el-input v-model="form.phonenumber" placeholder="请输入手机号码" maxlength="11" />
+              <el-input
+                v-model="form.phonenumber"
+                placeholder="请输入手机号码"
+                maxlength="11"
+                :disabled="form.ehr === '0' ? false : keys.includes('phonenumber')"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="11">
@@ -299,7 +322,7 @@ import proxy from "@/config/host";
 // import Search from './Search.vue'
 import MenuContent from "./MenuContent.vue";
 import { updateLastLogout, getCodeImg } from "@/api/intelligentOilfield/login";
-import { updateaccessPage, getUser, updateUseridcard, updateUserPwdByUserName } from "@/api/intelligentOilfield/system/user";
+import { updateaccessPage, getUser, updateUseridcard, updateUserPwdByUserName, getNoEditable } from "@/api/intelligentOilfield/system/user";
 import { getTenantsByUserId } from "@/api/intelligentOilfield/system/dept";
 import { noticeList } from "@/api/intelligentOilfield/system/home";
 import { exchangeTenant } from "@/api/intelligentOilfield/system/tenant";
@@ -386,6 +409,7 @@ export default Vue.extend({
       },
       // 身份证输入框是否可见
       isInputDisable: false,
+      keys: [],
       // 表单校验
       rules: {
         userName: [
@@ -408,7 +432,6 @@ export default Vue.extend({
           }
         ],
         idCard: [
-          { required: true, message: "身份证不能为空", trigger: "blur" },
           {
             pattern:
               /^\d{6}((((((19|20)\d{2})(0[13-9]|1[012])(0[1-9]|[12]\d|30))|(((19|20)\d{2})(0[13578]|1[02])31)|((19|20)\d{2})02(0[1-9]|1\d|2[0-8])|((((19|20)([13579][26]|[2468][048]|0[48]))|(2000))0229))\d{3})|((((\d{2})(0[13-9]|1[012])(0[1-9]|[12]\d|30))|((\d{2})(0[13578]|1[02])31)|((\d{2})02(0[1-9]|1\d|2[0-8]))|(([13579][26]|[2468][048]|0[048])0229))\d{2}))(\d|X|x)$/,
@@ -696,6 +719,10 @@ export default Vue.extend({
       this.reset();
       this.isInputDisable = true;
       const userId = this.$store.getters["user/userDetail"].user.userId;
+      getNoEditable().then(res => {
+        const objValue = JSON.parse(res.data.data);
+        this.keys = Object.keys(objValue);
+      });
       getUser(userId).then(response => {
         this.form = response.data.data;
         this.open = true;

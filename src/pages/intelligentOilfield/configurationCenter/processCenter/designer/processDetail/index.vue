@@ -70,6 +70,7 @@
           取消
         </el-button>
         <el-button
+          v-hasPermi="['process:model:remove']"
           type="danger"
           :disabled="loading"
           @click="handleDelete"
@@ -77,6 +78,7 @@
           删除
         </el-button>
         <el-button
+          v-hasPermi="['process:model:edit']"
           :disabled="loading"
           type="primary"
           @click="editModelId = modelId"
@@ -84,6 +86,7 @@
           修改
         </el-button>
         <el-button
+          v-hasPermi="['process:model:copy']"
           :disabled="loading"
           type="primary"
           @click="handleCopy"
@@ -91,6 +94,7 @@
           复制
         </el-button>
         <el-button
+          v-hasPermi="['process:model:release']"
           :disabled="loading"
           type="primary"
           @click="handlePublish"
@@ -98,6 +102,7 @@
           发布
         </el-button>
         <el-button
+          v-hasPermi="['process:model:export']"
           :disabled="loading"
           type="primary"
           @click="handleExport(modelId)"
@@ -105,6 +110,7 @@
           导出
         </el-button>
         <el-button
+          v-hasPermi="['process:model:nodeDesigner']"
           :disabled="loading"
           type="primary"
           @click="showImg = false;"
@@ -112,6 +118,7 @@
           节点设计器
         </el-button>
         <node-editor
+          v-hasPermi="['process:model:visualEditor']"
           :btn="{
             type: 'primary',
             icon: 'el-icon-edit',
