@@ -86,7 +86,7 @@
                 <el-col :span="9" style="margin-left: 20px;margin-right: 20px">
                     <page-panel :show-btn="true" headerTitle="数据类型">
                         <el-radio-group v-model="activeTabIndexData">
-                            <el-radio :label="dataType.val" v-for="dataType in dataTypes">{{dataType.name}}</el-radio>
+                            <el-radio :key="index" :label="dataType.val" v-for="(dataType,index) in dataTypes">{{dataType.name}}</el-radio>
                         </el-radio-group>
                     </page-panel>
                 </el-col>
@@ -96,42 +96,42 @@
                 <el-col :span="8" style="margin-left: 20px;margin-right: 20px">
                     <page-panel :show-btn="true" headerTitle="状态指标" style="min-height: 250px" v-show="stateList.length != 0">
                         <el-checkbox-group v-model="stateValue">
-                            <el-checkbox :label="item.val" :value="item.val" v-for="item in stateList">{{ item.name?item.name:item }}</el-checkbox>
+                            <el-checkbox :key="index" :label="item.val" :value="item.val" v-for="(item,index) in stateList">{{ item.name?item.name:item }}</el-checkbox>
                         </el-checkbox-group>
                     </page-panel>
                 </el-col>
                 <el-col :span="5" style="margin-left: 20px;margin-right: 20px">
                     <page-panel :show-btn="true" headerTitle="生产指标" style="min-height: 250px" v-show="productList.length != 0">
                         <el-checkbox-group v-model="productValue">
-                            <el-checkbox :label="item.val" :value="item.val" v-for="item in productList">{{ item.name?item.name:item }}</el-checkbox>
+                            <el-checkbox :key="index" :label="item.val" :value="item.val" v-for="(item,index) in productList">{{ item.name?item.name:item }}</el-checkbox>
                         </el-checkbox-group>
                     </page-panel>
                 </el-col>
                 <el-col :span="8" style="margin-left: 20px;margin-right: 20px">
                     <page-panel :show-btn="true" headerTitle="累产指标" style="min-height: 250px" v-show="totalList.length != 0">
                         <el-checkbox-group v-model="totalValue">
-                            <el-checkbox :label="item.val" :value="item.val" v-for="item in totalList">{{ item.name?item.name:item }}</el-checkbox>
+                            <el-checkbox :key="index" :label="item.val" :value="item.val" v-for="(item,index) in totalList">{{ item.name?item.name:item }}</el-checkbox>
                         </el-checkbox-group>
                     </page-panel>
                 </el-col>
                 <el-col :span="8" style="margin-left: 20px;margin-right: 20px">
                     <page-panel :show-btn="true" headerTitle="注入指标" style="min-height: 250px" v-show="injectList.length != 0">
                         <el-checkbox-group v-model="injectValue">
-                            <el-checkbox :label="item.val" :value="item.val" v-for="item in injectList">{{ item.name?item.name:item }}</el-checkbox>
+                            <el-checkbox :key="index" :label="item.val" :value="item.val" v-for="(item,index) in injectList">{{ item.name?item.name:item }}</el-checkbox>
                         </el-checkbox-group>
                     </page-panel>
                 </el-col>
                 <el-col :span="8" style="margin-left: 20px;margin-right: 20px">
                     <page-panel :show-btn="true" headerTitle="管理指标" style="min-height: 250px" v-show="managerList.length != 0">
                         <el-checkbox-group v-model="managerValue">
-                            <el-checkbox :label="item.val" :value="item.val" v-for="item in managerList">{{ item.name?item.name:item }}</el-checkbox>
+                            <el-checkbox :key="index" :label="item.val" :value="item.val" v-for="(item,index) in managerList">{{ item.name?item.name:item }}</el-checkbox>
                         </el-checkbox-group>
                     </page-panel>
                 </el-col>
                 <el-col :span="8" style="margin-left: 20px;margin-right: 20px">
                     <page-panel :show-btn="true" headerTitle="储采指标" style="min-height: 250px" v-show="storeList.length != 0">
                         <el-checkbox-group v-model="storeValue">
-                            <el-checkbox :label="item.val" :value="item.val" v-for="item in storeList">{{ item.name?item.name:item }}</el-checkbox>
+                            <el-checkbox :key="index" :label="item.val" :value="item.val" v-for="(item,index) in storeList">{{ item.name?item.name:item }}</el-checkbox>
                         </el-checkbox-group>
                     </page-panel>
                 </el-col>
@@ -191,7 +191,7 @@
                 >
                     <template slot-scope="scope">
                         <el-select v-model="scope.row.name" size="small">
-                            <el-option :label="item.name" :value="item.val" v-for="item in headerText"/>
+                            <el-option :key="index" :label="item.name" :value="item.val" v-for="(item,index) in headerText"/>
                         </el-select>
                     </template>
                 </el-table-column>

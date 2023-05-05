@@ -97,6 +97,7 @@
         </pagePanel>
           <pagePanel headerTitle="含水上升" style="height: 750px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>
+              <waterUp></waterUp>
         </pagePanel>
       </el-col>
       <el-col :span="8">
