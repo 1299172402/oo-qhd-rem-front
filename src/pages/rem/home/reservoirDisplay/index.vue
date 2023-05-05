@@ -101,8 +101,8 @@
         </pagePanel>
       </el-col>
       <el-col :span="8">
-        <pagePanel headerTitle="秦皇岛32-6油田生产指标总览" style="height: 1500px; width: 100%" class="g-w100">
-          <button class="detailLinkBtn" @click="linkroute('measuresPumpWellRecovery')">详细</button>
+        <pagePanel :show-btn="true" headerTitle="秦皇岛32-6油田生产指标总览" style="height: 1500px; width: 100%" class="g-w100">
+          <!-- <button class="detailLinkBtn" @click="linkroute('measuresPumpWellRecovery')">详细</button> -->
           <overviewIndicators></overviewIndicators>
         </pagePanel>
       </el-col>

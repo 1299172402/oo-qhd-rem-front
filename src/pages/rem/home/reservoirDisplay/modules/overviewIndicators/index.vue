@@ -80,20 +80,20 @@
     </el-row>
     <el-row :gutter="20">
       <el-col :span="8">
-        <div class="grid-content bg-purple">
-          <Echart :chart-data="histogram"></Echart>
+        <div>
+          <Echart height="100%" :chart-data="histogram"></Echart>
           <div class="chartText">自然递减</div>
         </div>
       </el-col>
       <el-col :span="8">
-        <div class="grid-content bg-purple">
-          <Echart :chart-data="histogram"></Echart>
+        <div>
+          <Echart height="100%" :chart-data="histogram"></Echart>
           <div class="chartText">综合递减</div>
         </div>
       </el-col>
       <el-col :span="8">
-        <div class="grid-content bg-purple">
-          <Echart :chart-data="histogram"></Echart>
+        <div>
+          <Echart height="100%" :chart-data="histogram"></Echart>
           <div class="chartText">总递减</div>
         </div>
       </el-col>
@@ -137,8 +137,6 @@ export default {
   },
   data() {
     return {
-      chartHeight: "150px",
-      tableHeight: 280,
       histogram: {
         title: {
           // text: '{a|' + value + '}{c|%}',
@@ -148,12 +146,12 @@ export default {
           textStyle: {
             rich: {
               a: {
-                fontSize: 48,
+                fontSize: 18,
                 color: "#29EEF3",
               },
 
               c: {
-                fontSize: 20,
+                fontSize: 10,
                 color: "#fff",
                 // padding: [5,0]
               },
@@ -164,7 +162,7 @@ export default {
           {
             name: "吃猪肉频率",
             type: "pie",
-            radius: ["58%", "45%"],
+            radius: ['58%', '68%'],
             silent: true,
             clockwise: true,
             startAngle: 90,
@@ -195,7 +193,7 @@ export default {
                 },
                 itemStyle: {
                   normal: {
-                    color: "#173164",
+                    color: "transparent",
                   },
                 },
               },
@@ -204,20 +202,20 @@ export default {
           {
             name: "",
             type: "gauge",
-            radius: "58%",
+            radius: "82%",
             center: ["50%", "50%"],
             startAngle: 0,
-            endAngle: 359.9,
+            endAngle: 355.9,
             splitNumber: 60,
             hoverAnimation: true,
             axisTick: {
               show: false,
             },
             splitLine: {
-              length: 60,
+              length: 83,
               lineStyle: {
-                width: 5,
-                color: "#061740",
+                width: 3,
+                color: "#fff",
               },
             },
             axisLabel: {

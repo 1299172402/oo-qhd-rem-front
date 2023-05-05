@@ -3,10 +3,10 @@
     <div class="text" style="width: 15%; height: 10%; margin-left: 5%; text-align: center; padding: 5px 0">
       投产时间：2001-10
     </div>
-    <Echart :chart-data="histogram" width="90%" height="65%"></Echart>
-    <el-row :gutter="20" style="margin-top:-50px">
+    <Echart :chart-data="histogram" width="100%" height="65%"></Echart>
+    <el-row :gutter="20" style="margin-top: -50px">
       <el-col :span="4">
-        <!-- <Echart :chart-data="option"></Echart> -->
+        <Echart :chart-data="option"></Echart>
       </el-col>
     </el-row>
   </div>
@@ -22,8 +22,9 @@ echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, Canvas
 //前端细节区分
 var demoData = {
   name: "批次转化率",
-  value: '',
+  value: "",
 };
+let dataArr = 6130;
 export default {
   props: ["infodata"],
   components: {
@@ -31,10 +32,8 @@ export default {
   },
   data() {
     return {
-
       histogram: {
         color: ["#00C1DE", "#6F7AF8", "#F5A547", "#3399ff"],
-
         tooltip: {
           trigger: "axis",
           axisPointer: {
@@ -65,12 +64,13 @@ export default {
           left: 20,
           right: 20,
           bottom: 20,
+          show: false, // 隐藏坐标系网格线
           containLabel: true,
         },
         legend: {
-            textStyle:{
-                color:''
-            },
+          textStyle: {
+            color: "",
+          },
           data: [
             {
               name: "计划日常",
@@ -95,6 +95,17 @@ export default {
             type: "category",
             boundaryGap: false,
             data: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+            axisLabel: {
+              fontSize: 16,
+              color: "#a9a8a8",
+              margin: 10,
+            },
+            axisLine: {
+              show: false, // 隐藏 x 轴线
+            },
+            splitLine: {
+              show: false, // 隐藏 x 轴分隔线
+            },
           },
         ],
         yAxis: [
@@ -107,12 +118,40 @@ export default {
             axisLabel: {
               formatter: "{value}",
             },
+            axisLine: {
+              show: false,
+              lineStyle: {
+                color: "#a9a8a8",
+              },
+            },
+            splitLine: {
+              show: false, // 隐藏 x 轴分隔线
+            },
+            axisLabel: {
+              fontSize: 16,
+              color: "#a9a8a8",
+              margin: 10,
+            },
           },
           {
             type: "value",
             name: "实例数",
             position: "right",
             scale: true,
+            axisLine: {
+              show: false,
+              lineStyle: {
+                color: "#a9a8a8",
+              },
+            },
+            splitLine: {
+              show: false, // 隐藏 x 轴分隔线
+            },
+            axisLabel: {
+              fontSize: 16,
+              color: "#a9a8a8",
+              margin: 10,
+            },
             axisLabel: {
               formatter: "{value}",
             },
@@ -146,203 +185,336 @@ export default {
         ],
       },
       option: {
-        title: {
-          x: "50%",
-          y: "53%",
-          textAlign: "center",
-          textStyle: {
-            rich: {
-              num: {
-                fontWeight: "500",
-                color: "#F8F8FA",
-                fontFamily: "D-DIN Exp",
-                fontSize: 90,
+        series: [
+          // 刻度值
+          {
+            name: "外部刻度",
+            type: "gauge",
+            radius: "50",
+            min: 0,
+            max: 10000,
+
+            splitNumber: 5, //刻度数量
+            startAngle: 186,
+            endAngle: -6,
+            axisLine: {
+              show: false,
+              lineStyle: {
+                color: [[1, "rgba(0,0,0,0)"]],
               },
+            }, //仪表盘轴线
+            axisLabel: {
+              show: true,
+              color: "#FFF",
+              fontSize: 9,
+              distance: -4, // 动态
+            }, //刻度标签。
+            axisTick: {
+              show: false,
+            }, //刻度样式
+            splitLine: {
+              show: false,
             },
           },
-        },
-        series: [
+          // 底层
           {
+            name: "内部宽线条",
             type: "gauge",
-            radius: "90%", // 1行3个
-            center: ["50%", "70%"],
-            splitNumber: 10,
-            // min: 0,
-            max: 100,
-            startAngle: 180,
-            endAngle: 0,
-            z: 99,
-            // 线
+            radius: "44",
+            startAngle: 186,
+            endAngle: -6,
+
             axisLine: {
+              roundCap: true,
               lineStyle: {
-                width: 1,
-                color: [[1, "rgba(255,255,255,0)"]],
-              },
-              detail: {
-                formatter: "{value}",
-              },
-              data: [
-                {
-                  value: 50,
-                  name: "SCORE",
-                },
-              ],
-            },
-            //刻度标签。
-            axisTick: {
-              show: true,
-              splitNumber: 6, //刻度的段落数
-              lineStyle: {
-                color: "#858A93",
-                width: 2, //刻度的宽度
-              },
-              length: 25, //刻度的长度
-            },
-            splitLine: {
-              //文字和刻度的偏移量
-              show: true,
-              length: -15, //长度
-              lineStyle: {
-                color: "#858A93",
-                width: 2,
+                color: [[1, "#2f7194"]],
+                width: 15,
               },
             },
-            // //刻度线文字
             axisLabel: {
               show: false,
-              color: "#858A93",
-              fontSize: 16,
-              distance: -30,
             },
-            data: [
-              {
-                value: demoData.value,
-                name: "SCORE",
-                itemStyle: {
-                  color: "#02C3A2",
-                },
-              },
-            ],
-            pointer: {
+            axisTick: {
               show: false,
-              length: "12%",
-              radius: "50%",
-              width: 12, //指针粗细
-              offsetCenter: [0, -273],
+            },
+            splitLine: {
+              show: false,
             },
             detail: {
               show: false,
             },
             title: {
-              // 仪表盘标题。
               show: false,
             },
           },
+          //   间隔条形
           {
-            name: demoData.name,
-            type: "pie", //渐变环
-            radius: ["65%", "77%"],
-            center: ["50%", "70%"],
-            startAngle: 180,
-            endAngle: 0,
-            color: [
-              {
-                type: "linear",
-                x: 1,
-                y: 0,
-                x2: 0,
-                y2: 0,
-                colorStops: [
-                  {
-                    offset: 0,
-                    color: "#6FE5FF", // 0% 处的颜色
-                  },
-                  {
-                    offset: 1,
-                    color: "#1C70C6", // 100% 处的颜色
-                  },
-                ],
-              },
-              "transparent",
-            ],
-            hoverAnimation: true,
-            legendHoverLink: false,
-            z: 10,
-            labelLine: {
-              normal: {
-                show: false,
-              },
-            },
-            data: [
-              {
-                value: 0,
-              },
-              {
-                value: demoData.value,
-              },
-            ],
-          },
-          {
-            name: "",
-            type: "gauge", //粗分割线
-            radius: "82%",
-            center: ["50%", "70%"],
-            startAngle: 180,
-            endAngle: 0,
-            splitNumber: 15,
-            hoverAnimation: true,
-            axisTick: {
-              show: false,
-            },
-            splitLine: {
-              length: 60,
+            name: "间隔条形",
+            type: "gauge",
+            radius: "40",
+            min: 0,
+            max: 10000,
+
+            z: 4,
+            splitNumber: 14,
+            startAngle: 186,
+            endAngle: -6,
+            axisLine: {
               lineStyle: {
-                width: 30,
-                color: "#26262A",
+                opacity: 0,
               },
             },
             axisLabel: {
               show: false,
             },
+            axisTick: {
+              show: true,
+              length: 12,
+              splitNumber: 2,
+              distance: -12,
+              lineStyle: {
+                color: "#2f7698",
+                width: 2,
+              },
+            },
+            splitLine: {
+              show: false,
+            },
+            detail: {
+              show: false,
+            },
+            title: {
+              show: false,
+            },
+          },
+          // 数据
+          {
+            name: "内层数据刻度",
+            type: "gauge",
+            radius: "41",
+            z: 3,
+            min: 0,
+            max: 10000,
+
+            startAngle: 186,
+            endAngle: -6,
+            // 进度的颜色
+            axisLine: {
+              roundCap: true,
+              lineStyle: {
+                width: 10,
+                // color: [[0.2, '#77D97F'],[0.8, '#4285F4'],[1, '#FF7E7F']],
+                color: [
+                  // [dataArr/10000,'#fff'],
+                  [1, "#1c5a73"],
+                ],
+              },
+            },
+            progress: {
+              show: true,
+              roundCap: false,
+              width: 11,
+              itemStyle: {
+                color: {
+                  type: "linear",
+                  x: 0,
+                  y: 0,
+                  x2: 0,
+                  y2: 1,
+                  colorStops: [
+                    {
+                      offset: dataArr / 10000 / 6,
+                      color: "#ffffff",
+                    },
+                    {
+                      offset: 0.4,
+                      color: "#54cae2",
+                    },
+                    {
+                      offset: 0.7,
+                      color: "#3690a3",
+                    },
+                    {
+                      offset: 1,
+                      color: "#2d7a8b",
+                    },
+                  ],
+                  // global: false // 缺省为 false
+                },
+                borderColor: "#1b5b76",
+                borderWidth: "2",
+              },
+            },
+            tooltip: {
+              show: false,
+            },
+            axisLabel: {
+              show: false,
+            },
+            axisTick: {
+              show: false,
+            },
+            splitLine: {
+              show: false,
+            },
+            pointer: {
+              length: "68%",
+              width: 2,
+              offsetCenter: [0, "-30%"],
+              itemStyle: {
+                color: {
+                  type: "linear",
+                  x: 0,
+                  y: 0,
+                  x2: 0,
+                  y2: 1,
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: "#ffffff",
+                    },
+                    {
+                      offset: 0.7,
+                      color: "#ffffff",
+                    },
+                    {
+                      offset: 1,
+                      color: "#2d7a8b",
+                    },
+                  ],
+                  // global: false // 缺省为 false
+                },
+                // shadowColor: 'rgba(0, 0, 0, 0.5)',
+                shadowBlur: 7,
+                shadowColor: "#ffffff",
+              },
+            },
+            detail: {
+              offsetCenter: ["4%", "-5%"],
+              formatter: function (value) {
+                return "{value|" + value.toFixed(0) + "}";
+              },
+              rich: {
+                value: {
+                  fontSize: 18,
+                  fontWeight: "bolder",
+                  color: "#ffffff",
+                  textShadowBlur: "12",
+                  textShadowColor: "#3ea0b5",
+                },
+                unit: {
+                  fontSize: 18,
+                  fontWeight: "bolder",
+                  color: "#ffffff",
+                  textShadowBlur: "12",
+                  textShadowColor: "#3ea0b5",
+                },
+              },
+            },
+            data: [
+              {
+                value: dataArr,
+              },
+            ],
+          },
+          // 最外层线
+          {
+            type: "gauge",
+            name: "外层辅助",
+            radius: 52,
+            startAngle: 188,
+            // center: ['50%', '75%'],
+            endAngle: -9,
+            min: 0,
+            max: 10000,
+            splitNumber: 5,
             pointer: {
               show: false,
             },
             axisLine: {
+              roundCap: true,
+              show: true,
+              lineStyle: {
+                color: [[1, "#3ea0b5"]],
+                width: 3,
+                opacity: 0.5,
+                shadowColor: "rgba(0,138,255,0.45)",
+                shadowBlur: 5,
+                shadowOffsetX: 1,
+                shadowOffsetY: 1,
+              },
+            },
+
+            axisTick: {
+              show: false,
+            },
+            splitLine: {
+              show: false,
+            },
+            axisLabel: {
+              show: false,
+            },
+          },
+          // 最内层线
+          {
+            name: "最内层线",
+            type: "gauge",
+            radius: "28",
+
+            startAngle: 192,
+            min: 0,
+            max: 10000,
+            endAngle: -12,
+            splitLine: {
+              show: false,
               lineStyle: {
                 opacity: 0,
               },
+            },
+            axisLabel: {
+              show: false,
+            },
+            // 上面一圈
+            itemStyle: {
+              color: "#50cbe7",
+              shadowColor: "rgba(0,138,255,0.45)",
+              shadowBlur: 2,
+              shadowOffsetX: 1,
+              shadowOffsetY: 1,
+            },
+            // 刻度指到位置
+            progress: {
+              roundCap: true,
+              show: true,
+              roundCap: true,
+              width: 3,
+            },
+            axisLine: {
+              roundCap: true,
+              show: true,
+              lineStyle: {
+                color: [[1, "#2e719a"]],
+                width: 3,
+                opacity: 0.5,
+                shadowColor: "rgba(0,138,255,0.45)",
+                shadowBlur: 5,
+                shadowOffsetX: 1,
+                shadowOffsetY: 1,
+              },
+            },
+            axisTick: {
+              show: false,
+            },
+            pointer: {
+              show: false,
             },
             detail: {
               show: false,
             },
             data: [
               {
-                value: 0,
-                name: "",
-              },
-            ],
-          },
-          {
-            type: "pie", //纯色背景环
-            radius: ["65%", "77%"],
-            center: ["50%", "70%"],
-            startAngle: 180,
-            endAngle: 0,
-            color: "#606672",
-            hoverAnimation: true,
-            legendHoverLink: false,
-            z: 0,
-            labelLine: {
-              normal: {
-                show: false,
-              },
-            },
-            data: [
-              {
-                value: 1,
-              },
-              {
-                value: 1,
+                value: dataArr,
+                // value: data.value
               },
             ],
           },
@@ -350,25 +522,25 @@ export default {
       },
     };
   },
-    computed:{
-      getGlobeTheme(val){
-          return this.$store.state.setting.mode
-      }  
+  computed: {
+    getGlobeTheme(val) {
+      return this.$store.state.setting.mode;
     },
-   watch:{
-        getGlobeTheme: {
-           immediate: true,
-            handler(Nval) {
-                console.log(Nval)
-                if(Nval == 'dark'){
-                    this.histogram.legend.textStyle.color = '#ffffff'
-                }else {
-                    this.histogram.legend.textStyle.color = '#000000'
-                }
-            },
-            deep: true,
-        },
+  },
+  watch: {
+    getGlobeTheme: {
+      immediate: true,
+      handler(Nval) {
+        console.log(Nval);
+        if (Nval == "dark") {
+          this.histogram.legend.textStyle.color = "#ffffff";
+        } else {
+          this.histogram.legend.textStyle.color = "#000000";
+        }
+      },
+      deep: true,
     },
+  },
   mounted() {},
   methods: {},
 };

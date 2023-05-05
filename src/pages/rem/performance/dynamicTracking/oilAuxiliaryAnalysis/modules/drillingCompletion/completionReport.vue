@@ -3,14 +3,18 @@
   <div class="z-main" style="display: flex; justify-content: space-around">
     <!-- <iframe :src="image?(image+'#toolbar=0'):''" style="width: 100%;height:100%;"></iframe> -->
     <!-- <el-row> -->
-    <img
-      style="height: 100%"
-      src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"
-    />
-    <img
-      style="height: 100%; margin-left: 20px"
-      src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"
-    />
+    <div class="imagesBox">
+      <img
+        style="height: 100%"
+        src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"
+      />
+    </div>
+    <div class="imagesBox">
+      <img
+        style="height: 100%; margin-left: 20px"
+        src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"
+      />
+    </div>
     <!-- </el-row> -->
   </div>
 </template>
@@ -76,5 +80,10 @@ export default {
     border: 1px solid #ddd;
     border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
   }
+}
+.imagesBox {
+  border: 1px solid rgb(256, 256, 256);
+  // width: 60%;
+  text-align: center;
 }
 </style>
