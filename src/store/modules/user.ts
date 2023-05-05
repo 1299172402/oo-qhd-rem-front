@@ -8,7 +8,7 @@ import router from "@/router";
 import proxy from "@/config/host";
 import STYLE_CONFIG from "@/config/style";
 import { LIGHT_CHART_COLORS, DARK_CHART_COLORS } from "@/config/color";
-import path from "path-browserify";
+// import path from "path-browserify";
 // import { getToken, setToken, removeToken } from '@/utils/auth'
 // import { getToken, setToken, setExpiresIn, removeToken } from '@/utils/auth'
 const env = import.meta.env.MODE || "development";
@@ -278,7 +278,7 @@ const actions = {
           }
           const firstMenu = res.data.firstMenu;
           // 如果有菜单走菜单【菜单为本用户第一个可跳转的菜单】,没有则走404页面
-          const firstRoputer = firstMenu ? path.join(...handlerFirstMenuPath(firstMenu)) : "/pageInfo/error";
+          const firstRoputer = firstMenu 
           store.commit("permission/setDefaultTo", firstRoputer);
           if (firstRoputer !== "/pageInfo/error") {
             const route = {
