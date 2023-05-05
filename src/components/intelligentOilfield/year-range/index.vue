@@ -68,7 +68,7 @@ export default {
   methods: {
     changeYear() {
       // 将改动传回父组件
-      this.$emit("year-changed", [this.startYear, this.endYear]);
+      this.$emit("change", [this.startYear, this.endYear]);
     }
   }
 };

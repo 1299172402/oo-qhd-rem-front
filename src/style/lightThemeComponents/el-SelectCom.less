@@ -23,7 +23,10 @@
 
 .el-select .el-input {
   background: var(--opacity-blue-bg);
-  border: 1px solid var(--light-blue-color);
+
+  input {
+    border: 1px solid var(--light-blue-color);
+  }
 }
 
 .el-select .el-input__inner {
@@ -54,14 +57,18 @@
   border-color: var(--light-blue-color);
 }
 
+.collapseTags .el-select__tags .el-tag.el-tag--info {
+  max-width: 70%;
+}
+
 .el-select__tags .el-tag.el-tag--info {
   background: rgba(52, 144, 211, 0.2) !important;
   border: unset !important;
 }
 
 .dropdown {
-  .el-input {
-    border: none;
+  input {
+    border: none !important;
   }
 }
 
@@ -81,12 +88,8 @@
 }
 
 .noBorderBg {
-  .el-input {
-    border: none;
-
-    .el-select__caret {
-      // color: green;
-    }
+  input {
+    border: none !important;
   }
 
   .el-input__inner {

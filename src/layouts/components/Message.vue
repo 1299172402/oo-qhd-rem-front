@@ -82,6 +82,7 @@ import {
 } from "@/api/intelligentOilfield/portal/projectionMode";
 import { NotificationItem } from "@/interface";
 import proxy from "@/config/host";
+import jumpSupApp from "@/utils/jumpSupApp.js";
 
 const env = import.meta.env.MODE;
 export default Vue.extend({
@@ -136,7 +137,7 @@ export default Vue.extend({
       this.isNoticeVisible = visible;
     },
     goDetail() {
-      window.open(proxy[env].MESSAGEURL, "_blank");
+      jumpSupApp(proxy[env].MESSAGEURL);
       this.isNoticeVisible = false;
     },
     setRead(type: string, item?: NotificationItem) {

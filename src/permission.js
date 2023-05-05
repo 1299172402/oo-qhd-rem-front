@@ -11,6 +11,20 @@ let defaultToWithoutPath = null;
 
 router.beforeEach(async(to, from, next) => {
   NProgress.start();
+  if (to.query.access_token) {
+    if (to.path === "/appCallback") {
+      next();
+      return;
+    }
+    next({
+      path: "/appCallback",
+      query: {
+        ...to.query,
+        redirect: to.path
+      }
+    });
+    return;
+  }
   if ((to.path === "/login" && Object.prototype.hasOwnProperty.call(to.query, "srid")) || to.path.indexOf("/iamCallback") === 0 || to.path === "/appCallback") {
     // 如果跳转到登录页且携带srid参数则放行
     next();

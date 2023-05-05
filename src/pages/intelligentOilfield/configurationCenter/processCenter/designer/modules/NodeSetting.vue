@@ -21,6 +21,7 @@
         </el-button>
       </div>
       <import-file
+        v-hasPermi="['process:nodeDesigner:import']"
         :base-url="prefixApi"
         :upload-url="`/app/rest/act-ruler/model/${modelId}/import-custom`"
         btn-text="导入"
@@ -29,6 +30,7 @@
         @ok="searchQuery"
       />
       <el-button
+        v-hasPermi="['process:nodeDesigner:export']"
         class="gap--left commonBtn"
         @click="handleExport(modelId)"
       >
@@ -47,10 +49,10 @@
           <question-info tip="flow_node_designer_node_list_header" style="margin-left: 5px;" />
         </template>
         <div class="gap-container">
-          <el-button type="primary" @click="actKey = item.actKey; showDetail = true;">
+          <el-button v-hasPermi="['process:nodeDesigner:addRule']" type="primary" @click="actKey = item.actKey; showDetail = true;">
             添加规则
           </el-button>
-          <el-button class="commonBtn" @click="handleEditSort(item)">
+          <el-button v-hasPermi="['process:nodeDesigner:importOrder']" class="commonBtn" @click="handleEditSort(item)">
             编辑顺序
             <question-info tip="flow_node_designer_sequence" />
           </el-button>

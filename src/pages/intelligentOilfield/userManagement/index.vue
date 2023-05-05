@@ -182,8 +182,8 @@
 
         <!-- v-loading="loading" -->
         <page-panel-new header-title="用户管理" style="height: calc(100% - 106px);">
-          <el-row style="margin-bottom: 20px">
-            <el-col :span="16">
+          <el-row style="margin-bottom: 20px;">
+            <el-col class="height-placeholder" :span="16">
               <el-button
                 v-hasPermi="['system:user:add']"
                 type="primary"
@@ -196,7 +196,7 @@
             </el-col>
             <el-col :span="8" style="text-align: right">
               <el-button
-                v-hasPermi="['system:user:import']"
+                v-hasPermi="['system:user:importModel']"
                 class="commonBtn"
                 size="mini"
                 @click="importTemplate"
@@ -310,6 +310,16 @@
             </el-table-column>
             <!-- <el-table-column label="手机号码" align="center" key="phonenumber" prop="phonenumber" v-if="columns[4].visible" width="120" /> -->
             <el-table-column
+              label="是否为EHR用户"
+              align="center"
+              prop="ehr"
+              :show-overflow-tooltip="true"
+            >
+              <template slot-scope="scope">
+                {{ scope.row.ehr === "1" ? '是' : "否" }}
+              </template>
+            </el-table-column>
+            <el-table-column
               v-if="columns[6].visible"
               key="status"
               label="用户状态"
@@ -355,7 +365,7 @@
             >
               <template slot-scope="scope">
                 <el-button
-                  v-hasPermi="['system:user:edit']"
+                  v-hasPermi="['system:user:detail']"
                   size="mini"
                   type="text"
                   @click="seeDetail(scope.row)"
@@ -371,7 +381,7 @@
                   修改
                 </el-button>
                 <el-button
-                  v-if="scope.row.userId !== '1'"
+                  v-if="scope.row.userId !== '1' && scope.row.ehr !== '1' "
                   v-hasPermi="['system:user:remove']"
                   size="mini"
                   type="text"
@@ -380,15 +390,17 @@
                 >
                   删除
                 </el-button>
+                <!-- TODO: Maybe change back -->
+                <!-- v-hasPermi="['system:user:resetPwd', 'system:user:roleEdit', 'system:user:appRole']" -->
                 <el-dropdown
-                  v-hasPermi="['system:user:resetPwd', 'system:user:edit']"
                   size="mini"
                   style="margin-left: 20px;"
                   @command="(command) => handleCommand(command, scope.row)"
                 >
-                  <span class="el-dropdown-link">更多</span>
+                  <span class="el-dropdown-link" style="font-size: 12px">更多</span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item
+                      v-if="scope.row.ehr !== '1' "
                       v-hasPermi="['system:user:resetPwd']"
                       command="handleResetPwd"
                       icon="el-icon-key"
@@ -396,7 +408,7 @@
                       重置密码
                     </el-dropdown-item>
                     <el-dropdown-item
-                      v-hasPermi="['system:user:edit']"
+                      v-hasPermi="['system:user:roleEdit']"
                       command="handleAuthRole"
                       icon="el-icon-circle-check"
                     >
@@ -446,12 +458,17 @@
         <el-row type="flex" justify="start" style="margin-top: 30px">
           <el-col :span="8">
             <el-form-item label="用户名称" prop="nickName">
-              <el-input v-model="form.nickName" placeholder="请输入用户名称" maxlength="30" />
+              <el-input
+                v-model="form.nickName"
+                placeholder="请输入用户名称"
+                maxlength="30"
+                :disabled="form.ehr === '0' ? false : keys.includes('nickName')"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="用户账号" prop="userName">
-              <el-input v-model="form.userName" placeholder="请输入用户账号" />
+              <el-input v-model="form.userName" placeholder="请输入用户账号" :disabled="form.ehr === '0' ? false : keys.includes('userName')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -461,6 +478,7 @@
                 placeholder="请选择账号类型"
                 clearable
                 class="g-w100"
+                :disabled="form.ehr === '0' ? false : keys.includes('userType')"
               >
                 <el-option
                   v-for="dict in dict.type.sys_user_account_type"
@@ -475,22 +493,40 @@
         <el-row type="flex" justify="start" style="margin: 15px 0">
           <el-col :span="8">
             <el-form-item label="账号邮箱" prop="email">
-              <el-input v-model="form.email" placeholder="请输入账号邮箱" maxlength="50" />
+              <el-input
+                v-model="form.email"
+                placeholder="请输入账号邮箱"
+                maxlength="50"
+                :disabled="form.ehr === '0' ? false : keys.includes('email')"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="用户手机" prop="phonenumber">
-              <el-input v-model="form.phonenumber" placeholder="请输入手机号码" maxlength="11" />
+              <el-input
+                v-model="form.phonenumber"
+                placeholder="请输入手机号码"
+                maxlength="11"
+                :disabled="form.ehr === '0' ? false : keys.includes('phonenumber')"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="身份证" prop="idCard">
               <div>
                 <el-input
+                  v-if="form.ehr === '0' "
                   v-model="convertIdCard"
                   placeholder="请输入身份证"
                   maxlength="30"
                   :disabled="isInputDisable"
+                />
+                <el-input
+                  v-else
+                  v-model="convertIdCard"
+                  placeholder="请输入身份证"
+                  maxlength="30"
+                  :disabled="keys.includes('idCard') || isInputDisable"
                 />
                 <el-tooltip
                   class="item"
@@ -510,6 +546,7 @@
             <el-form-item label="所属机构" prop="deptId">
               <treeselect
                 v-model="form.deptId"
+                :disabled="form.ehr === '0' ? false : keys.includes('deptId')"
                 :options="deptOptions"
                 :show-count="true"
                 placeholder="请选择所属机构"
@@ -545,6 +582,7 @@
         <el-form-item label="用户角色" prop="roleIds">
           <el-select
             v-model="form.roleIds"
+            :disabled="form.ehr === '0' ? false : keys.includes('roleIds')"
             style="margin-bottom: 20px"
             filterable
             class="customSelect"
@@ -565,6 +603,7 @@
           <el-select
             v-model="form.postIds"
             filterable
+            :disabled="form.ehr === '0' ? false : keys.includes('postIds')"
             class="customSelect"
             multiple
             placeholder="请选择用户岗位"
@@ -664,7 +703,8 @@
         :limit="1"
         accept=".xlsx, .xls"
         :headers="upload.headers"
-        :action="upload.url + '?updateSupport=' + upload.updateSupport"
+        action=""
+        :http-request="httpRequest"
         :disabled="upload.isUploading"
         :on-progress="handleFileUploadProgress"
         :on-success="handleFileSuccess"
@@ -738,7 +778,9 @@ import {
   addUser,
   updateUser,
   resetUserPwd,
-  changeUserStatus
+  changeUserStatus,
+  getNoEditable,
+  uploadFile
 } from "@/api/intelligentOilfield/system/user";
 import { listPost, addPost } from "@/api/intelligentOilfield/system/post";
 // import { getToken } from "@/utils/auth";
@@ -952,7 +994,10 @@ export default {
           { required: true, message: "确认密码不能为空", trigger: "blur" },
           { required: true, validator: equalToPassword, trigger: "blur" }
         ]
-      }
+      },
+      keys: [],
+      defaultLoad: true,
+      isActivated: true
     };
   },
   computed: {
@@ -978,15 +1023,22 @@ export default {
     }
   },
   created() {
-    this.getUserDetail();
-    this.getPostList();
-    this.getTreeselect();
-    this.getConfigKey("sys.user.initPassword").then(response => {
-      this.initPassword = response.data.msg;
-    });
+    if (this.defaultLoad) {
+      this.isActivated = false;
+      this.getUserDetail();
+      this.getPostList();
+      this.getTreeselect();
+      this.getConfigKey("sys.user.initPassword").then(response => {
+        this.initPassword = response.data.msg;
+      });
+    }
   },
   activated() {
-    this.getTreeselect();
+    if (this.defaultLoad && this.isActivated) {
+      this.getTreeselect();
+    } else {
+      this.isActivated = true;
+    }
   },
   methods: {
     changePost() {
@@ -1111,6 +1163,7 @@ export default {
       this.dateRange = [];
       this.resetForm("queryForm");
       this.queryParams.deptId = undefined;
+      this.queryParams.tenantId = undefined;
       this.$nextTick(() => {
         this.handleQuery();
       });
@@ -1139,6 +1192,7 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
+      this.keys = [];
       this.reset();
       this.isInputDisable = false;
       this.getTreeselect();
@@ -1189,6 +1243,10 @@ export default {
       this.isInputDisable = true;
       this.getTreeselect();
       const userId = row.userId || this.ids;
+      getNoEditable().then(res => {
+        const objValue = JSON.parse(res.data.data);
+        this.keys = Object.keys(objValue);
+      });
       getUser(userId).then(response => {
         this.form = response.data.data;
         this.form.idCard = response.data.data.idCard;
@@ -1277,9 +1335,10 @@ export default {
           } else {
             getCodeImg().then(res => {
               const { publicKey } = res.data.publicKey;
-              this.form.password = encryptlogin(this.form.password, publicKey);
-              this.form.surePassword = encryptlogin(this.form.surePassword, publicKey);
-              addUser(this.form).then(res => {
+              const reqParam = JSON.parse(JSON.stringify(this.form));
+              reqParam.password = encryptlogin(this.form.password, publicKey);
+              reqParam.surePassword = encryptlogin(this.form.surePassword, publicKey);
+              addUser(reqParam).then(res => {
                 if (res ? res.data.code === 200 : false) {
                   this.$modal.msgSuccess("新增成功");
                   this.open = false;
@@ -1360,12 +1419,19 @@ export default {
     handleFileUploadProgress() {
       this.upload.isUploading = true;
     },
+    httpRequest: function(val) {
+      const fd = new FormData();
+      fd.append("file", val.file, val.file.name);
+      uploadFile(this.upload.updateSupport, fd).then(res => {
+        this.handleFileSuccess(res);
+      });
+    },
     // 文件上传成功处理
     handleFileSuccess(response) {
       this.upload.open = false;
       this.upload.isUploading = false;
       this.$refs.upload.clearFiles();
-      this.$alert(response.msg, "导入结果", { dangerouslyUseHTMLString: true });
+      this.$alert(response.data.msg, "导入结果", { dangerouslyUseHTMLString: true });
       this.queryParams.pageNum = 1;
       this.getList();
     },

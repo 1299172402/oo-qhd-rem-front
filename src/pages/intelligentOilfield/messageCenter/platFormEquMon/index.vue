@@ -10,15 +10,33 @@
       custom-class="land-dialog"
       @close="clearSearchList"
     >
-      <div style="height: 93%">
+      <div style="height: 93%;padding-left: 13px">
         <div style="margin-top: 20px">
           <div class="g-row-flex-V">
             <div class="g-row-flex-V">
-              <div style="margin-right: 10px">
+              <div>
                 设备名称：
               </div>
               <div>
-                <el-input v-model="nameInput" style="width: 150px" placeholder="请输入设备名称" />
+                <el-input
+                  v-model="nameInput"
+                  clearable
+                  style="width: 220px"
+                  placeholder="请输入设备名称"
+                />
+              </div>
+            </div>
+            <div class="g-row-flex-V" style="margin: 0 20px">
+              <div>
+                设备编号：
+              </div>
+              <div>
+                <el-input
+                  v-model="codeInput"
+                  style="width: 220px"
+                  placeholder="请输入设备编号"
+                  clearable
+                />
               </div>
             </div>
             <div style="margin-left: 10px">
@@ -31,23 +49,39 @@
             </div>
           </div>
         </div>
-        <div class="g-row-flex" style="flex-wrap: wrap; margin-top: 10px; overflow: scroll; height: 100%;">
+        <div class="g-row-flex" style="flex-wrap: wrap; margin-top: 10px; overflow: scroll; height: 100%;align-content: flex-start;">
           <div
             v-for="(item, index) in searchList"
             :key="index"
             class="typeClass"
-            style="margin-top: 10px"
+            style="margin-top: 20px"
           >
             <div
               class="bgClass g-row-flex-V g-w100 g-h100"
-              style="width: 170px;margin: 0 10px 0 0"
+              style="width: 170px;margin: 0 12px 0 0;padding-right: 18px"
               :style="{
                 background: $store.state.setting.mode === 'dark' ? 'rgba(0,169,159,0.3)' : 'rgba(44, 88, 118, 1)',
-                paddingLeft: item.passStatus === '0' ? '20px' : '0px'
               }"
             >
-              <div v-if="item.passStatus === '1'" class="circleStyle" :style="{ background: item.status == '1' ? '#32cd32' : 'red' }" />
-              {{ item.equipmentType }}
+              <div
+                v-if="item.passStatus === '1'"
+                class="circleStyle"
+                :style="{ background: item.status == '1' ? '#32cd32' : 'red' }"
+                style="flex-shrink: 0"
+              />
+              <el-tooltip
+                class="item"
+                effect="dark"
+                :content="item.equipmentType + '-' + item.equipmentCode"
+                placement="top"
+              >
+                <span
+                  style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"
+                  :style="{ marginLeft: item.passStatus === '1' ? '0px' : '20px'}"
+                >
+                  {{ item.equipmentType }} -  {{ item.equipmentCode }}
+                </span>
+              </el-tooltip>
             </div>
           </div>
         </div>
@@ -102,14 +136,18 @@
               />
               <div
                 class="bgClass g-row-flex-V g-w100 g-h100 typeClass"
-                style="cursor: pointer;margin-top: 0;z-index: 0;width: 180px;margin-left: 62px"
+                style="cursor: pointer;margin-top: 0;z-index: 0;width: 180px;margin-left: 62px;padding-right: 18px"
                 :style="{
                   background: $store.state.setting.mode === 'dark' ? 'rgba(0,169,159,0.3)' : 'rgba(44, 88, 118, 1)',
-                  paddingLeft: item.runningState ? '0px' : '20px'
                 }"
                 @click="clickItem(item)"
               >
-                <div v-show="item.runningState" class="circleStyle" :style="{ background: item.runningState === '1' ? '#32cd32' : 'red' }" />
+                <div
+                  v-show="item.runningState"
+                  class="circleStyle"
+                  style="flex-shrink: 0"
+                  :style="{ background: item.runningState === '1' ? '#32cd32' : 'red' }"
+                />
                 <!-- TODO: Maybe change back -->
                 <!-- <svg-icon
                   v-if="item.icon"
@@ -117,7 +155,21 @@
                   :icon-class="item.icon"
                   style="margin: 0 6px 0 16px;"
                 /> -->
-                {{ item.systemName }}
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  :content="item.systemName"
+                  placement="top"
+                >
+                  <span
+                    style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"
+                    :style="{
+                      marginLeft: item.runningState ? '0px' : '20px'
+                    }"
+                  >
+                    {{ item.systemName }}
+                  </span>
+                </el-tooltip>
               </div>
             </div>
           </div>
@@ -125,10 +177,10 @@
       </div>
       <!-- 链路状态 -->
       <div v-show="headerTitle === '链路状态'" class="g-w100 g-h100 g-row-flex-HV">
-        <div class="g-w100 g-h100 g-column-flex-V" style="margin-left: 200px">
+        <div class="g-w100 g-h100 g-column-flex-V" style="margin-left: 200px;">
           <div
             class="pageGreen g-column-flex-HV"
-            style="margin-right: 26px;"
+            style="margin-right: 26px; height: 500px"
             :style="{
               background: $store.state.setting.mode === 'dark' ? 'rgba(45,141,92,0.3)' : 'rgba(45,141,92,0.6)',
             }"
@@ -138,23 +190,36 @@
             </div>
 
             <div class="g-column-flex-HV">
+              <div class="greenBtn g-column-flex-HV" style="margin: 0 10px 5px;">
+                {{ parentSignList[0]?.[1] }}
+                <line-svg
+                  :linear-id="parentSignList[0]?.[2]"
+                  :start-color="parentSignList[0]?.[3] === '0' ? 'red' : '#32cd32'"
+                  :end-color="parentSignList[0]?.[3] === '0' ? 'red' : '#32cd32'"
+                  class="svgClass"
+                  style="top: 0;left: 220px;margin-top: 0;background: green"
+                  svg-height="340px"
+                  svg-width="736px"
+                  set-points="0,25 700,25 700,325 736,325"
+                />
+              </div>
               <div class="greenBtn g-column-flex-HV" style="margin: 0 10px;">
                 {{ initList[keys[0]]?.[0].terraceName }}
                 <line-svg
-                  :linear-id="initList[keys[0]]?.[0].terraceCode"
+                  :linear-id="initList[keys[0]]?.[0]?.terraceCode"
                   :start-color="initList[keys[0]]?.[0].terraceState === '0' ? 'red' : '#32cd32'"
                   :end-color="initList[keys[0]]?.[0].terraceState === '0' ? 'red' : '#32cd32'"
                   class="svgClass"
-                  style="top: 0;left: 220px;margin-top: 0;background: green"
-                  svg-height="275px"
+                  style="top: 0;left: 220px;margin-top: 0;"
+                  svg-height="45px"
                   svg-width="736px"
-                  set-points="0,25 700,25 700,270 736,270"
+                  set-points="0,25 700,25 700,26"
                 />
               </div>
               <div class="greenBtn g-column-flex-HV" style="margin: 5px 10px;">
                 {{ initList[keys[0]]?.[1].terraceName }}
                 <line-svg
-                  :linear-id="initList[keys[0]]?.[1].terraceCode"
+                  :linear-id="initList[keys[0]]?.[1]?.terraceCode"
                   :start-color="initList[keys[0]]?.[1].terraceState === '0' ? 'red' : '#32cd32'"
                   :end-color="initList[keys[0]]?.[1].terraceState === '0' ? 'red' : '#32cd32'"
                   class="svgClass"
@@ -167,9 +232,35 @@
               <div class="greenBtn g-column-flex-HV" style="margin: 0 10px;">
                 {{ initList[keys[0]]?.[2].terraceName }}
                 <line-svg
-                  :linear-id="initList[keys[0]]?.[2].terraceCode"
+                  :linear-id="initList[keys[0]]?.[2]?.terraceCode"
                   :start-color="initList[keys[0]]?.[2].terraceState === '0' ? 'red' : '#32cd32'"
                   :end-color="initList[keys[0]]?.[2].terraceState === '0' ? 'red' : '#32cd32'"
+                  class="svgClass"
+                  style="top: 0;left: 220px;margin-top: 0;"
+                  svg-height="45px"
+                  svg-width="736px"
+                  set-points="0,25 700,25 700,26"
+                />
+              </div>
+              <div class="greenBtn g-column-flex-HV" style="margin: 5px 10px;">
+                {{ initList[keys[0]]?.[3].terraceName }}
+                <line-svg
+                  :linear-id="initList[keys[0]]?.[3]?.terraceCode"
+                  :start-color="initList[keys[0]]?.[3].terraceState === '0' ? 'red' : '#32cd32'"
+                  :end-color="initList[keys[0]]?.[3].terraceState === '0' ? 'red' : '#32cd32'"
+                  class="svgClass"
+                  style="top: 0;left: 220px;margin-top: 0;"
+                  svg-height="45px"
+                  svg-width="736px"
+                  set-points="0,25 700,25 700,26"
+                />
+              </div>
+              <div class="greenBtn g-column-flex-HV" style="margin: 0 10px;">
+                {{ initList[keys[0]]?.[4].terraceName }}
+                <line-svg
+                  :linear-id="initList[keys[0]]?.[4]?.terraceCode"
+                  :start-color="initList[keys[0]]?.[4].terraceState === '0' ? 'red' : '#32cd32'"
+                  :end-color="initList[keys[0]]?.[4].terraceState === '0' ? 'red' : '#32cd32'"
                   class="svgClass"
                   style="top: 0;left: 220px;margin-top: 0;"
                   svg-height="45px"
@@ -181,19 +272,33 @@
           </div>
           <div
             class="pageGreen g-column-flex-HV"
-            style="margin: 20px 26px 20px 0"
+            style="margin: 20px 26px 20px 0;height: 120px"
             :style="{
               background: $store.state.setting.mode === 'dark' ? 'rgba(45,141,92,0.3)' : 'rgba(45,141,92,0.6)',
             }"
           >
-            <div style="margin-bottom: 10px">
+            <div>
               {{ parentSignList[1]?.[1] }}
             </div>
             <div class="g-column-flex-HV">
               <div class="greenBtn g-column-flex-HV" style="margin: 0 10px">
+                {{ parentSignList[1]?.[1] }}
+                <line-svg
+                  :linear-id="parentSignList[1]?.[2]"
+                  :start-color="parentSignList[1]?.[3] === '0' ? 'red' : '#32cd32'"
+                  :end-color="parentSignList[1]?.[3] === '0' ? 'red' : '#32cd32'"
+                  class="svgClass"
+                  style="top: 0;left: 220px;margin-top: -2px;"
+                  svg-height="45px"
+                  svg-width="736px"
+                  set-points="0,25 736,25 736,26"
+                />
+              </div>
+              <!-- TODO: Maybe change back -->
+              <!-- <div class="greenBtn g-column-flex-HV" style="margin: 0 10px">
                 {{ initList[keys[1]]?.[0].terraceName }}
                 <line-svg
-                  :linear-id="initList[keys[1]]?.[0].terraceCode"
+                  :linear-id="initList[keys[1]]?.[0]?.terraceCode"
                   :start-color="initList[keys[1]]?.[0].terraceState === '0' ? 'red' : '#32cd32'"
                   :end-color="initList[keys[1]]?.[0].terraceState === '0' ? 'red' : '#32cd32'"
                   class="svgClass"
@@ -206,7 +311,7 @@
               <div class="greenBtn g-column-flex-HV" style="margin: 5px 10px">
                 {{ initList[keys[1]]?.[1].terraceName }}
                 <line-svg
-                  :linear-id="initList[keys[1]]?.[1].terraceCode"
+                  :linear-id="initList[keys[1]]?.[1]?.terraceCode"
                   :start-color="initList[keys[1]]?.[1].terraceState === '0' ? 'red' : '#32cd32'"
                   :end-color="initList[keys[1]]?.[1].terraceState === '0' ? 'red' : '#32cd32'"
                   class="svgClass"
@@ -219,7 +324,7 @@
               <div class="greenBtn g-column-flex-HV" style="margin: 0 10px">
                 {{ initList[keys[1]]?.[2].terraceName }}
                 <line-svg
-                  :linear-id="initList[keys[1]]?.[2].terraceCode"
+                  :linear-id="initList[keys[1]]?.[2]?.terraceCode"
                   :start-color="initList[keys[1]]?.[2].terraceState === '0' ? 'red' : '#32cd32'"
                   :end-color="initList[keys[1]]?.[2].terraceState === '0' ? 'red' : '#32cd32'"
                   class="svgClass"
@@ -228,12 +333,12 @@
                   svg-width="736px"
                   set-points="0,25 700,25 700,26"
                 />
-              </div>
+              </div> -->
             </div>
           </div>
           <div
             class="pageGreen g-column-flex-HV"
-            style="margin: 0 26px 0 0"
+            style="margin: 0 26px 0 0; height: 550px"
             :style="{
               background: $store.state.setting.mode === 'dark' ? 'rgba(45,141,92,0.3)' : 'rgba(45,141,92,0.6)',
             }"
@@ -242,10 +347,23 @@
               {{ parentSignList[2]?.[1] }}
             </div>
             <div class="g-column-flex-HV">
+              <div class="greenBtn g-column-flex-HV" style="margin: 0 10px 5px;">
+                {{ parentSignList[2]?.[1] }}
+                <line-svg
+                  :linear-id="parentSignList[2]?.[2]"
+                  :start-color="parentSignList[2]?.[3] === '0' ? 'red' : '#32cd32'"
+                  :end-color="parentSignList[2]?.[3] === '0' ? 'red' : '#32cd32'"
+                  class="svgClass"
+                  style="top: 0;left: 220px;margin-top: 0;"
+                  svg-height="45px"
+                  svg-width="736px"
+                  set-points="0,25 700,25 700,26"
+                />
+              </div>
               <div class="greenBtn g-column-flex-HV" style="margin: 0 10px">
                 {{ initList[keys[2]]?.[0].terraceName }}
                 <line-svg
-                  :linear-id="initList[keys[2]]?.[0].terraceCode"
+                  :linear-id="initList[keys[2]]?.[0]?.terraceCode"
                   :start-color="initList[keys[2]]?.[0].terraceState === '0' ? 'red' : '#32cd32'"
                   :end-color="initList[keys[2]]?.[0].terraceState === '0' ? 'red' : '#32cd32'"
                   class="svgClass"
@@ -258,7 +376,7 @@
               <div class="greenBtn g-column-flex-HV" style="margin: 5px 10px">
                 {{ initList[keys[2]]?.[1].terraceName }}
                 <line-svg
-                  :linear-id="initList[keys[2]]?.[1].terraceCode"
+                  :linear-id="initList[keys[2]]?.[1]?.terraceCode"
                   :start-color="initList[keys[2]]?.[1].terraceState === '0' ? 'red' : '#32cd32'"
                   :end-color="initList[keys[2]]?.[1].terraceState === '0' ? 'red' : '#32cd32'"
                   class="svgClass"
@@ -271,14 +389,53 @@
               <div class="greenBtn g-column-flex-HV" style="margin: 0 10px;position: relative">
                 {{ initList[keys[2]]?.[2].terraceName }}
                 <line-svg
-                  :linear-id="initList[keys[2]]?.[2].terraceCode"
+                  :linear-id="initList[keys[2]]?.[2]?.terraceCode"
                   :start-color="initList[keys[2]]?.[2].terraceState === '0' ? 'red' : '#32cd32'"
                   :end-color="initList[keys[2]]?.[2].terraceState === '0' ? 'red' : '#32cd32'"
                   class="svgClass"
-                  style="top: 0;left: 220px;margin-top: -265px;"
-                  svg-height="310px"
+                  style="top: 0;left: 220px;margin-top: 0;"
+                  svg-height="45px"
                   svg-width="736px"
-                  set-points="0,290 700,290 700,5 736,5"
+                  set-points="0,25 700,25 700,26"
+                />
+              </div>
+              <div class="greenBtn g-column-flex-HV" style="margin: 5px 10px;position: relative">
+                {{ initList[keys[2]]?.[3].terraceName }}
+                <line-svg
+                  :linear-id="initList[keys[2]]?.[3]?.terraceCode"
+                  :start-color="initList[keys[2]]?.[3].terraceState === '0' ? 'red' : '#32cd32'"
+                  :end-color="initList[keys[2]]?.[3].terraceState === '0' ? 'red' : '#32cd32'"
+                  class="svgClass"
+                  style="top: 0;left: 220px;margin-top: 0;"
+                  svg-height="45px"
+                  svg-width="736px"
+                  set-points="0,25 700,25 700,26"
+                />
+              </div>
+              <div class="greenBtn g-column-flex-HV" style="margin: 0 10px;position: relative">
+                {{ initList[keys[2]]?.[4].terraceName }}
+                <line-svg
+                  :linear-id="initList[keys[2]]?.[4]?.terraceCode"
+                  :start-color="initList[keys[2]]?.[4].terraceState === '0' ? 'red' : '#32cd32'"
+                  :end-color="initList[keys[2]]?.[4].terraceState === '0' ? 'red' : '#32cd32'"
+                  class="svgClass"
+                  style="top: 0;left: 220px;margin-top: 0;"
+                  svg-height="45px"
+                  svg-width="736px"
+                  set-points="0,25 700,25 700,26"
+                />
+              </div>
+              <div class="greenBtn g-column-flex-HV" style="margin: 5px 10px;position: relative">
+                {{ initList[keys[2]]?.[5].terraceName }}
+                <line-svg
+                  :linear-id="initList[keys[2]]?.[5]?.terraceCode"
+                  :start-color="initList[keys[2]]?.[5].terraceState === '0' ? 'red' : '#32cd32'"
+                  :end-color="initList[keys[2]]?.[5].terraceState === '0' ? 'red' : '#32cd32'"
+                  class="svgClass"
+                  style="top: 0;left: 220px;margin-top: -318px;"
+                  svg-height="355px"
+                  svg-width="736px"
+                  set-points="0,340 700,340 700,5 736,5"
                 />
               </div>
             </div>
@@ -286,7 +443,7 @@
         </div>
         <div
           class="bgClass g-column-flex-HV"
-          style="height: 44px; background: rgba(0, 100, 169, 0.3); margin-right: 300px; position: relative;width: 180px;margin-left: 62px"
+          style="height: 244px; background: rgba(0, 100, 169, 0.3); margin-right: 240px; position: relative;width: 280px;margin-left: 62px"
           :style="{ background: $store.state.setting.mode === 'dark' ? 'rgba(0,100,169,0.3)' : 'rgba(43, 143, 229, 1)' }"
         >
           物联网平台
@@ -315,6 +472,7 @@ export default {
       openDialog: false,
       platDevList: [],
       nameInput: "",
+      codeInput: "",
       searchList: [],
       parentSignList: [],
       keys: [],
@@ -340,9 +498,9 @@ export default {
             this.keys.push(key);
           });
           // TODO: Maybe change back
-          // console.log("initList===", this.initList);
-          // console.log("parentSignList===", this.parentSignList);
-          // console.log("keys===", this.keys);
+        //   console.log("initList===", this.initList);
+        //   console.log("parentSignList===", this.parentSignList);
+        //   console.log("keys===", this.keys);
         });
       } else {
         eqSystemListNoPage(this.$route.query.terraceId).then(res => {
@@ -368,7 +526,8 @@ export default {
       this.currentSystemId = val.systemId;
       const params = {
         systemId: this.currentSystemId,
-        equipmentType: ""
+        equipmentType: "",
+        equipmentCode: ""
       };
       this.searchEquipment(params);
       this.dialogTitle = val.systemName;
@@ -384,7 +543,8 @@ export default {
     handleQuery() {
       const queryParams = {
         systemId: this.currentSystemId,
-        equipmentType: this.nameInput
+        equipmentType: this.nameInput,
+        equipmentCode: this.codeInput
       };
       this.searchEquipment(queryParams);
     },
@@ -392,6 +552,7 @@ export default {
     resetQuery() {
       this.searchList = [];
       this.nameInput = "";
+      this.codeInput = "";
       this.handleQuery();
     }
   }
@@ -456,7 +617,7 @@ export default {
 
 .greenBtn {
   width: 220px;
-  height: 44px;
+  height: 37px;
   background: rgba(45, 141, 92, 0.6);
   border-radius: 4px;
   position: relative;

@@ -27,9 +27,7 @@ export default {
     if (query.access_token) {
       // 参数存在access_token进行跳转
       this.$store.commit("user/setToken", query.access_token);
-      if (query.redirect) {
-        router.push(query.redirect);
-      } else if (query.businessKey && query.taskId && query.processInstanceId) {
+      if (query.businessKey && query.taskId && query.processInstanceId) {
         getAction(`/system/flow/task/${query.taskId}/view-component`, {}).then(res => {
           if (res.success) {
             if (res.viewComponent) {
@@ -49,6 +47,8 @@ export default {
             }
           }
         });
+      } else if (query.redirect) {
+        router.push(query.redirect);
       } else {
         router.push("/");
       }

@@ -84,7 +84,7 @@
       <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
         <el-col :span="1.5">
           <el-button
-            v-hasPermi="['system:role:add']"
+            v-hasPermi="['system:notice:add']"
             type="primary"
             size="mini"
             @click="handleAdd"
@@ -157,6 +157,7 @@
           <template v-if="scope.row.noticeType === '2'" slot-scope="scope">
             <el-button
               v-if="scope.row.status === '0'"
+              v-hasPermi="['system:notice:enable']"
               size="mini"
               type="text"
               @click="handleStart(scope.row)"
@@ -165,6 +166,7 @@
             </el-button>
             <el-button
               v-if="scope.row.status === '1'"
+              v-hasPermi="['system:notice:close']"
               size="mini"
               type="text"
               @click="handleClose(scope.row)"
@@ -172,7 +174,7 @@
               关闭
             </el-button>
             <el-button
-              v-hasPermi="['system:role:remove']"
+              v-hasPermi="['system:notice:remove']"
               size="mini"
               type="text"
               class="delbutton"

@@ -14,6 +14,7 @@
             v-model="queryParams.menuName"
             placeholder="请输入菜单名称"
             clearable
+            style="width: 240px"
             size="small"
             @keyup.enter.native="handleQuery"
           />
@@ -21,10 +22,10 @@
         <el-form-item v-if="showAppSearch" label="所属应用" prop="appId">
           <el-select
             v-model="queryParams.appId"
-            size="small"
             style="width: 240px"
             placeholder="请选择"
             clearable
+            filterable
           >
             <el-option
               v-for="item in searchOption"
@@ -39,7 +40,7 @@
             v-model="queryParams.status"
             placeholder="菜单状态"
             clearable
-            size="small"
+            style="width: 240px"
           >
             <el-option
               v-for="dict in dict.type.sys_normal_disable"
@@ -185,31 +186,55 @@
         </el-table-column>
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
-            <el-button
-              v-hasPermi="['system:menu:edit']"
-              size="mini"
-              type="text"
-              @click="handleUpdate(scope.row)"
+            <el-tooltip
+              effect="dark"
+              content="请到相关应用下进行操作"
+              placement="top-start"
+              :disabled="!disabledHandle"
             >
-              修改
-            </el-button>
-            <el-button
-              v-hasPermi="['system:menu:add']"
-              size="mini"
-              type="text"
-              @click="handleAdd(scope.row, '内层新增')"
+              <el-button
+                v-hasPermi="['system:menu:edit']"
+                size="mini"
+                type="text"
+                :disabled="disabledHandle"
+                @click="handleUpdate(scope.row)"
+              >
+                修改
+              </el-button>
+            </el-tooltip>
+            <el-tooltip
+              effect="dark"
+              content="请到相关应用下进行操作"
+              placement="top-start"
+              :disabled="!disabledHandle"
             >
-              新增
-            </el-button>
-            <el-button
-              v-hasPermi="['system:menu:remove']"
-              size="mini"
-              type="text"
-              class="delbutton"
-              @click="handleDelete(scope.row)"
+              <el-button
+                v-hasPermi="['system:menu:add']"
+                size="mini"
+                type="text"
+                :disabled="disabledHandle"
+                @click="handleAdd(scope.row, '内层新增')"
+              >
+                新增
+              </el-button>
+            </el-tooltip>
+            <el-tooltip
+              effect="dark"
+              content="请到相关应用下进行操作"
+              placement="top-start"
+              :disabled="!disabledHandle"
             >
-              删除
-            </el-button>
+              <el-button
+                v-hasPermi="['system:menu:remove']"
+                size="mini"
+                type="text"
+                class="delbutton"
+                :disabled="disabledHandle"
+                @click="handleDelete(scope.row)"
+              >
+                删除
+              </el-button>
+            </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
@@ -472,8 +497,10 @@ import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import IconSelect from "@/components/intelligentOilfield/icon-select/index.vue";
 import { appList } from "@/api/intelligentOilfield/system/dataper";
 import { applicationAllList } from "@/api/intelligentOilfield/portal/officeMode";
+import proxy from "@/config/host";
 
 var that;
+const env = import.meta.env.MODE || "development";
 export default {
   name: "Menu",
   dicts: ["sys_show_hide", "sys_normal_disable"],
@@ -507,7 +534,7 @@ export default {
     },
     appId: {
       type: String,
-      default: undefined
+      default: proxy[env].appId || "$system$"
     }
   },
   data() {
@@ -536,7 +563,7 @@ export default {
       queryParams: {
         menuName: undefined,
         visible: undefined,
-        appId: undefined
+        appId: this.appId
       },
       // 表单参数
       form: {},
@@ -547,7 +574,8 @@ export default {
         path: [{ required: true, message: "路由名称不能为空", trigger: "blur" }],
         component: [{ required: true, message: "组件路径不能为空", trigger: "blur" }],
         link: [{ required: true, message: "路由地址不能为空", trigger: "blur" }]
-      }
+      },
+      disabledHandle: false
     };
   },
   created() {
@@ -571,7 +599,6 @@ export default {
             value: el.appId
           });
         });
-        this.searchOption.unshift({ label: "无", value: undefined });
       });
     },
     getAppList() {
@@ -600,6 +627,11 @@ export default {
     },
     /** 查询菜单列表 */
     getList() {
+      if (this.appId !== this.queryParams.appId) {
+        this.disabledHandle = true;
+      } else {
+        this.disabledHandle = false;
+      }
       this.loading = true;
       listMenu({ ...this.queryParams, appId: this.queryParams.appId || this.appId }).then(response => {
         this.menuList = this.handleTree(response.data.data, "menuId");
@@ -652,7 +684,7 @@ export default {
         path: undefined,
         component: "",
         perms: undefined,
-        appId: undefined
+        appId: this.$route.params.id || this.appId
       };
       this.isShowRadioBtnM = true;
       this.resetForm("form");
@@ -716,7 +748,7 @@ export default {
       }
       this.$refs.form.validate(valid => {
         if (valid) {
-          if (!this.form.appId && this.appId) {
+          if (!this.form.appId) {
             this.form.appId = this.appId;
           }
           if (this.form.menuType === "M" && this.form.parentId === "0") {

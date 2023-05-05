@@ -5,36 +5,42 @@ const config = {
   PROCESS_TENANT_TYPE: "tenant",
   // rsa公钥
   PROCESS_PULBIC_KEY: "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKsr9kM6vJHJb8KgWhY6xVaYCkLEr+QKeuYUoZ2uX3+t4lzbxdf1JeJ2jUs26jWWgkpe3W1UHxXUaapyTG9sFbECAwEAAQ==",
-  LOGIN_TYPES: ["password", "corp_oauth"]
+  LOGIN_TYPES: ["password", "corp_oauth"],
+  // 右上角报警点击“查看跳转”路径
+  MESSAGEURL: "http://10.77.78.250:8085/#/reportlnformation/source",
+  appId: "$system$"
 };
 
 export default {
   development: {
     ...config,
+    // TODO: Maybe change back
+    // 通用模块-报警中心
+    // GEM_API: "/gem001b",
     // 流程平台
     BIZ_FLOW_API: "/biz/flow",
     // 文件预览服务
     PREVIEW_FILE_API: "/b/upload",
     processAPI: "/dev-api/workflow",
     // 开发环境接口请求
-    API: '/dev-api',
+    API: "/dev-api",
     // API: '',
     // 开发环境 cdn 路径
-    CDN: '',
-    appId: null
-    
+    CDN: ""
   },
   test: {
     ...config,
+    // TODO: Maybe change back
+    // 通用模块-报警中心
+    // GEM_API: "/gem001b",
     // 流程平台
     BIZ_FLOW_API: "/biz/flow",
     // 文件预览服务
     PREVIEW_FILE_API: "文件服务地址",
     // 测试环境接口地址
-    API: '',
+    API: "",
     // 测试环境 cdn 路径
-    CDN: '',
-    appId: null
+    CDN: ""
   },
   stage: {
     ...config,
@@ -42,20 +48,22 @@ export default {
     // 正式环境接口地址
     API: "http://kd.bytzdev.xyz:38880/stage-api",
     // 正式环境 cdn 路径
-    CDN: "",
+    CDN: ""
   },
   release: {
     ...config,
+    // 通用模块-报警中心
+    // TODO: Maybe change back
+    // GEM_API: "/gem001b",
     // 流程平台
-    BIZ_FLOW_API: "/b/sw", 
+    BIZ_FLOW_API: "/b/sw",
     processAPI: "/prod-api/workflow",
     // 文件预览服务
     PREVIEW_FILE_API: "文件服务地址",
     // 正式环境接口地址
-    API: 'https://rem.tjioms-dev.tjltd.cnooc/prod-api/',
+    API: "http://10.77.78.250:80/prod-api/",
     // 正式环境 cdn 路径
-    CDN: '',
-    appId: 'f198c1a239254b0e86529a0668cf4adb',
+    CDN: "",
     LOGIN_TYPES: ["corp_oauth", "password"]
-  },
+  }
 };

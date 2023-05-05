@@ -91,3 +91,11 @@ export function delDeptsure(deptId) {
     method: "get"
   });
 }
+
+// 获取编辑时的不可编辑项
+export function getNoEditable() {
+  return request({
+    url: "/system/dept/nonEditable",
+    method: "get"
+  });
+}

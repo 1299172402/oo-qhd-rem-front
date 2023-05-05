@@ -128,7 +128,7 @@
         <el-table-column
           prop="deptShort"
           label="组织机构简称"
-          width="260"
+          width="200"
           align="center"
         />
         <el-table-column
@@ -140,7 +140,7 @@
         <el-table-column
           prop="type"
           label="类型"
-          width="240"
+          width="140"
           align="center"
         >
           <template slot-scope="scope">
@@ -148,9 +148,20 @@
           </template>
         </el-table-column>
         <el-table-column
+          label="是否为EHR组织"
+          align="center"
+          prop="ehr"
+          width="140"
+          :show-overflow-tooltip="true"
+        >
+          <template slot-scope="scope">
+            {{ scope.row.ehr === "1" ? '是' : "否" }}
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="status"
           label="状态"
-          width="220"
+          width="140"
           align="center"
         >
           <template slot-scope="scope">
@@ -186,7 +197,7 @@
               新增
             </el-button>
             <el-button
-              v-if="scope.row.parentId != '0'"
+              v-if="scope.row.parentId != '0' && scope.row.ehr !== '1'"
               v-hasPermi="['system:dept:remove']"
               size="mini"
               type="text"
@@ -219,6 +230,7 @@
             <el-form-item label="上级机构" prop="parentId">
               <treeselect
                 v-model="form.parentId"
+                :disabled="form.ehr === '0' ? false : keys.includes('parentId')"
                 :options="deptOptions"
                 :normalizer="normalizer"
                 placeholder="选择上级机构"
@@ -227,17 +239,22 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="机构名称" prop="deptName">
-              <el-input v-model="form.deptName" placeholder="请输入机构名称" />
+              <el-input v-model="form.deptName" placeholder="请输入机构名称" :disabled="form.ehr === '0' ? false : keys.includes('deptName')" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="机构简称">
-              <el-input v-model="form.deptShort" placeholder="请输入机构简称" />
+              <el-input v-model="form.deptShort" placeholder="请输入机构简称" :disabled="form.ehr === '0' ? false : keys.includes('deptShort')" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="显示排序" prop="orderNum">
-              <el-input-number v-model="form.orderNum" controls-position="right" :min="0" />
+              <el-input-number
+                v-model="form.orderNum"
+                controls-position="right"
+                :min="0"
+                :disabled="form.ehr === '0' ? false : keys.includes('orderNum')"
+              />
             </el-form-item>
           </el-col>
           <!-- <el-col :span="12">
@@ -257,7 +274,12 @@
                                                     </el-col> -->
           <el-col :span="12">
             <el-form-item label="机构类型" prop="type">
-              <el-select v-model="form.type" placeholder="请选择机构类型" clearable>
+              <el-select
+                v-model="form.type"
+                placeholder="请选择机构类型"
+                clearable
+                :disabled="form.ehr === '0' ? false : keys.includes('type')"
+              >
                 <el-option
                   v-for="dict in dict.type.sys_department_type"
                   :key="dict.value"
@@ -269,7 +291,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="机构状态" prop="status">
-              <el-radio-group v-model="form.status">
+              <el-radio-group v-model="form.status" :disabled="form.ehr === '0' ? false : keys.includes('status')">
                 <el-radio v-for="dict in dict.type.sys_normal_disable" :key="dict.value" :label="dict.value">
                   {{
                     dict.label
@@ -309,7 +331,7 @@
 </template>
 
 <script>
-import { listDept, selectDepts, getDept, delDept, addDept, updateDept, listDeptExcludeChild, delDeptsure } from "@/api/intelligentOilfield/system/dept";
+import { listDept, selectDepts, getDept, delDept, addDept, updateDept, listDeptExcludeChild, delDeptsure, getNoEditable } from "@/api/intelligentOilfield/system/dept";
 // import { listRole } from '@/api/intelligentOilfield/system/role';
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
@@ -369,7 +391,8 @@ export default {
         // isTenant: [{ required: true, message: '是否租户不能为空', trigger: 'change' }],
         tenantRoleId: [{ required: true, message: "选择角色不能为空", trigger: "change" }]
       },
-      roleList: []
+      roleList: [],
+      keys: []
     };
   },
   created() {
@@ -443,6 +466,7 @@ export default {
     /** 新增按钮操作 */
     handleAdd(row) {
       this.reset();
+      this.form.ehr = "0";
       if (row !== undefined) {
         this.form.parentId = row.deptId;
       }
@@ -463,6 +487,10 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
+      getNoEditable().then(res => {
+        const objValue = JSON.parse(res.data.data);
+        this.keys = Object.keys(objValue);
+      });
       getDept(row.deptId).then(response => {
         this.form = response.data.data;
         this.open = true;

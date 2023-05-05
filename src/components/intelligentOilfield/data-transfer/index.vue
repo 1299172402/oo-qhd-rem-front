@@ -240,6 +240,7 @@ export default {
   flex-wrap: wrap;
   height: calc(100% - 30px);
   overflow: auto;
+  align-content: flex-start;
 }
 
 .lineStyle {

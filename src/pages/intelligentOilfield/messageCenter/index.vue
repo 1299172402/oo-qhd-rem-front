@@ -72,7 +72,7 @@
 
     <page-panel-new header-title="消息日志" style="height: calc(100% - 100px)">
       <el-row style="margin-bottom: 20px">
-        <el-col :span="20">
+        <el-col class="placeholder" :span="20">
           <el-button
             v-hasPermi="['message:config']"
             type="primary"
@@ -129,10 +129,15 @@
           align="center"
         >
           <template slot-scope="scope">
-            <el-button type="text" @click="handleView(scope.row.id, scope.row)">
+            <el-button v-hasPermi="['message:view']" type="text" @click="handleView(scope.row.id, scope.row)">
               查看
             </el-button>
-            <el-button v-if="scope.row.status === 'FAILURE'" type="text" @click="handleResend(scope.row)">
+            <el-button
+              v-if="scope.row.status === 'FAILURE'"
+              v-hasPermi="['message:retry']"
+              type="text"
+              @click="handleResend(scope.row)"
+            >
               重试
             </el-button>
           </template>

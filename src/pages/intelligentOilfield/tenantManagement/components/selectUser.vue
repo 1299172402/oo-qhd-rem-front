@@ -57,7 +57,7 @@
                   <el-button type="primary" icon="el-icon-search" @click="searchQuery">
                     搜索
                   </el-button>
-                  <el-button icon="el-icon-refresh" @click="searchReset">
+                  <el-button class="commonBtn" icon="el-icon-refresh" @click="searchReset">
                     重置
                   </el-button>
                 </el-form-item>

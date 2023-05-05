@@ -1,6 +1,6 @@
 <template>
   <div class="login-wrapper">
-    <div style="display: flex; align-items: center; height: 77px; padding-left: 30px;">
+    <div style="display: flex; align-items: center; height: 84px; padding-left: 30px;">
       <div class="logoDiv" />
       <!-- TODO: 内网 Maybe change back -->
       <p class="titleDiv">

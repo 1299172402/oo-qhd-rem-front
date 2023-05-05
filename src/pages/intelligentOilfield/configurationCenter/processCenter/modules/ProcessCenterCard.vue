@@ -43,7 +43,7 @@
       </div>
     </div>
     <div class="card-button">
-      <el-tooltip content="租户管理配置">
+      <el-tooltip v-hasPermi="['process:tenant:config']" content="租户管理配置">
         <el-button
           :disabled="disable"
           class="card-button-item"
@@ -52,12 +52,12 @@
           <svg-icon class="svg-icon-class" icon-class="tenant-manage" />
         </el-button>
       </el-tooltip>
-      <el-tooltip v-if="isShow" content="新建流程">
+      <el-tooltip v-if="isShow" v-hasPermi="['process:new']" content="新建流程">
         <el-button :disabled="disable" class="card-button-item" @click="handleVisible(true)">
           <svg-icon class="svg-icon-class" icon-class="new-process" />
         </el-button>
       </el-tooltip>
-      <el-tooltip v-if="isShow" content="流程设计中心">
+      <el-tooltip v-if="isShow" v-hasPermi="['process:disable']" content="流程设计中心">
         <el-button
           :disabled="disable"
           class="card-button-item"
@@ -68,7 +68,7 @@
           <svg-icon class="svg-icon-class" icon-class="process-design" />
         </el-button>
       </el-tooltip>
-      <el-tooltip v-if="isShow" content="流程实例清单">
+      <el-tooltip v-if="isShow" v-hasPermi="['process:design']" content="流程实例清单">
         <el-button
           :disabled="disable"
           class="card-button-item"
@@ -79,7 +79,7 @@
           <svg-icon class="svg-icon-class" icon-class="lnstance-list" />
         </el-button>
       </el-tooltip>
-      <el-tooltip v-if="isShow" :content="!disable ? '禁用' : '启用'">
+      <el-tooltip v-if="isShow" v-hasPermi="['process:example']" :content="!disable ? '禁用' : '启用'">
         <el-button
           class="card-button-item"
           @click="handleDisable(processCenterInfo.tenantCode || processCenterInfo.appId)"

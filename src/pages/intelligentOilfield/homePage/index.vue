@@ -67,6 +67,7 @@
             <div style="text-align: center">
               <el-button
                 v-if="$store.state.setting.mode === 'dark'"
+                v-hasPermi="['system:homePage:detail']"
                 type="primary"
                 size="mini"
                 style="width: 80px; height: 32px"
@@ -76,6 +77,7 @@
               </el-button>
               <el-button
                 v-else
+                v-hasPermi="['system:homePage:detail']"
                 size="mini"
                 style="width: 80px;height: 32px;color: #fff;background: #3490d3"
                 @click="handleAuth(item.tenantId, item.tenantName)"

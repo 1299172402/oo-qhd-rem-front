@@ -268,7 +268,6 @@ export default {
 <style scoped>
 .vue-grid-layout {
   position: absolute;
-  z-index: 0;
   top: 0;
   left: 0;
   width: 1920px;
@@ -280,6 +279,8 @@ export default {
   width: 100% !important;
   height: 100% !important;
   transform: translate3d(0, 0, 0) !important;
+  z-index: 999;
+  position: relative;
 }
 
 .smallWindow >>> .vue-grid-item {

@@ -25,8 +25,8 @@
     </header-search>
     <page-panel-new header-title="角色列表" style="height: calc(100% - 100px);" class="g-w100">
       <el-row style="margin-bottom: 20px">
-        <el-col :span="20">
-          <el-button class="" type="primary">
+        <el-col class="height-placeholder" :span="20">
+          <el-button type="primary">
             新增
           </el-button>
         </el-col>

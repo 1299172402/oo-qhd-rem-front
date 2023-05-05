@@ -107,6 +107,7 @@ import statisticalData from "@/pages/intelligentOilfield/homePage/components/sta
 // import quickEntry from '@/pages/intelligentOilfield/portal/officeMode/components/quickEntry.vue';
 // import alarmCenter from '@/pages/intelligentOilfield/portal/projectionMode/components/alarmCenter.vue'
 import { listAll, noticeList } from "@/api/intelligentOilfield/system/home";
+import { downFile } from "@/components/upload/utils/file.ts";
 
 export default {
   data() {
@@ -138,6 +139,48 @@ export default {
   methods: {
     listAll() {
       listAll(this.$route.params.tenantId).then(response => {
+        // 业务中心
+        response.businessList.forEach(item => {
+          item.businessImgUrl = "";
+          if (item.businessImg) {
+            const arr = item.businessImg.split(":");
+            if (arr.length > 0) {
+              if (arr[0] !== "http") {
+                downFile(arr[0]).then(res => {
+                  item.businessImgUrl = window.URL.createObjectURL(res);
+                });
+              }
+            }
+          }
+        });
+        // 授权应用
+        response.appList.forEach(item => {
+          item.imgUrl = "";
+          if (item.appImg) {
+            const arr = item.appImg.split(":");
+            if (arr.length > 0) {
+              if (arr[0] !== "http") {
+                downFile(arr[0]).then(res => {
+                  item.imgUrl = window.URL.createObjectURL(res);
+                });
+              }
+            }
+          }
+        });
+        // 已授权看板
+        response.boardList.forEach(item => {
+          item.imgUrl = "";
+          if (item.boardImg) {
+            const arr = item.boardImg.split(":");
+            if (arr.length > 0) {
+              if (arr[0] !== "http") {
+                downFile(arr[0]).then(res => {
+                  item.imgUrl = window.URL.createObjectURL(res);
+                });
+              }
+            }
+          }
+        });
         this.listAllData = response;
       });
     },

@@ -1,6 +1,9 @@
 .el-select .el-input {
   background: var(--opacity-blue-bg);
-  border: 1px solid var(--light-blue-color);
+
+  input {
+    border: 1px solid var(--light-blue-color);
+  }
 }
 
 .el-input--suffix .el-input__inner {
@@ -60,9 +63,13 @@
   border: unset !important;
 }
 
+.collapseTags .el-select__tags .el-tag.el-tag--info {
+  max-width: 70%;
+}
+
 .dropdown {
-  .el-input {
-    border: none;
+  input {
+    border: none !important;
   }
 }
 
@@ -82,13 +89,11 @@
 
 .noBorderBg {
   .el-input {
-    border: none;
-
-    .el-select__caret {
-      // color: green;
-    }
-
     background: transparent;
+
+    input {
+      border: none !important;
+    }
   }
 
   .el-input__inner {

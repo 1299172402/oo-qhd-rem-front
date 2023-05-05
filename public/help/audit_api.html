@@ -1,11 +1,4 @@
-<!--
-  ~ Copyright (c) 2019 - 2021. Boya Triz Co.,Ltd. All rights reserved. 博雅创智版权所有
-  ~ 项目名称：cup-parent
-  ~ 文件名称：flow_node_helper.html
-  ~ 版本：1.0
-  -->
-
-  <!DOCTYPE html>
+<!DOCTYPE html>
   <html>
   <head>
       <meta charset="utf-8">
@@ -73,15 +66,15 @@
       <pre class="layui-code" lay-title="取审批人Service">
     @Service
     public class AssignCallbackService {
-    
+
         @Autowired
         private ISysUserService sysUserService;
-    
+
         public FetchAssignResult getFetchAssign(FetchAssignCallBackRo fetchAssignCallBackRo) {
             FetchAssignResult fetchAssignResult = new FetchAssignResult();
-    
+
             String startUserDeptId = fetchAssignCallBackRo.getAuditUserSearchCallBackData();
-    
+
             List&lt;FetchAssignResult.Resource&gt; resources = new ArrayList&lt;&gt;();
             for (FetchAssignCallBackRo.Resource resource : fetchAssignCallBackRo.getResources()) {
                 ResourceType type = resource.getType();
@@ -90,20 +83,20 @@
                 String roleId = resource.getResourceId();
                 Boolean multiInstance = resource.getMultiInstance();
                 Integer priority = resource.getPriority();
-    
+
                 if (type != ResourceType.GROUP) {
                     continue;
                 }
-    
+
                 // 计算审批人，具体的根据自己的业务系统来实现
                 // 基本逻辑是：如果dataScope(指定的机构)不为空就使用指定的机构为参照来找指定dataScope(查找范围如本部门)有指定角色(roleId)的人
                 //            如果dataScope(指定的机构)为空就使用startUserDeptId(发起人部门)为参照来找指定dataScope(查找范围如本部门)有指定角色(roleId)的人
                 List&lt;SysUser&gt; users = sysUserService.calculateAuditUsers(startUserDeptId, roleId, dataScope, applyScope);
-    
+
                 // 输出审批人
                 for (SysUser user : users) {
                     FetchAssignResult.Resource returnResource = new FetchAssignResult.Resource();
-    
+
                     returnResource.setType(ResourceType.USER);
                     returnResource.setResourceId(user.getId());
                     returnResource.setRecipient(user.getEmail());
@@ -111,11 +104,11 @@
                     returnResource.setResourceName(user.getRealname());
                     returnResource.setMultiInstance(multiInstance);
                     returnResource.setPriority(priority);
-    
+
                     resources.add(returnResource);
                 }
             }
-    
+
             // 计算自定义指派资源，在节点上可以配置一个自定义的文本，此处将文本定义为Json的格式
             // Json中有一个属性是 processClass(处理类)，这里会从Spring中取这为这个类型的bean，并判断是否为ILocalCustomAssignCallbackService的子类
             // 如果满足则调用ILocalCustomAssignCallbackService接口指定的fetchAuditResources方法
@@ -127,16 +120,16 @@
                 if (StringUtils.isBlank(processClass)) {
                     throw new RuntimeException("自定义指派规则中processClass属性必须定义");
                 }
-    
+
                 // 解析params
                 JSONObject paramsJsonObject = parsedObject.getJSONObject("params");
                 if (paramsJsonObject == null) {
                     throw new RuntimeException("自定义指派规则中params属性必须定义");
                 }
-    
+
                 try {
                     Object callBackService = SpringBeanUtil.getBeanByClassName(processClass);
-    
+
                     if (callBackService instanceof ILocalCustomAssignCallbackService) {
                         ILocalCustomAssignCallbackService localCustomAssignCallbackService = (ILocalCustomAssignCallbackService) callBackService;
                         // 计算资源
@@ -148,10 +141,10 @@
                     throw new RuntimeException(String.format("执行自定义审批资源类processClass[%s]出错, 错误信息: %s", processClass, ex.getMessage()));
                 }
             }
-    
+
             fetchAssignResult.setResources(resources);
             fetchAssignResult.setSuccess(true);
-    
+
             return fetchAssignResult;
         }
     }

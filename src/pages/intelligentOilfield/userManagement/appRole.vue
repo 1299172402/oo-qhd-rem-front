@@ -58,6 +58,7 @@
         <el-table-column label="操作" width="80">
           <template slot-scope="scope">
             <el-button
+              v-hasPermi="['system:user:appRole:remove']"
               type="text"
               icon="el-icon-delete"
               @click="handleDelete(scope.row)"

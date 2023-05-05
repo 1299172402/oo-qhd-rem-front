@@ -86,3 +86,11 @@ export function unallocatedList(query) {
     params: query
   });
 }
+
+// 获取编辑时的不可编辑项
+export function getNoEditable() {
+  return request({
+    url: "/system/post/nonEditable",
+    method: "get"
+  });
+}
