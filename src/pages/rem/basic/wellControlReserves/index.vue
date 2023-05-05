@@ -12,7 +12,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="油田">
-              <el-select v-model="queryData.ogfId">
+              <el-select v-model="queryData.ogfId" disabled>
                 <el-option
                   v-for="(item, index) in oilFields"
                   :key="index"
@@ -33,10 +33,6 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <!-- <el-form-item label="评价时间" prop="pjsj">
-              <el-date-picker v-model="queryData.month" type="month" format="yyyy-MM" value-format="yyyy-MM">
-              </el-date-picker>
-            </el-form-item> -->
             <el-form-item>
               <el-button type="primary" @click="queryserch()" icon="el-icon-search">搜索</el-button>
             </el-form-item>
@@ -154,7 +150,6 @@ export default {
       });
       fetchOilFields().then((res) => {
         if (res.data.code == 200) {
-          this.oilFields = res.data.data.oilFields;
           const requestPlat = {
             oilFieldId: this.queryData.ogfId,
           };
