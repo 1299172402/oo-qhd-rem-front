@@ -1,10 +1,8 @@
 <template>
-  <div class="app-container">
-    <Echart :chart-data="histogram" width="100%" height="680px"></Echart>
-    <!-- :style="{
+  <Echart :chart-data="histogram" width="100%" height="100%"></Echart>
+  <!-- :style="{
           background: currentModel == 'dark' ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0)',
         }" -->
-  </div>
 </template>
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
@@ -45,7 +43,7 @@ export default {
         title: {
           x: "center",
           top: "5",
-          textStyle: { color: "#fff" },
+          textStyle: { color: "#a9a8a8" },
         },
         tooltip: {
           trigger: "axis",
@@ -54,18 +52,25 @@ export default {
             type: "line",
           },
         },
-        legend: {
-          show: true,
-          bottom: 15,
-          textStyle: { color: "#fff" },
+            legend: {
+          data: ["关停影响产量", "关停井数"],
+          bottom: "bottom",
+          textStyle: {
+            color: "#a9a8a8",
+          },
         },
+        // legend: {
+        //   show: true,
+        //   bottom: 15,
+        //   textStyle: { color: "#a9a8a8" },
+        // },
         xAxis: {
           type: "category",
           axisLabel: {
-            color: "#fff",
+            color: "#a9a8a8",
           },
           axisLine: {
-            lineStyle: { color: "#fff" },
+            lineStyle: { color: "#a9a8a8" },
           },
           data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
         },
@@ -78,7 +83,7 @@ export default {
             name: "(单位：xx)",
             splitLine: { show: false },
             axisLine: {
-              lineStyle: { color: "#fff" },
+              lineStyle: { color: "#a9a8a8" },
             },
           },
           {
@@ -89,7 +94,7 @@ export default {
             name: "(单位：xx)",
             splitLine: { show: false },
             axisLine: {
-              lineStyle: { color: "#fff" },
+              lineStyle: { color: "#a9a8a8" },
             },
           },
         ],
@@ -101,11 +106,11 @@ export default {
           containLabel: true,
         },
         series: [
-        //   {
-        //     label: {
-        //       color:"#ffffff"
-        //     },
-        //   },
+          //   {
+          //     label: {
+          //       color:"#ffffff"
+          //     },
+          //   },
         ],
       },
     };

@@ -1,6 +1,6 @@
 <template>
-  <div class="app-container" style="height:100%">
-    <Echart :chart-data="histogram" style="height:600px"></Echart>
+  <div class="app-container" style="height: 100%">
+    <Echart :chart-data="histogram" style="height: 100%"></Echart>
   </div>
 </template>
 <script>
@@ -18,14 +18,12 @@ export default {
   },
   data() {
     return {
-      chartHeight: "150px",
-      tableHeight: 280,
       histogram: {
         tooltip: {
           show: true,
         },
         legend: {
-          left: "left",
+          bottom: "bottom",
           padding: [5, 100],
           icon: "rect",
           itemWidth: 12,
@@ -33,24 +31,22 @@ export default {
           itemGap: 40,
           data: ["月度计划产量", "月度实际产量"],
           textStyle: {
-            color: "#FFFFFF",
+            color: "#a9a8a8",
             fontSize: 14,
           },
         },
         grid: {
-          top: 30,
-          left: 40,
+          top: 10,
+          left: 60,
           right: 10,
-          bottom: 30,
+          bottom: 50,
         },
         xAxis: [
           {
             type: "category",
-            data: [
-                
-            ],
+            data: ["1月", "2月", "3月", "4月"],
             axisLabel: {
-              color: "#8FA4CC",
+              color: "#a9a8a8",
               fontSize: 14,
             },
             axisTick: {
@@ -63,7 +59,7 @@ export default {
             axisLine: {
               lineStyle: {
                 //color: '#979797'
-                color: "rgba(255,255,255,.16)",
+                color: "#a9a8a8",
               },
             },
           },
@@ -71,8 +67,13 @@ export default {
         yAxis: [
           {
             type: "value",
+            name: "月产油(m⁴m³)",
+            nameTextStyle: {
+              padding: [0, 0, 20, 0], // 上、右、下、左
+            },
+            nameLocation: "center",
             axisLabel: {
-              color: "#8FA4CC",
+              color: "#a9a8a8",
               fontSize: 14,
             },
             axisTick: {
@@ -81,11 +82,12 @@ export default {
             axisLine: {
               show: false,
               lineStyle: {
-                color: "#979797",
+                color: "#a9a8a8",
               },
             },
             splitLine: {
               show: true,
+
               lineStyle: {
                 color: "rgba(255,255,255,.16)",
               },
@@ -97,7 +99,7 @@ export default {
             name: "月度计划产量",
             type: "bar",
             barWidth: "12",
-            data: [],
+            data: [4, 3, 5, 4],
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 {
@@ -119,7 +121,7 @@ export default {
             name: "月度实际产量",
             type: "bar",
             barWidth: "12",
-            data: [],
+            data: [4, 3, 4, 5],
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 {

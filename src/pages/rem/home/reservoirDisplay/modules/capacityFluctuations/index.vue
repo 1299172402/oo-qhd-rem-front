@@ -20,23 +20,22 @@ export default {
     return {
       histogram: {
         textStyle: {
-          fontSize: 0,
+          fontSize: 10,
         },
         xAxis: {
           nameTextStyle: {
-            color: "#c0c3cd",
+            color: "#a9a8a8",
             padding: [0, 0, -10, 0],
             fontSize: 14,
           },
           axisLabel: {
-            color: "#8BA0C4",
+            color: "#a9a8a8",
             fontWeight: 400,
-            fontFamily: "SourceHanSansCN-Regular, SourceHanSansCN",
-            fontSize: 20,
+            fontSize: 16,
           },
           axisTick: {
             lineStyle: {
-              color: "#0B1535",
+              color: "#a9a8a8",
               width: 1,
             },
             show: false,
@@ -46,7 +45,7 @@ export default {
           },
           axisLine: {
             lineStyle: {
-              color: "#384267",
+              color: "#a9a8a8",
               width: 1,
               type: "dashed",
             },
@@ -58,32 +57,26 @@ export default {
         yAxis: {
           name: "变化量(口)",
           type: "value",
-
+          nameLocation: "center",
           nameTextStyle: {
-            color: "#c0c3cd",
-            padding: [0, 0, -10, 0],
-            fontSize: 14,
+            color: "#a9a8a8",
+            padding: [0, 0, 30, 0],
+            fontSize: 16,
           },
           axisLabel: {
             margin: 20,
-            color: "#8BA0C4",
-            fontWeight: 400,
-            fontFamily: "SourceHanSansCN-Regular, SourceHanSansCN",
-            fontSize: 20,
+            color: "#a9a8a8",
+            fontSize: 16,
           },
           axisTick: {
             lineStyle: {
-              color: "#384267",
+               color: "#a9a8a8",
               width: 1,
             },
             show: true,
           },
           splitLine: {
-            show: true,
-            lineStyle: {
-              color: "#384267",
-              type: "line",
-            },
+            show: false,
           },
           axisLine: {
             lineStyle: {
@@ -99,7 +92,7 @@ export default {
             data: [22.0, 21.3, 19, 19],
             type: "bar",
             barMaxWidth: "auto",
-            barWidth: 35,
+            barWidth: 28,
             itemStyle: {
               color: {
                 x: 0,
@@ -111,22 +104,22 @@ export default {
                 colorStops: [
                   {
                     offset: 0,
-                    color: "#00BFFF",
+                    color: "rgb(0,243,199)",
                   },
                   {
                     offset: 1,
-                    color: "#54FF9F",
+                     color: "rgb(7,121,64)",
                   },
                 ],
               },
             },
-            label: {
-              show: true,
-              position: "top",
-              distance: 10,
-              color: "#fff",
-              position: [30, 10],
-            },
+            // label: {
+            //   show: true,
+            //   position: "top",
+            //   distance: 10,
+            //   color: "#fff",
+            //   position: [30, 10],
+            // },
           },
         ],
       },

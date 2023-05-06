@@ -15,11 +15,21 @@
         </pagePanel>
         <pagePanel headerTitle="油田大事件" style="height: 250px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('operationOverview')">详细</button>
-          <ol>
-            <li> 1 2022年9月3日-4日停产检修  2022-08-30</li>
-            <li> 2   2022年9月3日-4日停产检修 2022-08-30</li>
-            <li> 3  2022年9月3日-4日停产检修 2022-08-30</li>
-          </ol>
+          <el-row>
+            <el-col :span="4"> 1 </el-col>
+            <el-col :span="15"> 2023年3月3日-4日停产检修 </el-col>
+            <el-col :span="5"> 2023-02-26 </el-col>
+          </el-row>
+          <el-row style="margin-top: 20px">
+            <el-col :span="4">2 </el-col>
+            <el-col :span="15"> QHD32-6-F19井2023年3月13号转注</el-col>
+            <el-col :span="5"> 2023-02-27 </el-col>
+          </el-row>
+          <el-row style="margin-top: 20px">
+            <el-col :span="4">3</el-col>
+            <el-col :span="15"> 2023年3月3日-4日停产检修 </el-col>
+            <el-col :span="5"> 2023-02-23</el-col>
+          </el-row>
         </pagePanel>
       </el-col>
     </el-row>
@@ -72,36 +82,51 @@
       </el-col>
       <el-col :span="7">
         <pagePanel headerTitle="措施效果跟踪表" style="height: 370px; width: 100%" class="g-w100">
-          <button class="detailLinkBtn" @click="linkroute('measuresPumpWellRecovery')">详细</button>
+          <button class="buttonActive_primary detailLinkBtn" @click="linkroute('measuresPumpWellRecovery')">
+            详细
+          </button>
+          <span style="color: #1ec5e6; position: relative; top: -45px; left: 150px">措施潜力井统计表</span>
+          <span style="color: #1ec5e6; position: relative; top: -45px; left: 160px"
+            >增油量值设置
+            <div class="inputstyle"><el-input></el-input></div>
+          </span>
+          <effectMeasure style="margin-top:-50px"></effectMeasure>
         </pagePanel>
         <pagePanel headerTitle="超欠注情况统计" style="height: 370px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('measuresPumpWellRecovery')">详细</button>
+            <owing></owing>
         </pagePanel>
+      
       </el-col>
     </el-row>
-     <el-row :gutter="20">
+    <el-row :gutter="20">
       <el-col :span="8">
-        <pagePanel headerTitle="自然递减率" style="height: 750px; width: 100%" class="g-w100">
+        <pagePanel headerTitle="自然递减率" style="height: 450px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>
           <naturalDecline></naturalDecline>
         </pagePanel>
-        <pagePanel headerTitle="采出程度与含水率关系图" style="height: 750px; width: 100%" class="g-w100">
+        <pagePanel headerTitle="采出程度与含水率关系图" style="height: 450px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>
           <naturalDecline></naturalDecline>
         </pagePanel>
       </el-col>
       <el-col :span="8">
-        <pagePanel headerTitle="采油速度" style="height: 750px; width: 100%" class="g-w100">
+        <pagePanel headerTitle="采油速度" style="height: 450px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>
           <recoveryRate></recoveryRate>
         </pagePanel>
-          <pagePanel headerTitle="含水上升" style="height: 750px; width: 100%" class="g-w100">
+        <pagePanel headerTitle="含水上升" style="height: 450px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>
-              <waterUp></waterUp>
+          <waterUp></waterUp>
         </pagePanel>
       </el-col>
-      <el-col :span="8">
-        <pagePanel :show-btn="true" headerTitle="秦皇岛32-6油田生产指标总览" style="height: 1500px; width: 100%" class="g-w100">
+      <el-col :span="8"  >
+        <pagePanel
+          :show-btn="true"
+          headerTitle="秦皇岛32-6油田生产指标总览"
+          style="height: 930px; width: 100%"
+          class="g-w100"
+        >
           <!-- <button class="detailLinkBtn" @click="linkroute('measuresPumpWellRecovery')">详细</button> -->
           <overviewIndicators></overviewIndicators>
         </pagePanel>
@@ -174,10 +199,7 @@ export default {
   height: 100px;
   flex-direction: column;
 } */
-.item5 {
-  border: 8px inset #2cd5ff;
-  padding-top: 10%;
-}
+
 .detailLinkBtn {
   position: absolute;
   right: 5px;
@@ -201,5 +223,12 @@ export default {
   text-align: center;
   font-size: 25px;
   color: #00b4ff;
+}
+.inputstyle ::v-deep.el-input__inner {
+  width: 10%;
+  position: relative;
+  top: -25px;
+  left: 200px;
+  height: 20px;
 }
 </style>

@@ -20,13 +20,20 @@ export default {
     return {
       histogram: {
         legend: {
-          data: ["月注水量(10⁴m³)", "月配注量(10⁴m³)","产液量(10⁴m³)"],
-          top: "5%",
-          right: "10",
+          data: ["月注水量(10⁴m³)", "月配注量(10⁴m³)", "产液量(10⁴m³)"],
+          bottom: "bottom",
           textStyle: {
-            color: "rgba(250,250,250,0.6)",
+            color: "#a9a8a8",
             fontSize: 16,
           },
+        },
+        grid: {
+          left: 20,
+          right: 30,
+          top: 0,
+          bottom: 30,
+          show: false, // 隐藏坐标系网格线
+          containLabel: true,
         },
         barWidth: 15,
         xAxis: {
@@ -42,21 +49,21 @@ export default {
           axisLine: {
             //  改变x轴颜色
             lineStyle: {
-              color: "#3c4654",
+              color: "#a9a8a8",
             },
           },
           axisLabel: {
             //  改变x轴字体颜色和大小
             textStyle: {
-              color: "rgba(250,250,250,0.5)",
+              color: "#a9a8a8",
               fontSize: 16,
             },
           },
         },
         yAxis: {
           type: "category",
-        //   Ⅰ、Ⅱ、Ⅲ、Ⅳ、Ⅴ、Ⅵ、Ⅶ、Ⅷ、Ⅸ
-          data: ["nm1", "nm2", "nm3", "nm4","nm5"],
+          //   Ⅰ、Ⅱ、Ⅲ、Ⅳ、Ⅴ、Ⅵ、Ⅶ、Ⅷ、Ⅸ
+          data: ["nm1", "nm2", "nm3", "nm4", "nm5"],
           splitLine: {
             show: false,
           },
@@ -65,15 +72,16 @@ export default {
           },
           axisLine: {
             //  改变y轴颜色
+            show: false,
             lineStyle: {
-              color: "#3c4654",
+              color: "#a9a8a8",
             },
           },
           axisLabel: {
             //  改变y轴字体颜色和大小
             //formatter: '{value} m³ ', //  给y轴添加单位
             textStyle: {
-              color: "rgba(250,250,250,0.5)",
+              color: "#a9a8a8",
               fontSize: 16,
             },
           },
@@ -97,18 +105,18 @@ export default {
                 color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [
                   {
                     offset: 0,
-                    color: "rgba(45,130,255,1)",
+                    color: "rgba(85,209,255,1)",
                   },
                   {
                     offset: 1,
-                    color: "rgba(85,209,255,1)",
+                    color: "rgba(45,130,255,1)",
                   },
                 ]),
 
                 borderWidth: 0,
               },
             },
-            data: [19, 29, 39, 81,65],
+            data: [4, 9, 9, 8, 6],
           },
           {
             type: "bar",
@@ -128,20 +136,20 @@ export default {
                 color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [
                   {
                     offset: 0,
-                    color: "rgba(255,172,52,1)",
+                    color: "rgba(0,248,205,1)",
                   },
                   {
                     offset: 1,
-                    color: "rgba(255,206,93,1)",
+                    color: "rgb(7,117,59)",
                   },
                 ]),
 
                 borderWidth: 0,
               },
             },
-            data: [12, 23, 35, 100,65],
+            data: [2, 3, 5, 10, 5],
           },
-            {
+          {
             type: "bar",
             name: "产液量(10⁴m³)",
             itemStyle: {
@@ -159,18 +167,18 @@ export default {
                 color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [
                   {
                     offset: 0,
-                    color: "rgba(255,172,52,1)",
+                    color: "rgba(255,199,87,1)",
                   },
                   {
                     offset: 1,
-                    color: "rgba(255,206,93,1)",
+                    color: "rgba(255,114,53,1)",
                   },
                 ]),
 
                 borderWidth: 0,
               },
             },
-            data: [12, 23, 35, 100,88],
+            data: [2, 3, 5, 7, 8],
           },
         ],
       },

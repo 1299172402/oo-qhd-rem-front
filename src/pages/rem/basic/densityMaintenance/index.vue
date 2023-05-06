@@ -26,7 +26,6 @@
             placeholder="请选择产品类型"
             clearable
             size="small"
-            @change="getInfo()"
             style="width: 240px"
           >
             <el-option
@@ -41,41 +40,40 @@
           <el-date-picker
             type="year"
             placeholder="选择年份"
-            @change="getInfo()"
             value-format="yyyy"
             v-model="queryParams.year"
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button icon="el-icon-edit-outline" size="mini" @click="redact" type="primary">编辑</el-button>
-          <el-button icon="el-icon-document-checked" size="mini" @click="save" type="primary">保存</el-button>
-          <el-button icon="el-icon-s-platform" size="mini" @click="dialogVisible = true" type="primary"
-            >运行计算
-          </el-button>
+          <el-button size="mini" @click="getInfo" type="primary">搜索 </el-button>
+          <el-button size="mini" class="commonBtn">重置 </el-button>
         </el-form-item>
       </el-form>
     </headerSearch>
-
-    <!--        <el-button size="mini" @click="getInfo" type="primary">搜索 </el-button>-->
-    <!--        <el-button size="mini" class="commonBtn">重置 </el-button>-->
 
     <!--        <pagePanel headerTitle="密度信息维护" style="height: calc(100% - 100px)" :is-show-max-btn="true" class="g-w100">-->
     <!--            <div class="btnPosition g-row-flex" style="width: 100%">-->
     <!--                <el-button icon="el-icon-edit-outline" size="mini" @click="redact" type="primary">编辑</el-button>-->
     <!--                <el-button icon="el-icon-document-checked" size="mini" @click="save" type="primary">保存</el-button>-->
     <!--            </div>-->
-
-    <info-window :is-show-max-btn="true" infoWidth="100%" infoHeight="100%" headerTitle="密度信息维护">
+    <page-panel header-title="密度信息维护" style="height: 100%" :show-btn="true">
+      <el-row>
+        <el-button icon="el-icon-edit-outline" size="mini" @click="redact" type="primary">编辑</el-button>
+        <el-button icon="el-icon-document-checked" size="mini" @click="save" type="primary">保存</el-button>
+        <el-button icon="el-icon-s-platform" size="mini" @click="dialogVisible = true" type="primary"
+          >运行计算
+        </el-button>
+      </el-row>
       <el-table
         :data="noticeList"
         @current-change="handleCurrentChange"
         highlight-current-row
-        height="100%"
+        height="calc(100% - 30px)"
+        style="margin-top:10px"
         :row-style="{ height: '0px' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
         header-cell-class-name="table_header"
         :cell-style="{ 'text-align': 'center', padding: '2px' }"
-        style="width: auto; height: 100%"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column label="油气田" fixed width="130px" prop="ogfName" align="center"></el-table-column>
@@ -88,7 +86,7 @@
           </el-table-column>
           <el-table-column label="实际" width="130px" align="center">
             <template slot-scope="scope">
-              <span  v-if="isDisabled[0]">{{ scope.row.january }}</span>
+              <span v-if="isDisabled[0]">{{ scope.row.january }}</span>
               <span v-else> <el-input v-model="scope.row.january" size="small" @change="inputChange(1)" /></span>
             </template>
           </el-table-column>
@@ -195,7 +193,7 @@
           </el-table-column>
         </el-table-column>
       </el-table>
-    </info-window>
+    </page-panel>
     <el-dialog title="模型运行结果通知" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false">
       <span>
         AC-20井组指标变化趋势评价模型（日度）、AC-25井组注采平衡分析、AC-23井组措施推荐模型全部运行成功。AC-22井组注水受效分析运行失败。</span

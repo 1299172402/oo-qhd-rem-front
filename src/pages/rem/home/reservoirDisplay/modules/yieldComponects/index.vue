@@ -5,7 +5,6 @@
 </template>
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
-import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 import { LineChart } from "echarts/charts";
 import * as echarts from "echarts/core";
 import { GridComponent, TooltipComponent, LegendComponent } from "echarts/components";
@@ -28,7 +27,7 @@ export default {
         legend: {
           data: ["当年累计产量", "滚动预测", "分公司奋斗", "分公司考核"],
           align: "right",
-          right: 10,
+          bottom: 'bottom',
           textStyle: {
             color: "",
           },
@@ -39,7 +38,8 @@ export default {
         grid: {
           left: "3%",
           right: "4%",
-          bottom: "3%",
+          bottom: "8%",
+          top:'10%',
           containLabel: true,
         },
         xAxis: [
@@ -49,7 +49,7 @@ export default {
             axisLine: {
               show: true,
               lineStyle: {
-                color: "#063374",
+                color: "#a9a8a8",
                 width: 1,
                 type: "solid",
               },
@@ -60,7 +60,7 @@ export default {
             axisLabel: {
               show: true,
               textStyle: {
-                color: "#00c7ff",
+                color: "#a9a8a8",
               },
             },
           },
@@ -68,8 +68,13 @@ export default {
         yAxis: [
           {
             type: "value",
+            name:'当年累产油量(10m⁴m³)',
+             nameLocation: "center",
+             nameTextStyle: {
+              padding: [0, 0, 20, 0], // 上、右、下、左
+            },
             axisLabel: {
-              formatter: "{value} %",
+              formatter: "{value} ",
             },
             axisTick: {
               show: false,
@@ -77,56 +82,18 @@ export default {
             axisLine: {
               show: false,
               lineStyle: {
-                color: "#fff",
+                color: "#a9a8a8",
                 width: 1,
                 type: "solid",
               },
             },
             splitLine: {
               lineStyle: {
-                color: "#000",
+                color: "#a9a8a8",
               },
             },
           },
         ],
-        // dataZoom: [
-        //   //给x轴设置滚动条
-        //   {
-        //     start: 0, //默认为0
-        //     end: 100 - 1500 / 31, //默认为100
-        //     type: "slider",
-        //     show: true,
-        //     xAxisIndex: [0],
-        //     handleSize: 0, //滑动条的 左右2个滑动条的大小
-        //     height: 10, //组件高度
-        //     left: 50, //左边的距离
-        //     right: 40, //右边的距离
-        //     bottom: 0, //右边的距离
-        //     handleColor: "#ddd", //h滑动图标的颜色
-        //     handleStyle: {
-        //       borderColor: "#cacaca",
-        //       borderWidth: "1",
-        //       shadowBlur: 2,
-        //       background: "#ddd",
-        //       shadowColor: "#ddd",
-        //     },
-        //     fillerColor: "#808080",
-        //     backgroundColor: "#ddd", //两边未选中的滑动条区域的颜色
-        //     showDataShadow: false, //是否显示数据阴影 默认auto
-        //     showDetail: false, //即拖拽时候是否显示详细数值信息 默认true
-        //     handleIcon:
-        //       "M-292,322.2c-3.2,0-6.4-0.6-9.3-1.9c-2.9-1.2-5.4-2.9-7.6-5.1s-3.9-4.8-5.1-7.6c-1.3-3-1.9-6.1-1.9-9.3c0-3.2,0.6-6.4,1.9-9.3c1.2-2.9,2.9-5.4,5.1-7.6s4.8-3.9,7.6-5.1c3-1.3,6.1-1.9,9.3-1.9c3.2,0,6.4,0.6,9.3,1.9c2.9,1.2,5.4,2.9,7.6,5.1s3.9,4.8,5.1,7.6c1.3,3,1.9,6.1,1.9,9.3c0,3.2-0.6,6.4-1.9,9.3c-1.2,2.9-2.9,5.4-5.1,7.6s-4.8,3.9-7.6,5.1C-285.6,321.5-288.8,322.2-292,322.2z",
-        //     filterMode: "filter",
-        //   },
-        //   //下面这个属性是里面拖到
-        //   {
-        //     type: "inside",
-        //     show: true,
-        //     xAxisIndex: [0],
-        //     start: 0, //默认为1
-        //     end: 100 - 1500 / 31, //默认为100
-        //   },
-        // ],
         series: [
           {
             name: "当年累计产量",
@@ -139,11 +106,11 @@ export default {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0,
-                    color: "#008cff",
+                   color: "rgb(3,189,234)", 
                   },
                   {
                     offset: 1,
-                    color: "#005193",
+                     color: "rgb(14,105,233)",
                   },
                 ]),
                 opacity: 1,
@@ -161,11 +128,11 @@ export default {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0,
-                    color: "#00da9c",
+                    color: "rgb(0,248,204)",
                   },
                   {
                     offset: 1,
-                    color: "#007a55",
+                    color: "rgb(7,122,64)", 
                   },
                 ]),
                 opacity: 1,
@@ -183,11 +150,11 @@ export default {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0,
-                    color: "#c4e300",
+                    color: "rgb(255,199,87)", 
                   },
                   {
                     offset: 1,
-                    color: "#728400",
+                   color: "rgb(255,114,53)", 
                   },
                 ]),
                 opacity: 1,
@@ -206,11 +173,11 @@ export default {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0,
-                    color: "#c4e300",
+                    color: "rgb(199,59,0)", 
                   },
                   {
                     offset: 1,
-                    color: "#728400",
+                    color: "rgb(177,35,0)", 
                   },
                 ]),
                 opacity: 1,

@@ -48,14 +48,14 @@ export default {
         },
         legend: {
           data: ["关停影响产量", "关停井数"],
-          top: "5%",
+          bottom: "bottom",
           textStyle: {
-            color: "",
+            color: "#a9a8a8",
           },
         },
         xAxis: {
           type: "category",
-          data: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+          data: ["1月", "2月", "3月", "4月"],
           axisLine: {
             show: false,
           },
@@ -65,7 +65,7 @@ export default {
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#393939", //X轴文字颜色
+              color: "#a9a8a8", //X轴文字颜色
             },
           },
         },
@@ -74,12 +74,16 @@ export default {
             type: "value",
             name: "关停影响产量(10⁴m³)",
             nameTextStyle: {
-              color: "#393939",
+              color: "#a9a8a8",
+
+              padding: [0, 0, 20, 0], // 上、右、下、左
             },
+
+            nameLocation: "center",
             splitLine: {
-              show: true,
+              show: false,
               lineStyle: {
-                color: "#eeeeee",
+                  color: "#a9a8a8",
               },
             },
             axisTick: {
@@ -91,7 +95,7 @@ export default {
             axisLabel: {
               show: true,
               textStyle: {
-                color: "#393939",
+                color: "#a9a8a8",
               },
             },
           },

@@ -40,8 +40,8 @@
     </header-search>
     <!-- </el-header> -->
     <pagePanel headerTitle="井组自定义" style="height: 100%" :show-btn="true">
-      <div>
-        <div style="text-align: right">
+      <el-row>
+        <el-col :span="22">
           <el-button type="primary" style="font-size: 12px; padding: 5px 10px 5px 10px; width: 85px" @click="saveBut">
             <i class="el-icon-plus el-icon--left" />
             保存
@@ -54,13 +54,19 @@
             <i class="el-icon-s-platform el-icon--left" />
             运行计算
           </el-button>
-          <el-button class="commonBtn" type="primary" @click="preserve" style="font-size: 12px; padding: 5px 10px 5px 10px; width: 85px">
+        </el-col>
+        <el-col :span="1">
+           <el-button
+            class="commonBtn"
+            type="primary"
+            @click="preserve"
+            style="font-size: 12px; padding: 5px 10px 5px 10px; width: 85px"
+          >
             <i class="el-icon-download el-icon--left" />
             下载
           </el-button>
-        </div>
-      </div>
-
+        </el-col>
+      </el-row>
       <el-row :gutter="20">
         <el-col :span="8">
           <el-table

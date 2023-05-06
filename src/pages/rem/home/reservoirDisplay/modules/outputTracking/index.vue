@@ -5,8 +5,30 @@
     </div>
     <Echart :chart-data="histogram" width="100%" height="65%"></Echart>
     <el-row :gutter="20" style="margin-top: -50px">
-      <el-col :span="4">
-        <Echart :chart-data="option"></Echart>
+      <el-col :span="7">
+        <div style="display: flex">
+          <Echart :chart-data="option"></Echart>
+          <Echart :chart-data="option"></Echart>
+        </div>
+      </el-col>
+      <el-col :span="17">
+        <!-- <div>
+          <div v-for="(item, index) in data" :key="index">
+                <svg-icon :icon-class="item.icon" style="width: 100%; height: 100%" />
+                <div style="float:left">
+                  <div>{{ item.name }}</div>
+                  <div >{{ item.value }}</div >
+                </div>
+          </div>
+        </div> -->
+        <!-- <div class="xbox" v-for="(item, index) in data" :key="index">
+          <div>
+            <svg-icon :icon-class="item.icon" style="width: 100%; height: 100%" />
+          </div>
+
+          {{ item.name }}
+          {{ item.value }}
+        </div> -->
       </el-col>
     </el-row>
   </div>
@@ -36,6 +58,7 @@ export default {
         color: ["#00C1DE", "#6F7AF8", "#F5A547", "#3399ff"],
         tooltip: {
           trigger: "axis",
+
           axisPointer: {
             type: "line",
             lineStyle: {
@@ -51,29 +74,33 @@ export default {
             const d0 = param[0];
             const d1 = param[1];
             const d2 = param[2];
+            const d3 = param[3];
             return `
 					<div class='slot-chart-tooltip'>
 					${d2.marker} <span class='slot-chart-name'>${d2.seriesName}</span>${d2.value}<br>
 					${d1.marker} <span class='slot-chart-name'>${d1.seriesName}</span>${d1.value}%<br>
 					${d0.marker} <span class='slot-chart-name'>${d0.axisValue} ${d0.seriesName}</span>${d0.value}%<br>
+          ${d3.marker} <span class='slot-chart-name'>${d3.axisValue} ${d3.seriesName}</span>${d3.value}%<br>
 					</div>
 				`;
           },
         },
         grid: {
           left: 20,
-          right: 20,
-          bottom: 20,
+          right: 30,
+          top: 30,
+          bottom: 30,
           show: false, // 隐藏坐标系网格线
           containLabel: true,
         },
         legend: {
+           bottom: "bottom",
           textStyle: {
             color: "",
           },
           data: [
             {
-              name: "计划日常",
+              name: "计划日产",
               icon: "circle",
             },
             {
@@ -111,8 +138,11 @@ export default {
         yAxis: [
           {
             type: "value",
-            name: "使用率（%）",
-            position: "left",
+            name: "年产 (m³/d)",
+             nameTextStyle: {
+              padding: [0, 0, 20, 0], // 上、右、下、左
+            },
+            nameLocation: "center",
             min: 0,
             max: 100,
             axisLabel: {
@@ -135,8 +165,12 @@ export default {
           },
           {
             type: "value",
-            name: "实例数",
+            name: "年产(10m⁴m³)",
             position: "right",
+              nameTextStyle: {
+              padding: [20, 0, 0, 0], // 上、右、下、左
+            },
+             nameLocation: "center",
             scale: true,
             axisLine: {
               show: false,
@@ -159,7 +193,7 @@ export default {
         ],
         series: [
           {
-            name: "计划日常",
+            name: "计划日产",
             type: "line",
             yAxisIndex: 0,
             data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 15.6, 12.2, 32.6, 20.0, 6.4, 3.3],
@@ -184,13 +218,30 @@ export default {
           },
         ],
       },
+      data: [
+        {
+          icon: "dayproOil",
+          name: "日产油(m³)",
+          value: "6160.02",
+        },
+        {
+          icon: "reserves",
+          name: "与前日日产油差值(m³)",
+          value: "17.01",
+        },
+        {
+          icon: "reserves",
+          name: "累产油(m³)",
+          value: "165.87",
+        },
+      ],
       option: {
         series: [
           // 刻度值
           {
             name: "外部刻度",
             type: "gauge",
-            radius: "50",
+            radius: "80",
             min: 0,
             max: 10000,
 
@@ -223,7 +274,6 @@ export default {
             radius: "44",
             startAngle: 186,
             endAngle: -6,
-
             axisLine: {
               roundCap: true,
               lineStyle: {
@@ -358,7 +408,7 @@ export default {
               show: false,
             },
             pointer: {
-              length: "68%",
+              length: "78%",
               width: 2,
               offsetCenter: [0, "-30%"],
               itemStyle: {
@@ -396,7 +446,7 @@ export default {
               },
               rich: {
                 value: {
-                  fontSize: 18,
+                  fontSize: 13,
                   fontWeight: "bolder",
                   color: "#ffffff",
                   textShadowBlur: "12",
@@ -567,5 +617,33 @@ export default {
   text-align: center;
   line-height: 42px;
   box-shadow: 0px 0px 15px #66ffff inset;
+}
+.xbox {
+  display: flex;
+  align-items: center;
+  height: 200px;
+}
+
+.item {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+#item1 {
+  width: 30%;
+}
+
+.item-group {
+  display: flex;
+  flex-grow: 1;
+}
+
+#item2 {
+  flex-basis: 70%;
+  margin-right: 20px;
+}
+
+#item3 {
+  flex-basis: 70%;
 }
 </style>
