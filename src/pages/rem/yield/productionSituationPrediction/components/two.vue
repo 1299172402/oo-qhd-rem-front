@@ -12,7 +12,7 @@
             <el-select v-model="searchForm.unitType" placeholder="请选择" style="width:100px;margin-right:15px;">
                 <el-option v-for="item in unitTypeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
             </el-select>
-            <el-button type="primary" icon="el-icon-search" @click="doSearch">检索</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
         </div>
         <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="油田产量影响因素" isShowMaxBtn>
             <div slot-name="titleContent" style="position: absolute;right:52px;top:5px;">

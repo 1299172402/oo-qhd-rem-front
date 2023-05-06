@@ -35,7 +35,7 @@
             style="margin-left: 20px; width: 90px"
             icon="el-icon-search"
             @click="switchParam('3')"
-            >检索</el-button
+            >搜索</el-button
           >
         </div>
       </el-col>

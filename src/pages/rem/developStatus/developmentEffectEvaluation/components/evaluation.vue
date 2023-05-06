@@ -882,7 +882,9 @@
 
 <style lang="scss" scoped>
     .z-main{
+        padding-bottom: 8px;
         .rowBox{
+            padding-left:8px;
             display: flex;
             align-items: center;
             .row{

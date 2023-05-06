@@ -12,7 +12,7 @@
             <el-select v-model="searchForm.unitType" placeholder="请选择" style="width:100px;margin-right:15px;">
                 <el-option v-for="item in unitTypeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
             </el-select>
-            <el-button type="primary" icon="el-icon-search" @click="doSearch">检索</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
         </div>
         <el-table id="TaskOutputTrackingTable" :data="tableData" highlight height="calc(100% - 74px)" show-summary :summary-method="getSummaries">
             <el-table-column prop="wellType" label="累产/10⁴m³" align="center" min-width="130"></el-table-column>

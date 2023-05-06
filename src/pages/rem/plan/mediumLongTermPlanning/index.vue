@@ -13,7 +13,7 @@
           ></el-option>
         </el-select>
         <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="searchForOilField"
-          >检索</el-button
+          >搜索</el-button
         >
       </div>
     </header-search>

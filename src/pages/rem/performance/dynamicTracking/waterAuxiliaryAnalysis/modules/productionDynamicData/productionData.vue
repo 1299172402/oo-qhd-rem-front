@@ -7,7 +7,7 @@
             <el-select v-model="selectPosition" placeholder="请选择" filterable clearable style="width: 220px;margin-right:15px;">
                 <el-option v-for="item in position" :key="item.fieldLayerId" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
-            <el-button type="primary" icon="el-icon-search" @click="doSearch">检索</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
         </div>
         <div class="z-echarts" :class="[isDevelop?'z-echarts-active':'']">
             <Echarts ref="echartDown" :chart-data="option" style="height:100%;"></Echarts>

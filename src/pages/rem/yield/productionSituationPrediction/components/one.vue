@@ -8,7 +8,7 @@
             <el-select v-model="searchForm.unitType" placeholder="请选择" style="width:100px;margin-right:15px;">
                 <el-option v-for="item in unitTypeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
             </el-select>
-            <el-button type="primary" icon="el-icon-search" @click="doSearch">检索</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
         </div>
         <el-table id="tableData" :data="tableData" highlight style="width:100%;" height="calc(100% - 58px)">
             <el-table-column fixed style="overflow-x:hidden;" prop="type" :label="outputTrackingTableDate" align="center" width="300"></el-table-column>

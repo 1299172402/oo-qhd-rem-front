@@ -18,7 +18,7 @@
                 <el-select v-model="selectUnitOfProduction" placeholder="请选择" style="width:100px;margin-right:15px;">
                     <el-option v-for="item in unitOfProduction" :key="item.value" :label="item.label" :value="item.value"></el-option>
                 </el-select>
-                <el-button icon="el-icon-search" type="primary" @click="searchThing">检索</el-button>
+                <el-button icon="el-icon-search" type="primary" @click="searchThing">搜索</el-button>
                 <el-button icon="el-icon-s-promotion" type="primary" @click="showOutputTracking">作业公司产量跟踪</el-button>
             </div>
         </headerSearch>
@@ -203,7 +203,7 @@
             <el-select v-model="outputTrackingForm.selectUnitOfProduction" placeholder="请选择" style="width:100px;" class="f1">
                 <el-option v-for="item in outputTrackingForm.unitOfProduction" :key="item.value" :label="item.label" :value="item.value"></el-option>
             </el-select>
-            <el-button type="primary" icon="el-icon-search" @click="queryOutputTrackingTableData">检索</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="queryOutputTrackingTableData">搜索</el-button>
             <el-button type="primary" @click="downloadOutputTracking">下载</el-button>
             <div height="100%" style="margin-top: 10px" title="作业公司产量跟踪">
                 <el-table :data="outputTrackingTableData" highlight style="width:100%;" max-height="500px">

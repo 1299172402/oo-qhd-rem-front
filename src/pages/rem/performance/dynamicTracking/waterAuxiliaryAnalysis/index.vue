@@ -15,7 +15,7 @@
                 <el-select v-model="selectWellId" class="f2" filterable clearable @change="onChangeWell" style="width: 180px;">
                     <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled"></el-option>
                 </el-select>
-                <el-button type="primary" icon="el-icon-search" style="margin-left: 15px" @click="doSearch">检索</el-button>
+                <el-button type="primary" icon="el-icon-search" style="margin-left: 15px" @click="doSearch">搜索</el-button>
                 <el-upload ref="upload" style="margin-left: 15px" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess">
                     <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
                 </el-upload>

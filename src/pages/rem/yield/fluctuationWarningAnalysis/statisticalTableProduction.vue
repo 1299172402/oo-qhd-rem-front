@@ -37,7 +37,7 @@
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
-                    <el-button type="primary" icon="el-icon-search" @click="getWellOutputWaveTable">检索</el-button>
+                    <el-button type="primary" icon="el-icon-search" @click="getWellOutputWaveTable">搜索</el-button>
                 </div>
             </div>
         </headerSearch>

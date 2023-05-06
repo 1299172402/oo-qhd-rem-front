@@ -19,7 +19,7 @@
                 <el-option v-for="item in forecastYearMonthList" :key="item.source_ID" :label="item.source_NAME" :value="item.source_ID">
                 </el-option>
             </el-select>
-            <el-button type="primary" icon="el-icon-search" @click="searchDataFromServer">检索</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="searchDataFromServer">搜索</el-button>
             <el-button type="primary" icon="el-icon-add" @click="save">保存</el-button>
             <el-button type="primary" @click="showAddDialog">添加</el-button>
         </div>

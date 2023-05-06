@@ -25,7 +25,7 @@
                     </el-select>
                 </div>
                 <div style="margin-right:15px;">
-                    <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="Retrieval">检索</el-button>
+                    <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="Retrieval">搜索</el-button>
                 </div>
             </div>
         </header-search>
@@ -1141,7 +1141,7 @@
                     }
                 })
             },
-            //检索
+            //搜索
             Retrieval() {
                 let request = {
                     fieldId: this.selectBlock,
