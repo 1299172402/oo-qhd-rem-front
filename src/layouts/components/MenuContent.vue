@@ -215,10 +215,10 @@ export default Vue.extend({
   },
   methods: {
     onmouseoverRight(e) {
-        if(this.showSidebar && this.$store.state.setting.mode==='dark' && this.$store.state.setting.isSidebarCompact)  {
-            e.srcElement.parentNode.lastElementChild.style.border = '1px solid'
-            e.srcElement.parentNode.lastElementChild.style.borderImage = 'linear-gradient(180deg, rgba(116, 190, 243, 0.5), rgba(0, 180, 255, 1)) 1 1'
-        }
+        // if(this.showSidebar && this.$store.state.setting.mode==='dark' && this.$store.state.setting.isSidebarCompact)  {
+            // e.srcElement.parentNode.lastElementChild.style.border = '1px solid'
+            // e.srcElement.parentNode.lastElementChild.style.borderImage = 'linear-gradient(180deg, rgba(116, 190, 243, 0.5), rgba(0, 180, 255, 1)) 1 1'
+        // }
       const circle = document.getElementsByClassName("el-carousel__arrow");
       for(let i = 0; i < circle.length; i++){
           circle[i].style.zIndex = "0"
@@ -245,12 +245,12 @@ export default Vue.extend({
       }
     },
     onmouseleave(e){
-        if(this.showSidebar && this.$store.state.setting.mode==='dark' && this.$store.state.setting.isSidebarCompact)  {
-            e.srcElement.firstElementChild.lastElementChild.style.borderWidth = ""
-            e.srcElement.firstElementChild.lastElementChild.style.borderStyle = ""
-            e.srcElement.firstElementChild.lastElementChild.style.borderImageSource = ""
-            e.srcElement.firstElementChild.lastElementChild.style.borderImage = ""
-        }
+        // if(this.showSidebar && this.$store.state.setting.mode==='dark' && this.$store.state.setting.isSidebarCompact)  {
+        //     e.srcElement.firstElementChild.lastElementChild.style.borderWidth = ""
+        //     e.srcElement.firstElementChild.lastElementChild.style.borderStyle = ""
+        //     e.srcElement.firstElementChild.lastElementChild.style.borderImageSource = ""
+        //     e.srcElement.firstElementChild.lastElementChild.style.borderImage = ""
+        // }
       const circle = document.getElementsByClassName("el-carousel__arrow");
       for(let i = 0; i < circle.length; i++){
           circle[i].style.zIndex = ""
