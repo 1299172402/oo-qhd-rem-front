@@ -34,7 +34,8 @@ const GenerateRouter = {
   "DemoIndex": () => import("@/pages/intelligentOilfield/demo/index.vue"),
   "DemoIndex2": () => import("@/pages/intelligentOilfield/demo/index2.vue"),
   "DemoIndex3": () => import("@/pages/intelligentOilfield/demo/index3.vue"),
-  "DemoIndex5": () => import("@/pages/intelligentOilfield/demo/index5.vue")
+  "DemoIndex5": () => import("@/pages/intelligentOilfield/demo/index5.vue"),
+  "DragPanel": () => import("@/pages/intelligentOilfield/demo/demo3.vue")
 };
 
 export default GenerateRouter;

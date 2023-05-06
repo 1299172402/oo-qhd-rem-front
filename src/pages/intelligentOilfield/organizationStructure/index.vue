@@ -197,8 +197,9 @@
               新增
             </el-button>
             <el-button
-              v-if="scope.row.parentId != '0' && scope.row.ehr !== '1'"
+              v-if="scope.row.parentId !== '0'"
               v-hasPermi="['system:dept:remove']"
+              :disabled="scope.row.ehr === '1' "
               size="mini"
               type="text"
               class="delbutton"

@@ -88,6 +88,11 @@
 }
 
 //左侧菜单收起，下拉框样式
+.t-default-menu__inner .t-menu{
+  overflow-y: scroll;
+  padding-bottom: 30px;
+}
+
 .t-default-menu.t-menu--dark .t-menu__popup {
   background: #004575;
   height: 100vh;
@@ -99,8 +104,9 @@
 }
 
 .t-default-menu.t-menu--dark .t-submenu .t-is-opened:last-child {
-  border: 1px solid;
-  border-image: linear-gradient(180deg, rgba(116, 190, 243, 0.5), rgba(0, 180, 255, 1)) 1 1;
+  //TODO: Maybe change back
+  //border: 1px solid;
+  //border-image: linear-gradient(180deg, rgba(116, 190, 243, 0.5), rgba(0, 180, 255, 1)) 1 1;
 }
 
 .t-default-menu.t-menu--light .t-menu__popup {
@@ -116,13 +122,14 @@
 
 //顶部菜单下拉框样式
 .t-menu--dark.t-head-menu .t-menu__popup {
-  background: linear-gradient(
-    360deg,
-    rgba(0, 68, 115, 0.6) 0%,
-    rgba(0, 69, 117, 0.79) 50%,
-    rgba(0, 69, 117, 0.9) 97%,
-    rgba(0, 69, 117, 0.5) 100%
-  );
+  background: #004575;
+  //background: linear-gradient(
+  //  360deg,
+  //  rgba(0, 68, 115, 0.6) 0%,
+  //  rgba(0, 69, 117, 0.79) 50%,
+  //  rgba(0, 69, 117, 0.9) 97%,
+  //  rgba(0, 69, 117, 0.5) 100%
+  //);
 
   .t-menu__item {
     padding-left: 8px;

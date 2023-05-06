@@ -1,6 +1,6 @@
 import { message } from "tdesign-vue";
 import Cookies from "js-cookie";
-import { TOKEN_NAME } from "@/config/global";
+import { TOKEN_NAME, USER_NAME } from "@/config/global";
 import { login, getInfoByAppId, logout, getCodeImg } from "@/api/intelligentOilfield/login";
 import { encrypt, encryptlogin } from "@/utils/jsencrypt";
 import store from "@/store";
@@ -69,6 +69,7 @@ const mutations = {
     state.token = "";
   },
   setUserInfo(state, userInfo) {
+    localStorage.setItem(USER_NAME, userInfo?.userName);
     state.userInfo = JSON.parse(JSON.stringify(userInfo));
   },
   setProjectionMode(state, projectionMode) {

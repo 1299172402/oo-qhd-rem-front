@@ -29,7 +29,7 @@
     </div>
     <div>
       <div class="primary-font-size">
-        正文一般使用14号字体，代码中直接使用【class="primary-font-size"】
+        默认字体大小为14px，正文一般使用14号字体，代码中直接使用【class="primary-font-size"】
       </div>
       <div class="big-font-size">
         标题一般使用18号字体，代码中直接使用【class="big-font-size"】
@@ -117,7 +117,8 @@
         :value="item.value"
       />
     </el-select>
-    <div class="spaceMargin">
+    <!-- TODO: Maybe change back -->
+    <!-- <div class="spaceMargin">
       2.1.3、多选下拉框（合并为一段文字展示）
     </div>
     <el-select
@@ -133,9 +134,9 @@
         :label="item.label"
         :value="item.value"
       />
-    </el-select>
+    </el-select> -->
     <div class="spaceMargin">
-      2.1.4、多选下拉框（文字过长时展示：添加class="collapseTags"如下）
+      2.1.3、多选下拉框【文字过长时展示：添加class="collapseTags"如下】
     </div>
     <el-select
       v-model="valueA"
@@ -153,7 +154,7 @@
       />
     </el-select>
     <div class="spaceMargin">
-      2.2、无border下拉框
+      2.2、无border下拉框【注意：不推荐做为搜索框进行使用】
     </div>
     <el-select
       v-model="value"
@@ -169,7 +170,7 @@
       />
     </el-select>
     <div class="spaceMargin">
-      2.3、无border背景色下拉框
+      2.3、无border背景色下拉框【注意：不推荐做为搜索框进行使用】
     </div>
     <el-select
       v-model="value"
@@ -307,7 +308,15 @@
       4.4、时间选择器
     </div>
     <el-time-picker v-model="date2" placeholder="选择时间" style="width: 400px" />
-
+    <div class="spaceMargin">
+      4.5、月度选择器
+    </div>
+    <el-date-picker
+      v-model="date4"
+      type="month"
+      placeholder="选择月"
+      style="width: 400px"
+    />
     <div class="headerTitle spaceMargin">
       5、table表格=========================================================================================
     </div>
@@ -476,7 +485,7 @@
           <div>
             <span>试算当前吸水指数</span>
             <br>
-            <span>[m/(d·MPa)]</span>
+            <span style="font-size: 12px">[m/(d·MPa)]</span>
           </div>
         </template>
       </el-table-column>
@@ -493,7 +502,7 @@
           <div class="headerSortRow1">
             <span>试算当前吸水指数</span>
             <br>
-            <span>[[m/(d·MPa)]]</span>
+            <span style="font-size: 12px">[[m/(d·MPa)]]</span>
           </div>
         </template>
       </el-table-column>
@@ -1204,6 +1213,7 @@ export default {
       return data;
     };
     return {
+      date4: "",
       yearRange: [],
       selectValue: undefined,
       treeSelectName: "",

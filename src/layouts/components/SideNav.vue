@@ -7,7 +7,7 @@
       :value="active"
       :collapsed="collapsed"
       :default-expanded="defaultExpanded"
-      expand-type="popup"
+      :expand-type="showLogo ? 'popup' : 'normal'"
     >
       <template #logo>
         <span v-if="showLogo" :class="`${prefix}-side-nav-logo-wrapper`">

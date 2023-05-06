@@ -27,7 +27,7 @@
             <div v-else class="bgImage g-row-flex-HV" style="width: 56px;height: 56px">
                 {{ item2.name[0] }}
             </div>
-            <div style="max-width: 82px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" :title="item2.name" :style="{color:$store.state.setting.mode==='dark'?'#D8D8D8':'#606266'}">
+            <div style="max-width: 68px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" :title="item2.name" :style="{color:$store.state.setting.mode==='dark'?'#D8D8D8':'#606266'}">
               {{item2.name}}</div>
           </div>
           <!-- :class="index % 3 === 0 ? 'panelBlueColor' : index % 3 === 1 ? 'panelRedColor' : 'panelGreenColor'" -->
@@ -47,7 +47,7 @@
                 <div v-else class="bgImage g-row-flex-HV" style="width: 56px;height: 56px">
                     {{ item.name[0] }}
                 </div>
-                <div style="max-width: 82px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" :title="item.name" :style="{color:$store.state.setting.mode==='dark'?'#D8D8D8':'#606266'}">
+                <div style="max-width: 68px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" :title="item.name" :style="{color:$store.state.setting.mode==='dark'?'#D8D8D8':'#606266'}">
                 {{item.name}}</div>
             </div>
             <div v-else class="panelBg g-row-flex-HV" @click="jumpLink(item, index)">

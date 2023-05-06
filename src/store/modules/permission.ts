@@ -175,7 +175,7 @@ const actions = {
           mapList.push({ "path": "*", "redirect": "/pageInfo/error", "hidden": true });
           // 本地路由+动态路由整合
           const concatRouters = asyncRouterList.concat(mapList);
-          commit("setRouters", concatRouters.filter(v => !v.appId || v.appId === proxy[env].appId));
+          commit("setRouters", concatRouters);
           router.addRoutes(concatRouters);
         }
       });

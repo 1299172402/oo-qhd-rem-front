@@ -17,6 +17,9 @@ import { mapGetters } from "vuex";
 import CommonHeader from "./Header.vue";
 
 import { SettingType } from "@/interface";
+import proxy from "@/config/host";
+
+const env = import.meta.env.MODE || "development";
 
 export default Vue.extend({
   name: "LayoutHeader",
@@ -45,7 +48,7 @@ export default Vue.extend({
         }
         return [];
       }
-      return menuRouters;
+      return menuRouters.filter(v => !v.appId || v.appId === proxy[env].appId);
     }
   }
 });

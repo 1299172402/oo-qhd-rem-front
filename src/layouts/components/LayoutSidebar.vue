@@ -17,6 +17,9 @@ import { mapGetters } from "vuex";
 import SideNav from "./SideNav.vue";
 
 import { SettingType } from "@/interface";
+import proxy from "@/config/host";
+
+const env = import.meta.env.MODE || "development";
 
 export default Vue.extend({
   name: "LayoutSidebar",
@@ -55,7 +58,7 @@ export default Vue.extend({
           }
         });
       }
-      return menuRouters;
+      return menuRouters.filter(v => !v.appId || v.appId === proxy[env].appId);
     }
   }
 });

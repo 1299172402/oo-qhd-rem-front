@@ -246,11 +246,15 @@ export default Vue.extend({
     },
     handleTableChange(pagination, filters, sorter) {
       // TODO 筛选
-      if (Object.keys(sorter).length > 0) {
+      if (sorter && Object.keys(sorter).length > 0) {
         this.isorter.column = sorter.field;
         this.isorter.order = sorter.order === "ascend" ? "asc" : "desc";
       }
-      this.ipagination = pagination;
+
+      this.ipagination = {
+        ...pagination.pagination,
+        total: pagination.total
+      };
       this.loadData();
     },
     handleSubmit() {

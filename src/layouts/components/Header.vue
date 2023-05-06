@@ -64,9 +64,9 @@
         <div class="operations-container" style="margin-left: 20px">
           <!-- 搜索框 -->
           <!-- <search v-if="layout !== 'side'" :layout="layout" /> -->
-
+          <audio ref="musicAudio" muted="muted" src="@/assets/messageVideo.wav" />
           <!-- 全局通知，通告 -->
-          <message />
+          <message @play-audio="playAudio" />
           <!-- 全局通知，通告 -->
           <notice />
           <!-- <t-button v-show="$store.getters['user/isGroupLogin']" theme="default" variant="text" @click="switchMode" style="color: var(--white-color)"
@@ -519,6 +519,13 @@ export default Vue.extend({
     this.getInitDeptds();
   },
   methods: {
+    playAudio(audio) {
+      if (audio) {
+        this.$refs.musicAudio.play();
+      } else {
+        this.$refs.musicAudio.pause();
+      }
+    },
     containerWidth() {
       Vue.nextTick(() => {
         const scrolldom = document.getElementsByClassName("header-menu")[0].scrollWidth;
@@ -886,6 +893,7 @@ export default Vue.extend({
 
 .t-head-menu__inner {
   border-bottom: 1px solid var(--td-border-level-1-color);
+  height: 60px;
 }
 
 .t-menu--light {
@@ -897,6 +905,7 @@ export default Vue.extend({
 .t-menu--dark {
   .t-head-menu__inner {
     border-bottom: 1px solid var(--td-gray-color-10);
+    height: 60px;
   }
 
   .header-user-account {
