@@ -1,205 +1,191 @@
 <template>
   <div class="app-container">
+    <!--        <headerSearch  height="auto">-->
+    <div>
+      <header-search class="g-w100 g-h100" style="height: auto; align-items: center">
+        <el-form label-width="60px" style="margin-top: 10px">
+          <el-row style="display: flex">
+            <el-form-item label="油田：">
+              <el-select v-model="queryData.ogfId" @change="changeOil">
+                <el-option
+                  v-for="item in oilList"
+                  :key="item.oilFieldId"
+                  :label="item.oilFieldName"
+                  :value="item.oilFieldId"
+                ></el-option>
+              </el-select>
+            </el-form-item>
 
-<!--        <headerSearch  height="auto">-->
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 20px">
-            <div style="display: flex; align-items: center">
-              <div>
-                <span>油田：</span>
-                <el-select v-model="queryData.ogfId" style="width: 180px" @change="changeOil">
-                  <el-option
-                    v-for="item in oilList"
-                    :key="item.ogfId"
-                    :label="item.ogfName"
-                    :value="{ value: item.ogfId, label: item.ogfName }"
-                  ></el-option>
-                </el-select>
-              </div>
-              <div style="margin-left: 10px">
-                <span>区块：</span>
-                <el-select v-model="queryData.blockId" @change="changeBlock">
-                  <el-option
-                    v-for="item in blockList"
-                    :key="item.blockId"
-                    :label="item.blockName"
-                    :value="{ value: item.blockId, label: item.blockName }"
-                  ></el-option>
-                </el-select>
-              </div>
-              <div style="margin-left: 10px">
-                <span>井别：</span>
-                <el-select v-model="queryData.wellCategory" filterable @change="changeWell">
-                  <el-option
-                    v-for="item in wellCategoryList"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </div>
-              <div style="margin-left: 10px">
-                <span>井号：</span>
-                <el-select v-model="queryData.wellId" multiple filterable style="width: 300px" @change="selectWell">
-                  <el-option
-                    v-for="item in wellList"
-                    :key="item.wellId"
-                    :label="item.wellName"
-                    :value="item.wellId"
-                  ></el-option>
-                </el-select>
-              </div>
-              <div style="margin-left: 10px">
-                <span>时间：</span>
-                <el-date-picker
-                  v-model="queryData.value"
-                  type="daterange"
-                  style="width: 250px"
-                  placeholder="请选择"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  value-format="yyyy-MM-dd"
-                  @change="createChange"
-                ></el-date-picker>
-              </div>
-            </div>
-            <div class="fr" style="display:flex;">
-              <el-button type="primary" icon="el-icon-search" style="margin-left: 20px" @click="doSearch"
-                >搜索</el-button
-              >
-              <el-button class="commonBtn" type="primary" style="width: 70px" @click="doExportFile" icon="el-icon-download"
-                >下载</el-button
-              >
-            </div>
-          </div>
-<!--        </headerSearch>-->
-        <pagePanelNew>
-            <div
-              title="产量劈分"
-              class="m1"
-              height="600px"
-              style="margin-top: 12px; position: relative; text-align: center"
-            >
-              <div style="float: right;padding-bottom: 20px">
-                <el-button type="primary" style="margin-left: 20px" @click="splitSection('splitSection')"
-                  >劈分剖面</el-button
-                >
-                <el-button type="primary" style="margin-left: 20px" @click="splitSection('DividingCoefficient')"
-                  >劈分系数</el-button
-                >
-              </div>
-              <el-table
-                :data="tableData"
-                v-if="queryData.wellCategory == '01'"
-                row-key="id"
-                id="clpf"
-                highlight
-                height="600px"
-                style="width: 100%; margin-top: 10px"
-                :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-              >
-                <el-table-column prop="name" label="井号/层段" width="250">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.name }}</span>
-                  </template>
-                </el-table-column>
+            <el-form-item label="区块：">
+              <el-select v-model="queryData.blockId" @change="changeBlock">
+                <el-option
+                  v-for="item in blockList"
+                  :key="item.fieldId"
+                  :label="item.name"
+                  :value="item.fieldId"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="井别：">
+              <el-select v-model="queryData.wellCategory" filterable @change="changeWell">
+                <el-option
+                  v-for="item in wellCategoryList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="井号：">
+              <el-select v-model="queryData.wellId" filterable clearable>
+                <el-option v-for="item in wellList" :key="item.wellId" :label="item.wellName" :value="item.wellId">
+                </el-option>
+              </el-select>
+            </el-form-item>
 
-                <el-table-column prop="airPermeability" align="center" label="渗透率（mD）" min-width="100">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.airPermeability }}</span>
-                  </template>
-                </el-table-column>
+            <el-form-item label="时间：">
+              <el-date-picker
+                v-model="queryData.value"
+                type="daterange"
+                style="width: 250px"
+                placeholder="请选择"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                value-format="yyyy-MM-dd"
+                @change="createChange"
+              ></el-date-picker>
+            </el-form-item>
 
-                <el-table-column prop="thicknessEffe" align="center" label="有效厚度（m）" min-width="100">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.thicknessEffe }}</span>
-                  </template>
-                </el-table-column>
+            <el-button type="primary" icon="el-icon-search" style="margin-left: 20px" @click="doSearch">搜索</el-button>
+          </el-row>
+        </el-form>
+      </header-search>
+    </div>
+    <!--        </headerSearch>-->
+    <pagePanel headerTitle="产量劈分" style="height: 100%" class="g-w100" :show-btn="true">
+      <el-row>
+        <el-col :span="22">
+          <el-button type="primary" style="margin-left: 20px" @click="splitSection('splitSection')">劈分剖面</el-button>
+          <el-button type="primary" style="margin-left: 20px" @click="splitSection('DividingCoefficient')"
+            >劈分系数</el-button
+          >
+        </el-col>
+        <el-col :span="1">
+          <el-button class="commonBtn" type="primary" @click="doExportFile" icon="el-icon-download">下载</el-button>
+        </el-col>
+      </el-row>
+      <el-table
+        :data="tableData"
+        v-if="queryData.wellCategory == '01'"
+        row-key="id"
+        id="clpf"
+        highlight
+        height="600px"
+        style="width: 100%; margin-top: 10px"
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+      >
+        <el-table-column prop="name" label="井号/层段" width="250">
+          <template slot-scope="scope">
+            <span>{{ scope.row.name }}</span>
+          </template>
+        </el-table-column>
 
-                <el-table-column prop="oilSplitData" label="产油量（m³）" align="center" min-width="100">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.oilSplitData }}</span>
-                  </template>
-                </el-table-column>
+        <el-table-column prop="airPermeability" align="center" label="渗透率（mD）" min-width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.airPermeability }}</span>
+          </template>
+        </el-table-column>
 
-                <el-table-column prop="oilRatio" label="产油量占比（%）" align="center" min-width="100">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.oilRatio }}</span>
-                  </template>
-                </el-table-column>
+        <el-table-column prop="thicknessEffe" align="center" label="有效厚度（m）" min-width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.thicknessEffe }}</span>
+          </template>
+        </el-table-column>
 
-                <el-table-column prop="waterSplitData" label="产水量（m³）" align="center" min-width="100">
-                  <!-- <template slot-scope="scope">
+        <el-table-column prop="oilSplitData" label="产油量（m³）" align="center" min-width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.oilSplitData }}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="oilRatio" label="产油量占比（%）" align="center" min-width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.oilRatio }}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="waterSplitData" label="产水量（m³）" align="center" min-width="100">
+          <!-- <template slot-scope="scope">
                     <span>{{ Math.round(scope.row.waterSplitData / 100) }}</span>
                   </template> -->
-                </el-table-column>
+        </el-table-column>
 
-                <el-table-column prop="waterRatio" label="产水量占比（%）" align="center" min-width="100">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.waterRatio }}</span>
-                  </template>
-                </el-table-column>
+        <el-table-column prop="waterRatio" label="产水量占比（%）" align="center" min-width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.waterRatio }}</span>
+          </template>
+        </el-table-column>
 
-                <el-table-column prop="remark" label="备注" align="center" min-width="100">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.remark }}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
+        <el-table-column prop="remark" label="备注" align="center" min-width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.remark }}</span>
+          </template>
+        </el-table-column>
+      </el-table>
 
-              <el-table
-                :data="tableData"
-                v-else
-                row-key="id"
-                id="clpf"
-                highlight
-                height="calc(100% - 80px)"
-                style="width: 100%; margin-top: 10px"
-                :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-              >
-                <el-table-column prop="name" label="井号/层段" min-width="100">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.name }}</span>
-                  </template>
-                </el-table-column>
+      <el-table
+        :data="tableData"
+        v-else
+        row-key="id"
+        id="clpf"
+        highlight
+        height="calc(100% - 80px)"
+        style="width: 100%; margin-top: 10px"
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+      >
+        <el-table-column prop="name" label="井号/层段" min-width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.name }}</span>
+          </template>
+        </el-table-column>
 
-                <el-table-column prop="airPermeability" align="center" label="渗透率(mD)" min-width="100">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.airPermeability }}</span>
-                  </template>
-                </el-table-column>
+        <el-table-column prop="airPermeability" align="center" label="渗透率(mD)" min-width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.airPermeability }}</span>
+          </template>
+        </el-table-column>
 
-                <el-table-column prop="thicknessEffe" align="center" label="有效厚度（m）" min-width="100">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.thicknessEffe }}</span>
-                  </template>
-                </el-table-column>
+        <el-table-column prop="thicknessEffe" align="center" label="有效厚度（m）" min-width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.thicknessEffe }}</span>
+          </template>
+        </el-table-column>
 
-                <el-table-column prop="waterRatio" label="注水量（m³）" align="center" min-width="100">
-                  <template slot-scope="scope">
-                    <span>{{ Math.round(scope.row.waterRatio) }}</span>
-                  </template>
-                </el-table-column>
+        <el-table-column prop="waterRatio" label="注水量（m³）" align="center" min-width="100">
+          <template slot-scope="scope">
+            <span>{{ Math.round(scope.row.waterRatio) }}</span>
+          </template>
+        </el-table-column>
 
-                <el-table-column prop="waterSplitData" label="注水占比（%）" align="center" min-width="100">
-                  <!-- <template slot-scope="scope">
+        <el-table-column prop="waterSplitData" label="注水占比（%）" align="center" min-width="100">
+          <!-- <template slot-scope="scope">
                     <span>{{ Number(scope.row.waterSplitData / 100).toFixed(1) }}</span>
                   </template> -->
-                </el-table-column>
+        </el-table-column>
 
-                <!-- <el-table-column prop="waterRatio" label="产水量占比(%)" align="center" min-width="100">
+        <!-- <el-table-column prop="waterRatio" label="产水量占比(%)" align="center" min-width="100">
                 <template slot-scope="scope">
                   <span>{{ scope.row.waterRatio }}</span>
                 </template>
                 </el-table-column>-->
 
-                <el-table-column prop="remark" label="备注" align="center" min-width="100">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.remark }}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-        </pagePanelNew>
+        <el-table-column prop="remark" label="备注" align="center" min-width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.remark }}</span>
+          </template>
+        </el-table-column>
+      </el-table>
+    </pagePanel>
   </div>
 </template>
 <script>
@@ -208,36 +194,33 @@ import {
   getOgfInfo,
   getblockData,
   getWellData,
-  exportProductionSplit
+  exportProductionSplit,
 } from "@/api/rem/injection.js";
+import { fetchProductionWells, fetchInjectionWells } from "@/api/oilDeposit/rem-02/primaryinfo.js";
+import { getOilFieldList, queryLayerList } from "@/api/rem/workcompanydesignate";
+import { fetchFields } from "@/api/rem/primaryinfoqhdrem";
 import FileSaver from "file-saver";
 let timeNew = new Date();
 timeNew.setMonth(timeNew.getMonth() - 1);
 timeNew.setDate(1);
 let lastDay = new Date(timeNew.getFullYear(), timeNew.getMonth() + 1, 0);
-let stopTime = new Date('2020-1-1');
+let stopTime = new Date("2020-1-1");
 let filterTime = new Date();
 export default {
-  name: 'app',
+  name: "app",
   //   components: {
   //   },
   data() {
     return {
       queryData: {
-        ogfId: {
-          value: '68B63EC37E3649B38F7C0219C9BB0948',
-          label: '秦皇岛32-6',
-        }, //油田
-        blockId: {
-          value: '6CD7342CA6DD418183A4B3BC38584F7C',
-          label: '秦皇岛32-6南区',
-        }, //区块
-        wellCategory: '01', //井别
-        wellId: ['DA0269628E74490ABDE198E7D1DBF3EA'], //井号
-        value: [timeNew.format('YYYY-MM-DD'), lastDay.format('YYYY-MM-DD')],
+        ogfId: "3FC9A818F5BC43B88270DB80BBB3018F", //油田
+        blockId: "6CD7342CA6DD418183A4B3BC38584F7C", //区块
+        wellCategory: "01", //井别
+        wellId: "DA0269628E74490ABDE198E7D1DBF3EA", //井号
+        value: [timeNew.format("YYYY-MM-DD"), lastDay.format("YYYY-MM-DD")],
         // ['2022-10-24', '2022-11-24']
-        startTime: '',
-        endTime: '',
+        startTime: "",
+        endTime: "",
       },
       //油田下拉框
       oilList: [],
@@ -256,8 +239,8 @@ export default {
       blockList: [],
       //井别下拉
       wellCategoryList: [
-        { id: '01', name: '油井' },
-        { id: '02', name: '水井' },
+        { id: "01", name: "油井" },
+        { id: "02", name: "水井" },
       ],
       //井号下拉
       wellList: [],
@@ -268,7 +251,7 @@ export default {
     };
   },
   created() {
-    const params = JSON.parse(localStorage.getItem('PRODUCTION_SPLIT'));
+    const params = JSON.parse(localStorage.getItem("PRODUCTION_SPLIT"));
     if (params && params.blockId) {
       this.queryData.ogfId.value = params.ogfId.value;
       this.queryData.ogfId.label = params.ogfId.label;
@@ -281,14 +264,9 @@ export default {
         arr.push(item.wellId);
       });
       this.queryData.wellId = arr;
-      localStorage.removeItem('PRODUCTION_SPLIT');
+      localStorage.removeItem("PRODUCTION_SPLIT");
     } else {
-      this.queryData.ogfId.value = '68B63EC37E3649B38F7C0219C9BB0948';
-      this.queryData.ogfId.label = '秦皇岛32-6';
-      this.queryData.blockId.value = '6CD7342CA6DD418183A4B3BC38584F7C';
-      this.queryData.blockId.label = '秦皇岛32-6南区';
-      this.queryData.wellCategory = '01';
-      this.queryData.wellId = ['DA0269628E74490ABDE198E7D1DBF3EA'];
+      this.queryData.wellCategory = "01";
     }
     this.queryOilFeild();
     this.queryBlockFeild();
@@ -303,17 +281,17 @@ export default {
         this.queryData.startTime = dates[0];
         this.queryData.endTime = dates[1];
       } else {
-        this.queryData.startTime = '';
-        this.queryData.endTime = '';
+        this.queryData.startTime = "";
+        this.queryData.endTime = "";
       }
     },
     /**
      * 获取油田
      */
     queryOilFeild() {
-      getOgfInfo().then((res) => {
-          console.log(res);
-          this.oilList = res.data.data.ogfId;
+      getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
+        console.log(res, "111111111111111111111");
+        this.oilList = res.data.data;
       });
     },
     //改变油田
@@ -327,10 +305,10 @@ export default {
      */
     queryBlockFeild() {
       let param = {
-        ogfId: this.queryData.ogfId.value,
+        oilFieldId: this.queryData.ogfId,
       };
-      getblockData(param).then((res) => {
-        this.blockList = res.data.data.blockList;
+      fetchFields(param).then((res) => {
+        this.blockList = res.data.data.fields;
       });
     },
     /**
@@ -357,14 +335,35 @@ export default {
      * 井号下拉
      */
     queryWellData() {
-      let params = {
-        blockId: this.queryData.blockId.value,
-        apprndixId: this.queryData.wellCategory,
-      };
-      getWellData(params).then((res) => {
-          console.log(res);
-          this.wellList = res.wellList;
-      });
+      // { id: "01", name: "油井" },
+      //   { id: "02", name: "水井" },
+      if (this.queryData.wellCategory == "01") {
+        let paraPlatForm = {
+          oilFieldId: this.queryData.ogfId,
+        };
+        fetchProductionWells(paraPlatForm).then((res) => {
+          //判断联通状态
+          if (res.data.code == 200) {
+            let wellList = res.data.data.productionWells;
+            this.wellList = wellList.filter((el) => el.wellName);
+            this.queryProductionSplit();
+          }
+        });
+      } else {
+        let paraPlatForm = {
+          oilFieldId: this.queryData.ogfId,
+        };
+        fetchInjectionWells(paraPlatForm).then((res) => {
+          //判断联通状态
+          if (res.data.code == 200) {
+            // let wellList = res.data.data.productionWells;
+            // this.wellList = wellList.filter((el) => el.wellName);
+            this.wellList = res.data.data.injectionWell;
+            this.queryData.wellId = this.wellList[0].wellId;
+            this.queryProductionSplit();
+          }
+        });
+      }
     },
     /**
      * 获取表格数据
@@ -373,14 +372,14 @@ export default {
       let params = {
         endTime: this.queryData.endTime,
         startTime: this.queryData.startTime,
-        wellIdList: this.queryData.wellId.join(','),
+        wellIdList: this.queryData.wellId,
         wellType: this.queryData.wellCategory,
       };
       if (this.queryData.wellId.length == 0 || this.queryData.value.length == 0) {
         this.tableData = [];
         this.$message({
-          message: '井号，时间未选择',
-          type: 'error',
+          message: "井号，时间未选择",
+          type: "error",
           duration: 1500,
         });
         return;
@@ -436,7 +435,7 @@ export default {
       exportProductionSplit({
         endTime: this.queryData.endTime,
         startTime: this.queryData.startTime,
-        wellIdList: this.queryData.wellId.join(','),
+        wellIdList: this.queryData.wellId.join(","),
         wellType: this.queryData.wellCategory,
       }).then((res) => {
         const aBlob = new Blob([res]);
@@ -480,13 +479,13 @@ export default {
           wellId: arr, //井号
           value: this.queryData.value,
         };
-        localStorage.setItem('PRODUCTION_SPLIT', JSON.stringify(crr));
+        localStorage.setItem("PRODUCTION_SPLIT", JSON.stringify(crr));
         this.$router.push({
           name: str,
           params: crr,
         });
       } else {
-        this.$message.error('请填写完毕');
+        this.$message.error("请填写完毕");
       }
     },
 
@@ -533,5 +532,4 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

@@ -46,16 +46,10 @@
         </el-form-item>
         <el-form-item>
           <el-button size="mini" @click="getInfo" type="primary">搜索 </el-button>
-          <el-button size="mini" class="commonBtn">重置 </el-button>
+          <el-button size="mini" @click="reset" class="commonBtn">重置 </el-button>
         </el-form-item>
       </el-form>
     </headerSearch>
-
-    <!--        <pagePanel headerTitle="密度信息维护" style="height: calc(100% - 100px)" :is-show-max-btn="true" class="g-w100">-->
-    <!--            <div class="btnPosition g-row-flex" style="width: 100%">-->
-    <!--                <el-button icon="el-icon-edit-outline" size="mini" @click="redact" type="primary">编辑</el-button>-->
-    <!--                <el-button icon="el-icon-document-checked" size="mini" @click="save" type="primary">保存</el-button>-->
-    <!--            </div>-->
     <page-panel header-title="密度信息维护" style="height: 100%" :show-btn="true">
       <el-row>
         <el-button icon="el-icon-edit-outline" size="mini" @click="redact" type="primary">编辑</el-button>
@@ -405,6 +399,11 @@ export default {
           month.december = monthDen;
       }
     },
+    // 重置
+    reset(){
+   this.queryParams.ogfId = this.oilFields[0].oilFieldId 
+   this.queryParams.productTypeCode = this.producttype[0].appendixValueCode
+    }
   },
 };
 </script>

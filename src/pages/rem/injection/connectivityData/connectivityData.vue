@@ -1,8 +1,8 @@
 <template>
   <!-- 井间联通性评价 -->
-  <el-container class="layout">
-    <el-header >
-      <div class="case2">
+  <div class="layout" style="height: 100%">
+    <header-search class="g-w100 g-h100" style="height: 60px">
+      <div class="case2" style="margin: 5px">
         <div>
           <span>作业公司：</span>
           <el-select v-model="queryData.deptId" disabled>
@@ -16,7 +16,7 @@
             filterable
             disabled
             clearable
-            style="width:180px"
+            style="width: 180px"
             @change="changeOilfield"
           >
             <el-option
@@ -27,143 +27,184 @@
             ></el-option>
           </el-select>
           <span>区块：</span>
-          <el-select v-model="queryData.blockId" filterable clearable style="width:180px">
+          <el-select v-model="queryData.blockId" filterable clearable style="width: 180px">
             <el-option
               v-for="item in blockList"
               :key="item.blockId"
               :label="item.blockName"
-              :value=" item.blockId"
+              :value="item.blockId"
             ></el-option>
           </el-select>
           <span>时间：</span>
           <el-date-picker
             v-model="queryData.dateTime"
-            style="width: 130px;"
+            style="width: 130px"
             type="month"
             placeholder="请选择"
             value-format="yyyy-MM"
           ></el-date-picker>
-          <el-button
-            type="primary"
-            class="confirmBut"
-            style="color: #66ffff;"
-            size="mini"
-            @click="tableOilfield"
-          >搜索</el-button>
-          <el-button
-            type="primary"
-            class="commonBtn"
-            style="color: #66ffff;"
-            size="mini"
-            icon="el-icon-download"
-            @click="downloadTable"
-          >下载</el-button>
+          <el-button type="primary" icon="el-icon-search" class="confirmBut" style="margin-left: 20px" size="mini" @click="tableOilfield"
+            >搜索</el-button
+          >
+         
         </div>
         <div style="float: left">
           <el-button type="danger" class="countBut" @click="examine">查看连通系数计算基础数据</el-button>
         </div>
       </div>
-    </el-header>
-    <el-main style="height: calc(100% - 60px)">
-      <div class="case4" style="height: 100%;">
-        <pagePanel headerTitle="连通系数计算" style="height: 450px; width: 100%" class="g-w100">
-          <div style="float: right">
-                  <el-button
-                      type="primary"
-                      size="mini"
-                      class="confirmBut"
-                      :loading="btnLoad"
-                      icon="el-icon-cpu"
-                      @click="Correction(1)"
-                  >运算</el-button>
-                  <el-button
-                      type="primary"
-                      size="mini"
-                      :loading="btnLoad"
-                      class="confirmBut"
-                      icon="el-icon-s-tools"
-                      @click="Correction(2)"
-                  >修正</el-button>
-                  <el-button
-                      type="primary"
-                      size="mini"
-                      class="confirmBut"
-                      icon="el-icon-refresh"
-                      :disabled="!isComputed && !isCorrected"
-                      @click="handleExchange"
-                  >置换</el-button>
-                  <el-button
-                      type="primary"
-                      size="mini"
-                      icon="el-icon-edit"
-                      style="margin-left: 50px; width: 70px"
-                      :disabled="disabledComp || !form.tableData.length"
-                      @click="modify = !modify"
-                  >更改</el-button>
-                  <el-button
-                      type="primary"
-                      size="mini"
-                      :loading="preserveLoad"
-                      icon="el-icon-bank-card"
-                      style="width: 70px"
-                      :disabled="disabledComp || !form.tableData.length"
-                      @click="preserve('form')"
-                  >保存</el-button>
-              </div>
-          <el-form ref="form" label-width="100px" style="height: 100%;" :model="form">
-                  <el-table
-                      :data="form.tableData"
-                      id="indexscv"
-                      highlight
-                      height="96%"
-                      style="margin-top: 10px;height: 100%;"
-                      :cell-style="changeCellStyle"
-                      :header-cell-style="tableColor"
-                      :span-method="mergeTable"
+    </header-search>
+   
+      <div class="case4" style="height: calc(100% - 70px)">
+        <pagePanel headerTitle="连通系数计算" style="height: 100%; width: 100%" class="g-w100">
+          <el-row>
+            <el-col :span="22">
+          <div>
+            <el-button
+              type="primary"
+              size="mini"
+              class="confirmBut"
+              :loading="btnLoad"
+              icon="el-icon-cpu"
+              @click="Correction(1)"
+              >运算</el-button
+            >
+            <el-button
+              type="primary"
+              size="mini"
+              :loading="btnLoad"
+              class="confirmBut"
+              icon="el-icon-s-tools"
+              @click="Correction(2)"
+              >修正</el-button
+            >
+            <el-button
+              type="primary"
+              size="mini"
+              class="confirmBut"
+              icon="el-icon-refresh"
+              :disabled="!isComputed && !isCorrected"
+              @click="handleExchange"
+              >置换</el-button
+            >
+            <el-button
+              type="primary"
+              size="mini"
+              icon="el-icon-edit"
+              style="margin-left: 50px; "
+              :disabled="disabledComp || !form.tableData.length"
+              @click="modify = !modify"
+              >更改</el-button
+            >
+            <el-button
+              type="primary"
+              :loading="preserveLoad"
+              icon="el-icon-bank-card"
+              :disabled="disabledComp || !form.tableData.length"
+              @click="preserve('form')"
+              >保存</el-button
+            >
+          </div>
+            </el-col>
+           <el-button
+            type="primary"
+            class="commonBtn"
+            style="color: #66ffff"
+            size="mini"
+            icon="el-icon-download"
+            @click="downloadTable"
+            >下载</el-button
+          >
+          </el-row>
+          <el-form ref="form" label-width="100px" style="height: 100%" :model="form">
+            <el-table
+              :data="form.tableData"
+              id="indexscv"
+              highlight
+              height="96%"
+              style="margin-top: 10px; height: 100%"
+              :cell-style="changeCellStyle"
+              :header-cell-style="tableColor"
+              :span-method="mergeTable"
+            >
+              <el-table-column prop="wellGroupName" min-width="200" label="井组名称" align="center"></el-table-column>
+              <el-table-column prop="injWellNo" min-width="140" label="水井井号" align="center"></el-table-column>
+              <el-table-column prop="layerName" label="层位名称" min-width="200" align="center"></el-table-column>
+              <el-table-column prop="proWellNo" label="油井井号" min-width="140" align="center"></el-table-column>
+              <el-table-column
+                prop="diviDingCoeff"
+                label="连通系数?(动态调整)"
+                min-width="120"
+                align="center"
+                :render-header="renderheader"
+                show-overflow-tooltip
+                class="lian"
+              >
+                <template slot-scope="scope">
+                  <el-form-item
+                    v-if="modify"
+                    :prop="'tableData.' + scope.$index + '.diviDingCoeff'"
+                    :rules="rules.injDividingCoeff"
                   >
-                      <el-table-column prop="wellGroupName" min-width="200" label="井组名称" align="center"></el-table-column>
-                      <el-table-column prop="injWellNo" min-width="140" label="水井井号" align="center"></el-table-column>
-                      <el-table-column prop="layerName" label="层位名称" min-width="200" align="center"></el-table-column>
-                      <el-table-column prop="proWellNo" label="油井井号" min-width="140" align="center"></el-table-column>
-                      <el-table-column prop="diviDingCoeff" label="连通系数?(动态调整)" min-width="120" align="center" :render-header="renderheader" show-overflow-tooltip class="lian">
-                          <template slot-scope="scope">
-                              <el-form-item
-                                  v-if="modify"
-                                  :prop="'tableData.'+scope.$index+'.diviDingCoeff'"
-                                  :rules="rules.injDividingCoeff"
-                              >
-                                  <el-input
-                                      v-model="scope.row.diviDingCoeff"
-                                      placeholder="连通系数(动态调整)"
-                                      @blur="veitBut"
-                                  />
-                              </el-form-item>
-                              <span v-else>{{ scope.row.diviDingCoeff }}</span>
-                          </template>
-                      </el-table-column>
-                      <el-table-column prop="injSplitData" label="劈分注水量?m³/d" :render-header="renderheader" show-overflow-tooltip min-width="125px" align="center"></el-table-column>
-                      <el-table-column prop="operationalNarration" label="连通系数?(计算)" min-width="120" :render-header="renderheader" align="center"></el-table-column>
-                      <el-table-column prop="operationInjSplitData" label="劈分注水量?m³/d" :render-header="renderheader" show-overflow-tooltip min-width="120px" align="center"></el-table-column>
-                      <el-table-column prop="correctionFactor" label="连通系数?(修正)" min-width="120" :render-header="renderheader" align="center"></el-table-column>
-                      <el-table-column prop="reviseInjSplitData" label="劈分注水量?m³/d" :render-header="renderheader" show-overflow-tooltip min-width="120px" align="center"></el-table-column>
-                      <el-table-column prop="remark" min-width="150" label="备注" show-overflow-tooltip align="center">
-                          <template slot-scope="scope">
-                              <el-form-item v-if="modify" :prop="'tableData.'+scope.$index+'.remark'">
-                                  <el-input v-if="modify" v-model="scope.row.remark" />
-                              </el-form-item>
+                    <el-input v-model="scope.row.diviDingCoeff" placeholder="连通系数(动态调整)" @blur="veitBut" />
+                  </el-form-item>
+                  <span v-else>{{ scope.row.diviDingCoeff }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="injSplitData"
+                label="劈分注水量?m³/d"
+                :render-header="renderheader"
+                show-overflow-tooltip
+                min-width="125px"
+                align="center"
+              ></el-table-column>
+              <el-table-column
+                prop="operationalNarration"
+                label="连通系数?(计算)"
+                min-width="120"
+                :render-header="renderheader"
+                align="center"
+              ></el-table-column>
+              <el-table-column
+                prop="operationInjSplitData"
+                label="劈分注水量?m³/d"
+                :render-header="renderheader"
+                show-overflow-tooltip
+                min-width="120px"
+                align="center"
+              ></el-table-column>
+              <el-table-column
+                prop="correctionFactor"
+                label="连通系数?(修正)"
+                min-width="120"
+                :render-header="renderheader"
+                align="center"
+              ></el-table-column>
+              <el-table-column
+                prop="reviseInjSplitData"
+                label="劈分注水量?m³/d"
+                :render-header="renderheader"
+                show-overflow-tooltip
+                min-width="120px"
+                align="center"
+              ></el-table-column>
+              <el-table-column prop="remark" min-width="150" label="备注" show-overflow-tooltip align="center">
+                <template slot-scope="scope">
+                  <el-form-item v-if="modify" :prop="'tableData.' + scope.$index + '.remark'">
+                    <el-input v-if="modify" v-model="scope.row.remark" />
+                  </el-form-item>
 
-                              <span v-else>{{ scope.row.remark }}</span>
-                          </template>
-                      </el-table-column>
-                  </el-table>
-              </el-form>
+                  <span v-else>{{ scope.row.remark }}</span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-form>
         </pagePanel>
-
       </div>
-    </el-main>
+   
     <!-- 置换 -->
     <el-dialog title="置换" :visible.sync="exchangeVisible" width="40%">
-      <div style="margin: 0  0 20px 10px;">
+      <div style="margin: 0 0 20px 10px">
         <el-radio-group v-model="exchangeType">
           <el-radio :label="1">计算</el-radio>
           <el-radio :label="2">修正</el-radio>
@@ -177,7 +218,7 @@
         <el-button type="primary" @click="saveExchange">确认</el-button>
       </span>
     </el-dialog>
-  </el-container>
+  </div>
 </template>
 <script>
 import {
@@ -187,67 +228,65 @@ import {
   getCorrectionOperation, //运算与修正
   postCoefficientconnectivity, //油田列表
   getblock, //区块下拉
-  downLoadUnicomModeloperationDto
+  downLoadUnicomModeloperationDto,
 } from "@/api/rem/r-wellConnectEvaluate.js";
 
 import {
-    fetchOilFields,//油田下拉
-} from "@/api/oilDeposit/rem-02/primaryinfo.js"
+  fetchOilFields, //油田下拉
+} from "@/api/oilDeposit/rem-02/primaryinfo.js";
 
-import { 
-    fetchFields, //区块下拉
-} from '@/api/rem/primaryinfoqhdrem';
+import {
+  fetchFields, //区块下拉
+} from "@/api/rem/primaryinfoqhdrem";
 import FileSaver from "file-saver";
 
 export default {
-  components: {
-      
-  },
-  data () {
+  components: {},
+  data() {
     var ratio = (rule, value, callback) => {
-      let index = parseInt(rule.field.split('.')[1])
-      let arr = 0
-      this.form.tableData.forEach(item => {
+      let index = parseInt(rule.field.split(".")[1]);
+      let arr = 0;
+      this.form.tableData.forEach((item) => {
         if (this.form.tableData[index].wellGroupName === item.wellGroupName) {
-          arr += item.diviDingCoeff - 0
+          arr += item.diviDingCoeff - 0;
         }
       });
       if (arr >= 0.99 && arr <= 1.01) {
-        return callback()
+        return callback();
       } else {
-        return callback(new Error("连通系数(动态调整)之和不为1请重新填写"))
+        return callback(new Error("连通系数(动态调整)之和不为1请重新填写"));
       }
-    }
+    };
     return {
       queryData: {
-        ogfId: '68B63EC37E3649B38F7C0219C9BB0948',
-        blockId: '106F9FE6A23F433CBD4AD47199C1C67D',
-        dateTime: this.eeee(), 
-        deptId :'715AD1CD60484BB59E737CD18A9DE44A',
+        ogfId: "68B63EC37E3649B38F7C0219C9BB0948",
+        blockId: "106F9FE6A23F433CBD4AD47199C1C67D",
+        dateTime: this.eeee(),
+        deptId: "715AD1CD60484BB59E737CD18A9DE44A",
       },
-        oilList:[
-            {
-                name: '秦皇岛32-6',
-                oilFieldId: '68B63EC37E3649B38F7C0219C9BB0948',
-            }
-        ],
-        blockList:[
-            {
-                blockId:'106F9FE6A23F433CBD4AD47199C1C67D',
-                blockName:'秦皇岛32-6油田'
-            }
-        ],
-        deptSelect: [
-            {
-                deptId: '715AD1CD60484BB59E737CD18A9DE44A',
-                deptName: '秦皇岛32-6渤中作业公司',
-            },
-        ], //作业公司
+      oilList: [
+        {
+          name: "秦皇岛32-6",
+          oilFieldId: "68B63EC37E3649B38F7C0219C9BB0948",
+        },
+      ],
+      blockList: [
+        {
+          blockId: "106F9FE6A23F433CBD4AD47199C1C67D",
+          blockName: "秦皇岛32-6油田",
+        },
+      ],
+      deptSelect: [
+        {
+          deptId: "715AD1CD60484BB59E737CD18A9DE44A",
+          deptName: "秦皇岛32-6渤中作业公司",
+        },
+      ], //作业公司
       //   new Date().format("yyyy-MM")
       form: {
         tableData: [],
-        wellGroupIds:[],
-        wellGroupList:[]
+        wellGroupIds: [],
+        wellGroupList: [],
       },
       tableWater: [],
       input: "",
@@ -256,12 +295,13 @@ export default {
         injDividingCoeff: [
           // { type: 'string', required: true, pattern: /^((^[0])\.([0-9]{1,2})$)|^((^[0-1])$)/, message: '输入不正确', },
           {
-            validator: ratio, trigger: 'blur'
-          }
-        ]
+            validator: ratio,
+            trigger: "blur",
+          },
+        ],
       },
       btnLoad: false,
-      mergeArr: ['wellGroupName'],
+      mergeArr: ["wellGroupName"],
       mergeObj: {},
       preserveLoad: false,
       isComputed: false,
@@ -272,226 +312,233 @@ export default {
       disabledDateTime: null,
     };
   },
-  created () {
-    const params = JSON.parse(localStorage.getItem('CONNECTIVITY_DATA'))
-    if(params && params.blockId){
-      this.queryData.blockId = params.blockId
-      this.queryData.ogfId = params.ogfId
-      this.queryData.dateTime = params.dateTime
-      localStorage.removeItem('CONNECTIVITY_DATA')
+  created() {
+    const params = JSON.parse(localStorage.getItem("CONNECTIVITY_DATA"));
+    if (params && params.blockId) {
+      this.queryData.blockId = params.blockId;
+      this.queryData.ogfId = params.ogfId;
+      this.queryData.dateTime = params.dateTime;
+      localStorage.removeItem("CONNECTIVITY_DATA");
     }
     //获取油田下拉数据
     this.selectData();
     //获取区块下拉数据
-      this.selectblock();
-    this.tableOilfield()
+    this.selectblock();
+    this.tableOilfield();
   },
-  computed:{
-    disabledComp(){
-      return this.queryData.dateTime !== (new Date(this.disabledDateTime)).format("yyyy-MM")
-    }
+  computed: {
+    disabledComp() {
+      return this.queryData.dateTime !== new Date(this.disabledDateTime).format("yyyy-MM");
+    },
   },
   methods: {
-    mergeTable ({ row, column, rowIndex, columnIndex }) {
+    mergeTable({ row, column, rowIndex, columnIndex }) {
       if (columnIndex === 0 || columnIndex === 1 || columnIndex === 2) {
-        if (this.mergeObj['wellGroupName'][rowIndex]) {
-          return [this.mergeObj['wellGroupName'][rowIndex], 1]
+        if (this.mergeObj["wellGroupName"][rowIndex]) {
+          return [this.mergeObj["wellGroupName"][rowIndex], 1];
         } else {
-          return [0, 0]
+          return [0, 0];
         }
       }
     },
-    getSpanArr (data) {
+    getSpanArr(data) {
       this.mergeArr.forEach((key) => {
         let count = 0;
-        this.mergeObj[key] = []
+        this.mergeObj[key] = [];
         data.forEach((item, index) => {
           if (index === 0) {
-            this.mergeObj[key].push(1)
+            this.mergeObj[key].push(1);
           } else {
             if (item[key] === data[index - 1][key]) {
               this.mergeObj[key][count] += 1;
-              this.mergeObj[key].push(0)
+              this.mergeObj[key].push(0);
             } else {
-              count = index
-              this.mergeObj[key].push(1)
+              count = index;
+              this.mergeObj[key].push(1);
             }
           }
-        })
-      })
+        });
+      });
     },
-    eeee () {
-      let data = new Date()
+    eeee() {
+      let data = new Date();
       if (data.getMonth() < 10) {
-        return data.getFullYear() + '-0' + (data.getMonth() + 1)
+        return data.getFullYear() + "-0" + (data.getMonth() + 1);
       } else {
-        return data.getFullYear() + '-' + (data.getMonth() + 1)
+        return data.getFullYear() + "-" + (data.getMonth() + 1);
       }
     },
-    tableColor ({ row, column, rowIndex, columnIndex }) {
-      if (rowIndex === 0 && columnIndex === 4 || columnIndex === 10) {
+    tableColor({ row, column, rowIndex, columnIndex }) {
+      if ((rowIndex === 0 && columnIndex === 4) || columnIndex === 10) {
         return "color:#66ffff"; //修改的样式
       }
     },
-    renderheader (h, { column, $index }) {
-      return h('span', {}, [
-        h('span', {}, column.label.split('?')[0]),
-        h('br'),
-        h('span', {}, column.label.split('?')[1])
+    renderheader(h, { column, $index }) {
+      return h("span", {}, [
+        h("span", {}, column.label.split("?")[0]),
+        h("br"),
+        h("span", {}, column.label.split("?")[1]),
       ]);
     },
     // 获取油田下拉数据
-      selectData () {
-          getoilfield().then(({ ogfId }) => {
-              console.log(ogfId);
-              this.oilList = ogfId;
-          });
-      },
-      // 获取区块下拉数据
-      selectblock () {
-          // if (!this.selectField) return;
-          getblock({
-              ogfId: this.queryData.ogfId
-          }).then(({ blockList }) => {
-              this.blockList = blockList;
-          });
-          //   }
-      },
+    selectData() {
+      getoilfield().then(({ ogfId }) => {
+        this.oilList = ogfId;
+      });
+    },
+    // 获取区块下拉数据
+    selectblock() {
+      // if (!this.selectField) return;
+      getblock({
+        ogfId: this.queryData.ogfId,
+      }).then(({ blockList }) => {
+        this.blockList = blockList;
+      });
+      //   }
+    },
     // 油田下拉点击事件
-    changeOilfield () {
+    changeOilfield() {
       this.selectblock();
-      this.queryData.blockId = ""
+      this.queryData.blockId = "";
     },
     // 区块下拉点击事件
-    changeBlock () { },
+    changeBlock() {},
     // 获取油田列表数据
-    tableOilfield () {
+    tableOilfield() {
       let params = {
         // blockId: this.queryData.blockId,
-        blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
+        blockId: "6CD7342CA6DD418183A4B3BC38584F7C",
         type: 0,
         dateTime: this.queryData.dateTime,
       };
-      this.form.wellGroupIds = []
-      this.form.wellGroupList = []
+      this.form.wellGroupIds = [];
+      this.form.wellGroupList = [];
       getCorrectionOperation(params).then((res) => {
-        if(Array.isArray(res) && res.length){
-          this.disabledDateTime = res[0].updateYearMonth ? res[0].updateYearMonth : null
+        if (Array.isArray(res) && res.length) {
+          this.disabledDateTime = res[0].updateYearMonth ? res[0].updateYearMonth : null;
         }
         if (res[0].wellGroupId == null) {
           this.form.tableData = [];
         } else {
-          res.forEach(item => {
-            item.diviDingCoeff = String(item.diviDingCoeff)
-            if(!this.form.wellGroupIds.includes(item.wellGroupId)){
-              this.form.wellGroupIds.push(item.wellGroupId)
-              this.form.wellGroupList.push({wellGroupName: item.wellGroupName, wellGroupId: item.wellGroupId})
+          res.forEach((item) => {
+            item.diviDingCoeff = String(item.diviDingCoeff);
+            if (!this.form.wellGroupIds.includes(item.wellGroupId)) {
+              this.form.wellGroupIds.push(item.wellGroupId);
+              this.form.wellGroupList.push({ wellGroupName: item.wellGroupName, wellGroupId: item.wellGroupId });
             }
-          })
+          });
           this.form.tableData = res;
         }
-        this.$set(this.form,'tableData', this.form.tableData)
-        this.getSpanArr(this.form.tableData)
+        this.$set(this.form, "tableData", this.form.tableData);
+        this.getSpanArr(this.form.tableData);
       });
     },
     // 运算、修正: type = 1 运算，type = 2 修正
-    Correction (type) {
-      this.btnLoad = true
+    Correction(type) {
+      this.btnLoad = true;
       let params = {
         // blockId: this.queryData.blockId,
-          blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
+        blockId: "6CD7342CA6DD418183A4B3BC38584F7C",
         type: type,
         dateTime: this.queryData.dateTime,
       };
-      let existsList = []
-      getCorrectionOperation(params).then((res) => {
-        this.form.tableData.forEach((el) => {
-          for(const item of res){
-            if(item.wellGroupId === el.wellGroupId && item.injWellId === el.injWellId && item.oilWellId === el.oilWellId){
-              existsList.push(item.oilWellId)
-              el.injDividingCoeff = Number(item.injDividingCoeff).toFixed(2)
-              if(type === 1){
-                el.operationalNarration = item.operationalNarration
-                el.operationInjSplitData = item.operationInjSplitData
-              } else if (type === 2){
-                el.correctionFactor = item.correctionFactor
-                el.reviseInjSplitData = item.reviseInjSplitData
+      let existsList = [];
+      getCorrectionOperation(params)
+        .then((res) => {
+          this.form.tableData.forEach((el) => {
+            for (const item of res) {
+              if (
+                item.wellGroupId === el.wellGroupId &&
+                item.injWellId === el.injWellId &&
+                item.oilWellId === el.oilWellId
+              ) {
+                existsList.push(item.oilWellId);
+                el.injDividingCoeff = Number(item.injDividingCoeff).toFixed(2);
+                if (type === 1) {
+                  el.operationalNarration = item.operationalNarration;
+                  el.operationInjSplitData = item.operationInjSplitData;
+                } else if (type === 2) {
+                  el.correctionFactor = item.correctionFactor;
+                  el.reviseInjSplitData = item.reviseInjSplitData;
+                }
+                break;
               }
-              break;
             }
-          }
-        })
-        
-        // 补充没有井组处理
-        this.form.tableData.forEach(elItme => {
-          if(!existsList.includes(elItme.oilWellId)){
-            if(type === 1){
-              elItme.operationalNarration = 0
-              elItme.operationInjSplitData = 0
-            } else if (type === 2){
-              elItme.correctionFactor = 0
-              elItme.reviseInjSplitData = 0
-            }
-          }
-        })
+          });
 
-        this.$set(this.form,'tableData', this.form.tableData)
-        if(type === 1){
-          this.isComputed = true
-        } else if(type === 2){
-          this.isCorrected = true
-        }
-      }).catch(() => {
-        this.$set(this.form,'tableData', [])
-      }).finally(()=>{
-        this.btnLoad = false;
-      })
+          // 补充没有井组处理
+          this.form.tableData.forEach((elItme) => {
+            if (!existsList.includes(elItme.oilWellId)) {
+              if (type === 1) {
+                elItme.operationalNarration = 0;
+                elItme.operationInjSplitData = 0;
+              } else if (type === 2) {
+                elItme.correctionFactor = 0;
+                elItme.reviseInjSplitData = 0;
+              }
+            }
+          });
+
+          this.$set(this.form, "tableData", this.form.tableData);
+          if (type === 1) {
+            this.isComputed = true;
+          } else if (type === 2) {
+            this.isCorrected = true;
+          }
+        })
+        .catch(() => {
+          this.$set(this.form, "tableData", []);
+        })
+        .finally(() => {
+          this.btnLoad = false;
+        });
     },
     // 查看连通系数计算基础数据
-    examine () {
-        if (this.queryData.blockId && this.queryData.dateTime && this.queryData.ogfId) {
-        let ogfName = this.oilList.length? this.oilList.find(
-          (item) => item.ogfId == this.queryData.ogfId
-        ).ogfName : '';
-        let blockName = this.blockList.length ? this.blockList.find(
-          (item) => item.blockId == this.queryData.blockId
-        ).blockName : '';
+    examine() {
+      if (this.queryData.blockId && this.queryData.dateTime && this.queryData.ogfId) {
+        // let ogfName = this.oilList.length
+        //   ? this.oilList.find((item) => item.ogfId == this.queryData.ogfId).ogfName
+        //   : "";
+        // let blockName = this.blockList.length
+        //   ? this.blockList.find((item) => item.blockId == this.queryData.blockId).blockName
+        //   : "";
         const params = {
-            // blockId: this.queryData.blockId, //区块id
-            blockId:'6CD7342CA6DD418183A4B3BC38584F7C',
-            blockName: blockName,
-            ogfId: this.queryData.ogfId, //油田id
-            ogfName: ogfName,
-            dateTime: this.queryData.dateTime //时间
-          }
-        localStorage.setItem('CONNECTIVITY_DATA',JSON.stringify(params));    
+          // blockId: this.queryData.blockId, //区块id
+          blockId: "6CD7342CA6DD418183A4B3BC38584F7C",
+          // blockName: blockName,
+          ogfId: this.queryData.ogfId, //油田id
+          // ogfName: ogfName,
+          dateTime: this.queryData.dateTime, //时间
+        };
+        localStorage.setItem("CONNECTIVITY_DATA", JSON.stringify(params));
         this.$router.push({
           name: "coefficientCalculates",
           params,
         });
       } else {
-        this.$message.error("条件不足，请添加条件")
+        this.$message.error("条件不足，请添加条件");
       }
     },
-    downloadTable () {
-      let blockName = ''
-        if (this.queryData.ogfId && this.queryData.blockId) {
-          blockName = this.blockList.find((item) => item.blockId == this.queryData.blockId).blockName;
-        }
-      downLoadUnicomModeloperationDto(this.form.tableData).then((res)=>{
-        const aBlob = new Blob([res.data]);
-        FileSaver.saveAs(aBlob, blockName + "连通系数计算结果表.xls");
-      }).catch(()=>{
-        this.$message.error('下载失败')
-      })
+    downloadTable() {
+      let blockName = "";
+      if (this.queryData.ogfId && this.queryData.blockId) {
+        blockName = this.blockList.find((item) => item.blockId == this.queryData.blockId).blockName;
+      }
+      downLoadUnicomModeloperationDto(this.form.tableData)
+        .then((res) => {
+          const aBlob = new Blob([res.data]);
+          FileSaver.saveAs(aBlob, blockName + "连通系数计算结果表.xls");
+        })
+        .catch(() => {
+          this.$message.error("下载失败");
+        });
     },
 
-    veitBut () {
-      if (this.$refs['form'])
-        this.$refs['form'].validate()
+    veitBut() {
+      if (this.$refs["form"]) this.$refs["form"].validate();
     },
     // 保存
-    preserve (form) {
+    preserve(form) {
       let params = [];
       let data = this.form.tableData;
       for (var i = 0; i < data.length; i++) {
@@ -505,34 +552,33 @@ export default {
       }
       this.$refs[form].validate((valid) => {
         if (valid) {
-          this.preserveLoad = true
-          postCoefficientConnectionpreserve(params).then(bool => {
-            if (bool) {
-              this.modify = false
-              getUnicomInjSplit({
-                blockId: this.queryData.blockId,
-                dateTime: this.queryData.dateTime,
-              }).then((res) => {
-                this.tableWater = res;
-              });
-              this.$message.success("保存成功")
-            } else {
-              this.$message.error("保存失败")
-            }
-          }).finally(() => {
-            this.preserveLoad = false
-          })
+          this.preserveLoad = true;
+          postCoefficientConnectionpreserve(params)
+            .then((bool) => {
+              if (bool) {
+                this.modify = false;
+                getUnicomInjSplit({
+                  blockId: this.queryData.blockId,
+                  dateTime: this.queryData.dateTime,
+                }).then((res) => {
+                  this.tableWater = res;
+                });
+                this.$message.success("保存成功");
+              } else {
+                this.$message.error("保存失败");
+              }
+            })
+            .finally(() => {
+              this.preserveLoad = false;
+            });
         } else {
           return false;
         }
       });
     },
-    changeCellStyle (row, column, rowIndex, columnIndex) {
+    changeCellStyle(row, column, rowIndex, columnIndex) {
       //列的label的名称
-      if (
-        row.column.label === "连通系数?(动态调整)" ||
-        row.column.label === "备注"
-      ) {
+      if (row.column.label === "连通系数?(动态调整)" || row.column.label === "备注") {
         return "color:#66ffff"; //修改的样式
       } else {
         return "";
@@ -541,46 +587,52 @@ export default {
 
     handleSelectionChange(val) {
       this.multipleSelection = [];
-      val.forEach(item => {
-        this.multipleSelection.push(item.wellGroupId)
-      })
+      val.forEach((item) => {
+        this.multipleSelection.push(item.wellGroupId);
+      });
     },
 
     // 置换
-    handleExchange(){
-      this.exchangeVisible = true
+    handleExchange() {
+      this.exchangeVisible = true;
       this.$nextTick(() => {
         this.$refs.multipleTable.clearSelection();
-      })
+      });
     },
 
     // 置换保存
-    saveExchange(){
-      if(!this.multipleSelection.length || this.exchangeType === 1 && !this.isComputed || this.exchangeType === 2 && !this.isCorrected){
-        this.exchangeVisible = false
-        return
+    saveExchange() {
+      if (
+        !this.multipleSelection.length ||
+        (this.exchangeType === 1 && !this.isComputed) ||
+        (this.exchangeType === 2 && !this.isCorrected)
+      ) {
+        this.exchangeVisible = false;
+        return;
       }
 
-      if(this.exchangeType === 1){ // 计算——>动态调整
-        this.form.tableData.forEach(item => {
-          if(this.multipleSelection.includes(item.wellGroupId)){
-            item.diviDingCoeff = item.operationalNarration
-            item.injSplitData = item.operationInjSplitData
+      if (this.exchangeType === 1) {
+        // 计算——>动态调整
+        this.form.tableData.forEach((item) => {
+          if (this.multipleSelection.includes(item.wellGroupId)) {
+            item.diviDingCoeff = item.operationalNarration;
+            item.injSplitData = item.operationInjSplitData;
           }
-        })
-      } else if(this.exchangeType === 2){ // 修正——>动态调整
-        this.form.tableData.forEach(item => {
-          if(this.multipleSelection.includes(item.wellGroupId)){
-            item.diviDingCoeff = item.correctionFactor
-            item.injSplitData = item.reviseInjSplitData
+        });
+      } else if (this.exchangeType === 2) {
+        // 修正——>动态调整
+        this.form.tableData.forEach((item) => {
+          if (this.multipleSelection.includes(item.wellGroupId)) {
+            item.diviDingCoeff = item.correctionFactor;
+            item.injSplitData = item.reviseInjSplitData;
           }
-        })
+        });
       }
-      this.$set(this.form,'tableData', this.form.tableData)
-      this.exchangeVisible = false
+      this.$set(this.form, "tableData", this.form.tableData);
+      this.exchangeVisible = false;
     },
   },
-}
+};
 </script>
 <style lang="scss" scoped>
 // .case {
