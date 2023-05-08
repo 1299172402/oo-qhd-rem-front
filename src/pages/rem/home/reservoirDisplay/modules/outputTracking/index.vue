@@ -4,7 +4,7 @@
       投产时间：2001-10
     </div>
     <Echart :chart-data="histogram" width="100%" height="65%"></Echart>
-    <el-row :gutter="20" style="margin-top: -50px">
+    <el-row :gutter="20">
       <el-col :span="7">
         <div style="display: flex">
           <Echart :chart-data="option"></Echart>
@@ -12,23 +12,17 @@
         </div>
       </el-col>
       <el-col :span="17">
-        <!-- <div>
-          <div v-for="(item, index) in data" :key="index">
-                <svg-icon :icon-class="item.icon" style="width: 100%; height: 100%" />
-                <div style="float:left">
-                  <div>{{ item.name }}</div>
-                  <div >{{ item.value }}</div >
-                </div>
-          </div>
-        </div> -->
-        <!-- <div class="xbox" v-for="(item, index) in data" :key="index">
-          <div>
-            <svg-icon :icon-class="item.icon" style="width: 100%; height: 100%" />
-          </div>
-
-          {{ item.name }}
-          {{ item.value }}
-        </div> -->
+          <el-row :gutter="10">
+              <el-col :span="8" v-for="(item, index) in data" :key="index">
+                  <div style="float: left;width: 60px; height: 60px">
+                      <svg-icon :icon-class="item.icon" style="width: 100%;height: 100%" />
+                  </div>
+                  <div style="margin-top: 10px">
+                    <div>{{ item.name }}</div>
+                    <div>{{ item.value }}</div >
+                  </div>
+              </el-col>
+          </el-row>
       </el-col>
     </el-row>
   </div>
@@ -225,13 +219,27 @@ export default {
           value: "6160.02",
         },
         {
-          icon: "reserves",
+          icon: "dayproOil",
           name: "与前日日产油差值(m³)",
           value: "17.01",
         },
         {
-          icon: "reserves",
+          icon: "dayproOil",
           name: "累产油(m³)",
+          value: "165.87",
+        },{
+          icon: "dayproOil",
+          name: "规划采收率(%)",
+          value: "6160.02",
+        },
+        {
+          icon: "dayproOil",
+          name: "综合含水率(%)",
+          value: "17.01",
+        },
+        {
+          icon: "dayproOil",
+          name: "储量(%)",
           value: "165.87",
         },
       ],

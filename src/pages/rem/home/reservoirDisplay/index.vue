@@ -107,7 +107,7 @@
         </pagePanel>
         <pagePanel headerTitle="采出程度与含水率关系图" style="height: 450px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>
-          <naturalDecline></naturalDecline>
+          <recoverLevel></recoverLevel>
         </pagePanel>
       </el-col>
       <el-col :span="8">

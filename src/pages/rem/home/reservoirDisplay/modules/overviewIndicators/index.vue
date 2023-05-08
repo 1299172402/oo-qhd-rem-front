@@ -135,6 +135,21 @@ export default {
   components: {
     Echart,
   },
+    mounted() {
+        this.histogram.series[1].splitLine.lineStyle.color = this.$store.state.setting.mode == 'dark'?'#023255':'#fff'
+    },
+    computed:{
+    getGlobeTheme(){
+        return this.$store.state.setting.mode == 'dark'?'#022947':'#fff'
+    }
+  },
+    watch:{
+        getGlobeTheme: {
+            handler(val){
+                this.histogram.series[1].splitLine.lineStyle.color = val
+            }
+        }
+    },
   data() {
     return {
       histogram: {
@@ -243,7 +258,6 @@ export default {
       },
     };
   },
-  mounted() {},
   methods: {
     //图表
     getEchartData(value, unit, valueColor, backColor, centerColor, data) {
