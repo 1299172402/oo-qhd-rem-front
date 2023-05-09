@@ -22,11 +22,12 @@
                 <div style="margin-left: 10px;">
                     <el-button icon="el-icon-search" style="margin-left: 20px; width: 90px" type="primary" @click="searchThing">搜索</el-button>
                 </div>
-                <el-button type="primary" style="margin-left:auto;" @click="">切换版式</el-button>
+                <el-button type="primary" style="margin-left:auto;" @click="isNewformat=!isNewformat;">切换版式</el-button>
             </div>
         </headerSearch>
         <pagePanelNew style="height: calc(100% - 100px);" class="g-w100">
-            <div style="height:100%;padding-bottom:8px;overflow-y: scroll;">
+            <!-- 旧版 -->
+            <div style="height:100%;padding-bottom:8px;overflow-y: scroll;" v-show="!isNewformat">
                 <div style="margin-left:8px;margin-right:20px;">
                     <pagePanel headerTitle="主要开发矛盾洞察" style="margin-top:0;min-height:500px;">
                         <el-row :gutter="30" style="text-align: center;height:calc(100% - 55px);">
@@ -113,6 +114,135 @@
                     </pagePanelNew>
                 </div>
             </div>
+            <!-- 新版 -->
+            <div style="height:100%;padding-bottom:8px;overflow-y: scroll;" v-show="isNewformat">
+                <div style="margin-left:8px;margin-right:20px;height:calc( 100% - 418px);">
+                    <pagePanel headerTitle="主要开发矛盾洞察" style="margin-top:0;height:100%;">
+                        <div class="z-content" style="height:calc(100% - 55px);">
+                            <el-row>
+                                <el-col :span="24">
+                                    <table class="condationRow" style="float: right">
+                                        <tr>
+                                            <td style="padding-right:10px">图例：</td>
+                                            <td class="checkBtn">选中</td>
+                                            <td class="about">相关</td>
+                                            <td class="noCheckBtn">未选中</td>
+                                        </tr>
+                                    </table>
+                                </el-col>
+                            </el-row>
+                            <div class="z-content-n">
+                                <div class="z-row">
+                                    <div class="z_title">
+                                        <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                        <span>开采现状（地层压力）分析</span>
+                                    </div>
+                                    <div class="z_schedule">
+                                        <span class="sp1">正常：</span>
+                                        <div class="z_proess">
+                                            <span class="z_proess_sp1"><b>182</b></span>
+                                            <span class="z_proess_sp2"></span>
+                                        </div>
+                                        <span class="sp2">异常：<b>30</b></span>
+                                    </div>
+                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{changeFx(val,'indexChangeTrendList')})" style="width:100%;">
+                                        <el-radio-button v-for="(item,index) in indexChangeTrendList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'" style="width: 46%;margin-right:10px;" v-if="item.value > 0">
+                                            {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                        </el-radio-button>
+                                    </el-radio-group>
+                                </div>
+                                <div class="z-row">
+                                    <div class="z_title">
+                                        <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                        <span>开采现状（注水受效）分析</span>
+                                    </div>
+                                    <div class="z_schedule">
+                                        <span class="sp1">正常：</span>
+                                        <div class="z_proess">
+                                            <span class="z_proess_sp1"><b>182</b></span>
+                                            <span class="z_proess_sp2"></span>
+                                        </div>
+                                        <span class="sp2">异常：<b>30</b></span>
+                                    </div>
+                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{changeFx(val,'stabilityFoundationAnalysisList')})" style="width:100%;">
+                                        <el-radio-button v-for="(item,index) in stabilityFoundationAnalysisList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'"  style="width: 46%;margin-right:10px;" v-if="item.value > 0">
+                                            {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                        </el-radio-button>
+                                    </el-radio-group>
+                                </div>
+                                <div class="z-row">
+                                    <div class="z_title2">
+                                        <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                        <span>注采平衡分析</span>
+                                    </div>
+                                    <div class="z_schedule">
+                                        <span class="sp1">正常：</span>
+                                        <div class="z_proess">
+                                            <span class="z_proess_sp1"><b>182</b></span>
+                                            <span class="z_proess_sp2"></span>
+                                        </div>
+                                        <span class="sp2">异常：<b>30</b></span>
+                                    </div>
+                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{changeFx(val,'injectionProductionBalanceAnalysisList')})" style="width:100%;">
+                                        <el-radio-button v-for="(item,index) in injectionProductionBalanceAnalysisList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'" style="width: 46%;margin-right:10px;" v-if="item.value > 0">
+                                            {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                        </el-radio-button>
+                                    </el-radio-group>
+                                </div>
+                                <div class="z-row">
+                                    <div class="z_title2">
+                                        <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                        <span>采出状况分析</span>
+                                    </div>
+                                    <div class="z_schedule">
+                                        <span class="sp1">正常：</span>
+                                        <div class="z_proess">
+                                            <span class="z_proess_sp1"><b>182</b></span>
+                                            <span class="z_proess_sp2"></span>
+                                        </div>
+                                        <span class="sp2">异常：<b>30</b></span>
+                                    </div>
+                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{changeFx(val,'recoveryAnalysisList')})" style="width:100%;">
+                                        <el-radio-button v-for="(item,index) in recoveryAnalysisList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'" style="width: 46%;margin-right:10px;" v-if="item.value > 0">
+                                            {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                        </el-radio-button>
+                                    </el-radio-group>
+                                </div>
+                            </div>
+                        </div>
+                    </pagePanel>
+                </div>
+                <div style="margin-left:8px;margin-right:20px;height:398px;display: flex;">
+                    <div style="flex:1;margin-right:10px;height:100%;">
+                        <pagePanelNew headerTitle="" style="height:100%;">
+                            <div>
+                                <div style="display: flex;justify-content: flex-end;margin-bottom:10px;">
+                                    <el-button class="commonBtn" @click="switchToAnaylsis">区块分析</el-button>
+                                </div>
+                                <H5Chart ref="H5Chart" height="310px" :url="url" width="100%" @load="frameLoad"></H5Chart>
+                            </div>
+                        </pagePanelNew>
+                    </div>
+                    <div style="width:664px;height:100%;">
+                        <pagePanelNew headerTitle="" style="height:100%;">
+                            <el-col :span="24" style="height: 100%;">
+                                <div class="tips" v-show="myList.length>0">
+                                    <img src="@/assets/rem/performance/zy.png" alt="">
+                                    <p>{{tagMessage}}</p>
+                                </div>
+                                <div :class="[$store.state.setting.mode=='light'?'remark0':'remark']" v-show="myList.length>0">相关内容:{{$store.state.setting.mode}}</div>
+                                <div style="width: 100%;height:250px;overflow: auto; margin-top: 15px;display: flex;flex-wrap: wrap;">
+                                    <div v-for="(item,index) in myList" :key="index" :class="[$store.state.setting.mode=='light'?'z-well0':'z-well']">
+                                        <span>{{item.well}}</span>
+                                        <img src="@/assets/rem/performance/sjt0.png" alt="" v-if="$store.state.setting.mode=='light'">
+                                        <img src="@/assets/rem/performance/sjt.png" alt="" v-else>
+                                    </div>
+                                </div>
+                            </el-col>
+                        </pagePanelNew>
+                    </div>
+                </div>
+            </div>
         </pagePanelNew>
     </div>
 </template>
@@ -133,6 +263,8 @@
                 selectBlock: "",
                 //日期
                 rq: "",
+                //默认新版式
+                isNewformat:true,
                 //是否加载完成
                 loadFinish: false,
                 url: '\/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient.html',
@@ -174,6 +306,7 @@
             }
         },
         mounted() {
+            console.log(this.$store.state.setting.mode)
             /*this.getfetchOilFields1();//获取油田
             this.getProStatusAnalysis();//开采状况分析
             this.outputStatusAnalysis();//采出状况分析
@@ -695,7 +828,7 @@
                 }
                 Layers_cont.Objects = Objects
                 Layers[0] = Layers_cont;
-                data.Layers = Layers
+                data.Layers = Layers;
                 this.$refs.H5Chart.setSampleDate(data);
             },
             /*sjcl(tc) {
@@ -808,8 +941,6 @@
                 this.getProInjectionBalanceAnalysis();
                 this.outputStatusAnalysis()
                 this.clickAnalysis();
-
-
             },
             switchToAnaylsis() {
                 this.$router.push({
@@ -831,6 +962,194 @@
             justify-content: space-between;
             margin-bottom:20px;
         }
+        .z-content{
+            .z-content-n{
+                margin-top:16px;
+                display: flex;
+                .z-row{
+                    flex:1;
+                    .z_title{
+                        display: flex;
+                        align-items: center;
+                        position: relative;
+                        img{
+                            width:38px;
+                            height:38px;
+                            margin-right:10px;
+                        }
+                        span{
+                            font-size: 16px;
+                            color: #FFFFFF;
+                            text-align: center;
+                            font-weight: 600;
+                            z-index: 1;
+                        }
+                        &::before{
+                            content:'';
+                            background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                            width:110px;
+                            height:32px;
+                            position: absolute;
+                            left:60px;
+                            top:2px;
+                            z-index: 0;
+                        }
+                    }
+                    .z_title2{
+                        display: flex;
+                        align-items: center;
+                        position: relative;
+                        img{
+                            width:38px;
+                            height:38px;
+                            margin-right:20px;
+                        }
+                        span{
+                            font-size: 16px;
+                            color: #FFFFFF;
+                            text-align: center;
+                            font-weight: 600;
+                            z-index: 1;
+                        }
+                        &::before{
+                            content:'';
+                            background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                            width:110px;
+                            height:32px;
+                            position: absolute;
+                            left:50px;
+                            top:2px;
+                            z-index: 0;
+                        }
+                    }
+                }
+                .z_schedule{
+                    margin-top:22px;
+                    margin-bottom:10px;
+                    display: flex;
+                    align-items: center;
+                    .sp1{
+                        width:61px;
+                        font-size: 14px;
+                    }
+                    .z_proess{
+                        width:182px;
+                        height:16px;
+                        border: 1px solid rgba(41,171,226,1);
+                        margin-right:16px;
+                        display: flex;
+                        align-items: center;
+                        padding:2px;
+                        .z_proess_sp1{
+                            width:70%;
+                            height:12px;
+                            background: linear-gradient(to right, #2cbdfb 0%, #80e2bf 50%, #befe93 100%);
+                            b{
+                                font-size: 14px;
+                                color: #00223F;
+                                letter-spacing: 0;
+                                font-weight: 700;
+                                position: relative;
+                                top:-4px;
+                                left:14px;
+                            }
+                        }
+                        .z_proess_sp2{
+                            width:30%;
+                            height:12px;
+                            background: linear-gradient(to right, #ffc255 0%, #ff9c46 50%, #ff7b39 100%);
+                        }
+                    }
+                    .sp2{
+                        cursor: pointer;
+                        font-size: 14px;
+                        color:rgba(255,200,53,.8);
+                        b{
+                            font-size:20px;
+                            opacity: 1;
+                            color:#FFC835;
+                        }
+                    }
+                }
+            }
+        }
+        .tips{
+            width:590px;
+            height:40px;
+            display: flex;    
+            align-items: center;
+            padding-left:8px;
+            background: rgba(216,150,20,0.06);
+            border: 1px solid rgba(255,149,1,1);
+            border-radius: 2px;
+            margin-bottom:15px;
+            img{
+                width:20px;
+                height:20px;
+                margin-right:8px;
+            }
+        }
+        .remark0{
+            padding-left:14px;
+            width:590px;
+            height:38px;
+            line-height: 38px;
+            font-size: 16.8px;
+            color: #00DEF0;
+            background-color: #eef1f4;
+        }
+        .remark{
+            padding-left:14px;
+            width:590px;
+            height:38px;
+            line-height: 38px;
+            font-size: 16.8px;
+            color: #00DEF0;
+            background-color: #14334f;
+            background-image: linear-gradient(90deg, #004473 0%, rgba(0,72,122,0.22) 100%);
+        }
+        .z-well0{
+            width:285px;
+            height:36px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #D2E4FF;
+            font-size: 14px;
+            color:#313D4C;
+            font-weight: 400;
+            padding:0 14px;
+            margin-bottom:14px;
+            cursor: pointer;
+            img{
+                width:14px;
+                height:14px;
+            }
+        }
+        .z-well0:nth-child(1n){
+            margin-right:18px;
+        }
+        .z-well{
+            width:285px;
+            height:36px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-image: linear-gradient(0deg, #004473 0%, rgba(0,72,122,0.36) 100%);
+            font-size: 14px;
+            color: rgba(255,255,255,0.80);
+            font-weight: 400;
+            padding:0 14px;
+            margin-bottom:14px;
+            cursor: pointer;
+            img{
+                width:14px;
+                height:14px;
+            }
+        }
+        .z-well:nth-child(1n){
+            margin-right:18px;
+        }
     }
     
     .condationRow {
@@ -841,8 +1160,9 @@
     }
 
     .checkBtn {
-        width: 100px;
-        height: 30px;
+        width: 110px;
+        height: 28px;
+        font-size:14px;
         text-align: center;
         border-image: var(--primary-btn);
         background: var(--logo-bg) no-repeat top / contain, var(--primary-btn) !important;
@@ -851,16 +1171,18 @@
     }
 
     .about {
-        width: 100px;
-        height: 30px;
+        width: 110px;
+        height: 28px;
+        font-size:14px;
         text-align: center;
         background: rgb(2, 43, 117);
         color:#fff;
     }
 
     .noCheckBtn {
-        width: 100px;
-        height: 30px;
+        width: 110px;
+        height: 28px;
+        font-size:14px;
         text-align: center;
         background: rgba(143, 164, 204, 0.3);
     }
@@ -903,4 +1225,26 @@
         }
     }
     
+    
+    .checkBtn2{
+        width: 110px;
+        height: 28px;
+        text-align: center;
+        background: rgba(255,200,53,0.8);
+        font-size:14px;
+    }
+    .about2{
+        width: 110px;
+        height: 28px;
+        text-align: center;
+        background: rgba(0,133,225,0.34);
+        font-size:14px;
+    }
+    .noCheckBtn2{
+        width: 110px;
+        height: 28px;
+        text-align: center;
+        background: rgba(143,164,204,0.18);
+        font-size:14px;
+    }
 </style>
