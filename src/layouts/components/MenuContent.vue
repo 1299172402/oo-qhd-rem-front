@@ -97,14 +97,11 @@
           {{ item.title }}
         </template>
         <!-- :style="{'margin-left':item.icon==='#'? '0px' : item.icon==='icon' ? '0px': '10px'}"  -->
-        <!-- TODO: Maybe change back -->
-        <!-- <menu-content
-          v-if="
-            item.children && $store.state.setting.isSidebarCompact == false && $store.state.setting.layout === 'mix'
-          "
+       <menu-content
+          v-if="item.children && $store.state.setting.isSidebarCompact == false && $store.state.setting.layout === 'mix'"
           :nav-data="item.children"
-        /> -->
-        <div class="menuselect">
+        /> 
+        <div class="menuselect" v-show="!showSidebar  || $store.state.setting.isSidebarCompact">
           <div class="menuTitle">
             <svg-icon
               v-if="typeof item.icon === 'string' && item.icon && item.icon !== '#'"
@@ -139,6 +136,7 @@ import Vue, { PropType } from "vue";
 
 import { prefix } from "@/config/global";
 import { MenuRoute } from "@/interface";
+import { mapGetters } from "vuex";
 
 const getMenuList = (list: MenuRoute[], basePath?: string): MenuRoute[] => {
   if (!list) {
@@ -210,10 +208,17 @@ export default Vue.extend({
   computed: {
     list(): Array<MenuRoute> {
       return getMenuList(this.navData);
-    }
+    },
+     ...mapGetters({
+       showSidebar: "setting/showSidebar"
+      }),
   },
   methods: {
     onmouseoverRight(e) {
+        if(this.showSidebar && this.$store.state.setting.mode==='dark' && this.$store.state.setting.isSidebarCompact)  {
+            e.srcElement.parentNode.lastElementChild.style.border = '1px solid'
+            e.srcElement.parentNode.lastElementChild.style.borderImage = 'linear-gradient(180deg, rgba(116, 190, 243, 0.5), rgba(0, 180, 255, 1)) 1 1'
+        }
       const circle = document.getElementsByClassName("el-carousel__arrow");
       for(let i = 0; i < circle.length; i++){
           circle[i].style.zIndex = "0"
@@ -239,7 +244,13 @@ export default Vue.extend({
         }
       }
     },
-    onmouseleave(){
+    onmouseleave(e){
+        if(this.showSidebar && this.$store.state.setting.mode==='dark' && this.$store.state.setting.isSidebarCompact)  {
+            e.srcElement.firstElementChild.lastElementChild.style.borderWidth = ""
+            e.srcElement.firstElementChild.lastElementChild.style.borderStyle = ""
+            e.srcElement.firstElementChild.lastElementChild.style.borderImageSource = ""
+            e.srcElement.firstElementChild.lastElementChild.style.borderImage = ""
+        }
       const circle = document.getElementsByClassName("el-carousel__arrow");
       for(let i = 0; i < circle.length; i++){
           circle[i].style.zIndex = ""

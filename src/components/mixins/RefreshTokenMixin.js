@@ -91,9 +91,7 @@ export default {
      * 获取请求刷新的参数
      */
     getRequestData: function() {
-      const data = {
-        token: this.getToken()
-      };
+      const data = {};
       const userInfo = this.$store.getters["user/userInfo"];
       if (userInfo?.userName) {
         data.username = userInfo.userName;
@@ -106,6 +104,7 @@ export default {
       if (this.$route.query.srid) {
         data.srid = this.$route.query.srid;
       }
+      data.token = this.getToken();
       return data;
     },
     /**
@@ -131,7 +130,8 @@ export default {
       )
         .then(this.handleRequestResult);
     },
-    handleRequestResult: function({ data }) {
+    handleRequestResult: function(response) {
+      const data = response.data.data;
       if (this.isInIframe) {
         if (data.newToken) {
           this.$store.commit("user/setToken", data.newToken);
@@ -263,7 +263,9 @@ export default {
      * 将本地 token 更新给 store
      */
     setLocalToStoreToken: function() {
-      this.$store.commit("user/setToken", localStorage.getItem(this.refreshTokenData.TOKEN_NAME));
+      if (localStorage.getItem(this.refreshTokenData.TOKEN_NAME)) {
+        this.$store.commit("user/setToken", localStorage.getItem(this.refreshTokenData.TOKEN_NAME));
+      }
     }
   }
 };

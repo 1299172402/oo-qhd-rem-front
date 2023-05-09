@@ -28,22 +28,26 @@ export default {
       // 参数存在access_token进行跳转
       this.$store.commit("user/setToken", query.access_token);
       if (query.businessKey && query.taskId && query.processInstanceId) {
-        getAction(`/system/flow/task/${query.taskId}/view-component`, {}).then(res => {
+        getAction(`/system/flow/${query.url || "task"}/${query.taskId}/view-component`, {}).then(res => {
           if (res.success) {
             if (res.viewComponent) {
               this.$store.commit("tabRouter/removeTabRouterList");
               this.$store.commit("user/SETISGROUPLOGIN", false);
-              this.$router.push({
-                name: res.viewComponent,
-                query: {
-                  taskId: query.taskId,
-                  processInstanceId: query.processInstanceId,
-                  businessKey: query.businessKey
-                },
+              const { action, businessKey, taskId, processInstanceId } = query;
+              const queryParams = {
                 params: {
-                  action: query.action || "Audit"
-                }
-              });
+                  action,
+                  ...((action.toLowerCase() === "view" && { id: businessKey }) || {})
+                },
+                ...((action.toLowerCase() !== "view" && {
+                  query: {
+                    taskId,
+                    processInstanceId,
+                    businessKey
+                  }
+                }) || {})
+              };
+              this.$router.push({ name: res.viewComponent, ...queryParams });
             }
           }
         });

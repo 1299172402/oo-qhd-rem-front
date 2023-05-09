@@ -184,6 +184,7 @@ export default Vue.extend({
       <div>
         <t-popup
           visible={this.visible}
+          trigger="click"
           on-visible-change={val => { this.visible = val; }}
           content={() =>
             <SelectAuditorByDepModalForAudit

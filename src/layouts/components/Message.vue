@@ -7,7 +7,10 @@
     @visible-change="onPopupVisibleChange"
   >
     <template #content>
-      <div class="header-msg">
+      <div
+        class="header-msg"
+        @wheel="scrollBarWheel"
+      >
         <div class="header-msg-top">
           <p>通知</p>
           <!-- TODO: Maybe change back -->
@@ -36,7 +39,7 @@
             </p>
             <template #action>
               <t-button size="small" variant="outline" @click="sureWarn(item)">
-                {{ item.delType === '1' ? '确认': '处理' }}
+                {{ item.delType === "1" ? "确认" : "处理" }}
               </t-button>
             </template>
           </t-list-item>
@@ -58,12 +61,12 @@
         </div>
       </div>
     </template>
-    <t-badge :count="tableData.length" :offset="[15, 21]">
+    <t-badge :count="total" :offset="[15, 21]">
       <t-button
         theme="default"
         shape="square"
         variant="text"
-        style="background: transparent;border: 0;"
+        style="background: transparent; border: 0"
         @click="isNoticeVisible = true"
       >
         <!-- <notification-icon style="color: var(--white-color);"/> -->
@@ -78,7 +81,9 @@ import Vue from "vue";
 import { mapState } from "vuex";
 // import { NotificationIcon } from 'tdesign-icons-vue';
 import {
-  queryAlcAlarmByParam, updateAlcAlarmCheckTag
+  queryAlcAlarmByParam,
+  updateAlcAlarmCheckTag,
+  popoverRingMessage
 } from "@/api/intelligentOilfield/portal/projectionMode";
 import { NotificationItem } from "@/interface";
 import proxy from "@/config/host";
@@ -96,7 +101,10 @@ export default Vue.extend({
       queryParams: {
         pageNum: 1,
         pageSize: 10
-      }
+      },
+      timer: null,
+      firstGet: true,
+      total: 0
     };
   },
   computed: {
@@ -105,7 +113,31 @@ export default Vue.extend({
   created() {
     this.getList();
   },
+  mounted() {
+    this.pollingTime();
+  },
+  destroyed() {
+    window.clearInterval(this.timer);
+  },
   methods: {
+    pollingTime() {
+      this.timer = window.setInterval(() => {
+        setTimeout(() => {
+        // TODO: Maybe change back
+        // 调接口
+          popoverRingMessage().then(response => {
+            if (response.data.data.hasPopup === "1") { // 是否弹窗 0否 1是
+              this.isNoticeVisible = true;
+              if (response.data.data.hasSound === "1") { // 是否响铃 0否 1是
+                this.$emit("play-audio", true);
+              } else {
+                this.$emit("play-audio", false);
+              }
+            }
+          });
+        }, 0);
+      }, 300000);
+    },
     sureWarn(row) {
       if (row.delType === "1") {
         const queryParam = {
@@ -115,17 +147,52 @@ export default Vue.extend({
         this.$modal.confirm("是否已确定告警内容？").then(() =>
           updateAlcAlarmCheckTag(queryParam).then(() => {
             this.getList();
-          }));
-      } else {  // 处置
-        window.open(row.delUrl, "_blank");
+          })
+        );
+      } else {
+        // 处置
+        // window.open(row.delUrl, "_blank");
+        window.open(`${proxy[env].ALARMURL}${this.$store.getters["user/token"]}`, "_blank");
+      }
+    },
+    scrollBarWheel(e) {
+      e = e || window.event;
+
+      if (e.wheelDelta) {  // 判断浏览器IE，谷歌滑轮事件
+        if (e.wheelDelta < 0) {
+          this.queryParams.pageNum += 1;
+          const maxPageNum = Math.ceil(this.total / 10);
+
+          if (this.queryParams.pageNum <= maxPageNum) {
+            this.getList();
+          }
+        }
+      } else if (e.detail) {  // Firefox滑轮事件
+        if (e.detail < 0) {
+          this.queryParams.pageNum += 1;
+          const maxPageNum = Math.ceil(this.total / 10);
+          if (this.queryParams.pageNum <= maxPageNum) {
+            this.getList();
+          }
+        }
       }
     },
     getList() {
       // 获取列表
-      this.tableData = [];
       if (process.env.NODE_ENV !== "development" && window.location.host !== "114.115.233.247:38085") {
         queryAlcAlarmByParam(this.queryParams).then(response => {
-          this.tableData = response.data.rows;
+          const _res = JSON.parse(
+            JSON.stringify(response.data.rows)
+          );
+
+          this.tableData = [
+            ...this.tableData,
+            ..._res
+          ];
+          if (this.firstGet) {
+            this.total = response.data.total;
+            this.firstGet = false;
+          }
         });
       }
     },

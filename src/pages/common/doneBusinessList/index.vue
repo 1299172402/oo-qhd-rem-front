@@ -305,7 +305,8 @@ export default {
             businessKey,
             processInstanceId,
             taskId: id,
-            action: "View"
+            action: "View",
+            url: "instance"
           };
           jumpSupApp(res.data.data.appPcAccessUrl, query);
         });

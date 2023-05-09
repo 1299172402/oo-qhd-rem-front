@@ -31,7 +31,7 @@ const env = import.meta.env.MODE || "development";
 //           childRouter.children?.forEach((sonChild) => {
 //             const sonChildRoleCode = sonChild.meta?.roleCode || sonChild.name;
 //             if (roles.indexOf(sonChildRoleCode) === -1) {
-//               // 三级菜单搜索
+//               // 三级菜单检索
 //               children.forEach((el, index3) => {
 //                 el.children.forEach((element, index4) => {
 //                   if (element.name === sonChild.name) {
@@ -175,7 +175,7 @@ const actions = {
           mapList.push({ "path": "*", "redirect": "/pageInfo/error", "hidden": true });
           // 本地路由+动态路由整合
           const concatRouters = asyncRouterList.concat(mapList);
-          commit("setRouters", concatRouters.filter(v => !v.appId || v.appId === proxy[env].appId));
+          commit("setRouters", concatRouters);
           router.addRoutes(concatRouters);
         }
       });

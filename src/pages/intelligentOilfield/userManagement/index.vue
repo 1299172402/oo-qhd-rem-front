@@ -28,7 +28,20 @@
             :filter-node-method="filterNode"
             default-expand-all
             @node-click="handleNodeClick"
-          />
+          >
+            <template slot-scope="{ node }">
+              <el-tooltip
+                v-if="node.label.length>13"
+                class="item"
+                effect="dark"
+                :content="node.label"
+                placement="top"
+              >
+                <span class="treeNodeTextOver">{{ node.label }}</span>
+              </el-tooltip>
+              <span v-else class="treeNodeTextOver">{{ node.label }}</span>
+            </template>
+          </el-tree>
         </div>
       </el-col>
       <!--用户数据-->
@@ -52,7 +65,6 @@
                 v-model="queryParams.userName"
                 placeholder="请输入用户账号"
                 clearable
-                size="medium"
                 style="width: 240px; height: 40px"
                 @keyup.enter.native="handleQuery"
               />
@@ -252,21 +264,6 @@
               :show-overflow-tooltip="true"
             />
             <el-table-column
-              v-if="columns[1].visible"
-              label="用户角色"
-              align="center"
-              :show-overflow-tooltip="true"
-              width="173"
-            >
-              <template slot-scope="scope">
-                <div class="textOverFlow">
-                  <span v-for="(item, indexRow) in scope.row.roles" :key="indexRow">
-                    {{ item.roleName + (indexRow === scope.row.roles.length - 1 ? '' : '，') }}
-                  </span>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column
               v-if="columns[2].visible"
               label="用户岗位"
               align="center"
@@ -284,6 +281,7 @@
             <el-table-column
               v-if="columns[3].visible"
               key="deptName"
+              width="150"
               label="所属机构"
               align="center"
               prop="dept.deptName"
@@ -294,6 +292,7 @@
               key="userTenant"
               label="用户租户"
               align="center"
+              width="150"
               prop="tenantName"
               :show-overflow-tooltip="true"
             >
@@ -313,6 +312,7 @@
               label="是否为EHR用户"
               align="center"
               prop="ehr"
+              width="120"
               :show-overflow-tooltip="true"
             >
               <template slot-scope="scope">
@@ -324,6 +324,7 @@
               key="status"
               label="用户状态"
               align="center"
+              width="100"
             >
               <template slot-scope="scope">
                 <el-switch
@@ -381,8 +382,9 @@
                   修改
                 </el-button>
                 <el-button
-                  v-if="scope.row.userId !== '1' && scope.row.ehr !== '1' "
+                  v-if="scope.row.userId !== '1'"
                   v-hasPermi="['system:user:remove']"
+                  :disabled="scope.row.ehr === '1' "
                   size="mini"
                   type="text"
                   class="delbutton"
@@ -400,8 +402,8 @@
                   <span class="el-dropdown-link" style="font-size: 12px">更多</span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item
-                      v-if="scope.row.ehr !== '1' "
                       v-hasPermi="['system:user:resetPwd']"
+                      :disabled="scope.row.ehr === '1' "
                       command="handleResetPwd"
                       icon="el-icon-key"
                     >
@@ -1446,6 +1448,17 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+/deep/ .head-container .el-tree .el-tree-node__content {
+  margin: 0 10px;
+}
+
+.treeNodeTextOver {
+  overflow: hidden;
+  margin-right: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;//禁止换行
+}
+
 /deep/ .customSelect {
   max-height: 96px !important;
   width: 100% !important;

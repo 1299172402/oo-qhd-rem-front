@@ -10,14 +10,12 @@
         :inline="true"
       >
         <el-form-item label="菜单名称" prop="menuName">
-          <el-input
-            v-model="queryParams.menuName"
+          <input
+            v-model.lazy="queryParams.menuName"
+            class="el-input__inner"
             placeholder="请输入菜单名称"
-            clearable
-            style="width: 240px"
-            size="small"
-            @keyup.enter.native="handleQuery"
-          />
+            @keyup.enter="handleQuery"
+          >
         </el-form-item>
         <el-form-item v-if="showAppSearch" label="所属应用" prop="appId">
           <el-select
@@ -311,7 +309,13 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="菜单名称" prop="menuName">
-              <el-input v-model="form.menuName" placeholder="请输入菜单名称" />
+              <textarea
+                v-model.lazy="form.menuName"
+                :rows="1"
+                class="el-textarea__inner"
+                placeholder="请输入菜单名称"
+                @keydown="handlePushKeyword($event)"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -328,12 +332,18 @@
                   </el-tooltip>
                   路由名称
                 </span>
-                <el-input v-model="form.path" placeholder="请输入路由名称" />
+                <textarea
+                  v-model.lazy="form.path"
+                  :rows="1"
+                  class="el-textarea__inner"
+                  placeholder="请输入路由名称"
+                  @keydown="handlePushKeyword($event)"
+                />
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="12">
-            <div v-if="form.menuType != 'F'">
+            <div v-if="form.menuType != 'F' && form.menuType != 'M'">
               <el-form-item>
                 <span slot="label">
                   <el-tooltip content="选择是外链则路由地址需要以`http(s)://`开头" placement="top">
@@ -353,7 +363,7 @@
             </div>
           </el-col>
           <el-col :span="12">
-            <div v-if="form.menuType != 'F'">
+            <div v-if="form.menuType != 'F' && form.menuType != 'M'">
               <el-form-item :prop="form.isFrame === '0' ? 'link' : ''">
                 <span slot="label">
                   <el-tooltip
@@ -364,7 +374,13 @@
                   </el-tooltip>
                   路由地址
                 </span>
-                <el-input v-model="form.link" placeholder="请输入路由地址" />
+                <textarea
+                  v-model.lazy="form.link"
+                  :rows="1"
+                  class="el-textarea__inner"
+                  placeholder="请输入路由地址"
+                  @keydown="handlePushKeyword($event)"
+                />
               </el-form-item>
             </div>
           </el-col>
@@ -590,6 +606,12 @@ export default {
     this.getList();
   },
   methods: {
+    handlePushKeyword(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault(); // 阻止浏览器默认换行操作
+        return false;
+      }
+    },
     getSelectOptions() {
       this.searchOption = [];
       applicationAllList().then(response => {
@@ -795,6 +817,17 @@ export default {
 <style lang="less" scoped>
 ::v-deep .indentationClass .cell{
   margin-left: 24px;
+}
+
+::v-deep textarea{
+  resize: none;
+  font: var(--td-font-body-medium);
+  height: 38px;
+  line-height: 25px;
+  font-size: 13px;
+  overflow: hidden;
+  white-space: nowrap;
+  padding-right: 10px
 }
 
 .app-container {

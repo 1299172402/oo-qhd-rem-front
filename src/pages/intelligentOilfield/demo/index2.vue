@@ -9,39 +9,54 @@
     <div class="spaceMargin">
       1.1、折线图
     </div>
-    <charts-components :chart-data-options="dataOptionLine" echarts-type="line1" style="width: 600px; height: 400px" />
+    <charts-components
+      ref="dataOptionLine"
+      :chart-data-options="dataOptionLine"
+      echarts-type="line1"
+      style="width: 600px; height: 400px"
+    />
     <div class="spaceMargin">
       1.2、多Y轴折线图
     </div>
-    <charts-components :chart-data-options="char8" style="width: 600px; height: 400px" />
+    <charts-components ref="char8" :chart-data-options="char8" style="width: 600px; height: 400px" />
     <div class="spaceMargin">
       1.3、柱状折线混合图（设置了x轴文字过长显示）
     </div>
-    <charts-components :chart-data-options="dataZhuzhuang" echarts-type="bar1" style="width: 600px; height: 400px" />
+    <charts-components
+      ref="dataZhuzhuang"
+      :chart-data-options="dataZhuzhuang"
+      echarts-type="bar1"
+      style="width: 600px; height: 400px"
+    />
     <div class="spaceMargin">
       1.4、散点图
     </div>
-    <charts-components :chart-data-options="char4" style="width: 600px; height: 400px" />
+    <charts-components ref="char4" :chart-data-options="char4" style="width: 600px; height: 400px" />
     <div class="spaceMargin">
       1.5、横线柱状单一堆叠图
     </div>
-    <charts-components :chart-data-options="char5" style="width: 600px; height: 400px" />
+    <charts-components ref="char5" :chart-data-options="char5" style="width: 600px; height: 100px" />
     <div class="spaceMargin">
       1.6、横向柱状图
     </div>
-    <charts-components :chart-data-options="char6" style="width: 600px; height: 400px" />
+    <charts-components ref="char6" :chart-data-options="char6" style="width: 600px; height: 400px" />
     <div class="spaceMargin">
       1.7、多柱柱状图
     </div>
-    <charts-components :chart-data-options="char7" style="width: 1000px; height: 400px" />
+    <charts-components ref="char7" :chart-data-options="char7" style="width: 1000px; height: 400px" />
     <div class="spaceMargin">
       1.8、横向堆叠柱状图
     </div>
-    <charts-components :chart-data-options="char10" style="width: 600px; height: 400px" />
+    <charts-components ref="char10" :chart-data-options="char10" style="width: 600px; height: 400px" />
     <div class="spaceMargin">
       1.9、环形图
     </div>
-    <charts-components :chart-data-options="dataOption" echarts-type="pie1" style="width: 400px; height: 400px" />
+    <charts-components
+      ref="dataOption"
+      :chart-data-options="dataOption"
+      echarts-type="pie1"
+      style="width: 400px; height: 400px"
+    />
     <div class="spaceMargin">
       1.10、半环形图
     </div>
@@ -235,7 +250,6 @@ export default {
             label: {
               show: true,
               position: "center",
-
               formatter: `{total|${getRate}%}\n\n{lname|合格值}`,
               rich: {
                 total: {
@@ -245,7 +259,7 @@ export default {
                 },
                 lname: {
                   fontSize: 12,
-                  color: "#FFF"
+                  color: "#8FA4CC"
                 }
               }
             },
@@ -326,25 +340,31 @@ export default {
           }
         },
         legend: {
-          x: "46%",
-          top: "0%",
+          x: "center", // 可设定图例在左、右、居中
+          y: "bottom", // 可设定图例在上、下、居中
+          padding: [2, 0, 10, 0], // 可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
           textStyle: {
-            color: "gray",
-            fontSize: 12
+            color: getComputedStyle(document.documentElement).getPropertyValue("--text1"),
+            fontSize: 14
           },
           data: ["历史价格"]
         },
 
         grid: {
-          top: "25%",
+          top: "5%",
           left: "12%",
-          right: "3%",
-          bottom: "10%"
+          right: "13%",
+          bottom: "15%"
           // TODO: Maybe change back
           // containLabel: true
         },
         xAxis: [
           {
+            name: "日期(日)",
+            nameTextStyle: {
+              color: "#8FA4CC",
+              fontSize: 14
+            },
             type: "category",
             axisLine: {
               show: false,
@@ -352,8 +372,8 @@ export default {
             },
 
             axisLabel: {
-              color: "gray",
-              width: 100
+              color: "#8FA4CC",
+              fontSize: 14
             },
             splitLine: {
               show: false
@@ -397,9 +417,13 @@ export default {
         yAxis: [
           {
             name: "单位：元",
+            // 居中
+            nameLocation: "middle",
+            // 坐标轴名称与轴线之间的距离。
+            nameGap: 50,
             nameTextStyle: {
-              color: "gray",
-              fontSize: 12
+              color: "#8FA4CC",
+              fontSize: 14
             },
             type: "value",
             min: 0,
@@ -418,7 +442,8 @@ export default {
               show: true,
               margin: 15,
               textStyle: {
-                color: "gray"
+                color: "#8FA4CC",
+                fontSize: 14
               }
             },
             axisTick: {
@@ -494,9 +519,10 @@ export default {
           left: "5%"
         },
         grid: {
-          top: "28%",
-          right: "10%",
-          bottom: "18%" // 也可设置left和right设置距离来控制图表的大小
+          top: "5%",
+          left: "12%",
+          right: "13%",
+          bottom: "25%"
         },
         tooltip: {
           trigger: "axis",
@@ -530,14 +556,12 @@ export default {
           }
         ],
         legend: {
-          top: "20%",
-          left: "40%",
-          // icon: 'rect',
+          x: "center", // 可设定图例在左、右、居中
+          y: "bottom", // 可设定图例在上、下、居中
+          padding: [2, 0, 10, 0], // 可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
           textStyle: {
-            padding: [0, 0, 0, 10],
-            color: "gray",
-            fontSize: 14,
-            lineHeight: 16
+            color: getComputedStyle(document.documentElement).getPropertyValue("--text1"),
+            fontSize: 14
           },
           itemGap: 50,
           itemHeight: 10,
@@ -565,8 +589,8 @@ export default {
               return res;
             },
             textStyle: {
-              padding: [5, 0, 0, 0],
-              color: "gray" // X轴文字颜色
+              color: "#8FA4CC",
+              fontSize: 14
             }
           }
         },
@@ -574,8 +598,12 @@ export default {
           {
             type: "value",
             name: "吨",
+            // 居中
+            nameLocation: "middle",
+            // 坐标轴名称与轴线之间的距离。
+            nameGap: 30,
             nameTextStyle: {
-              color: "gray",
+              color: "#8FA4CC",
               fontSize: 14
             },
             splitLine: {
@@ -596,8 +624,8 @@ export default {
             axisLabel: {
               show: true,
               textStyle: {
-                fontSize: 14,
-                color: "gray"
+                color: "#8FA4CC",
+                fontSize: 14
               }
             }
           },
@@ -1138,7 +1166,20 @@ export default {
       char4: {
         color: ["#37A2DA"],
         grid: {
-          containLabel: true
+          top: "5%",
+          left: "12%",
+          right: "13%",
+          bottom: "15%"
+        },
+        legend: {
+          x: "center", // 可设定图例在左、右、居中
+          y: "bottom", // 可设定图例在上、下、居中
+          padding: [2, 0, 10, 0], // 可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
+          textStyle: {
+            color: getComputedStyle(document.documentElement).getPropertyValue("--text1"),
+            fontSize: 14
+          },
+          data: ["体重"]
         },
         tooltip: {
           trigger: "item",
@@ -1162,7 +1203,9 @@ export default {
           type: "value",
           scale: true,
           axisLabel: {
-            formatter: "{value} cm"
+            formatter: "{value} cm",
+            color: "#8FA4CC",
+            fontSize: 14
           },
           splitLine: {
             show: false,
@@ -1175,7 +1218,9 @@ export default {
           type: "value",
           scale: true,
           axisLabel: {
-            formatter: "{value} kg"
+            formatter: "{value} kg",
+            color: "#8FA4CC",
+            fontSize: 14
           },
           splitLine: {
             show: true,
@@ -1342,9 +1387,36 @@ export default {
       },
       char5: {
         "color": ["#4C98FB", "#83CCE7", "#26C7C8", "#73DEBD"],
-        "legend": { "top": "35%", "left": "30%", "data": ["华为", "中兴", "烽火", "瑞斯"] }, "grid": { "left": "15%" },
-        "xAxis": { "type": "value", "show": false, "minorSplitLine": { "show": false }},
-        "yAxis": { "type": "category", "data": ["各厂商端口占比"],
+        "legend": {
+          x: "center", // 可设定图例在左、右、居中
+          y: "bottom", // 可设定图例在上、下、居中
+          padding: [2, 0, 10, 0], // 可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
+          textStyle: {
+            color: getComputedStyle(document.documentElement).getPropertyValue("--text1"),
+            fontSize: 14
+          },
+          "data": ["华为", "中兴", "烽火", "瑞斯"] },
+        "grid": {
+          "left": "20%"
+        },
+        "xAxis": {
+          "type": "value",
+          "show": false,
+          "minorSplitLine": {
+            "show": false
+          }
+        },
+        "yAxis": {
+          "type": "category",
+          "data": ["各厂商端口占比"],
+          axisLabel: {
+            show: true,
+            margin: 15,
+            textStyle: {
+              color: "#8FA4CC",
+              fontSize: 14
+            }
+          },
           "axisLine": { "show": false },
           "axisTick": { "show": false }},
         "series": [
@@ -1358,11 +1430,19 @@ export default {
           "#1c9a4c"
         ],
         "grid": {
-          "left": "8%",
-          "right": "10%",
-          "top": "12%",
-          "bottom": "18%",
-          "containLabel": true
+          top: "5%",
+          left: "17%",
+          right: "13%",
+          bottom: "15%"
+        },
+        legend: {
+          x: "center", // 可设定图例在左、右、居中
+          y: "bottom", // 可设定图例在上、下、居中
+          padding: [2, 0, 10, 0], // 可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
+          textStyle: {
+            color: getComputedStyle(document.documentElement).getPropertyValue("--text1"),
+            fontSize: 14
+          }
         },
         "yAxis": {
           "data": [
@@ -1377,6 +1457,10 @@ export default {
           ],
           "axisTick": {
             "show": false
+          },
+          axisLabel: {
+            color: "#8FA4CC",
+            fontSize: 14
           }
         },
         "xAxis": [
@@ -1384,10 +1468,15 @@ export default {
             "axisTick": {
               "show": false
             },
+            splitLine: {
+              show: false
+            },
             "type": "value",
             "splitNumber": 5,
             "axisLabel": {
-              "formatter": "{value}%"
+              "formatter": "{value}%",
+              color: "#8FA4CC",
+              fontSize: 14
             }
           }
         ],
@@ -1402,7 +1491,7 @@ export default {
                 "position": "right",
                 "formatter": "{c}%",
                 "textStyle": {
-                  "color": "black"
+                  "color": "#8FA4CC"
                 }
               }
             },
@@ -1429,20 +1518,19 @@ export default {
         },
         legend: {
           data: ["接入率", "在线率", "完好率"],
-          align: "right",
-          right: 10,
+          x: "center", // 可设定图例在左、右、居中
+          y: "bottom", // 可设定图例在上、下、居中
+          padding: [2, 0, 10, 0], // 可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
           textStyle: {
-            color: "grey"
-          },
-          itemWidth: 10,
-          itemHeight: 10,
-          itemGap: 35
+            color: getComputedStyle(document.documentElement).getPropertyValue("--text1"),
+            fontSize: 14
+          }
         },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
-          containLabel: true
+          top: "5%",
+          left: "5%",
+          right: "13%",
+          bottom: "15%"
         },
         xAxis: [{
           type: "category",
@@ -1471,14 +1559,19 @@ export default {
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#088AD5"
+              color: "#8FA4CC",
+              fontSize: 14
             }
           }
         }],
         yAxis: [{
           type: "value",
           axisLabel: {
-            formatter: "{value} %"
+            formatter: "{value} %",
+            textStyle: {
+              color: "#8FA4CC",
+              fontSize: 14
+            }
           },
           axisTick: {
             show: false
@@ -1547,7 +1640,12 @@ export default {
           trigger: "axis"
         },
         grid: {
-          left: "25%"
+          top: "5%",
+          left: "25%",
+          right: "13%",
+          bottom: "18%"
+          // TODO: Maybe change back
+          // containLabel: true
         },
         toolbox: {
           feature: {
@@ -1565,11 +1663,12 @@ export default {
         },
         legend: {
           textStyle: {
-            color: "grey"
+            color: getComputedStyle(document.documentElement).getPropertyValue("--text1"),
+            fontSize: 14
           },
-          x: "right", // 可设定图例在左、右、居中
-          y: "top", // 可设定图例在上、下、居中
-          padding: [10, 0, 0, 0], // 可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
+          x: "center", // 可设定图例在左、右、居中
+          y: "bottom", // 可设定图例在上、下、居中
+          padding: [3, 0, 20, 0], // 可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
           position: "right",
           data: ["设备新增数量", "产品新增数量", "厂商新增数量"]
         },
@@ -1586,6 +1685,10 @@ export default {
                 width: 1, // y轴线的宽度
                 type: "dashed" // y轴线为实线
               }
+            },
+            axisLabel: {
+              color: "#8FA4CC",
+              fontSize: 14
             },
             data: [
               "2016-01",
@@ -1607,10 +1710,14 @@ export default {
           {
             type: "value",
             name: "设备新增数量",
+            nameTextStyle: {
+              color: "#8FA4CC",
+              fontSize: 14
+            },
             // 居中
             nameLocation: "middle",
             // 坐标轴名称与轴线之间的距离。
-            nameGap: 50,
+            nameGap: 55,
             min: 0,
             max: 11000,
             position: "left",
@@ -1621,7 +1728,12 @@ export default {
               show: true
             },
             axisLabel: {
-              formatter: "{value}"
+              show: true,
+              margin: 15,
+              textStyle: {
+                color: "#8FA4CC",
+                fontSize: 14
+              }
             },
             splitLine: {
               show: true,
@@ -1639,6 +1751,9 @@ export default {
           {
             type: "value",
             name: "产品新增数量",
+            nameTextStyle: {
+              fontSize: 14
+            },
             // 居中
             nameLocation: "middle",
             // 坐标轴名称与轴线之间的距离。
@@ -1653,7 +1768,10 @@ export default {
               show: true
             },
             axisLabel: {
-              formatter: "{value}"
+              formatter: "{value}",
+              textStyle: {
+                fontSize: 14
+              }
             },
             axisTick: {
               show: true
@@ -1664,6 +1782,9 @@ export default {
           },
           {
             type: "value",
+            nameTextStyle: {
+              fontSize: 14
+            },
             name: "厂商新增数量",
             // 居中
             nameLocation: "middle",
@@ -1680,7 +1801,10 @@ export default {
               show: true
             },
             axisLabel: {
-              formatter: "{value}"
+              formatter: "{value}",
+              textStyle: {
+                fontSize: 14
+              }
             },
             axisTick: {
               show: true
@@ -1713,10 +1837,22 @@ export default {
       },
       char10: {
         "tooltip": { "trigger": "axis", "axisPointer": { "type": "shadow" }},
-        "legend": { "show": true,
-          "data": [{ "name": "SO2", "icon": "rect" }, { "name": "O3", "icon": "rect" }],
-          "textStyle": { "lineHeight": 12, "verticalAlign": "middle", "fontSize": 12, color: "grey" }},
-        "grid": { "top": "10%", "left": "10%", "right": "15%", "bottom": "10%", "containLabel": true },
+        "legend": {
+          x: "center", // 可设定图例在左、右、居中
+          y: "bottom", // 可设定图例在上、下、居中
+          padding: [2, 0, 10, 0], // 可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
+          textStyle: {
+            color: getComputedStyle(document.documentElement).getPropertyValue("--text1"),
+            fontSize: 14
+          },
+          "data": [{ "name": "SO2", "icon": "rect" }, { "name": "O3", "icon": "rect" }]
+        },
+        "grid": {
+          top: "5%",
+          left: "12%",
+          right: "13%",
+          bottom: "15%"
+        },
         "xAxis": {
           "type": "value",
           "axisLine": {
@@ -1727,7 +1863,9 @@ export default {
             }},
           "axisLabel": {
             "show": true,
-            "color": "#686868", "fontSize": 16 },
+            color: "#8FA4CC",
+            fontSize: 14
+          },
           "axisTick": { "show": false },
           "splitLine": {
             "show": true,
@@ -1735,7 +1873,22 @@ export default {
               "color": "grey",
               opacity: 0.23
             }}},
-        "yAxis": { "type": "category", "data": ["地区一", "地区二", "地区三", "地区四"], "inverse": true, "axisLine": { "show": false }, "axisLabel": { "show": true, "color": "#686868", "fontSize": 16 }, "axisTick": { "show": false }, "splitLine": { "show": false }},
+        "yAxis": {
+          "type": "category",
+          "data": ["地区一", "地区二", "地区三", "地区四"],
+          "inverse": true,
+          "axisLine": {
+            "show": false
+          },
+          "axisLabel": {
+            "show": true,
+            color: "#8FA4CC",
+            fontSize: 14
+          },
+          "axisTick": {
+            "show": false
+          },
+          "splitLine": { "show": false }},
         "series": [
           { "name": "SO2",
             "type": "bar",
@@ -1748,12 +1901,24 @@ export default {
               "shadowOffsetX": 0,
               "shadowOffsetY": 3,
               "shadowBlur": 6 }},
-          { "name": "O3", "type": "bar", "barWidth": 20, "stack": "因子", "data": [21, 25, 25, 25], "itemStyle": { "color": "#F39927", "shadowColor": "rgba(0, 0, 0, 0.16)", "shadowOffsetX": 0, "shadowOffsetY": 3, "shadowBlur": 6 }}, { "name": "总计", "type": "bar", "barWidth": 20, "barGap": "-100%", "label": { "show": true, "offset": [10, 0], "position": "right", "textStyle": { "color": "#686868", "fontSize": 16 }}, "itemStyle": { "normal": { "color": "transparent" }}, "data": [33, 35, 45, 55] }] },
+          {
+            "name": "O3",
+            "type": "bar",
+            "barWidth": 20,
+            "stack": "因子",
+            "data": [21, 25, 25, 25],
+            "itemStyle": { "color": "#F39927",
+              "shadowColor": "rgba(0, 0, 0, 0.16)",
+              "shadowOffsetX": 0, "shadowOffsetY": 3, "shadowBlur": 6 }},
+          { "name": "总计", "type": "bar", "barWidth": 20, "barGap": "-100%", "label": { "show": true, "offset": [10, 0], "position": "right", "textStyle": { "color": "#8FA4CC", "fontSize": 16 }}, "itemStyle": { "normal": { "color": "transparent" }}, "data": [33, 35, 45, 55] }] },
       char11: {
         title: {
           x: "center",
           bottom: 80,
-          subtext: "信用等级"
+          subtext: "信用等级",
+          subtextStyle: {
+            color: "#8FA4CC"
+          }
         },
         tooltip: {
           show: true,
@@ -1837,7 +2002,10 @@ export default {
         title: {
           x: "center",
           bottom: 80,
-          subtext: "信用等级"
+          subtext: "信用等级",
+          subtextStyle: {
+            color: "#8FA4CC"
+          }
         },
         tooltip: {
           show: true,
@@ -2195,6 +2363,10 @@ export default {
               "show": false
             },
             "detail": {
+              textStyle: {
+                color: "#FFF",
+                fontSize: 29
+              },
               "rich": {
                 "white": {
                   "fontSize": 50,
@@ -2247,7 +2419,7 @@ export default {
             },
             "data": [
               {
-                "value": 91,
+                "value": 93,
                 "name": "订单响应占比"
               }
             ],
@@ -2455,6 +2627,28 @@ export default {
     },
     mode() {
       this.renderCharts();
+    },
+    "$store.state.setting.mode": {
+      handler() {
+        this.dataOptionLine.legend.textStyle.color = getComputedStyle(document.documentElement).getPropertyValue("--text1");
+        this.$refs.dataOptionLine.refreshEcharts();
+        this.char8.legend.textStyle.color = getComputedStyle(document.documentElement).getPropertyValue("--text1");
+        this.$refs.char8.refreshEcharts();
+        this.dataZhuzhuang.legend.textStyle.color = getComputedStyle(document.documentElement).getPropertyValue("--text1");
+        this.$refs.dataZhuzhuang.refreshEcharts();
+        this.char4.legend.textStyle.color = getComputedStyle(document.documentElement).getPropertyValue("--text1");
+        this.$refs.char4.refreshEcharts();
+        this.char5.legend.textStyle.color = getComputedStyle(document.documentElement).getPropertyValue("--text1");
+        this.$refs.char5.refreshEcharts();
+        this.char6.legend.textStyle.color = getComputedStyle(document.documentElement).getPropertyValue("--text1");
+        this.$refs.char6.refreshEcharts();
+        this.char7.legend.textStyle.color = getComputedStyle(document.documentElement).getPropertyValue("--text1");
+        this.$refs.char7.refreshEcharts();
+        this.char10.legend.textStyle.color = getComputedStyle(document.documentElement).getPropertyValue("--text1");
+        this.$refs.char10.refreshEcharts();
+      },
+      deep: true,
+      immediate: true
     }
   },
   mounted() {

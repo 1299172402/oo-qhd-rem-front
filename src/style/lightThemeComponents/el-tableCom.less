@@ -1,6 +1,8 @@
 .el-table tr {
-  //   color: rgba(0, 0, 0, 0.6);
-  background: unset;
+  // color: rgba(0, 0, 0, 0.6);
+//   background: #f5f5f5;
+  // TODO: Maybe change back，带图标的时候放开
+  background: var(--logo-bg) no-repeat top right #f5f5f5;
   color: #606266;
   font-size: 14px;
   font-weight: 400;
@@ -114,13 +116,15 @@
   font-size: 14px;
   color: var(--white-color);
   padding: 0 0 0 20px;
-  background: #3490d3;
+  //   background: #3490d3;
+  // TODO: Maybe change back，带图标的时候放开
+  background: var(--logo-bg) no-repeat top right #3490d3 !important;
 }
 
 .infoHeaderBg{
-  background: #fff;
+//   background: #3490d3;
   // TODO: Maybe change back，带图标的时候放开
-  //background: var(--logo-bg) no-repeat top right, linear-gradient(to right, #fff, #fff) !important;
+  background: var(--logo-bg) no-repeat top right, #3490D3;
 }
 
 .footerBox {
@@ -195,7 +199,8 @@
 .el-table__fixed-right,
 .el-table__fixed {
   height: calc(100% - 6px) !important;
-  z-index: 0
+  z-index: 0;
+  box-shadow: 0 -13px 18px 3px #b0b0b3;
 }
 
 .el-table__fixed-header-wrapper {
