@@ -1,8 +1,7 @@
 <template>
   <div style="height:100%;">
-    <el-container  class="layout">
-      <el-header height="auto">
-        <div class="titleBox">
+      <header-search height="auto">
+        <div class="titleBox" style="margin-top: 20px;">
           <el-tabs v-model="activeName" class="g-pageHeader">
             <el-tab-pane label="定产配注" name="first"></el-tab-pane>
             <el-tab-pane label="智能配注" name="second">
@@ -10,9 +9,9 @@
             </el-tab-pane>
           </el-tabs>
         </div>
-        <div v-if="activeName == 'first'" style="margin-top:20px;" >
+        <div v-if="activeName == 'first'" style="margin:20px 0;" >
           <span>油田：</span>
-          <el-select v-model="queryData.ogfId" filterable clearable disabled style="width:180px">
+          <el-select v-model="queryData.ogfId" filterable clearable disabled style="width:180px;margin-right: 10px">
             <el-option
               v-for="item in oilList"
               :key="item.ogfId"
@@ -21,12 +20,12 @@
             ></el-option>
           </el-select>
           <span>区块：</span>
-          <el-select v-model="queryData.blockId">
+          <el-select v-model="queryData.blockId" style="margin-right: 10px">
             <el-option
               v-for="item in blockList"
-              :key="item.blockId"
-              :label="item.blockName"
-              :value="item.blockId"
+              :key="item.fieldId"
+              :label="item.name"
+              :value="item.fieldId"
             ></el-option>
           </el-select>
           <span>时间：</span>
@@ -35,6 +34,7 @@
             type="month"
             placeholder="请选择"
             value-format="yyyy-MM"
+            style="margin-right: 10px"
           ></el-date-picker>
           <el-button
             icon="el-icon-search"
@@ -56,157 +56,154 @@
             </el-button>
           </span>
         </div>
-      </el-header>
-      <el-main style="height: auto">
-        <el-row v-if="activeName == 'first'"  :gutter="20" style="margin: 20px 20px">
-          <el-col :span="6">
-            <pagePanel :headerTitle="title1" class="g-w100">
-                <el-table
-                v-loading="tableData1.length>0?false:true"
-                element-loading-background="rgba(0,0,0,0.5)"
-                element-loading-text="数据加载中"
-                element-loading-spinner="el-icon-loading"
-                :data="tableData1"
-                id="indexscvFirst"
-                highlight
-                style="margin-top: 10px"
-                height="620"
-              >
-                <el-table-column prop="wellNo" label="油井井号" show-overflow-tooltip align="center" min-width="160"></el-table-column>
-                <el-table-column prop="fluidProdDaily" label="日配产量(m³/d)" align="center">
-                  <template slot="header">
-                    <p>
-                      日配产量
-                      <br />(m³/d)
-                    </p>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </pagePanel>
-          </el-col>
-          <el-col :span="18">
-            <pagePanel :headerTitle="title2" class="g-w100">
-                <div class="buttonBox">
-                  <el-button class="button" icon="el-icon-search" @click="assessBut">可行性评估</el-button>
-                  <!-- @click="modify = true" -->
-                  <el-button type="primary" icon="el-icon-edit" @click="modify = true">修改</el-button>
-                  <el-button
-                    type="primary"
-                    :loading="saveLoad"
-                    icon="el-icon-bank-card"
-                    @click="handleSubmit('form')"
-                  >保存</el-button>
-                </div>
-              <el-form ref="form" :rules="rules" label-width="100px" :model="form">
-                <el-table
-                  :data="form.tableData2"
-                  id="indexscvSecond"
-                  highlight
-                  height="620"
-                  style="margin-top: 10px"
-                  :header-cell-style="tableColor"
-                  :cell-style="tableColorone"
-                  :span-method="mergeTable"
-                >
-                  <el-table-column prop="injWellNo" label="注水井" align="center" min-width="120"></el-table-column>
-                  <el-table-column
-                    prop="injWellDaily"
-                    :render-header="renderheader"
-                    label="日配注量?(m³/d)"
-                    min-width="100"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column prop="injection" label="注采比" align="center"></el-table-column>
-                  <el-table-column prop="layerNo" min-width="200" label="层段号" align="center"></el-table-column>
-                  <el-table-column
-                    prop="froecastInjDaily"
-                    :render-header="renderheader"
-                    label="预测日配注量?(m³/d)"
-                    min-width="120"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="afterConfigurationInjDaily"
-                    :render-header="renderheader"
-                    label="上月实际日注水量?(m³/d)"
-                    min-width="150"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="afterInjDaily"
-                    :render-header="renderheader"
-                    label="上月日配注水量?(m³/d)"
-                    min-width="120"
-                    align="center"
-                  ></el-table-column>
-
-                  <el-table-column
-                    prop="configurationInjDaily"
-                    :render-header="renderheader"
-                    label="本月日配注量?(m³/d)"
-                    min-width="150"
-                    align="center"
-                  >
-                    <template slot-scope="scope">
-                      <el-form-item
-                        style="display: inline-block;"
-                        v-if="modify"
-                        :prop="'tableData2.'+scope.$index+'.configurationInjDaily'"
-                        :rules="rules.configurationInjDaily"
+      </header-search>
+      <pagePanelNew style="height: calc(100% - 160px)">
+          <el-row v-if="activeName == 'first'"  :gutter="20" style="height:100%;">
+              <el-col :span="6" style="height: 100%">
+                  <pagePanel :headerTitle="title1"  style="height: calc(100% - 30px)">
+                      <el-table
+                          v-loading="tableData1.length>0?false:true"
+                          element-loading-background="rgba(0,0,0,0.5)"
+                          element-loading-text="数据加载中"
+                          element-loading-spinner="el-icon-loading"
+                          :data="tableData1"
+                          id="indexscvFirst"
+                          highlight
+                          style="margin-top: 10px"
+                          height="100%"
                       >
-                        <el-input-number
-                          v-model="scope.row.configurationInjDaily"
-                          :min="0"
-                          :controls="false"
-                          style="width: 100%;margin-top: 5px;"
-                        />
-                      </el-form-item>
-                      <span v-else>
+                          <el-table-column prop="wellNo" label="油井井号" show-overflow-tooltip align="center" min-width="160"></el-table-column>
+                          <el-table-column prop="fluidProdDaily" label="日配产量(m³/d)" align="center">
+                              <template slot="header">
+                                  <p>
+                                      日配产量
+                                      <br />(m³/d)
+                                  </p>
+                              </template>
+                          </el-table-column>
+                      </el-table>
+                  </pagePanel>
+              </el-col>
+              <el-col :span="18" style="height:100%">
+                  <pagePanel :headerTitle="title2" style="height: calc(100% - 30px)">
+                      <div class="buttonBox">
+                          <el-button class="button" icon="el-icon-search" @click="assessBut">可行性评估</el-button>
+                          <!-- @click="modify = true" -->
+                          <el-button type="primary" icon="el-icon-edit" @click="modify = true">修改</el-button>
+                          <el-button
+                              type="primary"
+                              :loading="saveLoad"
+                              icon="el-icon-bank-card"
+                              @click="handleSubmit('form')"
+                          >保存</el-button>
+                      </div>
+                      <el-form ref="form" :rules="rules" style="height:calc(100% - 50px)" label-width="100px" :model="form">
+                          <el-table
+                              :data="form.tableData2"
+                              id="indexscvSecond"
+                              highlight
+                              style="margin-top: 10px"
+                              :header-cell-style="tableColor"
+                              :cell-style="tableColorone"
+                              :span-method="mergeTable"
+                              height="100%"
+                          >
+                              <el-table-column prop="injWellNo" label="注水井" align="center" min-width="120"></el-table-column>
+                              <el-table-column
+                                  prop="injWellDaily"
+                                  :render-header="renderheader"
+                                  label="日配注量?(m³/d)"
+                                  min-width="100"
+                                  align="center"
+                              ></el-table-column>
+                              <el-table-column prop="injection" label="注采比" align="center"></el-table-column>
+                              <el-table-column prop="layerNo" min-width="200" label="层段号" align="center"></el-table-column>
+                              <el-table-column
+                                  prop="froecastInjDaily"
+                                  :render-header="renderheader"
+                                  label="预测日配注量?(m³/d)"
+                                  min-width="120"
+                                  align="center"
+                              ></el-table-column>
+                              <el-table-column
+                                  prop="afterConfigurationInjDaily"
+                                  :render-header="renderheader"
+                                  label="上月实际日注水量?(m³/d)"
+                                  min-width="150"
+                                  align="center"
+                              ></el-table-column>
+                              <el-table-column
+                                  prop="afterInjDaily"
+                                  :render-header="renderheader"
+                                  label="上月日配注水量?(m³/d)"
+                                  min-width="120"
+                                  align="center"
+                              ></el-table-column>
+
+                              <el-table-column
+                                  prop="configurationInjDaily"
+                                  :render-header="renderheader"
+                                  label="本月日配注量?(m³/d)"
+                                  min-width="150"
+                                  align="center"
+                              >
+                                  <template slot-scope="scope">
+                                      <el-form-item
+                                          style="display: inline-block;"
+                                          v-if="modify"
+                                          :prop="'tableData2.'+scope.$index+'.configurationInjDaily'"
+                                          :rules="rules.configurationInjDaily"
+                                      >
+                                          <el-input-number
+                                              v-model="scope.row.configurationInjDaily"
+                                              :min="0"
+                                              :controls="false"
+                                              style="width: 100%;margin-top: 5px;"
+                                          />
+                                      </el-form-item>
+                                      <span v-else>
                         {{ scope.row.configurationInjDaily }}
                         <i
-                          v-if="scope.row.configurationInjDaily-scope.row.afterConfigurationInjDaily > 0 && scope.row.configurationInjDaily!=null"
-                          class="el-icon-my-export"
+                            v-if="scope.row.configurationInjDaily-scope.row.afterConfigurationInjDaily > 0 && scope.row.configurationInjDaily!=null"
+                            class="el-icon-my-export"
                         />
                         <i
-                          v-if="scope.row.configurationInjDaily == scope.row.afterConfigurationInjDaily && scope.row.configurationInjDaily!=null"
-                          class="el-icon-my-export2"
+                            v-if="scope.row.configurationInjDaily == scope.row.afterConfigurationInjDaily && scope.row.configurationInjDaily!=null"
+                            class="el-icon-my-export2"
                         />
                         <i
-                          v-if="scope.row.configurationInjDaily-scope.row.afterConfigurationInjDaily < 0 && scope.row.configurationInjDaily!=null"
-                          class="el-icon-my-export1"
+                            v-if="scope.row.configurationInjDaily-scope.row.afterConfigurationInjDaily < 0 && scope.row.configurationInjDaily!=null"
+                            class="el-icon-my-export1"
                         />
                       </span>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="layerRatio" label="注采比" align="center" min-width="80">
-                    <!-- <template slot-scope="scope">
-                                    <span>{{ scope.row.froecastInjDaily / scope.row.configurationInjDaily }}</span>
-                    </template>-->
-                  </el-table-column>
-                  <el-table-column prop="remark" label="备注" align="center" min-width="150">
-                    <template slot-scope="scope">
-                      <el-input v-if="modify" v-model="scope.row.remark" />
-                      <span v-else>{{ scope.row.remark }}</span>
-                    </template>
-                  </el-table-column>
-                </el-table>
-                <!-- v-if="activeName == 'second'" -->
-              </el-form>
-            </pagePanel>
-          </el-col>
-        </el-row>
-          
+                                  </template>
+                              </el-table-column>
+                              <el-table-column prop="layerRatio" label="注采比" align="center" min-width="80">
+                                  <!-- <template slot-scope="scope">
+                                                  <span>{{ scope.row.froecastInjDaily / scope.row.configurationInjDaily }}</span>
+                                  </template>-->
+                              </el-table-column>
+                              <el-table-column prop="remark" label="备注" align="center" min-width="150">
+                                  <template slot-scope="scope">
+                                      <el-input v-if="modify" v-model="scope.row.remark" />
+                                      <span v-else>{{ scope.row.remark }}</span>
+                                  </template>
+                              </el-table-column>
+                          </el-table>
+                          <!-- v-if="activeName == 'second'" -->
+                      </el-form>
+                  </pagePanel>
+              </el-col>
+          </el-row>
 
-        <iframe
-          style="margin-top:20px; width: 100%; height: 800px"
-          v-show="activeName == 'second'"
-          src="https://dl-front-qhd32-6znyt.tj.app.cnooc/sow/"
-        ></iframe>
+
+          <iframe
+              style="margin-top:20px; width: 100%; height: calc(100% - 20px)"
+              v-show="activeName == 'second'"
+              src="https://dl-front-qhd32-6znyt.tj.app.cnooc/sow/"
+          ></iframe>
         
-      </el-main>
-    </el-container>
-    
-    
+      </pagePanelNew>
   </div>
 </template>
 <script>
@@ -214,6 +211,7 @@ import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import { getWellMonthAllocation, getWellMonthInj, wellAvgFluidProdAllocUpdate } from "@/api/rem/r-intelligentIPA.js";
 import { exportExcel } from '@/lib/exportExcel.js';
 import Iframe from '@/components/rem/tools/iframe.vue'
+
 export default {
   components: {
     Iframe
@@ -469,7 +467,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .buttonBox {
-  float: right;
+  float: left;
   margin-bottom: 10px;
 }
 

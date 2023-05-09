@@ -4,6 +4,7 @@ import {
     getblockData,
     getWellData,
 } from "@/api/rem/r-intelligentIPA.js";
+import { fetchFields } from "@/api/rem/primaryinfoqhdrem";
 export default {
     data () {
         return {
@@ -43,16 +44,22 @@ export default {
          * 获取区块
          */
         queryBlockFeild () {
+            // let param = {
+            //     ogfId: this.queryData.ogfId,
+            // };
+            // getblockData(param).then((res) => {
+            //     this.blockList = res.blockList;
+            //     this.blockList.forEach(item => {
+            //         if (item.blockId == this.queryData.blockId) {
+            //             this.title = item.blockName
+            //         }
+            //     })
+            // });
             let param = {
-                ogfId: this.queryData.ogfId,
+                oilFieldId: this.queryData.ogfId,
             };
-            getblockData(param).then((res) => {
-                this.blockList = res.blockList;
-                this.blockList.forEach(item => {
-                    if (item.blockId == this.queryData.blockId) {
-                        this.title = item.blockName
-                    }
-                })
+            fetchFields(param).then((res) => {
+                this.blockList = res.data.data.fields;
             });
         },
         /**

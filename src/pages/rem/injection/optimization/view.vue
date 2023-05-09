@@ -1,7 +1,7 @@
 <template>
-  <el-container class="layout">
-    <el-header height="auto">
-      <div class="my-5">
+  <div class="container" style="height: 100%">
+    <header-search height="60px">
+      <div class="my-5" style="padding: 20px 0">
         <span>油田：</span>
         <el-select
           v-model="queryData.ogfId"
@@ -23,9 +23,9 @@
         <el-select v-model="queryData.blockId">
           <el-option
             v-for="item in blockList"
-            :key="item.blockId"
-            :label="item.blockName"
-            :value="item.blockId"
+            :key="item.fieldId"
+            :label="item.name"
+            :value="item.fieldId"
           ></el-option>
         </el-select>
         <span>时间：</span>
@@ -50,13 +50,13 @@
           </el-radio-group>
         </span>
       </div>
-    </el-header>
+    </header-search>
 
-    <el-main style="height: auto">
-      <el-row :gutter="20" style="margin: 20px 20px">
-        <el-col :span="6">
-          <pagePanel headerTitle="指定单井产量" style="height: 820px;" align="center">
-            <div align="right">
+    <pagePanelNew style="height: calc(100% - 100px)">
+      <el-row :gutter="20" style="height: 100%">
+        <el-col :span="6" style="height:100%">
+          <pagePanel headerTitle="指定单井产量" style="height: calc(100% - 10px);" align="center">
+            <div align="left">
               <el-button type="primary" align="left" icon="el-icon-edit" @click="modify1 = true">修改</el-button>
               <el-button type="primary" :loading="saveWellLoad" icon="el-icon-bank-card" @click="handleSubmit1">保存</el-button>
             </div>
@@ -100,14 +100,14 @@
           </pagePanel>
         </el-col>
 
-        <el-col :span="10">
-          <pagePanel headerTitle="指定注采比" style="height: 820px;" align="center">
-            <div class="buttonBox" align="right">
+        <el-col :span="10" style="height: 100%">
+          <pagePanel headerTitle="指定注采比" style="height: calc(100% - 10px);" align="center">
+            <div class="buttonBox" align="left">
               <el-button type="primary" icon="el-icon-edit" @click="queryEdit">修改</el-button>
               <el-button type="primary" icon="el-icon-bank-card" @click="handleSubmit2('form')" :loading="saveInLoad">保存</el-button>
             </div>
             <div>
-              <el-form ref="form" :rules="rules" label-width="100px" :model="form">
+              <el-form ref="form" :rules="rules" style="height:calc(100% - 50px)" label-width="100px" :model="form">
                 <el-table
                   v-if="radio == 1"
                   :data="form.tableData2"
@@ -117,7 +117,7 @@
                   :cell-style="tableColorone"
                   :header-cell-style="tableColor1"
                   :span-method="arrheader"
-                  height="720"
+                  height="calc(100% - 50px)"
                 >
                 <!-- :span-method="arrheader" -->
                   <el-table-column prop="injWellNo" label="水井井号" width="150" align="center"></el-table-column>
@@ -170,7 +170,7 @@
                   :data="form.tableData2"
                   id="indexscv"
                   highlight
-                  height="700"
+                  height="calc(100% - 50px)"
                   :span-method="arrheader1"
                   style="margin-top: 10px"
                 >
@@ -208,8 +208,8 @@
           </pagePanel>
         </el-col>
 
-        <el-col :span="8">
-          <pagePanel headerTitle="预测结果" style="min-height: 350px;max-height: 520px;margin-bottom: 20px;overflow-y: hidden" align="center">
+        <el-col :span="8" style="height:100%">
+          <pagePanel headerTitle="预测结果" style="height: calc(50% - 10px);margin-bottom: 20px;overflow-y: hidden" align="center">
             <template slot="header">
               <div style="display: flex; margin: 3px 10px 0 10px;justify-content: end;">
                 <el-button
@@ -238,14 +238,14 @@
               <el-table-column prop="layerRatio" label="层注采比" align="center"></el-table-column>
             </el-table>
           </pagePanel>
-          <pagePanel headerTitle="" style="height: 280px;">
+          <pagePanelNew style="height: calc(50% - 20px);">
             <el-button type="text" class="foreBtn">预测结果</el-button>
-            <Echart :chart-data="getEchart()"></Echart>
-          </pagePanel>
+            <Echart style="height:100%" :chart-data="getEchart()"></Echart>
+          </pagePanelNew>
         </el-col>
       </el-row>
-    </el-main>
-  </el-container>
+    </pagePanelNew>
+  </div>
 </template>
 <script>
 
@@ -578,9 +578,17 @@ export default {
             }
           }
         },
+        grid: {
+          left: "3%",
+          right: "13%",
+          bottom: "15%",
+          containLabel: true,
+        },
         legend: {
           data: ['层配注量', '层配产量', '注采比'],
-          left: '10%'
+          textStyle:{color:'#a9a8a8'},
+          bottom: "0",
+          left: "center",
         },
         xAxis: [
           {
@@ -607,7 +615,12 @@ export default {
             name: '注采比',
             axisLabel: {
               formatter: '{value}'
-            }
+            },
+            nameTextStyle: {
+              color: "#3399ff",
+              padding:[0,0,30,0]
+            },
+            nameLocation:"center",
           }
         ],
         series: [
