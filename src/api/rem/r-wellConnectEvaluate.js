@@ -144,7 +144,7 @@ export function getChopSection (params) {
         method: "post",
         params
     }).then((res) => {
-        return res.data.data
+        return res
     })
         ;
 }
@@ -287,12 +287,7 @@ export function postdividingCoefficient (params) {
         method: "post",
         params,
     }).then((res) => {
-        if (res.data.data) {
-            // 返回数据 [{"wellGroupId":"井组标识", "wellGroupName":"井组名"}]
-            return res.data.data;
-        } else {
-            return [];
-        }
+        return res
     });
 }
 

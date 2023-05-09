@@ -6,7 +6,7 @@
         <el-form label-width="60px" style="margin-top: 10px">
           <el-row style="display: flex">
             <el-form-item label="油田：">
-              <el-select v-model="queryData.ogfId" @change="changeOil">
+              <el-select v-model="queryData.ogfId">
                 <el-option
                   v-for="item in oilList"
                   :key="item.oilFieldId"
@@ -253,17 +253,12 @@ export default {
   created() {
     const params = JSON.parse(localStorage.getItem("PRODUCTION_SPLIT"));
     if (params && params.blockId) {
-      this.queryData.ogfId.value = params.ogfId.value;
-      this.queryData.ogfId.label = params.ogfId.label;
-      this.queryData.blockId.value = params.blockId.value;
-      this.queryData.blockId.label = params.blockId.label;
+      console.log(params);
+      this.queryData.ogfId = params.ogfId
+      this.queryData.blockId = params.blockId
       this.queryData.wellCategory = params.wellCategory;
       this.queryData.value = params.value;
-      let arr = [];
-      params.wellId.forEach((item) => {
-        arr.push(item.wellId);
-      });
-      this.queryData.wellId = arr;
+      this.queryData.wellId = params.wellId[0].wellId;
       localStorage.removeItem("PRODUCTION_SPLIT");
     } else {
       this.queryData.wellCategory = "01";
@@ -290,15 +285,8 @@ export default {
      */
     queryOilFeild() {
       getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
-        console.log(res, "111111111111111111111");
         this.oilList = res.data.data;
       });
-    },
-    //改变油田
-    changeOil() {
-      // this.queryData.blockId = "";
-      this.queryData.wellId = [];
-      this.queryBlockFeild();
     },
     /**
      * 获取区块
@@ -374,6 +362,7 @@ export default {
         startTime: this.queryData.startTime,
         wellIdList: this.queryData.wellId,
         wellType: this.queryData.wellCategory,
+        blockId: this.queryData.blockId
       };
       if (this.queryData.wellId.length == 0 || this.queryData.value.length == 0) {
         this.tableData = [];
@@ -385,7 +374,6 @@ export default {
         return;
       }
       getProductionSplit(params).then((res) => {
-        console.log(res);
         res.data.data.forEach((item) => {
           item.name = item.wellNo;
           item.id = item.wellId;
@@ -453,11 +441,11 @@ export default {
      * 劈分剖面
      */
     splitSection(str) {
-      if (this.queryData.wellId.length > 0) {
+      if (this.queryData.wellId) {
         let arr = [];
-        this.queryData.wellId.forEach((item) => {
-          this.wellList.forEach((data) => {
-            if (item == data.wellId) {
+        this.queryData.wellId
+         this.wellList.forEach((data) => {
+            if (this.queryData.wellId == data.wellId) {
               let obj = {
                 wellName: data.wellName,
                 wellId: data.wellId,
@@ -465,16 +453,9 @@ export default {
               arr.push(obj);
             }
           });
-        });
         let crr = {
-          ogfId: {
-            value: this.queryData.ogfId.value,
-            label: this.queryData.ogfId.label,
-          }, //油田
-          blockId: {
-            value: this.queryData.blockId.value,
-            label: this.queryData.blockId.label,
-          }, //区块
+          ogfId:  this.queryData.ogfId, //油田
+          blockId:this.queryData.blockId, //区块
           wellCategory: this.queryData.wellCategory, //井别
           wellId: arr, //井号
           value: this.queryData.value,
