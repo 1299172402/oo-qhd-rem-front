@@ -26,6 +26,7 @@
                 </div>
                 <div style="margin-right:15px;">
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="Retrieval">搜索</el-button>
+                    <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
             </div>
         </header-search>
@@ -1087,6 +1088,13 @@
             this.Retrieval();
         },
         methods: {
+            //重置
+            resetting(){
+                this.selectOilField='3FC9A818F5BC43B88270DB80BBB3018F';
+                this.selectBlock='3FC9A818F5BC43B88270DB80BBB3018F';
+                this.cx='';
+                this.Retrieval();
+            },
             //切换tabs
             handleClick() {
                 console.log(this.activeName)
