@@ -90,6 +90,15 @@ export default ({ mode }) => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api\/prm\/api/, ""),
         },
+        "/dev-api/masterService/api": {
+          // 主服务转发请求
+          // 接口网关地址：http://10.77.79.57:8080
+          // 接口微服务地址：http://10.77.78.243:8003
+          // 接口微服务名称：oo-csc-csc-masterdata-atom
+          target: "http://10.77.78.243:8003",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/dev-api\/masterService\/api/, ""),
+        },
         "/dev-api": {
           // 用于开发环境下的转发请求
           // 更多请参考：https://vitejs.dev/config/#server-proxy
