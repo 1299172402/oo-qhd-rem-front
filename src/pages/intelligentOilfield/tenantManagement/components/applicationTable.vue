@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="updateData" height="calc(100vh - 580px)">
+    <el-table style="min-height: 200px;" :data="updateData" height="calc(100vh - 580px)">
       <el-table-column
         type="index"
         label="序号"

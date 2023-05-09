@@ -55,7 +55,11 @@ const state = {
 
 const mutations = {
   setToken(state, token) {
-    localStorage.setItem(TOKEN_NAME, token);
+    if (!token) {
+      localStorage.removeItem(TOKEN_NAME);
+    } else {
+      localStorage.setItem(TOKEN_NAME, token);
+    }
     state.token = token;
   },
   SETISMAX: (state, isMax) => {

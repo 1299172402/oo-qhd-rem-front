@@ -203,8 +203,8 @@ export default {
           this.ipagination.pageSize = pagination.limit;
           break;
         case "tdesign":
-          this.ipagination.current = pagination.current;
-          this.ipagination.pageSize = pagination.pageSize;
+          this.ipagination.current = pagination.pagination.current;
+          this.ipagination.pageSize = pagination.pagination.pageSize;
           break;
         default:
           break;

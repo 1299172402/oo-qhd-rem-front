@@ -8,7 +8,8 @@ const config = {
   LOGIN_TYPES: ["password", "corp_oauth"],
   // 右上角报警点击“查看跳转”路径
   MESSAGEURL: "https://amm.tjioms-dev.tjltd.cnooc/#/appCallback?rediect=reportlnformation/source",
-  appId: "$system$"
+  appId: "$system$",
+  ALARMURL: "https://amm.tjioms-dev.tjltd.cnooc/#/reportPolice/source?access_token="
 };
 
 export default {

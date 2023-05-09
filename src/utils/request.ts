@@ -85,7 +85,7 @@ instance.interceptors.request.use(
     //   config.headers.Authorization = `Bearer ${store.getters['user/token']}`;
     // }
     // 判断当前请求是否设置了不显示Loading
-    if (config.headers.showLoading !== false && config.url !== "system/rang/queryCurrent") {
+    if (config.headers.showLoading !== false && config.url !== "system/rang/queryCurrent" && config.url.substring(0, config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam") {
       showLoading(config.headers.loadingTarget);
     }
     return config;

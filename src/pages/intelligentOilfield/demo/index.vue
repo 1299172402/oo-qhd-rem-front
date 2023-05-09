@@ -1074,10 +1074,11 @@
     <div class="spaceMargin">
       23.1、老版带标题
     </div>
+    <div>注意：右上角放大按钮默认为隐藏，如使用请将属性:show-btn="true"即可</div>
     <page-panel
       header-title="我是标题"
       style="height: 600px"
-      :show-btn="true"
+      :show-btn="false"
       @zoom-out-com="zoomOutCom"
     >
       <!-- <div>这里显示主内容，padding为20px</div> -->
@@ -1118,17 +1119,19 @@
       </el-table>
     </page-panel>
     <div class="spaceMargin">
-      23.2、新版不带标题
+      23.2、新版不带标题【注意：仅推荐单列表页面使用该组件作为列表面板】
     </div>
-    <page-panel-new style="height: 600px" :show-btn="true" @zoom-out-com="zoomOutComNew" />
+    <div>注意：右上角放大按钮默认为隐藏，如使用请将属性:show-btn="true"即可</div>
+    <page-panel-new style="height: 600px" :show-btn="false" @zoom-out-com="zoomOutComNew" />
     <div class="headerTitle spaceMargin">
       24、自定义info信息窗【建议只在拖拽面板页面使用】=========================================================================================
     </div>
+    <div>注意：右上角放大按钮默认为隐藏，如使用请将属性:is-show-max-btn="true"即可</div>
     <info-window
       info-width="400px"
       info-height="300px"
       header-title="开采现状分析"
-      :is-show-max-btn="true"
+      :is-show-max-btn="false"
     >
       <div style="padding: 20px">
         放主内容

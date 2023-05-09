@@ -343,7 +343,7 @@
             </div>
           </el-col>
           <el-col :span="12">
-            <div v-if="form.menuType != 'F'">
+            <div v-if="form.menuType != 'F' && form.menuType != 'M'">
               <el-form-item>
                 <span slot="label">
                   <el-tooltip content="选择是外链则路由地址需要以`http(s)://`开头" placement="top">
@@ -363,7 +363,7 @@
             </div>
           </el-col>
           <el-col :span="12">
-            <div v-if="form.menuType != 'F'">
+            <div v-if="form.menuType != 'F' && form.menuType != 'M'">
               <el-form-item :prop="form.isFrame === '0' ? 'link' : ''">
                 <span slot="label">
                   <el-tooltip

@@ -7,7 +7,10 @@
     @visible-change="onPopupVisibleChange"
   >
     <template #content>
-      <div class="header-msg">
+      <div
+        class="header-msg"
+        @wheel="scrollBarWheel"
+      >
         <div class="header-msg-top">
           <p>通知</p>
           <!-- TODO: Maybe change back -->
@@ -58,7 +61,7 @@
         </div>
       </div>
     </template>
-    <t-badge :count="tableData.length" :offset="[15, 21]">
+    <t-badge :count="total" :offset="[15, 21]">
       <t-button
         theme="default"
         shape="square"
@@ -99,7 +102,9 @@ export default Vue.extend({
         pageNum: 1,
         pageSize: 10
       },
-      timer: null
+      timer: null,
+      firstGet: true,
+      total: 0
     };
   },
   computed: {
@@ -146,15 +151,48 @@ export default Vue.extend({
         );
       } else {
         // 处置
-        window.open(row.delUrl, "_blank");
+        // window.open(row.delUrl, "_blank");
+        window.open(`${proxy[env].ALARMURL}${this.$store.getters["user/token"]}`, "_blank");
+      }
+    },
+    scrollBarWheel(e) {
+      e = e || window.event;
+
+      if (e.wheelDelta) {  // 判断浏览器IE，谷歌滑轮事件
+        if (e.wheelDelta < 0) {
+          this.queryParams.pageNum += 1;
+          const maxPageNum = Math.ceil(this.total / 10);
+
+          if (this.queryParams.pageNum <= maxPageNum) {
+            this.getList();
+          }
+        }
+      } else if (e.detail) {  // Firefox滑轮事件
+        if (e.detail < 0) {
+          this.queryParams.pageNum += 1;
+          const maxPageNum = Math.ceil(this.total / 10);
+          if (this.queryParams.pageNum <= maxPageNum) {
+            this.getList();
+          }
+        }
       }
     },
     getList() {
       // 获取列表
-      this.tableData = [];
       if (process.env.NODE_ENV !== "development" && window.location.host !== "114.115.233.247:38085") {
         queryAlcAlarmByParam(this.queryParams).then(response => {
-          this.tableData = response.data.rows;
+          const _res = JSON.parse(
+            JSON.stringify(response.data.rows)
+          );
+
+          this.tableData = [
+            ...this.tableData,
+            ..._res
+          ];
+          if (this.firstGet) {
+            this.total = response.data.total;
+            this.firstGet = false;
+          }
         });
       }
     },

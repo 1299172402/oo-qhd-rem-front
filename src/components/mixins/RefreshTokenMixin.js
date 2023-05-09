@@ -263,7 +263,9 @@ export default {
      * 将本地 token 更新给 store
      */
     setLocalToStoreToken: function() {
-      this.$store.commit("user/setToken", localStorage.getItem(this.refreshTokenData.TOKEN_NAME));
+      if (localStorage.getItem(this.refreshTokenData.TOKEN_NAME)) {
+        this.$store.commit("user/setToken", localStorage.getItem(this.refreshTokenData.TOKEN_NAME));
+      }
     }
   }
 };
