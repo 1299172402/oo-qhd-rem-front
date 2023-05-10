@@ -3,8 +3,8 @@
     <!--        <headerSearch  height="auto">-->
     <div>
       <header-search class="g-w100 g-h100" style="height: auto; align-items: center">
-        <el-form label-width="60px" style="margin-top: 10px">
-          <el-row style="display: flex">
+        <el-form label-width="60px" style="">
+          <el-row style="display: flex; margin-top: 25px">
             <el-form-item label="油田：">
               <el-select v-model="queryData.ogfId">
                 <el-option
@@ -57,6 +57,7 @@
             </el-form-item>
 
             <el-button type="primary" icon="el-icon-search" style="margin-left: 20px" @click="doSearch">搜索</el-button>
+            <el-button icon="el-icon-refresh" class="commonBtn" @click="resettingQuery">重置</el-button>
           </el-row>
         </el-form>
       </header-search>
@@ -222,6 +223,7 @@ export default {
         startTime: "",
         endTime: "",
       },
+      fixedTime: [],
       //油田下拉框
       oilList: [],
       datePickOptions: {
@@ -254,8 +256,8 @@ export default {
     const params = JSON.parse(localStorage.getItem("PRODUCTION_SPLIT"));
     if (params && params.blockId) {
       console.log(params);
-      this.queryData.ogfId = params.ogfId
-      this.queryData.blockId = params.blockId
+      this.queryData.ogfId = params.ogfId;
+      this.queryData.blockId = params.blockId;
       this.queryData.wellCategory = params.wellCategory;
       this.queryData.value = params.value;
       this.queryData.wellId = params.wellId[0].wellId;
@@ -362,7 +364,7 @@ export default {
         startTime: this.queryData.startTime,
         wellIdList: this.queryData.wellId,
         wellType: this.queryData.wellCategory,
-        blockId: this.queryData.blockId
+        blockId: this.queryData.blockId,
       };
       if (this.queryData.wellId.length == 0 || this.queryData.value.length == 0) {
         this.tableData = [];
@@ -443,19 +445,19 @@ export default {
     splitSection(str) {
       if (this.queryData.wellId) {
         let arr = [];
-        this.queryData.wellId
-         this.wellList.forEach((data) => {
-            if (this.queryData.wellId == data.wellId) {
-              let obj = {
-                wellName: data.wellName,
-                wellId: data.wellId,
-              };
-              arr.push(obj);
-            }
-          });
+        this.queryData.wellId;
+        this.wellList.forEach((data) => {
+          if (this.queryData.wellId == data.wellId) {
+            let obj = {
+              wellName: data.wellName,
+              wellId: data.wellId,
+            };
+            arr.push(obj);
+          }
+        });
         let crr = {
-          ogfId:  this.queryData.ogfId, //油田
-          blockId:this.queryData.blockId, //区块
+          ogfId: this.queryData.ogfId, //油田
+          blockId: this.queryData.blockId, //区块
           wellCategory: this.queryData.wellCategory, //井别
           wellId: arr, //井号
           value: this.queryData.value,
@@ -469,9 +471,24 @@ export default {
         this.$message.error("请填写完毕");
       }
     },
+    //重置
+    resettingQuery() {
+      this.queryData.blockId = this.blockList[0].fieldId;
+      this.queryData.wellCategory = this.wellCategoryList[0].id;
+      let paraPlatForm = {
+        oilFieldId: this.queryData.ogfId,
+      };
+      fetchProductionWells(paraPlatForm).then((res) => {
+        //判断联通状态
+        if (res.data.code == 200) {
+          let wellList = res.data.data.productionWells;
+          this.wellList = wellList.filter((el) => el.wellName);
 
-    selectWell(val) {
-      console.log(val);
+          this.queryData.wellId = "DA0269628E74490ABDE198E7D1DBF3EA";
+        }
+      });
+      this.queryData.value = [timeNew.format("YYYY-MM-DD"), lastDay.format("YYYY-MM-DD")];
+      this.queryProductionSplit();
     },
     /**
      * 劈分系数

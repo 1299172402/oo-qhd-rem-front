@@ -35,6 +35,7 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="queryserch()" icon="el-icon-search">搜索</el-button>
+              <el-button type="primary" @click="refresh()" icon="el-icon-refresh">重置</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -107,9 +108,9 @@ import {
   fetchInjectionWellsByPlatform,
   fetchProductionWells,
   fetchProductionWellsByPlatform,
-} from '@/api/oilDeposit/rem-02/primaryinfo.js';
-import { queryLayerList, getOilFieldList } from '@/api/rem/workcompanydesignate';
-import { saveControlledReserves, getControlledReserves } from '@/api/rem/welldetailedevaluationresult';
+} from "@/api/oilDeposit/rem-02/primaryinfo.js";
+import { queryLayerList, getOilFieldList } from "@/api/rem/workcompanydesignate";
+import { saveControlledReserves, getControlledReserves } from "@/api/rem/welldetailedevaluationresult";
 export default {
   components: {},
   data() {
@@ -117,17 +118,17 @@ export default {
       cwOptions: [],
       edit: true,
       queryData: {
-        assetCode: '',
-        month: new Date().format('yyyy-MM'),
-        ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
-        wellId: '09D30C16BD1D4F759D53F74941701307',
-        orgId: '715AD1CD60484BB59E737CD18A9DE44A',
-        pt: '',
+        assetCode: "",
+        month: new Date().format("yyyy-MM"),
+        ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+        wellId: "09D30C16BD1D4F759D53F74941701307",
+        orgId: "715AD1CD60484BB59E737CD18A9DE44A",
+        pt: "",
       },
       deptSelect: [
         {
-          deptId: '715AD1CD60484BB59E737CD18A9DE44A',
-          deptName: '秦皇岛32-6渤中作业公司',
+          deptId: "715AD1CD60484BB59E737CD18A9DE44A",
+          deptName: "秦皇岛32-6渤中作业公司",
         },
       ], //作业公司
       wells: [],
@@ -143,7 +144,7 @@ export default {
   },
   methods: {
     getList() {
-      getOilFieldList({ orgId: '715AD1CD60484BB59E737CD18A9DE44A' }).then((res) => {
+      getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
         if (res.data.code == 200) {
           this.oilFields = res.data.data;
         }
@@ -157,10 +158,10 @@ export default {
             if (res.data.code == 200) {
               this.platforms = res.data.data.platform;
               this.platforms.map((n) => {
-                if (n.platName == '全部') {
-                  n.platFormId = '';
+                if (n.platName == "全部") {
+                  n.platFormId = "";
                 }
-                this.queryData.pt = '';
+                this.queryData.pt = "";
               });
             }
           });
@@ -176,7 +177,7 @@ export default {
         if (res.data.data) {
           this.djclForm = res.data.data;
         } else {
-          this.djclForm = []
+          this.djclForm = [];
         }
       });
     },
@@ -188,7 +189,7 @@ export default {
         if (res.data.code == 200) {
           this.cwOptions = res.data.data;
         } else {
-          this.$message.error('系统错误请重新尝试或联系运维人员！');
+          this.$message.error("系统错误请重新尝试或联系运维人员！");
         }
         console.log(this.tableData);
       });
@@ -200,14 +201,14 @@ export default {
       saveControlledReserves({ ...this.djclForm, wellId: this.queryData.wellId }).then((res) => {
         if (res.data.code == 200) {
           this.edit = true;
-          this.$message.success('保存成功！');
+          this.$message.success("保存成功！");
         } else {
-          this.$message.error('系统错误请重新尝试或联系运维人员！');
+          this.$message.error("系统错误请重新尝试或联系运维人员！");
         }
       });
     },
     getData() {
-      let oilFieldId = '3FC9A818F5BC43B88270DB80BBB3018F';
+      let oilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
       const request = {
         oilFieldId,
       };
@@ -232,57 +233,82 @@ export default {
     },
     //平台下拉-change
     onPlatfromChange(val) {
-        console.log(this.queryData.ogfId);
-        console.log(val);
-        this.getFetchWells(this.queryData.ogfId, val);
+      this.getFetchWells(this.queryData.ogfId, val);
+    },
+    // 重置仅重置搜索条件与下方查询内容无关
+    refresh() {
+      this.queryData.pt = "";
+      let oilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
+      const request = {
+        oilFieldId,
+      };
+      fetchProductionWells(request).then((res) => {
+        if (res.data.code == 200) {
+          let wellList = res.data.data.productionWells;
+          let arr = [];
+          wellList.map((n) => {
+            if (n.wellName != null) {
+              arr.push(n);
+            }
+          });
+
+          this.wells = [...arr];
+          this.wells.unshift({
+            wellId: "",
+            wellName: "全部",
+          });
+          this.queryData.wellId = ''
+        }
+      });
     },
     //通过油田 或 平台 获得井
     getFetchWells(oilFieldId, platformId) {
       this.wells = [];
-      if (oilFieldId == platformId) {
-          const request = {oilFieldId};
-          fetchProductionWells(request).then((res) => {
-              if (res.data.code == 200) {
-                  let wellData=res.data.data.productionWells||[];
-                  if(wellData.length){
-                      const wellList = wellData.filter(el=>el.wellName);
-                      this.wells = this.wells.concat(wellList);
-                  }
-              }
-              fetchInjectionWells(request).then((res) => {
-                  if (res.data.code == 200) {
-                      const waterWellList = res.data.data.injectionWell || [];
-                      this.wells = this.wells.concat(waterWellList);
-                  }
+      if (platformId == "") {
+        const request = { oilFieldId };
+        fetchProductionWells(request).then((res) => {
+          if (res.data.code == 200) {
+            let wellData = res.data.data.productionWells || [];
+            if (wellData.length) {
+              const wellList = wellData.filter((el) => el.wellName);
+              this.wells = this.wells.concat(wellList);
+            }
+          }
+          fetchInjectionWells(request).then((res) => {
+            if (res.data.code == 200) {
+              const waterWellList = res.data.data.injectionWell || [];
+              this.wells = this.wells.concat(waterWellList);
+              this.wells.unshift({
+                wellId: "",
+                wellName: "全部",
               });
+            }
           });
+        });
       } else {
-          const request = {platformId};
-          fetchProductionWellsByPlatform(request).then((res) => {
-              if (res.data.code == 200) {
-                  let wellData=res.data.data.productionWells||[];
-                  if(wellData.length){
-                      const wellList = wellData.filter(el=>el.wellName);
-                      this.wells = this.wells.concat(wellList);
-                  }
-              }
-              fetchInjectionWellsByPlatform(request).then((res) => {
-                  if (res.data.code == 200) {
-                      const waterWellList = res.data.data.injectionWell || [];
-                      this.wells = this.wells.concat(waterWellList);
-                      this.wells.unshift({
-                          wellId: '',
-                          wellName: '全部'
-                      });
-                      this.queryData.wellId = '';
-                  }
+        const request = { platformId };
+        fetchProductionWellsByPlatform(request).then((res) => {
+          if (res.data.code == 200) {
+            let wellData = res.data.data.productionWells || [];
+            if (wellData.length) {
+              const wellList = wellData.filter((el) => el.wellName);
+              this.wells = this.wells.concat(wellList);
+            }
+          }
+          fetchInjectionWellsByPlatform(request).then((res) => {
+            if (res.data.code == 200) {
+              const waterWellList = res.data.data.injectionWell || [];
+              this.wells = this.wells.concat(waterWellList);
+              this.wells.unshift({
+                wellId: "",
+                wellName: "全部",
               });
+              this.queryData.wellId = "";
+            }
           });
-          
+        });
       }
-
     },
-
   },
 };
 </script>
@@ -312,7 +338,7 @@ export default {
   padding-left: 80px;
 
   &::after {
-    content: '';
+    content: "";
     width: calc(100% - 20px);
     height: 100%;
     position: absolute;
@@ -324,7 +350,7 @@ export default {
     z-index: -1;
   }
   &::before {
-    content: '';
+    content: "";
     width: 100%;
     height: calc(100% - 20px);
     position: absolute;

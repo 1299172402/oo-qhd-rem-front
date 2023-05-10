@@ -87,7 +87,6 @@ export default {
             },
             splitLine: {
               show: true,
-
               lineStyle: {
                 color: "rgba(255,255,255,.16)",
               },
@@ -142,9 +141,24 @@ export default {
         ],
       },
     };
+    
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+    this.getinfo()
+  },
+  methods: {
+    getinfo(){
+//       this.histogram.timeTicket = setInterval(function() {
+//    axisData =  ["1月", "2月", "3月", "4月"],data_series = [123, 224, 523, 222, 341, 231, 112];
+//     var data0 = option.series[0].data;
+//     var p2 = data0.shift();
+//     data0.push(p2);
+//     var kl =  this.histogram.xAxis[0].data.shift();
+//      this.histogram.xAxis[0].data.push(kl);
+//     myChart.setOption( this.histogram);
+// }, 3000);
+    }
+  },
 };
 </script>
 <style lang="scss" scoped>

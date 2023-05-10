@@ -33,7 +33,7 @@
         </pagePanel>
       </el-col>
     </el-row>
-    <el-row :gutter="20">
+    <el-row :gutter="20" style="position:relative;top:-50px">
       <el-col :span="17">
         <pagePanel headerTitle="秦皇岛32-6油田月度产量对比图" style="height: 450px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('fault')">详细</button>
@@ -47,7 +47,7 @@
         </pagePanel>
       </el-col>
     </el-row>
-    <el-row :gutter="20">
+    <el-row :gutter="20" style="position:relative;top:-50px">
       <el-col :span="9">
         <pagePanel headerTitle="产能波动" style="height: 450px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('fault')">详细</button>
@@ -67,7 +67,7 @@
         </pagePanel>
       </el-col>
     </el-row>
-    <el-row :gutter="20">
+    <el-row :gutter="20"  style="position:relative;top:-50px">
       <el-col :span="9">
         <pagePanel headerTitle="秦皇岛32-6南区" style="height: 750px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>
@@ -99,7 +99,7 @@
       
       </el-col>
     </el-row>
-    <el-row :gutter="20">
+    <el-row :gutter="20"  style="position:relative;top:-50px">
       <el-col :span="8">
         <pagePanel headerTitle="自然递减率" style="height: 450px; width: 100%" class="g-w100">
           <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>

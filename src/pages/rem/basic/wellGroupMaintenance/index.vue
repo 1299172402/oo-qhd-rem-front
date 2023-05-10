@@ -34,7 +34,10 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" size="mini" class="confirmBut" @click="tableOilfield">搜索</el-button>
+          <el-button type="primary" size="mini" icon="el-icon-search" class="confirmBut" @click="tableOilfield"
+            >搜索</el-button
+          >
+          <el-button class="commonBtn" @click="reset" icon="el-icon-refresh"> 重置 </el-button>
         </el-form-item>
       </el-form>
     </header-search>
@@ -56,7 +59,7 @@
           </el-button>
         </el-col>
         <el-col :span="1">
-           <el-button
+          <el-button
             class="commonBtn"
             type="primary"
             @click="preserve"
@@ -289,7 +292,6 @@ export default {
         wellGroupId: this.select.waterBlock,
         blockId: this.query.selectBlock,
       }).then((res) => {
-        console.log(res);
         let data = [];
         // this.cities.push(...wellGroup);
         // this.cities.forEach((city, index) => {
@@ -411,7 +413,6 @@ export default {
             layerId: res.data.data[0].layerId,
             layerName: res.data.data[0].layerName,
           });
-          console.log(arr);
           this.waterList = arr;
           this.cwOptions = arr;
           this.select.waterBlock = arr[0].wellId;
@@ -485,7 +486,6 @@ export default {
         this.waterList = res.data.data.injectionWell;
       });
       fetchProductionWells({ oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F" }).then((res) => {
-        console.log(res, "xxxxxxxxxxxxxx");
         let wellGroup = res.data.data.productionWells;
         let data = [];
         wellGroup.forEach((item) => {
@@ -552,9 +552,18 @@ export default {
     },
     // 保存
     saveBut() {
-      saveAllWellGroup().then(() => {
-        this.$message.success("保存成功");
+      saveAllWellGroup().then((res) => {
+        if (res.data.code == 200) {
+          this.$message.success("保存成功");
+        } else {
+          this.$message.error("系统错误请重新尝试或联系运维人员！");
+        }
       });
+    },
+    // 重置
+    reset() {
+      this.query.selectBlock = this.blanks[0].fieldId;
+      (this.query.value2 = this.getDate()), this.tableOilfield();
     },
   },
 };

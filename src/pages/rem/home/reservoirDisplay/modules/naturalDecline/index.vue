@@ -1,36 +1,9 @@
 <template>
   <Echart :chart-data="histogram" width="100%" height="100%"></Echart>
-  <!-- :style="{
-          background: currentModel == 'dark' ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0)',
-        }" -->
 </template>
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
-import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
-import { LineChart } from "echarts/charts";
-import * as echarts from "echarts/core";
-import { GridComponent, TooltipComponent, LegendComponent } from "echarts/components";
-import { CanvasRenderer } from "echarts/renderers";
-echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
-var data = {
-  color: ["#F87535", "#177cf1"],
-  x: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
-  y: [{ min: null, max: null, name: "(自然递减率（%））" }],
-  data: [
-    {
-      data: ["21", "3", "38", "9", "8.5", "5", "35", "25", "14", "11", "9", "25"],
-    },
-    {
-      data: ["13", "9.3", "9", "17", "8.5", "11.5", "9.3", "9", "17", "8.5", "27.5", "23.666"],
-    },
-  ],
-};
-//前端细节区分
-var tip = {
-  tofiexd: 2, //y轴刻度保留2位数小数
-  unit: "%", //y轴刻度单位
-};
-var type = "line_auto_up_down";
+import * as echarts from "echarts";
 export default {
   props: ["infodata"],
   components: {
@@ -40,188 +13,161 @@ export default {
     return {
       currentModel: this.$store.state.setting.mode,
       histogram: {
-        title: {
-          x: "center",
-          top: "5",
-          textStyle: { color: "#a9a8a8" },
-        },
         tooltip: {
           trigger: "axis",
-          confine: true,
-          axisPointer: {
-            type: "line",
+          formatter: function (params, ticket, callback) {
+            var res = params[0].name;
+            for (var i = 0, l = params.length; i < l; i++) {
+              if (params[i].seriesType === "line") {
+                res += "<br/>" + params[i].seriesName + " : " + (params[i].value ? params[i].value : "-") + "";
+              } else {
+                res += "<br/>" + params[i].seriesName + " : " + (params[i].value ? params[i].value : "-") + "";
+              }
+            }
+            return res;
           },
         },
-            legend: {
-          data: ["关停影响产量", "关停井数"],
+        grid: {
+          top: "10%",
+          left: "5%",
+          right: "5%",
+          bottom: "8%",
+          containLabel: true,
+        },
+        legend: {
+          data: ["自然递减率（正）", "自然递减率（负）"],
           bottom: "bottom",
           textStyle: {
             color: "#a9a8a8",
           },
         },
-        // legend: {
-        //   show: true,
-        //   bottom: 15,
-        //   textStyle: { color: "#a9a8a8" },
-        // },
-        xAxis: {
-          type: "category",
-          axisLabel: {
-            color: "#a9a8a8",
+        xAxis: [
+          {
+            type: "category",
+            axisTick: {
+              alignWithLabel: true,
+            },
+            axisLabel: {
+              textStyle: {
+                color: "#a9a8a8",
+              },
+            },
+            data: ['2023-01','2023-02','2023-03','2023-04'],
           },
-          axisLine: {
-            lineStyle: { color: "#a9a8a8" },
-          },
-          data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
-        },
+        ],
         yAxis: [
           {
-            type: "value",
-            show: true,
-            min: null,
-            max: null,
-            name: "(单位：xx)",
-            splitLine: { show: false },
-            axisLine: {
-              lineStyle: { color: "#a9a8a8" },
+            name: "地质储量采油速度(%)",
+            nameTextStyle: {
+              color: "#a9a8a8",
+              padding: [0, 0, 20, 0], // 上、右、下、左
             },
-          },
-          {
+
             type: "value",
-            show: false,
-            min: null,
-            max: null,
-            name: "(单位：xx)",
-            splitLine: { show: false },
-            axisLine: {
-              lineStyle: { color: "#a9a8a8" },
+            nameLocation: "center",
+            position: "left",
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: "#a9a8a8",
+              },
+            },
+            axisLabel: {
+              formatter: "{value} ",
+              textStyle: {
+                color: "#a9a8a8",
+              },
             },
           },
         ],
-        grid: {
-          left: "4%",
-          right: "4%",
-          bottom: "15%",
-          top: "20%",
-          containLabel: true,
-        },
         series: [
-          //   {
-          //     label: {
-          //       color:"#ffffff"
-          //     },
-          //   },
+          {
+            name: "自然递减率（正）",
+            type: "line",
+            smooth: true,
+            // symbol: "none",
+            itemStyle: {
+              borderWidth: "1px",
+              color: "rgb(25,125,243)",
+            },
+
+            label: {
+              normal: {
+                show: false,
+                position: "top",
+              },
+            },
+            lineStyle: {
+              normal: {
+                width: 2,
+                shadowColor: "rgba(0,0,0,0.4)",
+                shadowBlur: 10,
+                shadowOffsetY: 10,
+              },
+            },
+            data: [10, 15, 20, 25, 30, 25, 20, 15, 10, 8, 6, 5, 3, 1],
+          },
+          {
+            name: "自然递减率（负）",
+            type: "line",
+            smooth: true,
+            // symbol: "true",
+            label: {
+              normal: {
+                show: false,
+                position: "top",
+              },
+            },
+            itemStyle: {
+              borderWidth: "1px",
+              color: "rgb(254,1113,53)",
+            },
+            lineStyle: {
+              normal: {
+                width: 3,
+                shadowColor: "rgba(0,0,0,0.4)",
+                shadowBlur: 10,
+                shadowOffsetY: 10,
+              },
+            },
+            markArea: {
+              silent: true,
+              color: "rgba(255, 250, 205, 0.2)",
+              data: [
+                [
+                  {
+                    xAxis: "93",
+                  },
+                  {
+                    xAxis: "130",
+                  },
+                ],
+                [
+                  {
+                    xAxis: "0",
+                  },
+                  {
+                    xAxis: "19",
+                  },
+                ],
+                [
+                  {
+                    xAxis: "148",
+                  },
+                  {
+                    xAxis: "200",
+                  },
+                ],
+              ],
+            },
+            data: [-2, -4, -5, -6, -7, -9, -12, -13, -14, -15, -13, -11],
+          },
         ],
       },
     };
   },
-  mounted() {
-    //后端传数据源进行处理
-    if (data.title) {
-      this.histogram.title.text = data.title;
-    }
-    if (data.color) {
-      var arrColor = data.color;
-      this.histogram.color = arrColor;
-    }
-    if (data.x) {
-      this.histogram.xAxis.data = data.x;
-    }
-    //全局处理设置Y轴刻度单位（默认无单位），显示多少位小数(默认0位)
-    var sunit = "",
-      stofixed = 0;
-    //前端控制设置
-    if (tip) {
-      if (tip.tofiexd) {
-        stofixed = tip.tofiexd;
-      }
-      if (tip.unit) {
-        sunit = tip.unit;
-      }
-    }
-    for (var mm = 0; mm < data.y.length; mm++) {
-      if (data.y[mm].name) {
-        this.histogram.yAxis[mm].name = data.y[mm].name;
-      }
-      if (data.y[mm].min) {
-        this.histogram.yAxis[mm].min = data.y[mm].min;
-      }
-      if (data.y[mm].max) {
-        this.histogram.yAxis[mm].max = data.y[mm].max;
-      }
-
-      this.histogram.yAxis[mm].axisLabel = {
-        formatter: function (val) {
-          if (stofixed == 0) {
-            return val + sunit;
-          } else {
-            return val.toFixed(stofixed) + sunit;
-          }
-        },
-      };
-    }
-    if (data.y.length > 1) {
-      //双Y轴处理
-      this.histogram.yAxis[1].show = true;
-    }
-    //line_auto_up_down标注文字上下自动排序显示类型处理
-    if (type == "line_auto_up_down") {
-      var arrVal1 = [],
-        arrVal2 = [];
-      for (var i = 0; i < data.data.length; i++) {
-        var val = data.data[i];
-        var tmp = {
-          name: val.name,
-          yAxisIndex: 0,
-          type: "line",
-          data: [],
-        };
-        for (var j = 0; j < val.data.length; j++) {
-          var vval = {
-            value: val.data[j],
-            label: { show: true },
-          };
-          tmp.data.push(vval);
-        }
-        this.histogram.series.push(tmp);
-      }
-
-      for (var j = 0; j < data.data[0].data.length; j++) {
-        arrVal1.push(data.data[0].data[j]);
-        arrVal2.push(data.data[1].data[j]);
-      }
-      //判断数组大小并进行上下自动显示
-      if (arrVal1.length == arrVal2.length) {
-        for (var j = 0; j < arrVal1.length; j++) {
-          var val0 = this.histogram.series[0].data[j].value;
-          var val1 = this.histogram.series[1].data[j].value;
-          if (Number(val0) > Number(val1) || Number(val0) == Number(val1)) {
-            this.histogram.series[0].data[j].label.position = "top";
-            this.histogram.series[1].data[j].label.position = "bottom";
-          } else {
-            this.histogram.series[0].data[j].label.position = "bottom";
-            this.histogram.series[1].data[j].label.position = "top";
-          }
-        }
-      }
-    }
-  },
+  mounted() {},
   methods: {},
 };
 </script>
-<style lang="scss" scoped>
-// .f1 {
-//   margin: 10px;
-// }
-.cont {
-  & > div {
-    margin-top: 20px;
-  }
-}
-.m1 {
-  margin-top: 10px;
-}
-.f1 {
-  margin-left: 10px;
-}
-</style>
+<style lang="scss" scoped></style>

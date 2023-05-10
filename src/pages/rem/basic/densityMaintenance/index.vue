@@ -45,8 +45,8 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button size="mini" @click="getInfo" type="primary">搜索 </el-button>
-          <el-button size="mini" @click="reset" class="commonBtn">重置 </el-button>
+          <el-button size="mini" @click="getInfo" icon="el-icon-search" type="primary">搜索 </el-button>
+          <el-button size="mini" @click="reset" icon="el-icon-refresh" class="commonBtn">重置 </el-button>
         </el-form-item>
       </el-form>
     </headerSearch>
@@ -63,7 +63,7 @@
         @current-change="handleCurrentChange"
         highlight-current-row
         height="calc(100% - 30px)"
-        style="margin-top:10px"
+        style="margin-top: 10px"
         :row-style="{ height: '0px' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
         header-cell-class-name="table_header"
@@ -400,10 +400,12 @@ export default {
       }
     },
     // 重置
-    reset(){
-   this.queryParams.ogfId = this.oilFields[0].oilFieldId 
-   this.queryParams.productTypeCode = this.producttype[0].appendixValueCode
-    }
+    reset() {
+      (this.queryParams.ogfId = "3FC9A818F5BC43B88270DB80BBB3018F"),
+        (this.queryParams.orgId = "715AD1CD60484BB59E737CD18A9DE44A");
+        this.queryParams.productTypeCode = "002001"
+        this.getInfo()
+    },
   },
 };
 </script>
