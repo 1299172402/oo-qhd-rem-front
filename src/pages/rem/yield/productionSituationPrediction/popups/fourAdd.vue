@@ -36,8 +36,8 @@
                 <el-input v-model="formObj.remark" size="medium"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button @click="calcSingleWellMeasure">计算单井配产量</el-button>
-                <el-button @click="saveEvt">保存</el-button>
+                <el-button type="primary" @click="calcSingleWellMeasure">计算单井配产量</el-button>
+                <el-button type="primary" @click="saveEvt">保存</el-button>
             </el-form-item>
         </el-form>
         <el-dialog title="选择作业措施" :visible.sync="SelDialogFlag" width="30%" height="40%" :modal-append-to-body="false" :close-on-press-escape="false" :destroy-on-close="true">

@@ -80,12 +80,13 @@
             :value="item.wellGroupId"
           ></el-option>
         </el-select>
-        <el-button type="primary" icon="el-icon-search" style="margin-right: 20px" @click="doSearch">搜索 </el-button>
+        <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索 </el-button>
+        <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
         <el-button
           type="primary"
           icon="el-icon-upload2"
           @click="ljpmUploadDialog"
-          style="margin-left: 0px !important"
+          style="margin-left: auto !important"
           v-if="currentModule == 'connecting'"
           >上传文档</el-button
         >
@@ -97,6 +98,7 @@
           :auto-upload="false"
           :on-change="useUploadPic"
           :show-file-list="false"
+          style="margin-left: auto !important"
         >
           <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
         </el-upload>
@@ -384,6 +386,18 @@ export default {
     this.initData();
   },
   methods: {
+    //重置
+    resetting(){
+    	let activeName=this.activeName;
+    	let currentModule=this.currentModule;
+    	this.currentModule='';
+    	this.$nextTick(()=>{
+    		Object.assign(this.$data, this.$options.data());
+    		this.activeName=activeName;
+    		this.currentModule=currentModule;
+    		this.initData();
+    	})
+    }, 
     //点击一级tabs
     handleClick(tab) {
       this.activeName = tab.name;

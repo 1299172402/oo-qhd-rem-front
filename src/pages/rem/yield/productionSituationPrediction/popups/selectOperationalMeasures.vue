@@ -7,7 +7,7 @@
             <el-tree :data="treeList" @node-click="handleNodeClick"></el-tree>
         </div>
         <el-row>
-            <el-button @click="handleConfirmBtnEvt">确定</el-button>
+            <el-button type="primary" @click="handleConfirmBtnEvt">确定</el-button>
         </el-row>
     </div>
 </template>

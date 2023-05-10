@@ -16,6 +16,7 @@
                 <el-date-picker v-model="selectDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="monthrange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" style="margin-right:20px">
                 </el-date-picker>
                 <el-button icon="el-icon-search" type="primary" @click="searchThing">搜索</el-button>
+                <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 <span style="margin-left:auto;">单位选择：</span>
                 <el-select v-model="selectUnitOfProduction" placeholder="请选择" style="width: 100px;margin-right:20px">
                     <el-option v-for="item in unitOfProduction" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -593,17 +594,15 @@
                 }
             }
         },
-        created() {
-            //初始化时间段
-            this.selectDate = [];
-            // this.selectDate = ['2002-06-01','2002-06-05'];
-            //初始化筛选设置
-            this.setParaValue = '10';
-        },
         mounted() {
             this.initData();
         },
         methods: {
+            //重置
+            resetting(){
+                Object.assign(this.$data, this.$options.data());
+                this.initData();
+            },
             async initData() {
                 await fetchOilFields().then((res) => {
                     if (res.data.code == 200) {

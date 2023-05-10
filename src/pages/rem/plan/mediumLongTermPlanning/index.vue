@@ -12,9 +12,8 @@
             :value="item.oilFieldId"
           ></el-option>
         </el-select>
-        <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="searchForOilField"
-          >搜索</el-button
-        >
+        <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="searchForOilField">搜索</el-button>
+        <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
       </div>
     </header-search>
     <page-panel-new class="tablebox" :show-btn="true">
@@ -219,9 +218,15 @@ export default {
   },
   mounted() {
     this.initData();
-    // this.getPageAuthMessage();
   },
   methods: {
+    //重置
+    resetting(){
+    	this.$nextTick(()=>{
+    		Object.assign(this.$data, this.$options.data());
+    		this.initData();
+    	})
+    },
     //初始化
     async initData() {
       //获取油田信息

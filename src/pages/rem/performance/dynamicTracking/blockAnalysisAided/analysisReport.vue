@@ -21,13 +21,19 @@
                 </div>
                 <div style="margin-left: 10px;">
                     <el-button icon="el-icon-search" style="margin-left: 20px; width: 90px" type="primary" @click="searchThing">搜索</el-button>
+                    <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
-                <el-button type="primary" style="margin-left:auto;" @click="isNewformat=!isNewformat;">切换版式</el-button>
+                
             </div>
         </headerSearch>
         <pagePanelNew style="height: calc(100% - 100px);" class="g-w100">
+            <div class="btns" style="height:50px;;display: flex;">
+                <el-button type="primary" style="margin-left:auto;" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
+                <el-button type="primary" @click="isNewformat=!isNewformat;">切换版式</el-button>
+            </div>
+            
             <!-- 旧版 -->
-            <div style="height:100%;padding-bottom:8px;overflow-y: scroll;" v-show="!isNewformat">
+            <div style="height:calc(100% - 50px);padding-bottom:8px;overflow-y: scroll;" v-show="!isNewformat">
                 <div style="margin-left:8px;margin-right:20px;">
                     <pagePanel headerTitle="主要开发矛盾洞察" style="margin-top:0;min-height:500px;">
                         <el-row :gutter="30" style="text-align: center;height:calc(100% - 55px);">
@@ -115,8 +121,8 @@
                 </div>
             </div>
             <!-- 新版 -->
-            <div style="height:100%;padding-bottom:8px;overflow-y: scroll;" v-show="isNewformat">
-                <div style="margin-left:8px;margin-right:20px;height:calc( 100% - 418px);">
+            <div style="height:calc(100% - 50px);padding-bottom:8px;overflow-y: scroll;" v-show="isNewformat">
+                <div style="margin-left:8px;margin-right:20px;height:auto;">
                     <pagePanel headerTitle="主要开发矛盾洞察" style="margin-top:0;height:100%;">
                         <div class="z-content" style="height:calc(100% - 55px);">
                             <el-row>
@@ -212,14 +218,14 @@
                         </div>
                     </pagePanel>
                 </div>
-                <div style="margin-left:8px;margin-right:20px;height:398px;display: flex;">
+                <div style="margin-left:8px;margin-right:20px;height:498px;display: flex;">
                     <div style="flex:1;margin-right:10px;height:100%;">
                         <pagePanelNew headerTitle="" style="height:100%;">
                             <div>
                                 <div style="display: flex;justify-content: flex-end;margin-bottom:10px;">
                                     <el-button class="commonBtn" @click="switchToAnaylsis">区块分析</el-button>
                                 </div>
-                                <H5Chart ref="H5Chart" height="310px" :url="url" width="100%" @load="frameLoad"></H5Chart>
+                                <H5Chart ref="H5Chart" height="410px" :url="url" width="100%" @load="frameLoad"></H5Chart>
                             </div>
                         </pagePanelNew>
                     </div>
@@ -230,7 +236,7 @@
                                     <img src="@/assets/rem/performance/zy.png" alt="">
                                     <p>{{tagMessage}}</p>
                                 </div>
-                                <div :class="[$store.state.setting.mode=='light'?'remark0':'remark']" v-show="myList.length>0">相关内容:{{$store.state.setting.mode}}</div>
+                                <div :class="[$store.state.setting.mode=='light'?'remark0':'remark']" v-show="myList.length>0">相关内容:</div>
                                 <div style="width: 100%;height:250px;overflow: auto; margin-top: 15px;display: flex;flex-wrap: wrap;">
                                     <div v-for="(item,index) in myList" :key="index" :class="[$store.state.setting.mode=='light'?'z-well0':'z-well']">
                                         <span>{{item.well}}</span>
@@ -305,6 +311,11 @@
                 this.getFieldsData(val);
             }
         },
+        created() {
+            //初始化时间
+            /* this.rq = new Date().addDays(-1).format('yyyy-MM-dd');*/
+            this.rq = new Date().addDays(-1).format('yyyy-MM-dd');
+        },
         mounted() {
             console.log(this.$store.state.setting.mode)
             /*this.getfetchOilFields1();//获取油田
@@ -315,15 +326,14 @@
             this.clickAnalysis();//获取图层组件（接入数据后启用）*/
             this.initData();
         },
-        created() {
-            //初始化时间
-            /* this.rq = new Date().addDays(-1).format('yyyy-MM-dd');*/
-            this.rq = new Date().addDays(-1).format('yyyy-MM-dd');
-        },
         methods: {
-            //测试
-            test(item) {
-                console.log(item, '---')
+            //重置
+            resetting(){
+                this.$nextTick(()=>{
+                	Object.assign(this.$data, this.$options.data());
+                	this.rq = new Date().addDays(-1).format('yyyy-MM-dd');
+                	this.initData();
+                })
             },
             frameLoad() {
                 this.loadFinish = true;
@@ -1061,7 +1071,6 @@
                         }
                     }
                     .sp2{
-                        cursor: pointer;
                         font-size: 14px;
                         color:rgba(255,200,53,.8);
                         b{
@@ -1153,8 +1162,8 @@
     }
     
     .condationRow {
-        height: 40px;
-        line-height: 40px;
+        height: 30px;
+        line-height: 30px;
         margin-bottom: 10px;
         font-size: 18px;
     }

@@ -16,7 +16,8 @@
                     <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled"></el-option>
                 </el-select>
                 <el-button type="primary" icon="el-icon-search" style="margin-left: 15px" @click="doSearch">搜索</el-button>
-                <el-upload ref="upload" style="margin-left: 15px" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess">
+                <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+                <el-upload ref="upload" style="margin-left: auto" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess">
                     <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
                 </el-upload>
                 <el-button style="margin-left: 15px" type="primary" icon="el-icon-download" @click="doDownLoad">下载</el-button>
@@ -329,6 +330,17 @@
             this.initData();
         },
         methods: {
+            resetting(){
+                let activeName=this.activeName;
+                let currentModule=this.currentModule;
+            	this.currentModule='';
+            	this.$nextTick(()=>{
+            		Object.assign(this.$data, this.$options.data());
+                    this.activeName=activeName;
+                    this.currentModule=currentModule;
+            		this.initData();
+            	})
+            },
             handleClick(tab) {
                 this.activeName = tab.name;
                 this.currentModule = this.tabs[tab.index].modules[0].name;

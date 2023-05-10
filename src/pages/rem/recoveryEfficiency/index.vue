@@ -33,11 +33,20 @@
         <page-panel-new style="height: calc(100% - 100px);">
             <div style="height:100%">
                 <el-row style="height:126px;margin-bottom:20px;">
-                    <el-table highlight :data="wellPerformanceAnalysis" style="width: 100%" height="calc(100% - 0px)" class="doubleHeader">
-                        <el-table-column align="center" prop="name" label="油田(区块)" show-overflow-tooltip></el-table-column>
-                        <el-table-column align="center" label="储量状况">
-                            <el-table-column align="center" show-overflow-tooltip label-class-name="twoRowHeader">
-                                <template slot="header">
+                    <el-table 
+                    :data="wellPerformanceAnalysis"
+                    style="width:100%;"
+                    height="100%" 
+                    class="doubleHeader"
+                    :row-style="{ height: '0px' }"
+                    :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                    header-cell-class-name="table_header"
+                    :cell-style="{ padding: '6px', 'text-align': 'center' }"
+                    >
+                        <el-table-column prop="name" label="油田(区块)" fixed></el-table-column>
+                        <el-table-column label="储量状况">
+                            <el-table-column label-class-name="twoRowHeader">
+                                <template #header>
                                     <div>
                                         <span>地质储量</span>
                                         <br />
@@ -48,8 +57,8 @@
                                     <span>{{ scoped.row.geologyReservoirs!=null ? scoped.row.geologyReservoirs :'-'}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column align="center" show-overflow-tooltip label-class-name="twoRowHeader">
-                                <template slot="header">
+                            <el-table-column label-class-name="twoRowHeader">
+                                <template #header>
                                     <div>
                                         <span>可采储量</span>
                                         <br />
@@ -60,8 +69,8 @@
                                     <span>{{ scoped.row.recoverableReserves!= null ? scoped.row.recoverableReserves :'-'}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column align="center" prop="recoveryRatio" show-overflow-tooltip label-class-name="twoRowHeader">
-                                <template slot="header">
+                            <el-table-column label-class-name="twoRowHeader">
+                                <template #header>
                                     <div>
                                         <span>采收率</span>
                                         <br />
@@ -72,8 +81,8 @@
                                     <span>{{scoped.row.recoveryRatio | toFixedTwo}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column align="center" show-overflow-tooltip label-class-name="twoRowHeader">
-                                <template slot="header">
+                            <el-table-column label-class-name="twoRowHeader">
+                                <template #header>
                                     <div>
                                         <span>累产油</span>
                                         <br />
@@ -84,8 +93,8 @@
                                     <span>{{ scoped.row.oilSum | toFixedTwo}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column align="center" show-overflow-tooltip label-class-name="twoRowHeader">
-                                <template slot="header">
+                            <el-table-column label-class-name="twoRowHeader">
+                                <template #header>
                                     <div>
                                         <span>目前剩余可采储量</span>
                                         <br />
@@ -97,9 +106,9 @@
                                 </template>
                             </el-table-column>
                         </el-table-column>
-                        <el-table-column align="center" label="采出程度">
-                            <el-table-column align="center" prop="geologyReservoirsForOutput" show-overflow-tooltip label-class-name="twoRowHeader">
-                                <template slot="header">
+                        <el-table-column label="采出程度">
+                            <el-table-column prop="geologyReservoirsForOutput" label-class-name="twoRowHeader">
+                                <template #header>
                                     <div>
                                         <span>地质储量</span>
                                         <br />
@@ -107,8 +116,8 @@
                                     </div>
                                 </template>
                             </el-table-column>
-                            <el-table-column align="center" prop="recoverableReservesForOutput" show-overflow-tooltip label-class-name="twoRowHeader">
-                                <template slot="header">
+                            <el-table-column prop="recoverableReservesForOutput" label-class-name="twoRowHeader">
+                                <template #header>
                                     <div>
                                         <span>可采储量</span>
                                         <br />
@@ -117,9 +126,9 @@
                                 </template>
                             </el-table-column>
                         </el-table-column>
-                        <el-table-column align="center" label="采油速度">
-                            <el-table-column align="center" prop="recoverableReservesForProSpeed" show-overflow-tooltip label-class-name="twoRowHeader">
-                                <template slot="header">
+                        <el-table-column label="采油速度">
+                            <el-table-column prop="recoverableReservesForProSpeed" label-class-name="twoRowHeader">
+                                <template #header>
                                     <div>
                                         <span>可采储量</span>
                                         <br />
@@ -127,8 +136,8 @@
                                     </div>
                                 </template>
                             </el-table-column>
-                            <el-table-column align="center" prop="recoverableReservesRemainForProSpeed" show-overflow-tooltip label-class-name="twoRowHeader">
-                                <template slot="header">
+                            <el-table-column prop="recoverableReservesRemainForProSpeed" label-class-name="twoRowHeader">
+                                <template #header>
                                     <div>
                                         <span>剩余可采储量</span>
                                         <br />
@@ -1415,9 +1424,6 @@
         .remark{
             color:#CD3D00;
         }
-    }
-    table>tbody>tr>td {
-        text-align: center
     }
     ::v-deep .el-table .cell:empty::before {
         content: '-';

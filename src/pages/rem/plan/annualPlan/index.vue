@@ -35,20 +35,30 @@
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <el-button icon="el-icon-search" type="primary" style="margin-left:10px;" @click="doSearch">搜索</el-button>
+                    <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
-                <div style="margin-left:auto;margin-bottom:10px;" v-if="pageType == '原油产量'">
+                <!-- <div style="margin-left:auto;margin-bottom:10px;" v-if="pageType == '原油产量'">
                     <span>单位选择：</span>
                     <el-select v-model="searchForm.selectUnitOfProduction" placeholder="请选择" style="width: 100px;" @change="doSearch">
                         <el-option v-for="(item,index) in unitOfProduction" :key="index" :label="item.label" :value="item.value"></el-option>
                     </el-select>
-                </div>
+                </div> -->
             </div>
         </headerSearch>
         <div class="z-container">
             <pagePanelNew class="pagePanelNew" id="pagePanelNew">
                 <el-tabs class="g-pageHeader" v-model="pageType" topline v-if="isLoadChildCommon">
                     <el-tab-pane label="原油产量" name="原油产量">
-                        <crudeOil v-if="pageType=='原油产量'&&searchForm.theYieldComponentsValue==1" :searchForm="searchForm" ref="childComponent"></crudeOil>
+                        <crudeOil v-if="pageType=='原油产量'&&searchForm.theYieldComponentsValue==1" :searchForm="searchForm" ref="childComponent">
+                            <template v-slot:downBtn>
+                                <div style="margin-left:10px;margin-top:10px;">
+                                    <span>单位选择：</span>
+                                    <el-select v-model="searchForm.selectUnitOfProduction" placeholder="请选择" style="width: 100px;" @change="doSearch">
+                                        <el-option v-for="(item,index) in unitOfProduction" :key="index" :label="item.label" :value="item.value"></el-option>
+                                    </el-select>
+                                </div>
+                            </template>
+                        </crudeOil>
                         <basicYield v-if="pageType=='原油产量'&&searchForm.theYieldComponentsValue==2" :searchForm="searchForm" ref="childComponent"></basicYield>
                         <measureProduction v-if="pageType=='原油产量'&&searchForm.theYieldComponentsValue==3" :searchForm="searchForm" ref="childComponent"></measureProduction>
                         <adjustingWellProduction v-if="pageType=='原油产量'&&searchForm.theYieldComponentsValue==4" :searchForm="searchForm" ref="childComponent"></adjustingWellProduction>
@@ -130,6 +140,15 @@
             this.initData();
         },
         methods: {
+            //重置
+            resetting(){
+            	let pageType=this.pageType;
+            	this.$nextTick(()=>{
+            		Object.assign(this.$data, this.$options.data());
+            		this.pageType=pageType;
+            		this.initData();
+            	})
+            },
             //初始化信息
             async initData() {
                 //获取油田

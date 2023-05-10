@@ -54,16 +54,16 @@
                     <el-button type="primary" icon="el-icon-search" @click="getFetchMeasureInfos">搜索</el-button>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
-                    <el-button type="primary" icon="el-icon-download" @click="doExportFile" v-show="canDownload">下载
-                    </el-button>
+                    <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+                    
                 </div>
             </div>
         </headerSearch>
         <div class="z-container">
             <pagePanelNew headerTitle="措施管理" style="height:100%;margin-top:0;">
-                <div class="pageHeader"
-                    style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
+                <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
                     <span>秦皇岛32-6油田作业计划跟踪</span>
+                    <el-button type="primary" icon="el-icon-download" style="height:30px;" @click="doExportFile" v-show="canDownload">下载</el-button>
                 </div>
                 <div class="tableBox" id="tableBox" style="height:calc(100% - 75px)">
                     <el-table id="csgl"
@@ -310,6 +310,27 @@
             },
         },
         methods: {
+            //重置
+            resetting(){
+                Object.assign(this.$data, this.$options.data());
+                this.$nextTick(() => {
+                    let width = document.getElementById('tableBox').clientWidth - 500;
+                    this.width = width; //table最后一列的宽度
+                    //计算日期 间距 
+                    console.log('日期宽度', Math.floor(this.width - 44 - 20))
+                    this.spacing = Math.floor((this.width - 936 - 44 - 20) / 11);
+                    console.log('日期间距', this.spacing)
+                    this.initData();
+                
+                    //监听页面缩放
+                    this.screenWidth = document.body.clientWidth;
+                    window.onresize = () => {
+                        return (() => {
+                            this.screenWidth = document.body.clientWidth;
+                        })();
+                    };
+                })
+            },
             //页面初始化信息
             async initData() {
                 //油田

@@ -19,7 +19,8 @@
                     <el-option v-for="item in unitOfProduction" :key="item.value" :label="item.label" :value="item.value"></el-option>
                 </el-select>
                 <el-button icon="el-icon-search" type="primary" @click="searchThing">搜索</el-button>
-                <el-button icon="el-icon-s-promotion" type="primary" @click="showOutputTracking">作业公司产量跟踪</el-button>
+                <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+                <el-button icon="el-icon-s-promotion" type="primary" style="margin-left:auto!important;" @click="showOutputTracking">作业公司产量跟踪</el-button>
             </div>
         </headerSearch>
         <div class="z-container">
@@ -712,6 +713,17 @@
             this.initData();
         },
         methods: {
+            //重置
+            resetting(){
+            	this.$nextTick(()=>{
+            		Object.assign(this.$data, this.$options.data());
+                    //初始化时间段
+                    this.selectDate = [new Date().addDays(-30).format('yyyy-MM-dd'), new Date().addDays(-1).format('yyyy-MM-dd')];
+                    //初始化筛选设置
+                    this.setParaValue = "2";
+            		this.initData();
+            	})
+            },
             //表格合并单元格
             objectSpanMethod({row,column,rowIndex,columnIndex}) {
                 if (columnIndex === 0) {

@@ -44,6 +44,12 @@ export default [
                 component: () => import("@/layouts/blank.vue"),
                 children: [
                     {
+                        path: "analysisReport",
+                        name: "analysisReport",
+                        component: () => import("@/pages/rem/performance/dynamicTracking/waterAuxiliaryAnalysis/analysisReport.vue"),
+                        meta: { title: "水井动态分析报告", icon: "icon" },
+                    },
+                    {
                         hidden: false,
                         path: "waterAuxiliaryAnalysis",
                         name: "waterAuxiliaryAnalysis",

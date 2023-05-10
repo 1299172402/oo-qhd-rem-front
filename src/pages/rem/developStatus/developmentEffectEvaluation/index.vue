@@ -11,6 +11,7 @@
                     <span class="QU" style="margin-left: 20px">区块：</span>
                     <el-select v-model="selectBlock"><el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option></el-select>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
+                    <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
             </div>
         </header-search>
@@ -118,6 +119,11 @@ export default {
     this.initData();
   },
   methods: {
+    //重置
+    resetting(){
+        Object.assign(this.$data, this.$options.data());
+        this.initData();
+    },
     //设置页面初始化
     async initData() {
       //调用油田接口

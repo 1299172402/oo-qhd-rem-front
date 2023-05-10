@@ -11,6 +11,8 @@
                 <span>配置项代码：</span>
                 <el-input style="width:200px;margin-right:15px;" v-model="searchForm.configId"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="queryTableDate">搜索</el-button>
+                <el-button class="commonBtn" icon="el-icon-refresh" style="margin-right:auto;" @click="resetting">重置</el-button>
+                
                 <el-button type="primary" v-if="isModuleBtn" @click="moduleDialog=true;">选定模型重算</el-button>
                 <el-button type="primary" @click="getModelInstructionManual">模型说明文档</el-button>
             </div>
@@ -291,6 +293,14 @@
             this.queryTableDate();
         },
         methods: {
+            //重置
+            resetting(){
+            	this.$nextTick(()=>{
+            		Object.assign(this.$data, this.$options.data());
+            		this.getAllModelName();
+            		this.queryTableDate();
+            	})
+            },
             // 获取所有的模型名称
             getAllModelName() {
                 getAllModelName().then(response => {
@@ -407,7 +417,6 @@
                 this.$refs['moduleFrom'].resetFields();
                 this.moduleDialog = false;
             },
-            
             
             //切换分页
             pagination(e) {

@@ -12,16 +12,19 @@
                     <el-option v-for="item in blockoptions" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                 </el-select>
                 <el-button icon="el-icon-search" type="primary" @click="doSearch">搜索</el-button>
+                <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 <el-button style="margin-left:auto!important;" type="primary" @click="development(oilfield, block)">开发现状表</el-button>
             </div>
         </headerSearch>
         <pagePanelNew style="height: calc(100% - 100px);" class="z-main">
+            
             <pagePanel headerTitle="油田综合开发曲线" style="height: 650px;margin-bottom:20px;position: relative;">
                 <el-button type="primary" style="position:absolute;right:0;top:0;;height:30px;margin-right:0px;" @click="dialogVisible = true">选择指标信息</el-button>
                 <div style="height:100%;">
                     <Echart :chart-data="option" style="height: 570px"></Echart>
                 </div>
             </pagePanel>
+            
             <pagePanel headerTitle="油田综合开发历程表" style="height: 300px;position: relative;">
                 <el-button type="primary" style="position:absolute;right:0;top:0;;height:26px;margin-right:20px;" @click="doDownExcel('#tableData', '油田综合开发历程')" v-show="canDownload">下载</el-button>
                 <div style="padding-bottom:5px;height:100%;">
@@ -47,6 +50,7 @@
                     </el-table>
                 </div>
             </pagePanel>
+            
             <!-- 参数配置 -->
             <el-dialog title="参数配置" :visible="dialogCsVisible" top="20vh" width="400px" class="dialogClass" :close-on-click-modal="false" @close="[(dialogCsVisible = false)]">
                 <el-checkbox-group v-model="checkList" style="margin-bottom: 10px">
@@ -103,7 +107,7 @@
                     <el-button icon="el-icon-search" size="mini" style="margin-left: 130px" type="primary">搜索</el-button>
                 </el-row>
             </el-dialog>
-            <!-- 开发先状表 -->
+            <!-- 开发现状表 -->
             <el-dialog title="开发现状表" :visible="dialogDeveVisible" top="4vh" width="1200px" :close-on-click-modal="false" @close="[(dialogDeveVisible = false)]">
                 <div style="margin-bottom:20px;display:flex;align-item:center;justify-content: space-between;">
                     <div class="fl">
@@ -177,6 +181,7 @@
                     </el-table>
                 </info-window>
             </el-dialog>
+            
             <!-- 选择查看指标 -->
             <el-dialog title="选择查看指标信息" :visible.sync="dialogVisible" width="400px">
                 <el-checkbox-group v-model="selectIndexList" style="display: flex; flex-direction: column">
@@ -187,6 +192,7 @@
                     <el-button type="primary" @click="changeIndex">确 定</el-button>
                 </span>
             </el-dialog>
+        
         </pagePanelNew>
     </div>
 </template>
@@ -1048,16 +1054,21 @@
         },
         created() {
             this.rq = [new Date().addDays(-30).format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
-            // console.log(dayjs())
             this.dateFirst = moment().subtract(1, 'months').startOf('months').format('YYYY-MM-DD');
             this.dateSecond = moment().startOf('months').format('YYYY-MM-DD');
         },
         mounted() {
             this.initData();
-            //获取权限问题内容
-            // this.getPageAuthMessage();
         },
         methods: {
+            //重置
+            resetting(){
+                Object.assign(this.$data, this.$options.data())
+                this.rq = [new Date().addDays(-30).format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
+                this.dateFirst = moment().subtract(1, 'months').startOf('months').format('YYYY-MM-DD');
+                this.dateSecond = moment().startOf('months').format('YYYY-MM-DD');
+                this.initData();
+            },
             configuration() {
                 this.dialogCsVisible = true;
             },
@@ -1561,59 +1572,6 @@
                 }
                 this.option.grid = grid;
                 this.dialogVisible = false;
-            },
-            //获取当前页面的权限内容，并处理其逻辑问题
-            getPageAuthMessage() {
-                // this.userInfo = VSAuth.getAuthInfo();
-                this.userInfo={};
-                let myPath = this.$route.path;
-                //该值可以为空
-                let areaCode = 'znytglxt';
-                let loginName = this.userInfo.userName;
-                getWidgetByAreaUser({
-                    areaCode: areaCode,
-                    loginName: loginName
-                }).then((res) => {
-                    let myList = res.data.dataList;
-                    if (myList) {
-                        let pageMes = myList.find((item) => {
-                            return item.resPvalue == myPath;
-                        });
-                        if (pageMes) {
-                            this.myWidget = pageMes.widgetList;
-                        }
-                        if (this.myWidget) {
-                            for (let indexNum in this.myWidget) {
-                                try {
-                                    let myWidgetItem = this.myWidget[indexNum];
-                                    switch (myWidgetItem.widgetCode) {
-                                        case 'addInfo':
-                                            this.canAddInfo = true;
-                                            break;
-                                        case 'updateInfo':
-                                            this.canUpdateInfo = true;
-                                            break;
-                                        case 'sendInfo':
-                                            this.canSendInfo = true;
-                                            break;
-                                        case 'deleteInfo':
-                                            this.canDeleteInfo = true;
-                                            break;
-                                        case 'download':
-                                            this.canDownload = true;
-                                            break;
-                                        case 'upload':
-                                            this.canUpload = true;
-                                            break;
-                                        default:
-                                    }
-                                } catch (e) {
-                                    continue;
-                                }
-                            }
-                        }
-                    }
-                });
             },
         },
     };

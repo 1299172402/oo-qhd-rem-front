@@ -4,24 +4,26 @@
         <headerSearch style="height: 80px">
             <div class="g-row-flex-V g-w100 g-h100">
                 <span class="title">油田：</span>
-                <el-select v-model="selectOilField" placeholder="请选择" filterable clearable disabled @change="doChangeYt" style="margin-right: 20px">
+                <el-select v-model="selectOilField" placeholder="请选择" filterable clearable disabled @change="doChangeYt" style="margin-right: 15px">
                     <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
                 </el-select>
                 <span class="title">平台：</span>
                 <el-select v-model="selectPlatform" style="width: 220px" placeholder="请选择" filterable clearable @change="doChangePT">
                     <el-option v-for="item in platform" :key="item.platFormId" :label="item.platName" :value="item.platFormId"></el-option>
                 </el-select>
-                <span class="title" style="margin-left: 20px">井号：</span>
+                <span class="title" style="margin-left: 15px">井号：</span>
                 <el-select v-model="selectWellId" filterable clearable @change="onChangeWell">
                     <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled"></el-option>
                 </el-select>
-                <el-button type="primary" icon="el-icon-search" style="margin-left: 20px" @click="doSearch">搜索</el-button>
-                <el-upload ref="upload" style="margin-left: 20px" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess" v-show="currentModule == 'wellNetworkDiagram' ||currentModule == 'completionStringDrawing' || currentModule == 'fluidProducingProfile' ||currentModule == 'saturationLog' ||currentModule == 'wellTestReport'">
+                <el-button type="primary" icon="el-icon-search" style="margin-left: 15px;" @click="doSearch">搜索</el-button>
+                <el-button class="commonBtn" icon="el-icon-refresh" style="margin-right:auto;" @click="resetting">重置</el-button>
+                
+                <el-upload ref="upload" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess" v-show="currentModule == 'wellNetworkDiagram' ||currentModule == 'completionStringDrawing' || currentModule == 'fluidProducingProfile' ||currentModule == 'saturationLog' ||currentModule == 'wellTestReport'">
                     <el-button type="primary" icon="el-icon-download">上传文档</el-button>
                 </el-upload>
                 
-                <el-button type="primary" icon="el-icon-download" style="margin-left: 20px" @click="ljpmUploadDialog" v-if="activeName=='staticData'&&currentModule=='connecting'">上传文档</el-button>
-                <el-button style="margin-left: 20px" type="primary" icon="el-icon-download" @click="doDownLoad">下载</el-button>
+                <el-button type="primary" icon="el-icon-download" @click="ljpmUploadDialog" v-if="activeName=='staticData'&&currentModule=='connecting'">上传文档</el-button>
+                <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" @click="doDownLoad">下载</el-button>
             </div>
         </headerSearch>
         <pagePanelNew headerTitle="油井辅助分析" :style="{ height: this.currentModule == 'oilReport' ? 'auto' : 'calc(100% - 100px)' }" class="g-w100">
@@ -95,7 +97,6 @@
                 fileList: [],
                 component: null,
                 activeName: "staticData",
-                // currentModule: 'smallLayerStructureDiagram',
                 currentModule: "loggingInterpretationResult",
                 queryParams: {
                     ogfId: "",
@@ -426,7 +427,6 @@
                 if (!this.currentModule) {
                     return null;
                 }
-                console.log(this.currentModule);
                 if (this.currentModule == "seismicAttributeMap") {
                     this.ljpmTag = true;
                 } else {
@@ -438,9 +438,6 @@
                         assetCode: this.selectPlatform,
                         selectWellId: this.selectWellId,
                     };
-                    // setTimeOut(function(){
-                    //    this.$refs.componentCustom.queryInfo(data);
-                    //   },1000)
                     return () => import(`../oilReport/oilReport.vue`);
                 } else {
                     return () => import(`./modules/${this.activeName}/${this.currentModule}.vue`);
@@ -465,6 +462,18 @@
             this.initData();
         },
         methods: {
+            //重置
+            resetting(){
+                let activeName=this.activeName;
+                let currentModule=this.currentModule;
+                this.currentModule='';
+                this.$nextTick(()=>{
+                	Object.assign(this.$data, this.$options.data());
+                    this.activeName=activeName;
+                    this.currentModule=currentModule;
+                	this.initData();
+                })
+            },
             queryInfo(queryString) {
                 console.log(queryString);
             },
