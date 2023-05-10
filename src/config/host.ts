@@ -11,7 +11,7 @@ const config = {
   appId: "$system$",
   ALARM_URL: "https://amm.tjioms-dev.tjltd.cnooc/#/reportPolice/source?access_token=",
   WEB_TAG_NAME: "智能油田管理系统", // 网页标签名称
-  SYSTEM_NAME: "智能油田管理系统" // 系统名称
+  SYSTEM_NAME: "天津分公司智能油田管理系统" // 系统名称
 };
 
 export default {
