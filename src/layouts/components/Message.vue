@@ -152,7 +152,7 @@ export default Vue.extend({
       } else {
         // 处置
         // window.open(row.delUrl, "_blank");
-        window.open(`${proxy[env].ALARMURL}${this.$store.getters["user/token"]}`, "_blank");
+        window.open(`${proxy[env].ALARM_URL}${this.$store.getters["user/token"]}`, "_blank");
       }
     },
     scrollBarWheel(e) {
@@ -204,7 +204,7 @@ export default Vue.extend({
       this.isNoticeVisible = visible;
     },
     goDetail() {
-      jumpSupApp(proxy[env].MESSAGEURL);
+      jumpSupApp(proxy[env].MESSAGE_URL);
       this.isNoticeVisible = false;
     },
     setRead(type: string, item?: NotificationItem) {

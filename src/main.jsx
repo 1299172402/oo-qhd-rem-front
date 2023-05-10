@@ -65,6 +65,7 @@ Vue.prototype.$bus = new Vue();
 
 localStorage.setItem("contextRoot", proxy[env].processAPI);
 
+document.title = proxy[env].WEB_TAG_NAME; // 修改网页标签名称
 Vue.use(VXETable);
 Vue.use(directive);
 Vue.use(plugins);
