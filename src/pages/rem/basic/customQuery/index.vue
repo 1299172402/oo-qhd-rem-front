@@ -56,7 +56,7 @@
         </el-button>
       </div>
     </el-row>
-    <page-panel-new :show-btn="true" v-if="!activeEchart" style="height: calc(100% - 32px)">
+    <page-panel-new :show-btn="true" v-if="!activeEchart" style="min-height: calc(100% - 40px);height: auto">
       <el-row>
         <el-col :span="6" style="margin-left: 20px; margin-right: 20px">
           <page-panel :show-btn="true" headerTitle="目标类型">
@@ -78,7 +78,7 @@
         <el-col :span="9" style="margin-left: 20px; margin-right: 20px">
           <page-panel :show-btn="true" headerTitle="数据类型">
             <el-radio-group v-model="activeTabIndexData">
-              <el-radio :label="dataType.val" v-for="dataType in dataTypes">{{ dataType.name }}</el-radio>
+              <el-radio :label="dataType.val" :key="index" v-for="(dataType,index) in dataTypes">{{ dataType.name }}</el-radio>
             </el-radio-group>
           </page-panel>
         </el-col>
@@ -233,7 +233,7 @@
         <el-table-column prop="name" label="指标" width="170">
           <template slot-scope="scope">
             <el-select v-model="scope.row.name" size="small">
-              <el-option :label="item.name" :value="item.val" v-for="item in headerText" />
+              <el-option :key="index" :label="item.name" :value="item.val" v-for="(item,index) in headerText" />
             </el-select>
           </template>
         </el-table-column>
