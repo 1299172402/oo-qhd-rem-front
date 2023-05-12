@@ -23,17 +23,15 @@
                     <el-button icon="el-icon-search" style="margin-left: 20px; width: 90px" type="primary" @click="searchThing">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
-                
             </div>
         </headerSearch>
         <pagePanelNew style="height: calc(100% - 100px);" class="g-w100">
-            <div class="btns" style="height:50px;;display: flex;">
-                <el-button type="primary" style="margin-left:auto;" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
-                <el-button type="primary" @click="isNewformat=!isNewformat;">切换版式</el-button>
+            <div class="btns" style="height:50px;;display: flex;padding-left:7px;">
+                <el-button type="primary" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
+                <el-button type="primary" @click="switchVersions">切换版式</el-button>
             </div>
-            
             <!-- 旧版 -->
-            <div style="height:calc(100% - 50px);padding-bottom:8px;overflow-y: scroll;" v-show="!isNewformat">
+            <div style="height:calc(100% - 50px);padding-bottom:8px;overflow-y: scroll;" v-if="!isNewformat">
                 <div style="margin-left:8px;margin-right:20px;">
                     <pagePanel headerTitle="主要开发矛盾洞察" style="margin-top:0;min-height:500px;">
                         <el-row :gutter="30" style="text-align: center;height:calc(100% - 55px);">
@@ -96,9 +94,7 @@
                     <pagePanelNew headerTitle="" style="height:398px;">
                         <el-row style="height: 100%;">
                             <el-col :span="12">
-                                <div>
-                                    <H5Chart ref="H5Chart" height="350px" :url="url" width="100%" @load="frameLoad"></H5Chart>
-                                </div>
+                                <H5Chart ref="H5Chart" height="350px" :url="url" width="100%"></H5Chart>
                             </el-col>
                             <el-col :span="11" style="margin-left:10px;height: 100%;">
                                 <el-col :span="20" style="height: 100%;">
@@ -121,8 +117,8 @@
                 </div>
             </div>
             <!-- 新版 -->
-            <div style="height:calc(100% - 50px);padding-bottom:8px;overflow-y: scroll;" v-show="isNewformat">
-                <div style="margin-left:8px;margin-right:20px;height:auto;">
+            <div style="height:calc(100% - 50px);padding-bottom:8px;overflow-y: scroll;" v-if="isNewformat">
+                <div style="margin-left:8px;margin-right:7px;height:auto;">
                     <pagePanel headerTitle="主要开发矛盾洞察" style="margin-top:0;height:100%;">
                         <div class="z-content" style="height:calc(100% - 55px);">
                             <el-row>
@@ -218,14 +214,14 @@
                         </div>
                     </pagePanel>
                 </div>
-                <div style="margin-left:8px;margin-right:20px;height:498px;display: flex;">
-                    <div style="flex:1;margin-right:10px;height:100%;">
+                <div style="margin-left:8px;margin-right:7px;height:498px;display: flex;">
+                    <div style="flex:1;margin-right:10px;height:498px;">
                         <pagePanelNew headerTitle="" style="height:100%;">
-                            <div>
+                            <div style="height:100%;">
                                 <div style="display: flex;justify-content: flex-end;margin-bottom:10px;">
                                     <el-button class="commonBtn" @click="switchToAnaylsis">区块分析</el-button>
                                 </div>
-                                <H5Chart ref="H5Chart" height="410px" :url="url" width="100%" @load="frameLoad"></H5Chart>
+                                <H5Chart2 ref="H5Chart2" height="calc(100% - 50px)" :url="url" width="100%"></H5Chart2>
                             </div>
                         </pagePanelNew>
                     </div>
@@ -255,10 +251,11 @@
 
 <script>
     import H5Chart from "@/components/tools/H5Chart/index.vue";
+    import H5Chart2 from "@/components/tools/H5Chart/index.vue";
     import { outputStatusAnalysis, areaDiagram, stableBaseAnalysis, proInjectionBalanceAnalysis, proStatusAnalysis} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
     import { fetchFields,fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
     export default {
-        components: {H5Chart},
+        components: {H5Chart,H5Chart2},
         data() {
             return {
                 //油田
@@ -290,7 +287,6 @@
                 tagMessage: '',
                 //展示列表
                 myList: [],
-                
                 //开采现状分析
                 indexChangeTrend: "",
                 indexChangeTrendName: "",
@@ -313,17 +309,9 @@
         },
         created() {
             //初始化时间
-            /* this.rq = new Date().addDays(-1).format('yyyy-MM-dd');*/
             this.rq = new Date().addDays(-1).format('yyyy-MM-dd');
         },
         mounted() {
-            console.log(this.$store.state.setting.mode)
-            /*this.getfetchOilFields1();//获取油田
-            this.getProStatusAnalysis();//开采状况分析
-            this.outputStatusAnalysis();//采出状况分析
-            this.getStableBaseAnalysis();//稳产基础分析
-            this.getProInjectionBalanceAnalysis();//注采平衡分析
-            this.clickAnalysis();//获取图层组件（接入数据后启用）*/
             this.initData();
         },
         methods: {
@@ -335,11 +323,13 @@
                 	this.initData();
                 })
             },
-            frameLoad() {
-                this.loadFinish = true;
-                if (this.layerData) {
-                    this.sjcl(this.layerData)
-                }
+            //切换版式
+            switchVersions(){
+                this.loadFinish=false;
+                this.isNewformat=!this.isNewformat;
+                this.$nextTick(()=>{
+                    this.initData();
+                })
             },
             getfetchOilFields1() { //油田
                 fetchOilFields().then((data) => {
@@ -748,14 +738,15 @@
                     yearMonth: yearMonth,
                 };
                 areaDiagram(request).then((data) => {
-                    this.layerData = data.data
-                    if (this.loadFinish) {
-                        if (data.data.data.mutiLayerPicResponse) {
-                            this.sjcl(data.data.data.mutiLayerPicResponse);
-                        } else {
+                    this.layerData = data.data;
+                    if (data.data.data.mutiLayerPicResponse) {
+                        this.sjcl(data.data.data.mutiLayerPicResponse);
+                    } else {
+                        if(this.isNewformat){
+                            this.$refs.H5Chart2.setSampleDate(null);
+                        }else{
                             this.$refs.H5Chart.setSampleDate(null);
                         }
-
                     }
                 });
             },
@@ -839,7 +830,11 @@
                 Layers_cont.Objects = Objects
                 Layers[0] = Layers_cont;
                 data.Layers = Layers;
-                this.$refs.H5Chart.setSampleDate(data);
+                if(this.isNewformat){
+                    this.$refs.H5Chart2.setSampleDate(data);
+                }else{
+                    this.$refs.H5Chart.setSampleDate(data);
+                }
             },
             /*sjcl(tc) {
                 let  result = tc.data.mutiLayerPicResponse;

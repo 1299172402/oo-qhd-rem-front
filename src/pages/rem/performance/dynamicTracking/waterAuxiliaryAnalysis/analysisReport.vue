@@ -1,125 +1,380 @@
 <!-- 水井动态分析报告 -->
 <template>
-    <div class="app-container" style="height:100%;">
-        <headerSearch style="height:80px;">
-            <div class="g-row-flex-V g-w100 g-h100">
-                <span>油田：</span>
-                <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="changeOilFeild">
-                    <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId" :disabled="item.disabled"></el-option>
-                </el-select>
-                <span style="margin-left:15px;">平台：</span>
-                <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="changePlatForm">
-                    <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId" :disabled="item.disabled"></el-option>
-                </el-select>
-                <span style="margin-left:15px;">井号：</span>
-                <el-select v-model="wellId" class="f2" style="width:180px" filterable clearable>
-                    <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled"></el-option>
-                </el-select>
-                <span style="margin-left:15px;">评价时间：</span>
-                <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
-                <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">检索</el-button>
-                <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
-            </div>
-        </headerSearch>
-        <pagePanelNew style="height: calc(100% - 100px);" class="g-w100">
-            <div class="btns" style="height:50px;display: flex;">
-                <el-button type="primary" style="margin-left:auto;" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
-                <!-- <el-button type="primary" @click="isNewformat=!isNewformat;">切换版式</el-button> -->
-            </div>
-            <div style="height:calc(100% - 50px);overflow-y: scroll;overflow-x: hidden;padding-left:8px;padding-right:20px;display: flex;flex-direction: column;">
-                <div style="height:auto;">
-                    <el-row style="min-height:300px;" :gutter="15" class="test">
-                        <el-col :span="6" style="height: 100%">
-                            <pagePanel headerTitle="注入问题" style="margin-top:0;height:100%;">
-                                <el-row :gutter="10">
-                                    <el-col :span="12">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">注入动态</el-button>
-                                        <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'trendOfIndicators')})">
-                                            <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code" v-for="(item,index) in trendOfIndicators" :key="index" :span="24">
-                                                {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
-                                            </el-radio-button>
-                                        </el-radio-group>
-                                    </el-col>
-                                    <el-col :span="12">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">井层注水工况</el-button>
-                                        <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'workingCondition')})">
-                                            <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code" v-for="(item,index) in workingCondition" :key="index" :span="24">
-                                                {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
-                                            </el-radio-button>
-                                        </el-radio-group>
-                                    </el-col>
-                                </el-row>
-                            </pagePanel>
-                        </el-col>
-                        <el-col :span="12" style="height: 100%">
-                            <pagePanel headerTitle="超欠注原因分析" style="margin-top:0;height:100%;">
-                                <el-row :gutter="10">
-                                    <el-col :span="6">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">地面原因</el-button>
-                                        <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'theGroundBecause')})">
-                                            <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code" v-for="(item,index) in theGroundBecause" :key="index" :span="24">
-                                                {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
-                                            </el-radio-button>
-                                        </el-radio-group>
-                                    </el-col>
-                                    <el-col :span="6">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">井筒原因</el-button>
-                                        <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'wellboreReason')})">
-                                            <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code" v-for="(item,index) in wellboreReason" :key="index" :span="24">
-                                                {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
-                                            </el-radio-button>
-                                        </el-radio-group>
-                                    </el-col>
-                                    <el-col :span="6">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">地层原因</el-button>
-                                        <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'formationReason')})">
-                                            <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code" v-for="(item,index) in formationReason" :key="index" :span="24">
-                                                {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
-                                            </el-radio-button>
-                                        </el-radio-group>
-                                    </el-col>
-                                    <el-col :span="6">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">停注恢复</el-button>
-                                        <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'stopInjectionRecovery')})">
-                                            <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code" v-for="(item,index) in stopInjectionRecovery" :key="index" :span="24">
-                                                {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
-                                            </el-radio-button>
-                                        </el-radio-group>
-                                    </el-col>
-                                </el-row>
-                            </pagePanel>
-                        </el-col>
-                        <el-col :span="6" style="height: 100%">
-                            <pagePanel headerTitle="措施推荐" style="margin-top:0;height:100%;">
-                                <el-row :gutter="10" style="height: 100%">
-                                    <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'recommendedMeasuresOptions')})">
-                                        <el-col v-for="(item,index) in recommendedMeasuresOptions" :key="index" :span="12">
-                                            <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
-                                            </el-radio-button>
+    <div class="z_app_container">
+        <!-- 旧版本 -->
+        <div class="app-container" v-if="!isNewformat">
+            <headerSearch style="height:80px;">
+                <div class="g-row-flex-V g-w100 g-h100">
+                    <span>油田：</span>
+                    <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="changeOilFeild">
+                        <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId" :disabled="item.disabled"></el-option>
+                    </el-select>
+                    <span style="margin-left:15px;">平台：</span>
+                    <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="changePlatForm">
+                        <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId" :disabled="item.disabled"></el-option>
+                    </el-select>
+                    <span style="margin-left:15px;">井号：</span>
+                    <el-select v-model="wellId" class="f2" style="width:180px" filterable clearable>
+                        <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled"></el-option>
+                    </el-select>
+                    <span style="margin-left:15px;">评价时间：</span>
+                    <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
+                    <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+                </div>
+            </headerSearch>
+            <pagePanelNew style="height: calc(100% - 100px);" class="g-w100">
+                <div class="btns" style="height:50px;display: flex;padding-left:7px;">
+                    <el-button type="primary" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
+                    <el-button type="primary" @click="isNewformat=!isNewformat;">切换版式</el-button>
+                </div>
+                <div style="height:calc(100% - 50px);overflow-y: scroll;overflow-x: hidden;padding-left:8px;padding-right:7px;display: flex;flex-direction: column;">
+                    <div style="height:auto;">
+                        <el-row style="min-height:300px;" :gutter="15" class="test">
+                            <el-col :span="5" style="height: 100%">
+                                <pagePanel headerTitle="注入问题" style="margin-top:0;height:100%;">
+                                    <el-row :gutter="10">
+                                        <el-col :span="12">
+                                            <el-button class="commonBtn" style="width:100%;cursor: inherit;">注入动态</el-button>
+                                            <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'trendOfIndicators')})">
+                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code" v-for="(item,index) in trendOfIndicators" :key="index" :span="24">
+                                                    {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
+                                                </el-radio-button>
+                                            </el-radio-group>
                                         </el-col>
-                                    </el-radio-group>
-                                </el-row>
-                            </pagePanel>
-                        </el-col>
-                    </el-row>
-                    <div style="margin-bottom:10px;">
-                        <el-row>
-                            <el-col :span="24">
-                                <table class="condationRow" style="float: right">
-                                    <tr>
-                                        <td style="padding-right:10px">图例：</td>
-                                        <td class="checkBtn">选中</td>
-                                        <td class="about">相关</td>
-                                        <td class="noCheckBtn">未选中</td>
-                                    </tr>
-                                </table>
+                                        <el-col :span="12">
+                                            <el-button class="commonBtn" style="width:100%;cursor: inherit;">井层注水工况</el-button>
+                                            <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'workingCondition')})">
+                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code" v-for="(item,index) in workingCondition" :key="index" :span="24">
+                                                    {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
+                                                </el-radio-button>
+                                            </el-radio-group>
+                                        </el-col>
+                                    </el-row>
+                                </pagePanel>
+                            </el-col>
+                            <el-col :span="10" style="height: 100%">
+                                <pagePanel headerTitle="超欠注原因分析" style="margin-top:0;height:100%;">
+                                    <el-row :gutter="10">
+                                        <el-col :span="6">
+                                            <el-button class="commonBtn" style="width:100%;cursor: inherit;">地面原因</el-button>
+                                            <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'theGroundBecause')})">
+                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code" v-for="(item,index) in theGroundBecause" :key="index" :span="24">
+                                                    {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
+                                                </el-radio-button>
+                                            </el-radio-group>
+                                        </el-col>
+                                        <el-col :span="6">
+                                            <el-button class="commonBtn" style="width:100%;cursor: inherit;">井筒原因</el-button>
+                                            <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'wellboreReason')})">
+                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code" v-for="(item,index) in wellboreReason" :key="index" :span="24">
+                                                    {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
+                                                </el-radio-button>
+                                            </el-radio-group>
+                                        </el-col>
+                                        <el-col :span="6">
+                                            <el-button class="commonBtn" style="width:100%;cursor: inherit;">地层原因</el-button>
+                                            <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'formationReason')})">
+                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code" v-for="(item,index) in formationReason" :key="index" :span="24">
+                                                    {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
+                                                </el-radio-button>
+                                            </el-radio-group>
+                                        </el-col>
+                                        <el-col :span="6">
+                                            <el-button class="commonBtn" style="width:100%;cursor: inherit;">停注恢复</el-button>
+                                            <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'stopInjectionRecovery')})">
+                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code" v-for="(item,index) in stopInjectionRecovery" :key="index" :span="24">
+                                                    {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
+                                                </el-radio-button>
+                                            </el-radio-group>
+                                        </el-col>
+                                    </el-row>
+                                </pagePanel>
+                            </el-col>
+                            <el-col :span="4" style="height: 100%">
+                                <pagePanel headerTitle="注水动态" style="margin-top:0;height:100%;">
+                                    <el-row :gutter="10" style="height: 100%">
+                                        <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'recommendedMeasuresOptions')})">
+                                            <!-- <el-col v-for="(item,index) in recommendedMeasuresOptions" :key="index" :span="12">
+                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
+                                                    {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
+                                                </el-radio-button>
+                                            </el-col> -->
+                                            <!-- 等模型 -->
+                                            <el-col :span="24">
+                                                <el-radio-button class="checkButton">
+                                                    注水强度偏高（0）
+                                                </el-radio-button>
+                                            </el-col>
+                                            <el-col :span="24">
+                                                <el-radio-button class="checkButton">
+                                                    注水强度偏低（0）
+                                                </el-radio-button>
+                                            </el-col>
+                                            <el-col :span="24">
+                                                <el-radio-button class="checkButton">
+                                                    正常（0）
+                                                </el-radio-button>
+                                            </el-col>
+                                        </el-radio-group>
+                                    </el-row>
+                                </pagePanel>
+                            </el-col>
+                            <el-col :span="5" style="height: 100%">
+                                <pagePanel headerTitle="措施推荐" style="margin-top:0;height:100%;">
+                                    <el-row :gutter="10" style="height: 100%">
+                                        <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'recommendedMeasuresOptions')})">
+                                            <el-col v-for="(item,index) in recommendedMeasuresOptions" :key="index" :span="12">
+                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
+                                                    {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
+                                                </el-radio-button>
+                                            </el-col>
+                                        </el-radio-group>
+                                    </el-row>
+                                </pagePanel>
                             </el-col>
                         </el-row>
+                        <div style="margin-bottom:10px;">
+                            <el-row>
+                                <el-col :span="24">
+                                    <table class="condationRow" style="float: right">
+                                        <tr>
+                                            <td style="padding-right:10px">图例：</td>
+                                            <td class="checkBtn">选中</td>
+                                            <td class="about">相关</td>
+                                            <td class="noCheckBtn">未选中</td>
+                                        </tr>
+                                    </table>
+                                </el-col>
+                            </el-row>
+                        </div>
+                    </div>
+                    <div style="flex:1;min-height:380px;">
+                        <pagePanel headerTitle="水井动态分析详情列表" style="margin-top:0;height:100%;">
+                            <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList">
+                                <el-table-column prop="wellId" label="井号" align="center" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
+                                <el-table-column prop="productionProblems" label="生产问题" align="center">
+                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" :label="item.name" :render-header="renderHeader" align="center" sortable="custom">
+                                        <template slot-scope="{row}">
+                                            <span v-if="!row[item.code+'Message']">{{row[item.code]}}</span>
+                                            <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
+                                                <span>{{row[item.code]}}</span>
+                                            </el-tooltip>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column v-for="(item, index) in productionProblemsTab" :key="index" :prop="item.code" :label="item.name" align="center">
+                                        <template slot-scope="{row}">
+                                            <span v-if="row[item.code+'Message']==''">{{row[item.code]}}</span>
+                                            <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
+                                                <span>{{row[item.code]}}</span>
+                                            </el-tooltip>
+                                        </template>
+                                    </el-table-column>
+                                </el-table-column>
+                                <el-table-column prop="overUnderInjectionAnalysis" label="超欠注原因分析" align="center">
+                                    <el-table-column v-for="(item, index) in overUnderInjectionAnalysisTab" :key="index" :prop="item.code" :label="item.name" align="center">
+                                        <template slot-scope="{row}">
+                                            <span v-if="row[item.code+'Message']==''">{{row[item.code]}}</span>
+                                            <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
+                                                <span>{{row[item.code]}}</span>
+                                            </el-tooltip>
+                                        </template>
+                                    </el-table-column>
+                                </el-table-column>
+                                <el-table-column prop="recommendedMeasures" label="措施初选" align="center">
+                                    <el-table-column prop="measuresName" label="推荐措施" align="center"></el-table-column>
+                                    <el-table-column prop="theDate" label="推荐日期" align="center" width="120px"></el-table-column>
+                                    <el-table-column label="操作" align="center">
+                                        <template slot-scope="scope">
+                                            <el-button type="text" @click="openAnalysis(scope.row.wellId)">分析</el-button>
+                                        </template>
+                                    </el-table-column>
+                                </el-table-column>
+                            </el-table>
+                        </pagePanel>
                     </div>
                 </div>
-                <div style="flex:1;min-height:380px;">
-                    <pagePanel headerTitle="水井动态分析详情列表" style="margin-top:0;height:100%;">
+            </pagePanelNew>
+        </div>
+        <!-- 新版本 -->
+        <div class="app-container2" v-if="isNewformat">
+            <div class="leftBox">
+                <img src="@/assets/rem/performance/yj_bg.png" alt="">
+            </div>
+            <div class="rightBox">
+                <div class="v0">
+                    <headerSearch style="height:80px;">
+                        <div class="g-row-flex-V g-w100 g-h100">
+                            <span>油田：</span>
+                            <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="changeOilFeild">
+                                <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId" :disabled="item.disabled"></el-option>
+                            </el-select>
+                            <span style="margin-left:15px;">平台：</span>
+                            <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="changePlatForm">
+                                <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId" :disabled="item.disabled"></el-option>
+                            </el-select>
+                            <span style="margin-left:15px;">井号：</span>
+                            <el-select v-model="wellId" class="f2" style="width:180px" filterable clearable>
+                                <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled"></el-option>
+                            </el-select>
+                            <span style="margin-left:15px;">评价时间：</span>
+                            <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
+                            <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
+                            <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+                        </div>
+                    </headerSearch> 
+                </div>
+                <div class="v1">
+                    <img src="@/assets/rem/performance/bgline1.png" alt="" class="bgline1">
+                    <div class="btns" style="height:40px;display: flex;">
+                        <el-button type="primary" style="margin-left:auto;" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
+                        <el-button type="primary" @click="isNewformat=!isNewformat;">切换版式</el-button>
+                    </div>
+                    <div class="btns0">
+                        <img src="@/assets/rem/performance/help.png" alt="" class="helpImg">
+                        <span>{{potentialWellNum}}</span>
+                        <b>潜力井</b>
+                    </div>
+                </div>
+                <div class="v2">
+                    <info-window info-width="100%"  info-height="100%"  header-title="生产动态监测" :is-show-max-btn="false">
+                        <div class="z-content" style="height:calc(100% - 55px);">
+                            <div class="z-content-n">
+                                <div class="z-row-left">
+                                    <div class="z_title">
+                                        <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                        <span>注入动态</span>
+                                    </div>
+                                    <div class="z_schedule">
+                                        <span class="sp1">正常：</span>
+                                        <div class="z_proess">
+                                            <span class="z_proess_sp1" :style="{width:trendOfIndicatorsNum.zczb+'%'}"><b>{{trendOfIndicatorsNum.zcnum}}</b></span>
+                                            <span class="z_proess_sp2"></span>
+                                        </div>
+                                        <span class="sp2">异常：<b>{{trendOfIndicatorsNum.ycnum}}</b></span>
+                                    </div>
+                                </div>  
+                                <div class="z-row-center">
+                                    <div class="numBtn" v-for="(item,index) in trendOfIndicators" :key="index" v-if="item.name!='正常'">
+                                        <span class="sp1">{{item.value}}</span>
+                                        <span class="sp2">{{item.name}}</span>
+                                    </div>
+                                </div>
+                                <div class="z-row-right">
+                                    <div class="name">措施推荐</div>
+                                    <div class="num">
+                                        <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='地面提压'||item.name=='测调'">
+                                            {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </info-window>
+                </div>
+                <div class="v2">
+                    <img src="@/assets/rem/performance/bgline0.png" alt="" class="bgline0">
+                    <info-window info-width="100%"  info-height="100%"  header-title="水井工况诊断" :is-show-max-btn="false">
+                        <div class="z-content" style="height:calc(100% - 55px);">
+                            <div class="z-content-n">
+                                <div class="z-row-left">
+                                    <div class="z_title">
+                                        <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                        <span>井筒原因</span>
+                                    </div>
+                                    <div class="z_schedule">
+                                        <span class="sp1">正常：</span>
+                                        <div class="z_proess">
+                                            <span class="z_proess_sp1" :style="{width:wellboreReasonNum.zczb+'%'}"><b>{{wellboreReasonNum.zcnum}}</b></span>
+                                            <span class="z_proess_sp2"></span>
+                                        </div>
+                                        <span class="sp2">异常：<b>{{wellboreReasonNum.ycnum}}</b></span>
+                                    </div>
+                                </div>  
+                                <div class="z-row-center">
+                                    <div class="numBtn" v-for="(item,index) in wellboreReason" :key="index" v-if="item.name!='正常'">
+                                        <span class="sp1">{{item.value}}</span>
+                                        <span class="sp2">{{item.name}}</span>
+                                    </div>
+                                </div>
+                                <div class="z-row-right">
+                                    <div class="name">措施推荐</div>
+                                    <div class="num">
+                                        <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='检查管柱'">
+                                            {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </info-window>
+                </div>
+                <div class="v2 v3">
+                    <img src="@/assets/rem/performance/bgline2.png" alt="" class="bgline2">
+                    <info-window info-width="100%"  info-height="100%"  header-title="潜力分析" :is-show-max-btn="false">
+                        <div class="z-content" style="height:calc(100% - 55px);">
+                            <div class="z-content-n">
+                                <div class="z-row-left">
+                                    <div class="z_title">
+                                        <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                        <span>井层注水工况</span>
+                                    </div>
+                                    <div class="z_schedule">
+                                        <span class="sp1">正常：</span>
+                                        <div class="z_proess">
+                                            <span class="z_proess_sp1" :style="{width:workingCondNum.zczb+'%'}"><b>{{workingCondNum.zcnum}}</b></span>
+                                            <span class="z_proess_sp2"></span>
+                                        </div>
+                                        <span class="sp2">异常：<b>{{workingCondNum.ycnum}}</b></span>
+                                    </div>
+                                </div>  
+                                <div class="z-row-center">
+                                    <div class="numBtn" v-for="(item,index) in workingCondition" :key="index" v-if="item.name!='正常'">
+                                        <span class="sp1">{{item.value}}</span>
+                                        <span class="sp2">{{item.name}}</span>
+                                    </div>
+                                </div>
+                                <div class="z-row-right" style="position: relative;top: 48px;">
+                                    <div class="name">措施推荐</div>
+                                    <div class="num">
+                                        <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='储层改造'||item.name=='酸化解堵'||item.name=='恢复注水'">
+                                            {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="z-content-n">
+                                <div class="z-row-left">
+                                    <div class="z_title">
+                                        <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                        <span>注水强度</span>
+                                    </div>
+                                    <div class="z_schedule">
+                                        <span class="sp1">正常：</span>
+                                        <div class="z_proess">
+                                            <span class="z_proess_sp1" style="width:0%"><b>0</b></span>
+                                            <span class="z_proess_sp2"></span>
+                                        </div>
+                                        <span class="sp2">异常：<b>0</b></span>
+                                    </div>
+                                </div>  
+                                <div class="z-row-center">
+                                    <div class="numBtn">
+                                        <span class="sp1">0</span>
+                                        <span class="sp2">注水强度偏高</span>
+                                    </div>
+                                    <div class="numBtn">
+                                        <span class="sp1">0</span>
+                                        <span class="sp2">注水强度偏低</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </info-window>
+                </div>
+                <div style="height:340px;">
+                    <info-window info-width="100%"  info-height="100%"  header-title="水井动态分析详情列表" :is-show-max-btn="false">
                         <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList">
                             <el-table-column prop="wellId" label="井号" align="center" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                             <el-table-column prop="productionProblems" label="生产问题" align="center">
@@ -160,10 +415,10 @@
                                 </el-table-column>
                             </el-table-column>
                         </el-table>
-                    </pagePanel>
+                    </info-window>
                 </div>
             </div>
-        </pagePanelNew>
+        </div>
     </div>
 </template>
 
@@ -187,6 +442,8 @@
     export default {
         data() {
             return {
+                isNewformat:true,//默认新版本
+                potentialWellNum:0,//潜力井
                 //数据来源,大于０为后台提取
                 dataSource: 1,
                 initTypes: 1, //进行初始加载
@@ -207,7 +464,7 @@
                 //有推荐措施的井
                 recommendedMeasuresWells: {},
                 //生产问题表头
-                productionProblemsTab: [ /*{code:"trendOfIndicators",name:"指标变化趋势"},*/ {
+                productionProblemsTab: [{
                     code: "workingCondition",
                     name: "注水工况"
                 }],
@@ -233,12 +490,33 @@
                 selTag: "",
                 //井层指标变化趋势
                 trendOfIndicators: [],
+                trendOfIndicatorsNum:{
+                    allnum:0,
+                    zcnum:0,
+                    ycnum:0,
+                    zczb:0,
+                    yczb:0,
+                },
                 //井层注水工况
                 workingCondition: [],
+                workingCondNum:{
+                    allnum:0,
+                    zcnum:0,
+                    ycnum:0,
+                    zczb:0,
+                    yczb:0,
+                },
                 //地面原因
                 theGroundBecause: [],
                 //井筒原因
                 wellboreReason: [],
+                wellboreReasonNum:{
+                    allnum:0,
+                    zcnum:0,
+                    ycnum:0,
+                    zczb:0,
+                    yczb:0,
+                },
                 //地层原因
                 formationReason: [],
                 //停注恢复
@@ -344,7 +622,19 @@
                         let msg = res.data.msg;
                         if (msg == "success") {
                             let myData = res.data.data.indicatorAnalysisDetailInfos;
-                            console.log("myData1", myData);
+                            this.trendOfIndicatorsNum.allnum=0;
+                            this.trendOfIndicatorsNum.zcnum=0;
+                            this.trendOfIndicatorsNum.ycnum=0;
+                            myData.forEach((el,i)=>{
+                                this.trendOfIndicatorsNum.allnum+=Number(el.value);
+                                if(el.name=='正常'){
+                                    this.trendOfIndicatorsNum.zcnum=Number(el.value);
+                                }else{
+                                    this.trendOfIndicatorsNum.ycnum+=Number(el.value);
+                                }
+                            })
+                            this.trendOfIndicatorsNum.zczb=this.trendOfIndicatorsNum.zcnum/this.trendOfIndicatorsNum.allnum * 100;
+                            this.trendOfIndicatorsNum.yczb=this.trendOfIndicatorsNum.yczb/this.trendOfIndicatorsNum.allnum * 100;
                             this.trendOfIndicators = myData;
                         }
                     });
@@ -384,7 +674,20 @@
                         let msg = res.data.msg;
                         if (msg == "success") {
                             let myData = res.data.data.indicatorAnalysisDetailInfos;
-                            console.log("myData2", myData);
+                            this.workingCondNum.allnum=0;
+                            this.workingCondNum.zcnum=0;
+                            this.workingCondNum.ycnum=0;
+                            myData.forEach((el,i)=>{
+                                this.workingCondNum.allnum+=Number(el.value);
+                                if(el.name=='正常'){
+                                    this.workingCondNum.zcnum=Number(el.value);
+                                }else{
+                                    this.workingCondNum.ycnum+=Number(el.value);
+                                }
+                            })
+                            this.workingCondNum.zczb=this.workingCondNum.zcnum/this.workingCondNum.allnum * 100;
+                            // this.workingCondNum.zczb=100;
+                            this.workingCondNum.yczb=this.workingCondNum.yczb/this.workingCondNum.allnum * 100;
                             this.workingCondition = myData;
                         }
                     });
@@ -458,7 +761,20 @@
                         let msg = res.data.msg;
                         if (msg == "success") {
                             let myData = res.data.data.indicatorAnalysisDetailInfos;
-                            console.log("myData4", myData);
+                            this.wellboreReasonNum.allnum=0;
+                            this.wellboreReasonNum.zcnum=0;
+                            this.wellboreReasonNum.ycnum=0;
+                            myData.forEach((el,i)=>{
+                                this.wellboreReasonNum.allnum+=Number(el.value);
+                                if(el.name=='正常'){
+                                    this.wellboreReasonNum.zcnum=Number(el.value);
+                                }else{
+                                    this.wellboreReasonNum.ycnum+=Number(el.value);
+                                }
+                            })
+                            this.wellboreReasonNum.zczb=this.wellboreReasonNum.zcnum/this.wellboreReasonNum.allnum * 100;
+                            // this.wellboreReasonNum.zczb=100;
+                            this.wellboreReasonNum.yczb=this.wellboreReasonNum.yczb/this.wellboreReasonNum.allnum * 100;
                             this.wellboreReason = myData;
                         }
                     });
@@ -605,7 +921,10 @@
                         let msg = res.data.msg;
                         if (msg == "success") {
                             let myData = res.data.data.indicatorAnalysisDetailInfos;
-                            console.log("myData10", myData);
+                            this.potentialWellNum=0;
+                            myData.forEach((el,i)=>{
+                                this.potentialWellNum=Number(el.value);
+                            })
                             this.recommendedMeasuresOptions = myData;
                         }
                     });
@@ -1168,7 +1487,6 @@
                     this.wellData = [];
                     this.wellId = ""; //选中
                 } else { //使用接口
-                    console.log('走了')
                     //判断平台全部情况 平台全部 的id 为 油田的id 所以通过判断油田和平台全部的id值是否相等调用不同方法
                     if (this.platform == this.selYtdm) {
                         this.queryOilWellList();
@@ -1274,8 +1592,283 @@
 </script>
 
 <style lang="scss" scoped>
-   
-
+    .z_app_container{
+        height:100%;
+        .app-container{
+            height:100%;
+        }
+        .app-container2{
+            height:100%;
+            // height:975px;
+            position: relative;
+            overflow-y: scroll;
+            &::-webkit-scrollbar {
+              width: 0px;
+              height: 1px;
+            }
+            &::-webkit-scrollbar-thumb { //滑块部分
+              border-radius: 5px;
+              background-color: rgb(175, 74, 240);
+            }
+            &::-webkit-scrollbar-track { //轨道部分
+              box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+              background: #ededed;
+              border-radius: 5px;
+            }
+            .leftBox{
+                width:563px;
+                // height:100%;
+                height:975px;
+                img{
+                    width:100%;
+                    height:100%;
+                }
+            }
+            .rightBox{
+                width:100%;
+                height:100%;
+                position: absolute;
+                left:0;
+                top:0;
+            }
+            .v0{
+                padding-left:400px;
+            }
+            .v1{
+                margin:5px 0;
+                padding-left:400px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                position: relative;
+                .bgline1{
+                    width: 358px;
+                    height: 43px;
+                    position: absolute;
+                    left: 180px;
+                    top: 30px;
+                }
+                .btns0{
+                    // margin:5px 0;
+                    width:224px;
+                    height:70px;
+                    padding-left:20px;
+                    border: 1px solid;
+                    border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
+                    background-image: var(--logo-bg) !important;
+                    display: flex;
+                    align-items: center;
+                    position: relative;
+                    .helpImg{
+                        width:52px;
+                        height:52px;
+                        margin-right:18px;
+                    }
+                    span{
+                        font-size: 50px;
+                        color: #FFCA07;
+                        font-weight: 600;
+                    }
+                    b{
+                        position: absolute;
+                        right:12px;
+                        top:4px;
+                        font-size: 16px;
+                        color: #24DEFF;
+                    }
+                }
+            }
+            .v2{
+                margin-bottom:30px;
+                padding-left:400px;
+                width:100%;
+                height:164px;
+                position: relative;
+                .bgline0{
+                    width: 374px;
+                    height: 134px;
+                    position: absolute;
+                    left: 172px;
+                    top: -70px;
+                }
+                
+                .bgline2{
+                    width: 380px;
+                    height: 271px;
+                    position: absolute;
+                    left: 180px;
+                    top: -72px;
+                }
+                .z-content{
+                    padding-left:36px;
+                    .z-content-n{
+                        margin-top:16px;
+                        display: flex;
+                        .z-row-left{
+                            margin-right:60px;
+                            .z_title{
+                                display: flex;
+                                align-items: center;
+                                position: relative;
+                                img{
+                                    width:38px;
+                                    height:38px;
+                                    margin-right:10px;
+                                }
+                                span{
+                                    font-size: 16px;
+                                    color: #FFFFFF;
+                                    text-align: center;
+                                    font-weight: 600;
+                                    z-index: 1;
+                                }
+                                &::before{
+                                    content:'';
+                                    background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                                    width:110px;
+                                    height:32px;
+                                    position: absolute;
+                                    left:60px;
+                                    top:2px;
+                                    z-index: 0;
+                                }
+                            }
+                            .z_title2{
+                                display: flex;
+                                align-items: center;
+                                position: relative;
+                                img{
+                                    width:38px;
+                                    height:38px;
+                                    margin-right:20px;
+                                }
+                                span{
+                                    font-size: 16px;
+                                    color: #FFFFFF;
+                                    text-align: center;
+                                    font-weight: 600;
+                                    z-index: 1;
+                                }
+                                &::before{
+                                    content:'';
+                                    background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                                    width:110px;
+                                    height:32px;
+                                    position: absolute;
+                                    left:50px;
+                                    top:2px;
+                                    z-index: 0;
+                                }
+                            }
+                            .z_schedule{
+                                margin-top:22px;
+                                margin-bottom:10px;
+                                display: flex;
+                                align-items: center;
+                                .sp1{
+                                    width:61px;
+                                    font-size: 14px;
+                                }
+                                .z_proess{
+                                    width:182px;
+                                    height:16px;
+                                    border: 1px solid rgba(41,171,226,1);
+                                    margin-right:16px;
+                                    display: flex;
+                                    align-items: center;
+                                    padding: 1px;
+                                    .z_proess_sp1{
+                                        height:100%;
+                                        background: linear-gradient(to right, #2cbdfb 0%, #80e2bf 50%, #befe93 100%);
+                                        b{
+                                            font-size: 14px;
+                                            color: #00223F;
+                                            letter-spacing: 0;
+                                            font-weight: 700;
+                                            position: relative;
+                                            top:-6px;
+                                            left:14px;
+                                        }
+                                    }
+                                    .z_proess_sp2{
+                                        flex:1;
+                                        height:100%;
+                                        background: linear-gradient(to right, #ffc255 0%, #ff9c46 50%, #ff7b39 100%);
+                                    }
+                                }
+                                .sp2{
+                                    font-size: 14px;
+                                    color:rgba(255,200,53,.8);
+                                    b{
+                                        font-size:20px;
+                                        opacity: 1;
+                                        color:#FFC835;
+                                    }
+                                }
+                            }
+                        }
+                        .z-row-center{
+                            flex:1;
+                            display: flex;
+                            flex-wrap: wrap;
+                            .numBtn{
+                                min-width: 100px;
+                                border-radius:4px;
+                                height:68px;
+                                padding:0 10px;
+                                margin-right:8px;
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                justify-content: center;
+                                background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                                .sp1{
+                                    font-size: 16px;
+                                    color: #FFCA07;
+                                    font-weight: 600;
+                                }
+                                .sp2{
+                                    font-size: 12px;
+                                }
+                            }
+                        }
+                        .z-row-right{
+                            width:224px;
+                            // height:90px;
+                            margin-right:75px;
+                            padding:0 30px 0 26px;
+                            padding-bottom:20px;
+                            border: 1px solid;
+                            border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
+                            background-image: var(--logo-bg) !important;
+                            .name{
+                                padding-top:14px;
+                                margin-bottom:14px;
+                                font-size: 18px;
+                                color: #24DEFF;
+                                text-align: center;
+                                line-height: 25px;
+                                font-weight: 600;
+                            }
+                            .num{
+                                flex-wrap: wrap;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                span{
+                                    font-size:12px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .v3{
+                height:300px;
+            }
+        }
+    }
+    
     .condationRow {
         height: 30px;
         line-height: 30px;

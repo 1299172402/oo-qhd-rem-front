@@ -15,6 +15,12 @@ export default [
                 component: () => import("@/layouts/blank.vue"),
                 children: [
                     {
+                        path: "analysisReport",
+                        name: "analysisReport",
+                        component: () => import("@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/analysisReport.vue"),
+                        meta: { title: "油井动态分析报告", icon: "icon" },
+                    },
+                    {
                         hidden: false,
                         path: "oilAuxiliaryAnalysis",
                         name: "oilAuxiliaryAnalysis",
@@ -65,6 +71,12 @@ export default [
                 component: () => import("@/layouts/blank.vue"),
                 meta: { title: "井组动态分析", single: false },
                 children: [
+                    {
+                        path: "analysisReport",
+                        name: "analysisReport",
+                        component: () => import("@/pages/rem/performance/dynamicTracking/wellGroupAnalysisAssistant/analysisReport.vue"),
+                        meta: { title: "井组动态分析报告", icon: "icon" },
+                    },
                     {
                         path: "wellGroupAnalysisAssistant",
                         name: "wellGroupAnalysisAssistant",
