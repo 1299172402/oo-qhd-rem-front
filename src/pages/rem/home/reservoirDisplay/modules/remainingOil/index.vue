@@ -1,19 +1,36 @@
 <template>
-  <div class="box">
-    <video
-      id="media"
-      class="media"
-      height="85%"
-      width="93%"
-      style="object-fit: fill; position: relative; top: 24px"
-      controls
-      src="@/pages/rem/home/reservoirDisplay/modules/演示视频.mp4"
-    ></video>
-  </div>
+  <video
+    id="my-video"
+    class="box"
+    height="100%"
+    width="100%"
+    controls
+    src="@/pages/rem/home/reservoirDisplay/modules/演示视频.mp4"
+  >
+    <div class="progress-bar"></div>
+    <div class="progress"></div>
+  </video>
 </template>
 
 <script>
-export default {};
+export default {
+  mounted() {
+    this.video();
+  },
+  methods: {
+    video() {
+      const video = document.getElementById("my-video");
+      const progressBar = document.querySelector(".progress-bar");
+      const progress = document.querySelector(".progress");
+      video.onresize = () => {
+        const videoWidth = video.offsetWidth;
+        const barWidth = progressBar.offsetWidth;
+        const newWidth = Math.floor((videoWidth / barWidth) * 100);
+        progress.style.width = `${newWidth}%`;
+      };
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -24,5 +41,18 @@ export default {};
   background-repeat: no-repeat;
   background-size: 100% 100%;
   text-align: center;
+  padding: 30px 20px;
+  overflow: hidden;
+}
+.progress-bar {
+  width: 100%; /* 进度条容器的初始宽度 */
+  height: 10px;
+  background-color: #ccc;
+}
+
+.progress {
+  width: 0%; /* 进度条的初始宽度为 0 */
+  height: 100%;
+  background-color: #f00;
 }
 </style>

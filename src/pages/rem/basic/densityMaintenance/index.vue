@@ -1,6 +1,6 @@
 <!-- 基础数据维护 - 密度维护表 -->
 <template>
-  <div class="app-container" style="height: calc(100% - 70px)">
+  <div class="app-container" style="height: calc(100% - 85px)">
     <headerSearch class="g-w100 g-h100" style="height: auto">
       <el-form :model="queryParams" :inline="true" style="margin-top: 18px">
         <el-form-item label="作业公司：">

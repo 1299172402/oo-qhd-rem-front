@@ -28,8 +28,8 @@
               </el-select>
             </el-form-item>
             <el-form-item label="井号">
-              <el-select v-model="queryData.wellId">
-                <el-option v-for="item in wells" :key="item.id" :label="item.wellName" :value="item.wellId">
+              <el-select v-model="queryData.wellId" @change="choicewellName">
+                <el-option v-for="item in wells" :key="item.wellId" :label="item.wellName" :value="item.wellId">
                 </el-option>
               </el-select>
             </el-form-item>
@@ -42,60 +42,64 @@
       </div>
     </header-search>
 
-    <pagePanel headerTitle="单井储量信息维护" style="height: calc(100% - 100px)" class="g-w100" :show-btn="true">
-      <div class="smart-energy-item">
-        <el-form
-          :model="djclForm"
-          style="width: 800px; padding-top: 20px"
-          ref="djclForm"
-          label-width="110px"
-          class="demo-ruleForm"
-        >
-          <el-row>
-            <el-col :span="10">
-              <el-form-item label="层位选择" prop="cw">
-                <el-select v-model="djclForm.layerId" @change="selectcw" placeholder="" style="width: 100.5%">
-                  <el-option
-                    v-for="item in cwOptions"
-                    :key="item.layerId"
-                    :label="item.layerName"
-                    :value="item.layerId"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="2">&nbsp;</el-col>
-            <el-col :span="10">
-              <el-form-item label="有效厚度" prop="cw">
-                <el-input v-model="djclForm.thicknessEffe" :disabled="edit"> <i slot="suffix">m</i></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="10">
-              <el-form-item label="控制储量" prop="kzcl">
-                <el-input v-model="djclForm.probReservesWell" :disabled="edit"> <i slot="suffix">m³</i></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="2">&nbsp;</el-col>
-            <el-col :span="10">
-              <el-form-item label="控制面积" prop="kzmj">
-                <el-input v-model="djclForm.controlArea" :disabled="edit">
-                  <i slot="suffix">m²</i>
-                </el-input>
-              </el-form-item>
-            </el-col>
-            <!-- <el-col :span="2">㎡</el-col> -->
-          </el-row>
-          <el-row>
-            <el-col :span="24" align="right" style="padding-top: 20px">
-              <el-button type="primary" @click="redact" icon="el-icon-edit">编辑</el-button>
-              <el-button type="primary" @click="save">保存</el-button>
-              <el-button type="primary" icon="el-icon-search">运行计算</el-button>
-            </el-col>
-          </el-row>
-        </el-form>
+    <pagePanel headerTitle="单井储量信息维护界面" style="height: calc(100% - 100px)" class="g-w100" :show-btn="true">
+      <div class="alltitle">{{ wellName }}</div>
+      <div class="boxall" style="height: 500px; width: 900px; margin: auto">
+        <div style="margin-left:4%;margin-top:100px">
+          <el-form
+            :model="djclForm"
+            style="width: 800px; padding-top: 20px"
+            ref="djclForm"
+            label-width="110px"
+            class="demo-ruleForm"
+          >
+            <el-row>
+              <el-col :span="10">
+                <el-form-item label="层位选择" prop="cw">
+                  <el-select v-model="djclForm.layerId" @change="selectcw" placeholder="" style="width: 100.5%">
+                    <el-option
+                      v-for="item in cwOptions"
+                      :key="item.layerId"
+                      :label="item.layerName"
+                      :value="item.layerId"
+                    >
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="2">&nbsp;</el-col>
+              <el-col :span="10">
+                <el-form-item label="有效厚度" prop="cw">
+                  <el-input v-model="djclForm.thicknessEffe" :disabled="edit"> <i slot="suffix">m</i></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="10">
+                <el-form-item label="控制储量" prop="kzcl">
+                  <el-input v-model="djclForm.probReservesWell" :disabled="edit"> <i slot="suffix">m³</i></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="2">&nbsp;</el-col>
+              <el-col :span="10">
+                <el-form-item label="控制面积" prop="kzmj">
+                  <el-input v-model="djclForm.controlArea" :disabled="edit">
+                    <i slot="suffix">m²</i>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <!-- <el-col :span="2">㎡</el-col> -->
+            </el-row>
+            <el-row>
+              <el-col :span="24" align="right" style="padding-top: 20px">
+                <el-button type="primary" @click="redact" icon="el-icon-edit">编辑</el-button>
+                <el-button type="primary" @click="save">保存</el-button>
+                <el-button type="primary" icon="el-icon-search">运行计算</el-button>
+              </el-col>
+            </el-row>
+          </el-form>
+        </div>
+        <div class="boxfoot"></div>
       </div>
     </pagePanel>
   </div>
@@ -139,6 +143,7 @@ export default {
       platforms: [],
       oilFields: [],
       djclForm: {},
+      wellName: "QHD32-6-A1",
     };
   },
   mounted() {
@@ -183,6 +188,13 @@ export default {
       //     });
       //   }
       // });
+    },
+    choicewellName(e) {
+      let obj = {};
+      obj = this.wells.find((item) => {
+        return item.wellId === e;
+      });
+      this.wellName = obj.wellName
     },
     selectcw() {
       let adta = {
@@ -286,7 +298,7 @@ export default {
             wellId: "",
             wellName: "全部",
           });
-          this.queryData.wellId = ''
+          this.queryData.wellId = "";
         }
       });
     },
@@ -354,6 +366,81 @@ export default {
   align-items: center;
   height: calc(100% - 80px);
 } */
+.alltitle {
+  color: #fff;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+}
+
+.boxall {
+  border: 2px solid rgba(25, 186, 139, 0.17);
+  /* padding: 0 .2rem .4rem .15rem; */
+  margin-left: 20px;
+  background-size: 100% auto;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  /* margin-bottom: 10px; */
+  z-index: 10;
+}
+
+.boxall:before,
+.boxfoot:before {
+  border-left: 10px solid rgb(0,183,255);
+  left: 0;
+}
+
+.boxall:after,
+.boxfoot:after {
+  border-right: 10px solid rgb(0,183,255);
+  right: 0;
+}
+
+.alltitle {
+  color: #fff;
+  text-align: center;
+  line-height: 30px;
+}
+
+.boxfoot {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+}
+
+.boxall:before,
+.boxall:after {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  content: "";
+  border-top: 4px solid rgb(0,183,255);
+  top: 0;
+}
+
+.boxall:before,
+.boxfoot:before {
+  border-left: 4px solid rgb(0,183,255);
+  left: 0;
+}
+
+.boxall:after,
+.boxfoot:after {
+  border-right: 4px solid rgb(0,183,255);
+  right: 0;
+}
+
+.boxfoot:before,
+.boxfoot:after {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  content: "";
+  border-bottom: 4px solid rgb(0,183,255);
+  bottom: 0;
+}
 </style>
 <style lang="scss" scoped>
 .smart-energy-item {

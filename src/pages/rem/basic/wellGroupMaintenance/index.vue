@@ -1,6 +1,6 @@
 <template>
   <!-- 井组信息维护 -->
-  <div style="width: 100%; height: 100%" class="pageBox">
+  <div style="width: 100%; height: calc(100% - 50px)" class="pageBox">
     <!-- <el-header style="margin-top: 15px"> -->
     <header-search class="g-w100 g-h100" style="height: auto">
       <el-form inline>
@@ -70,15 +70,15 @@
           </el-button>
         </el-col>
       </el-row>
-      <el-row :gutter="20">
-        <el-col :span="8">
+      <el-row :gutter="20" style="height: calc(100% - 100px)">
+        <el-col :span="8" style="height: 100%">
           <el-table
             :data="tableData"
             highlight
             style="margin-top: 10px"
             :row-style="{ height: '0px' }"
             :cell-style="{ padding: '3px', 'text-align': 'center' }"
-            height="550"
+            height="100%"
           >
             <el-table-column label="井组关系" align="center">
               <el-table-column prop="injWellNo" show-overflow-tooltip label="水井" align="center"></el-table-column>
@@ -114,7 +114,9 @@
                 <el-table-column prop="proWellNo" label="油井" show-overflow-tooltip align="center"></el-table-column>
                 <el-table-column label="操作" show-overflow-tooltip align="center">
                   <template slot-scope="scope">
-                    <el-button @click="deleteWellGroup(scope.row)">删除井组</el-button>
+                    <el-button type="text" size="small" @click="deleteWellGroup(scope.row)" style="color: #f56c6c">
+                      删除井组
+                    </el-button>
                   </template>
                 </el-table-column>
               </el-table-column>
