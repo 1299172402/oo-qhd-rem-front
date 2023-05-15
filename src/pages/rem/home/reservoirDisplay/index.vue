@@ -62,7 +62,7 @@
       </el-col>
       <el-col :span="7">
         <pagePanel headerTitle="关停井统计" style="height: 450px; width: 100%" class="g-w100">
-          <button class="detailLinkBtn" @click="linkroute('operationOverview')">详细</button>
+          <button class="detailLinkBtn" @click="linkroute('shutdownDetection')">详细</button>
           <shutdownWell></shutdownWell>
         </pagePanel>
       </el-col>
@@ -184,7 +184,7 @@ export default {
   methods: {
     linkroute(rname) {
       this.$router.push({
-        path: "/plucking/mechanical/outerframe",
+        path: `/reservoirDisplay/${rname}`,
         query: { key: rname },
       });
     },
