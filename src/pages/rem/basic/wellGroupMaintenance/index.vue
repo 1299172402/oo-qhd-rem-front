@@ -6,7 +6,7 @@
       <el-form inline>
         <el-form-item label="作业公司：">
           <el-select v-model="query.orgId" disabled>
-            <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.deptName" :value="item.deptId">
+            <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.orgName" :value="item.orgId">
             </el-option>
           </el-select>
         </el-form-item>
@@ -15,8 +15,8 @@
             <el-option
               v-for="(item, index) in oilFields"
               :key="index"
-              :label="item.oilFieldName"
-              :value="item.oilFieldId"
+              :label="item.ogfName"
+              :value="item.ogfId"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -232,6 +232,7 @@ import {
 import { getOilFieldList, queryLayerList } from "@/api/rem/workcompanydesignate";
 import { fetchInjectionWells, fetchProductionWells } from "@/api/rem/primaryinfo";
 import { fetchFields } from "@/api/rem/primaryinfoqhdrem";
+import { queryOperatingCompanyDetail, queryOperatorsCheckFieldListsDetail } from "@/api/basic/master";
 export default {
   components: {},
   data() {
@@ -246,12 +247,7 @@ export default {
         selectBlock: "6CD7342CA6DD418183A4B3BC38584F7C",
         orgId: "715AD1CD60484BB59E737CD18A9DE44A",
       },
-      deptSelect: [
-        {
-          deptId: "715AD1CD60484BB59E737CD18A9DE44A",
-          deptName: "秦皇岛32-6渤中作业公司",
-        },
-      ], //作业公司
+      deptSelect: [], //作业公司
       select: {
         selectBlock: "",
         waterBlock: "",
@@ -469,11 +465,19 @@ export default {
     },
     // 获取油田下拉数据
     selectData() {
-      getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
-        if (res.data.code == 200) {
-          this.oilFields = res.data.data;
-        }
-      });
+        //获取作业公司
+        queryOperatingCompanyDetail({}).then(res=>{
+            this.deptSelect = res.data.data
+        })
+        //根据作业公司查询油田
+        queryOperatorsCheckFieldListsDetail({orgId:this.query.orgId}).then(res=>{
+            this.oilFields = res.data.data
+        })
+      // getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
+      //   if (res.data.code == 200) {
+      //     this.oilFields = res.data.data;
+      //   }
+      // });
       queryLayerList().then((res) => {
         if (res.data.code == 200) {
           this.cwOptions = res.data.data;

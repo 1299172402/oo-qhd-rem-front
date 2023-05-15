@@ -7,8 +7,8 @@
           <el-option
             v-for="(item, index) in oilFields"
             :key="index"
-            :label="item.oilFieldName"
-            :value="item.oilFieldId"
+            :label="item.ogfName"
+            :value="item.ogfId"
           />
         </el-select>
         <span v-show="activeTabIndex == 1" style="padding-left: 20px">井号：</span>
@@ -271,6 +271,7 @@
 import ProductionData from "@/pages/rem/basic/customQuery/modules/index.vue";
 import { queryCustomQueryList } from "@/api/basic/basic";
 import { fetchProductionWells } from "@/api/oilDeposit/rem-02/primaryinfo.js";
+import { queryOperatorsCheckFieldListsDetail } from "@/api/basic/master";
 export default {
   name: "CustomQuery",
   components: {
@@ -303,12 +304,7 @@ export default {
       dialogVisible: false,
       ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
       wellId: "",
-      oilFields: [
-        {
-          oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
-          oilFieldName: "秦皇岛32-6油田",
-        },
-      ],
+      oilFields: [],
       wellData: [],
       dataTypes: [
         { val: "wellhead", name: "井口生产指标" },
@@ -475,6 +471,11 @@ export default {
   created() {},
   methods: {
     initData() {
+        queryOperatorsCheckFieldListsDetail({}).then(res =>{
+            if (res.data.code == 200) {
+                this.oilFields = res.data.data
+            }
+        })
       let oilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
       const request = {
         oilFieldId,

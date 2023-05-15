@@ -5,7 +5,7 @@
       <el-form :model="queryParams" :inline="true" style="margin-top: 18px">
         <el-form-item label="作业公司：">
           <el-select v-model="queryParams.orgId" disabled>
-            <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.deptName" :value="item.deptId">
+            <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.orgName" :value="item.orgId">
             </el-option>
           </el-select>
         </el-form-item>
@@ -14,8 +14,8 @@
             <el-option
               v-for="(item, index) in oilFields"
               :key="index"
-              :label="item.oilFieldName"
-              :value="item.oilFieldId"
+              :label="item.ogfName"
+              :value="item.ogfId"
             >
             </el-option>
           </el-select>
@@ -205,6 +205,8 @@
 import { getOilFieldList, queryProductList } from "@/api/rem/workcompanydesignate";
 import { queryDensityInfo, save } from "@/api/rem/density.js";
 import { mapGetters } from "vuex";
+import { queryOperatingCompanyDetail, queryOperatorsCheckFieldListsDetail } from "@/api/basic/master";
+
 export default {
   name: "Notice",
   dicts: ["sys_normal_disable"],
@@ -214,12 +216,7 @@ export default {
       dialogVisible: false, //运行计算展示弹窗
       oilfield: [],
       producttype: [],
-      deptSelect: [
-        {
-          deptId: "715AD1CD60484BB59E737CD18A9DE44A",
-          deptName: "秦皇岛32-6渤中作业公司",
-        },
-      ], //作业公司
+      deptSelect: [], //作业公司
       oilFields: [],
       // 表格数据
       noticeList: [],
@@ -270,12 +267,20 @@ export default {
      * @param oilfield 油田数据数组
      */
     getList() {
-      // debugger
-      getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
-        if (res.data.code == 200) {
-          this.oilFields = res.data.data;
-        }
-      });
+        //获取作业公司
+        queryOperatingCompanyDetail({}).then(res=>{
+            this.deptSelect = res.data.data
+        })
+        //根据作业公司查询油田
+        queryOperatorsCheckFieldListsDetail({orgId:this.queryParams.orgId}).then(res=>{
+            this.oilFields = res.data.data
+        })
+      // // debugger
+      // getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
+      //   if (res.data.code == 200) {
+      //     this.oilFields = res.data.data;
+      //   }
+      // });
       queryProductList().then((res) => {
         if (res.data.code == 200) {
           this.producttype = res.data.data;

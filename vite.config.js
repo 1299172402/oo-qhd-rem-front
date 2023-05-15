@@ -95,9 +95,9 @@ export default ({ mode }) => {
           // 接口网关地址：http://10.77.79.57:8080
           // 接口微服务地址：http://10.77.78.243:8003
           // 接口微服务名称：oo-csc-csc-masterdata-atom
-          target: "http://10.77.78.243:8003",
+          target: "http://10.77.79.57:8080",
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/dev-api\/masterService\/api/, ""),
+          rewrite: (path) => path.replace(/^\/dev-api\/masterService\/api/, "/omc003d"),
         },
         "/dev-api": {
           // 用于开发环境下的转发请求

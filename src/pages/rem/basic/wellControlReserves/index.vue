@@ -7,7 +7,7 @@
           <el-form :inline="true">
             <el-form-item label="作业公司：">
               <el-select v-model="queryData.orgId" disabled>
-                <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.deptName" :value="item.deptId">
+                <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.orgName" :value="item.orgId">
                 </el-option>
               </el-select>
             </el-form-item>
@@ -16,14 +16,14 @@
                 <el-option
                   v-for="(item, index) in oilFields"
                   :key="index"
-                  :label="item.oilFieldName"
-                  :value="item.oilFieldId"
+                  :label="item.ogfName"
+                  :value="item.ogfId"
                 ></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="平台" prop="pt">
               <el-select v-model="queryData.pt" @change="onPlatfromChange">
-                <el-option v-for="item in platforms" :key="item.id" :label="item.platName" :value="item.platFormId">
+                <el-option v-for="item in platforms" :key="item.id" :label="item.platformName" :value="item.platformId">
                 </el-option>
               </el-select>
             </el-form-item>
@@ -111,6 +111,14 @@ import {
 } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { queryLayerList, getOilFieldList } from "@/api/rem/workcompanydesignate";
 import { saveControlledReserves, getControlledReserves } from "@/api/rem/welldetailedevaluationresult";
+import { 
+    queryOperatingCompanyDetail,
+    queryOperatorsCheckFieldListsDetail,
+    queryListOfOilfieldQueryPlatformsDetail,
+    queryPlatformQueryWellListDetail,
+    queryOilAndGasFieldQueryPositionDetail
+} from "@/api/basic/master";
+
 export default {
   components: {},
   data() {
@@ -121,16 +129,12 @@ export default {
         assetCode: "",
         month: new Date().format("yyyy-MM"),
         ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
-        wellId: "09D30C16BD1D4F759D53F74941701307",
+        // wellId: "09D30C16BD1D4F759D53F74941701307",
+        wellId: "",
         orgId: "715AD1CD60484BB59E737CD18A9DE44A",
         pt: "",
       },
-      deptSelect: [
-        {
-          deptId: "715AD1CD60484BB59E737CD18A9DE44A",
-          deptName: "秦皇岛32-6渤中作业公司",
-        },
-      ], //作业公司
+      deptSelect: [], //作业公司
       wells: [],
       platforms: [],
       oilFields: [],
@@ -144,29 +148,41 @@ export default {
   },
   methods: {
     getList() {
-      getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
-        if (res.data.code == 200) {
-          this.oilFields = res.data.data;
-        }
-      });
-      fetchOilFields().then((res) => {
-        if (res.data.code == 200) {
-          const requestPlat = {
-            oilFieldId: this.queryData.ogfId,
-          };
-          fetchPlatforms(requestPlat).then((res) => {
-            if (res.data.code == 200) {
-              this.platforms = res.data.data.platform;
-              this.platforms.map((n) => {
-                if (n.platName == "全部") {
-                  n.platFormId = "";
-                }
-                this.queryData.pt = "";
-              });
-            }
-          });
-        }
-      });
+        //获取作业公司
+        queryOperatingCompanyDetail({}).then(res=>{
+            this.deptSelect = res.data.data
+        })
+        //根据作业公司查询油田
+        queryOperatorsCheckFieldListsDetail({orgId:this.queryData.orgId}).then(res=>{
+            this.oilFields = res.data.data
+        })
+        //根据油田查询平台列表
+        queryListOfOilfieldQueryPlatformsDetail({ogfId:this.queryData.ogfId}).then(res=>{
+            this.platforms = res.data.data
+        })
+      // getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
+      //   if (res.data.code == 200) {
+      //     this.oilFields = res.data.data;
+      //   }
+      // });
+      // fetchOilFields().then((res) => {
+      //   if (res.data.code == 200) {
+      //     const requestPlat = {
+      //       oilFieldId: this.queryData.ogfId,
+      //     };
+      //     fetchPlatforms(requestPlat).then((res) => {
+      //       if (res.data.code == 200) {
+      //         this.platforms = res.data.data.platform;
+      //         this.platforms.map((n) => {
+      //           if (n.platName == "全部") {
+      //             n.platFormId = "";
+      //           }
+      //           this.queryData.pt = "";
+      //         });
+      //       }
+      //     });
+      //   }
+      // });
     },
     selectcw() {
       let adta = {
@@ -185,14 +201,18 @@ export default {
       this.edit = false;
     },
     queryserch() {
-      queryLayerList(this.queryData).then((res) => {
-        if (res.data.code == 200) {
-          this.cwOptions = res.data.data;
-        } else {
-          this.$message.error("系统错误请重新尝试或联系运维人员！");
-        }
-        console.log(this.tableData);
-      });
+        //获取层位
+        queryOilAndGasFieldQueryPositionDetail({ogfId:this.queryData.ogfId}).then((res) => {
+            this.cwOptions = res.data.data;
+        });
+      // queryLayerList(this.queryData).then((res) => {
+      //   if (res.data.code == 200) {
+      //     this.cwOptions = res.data.data;
+      //   } else {
+      //     this.$message.error("系统错误请重新尝试或联系运维人员！");
+      //   }
+      //   console.log(this.tableData);
+      // });
     },
     save() {
       this.djclForm.controlArea = Number(this.djclForm.controlArea);
@@ -208,22 +228,26 @@ export default {
       });
     },
     getData() {
-      let oilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
-      const request = {
-        oilFieldId,
-      };
-      fetchProductionWells(request).then((res) => {
-        if (res.data.code == 200) {
-          let wellList = res.data.data.productionWells;
-          let arr = [];
-          wellList.map((n) => {
-            if (n.wellName != null) {
-              arr.push(n);
-            }
-          });
-          this.wells = [...arr];
-        }
-      });
+        //根据平台获得井
+        queryPlatformQueryWellListDetail({ogfId:this.queryData.ogfId}).then((res) => {
+            this.wells = res.data.data
+        })
+      // let oilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
+      // const request = {
+      //   oilFieldId,
+      // };
+      // fetchProductionWells(request).then((res) => {
+      //   if (res.data.code == 200) {
+      //     let wellList = res.data.data.productionWells;
+      //     let arr = [];
+      //     wellList.map((n) => {
+      //       if (n.wellName != null) {
+      //         arr.push(n);
+      //       }
+      //     });
+      //     this.wells = [...arr];
+      //   }
+      // });
       // fetchInjectionWells(request).then((res) => {
       //   if (res.data.code == 200) {
       //     const wellList = res.data.data.injectionWell;
@@ -233,7 +257,12 @@ export default {
     },
     //平台下拉-change
     onPlatfromChange(val) {
-      this.getFetchWells(this.queryData.ogfId, val);
+      // this.getFetchWells(this.queryData.ogfId, val);
+        
+        //根据平台获得井
+        queryPlatformQueryWellListDetail({platformId:val}).then((res) => {
+            this.wells = res.data.data
+        })
     },
     // 重置仅重置搜索条件与下方查询内容无关
     refresh() {
