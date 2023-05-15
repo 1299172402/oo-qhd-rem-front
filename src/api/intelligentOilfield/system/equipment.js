@@ -168,3 +168,12 @@ export function uploadFile2(updateSupport, data) {
     data
   });
 }
+
+// 第三版接口
+export function monitorLinks(data) {
+  return request({
+    url: "/system/monitor/links",
+    method: "post",
+    data
+  });
+}

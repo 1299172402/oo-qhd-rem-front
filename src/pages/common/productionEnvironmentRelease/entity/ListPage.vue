@@ -1,15 +1,15 @@
 <template>
   <div class="app-container g-h100">
-    <header-search class="g-w100 g-h100">
-      <el-form :inline="true" style="margin-top: 18px" @keyup.enter.native="searchQuery">
+    <header-search class="g-w100 g-h100 colon">
+      <el-form :inline="true" @keyup.enter.native="searchQuery">
         <el-form-item label="项目名称">
-          <el-input v-model="queryParam.projectName" placeholder="请输入项目名称" />
+          <el-input v-model="queryParam.projectName" placeholder="请输入项目名称" clearable />
         </el-form-item>
         <el-form-item label="客户单位">
-          <el-input v-model="queryParam.customName" placeholder="请输入客户单位" />
+          <el-input v-model="queryParam.customName" placeholder="请输入客户单位" clearable />
         </el-form-item>
         <el-form-item label="上传提出人">
-          <el-input v-model="queryParam.publishUserName" placeholder="上传提出人" />
+          <el-input v-model="queryParam.publishUserName" placeholder="上传提出人" clearable />
         </el-form-item>
         <el-form-item label="上传日期">
           <el-date-picker
@@ -19,9 +19,10 @@
             value-format="yyyy-MM-dd HH:mm:ss"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
+            clearable
           />
         </el-form-item>
-        <el-form-item>
+        <el-form-item class="buttonArea">
           <el-button
             type="primary"
             icon="el-icon-search"
@@ -41,8 +42,8 @@
         </el-form-item>
       </el-form>
     </header-search>
-    <page-panel-new header-title="生产环境发布列表" style="height: calc(100% - 100px)">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
+    <page-panel-new header-title="生产环境发布列表">
+      <el-row :gutter="10" class="mb8 mbBottom">
         <el-col :span="1.5">
           <el-button type="primary" size="mini" @click="handleAddToPage">
             发起申请

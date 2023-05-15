@@ -1,10 +1,16 @@
 <template>
   <div style="width: 100%; height: 100%" class="pageBox">
-    <header-search class="g-w100 g-h100">
-      <div class="g-row-flex-V g-w100 g-h100" style="margin-top: 20px;padding-bottom: 22px;">
-        <div>角色名称：<el-input v-model="input" style="width: 200px" placeholder="请输入角色名称" /></div>
-        <div style="margin: 0 10px">
-          状态：<el-select v-model="value" placeholder="请选择" clearable>
+    <header-search class="g-w100 g-h100 colon">
+      <el-form
+        ref="queryForm"
+        :model="queryParams"
+        :inline="true"
+      >
+        <el-form-item label="角色名称" prop="title">
+          <el-input v-model="input" placeholder="请输入角色名称" />
+        </el-form-item>
+        <el-form-item label="状态" prop="title">
+          <el-select v-model="value" placeholder="请选择" clearable>
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -12,19 +18,25 @@
               :value="item.value"
             />
           </el-select>
-        </div>
-        <div>
+        </el-form-item>
+        <el-form-item label="角色名称" prop="title">
+          <el-input v-model="input" placeholder="请输入角色名称" />
+        </el-form-item>
+        <el-form-item label="角色名称" prop="title">
+          <el-input v-model="input" placeholder="请输入角色名称" />
+        </el-form-item>
+        <el-form-item class="buttonArea">
           <el-button type="primary" icon="el-icon-search">
             搜索
           </el-button>
           <el-button class="commonBtn" icon="el-icon-refresh">
             重置
           </el-button>
-        </div>
-      </div>
+        </el-form-item>
+      </el-form>
     </header-search>
-    <page-panel-new header-title="角色列表" style="height: calc(100% - 100px);" class="g-w100">
-      <el-row style="margin-bottom: 20px">
+    <page-panel-new header-title="角色列表" class="g-w100">
+      <el-row class="mbBottom">
         <el-col class="height-placeholder" :span="20">
           <el-button type="primary">
             新增
@@ -34,7 +46,6 @@
           <el-button
             v-hasPermi="['system:logininfor:export']"
             type="primary"
-            size="mini"
           >
             导出
           </el-button>
@@ -58,13 +69,13 @@
         <el-table-column prop="status" label="状态" width="100" />
         <el-table-column prop="date" label="创建时间" width="180" />
         <el-table-column label="操作" width="400">
-          <el-button type="text" size="small">
+          <el-button type="text">
             编辑
           </el-button>
-          <el-button type="text" size="small">
+          <el-button type="text">
             禁用
           </el-button>
-          <el-button type="text" size="small" style="color: #f56c6c">
+          <el-button type="text" style="color: #f56c6c">
             删除
           </el-button>
         </el-table-column>
@@ -75,7 +86,7 @@
         :page.sync="queryParams.pageNum"
         :limit.sync="queryParams.pageSize"
       />
-      <!-- <el-pagination background layout="prev, pager, next,total" :total="1000" class="paginationDiv"> </el-pagination> -->
+    <!-- <el-pagination background layout="prev, pager, next,total" :total="1000" class="paginationDiv"> </el-pagination> -->
     </page-panel-new>
   </div>
 </template>
@@ -193,12 +204,12 @@ export default {
           date: "2016-05-04 12:21"
         },
         {
-          roleName: "其余角色",
-          permissions: "common",
-          roleSort: "2",
-          assigningUser: "查看（10）",
-          status: "停用",
-          date: "2022-12-04 01:45"
+          roleName: "管理员",
+          permissions: "admin",
+          roleSort: "1",
+          assigningUser: "查看（1）",
+          status: "正常",
+          date: "2016-05-04 12:21"
         },
         {
           roleName: "管理员",
@@ -209,12 +220,68 @@ export default {
           date: "2016-05-04 12:21"
         },
         {
-          roleName: "组织机构",
-          permissions: "common",
-          roleSort: "2",
-          assigningUser: "查看（12）",
+          roleName: "管理员",
+          permissions: "admin",
+          roleSort: "1",
+          assigningUser: "查看（1）",
           status: "正常",
-          date: "2013-03-12 05:11"
+          date: "2016-05-04 12:21"
+        },
+        {
+          roleName: "管理员",
+          permissions: "admin",
+          roleSort: "1",
+          assigningUser: "查看（1）",
+          status: "正常",
+          date: "2016-05-04 12:21"
+        },
+        {
+          roleName: "管理员",
+          permissions: "admin",
+          roleSort: "1",
+          assigningUser: "查看（1）",
+          status: "正常",
+          date: "2016-05-04 12:21"
+        },
+        {
+          roleName: "管理员",
+          permissions: "admin",
+          roleSort: "1",
+          assigningUser: "查看（1）",
+          status: "正常",
+          date: "2016-05-04 12:21"
+        },
+        {
+          roleName: "管理员",
+          permissions: "admin",
+          roleSort: "1",
+          assigningUser: "查看（1）",
+          status: "正常",
+          date: "2016-05-04 12:21"
+        },
+        {
+          roleName: "管理员",
+          permissions: "admin",
+          roleSort: "1",
+          assigningUser: "查看（1）",
+          status: "正常",
+          date: "2016-05-04 12:21"
+        },
+        {
+          roleName: "管理员",
+          permissions: "admin",
+          roleSort: "1",
+          assigningUser: "查看（1）",
+          status: "正常",
+          date: "2016-05-04 12:21"
+        },
+        {
+          roleName: "管理员",
+          permissions: "admin",
+          roleSort: "1",
+          assigningUser: "查看（1）",
+          status: "正常",
+          date: "2016-05-04 12:21"
         }
       ]
     };

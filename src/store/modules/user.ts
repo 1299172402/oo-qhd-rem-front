@@ -72,7 +72,7 @@ const mutations = {
     localStorage.removeItem(TOKEN_NAME);
     state.token = "";
   },
-  setUserInfo(state, userInfo) {
+  setUserInfo(state, userInfo = {}) {
     localStorage.setItem(USER_NAME, userInfo?.userName);
     state.userInfo = JSON.parse(JSON.stringify(userInfo));
   },

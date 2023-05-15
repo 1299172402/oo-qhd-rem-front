@@ -69,7 +69,7 @@
 }
 
 .twoRowHeader {
-  height: 58px;
+  height: auto !important;
 
   .sort-caret.descending {
     bottom: -6px !important;
@@ -122,9 +122,9 @@
 }
 
 .infoHeaderBg{
-//   background: #3490d3;
+//   background: #fff;
   // TODO: Maybe change back，带图标的时候放开
-  background: var(--logo-bg) no-repeat top right, #3490D3;
+  background: var(--logo-bg) no-repeat top right, #fff;
 }
 
 .footerBox {
@@ -138,10 +138,10 @@
 }
 
 .panelBox {
-  height: calc(100% - 125px);
+  height: calc(100% - 90px);
   width: 100%;
   box-shadow: 0 0 10px 0 rgba(144,147,153,0.3);
-  border: 1px solid transparent;
+  border: unset;
 }
 
 .right{

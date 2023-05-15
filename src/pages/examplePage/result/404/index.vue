@@ -8,12 +8,15 @@
 
 <script>
 import result from "@/components/intelligentOilfield/result/index.vue";
+import { updateaccessPage } from "../../../../api/intelligentOilfield/system/user";
 
 export default {
   name: "Result404",
   components: { result },
   methods: {
     logoutPage() {
+      const sysUser = { accessPage: "无权限", userName: this.$store.state.user.name };
+      updateaccessPage(sysUser).then(() => {});
       Promise.all([
         this.$store.dispatch("user/logout"),
         this.$store.dispatch("permission/restore")

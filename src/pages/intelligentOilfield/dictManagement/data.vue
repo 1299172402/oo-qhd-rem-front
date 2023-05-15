@@ -1,20 +1,17 @@
 <template>
   <div class="app-container">
-    <header-search class="g-w100 g-h100">
+    <header-search class="g-w100 g-h100 colon">
       <el-form
         v-show="showSearch"
         ref="queryForm"
-        style="margin-top: 20px"
         :model="queryParams"
         :inline="true"
-        label-width="68px"
       >
         <el-form-item label="字典标签" prop="dictLabel">
           <el-input
             v-model="queryParams.dictLabel"
             placeholder="请输入字典标签"
             clearable
-            size="small"
             style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
@@ -34,18 +31,16 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item>
+        <el-form-item class="buttonArea">
           <el-button
             type="primary"
             icon="el-icon-search"
-            size="mini"
             @click="handleQuery"
           >
             搜索
           </el-button>
           <el-button
             icon="el-icon-refresh"
-            size="mini"
             class="commonBtn"
             @click="resetQuery"
           >
@@ -54,13 +49,12 @@
         </el-form-item>
       </el-form>
     </header-search>
-    <page-panel-new header-title="字典数据" style="height: calc(100% - 100px);">
-      <el-row style="margin-bottom: 20px">
+    <page-panel-new header-title="字典数据">
+      <el-row class="mbBottom">
         <el-col class="height-placeholder" :span="20">
           <el-button
             v-hasPermi="['system:dict:data:add']"
             type="primary"
-            size="mini"
             @click="handleAdd"
           >
             新增
@@ -70,7 +64,6 @@
           <el-button
             v-hasPermi="['system:dict:data:export']"
             type="primary"
-            size="mini"
             @click="handleExport"
           >
             导出
@@ -123,7 +116,6 @@
           <template slot-scope="scope">
             <el-button
               v-hasPermi="['system:dict:data:edit']"
-              size="mini"
               type="text"
               @click="handleUpdate(scope.row)"
             >
@@ -131,7 +123,6 @@
             </el-button>
             <el-button
               v-hasPermi="['system:dict:data:remove']"
-              size="mini"
               type="text"
               class="delbutton"
               @click="handleDelete(scope.row, scope.$index)"

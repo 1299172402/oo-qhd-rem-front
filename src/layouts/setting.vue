@@ -322,7 +322,7 @@ export default {
         this.$store.commit("setting/toggleSettingPanel", false);
       } else {
         this.$store.dispatch("user/getUserInfo");
-        this.$router.push("/portal/projectionMode");
+        this.$router.push("/portal/officeMode");
         this.$store.commit("user/SETISGROUPLOGIN", true);
         this.$store.commit("setting/toggleSettingPanel", false);
       }

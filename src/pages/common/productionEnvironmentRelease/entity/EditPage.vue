@@ -1,5 +1,5 @@
 <template>
-  <page-panel header-title="生产环境发布申请单填写" style="height: calc(100% - 80px)">
+  <page-panel header-title="生产环境发布申请单填写" style="height: calc(100% - 40px)">
     <edit-model
       :is-audit="isAudit"
       @cancel="handleReturn"

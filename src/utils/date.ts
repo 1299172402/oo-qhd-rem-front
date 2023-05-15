@@ -40,3 +40,9 @@ export function compareDate(list) {
   dateList.minDate = dayjs(Math.min(...departList)).format("YYYY-MM-DD");
   return dateList;
 }
+
+// 时间戳转换为YYYY-MM-DD hh:mm:ss
+export function compareDateToS(data) {
+  const dy = dayjs(data).format("YYYY-MM-DD HH:mm:ss");
+  return dy;
+}

@@ -172,21 +172,22 @@ export default [
       }
     ]
   },
-  {
-    path: "/stationMessage",
-    component: Layout,
-    hidden: true,
-    redirect: "/stationMessage/stationMessageDetail",
-    meta: { title: "站内信", icon: "", single: true },
-    children: [
-      {
-        path: "stationMessageDetail",
-        name: "stationMessageDetail",
-        component: () => import("@/pages/intelligentOilfield/stationMessage/index.vue"),
-        meta: { title: "站内信" }
-      }
-    ]
-  },
+  // TODO: Maybe change back
+  //   {
+  //     path: "/stationMessage",
+  //     component: Layout,
+  //     hidden: true,
+  //     redirect: "/stationMessage/stationMessageDetail",
+  //     meta: { title: "站内信", icon: "", single: true },
+  //     children: [
+  //       {
+  //         path: "stationMessageDetail",
+  //         name: "stationMessageDetail",
+  //         component: () => import("@/pages/intelligentOilfield/stationMessage/index.vue"),
+  //         meta: { title: "站内信" }
+  //       }
+  //     ]
+  //   },
   {
     path: "/messageCenter",
     component: Layout,

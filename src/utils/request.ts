@@ -19,9 +19,8 @@ let interceptCount = 0;
 
 // 防抖：将 500ms 间隔内的关闭 loading 便合并为一次。防止连续请求时， loading闪烁的问题。
 const toHideLoading = _.debounce(() => {
-  if (loading) {
-    loading.close();
-  }
+  if (needLoadingRequestCount !== 0) return;
+  loading?.close();
   loading = null;
 }, 500);
 
@@ -85,7 +84,7 @@ instance.interceptors.request.use(
     //   config.headers.Authorization = `Bearer ${store.getters['user/token']}`;
     // }
     // 判断当前请求是否设置了不显示Loading
-    if (config.headers.showLoading !== false && config.url !== "system/rang/queryCurrent" && config.url.substring(0, config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam") {
+    if (config.headers.showLoading !== false && config.url !== "system/rang/queryCurrent" && config.url.substring(0, config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && config.url !== "/system/monitor/links") {
       showLoading(config.headers.loadingTarget);
     }
     return config;
@@ -116,7 +115,7 @@ instance.interceptors.response.use(
     }
     if (response.data.code === 401 && interceptCount === 0) {
       interceptCount += 1;
-      MessageBox.confirm("登录状态已过期，您可以继续留在该页面，或者重新登录", "系统提示", {
+      MessageBox.confirm("登录状态已过期,请重新登录", "系统提示", {
         confirmButtonText: "重新登录",
         cancelButtonText: "取消",
         type: "warning"
@@ -174,8 +173,8 @@ instance.interceptors.response.use(
     hideLoading();
     // }
     if (!config || !config.retry) {
-      if (err.response.data.code === 401) {
-        MessageBox.confirm("登录状态已过期，您可以继续留在该页面，或者重新登录", "系统提示", {
+      if (err.response?.data.code === 401) {
+        MessageBox.confirm("登录状态已过期,请重新登录", "系统提示", {
           confirmButtonText: "重新登录",
           cancelButtonText: "取消",
           type: "warning"

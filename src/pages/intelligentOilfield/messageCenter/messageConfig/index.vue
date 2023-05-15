@@ -1,11 +1,10 @@
 <!-- 后台——消息配置列表 -->
 <template>
   <div class="app-container">
-    <header-search class="g-w100 g-h100">
+    <header-search class="g-w100 g-h100 colon">
       <el-form
         v-show="showSearch"
         ref="queryForm"
-        style="margin-top: 18px"
         :model="queryParams"
         :inline="true"
       >
@@ -48,7 +47,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item>
+        <el-form-item class="buttonArea">
           <el-button
             type="primary"
             icon="el-icon-search"
@@ -67,8 +66,8 @@
       </el-form>
     </header-search>
 
-    <page-panel-new header-title="消息主题" style="height: calc(100% - 100px)">
-      <el-row style="margin-bottom: 20px">
+    <page-panel-new header-title="消息主题">
+      <el-row class="mbBottom">
         <el-col class="height-placeholder" :span="20">
           <el-button
             v-hasPermi="['messageConfig:add']"

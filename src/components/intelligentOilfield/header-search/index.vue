@@ -26,6 +26,23 @@ export default {
   background-position: right top !important;
 }
 
+.searchHeader /deep/ .el-form {
+  margin-top: 15px;
+}
+
+.searchHeader /deep/ .el-form-item {
+  margin-bottom: 15px;
+}
+
+.searchHeader /deep/ .el-form-item__label {
+  line-height: 34px;
+  padding: 0;
+}
+
+.colon /deep/ .el-form-item__label::after {
+  content: '：';
+}
+
 .searchHeader-light {
   border: 1px solid transparent;
   padding-top: 2px;

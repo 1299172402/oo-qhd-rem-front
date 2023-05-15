@@ -38,22 +38,21 @@
       <el-divider direction="vertical" />
       <el-container direction="vertical">
         <div>
-          <header-search class="g-w100 g-h100">
+          <header-search class="g-w100 g-h100 colon">
             <el-header style="height: 50px;">
               <el-form
                 ref="queryForm"
                 :model="queryParams"
                 :inline="true"
-                style="margin-top: 20px"
                 @keyup.enter.native="searchQuery"
               >
-                <el-form-item label="用户名称：" prop="userName">
-                  <el-input v-model="queryParams.userName" placeholder="请输入用户名称" clearable />
+                <el-form-item label="用户账号" prop="userName">
+                  <el-input v-model="queryParams.userName" placeholder="请输入用户账号" clearable />
                 </el-form-item>
-                <el-form-item label="手机号码：" prop="phonenumber">
-                  <el-input v-model="queryParams.phonenumber" placeholder="请输入手机号码" clearable />
+                <el-form-item label="用户名称" prop="nickName">
+                  <el-input v-model="queryParams.nickName" placeholder="请输入用户名称" clearable />
                 </el-form-item>
-                <el-form-item>
+                <el-form-item class="buttonArea">
                   <el-button type="primary" icon="el-icon-search" @click="searchQuery">
                     搜索
                   </el-button>
