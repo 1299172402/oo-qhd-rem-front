@@ -15,7 +15,6 @@ export default [
                 meta: { title: "技术指标管理" },
             },
             
-            
             {
                 path: "waterInjectionIndexManagement",
                 name: "waterInjectionIndexManagement",
@@ -50,13 +49,6 @@ export default [
                 name: "splitHole",
                 meta: { title: "分注井层段合格率" },
             },
-            // {
-            //   hidden: true,
-            //   path: "containingWater",
-            //   component: () => import("@/pages/rem/devmentIndicators/waterInjectionIndexManagement/containingWater.vue"),
-            //   name: "containingWater",
-            //   meta: { title: "含水上升率" },
-            // },
             {
                 hidden: true,
                 path: "waterInjectionWell",
@@ -77,13 +69,6 @@ export default [
                 component: () => import("@/pages/rem/devmentIndicators/waterInjectionIndexManagement/splitWellTest.vue"),
                 name: "splitWellTest",
                 meta: { title: "分注井测试率" },
-            },
-            {
-                hidden: true,
-                path: "naturalDecline",
-                component: () => import("@/pages/rem/devmentIndicators/waterInjectionIndexManagement/naturalDecline.vue"),
-                name: "naturalDecline",
-                meta: { title: "自然递减率" },
             },
         ],
     },
