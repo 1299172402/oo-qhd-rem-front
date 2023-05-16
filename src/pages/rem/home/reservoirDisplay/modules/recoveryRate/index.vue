@@ -1,9 +1,18 @@
 <template>
-  <Echart :chart-data="histogram" width="100%" height="100%"></Echart>
+    <info-window
+        info-width="100%"
+        info-height="100%"
+        header-title="采油速度"
+        :is-show-max-btn="true"
+    >
+        <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>
+        <Echart :chart-data="productionSpeed" width="100%" height="100%"></Echart>
+    </info-window>
 </template>
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
 import * as echarts from "echarts";
+import { outputSpeed, outputDegree, outputDegreeTongChart, injectionProRate, generalPressure, indicatorEveluationResults } from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
 
 export default {
   props: ["infodata"],
@@ -13,153 +22,196 @@ export default {
   data() {
     return {
       currentModel: this.$store.state.setting.mode,
-      histogram: {
-        tooltip: {
-          trigger: "axis",
-          formatter: function (params, ticket, callback) {
-            var res = params[0].name;
-            for (var i = 0, l = params.length; i < l; i++) {
-              if (params[i].seriesType === "line") {
-                res += "<br/>" + params[i].seriesName + " : " + (params[i].value ? params[i].value : "-") + "";
-              } else {
-                res += "<br/>" + params[i].seriesName + " : " + (params[i].value ? params[i].value : "-") + "";
-              }
-            }
-            return res;
-          },
+        //采油速度
+        productionSpeed: {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            dataZoom: {
+                start: 0,
+                type: 'inside'
+            },
+            // toolbox: {
+            //     show: true,
+            //     feature: {
+            //         saveAsImage: {
+            //             name: '采油速度',
+            //             pixelRatio: 15,
+            //             //值越大分辨率越高,下载的图片越清晰
+            //             backgroundColor: '#698398'
+            //         }
+            //     }
+            // },
+            legend: {
+                data: [],
+                bottom: 0,
+                textStyle: {
+                    color: '#24DEFF'
+                }
+            },
+            grid:{
+                top: "15%",
+                right: "15%",
+                bottom:"15%",
+                left: "15%",
+            },
+            xAxis: {
+                type: 'category',
+                axisLabel: {
+                    color: '#698398'
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#698398',
+                        width: 1,
+                        type: 'solid'
+                    }
+                },
+                splitLine:{
+                    show:false,
+                    lineStyle: {
+                        color: 'rgba(143,164,204,.5)'
+                    }
+                }
+            },
+            color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#FF5844', '#DA835E', '#9A72FF', '#FF30AD', '#2ACAFF'],
+            yAxis: [
+                {
+                    name: '地质储量采油速度%',
+                    nameLocation: 'center',
+                    nameTextStyle: {
+                        color: '#8FA4CC'
+                    },
+                    nameGap: 44,
+                    type: 'value',
+                    minInterval: 0,
+                    axisLabel: {
+                        color: '#8FA4CC'
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        // show: true,
+                        lineStyle: {
+                            color: '#2a4e6a'
+                        }
+                    },
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: 'rgba(143,164,204,.3)'
+                        }
+                    }
+                },
+                {
+                    name: '可采、剩余可采采油速度%',
+                    nameLocation: 'center',
+                    nameTextStyle: {
+                        color: '#8FA4CC'
+                    },
+                    nameGap: 44,
+                    type: 'value',
+                    minInterval: 0,
+                    axisLabel: {
+                        color: '#698398'
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: false,
+                        lineStyle: {
+                            color: '#2a4e6a'
+                        }
+                    },
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: 'rgba(143,164,204,.3)'
+                        }
+                    }
+                },
+            ],
+            series: []
         },
-        grid: {
-          top: "10%",
-          left: "5%",
-          right: "5%",
-          bottom: "8%",
-          containLabel: true,
-        },
-        legend: {
-          data: ["含水上升率", "油粘度CP-78", "油粘度CP-260"],
-          bottom: "bottom",
-          textStyle: {
-            color: "#a9a8a8",
-          },
-        },
-        xAxis: [
-          {
-            type: "category",
-            axisTick: {
-              alignWithLabel: true,
-            },
-            axisLabel: {
-              textStyle: {
-                color: "#a9a8a8",
-              },
-            },
-            // data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100]
-            data: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-          },
-        ],
-        yAxis: [
-          {
-            name: "地质储量采油速度(%)",
-            nameTextStyle: {
-              color: "#a9a8a8",
-              padding: [0, 0, 20, 0], // 上、右、下、左
-            },
-            type: "value",
-            nameLocation: "center",
-            position: "left",
-            splitLine: {
-              show: false,
-              lineStyle: {
-                color: "#a9a8a8",
-              },
-            },
-            axisLabel: {
-              formatter: "{value} ",
-              textStyle: {
-                color: "#a9a8a8",
-              },
-            },
-          },
-        ],
-        series: [
-          {
-            name: "油粘度CP-78",
-            type: "line",
-            smooth: true,
-            symbol: "none",
-            label: {
-              normal: {
-                show: false,
-                position: "top",
-              },
-            },
-            lineStyle: {
-              normal: {
-                width: 3,
-                shadowColor: "rgba(0,0,0,0.4)",
-                shadowBlur: 10,
-                shadowOffsetY: 10,
-              },
-            },
-            data: [10, 15, 20, 25, 30, 25, 20, 15, 10, 8, 6, 5, 3, 1],
-          },
-          {
-            name: "油粘度CP-260",
-            type: "line",
-            smooth: true,
-            symbol: "none",
-            label: {
-              normal: {
-                show: false,
-                position: "top",
-              },
-            },
-            lineStyle: {
-              normal: {
-                width: 3,
-                shadowColor: "rgba(0,0,0,0.4)",
-                shadowBlur: 10,
-                shadowOffsetY: 10,
-              },
-            },
-            markArea: {
-              silent: true,
-              color: "rgba(255, 250, 205, 0.2)",
-              data: [
-                [
-                  {
-                    xAxis: "93",
-                  },
-                  {
-                    xAxis: "130",
-                  },
-                ],
-                [
-                  {
-                    xAxis: "0",
-                  },
-                  {
-                    xAxis: "19",
-                  },
-                ],
-                [
-                  {
-                    xAxis: "148",
-                  },
-                  {
-                    xAxis: "200",
-                  },
-                ],
-              ],
-            },
-            data: [2, 4, 5, 6, 7, 9, 12, 13, 14, 15, 13, 11],
-          },
-        ],
-      },
     };
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+      this.getOutputSpeed()
+  },
+  methods: {
+      //产能类 采油速度
+      getOutputSpeed(oilFieldId, fieldId) {
+          let request = {
+              oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+              fieldId: "3FC9A818F5BC43B88270DB80BBB3018F"
+          };
+          outputSpeed(request).then((res) => {
+              if (res.data.code == 200) {
+                  let lineChart = res.data.data.chart.linearDataSets;
+                  let legendData = [];
+                  let seriesData = [];
+                  lineChart.forEach((item, index) => {
+                      legendData.push(item.label);
+                      seriesData.push(this.outputSpeedLine(item));
+                  });
+                  this.productionSpeed.legend.data = legendData;
+                  this.productionSpeed.series = seriesData;
+              } else {
+                  let legendData = [];
+                  let seriesData = [];
+                  this.productionSpeed.legend.data = legendData;
+                  this.productionSpeed.series = seriesData;
+              }
+          });
+      },
+      //采出速度 折线解析
+      outputSpeedLine(linearChart) {
+          let series = {};
+          series.type = 'line';
+          let seriesName = linearChart.label;
+          series.name = seriesName;
+          if (seriesName == '实际年采油速度') {
+              series.yAxisIndex = 0;
+          } else if (seriesName == '可采储量采油速度' || seriesName == '剩余可采储量采油速度') {
+              series.yAxisIndex = 1;
+          }
+          let linearData = linearChart.linearData;
+          let seriesData = [];
+          linearData.forEach((item, index) => {
+              let point = [];
+              let label = item.label.split('-');
+              point.push(label[0] + '-' + label[1]);
+              point.push(item.value);
+              seriesData.push(point);
+          });
+          series.data = seriesData;
+          series.symbol = 'none';
+          return series;
+      },
+  },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.detailLinkBtn {
+    position: absolute;
+    right: 50px;
+    top: 10px;
+    width: 50px;
+    height: 20px;
+    background: linear-gradient(90deg, #0751b0, #50a6ec);
+    text-align: center;
+    font-size: smaller;
+    border: 0;
+    cursor: pointer;
+    color: #ffffff;
+}
+</style>

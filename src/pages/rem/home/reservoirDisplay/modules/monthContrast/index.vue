@@ -1,6 +1,14 @@
 <template>
   <div class="app-container" style="height: 100%">
-    <Echart :chart-data="histogram" style="height: 100%"></Echart>
+      <info-window
+          info-width="100%"
+          info-height="100%"
+          header-title="秦皇岛32-6油田月度产量对比图"
+          :is-show-max-btn="true"
+      >
+        <button class="detailLinkBtn" @click="linkroute('fault')">详细</button>
+          <Echart :chart-data="histogram" style="height: 100%"></Echart>
+      </info-window>
   </div>
 </template>
 <script>
@@ -175,5 +183,18 @@ export default {
 }
 .f1 {
   margin-left: 10px;
+}
+.detailLinkBtn {
+    position: absolute;
+    right: 50px;
+    top: 10px;
+    width: 50px;
+    height: 20px;
+    background: linear-gradient(90deg, #0751b0, #50a6ec);
+    text-align: center;
+    font-size: smaller;
+    border: 0;
+    cursor: pointer;
+    color: #ffffff;
 }
 </style>

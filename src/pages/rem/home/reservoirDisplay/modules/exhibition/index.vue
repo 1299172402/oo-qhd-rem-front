@@ -1,109 +1,117 @@
 <template>
-  <div class="app-container">
-    <el-row :gutter="20" style="margin-bottom: 10px">
-      <el-col :span="12">
-        <div class="grid-content bg-purple">
-          <div class="yield water">
-            <div class="box">
-              <div>{{ 12 }}</div>
-              <div>10⁴m³</div>
+  <div class="app-container" style="height: 100%">
+      <info-window
+          info-width="100%"
+          info-height="100%"
+          header-title="秦皇岛32-6南区"
+          :is-show-max-btn="true"
+      >
+        <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>
+        <el-row :gutter="20" style="margin-bottom: 10px">
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <div class="yield water">
+                <div class="box">
+                  <div>{{ 12 }}</div>
+                  <div>10⁴m³</div>
+                </div>
+              </div>
+              <div class="text">产水量</div>
             </div>
-          </div>
-          <div class="text">产水量</div>
-        </div>
-      </el-col>
-      <el-col :span="12">
-        <div class="grid-content bg-purple">
-          <div class="yield oil">
-            <div class="box">
-              <div>{{ 13 }}</div>
-              <div>10⁴m³</div>
+          </el-col>
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <div class="yield oil">
+                <div class="box">
+                  <div>{{ 13 }}</div>
+                  <div>10⁴m³</div>
+                </div>
+              </div>
+              <div class="text">产油量</div>
             </div>
-          </div>
-          <div class="text">产油量</div>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row :gutter="20">
-      <el-col :span="12">
-        <div class="grid-content bg-purple">
-          <div class="yield gas">
-            <div class="box">
-              <div>{{ 12 }}</div>
-              <div>10⁴m³</div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <div class="yield gas">
+                <div class="box">
+                  <div>{{ 12 }}</div>
+                  <div>10⁴m³</div>
+                </div>
+              </div>
+              <div class="text">产气量</div>
             </div>
-          </div>
-          <div class="text">产气量</div>
-        </div>
-      </el-col>
-      <el-col :span="12">
-        <div class="grid-content bg-purple">
-          <div class="yield liquid">
-            <div class="box">
-              <div>{{ 23 }}</div>
-              <div>10⁴m³</div>
+          </el-col>
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <div class="yield liquid">
+                <div class="box">
+                  <div>{{ 23 }}</div>
+                  <div>10⁴m³</div>
+                </div>
+              </div>
+              <div class="text">产液量</div>
             </div>
-          </div>
-          <div class="text">产液量</div>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row :gutter="20">
-      <el-col :span="6">
-        <div class="grid-content bg-purple">
-          <Echart
-            :chart-data="getEchartData(21, '10⁴m³', 'rgb(59,197,197)', 'rgb(59,197,197)', 'rgb(59,197,197)')"
-          ></Echart>
-          <div class="chartText">配注量</div>
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple">
-          <Echart
-            :chart-data="getEchartData(12, '10⁴m³', 'rgb(13,190,124)', 'rgb(1,67,78)', 'rgb(13,190,124)')"
-          ></Echart>
-          <div class="chartText">注水量</div>
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple">
-          <Echart :chart-data="getEchartData(12, '口', 'rgb(247,181,0)', 'rgb(41,72,94)', 'rgb(247,181,0)')"></Echart>
-          <div class="chartText">油井总井数</div>
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple">
-          <Echart :chart-data="getEchartData(12, '口', 'rgb(36,151,194)', 'rgb(7,59,90)', 'rgb(36,151,194)')"></Echart>
-          <div class="chartText">水井总井数</div>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row :gutter="20">
-      <el-col :span="6">
-        <div class="grid-content bg-purple">
-          <Echart :chart-data="getEchart(12, '口', 'rgb(0,179,225)', 'rgb(38,43,90)', 'transparent')"></Echart>
-          <div class="chartText">油井开井数</div>
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple">
-          <Echart :chart-data="getEchart(12, '口', 'rgb(235,125,96)', 'rgb(38,43,90)', 'transparent')"></Echart>
-          <div class="chartText">水井开井数</div>
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple">
-          <Echart :chart-data="getEchart(12, '', 'rgb(164,227,77)', 'rgb(38,43,90)', 'transparent')"></Echart>
-          <div class="chartText">注采比</div>
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple">
-          <Echart :chart-data="getEchart(12, '%', 'rgb(185,75,215)', 'rgb(38,43,90)', 'transparent')"></Echart>
-          <div class="chartText">含水</div>
-        </div>
-      </el-col>
-    </el-row>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <div class="grid-content bg-purple">
+              <Echart
+                :chart-data="getEchartData(21, '10⁴m³', 'rgb(59,197,197)', 'rgb(59,197,197)', 'rgb(59,197,197)')"
+              ></Echart>
+              <div class="chartText">配注量</div>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content bg-purple">
+              <Echart
+                :chart-data="getEchartData(12, '10⁴m³', 'rgb(13,190,124)', 'rgb(1,67,78)', 'rgb(13,190,124)')"
+              ></Echart>
+              <div class="chartText">注水量</div>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content bg-purple">
+              <Echart :chart-data="getEchartData(12, '口', 'rgb(247,181,0)', 'rgb(41,72,94)', 'rgb(247,181,0)')"></Echart>
+              <div class="chartText">油井总井数</div>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content bg-purple">
+              <Echart :chart-data="getEchartData(12, '口', 'rgb(36,151,194)', 'rgb(7,59,90)', 'rgb(36,151,194)')"></Echart>
+              <div class="chartText">水井总井数</div>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <div class="grid-content bg-purple">
+              <Echart :chart-data="getEchart(12, '口', 'rgb(0,179,225)', 'rgb(38,43,90)', 'transparent')"></Echart>
+              <div class="chartText">油井开井数</div>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content bg-purple">
+              <Echart :chart-data="getEchart(12, '口', 'rgb(235,125,96)', 'rgb(38,43,90)', 'transparent')"></Echart>
+              <div class="chartText">水井开井数</div>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content bg-purple">
+              <Echart :chart-data="getEchart(12, '', 'rgb(164,227,77)', 'rgb(38,43,90)', 'transparent')"></Echart>
+              <div class="chartText">注采比</div>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content bg-purple">
+              <Echart :chart-data="getEchart(12, '%', 'rgb(185,75,215)', 'rgb(38,43,90)', 'transparent')"></Echart>
+              <div class="chartText">含水</div>
+            </div>
+          </el-col>
+        </el-row>
+      </info-window>
   </div>
 </template>
 <script>
@@ -402,6 +410,19 @@ export default {
   text-align: center;
   line-height: 42px;
   box-shadow: 0px 0px 15px #66ffff inset;
+}
+.detailLinkBtn {
+    position: absolute;
+    right: 50px;
+    top: 10px;
+    width: 50px;
+    height: 20px;
+    background: linear-gradient(90deg, #0751b0, #50a6ec);
+    text-align: center;
+    font-size: smaller;
+    border: 0;
+    cursor: pointer;
+    color: #ffffff;
 }
 </style>
 

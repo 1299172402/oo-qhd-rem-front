@@ -1,6 +1,14 @@
 <template>
-  <div class="app-container">
-    <Echart :chart-data="histogram" width="100%" height="680px"></Echart>
+  <div class="app-container" style="height: 100%">
+      <info-window
+          info-width="100%"
+          info-height="100%"
+          header-title="分层注入量"
+          :is-show-max-btn="true"
+      >
+          <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>
+          <Echart :chart-data="histogram" width="100%" height="100%"></Echart>
+      </info-window>
   </div>
 </template>
 <script>
@@ -31,7 +39,7 @@ export default {
           left: 20,
           right: 30,
           top: 0,
-          bottom: 30,
+          bottom: '10%',
           show: false, // 隐藏坐标系网格线
           containLabel: true,
         },
@@ -202,5 +210,18 @@ export default {
 }
 .f1 {
   margin-left: 10px;
+}
+.detailLinkBtn {
+    position: absolute;
+    right: 50px;
+    top: 10px;
+    width: 50px;
+    height: 20px;
+    background: linear-gradient(90deg, #0751b0, #50a6ec);
+    text-align: center;
+    font-size: smaller;
+    border: 0;
+    cursor: pointer;
+    color: #ffffff;
 }
 </style>

@@ -1,9 +1,20 @@
 <template>
-  <Echart :chart-data="histogram" width="100%" height="100%"></Echart>
+    <div style="font-size: 20px" class="g-w100 g-h100">
+        <info-window
+            info-width="100%"
+            info-height="100%"
+            header-title="含水上升"
+            :is-show-max-btn="true"
+        >
+            <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>
+            <Echart :chart-data="rateOfWaterCutRise" width="100%" height="100%"></Echart>
+        </info-window>
+    </div>
 </template>
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
 import * as echarts from "echarts";
+import { waterContainRaiseChart } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 
 //前端细节区分
 var tip = {
@@ -19,176 +30,166 @@ export default {
   data() {
     return {
       currentModel: this.$store.state.setting.mode,
-        histogram: {
+        rateOfWaterCutRise: {
             tooltip: {
                 trigger: "axis",
-                formatter: function (params, ticket, callback) {
-                    var res = params[0].name;
-                    for (var i = 0, l = params.length; i < l; i++) {
-                        if (params[i].seriesType === "line") {
-                            res += "<br/>" + params[i].seriesName + " : " + (params[i].value ? params[i].value : "-") + "";
-                        } else {
-                            res += "<br/>" + params[i].seriesName + " : " + (params[i].value ? params[i].value : "-") + "";
-                        }
-                    }
-                    return res;
+                axisPointer: {
+                    type: "shadow",
                 },
             },
-            grid: {
-                top: "10%",
-                left: "5%",
-                right: "5%",
-                bottom: "8%",
-                containLabel: true,
+            dataZoom: {
+                start: 0,
+                type: "inside",
             },
-            legend: {
-                data: ["含水上升率", "油粘度CP-78", "油粘度CP-260"],
-                bottom: "bottom",
-                textStyle: {
-                    color: "#a9a8a8",
+            // toolbox: {
+            //     show: true,
+            //     feature: {
+            //         saveAsImage: {
+            //             name: "含水上升率",
+            //             pixelRatio: 15,
+            //             //值越大分辨率越高,下载的图片越清晰
+            //             backgroundColor: "#022644",
+            //         },
+            //     },
+            // },
+                grid: {
+                    top: "5%",
+                    left: "8%",
+                    right: "5%",
+                    bottom: "12%",
+                    containLabel: true,
                 },
-            },
-            xAxis: [
-                {
-                    type: "category",
-                    axisTick: {
-                        alignWithLabel: true,
-                    },
-                    axisLabel: {
-                        textStyle: {
-                            color: "#a9a8a8",
-                        },
-                    },
-                    // data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100]
-                    data: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-                },
-            ],
-            yAxis: [
-                {
-                    name: "含水上升率(%)",
-                    nameTextStyle: {
+                legend: {
+                    data: [],
+                    bottom: "bottom",
+                    textStyle: {
                         color: "#a9a8a8",
-                        padding: [0, 0, 20, 0], // 上、右、下、左
-                    },
-                    type: "value",
-                    nameLocation: "center",
-                    position: "left",
-                    splitLine: {
-                        show: false,
-                        lineStyle: {
-                            color: "#a9a8a8",
-                        },
-                    },
-                    axisLabel: {
-                        formatter: "{value} ",
-                        textStyle: {
-                            color: "#a9a8a8",
-                        },
                     },
                 },
-            ],
-            series: [
-                {
-                    name: "油粘度CP-78",
-                    type: "line",
-                    smooth: true,
-                    symbol: "none",
-                    label: {
-                        normal: {
-                            show: false,
-                            position: "top",
-                        },
-                    },
+            xAxis: {
+                name: "含水率(%)",
+                nameLocation: "center",
+                nameTextStyle: {
+                    color: "#8FA4CC",
+                },
+                nameGap: 25,
+                //min:90,
+                type: "value",
+                axisLabel: {
+                    color: "#8FA4CC",
+                },
+                axisTick: {
+                    show: false,
+                },
+                axisLine: {
+                    show: true,
                     lineStyle: {
-                        normal: {
-                            width: 3,
-                            shadowColor: "rgba(0,0,0,0.4)",
-                            shadowBlur: 10,
-                            shadowOffsetY: 10,
-                        },
+                        color: 'rgba(143,164,204,.5)'
                     },
-                    data: [10, 15, 20, 25, 30, 25, 20, 15, 10, 8, 6, 5, 3, 1],
                 },
-                {
-                    name: "油粘度CP-260",
-                    type: "line",
-                    smooth: true,
-                    symbol: "none",
-                    label: {
-                        normal: {
-                            show: false,
-                            position: "top",
-                        },
-                    },
+                splitLine: {
+                    show: true,
                     lineStyle: {
-                        normal: {
-                            width: 3,
-                            shadowColor: "rgba(0,0,0,0.4)",
-                            shadowBlur: 10,
-                            shadowOffsetY: 10,
-                        },
-                    },
-                    markArea: {
-                        silent: true,
-                        color: "rgba(255, 250, 205, 0.2)",
-                        data: [
-                            [
-                                {
-                                    xAxis: "93",
-                                },
-                                {
-                                    xAxis: "130",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "0",
-                                },
-                                {
-                                    xAxis: "19",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "148",
-                                },
-                                {
-                                    xAxis: "200",
-                                },
-                            ],
-                        ],
-                    },
-                    data: [2, 4, 5, 6, 7, 9, 12, 13, 14, 15, 13, 11],
-                },
-                {
-                    name: "含水上升率",
-                    data: ["", "", "", "", "", 40, 34, 33, 32, 31, 29, 32, 31, 29],
-                    type: "scatter",
-                    symbol: "roundRect",
-                    symbolSize: [10, 7],
-                    itemStyle: {
-                        shadowBlur: 10,
-                        shadowColor: "rgba(0, 0, 0, 0.5)",
-                        shadowOffsetY: 5,
-                        color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [
-                            {
-                                offset: 0,
-                                color: "#7193D1",
-                            },
-                            {
-                                offset: 1,
-                                color: "#7193D1",
-                            },
-                        ]),
+                        color: 'rgba(143,164,204,.5)'
                     },
                 },
-
-            ],
+            },
+            yAxis: {
+                name: "含水上升率(%)",
+                nameLocation: "center",
+                nameTextStyle: {
+                    color: "#a9a8a8",
+                    // padding: [0, 0, 0, 0], // 上、右、下、左
+                },
+                nameGap: 35,
+                type: "value",
+                axisLabel: {
+                    color: "#8FA4CC",
+                },
+                axisTick: {
+                    show: false,
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: 'rgba(143,164,204,.5)'
+                    },
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: 'rgba(143,164,204,.5)'
+                    },
+                },
+            },
+            color: ["#24DEFF", "#00FFD4", "#387DFF", "#E9D456", "#CD3D00", "#8635FF"],
+            series: [],
         },
+
     };
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+      this.getWaterContainRaiseChart()
+  },
+  methods: {
+      //含水上升率
+      getWaterContainRaiseChart(oilFieldId, fieldId) {
+          let request = {
+              oilFieldId: '3FC9A818F5BC43B88270DB80BBB3018F',
+              fieldId: '3FC9A818F5BC43B88270DB80BBB3018F',
+          };
+          waterContainRaiseChart(request).then((res) => {
+              if (res.data.code == 200) {
+                  let legendData = [];
+                  let seriesData = [];
+                  let lineCharts = res.data.data.chart.lineChartDataSets;
+                  lineCharts.forEach((item, index) => {
+                      legendData.push(item.label);
+                      seriesData.push(this.waterContainRaiseLine(item));
+                  });
+                  this.rateOfWaterCutRise.legend.data = legendData;
+                  this.rateOfWaterCutRise.series = seriesData;
+              }
+          });
+      },
+      waterContainRaiseLine(lineChart) {
+          let series = {};
+          series.type = "line";
+          series.smooth = true;
+          series.name = lineChart.label;
+          series.symbol = "none";
+          if (lineChart.label == "含水上升率") {
+              series.type = "scatter";
+              series.symbol = "circle";
+              series.symbolSize = 8;
+          }
+          let seriesData = [];
+          let lineData = lineChart.numberPoints;
+          lineData.forEach((item, index) => {
+              let point = [];
+              point.push(item.x);
+              point.push(item.y);
+              seriesData.push(point);
+          });
+          //seriesData.sort();
+          series.data = seriesData;
+          return series;
+      },
+
+  },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.detailLinkBtn {
+    position: absolute;
+    right: 50px;
+    top: 10px;
+    width: 50px;
+    height: 20px;
+    background: linear-gradient(90deg, #0751b0, #50a6ec);
+    text-align: center;
+    font-size: smaller;
+    border: 0;
+    cursor: pointer;
+    color: #ffffff;
+}
+</style>

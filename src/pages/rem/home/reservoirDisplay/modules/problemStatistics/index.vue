@@ -1,6 +1,14 @@
 <template>
   <div class="app-container" style="width:100%;height:100%">
-    <Echart :chart-data="histogram" width="100%" height="100%"></Echart>
+      <info-window
+          info-width="100%"
+          info-height="100%"
+          header-title="问题井统计"
+          :is-show-max-btn="true"
+      >
+            <button class="detailLinkBtn" @click="linkroute('operationOverview')">详细</button>
+            <Echart :chart-data="histogram" width="100%" height="100%"></Echart>
+      </info-window>
     <!-- :style="{
           background: currentModel == 'dark' ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0)',
         }" -->
@@ -103,5 +111,18 @@ export default {
 }
 .f1 {
   margin-left: 10px;
+}
+.detailLinkBtn {
+    position: absolute;
+    right: 50px;
+    top: 10px;
+    width: 50px;
+    height: 20px;
+    background: linear-gradient(90deg, #0751b0, #50a6ec);
+    text-align: center;
+    font-size: smaller;
+    border: 0;
+    cursor: pointer;
+    color: #ffffff;
 }
 </style>

@@ -1,9 +1,19 @@
 <template>
-  <Echart :chart-data="histogram" width="100%" height="100%"></Echart>
+    <info-window
+        info-width="100%"
+        info-height="100%"
+        header-title="自然递减率"
+        :is-show-max-btn="true"
+    >
+        <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>
+        <Echart :chart-data="naturalDeclineRate" width="100%" height="100%"></Echart>
+    </info-window>
 </template>
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
 import * as echarts from "echarts";
+import { natureDeclineChart } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+
 export default {
   props: ["infodata"],
   components: {
@@ -12,162 +22,166 @@ export default {
   data() {
     return {
       currentModel: this.$store.state.setting.mode,
-      histogram: {
-        tooltip: {
-          trigger: "axis",
-          formatter: function (params, ticket, callback) {
-            var res = params[0].name;
-            for (var i = 0, l = params.length; i < l; i++) {
-              if (params[i].seriesType === "line") {
-                res += "<br/>" + params[i].seriesName + " : " + (params[i].value ? params[i].value : "-") + "";
-              } else {
-                res += "<br/>" + params[i].seriesName + " : " + (params[i].value ? params[i].value : "-") + "";
-              }
-            }
-            return res;
-          },
-        },
-        grid: {
-          top: "10%",
-          left: "5%",
-          right: "5%",
-          bottom: "8%",
-          containLabel: true,
-        },
-        legend: {
-          data: ["自然递减率（正）", "自然递减率（负）"],
-          bottom: "bottom",
-          textStyle: {
-            color: "#a9a8a8",
-          },
-        },
-        xAxis: [
-          {
-            type: "category",
-            axisTick: {
-              alignWithLabel: true,
+        naturalDeclineRate: {
+            tooltip: {
+                trigger: "axis",
+                axisPointer: {
+                    type: "shadow",
+                },
             },
-            axisLabel: {
-              textStyle: {
-                color: "#a9a8a8",
-              },
+            dataZoom: {
+                start: 95,
+                type: "inside",
             },
-            data: ['2023-01','2023-02','2023-03','2023-04'],
-          },
-        ],
-        yAxis: [
-          {
-            name: "地质储量采油速度(%)",
-            nameTextStyle: {
-              color: "#a9a8a8",
-              padding: [0, 0, 20, 0], // 上、右、下、左
+            // toolbox: {
+            //     show: true,
+            //     feature: {
+            //         saveAsImage: {
+            //             name: "自然递减率",
+            //             pixelRatio: 15,
+            //             //值越大分辨率越高,下载的图片越清晰
+            //             backgroundColor: "#022644",
+            //         },
+            //     },
+            // },
+            xAxis: {
+                type: "category",
+                axisLabel: {
+                    color: "#8FA4CC",
+                    margin: 20,
+                },
+                axisTick: {
+                    show: false,
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: 'rgba(143,164,204,.5)'
+                    },
+                },
             },
+            yAxis: {
+                name: "自然递减率(%)",
+                nameTextStyle: {
+                    color: "#8FA4CC"
+                },
+                type: "value",
+                axisLabel: {
+                    color: "#8FA4CC",
+                },
+                axisTick: {
+                    show: false,
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: 'rgba(143,164,204,.5)'
+                    },
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: 'rgba(143,164,204,.5)'
+                    },
+                },
+            },
+            series: {
+                data: [],
+                type: "bar",
+                label: {
+                    show: true,
+                },
+            },
+        },
 
-            type: "value",
-            nameLocation: "center",
-            position: "left",
-            splitLine: {
-              show: false,
-              lineStyle: {
-                color: "#a9a8a8",
-              },
-            },
-            axisLabel: {
-              formatter: "{value} ",
-              textStyle: {
-                color: "#a9a8a8",
-              },
-            },
-          },
-        ],
-        series: [
-          {
-            name: "自然递减率（正）",
-            type: "line",
-            smooth: true,
-            // symbol: "none",
-            itemStyle: {
-              borderWidth: "1px",
-              color: "rgb(25,125,243)",
-            },
-
-            label: {
-              normal: {
-                show: false,
-                position: "top",
-              },
-            },
-            lineStyle: {
-              normal: {
-                width: 2,
-                shadowColor: "rgba(0,0,0,0.4)",
-                shadowBlur: 10,
-                shadowOffsetY: 10,
-              },
-            },
-            data: [10, 15, 20, 25, 30, 25, 20, 15, 10, 8, 6, 5, 3, 1],
-          },
-          {
-            name: "自然递减率（负）",
-            type: "line",
-            smooth: true,
-            // symbol: "true",
-            label: {
-              normal: {
-                show: false,
-                position: "top",
-              },
-            },
-            itemStyle: {
-              borderWidth: "1px",
-              color: "rgb(254,1113,53)",
-            },
-            lineStyle: {
-              normal: {
-                width: 3,
-                shadowColor: "rgba(0,0,0,0.4)",
-                shadowBlur: 10,
-                shadowOffsetY: 10,
-              },
-            },
-            markArea: {
-              silent: true,
-              color: "rgba(255, 250, 205, 0.2)",
-              data: [
-                [
-                  {
-                    xAxis: "93",
-                  },
-                  {
-                    xAxis: "130",
-                  },
-                ],
-                [
-                  {
-                    xAxis: "0",
-                  },
-                  {
-                    xAxis: "19",
-                  },
-                ],
-                [
-                  {
-                    xAxis: "148",
-                  },
-                  {
-                    xAxis: "200",
-                  },
-                ],
-              ],
-            },
-            data: [-2, -4, -5, -6, -7, -9, -12, -13, -14, -15, -13, -11],
-          },
-        ],
-      },
     };
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+      this.getNatureDeclineChart()
+  },
+  methods: {
+      //自然递减率
+      getNatureDeclineChart(oilFieldId, fieldId) {
+          let request = {
+              oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+              fieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+          };
+          natureDeclineChart(request).then((res) =>{
+              if (res.data.code == 200) {
+                  let seriesData = [];
+                  let barChartData = res.data.data.chart.barDataSets[0].barDatas;
+                  /*barChartData.forEach((item, index) => {
+                let point = [];
+                let label = item.label.split('-');
+                point.push(label[0] + '-' + label[1]);
+                point.push(item.value);
+                seriesData.push(point);
+              });*/
+                  seriesData = this.getBarChartSeries(barChartData);
+                  //console.log(seriesData);
+                  this.naturalDeclineRate.series.data = seriesData;
+              }
+          });
+      },
+      //柱状图
+      getBarChartSeries(barChart) {
+          let seriesData = [];
+          for (let i = 0; i < barChart.length; i++) {
+              let barData = {};
+              //值大于等于0
+              if (barChart[i].value >= 0) {
+                  barData.value = barChart[i].value;
+                  let label = barChart[i].label.split("-");
+                  barData.value = [label[0] + "-" + label[1], barData.value];
+                  barData.name = label[0] + "-" + label[1];
+                  barData.label = {
+                      show: false,
+                      /*normal: {
+                  position: "top",
+                  color: "#fff",
+                  fontSize: 14,
+                },*/
+                  };
+                  barData.itemStyle = {
+                      color: "#1379F7",
+                  };
+                  seriesData.push(barData);
+              } else {
+                  //值小于0
+                  barData.value = barChart[i].value;
+                  let label = barChart[i].label.split("-");
+                  barData.value = [label[0] + "-" + label[1], barData.value];
+                  barData.name = label[0] + "-" + label[1];
+                  barData.label = {
+                      show: false,
+                      /*normal: {
+                  position: "bottom",
+                  color: "#fff",
+                  fontSize: 14,
+                },*/
+                  };
+                  barData.itemStyle = {
+                      color: "#FF7135",
+                  };
+                  seriesData.push(barData);
+              }
+          }
+          return seriesData;
+      },
+  },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.detailLinkBtn {
+    position: absolute;
+    right: 50px;
+    top: 10px;
+    width: 50px;
+    height: 20px;
+    background: linear-gradient(90deg, #0751b0, #50a6ec);
+    text-align: center;
+    font-size: smaller;
+    border: 0;
+    cursor: pointer;
+    color: #ffffff;
+}
+</style>

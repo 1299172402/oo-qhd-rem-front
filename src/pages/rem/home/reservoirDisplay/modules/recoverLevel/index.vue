@@ -1,9 +1,18 @@
 <template>
-  <Echart :chart-data="histogram" width="100%" height="100%"></Echart>
+    <info-window
+        info-width="100%"
+        info-height="100%"
+        header-title="采出程度与含水率关系图"
+        :is-show-max-btn="true"
+    >
+        <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>
+        <Echart :chart-data="relationship" width="100%" height="100%"></Echart>
+    </info-window>
 </template>
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
 import * as echarts from "echarts";
+import { outputDegree, outputDegreeTongChart } from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
 
 //前端细节区分
 var tip = {
@@ -19,627 +28,174 @@ export default {
   data() {
     return {
       currentModel: this.$store.state.setting.mode,
-        histogram: {
-            tooltip: {
-                trigger: "axis",
-                formatter: function (params, ticket, callback) {
-                    var res = params[0].name;
-                    for (var i = 0, l = params.length; i < l; i++) {
-                        if (params[i].seriesType === "line") {
-                            res += "<br/>" + params[i].seriesName + " : " + (params[i].value ? params[i].value : "-") + "";
-                        } else {
-                            res += "<br/>" + params[i].seriesName + " : " + (params[i].value ? params[i].value : "-") + "";
-                        }
-                    }
-                    return res;
-                },
-            },
-            grid: {
-                top: "10%",
-                left: "5%",
+        relationship: {
+            grid:{
+                top: "5%",
                 right: "5%",
-                bottom: "12%",
-                containLabel: true,
+                bottom:"25%",
+                left: "12%",
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                },
+                confine: true
             },
             legend: {
-                data: ["含水率%", "Rm=10", "Rm=20", "Rm=30", "Rm=40", "Rm=50", "Rm=60", "Rm=70", "Rm=80", "Rm=90", "Rm=100"],
-                bottom: "bottom",
+                bottom: 0,
                 textStyle: {
-                    color: "#a9a8a8",
+                    color: '#24DEFF'
                 },
-            },
-            xAxis: [
-                {
-                    type: "category",
-                    axisTick: {
-                        alignWithLabel: true,
-                    },
-                    axisLabel: {
-                        textStyle: {
-                            color: "#a9a8a8",
-                        },
-                    },
-                    // data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100]
-                    data: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-                },
-            ],
-            yAxis: [
-                {
-                    name: "综合含水率(%)",
-                    nameTextStyle: {
-                        color: "#a9a8a8",
-                        padding: [0, 0, 20, 0], // 上、右、下、左
-                    },
-                    type: "value",
-                    nameLocation: "center",
-                    position: "left",
-                    splitLine: {
-                        show: false,
-                        lineStyle: {
-                            color: "#a9a8a8",
-                        },
-                    },
-                    axisLabel: {
-                        formatter: "{value} ",
-                        textStyle: {
-                            color: "#a9a8a8",
-                        },
-                    },
-                },
-            ],
-            series: [
-                {
-                    name: "含水率(%)",
-                    type: "line",
-                    smooth: true,
-                    symbol: "none",
-                    label: {
-                        normal: {
-                            show: false,
-                            position: "top",
-                        },
-                    },
-                    lineStyle: {
-                        normal: {
-                            width: 3,
-                            shadowColor: "rgba(0,0,0,0.4)",
-                            shadowBlur: 10,
-                            shadowOffsetY: 10,
-                        },
-                    },
-                    data: [10, 15, 20, 25, 30, 25, 20, 15, 10, 8, 6, 5, 3, 1],
-                },
-                {
-                    name: "Rm=10",
-                    type: "line",
-                    smooth: true,
-                    symbol: "none",
-                    label: {
-                        normal: {
-                            show: false,
-                            position: "top",
-                        },
-                    },
-                    lineStyle: {
-                        normal: {
-                            width: 3,
-                            shadowColor: "rgba(0,0,0,0.4)",
-                            shadowBlur: 10,
-                            shadowOffsetY: 10,
-                        },
-                    },
-                    markArea: {
-                        silent: true,
-                        color: "rgba(255, 250, 205, 0.2)",
-                        data: [
-                            [
-                                {
-                                    xAxis: "93",
-                                },
-                                {
-                                    xAxis: "130",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "0",
-                                },
-                                {
-                                    xAxis: "19",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "148",
-                                },
-                                {
-                                    xAxis: "200",
-                                },
-                            ],
-                        ],
-                    },
-                    data: [2, 4, 5, 6, 7, 9, 12, 13, 14, 15, 13, 11],
-                },
-                {
-                    name: "Rm=20",
-                    type: "line",
-                    smooth: true,
-                    symbol: "none",
-                    label: {
-                        normal: {
-                            show: false,
-                            position: "top",
-                        },
-                    },
-                    lineStyle: {
-                        normal: {
-                            width: 3,
-                            shadowColor: "rgba(0,0,0,0.4)",
-                            shadowBlur: 10,
-                            shadowOffsetY: 10,
-                        },
-                    },
-                    markArea: {
-                        silent: true,
-                        color: "rgba(255, 250, 205, 0.2)",
-                        data: [
-                            [
-                                {
-                                    xAxis: "93",
-                                },
-                                {
-                                    xAxis: "130",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "0",
-                                },
-                                {
-                                    xAxis: "19",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "148",
-                                },
-                                {
-                                    xAxis: "200",
-                                },
-                            ],
-                        ],
-                    },
-                    data: [4, 8, 10, 12, 14, 18, 24, 26, 28, 30, 26, 22],
-                },                {
-                    name: "Rm=30",
-                    type: "line",
-                    smooth: true,
-                    symbol: "none",
-                    label: {
-                        normal: {
-                            show: false,
-                            position: "top",
-                        },
-                    },
-                    lineStyle: {
-                        normal: {
-                            width: 3,
-                            shadowColor: "rgba(0,0,0,0.4)",
-                            shadowBlur: 10,
-                            shadowOffsetY: 10,
-                        },
-                    },
-                    markArea: {
-                        silent: true,
-                        color: "rgba(255, 250, 205, 0.2)",
-                        data: [
-                            [
-                                {
-                                    xAxis: "93",
-                                },
-                                {
-                                    xAxis: "130",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "0",
-                                },
-                                {
-                                    xAxis: "19",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "148",
-                                },
-                                {
-                                    xAxis: "200",
-                                },
-                            ],
-                        ],
-                    },
-                    data: [12, 14, 15, 16, 17, 19, 22, 23, 24, 25, 23, 21],
-                },  {
-                    name: "Rm=40",
-                    type: "line",
-                    smooth: true,
-                    symbol: "none",
-                    label: {
-                        normal: {
-                            show: false,
-                            position: "top",
-                        },
-                    },
-                    lineStyle: {
-                        normal: {
-                            width: 3,
-                            shadowColor: "rgba(0,0,0,0.4)",
-                            shadowBlur: 10,
-                            shadowOffsetY: 10,
-                        },
-                    },
-                    markArea: {
-                        silent: true,
-                        color: "rgba(255, 250, 205, 0.2)",
-                        data: [
-                            [
-                                {
-                                    xAxis: "93",
-                                },
-                                {
-                                    xAxis: "130",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "0",
-                                },
-                                {
-                                    xAxis: "19",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "148",
-                                },
-                                {
-                                    xAxis: "200",
-                                },
-                            ],
-                        ],
-                    },
-                    data: [14, 16, 18, 18, 19, 21, 24, 25, 26, 27, 25, 23],
-                }, {
-                    name: "Rm=50",
-                    type: "line",
-                    smooth: true,
-                    symbol: "none",
-                    label: {
-                        normal: {
-                            show: false,
-                            position: "top",
-                        },
-                    },
-                    lineStyle: {
-                        normal: {
-                            width: 3,
-                            shadowColor: "rgba(0,0,0,0.4)",
-                            shadowBlur: 10,
-                            shadowOffsetY: 10,
-                        },
-                    },
-                    markArea: {
-                        silent: true,
-                        color: "rgba(255, 250, 205, 0.2)",
-                        data: [
-                            [
-                                {
-                                    xAxis: "93",
-                                },
-                                {
-                                    xAxis: "130",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "0",
-                                },
-                                {
-                                    xAxis: "19",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "148",
-                                },
-                                {
-                                    xAxis: "200",
-                                },
-                            ],
-                        ],
-                    },
-                    data: [14, 16, 18, 18, 19, 21, 24, 25, 26, 27, 25, 23],
-                }, {
-                    name: "Rm=60",
-                    type: "line",
-                    smooth: true,
-                    symbol: "none",
-                    label: {
-                        normal: {
-                            show: false,
-                            position: "top",
-                        },
-                    },
-                    lineStyle: {
-                        normal: {
-                            width: 3,
-                            shadowColor: "rgba(0,0,0,0.4)",
-                            shadowBlur: 10,
-                            shadowOffsetY: 10,
-                        },
-                    },
-                    markArea: {
-                        silent: true,
-                        color: "rgba(255, 250, 205, 0.2)",
-                        data: [
-                            [
-                                {
-                                    xAxis: "93",
-                                },
-                                {
-                                    xAxis: "130",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "0",
-                                },
-                                {
-                                    xAxis: "19",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "148",
-                                },
-                                {
-                                    xAxis: "200",
-                                },
-                            ],
-                        ],
-                    },
-                    data: [14, 16, 18, 18, 19, 21, 24, 25, 26, 27, 25, 23],
-                }, {
-                    name: "Rm=70",
-                    type: "line",
-                    smooth: true,
-                    symbol: "none",
-                    label: {
-                        normal: {
-                            show: false,
-                            position: "top",
-                        },
-                    },
-                    lineStyle: {
-                        normal: {
-                            width: 3,
-                            shadowColor: "rgba(0,0,0,0.4)",
-                            shadowBlur: 10,
-                            shadowOffsetY: 10,
-                        },
-                    },
-                    markArea: {
-                        silent: true,
-                        color: "rgba(255, 250, 205, 0.2)",
-                        data: [
-                            [
-                                {
-                                    xAxis: "93",
-                                },
-                                {
-                                    xAxis: "130",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "0",
-                                },
-                                {
-                                    xAxis: "19",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "148",
-                                },
-                                {
-                                    xAxis: "200",
-                                },
-                            ],
-                        ],
-                    },
-                    data: [14, 16, 18, 18, 19, 21, 24, 25, 26, 27, 25, 23],
-                }, {
-                    name: "Rm=80",
-                    type: "line",
-                    smooth: true,
-                    symbol: "none",
-                    label: {
-                        normal: {
-                            show: false,
-                            position: "top",
-                        },
-                    },
-                    lineStyle: {
-                        normal: {
-                            width: 3,
-                            shadowColor: "rgba(0,0,0,0.4)",
-                            shadowBlur: 10,
-                            shadowOffsetY: 10,
-                        },
-                    },
-                    markArea: {
-                        silent: true,
-                        color: "rgba(255, 250, 205, 0.2)",
-                        data: [
-                            [
-                                {
-                                    xAxis: "93",
-                                },
-                                {
-                                    xAxis: "130",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "0",
-                                },
-                                {
-                                    xAxis: "19",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "148",
-                                },
-                                {
-                                    xAxis: "200",
-                                },
-                            ],
-                        ],
-                    },
-                    data: [14, 16, 18, 18, 19, 21, 24, 25, 26, 27, 25, 23],
-                }, {
-                    name: "Rm=90",
-                    type: "line",
-                    smooth: true,
-                    symbol: "none",
-                    label: {
-                        normal: {
-                            show: false,
-                            position: "top",
-                        },
-                    },
-                    lineStyle: {
-                        normal: {
-                            width: 3,
-                            shadowColor: "rgba(0,0,0,0.4)",
-                            shadowBlur: 10,
-                            shadowOffsetY: 10,
-                        },
-                    },
-                    markArea: {
-                        silent: true,
-                        color: "rgba(255, 250, 205, 0.2)",
-                        data: [
-                            [
-                                {
-                                    xAxis: "93",
-                                },
-                                {
-                                    xAxis: "130",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "0",
-                                },
-                                {
-                                    xAxis: "19",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "148",
-                                },
-                                {
-                                    xAxis: "200",
-                                },
-                            ],
-                        ],
-                    },
-                    data: [14, 16, 18, 18, 19, 21, 24, 25, 26, 27, 25, 23],
-                }, {
-                    name: "Rm=100",
-                    type: "line",
-                    smooth: true,
-                    symbol: "none",
-                    label: {
-                        normal: {
-                            show: false,
-                            position: "top",
-                        },
-                    },
-                    lineStyle: {
-                        normal: {
-                            width: 3,
-                            shadowColor: "rgba(0,0,0,0.4)",
-                            shadowBlur: 10,
-                            shadowOffsetY: 10,
-                        },
-                    },
-                    markArea: {
-                        silent: true,
-                        color: "rgba(255, 250, 205, 0.2)",
-                        data: [
-                            [
-                                {
-                                    xAxis: "93",
-                                },
-                                {
-                                    xAxis: "130",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "0",
-                                },
-                                {
-                                    xAxis: "19",
-                                },
-                            ],
-                            [
-                                {
-                                    xAxis: "148",
-                                },
-                                {
-                                    xAxis: "200",
-                                },
-                            ],
-                        ],
-                    },
-                    data: [0,3, 5,8, 10, 15, 20, 25, 30, 35, 38, 38],
-                },
-                {
-                    name: "含水上升率",
-                    data: ["", "", "", "", "", 40, 34, 33, 32, 31, 29, 32, 31, 29],
-                    type: "scatter",
-                    symbol: "roundRect",
-                    symbolSize: [10, 7],
-                    itemStyle: {
-                        shadowBlur: 10,
-                        shadowColor: "rgba(0, 0, 0, 0.5)",
-                        shadowOffsetY: 5,
-                        color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [
-                            {
-                                offset: 0,
-                                color: "#7193D1",
-                            },
-                            {
-                                offset: 1,
-                                color: "#7193D1",
-                            },
-                        ]),
-                    },
-                },
+                data: [
 
-            ],
+                ],
+                itemGap: 5
+            },
+            // toolbox: {
+            //     show: true,
+            //     feature: {
+            //         saveAsImage: {
+            //             name: '采出程度与含水率关系',
+            //             pixelRatio: 15,
+            //             //值越大分辨率越高,下载的图片越清晰
+            //             backgroundColor: '#022644'
+            //         }
+            //     }
+            // },
+            xAxis: {
+                name: '地质储量采出程度(%)',
+                nameLocation: 'center',
+                nameTextStyle: {
+                    color: '#8FA4CC'
+                },
+                nameGap: 30,
+                type: 'value',
+                axisLabel: {
+                    color: '#8FA4CC'
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: 'rgba(143,164,204,.5)'
+                    }
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: 'rgba(143,164,204,.5)'
+                    }
+                }
+            },
+            yAxis: {
+                name: '综合含水率(%)',
+                nameLocation: 'center',
+                nameTextStyle: {
+                    color: '#8FA4CC'
+                },
+                nameGap: 30,
+                type: 'value',
+                axisLabel: {
+                    color: '#8FA4CC'
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: 'rgba(143,164,204,.5)'
+                    }
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: 'rgba(143,164,204,.5)'
+                    }
+                }
+            },
+            color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#FF5844', '#DA835E', '#9A72FF', '#FF30AD', '#2ACAFF'],
+            series: []
         },
+
     };
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+      this.getOutputDegreeTongChart()
+  },
+  methods: {
+      //采出程度与含水率关系图
+      getOutputDegreeTongChart(oilFieldId, fieldId) {
+          let request = {
+              oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+              fieldId: "3FC9A818F5BC43B88270DB80BBB3018F"
+          };
+          let legendData = [];
+          let seriesData = [];
+          outputDegree(request).then((res) => {
+              if (res.data.code == 200) {
+                  let lineChart = res.data.data.chart.lineChartDataSets;
+                  lineChart.forEach((item, index) => {
+                      legendData.push(item.label);
+                      seriesData.push(this.outputDegreeLine(item));
+                  });
+              } else {
+                  legendData = [];
+                  seriesData = [];
+              }
+          });
+
+          outputDegreeTongChart(request).then((res) => {
+              if (res.data.code == 200) {
+                  let lineChart = res.data.data.chart.lineChartDataSets;
+                  lineChart.forEach((item, index) => {
+                      legendData.push('Rm=' + item.label);
+                      seriesData.push(this.outputDegreeTongChart(item));
+                  });
+              } else {
+                  legendData = [];
+                  seriesData = [];
+              }
+          });
+          this.relationship.legend.data = legendData;
+          this.relationship.series = seriesData;
+      },
+      //采出程度童氏图折线解析
+      outputDegreeTongChart(lineChart) {
+          let series = {};
+          series.name = 'Rm=' + lineChart.label;
+          series.type = 'line';
+          series.symbol = 'none';
+          /* series.symbolSize=3;*/
+          series.smooth = true;
+          let seriesData = [];
+          let lineData = lineChart.numberPoints;
+          lineData.forEach((item, index) => {
+              let point = [];
+              point.push(item.x);
+              point.push(item.y);
+              seriesData.push(point);
+          });
+          series.data = seriesData;
+          return series;
+      },
+  },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.detailLinkBtn {
+    position: absolute;
+    right: 50px;
+    top: 10px;
+    width: 50px;
+    height: 20px;
+    background: linear-gradient(90deg, #0751b0, #50a6ec);
+    text-align: center;
+    font-size: smaller;
+    border: 0;
+    cursor: pointer;
+    color: #ffffff;
+}
+</style>

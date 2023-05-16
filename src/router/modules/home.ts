@@ -41,6 +41,14 @@ export default [
         component: () => import('@/pages/rem/home/ipmHome/index.vue'),
         meta: { title: '智能注采调配',icon: 'icon' },
       },
+      {
+        path: 'oilEventDetail',
+        name: 'oilEventDetail',
+        hidden: true,
+        component: () => import('@/pages/rem/home/reservoirDisplay/detailPage/oilEventDetail.vue'),
+        meta: { title: '油田大事件详情',icon: 'icon' },
+      },
+    
     ],
     
   },
