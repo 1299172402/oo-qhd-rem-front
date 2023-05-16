@@ -61,8 +61,8 @@
 </template>
 
 <script>
-import { queryMeasurePlanList } from "@/api/rem/actionplanmanagement.js";
-// import { pumpReplaceDetail } from "@/api/rem/welldynamicanalysis.js";
+// import { queryMeasurePlanList } from "@/api/rem/actionplanmanagement";
+// import { pumpReplaceDetail } from "@/api/rem/welldynamicanalysis";
 export default {
   data() {
     return {
@@ -98,19 +98,19 @@ export default {
       this.queryParams.selectPlatform = data.assetCode;
       this.getList();
     },
-    getList() {
-      let data = {
-        date: "2023-05-14",
-        ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
-        platId: "3A5F370A168C4A3F9DF2CD244F9B4346",
-        wellId: "ED661145A1E74180958D1D60766C0102",
-        wellIds: [],
-        wellTypeCodes: [],
-      };
-      pumpReplaceDetail(data).then((res) => {
-        this.noticeList = res.data.data;
-      });
-    },
+    // getList() {
+    //   let data = {
+    //     date: "2023-05-14",
+    //     ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+    //     platId: "3A5F370A168C4A3F9DF2CD244F9B4346",
+    //     wellId: "ED661145A1E74180958D1D60766C0102",
+    //     wellIds: [],
+    //     wellTypeCodes: [],
+    //   };
+    //   pumpReplaceDetail(data).then((res) => {
+    //     this.noticeList = res.data.data;
+    //   });
+    // },
   },
 };
 </script>
