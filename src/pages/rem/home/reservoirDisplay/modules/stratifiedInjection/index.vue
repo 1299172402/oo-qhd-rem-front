@@ -35,6 +35,12 @@ export default {
             fontSize: 16,
           },
         },
+          tooltip: {
+              trigger: "axis",
+              axisPointer: {
+                  type: "shadow",
+              },
+          },
         grid: {
           left: 20,
           right: 30,
