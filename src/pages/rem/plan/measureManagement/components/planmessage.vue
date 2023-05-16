@@ -1,15 +1,15 @@
 <!-- 措施计划情况 -->
 <template>
-  <div class="app-container" style="height:100%">
-    <pagePanel headerTitle="现场作业计划表" style="height:100%" >
+  <div class="app-container" style="height: 100%">
+    <pagePanel headerTitle="现场作业计划表" style="height: 100%">
       <el-table
         :data="noticeList"
         highlight-current-row
         :row-style="{ height: '0px' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
         header-cell-class-name="table_header"
-        :cell-style="{ 'text-align': 'center', padding: '2px'}"
-        style="width: 100%;height:100%"
+        :cell-style="{ 'text-align': 'center', padding: '2px' }"
+        style="width: 100%; height: 100%"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column label="井基本信息" prop="name" align="center">
@@ -43,7 +43,7 @@
           <el-table-column label="生产压差" prop="one" align="center"></el-table-column>
           <el-table-column label="流压" prop="one" align="center"></el-table-column>
         </el-table-column>
-         <el-table-column label="其他因素" prop="name" align="center">
+        <el-table-column label="其他因素" prop="name" align="center">
           <el-table-column label="排量效率" prop="one" align="center"></el-table-column>
           <el-table-column label="历史出砂" prop="one" align="center"></el-table-column>
           <el-table-column label="近期出砂" prop="one" align="center"></el-table-column>
@@ -61,21 +61,20 @@
 </template>
 
 <script>
-import { queryMeasurePlanList } from '@/api/rem/actionplanmanagement';
+import { queryMeasurePlanList } from "@/api/rem/actionplanmanagement";
+import { pumpReplaceDetail } from "@/api/rem/welldynamicanalysis";
 export default {
   data() {
     return {
       open: false, // 新增弹框
       dialogVisible: false, //运行计算展示弹窗
-      title: '', // 弹窗标题
+      title: "", // 弹窗标题
       company: [],
       oilfield: [],
       deptSelect: [],
       // 表格数据
-      noticeList: [
-      
-      ],
-       queryParams: { actionEvent: '', assetCode: '', month: '', ogfId: '', wellNo: '' },
+      noticeList: [],
+      queryParams: { actionEvent: "", assetCode: "", month: "", ogfId: "", wellNo: "" },
       // 是否展开，默认全部展开
       isExpandAll: true,
       deptList: [],
@@ -94,15 +93,23 @@ export default {
     // this.choiceDepts(); // 获取组织机构
   },
   methods: {
-     show(data){
-        this.queryParams.ogfId = data.selectOilField
-        this.queryParams.selectPlatform = data.assetCode
-        this.getList()
+    show(data) {
+      this.queryParams.ogfId = data.selectOilField;
+      this.queryParams.selectPlatform = data.assetCode;
+      this.getList();
     },
     getList() {
-      queryMeasurePlanList(this.queryParams).then((res)=>{
-        this.noticeList = res.data.data
-      })
+      let data = {
+        date: "2023-05-14",
+        ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+        platId: "3A5F370A168C4A3F9DF2CD244F9B4346",
+        wellId: "ED661145A1E74180958D1D60766C0102",
+        wellIds: [],
+        wellTypeCodes: [],
+      };
+      pumpReplaceDetail(data).then((res) => {
+        this.noticeList = res.data.data;
+      });
     },
   },
 };

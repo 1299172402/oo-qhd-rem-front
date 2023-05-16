@@ -1,4 +1,4 @@
-<!-- 油藏看板 - 关停井跟踪 -->
+<!-- 模型 - 归因分析 -->
 <template>
   <div style="width: 100%; height: calc(100% - 90px)" class="pageBox">
     <header-search class="g-w100 g-h100" style="height: auto">
@@ -11,7 +11,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="油田:" >
+            <el-form-item label="油田:">
               <el-select v-model="queryData.ogfId" disabled style="width: 160px">
                 <el-option v-for="(item, index) in oilFields" :key="index" :label="item.ogfName" :value="item.ogfId">
                 </el-option>
@@ -34,16 +34,15 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="开始与结束日期：">
+            <el-form-item label="日期">
               <el-date-picker
-                v-model="month"
-                type="daterange"
-                style="width: 300px"
-                range-separator="-"
-                key="2"
                 value-format="yyyy-MM-dd"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :clearable="false"
+                v-model="queryData.month"
+                type="date"
+                key="1"
+                style="width: 170px"
+                placeholder="选择月"
               >
               </el-date-picker>
             </el-form-item>
@@ -59,32 +58,40 @@
         </div>
       </div>
     </header-search>
-    <pagePanel headerTitle="秦皇岛32-6油田关停井跟踪" style="height: 100%" class="g-w100" :show-btn="true">
-      <el-table
-        height="100%"
-        :row-style="{ height: '0px' }"
-        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-        header-cell-class-name="table_header"
-        :cell-style="{ padding: '3px', 'text-align': 'center' }"
-        :data="tableData"
-        show-summary
-        border
-        ref="reset"
-        style="width: 100%; height: 100%"
-        id="cjyzsj"
-        :default-sort="{ prop: 'date', order: 'descending' }"
-      >
-        <el-table-column prop="oilField" label="井号"> </el-table-column>
-        <el-table-column prop="pumpFactory" label="*关停分类"> </el-table-column>
-        <el-table-column prop="wellCount" label="关停原因"> </el-table-column>
-        <el-table-column prop="wellOpenCount" label="*计划属性"> </el-table-column>
-        <el-table-column prop="dispEffiRate" label="*时间属性"> </el-table-column>
-        <el-table-column prop="pjyzsj" :label="`*关停开始时间\n(yyyy/mm/dd)`"></el-table-column>
-        <el-table-column prop="pjyzsj" :label="`*关停结束时间\n(yyyy/mm/dd)`"> </el-table-column>
-        <el-table-column prop="pjyzsj" :label="`影响产量\n(m³)`"> </el-table-column>
-        <el-table-column prop="pjyzsj" label="备注">  </el-table-column>
-      </el-table>
-    </pagePanel>
+    <page-panel-new headerTitle="归因分析报告" style="height: 100%" class="g-w100" :show-btn="true">
+      <el-row :gutter="20" style="height:100%">
+        <el-col :span="10">
+          <pagePanel headerTitle="采液强度分析流程图" style="height: 100%" class="g-w100" :show-btn="true"> </pagePanel>
+        </el-col>
+        <el-col :span="14"  style="height:100%">
+          <pagePanel headerTitle="采液强度分析关键参数明细表" style="height: 100%" class="g-w100" :show-btn="true">
+            <el-table
+              height="100%"
+              :row-style="{ height: '0px' }"
+              :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+              header-cell-class-name="table_header"
+              :cell-style="{ padding: '3px', 'text-align': 'center' }"
+              :data="tableData"
+              show-summary
+              border
+              ref="reset"
+              style="width: 100%; height: 100%"
+              id="cjyzsj"
+              :default-sort="{ prop: 'date', order: 'descending' }"
+            >
+              <el-table-column prop="null" label="井号"> </el-table-column>
+              <el-table-column prop="null" :label="`采液强度\n(m³/mPa)`"> </el-table-column>
+              <el-table-column prop="null" label="含水率(%)"> </el-table-column>
+              <el-table-column prop="null" label="动液面(m)"> </el-table-column>
+              <el-table-column prop="null" label="储层物性"> </el-table-column>
+              <el-table-column prop="null" :label="`地层压力\n(mPa)`">></el-table-column>
+              <el-table-column prop="null" :label="`*关停结束时间\n(yyyy/mm/dd)`"> </el-table-column>
+              <el-table-column prop="null" label="出砂情况"> </el-table-column>
+            </el-table>
+          </pagePanel>
+        </el-col>
+      </el-row>
+    </page-panel-new>
   </div>
 </template>
 <script>
@@ -113,7 +120,11 @@ export default {
         endDate: "",
         well: "",
       },
-      month: [], //开始与结束时间中转字段
+      pickerOption: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+      },
       tableData: [],
       oilFields: [],
       platforms: [],
@@ -124,7 +135,6 @@ export default {
   mounted() {
     this.getData();
     var data = new Date();
-    var y = data.getFullYear();
     var time = data.getTime() - 24 * 60 * 60 * 1000;
     var time = new Date().getTime() - 24 * 60 * 60 * 1000;
     var yesday = new Date(time); // 获取的是前一天日期
@@ -134,10 +144,7 @@ export default {
       (yesday.getMonth() > 9 ? yesday.getMonth() + 1 : "0" + (yesday.getMonth() + 1)) +
       "-" +
       (yesday.getDate() > 9 ? yesday.getDate() : "0" + yesday.getDate()); //字符串拼接转格式
-    this.queryData.beginDate = y + "-" + "01-01";
-    this.queryData.endDate = yesday;
-    this.$set(this.month, 0, this.queryData.beginDate);
-    this.$set(this.month, 1, this.queryData.endDate);
+    this.queryData.month = yesday;
   },
   methods: {
     getData() {

@@ -22,6 +22,12 @@ export default [
                         meta: { title: "油井动态分析报告", icon: "icon" },
                     },
                     {
+                        path: "attributtonAnalysis",
+                        name: "attributtonAnalysis",
+                        component: () => import("@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/attributtonAnalysis.vue"),
+                        meta: { title: "归因分析", icon: "icon" },
+                    },
+                    {
                         hidden: false,
                         path: "oilAuxiliaryAnalysis",
                         name: "oilAuxiliaryAnalysis",
