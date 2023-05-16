@@ -2,10 +2,7 @@
   <div class="app-container" style="height: 100%">
     <headerSearch class="g-w100 g-h100" style="width: 100%">
       <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 18px">
-        <el-form-item label="日期：">
-          <el-date-picker v-model="queryParams.endTime" value-format="yyyy-MM-dd" type="date" placeholder="年/月/日">
-          </el-date-picker>
-        </el-form-item>
+      
         <el-form-item label="油田：">
           <el-select v-model="queryParams.selectOilField" disabled>
             <el-option
@@ -32,6 +29,10 @@
               :value="item.platFormId"
             ></el-option>
           </el-select>
+        </el-form-item>
+          <el-form-item label="日期：">
+          <el-date-picker v-model="queryParams.endTime" value-format="yyyy-MM-dd" type="date" placeholder="年/月/日">
+          </el-date-picker>
         </el-form-item>
         <el-button size="medium" type="primary" @click="retrieval" icon="el-icon-search" style="margin-left: 10px"
           >搜索</el-button
