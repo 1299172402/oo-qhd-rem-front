@@ -9,7 +9,6 @@
                     <el-option v-for="item in oilFieldList" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
                 </el-select>
                 <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
-                <!-- <el-button icon="el-icon-refresh" class="commonBtn" @click="resetting">重置</el-button> -->
             </div>
         </header-search>
         
@@ -27,12 +26,10 @@
                         <el-button style="position: absolute; z-index: 9; right: 10px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click.native="cardClick(item, index)">详情</el-button>
                         <div style="display:flex;margin-left: 10px;">
                             <div style="width: 42%">
-                                <el-card class="cardLeft" shadow="always" style="text-align: center">
-                                    <span style="vertical-align: middle">
-                                        <span style="font-size: 26px">{{ item.sz }}</span>
-                                        <sub style="color: #8fa4cc; font-size: 15px">{{item.dw}}</sub>
-                                    </span>
-                                </el-card>
+                                <span style="vertical-align: middle">
+                                    <span style="font-size: 26px;margin-right:6px;">{{ item.sz }}</span>
+                                    <sub style="color: #8fa4cc; font-size: 15px">{{item.dw}}</sub>
+                                </span>
                                 <div style="margin-top: 10px">
                                     <el-row v-if="item.title=='年产油量'" :gutter="12" style="line-height: 20px; text-align: center">
                                         <el-col :span="14" style="color: #8fa4cc">
@@ -70,8 +67,8 @@
                     </pagePanel>
                 </el-col>
             </el-row>
-            <pagePanel v-if="currentIndex == 0" headerTitle="技术指标管理" style="height: calc(100% - 390px);margin-top:0;">
-                <div style="display:flex;align-items: center;">
+            <pagePanel v-if="currentIndex == 0" headerTitle="技术指标管理" style="height: calc(100% - 390px);margin-top:0;" showBtn>
+                <div style="display:flex;align-items: center;height:40px;">
                     <span>对标油田：</span>
                     <el-select v-model="selectTargetOilFieldId" disabled>
                         <el-option v-for="item in oilFieldList" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
@@ -81,11 +78,10 @@
                         <el-option v-for="item in developmentPhaseList" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                     </el-select>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
-                    <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doDownIndex">下载</el-button>
+                    <el-button icon="el-icon-download" type="primary" style="margin-left: auto!important;" @click="doDownIndex">下载</el-button>
                 </div>
-                
-                <div style="margin-top: 10px">
-                    <el-table id="indexscv" :data="tableData" highlight>
+                <div style="margin-top: 10px;height:calc(100% - 40px);">
+                    <el-table id="indexscv" :data="tableData" highlight height="100%">
                         <el-table-column prop="name" label="指标" align="center"></el-table-column>
                         <el-table-column prop="real" label="实际值" align="center"></el-table-column>
                         <el-table-column prop="compareOilField" label="对标油田(羊三木)" align="center"></el-table-column>
@@ -93,13 +89,13 @@
                     </el-table>
                 </div>
             </pagePanel>
-            <pagePanel v-if="currentIndex == 1" headerTitle="年产油量" style="height: calc(100% - 390px);margin-top:0;">
+            <pagePanel v-if="currentIndex == 1" headerTitle="年产油量" style="height: calc(100% - 390px);margin-top:0;" showBtn>
                 <Echart :chart-data="inOilProduction" style="height: 100%"></Echart>
             </pagePanel>
-            <pagePanel v-if="currentIndex == 2" headerTitle="采油速度" style="height: calc(100% - 390px);margin-top:0;">
+            <pagePanel v-if="currentIndex == 2" headerTitle="采油速度" style="height: calc(100% - 390px);margin-top:0;" showBtn>
                 <Echart :chart-data="productionSpeed" style="height: 100%"></Echart>
             </pagePanel>
-            <pagePanel v-if="currentIndex == 3" headerTitle="综合递减率" style="height: calc(100% - 390px);margin-top:0;">
+            <pagePanel v-if="currentIndex == 3" headerTitle="综合递减率" style="height: calc(100% - 390px);margin-top:0;" showBtn>
                 <span>区块：</span>
                 <el-select v-model="selectDecreaseBlock">
                     <el-option v-for="item in blockList" :key="item.fieldId" :label="item.name" :value="item.fieldId">
@@ -110,7 +106,7 @@
                 </el-button>
                 <Echart :chart-data="comprehensiveDeclineRate" style="height: 100%"></Echart>
             </pagePanel>
-            <pagePanel v-if="currentIndex == 4" headerTitle="含水上升率" style="height: calc(100% - 390px);margin-top:0;">
+            <pagePanel v-if="currentIndex == 4" headerTitle="含水上升率" style="height: calc(100% - 390px);margin-top:0;" showBtn>
                 <span>平台：</span>
                 <el-select v-model="selectIncreasingRatePlatform" style="width: 220px;">
                     <el-option v-for="item in platformList" :key="item.platFormId" :label="item.platName" :value="item.platFormId">
@@ -121,13 +117,13 @@
                 </el-button>
                 <Echart :chart-data="rateOfWaterCutRise" style="height: 100%"></Echart>
             </pagePanel>
-            <pagePanel v-if="currentIndex == 5" headerTitle="生产时率" style="height: calc(100% - 390px);margin-top:0;">
+            <pagePanel v-if="currentIndex == 5" headerTitle="生产时率" style="height: calc(100% - 390px);margin-top:0;" showBtn>
                 <Echart :chart-data="whenTheProductionRate" style="height: 100%"></Echart>
             </pagePanel>
-            <pagePanel v-if="currentIndex == 6" headerTitle="油井利用率" style="height: calc(100% - 390px);margin-top:0;">
+            <pagePanel v-if="currentIndex == 6" headerTitle="油井利用率" style="height: calc(100% - 390px);margin-top:0;" showBtn>
                 <Echart :chart-data="wellUtilization" style="height: 100%"></Echart>
             </pagePanel>
-            <pagePanel v-if="currentIndex == 7" headerTitle="自然递减率" style="height: calc(100% - 390px);margin-top:0;">
+            <pagePanel v-if="currentIndex == 7" headerTitle="自然递减率" style="height: calc(100% - 390px);margin-top:0;" showBtn>
                 <span>平台：</span>
                 <el-select v-model="selectNaturalDeclinePlatform" style="width: 220px;">
                     <el-option v-for="item in platformList" :key="item.platFormId" :label="item.platName" :value="item.platFormId">
