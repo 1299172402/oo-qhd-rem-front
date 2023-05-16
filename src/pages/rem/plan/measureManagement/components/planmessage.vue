@@ -61,8 +61,8 @@
 </template>
 
 <script>
-import { queryMeasurePlanList } from "@/api/rem/actionplanmanagement";
-import { pumpReplaceDetail } from "@/api/rem/welldynamicanalysis";
+import { queryMeasurePlanList } from "@/api/rem/actionplanmanagement.js";
+// import { pumpReplaceDetail } from "@/api/rem/welldynamicanalysis.js";
 export default {
   data() {
     return {

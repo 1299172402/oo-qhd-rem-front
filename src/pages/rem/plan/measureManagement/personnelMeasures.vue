@@ -52,7 +52,7 @@ import verticalSwitchButton from "@/components/intelligentOilfield/vertical-swit
 import personnelplan from "./components/personnelplan.vue";
 import operationplan from "./components/operationplan.vue";
 import planmessage from "./components/planmessage.vue";
-import { getOilFieldList, queryProductList } from "@/api/rem/workcompanydesignate";
+import { getOilFieldList, queryProductList } from "@/api/rem/workcompanydesignate.js";  
 import {
   fetchOilFields,
   fetchPlatforms,
