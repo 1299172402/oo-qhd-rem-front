@@ -1,76 +1,99 @@
 <template>
-  <t-popup
-    expand-animation
-    placement="bottom"
-    trigger="click"
-    :visible="isNoticeVisible"
-    @visible-change="onPopupVisibleChange"
-  >
-    <template #content>
-      <div class="header-msg">
-        <div class="header-msg-top">
-          <p>通知</p>
-          <t-button
-            v-if="unreadMsg.length > 0"
-            class="clear-btn"
-            variant="text"
-            theme="primary"
-            @click="setRead('all')"
-          >
-            全部已读
-          </t-button>
-        </div>
-        <t-list v-if="unreadMsg.length > 0" class="narrow-scrollbar" :split="true">
-          <t-list-item v-for="(item, index) in unreadMsg" :key="index">
-            <div>
-              <p class="msg-content">
-                {{ item.content }}
-              </p>
-              <p class="msg-type">
-                {{ item.type }}
-              </p>
-            </div>
-            <p class="msg-time">
-              {{ item.date }}
-            </p>
-            <template #action>
-              <t-button size="small" variant="outline" @click="setRead('radio', item)">
-                设为已读
-              </t-button>
-            </template>
-          </t-list-item>
-        </t-list>
-
-        <div v-else class="empty-list">
-          <img src="../../assets/intelligentOilfield/nothing.png" alt="空">
-          <p>暂无通知</p>
-        </div>
-        <div class="header-msg-bottom">
-          <!-- v-if="unreadMsg.length > 0" -->
-          <t-button
-            class="header-msg-bottom-link"
-            variant="text"
-            theme="primary"
-            @click="goDetail"
-          >
-            查看全部
-          </t-button>
-        </div>
+  <div>
+    <el-dialog
+      title="站内信列表"
+      :visible.sync="dialogVisible"
+      width="1300px"
+      append-to-body
+      @closed="closeDialog"
+    >
+      <div style="height: 93%;padding-left: 13px">
+        <station-message ref="messageRef" />
       </div>
-    </template>
-    <t-badge :count="unreadMsg.length" :offset="[15, 21]">
-      <t-button
-        theme="default"
-        shape="square"
-        variant="text"
-        style="background: transparent;border: 0;"
-        @click="isNoticeVisible = true"
+      <div
+        slot="footer"
+        class="dialog-footer"
+        style="border-top: 1px solid var(--light-blue-color);
+    padding-top: 20px;"
       >
-        <!-- <mail-icon style="color: var(--white-color);"/> -->
-        <svg-icon icon-class="message-logo" class="panelIconClass" />
-      </t-button>
-    </t-badge>
-  </t-popup>
+        <el-button type="primary" @click="closeDialog">
+          关 闭
+        </el-button>
+      </div>
+    </el-dialog>
+    <t-popup
+      expand-animation
+      placement="bottom"
+      trigger="click"
+      :visible="isNoticeVisible"
+      @visible-change="onPopupVisibleChange"
+    >
+      <template #content>
+        <div class="header-msg">
+          <div class="header-msg-top">
+            <p>通知</p>
+            <t-button
+              v-if="unreadMsg.length > 0"
+              class="clear-btn"
+              variant="text"
+              theme="primary"
+              @click="setRead('all')"
+            >
+              全部已读
+            </t-button>
+          </div>
+          <t-list v-if="unreadMsg.length > 0" class="narrow-scrollbar" :split="true">
+            <t-list-item v-for="(item, index) in unreadMsg" :key="index">
+              <div>
+                <p class="msg-content">
+                  {{ item.content }}
+                </p>
+                <p class="msg-type">
+                  {{ item.type }}
+                </p>
+              </div>
+              <p class="msg-time">
+                {{ item.date }}
+              </p>
+              <template #action>
+                <t-button size="small" variant="outline" @click="setRead('radio', item)">
+                  设为已读
+                </t-button>
+              </template>
+            </t-list-item>
+          </t-list>
+
+          <div v-else class="empty-list">
+            <img src="../../assets/intelligentOilfield/nothing.png" alt="空">
+            <p>暂无通知</p>
+          </div>
+          <div class="header-msg-bottom">
+            <!-- v-if="unreadMsg.length > 0" -->
+            <t-button
+              class="header-msg-bottom-link"
+              variant="text"
+              theme="primary"
+              @click="goDetail"
+            >
+              查看全部
+            </t-button>
+          </div>
+        </div>
+      </template>
+      <t-badge :count="unreadMsg.length" :offset="[10, 3]">
+        <t-button
+          theme="default"
+          shape="square"
+          variant="text"
+          style="background: transparent;border: 0;"
+          @click="isNoticeVisible = true"
+        >
+          <!-- <mail-icon style="color: var(--white-color);"/> -->
+          <svg-icon icon-class="message-logo" class="panelIconClass" />
+        </t-button>
+      </t-badge>
+    </t-popup>
+  </div>
 </template>
 
 <script lang="ts">
@@ -80,14 +103,17 @@ import { mapState, mapGetters } from "vuex";
 import { getList, updateAllStatus, updateOneStatus } from "@/api/intelligentOilfield/system/notification.js";
 
 import { NotificationItem } from "@/interface";
+import stationMessage from "@/pages/intelligentOilfield/stationMessage/index.vue";
 
 export default Vue.extend({
   components: {
     // MailIcon,
+    stationMessage
   },
   data() {
     return {
-      isNoticeVisible: false
+      isNoticeVisible: false,
+      dialogVisible: false
     };
   },
   computed: {
@@ -113,8 +139,12 @@ export default Vue.extend({
       }
       this.isNoticeVisible = visible;
     },
+    closeDialog() {
+      this.dialogVisible = false;
+      this.$refs.messageRef.resetData();
+    },
     goDetail() {
-      this.$router.push("/stationMessage/stationMessageDetail");
+      this.dialogVisible = true;
       this.isNoticeVisible = false;
     },
     setRead(type: string, item?: NotificationItem) {

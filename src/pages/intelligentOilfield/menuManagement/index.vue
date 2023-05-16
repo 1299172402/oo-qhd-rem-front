@@ -1,12 +1,11 @@
 <!-- 后台——菜单管理 -->
 <template>
   <div class="app-container">
-    <header-search class="g-w100 g-h100">
+    <header-search class="g-w100 g-h100 colon">
       <el-form
         v-show="showSearch"
         ref="queryForm"
         :model="queryParams"
-        style="margin-top: 20px"
         :inline="true"
       >
         <el-form-item label="菜单名称" prop="menuName">
@@ -48,18 +47,18 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item>
+        <el-form-item
+          class="buttonArea"
+        >
           <el-button
             type="primary"
             icon="el-icon-search"
-            size="mini"
             @click="handleQuery"
           >
             搜索
           </el-button>
           <el-button
             icon="el-icon-refresh"
-            size="mini"
             class="commonBtn"
             @click="resetQuery"
           >
@@ -69,13 +68,12 @@
       </el-form>
     </header-search>
 
-    <page-panel-new header-title="菜单管理" style="height: calc(100% - 100px);">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
+    <page-panel-new header-title="菜单管理">
+      <el-row :gutter="10" class="mb8 mbBottom">
         <el-col :span="1.5">
           <el-button
             v-hasPermi="['system:menu:add']"
             type="primary"
-            size="mini"
             @click="handleAdd({}, '外层新增')"
           >
             新增
@@ -192,7 +190,6 @@
             >
               <el-button
                 v-hasPermi="['system:menu:edit']"
-                size="mini"
                 type="text"
                 :disabled="disabledHandle"
                 @click="handleUpdate(scope.row)"
@@ -208,7 +205,6 @@
             >
               <el-button
                 v-hasPermi="['system:menu:add']"
-                size="mini"
                 type="text"
                 :disabled="disabledHandle"
                 @click="handleAdd(scope.row, '内层新增')"
@@ -224,7 +220,6 @@
             >
               <el-button
                 v-hasPermi="['system:menu:remove']"
-                size="mini"
                 type="text"
                 class="delbutton"
                 :disabled="disabledHandle"
@@ -822,9 +817,9 @@ export default {
 ::v-deep textarea{
   resize: none;
   font: var(--td-font-body-medium);
-  height: 38px;
-  line-height: 25px;
-  font-size: 13px;
+  height: 34px;
+  line-height: 20px;
+  font-size: 14px;
   overflow: hidden;
   white-space: nowrap;
   padding-right: 10px

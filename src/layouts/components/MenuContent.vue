@@ -215,15 +215,21 @@ export default Vue.extend({
   },
   methods: {
     onmouseoverRight(e) {
-        if(this.showSidebar && this.$store.state.setting.mode==='dark' && this.$store.state.setting.isSidebarCompact)  {
-            e.srcElement.parentNode.lastElementChild.style.border = '1px solid'
-            e.srcElement.parentNode.lastElementChild.style.borderImage = 'linear-gradient(180deg, rgba(116, 190, 243, 0.5), rgba(0, 180, 255, 1)) 1 1'
-        }
       const circle = document.getElementsByClassName("el-carousel__arrow");
       for(let i = 0; i < circle.length; i++){
           circle[i].style.zIndex = "0"
       }
+      if (e.target.className === "t-menu__item  t-is-active") {
+        if(this.showSidebar && this.$store.state.setting.mode === "dark" && this.$store.state.setting.isSidebarCompact)  {
+          e.srcElement.parentNode.lastElementChild.style.border = "1px solid"
+          e.srcElement.parentNode.lastElementChild.style.borderImage = "linear-gradient(180deg, rgba(116, 190, 243, 0.5), rgba(0, 180, 255, 1)) 1 1"
+        }
+      }
       if (e.target.className === "t-menu__item t-is-opened" || e.target.className === "t-menu__item") {
+          if(this.showSidebar && this.$store.state.setting.mode === "dark" && this.$store.state.setting.isSidebarCompact)  {
+            e.srcElement.parentNode.lastElementChild.style.border = "1px solid"
+            e.srcElement.parentNode.lastElementChild.style.borderImage = "linear-gradient(180deg, rgba(116, 190, 243, 0.5), rgba(0, 180, 255, 1)) 1 1"
+          }
         if (this.$store.state.setting.layout === "top" && e.target.tagName !== "LI") {
           if (e.target.tagName === "DIV") {
             e.srcElement.parentNode.lastElementChild.style.left = `${e.target.getBoundingClientRect().left - 140}px`;

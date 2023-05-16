@@ -4,21 +4,18 @@
     <el-row :gutter="24">
       <!--用户数据-->
       <el-col :span="24" :xs="24" class="right">
-        <header-search class="g-w100 g-h100">
+        <header-search class="g-w100 g-h100 colon">
           <el-form
             ref="queryForm"
             :model="queryParam"
             :inline="true"
-            label-width="68px"
-            style="margin-top: 18px"
           >
             <el-form-item label="流程名称" prop="processDefinitionName">
               <el-input
                 v-model="queryParam.processDefinitionName"
                 placeholder="请输入流程名称"
                 clearable
-                size="medium"
-                style="width: 240px; height: 40px"
+                style="width: 240px"
                 @keyup.enter.native="searchQuery"
               />
             </el-form-item>
@@ -27,17 +24,14 @@
                 v-model="queryParam.businessName"
                 placeholder="请输入业务名称"
                 clearable
-                size="medium"
-                style="width: 240px; height: 40px"
+                style="width: 240px"
                 @keyup.enter.native="searchQuery"
               />
             </el-form-item>
-            <el-form-item>
+            <el-form-item class="buttonArea">
               <el-button
                 type="primary"
                 icon="el-icon-search"
-                size="mini"
-                style="height: 40px"
                 @click="searchQuery"
               >
                 搜索
@@ -54,7 +48,7 @@
           </el-form>
         </header-search>
         <!-- v-loading="loading" -->
-        <page-panel-new header-title="我的待办" style="height: calc(100% - 90px)">
+        <page-panel-new header-title="我的待办">
           <el-table
             :data="dataSource"
             height="calc(100% - 46px)"

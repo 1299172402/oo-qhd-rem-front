@@ -4,9 +4,10 @@ const env = import.meta.env.MODE;
 export default [
   // 基础数据维护
   {
+    // hidden: env == "development" ? false : true,
+    hidden:true,  
     path: '/basic',
     name: 'basic', 
-    hidden: env == "development" ? false : true,
     component: Layout,
     redirect: '/basic/density',
     meta: { title: '基础数据维护', icon: 'client', single: false },

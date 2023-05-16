@@ -1,20 +1,18 @@
 <!-- 后台——角色管理 -->
 <template>
   <div class="app-container">
-    <header-search class="g-w100 g-h100">
+    <header-search class="g-w100 g-h100 colon">
       <el-form
         v-show="showSearch"
         ref="queryForm"
         :model="queryParams"
         :inline="true"
-        style="margin-top: 20px"
       >
         <el-form-item label="角色名称" prop="roleName">
           <el-input
             v-model="queryParams.roleName"
             placeholder="请输入角色名称"
             clearable
-            size="small"
             style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
@@ -72,18 +70,16 @@
           end-placeholder="结束日期"
         ></el-date-picker>
                             </el-form-item> -->
-        <el-form-item>
+        <el-form-item class="buttonArea">
           <el-button
             type="primary"
             icon="el-icon-search"
-            size="mini"
             @click="handleQuery"
           >
             搜索
           </el-button>
           <el-button
             icon="el-icon-refresh"
-            size="mini"
             class="commonBtn"
             @click="resetQuery"
           >
@@ -93,13 +89,12 @@
       </el-form>
     </header-search>
 
-    <page-panel-new header-title="角色管理" style="height: calc(100% - 105px);">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
+    <page-panel-new header-title="角色管理">
+      <el-row :gutter="10" class="mb8 mbBottom">
         <el-col :span="1.5">
           <el-button
             v-hasPermi="['system:role:add']"
             type="primary"
-            size="mini"
             @click="handleAdd"
           >
             新增
@@ -181,7 +176,6 @@
           <template v-if="scope.row.roleId !== '1'" slot-scope="scope">
             <el-button
               v-hasPermi="['system:role:detail']"
-              size="mini"
               type="text"
               @click="handleAuthUser(scope.row)"
             >
@@ -225,7 +219,6 @@
             >
               <el-button
                 v-hasPermi="['system:role:edit']"
-                size="mini"
                 type="text"
                 :disabled="disabledHandle"
                 @click="handleUpdate(scope.row)"
@@ -241,7 +234,6 @@
             >
               <el-button
                 v-hasPermi="['system:role:remove']"
-                size="mini"
                 type="text"
                 class="delbutton"
                 :disabled="disabledHandle"
@@ -258,7 +250,6 @@
             >
               <el-button
                 v-hasPermi="['system:role:dataPermission']"
-                size="mini"
                 type="text"
                 :disabled="disabledHandle"
                 @click="handleDataScope(scope.row)"

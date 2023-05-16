@@ -284,7 +284,7 @@ export default {
 <style lang="less" scoped>
 .form-layout {
   max-width: 1000px;
-  min-height: calc(100vh - 280px);
+  min-height: calc(100vh - 300px);
   padding: 20px;
 }
 

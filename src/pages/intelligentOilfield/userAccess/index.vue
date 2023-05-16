@@ -1,14 +1,32 @@
 <!-- 后台——用户访问 -->
 <template>
   <div class="app-container">
-    <header-search class="g-w100 g-h100">
+    <header-search class="g-w100 g-h100 colon">
       <el-form
         v-show="showSearch"
         ref="queryForm"
         :model="queryParams"
-        style="margin-top: 20px"
         :inline="true"
       >
+        <el-form-item v-show="activeName === 'first'" label="用户名称" prop="nickName">
+          <el-input
+            v-model="queryParams.nickName"
+            placeholder="请输入用户名称"
+            clearable
+            style="width: 240px"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item v-show="activeName === 'first'" label="用户账号" prop="userName">
+          <el-input
+            v-model="queryParams.userName"
+            placeholder="请输入用户账号"
+            clearable
+            style="width: 240px"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+
         <el-form-item v-show="activeName === 'first'" label="组织机构" prop="deptId">
           <el-select
             v-model="queryParams.deptId"
@@ -24,17 +42,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item v-show="activeName === 'first'" label="用户名称" prop="nickName">
-          <el-input
-            v-model="queryParams.nickName"
-            placeholder="请输入用户名称"
-            clearable
-            size="small"
-            style="width: 240px"
-            @keyup.enter.native="handleQuery"
-          />
-        </el-form-item>
-        <el-form-item v-show="activeName === 'first'" label="时间">
+        <el-form-item v-show="activeName === 'first'" label="操作时间">
           <el-date-picker
             v-model="queryParams.loginDate"
             style="width: 240px"
@@ -61,7 +69,6 @@
             v-model="queryParams.appName"
             placeholder="请输入应用名称"
             clearable
-            size="small"
             style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
@@ -96,7 +103,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item>
+        <el-form-item class="buttonArea">
           <el-button
             type="primary"
             icon="el-icon-search"
@@ -117,7 +124,7 @@
       </el-form>
     </header-search>
 
-    <page-panel-new header-title="用户访问" style="height: calc(100% - 118px);">
+    <page-panel-new header-title="用户访问" :class="activeName === 'first' ? 'page-panel-height' : ''">
       <el-row>
         <el-col :span="20">
           <el-tabs v-model="activeName" class="g-pageHeader" @tab-click="handleClick">
@@ -129,7 +136,6 @@
           <el-button
             v-hasPermi="['system:userAccess:export']"
             type="primary"
-            size="mini"
             @click="handleExport"
           >
             导出
@@ -149,9 +155,9 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column label="序号" type="index" width="65" />
-        <el-table-column label="组织机构" prop="dept.deptName" />
-        <el-table-column label="用户账号" prop="userName" />
         <el-table-column label="用户名称" prop="nickName" />
+        <el-table-column label="用户账号" prop="userName" />
+        <el-table-column label="组织机构" prop="dept.deptName" />
         <el-table-column label="访问时间" align="center" prop="loginDate">
           <template slot-scope="scope">
             <span>{{ parseTime(scope.row.loginDate) }}</span>
@@ -314,6 +320,7 @@ export default {
         roleKey: undefined,
         status: undefined,
         nickName: undefined,
+        userName: undefined,
         loginDate: undefined,
         beginTime: undefined,
         endTime: undefined,
@@ -328,8 +335,10 @@ export default {
       searchOption: []
     };
   },
-  created() {
+  mounted() {
     this.getList();
+  },
+  created() {
     this.choiceDepts(); // 获取组织机构
     this.getAccessCount();
     this.getOrgTreeData();

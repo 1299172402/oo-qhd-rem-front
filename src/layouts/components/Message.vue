@@ -7,10 +7,7 @@
     @visible-change="onPopupVisibleChange"
   >
     <template #content>
-      <div
-        class="header-msg"
-        @wheel="scrollBarWheel"
-      >
+      <div class="header-msg" @wheel="scrollBarWheel">
         <div class="header-msg-top">
           <p>通知</p>
           <!-- TODO: Maybe change back -->
@@ -24,11 +21,27 @@
             清空
           </t-button> -->
         </div>
-        <t-list v-if="tableData.length > 0" class="narrow-scrollbar" :split="true">
-          <t-list-item v-for="(item, index) in tableData" :key="index">
+        <div
+          v-if="tableData.length > 0"
+          ref="listDiv"
+          style="height: 400px; overflow-y: scroll"
+          :scrollTop="scrollData"
+          class="narrow-scrollbar"
+          :split="true"
+          @scroll="ScrollM"
+        >
+          <t-list-item
+            v-for="(item, index) in tableData"
+            :key="index"
+            :style="{ background: item.typeColor, color: '#fff' }"
+            style="border-bottom: 1px solid #eee"
+          >
             <div>
               <p class="msg-content">
                 {{ item.alarmContent }}
+              </p>
+              <p class="msg-type">
+                {{ item.levelName }}
               </p>
               <p class="msg-type">
                 {{ item.typeName }}
@@ -43,7 +56,7 @@
               </t-button>
             </template>
           </t-list-item>
-        </t-list>
+        </div>
 
         <div v-else class="empty-list">
           <img src="../../assets/intelligentOilfield/nothing.png" alt="空">
@@ -61,13 +74,13 @@
         </div>
       </div>
     </template>
-    <t-badge :count="total" :offset="[15, 21]">
+    <t-badge :count="total" :offset="[10, 3]">
       <t-button
         theme="default"
         shape="square"
         variant="text"
         style="background: transparent; border: 0"
-        @click="isNoticeVisible = true"
+        @click="updateData"
       >
         <!-- <notification-icon style="color: var(--white-color);"/> -->
         <svg-icon icon-class="reminder" class="panelIconClass" />
@@ -96,6 +109,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      scrollData: 0,
       tableData: [],
       isNoticeVisible: false,
       queryParams: {
@@ -103,32 +117,97 @@ export default Vue.extend({
         pageSize: 10
       },
       timer: null,
-      firstGet: true,
       total: 0
     };
   },
   computed: {
     ...mapState("notification", ["msgData"])
   },
-  created() {
-    this.getList();
+  watch: {
+    isNoticeVisible() {
+      if (this.isNoticeVisible) {
+        this.getList(true);
+      } else {
+        this.tableData = [];
+      }
+    }
   },
   mounted() {
+    // this.initData();
+    this.getList(true);
     this.pollingTime();
   },
   destroyed() {
     window.clearInterval(this.timer);
   },
   methods: {
+    initData() {
+      this.tableData = [
+        {
+          typeName: "测试报警类型",
+          sourceName: "测试报警名称",
+          alarmContent:
+            "测试报警内容很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长",
+          levelName: "一级",
+          alarmTime: "2023/2/17 17:25:00",
+          type: "我的",
+          typeColor: "#E90202"
+        },
+        {
+          typeName: "测试报警类型1",
+          sourceName: "测试报警名称1",
+          alarmContent: "测试报警内容1",
+          levelName: "三级",
+          alarmTime: "2023/2/17 17:25:00",
+          type: "全部",
+          typeColor: "green"
+        },
+        {
+          typeName: "测试报警类型2",
+          sourceName: "测试报警名称2",
+          alarmContent: "测试报警内容2",
+          levelName: "二级",
+          alarmTime: "2023/2/17 17:25:00",
+          type: "我的",
+          typeColor: "#E90202"
+        },
+        {
+          typeName: "测试报警类型2",
+          sourceName: "测试报警名称2",
+          alarmContent: "测试报警内容2",
+          levelName: "二级",
+          alarmTime: "2023/2/17 17:25:00",
+          type: "我的",
+          typeColor: "#E90202"
+        },
+        {
+          typeName: "测试报警类型2",
+          sourceName: "测试报警名称2",
+          alarmContent: "测试报警内容2",
+          levelName: "二级",
+          alarmTime: "2023/2/17 17:25:00",
+          type: "我的",
+          typeColor: "#E90202"
+        }
+      ];
+    },
+    ScrollM(e) {
+      this.scrollData = e.target.offsetTop;
+    },
     pollingTime() {
+      window.clearInterval(this.timer);
       this.timer = window.setInterval(() => {
         setTimeout(() => {
-        // TODO: Maybe change back
-        // 调接口
+          // 重新调用第一个页的接口
+          this.getList(true);
+          // TODO: Maybe change back
+          // 调接口
           popoverRingMessage().then(response => {
-            if (response.data.data.hasPopup === "1") { // 是否弹窗 0否 1是
+            if (response.data.data.hasPopup === "1") {
+              // 是否弹窗 0否 1是
               this.isNoticeVisible = true;
-              if (response.data.data.hasSound === "1") { // 是否响铃 0否 1是
+              if (response.data.data.hasSound === "1") {
+                // 是否响铃 0否 1是
                 this.$emit("play-audio", true);
               } else {
                 this.$emit("play-audio", false);
@@ -136,7 +215,7 @@ export default Vue.extend({
             }
           });
         }, 0);
-      }, 300000);
+      }, 60000);
     },
     sureWarn(row) {
       if (row.delType === "1") {
@@ -146,52 +225,106 @@ export default Vue.extend({
         // 确认接口
         this.$modal.confirm("是否已确定告警内容？").then(() =>
           updateAlcAlarmCheckTag(queryParam).then(() => {
-            this.getList();
+            this.getList(true);
           })
         );
       } else {
         // 处置
         // window.open(row.delUrl, "_blank");
-        window.open(`${proxy[env].ALARMURL}${this.$store.getters["user/token"]}`, "_blank");
+        window.open(`${proxy[env].ALARM_URL}${this.$store.getters["user/token"]}`, "_blank");
       }
     },
     scrollBarWheel(e) {
       e = e || window.event;
 
-      if (e.wheelDelta) {  // 判断浏览器IE，谷歌滑轮事件
+      if (e.wheelDelta) {
+        // 判断浏览器IE，谷歌滑轮事件
         if (e.wheelDelta < 0) {
           this.queryParams.pageNum += 1;
           const maxPageNum = Math.ceil(this.total / 10);
 
           if (this.queryParams.pageNum <= maxPageNum) {
-            this.getList();
+            this.getList(false);
           }
         }
-      } else if (e.detail) {  // Firefox滑轮事件
+      } else if (e.detail) {
+        // Firefox滑轮事件
         if (e.detail < 0) {
           this.queryParams.pageNum += 1;
           const maxPageNum = Math.ceil(this.total / 10);
           if (this.queryParams.pageNum <= maxPageNum) {
-            this.getList();
+            this.getList(false);
           }
         }
       }
     },
-    getList() {
+    updateData() {
+      this.isNoticeVisible = true;
+    },
+    getList(firstPage) {
+      //  TODO: Maybe change back
+      // const _res = [
+      //   {
+      //     typeName: "测试报警类型",
+      //     sourceName: "测试报警名称",
+      //     alarmContent:
+      //       "测试报警内容很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长",
+      //     levelName: "一级",
+      //     alarmTime: "2023/2/17 17:25:00",
+      //     type: "我的",
+      //     typeColor: "#E90202"
+      //   },
+      //   {
+      //     typeName: "测试报警类型1",
+      //     sourceName: "测试报警名称1",
+      //     alarmContent: "测试报警内容1",
+      //     levelName: "三级",
+      //     alarmTime: "2023/2/17 17:25:00",
+      //     type: "全部",
+      //     typeColor: "green"
+
+      //   },
+      //   {
+      //     typeName: "测试报警类型2",
+      //     sourceName: "测试报警名称2",
+      //     alarmContent: "测试报警内容2",
+      //     levelName: "二级",
+      //     alarmTime: "2023/2/17 17:25:00",
+      //     type: "我的",
+      //     typeColor: "#E90202"
+      //   },
+      //   {
+      //     typeName: "测试报警类型2",
+      //     sourceName: "测试报警名称2",
+      //     alarmContent: "测试报警内容2",
+      //     levelName: "二级",
+      //     alarmTime: "2023/2/17 17:25:00",
+      //     type: "我的",
+      //     typeColor: "#E90202"
+      //   }
+      // ];
       // 获取列表
       if (process.env.NODE_ENV !== "development" && window.location.host !== "114.115.233.247:38085") {
-        queryAlcAlarmByParam(this.queryParams).then(response => {
-          const _res = JSON.parse(
-            JSON.stringify(response.data.rows)
-          );
-
-          this.tableData = [
-            ...this.tableData,
-            ..._res
-          ];
-          if (this.firstGet) {
+        const param = {
+          pageNum: 1,
+          pageSize: 10
+        };
+        const currentParam = firstPage ? param : this.queryParams;
+        // TODO: Maybe change back
+        //   if (firstPage) {
+        //     this.tableData = _res;
+        //     this.total = 21;
+        //   } else {
+        //     this.tableData = [...this.tableData, ..._res];
+        //   }
+        if (this.$refs.listDiv) this.$refs.listDiv.scrollTop = 0;
+        queryAlcAlarmByParam(currentParam).then(response => {
+          const _res = JSON.parse(JSON.stringify(response.data.rows));
+          if (firstPage) {
+            this.tableData = _res;
             this.total = response.data.total;
-            this.firstGet = false;
+          } else {
+            this.tableData = [...this.tableData, ..._res];
           }
         });
       }
@@ -199,12 +332,13 @@ export default Vue.extend({
     onPopupVisibleChange(visible: boolean, context) {
       if (context.trigger === "trigger-element-click") {
         this.isNoticeVisible = true;
+        if (this.$refs.listDiv) this.$refs.listDiv.scrollTop = 0;
         return;
       }
       this.isNoticeVisible = visible;
     },
     goDetail() {
-      jumpSupApp(proxy[env].MESSAGEURL);
+      jumpSupApp(proxy[env].MESSAGE_URL);
       this.isNoticeVisible = false;
     },
     setRead(type: string, item?: NotificationItem) {

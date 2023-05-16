@@ -7,8 +7,11 @@ const config = {
   PROCESS_PULBIC_KEY: "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKsr9kM6vJHJb8KgWhY6xVaYCkLEr+QKeuYUoZ2uX3+t4lzbxdf1JeJ2jUs26jWWgkpe3W1UHxXUaapyTG9sFbECAwEAAQ==",
   LOGIN_TYPES: ["password", "corp_oauth"],
   // 右上角报警点击“查看跳转”路径
-  MESSAGEURL: "http://10.77.78.250:8085/#/reportlnformation/source",
-  appId: "$system$"
+  MESSAGE_URL: "https://amm.tjioms-dev.tjltd.cnooc/#/appCallback?rediect=reportlnformation/source",
+  appId: "$system$",
+  ALARM_URL: "https://amm.tjioms-dev.tjltd.cnooc/#/reportPolice/source?access_token=",
+  WEB_TAG_NAME: "智能油田管理系统", // 网页标签名称
+  SYSTEM_NAME: "天津分公司智能油田管理系统" // 系统名称
 };
 
 export default {

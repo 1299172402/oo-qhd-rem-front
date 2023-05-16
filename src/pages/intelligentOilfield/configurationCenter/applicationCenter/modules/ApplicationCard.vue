@@ -96,20 +96,20 @@ export default {
           label: "编辑应用",
           icon: "edit1",
           path: "ApplicationForm/:id?",
-          permission: "system:meta:edit",
+          permission: "system:app:edit",
           pathaction: "edit"
         },
         {
           label: "应用授权",
           icon: "power",
           path: "handleAuthorize/:id",
-          permission: "system:authorize:add"
+          permission: "system:app:empower"
         },
         {
           label: "删除",
           icon: "delete",
           className: "delete",
-          permission: "system:meta:remove"
+          permission: "system:app:remove"
         }
       ]
     };

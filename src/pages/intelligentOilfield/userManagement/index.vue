@@ -51,14 +51,12 @@
         class="right"
         style="padding-left: 20px"
       >
-        <header-search class="g-w100 g-h100">
+        <header-search class="g-w100 g-h100 colon">
           <el-form
             v-show="showSearch"
             ref="queryForm"
             :model="queryParams"
-            style="margin-top: 20px"
             :inline="true"
-            label-width="68px"
           >
             <el-form-item label="用户账号" prop="userName">
               <el-input
@@ -74,8 +72,7 @@
                 v-model="queryParams.nickName"
                 placeholder="请输入用户名"
                 clearable
-                size="medium"
-                style="width: 240px; height: 40px"
+                style="width: 240px"
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
@@ -170,19 +167,16 @@
               end-placeholder="结束日期"
             ></el-date-picker>
                   </el-form-item> -->
-            <el-form-item>
+            <el-form-item class="buttonArea">
               <el-button
                 type="primary"
                 icon="el-icon-search"
-                size="mini"
-                style="height: 40px"
                 @click="handleQuery"
               >
                 搜索
               </el-button>
               <el-button
                 icon="el-icon-refresh"
-                size="mini"
                 class="commonBtn"
                 @click="resetQuery"
               >
@@ -193,14 +187,12 @@
         </header-search>
 
         <!-- v-loading="loading" -->
-        <page-panel-new header-title="用户管理" style="height: calc(100% - 106px);">
-          <el-row style="margin-bottom: 20px;">
+        <page-panel-new header-title="用户管理">
+          <el-row class="mbBottom">
             <el-col class="height-placeholder" :span="16">
               <el-button
                 v-hasPermi="['system:user:add']"
                 type="primary"
-                size="mini"
-                style="height: 40px"
                 @click="handleAdd"
               >
                 新增
@@ -210,7 +202,6 @@
               <el-button
                 v-hasPermi="['system:user:importModel']"
                 class="commonBtn"
-                size="mini"
                 @click="importTemplate"
               >
                 导入模板
@@ -218,7 +209,6 @@
               <el-button
                 v-hasPermi="['system:user:import']"
                 type="primary"
-                size="mini"
                 @click="handleImport"
               >
                 导入
@@ -367,7 +357,6 @@
               <template slot-scope="scope">
                 <el-button
                   v-hasPermi="['system:user:detail']"
-                  size="mini"
                   type="text"
                   @click="seeDetail(scope.row)"
                 >
@@ -375,7 +364,6 @@
                 </el-button>
                 <el-button
                   v-hasPermi="['system:user:edit']"
-                  size="mini"
                   type="text"
                   @click="handleUpdate(scope.row)"
                 >
@@ -385,7 +373,6 @@
                   v-if="scope.row.userId !== '1'"
                   v-hasPermi="['system:user:remove']"
                   :disabled="scope.row.ehr === '1' "
-                  size="mini"
                   type="text"
                   class="delbutton"
                   @click="handleDelete(scope.row)"
@@ -395,7 +382,6 @@
                 <!-- TODO: Maybe change back -->
                 <!-- v-hasPermi="['system:user:resetPwd', 'system:user:roleEdit', 'system:user:appRole']" -->
                 <el-dropdown
-                  size="mini"
                   style="margin-left: 20px;"
                   @command="(command) => handleCommand(command, scope.row)"
                 >

@@ -4,7 +4,7 @@
     <div class="g-w100 g-h100" style="background: white; position: absolute;z-index: -1" :style="{background: $store.state.setting.mode==='dark'?'rgba(3, 21, 39, 1)':'#fff'}" />
     <!-- TODO: Maybe change back -->
     <!-- <div class="infoHeader g-row-flex-V" :style="{background: $store.state.setting.mode==='dark'?'linear-gradient(to right, rgba(0, 202, 255, 0.4), var(--opacity-blue-bg2))':'linear-gradient(to right, var(--only-light-blue-color), rgba(0, 96, 166, 0.2))',color:$store.state.setting.mode==='dark'?'var(--light-blue-color)':'var(--white-color)'}"> -->
-    <div class="infoHeader g-row-flex-V infoHeaderBg" :style="{color:$store.state.setting.mode==='dark'?'var(--light-blue-color)':'#fff'}">
+    <div class="infoHeader g-row-flex-V infoHeaderBg" style="color: var(--light-blue-color)">
       <div style="width: 100%" :style="{color: headerStyle.color}">
         {{ headerTitle }}
       </div>

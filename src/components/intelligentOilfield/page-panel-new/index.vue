@@ -23,7 +23,7 @@
         />
       </el-tooltip>
     </div>
-    <div style="padding: 0 20px 20px;height: 100%;" class="g-w100" :style="{height: showBtn ? 'calc(100%  - 32px)' : '100%', padding: showBtn ? '0 20px 20px 20px' : '20px'}">
+    <div style="padding: 0 20px 20px;height: 100%;" class="g-w100" :style="{height: showBtn ? 'calc(100%  - 32px)' : '100%', padding: showBtn ? '0 20px 20px 20px' : '15px 20px 20px 20px'}">
       <slot />
     </div>
   </div>

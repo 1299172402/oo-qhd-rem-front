@@ -2,19 +2,17 @@
 <template>
   <div class="Process-container">
     <!-- 查询 -->
-    <header-search class="g-w100 g-h100">
+    <header-search class="g-w100 g-h100 colon">
       <el-form
         v-show="showSearch"
         ref="queryForm"
-        style="margin-top: 18px"
         :model="queryParams"
         :inline="true"
-        label-width="68px"
       >
         <el-form-item label="租户名称">
           <el-input v-model="queryParams.tenantName" placeholder="请输入租户名称" clearable />
         </el-form-item>
-        <el-form-item>
+        <el-form-item class="buttonArea">
           <el-button type="primary" icon="el-icon-search" @click="getList">
             搜索
           </el-button>
@@ -25,7 +23,7 @@
       </el-form>
     </header-search>
     <!-- 租户卡片 -->
-    <page-panel-new header-title="租户管理" style="height: calc(100% - 100px);">
+    <page-panel-new header-title="租户管理">
       <div
         class="footer-box container-box--background"
         :style="{ background: $store.state.setting.mode == 'dark' ? 'transparent' : '#fff' }"

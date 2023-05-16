@@ -2,9 +2,10 @@ import Layout from '@/layouts/index.vue';
 
 export default [
   {
+    // hidden: env == "development" ? false : true,
+    hidden:true,  
     path: '/reservoirDisplay',
     name: 'reservoirDisplay',
-    hidden: false,
     component: Layout,
     meta: { title: '首页', icon: 'client', single: false },
     children: [

@@ -1,21 +1,20 @@
 <!-- 后台——组织机构管理 -->
 <template>
   <div class="app-container">
-    <header-search class="g-w100 g-h100">
+    <header-search class="g-w100 g-h100 colon">
       <el-form
         v-show="showSearch"
         ref="queryForm"
         label-height="80px"
         :model="queryParams"
+        :label-width="auto"
         :inline="true"
-        style="margin-top: 20px"
       >
         <el-form-item label="组织机构名称" prop="deptName">
           <el-input
             v-model="queryParams.deptName"
             placeholder="请输入组织机构名称"
             clearable
-            size="small"
             style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
@@ -59,18 +58,16 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item>
+        <el-form-item class="buttonArea">
           <el-button
             type="primary"
             icon="el-icon-search"
-            size="mini"
             @click="handleQuery"
           >
             搜索
           </el-button>
           <el-button
             icon="el-icon-refresh"
-            size="mini"
             class="commonBtn"
             @click="resetQuery"
           >
@@ -80,13 +77,12 @@
       </el-form>
     </header-search>
 
-    <page-panel-new header-title="组织机构管理" style="height: calc(100% - 100px);">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
+    <page-panel-new header-title="组织机构管理">
+      <el-row :gutter="10" class="mb8 mbBottom">
         <el-col :span="1.5">
           <el-button
             v-hasPermi="['system:dept:add']"
             type="primary"
-            size="mini"
             @click="handleAdd"
           >
             新增
@@ -95,7 +91,6 @@
         <el-col :span="1.5">
           <el-button
             type="info"
-            size="mini"
             class="commonBtn"
             @click="toggleExpandAll"
           >
@@ -182,7 +177,6 @@
           <template slot-scope="scope">
             <el-button
               v-hasPermi="['system:dept:edit']"
-              size="mini"
               type="text"
               @click="handleUpdate(scope.row)"
             >
@@ -190,7 +184,6 @@
             </el-button>
             <el-button
               v-hasPermi="['system:dept:add']"
-              size="mini"
               type="text"
               @click="handleAdd(scope.row)"
             >
@@ -200,7 +193,6 @@
               v-if="scope.row.parentId !== '0'"
               v-hasPermi="['system:dept:remove']"
               :disabled="scope.row.ehr === '1' "
-              size="mini"
               type="text"
               class="delbutton"
               @click="handleDelete(scope.row)"
@@ -290,17 +282,6 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="机构状态" prop="status">
-              <el-radio-group v-model="form.status" :disabled="form.ehr === '0' ? false : keys.includes('status')">
-                <el-radio v-for="dict in dict.type.sys_normal_disable" :key="dict.value" :label="dict.value">
-                  {{
-                    dict.label
-                  }}
-                </el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
           <!-- <el-col :span="24">
               <el-form-item label="是否租户" prop="isTenant">
                 <el-radio-group v-model="form.isTenant">
@@ -317,6 +298,19 @@
                 </el-select>
               </el-form-item>
                 </el-col> -->
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="机构状态" prop="status">
+              <el-radio-group v-model="form.status" :disabled="form.ehr === '0' ? false : keys.includes('status')">
+                <el-radio v-for="dict in dict.type.sys_normal_disable" :key="dict.value" :label="dict.value">
+                  {{
+                    dict.label
+                  }}
+                </el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">

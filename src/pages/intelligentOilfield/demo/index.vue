@@ -1164,9 +1164,7 @@
         v-model="treeSelectName"
         placeholder="请输入"
         clearable
-        size="small"
         prefix-icon="el-icon-search"
-        style="margin-bottom: 10px; height: 40px"
       />
       <el-tree
         ref="tree"

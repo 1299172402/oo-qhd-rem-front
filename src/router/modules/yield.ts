@@ -2,7 +2,8 @@ import Layout from "@/layouts/index.vue";
 const env = import.meta.env.MODE;
 export default [
     {
-        hidden: env == "development" ? false : true,
+        // hidden: env == "development" ? false : true,
+        hidden:true,  
         path: "/yield",
         name: "yield",
         component: Layout,

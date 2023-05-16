@@ -1,11 +1,10 @@
 <!-- 后台——消息日志 -->
 <template>
   <div class="app-container">
-    <header-search class="g-w100 g-h100">
+    <header-search class="g-w100 g-h100 colon">
       <el-form
         v-show="showSearch"
         ref="queryForm"
-        style="margin-top: 18px"
         :model="queryParams"
         :inline="true"
       >
@@ -28,7 +27,6 @@
         <el-form-item label="消息状态" prop="status">
           <el-select
             v-model="queryParams.status"
-            style="width: 240px;"
             placeholder="请选择消息状态"
             clearable
           >
@@ -51,7 +49,7 @@
             end-placeholder="结束日期"
           />
         </el-form-item>
-        <el-form-item>
+        <el-form-item class="buttonArea">
           <el-button
             type="primary"
             icon="el-icon-search"
@@ -70,8 +68,8 @@
       </el-form>
     </header-search>
 
-    <page-panel-new header-title="消息日志" style="height: calc(100% - 100px)">
-      <el-row style="margin-bottom: 20px">
+    <page-panel-new header-title="消息日志">
+      <el-row class="mbBottom">
         <el-col class="placeholder" :span="20">
           <el-button
             v-hasPermi="['message:config']"
@@ -118,8 +116,8 @@
           <template slot-scope="scope">
             <span v-if="item.props !== 'status'">{{ columnsFormatter(scope.row, item.props) }}</span>
             <span v-else>
-              <span v-if="scope.row[item.props] === 'SUCCESS'" style="color: #2acc29;">成功</span>
-              <span v-if="scope.row[item.props] === 'FAILURE'" style="color: #ee0909;">失败</span>
+              <el-tag v-if="scope.row[item.props] === 'SUCCESS'">成功</el-tag>
+              <el-tag v-if="scope.row[item.props] === 'FAILURE'" type="danger">失败</el-tag>
             </span>
           </template>
         </el-table-column>

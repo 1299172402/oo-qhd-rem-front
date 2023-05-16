@@ -1,11 +1,10 @@
 <!-- 分配角色 -->
 <template>
   <div class="app-container">
-    <header-search class="g-w100 g-h100">
+    <header-search class="g-w100 g-h100 colon">
       <el-form
         v-show="showSearch"
         ref="queryForm"
-        style="margin-top: 20px"
         :model="queryParams"
         :inline="true"
       >
@@ -14,7 +13,6 @@
             v-model="queryParams.userName"
             placeholder="请输入用户账号"
             clearable
-            size="small"
             style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
@@ -24,7 +22,6 @@
             v-model="queryParams.email"
             placeholder="请输入用户邮箱"
             clearable
-            size="small"
             style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
@@ -34,7 +31,6 @@
             v-model="queryParams.phonenumber"
             placeholder="请输入用户手机"
             clearable
-            size="small"
             style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
@@ -44,7 +40,6 @@
             v-model="queryParams.status"
             placeholder="请选择状态"
             clearable
-            size="small"
           >
             <el-option
               v-for="dict in dict.type.sys_normal_disable"
@@ -54,18 +49,16 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item>
+        <el-form-item class="buttonArea">
           <el-button
             type="primary"
             icon="el-icon-search"
-            size="mini"
             @click="handleQuery"
           >
             搜索
           </el-button>
           <el-button
             icon="el-icon-refresh"
-            size="mini"
             class="commonBtn"
             @click="resetQuery"
           >
@@ -75,7 +68,7 @@
       </el-form>
     </header-search>
     <page-panel-new header-title="分配用户">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
+      <el-row :gutter="10" class="mb8 mbBottom">
         <el-col :span="1.5">
           <el-button
             v-hasPermi="['system:roleUser:unbind']"

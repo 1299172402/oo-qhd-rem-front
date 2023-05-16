@@ -67,7 +67,7 @@
 }
 
 .twoRowHeader {
-  height: 58px;
+  height: auto !important;
 
   .sort-caret.descending {
     bottom: -6px !important;
@@ -134,7 +134,7 @@
 }
 
 .panelBox {
-  height: calc(100% - 125px);
+  height: calc(100% - 90px);
   width: 100%;
   border: 1px solid #ddd;
   border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
@@ -226,6 +226,11 @@
 //划过某行，表头表尾背景色
 .el-table__fixed-right .hover-row,
 .el-table__fixed .hover-row {
+  background: var(--opacity-blue-bg) !important;
+}
+
+// 该样式用于修复在暗色模式下使用带有固定列的elementui的表格时出现的鼠标移入固定列后该行样式未全部改变的bug
+.el-table__body tr.hover-row > td.el-table__cell {
   background: var(--opacity-blue-bg) !important;
 }
 

@@ -69,13 +69,28 @@
           </el-tooltip>
           允许文件的最大大小：
         </span>
-        <el-input-number v-model="model.maxSize" :title="model.maxSize" placeholder="请输入允许文件的最大大小" />
+        <el-input-number
+          v-model="model.maxSize"
+          :min="0"
+          :title="model.maxSize"
+          placeholder="请输入允许文件的最大大小"
+        />
       </el-form-item>
       <el-form-item label="允许图片的宽度：" prop="imageWidth" class="form-layout__item-col2">
-        <el-input-number v-model="model.imageWidth" :title="model.imageWidth" placeholder="请输入允许图片的宽度" />
+        <el-input-number
+          v-model="model.imageWidth"
+          :min="0"
+          :title="model.imageWidth"
+          placeholder="请输入允许图片的宽度"
+        />
       </el-form-item>
       <el-form-item label="允许图片的高度：" prop="imageHeight" class="form-layout__item-col2">
-        <el-input-number v-model="model.imageHeight" :title="model.imageHeight" placeholder="请输入允许图片的高度" />
+        <el-input-number
+          v-model="model.imageHeight"
+          :min="0"
+          :title="model.imageHeight"
+          placeholder="请输入允许图片的高度"
+        />
       </el-form-item>
       <el-form-item label="状态：" class="form-layout__item-col2">
         <el-radio-group v-model="model.status">

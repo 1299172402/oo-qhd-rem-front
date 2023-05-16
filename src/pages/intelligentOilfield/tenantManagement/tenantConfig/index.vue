@@ -1,14 +1,13 @@
 <template>
   <div class="app-container">
-    <header-search class="g-w100 g-h100">
+    <header-search class="g-w100 g-h100 colon">
       <el-form
         ref="queryForm"
         :model="queryParams"
         :inline="true"
-        style="margin-top: 20px"
         @keyup.enter.native="searchQuery"
       >
-        <el-form-item label="用户账号：" prop="userName">
+        <el-form-item label="用户账号" prop="userName">
           <el-input
             v-model="queryParams.userName"
             placeholder="请输入用户账号"
@@ -16,7 +15,7 @@
             style="width: 240px;"
           />
         </el-form-item>
-        <el-form-item label="用户名：" prop="phonenumber">
+        <el-form-item label="用户名" prop="phonenumber">
           <el-input
             v-model="queryParams.nickName"
             placeholder="请输入用户名"
@@ -24,7 +23,7 @@
             style="width: 240px;"
           />
         </el-form-item>
-        <el-form-item>
+        <el-form-item class="buttonArea">
           <el-button
             type="primary"
             icon="el-icon-search"
@@ -38,8 +37,8 @@
         </el-form-item>
       </el-form>
     </header-search>
-    <page-panel-new header-title="分配用户" style="height: calc(100% - 100px);">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
+    <page-panel-new header-title="分配用户">
+      <el-row :gutter="10" class="mb8 mbBottom">
         <el-col v-show="isBindUser" :span="1.5">
           <select-user
             ref="select"
@@ -66,52 +65,50 @@
           </el-button>
         </el-col>
       </el-row>
-      <div class="footer-box container-box--background" style="height: 100%">
-        <el-table
-          :data="dataSource"
-          height="calc(100% - 45px)"
-          @selection-change="handleSelectionChange"
-        >
-          <el-table-column
-            type="selection"
-            :selectable="selectedTable"
-            width="55"
-            align="center"
-          />
-          <el-table-column label="用户账号" prop="userName" :show-overflow-tooltip="true" />
-          <el-table-column label="用户名" prop="nickName" :show-overflow-tooltip="true" />
-          <el-table-column label="所属部门" prop="deptName" :show-overflow-tooltip="true" />
-          <el-table-column label="创建时间" prop="createTime" :show-overflow-tooltip="true" />
-          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-            <template slot-scope="scope">
-              <el-button
-                v-if="isBindUser || scope.row.isManager === '1'"
-                v-hasPermi="['system:tenant:unbind']"
-                type="text"
-                @click="cancelBind([scope.row.userId])"
-              >
-                {{ isBindUser ? "取消关联" : "取消绑定" }}
-              </el-button>
-              <el-button
-                v-else
-                v-hasPermi="['system:tenant:bind']"
-                type="text"
-                icon="el-icon-lock"
-                @click="bindManager(scope.row.userId)"
-              >
-                绑定
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <pagination
-          v-show="ipagination.total > 0"
-          :total="ipagination.total"
-          :page.sync="ipagination.current"
-          :limit.sync="ipagination.pageSize"
-          @pagination="handlePage"
+
+      <el-table
+        :data="dataSource"
+        @selection-change="handleSelectionChange"
+      >
+        <el-table-column
+          type="selection"
+          :selectable="selectedTable"
+          width="55"
+          align="center"
         />
-      </div>
+        <el-table-column label="用户账号" prop="userName" :show-overflow-tooltip="true" />
+        <el-table-column label="用户名" prop="nickName" :show-overflow-tooltip="true" />
+        <el-table-column label="所属部门" prop="deptName" :show-overflow-tooltip="true" />
+        <el-table-column label="创建时间" prop="createTime" :show-overflow-tooltip="true" />
+        <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+          <template slot-scope="scope">
+            <el-button
+              v-if="isBindUser || scope.row.isManager === '1'"
+              v-hasPermi="['system:tenant:unbind']"
+              type="text"
+              @click="cancelBind([scope.row.userId])"
+            >
+              {{ isBindUser ? "取消关联" : "取消绑定" }}
+            </el-button>
+            <el-button
+              v-else
+              v-hasPermi="['system:tenant:bind']"
+              type="text"
+              icon="el-icon-lock"
+              @click="bindManager(scope.row.userId)"
+            >
+              绑定
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <pagination
+        v-show="ipagination.total > 0"
+        :total="ipagination.total"
+        :page.sync="ipagination.current"
+        :limit.sync="ipagination.pageSize"
+        @pagination="handlePage"
+      />
     </page-panel-new>
   </div>
 </template>

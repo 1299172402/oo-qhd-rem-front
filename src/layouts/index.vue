@@ -2,17 +2,27 @@
   <div>
     <template v-if="setting.layout === 'side'">
       <t-layout key="side">
-        <t-aside><layout-sidebar /></t-aside>
+        <t-aside v-if="!isInIframe">
+          <layout-sidebar />
+        </t-aside>
         <t-layout>
-          <t-header><layout-header /></t-header>
-          <t-content><layout-content /></t-content>
+          <t-header v-if="!isInIframe">
+            <layout-header />
+          </t-header>
+          <t-content :class="{'is-in-iframe': isInIframe}">
+            <layout-content />
+          </t-content>
         </t-layout>
       </t-layout>
     </template>
     <template v-else-if="setting.layout === 'top'">
       <t-layout key="top">
-        <t-header> <layout-header /></t-header>
-        <t-content><layout-content /></t-content>
+        <t-header v-if="!isInIframe">
+          <layout-header />
+        </t-header>
+        <t-content :class="{'is-in-iframe': isInIframe}">
+          <layout-content />
+        </t-content>
       </t-layout>
     </template>
     <template v-else>

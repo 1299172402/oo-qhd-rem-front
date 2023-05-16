@@ -11,16 +11,16 @@
         <span
           v-if="showLogo"
           class="header-logo-container"
-          style="font-size: 20px; width: 288px;caret-color: transparent"
+          style="font-size: 20px; width: auto;caret-color: transparent"
           @click="goPage"
         >
-          <!-- <span class="logoText">智能油田管理系统</span> -->
+          <!-- <span class="logoText">{{ systemName }}</span> -->
           <!-- TODO: 内网 Maybe change back -->
           <logo-full
             class="t-logo"
             style="width: 49px; height: 44px; margin-right: 10px;"
           />
-          <span class="logoText">天津分公司智能油田管理系统</span>
+          <span class="logoText">{{ systemName }}</span>
         </span>
         <!-- TODO: Maybe change back -->
         <!-- <div v-if="layout !== 'top' && !$store.getters['user/isGroupLogin']" class="header-operate-left">
@@ -383,6 +383,7 @@ export default Vue.extend({
       }
     };
     return {
+      systemName: proxy[env].SYSTEM_NAME,
       prefix,
       visibleNotice: false,
       isSearchFocus: false,
@@ -852,9 +853,7 @@ export default Vue.extend({
   color: var(--white-color);
 
   .logoText {
-    // width: 160px;
-    // TODO: 内网 Maybe change back
-    width: 261px;
+    width: auto;
     height: 28px;
     // font-size: 20px;
     // TODO: 内网 Maybe change back

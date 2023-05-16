@@ -1,13 +1,12 @@
 <!-- 后台——通知通告管理 -->
 <template>
   <div class="app-container">
-    <header-search class="g-w100 g-h100">
+    <header-search class="g-w100 g-h100 colon">
       <el-form
         v-show="showSearch"
         ref="queryForm"
         :model="queryParams"
         :inline="true"
-        style="margin-top: 18px"
       >
         <el-form-item label="通知租户" prop="tenantId">
           <el-select
@@ -29,7 +28,6 @@
             v-model="queryParams.noticeContent"
             placeholder="请输入通知内容"
             clearable
-            size="small"
             style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
@@ -39,7 +37,6 @@
             v-model="queryParams.createBy"
             placeholder="请输入操作人员"
             clearable
-            size="small"
             style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
@@ -59,18 +56,16 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item>
+        <el-form-item class="buttonArea">
           <el-button
             type="primary"
             icon="el-icon-search"
-            size="mini"
             @click="handleQuery"
           >
             搜索
           </el-button>
           <el-button
             icon="el-icon-refresh"
-            size="mini"
             class="commonBtn"
             @click="resetQuery"
           >
@@ -80,8 +75,8 @@
       </el-form>
     </header-search>
 
-    <page-panel-new header-title="通知通告列表" style="height: calc(100% - 100px);">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
+    <page-panel-new header-title="通知通告列表">
+      <el-row :gutter="10" class="mb8 mbBottom">
         <el-col :span="1.5">
           <el-button
             v-hasPermi="['system:notice:add']"
@@ -158,7 +153,6 @@
             <el-button
               v-if="scope.row.status === '0'"
               v-hasPermi="['system:notice:enable']"
-              size="mini"
               type="text"
               @click="handleStart(scope.row)"
             >
@@ -167,7 +161,6 @@
             <el-button
               v-if="scope.row.status === '1'"
               v-hasPermi="['system:notice:close']"
-              size="mini"
               type="text"
               @click="handleClose(scope.row)"
             >
@@ -175,7 +168,6 @@
             </el-button>
             <el-button
               v-hasPermi="['system:notice:remove']"
-              size="mini"
               type="text"
               class="delbutton"
               @click="handleDelete(scope.row)"

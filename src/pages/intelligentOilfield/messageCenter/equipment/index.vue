@@ -1,19 +1,17 @@
 <!-- 后台——设备维护 -->
 <template>
   <div class="app-container">
-    <header-search class="g-w100 g-h100">
+    <header-search class="g-w100 g-h100 colon">
       <el-form
         ref="queryForm"
         :model="queryParams"
         :inline="true"
-        style="margin-top: 18px"
       >
         <el-form-item v-show="activeName === 'first'" label="系统名称">
           <el-input
             v-model="queryParams.systemName"
             placeholder="请输入系统名称"
             clearable
-            size="small"
             style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
@@ -23,7 +21,6 @@
             v-model="queryParams.systemCode"
             placeholder="请输入系统编号"
             clearable
-            size="small"
             style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
@@ -48,7 +45,6 @@
             v-model="queryParams.equipmentType"
             placeholder="请输入设备名称"
             clearable
-            size="small"
             style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
@@ -58,7 +54,6 @@
             v-model="queryParams.equipmentCode"
             placeholder="请输入系统编号"
             clearable
-            size="small"
             style="width: 240px"
             @keyup.enter.native="handleQuery"
           />
@@ -94,18 +89,16 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item>
+        <el-form-item class="buttonArea">
           <el-button
             type="primary"
             icon="el-icon-search"
-            size="mini"
             @click="handleQuery"
           >
             搜索
           </el-button>
           <el-button
             icon="el-icon-refresh"
-            size="mini"
             class="commonBtn"
             @click="resetQuery"
           >
@@ -114,8 +107,8 @@
         </el-form-item>
       </el-form>
     </header-search>
-    <page-panel-new header-title="设备维护列表" style="height: calc(100% - 105px);">
-      <el-row style="margin-bottom: 20px">
+    <page-panel-new header-title="设备维护列表">
+      <el-row class="mbBottom">
         <el-col :span="24">
           <el-tabs v-model="activeName" class="g-pageHeader" @tab-click="handleClick">
             <el-tab-pane label="设备系统列表" name="first" />
@@ -126,7 +119,6 @@
           <el-button
             v-hasPermi="['system:equipment:add']"
             type="primary"
-            size="mini"
             @click="handleAdd"
           >
             新增
@@ -136,7 +128,6 @@
           <el-button
             v-hasPermi="['system:equipment:import']"
             class="commonBtn"
-            size="mini"
             @click="importTemplate"
           >
             导入模板
@@ -144,14 +135,12 @@
           <el-button
             v-hasPermi="['system:equipment:import']"
             type="primary"
-            size="mini"
             @click="handleImport"
           >
             导入
           </el-button>
           <el-button
             v-hasPermi="['system:equipment:export']"
-            size="mini"
             type="primary"
             @click="handleExport"
           >
@@ -194,7 +183,7 @@
           label="创建时间"
           align="center"
           prop="createTime"
-          width="150"
+          width="165"
         >
           <template slot-scope="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -204,7 +193,6 @@
           <template slot-scope="scope">
             <el-button
               v-hasPermi="['system:equipment:edit']"
-              size="mini"
               type="text"
               @click="handleUpdate(scope.row)"
             >
@@ -212,7 +200,6 @@
             </el-button>
             <el-button
               v-hasPermi="['system:equipment:remove']"
-              size="mini"
               type="text"
               class="delbutton"
               @click="handleDelete(scope.row)"
@@ -273,7 +260,6 @@
           <template slot-scope="scope">
             <el-button
               v-hasPermi="['system:equipment:edit']"
-              size="mini"
               type="text"
               @click="handleUpdate(scope.row)"
             >
@@ -281,7 +267,6 @@
             </el-button>
             <el-button
               v-hasPermi="['system:equipment:remove']"
-              size="mini"
               type="text"
               class="delbutton"
               @click="handleDelete(scope.row)"
