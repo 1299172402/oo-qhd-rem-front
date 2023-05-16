@@ -22,6 +22,7 @@ export default {
     // 文件预览服务
     PREVIEW_FILE_API: "/b/upload",
     processAPI: "/dev-api/workflow",
+    appId: 'f198c1a239254b0e86529a0668cf4adb',
     // 开发环境接口请求
     API: "/dev-api",
     // API: '',
