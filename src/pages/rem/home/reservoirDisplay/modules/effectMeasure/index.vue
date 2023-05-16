@@ -7,9 +7,10 @@
             :is-show-max-btn="true"
         >
             <button class="detailLinkBtn" @click="linkroute('measuresPumpWellRecovery')">详细</button>
-              <span style="font-size:14px;color: #1ec5e6; position: relative; top: -31px; left: 150px">措施潜力井统计表</span>
-              <span style="font-size:14px;color: #1ec5e6; position: relative; top: -31px; left: 160px"
-                >增油量值设置
+            <span
+                style="font-size:14px;color: #1ec5e6; position: relative; top: -31px; left: 150px">措施潜力井统计表</span>
+            <span style="font-size:14px;color: #1ec5e6; position: relative; top: -31px; left: 160px"
+            >增油量值设置
                 <div class="inputstyle"><el-input></el-input></div>
               </span>
             <el-table
@@ -50,7 +51,7 @@
                 <el-table-column prop="addoil" label="">
                     <template slot="header">
                         <div style="color: #1ec5e6">
-                            预计增油量 <br />
+                            预计增油量 <br/>
                             (m³/d)
                         </div>
                     </template>
@@ -63,51 +64,52 @@
 
 <script>
 export default {
-  data() {
-    return {
-      tableData: [
-        {
-          date: "2023-03-23",
-          well: "QHD32-6-A01",
-          address: "换大泵",
-          addoil: "82",
-        },
-        {
-          date: "2023-03-22",
-          well: "QHD32-6-A02",
-          address: "换大泵",
-          addoil: "87",
-        },
-        {
-          date: "2023-03-21",
-          well: "QHD32-6-A03",
-         address: "地面调参",
-          addoil: "28",
-        },
-        {
-          date: "2023-03-24",
-          well: "QHD32-6-A01",
-          address: "换大泵",
-          addoil: "42",
-        },
-      ],
-    };
-  },
+    data() {
+        return {
+            tableData: [
+                {
+                    date: "2023-03-23",
+                    well: "QHD32-6-A01",
+                    address: "换大泵",
+                    addoil: "82",
+                },
+                {
+                    date: "2023-03-22",
+                    well: "QHD32-6-A02",
+                    address: "换大泵",
+                    addoil: "87",
+                },
+                {
+                    date: "2023-03-21",
+                    well: "QHD32-6-A03",
+                    address: "地面调参",
+                    addoil: "28",
+                },
+                {
+                    date: "2023-03-24",
+                    well: "QHD32-6-A01",
+                    address: "换大泵",
+                    addoil: "42",
+                },
+            ],
+        };
+    },
 };
 </script>
 
 <style lang="scss" scoped>
 #tableData {
-  ::v-deep .el-table__header-wrapper .cell {
-    height: auto;
-    line-height: 18px;
-    white-space: pre;
-  }
-  ::v-deep .cell:empty {
-    &::before {
-      content: "-";
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        line-height: 18px;
+        white-space: pre;
     }
-  }
+
+    ::v-deep .cell:empty {
+        &::before {
+            content: "-";
+        }
+    }
 }
 
 .detailLinkBtn {
@@ -123,6 +125,7 @@ export default {
     cursor: pointer;
     color: #ffffff;
 }
+
 .inputstyle ::v-deep.el-input__inner {
     width: 10%;
     position: absolute;

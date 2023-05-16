@@ -13,6 +13,7 @@
 </template>
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
+import {getYieldFluctuation} from "@/api/rem/reservoirbillboards.js"
 import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 import { LineChart } from "echarts/charts";
 import * as echarts from "echarts/core";
@@ -30,6 +31,12 @@ export default {
         textStyle: {
           fontSize: 10,
         },
+          tooltip: {
+              trigger: "axis",
+              axisPointer: {
+                  type: "shadow",
+              },
+          },
         xAxis: {
           nameTextStyle: {
             color: "#a9a8a8",
@@ -59,7 +66,7 @@ export default {
             },
             show: true,
           },
-          data: ["0-2", "2-5", "5-10", "10以上"],
+          data: [],
           type: "category",
         },
         yAxis: {
@@ -97,7 +104,7 @@ export default {
         },
         series: [
           {
-            data: [22.0, 21.3, 19, 19],
+            data: [],
             type: "bar",
             barMaxWidth: "auto",
             barWidth: 28,
@@ -133,8 +140,26 @@ export default {
       },
     };
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+      this.getinfo()
+  },
+  methods: {
+      getinfo(){
+          let params = {
+              date:'2022-10-11',
+              dateComp:'2022-10-12',
+              ogfId:'3FC9A818F5BC43B88270DB80BBB3018F'
+          }
+          getYieldFluctuation(params).then((res)=>{
+              res.data.data.data.ydata.forEach((item) => {
+                  this.histogram.xAxis.data.push(item)
+              });
+              res.data.data.data.xdata.forEach((item) => {
+                  this.histogram.series[0].data.push(item)
+              });
+          })
+      }
+  },
 };
 </script>
 <style lang="scss" scoped>
