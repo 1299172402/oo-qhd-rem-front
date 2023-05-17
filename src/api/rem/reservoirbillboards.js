@@ -1,9 +1,15 @@
 import request from '@/utils/request'
 const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
-export function getYieldFluctuation({ date, dateComp, ogfId } = {}) {
+export function getYieldFluctuation({ 对比时间, 对比时间前一天, 油田id } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/getYieldFluctuation?date=${ date || "" }&dateComp=${ dateComp || "" }&ogfId=${ ogfId || "" }`,
+    url: `${baseUrl}/reservoirBillboards/getYieldFluctuation?对比时间=${ 对比时间 || "" }&对比时间前一天=${ 对比时间前一天 || "" }&油田id=${ 油田id || "" }`,
+    method: "get",
+  });
+}
+export function monthlyProductionComparison({ date } = {}) {
+  return request({
+    url: `${baseUrl}/reservoirBillboards/monthlyProductionComparison?date=${ date || "" }`,
     method: "get",
   });
 }
@@ -13,9 +19,9 @@ export function productionMetricsOverview({ date } = {}) {
     method: "get",
   });
 }
-export function queryMeasureEffectTrack({ evaluationDate, oilFieldId, platformId, showNormal, timeGranularityCode, wellId } = {}) {
+export function queryMeasureEffectTrack({ 平台id, 时间数据粒度, 是否显示正常指标, 油田id, 评价时间 } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/queryMeasureEffectTrack?evaluationDate=${ evaluationDate || "" }&oilFieldId=${ oilFieldId || "" }&platformId=${ platformId || "" }&showNormal=${ showNormal || "" }&timeGranularityCode=${ timeGranularityCode || "" }&wellId=${ wellId || "" }`,
+    url: `${baseUrl}/reservoirBillboards/queryMeasureEffectTrack?平台id=${ 平台id || "" }&时间数据粒度=${ 时间数据粒度 || "" }&是否显示正常指标=${ 是否显示正常指标 || "" }&油田id=${ 油田id || "" }&评价时间=${ 评价时间 || "" }`,
     method: "get",
   });
 }
