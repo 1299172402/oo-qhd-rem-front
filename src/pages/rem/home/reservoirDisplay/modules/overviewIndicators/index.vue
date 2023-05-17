@@ -150,12 +150,12 @@ export default {
         Echart,
     },
     mounted() {
-        this.histogram.series[1].splitLine.lineStyle.color = this.$store.state.setting.mode == 'dark' ? '#023255' : '#fff'
+        this.histogram.series[1].splitLine.lineStyle.color = this.$store.state.setting.mode == 'dark' ? 'rgb(3,42,59)' : '#fff'
         this.getData();
     },
     computed: {
         getGlobeTheme() {
-            return this.$store.state.setting.mode == 'dark' ? '#022947' : '#fff'
+            return this.$store.state.setting.mode == 'dark' ? 'rgb(3,42,59)' : '#fff'
         }
     },
     watch: {
@@ -191,7 +191,7 @@ export default {
                 },
                 series: [
                     {
-                        name: "吃猪肉频率",
+                        name: "",
                         type: "pie",
                         radius: ['58%', '68%'],
                         silent: true,
@@ -246,7 +246,7 @@ export default {
                             length: 83,
                             lineStyle: {
                                 width: 3,
-                                color: "#fff",
+                                color: "red",
                             },
                         },
                         axisLabel: {
