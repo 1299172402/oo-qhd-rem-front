@@ -830,93 +830,15 @@
                 Layers_cont.Objects = Objects
                 Layers[0] = Layers_cont;
                 data.Layers = Layers;
+                
+                console.log('源数据',data)
+                
                 if(this.isNewformat){
                     this.$refs.H5Chart2.setSampleDate(data);
                 }else{
                     this.$refs.H5Chart.setSampleDate(data);
                 }
             },
-            /*sjcl(tc) {
-                let  result = tc.data.mutiLayerPicResponse;
-                let  rem = result;
-                //区块分析模型跳转
-                // this.$router.push({path: "/blockAnalysisAided"});
-                let obj = tc.data.fieldAreaDiagram;
-                let MinXMap = obj.x2;
-                let MaxXMap = obj.x3;
-                let MinYMap = obj.y2;
-                let MaxYMap = obj.y3;
-                let PictureBase64 = obj.data;
-                let IsShowPicture = true;
-                let PicMinXMap = obj.x2;
-                let PicMaxXMap = obj.x3;
-                let PicMinYMap = obj.y2;
-                let PicMaxYMap = obj.y3;
-                let LayerName = "等值线图层"
-                let LayerType = 8
-                let Active = true
-                let Display = true
-                let LayerIndex = 8
-                let data = {}
-                let Layers = []
-                data.MinXMap = MinXMap;
-                data.MaxXMap = MaxXMap;
-                data.MinYMap = MinYMap;
-                data.MaxYMap = MaxYMap;
-                data.PictureBase64 = "data:image/png;base64," + PictureBase64;
-                data.IsShowPicture = IsShowPicture;
-                data.PicMinXMap = PicMinXMap;
-                data.PicMaxXMap = PicMaxXMap;
-                data.PicMinYMap = PicMinYMap;
-                data.PicMaxYMap = PicMaxYMap;
-                let Layers_cont = {}
-                Layers_cont.LayerName = LayerName
-                Layers_cont.LayerType = LayerType
-                Layers_cont.Active = Active
-                Layers_cont.Display = Display
-                Layers_cont.LayerIndex = LayerIndex
-                let Objects = []
-                let areaLines = obj.areaLines
-                for (let i = 0; i < areaLines.length; i++) {
-                    let object = {
-                        ObjType: 131,
-                        Closed: false,
-                        ShowDot: true,
-                        ViewPen: {
-                            PenColorA: 255,
-                            PenColorR: 0,
-                            PenColorG: 0,
-                            PenColorB: 0,
-                            PenWidth: 5,
-                            PenDashStyle: 0
-                        },
-                        circleRadius: 5,
-                        ViewPenCircle: {
-                            PenColorA: 255,
-                            PenColorR: 255,
-                            PenColorG: 255,
-                            PenColorB: 255,
-                            PenWidth: 5,
-                            PenDashStyle: 0
-                        },
-                        ViewBrushCircle: {
-                            BrushColorA: 255,
-                            BrushColorR: 255,
-                            BrushColorG: 0,
-                            BrushColorB: 0,
-                            FillStyle: 0
-                        },
-                        UseSign: false,
-                    }
-                    //let a = areaLines[i].linePoints.length  点数量
-                    object.Points = areaLines[i].linePoints
-                    Objects[i] = object
-                }
-                Layers_cont.Objects = Objects
-                Layers[0] = Layers_cont;
-                data.Layers = Layers
-                this.$refs.H5Chart.setSampleDate(data);
-            },*/
             //区块模型配置页面跳转
             blockModel() {
                 this.$router.push({

@@ -25,6 +25,11 @@ export default {
             default:''
         }
     },
+    watch:{
+        currentModule:function(newValue){
+            this.tabsName=newValue;
+        }
+    },
     data() {
         return {
             tabsWidth:0,//tabs总宽度

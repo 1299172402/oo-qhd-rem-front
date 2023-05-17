@@ -1,80 +1,87 @@
 <!--开发方案-->
 <template>
-    <el-row style="margin-top:10px;height: 100%;">
-      <iframe style="width: 100%;height: 100%;border: none;" :src="image?(image+'#toolbar=0'):''" ></iframe>
-    </el-row>
+    <div class="z-main">
+        <div class="z-echarts">
+            <iframe style="width: 100%;height: 100%;border: none;" :src="image?(image+'#toolbar=0'):''"></iframe>
+        </div>
+    </div>
 </template>
 
 <script>
-import {developmentDataDevelopmentPlan} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
-import {downFile} from "@/lib/remBase64Download.js";
-export default {
-  props: {
-    oilFieldId: {},
-    blockId: {}
-  },
-  data() {
-    return {
-      radio: 1,//所选择的层位
-      selectPosition: '',
-      //层位所选择内容信息
-      position: [],
-      image: '',
-    };
-  },
-  watch: {
-    //监听层位信息，给其动态传值
-    selectPosition(val) {
-      this.$emit('childPara', this.selectPosition);
-      this.OnChangeImage();
-    }
-  },
-  mounted() {
-    //this.initData();
-    this.doSearch();
-
-  },
-  methods: {
-    async doSearch() {
-      this.$emit('childPara', '');
-      /**
-       *  hwh
-       *  获取参数油田id 平台id 井id
-       * @type {{ogfId: *, platformId: *, wellId: *}}
-       */
-      let request = {
-        oilFieldId: this.oilFieldId,
-        fieldId: this.blockId,
-        //layerId:this.selectPosition,
-      }
-      /**
-       * hwh
-       * 获取图片组信息
-       */
-      await developmentDataDevelopmentPlan(request).then((res) => {
-        if (res.data.code == 0) {
-          let imageData = res.data.data;
-          let type = imageData.type;
-          if(imageData.data&&type){
-            this.image = 'data:'+type+';base64,' + imageData.data;
-          } else{
-            this.image = '';
-          }
+    import { developmentDataDevelopmentPlan} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
+    import {downFile} from "@/lib/remBase64Download.js";
+    export default {
+        props: {
+            oilFieldId: {},
+            blockId: {}
+        },
+        data() {
+            return {
+                radio: 1, //所选择的层位
+                selectPosition: '',
+                //层位所选择内容信息
+                position: [],
+                image: '',
+            };
+        },
+        watch: {
+            //监听层位信息，给其动态传值
+            selectPosition(val) {
+                this.$emit('childPara', this.selectPosition);
+                this.OnChangeImage();
+            }
+        },
+        mounted() {
+            this.doSearch();
+        },
+        methods: {
+            async doSearch() {
+                this.$emit('childPara', '');
+                //获取参数油田id 平台id 井id
+                let request = {
+                    oilFieldId: this.oilFieldId,
+                    fieldId: this.blockId,
+                    //layerId:this.selectPosition,
+                }
+                //获取图片组信息
+                await developmentDataDevelopmentPlan(request).then((res) => {
+                    if (res.data.code == 200) {
+                        let imageData = res.data.data;
+                        let type = imageData.type;
+                        if (imageData.data && type) {
+                            this.image = 'data:' + type + ';base64,' + imageData.data;
+                        } else {
+                            this.image = '';
+                        }
+                    }
+                });
+            },
+            //下载
+            doDownLoad() {
+                let fileName = '开发方案';
+                if (this.blockName) {
+                    fileName = this.blockName + fileName;
+                }
+                downFile(this.image, fileName);
+            }
         }
-      });
-    },
-    /**
-     * hwh
-     * 下载
-     */
-    doDownLoad(){
-      let fileName = '开发方案';
-      if(this.blockName){
-        fileName = this.blockName + fileName;
-      }
-      downFile(this.image,fileName);
     }
-  }
-
-}
 </script>
+
+<style lang="scss" scoped>
+    .z-main {
+        width: 100%;
+        height: calc(100% - 86px);
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 15px;
+
+        .z-echarts {
+            width: 100%;
+            flex: 1;
+            // overflow-y: scroll;
+            border: 1px solid #ddd;
+            border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
+        }
+    }
+</style>

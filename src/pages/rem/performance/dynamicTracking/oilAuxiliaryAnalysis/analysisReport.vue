@@ -282,7 +282,7 @@
                 </div>
                 <div class="v2" style="height:206px;">
                     <info-window info-width="100%"  info-height="100%"  header-title="生产动态监测" :is-show-max-btn="false">
-                        <div class="z-content" style="height:calc(100% - 55px);">
+                        <div class="z-content" style="height:calc(100%);overflow-y: scroll;">
                             <div class="z-content-n">
                                 <div class="z-row-left">
                                     <div class="z_title">
@@ -485,6 +485,14 @@
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="z3" style="opacity: 0;">
+                                    <div class="z-row-right" style="height:130px;position: relative;top: 48px;">
+                                        <div class="name">措施推荐</div>
+                                        <div class="num">
+                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='换大泵'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
                                         </div>
                                     </div>
                                 </div>

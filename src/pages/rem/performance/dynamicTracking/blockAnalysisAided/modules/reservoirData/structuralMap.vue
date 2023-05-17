@@ -1,18 +1,25 @@
 <!--区块动态分析——小层顶面构造图-->
 <template>
-    <div class="mt-2">
-        <el-row>
+    <div style="height:calc(100% - 100px);">
+        <div class="z-search">
             <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable>
                 <el-option v-for="(item, index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
-        </el-row>
-        <el-row style="height: 600px;overflow: auto;">
-            <el-carousel :interval="4000" height="570px" :autoplay="false" indicator-position="outside">
-                <el-carousel-item v-for="(item, index) in imageList" ref="imageCaeousel" :key="index" style="height: 550px; overflow-y: auto;display: block">
-                    <el-image :src="item" :fit="fitInfo" style="width: 100%" :preview-src-list="imageList"><div slot="error"></div></el-image>
-                </el-carousel-item>
-            </el-carousel>
-        </el-row>
+        </div>
+        <div class="z-main">
+            <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                <div class="z-container">
+                    <el-carousel :interval="4000" :autoplay="false" indicator-position="outside" arrow="hover">
+                        <el-carousel-item v-for="(item, index) in imageList" ref="imageCaeousel" :key="index" style="height: 100%; overflow-y: auto;">
+                            <el-image :src="item" :fit="fitInfo" style="width: 100%" :preview-src-list="imageList">
+                                <div slot="error"></div>
+                            </el-image>
+                        </el-carousel-item>
+                    </el-carousel>
+                </div>
+            </page-panel-new>
+        </div>
+        
     </div>
 </template>
 
@@ -20,7 +27,6 @@
 import { fieldOilLayers } from '@/api/oilDeposit/rem-02/primaryinfo.js';
 import { reservoirDataConstructureDaigram } from '@/api/oilDeposit/rem-01/fielddynamicanalysis.js';
 import { downFile } from '@/lib/remBase64Download.js';
-
 export default {
     props: {
         oilFieldId: {},
@@ -45,7 +51,6 @@ export default {
         }
     },
     mounted() {
-        //this.initData();
         this.doSearch();
     },
     methods: {
@@ -185,3 +190,31 @@ export default {
     }
 };
 </script>
+
+<style scoped lang="scss">
+    .z-search{
+        height:50px;
+    }
+    .z-main {
+        width: 100%;
+        height: calc(100% - 50px);
+        display: flex;
+        flex-direction: column;
+        .z-container{
+            height: 100%; 
+            ::v-deep .el-carousel{
+                height:100%;
+                .el-carousel__container{
+                    height:100%;
+                }
+                .el-carousel__item{
+                    overflow-x: hidden!important;
+                    overflow-y: scroll!important;
+                }
+                .el-carousel__arrow{
+                    background-color: rgba(31,45,61,.5);
+                }
+            }
+        }
+    }
+</style>

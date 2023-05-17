@@ -11,62 +11,166 @@ define(['WGAD/Scripts/WGADPlatConfig/WGADPlatConfig',
 
         var comSelf=this;
     
-     //添加边框
-     this.SetBorder=function(obj)
-     {
-         
-         var Layer;
-         //找通用图层
-         for(var i = 0 ; i < this.View.MapData.LayerList.length; i++ ) {
-             if(this.View.MapData.LayerList[i].LayerName == "通用图层")
-             {
-                 Layer = this.View.MapData.LayerList[i];
-                 break;
-             }
-         }
-         //若无此图层，则创建一个名称为通用图层的fltGeneral图层
-         if(!Layer)
-         {
-             Layer = new WGADPlatGraph2DFrame.WGFrameLayer();
-             Layer.LayerName = "通用图层";
-             Layer.LayerType = WGADPlatGraph2DFrame.EWGFrameLayerType.fltGeneral;
-             this.View.MapData.AddLayer(Layer);
-         }
-         Layer.Actived = true;
-         //循环遍历次图层所有子图元
-         for(var i = Layer.Childrens.length; i>=0; i--)
-         {
-             //如果子图元存在图框图元
-             if (Layer.Childrens[i] instanceof WGADPlatGraph2DFrame.WGFrameBorder)
-             {
-                 var str = window.confirm("此图层上已存在图框，是否覆盖重新生成图框？");
-                 if (!str) {
-                     //如果否，则返回
-                     return;
-                 }
-                 //如果是，则删除此图框图元
-                 Layer.RemoveChildrenByIndex(i);
-                 break;
-             }
-         }
-         if(!obj)
-         {
-            obj=this.CreateBorder();
-         }
-         Layer.AddChildren(obj);
-         Layer.SetDataChanged(true);
-         var offTop=Math.abs(this.View.MapData.Transform.MapToEarth(10, WGADPlatGraph2D.EWGTransStyle.wgtsDistanceY));
-         var offleft=Math.abs(this.View.MapData.Transform.MapToEarth(10, WGADPlatGraph2D.EWGTransStyle.wgtsDistanceX));
-         var offright=Math.abs(this.View.MapData.Transform.MapToEarth(10, WGADPlatGraph2D.EWGTransStyle.wgtsDistanceX));
-         var offbottom=Math.abs(this.View.MapData.Transform.MapToEarth(10, WGADPlatGraph2D.EWGTransStyle.wgtsDistanceY));
-         //this.View.MapData.SetEarthArea(obj.Left-offleft, obj.Top+offTop, obj.Right+offright, obj.Bottom-offbottom);
-         //this.View.MapData.SetEarthArea(obj.Left, obj.Top, obj.Right, obj.Bottom);
-         this.View.MapData.UpdateTransform();
-         this.View.Repaint();
-         this.ZoomAll();
+        //添加边框 obj:其他方式创建好的图框 activeOne:处于编辑状态的图层最多只有一个 autopro 坐标及其他属性
+        this.SetBorder = function (obj, activeOne, borderPro) {
 
-     }
-     this.CreateBorder=function (json) {
+            var Layer;
+            //找通用图层
+            for (var i = 0; i < this.View.MapData.LayerList.length; i++) {
+                if (this.View.MapData.LayerList[i].LayerName == "通用图层") {
+                    Layer = this.View.MapData.LayerList[i];
+                    break;
+                }
+            }
+            //若无此图层，则创建一个名称为通用图层的fltGeneral图层
+            if (!Layer) {
+                Layer = new WGADPlatGraph2DFrame.WGFrameLayer();
+                Layer.LayerName = "通用图层";
+                Layer.LayerType = WGADPlatGraph2DFrame.EWGFrameLayerType.fltGeneral;
+                this.View.MapData.AddLayer(Layer);
+            }
+            if (activeOne) {
+                this.View.MapData.SetActivateLayer(Layer, true);
+            } else {
+                Layer.Actived = true;
+            }
+            //循环遍历次图层所有子图元
+            for (var i = Layer.Childrens.length; i >= 0; i--) {
+                //如果子图元存在图框图元
+                if (Layer.Childrens[i] instanceof WGADPlatGraph2DFrame.WGFrameBorder) {
+                    var str = window.confirm("此图层上已存在图框，是否覆盖重新生成图框？");
+                    if (!str) {
+                        //如果否，则返回
+                        return;
+                    }
+                    //如果是，则删除此图框图元
+                    Layer.RemoveChildrenByIndex(i);
+                    break;
+                }
+            }
+            if (!obj) {
+                obj = this.CreateBorder(null, borderPro, Layer);
+            }
+            Layer.AddChildren(obj);
+            Layer.SetDataChanged(true);
+            var offTop = Math.abs(this.View.MapData.Transform.MapToEarth(10, WGADPlatGraph2D.EWGTransStyle.wgtsDistanceY));
+            var offleft = Math.abs(this.View.MapData.Transform.MapToEarth(10, WGADPlatGraph2D.EWGTransStyle.wgtsDistanceX));
+            var offright = Math.abs(this.View.MapData.Transform.MapToEarth(10, WGADPlatGraph2D.EWGTransStyle.wgtsDistanceX));
+            var offbottom = Math.abs(this.View.MapData.Transform.MapToEarth(10, WGADPlatGraph2D.EWGTransStyle.wgtsDistanceY));
+            //this.View.MapData.SetEarthArea(obj.Left-offleft, obj.Top+offTop, obj.Right+offright, obj.Bottom-offbottom);
+            //this.View.MapData.SetEarthArea(obj.Left, obj.Top, obj.Right, obj.Bottom);
+            this.View.MapData.UpdateTransform();
+            this.View.Repaint();
+            this.ZoomAll();
+            if (fView.AfterSetBorder != null) {
+                fView.AfterSetBorder();
+            }
+        }
+        
+        this.AddGrid = function (activeOne, pro) {
+            var layer;
+            //找通用图层
+            for (var i = 0; i < this.View.MapData.LayerList.length; i++) {
+                if (this.View.MapData.LayerList[i].LayerName == "网格图层") {
+                    layer = this.View.MapData.LayerList[i];
+                    break;
+                }
+            }
+            //若无此图层，则创建一个名称为通用图层的fltGeneral图层
+            if (!layer) {
+                layer = new WGADPlatGraph2DFrame.WGFrameLayer();
+                layer.LayerName = "网格图层";
+                layer.LayerType = WGADPlatGraph2DFrame.EWGFrameLayerType.fltGeneral;
+                this.View.MapData.AddLayer(layer);
+                //this.View.MapData.DragLayerofIndex(this.View.MapData.LayerList.length - 1,0);
+            }
+            if (pro.LayerActive != undefined  && pro.LayerActive) {
+                if (activeOne) {
+                    this.View.MapData.SetActivateLayer(layer, true);
+                } else {
+                    layer.Actived = true;
+                }
+            } else {
+                layer.Actived = false;
+            }
+            
+            var grid = null;
+            //获取是否存在网格线 
+            for (var i = layer.Childrens.length - 1; i > -1; i--){
+                if (layer.Childrens[i] instanceof WGADPlatGraph2DFrame.WGFrameRegionGrid){
+                    grid = layer.Childrens[i];
+                } 
+            }
+            if (!grid) {
+                grid = new WGADPlatGraph2DFrame.WGFrameRegionGrid({});
+                layer.AddChildren(grid);
+                grid.GridViewPenBoudary.PenWidth = 3;
+                grid.GridViewPenBoudary.PenColor = WGADPlatGMEngine.WGColor.FromARGB(255, 0, 0, 0);
+                grid.GridViewPen.PenDashStyle = WGADPlatGMEngine.EGLineStyle.wglsDash;
+                grid.Font.FontSize = 16;
+                grid.ScaleTextShowTypeX = "auto";
+                grid.ScaleTextShowTypeY= "auto";
+                grid.ShowScaleLine = true;
+            }
+            if (pro.HiddenBorder != undefined && pro.HiddenBorder) {
+                grid.Hidden = true;
+            } else {
+                grid.Hidden = false;
+            }
+            if (pro.EarthLeft != undefined) {
+                grid.StartX = pro.EarthLeft;
+            }
+            if (pro.EarthRight != undefined) {
+                grid.EndX = pro.EarthRight;
+            }
+            
+            if (pro.EarthBottom != undefined) {
+                grid.StartY = pro.EarthBottom;
+            }
+            
+            if (pro.EarthTop != undefined) {
+                grid.EndY = pro.EarthTop;
+            }
+            
+            if (pro.IntervalX != undefined) {
+                grid.IntervalX = pro.IntervalX;
+            }
+            
+            if (pro.IntervalY != undefined) {
+                grid.IntervalY = pro.IntervalY;
+            }
+            
+            grid.DataChanged = true;
+            this.View.Repaint();
+        }
+        //添加指北针 activeOne:处于编辑状态的图层最多只有一个
+        this.SetNorth = function (activeOne) {
+            var layer;
+            //找通用图层
+            for (var i = 0; i < this.View.MapData.LayerList.length; i++) {
+                if (this.View.MapData.LayerList[i].LayerName == "通用图层") {
+                    layer = this.View.MapData.LayerList[i];
+                    break;
+                }
+            }
+            //若无此图层，则创建一个名称为通用图层的fltGeneral图层
+            if (!layer) {
+                layer = new WGADPlatGraph2DFrame.WGFrameLayer();
+                layer.LayerName = "通用图层";
+                layer.LayerType = WGADPlatGraph2DFrame.EWGFrameLayerType.fltGeneral;
+                this.View.MapData.AddLayer(layer);
+            }
+            if (activeOne) {
+                this.View.MapData.SetActivateLayer(layer, true);
+            } else {
+                layer.Actived = true;
+            }
+            fView.DrawNorth(layer);
+            if (fView.AfterSetNorth != null) {
+                fView.AfterSetNorth();
+            }
+        }
+     this.CreateBorder=function (json, borderPro, Layer) {
         if(!json) {
             json = {};
             //json.title = "$二级下标$~二级上标~@下标@^上标^ED3-1砂体层顶深平面图$二级下标$~二级上标~@下标@^上标^";
@@ -78,9 +182,26 @@ define(['WGAD/Scripts/WGADPlatConfig/WGADPlatConfig',
             json.date = "日期:";
             json.dw = "单位:";
         }
-        //得到Map上所有图元的外接矩形,JS中没有这个方法，需要自己遍历Map上所有图元得到外接矩形
-        var temp = new WGADPlatGMEngine.WGRect();
-        temp = fView.View.MapData.GetAllObjsEarthBound();
+         
+         var temp = new WGADPlatGMEngine.WGRect();
+         if (borderPro && borderPro.Region) {
+             temp.Left = borderPro.Region.EarthLeft;
+             temp.Right = borderPro.Region.EarthRight;
+             temp.Bottom = borderPro.Region.EarthBottom;
+             temp.Top = borderPro.Region.EarthTop;
+             if (borderPro.UpdateMapRegion) {
+                 this.View.MapData.SetEarthArea(temp.Left, temp.Top, temp.Right, temp.Bottom);
+                 this.View.MapData.IsCenterShowX = true;
+                 this.View.MapData.IsCenterShowY = true;
+                 this.View.MapData.UpdateTransform();
+                 this.View.MapData.SetChanged(true);
+                 Layer.SetDataChanged(true);
+                 this.View.Repaint();
+             }
+         } else {
+             //得到Map上所有图元的外接矩形
+             temp = fView.View.MapData.GetAllObjsEarthBound();
+         }
         //声明一个图框图元
         var oborder = new WGADPlatGraph2DFrame.WGFrameBorder({});
         oborder.Interval = 100;
@@ -252,6 +373,7 @@ define(['WGAD/Scripts/WGADPlatConfig/WGADPlatConfig',
 
  
          this.SetBorderObjProperty=function (boderObj,e) {
+             debugger;
             if (boderObj instanceof WGADPlatGraph2DFrame.WGFrameBorder)
             {
                 boderObj.Left=e.Left;//起点横坐标
@@ -451,6 +573,16 @@ define(['WGAD/Scripts/WGADPlatConfig/WGADPlatConfig',
             }
             this.View.Repaint();
         }
+
+        //外扩范围
+        this.ExtendRange = function (left,right,top,bottom) {
+            this.View.MapData.SetEarthArea(this.View.MapData.EarthLeft - left, this.View.MapData.EarthTop + top, this.View.MapData.EarthRight + right, this.View.MapData.EarthBottom- bottom);    
+            this.View.MapData.UpdateTransform();
+            this.View.MapData.SetChanged(true);
+            this.View.Repaint();
+            fView.ZoomPicture();
+        }
+
         //放大
         this.ZoomOut = function () {
             this.View.SetOperationModel(WGADPlatGraph2D.EWGMapOpModel.msbZoomOut);
@@ -545,6 +677,64 @@ define(['WGAD/Scripts/WGADPlatConfig/WGADPlatConfig',
             this.View.Repaint();
             console.log(this.View.MapData.ViewScale);
         }
+
+        //图元置顶
+        this.ObjTop = function ()
+        {
+            if (this.View.HiteResult.SelectObjs.length > 0)
+            {
+                var layer = this.View.MapData.GetActivateLayer();
+                if (layer != null) {
+                    layer.SetObjTop(this.View.HiteResult.SelectObjs[0]);
+                    this.View.Repaint();
+                }
+            }
+        }
+
+        //图元置底
+        this.ObjBottom = function ()
+        {
+            if (this.View.HiteResult.SelectObjs.length > 0)
+            {
+                var layer = this.View.MapData.GetActivateLayer();
+                if (layer != null) {
+                    layer.SetObjBottom(this.View.HiteResult.SelectObjs[0]);
+                    this.View.Repaint();
+                }
+            }
+        }
+
+        //图元上移
+        this.ObjUp = function ()
+        {
+            if (this.View.HiteResult.SelectObjs.length > 0)
+            {
+                var layer = this.View.MapData.GetActivateLayer();
+                if (layer != null) {
+                    layer.SetObjUp(this.View.HiteResult.SelectObjs[0]);
+                    this.View.Repaint();
+                }
+            }
+        }
+
+        //图元下移
+        this.ObjDown = function ()
+        {
+            if (this.View.HiteResult.SelectObjs.length > 0)
+            {
+                var layer = this.View.MapData.GetActivateLayer();
+                if (layer != null) {
+                    layer.SetObjDown(this.View.HiteResult.SelectObjs[0]);
+                    this.View.Repaint();
+                }
+            }
+        }
+
+        this.RightEvent = function (arg) {
+            if (this.View.HiteResult.SelectObjs.length > 0) {
+                fView.RightEvent([this.View.HiteResult.SelectObjs[0],arg]);
+            }
+        }
         //绘制点
         this.DrawPoint = function ()
         {
@@ -606,6 +796,7 @@ define(['WGAD/Scripts/WGADPlatConfig/WGADPlatConfig',
             this.View.SetOperationModel(WGADPlatGraph2D.EWGMapOpModel.msbDrawSText);
         }
 
+        //绘制图例
         this.DrawLegend = function ()
         {
             this.View.SetOperationModel(WGADPlatGraph2D.EWGMapOpModel.msbDrawLegend);
@@ -1200,6 +1391,101 @@ define(['WGAD/Scripts/WGADPlatConfig/WGADPlatConfig',
             this.View.MapData.SetActivateLayer( layer , true );
             this.View.MapData.SetSelectLayer( layer , true );
             this.View.SetOperationModel( WGADPlatGraph2D.EWGMapOpModel.msbPolygonCave );
+        }
+
+        //选中线上面的某些点
+        this.SelectLinePoint = function()
+        {
+            this.View.SetOperationModel(WGADPlatGraph2D.EWGMapOpModel.msbPolygonSelectLinePoint);
+        }
+
+        //恢复状态
+        this.MapSelect = function () {
+            if (this.View.Operation().OnMouseRightButtonUp) {
+                this.View.Operation().OnMouseRightButtonUp(null);
+            }
+            this.View.Operation().EndAction();
+            this.View.SetOperationModel(WGADPlatGraph2D.EWGMapOpModel.msbSelect);
+            this.View.MapCanvas.style.cursor = WGADPlatGraph2D.WGActionFactory.GetActionCursor(this.View.GetOpModel());
+            this.View.Repaint();
+        }
+
+        //删除线上的某些点
+        this.DeleteLinePoint = function () {
+            var view = this.View;
+            var hiteResult = view.HiteResult;
+            var isSelectLinePoint = false;
+            for (var index = hiteResult.SelectObjs.length; index > -1;index --) {
+                var obj = hiteResult.SelectObjs[index];
+                if (obj instanceof WGADPlatGraph2D.WGGeoPolygon && obj.PointSelected) {
+                    obj.DeleteLinePoint();
+                    //取消此图元的选中状态
+                    obj.Selected = false;
+                    hiteResult.SelectObjs.splice(index, 1);
+                    isSelectLinePoint = true;
+                }
+            }
+
+            if (isSelectLinePoint) {
+                view.Repaint();
+            }
+        }
+
+        //删除线上标注
+        this.DeleteLabel = function () {
+            var view = this.View;
+            var hiteResult = view.HiteResult;
+            var isSelectLinePoint = false;
+            for (var index in hiteResult.SelectObjs) {
+                var obj = hiteResult.SelectObjs[index];
+                if (!(obj instanceof WGADPlatGraph2D.WGGeoPolygon && obj.PointSelected)) {
+                    var objParent = obj.Parent;
+                    if (objParent != null && WGADPlatGraph2D.IsBaseClass(objParent, WGADPlatGraph2D.WGGeoObjGroup)) {
+                        var record = objParent.IsRecordHistory;
+                        objParent.IsRecordHistory = true;
+                        objParent.RemoveChildren(obj);
+                        objParent.IsRecordHistory = record;
+                        objParent.SetDataChanged(true);
+                    }
+
+                    isSelectLinePoint = true;
+                }
+            }
+
+            if (isSelectLinePoint) {
+                view.Repaint();
+            }
+        }
+
+        //删除标注和线上点功能二合一
+        this.DeleteLabelAndPoint = function () {
+            var view = this.View;
+            var hiteResult = view.HiteResult;
+            var isSelectLinePoint = false;
+            for (var index in hiteResult.SelectObjs) {
+                var obj = hiteResult.SelectObjs[index];
+                if (obj instanceof WGADPlatGraph2D.WGGeoPolygon && obj.PointSelected) {
+                    obj.DeleteLinePoint();
+                    isSelectLinePoint = true;
+                }
+                else{
+                    var objParent = obj.Parent;
+                    if (objParent != null && WGADPlatGraph2D.IsBaseClass(objParent, WGADPlatGraph2D.WGGeoObjGroup)) {
+                        var record = objParent.IsRecordHistory;
+                        objParent.IsRecordHistory = true;
+                        objParent.RemoveChildren(obj);
+                        objParent.IsRecordHistory = record;
+                        objParent.SetDataChanged(true);
+                    }
+
+                    isSelectLinePoint = true;
+                }
+            }
+
+            if (isSelectLinePoint) {
+                hiteResult.CancleSelect();
+                view.Repaint();
+            }
         }
 
         //线加点

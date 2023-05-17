@@ -1,23 +1,16 @@
-<!--砂层厚度图-->
+<!--沉积相图-->
 <template>
-  <div class="mt-2">
-    <el-row>
+  <div style="height:calc(100% - 100px);">
+    <div class="z-search">
       <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable  clearable >
-        <el-option
-            v-for="(item,index) in position"
-            :key="index"
-            :label="item.layerName"
-            :value="item.fieldLayerId"
-        >
-        </el-option>
+        <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
       </el-select>
-    </el-row>
-    <el-row class="mt-2" style="height: 600px;overflow: auto;">
+    </div>
+    <div class="z-main">
       <el-image  :src="image">
-        <div slot="error">
-        </div>
+        <div slot="error"></div>
       </el-image>
-    </el-row>
+    </div>
   </div>
 </template>
 
@@ -25,7 +18,6 @@
 import {fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import {reservoirDataSedimentaryFaciesAndSedimentaryMicroImage} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
 import {downFile} from "@/lib/remBase64Download.js";
-
 export default {
   props: {
     oilFieldId: {
@@ -65,7 +57,7 @@ export default {
         fieldId: this.blockId,
         wellId: '',
       }).then((res)=>{
-        if(res.data.code==0){
+        if(res.data.code==200){
           //层段数据
           if(res.data.data) {
             this.position = res.data.data.fieldLayers;
@@ -120,7 +112,7 @@ export default {
        * 获取图片组信息
        */
       await reservoirDataSedimentaryFaciesAndSedimentaryMicroImage(request).then((res)=>{
-        if(res.data.code==0){
+        if(res.data.code==200){
           if(res.data.data.layerPics){
             if(res.data.data.layerPics.length>0){
               let imageData = res.data.data.layerPics[0];
@@ -150,7 +142,7 @@ export default {
         layerId: this.selectPosition,
       }
       reservoirDataSedimentaryFaciesAndSedimentaryMicroImage(request).then((res)=>{
-        if(res.data.code==0){
+        if(res.data.code==200){
           if(res.data.data.layerPics){
             if(res.data.data.layerPics.length>0){
               let imageData = res.data.data.layerPics[0];
@@ -193,3 +185,14 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+    .z-search{
+        height:50px;
+    }
+    .z-main{
+        width: 100%;
+        height:calc(100% - 50px);
+        overflow: auto;
+    }
+</style>

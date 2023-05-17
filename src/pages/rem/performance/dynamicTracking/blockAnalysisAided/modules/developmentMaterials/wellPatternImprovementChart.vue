@@ -66,7 +66,7 @@ export default {
        * 获取图片组信息
        */
       await developmentDataWellPatternImprovementChart(request).then((res)=>{
-        if(res.data.code==0){
+        if(res.data.code==200){
           let imgData = res.data.data.data;
           let type = res.data.data.type;
           let firstParty='data:'+type+';base64,';
@@ -91,7 +91,7 @@ export default {
         //layerId:this.selectPosition,
       }
       developmentDataWellPatternImprovementChart(request).then((res)=>{
-        if(res.data.code==0){
+        if(res.data.code==200){
           let imgData = res.data.data.data;
           let type = res.data.data.type;
           let firstParty='data:'+type+';base64,';

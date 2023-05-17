@@ -33,7 +33,7 @@
             </div>
         </headerSearch>
         <pagePanelNew style="height: calc(100% - 100px)" class="g-w100">
-            <el-tabs class="g-pageHeader" style="margin-bottom:15px;" v-model="activeName" topline>
+            <el-tabs class="g-pageHeader" style="margin-bottom:15px;" v-model="activeName" topline @tab-click="handleClick">
                 <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
                     <sliderTabs :tabs="item.modules" :currentModule="currentModule" @tabTabs="tabTabs"></sliderTabs>
                 </el-tab-pane>
@@ -66,112 +66,112 @@ export default {
             //区块选中值
             selectBlock: '',
             component: null,
-            activeName: 'dynamicInformation',
-            currentModule: 'cumulativeOilWaterProduction',
+            activeName: 'reservoirData',
+            currentModule: 'geologicalMap',
             queryParams: {},
             tabs: [
-                // {    
-                //     label: "储层资料",
-                //     name: "reservoirData",  
-                //     modules: [    
-                //         {
-                //             label: "综合地质图",  
-                //             name: "geologicalMap",    
-                //         },    
-                //         { 
-                //             label: "小层顶面构造图", //原构造图    
-                //             name: "structuralMap",    
-                //         }, 
-                //         {    
-                //             label: "地震属性图", //原孔隙度裂缝发育情况    
-                //             name: "porosityDevelopment", 
-                //         },    
-                //         {    
-                //             label: "沉积相图", 
-                //             name: "sedimentaryMicrofacies",   
-                //         },    
-                //         {
-                //             label: "渗透率分布图",   
-                //             name: "permeabilityDistribution",    
-                //         },
-                //         {   
-                //             label: "地震剖面图",    
-                //             name: "reservoirProfile",
-                //         },   
-                //         {    
-                //             label: "连井剖面图",
-                //             name: "wellTieProfiles",    
-                //         },    
-                //         // // {一期代码就是注释的    
-                //         // //   label: "砂层厚度图",  
-                //         // //   name: "sandThicknessMap",    
-                //         // // },    
-                //         {    
-                //             label: "有效厚度图",    
-                //             name: "effectiveThicknessMap",    
-                //         },  
-                //         {    
-                //             label: "油藏基础信息",    
-                //             name: "basicReservoirInformation",    
-                //         },   
-                //         {    
-                //             label: "相渗透率曲线", 
-                //             name: "permeabilityCurve",   
-                //         },    
-                //         { 
-                //             label: "岩心化验数据",   
-                //             name: "coreTest",  
-                //         }, 
-                //         {   
-                //             label: "五敏分析数据",    
-                //             name: "fiveSensitivityAnalysis",
-                //         }  
-                //     ],    
-                // },
-                // {  
-                //     label: "流体资料",    
-                //     name: "fluidData",
-                //     modules: [  
-                //         {    
-                //             label: "原油粘度",
-                //             name: "viscosityOfCrudeOil",  
-                //         },    
-                //         {    
-                //             label: "高压物性分析", 
-                //             name: "highPressurePhysicalPropertyAnalysis",    
-                //         },    
-                //         { 
-                //             label: "水物性数据",    
-                //             name: "waterPhysicalPropertyData",    
-                //         }, 
-                //     ],    
-                // },    
-                // { 
-                //     label: "开发资料",   
-                //     name: "developmentMaterials",    
-                //     modules: [
-                //         {   
-                //             label: "储量报告",    
-                //             name: "reservesReport",
-                //         },   
-                //         {    
-                //             label: "开发方案",
-                //             name: "developmentPlan",   
-                //         },    
-                //         {
-                //             label: "开发调整方案",    
-                //             name: "developmentAdjustmentPlan",    
-                //         },    
-                //         {    
-                //             label: "井网图",    
-                //             name: "wellPattern",    
-                //         },  
-                //         {    
-                //           label: "井网完善图",//一期代码就是注释的    
-                //           name: "wellPatternImprovementChart",    
-                //         },    
-                //     ],    
-                // },  
+                {    
+                    label: "储层资料",
+                    name: "reservoirData",  
+                    modules: [    
+                        {
+                            label: "综合地质图",  
+                            name: "geologicalMap",    
+                        },    
+                        { 
+                            label: "小层顶面构造图", 
+                            name: "structuralMap",    
+                        }, 
+                        {    
+                            label: "地震属性图", 
+                            name: "porosityDevelopment", 
+                        },    
+                        {    
+                            label: "沉积相图", 
+                            name: "sedimentaryMicrofacies",   
+                        },    
+                        {
+                            label: "渗透率分布图",   
+                            name: "permeabilityDistribution",    
+                        },
+                        {   
+                            label: "地震剖面图",    
+                            name: "reservoirProfile",
+                        },   
+                        // {    
+                        //     label: "连井剖面图",
+                        //     name: "wellTieProfiles",    
+                        // },    
+                        // // {一期代码就是注释的    
+                        // //   label: "砂层厚度图",  
+                        // //   name: "sandThicknessMap",    
+                        // // },    
+                        {    
+                            label: "有效厚度图",    
+                            name: "effectiveThicknessMap",    
+                        },  
+                        {    
+                            label: "油藏基础信息",    
+                            name: "basicReservoirInformation",    
+                        },   
+                        {    
+                            label: "相渗透率曲线", 
+                            name: "permeabilityCurve",   
+                        },    
+                        { 
+                            label: "岩心化验数据",   
+                            name: "coreTest",  
+                        }, 
+                        {   
+                            label: "五敏分析数据",    
+                            name: "fiveSensitivityAnalysis",
+                        }  
+                    ],    
+                },
+                {  
+                    label: "流体资料",    
+                    name: "fluidData",
+                    modules: [  
+                        {    
+                            label: "原油粘度",
+                            name: "viscosityOfCrudeOil",  
+                        },    
+                        {    
+                            label: "高压物性分析", 
+                            name: "highPressurePhysicalPropertyAnalysis",    
+                        },    
+                        { 
+                            label: "水物性数据",    
+                            name: "waterPhysicalPropertyData",    
+                        }, 
+                    ],    
+                },    
+                { 
+                    label: "开发资料",   
+                    name: "developmentMaterials",    
+                    modules: [
+                        {   
+                            label: "储量报告",    
+                            name: "reservesReport",
+                        },   
+                        {    
+                            label: "开发方案",
+                            name: "developmentPlan",   
+                        },    
+                        {
+                            label: "开发调整方案",    
+                            name: "developmentAdjustmentPlan",    
+                        },    
+                        {    
+                            label: "井网图",    
+                            name: "wellPattern",    
+                        },  
+                        // {    
+                        //   label: "井网完善图",//一期代码就是注释的    
+                        //   name: "wellPatternImprovementChart",    
+                        // },    
+                    ],    
+                },  
                 {
                     label: '动态资料',
                     name: 'dynamicInformation',
@@ -446,6 +446,13 @@ export default {
         		this.initData();
         	})
         },
+        //点击一级
+        handleClick(tab){
+            let index=Number(tab.index);
+            this.activeName=tab.name;
+            this.currentModule=this.tabs[index].modules[0].name
+        },
+        //点击二级
         tabTabs (name) {
             this.currentModule = name;
         },

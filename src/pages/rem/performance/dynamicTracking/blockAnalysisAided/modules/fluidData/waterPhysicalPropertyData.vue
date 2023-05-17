@@ -1,170 +1,94 @@
 <!--水物性数据-->
 <template>
-  <div class="mt-2">
-    <el-row>
-      <el-table
-          id="tableData"
-          highlight
-          :data="tableData"
-          style="width: 100%;"
-          height="600"
-      >
-        <el-table-column
-          type="index"
-          label="序号"
-          align="center"
-          width="80"
-        ></el-table-column>
-        <el-table-column
-            prop="borepipeNo"
-            label="井号"
-            align="center"
-            min-width="160"
-        ></el-table-column>
-        <el-table-column
-            prop="date"
-            label="日期"
-            align="center"
-            min-width="140"
-        >
+    <el-table
+        id="tableData"
+        :data="tableData" :border="false" :row-style="{ height: '0px' }"
+        header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
+        style="width:100%;" height="calc(100% - 101px)" :default-sort="{ prop: 'date', order: 'descending' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+        <el-table-column type="index" label="序号" align="center" width="80"></el-table-column>
+        <el-table-column prop="borepipeNo" label="井号" align="center" min-width="160"></el-table-column>
+        <el-table-column prop="date" label="日期" align="center" min-width="140">
         </el-table-column>
-        <el-table-column
-            prop="sampleId"
-            label="流体样品类型"
-            align="center"
-            min-width="140"
-        >
+        <el-table-column prop="sampleId" label="流体样品类型" align="center" min-width="140">
         </el-table-column>
-        <el-table-column
-            prop="fluidPH"
-            label="PH值/酸碱度"
-            align="center"
-            min-width="140"
-        >
+        <el-table-column prop="fluidPH" label="PH值/酸碱度" align="center" min-width="140">
         </el-table-column>
-        <el-table-column
-            prop="color"
-            label="颜色"
-            align="center"
-            min-width="140"
-        >
+        <el-table-column prop="color" label="颜色" align="center" min-width="140">
         </el-table-column>
-        <el-table-column
-            :render-header="renderHeader"
-            prop=""
-            label="地层水矿化度 (mg/L)  "
-            align="center"
-            min-width="140"
-        >
+        <el-table-column prop="" :label="`地层水矿化度\n (mg/L)`" align="center" min-width="140">
         </el-table-column>
-        <el-table-column
-            :render-header="renderHeader"
-            prop="anionContent"
-            label="阴离子总量 (mg/L)"
-            align="center"
-            min-width="140"
-        >
+        <el-table-column prop="anionContent" :label="`阴离子总量\n (mg/L)`" align="center" min-width="140">
         </el-table-column>
-        <el-table-column
-            :render-header="renderHeader"
-            prop="cationContent"
-            label="阳离子总量 (mg/L)"
-            align="center"
-            min-width="140"
-        >
+        <el-table-column prop="cationContent" :label="`阳离子总量\n (mg/L)`" align="center" min-width="140">
         </el-table-column>
-        <el-table-column
-            :render-header="renderHeader"
-            prop="totalAlkalinity"
-            label="总碱度 (mmol/L)"
-            align="center"
-            min-width="140"
-        >
+        <el-table-column prop="totalAlkalinity" :label="`总碱度\n (mmol/L)`" align="center" min-width="140">
         </el-table-column>
-        <el-table-column
-            prop="cumHardness"
-            label="总硬度"
-            align="center"
-            min-width="140"
-        >
+        <el-table-column prop="cumHardness" label="总硬度" align="center" min-width="140">
         </el-table-column>
-        <el-table-column
-            :render-header="renderHeader"
-            prop="resis"
-            label="电阻率 (Ωm)"
-            align="center"
-            min-width="140"
-        >
+        <el-table-column prop="resis" :label="`电阻率\n (Ωm)`" align="center" min-width="140">
         </el-table-column>
-      </el-table>
-    </el-row>
-  </div>
+    </el-table>
 </template>
 
 <script>
-
-import {streamingMediaDataWaterPhysicalPropertyData} from "@/api/oilDeposit/rem-01/fielddynamicanalysis";
-import {exportExcel} from "@/lib/exportExcel.js";
-export default {
-  props: {
-    oilFieldId: {},
-    blockId: {},
-  },
-  data() {
-    return {
-      tableData: []
-    };
-  },
-  mounted() {
-    this.doSearch();
-  },
-  methods: {
-    async doSearch(){
-      //置空子组件参数
-      this.$emit('childPara', '');
-      //获得查询参数
-      let request = {
-        oilFieldId: this.oilFieldId,
-        fieldId: this.blockId,
-      }
-      //调用接口方法
-      await streamingMediaDataWaterPhysicalPropertyData(request).then((res) => {
-        if (res.data.code == 0) {
-          this.tableData=res.data.data.results;
-        } else {
-          this.tableData=[];
+    import {streamingMediaDataWaterPhysicalPropertyData} from "@/api/oilDeposit/rem-01/fielddynamicanalysis";
+    import {exportExcel} from "@/lib/exportExcel.js";
+    export default {
+        props: {
+            oilFieldId: {},
+            blockId: {},
+        },
+        data() {
+            return {
+                tableData: []
+            };
+        },
+        mounted() {
+            this.doSearch();
+        },
+        methods: {
+            async doSearch() {
+                //置空子组件参数
+                this.$emit('childPara', '');
+                //获得查询参数
+                let request = {
+                    oilFieldId: this.oilFieldId,
+                    fieldId: this.blockId,
+                }
+                //调用接口方法
+                await streamingMediaDataWaterPhysicalPropertyData(request).then((res) => {
+                    if (res.data.code == 200) {
+                        this.tableData = res.data.data.results;
+                    } else {
+                        this.tableData = [];
+                    }
+                });
+            },
+            //下载
+            doDownLoad() {
+                let fileName = '水物性数据';
+                if (this.blockName) {
+                    fileName = this.blockName + fileName;
+                }
+                exportExcel('#tableData', fileName);
+            },
         }
-      });
-    },
-    /**
-     * hwh
-     * 下载
-     */
-    doDownLoad(){
-      let fileName = '水物性数据';
-      if(this.blockName){
-        fileName = this.blockName + fileName;
-      }
-      exportExcel('#tableData',fileName);
-    },
-    /**
-     * hwh el table 表格头 标题单位样式
-     * @param h
-     * @param column
-     * @returns {*[]}
-     */
-    renderHeader (h, {column}) {
-      let header = column.label.split(' ');
-      return [h('p', [
-        h('p', {}, header[0]),
-        h('span', {}, header[1])
-      ])];
     }
-  }
-}
 </script>
+
 <style scoped lang="scss">
-::v-deep .el-table .cell:empty::before{
-  content: '-';
-}
+    #tableData{
+        ::v-deep .el-table__header-wrapper .cell{
+            height: auto;
+            line-height: 18px;
+            padding:3.5px 10px;
+            white-space: pre;
+        }
+        ::v-deep .cell:empty{
+            &::before {
+                content: '-';
+            } 
+        }
+    } 
 </style>
