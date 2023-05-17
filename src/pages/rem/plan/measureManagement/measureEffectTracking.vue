@@ -2,7 +2,7 @@
 <template>
     <div class="app-container">
         <div class="titleBox">
-            <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;">
+            <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-left:0;">
                 措施效果跟踪
                 <el-button type="primary" style="height:30px;" @click="switchToBack">返回</el-button>
             </div>
@@ -207,7 +207,7 @@
                                     <el-table-column label="预计结束时间" prop="endTime" width="250"></el-table-column>
                                     <el-table-column label="当前作业内容" prop="workContent"></el-table-column>
                                 </el-table>
-                                <pagination v-show="pageTotal2 > 0" :pageSizes="[15, 20, 40]" :total="pageTotal2" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />
+                                <pagination v-show="pageTotal2 > 0" :pageSizes="[15, 20, 40]" :total="pageTotal2" :page.sync="queryParams2.page" :limit.sync="queryParams2.pageSize" @pagination="pagination" />
                             </info-window>
                     </div>
                 </el-row>
@@ -254,7 +254,7 @@
     import {produceData} from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
     import {getDocDownloadUrl} from '@/api/oilDeposit/ipm-01/measuresmanageinfo.js';
     import {getIntervalWorkConditionDataCurve} from '@/api/oilDeposit/ipm-02/operationmonitor.js';
-    import {getProduceParams,getRealtimeData} from '@/api/oilDeposit/ipm-03/machineprodwellipm.js';
+    import {getProduceParams,getRealtimeData,getOilWellData,getPumpData} from '@/api/oilDeposit/ipm-03/machineprodwellipm.js';
     import {transformBorepipeNo} from '@/api/oilDeposit/ipm-03/basedata.js';
     import {wellFluxLastDayHour} from '@/api/oilDeposit/opm/opmData.js';
     import {fetchOilFields,fetchPlatforms,fetchInjectionWells,fetchInjectionWellsByPlatform,fetchProductionWells,fetchProductionWellsByPlatform} from '@/api/oilDeposit/rem-02/primaryinfo.js';
@@ -596,7 +596,7 @@
                 chemicalTableData: [],
                 // 作业信息
                 getWorkProgressData:[],
-                queryParams:{
+                queryParams2:{
                   page: 1,
                   pageSize: 15,
                 },
@@ -1815,7 +1815,7 @@
                     this.pageSize,
                     this.wellType,
                 );
-                this.queryParams.page =1;
+                this.queryParams2.page =1;
                 this.getWorkProgress();
             },
             //化验数据列表
@@ -1869,44 +1869,9 @@
                 })
             },
             pagination(e){
-              this.queryParams.page = e.page;
-              this.queryParams.pageSize = e.limit;
+              this.queryParams2.page = e.page;
+              this.queryParams2.pageSize = e.limit;
               this.getWorkProgress();
-            },
-            //改变当前页 跳转下一页
-            handleChangePage(pageValue) {
-                const page = pageValue;
-                const {
-                    pageSize
-                } = this;
-                this.getFetchMeasureStatInfos(
-                    this.oilFieldId,
-                    this.plarformId,
-                    this.wellId,
-                    this.measureId,
-                    this.year,
-                    page,
-                    pageSize,
-                    this.wellType,
-                );
-            },
-            //改变当前页大小
-            handleChangePageSize(rowsValue) {
-                this.pageSize = rowsValue;
-                const {
-                    page
-                } = this;
-                const pageSize = rowsValue;
-                this.getFetchMeasureStatInfos(
-                    this.oilFieldId,
-                    this.plarformId,
-                    this.wellId,
-                    this.measureId,
-                    this.year,
-                    page,
-                    pageSize,
-                    this.wellType,
-                );
             },
             //上传文件
             async useUploadPic(file, fileList) {
@@ -2252,17 +2217,12 @@
             },
             fetchProduceParams() {
                 getProduceParams().then((data) => {
-                    const {
-                        code
-                    } = data.data;
+                    const {code} = data.data;
                     if (code == 200) {
                         this.checkList = data.data.data;
-                        this.checkList
-                            .map((item) => item.childParams)
-                            .flat(Infinity)
-                            .forEach((item) => {
-                                console.log(item.paramName, ' : ', item.paramCode);
-                            });
+                        this.checkList.map((item) => item.childParams).flat(Infinity).forEach((item) => {
+                            console.log(item.paramName, ' : ', item.paramCode);
+                        });
                     }
                 });
             },
@@ -2284,22 +2244,30 @@
                 this.queryParams.endDate = dates[1];
             },
             getRealtimeData() {
-                getRealtimeData(this.queryParams).then((data) => {
-                    const {
-                        code
-                    } = data.data;
-                    if (code == 200) {
-                        const res = data.data.data;
-                        if (res) {
-                            this.realTimeData = res;
-                        } else {
-                            this.realTimeData = [];
+                this.realTimeData = [];
+                getOilWellData(this.queryParams).then(res => {
+                    if (res.data.code == 200) {
+                        const data = res.data.data;
+                        if (Object.keys(data).length) {
+                            for(let key in data){
+                                this.realTimeData.push(data[key]);
+                            }
+                            console.log('this.realTimeData',this.realTimeData)
                         }
-                    } else {
-                        this.realTimeData = [];
-                    }
-                    this.$nextTick(() => {
-                        this.getChartsOption();
+                    } 
+                    getPumpData(this.queryParams).then(ref => {
+                        if (ref.data.code == 200) {
+                            const data = res.data.data;
+                            if (Object.keys(data).length) {
+                                for(let key in data){
+                                    this.realTimeData.push(data[key]);
+                                }
+                                console.log('this.realTimeData',this.realTimeData)
+                            }
+                        }
+                        this.$nextTick(() => {
+                            this.getChartsOption();
+                        });
                     });
                 });
             },

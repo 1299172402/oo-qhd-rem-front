@@ -189,6 +189,7 @@ define([
                 for (var i = 0; i < data.Layers.length; i++) {
                     //判断是否已经存在同名图层，有同名的就不再新建
                     var layer = this.View.MapData.GetLayerByName(data.Layers[i].LayerName);
+                    console.log('是否有layer',layer)
                     if (!layer) {
                         layer = new WGADPlatGraph2DFrame.WGFrameLayer({});
                         layer.LayerName = data.Layers[i].LayerName;
@@ -391,6 +392,7 @@ define([
                             //井点信息存在，根据code获取井圈的颜色等属性
                             for (var index = 0; index < data.Layers[i].WellDotInfo.length; index++) {
                                 var wellDotInfo = data.Layers[i].WellDotInfo[index];
+                                console.log('wellDotInfo',wellDotInfo)
                                 if (wellDotInfo.ViewPen && wellDotInfo.WellDotTypeCode != undefined) {
                                     //画笔
                                     var viewPen = WGADPlatGMEngineTools.WGJsonObjPersistence.JsonToPen(
@@ -526,7 +528,7 @@ define([
                                     well.RemoveAllChildrens();
                                     well.CopyFromTemplet(wellTemplate);
                                 }
-                                
+
                                 well.WellName = itemObject.WellName;
                                 well.CoordX = itemObject.CoordX;
                                 well.CoordY = itemObject.CoordY;
@@ -540,6 +542,8 @@ define([
                                 var setWellSize = false;
                                 if (wellDotType != undefined) {
                                     //井点信息存在，根据code获取井圈的颜色等属性
+                                    console.log('wellDotPenDic',wellDotPenDic)
+                                    console.log('wellDotType',wellDotType)
                                     if (wellDotPenDic[wellDotType]) {
                                         well.ViewPen = wellDotPenDic[wellDotType].Clone();
                                     }

@@ -124,7 +124,7 @@
                 if (this.loadKey) {
                     if (this.w && this.w.fView && this.w.fView.RefreshData) {
                         console.log('setSampleDate')
-                        this.w.fView.RefreshData(data, true, true)
+                        this.w.fView.RefreshData(data, true, true);
                         // this.w.fView.View.ScrollView(this.w.fView.View.HScrollValue, this.w.fView.View.VScrollValue);
                         // this.w.fView.ZoomPicture();
                         // this.w.fView.View.Repaint();
@@ -137,6 +137,11 @@
                 // if(this.w && this.w.setProfessionalChart){
                 //   this.w.setProfessionalChart(data)
                 // }
+            },
+            setProminentWell(data){
+                this.w.fView.SetFrameData(data);
+                this.w.fView.View.MakeAviod();//井号避让，根据情况自决定是否选用
+                this.w.fView.ZoomAll();//全图
             },
             loadFinish() {
                 // alert('加载完成')

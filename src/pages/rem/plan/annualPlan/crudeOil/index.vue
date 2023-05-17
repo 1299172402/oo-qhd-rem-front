@@ -5,11 +5,7 @@
             <div slot-name="titleContent">
                 <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downEchart">下载</el-button>
             </div>
-            
-            
-            
             <slot name="downBtn"></slot>
-            
             <Echart ref="echartChart" :chart-data="productLineChart" height="calc(100% - 30px)"></Echart>
         </info-window>
         <div class="develop">

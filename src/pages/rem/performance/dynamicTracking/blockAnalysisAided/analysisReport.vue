@@ -267,7 +267,7 @@
                 //日期
                 rq: "",
                 //默认新版式
-                isNewformat:true,
+                isNewformat:false,
                 //是否加载完成
                 loadFinish: false,
                 url: '\/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient.html',
@@ -310,6 +310,7 @@
         created() {
             //初始化时间
             this.rq = new Date().addDays(-1).format('yyyy-MM-dd');
+            this.rq='2022-05-01';
         },
         mounted() {
             this.initData();
@@ -472,7 +473,7 @@
                 let indexCode = '';
                 //进行运算
                 //1、获取选中井集合
-                // console.log("logInfo:::",eval("this."+tag));
+                console.log("logInfo:::",eval("this."+tag));
                 if (eval("this." + tag)) {
                     for (let i = 0; i < eval("this." + tag).length; i++) {
                         let tData = eval("this." + tag)[i];
@@ -740,7 +741,11 @@
                 areaDiagram(request).then((data) => {
                     this.layerData = data.data;
                     if (data.data.data.mutiLayerPicResponse) {
-                        this.sjcl(data.data.data.mutiLayerPicResponse);
+                        if(!this.myList.length){
+                            this.sjcl(data.data.data.mutiLayerPicResponse);
+                        }else{
+                            this.setProminentWell(data.data.data.mutiLayerPicResponse)
+                        }
                     } else {
                         if(this.isNewformat){
                             this.$refs.H5Chart2.setSampleDate(null);
@@ -764,7 +769,8 @@
                 let PicMinYMap = obj.y2;
                 let PicMaxYMap = obj.y3;
                 let LayerName = "等值线图层"
-                let LayerType = 8
+                // let LayerType = 8
+                let LayerType=1;
                 let Active = true
                 let Display = true
                 let LayerIndex = 8
@@ -830,13 +836,243 @@
                 Layers_cont.Objects = Objects
                 Layers[0] = Layers_cont;
                 data.Layers = Layers;
-                
-                console.log('源数据',data)
-                
+                console.log('源数据',data);
+                console.log('this。myList',this.myList)
                 if(this.isNewformat){
                     this.$refs.H5Chart2.setSampleDate(data);
                 }else{
                     this.$refs.H5Chart.setSampleDate(data);
+                }
+            },
+            //突出井号
+            setProminentWell(tc){
+                let obj = tc;
+                let data = {
+                    Template: {
+                        "Truncate": 0,
+                        "WellSize": 3,
+                        "TruncateEnd": 0,
+                        "WGObjFullName": {
+                            "ClassName": "WGFrameWell",
+                            "NameSpace": "WGADPlatGraph2DFrame"
+                        },
+                        "ViewBrush": {
+                            "TransViewY": 0,
+                            "TransViewX": 0,
+                            "FillStyle": 0,
+                            "BrushColorA": 255,
+                            "BrushColorR": 255,
+                            "BrushColorG": 69,
+                            "BrushColorB": 0
+                        },
+                        "Childrens": [{
+                            "WGObjFullName": {
+                                "ClassName": "WGFrameWellLabelText",
+                                "NameSpace": "WGADPlatGraph2DFrame"
+                            },
+                            "DrawBoundary": true,
+                            // "PenWidth": 0.5,
+                            "PenWidth":1,
+                            "PenColorA": 255,
+                            // "PenColorR": 0,
+                            // "PenColorG": 0,
+                            // "PenColorB": 0,
+                            "PenColorR": 255,
+                            "PenColorG": 53,
+                            "PenColorB": 53,
+                            "ViewBrush": {
+                                "TransViewY": 0,
+                                "TransViewX": 0,
+                                "FillStyle": 0,
+                                "BrushColorG": 255,
+                                "BrushColorA": 255,
+                                "LinearGradientColor": [],
+                                "BrushColorR": 255,
+                                "BrushColorB": 255
+                            },
+                            "OffX": 4,
+                            "OffY": -3.3,
+                            "PaddingX": 3,
+                            "PaddingY": 2,
+                            "TextOffY": 0.4,
+                            "RectRadius": 2,
+                            "RectModel": "1",
+                            "IsRightLabel": true,
+                            "Font": {
+                                "FontName": "微软雅黑",
+                                "FontSize": 10,
+                                "Color": {
+                                    "ColorG": 0,
+                                    "ColorR": 0,
+                                    "ColorB": 0,
+                                    "ColorA": 255
+                                },
+                                "Weight": "bold",
+                                "HorizAlign": 1,
+                                "VerticalAlign": 1,
+                                "Shadow": false,
+                                "ShadowOffsetY": 2,
+                                "ShadowOffsetX": 2,
+                                "ShadowBlur": 5,
+                                "ShadowColor": {
+                                    "ColorG": 51,
+                                    "ColorR": 51,
+                                    "ColorB": 255,
+                                    "ColorA": 255
+                                },
+                                "TextStroke": false,
+                                "TextStrokeLineWidth": 1,
+                                "BackColor": {
+                                    "ColorG": 0,
+                                    "ColorR": 0,
+                                    "ColorB": 0,
+                                    "ColorA": 255
+                                },
+                                "Underline": false,
+                                "UnderlineWidth": 1,
+                                "UnderlineColor": {
+                                    "ColorG": 0,
+                                    "ColorR": 0,
+                                    "ColorB": 0,
+                                    "ColorA": 255
+                                },
+                                "Scale": 5.426344589246292,
+                                "AutoSize": true,
+                                "Orientation": 0,
+                                "Variant": "normal",
+                                "UnderlineSpace": 0,
+                                "Transparent": false,
+                                "StrikeOut": false,
+                                "Pitch": 0,
+                                "RowSpaceNew": 7,
+                                "PitchAndFamily": 0,
+                                "Style": "normal",
+                                "CharSet": 1,
+                                "Direction": 0,
+                                "Clipped": false
+                            },
+                            "DrawDirectLine": false,
+                            "ShowLineLength": 50,
+                            "Visible": true,
+                            "Hidden": false,
+                            "IsAllowSelect": true,
+                            "MaxScale": 500,
+                            "LineCap": "round",
+                            "PenROP": false,
+                            "IsChanged": true,
+                            "MinScale": 0,
+                            "ObjTag": "",
+                            "IsRecordHistory": true,
+                            "AllowDrag": true,
+                            "LineSmooth": false,
+                            "LoadEditionNum": 156,
+                            "LineJoin": "round",
+                            "ObjID": "e1516852-0042-4d55-9177-cf76038206e7",
+                            "ObjType": 112,
+                            "ObjName": "井号",
+                            "LabelCode": "井号",
+                            "EnableDeleted": true,
+                            "HintText": "GeoObj",
+                            "IsFixedOff": true,
+                            "PenDashStyle": 0
+                        }],
+                        "PenColorR": 0,
+                        "PenColorG": 206,
+                        "PenColorB": 209,
+                        "PenColorA": 255,
+                        "PenWidth": 3,
+                        "PenDashStyle": 0
+                    },
+                    MinXMap:obj.x2,
+                    MaxXMap:obj.x3,
+                    MinYMap:obj.y2,
+                    MaxYMap:obj.y3,
+                    Layers:[],
+                }
+                let LayersItem = {
+                    LayerName : "等值线图层",
+                    LayerType : 8,
+                    Active : true,
+                    Display : true,
+                    ClearLayer : true,
+                    LayerIndex : 8,
+                    WellDotInfo: [
+                        {
+                            "WellDotTypeCode": "0",
+                            "WellDotTypeName": "油",
+                            "WellSize": 6,
+                            "ViewPen": {
+                                "PenColorA": 255,
+                                "PenColorR": 255,
+                                "PenColorG": 255,
+                                "PenColorB": 255,
+                                "PenWidth": 3,
+                                "PenDashStyle": 0,
+                                "LineSmooth": false,
+                                "PenROP": false,
+                                "LineCap": "round",
+                                "LineJoin": "round"
+                            },
+                            "ViewBrush": {
+                                "BrushColorA": 255,
+                                "BrushColorR": 255,
+                                "BrushColorG": 0,
+                                "BrushColorB": 0,
+                                "FillStyle": 0,
+                                "LinearGradientColor": [],
+                                "Pattern": null,
+                                "TransViewX": 0,
+                                "TransViewY": 0
+                            }
+                        }, 
+                        {
+                            "WellDotTypeCode": "1",
+                            "WellDotTypeName": "水",
+                            "WellSize": 6,
+                            "ViewPen": {
+                                "PenColorA": 255,
+                                "PenColorR": 255,
+                                "PenColorG": 255,
+                                "PenColorB": 255,
+                                "PenWidth": 3,
+                                "PenDashStyle": 0,
+                                "LineSmooth": false,
+                                "PenROP": false,
+                                "LineCap": "round",
+                                "LineJoin": "round"
+                            },
+                            "ViewBrush": {
+                                "BrushColorA": 255,
+                                "BrushColorR": 0,
+                                "BrushColorG": 0,
+                                "BrushColorB": 255,
+                                "FillStyle": 0,
+                                "LinearGradientColor": [],
+                                "Pattern": null,
+                                "TransViewX": 0,
+                                "TransViewY": 0
+                            }
+                        }
+                    ],
+                    Objects:[]
+                };
+                this.myList.forEach((el,i)=>{
+                    if(el.wellCoord!==null){
+                        LayersItem.Objects.push({
+                            "ObjType": 110,
+                            "CoordX": el.wellCoord[0].coordX,
+                            "CoordY": el.wellCoord[0].coordY,
+                            "WellDotType":String(el.wellCoord[0].wellCode),
+                            "WellName": el.well
+                        })
+                    }
+                })
+                data.Layers.push(LayersItem);
+                console.log('绘制突出井号数据源',data)
+                if(this.isNewformat){
+                    this.$refs.H5Chart2.setProminentWell(data);
+                }else{
+                    this.$refs.H5Chart.setProminentWell(data);
                 }
             },
             //区块模型配置页面跳转
