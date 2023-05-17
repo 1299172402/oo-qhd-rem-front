@@ -116,7 +116,7 @@ export default {
         border-radius: 20px;
         font-size: 0.8vw;
         margin-left: 5vw;
-        z-index: 9999;
+        z-index: 8;
         .btnGo{
             background-image: url("@/assets/linkage/btn.png");
             background-size: 100% 100%;

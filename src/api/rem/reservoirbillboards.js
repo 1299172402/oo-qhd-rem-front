@@ -13,6 +13,12 @@ export function productionMetricsOverview({ date } = {}) {
     method: "get",
   });
 }
+export function queryMeasureEffectTrack({ evaluationDate, oilFieldId, platformId, showNormal, timeGranularityCode, wellId } = {}) {
+  return request({
+    url: `${baseUrl}/reservoirBillboards/queryMeasureEffectTrack?evaluationDate=${ evaluationDate || "" }&oilFieldId=${ oilFieldId || "" }&platformId=${ platformId || "" }&showNormal=${ showNormal || "" }&timeGranularityCode=${ timeGranularityCode || "" }&wellId=${ wellId || "" }`,
+    method: "get",
+  });
+}
 export function queryProblemWellStatis({ date, platformId, wellId } = {}) {
   return request({
     url: `${baseUrl}/reservoirBillboards/queryProblemWellStatis?date=${ date || "" }&platformId=${ platformId || "" }&wellId=${ wellId || "" }`,

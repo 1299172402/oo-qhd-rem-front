@@ -136,7 +136,7 @@ export default {
         text-align: center;
         font-size: 25px;
         color: #00b4ff;
-        z-index: 999;
+        z-index: 7;
         font-weight: bolder;
     }
     .studySelf{
