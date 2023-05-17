@@ -1,6 +1,13 @@
 import request from '@/utils/request'
 const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
+export function wellAvgFluidProdAlloc(data) {
+  return request({
+    url: `${baseUrl}/injDeployOptimize/wellAvgFluidProdAlloc`,
+    method: "post",
+    data
+  });
+}
 export function wellAvgFluidProdAllocUpdate(data) {
   return request({
     url: `${baseUrl}/injDeployOptimize/wellAvgFluidProdAllocUpdate`,

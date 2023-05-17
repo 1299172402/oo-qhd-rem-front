@@ -653,7 +653,7 @@ export default {
                         },
                         data: [
                             {
-                                value: dataArr,
+                                value: 90.45,
                             },
                         ],
                     },

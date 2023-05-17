@@ -252,6 +252,13 @@ export function produceTableData(data) {
     data
   });
 }
+export function pumpReplaceDetail(data) {
+  return request({
+    url: `${baseUrl}/dynamicAnalysis/pumpReplaceDetail`,
+    method: "post",
+    data
+  });
+}
 export function reserveProducing(data) {
   return request({
     url: `${baseUrl}/dynamicAnalysis/reserveProducing`,

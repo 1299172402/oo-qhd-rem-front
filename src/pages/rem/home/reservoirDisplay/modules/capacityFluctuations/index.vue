@@ -37,6 +37,12 @@ export default {
                   type: "shadow",
               },
           },
+          grid: {
+              top: 15,
+              left: 65,
+              right: 10,
+              bottom: 50,
+          },
         xAxis: {
           nameTextStyle: {
             color: "#a9a8a8",
@@ -146,15 +152,15 @@ export default {
   methods: {
       getinfo(){
           let params = {
-              date:'2022-10-11',
-              dateComp:'2022-10-12',
+              dateComp:'2022-10-11',
+              date:'2022-10-12',
               ogfId:'3FC9A818F5BC43B88270DB80BBB3018F'
           }
           getYieldFluctuation(params).then((res)=>{
-              res.data.data.data.ydata.forEach((item) => {
+              res.data.data.xdata.forEach((item) => {
                   this.histogram.xAxis.data.push(item)
               });
-              res.data.data.data.xdata.forEach((item) => {
+              res.data.data.ydata.forEach((item) => {
                   this.histogram.series[0].data.push(item)
               });
           })
