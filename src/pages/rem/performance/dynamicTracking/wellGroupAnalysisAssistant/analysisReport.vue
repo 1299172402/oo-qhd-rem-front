@@ -167,207 +167,207 @@
         </div>
         <!-- 新版本 -->
         <div class="app-container2" v-if="isNewformat">
-            <div class="leftBox">
-                <img src="@/assets/rem/performance/yj_bg.png" alt="">
-            </div>
-            <div class="rightBox">
-                <div class="v0">
-                    <headerSearch style="height:80px;">
-                        <div class="g-row-flex-V g-w100 g-h100">
-                            <span>油田：</span>
-                            <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="changeOilFeild">
-                                <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId">
-                                </el-option>
-                            </el-select>
-                            <span style="margin-left:15px;">区块：</span>
-                            <el-select v-model="selBlock" class="f2" style="width:180px" filterable clearable @change="changeBlock">
-                                <el-option v-for="item in blockData" :key="item.fieldId" :label="item.name" :value="item.fieldId">
-                                </el-option>
-                            </el-select>
-                            <span style="margin-left:15px;">水井井组：</span>
-                            <el-select v-model="searchKeys" class="f2" style="width:180px" filterable clearable>
-                                <el-option v-for="item in wellGroupList" :key="item.wellGroupId" :label="item.name" :value="item.wellGroupId">
-                                </el-option>
-                            </el-select>
-                            <span style="margin-left:15px;">年月：</span>
-                            <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
-                            <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
-                            <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+            <headerSearch style="height:80px;">
+                <div class="g-row-flex-V g-w100 g-h100">
+                    <span>油田：</span>
+                    <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="changeOilFeild">
+                        <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId">
+                        </el-option>
+                    </el-select>
+                    <span style="margin-left:15px;">区块：</span>
+                    <el-select v-model="selBlock" class="f2" style="width:180px" filterable clearable @change="changeBlock">
+                        <el-option v-for="item in blockData" :key="item.fieldId" :label="item.name" :value="item.fieldId">
+                        </el-option>
+                    </el-select>
+                    <span style="margin-left:15px;">水井井组：</span>
+                    <el-select v-model="searchKeys" class="f2" style="width:180px" filterable clearable>
+                        <el-option v-for="item in wellGroupList" :key="item.wellGroupId" :label="item.name" :value="item.wellGroupId">
+                        </el-option>
+                    </el-select>
+                    <span style="margin-left:15px;">年月：</span>
+                    <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
+                    <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+                </div>
+            </headerSearch>
+            <div class="app-container3">
+                <div class="leftBox">
+                    <img src="@/assets/rem/performance/yj_bg.png" alt="">
+                </div>
+                <div class="rightBox">
+                    <div class="v1">
+                        <img src="@/assets/rem/performance/bgline1.png" alt="" class="bgline1">
+                        <div class="btns" style="height:40px;display: flex;">
+                            <el-button type="primary" style="margin-left:auto;" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
+                            <el-button type="primary" @click="isNewformat=!isNewformat;">切换版式</el-button>
                         </div>
-                    </headerSearch>
-                </div>
-                <div class="v1">
-                    <img src="@/assets/rem/performance/bgline1.png" alt="" class="bgline1">
-                    <div class="btns" style="height:40px;display: flex;">
-                        <el-button type="primary" style="margin-left:auto;" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
-                        <el-button type="primary" @click="isNewformat=!isNewformat;">切换版式</el-button>
-                    </div>
-                    <div class="btns0">
-                        <img src="@/assets/rem/performance/help.png" alt="" class="helpImg">
-                        <span>{{potentialWellNum}}</span>
-                        <b>潜力井组</b>
-                    </div>
-                </div>
-                <div class="v2">
-                    <info-window info-width="100%"  info-height="100%"  header-title="井组变化趋势分析" :is-show-max-btn="false">
-                        <div class="z-content" style="height:100%;overflow-y: scroll;">
-                            <div class="z-content-n">
-                                <div class="z-row-left">
-                                    <div class="z_title">
-                                        <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                        <span>动态变化趋势</span>
-                                    </div>
-                                    <div class="z_schedule">
-                                        <span class="sp1">正常：</span>
-                                        <div class="z_proess">
-                                            <span class="z_proess_sp1" :style="{width:trendOfIndicatorsNum.zczb+'%'}"><b>{{trendOfIndicatorsNum.zcnum}}</b></span>
-                                            <span class="z_proess_sp2"></span>
-                                        </div>
-                                        <span class="sp2">异常：<b>{{trendOfIndicatorsNum.ycnum}}</b></span>
-                                    </div>
-                                </div>  
-                                <div class="z-row-center">
-                                    <div class="numBtn" v-for="(item,index) in trendOfIndicators" :key="index" v-if="item.name!='正常'">
-                                        <span class="sp1">{{item.value}}</span>
-                                        <span class="sp2">{{item.name}}</span>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="btns0">
+                            <img src="@/assets/rem/performance/help.png" alt="" class="helpImg">
+                            <span>{{potentialWellNum}}</span>
+                            <b>潜力井组</b>
                         </div>
-                    </info-window>
-                </div>
-                <div class="v2 v3">
-                    <img src="@/assets/rem/performance/bgline2.png" alt="" class="bgline2">
-                    <info-window info-width="100%"  info-height="100%"  header-title="开发生产问题监测" :is-show-max-btn="false">
-                        <div class="z-content2" style="height:100%;overflow-y: scroll;">
-                            <div class="z1">
+                    </div>
+                    <div class="v2">
+                        <info-window info-width="100%"  info-height="100%"  header-title="井组变化趋势分析" :is-show-max-btn="false">
+                            <div class="z-content" style="height:100%;overflow-y: scroll;">
                                 <div class="z-content-n">
                                     <div class="z-row-left">
                                         <div class="z_title">
                                             <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                            <span>注采平衡</span>
+                                            <span>动态变化趋势</span>
                                         </div>
                                         <div class="z_schedule">
                                             <span class="sp1">正常：</span>
                                             <div class="z_proess">
-                                                <span class="z_proess_sp1" :style="{width:injectionProductionBalanceNum.zczb+'%'}"><b>{{injectionProductionBalanceNum.zcnum}}</b></span>
+                                                <span class="z_proess_sp1" :style="{width:trendOfIndicatorsNum.zczb+'%'}"><b>{{trendOfIndicatorsNum.zcnum}}</b></span>
                                                 <span class="z_proess_sp2"></span>
                                             </div>
-                                            <span class="sp2">异常：<b>{{injectionProductionBalanceNum.ycnum}}</b></span>
+                                            <span class="sp2">异常：<b>{{trendOfIndicatorsNum.ycnum}}</b></span>
                                         </div>
                                     </div>  
                                     <div class="z-row-center">
-                                        <div class="numBtn" v-for="(item,index) in injectionProductionBalance" :key="index" v-if="item.name!='正常'">
-                                            <span class="sp1">{{item.value}}</span>
-                                            <span class="sp2">{{item.name}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="z-content-n">
-                                    <div class="z-row-left">
-                                        <div class="z_title">
-                                            <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                            <span>注水受效分析</span>
-                                        </div>
-                                        <div class="z_schedule">
-                                            <span class="sp1">正常：</span>
-                                            <div class="z_proess">
-                                                <span class="z_proess_sp1" :style="{width:injectionResponseAnalysisNum.zczb+'%'}"><b>{{injectionResponseAnalysisNum.zcnum}}</b></span>
-                                                <span class="z_proess_sp2"></span>
-                                            </div>
-                                            <span class="sp2">异常：<b>{{injectionResponseAnalysisNum.ycnum}}</b></span>
-                                        </div>
-                                    </div>  
-                                    <div class="z-row-center">
-                                        <div class="numBtn" v-for="(item,index) in injectionResponseAnalysis" :key="index" v-if="item.name!='正常'">
+                                        <div class="numBtn" v-for="(item,index) in trendOfIndicators" :key="index" v-if="item.name!='正常'">
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="z2">
-                                <div class="z-content-n" style="flex-direction: column;">
-                                    <div class="z-row-left" style="margin-bottom:16px;">
-                                        <div class="z_title">
-                                            <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                            <span>压力保持</span>
-                                        </div>
-                                        <div class="z_schedule">
-                                            <span class="sp1">正常：</span>
-                                            <div class="z_proess">
-                                                <span class="z_proess_sp1" :style="{width:thePressureToKeepNum.zczb+'%'}"><b>{{thePressureToKeepNum.zcnum}}</b></span>
-                                                <span class="z_proess_sp2"></span>
+                        </info-window>
+                    </div>
+                    <div class="v2 v3">
+                        <img src="@/assets/rem/performance/bgline2.png" alt="" class="bgline2">
+                        <info-window info-width="100%"  info-height="100%"  header-title="开发生产问题监测" :is-show-max-btn="false">
+                            <div class="z-content2" style="height:100%;overflow-y: scroll;">
+                                <div class="z1">
+                                    <div class="z-content-n">
+                                        <div class="z-row-left">
+                                            <div class="z_title">
+                                                <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                                <span>注采平衡</span>
                                             </div>
-                                            <span class="sp2">异常：<b>{{thePressureToKeepNum.ycnum}}</b></span>
+                                            <div class="z_schedule">
+                                                <span class="sp1">正常：</span>
+                                                <div class="z_proess">
+                                                    <span class="z_proess_sp1" :style="{width:injectionProductionBalanceNum.zczb+'%'}"><b>{{injectionProductionBalanceNum.zcnum}}</b></span>
+                                                    <span class="z_proess_sp2"></span>
+                                                </div>
+                                                <span class="sp2">异常：<b>{{injectionProductionBalanceNum.ycnum}}</b></span>
+                                            </div>
+                                        </div>  
+                                        <div class="z-row-center">
+                                            <div class="numBtn" v-for="(item,index) in injectionProductionBalance" :key="index" v-if="item.name!='正常'">
+                                                <span class="sp1">{{item.value}}</span>
+                                                <span class="sp2">{{item.name}}</span>
+                                            </div>
                                         </div>
-                                    </div>  
-                                    <div class="z-row-center">
-                                        <div class="numBtn" v-for="(item,index) in thePressureToKeep" :key="index" v-if="item.name!='正常'">
-                                            <span class="sp1">{{item.value}}</span>
-                                            <span class="sp2">{{item.name}}</span>
+                                    </div>
+                                    <div class="z-content-n">
+                                        <div class="z-row-left">
+                                            <div class="z_title">
+                                                <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                                <span>注水受效分析</span>
+                                            </div>
+                                            <div class="z_schedule">
+                                                <span class="sp1">正常：</span>
+                                                <div class="z_proess">
+                                                    <span class="z_proess_sp1" :style="{width:injectionResponseAnalysisNum.zczb+'%'}"><b>{{injectionResponseAnalysisNum.zcnum}}</b></span>
+                                                    <span class="z_proess_sp2"></span>
+                                                </div>
+                                                <span class="sp2">异常：<b>{{injectionResponseAnalysisNum.ycnum}}</b></span>
+                                            </div>
+                                        </div>  
+                                        <div class="z-row-center">
+                                            <div class="numBtn" v-for="(item,index) in injectionResponseAnalysis" :key="index" v-if="item.name!='正常'">
+                                                <span class="sp1">{{item.value}}</span>
+                                                <span class="sp2">{{item.name}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="z2">
+                                    <div class="z-content-n" style="flex-direction: column;">
+                                        <div class="z-row-left" style="margin-bottom:16px;">
+                                            <div class="z_title">
+                                                <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                                <span>压力保持</span>
+                                            </div>
+                                            <div class="z_schedule">
+                                                <span class="sp1">正常：</span>
+                                                <div class="z_proess">
+                                                    <span class="z_proess_sp1" :style="{width:thePressureToKeepNum.zczb+'%'}"><b>{{thePressureToKeepNum.zcnum}}</b></span>
+                                                    <span class="z_proess_sp2"></span>
+                                                </div>
+                                                <span class="sp2">异常：<b>{{thePressureToKeepNum.ycnum}}</b></span>
+                                            </div>
+                                        </div>  
+                                        <div class="z-row-center">
+                                            <div class="numBtn" v-for="(item,index) in thePressureToKeep" :key="index" v-if="item.name!='正常'">
+                                                <span class="sp1">{{item.value}}</span>
+                                                <span class="sp2">{{item.name}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="z3">
+                                    <div class="z-row-right" style="position: relative;top: 48px;">
+                                        <div class="name">措施推荐</div>
+                                        <div class="num">
+                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index">{{item.name}}：{{item.value}}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="z3">
-                                <div class="z-row-right" style="position: relative;top: 48px;">
-                                    <div class="name">措施推荐</div>
-                                    <div class="num">
-                                        <span v-for="(item,index) in recommendedMeasuresOptions" :key="index">{{item.name}}：{{item.value}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </info-window>
-                </div>
-                <div style="height:340px;">
-                    <info-window info-width="100%"  info-height="100%"  header-title="井组动态分析详情列表" :is-show-max-btn="false">
-                        <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList">
-                            <el-table-column prop="wellId" align="center" label="井组" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
-                            <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" :label="item.name" :render-header="renderHeader" align="center" min-width="140" sortable="custom">
-                                  <template slot-scope="{row}">
-                                      <span v-if="row[item.code+'Message']==''">{{row[item.code]}}</span>
-                                      <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
-                                          <span>{{row[item.code]}}</span>
-                                      </el-tooltip>
-                                  </template>
-                              </el-table-column>
-                            <el-table-column prop="injectionResponseAnalysis" align="center" label="注水受效" min-width="140">
-                                  <template slot-scope="{row}">
-                                      <span v-if="row['injectionResponseAnalysisMessage']==''">{{row['injectionResponseAnalysis']}}</span>
-                                      <el-tooltip v-else class="item" effect="dark" :content="row['injectionResponseAnalysisMessage']" placement="top">
-                                          <span>{{row['injectionResponseAnalysis']}}</span>
-                                      </el-tooltip>
-                                  </template>
-                              </el-table-column>
-                            <el-table-column prop="injectionProductionBalance" align="center" label="注水平衡" min-width="140">
-                                  <template slot-scope="{row}">
-                                      <span v-if="row['injectionProductionBalanceMessage']==''">{{row['injectionProductionBalance']}}</span>
-                                      <el-tooltip v-else class="item" effect="dark" :content="row['injectionProductionBalanceMessage']" placement="top">
-                                          <span>{{row['injectionProductionBalance']}}</span>
-                                      </el-tooltip>
-                                  </template>
-                              </el-table-column>
-                            <el-table-column prop="thePressureToKeep" align="center" label="压力保持" min-width="140">
-                                  <template slot-scope="{row}">
-                                      <span v-if="row['thePressureToKeepMessage']==''">{{row['thePressureToKeep']}}</span>
-                                      <el-tooltip v-else class="item" effect="dark" :content="row['thePressureToKeepMessage']" placement="top">
-                                          <span>{{row['thePressureToKeep']}}</span>
-                                      </el-tooltip>
-                                  </template>
-                              </el-table-column>
-                            <el-table-column align="center" label="措施初选">
-                                <el-table-column prop="measuresName" align="center" label="推荐措施" min-width="140"></el-table-column>
-                                <el-table-column prop="theDate" min-width="140px" align="center" label="推荐日期"></el-table-column>
-                                <el-table-column prop="address" align="center" label="操作" min-width="140">
-                                    <template slot-scope="scope">
-                                        <el-button type="text" size="small" @click="openAnalysis(scope.row.wellId)">分析</el-button>
-                                    </template>
+                        </info-window>
+                    </div>
+                    <div style="height:340px;">
+                        <info-window info-width="100%"  info-height="100%"  header-title="井组动态分析详情列表" :is-show-max-btn="false">
+                            <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList">
+                                <el-table-column prop="wellId" align="center" label="井组" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
+                                <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" :label="item.name" :render-header="renderHeader" align="center" min-width="140" sortable="custom">
+                                      <template slot-scope="{row}">
+                                          <span v-if="row[item.code+'Message']==''">{{row[item.code]}}</span>
+                                          <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
+                                              <span>{{row[item.code]}}</span>
+                                          </el-tooltip>
+                                      </template>
+                                  </el-table-column>
+                                <el-table-column prop="injectionResponseAnalysis" align="center" label="注水受效" min-width="140">
+                                      <template slot-scope="{row}">
+                                          <span v-if="row['injectionResponseAnalysisMessage']==''">{{row['injectionResponseAnalysis']}}</span>
+                                          <el-tooltip v-else class="item" effect="dark" :content="row['injectionResponseAnalysisMessage']" placement="top">
+                                              <span>{{row['injectionResponseAnalysis']}}</span>
+                                          </el-tooltip>
+                                      </template>
+                                  </el-table-column>
+                                <el-table-column prop="injectionProductionBalance" align="center" label="注水平衡" min-width="140">
+                                      <template slot-scope="{row}">
+                                          <span v-if="row['injectionProductionBalanceMessage']==''">{{row['injectionProductionBalance']}}</span>
+                                          <el-tooltip v-else class="item" effect="dark" :content="row['injectionProductionBalanceMessage']" placement="top">
+                                              <span>{{row['injectionProductionBalance']}}</span>
+                                          </el-tooltip>
+                                      </template>
+                                  </el-table-column>
+                                <el-table-column prop="thePressureToKeep" align="center" label="压力保持" min-width="140">
+                                      <template slot-scope="{row}">
+                                          <span v-if="row['thePressureToKeepMessage']==''">{{row['thePressureToKeep']}}</span>
+                                          <el-tooltip v-else class="item" effect="dark" :content="row['thePressureToKeepMessage']" placement="top">
+                                              <span>{{row['thePressureToKeep']}}</span>
+                                          </el-tooltip>
+                                      </template>
+                                  </el-table-column>
+                                <el-table-column align="center" label="措施初选">
+                                    <el-table-column prop="measuresName" align="center" label="推荐措施" min-width="140"></el-table-column>
+                                    <el-table-column prop="theDate" min-width="140px" align="center" label="推荐日期"></el-table-column>
+                                    <el-table-column prop="address" align="center" label="操作" min-width="140">
+                                        <template slot-scope="scope">
+                                            <el-button type="text" size="small" @click="openAnalysis(scope.row.wellId)">分析</el-button>
+                                        </template>
+                                    </el-table-column>
                                 </el-table-column>
-                            </el-table-column>
-                        </el-table>
-                    </info-window>
+                            </el-table>
+                        </info-window>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1293,419 +1293,422 @@
         }
         .app-container2{
             height:100%;
-            // height:975px;
-            position: relative;
-            overflow-y: scroll;
-            &::-webkit-scrollbar {
-              width: 0px;
-              height: 1px;
-            }
-            &::-webkit-scrollbar-thumb { //滑块部分
-              border-radius: 5px;
-              background-color: rgb(175, 74, 240);
-            }
-            &::-webkit-scrollbar-track { //轨道部分
-              box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-              background: #ededed;
-              border-radius: 5px;
-            }
-            .leftBox{
-                width:563px;
-                // height:100%;
-                height:975px;
-                img{
+            .app-container3{
+                margin-top:20px;
+                height: calc(100% - 100px);
+                position: relative;
+                overflow-y: scroll;
+                &::-webkit-scrollbar {
+                  width: 0px;
+                  height: 1px;
+                }
+                &::-webkit-scrollbar-thumb { //滑块部分
+                  border-radius: 5px;
+                  background-color: rgb(175, 74, 240);
+                }
+                &::-webkit-scrollbar-track { //轨道部分
+                  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+                  background: #ededed;
+                  border-radius: 5px;
+                }
+                .leftBox{
+                    width:563px;
+                    // height:100%;
+                    height:975px;
+                    img{
+                        width:100%;
+                        height:100%;
+                    }
+                }
+                .rightBox{
                     width:100%;
                     height:100%;
-                }
-            }
-            .rightBox{
-                width:100%;
-                height:100%;
-                position: absolute;
-                left:0;
-                top:0;
-            }
-            .v0{
-                padding-left:400px;
-            }
-            .v1{
-                margin:5px 0;
-                padding-left:400px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                position: relative;
-                .bgline1{
-                    width: 358px;
-                    height: 43px;
                     position: absolute;
-                    left: 180px;
-                    top: 30px;
+                    left:0;
+                    top:0;
                 }
-                .btns0{
-                    // margin:5px 0;
-                    width:224px;
-                    height:70px;
-                    padding-left:20px;
-                    border: 1px solid;
-                    border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
-                    background-image: var(--logo-bg) !important;
+                .v0{
+                    padding-left:400px;
+                }
+                .v1{
+                    margin:5px 0;
+                    padding-left:400px;
                     display: flex;
                     align-items: center;
+                    justify-content: space-between;
                     position: relative;
-                    .helpImg{
-                        width:52px;
-                        height:52px;
-                        margin-right:18px;
-                    }
-                    span{
-                        font-size: 50px;
-                        color: #FFCA07;
-                        font-weight: 600;
-                    }
-                    b{
+                    .bgline1{
+                        width: 358px;
+                        height: 43px;
                         position: absolute;
-                        right:12px;
-                        top:4px;
-                        font-size: 16px;
-                        color: #24DEFF;
+                        left: 180px;
+                        top: 30px;
+                    }
+                    .btns0{
+                        // margin:5px 0;
+                        width:224px;
+                        height:70px;
+                        padding-left:20px;
+                        border: 1px solid;
+                        border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
+                        background-image: var(--logo-bg) !important;
+                        display: flex;
+                        align-items: center;
+                        position: relative;
+                        .helpImg{
+                            width:52px;
+                            height:52px;
+                            margin-right:18px;
+                        }
+                        span{
+                            font-size: 50px;
+                            color: #FFCA07;
+                            font-weight: 600;
+                        }
+                        b{
+                            position: absolute;
+                            right:12px;
+                            top:4px;
+                            font-size: 16px;
+                            color: #24DEFF;
+                        }
                     }
                 }
-            }
-            .v2{
-                margin-bottom:30px;
-                padding-left:400px;
-                width:100%;
-                height:328px;
-                position: relative;
-                .bgline0{
-                    width: 374px;
-                    height: 134px;
-                    position: absolute;
-                    left: 172px;
-                    top: -70px;
-                }
-                
-                .bgline2{
-                    width: 380px;
-                    height: 271px;
-                    position: absolute;
-                    left: 180px;
-                    top: -72px;
-                }
-                .z-content{
-                    padding-left:36px;
-                    .z-content-n{
-                        margin-top:16px;
-                        display: flex;
-                        .z-row-left{
-                            margin-right:60px;
-                            .z_title{
-                                display: flex;
-                                align-items: center;
-                                position: relative;
-                                img{
-                                    width:38px;
-                                    height:38px;
-                                    margin-right:10px;
-                                }
-                                span{
-                                    font-size: 16px;
-                                    color: #FFFFFF;
-                                    text-align: center;
-                                    font-weight: 600;
-                                    z-index: 1;
-                                }
-                                &::before{
-                                    content:'';
-                                    background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                                    width:110px;
-                                    height:32px;
-                                    position: absolute;
-                                    left:60px;
-                                    top:2px;
-                                    z-index: 0;
-                                }
-                            }
-                            .z_title2{
-                                display: flex;
-                                align-items: center;
-                                position: relative;
-                                img{
-                                    width:38px;
-                                    height:38px;
-                                    margin-right:20px;
-                                }
-                                span{
-                                    font-size: 16px;
-                                    color: #FFFFFF;
-                                    text-align: center;
-                                    font-weight: 600;
-                                    z-index: 1;
-                                }
-                                &::before{
-                                    content:'';
-                                    background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                                    width:110px;
-                                    height:32px;
-                                    position: absolute;
-                                    left:50px;
-                                    top:2px;
-                                    z-index: 0;
-                                }
-                            }
-                            .z_schedule{
-                                margin-top:22px;
-                                margin-bottom:10px;
-                                display: flex;
-                                align-items: center;
-                                .sp1{
-                                    width:61px;
-                                    font-size: 14px;
-                                }
-                                .z_proess{
-                                    width:182px;
-                                    height:16px;
-                                    border: 1px solid rgba(41,171,226,1);
-                                    margin-right:16px;
+                .v2{
+                    margin-bottom:30px;
+                    padding-left:400px;
+                    width:100%;
+                    height:328px;
+                    position: relative;
+                    .bgline0{
+                        width: 374px;
+                        height: 134px;
+                        position: absolute;
+                        left: 172px;
+                        top: -70px;
+                    }
+                    
+                    .bgline2{
+                        width: 380px;
+                        height: 271px;
+                        position: absolute;
+                        left: 180px;
+                        top: -72px;
+                    }
+                    .z-content{
+                        padding-left:36px;
+                        .z-content-n{
+                            margin-top:16px;
+                            display: flex;
+                            .z-row-left{
+                                margin-right:60px;
+                                .z_title{
                                     display: flex;
                                     align-items: center;
-                                    padding:1px;
-                                    .z_proess_sp1{
-                                        height:100%;
-                                        background: linear-gradient(to right, #2cbdfb 0%, #80e2bf 50%, #befe93 100%);
-                                        b{
-                                            font-size: 14px;
-                                            color: #00223F;
-                                            letter-spacing: 0;
-                                            font-weight: 700;
-                                            position: relative;
-                                            top:-6px;
-                                            left:14px;
+                                    position: relative;
+                                    img{
+                                        width:38px;
+                                        height:38px;
+                                        margin-right:10px;
+                                    }
+                                    span{
+                                        font-size: 16px;
+                                        // color: #FFFFFF;
+                                        text-align: center;
+                                        font-weight: 600;
+                                        z-index: 1;
+                                    }
+                                    &::before{
+                                        content:'';
+                                        background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                                        width:110px;
+                                        height:32px;
+                                        position: absolute;
+                                        left:60px;
+                                        top:2px;
+                                        z-index: 0;
+                                    }
+                                }
+                                .z_title2{
+                                    display: flex;
+                                    align-items: center;
+                                    position: relative;
+                                    img{
+                                        width:38px;
+                                        height:38px;
+                                        margin-right:20px;
+                                    }
+                                    span{
+                                        font-size: 16px;
+                                        // color: #FFFFFF;
+                                        text-align: center;
+                                        font-weight: 600;
+                                        z-index: 1;
+                                    }
+                                    &::before{
+                                        content:'';
+                                        background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                                        width:110px;
+                                        height:32px;
+                                        position: absolute;
+                                        left:50px;
+                                        top:2px;
+                                        z-index: 0;
+                                    }
+                                }
+                                .z_schedule{
+                                    margin-top:22px;
+                                    margin-bottom:10px;
+                                    display: flex;
+                                    align-items: center;
+                                    .sp1{
+                                        width:61px;
+                                        font-size: 14px;
+                                    }
+                                    .z_proess{
+                                        width:182px;
+                                        height:16px;
+                                        border: 1px solid rgba(41,171,226,1);
+                                        margin-right:16px;
+                                        display: flex;
+                                        align-items: center;
+                                        padding:1px;
+                                        .z_proess_sp1{
+                                            height:100%;
+                                            background: linear-gradient(to right, #2cbdfb 0%, #80e2bf 50%, #befe93 100%);
+                                            b{
+                                                font-size: 14px;
+                                                color: #00223F;
+                                                letter-spacing: 0;
+                                                font-weight: 700;
+                                                position: relative;
+                                                top:-6px;
+                                                left:14px;
+                                            }
+                                        }
+                                        .z_proess_sp2{
+                                            flex:1;
+                                            height:100%;
+                                            background: linear-gradient(to right, #ffc255 0%, #ff9c46 50%, #ff7b39 100%);
                                         }
                                     }
-                                    .z_proess_sp2{
-                                        flex:1;
-                                        height:100%;
-                                        background: linear-gradient(to right, #ffc255 0%, #ff9c46 50%, #ff7b39 100%);
-                                    }
-                                }
-                                .sp2{
-                                    font-size: 14px;
-                                    color:rgba(255,200,53,.8);
-                                    b{
-                                        font-size:20px;
-                                        opacity: 1;
-                                        color:#FFC835;
+                                    .sp2{
+                                        font-size: 14px;
+                                        color:rgba(255,200,53,.8);
+                                        b{
+                                            font-size:20px;
+                                            opacity: 1;
+                                            color:#FFC835;
+                                        }
                                     }
                                 }
                             }
-                        }
-                        .z-row-center{
-                            flex:1;
-                            display: flex;
-                            flex-wrap: wrap;
-                            .numBtn{
-                                width: 120px;
-                                border-radius:4px;
-                                height:68px;
-                                padding:0 10px;
-                                margin-right:8px;
-                                margin-bottom:8px;
+                            .z-row-center{
+                                flex:1;
                                 display: flex;
-                                flex-direction: column;
-                                align-items: center;
-                                justify-content: center;
-                                background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                                .sp1{
-                                    font-size: 16px;
-                                    color: #FFCA07;
-                                    font-weight: 600;
-                                }
-                                .sp2{
-                                    font-size: 12px;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            .v3{
-                height:300px;
-                .z-content2{
-                    padding-left:36px;
-                    display: flex;
-                    .z1{
-                        margin-right:40px;
-                    }
-                    .z3{
-                        flex:1;
-                        display: flex;
-                        justify-content: flex-end;
-                        .z-row-right{
-                            width:250px;
-                            height:110px;
-                            margin-right:20px;
-                            padding:0 20px 0 10px;
-                            padding-bottom:20px;
-                            border: 1px solid;
-                            border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
-                            background-image: var(--logo-bg) !important;
-                            .name{
-                                padding-top:14px;
-                                margin-bottom:14px;
-                                font-size: 18px;
-                                color: #24DEFF;
-                                text-align: center;
-                                line-height: 25px;
-                                font-weight: 600;
-                            }
-                            .num{
                                 flex-wrap: wrap;
-                                display: flex;
-                                align-items: center;
-                                justify-content: space-between;
-                                span{
-                                    width:100px;
-                                    font-size:12px;
-                                    text-align: right;
+                                .numBtn{
+                                    width: 120px;
+                                    border-radius:4px;
+                                    height:68px;
+                                    padding:0 10px;
+                                    margin-right:8px;
+                                    margin-bottom:8px;
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    justify-content: center;
+                                    background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                                    .sp1{
+                                        font-size: 16px;
+                                        color: #FFCA07;
+                                        font-weight: 600;
+                                    }
+                                    .sp2{
+                                        font-size: 12px;
+                                    }
                                 }
                             }
                         }
                     }
-                    .z-content-n{
-                        margin-top:16px;
+                }
+                .v3{
+                    height:300px;
+                    .z-content2{
+                        padding-left:36px;
                         display: flex;
-                        .z-row-left{
-                            margin-right:60px;
-                            .z_title{
-                                display: flex;
-                                align-items: center;
-                                position: relative;
-                                img{
-                                    width:38px;
-                                    height:38px;
-                                    margin-right:10px;
-                                }
-                                span{
-                                    font-size: 16px;
-                                    color: #FFFFFF;
-                                    text-align: center;
-                                    font-weight: 600;
-                                    z-index: 1;
-                                }
-                                &::before{
-                                    content:'';
-                                    background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                                    width:110px;
-                                    height:32px;
-                                    position: absolute;
-                                    left:60px;
-                                    top:2px;
-                                    z-index: 0;
-                                }
-                            }
-                            .z_title2{
-                                display: flex;
-                                align-items: center;
-                                position: relative;
-                                img{
-                                    width:38px;
-                                    height:38px;
-                                    margin-right:20px;
-                                }
-                                span{
-                                    font-size: 16px;
-                                    color: #FFFFFF;
-                                    text-align: center;
-                                    font-weight: 600;
-                                    z-index: 1;
-                                }
-                                &::before{
-                                    content:'';
-                                    background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                                    width:110px;
-                                    height:32px;
-                                    position: absolute;
-                                    left:50px;
-                                    top:2px;
-                                    z-index: 0;
-                                }
-                            }
-                            .z_schedule{
-                                margin-top:22px;
-                                margin-bottom:10px;
-                                display: flex;
-                                align-items: center;
-                                .sp1{
-                                    width:61px;
-                                    font-size: 14px;
-                                }
-                                .z_proess{
-                                    width:182px;
-                                    height:16px;
-                                    border: 1px solid rgba(41,171,226,1);
-                                    margin-right:16px;
-                                    display: flex;
-                                    align-items: center;
-                                    padding:1px;
-                                    .z_proess_sp1{
-                                        height:100%;
-                                        background: linear-gradient(to right, #2cbdfb 0%, #80e2bf 50%, #befe93 100%);
-                                        b{
-                                            font-size: 14px;
-                                            color: #00223F;
-                                            letter-spacing: 0;
-                                            font-weight: 700;
-                                            position: relative;
-                                            top:-6px;
-                                            left:14px;
-                                        }
-                                    }
-                                    .z_proess_sp2{
-                                        flex:1;
-                                        height:100%;
-                                        background: linear-gradient(to right, #ffc255 0%, #ff9c46 50%, #ff7b39 100%);
-                                    }
-                                }
-                                .sp2{
-                                    font-size: 14px;
-                                    color:rgba(255,200,53,.8);
-                                    b{
-                                        font-size:20px;
-                                        opacity: 1;
-                                        color:#FFC835;
-                                    }
-                                }
-                            }
+                        .z1{
+                            margin-right:40px;
                         }
-                        .z-row-center{
+                        .z3{
                             flex:1;
                             display: flex;
-                            flex-wrap: wrap;
-                            .numBtn{
-                                width: 120px;
-                                border-radius:4px;
-                                height:68px;
-                                padding:0 10px;
-                                margin-right:8px;
-                                margin-bottom:8px;
-                                display: flex;
-                                flex-direction: column;
-                                align-items: center;
-                                justify-content: center;
-                                background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                                .sp1{
-                                    font-size: 16px;
-                                    color: #FFCA07;
+                            justify-content: flex-end;
+                            .z-row-right{
+                                width:250px;
+                                height:110px;
+                                margin-right:20px;
+                                padding:0 20px 0 10px;
+                                padding-bottom:20px;
+                                border: 1px solid;
+                                border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
+                                background-image: var(--logo-bg) !important;
+                                .name{
+                                    padding-top:14px;
+                                    margin-bottom:14px;
+                                    font-size: 18px;
+                                    color: #24DEFF;
+                                    text-align: center;
+                                    line-height: 25px;
                                     font-weight: 600;
                                 }
-                                .sp2{
-                                    font-size: 12px;
+                                .num{
+                                    flex-wrap: wrap;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    span{
+                                        width:100px;
+                                        font-size:12px;
+                                        text-align: right;
+                                    }
                                 }
                             }
                         }
-                        
+                        .z-content-n{
+                            margin-top:16px;
+                            display: flex;
+                            .z-row-left{
+                                margin-right:60px;
+                                .z_title{
+                                    display: flex;
+                                    align-items: center;
+                                    position: relative;
+                                    img{
+                                        width:38px;
+                                        height:38px;
+                                        margin-right:10px;
+                                    }
+                                    span{
+                                        font-size: 16px;
+                                        // color: #FFFFFF;
+                                        text-align: center;
+                                        font-weight: 600;
+                                        z-index: 1;
+                                    }
+                                    &::before{
+                                        content:'';
+                                        background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                                        width:110px;
+                                        height:32px;
+                                        position: absolute;
+                                        left:60px;
+                                        top:2px;
+                                        z-index: 0;
+                                    }
+                                }
+                                .z_title2{
+                                    display: flex;
+                                    align-items: center;
+                                    position: relative;
+                                    img{
+                                        width:38px;
+                                        height:38px;
+                                        margin-right:20px;
+                                    }
+                                    span{
+                                        font-size: 16px;
+                                        // color: #FFFFFF;
+                                        text-align: center;
+                                        font-weight: 600;
+                                        z-index: 1;
+                                    }
+                                    &::before{
+                                        content:'';
+                                        background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                                        width:110px;
+                                        height:32px;
+                                        position: absolute;
+                                        left:50px;
+                                        top:2px;
+                                        z-index: 0;
+                                    }
+                                }
+                                .z_schedule{
+                                    margin-top:22px;
+                                    margin-bottom:10px;
+                                    display: flex;
+                                    align-items: center;
+                                    .sp1{
+                                        width:61px;
+                                        font-size: 14px;
+                                    }
+                                    .z_proess{
+                                        width:182px;
+                                        height:16px;
+                                        border: 1px solid rgba(41,171,226,1);
+                                        margin-right:16px;
+                                        display: flex;
+                                        align-items: center;
+                                        padding:1px;
+                                        .z_proess_sp1{
+                                            height:100%;
+                                            background: linear-gradient(to right, #2cbdfb 0%, #80e2bf 50%, #befe93 100%);
+                                            b{
+                                                font-size: 14px;
+                                                color: #00223F;
+                                                letter-spacing: 0;
+                                                font-weight: 700;
+                                                position: relative;
+                                                top:-6px;
+                                                left:14px;
+                                            }
+                                        }
+                                        .z_proess_sp2{
+                                            flex:1;
+                                            height:100%;
+                                            background: linear-gradient(to right, #ffc255 0%, #ff9c46 50%, #ff7b39 100%);
+                                        }
+                                    }
+                                    .sp2{
+                                        font-size: 14px;
+                                        color:rgba(255,200,53,.8);
+                                        b{
+                                            font-size:20px;
+                                            opacity: 1;
+                                            color:#FFC835;
+                                        }
+                                    }
+                                }
+                            }
+                            .z-row-center{
+                                flex:1;
+                                display: flex;
+                                flex-wrap: wrap;
+                                .numBtn{
+                                    width: 120px;
+                                    border-radius:4px;
+                                    height:68px;
+                                    padding:0 10px;
+                                    margin-right:8px;
+                                    margin-bottom:8px;
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    justify-content: center;
+                                    background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                                    .sp1{
+                                        font-size: 16px;
+                                        color: #FFCA07;
+                                        font-weight: 600;
+                                    }
+                                    .sp2{
+                                        font-size: 12px;
+                                    }
+                                }
+                            }
+                            
+                        }
                     }
                 }
             }

@@ -267,7 +267,7 @@
                 //日期
                 rq: "",
                 //默认新版式
-                isNewformat:false,
+                isNewformat:true,
                 //是否加载完成
                 loadFinish: false,
                 url: '\/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient.html',
@@ -1142,7 +1142,7 @@
                         }
                         span{
                             font-size: 16px;
-                            color: #FFFFFF;
+                            // color: #FFFFFF;
                             text-align: center;
                             font-weight: 600;
                             z-index: 1;
@@ -1169,7 +1169,7 @@
                         }
                         span{
                             font-size: 16px;
-                            color: #FFFFFF;
+                            // color: #FFFFFF;
                             text-align: center;
                             font-weight: 600;
                             z-index: 1;

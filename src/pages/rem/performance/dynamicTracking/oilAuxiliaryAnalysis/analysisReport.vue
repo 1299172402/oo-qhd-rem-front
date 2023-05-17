@@ -239,167 +239,102 @@
         </div>
         <!-- 新版本 -->
         <div class="app-container2" v-if="isNewformat">
-            <div class="leftBox">
-                <img src="@/assets/rem/performance/yj_bg.png" alt="">
-            </div>
-            <div class="rightBox">
-                <div class="v0">
-                    <headerSearch style="height:80px;">
-                        <div class="g-row-flex-V g-w100 g-h100">
-                            <span>油田：</span>
-                            <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="changeOilFeild">
-                                <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId" :disabled="item.disabled">
-                                </el-option>
-                            </el-select>
-                            <span style="margin-left:15px;">平台：</span>
-                            <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="changePlatForm">
-                                <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId" :disabled="item.disabled">
-                                </el-option>
-                            </el-select>
-                            <span style="margin-left:15px;">井号：</span>
-                            <el-select v-model="wellId" class="f2" style="width:180px" filterable clearable>
-                                <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled">
-                                </el-option>
-                            </el-select>
-                            <span style="margin-left:15px;">评价时间：</span>
-                            <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
-                            <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">检索</el-button>
-                            <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+            <headerSearch style="height:80px;">
+                <div class="g-row-flex-V g-w100 g-h100">
+                    <span>油田：</span>
+                    <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="changeOilFeild">
+                        <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId" :disabled="item.disabled">
+                        </el-option>
+                    </el-select>
+                    <span style="margin-left:15px;">平台：</span>
+                    <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="changePlatForm">
+                        <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId" :disabled="item.disabled">
+                        </el-option>
+                    </el-select>
+                    <span style="margin-left:15px;">井号：</span>
+                    <el-select v-model="wellId" class="f2" style="width:180px" filterable clearable>
+                        <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled">
+                        </el-option>
+                    </el-select>
+                    <span style="margin-left:15px;">评价时间：</span>
+                    <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">检索</el-button>
+                    <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+                </div>
+            </headerSearch>
+            <div class="app-container3">
+                <div class="leftBox">
+                    <img src="@/assets/rem/performance/yj_bg.png" alt="">
+                </div>
+                <div class="rightBox">
+                    <div class="v1">
+                        <img src="@/assets/rem/performance/bgline1.png" alt="" class="bgline1">
+                        <div class="btns" style="height:40px;display: flex;">
+                            <el-button type="primary" style="margin-left:auto;" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
+                            <el-button type="primary" @click="isNewformat=!isNewformat;">切换版式</el-button>
                         </div>
-                    </headerSearch>
-                </div>
-                <div class="v1">
-                    <img src="@/assets/rem/performance/bgline1.png" alt="" class="bgline1">
-                    <div class="btns" style="height:40px;display: flex;">
-                        <el-button type="primary" style="margin-left:auto;" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
-                        <el-button type="primary" @click="isNewformat=!isNewformat;">切换版式</el-button>
-                    </div>
-                    <div class="btns0">
-                        <img src="@/assets/rem/performance/help.png" alt="" class="helpImg">
-                        <span>{{potentialWellNum}}</span>
-                        <b>潜力井</b>
-                    </div>
-                </div>
-                <div class="v2" style="height:206px;">
-                    <info-window info-width="100%"  info-height="100%"  header-title="生产动态监测" :is-show-max-btn="false">
-                        <div class="z-content" style="height:calc(100%);overflow-y: scroll;">
-                            <div class="z-content-n">
-                                <div class="z-row-left">
-                                    <div class="z_title">
-                                        <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                        <span>生产动态</span>
-                                    </div>
-                                    <div class="z_schedule">
-                                        <span class="sp1">正常：</span>
-                                        <div class="z_proess">
-                                            <span class="z_proess_sp1" :style="{width:productionNum.zczb+'%'}"><b>{{productionNum.zcnum}}</b></span>
-                                            <span class="z_proess_sp2"></span>
-                                        </div>
-                                        <span class="sp2">异常：<b>{{productionNum.ycnum}}</b></span>
-                                    </div>
-                                </div>  
-                                <div class="z-row-center">
-                                    <div class="numBtn" v-for="(item,index) in productionTrendsOptions" :key="index" v-if="item.name!='正常'">
-                                        <span class="sp1">{{item.value}}</span>
-                                        <span class="sp2">{{item.name}}</span>
-                                    </div>
-                                </div>
-                                <div class="z-row-right">
-                                    <div class="name">措施推荐</div>
-                                    <div class="num">
-                                        <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='地面调参'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="btns0">
+                            <img src="@/assets/rem/performance/help.png" alt="" class="helpImg">
+                            <span>{{potentialWellNum}}</span>
+                            <b>潜力井</b>
                         </div>
-                    </info-window>
-                </div>
-                <div class="v2 v3">
-                    <img src="@/assets/rem/performance/bgline0.png" alt="" class="bgline0">
-                    <info-window info-width="100%"  info-height="100%"  header-title="油井工况诊断" :is-show-max-btn="false">
-                        <div class="z-content2" style="height:100%;overflow-y: scroll;">
-                            <div class="z1" style="width:500px;">
-                                <div class="z-content-n" style="flex-direction: column;">
+                    </div>
+                    <div class="v2" style="height:206px;">
+                        <info-window info-width="100%"  info-height="100%"  header-title="生产动态监测" :is-show-max-btn="false">
+                            <div class="z-content" style="height:calc(100%);overflow-y: scroll;">
+                                <div class="z-content-n">
                                     <div class="z-row-left">
                                         <div class="z_title">
                                             <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                            <span>油井工况</span>
+                                            <span>生产动态</span>
                                         </div>
                                         <div class="z_schedule">
                                             <span class="sp1">正常：</span>
                                             <div class="z_proess">
-                                                <span class="z_proess_sp1" :style="{width:oilWellConditionNum.zczb+'%'}"><b>{{oilWellConditionNum.zcnum}}</b></span>
+                                                <span class="z_proess_sp1" :style="{width:productionNum.zczb+'%'}"><b>{{productionNum.zcnum}}</b></span>
                                                 <span class="z_proess_sp2"></span>
                                             </div>
-                                            <span class="sp2">异常：<b>{{oilWellConditionNum.ycnum}}</b></span>
+                                            <span class="sp2">异常：<b>{{productionNum.ycnum}}</b></span>
                                         </div>
                                     </div>  
                                     <div class="z-row-center">
-                                        <div class="numBtn" v-for="(item,index) in oilWellConditionOptions" :key="index" v-if="item.name!='正常'">
+                                        <div class="numBtn" v-for="(item,index) in productionTrendsOptions" :key="index" v-if="item.name!='正常'">
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="z2" style="width:500px;">
-                                <div class="z-content-n" style="flex-direction: column;">
-                                    <div class="z-row-left">
-                                        <div class="z_title">
-                                            <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                            <span>供排关系</span>
-                                        </div>
-                                        <div class="z_schedule">
-                                            <span class="sp1">正常：</span>
-                                            <div class="z_proess">
-                                                <span class="z_proess_sp1" :style="{width:relationshipNum.zczb+'%'}"><b>{{relationshipNum.zcnum}}</b></span>
-                                                <span class="z_proess_sp2"></span>
-                                            </div>
-                                            <span class="sp2">异常：<b>{{relationshipNum.ycnum}}</b></span>
-                                        </div>
-                                    </div>  
-                                    <div class="z-row-center">
-                                        <div class="numBtn" v-for="(item,index) in relationshipOptions" :key="index" v-if="item.name!='正常'">
-                                            <span class="sp1">{{item.value}}</span>
-                                            <span class="sp2">{{item.name}}</span>
+                                    <div class="z-row-right">
+                                        <div class="name">措施推荐</div>
+                                        <div class="num">
+                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='地面调参'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="z3">
-                                <div class="z-row-right" style="position: relative;top: 48px;">
-                                    <div class="name">措施推荐</div>
-                                    <div class="num">
-                                        <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='换大泵'||item.name=='加深泵挂'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </info-window>
-                </div>
-                <div class="v2 v3">
-                    <img src="@/assets/rem/performance/bgline2.png" alt="" class="bgline2">
-                    <info-window info-width="100%" info-height="100%" header-title="油藏潜力分析" :is-show-max-btn="false">
-                        <div style="height:100%;overflow-y: scroll;">
-                            <div class="z-content2">
+                        </info-window>
+                    </div>
+                    <div class="v2 v3">
+                        <img src="@/assets/rem/performance/bgline0.png" alt="" class="bgline0">
+                        <info-window info-width="100%"  info-height="100%"  header-title="油井工况诊断" :is-show-max-btn="false">
+                            <div class="z-content2" style="height:100%;overflow-y: scroll;">
                                 <div class="z1" style="width:500px;">
                                     <div class="z-content-n" style="flex-direction: column;">
                                         <div class="z-row-left">
                                             <div class="z_title">
                                                 <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                                <span>递减率</span>
+                                                <span>油井工况</span>
                                             </div>
                                             <div class="z_schedule">
                                                 <span class="sp1">正常：</span>
                                                 <div class="z_proess">
-                                                    <span class="z_proess_sp1" :style="{width:diminishingNum.zczb+'%'}"><b>{{diminishingNum.zcnum}}</b></span>
+                                                    <span class="z_proess_sp1" :style="{width:oilWellConditionNum.zczb+'%'}"><b>{{oilWellConditionNum.zcnum}}</b></span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b>{{diminishingNum.ycnum}}</b></span>
+                                                <span class="sp2">异常：<b>{{oilWellConditionNum.ycnum}}</b></span>
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" v-for="(item,index) in diminishingOptions" :key="index" v-if="item.name!='正常'">
+                                            <div class="numBtn" v-for="(item,index) in oilWellConditionOptions" :key="index" v-if="item.name!='正常'">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
@@ -411,19 +346,19 @@
                                         <div class="z-row-left">
                                             <div class="z_title">
                                                 <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                                <span>采液强度</span>
+                                                <span>供排关系</span>
                                             </div>
                                             <div class="z_schedule">
                                                 <span class="sp1">正常：</span>
                                                 <div class="z_proess">
-                                                    <span class="z_proess_sp1" :style="{width:fluidStrengthNum.zczb+'%'}"><b>{{fluidStrengthNum.zcnum}}</b></span>
+                                                    <span class="z_proess_sp1" :style="{width:relationshipNum.zczb+'%'}"><b>{{relationshipNum.zcnum}}</b></span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b>{{fluidStrengthNum.ycnum}}</b></span>
+                                                <span class="sp2">异常：<b>{{relationshipNum.ycnum}}</b></span>
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" v-for="(item,index) in fluidStrengthOptions" :key="index" v-if="item.name!='正常'">
+                                            <div class="numBtn" v-for="(item,index) in relationshipOptions" :key="index" v-if="item.name!='正常'">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
@@ -431,139 +366,204 @@
                                     </div>
                                 </div>
                                 <div class="z3">
-                                    <div class="z-row-right" style="height:130px;position: relative;top: 48px;">
+                                    <div class="z-row-right" style="position: relative;top: 48px;">
                                         <div class="name">措施推荐</div>
                                         <div class="num">
-                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='换大泵'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
+                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='换大泵'||item.name=='加深泵挂'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="z-content2">
-                                <div class="z1" style="width:500px;">
-                                    <div class="z-content-n" style="flex-direction: column;">
-                                        <div class="z-row-left">
-                                            <div class="z_title">
-                                                <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                                <span>采液指数</span>
-                                            </div>
-                                            <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
-                                                <div class="z_proess">
-                                                    <span class="z_proess_sp1" :style="{width:fluidProductionNum.zczb+'%'}"><b>{{fluidProductionNum.zcnum}}</b></span>
-                                                    <span class="z_proess_sp2"></span>
+                        </info-window>
+                    </div>
+                    <div class="v2 v3">
+                        <img src="@/assets/rem/performance/bgline2.png" alt="" class="bgline2">
+                        <info-window info-width="100%" info-height="100%" header-title="油藏潜力分析" :is-show-max-btn="false">
+                            <div style="height:100%;overflow-y: scroll;">
+                                <div class="z-content2">
+                                    <div class="z1" style="width:500px;">
+                                        <div class="z-content-n" style="flex-direction: column;">
+                                            <div class="z-row-left">
+                                                <div class="z_title">
+                                                    <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                                    <span>递减率</span>
                                                 </div>
-                                                <span class="sp2">异常：<b>{{fluidProductionNum.ycnum}}</b></span>
+                                                <div class="z_schedule">
+                                                    <span class="sp1">正常：</span>
+                                                    <div class="z_proess">
+                                                        <span class="z_proess_sp1" :style="{width:diminishingNum.zczb+'%'}"><b>{{diminishingNum.zcnum}}</b></span>
+                                                        <span class="z_proess_sp2"></span>
+                                                    </div>
+                                                    <span class="sp2">异常：<b>{{diminishingNum.ycnum}}</b></span>
+                                                </div>
+                                            </div>  
+                                            <div class="z-row-center">
+                                                <div class="numBtn" v-for="(item,index) in diminishingOptions" :key="index" v-if="item.name!='正常'">
+                                                    <span class="sp1">{{item.value}}</span>
+                                                    <span class="sp2">{{item.name}}</span>
+                                                </div>
                                             </div>
-                                        </div>  
-                                        <div class="z-row-center">
-                                            <div class="numBtn" v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name!='正常'">
-                                                <span class="sp1">{{item.value}}</span>
-                                                <span class="sp2">{{item.name}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="z2" style="width:500px;">
+                                        <div class="z-content-n" style="flex-direction: column;">
+                                            <div class="z-row-left">
+                                                <div class="z_title">
+                                                    <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                                    <span>采液强度</span>
+                                                </div>
+                                                <div class="z_schedule">
+                                                    <span class="sp1">正常：</span>
+                                                    <div class="z_proess">
+                                                        <span class="z_proess_sp1" :style="{width:fluidStrengthNum.zczb+'%'}"><b>{{fluidStrengthNum.zcnum}}</b></span>
+                                                        <span class="z_proess_sp2"></span>
+                                                    </div>
+                                                    <span class="sp2">异常：<b>{{fluidStrengthNum.ycnum}}</b></span>
+                                                </div>
+                                            </div>  
+                                            <div class="z-row-center">
+                                                <div class="numBtn" v-for="(item,index) in fluidStrengthOptions" :key="index" v-if="item.name!='正常'">
+                                                    <span class="sp1">{{item.value}}</span>
+                                                    <span class="sp2">{{item.name}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="z3">
+                                        <div class="z-row-right" style="height:130px;position: relative;top: 48px;">
+                                            <div class="name">措施推荐</div>
+                                            <div class="num">
+                                                <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='换大泵'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="z2" style="width:500px;">
-                                    <div class="z-content-n" style="flex-direction: column;">
-                                        <div class="z-row-left">
-                                            <div class="z_title">
-                                                <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                                <span>米采液强度</span>
-                                            </div>
-                                            <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
-                                                <div class="z_proess">
-                                                    <span class="z_proess_sp1" :style="{width:mfluidProductionNum.zczb+'%'}"><b>{{mfluidProductionNum.zcnum}}</b></span>
-                                                    <span class="z_proess_sp2"></span>
+                                <div class="z-content2">
+                                    <div class="z1" style="width:500px;">
+                                        <div class="z-content-n" style="flex-direction: column;">
+                                            <div class="z-row-left">
+                                                <div class="z_title">
+                                                    <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                                    <span>采液指数</span>
                                                 </div>
-                                                <span class="sp2">异常：<b>{{mfluidProductionNum.ycnum}}</b></span>
-                                            </div>
-                                        </div>  
-                                        <div class="z-row-center">
-                                            <div class="numBtn" v-for="(item,index) in mfluidProductionOptions" :key="index" v-if="item.name!='正常'">
-                                                <span class="sp1">{{item.value}}</span>
-                                                <span class="sp2">{{item.name}}</span>
+                                                <div class="z_schedule">
+                                                    <span class="sp1">正常：</span>
+                                                    <div class="z_proess">
+                                                        <span class="z_proess_sp1" :style="{width:fluidProductionNum.zczb+'%'}"><b>{{fluidProductionNum.zcnum}}</b></span>
+                                                        <span class="z_proess_sp2"></span>
+                                                    </div>
+                                                    <span class="sp2">异常：<b>{{fluidProductionNum.ycnum}}</b></span>
+                                                </div>
+                                            </div>  
+                                            <div class="z-row-center">
+                                                <div class="numBtn" v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name!='正常'">
+                                                    <span class="sp1">{{item.value}}</span>
+                                                    <span class="sp2">{{item.name}}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="z3" style="opacity: 0;">
-                                    <div class="z-row-right" style="height:130px;position: relative;top: 48px;">
-                                        <div class="name">措施推荐</div>
-                                        <div class="num">
-                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='换大泵'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
+                                    <div class="z2" style="width:500px;">
+                                        <div class="z-content-n" style="flex-direction: column;">
+                                            <div class="z-row-left">
+                                                <div class="z_title">
+                                                    <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                                    <span>米采液强度</span>
+                                                </div>
+                                                <div class="z_schedule">
+                                                    <span class="sp1">正常：</span>
+                                                    <div class="z_proess">
+                                                        <span class="z_proess_sp1" :style="{width:mfluidProductionNum.zczb+'%'}"><b>{{mfluidProductionNum.zcnum}}</b></span>
+                                                        <span class="z_proess_sp2"></span>
+                                                    </div>
+                                                    <span class="sp2">异常：<b>{{mfluidProductionNum.ycnum}}</b></span>
+                                                </div>
+                                            </div>  
+                                            <div class="z-row-center">
+                                                <div class="numBtn" v-for="(item,index) in mfluidProductionOptions" :key="index" v-if="item.name!='正常'">
+                                                    <span class="sp1">{{item.value}}</span>
+                                                    <span class="sp2">{{item.name}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="z3" style="opacity: 0;">
+                                        <div class="z-row-right" style="height:130px;position: relative;top: 48px;">
+                                            <div class="name">措施推荐</div>
+                                            <div class="num">
+                                                <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='换大泵'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </info-window>
-                </div>
-                <div style="height:340px;">
-                    <info-window info-width="100%" info-height="100%" header-title="油井动态分析详情列表" :is-show-max-btn="false">
-                        <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList">
-                            <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
-                            <!--生产动态项目-->
-                            <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" :label="item.name" :render-header="renderHeader" align="center" width="120" sortable="custom">
-                                <template slot-scope="scope">
-                                    <span v-if="scope.row.scdt[item.code] == null"></span>
-                                    <span v-else-if="item.code == 'ZC'">{{ scope.row.scdt[item.code].showLabel }}</span>
-                                    <el-tooltip v-else class="item" effect="dark" :content="scope.row.scdt[item.code].value + ''" placement="top">
-                                        <span>{{ scope.row.scdt[item.code].showLabel }}</span>
-                                    </el-tooltip>
-                                </template>
-                            </el-table-column>
-                            <!--生产问题监测项目-->
-                            <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
-                                <el-table-column v-for="(item, index) in problemMonitoringTab" :key="index" :prop="item.code" :label="item.name" align="center">
+                        </info-window>
+                    </div>
+                    <div style="height:340px;">
+                        <info-window info-width="100%" info-height="100%" header-title="油井动态分析详情列表" :is-show-max-btn="false">
+                            <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList">
+                                <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
+                                <!--生产动态项目-->
+                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" :label="item.name" :render-header="renderHeader" align="center" width="120" sortable="custom">
                                     <template slot-scope="scope">
-                                        <span v-if="scope.row[item.code] == null"></span>
-                                        <span v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel }}</span>
-                                        <el-tooltip v-else class="item" effect="dark" :content="scope.row[item.code].value + ''" placement="top">
-                                            <span>{{ scope.row[item.code].showLabel }}</span>
+                                        <span v-if="scope.row.scdt[item.code] == null"></span>
+                                        <span v-else-if="item.code == 'ZC'">{{ scope.row.scdt[item.code].showLabel }}</span>
+                                        <el-tooltip v-else class="item" effect="dark" :content="scope.row.scdt[item.code].value + ''" placement="top">
+                                            <span>{{ scope.row.scdt[item.code].showLabel }}</span>
                                         </el-tooltip>
                                     </template>
                                 </el-table-column>
-                            </el-table-column>
-                            <!--潜力分析-->
-                            <el-table-column prop="potentialAnalysis" label="潜力分析" align="center">
-                                <el-table-column v-for="(item, index) in potentialAnalysisTab" :key="index" :prop="item.code" :label="item.name" align="center">
+                                <!--生产问题监测项目-->
+                                <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
+                                    <el-table-column v-for="(item, index) in problemMonitoringTab" :key="index" :prop="item.code" :label="item.name" align="center">
+                                        <template slot-scope="scope">
+                                            <span v-if="scope.row[item.code] == null"></span>
+                                            <span v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel }}</span>
+                                            <el-tooltip v-else class="item" effect="dark" :content="scope.row[item.code].value + ''" placement="top">
+                                                <span>{{ scope.row[item.code].showLabel }}</span>
+                                            </el-tooltip>
+                                        </template>
+                                    </el-table-column>
+                                </el-table-column>
+                                <!--潜力分析-->
+                                <el-table-column prop="potentialAnalysis" label="潜力分析" align="center">
+                                    <el-table-column v-for="(item, index) in potentialAnalysisTab" :key="index" :prop="item.code" :label="item.name" align="center">
+                                        <template slot-scope="scope">
+                                            <span v-if="scope.row[item.code] == null"></span>
+                                            <!--                    <el-tooltip v-else class="item" effect="dark" :content="scope.row[item.code].value + ''" placement="top">-->
+                                            <span>{{ scope.row[item.code].showLabel }}</span>
+                                            <!--                    </el-tooltip>-->
+                                        </template>
+                                    </el-table-column>
+                                </el-table-column>
+                                <!--措施推荐-->
+                                <el-table-column prop="recommendedMeasures" label="措施初选" align="center">
+                                    <el-table-column prop="measuresName" label="推荐措施" align="center">
+                                        <template slot-scope="scope">
+                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel }}</span>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="theDate" label="推荐日期" align="center" width="120px">
+                                        <template slot-scope="scope">
+                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq }}</span>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column label="操作" align="center">
+                                        <template slot-scope="scope">
+                                            <el-button type="text" @click="openAnalysis(scope.row.wellId)">分析</el-button>
+                                        </template>
+                                    </el-table-column>
+                                </el-table-column>
+                                <!--措施效果数据-->
+                                <el-table-column prop="dailyOilIncrement" label="日增油量m³/d" align="center">
                                     <template slot-scope="scope">
-                                        <span v-if="scope.row[item.code] == null"></span>
-                                        <!--                    <el-tooltip v-else class="item" effect="dark" :content="scope.row[item.code].value + ''" placement="top">-->
-                                        <span>{{ scope.row[item.code].showLabel }}</span>
-                                        <!--                    </el-tooltip>-->
+                                        <span v-if="scope.row.rzyl == null || scope.row.rzyl.showMvalue == null"></span>
+                                        <span v-else>{{ scope.row.rzyl.showMvalue }}</span>
                                     </template>
                                 </el-table-column>
-                            </el-table-column>
-                            <!--措施推荐-->
-                            <el-table-column prop="recommendedMeasures" label="措施初选" align="center">
-                                <el-table-column prop="measuresName" label="推荐措施" align="center">
-                                    <template slot-scope="scope">
-                                        <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel }}</span>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column prop="theDate" label="推荐日期" align="center" width="120px">
-                                    <template slot-scope="scope">
-                                        <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq }}</span>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column label="操作" align="center">
-                                    <template slot-scope="scope">
-                                        <el-button type="text" @click="openAnalysis(scope.row.wellId)">分析</el-button>
-                                    </template>
-                                </el-table-column>
-                            </el-table-column>
-                            <!--措施效果数据-->
-                            <el-table-column prop="dailyOilIncrement" label="日增油量m³/d" align="center">
-                                <template slot-scope="scope">
-                                    <span v-if="scope.row.rzyl == null || scope.row.rzyl.showMvalue == null"></span>
-                                    <span v-else>{{ scope.row.rzyl.showMvalue }}</span>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </info-window>
+                            </el-table>
+                        </info-window>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2160,446 +2160,449 @@
         }
         .app-container2{
             height:100%;
-            // height:975px;
-            position: relative;
-            overflow-y: scroll;
-            &::-webkit-scrollbar {
-              width: 0px;
-              height: 1px;
-            }
-            &::-webkit-scrollbar-thumb { //滑块部分
-              border-radius: 5px;
-              background-color: rgb(175, 74, 240);
-            }
-            &::-webkit-scrollbar-track { //轨道部分
-              box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-              background: #ededed;
-              border-radius: 5px;
-            }
-            .leftBox{
-                width:563px;
-                height:1240px;
-                img{
+            .app-container3{
+                margin-top:20px;
+                height: calc(100% - 100px);
+                position: relative;
+                overflow-y: scroll;
+                &::-webkit-scrollbar {
+                  width: 0px;
+                  height: 1px;
+                }
+                &::-webkit-scrollbar-thumb { //滑块部分
+                  border-radius: 5px;
+                  background-color: rgb(175, 74, 240);
+                }
+                &::-webkit-scrollbar-track { //轨道部分
+                  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+                  background: #ededed;
+                  border-radius: 5px;
+                }
+                .leftBox{
+                    width:563px;
+                    height:1240px;
+                    img{
+                        width:100%;
+                        height:100%;
+                    }
+                }
+                .rightBox{
                     width:100%;
                     height:100%;
-                }
-            }
-            .rightBox{
-                width:100%;
-                height:100%;
-                position: absolute;
-                left:0;
-                top:0;
-            }
-            .v0{
-                padding-left:400px;
-            }
-            .v1{
-                margin:5px 0;
-                padding-left:400px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                position: relative;
-                .bgline1{
-                    width: 358px;
-                    height: 43px;
                     position: absolute;
-                    left: 180px;
-                    top: 30px;
+                    left:0;
+                    top:0;
                 }
-                .btns0{
-                    // margin:5px 0;
-                    width:224px;
-                    height:70px;
-                    padding-left:20px;
-                    border: 1px solid;
-                    border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
-                    background-image: var(--logo-bg) !important;
+                .v0{
+                    padding-left:400px;
+                }
+                .v1{
+                    margin:5px 0;
+                    padding-left:400px;
                     display: flex;
                     align-items: center;
+                    justify-content: space-between;
                     position: relative;
-                    .helpImg{
-                        width:52px;
-                        height:52px;
-                        margin-right:18px;
-                    }
-                    span{
-                        font-size: 50px;
-                        color: #FFCA07;
-                        font-weight: 600;
-                    }
-                    b{
+                    .bgline1{
+                        width: 358px;
+                        height: 43px;
                         position: absolute;
-                        right:12px;
-                        top:4px;
-                        font-size: 16px;
-                        color: #24DEFF;
+                        left: 180px;
+                        top: 30px;
+                    }
+                    .btns0{
+                        // margin:5px 0;
+                        width:224px;
+                        height:70px;
+                        padding-left:20px;
+                        border: 1px solid;
+                        border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
+                        background-image: var(--logo-bg) !important;
+                        display: flex;
+                        align-items: center;
+                        position: relative;
+                        .helpImg{
+                            width:52px;
+                            height:52px;
+                            margin-right:18px;
+                        }
+                        span{
+                            font-size: 50px;
+                            color: #FFCA07;
+                            font-weight: 600;
+                        }
+                        b{
+                            position: absolute;
+                            right:12px;
+                            top:4px;
+                            font-size: 16px;
+                            color: #24DEFF;
+                        }
                     }
                 }
-            }
-            .v2{
-                margin-bottom:30px;
-                padding-left:400px;
-                width:100%;
-                height:164px;
-                position: relative;
-                .bgline0{
-                    width: 374px;
-                    height: 134px;
-                    position: absolute;
-                    left: 172px;
-                    top: -70px;
-                }
-                
-                .bgline2{
-                    width: 380px;
-                    height: 271px;
-                    position: absolute;
-                    left: 180px;
-                    top: -72px;
-                }
-                .z-content{
-                    padding-left:36px;
-                    .z-content-n{
-                        margin-top:16px;
-                        display: flex;
-                        .z-row-left{
-                            margin-right:60px;
-                            .z_title{
-                                display: flex;
-                                align-items: center;
-                                position: relative;
-                                img{
-                                    width:38px;
-                                    height:38px;
-                                    margin-right:10px;
-                                }
-                                span{
-                                    font-size: 16px;
-                                    color: #FFFFFF;
-                                    text-align: center;
-                                    font-weight: 600;
-                                    z-index: 1;
-                                }
-                                &::before{
-                                    content:'';
-                                    background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                                    width:110px;
-                                    height:32px;
-                                    position: absolute;
-                                    left:60px;
-                                    top:2px;
-                                    z-index: 0;
-                                }
-                            }
-                            .z_title2{
-                                display: flex;
-                                align-items: center;
-                                position: relative;
-                                img{
-                                    width:38px;
-                                    height:38px;
-                                    margin-right:20px;
-                                }
-                                span{
-                                    font-size: 16px;
-                                    color: #FFFFFF;
-                                    text-align: center;
-                                    font-weight: 600;
-                                    z-index: 1;
-                                }
-                                &::before{
-                                    content:'';
-                                    background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                                    width:110px;
-                                    height:32px;
-                                    position: absolute;
-                                    left:50px;
-                                    top:2px;
-                                    z-index: 0;
-                                }
-                            }
-                            .z_schedule{
-                                margin-top:22px;
-                                margin-bottom:10px;
-                                display: flex;
-                                align-items: center;
-                                .sp1{
-                                    width:61px;
-                                    font-size: 14px;
-                                }
-                                .z_proess{
-                                    width:182px;
-                                    height:16px;
-                                    padding: 1px;
-                                    border: 1px solid rgba(41,171,226,1);
-                                    margin-right:16px;
+                .v2{
+                    margin-bottom:30px;
+                    padding-left:400px;
+                    width:100%;
+                    height:164px;
+                    position: relative;
+                    .bgline0{
+                        width: 374px;
+                        height: 134px;
+                        position: absolute;
+                        left: 172px;
+                        top: -70px;
+                    }
+                    
+                    .bgline2{
+                        width: 380px;
+                        height: 271px;
+                        position: absolute;
+                        left: 180px;
+                        top: -72px;
+                    }
+                    .z-content{
+                        padding-left:36px;
+                        .z-content-n{
+                            margin-top:16px;
+                            display: flex;
+                            .z-row-left{
+                                margin-right:60px;
+                                .z_title{
                                     display: flex;
                                     align-items: center;
-                                    .z_proess_sp1{
-                                        height:100%;
-                                        background: linear-gradient(to right, #2cbdfb 0%, #80e2bf 50%, #befe93 100%);
-                                        b{
-                                            font-size: 14px;
-                                            color: #00223F;
-                                            letter-spacing: 0;
-                                            font-weight: 700;
-                                            position: relative;
-                                            top:-6px;
-                                            left:14px;
+                                    position: relative;
+                                    img{
+                                        width:38px;
+                                        height:38px;
+                                        margin-right:10px;
+                                    }
+                                    span{
+                                        font-size: 16px;
+                                        // color: #FFFFFF;
+                                        text-align: center;
+                                        font-weight: 600;
+                                        z-index: 1;
+                                    }
+                                    &::before{
+                                        content:'';
+                                        background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                                        width:110px;
+                                        height:32px;
+                                        position: absolute;
+                                        left:60px;
+                                        top:2px;
+                                        z-index: 0;
+                                    }
+                                }
+                                .z_title2{
+                                    display: flex;
+                                    align-items: center;
+                                    position: relative;
+                                    img{
+                                        width:38px;
+                                        height:38px;
+                                        margin-right:20px;
+                                    }
+                                    span{
+                                        font-size: 16px;
+                                        // color: #FFFFFF;
+                                        text-align: center;
+                                        font-weight: 600;
+                                        z-index: 1;
+                                    }
+                                    &::before{
+                                        content:'';
+                                        background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                                        width:110px;
+                                        height:32px;
+                                        position: absolute;
+                                        left:50px;
+                                        top:2px;
+                                        z-index: 0;
+                                    }
+                                }
+                                .z_schedule{
+                                    margin-top:22px;
+                                    margin-bottom:10px;
+                                    display: flex;
+                                    align-items: center;
+                                    .sp1{
+                                        width:61px;
+                                        font-size: 14px;
+                                    }
+                                    .z_proess{
+                                        width:182px;
+                                        height:16px;
+                                        padding: 1px;
+                                        border: 1px solid rgba(41,171,226,1);
+                                        margin-right:16px;
+                                        display: flex;
+                                        align-items: center;
+                                        .z_proess_sp1{
+                                            height:100%;
+                                            background: linear-gradient(to right, #2cbdfb 0%, #80e2bf 50%, #befe93 100%);
+                                            b{
+                                                font-size: 14px;
+                                                color: #00223F;
+                                                letter-spacing: 0;
+                                                font-weight: 700;
+                                                position: relative;
+                                                top:-6px;
+                                                left:14px;
+                                            }
+                                        }
+                                        .z_proess_sp2{
+                                            flex:1;
+                                            height:100%;
+                                            background: linear-gradient(to right, #ffc255 0%, #ff9c46 50%, #ff7b39 100%);
                                         }
                                     }
-                                    .z_proess_sp2{
-                                        flex:1;
-                                        height:100%;
-                                        background: linear-gradient(to right, #ffc255 0%, #ff9c46 50%, #ff7b39 100%);
-                                    }
-                                }
-                                .sp2{
-                                    font-size: 14px;
-                                    color:rgba(255,200,53,.8);
-                                    b{
-                                        font-size:20px;
-                                        opacity: 1;
-                                        color:#FFC835;
+                                    .sp2{
+                                        font-size: 14px;
+                                        color:rgba(255,200,53,.8);
+                                        b{
+                                            font-size:20px;
+                                            opacity: 1;
+                                            color:#FFC835;
+                                        }
                                     }
                                 }
                             }
-                        }
-                        .z-row-center{
-                            flex:1;
-                            display: flex;
-                            flex-wrap: wrap;
-                            .numBtn{
-                                min-width: 70px;
-                                border-radius:4px;
-                                height:60px;
-                                padding:0 10px;
-                                margin-right:8px;
-                                margin-bottom:8px;
+                            .z-row-center{
+                                flex:1;
                                 display: flex;
-                                flex-direction: column;
-                                align-items: center;
-                                justify-content: center;
-                                background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                                .sp1{
-                                    font-size: 16px;
-                                    color: #FFCA07;
+                                flex-wrap: wrap;
+                                .numBtn{
+                                    min-width: 70px;
+                                    border-radius:4px;
+                                    height:60px;
+                                    padding:0 10px;
+                                    margin-right:8px;
+                                    margin-bottom:8px;
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    justify-content: center;
+                                    background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                                    .sp1{
+                                        font-size: 16px;
+                                        color: #FFCA07;
+                                        font-weight: 600;
+                                    }
+                                    .sp2{
+                                        font-size: 12px;
+                                    }
+                                }
+                            }
+                            .z-row-right{
+                                width: 250px;
+                                height: 100px;
+                                margin-right: 20px;
+                                padding:0 30px 0 26px;
+                                padding-bottom:20px;
+                                border: 1px solid;
+                                border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
+                                background-image: var(--logo-bg) !important;
+                                .name{
+                                    padding-top:14px;
+                                    margin-bottom:14px;
+                                    font-size: 18px;
+                                    color: #24DEFF;
+                                    text-align: center;
+                                    line-height: 25px;
                                     font-weight: 600;
                                 }
-                                .sp2{
-                                    font-size: 12px;
-                                }
-                            }
-                        }
-                        .z-row-right{
-                            width: 250px;
-                            height: 100px;
-                            margin-right: 20px;
-                            padding:0 30px 0 26px;
-                            padding-bottom:20px;
-                            border: 1px solid;
-                            border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
-                            background-image: var(--logo-bg) !important;
-                            .name{
-                                padding-top:14px;
-                                margin-bottom:14px;
-                                font-size: 18px;
-                                color: #24DEFF;
-                                text-align: center;
-                                line-height: 25px;
-                                font-weight: 600;
-                            }
-                            .num{
-                                flex-wrap: wrap;
-                                display: flex;
-                                align-items: center;
-                                justify-content: space-between;
-                                span{
-                                    font-size:12px;
+                                .num{
+                                    flex-wrap: wrap;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    span{
+                                        font-size:12px;
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
-            .v3{
-                height:300px;
-                .z-content2{
-                    padding-left:36px;
-                    display: flex;
-                    .z1{
-                        margin-right:40px;
-                    }
-                    .z3{
-                        flex:1;
+                .v3{
+                    height:300px;
+                    .z-content2{
+                        padding-left:36px;
                         display: flex;
-                        justify-content: flex-end;
-                        .z-row-right{
-                            width:250px;
-                            height:110px;
-                            margin-right:20px;
-                            padding-bottom:20px;
-                            border: 1px solid;
-                            border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
-                            background-image: var(--logo-bg) !important;
-                            .name{
-                                padding-top:14px;
-                                margin-bottom:14px;
-                                font-size: 18px;
-                                color: #24DEFF;
-                                text-align: center;
-                                line-height: 25px;
-                                font-weight: 600;
-                            }
-                            .num{
-                                padding-left:30px;
-                                flex-wrap: wrap;
-                                display: flex;
-                                align-items: center;
-                                justify-content: space-between;
-                                span{
-                                    width:100px;
-                                    font-size:12px;
-                                    // text-align: right;
-                                }
-                            }
+                        .z1{
+                            margin-right:40px;
                         }
-                    }
-                    .z-content-n{
-                        margin-top:16px;
-                        display: flex;
-                        .z-row-left{
-                            margin-right:60px;
-                            .z_title{
-                                display: flex;
-                                align-items: center;
-                                position: relative;
-                                img{
-                                    width:38px;
-                                    height:38px;
-                                    margin-right:10px;
-                                }
-                                span{
-                                    font-size: 16px;
-                                    color: #FFFFFF;
-                                    text-align: center;
-                                    font-weight: 600;
-                                    z-index: 1;
-                                }
-                                &::before{
-                                    content:'';
-                                    background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                                    width:110px;
-                                    height:32px;
-                                    position: absolute;
-                                    left:60px;
-                                    top:2px;
-                                    z-index: 0;
-                                }
-                            }
-                            .z_title2{
-                                display: flex;
-                                align-items: center;
-                                position: relative;
-                                img{
-                                    width:38px;
-                                    height:38px;
-                                    margin-right:20px;
-                                }
-                                span{
-                                    font-size: 16px;
-                                    color: #FFFFFF;
-                                    text-align: center;
-                                    font-weight: 600;
-                                    z-index: 1;
-                                }
-                                &::before{
-                                    content:'';
-                                    background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                                    width:110px;
-                                    height:32px;
-                                    position: absolute;
-                                    left:50px;
-                                    top:2px;
-                                    z-index: 0;
-                                }
-                            }
-                            .z_schedule{
-                                margin-top:22px;
-                                margin-bottom:10px;
-                                display: flex;
-                                align-items: center;
-                                .sp1{
-                                    width:61px;
-                                    font-size: 14px;
-                                }
-                                .z_proess{
-                                    width:182px;
-                                    height:16px;
-                                    padding: 1px;
-                                    border: 1px solid rgba(41,171,226,1);
-                                    margin-right:16px;
-                                    display: flex;
-                                    align-items: center;
-                                    .z_proess_sp1{
-                                        height:100%;
-                                        background: linear-gradient(to right, #2cbdfb 0%, #80e2bf 50%, #befe93 100%);
-                                        b{
-                                            font-size: 14px;
-                                            color: #00223F;
-                                            letter-spacing: 0;
-                                            font-weight: 700;
-                                            position: relative;
-                                            top:-6px;
-                                            left:14px;
-                                        }
-                                    }
-                                    .z_proess_sp2{
-                                        flex:1;
-                                        height:100%;
-                                        background: linear-gradient(to right, #ffc255 0%, #ff9c46 50%, #ff7b39 100%);
-                                    }
-                                }
-                                .sp2{
-                                    font-size: 14px;
-                                    color:rgba(255,200,53,.8);
-                                    b{
-                                        font-size:20px;
-                                        opacity: 1;
-                                        color:#FFC835;
-                                    }
-                                }
-                            }
-                        }
-                        .z-row-center{
+                        .z3{
                             flex:1;
                             display: flex;
-                            flex-wrap: wrap;
-                            .numBtn{
-                                min-width: 70px;
-                                border-radius:4px;
-                                height:60px;
-                                padding:0 10px;
-                                margin-right:8px;
-                                margin-bottom:8px;
-                                display: flex;
-                                flex-direction: column;
-                                align-items: center;
-                                justify-content: center;
-                                background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                                .sp1{
-                                    font-size: 16px;
-                                    color: #FFCA07;
+                            justify-content: flex-end;
+                            .z-row-right{
+                                width:250px;
+                                height:110px;
+                                margin-right:20px;
+                                padding-bottom:20px;
+                                border: 1px solid;
+                                border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
+                                background-image: var(--logo-bg) !important;
+                                .name{
+                                    padding-top:14px;
+                                    margin-bottom:14px;
+                                    font-size: 18px;
+                                    color: #24DEFF;
+                                    text-align: center;
+                                    line-height: 25px;
                                     font-weight: 600;
                                 }
-                                .sp2{
-                                    font-size: 12px;
+                                .num{
+                                    padding-left:30px;
+                                    flex-wrap: wrap;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    span{
+                                        width:100px;
+                                        font-size:12px;
+                                        // text-align: right;
+                                    }
                                 }
                             }
                         }
-                        
+                        .z-content-n{
+                            margin-top:16px;
+                            display: flex;
+                            .z-row-left{
+                                margin-right:60px;
+                                .z_title{
+                                    display: flex;
+                                    align-items: center;
+                                    position: relative;
+                                    img{
+                                        width:38px;
+                                        height:38px;
+                                        margin-right:10px;
+                                    }
+                                    span{
+                                        font-size: 16px;
+                                        // color: #FFFFFF;
+                                        text-align: center;
+                                        font-weight: 600;
+                                        z-index: 1;
+                                    }
+                                    &::before{
+                                        content:'';
+                                        background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                                        width:110px;
+                                        height:32px;
+                                        position: absolute;
+                                        left:60px;
+                                        top:2px;
+                                        z-index: 0;
+                                    }
+                                }
+                                .z_title2{
+                                    display: flex;
+                                    align-items: center;
+                                    position: relative;
+                                    img{
+                                        width:38px;
+                                        height:38px;
+                                        margin-right:20px;
+                                    }
+                                    span{
+                                        font-size: 16px;
+                                        // color: #FFFFFF;
+                                        text-align: center;
+                                        font-weight: 600;
+                                        z-index: 1;
+                                    }
+                                    &::before{
+                                        content:'';
+                                        background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                                        width:110px;
+                                        height:32px;
+                                        position: absolute;
+                                        left:50px;
+                                        top:2px;
+                                        z-index: 0;
+                                    }
+                                }
+                                .z_schedule{
+                                    margin-top:22px;
+                                    margin-bottom:10px;
+                                    display: flex;
+                                    align-items: center;
+                                    .sp1{
+                                        width:61px;
+                                        font-size: 14px;
+                                    }
+                                    .z_proess{
+                                        width:182px;
+                                        height:16px;
+                                        padding: 1px;
+                                        border: 1px solid rgba(41,171,226,1);
+                                        margin-right:16px;
+                                        display: flex;
+                                        align-items: center;
+                                        .z_proess_sp1{
+                                            height:100%;
+                                            background: linear-gradient(to right, #2cbdfb 0%, #80e2bf 50%, #befe93 100%);
+                                            b{
+                                                font-size: 14px;
+                                                color: #00223F;
+                                                letter-spacing: 0;
+                                                font-weight: 700;
+                                                position: relative;
+                                                top:-6px;
+                                                left:14px;
+                                            }
+                                        }
+                                        .z_proess_sp2{
+                                            flex:1;
+                                            height:100%;
+                                            background: linear-gradient(to right, #ffc255 0%, #ff9c46 50%, #ff7b39 100%);
+                                        }
+                                    }
+                                    .sp2{
+                                        font-size: 14px;
+                                        color:rgba(255,200,53,.8);
+                                        b{
+                                            font-size:20px;
+                                            opacity: 1;
+                                            color:#FFC835;
+                                        }
+                                    }
+                                }
+                            }
+                            .z-row-center{
+                                flex:1;
+                                display: flex;
+                                flex-wrap: wrap;
+                                .numBtn{
+                                    min-width: 70px;
+                                    border-radius:4px;
+                                    height:60px;
+                                    padding:0 10px;
+                                    margin-right:8px;
+                                    margin-bottom:8px;
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    justify-content: center;
+                                    background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+                                    .sp1{
+                                        font-size: 16px;
+                                        color: #FFCA07;
+                                        font-weight: 600;
+                                    }
+                                    .sp2{
+                                        font-size: 12px;
+                                    }
+                                }
+                            }
+                            
+                        }
                     }
                 }
             }

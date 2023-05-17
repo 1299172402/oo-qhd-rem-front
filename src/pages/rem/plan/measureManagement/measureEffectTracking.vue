@@ -44,7 +44,7 @@
         <div style="height: 125px;padding-top:0;margin-bottom:14px;" class="svg">
             <el-table v-show="type == 0" highlight :data="oilWellTableData" style="width: 100%" height="100%">
                 <el-table-column type="index" align="center" width="50" label="序号"></el-table-column>
-                <el-table-column prop="wellName" align="center" label="井号" width="130"></el-table-column>
+                <el-table-column prop="wellName" align="center" label="井号" width="160"></el-table-column>
                 <el-table-column prop="beginDate" align="center" label="措施开始日期" width="110px"></el-table-column>
                 <el-table-column prop="endDate" align="center" label="措施结束日期" width="110px"></el-table-column>
                 <el-table-column align="center" label="措施前生产情况">
@@ -261,7 +261,7 @@
     import {nameAndCode} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
     import {getWorkProgress} from '@/api/oilDeposit/rem-04/plan.js';
     export default {
-        name: 'wellMonitoring',
+        // name: 'wellMonitoring',
         components: {
             verticalSwitchButton,
             Echarts,
@@ -1701,7 +1701,7 @@
                 this.getFetchPlatforms(this.selectOilField);
                 //初始化需要根据油田
                 console.log('this.selectOilField,this.selectWellI',this.selectOilField,this.selectWellI)
-                this.getFetchWells(this.selectOilField,this.selectWellId);
+                this.getFetchWells(this.selectOilField,this.selectPlatform);
                 console.log('this.wells',this.wells.length)
                 //措施事件
                 this.getMeasureNameAndCode(this.selectOilField, this.selectPlatform, this.wellId, this.measuresType, this.dateTime, this.page, this.pageSize, 0);
@@ -1765,7 +1765,6 @@
                             this.wells = this.wells.concat(waterWellList);
                         }
                     });
-            
                 } else {
                     await fetchProductionWellsByPlatform({platformId}).then((res) => {
                         if (res.data.code == 200) {
@@ -1784,11 +1783,11 @@
                     });
                 }
                 console.log('this.wells.length',this.wells.length)
-                if(this.wells.length){
-                    this.selectWellId=this.wells[0].wellId;
-                }else{
-                    this.selectWellId='';
-                }
+                // if(this.wells.length){
+                //     this.selectWellId=this.wells[0].wellId;
+                // }else{
+                //     this.selectWellId='';
+                // }
             },
             //搜索文件
             doSearch() {
@@ -2134,20 +2133,20 @@
                             this.doOilSearch();
                         }
                         break;
-                    case '1': {
-                        this.queryParams.platId = this.selectPlatform;
-                        this.queryParams.borepipeId = this.selectWellId;
-                        this.fetchProduceParams();
-                        this.getRealtimeData();
-                    }
-                    break;
-                    case '2': {
-                        this.doWellFluxLastDayHour();
-                    }
-                    break;
-                    case '3': {}
-                    break;
-                    default: {}
+                        case '1': {
+                            this.queryParams.platId = this.selectPlatform;
+                            this.queryParams.borepipeId = this.selectWellId;
+                            this.fetchProduceParams();
+                            this.getRealtimeData();
+                        }
+                        break;
+                        case '2': {
+                            this.doWellFluxLastDayHour();
+                        }
+                        break;
+                        case '3': {}
+                        break;
+                        default: {}
                     }
                 } else if (this.type == '1') {
                     switch (this.waterTabType) {
@@ -2471,7 +2470,7 @@
                             },
                         },
                     };
-                    this.optionRealData.toolbox = toolBox;
+                    // this.optionRealData.toolbox = toolBox;
                 }
             },
             //根据井号id转换对应实时数据的井名信息
@@ -2569,6 +2568,7 @@
             },
             //虚拟计量内容 查询
             doWellFluxLastDayHour() {
+                return false;
                 const request = {
                     date: this.selectDateTime,
                     wellName: this.wellNameNano,

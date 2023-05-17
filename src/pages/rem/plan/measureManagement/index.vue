@@ -72,7 +72,7 @@
                         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                         header-cell-class-name="table_header" :cell-style="{ padding: '2px', 'text-align': 'center' }"
                         style="width: 100%;overflow-x: hidden;">
-                        <el-table-column prop="wellNo" label="井号" width="130"></el-table-column>
+                        <el-table-column prop="wellNo" label="井号" width="140"></el-table-column>
                         <el-table-column prop="measureName" label="作业类型" width="80"></el-table-column>
                         <el-table-column prop="measureName3" label="措施作业天数(计划/实际)" width="110">
                             <template slot-scope="scope">
@@ -281,7 +281,7 @@
         },
         mounted() {
             this.$nextTick(() => {
-                let width = document.getElementById('tableBox').clientWidth - 500;
+                let width = document.getElementById('tableBox').clientWidth - 510;
                 this.width = width; //table最后一列的宽度
                 //计算日期 间距 
                 console.log('日期宽度', Math.floor(this.width - 44 - 20))
@@ -300,7 +300,7 @@
         },
         watch: {
             screenWidth() {
-                let width = document.getElementById('tableBox').clientWidth - 500;
+                let width = document.getElementById('tableBox').clientWidth - 510;
                 this.width = width; //table最后一列的宽度
                 //计算日期 间距 
                 this.spacing = Math.floor((this.width - 936 - 44 - 20) / 11);
@@ -454,11 +454,10 @@
             mcMarginLeft() {
                 let newDate = moment().format('YYYY-MM-DD');
                 let diffObject = this.leftDiff(newDate);
-                let marginLeft = (diffObject.month * 78) + (diffObject.month * this.spacing) + (78 / 30 * diffObject
-                    .day) - 4;
+                let marginLeft = (diffObject.month * 78) + (diffObject.month * this.spacing) + (78 / 30 * diffObject.day) - 4;
                 console.log('marginLeft', marginLeft)
                 this.mcWidth = (this.width - 10 - 40) - marginLeft + 'px';
-                this.mcMgLeft = marginLeft + 550 + 'px';
+                this.mcMgLeft = marginLeft + 560 + 'px';
                 console.log('this.mcWidth', this.mcWidth);
                 console.log('this.mcMgLeft', this.mcMgLeft)
             },
