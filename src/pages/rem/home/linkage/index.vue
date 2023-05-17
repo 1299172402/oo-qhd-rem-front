@@ -201,7 +201,7 @@ export default {
 <style lang="less" scoped>
 .container{
     height: calc(100% - 20px);
-    background-image: url("@/assets/linkage/liandong-bg.jpg");
+    background-image: url("@/assets/linkage/liandong-bg.gif");
     background-size: 100% 100%;
     .topBanner{
         width: 100%;height: 38px;
