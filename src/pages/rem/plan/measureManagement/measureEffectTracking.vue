@@ -368,7 +368,8 @@
                     ],
                     ['003019', '003020'],
                 ],
-                paramsList: [{
+                paramsList: [
+                    {
                         paramName: '井口温度',
                         paramCode: '001001',
                         unit: '℃',
@@ -2244,27 +2245,26 @@
                 this.queryParams.endDate = dates[1];
             },
             getRealtimeData() {
-                this.realTimeData = [];
+                this.realTimeData =[];
                 getOilWellData(this.queryParams).then(res => {
                     if (res.data.code == 200) {
                         const data = res.data.data;
                         if (Object.keys(data).length) {
-                            for(let key in data){
-                                this.realTimeData.push(data[key]);
-                            }
-                            console.log('this.realTimeData',this.realTimeData)
+                            this.realTimeData=data;
                         }
                     } 
                     getPumpData(this.queryParams).then(ref => {
                         if (ref.data.code == 200) {
-                            const data = res.data.data;
+                            const data = ref.data.data;
                             if (Object.keys(data).length) {
-                                for(let key in data){
-                                    this.realTimeData.push(data[key]);
+                                if(Object.keys(this.realTimeData).length){
+                                    this.realTimeData=Object.assign(this.realTimeData,data);
+                                }else{
+                                    this.realTimeData=data;
                                 }
-                                console.log('this.realTimeData',this.realTimeData)
                             }
                         }
+                        console.log('this.realTimeData',this.realTimeData)
                         this.$nextTick(() => {
                             this.getChartsOption();
                         });

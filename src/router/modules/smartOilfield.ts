@@ -1,6 +1,6 @@
 // 智能油田一级页面
 import Layout from "@/layouts/index.vue";
-
+const env = import.meta.env.MODE;
 export default [
     // 静态本地路由【首页，组件样例，页面样例，门户页面】
     //   {
@@ -37,7 +37,7 @@ export default [
     {
         path: '/demo',
         name: 'demo',
-        hidden: false, // 设置为true路由不可见
+        hidden: env == "development" ? false : true,
         component: Layout,
         redirect: '/demo/demoIndex',
         meta: { title: '组件样例', icon: 'dashboard', single: true }, // single设置为true只显示一级路由
@@ -53,6 +53,7 @@ export default [
     {
         path: '/demo2',
         name: 'demo2',
+        hidden: env == "development" ? false : true,
         component: Layout,
         redirect: '/demo2/demoIndex2',
         meta: { title: '组件样例2', icon: 'education', single: true },
@@ -68,6 +69,7 @@ export default [
     {
         path: '/demo3',
         name: 'demo3',
+        hidden: env == "development" ? false : true,
         component: Layout,
         redirect: '/demo3/demoIndex3',
         meta: { title: '列表示例页', icon: 'form', single: true },
@@ -96,6 +98,7 @@ export default [
     {
         path: "/demo5",
         name: "demo5",
+        hidden: env == "development" ? false : true,
         component: Layout,
         redirect: "/demo5/demoIndex5",
         meta: { title: "拖拽组件", icon: "form", single: true },
