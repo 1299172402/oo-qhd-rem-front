@@ -119,6 +119,12 @@
                 pageSize: 10,
                 //采油速度
                 productionSpeed: {
+                    grid:{
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 70,
+                    },
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -142,7 +148,8 @@
                     },
                     legend: {
                         data: [],
-                        left: 0,
+                        x:'center',
+                        bottom:0,
                         textStyle: {
                             color: '#24DEFF'
                         }
@@ -150,7 +157,8 @@
                     xAxis: {
                         type: 'category',
                         axisLabel: {
-                            color: '#698398'
+                            color: '#8FA4CC',
+                            padding:[10,0,0,0],
                         },
                         axisTick: {
                             show: false
@@ -236,6 +244,12 @@
                 },
                 //采出程度
                 recoveryDegree: {
+                    grid:{
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 70,
+                    },
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -243,7 +257,8 @@
                         }
                     },
                     legend: {
-                        left: 0,
+                        x:'center',
+                        bottom:0,
                         textStyle: {
                             color: '#24DEFF'
                         }
@@ -266,11 +281,12 @@
                         nameTextStyle: {
                             color: '#8FA4CC'
                         },
-                        nameGap: 25,
+                        nameGap: 35,
                         //max: 60,
                         type: 'value',
                         axisLabel: {
-                            color: '#8FA4CC'
+                            color: '#8FA4CC',
+                            padding:[10,0,0,0],
                         },
                         axisTick: {
                             show: false
@@ -323,10 +339,10 @@
                 //采出程度与含水率关系图
                 relationship: {
                     grid:{
-                        top: "18%",
-                        right: "5%",
-                        bottom:"15%",
-                        left: "8%",
+                        x: 100,
+                        y: 20,
+                        x2: 100,
+                        y2: 100,
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -336,13 +352,12 @@
                         confine: true
                     },
                     legend: {
-                        left: 0,
+                        x:'center',
+                        bottom:0,
                         textStyle: {
                             color: '#24DEFF'
                         },
-                        data: [
-                
-                        ],
+                        data: [],
                         itemGap: 5
                     },
                     toolbox: {
@@ -365,7 +380,8 @@
                         nameGap: 30,
                         type: 'value',
                         axisLabel: {
-                            color: '#8FA4CC'
+                            color: '#8FA4CC',
+                            padding:[10,0,0,0],
                         },
                         axisTick: {
                             show: false
@@ -516,10 +532,10 @@
                 //地层总压降
                 totalFormationPressureDrop: {
                     grid:{
-                        top: "18%",
-                        right: "5%",
-                        bottom:"10%",
-                        left: "5%",
+                        x: 50,
+                        y: 20,
+                        x2: 60,
+                        y2: 50,
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -529,7 +545,8 @@
                     },
                     legend: {
                         data: ['合理地层压力', '压力保持水平'],
-                        left: 0,
+                        x:'center',
+                        bottom:0,
                         textStyle: {
                             color: '#fff'
                         }

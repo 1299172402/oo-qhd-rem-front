@@ -923,7 +923,7 @@
                             let myData = res.data.data.indicatorAnalysisDetailInfos;
                             this.potentialWellNum=0;
                             myData.forEach((el,i)=>{
-                                this.potentialWellNum=Number(el.value);
+                                this.potentialWellNum+=Number(el.value);
                             })
                             this.recommendedMeasuresOptions = myData;
                         }

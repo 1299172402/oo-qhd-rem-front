@@ -122,6 +122,7 @@
         selMonthRangeApi,
         getModelInstructionManual
     } from '@/api/modelConfiguration/config/modelConfigAPI';
+    import { saveAs } from "file-saver";
     export default {
         data() {
             return {
@@ -428,22 +429,8 @@
             //模型说明文档下载
             getModelInstructionManual() {
                 getModelInstructionManual().then(res => {
-                    const blob = new Blob([res.data], {
-                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
-                    });
-                    const downloadElement = document.createElement('a');
-                    const href = window.URL.createObjectURL(blob);
-                    let contentDisposition = res.headers['content-disposition'];
-                    let patt = new RegExp("filename=([^;]+\\.[^\\.;]+);*");
-                    let result = patt.exec(contentDisposition);
-                    let filename = decodeURI(result[1]);
-                    downloadElement.style.display = 'none';
-                    downloadElement.href = href;
-                    downloadElement.download = filename; //下载后文件名
-                    document.body.appendChild(downloadElement);
-                    downloadElement.click(); //点击下载
-                    document.body.removeChild(downloadElement); //下载完成移除元素
-                    window.URL.revokeObjectURL(href); //释放掉blob对象
+                    const blob = new Blob([res],{ type: "application/vnd.ms-excel" });
+                    saveAs(blob, '油藏动态分析模型说明手册');
                 }).catch(() => {});
             },
         },

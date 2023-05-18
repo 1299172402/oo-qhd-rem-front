@@ -25,14 +25,14 @@
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
-                    <span>措施事件：</span>
+                    <span>措施类型：</span>
                     <el-select v-model="measureId" style="width:170px;">
                         <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name"
                             :value="item.code"></el-option>
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
-                    <span>措施类型：</span>
+                    <span>措施事件：</span>
                     <el-select v-model="stimClassCode" filterable style="width:170px;">
                         <el-option v-for="(item, index) in stimClassCodeSelect" :key="index" :label="item.name"
                             :value="item.code"></el-option>
@@ -205,7 +205,8 @@
                 spacing: '', //日期间距
                 mcWidth: '0px',
                 mcMgLeft: '',
-                basicDays: ['-01-01', '-02-01', '-03-01', '-04-01', '-05-01', '-06-01', '-07-01', '-08-01', '-09-01','-10-01', '-11-01', '-12-01'],
+                // basicDays: ['-01-01', '-02-01', '-03-01', '-04-01', '-05-01', '-06-01', '-07-01', '-08-01', '-09-01','-10-01', '-11-01', '-12-01'],
+                basicDays:['年01月','年02月','年03月','年04月','年05月','年06月','年07月','年08月','年09月','年10月','年11月','年12月'],
                 days: [],
                 dateTime: new Date().format('yyyy'), //时间
                 queryParams: {
@@ -254,6 +255,17 @@
                     {label:'分公司奋斗',value:'001003'},
                     {label:'有限考核',value:'002002'},
                     {label:'有限奋斗',value:'001002'},
+                    {label:'1+11', value:'003003001'},
+                    {label:'2+10',value:'003003002'},
+                    {label:'3+9', value:'003003003'},
+                    {label:'4+8', value:'003003004'},
+                    {label:'5+7', value:'003003005'},
+                    {label:'6+6', value:'003003006'},
+                    {label:'7+5', value:'003003007'},
+                    {label:'8+4', value:'003003008'},
+                    {label:'9+3', value:'003003009'},
+                    {label:'10+2',value:'0030030010'},
+                    {label:'11+1',value:'0030030011'},
                 ],
                 // table表格数据
                 tableData: [

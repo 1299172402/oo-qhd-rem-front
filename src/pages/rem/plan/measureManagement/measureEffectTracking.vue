@@ -619,6 +619,8 @@
                             color: '#8FA4CC',
                             fontSize: 14,
                         },
+                        x:'center',
+                        bottom:-5,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -627,19 +629,19 @@
                     grid: [
                         {
                             left: '14%',
-                            top: '6%',
+                            top: '4%',
                             width: '74%',
                             height: '25%',
                         },
                         {
                             left: '14%',
-                            top: '38%',
+                            top: '33%',
                             width: '74%',
                             height: '25%',
                         },
                         {
                             left: '14%',
-                            top: '66%',
+                            top: '62%',
                             width: '74%',
                             height: '28%',
                         },
