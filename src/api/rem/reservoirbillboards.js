@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
-export function getYieldFluctuation({ 对比时间, 对比时间前一天, 油田id } = {}) {
+export function getYieldFluctuation({ date, dateComp, ogfId } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/getYieldFluctuation?对比时间=${ 对比时间 || "" }&对比时间前一天=${ 对比时间前一天 || "" }&油田id=${ 油田id || "" }`,
+    url: `${baseUrl}/reservoirBillboards/getYieldFluctuation?date=${ date || "" }&dateComp=${ dateComp || "" }&ogfId=${ ogfId || "" }`,
     method: "get",
   });
 }
