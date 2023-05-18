@@ -29,7 +29,7 @@
                     <div class="rowBox" style="margin-bottom:20px;">
                         <div class="row" style="margin-right:20px;">
                             <info-window infoWidth="100%" infoHeight="456px" :headerTitle="oilFieldName + '产量跟踪预警分析'" isShowMaxBtn style="margin-top:0;">
-                                <div style="position: absolute;top: 8%;left: 12%;">
+                                <div style="position: absolute;bottom: 8%;left:450px;">
                                     <div style="display:inline-block;margin: 10px">
                                         <div style="border-radius: 50%;height: 8px;width: 7.4px;background-color: #FF5844;display:inline-block;margin-right:4px;"></div>
                                         <span style="font-size: 14px;color: #8FA4CC">红色预警</span>
@@ -332,9 +332,11 @@
                         start: 0,
                         type: "inside"
                     },
-                    grid: {
-                        top:70,
-                        bottom: 30,
+                    grid:{
+                        x: 170,
+                        y: 50,
+                        x2: 50,
+                        y2: 100,
                     },
                     toolbox: {
                         show: true,
@@ -357,18 +359,19 @@
                         itemWidth: 12,
                         itemHeight: 6,
                         itemGap: 14,
-                        //x: "right",
-                        right: '4%',
+                        x:'center',
+                        bottom:30,
                     }, ],
                     xAxis: {
-                        name: "时间/天",
-                        nameTextStyle: {
-                            color: "#8FA4CC",
-                            fontSize: 14,
-                        },
+                        // name: "时间/天",
+                        // nameTextStyle: {
+                        //     color: "#8FA4CC",
+                        //     fontSize: 14,
+                        // },
                         type: "category",
                         axisLabel: {
                             color: "#8FA4CC",
+                            padding:[10,0,0,0],
                             fontSize: 14,
                         },
                         axisLine: {
@@ -386,6 +389,8 @@
                     yAxis: {
                         type: "value",
                         name: "产油量/(m³/d)",
+                        nameLocation:'middle',
+                        nameGap:100,
                         nameTextStyle: {
                             color: "#8FA4CC",
                             fontSize: 14,

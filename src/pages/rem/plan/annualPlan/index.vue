@@ -11,7 +11,7 @@
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>时间：</span>
-                    <el-date-picker v-model="searchForm.selectDate" :clearable="false" unlink-panels type="daterange" format="yyyy-MM-dd" value-format="yyyy-MM-dd" range-separator="至 " start-placeholder="开始日期" end-placeholder="结束日期" style="width:260px;"></el-date-picker>
+                    <el-date-picker v-model="searchForm.selectDate" :clearable="false" unlink-panels type="daterange" format="yyyy-MM-dd" value-format="yyyy-MM-dd" start-placeholder="开始日期" end-placeholder="结束日期" style="width:260px;"></el-date-picker>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span v-if="pageType=='原油产量'">产量计划类型：</span>
@@ -37,12 +37,6 @@
                     <el-button icon="el-icon-search" type="primary" style="margin-left:10px;" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
-                <!-- <div style="margin-left:auto;margin-bottom:10px;" v-if="pageType == '原油产量'">
-                    <span>单位选择：</span>
-                    <el-select v-model="searchForm.selectUnitOfProduction" placeholder="请选择" style="width: 100px;" @change="doSearch">
-                        <el-option v-for="(item,index) in unitOfProduction" :key="index" :label="item.label" :value="item.value"></el-option>
-                    </el-select>
-                </div> -->
             </div>
         </headerSearch>
         <div class="z-container">
