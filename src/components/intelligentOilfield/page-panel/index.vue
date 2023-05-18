@@ -5,6 +5,7 @@
     :class="isMax ? 'maxPage' : 'minPage'"
     :style="{background: $store.state.setting.mode === 'dark' ? isMax ? '#032a3b !important' : 'transparent' : '#FFFFFF'}"
   >
+    <!-- <div v-if="isMax" class="t-layout g-w100 g-h100 posBg" /> -->
     <div class="headerStyle g-row-flex-V">
       <div style="width: 70%;">
         {{ headerTitle }}
@@ -56,6 +57,13 @@ export default {
 };
 </script>
 <style scoped>
+.posBg {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+}
+
 .maxPage {
   position: fixed !important;
   z-index: 999 !important;

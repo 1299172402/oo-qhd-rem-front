@@ -29,7 +29,7 @@
       info-width="100%"
       info-height="100%"
       header-title="已授权应用"
-      :header-style="$store.state.setting.mode === 'dark'?{}:{color:'#3490D3'}"
+      :header-style="$store.state.setting.mode === 'dark'?{}:{color:'#0075E9'}"
     >
       <!-- <template #titleContent>
         <div>

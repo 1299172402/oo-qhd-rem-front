@@ -241,13 +241,13 @@ export default {
   justify-content: space-between;
   align-items: center;
   height: 50px;
-  background-color: rgba(52, 144, 211, 0.10);
+  background-color: rgba(0, 117, 233, 0.10);
 
   .card-button-item {
     border: none;
     background-color: transparent;
     font-size: 18px;
-    color: rgba(52, 144, 211, 1);
+    color: #0075e9;
 
     &:hover {
       color: var(--light-blue-color);

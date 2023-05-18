@@ -1,13 +1,12 @@
 <!-- 新的页面通用面板 -->
 <template>
   <div
-    class="panelBox"
+    class="panelBox divBox"
     :class="isMax ? 'maxPage' : 'minPage'"
     :style="{background: $store.state.setting.mode === 'dark' ? isMax ? '#032a3b !important' : 'transparent' : '#FFFFFF'}"
   >
     <div
       v-if="showBtn"
-      class="divBox"
       style="width: 100%;text-align: right"
     >
       <el-tooltip
@@ -18,6 +17,7 @@
       >
         <svg-icon
           :icon-class="isMax?'no-expand':'expand'"
+          :style="{fill: $store.state.setting.mode==='dark' ? '#ffffff' : '#0075e9'}"
           class="panelIconClass"
           @clickIcon="maximizeCom"
         />

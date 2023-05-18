@@ -89,7 +89,10 @@
           @click="isNoticeVisible = true"
         >
           <!-- <mail-icon style="color: var(--white-color);"/> -->
-          <svg-icon icon-class="message-logo" class="panelIconClass" />
+          <svg-icon
+            :icon-class="$store.state.setting.mode==='light'?'message-new':'message-new-dark'"
+            class="panelIconClass"
+          />
         </t-button>
       </t-badge>
     </t-popup>
@@ -286,5 +289,10 @@ export default Vue.extend({
       color: var(--td-text-color-secondary);
     }
   }
+}
+</style>
+<style scoped>
+.operations-container .t-button {
+  margin: 0 5px;
 }
 </style>

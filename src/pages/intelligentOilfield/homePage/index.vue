@@ -79,7 +79,7 @@
                 v-else
                 v-hasPermi="['system:homePage:detail']"
                 size="mini"
-                style="width: 80px;height: 32px;color: #fff;background: #3490d3"
+                style="width: 80px;height: 32px;color: #fff;background: #0075e9"
                 @click="handleAuth(item.tenantId, item.tenantName)"
               >
                 查看

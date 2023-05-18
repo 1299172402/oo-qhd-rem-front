@@ -27,11 +27,11 @@
             <div v-else class="bgImage g-row-flex-HV" style="width: 56px;height: 56px">
                 {{ item2.name[0] }}
             </div>
-            <div style="max-width: 68px;text-overflow: ellipsis;overflow: hidden;white-space: pre;" :title="item2.name" :style="{color:$store.state.setting.mode==='dark'?'#D8D8D8':'#606266'}">
+            <div style="max-width: 68px;text-overflow: ellipsis;overflow: hidden;white-space: pre;" :title="item2.name" :style="{color:$store.state.setting.mode==='dark'?'#FFFFFF':'#606266'}">
               {{item2.name}}</div>
           </div>
           <!-- :class="index % 3 === 0 ? 'panelBlueColor' : index % 3 === 1 ? 'panelRedColor' : 'panelGreenColor'" -->
-          <div v-else class="panelBg g-row-flex-HV" @click="jumpLink(item2, index)">
+          <div v-else class="panelBg g-row-flex-HV" :style="{background: $store.state.setting.mode === 'dark' ? '#3490D3' : '#51A1FF'}" @click="jumpLink(item2, index)">
             <a :href="item2.url" :id="'hrefText' + index" target="_blank" v-show="false">跳转</a>
             <div class="g-flex-row-HV textImageDiv">{{  item2.name }}</div>
           </div>
@@ -47,7 +47,7 @@
                 <div v-else class="bgImage g-row-flex-HV" style="width: 56px;height: 56px">
                     {{ item.name[0] }}
                 </div>
-                <div style="max-width: 68px;text-overflow: ellipsis;overflow: hidden;white-space: pre;" :title="item.name" :style="{color:$store.state.setting.mode==='dark'?'#D8D8D8':'#606266'}">
+                <div style="max-width: 68px;text-overflow: ellipsis;overflow: hidden;white-space: pre;" :title="item.name" :style="{color:$store.state.setting.mode==='dark'?'#FFFFFF':'#606266'}">
                 {{item.name}}</div>
             </div>
             <div v-else class="panelBg g-row-flex-HV" @click="jumpLink(item, index)">
@@ -269,8 +269,10 @@ export default {
   // TODO: Maybe change back
 
   /* background: url('../../../assets/intelligentOilfield/enterImage.png'); */
+  background: #51a1ff;
+  border-radius: 2px;
   color: #51a1ff;
-  border: 1px solid #51a1ff;
+  // border: 1px solid #51a1ff;
 }
 
 .textImageDiv {
@@ -278,7 +280,8 @@ export default {
   font-family: "PingFangSC-Semibold, PingFang SC";
 
   /* font-weight: 600; */
-  color: #51a1ff;
+  // color: #51a1ff;
+  color: #fff;
 }
 
 .panelBlueColor {

@@ -37,7 +37,7 @@
       info-width="100%"
       info-height="100%"
       header-title="已授权看板"
-      :header-style="$store.state.setting.mode === 'dark'?{}:{color:'#3490D3'}"
+      :header-style="$store.state.setting.mode === 'dark'?{}:{color:'#0075E9'}"
     >
       <div class="g-w100 g-h100 g-column-flex">
         <!-- <el-tabs

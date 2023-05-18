@@ -1,11 +1,12 @@
 <!--自定义info信息窗-->
 <template>
   <div :style="{width: infoWidth,height:infoHeight,boxShadow: $store.state.setting.mode==='dark'?'': '0px 0px 10px 0px rgba(144,147,153,0.3)'}" class="g-w100" :class="isFull? 'maxPage':'minPage'">
-    <div class="g-w100 g-h100" style="background: white; position: absolute;z-index: -1" :style="{background: $store.state.setting.mode==='dark'?'rgba(3, 21, 39, 1)':'#fff'}" />
+    <div v-if="isFull" class="t-layout g-w100 g-h100 posBg" />
+    <div class="g-w100 g-h100" style="background: white; position: absolute;z-index: -1" :style="{background: $store.state.setting.mode==='dark'?'transparent':'#fff'}" />
     <!-- TODO: Maybe change back -->
     <!-- <div class="infoHeader g-row-flex-V" :style="{background: $store.state.setting.mode==='dark'?'linear-gradient(to right, rgba(0, 202, 255, 0.4), var(--opacity-blue-bg2))':'linear-gradient(to right, var(--only-light-blue-color), rgba(0, 96, 166, 0.2))',color:$store.state.setting.mode==='dark'?'var(--light-blue-color)':'var(--white-color)'}"> -->
-    <div class="infoHeader g-row-flex-V infoHeaderBg" style="color: var(--light-blue-color)">
-      <div style="width: 100%" :style="{color: headerStyle.color}">
+    <div class="infoHeader g-row-flex-V infoHeaderBg" :style="{color:$store.state.setting.mode==='dark'?'var(--light-blue-color)':'#0075e9', background: $store.state.setting.mode==='light' ? '#0075e9'?.value : ''}">
+      <div style="width: 100%" :style="{color: headerStyle.color, color: $store.state.setting.mode==='light' ? '#0075e9' : ''}">
         {{ headerTitle }}
       </div>
       <el-tooltip
@@ -16,7 +17,8 @@
       >
         <svg-icon
           v-if="isShowMaxBtn"
-          :icon-class="$store.state.setting.mode==='dark' ? isFull?'no-expand':'expand' : 'expand-white'"
+          :icon-class="isFull?'no-expand':'expand'"
+          :style="{fill: $store.state.setting.mode==='dark' ? '#ffffff' : '#0075e9'}"
           class="panelIconClass"
           @clickIcon="maximizeCom"
         />
@@ -25,7 +27,7 @@
       <slot name="titleContent" />
       <!-- </div> -->
     </div>
-    <div class="infoBody" :class="$store.state.setting.mode==='dark'?'infoBody-dark':'infoBody'" :style="{background: $store.state.setting.mode==='dark'?'var(--opacity-blue-bg2)':'var(--white-color)'}">
+    <div class="infoBody" :class="$store.state.setting.mode==='dark'?'infoBody-dark':'infoBody'" :style="{background: $store.state.setting.mode==='dark'?'':'var(--white-color)'}">
       <slot />
     </div>
   </div>
@@ -80,6 +82,13 @@ export default {
 };
 </script>
 <style scoped>
+.posBg {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+}
+
 .panelIconClass {
   width: 16px !important;
   height: 17px !important;
@@ -98,7 +107,7 @@ export default {
   /* border: 1px solid var(--light-blue-color); */
   display: flex;
   width: 100%;
-  font-size: 14px;
+  font-size: 16px;
   font-family: PingFangSC-Medium, "PingFang SC";
   font-weight: 500;
 
@@ -116,7 +125,8 @@ export default {
     border-left: 1px solid var(--light-blue-color);
     border-right: 1px solid var(--light-blue-color); */
   border: 1px solid transparent;
-  border-top-color: #ddd;
+
+  /* border-top-color: #ddd; */
 
   /* TODO: Maybe change back */
 
@@ -126,8 +136,11 @@ export default {
 .infoBody-dark {
   height: calc(100% - 40px);
   font-size: 16px;
-  border: 1px solid #ddd;
-  border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
+
+  /* border: 1px solid #ddd; */
+
+  /* border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3; */
+  background: linear-gradient(360deg, rgba(0,68,115,0.64), rgba(0,72,122,0.16) 100%);
 }
 
 .titleStyle {

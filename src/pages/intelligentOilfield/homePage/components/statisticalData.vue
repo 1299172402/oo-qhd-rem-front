@@ -26,7 +26,7 @@
       info-width="100%"
       info-height="100%"
       header-title="统计数据"
-      :header-style="$store.state.setting.mode === 'dark' ? {} : { color: '#3490D3' }"
+      :header-style="$store.state.setting.mode === 'dark' ? {} : { color: '#0075E9' }"
     >
       <!-- TODO: Maybe change back -->
       <!-- <template #titleContent>
@@ -55,7 +55,7 @@
           <iframe-index v-else :template-html="item.indexCode" />
         </div>
       </div> -->
-      <div id="myBox" class="g-row-flex g-h100 divBox" style="display: block">
+      <div id="myBox" class="g-row-flex g-h100 divBox" style="display: block;height: 238px;">
         <el-carousel
           :interval="5000"
           trigger="click"
@@ -69,7 +69,15 @@
               class="indexCenter"
               style="font-size: 0; margin: 10px 20px 10px 0"
             >
-              <component :is="getComponent(items.indexUrl)" v-if="items.uploadingMode === '1'" />
+              <!-- TODO: Maybe change back -->
+              <!-- <component :is="getComponent(items.indexUrl)" v-if="items.uploadingMode === '1'" /> -->
+              <iframe
+                v-if="items.uploadingMode === '1'"
+                :id="'iframe_' + items.indexUrl"
+                :src="items.indexUrl"
+                frameborder="0"
+                class="currentIframe"
+              />
               <iframe-index v-else :template-html="items.indexCode" />
             </div>
           </el-carousel-item>
@@ -363,7 +371,7 @@ export default {
   width: 18%;
   min-width: 190px;
   min-height: 116px;
-  height: 152px;
+  height: 176px;
 }
 
 .currentIframe {

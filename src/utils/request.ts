@@ -34,6 +34,8 @@ const CODE = {
   REQUEST_FOBID: 1001
 };
 
+const quickCloseLoading = ["projectionMode", "officeMode"];
+
 // 显示loading
 function showLoading(target) {
   // 后面这个判断很重要，因为关闭时加了抖动，此时loading对象可能还存在，
@@ -100,6 +102,13 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   response => {
+    if (quickCloseLoading.includes(router.currentRoute.name) && loading) {
+      setTimeout(() => {
+        loading?.close();
+        loading = null;
+        needLoadingRequestCount = 0;
+      }, 1500);
+    }
     if (response.headers.ntk) {
       // 相应的 headers 中有 ntk 时，更换 token
       store.commit("user/setToken", response.headers.ntk);
@@ -117,23 +126,18 @@ instance.interceptors.response.use(
       interceptCount += 1;
       MessageBox.confirm("登录状态已过期,请重新登录", "系统提示", {
         confirmButtonText: "重新登录",
-        cancelButtonText: "取消",
-        type: "warning"
-      }
-      ).then(() => {
-        // 更新访问页面
-        // console.log(store.state.route)
-        // console.log(router)
-        // let sysUser = { accessPage: store.state.route.meta.title, userName: store.state.user.name };
-        // updateaccessPage(sysUser).then((res) => {
-        //   console.log(res);
-        // });
-        router.replace({ path: "/" });
-        store.dispatch("user/logout");
-        store.dispatch("permission/restore");
-        // router.push(`/login`)
-        if (response.config.headers.showLoading !== false) {
-          hideLoading();
+        type: "warning",
+        showClose: false,
+        closeOnClickModal: false,
+        showCancelButton: false,
+        customClass: "auto-refresh-token-alert-box",
+        callback: () => {
+          router.replace({ path: "/" });
+          store.dispatch("user/logout");
+          store.dispatch("permission/restore");
+          if (response.config.headers.showLoading !== false) {
+            hideLoading();
+          }
         }
       });
     } else if (response.data.code === 500) {
@@ -176,17 +180,21 @@ instance.interceptors.response.use(
       if (err.response?.data.code === 401) {
         MessageBox.confirm("登录状态已过期,请重新登录", "系统提示", {
           confirmButtonText: "重新登录",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(() => {
-          router.replace({ path: "/" });
-          store.dispatch("user/logout");
-          store.dispatch("permission/restore");
+          type: "warning",
+          showClose: false,
+          closeOnClickModal: false,
+          showCancelButton: false,
+          customClass: "auto-refresh-token-alert-box",
+          callback: () => {
+            router.replace({ path: "/" });
+            store.dispatch("user/logout");
+            store.dispatch("permission/restore");
+          }
         });
       } else {
-        MessageBox.alert(err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错", "系统提示", {
-          type: "error"
-        });
+        // MessageBox.alert(err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错", "系统提示", {
+        //   type: "error"
+        // });
       }
       return Promise.reject(err);
     }

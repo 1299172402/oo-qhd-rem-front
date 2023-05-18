@@ -162,7 +162,7 @@ export default {
       } else if (data.tokenExpired) {
         // 这个 token 已经过期
         if (this.$route.path !== "/login") {
-          this.reloadWindow("登录状态已过期,请重新登录", () => {
+          this.reloadWindow("登录状态已过期,请重新登录", "确定", () => {
             this.$store.dispatch("user/logout");
           });
         } else {
