@@ -28,16 +28,16 @@
                     <el-date-picker
                         v-model="queryData.selectDate"
                         type="daterange"
+                        style="width: 300px"
                         range-separator="-"
                         start-placeholder="开始日期"
                         end-placeholder="结束日期"
                         value-format="yyyy-MM-dd"
-                        :disabled="activeEchart"
                     />
                 </el-form-item>
                 <el-form-item label="大事类型：">
                     <el-select v-model="queryData.event">
-                        <el-option v-for="item in events" :key="item.id" :label="item.wellName" :value="item.wellId">
+                        <el-option v-for="item in events" :key="item.id" :label="item.name" :value="item.value">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -48,10 +48,9 @@
         </header-search>
         <page-panel header-title="秦皇岛32-6油田单井大事记录表" style="height: calc(100% - 145px)" :show-btn="true">
             <el-table
-                :data="noticeList"
-                @current-change="handleCurrentChange"
+                :data="tableData.slice((queryData.page - 1) * queryData.pageSize, queryData.page * queryData.pageSize)"
                 highlight-current-row
-                height="calc(100% - 30px)"
+                height="calc(100% - 50px)"
                 style="margin-top: 10px"
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
@@ -59,18 +58,27 @@
                 :cell-style="{ 'text-align': 'center', padding: '2px' }"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column label="序号" fixed min-width="40px" prop="ogfName" align="center">
+                <el-table-column label="序号" min-width="40px" prop="ogfName" align="center">
                     <template slot-scope="scope">
                         {{ scope.$index + 1 }}
                     </template>
                 </el-table-column>
-                <el-table-column label="井号" fixed min-width="130px" prop="ogfName" align="center"></el-table-column>
-                <el-table-column label="大事类型代码"  min-width="130px" prop="ogfName" align="center"></el-table-column>
-                <el-table-column label="开始时间"  min-width="130px" prop="ogfName" align="center"></el-table-column>
-                <el-table-column label="结束时间"  min-width="130px" prop="ogfName" align="center"></el-table-column>
-                <el-table-column label="大事简要"  min-width="300px" prop="ogfName" align="center"></el-table-column>
-                <el-table-column label="备注"  min-width="130px" prop="ogfName" align="center"></el-table-column>
+                <el-table-column label="井号" min-width="130px" prop="wellNo" align="center"></el-table-column>
+                <el-table-column label="大事类型"  min-width="130px" prop="appendixValueName" align="center"></el-table-column>
+                <el-table-column label="开始时间"  min-width="130px" prop="startTime" align="center">
+                    <template slot-scope="scope">
+                        <span>{{ scope.row.startTime?scope.row.startTime.split(' ')[0]:'' }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="结束时间"  min-width="130px" prop="endTime" align="center">
+                    <template slot-scope="scope">
+                        <span>{{ scope.row.endTime?scope.row.endTime.split(' ')[0]:'' }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="大事简要"  min-width="130px" prop="chronicle" align="center"></el-table-column>
+                <el-table-column label="备注"  min-width="500px" show-overflow-tooltip prop="remark" align="center"></el-table-column>
             </el-table>
+            <pagination v-if="pageTotal" :pageSizes="[16, 50, 100]" :total="pageTotal" :page.sync="queryData.page" :limit.sync="queryData.pageSize" @pagination="pagination" />
         </page-panel>
     </div>
 </template>
@@ -83,25 +91,31 @@
         queryPlatformQueryWellListDetail,
         queryOilAndGasFieldQueryPositionDetail
     } from "@/api/basic/master";
+    import {queryOilFieldIncident, queryOilFieldIncidentType} from "@/api/rem/reservoirbillboards";
     export default {
         data(){
             return {
+                pageTotal:'',
                 queryData: {
                     ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                     wellId: "",
                     platformId: "",
                     selectDate:'',
-                    event:''
+                    event:[],
+                    page: 1,
+                    pageSize: 16,
                 },
                 oilFields:[],
                 platforms: [],
                 wells: [],
-                events:[]
+                events:[],
+                tableData:[]
             }
         },
         mounted() {
             this.getList();
             this.getWellData();
+            this.getData();
         },
         methods:{
             goBack(){
@@ -116,6 +130,10 @@
                 queryListOfOilfieldQueryPlatformsDetail({ogfId: this.queryData.ogfId}).then(res => {
                     this.platforms = res.data.data
                 })
+                //查询事件类型
+                queryOilFieldIncidentType().then(res=>{
+                    this.events = res.data.data.data
+                })
             },
             getWellData() {
                 queryPlatformQueryWellListDetail({ogfId:this.queryData.ogfId}).then((res) => {
@@ -127,6 +145,38 @@
                 queryPlatformQueryWellListDetail({platformId:val}).then((res) => {
                     this.wells = res.data.data
                 })
+            },
+            getData(){
+                let params = {
+                    wellId:this.queryData.wellId,
+                    chronicleTypeCode:this.queryData.event,
+                    startTime:this.queryData.selectDate?this.queryData.selectDate[0]:'',
+                    endTime:this.queryData.selectDate?this.queryData.selectDate[1]:''
+                }
+                queryOilFieldIncident(params).then(res=>{
+                    this.tableData = res.data.data.data
+                    this.pageTotal = res.data.data.data.length
+                })
+            },
+            //切换分页
+            pagination(e) {
+                this.queryData.page = e.page;
+                this.queryData.pageSize = e.limit;
+            },
+            queryserch(){
+                this.getData()
+            },
+            refresh(){
+                this.queryData = {
+                    ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                    wellId: "",
+                    platformId: "",
+                    selectDate:'',
+                    event:[],
+                    page: 1,
+                    pageSize: 16,
+                }
+                this.getData()
             }
         }
     }

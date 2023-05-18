@@ -1,7 +1,7 @@
 <template>
     <div class="app-container" style="width: 100%; height: 100%">
-        <div class="text" style="width: 15%; height: 10%; margin-left: 5%; text-align: center; padding: 5px 0">
-            投产时间：2001-10
+        <div style="width: 15%; height: 10%; margin-left: 5%; text-align: center; padding: 5px 0">
+<!--            投产时间：2001-10-->
         </div>
         <Echart :chart-data="histogram" width="100%" height="65%"></Echart>
         <el-row :gutter="20">
