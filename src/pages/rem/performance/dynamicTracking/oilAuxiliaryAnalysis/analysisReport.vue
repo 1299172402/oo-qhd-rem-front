@@ -170,10 +170,21 @@
                     </div>
                     <div style="flex:1;min-height:380px;">
                         <pagePanel headerTitle="油井动态分析详情列表" style="margin-top:0;height:100%;">
-                            <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList">
+                            <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                 <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                 <!--生产动态项目-->
-                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" :label="item.name" :render-header="renderHeader" align="center" width="120" sortable="custom">
+                                <!-- :render-header="renderHeader" -->
+                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" align="center" width="120" sortable="custom" label-class-name="twoRowHeader">
+                                    <template #header>
+                                        <div class="headerSortRow1" v-if="item.name && item.name.split(' ')[1]">
+                                            <span>{{ item.name.split(' ')[0] ? item.name.split(' ')[0] : ""}}</span>
+                                            <br />
+                                            <span>{{ item.name.split(' ')[1] ? `(${item.name.split(' ')[1]})` : ""}}</span>
+                                        </div>
+                                        <div v-else>
+                                            <span>{{item.name}}</span>
+                                        </div>
+                                    </template>
                                     <template slot-scope="scope">
                                         <span v-if="scope.row.scdt[item.code] == null"></span>
                                         <span v-else-if="item.code == 'ZC'">{{ scope.row.scdt[item.code].showLabel }}</span>
@@ -184,7 +195,17 @@
                                 </el-table-column>
                                 <!--生产问题监测项目-->
                                 <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
-                                    <el-table-column v-for="(item, index) in problemMonitoringTab" :key="index" :prop="item.code" :label="item.name" align="center">
+                                    <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="100" :key="index" :prop="item.code" align="center" label-class-name="twoRowHeader">
+                                        <template #header>
+                                            <div v-if="item.isTwoHeader">
+                                                <span>{{item.name}}</span>
+                                                <br />
+                                                <span>{{item.unit}}</span>
+                                            </div>
+                                            <div v-else>
+                                                <span>{{item.name}}</span>
+                                            </div>
+                                        </template>
                                         <template slot-scope="scope">
                                             <span v-if="scope.row[item.code] == null"></span>
                                             <span v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel }}</span>
@@ -213,7 +234,14 @@
                                             <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel }}</span>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="theDate" label="推荐日期" align="center" width="120px">
+                                    <el-table-column prop="theDate" align="center" min-width="130" label-class-name="twoRowHeader">
+                                        <template #header>
+                                            <div>
+                                                <span>推荐日期</span>
+                                                <br />
+                                                <span>(yyyy/mm/dd)</span>
+                                            </div>
+                                        </template>
                                         <template slot-scope="scope">
                                             <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq }}</span>
                                         </template>
@@ -225,7 +253,14 @@
                                     </el-table-column>
                                 </el-table-column>
                                 <!--措施效果数据-->
-                                <el-table-column prop="dailyOilIncrement" label="日增油量m³/d" align="center">
+                                <el-table-column prop="dailyOilIncrement" label="日增油量m³/d" align="center" label-class-name="twoRowHeader">
+                                    <template #header>
+                                        <div>
+                                            <span>日增油量</span>
+                                            <br />
+                                            <span>(m³/d)</span>
+                                        </div>
+                                    </template>
                                     <template slot-scope="scope">
                                         <span v-if="scope.row.rzyl == null || scope.row.rzyl.showMvalue == null"></span>
                                         <span v-else>{{ scope.row.rzyl.showMvalue }}</span>
@@ -543,10 +578,21 @@
                     </div>
                     <div style="height:340px;">
                         <info-window info-width="100%" info-height="100%" header-title="油井动态分析详情列表" :is-show-max-btn="false">
-                            <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList">
+                            <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                 <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                 <!--生产动态项目-->
-                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" :label="item.name" :render-header="renderHeader" align="center" width="120" sortable="custom">
+                                <!--  :label="item.name" :render-header="renderHeader" -->
+                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" align="center" width="120" sortable="custom" label-class-name="twoRowHeader">
+                                    <template #header>
+                                        <div class="headerSortRow1" v-if="item.name && item.name.split(' ')[1]">
+                                            <span>{{ item.name.split(' ')[0] ? item.name.split(' ')[0] : ""}}</span>
+                                            <br />
+                                            <span>{{ item.name.split(' ')[1] ? `(${item.name.split(' ')[1]})` : ""}}</span>
+                                        </div>
+                                        <div v-else>
+                                            <span>{{item.name}}</span>
+                                        </div>
+                                    </template>
                                     <template slot-scope="scope">
                                         <span v-if="scope.row.scdt[item.code] == null"></span>
                                         <span v-else-if="item.code == 'ZC'">{{ scope.row.scdt[item.code].showLabel }}</span>
@@ -557,7 +603,17 @@
                                 </el-table-column>
                                 <!--生产问题监测项目-->
                                 <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
-                                    <el-table-column v-for="(item, index) in problemMonitoringTab" :key="index" :prop="item.code" :label="item.name" align="center" width="180px">
+                                    <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="100" :key="index" :prop="item.code" :label="item.name" align="center" width="180px" label-class-name="twoRowHeader">
+                                        <template #header>
+                                            <div v-if="item.isTwoHeader">
+                                                <span>{{item.name}}</span>
+                                                <br />
+                                                <span>{{item.unit}}</span>
+                                            </div>
+                                            <div v-else>
+                                                <span>{{item.name}}</span>
+                                            </div>
+                                        </template>
                                         <template slot-scope="scope">
                                             <span v-if="scope.row[item.code] == null"></span>
                                             <span v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel }}</span>
@@ -585,7 +641,14 @@
                                             <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel }}</span>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="theDate" label="推荐日期" align="center" width="120px">
+                                    <el-table-column prop="theDate" align="center"  min-width="130" label-class-name="twoRowHeader">
+                                        <template #header>
+                                            <div>
+                                                <span>推荐日期</span>
+                                                <br />
+                                                <span>(yyyy/mm/dd)</span>
+                                            </div>
+                                        </template>
                                         <template slot-scope="scope">
                                             <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq }}</span>
                                         </template>
@@ -597,7 +660,14 @@
                                     </el-table-column>
                                 </el-table-column>
                                 <!--措施效果数据-->
-                                <el-table-column prop="dailyOilIncrement" label="日增油量m³/d" align="center">
+                                <el-table-column prop="dailyOilIncrement" align="center" label-class-name="twoRowHeader">
+                                    <template #header>
+                                        <div>
+                                            <span>日增油量</span>
+                                            <br />
+                                            <span>(m³/d)</span>
+                                        </div>
+                                    </template>
                                     <template slot-scope="scope">
                                         <span v-if="scope.row.rzyl == null || scope.row.rzyl.showMvalue == null"></span>
                                         <span v-else>{{ scope.row.rzyl.showMvalue }}</span>
@@ -666,25 +736,36 @@
                 //生产问题监测表头
                 problemMonitoringTab: [{
                         code: "yjgk",
-                        name: "油井工况"
+                        name: "油井工况",
+                        isTwoHeader: false,
                     },
                     {
                         code: "gpgx",
-                        name: "供排关系"
+                        name: "供排关系",
+                        isTwoHeader: false,
                     }, {
                         code: "djl",
-                        name: "递减率"
+                        name: "递减率",
+                        isTwoHeader: true,
+                        unit: "(%)"
                     },
                     {
                         code: "cyqd",
-                        name: "采液强度"
+                        name: "采液强度",
+                        isTwoHeader: true,
+                        unit: "[t/(d.m)]"
+
                     }, {
                         code: "cyzs",
-                        name: "采液指数"
+                        name: "采液指数",
+                        isTwoHeader: true,
+                        unit: "[m³/(d.MPa)]"
                     },
                     {
                         code: "mcyzs",
-                        name: "米采液指数"
+                        name: "米采液指数",
+                        isTwoHeader: true,
+                        unit: "[m³/(d.MPa)]"
                     }
                 ],
                 //潜力分析表头
