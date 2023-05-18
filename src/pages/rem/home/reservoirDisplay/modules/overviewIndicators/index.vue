@@ -174,7 +174,7 @@ export default {
 
                             c: {
                                 fontSize: 10,
-                                color: "#fff",
+                                color: "#29EEF3",
                                 // padding: [5,0]
                             },
                         },
@@ -553,8 +553,8 @@ export default {
                             fontSize: 10,
                         },
                         data: [
-                            {value: 0, name: value, label: {color: "white", position: "center"}},
-                            {value: 1, name: unit, label: {color: "white", position: "inner"}},
+                            {value: 0, name: value, label: {color:'#29EEF3', position: "center"}},
+                            {value: 1, name: unit, label: {color:'#29EEF3', position: "inner"}},
                         ],
                     },
                     {

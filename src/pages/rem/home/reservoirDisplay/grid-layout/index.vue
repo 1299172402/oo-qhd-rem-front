@@ -90,7 +90,6 @@ import recoverLevel from "../modules/recoverLevel/index.vue"
 import recoveryRate from "../modules/recoveryRate/index.vue"
 import waterUp from "../modules/waterUp/index.vue"
 import overviewIndicators from "../modules/overviewIndicators/index.vue"
-import demoIndex from "@/pages/intelligentOilfield/demo/demo.vue";
 
 
 import {queryByPageName, savePage} from "@/api/intelligentOilfield/system/layout";

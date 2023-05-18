@@ -11,7 +11,7 @@
                         <Echart :chart-data="option"></Echart>
                         <div style="position:absolute;bottom:15%;left:2%;font-size: 10px;text-align: center">
                             <h5 style="color: #0d84ff">油田总井数/开井数(口)</h5>
-                            <h4 style="font-size: 20px;">{{dataList.oilWellTotal}}/{{dataList.oilWellOpenTotal}}</h4>
+                            <div style="font-size: 20px;">{{dataList.oilWellTotal}}/{{dataList.oilWellOpenTotal}}</div>
                         </div>
                         
                     </div>
@@ -19,7 +19,7 @@
                         <Echart :chart-data="option2"></Echart>
                         <div style="position:absolute;bottom:15%;right:5%;font-size: 10px;text-align: center">
                             <h5 style="color: #0d84ff">水井总井数/开井数(口)</h5>
-                            <h4 style="font-size: 20px;">{{dataList.injWellTotal}}/{{dataList.injWellOpenTotal}}</h4>
+                            <div style="font-size: 20px;">{{dataList.injWellTotal}}/{{dataList.injWellOpenTotal}}</div>
                         </div>
                         
                     </div>
@@ -29,7 +29,8 @@
                 <el-row :gutter="10">
                     <el-col :span="8" v-for="(item, index) in data" :key="index">
                         <div style="float: left; width: 60px; height: 60px">
-                            <svg-icon :icon-class="item.icon" style="width: 100%; height: 100%"/>
+<!--                            <svg-icon :icon-class="item.icon" style="width: 100%; height: 100%"/>-->
+                            <el-image style="padding: 15%" :src="item.src"></el-image>
                         </div>
                         <div style="margin-top: 10px">
                             <div>{{ item.name }}</div>
@@ -241,32 +242,38 @@ export default {
             dataList:'',
             data: [
                 {
-                    icon: "dayproOil",
+                    src: new URL('./image/01.png', import.meta.url).href,
+                    icon: "01",
                     name: "日产油(m³)",
                     value: "0",
                 },
                 {
-                    icon: "dayproOil",
+                    src:new URL('./image/02.png', import.meta.url).href,
+                    icon: "02",
                     name: "与前日日产油差值(m³)",
                     value: "0",
                 },
                 {
-                    icon: "dayproOil",
+                    src:new URL('./image/03.png', import.meta.url).href,
+                    icon: "03",
                     name: "年累产油(10⁴m³)",
                     value: "0",
                 },
                 {
-                    icon: "dayproOil",
+                    src:new URL('./image/04.png', import.meta.url).href,
+                    icon: "04",
                     name: "采收率(%)",
                     value: "0",
                 },
                 {
-                    icon: "dayproOil",
+                    src:new URL('./image/05.png', import.meta.url).href,
+                    icon: "05",
                     name: "综合含水率(%)",
                     value: "0",
                 },
                 {
-                    icon: "dayproOil",
+                    src:new URL('./image/06.png', import.meta.url).href,
+                    icon: "06",
                     name: "地质储量(%)",
                     value: "0",
                 },
@@ -414,6 +421,7 @@ export default {
                             show: false,
                         },
                         pointer: {
+                            show:false,
                             length: "78%",
                             width: 2,
                             offsetCenter: [0, "-30%"],
@@ -448,20 +456,20 @@ export default {
                         detail: {
                             offsetCenter: ["4%", "-5%"],
                             formatter: function (value) {
-                                return "{value|" + value.toFixed(0) + "}";
+                                return "{value|" + value + "}";
                             },
                             rich: {
                                 value: {
                                     fontSize: 13,
                                     fontWeight: "bolder",
-                                    color: "#ffffff",
+                                    // color: "#ffffff",
                                     textShadowBlur: "12",
                                     textShadowColor: "#3ea0b5",
                                 },
                                 unit: {
                                     fontSize: 18,
                                     fontWeight: "bolder",
-                                    color: "#ffffff",
+                                    // color: "#ffffff",
                                     textShadowBlur: "12",
                                     textShadowColor: "#3ea0b5",
                                 },
@@ -681,6 +689,7 @@ export default {
                             show: false,
                         },
                         pointer: {
+                            show:false,
                             length: "78%",
                             width: 2,
                             offsetCenter: [0, "-30%"],
@@ -715,20 +724,20 @@ export default {
                         detail: {
                             offsetCenter: ["4%", "-5%"],
                             formatter: function (value) {
-                                return "{value|" + value.toFixed(0) + "}";
+                                return "{value|" + value + "}";
                             },
                             rich: {
                                 value: {
                                     fontSize: 13,
                                     fontWeight: "bolder",
-                                    color: "#ffffff",
+                                    // color: "#ffffff",
                                     textShadowBlur: "12",
                                     textShadowColor: "#3ea0b5",
                                 },
                                 unit: {
                                     fontSize: 18,
                                     fontWeight: "bolder",
-                                    color: "#ffffff",
+                                    // color: "#ffffff",
                                     textShadowBlur: "12",
                                     textShadowColor: "#3ea0b5",
                                 },
