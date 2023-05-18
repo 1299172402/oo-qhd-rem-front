@@ -124,7 +124,7 @@ export default {
                         {name:'年度产量运行预警',url:''}
                     ],
                     boxBottomContent: [
-                        [{name:'年度产量趋势预测',url:'http://10.77.78.250:9107/#/yield/fluctuationWarningAnalysis'}]
+                        [{name:'年度产量趋势预测',url:'https://rem.tjioms-dev.tjltd.cnooc/#/yield/fluctuationWarningAnalysis'}]
                     ],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
@@ -138,7 +138,7 @@ export default {
                     boxBottomText: [
                         {
                             name: '动设备健康管理模型',
-                            url: 'http://10.77.78.250:9104/#/equipment/mechanical'
+                            url: 'https://efm.tjioms-dev.tjltd.cnooc/#/equipment/mechanical'
                         }
                     ],
                     boxStyle: {
@@ -166,8 +166,8 @@ export default {
                         {name:'注水海管设计输量',url:''}
                     ],
                     boxBottomContent: [
-                        [{ name:'管输动态模型', url:'http://10.77.78.250:9105/#/home/pipe' }],
-                        [{ name:'管输动态模型', url:'http://10.77.78.250:9105/#/home/pipe' }]
+                        [{ name:'管输动态模型', url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/pipe' }],
+                        [{ name:'管输动态模型', url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/pipe' }]
                     ],
                     boxStyle: {
                         pWidth: 'width:7vw'
@@ -183,8 +183,8 @@ export default {
                         {name:'生产水处理能力',url:''}
                     ],
                     boxBottomContent: [
-                        [{name:'地面平衡调配-流程监控模型',url:'http://10.77.78.250:9105/#/home/plat'}],
-                        [{name:'地面平衡调配-流程监控模型',url:'http://10.77.78.250:9105/#/home/plat'}]
+                        [{name:'地面平衡调配-流程监控模型',url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/plat'}],
+                        [{name:'地面平衡调配-流程监控模型',url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/plat'}]
                     ],
                     boxStyle: {
                         pWidth: 'width:7vw',

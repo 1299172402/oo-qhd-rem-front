@@ -25,7 +25,7 @@
                         </div>
                         <div>
                             <p v-show="content" :key="index" v-for="(item,index) in selectObj[selectIndex]">
-                                <span @click="linkTo(item.url)">{{ item.name ? item.name : item }}</span>
+                                <span style="cursor: pointer" @click="linkTo(item.url)">{{ item.name ? item.name : item }}</span>
                                 <span class="btnBack" @click="btnBack"></span>
                             </p>
                         </div>

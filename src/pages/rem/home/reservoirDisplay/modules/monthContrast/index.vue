@@ -18,6 +18,7 @@ import { LineChart } from "echarts/charts";
 import * as echarts from "echarts/core";
 import { GridComponent, TooltipComponent, LegendComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
+import {monthlyProductionComparison} from "@/api/rem/reservoirbillboards";
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 export default {
   props: ["infodata"],
@@ -44,15 +45,15 @@ export default {
           },
         },
         grid: {
-          top: 10,
-          left: 60,
+          top: 30,
+          left: '15%',
           right: 10,
           bottom: 50,
         },
         xAxis: [
           {
             type: "category",
-            data: ["1月", "2月", "3月", "4月"],
+            data: ["1月", "2月", "3月", "4月","5月", "6月", "7月", "8月","9月", "10月", "11月", "12月"],
             axisLabel: {
               color: "#a9a8a8",
               fontSize: 14,
@@ -75,9 +76,9 @@ export default {
         yAxis: [
           {
             type: "value",
-            name: "月产油(m⁴m³)",
+            name: "月产油(10⁴m³)",
             nameTextStyle: {
-              padding: [0, 0, 20, 0], // 上、右、下、左
+              padding: [0, 0, 120, 0], // 上、右、下、左
             },
             nameLocation: "center",
             axisLabel: {
@@ -156,18 +157,21 @@ export default {
   },
   methods: {
     getinfo(){
-//       this.histogram.timeTicket = setInterval(function() {
-//    axisData =  ["1月", "2月", "3月", "4月"],data_series = [123, 224, 523, 222, 341, 231, 112];
-//     var data0 = option.series[0].data;
-//     var p2 = data0.shift();
-//     data0.push(p2);
-//     var kl =  this.histogram.xAxis[0].data.shift();
-//      this.histogram.xAxis[0].data.push(kl);
-//     myChart.setOption( this.histogram);
-// }, 3000);
+        monthlyProductionComparison({}).then(res=>{
+            //计划
+            this.histogram.series[0].data = res.data.data.monthlyActualOutputVoList.map(item=>{
+                return item.checkedProdMonthly
+            })
+            let monthlyPlannedOutputVoArr = []
+            for(let key in res.data.data.monthlyPlannedOutputVo){
+                monthlyPlannedOutputVoArr.push(res.data.data.monthlyPlannedOutputVo[key])
+            }
+            //实际
+            this.histogram.series[1].data = monthlyPlannedOutputVoArr
+        })
     }
   },
-};
+};  
 </script>
 <style lang="scss" scoped>
 // .f1 {

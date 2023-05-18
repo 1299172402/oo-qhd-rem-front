@@ -4,7 +4,7 @@
     class="box"
     height="100%"
     width="100%"
-    controls
+    autoplay
     src="@/pages/rem/home/reservoirDisplay/modules/演示视频.mp4"
   >
     <div class="progress-bar"></div>
@@ -41,7 +41,7 @@ export default {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   text-align: center;
-  padding: 30px 20px;
+  padding: 20px 10px;
   overflow: hidden;
 }
 .progress-bar {

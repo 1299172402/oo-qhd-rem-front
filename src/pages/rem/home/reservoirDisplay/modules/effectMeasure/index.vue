@@ -23,7 +23,7 @@
                 header-cell-class-name="table_header"
                 :cell-style="{ 'text-align': 'center', padding: '0px' }"
                 :default-sort="{ prop: 'date', order: 'descending' }"
-                style="width: 100%"
+                style="width: 100%;position: absolute;top:45px"
             >
                 <el-table-column width="50px">
                     <template slot="header">
@@ -33,22 +33,22 @@
                         {{ scope.$index + 1 }}
                     </template>
                 </el-table-column>
-                <el-table-column prop="date" width="100px" label="">
+                <el-table-column prop="tjrq" width="100px" label="">
                     <template slot="header">
                         <div style="color: #1ec5e6">推荐日期</div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="well" label="">
+                <el-table-column prop="wellId" label="">
                     <template slot="header">
                         <div style="color: #1ec5e6">井号</div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="address" label="">
+                <el-table-column prop="showLabel" label="">
                     <template slot="header">
                         <div style="color: #1ec5e6">推荐措施</div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="addoil" label="">
+                <el-table-column prop="showMvalue" label="">
                     <template slot="header">
                         <div style="color: #1ec5e6">
                             预计增油量 <br/>
@@ -63,37 +63,24 @@
 </template>
 
 <script>
+import {queryMeasureEffectTrack} from "@/api/rem/reservoirbillboards";
+
 export default {
     data() {
         return {
-            tableData: [
-                {
-                    date: "2023-03-23",
-                    well: "QHD32-6-A01",
-                    address: "换大泵",
-                    addoil: "82",
-                },
-                {
-                    date: "2023-03-22",
-                    well: "QHD32-6-A02",
-                    address: "换大泵",
-                    addoil: "87",
-                },
-                {
-                    date: "2023-03-21",
-                    well: "QHD32-6-A03",
-                    address: "地面调参",
-                    addoil: "28",
-                },
-                {
-                    date: "2023-03-24",
-                    well: "QHD32-6-A01",
-                    address: "换大泵",
-                    addoil: "42",
-                },
-            ],
+            tableData: [],
         };
     },
+    mounted() {
+        this.getData()
+    },
+    methods:{
+        getData(){
+            queryMeasureEffectTrack({evaluationDate:new Date().getFullYear() +'-01-01',oilFieldId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{
+                this.tableData = res.data.data
+            })
+        }
+    }
 };
 </script>
 

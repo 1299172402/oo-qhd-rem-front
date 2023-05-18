@@ -8,50 +8,37 @@
         >
             <button class="detailLinkBtn" @click="linkroute('measuresPumpWellRecovery')">详细</button>
             <el-row :gutter="20" style="margin-bottom: 10px">
-                <el-col :span="12">
+                <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <div class="yield water">
                             <div class="box">
-                                <div>{{ 12 }}</div>
-                                <div>10⁴m³</div>
+                                <div>{{ dataList.dayOilProduction }}</div>
+                                <div>m³</div>
                             </div>
                         </div>
-                        <div class="text">产水量</div>
+                        <div class="text">日产油</div>
                     </div>
                 </el-col>
-                <el-col :span="12">
+                <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <div class="yield oil">
                             <div class="box">
-                                <div>{{ 13 }}</div>
+                                <div>{{ dataList.cumeOilProd }}</div>
                                 <div>10⁴m³</div>
                             </div>
                         </div>
-                        <div class="text">产油量</div>
+                        <div class="text">累产油量</div>
                     </div>
                 </el-col>
-            </el-row>
-            <el-row :gutter="20">
-                <el-col :span="12">
+                <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <div class="yield gas">
                             <div class="box">
-                                <div>{{ 12 }}</div>
+                                <div>{{ dataList.annualOilProduction }}</div>
                                 <div>10⁴m³</div>
                             </div>
                         </div>
-                        <div class="text">产气量</div>
-                    </div>
-                </el-col>
-                <el-col :span="12">
-                    <div class="grid-content bg-purple">
-                        <div class="yield liquid">
-                            <div class="box">
-                                <div>{{ 23 }}</div>
-                                <div>10⁴m³</div>
-                            </div>
-                        </div>
-                        <div class="text">产液量</div>
+                        <div class="text">年产油量</div>
                     </div>
                 </el-col>
             </el-row>
@@ -59,24 +46,24 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(21, '10⁴m³', 'rgb(59,197,197)', 'rgb(59,197,197)', 'rgb(59,197,197)')"
+                            :chart-data="getEchartData(dataList.productionEfficiency, '%', 'rgb(59,197,197)', 'rgb(59,197,197)', 'rgb(59,197,197)')"
                         ></Echart>
-                        <div class="chartText">配注量</div>
+                        <div class="chartText">生产时率</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(12, '10⁴m³', 'rgb(13,190,124)', 'rgb(1,67,78)', 'rgb(13,190,124)')"
+                            :chart-data="getEchartData(dataList.oilWellUtilizationRate, '%', 'rgb(13,190,124)', 'rgb(1,67,78)', 'rgb(13,190,124)')"
                         ></Echart>
-                        <div class="chartText">注水量</div>
+                        <div class="chartText">油井利用率</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(12, '口', 'rgb(247,181,0)', 'rgb(41,72,94)', 'rgb(247,181,0)')"></Echart>
-                        <div class="chartText">油井总井数</div>
+                            :chart-data="getEchartData(dataList.comRate, '%', 'rgb(247,181,0)', 'rgb(41,72,94)', 'rgb(247,181,0)')"></Echart>
+                        <div class="chartText">综合时率</div>
                     </div>
                 </el-col>
                 <!-- <el-col :span="6">
@@ -95,13 +82,13 @@
                 </el-col>
                 <el-col :span="8">
                     <div>
-                        <Echart height="100%" :chart-data="histogram"></Echart>
+                        <Echart height="100%" :chart-data="histogram2"></Echart>
                         <div class="chartText">综合递减</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div>
-                        <Echart height="100%" :chart-data="histogram"></Echart>
+                        <Echart height="100%" :chart-data="histogram3"></Echart>
                         <div class="chartText">总递减</div>
                     </div>
                 </el-col>
@@ -110,22 +97,22 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchart(12, '口', 'rgb(0,179,225)', 'rgb(38,43,90)', 'transparent')"></Echart>
-                        <div class="chartText">油井开井数</div>
+                            :chart-data="getEchart(dataList.waterInjectionWellInjection, '%', 'rgb(0,179,225)', 'rgb(38,43,90)', 'transparent')"></Echart>
+                        <div class="chartText">分注井分注率</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchart(12, '口', 'rgb(235,125,96)', 'rgb(38,43,90)', 'transparent')"></Echart>
-                        <div class="chartText">水井开井数</div>
+                            :chart-data="getEchart(dataList.layerPassRate, '%', 'rgb(235,125,96)', 'rgb(38,43,90)', 'transparent')"></Echart>
+                        <div class="chartText">层段合格率</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchart(12, '', 'rgb(164,227,77)', 'rgb(38,43,90)', 'transparent')"></Echart>
-                        <div class="chartText">注采比</div>
+                            :chart-data="getEchart(dataList.waterCutIncreaseRate, '%', 'rgb(164,227,77)', 'rgb(38,43,90)', 'transparent')"></Echart>
+                        <div class="chartText">含水上升率</div>
                     </div>
                 </el-col>
             </el-row>
@@ -142,7 +129,7 @@ import {CanvasRenderer} from "echarts/renderers";
 import {productionMetricsOverview} from "@/api/rem/reservoirbillboards";
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
-let value = 40;
+let value = 0;
 let name = "统计";
 export default {
     props: ["infodata"],
@@ -151,6 +138,8 @@ export default {
     },
     mounted() {
         this.histogram.series[1].splitLine.lineStyle.color = this.$store.state.setting.mode == 'dark' ? 'rgb(3,42,59)' : '#fff'
+        this.histogram2.series[1].splitLine.lineStyle.color = this.$store.state.setting.mode == 'dark' ? 'rgb(3,42,59)' : '#fff'
+        this.histogram3.series[1].splitLine.lineStyle.color = this.$store.state.setting.mode == 'dark' ? 'rgb(3,42,59)' : '#fff'
         this.getData();
     },
     computed: {
@@ -162,6 +151,8 @@ export default {
         getGlobeTheme: {
             handler(val) {
                 this.histogram.series[1].splitLine.lineStyle.color = val
+                this.histogram2.series[1].splitLine.lineStyle.color = val
+                this.histogram3.series[1].splitLine.lineStyle.color = val
             }
         }
     },
@@ -206,7 +197,7 @@ export default {
                         },
                         data: [
                             {
-                                value: value,
+                                value: 0,
                                 name: "",
                                 itemStyle: {
                                     normal: {
@@ -215,7 +206,215 @@ export default {
                                 },
                             },
                             {
-                                value: 100 - value,
+                                value: 0,
+                                name: "",
+                                label: {
+                                    normal: {
+                                        show: false,
+                                    },
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: "transparent",
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                    {
+                        name: "",
+                        type: "gauge",
+                        radius: "82%",
+                        center: ["50%", "50%"],
+                        startAngle: 0,
+                        endAngle: 355.9,
+                        splitNumber: 60,
+                        hoverAnimation: true,
+                        axisTick: {
+                            show: false,
+                        },
+                        splitLine: {
+                            length: 83,
+                            lineStyle: {
+                                width: 3,
+                                color: "red",
+                            },
+                        },
+                        axisLabel: {
+                            show: false,
+                        },
+                        pointer: {
+                            show: false,
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                opacity: 0,
+                            },
+                        },
+                        detail: {
+                            show: false,
+                        },
+                        data: [
+                            {
+                                value: 0,
+                                name: "",
+                            },
+                        ],
+                    },
+                ],
+            },
+            histogram2: {
+                title: {
+                    // text: '{a|' + value + '}{c|%}',
+                    text: "{a|" + value + "%}{c|\n" + name + "}",
+                    x: "center",
+                    y: "center",
+                    textStyle: {
+                        rich: {
+                            a: {
+                                fontSize: 18,
+                                color: "#29EEF3",
+                            },
+
+                            c: {
+                                fontSize: 10,
+                                color: "#fff",
+                                // padding: [5,0]
+                            },
+                        },
+                    },
+                },
+                series: [
+                    {
+                        name: "",
+                        type: "pie",
+                        radius: ['58%', '68%'],
+                        silent: true,
+                        clockwise: true,
+                        startAngle: 90,
+                        z: 0,
+                        zlevel: 0,
+                        label: {
+                            normal: {
+                                position: "center",
+                            },
+                        },
+                        data: [
+                            {
+                                value: 0,
+                                name: "",
+                                itemStyle: {
+                                    normal: {
+                                        color: "red",
+                                    },
+                                },
+                            },
+                            {
+                                value: 0,
+                                name: "",
+                                label: {
+                                    normal: {
+                                        show: false,
+                                    },
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: "transparent",
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                    {
+                        name: "",
+                        type: "gauge",
+                        radius: "82%",
+                        center: ["50%", "50%"],
+                        startAngle: 0,
+                        endAngle: 355.9,
+                        splitNumber: 60,
+                        hoverAnimation: true,
+                        axisTick: {
+                            show: false,
+                        },
+                        splitLine: {
+                            length: 83,
+                            lineStyle: {
+                                width: 3,
+                                color: "red",
+                            },
+                        },
+                        axisLabel: {
+                            show: false,
+                        },
+                        pointer: {
+                            show: false,
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                opacity: 0,
+                            },
+                        },
+                        detail: {
+                            show: false,
+                        },
+                        data: [
+                            {
+                                value: 0,
+                                name: "",
+                            },
+                        ],
+                    },
+                ],
+            },
+            histogram3: {
+                title: {
+                    // text: '{a|' + value + '}{c|%}',
+                    text: "{a|" + value + "%}{c|\n" + name + "}",
+                    x: "center",
+                    y: "center",
+                    textStyle: {
+                        rich: {
+                            a: {
+                                fontSize: 18,
+                                color: "#29EEF3",
+                            },
+
+                            c: {
+                                fontSize: 10,
+                                color: "#fff",
+                                // padding: [5,0]
+                            },
+                        },
+                    },
+                },
+                series: [
+                    {
+                        name: "",
+                        type: "pie",
+                        radius: ['58%', '68%'],
+                        silent: true,
+                        clockwise: true,
+                        startAngle: 90,
+                        z: 0,
+                        zlevel: 0,
+                        label: {
+                            normal: {
+                                position: "center",
+                            },
+                        },
+                        data: [
+                            {
+                                value: 0,
+                                name: "",
+                                itemStyle: {
+                                    normal: {
+                                        color: "red",
+                                    },
+                                },
+                            },
+                            {
+                                value: 0,
                                 name: "",
                                 label: {
                                     normal: {
@@ -277,12 +476,21 @@ export default {
     methods: {
         getData(){
             // new Date().format('YYYY-MM')
-            productionMetricsOverview({date:'2022-01' + '-01'}).then(res=>{
+            productionMetricsOverview({date:'2020-01' + '-01'}).then(res=>{
                 console.log(res);
                 this.dataList = res.data.data
+                if(!res.data.data.naturalDecline)  res.data.data.naturalDecline = 0
                 this.histogram.series[0].data[0].value = res.data.data.naturalDecline
                 this.histogram.series[0].data[1].value = 100 - res.data.data.naturalDecline
                 this.histogram.title.text = "{a|" + res.data.data.naturalDecline + "%}{c|\n" +   "统计}"
+                if(!res.data.data.overallDecline)  res.data.data.overallDecline = 0
+                this.histogram2.series[0].data[0].value = res.data.data.overallDecline
+                this.histogram2.series[0].data[1].value = 100 - res.data.data.overallDecline
+                this.histogram2.title.text = "{a|" + res.data.data.overallDecline + "%}{c|\n" +   "统计}"
+                if(!res.data.data.wholeDeclineRate)  res.data.data.wholeDeclineRate = 0
+                this.histogram3.series[0].data[0].value = res.data.data.wholeDeclineRate
+                this.histogram3.series[0].data[1].value = 100 - res.data.data.wholeDeclineRate
+                this.histogram3.title.text = "{a|" + res.data.data.wholeDeclineRate + "%}{c|\n" +   "统计}"
             })  
         },
         //图表
@@ -317,8 +525,8 @@ export default {
                             show: false,
                         },
                         data: [
-                            {value: 335, name: "Direct"},
-                            {value: 102, name: "Others"},
+                            {value: value, name: "Direct"},
+                            {value: 100 - value, name: "Others"},
                         ],
                     },
                 ],
@@ -361,9 +569,9 @@ export default {
                             show: false,
                         },
                         data: [
-                            {value: 9, name: "Others"},
-                            {value: 1, name: "Direct"},
-                            {value: 10, name: "528"},
+                            {value: value, name: "Others"},
+                            {value: 100 - value, name: "Direct"},
+                            {value: 100, name: "528"},
                         ],
                     },
                 ],

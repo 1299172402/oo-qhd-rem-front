@@ -19,9 +19,9 @@ export function productionMetricsOverview({ date } = {}) {
     method: "get",
   });
 }
-export function queryMeasureEffectTrack({ 平台id, 时间数据粒度, 是否显示正常指标, 油田id, 评价时间 } = {}) {
+export function queryMeasureEffectTrack({ platformId, timeGranularityCode, showNormal, oilFieldId, evaluationDate } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/queryMeasureEffectTrack?平台id=${ 平台id || "" }&时间数据粒度=${ 时间数据粒度 || "" }&是否显示正常指标=${ 是否显示正常指标 || "" }&油田id=${ 油田id || "" }&评价时间=${ 评价时间 || "" }`,
+    url: `${baseUrl}/reservoirBillboards/queryMeasureEffectTrack?platformId=${ platformId || "" }&timeGranularityCode=${ timeGranularityCode || "" }&showNormal=${ showNormal || "" }&oilFieldId=${ oilFieldId || "" }&evaluationDate=${ evaluationDate || "" }`,
     method: "get",
   });
 }

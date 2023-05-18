@@ -162,6 +162,29 @@ export default {
           this.relationship.legend.data = legendData;
           this.relationship.series = seriesData;
       },
+      //采出程度折线解析
+      outputDegreeLine(lineChart) {
+          let series = {};
+          series.type = 'scatter';
+          series.symbolSize = 4;
+          /* series.symbol = 'none';*/
+          series.name = lineChart.label;
+          series.label = {
+              show: false,
+              position: 'top',
+              color: '#00D9EA'
+          };
+          let seriesData = [];
+          let lineData = lineChart.numberPoints;
+          lineData.forEach((item, index) => {
+              let point = [];
+              point.push(item.x);
+              point.push(item.y);
+              seriesData.push(point);
+          });
+          series.data = seriesData;
+          return series;
+      },
       //采出程度童氏图折线解析
       outputDegreeTongChart(lineChart) {
           let series = {};
