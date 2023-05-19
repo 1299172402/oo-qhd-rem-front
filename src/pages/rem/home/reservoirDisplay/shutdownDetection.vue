@@ -50,6 +50,28 @@
                             >
                             </el-date-picker>
                         </el-form-item>
+                        <el-form-item label="关停分类:" >
+                            <el-select v-model="queryData.injShutdownTypeCode" style="width: 220px">
+                                <el-option
+                                    v-for="(item, index) in ShutDownValueDict"
+                                    :key="index"
+                                    :label="item.name"
+                                    :value="item.code"
+                                >
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="计划属性:" style="margin-left:20px">
+                            <el-select v-model="queryData.shutdownPlanTypeCode" style="width: 220px">
+                                <el-option
+                                    v-for="(item, index) in PlanValueDict"
+                                    :key="index"
+                                    :label="item.name"
+                                    :value="item.code"
+                                >
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
                         <el-form-item>
                             <el-button type="primary" @click="queryinfo" icon="el-icon-search">搜索</el-button>
                             <el-button class="commonBtn" @click="result" icon="el-icon-refresh"> 重置</el-button>
@@ -103,7 +125,7 @@ import {
     queryOperatingCompanyDetail,
     queryPlatformQueryWellListDetail,
 } from "@/api/rem/marster.js";
-import {queryShutDownWellStatisDetails} from '@/api/rem/reservoirbillboards'
+import {queryShutDownWellStatisDetails, queryShutDownValueDict, queryPlanValueDict} from '@/api/rem/reservoirbillboards'
 
 export default {
     components: {},
@@ -125,6 +147,9 @@ export default {
                 startTime: "",
                 endTime: "",
                 wellId: "",
+                shutdownPlanTypeCode: '',
+                injShutdownTypeCode: '',
+
             },
             total: 0,
             month: [], //开始与结束时间中转字段
@@ -134,6 +159,9 @@ export default {
             platforms: [],
             wellList: {},
             zygsSelect: [], //作业公司
+            PlanValueDict: {},
+            startmonth: {},
+            ShutDownValueDict: {},
         };
     },
     mounted() {
@@ -153,6 +181,7 @@ export default {
         this.queryData.endTime = yesday;
         this.$set(this.month, 0, this.queryData.startTime);
         this.$set(this.month, 1, this.queryData.endTime);
+        this.startmonth = this.month
         this.queryinfo()
     },
     methods: {
@@ -188,6 +217,13 @@ export default {
                     });
                 }
             });
+            queryPlanValueDict().then((res) => {
+                this.PlanValueDict = res.data.data.data
+            })
+            queryShutDownValueDict().then((res) => {
+                this.ShutDownValueDict = res.data.data.data
+            })
+
         },
         choicewell() {
             queryPlatformQueryWellListDetail({platformId: this.queryData.assetCode}).then((res) => {
@@ -207,13 +243,15 @@ export default {
                 this.wellList = res.data.data;
             });
             this.queryData.wellId = ''
+            this.queryData.shutdownPlanTypeCode = ''
+            this.queryData.injShutdownTypeCode = ''
+            this.month = this.startmonth
             this.queryinfo()
         },
         queryinfo() {
             this.queryData.startTime = this.month[0]
             this.queryData.endTime = this.month[1]
             queryShutDownWellStatisDetails(this.queryData).then((res) => {
-                console.log(res)
                 this.tableData = res.data.data.data.rows
                 this.total = res.data.data.data.total
             })

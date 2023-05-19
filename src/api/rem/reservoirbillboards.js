@@ -37,9 +37,21 @@ export function queryOilFieldIncidentType() {
     method: "get",
   });
 }
+export function queryPlanValueDict() {
+  return request({
+    url: `${baseUrl}/reservoirBillboards/queryPlanValueDict`,
+    method: "get",
+  });
+}
 export function queryProblemWellStatis({ date, platformId, wellId } = {}) {
   return request({
     url: `${baseUrl}/reservoirBillboards/queryProblemWellStatis?date=${ date || "" }&platformId=${ platformId || "" }&wellId=${ wellId || "" }`,
+    method: "get",
+  });
+}
+export function queryShutDownValueDict() {
+  return request({
+    url: `${baseUrl}/reservoirBillboards/queryShutDownValueDict`,
     method: "get",
   });
 }
@@ -49,9 +61,9 @@ export function queryShutDownWellStatisCharts({ endTime, startTime } = {}) {
     method: "get",
   });
 }
-export function queryShutDownWellStatisDetails({ endTime, injShutdownTypeCode, pageNum, pageSize, shutdownPlanTypeCode, startTime, wellId } = {}) {
+export function queryShutDownWellStatisDetails({ endTime, injShutdownTypeCode, ogfId, pageNum, pageSize, platformId, shutdownPlanTypeCode, startTime, wellId } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/queryShutDownWellStatisDetails?endTime=${ endTime || "" }&injShutdownTypeCode=${ injShutdownTypeCode || "" }&pageNum=${ pageNum || "" }&pageSize=${ pageSize || "" }&shutdownPlanTypeCode=${ shutdownPlanTypeCode || "" }&startTime=${ startTime || "" }&wellId=${ wellId || "" }`,
+    url: `${baseUrl}/reservoirBillboards/queryShutDownWellStatisDetails?endTime=${ endTime || "" }&injShutdownTypeCode=${ injShutdownTypeCode || "" }&ogfId=${ ogfId || "" }&pageNum=${ pageNum || "" }&pageSize=${ pageSize || "" }&platformId=${ platformId || "" }&shutdownPlanTypeCode=${ shutdownPlanTypeCode || "" }&startTime=${ startTime || "" }&wellId=${ wellId || "" }`,
     method: "get",
   });
 }
