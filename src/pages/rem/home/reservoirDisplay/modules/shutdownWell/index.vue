@@ -67,6 +67,9 @@ export default {
           data: [],
           axisLine: {
             show: true,
+            lineStyle: {
+              color: 'rgba(143,164,204,.5)'
+            }
           },
           axisTick: {
             show: false,
@@ -86,6 +89,8 @@ export default {
               color: "#a9a8a8",
               padding: [0, 0, 18, 0], // 上、右、下、左
             },
+            min:0,
+            max:1,
             nameLocation: "center",
             splitLine: {
               show: false,
@@ -98,6 +103,9 @@ export default {
             },
             axisLine: {
               show: true,
+              lineStyle: {
+                color: 'rgba(143,164,204,.5)'
+              }
             },
             axisLabel: {
               show: true,
@@ -113,7 +121,9 @@ export default {
               color: "#a9a8a8",
                 padding: [20, 0, 0, 0], // 上、右、下、左
             },
-              nameLocation: "center",
+            min:0,
+            max:50,
+            nameLocation: "center",
             splitLine: {
               show: false,
             },
@@ -122,6 +132,9 @@ export default {
             },
             axisLine: {
               show: true,
+              lineStyle: {
+                color: 'rgba(143,164,204,.5)'
+              }
             },
             axisLabel: {
               show: true,
@@ -210,6 +223,10 @@ export default {
           startTime:'2020-12-01'
       }
       queryShutDownWellStatisCharts(data).then((res)=>{
+          this.histogram.yAxis[0].min = null
+          this.histogram.yAxis[0].max = null
+          this.histogram.yAxis[1].min = null
+          this.histogram.yAxis[1].max = null
           console.log(res)
           res.data.data.data.yearMoth.forEach((n)=>{
               this.histogram.xAxis.data.push(n)

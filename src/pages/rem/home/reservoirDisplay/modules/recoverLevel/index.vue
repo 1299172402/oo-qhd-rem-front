@@ -96,6 +96,8 @@ export default {
                 nameTextStyle: {
                     color: '#8FA4CC'
                 },
+                max:100,
+                min:0,
                 nameGap: 30,
                 type: 'value',
                 axisLabel: {
@@ -105,6 +107,7 @@ export default {
                     show: false
                 },
                 axisLine: {
+                    show:true,
                     lineStyle: {
                         color: 'rgba(143,164,204,.5)'
                     }
@@ -159,6 +162,8 @@ export default {
                   seriesData = [];
               }
           });
+          this.relationship.yAxis.min = null;
+          this.relationship.yAxis.max = null;
           this.relationship.legend.data = legendData;
           this.relationship.series = seriesData;
       },

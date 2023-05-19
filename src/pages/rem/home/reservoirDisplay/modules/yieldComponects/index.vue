@@ -84,6 +84,7 @@ export default {
                         },
                         axisLabel: {
                             formatter: "{value} ",
+                            color:'#a9a8a8'
                         },
                         axisTick: {
                             show: false,
@@ -91,10 +92,8 @@ export default {
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: "#a9a8a8",
-                                width: 1,
-                                type: "solid",
-                            },
+                                color: '#a9a8a8'
+                            }
                         },
                         splitLine: {
                             show: false,

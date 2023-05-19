@@ -121,6 +121,7 @@ export default {
                         },
                         axisLine: {
                             show: true, // 隐藏 x 轴线
+                            // color:'#a9a8a8'
                         },
                         splitLine: {
                             show: false, // 隐藏 x 轴分隔线

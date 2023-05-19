@@ -64,6 +64,8 @@ export default {
                 nameTextStyle: {
                     color: "#8FA4CC"
                 },
+                min:0,
+                max:100,
                 type: "value",
                 axisLabel: {
                     color: "#8FA4CC",
@@ -118,6 +120,8 @@ export default {
               });*/
                   seriesData = this.getBarChartSeries(barChartData);
                   //console.log(seriesData);
+                  this.naturalDeclineRate.yAxis.max = null
+                  this.naturalDeclineRate.yAxis.min = null
                   this.naturalDeclineRate.series.data = seriesData;
               }
           });

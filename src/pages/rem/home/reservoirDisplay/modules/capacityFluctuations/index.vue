@@ -104,7 +104,7 @@ export default {
                     },
                     axisLine: {
                         lineStyle: {
-                            color: "#fff",
+                            color: "#a9a8a8",
                             width: 1,
                             type: "line",
                         },

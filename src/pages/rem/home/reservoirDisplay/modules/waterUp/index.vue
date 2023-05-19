@@ -101,6 +101,8 @@ export default {
                     color: "#a9a8a8",
                     // padding: [0, 0, 0, 0], // 上、右、下、左
                 },
+                max:100,
+                min:0,
                 nameGap: 35,
                 type: "value",
                 axisLabel: {
@@ -146,6 +148,8 @@ export default {
                       legendData.push(item.label);
                       seriesData.push(this.waterContainRaiseLine(item));
                   });
+                  this.rateOfWaterCutRise.yAxis.min = null;
+                  this.rateOfWaterCutRise.yAxis.max = null;
                   this.rateOfWaterCutRise.legend.data = legendData;
                   this.rateOfWaterCutRise.series = seriesData;
               }
