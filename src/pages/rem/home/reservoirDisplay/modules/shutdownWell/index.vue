@@ -47,7 +47,7 @@ export default {
             var data = "";
             for (var i = 0; i < params.length; i++) {
               if (params[i].seriesName == "关停井数") {
-                data += params[i].seriesName + ":  " + params[i].value + "个";
+                data += params[i].seriesName + ":  " + params[i].value + "口";
               } else {
                 data += params[i].seriesName + ":  " + params[i].value + "<br/>";
               }
@@ -108,7 +108,7 @@ export default {
           },
           {
             type: "value",
-            name: "关停井数(个)",
+            name: "关停井数(口)",
             nameTextStyle: {
               color: "#a9a8a8",
                 padding: [20, 0, 0, 0], // 上、右、下、左
