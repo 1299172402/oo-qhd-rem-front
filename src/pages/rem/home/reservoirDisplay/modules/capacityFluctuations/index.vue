@@ -69,7 +69,7 @@ export default {
                         lineStyle: {
                             color: "#a9a8a8",
                             width: 1,
-                            type: "dashed",
+                            type: "line",
                         },
                         show: true,
                     },
@@ -97,7 +97,7 @@ export default {
                             color: "#a9a8a8",
                             width: 1,
                         },
-                        show: true,
+                        show: false,
                     },
                     splitLine: {
                         show: false,

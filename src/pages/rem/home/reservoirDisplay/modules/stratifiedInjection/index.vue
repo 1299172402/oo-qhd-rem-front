@@ -54,6 +54,7 @@ export default {
           type: "value",
           max:10,
           splitLine: {
+              show:false,
             lineStyle: {
               color: "rgba(255,255,255,0.2)",
             },
@@ -62,6 +63,7 @@ export default {
             show: false,
           },
           axisLine: {
+              show:true,
             //  改变x轴颜色
             lineStyle: {
               color: "#a9a8a8",
@@ -87,7 +89,7 @@ export default {
           },
           axisLine: {
             //  改变y轴颜色
-            show: false,
+            show: true,
             lineStyle: {
               color: "#a9a8a8",
             },
