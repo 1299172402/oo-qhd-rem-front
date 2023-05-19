@@ -1,15 +1,15 @@
 <template>
-  <div class="app-container" style="height: 100%">
+    <div class="app-container" style="width: 100%; height: 100%">
       <info-window
           info-width="100%"
           info-height="100%"
           header-title="秦皇岛32-6油田月度产量对比图"
           :is-show-max-btn="true"
       >
-        <button class="detailLinkBtn" @click="linkroute('fault')">详细</button>
+          <button class="detailLinkBtn" @click="linkroute('fault')">详细</button>
           <Echart :chart-data="histogram" style="height: 100%"></Echart>
       </info-window>
-  </div>
+    </div>
 </template>
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
@@ -46,7 +46,7 @@ export default {
         },
         grid: {
           top: 30,
-          left: '15%',
+          left: '7%',
           right: 10,
           bottom: 50,
         },
@@ -78,8 +78,10 @@ export default {
             type: "value",
             name: "月产油(10⁴m³)",
             nameTextStyle: {
-              padding: [0, 0, 120, 0], // 上、右、下、左
+              padding: [0, 0, 30, 0], // 上、右、下、左
             },
+              min:0,
+              max:100,
             nameLocation: "center",
             axisLabel: {
               color: "#a9a8a8",
@@ -89,13 +91,13 @@ export default {
               show: false,
             },
             axisLine: {
-              show: false,
+              show: true,
               lineStyle: {
                 color: "#a9a8a8",
               },
             },
             splitLine: {
-              show: true,
+              show: false,
               lineStyle: {
                 color: "rgba(255,255,255,.16)",
               },

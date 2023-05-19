@@ -65,7 +65,7 @@ export default {
           type: "category",
           data: ["1月", "2月", "3月", "4月"],
           axisLine: {
-            show: false,
+            show: true,
           },
           axisTick: {
             show: false,
@@ -98,7 +98,7 @@ export default {
               show: false,
             },
             axisLine: {
-              show: false,
+              show: true,
             },
             axisLabel: {
               show: true,
@@ -111,7 +111,7 @@ export default {
             type: "value",
             name: "(%)",
             nameTextStyle: {
-              color: "#393939",
+              color: "#a9a8a8",
               padding: [0, 0, 0, 40], // 四个数字分别为上右下左与原位置距离
             },
             position: "right",
@@ -122,12 +122,12 @@ export default {
               show: false,
             },
             axisLine: {
-              show: false,
+              show: true,
             },
             axisLabel: {
               show: true,
               textStyle: {
-                color: "#393939",
+                color: "#a9a8a8",
               },
             },
           },

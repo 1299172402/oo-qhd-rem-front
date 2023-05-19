@@ -1,7 +1,7 @@
 <template>
     <div class="app-container" style="width: 100%; height: 100%">
         <div style="width: 15%; height: 10%; margin-left: 5%; text-align: center; padding: 5px 0">
-            <!--            投产时间：2001-10-->
+<!--            投产时间：2001-10-->
         </div>
         <Echart :chart-data="histogram" width="100%" height="65%"></Echart>
         <el-row :gutter="20">
@@ -11,19 +11,17 @@
                         <Echart :chart-data="option"></Echart>
                         <div style="position:absolute;bottom:15%;left:2%;font-size: 10px;text-align: center">
                             <h5 style="color: #0d84ff">油田总井数/开井数(口)</h5>
-                            <div style="font-size: 20px;">{{ dataList.oilWellTotal }}/{{ dataList.oilWellOpenTotal }}
-                            </div>
+                            <div style="font-size: 20px;">{{dataList.oilWellTotal}}/{{dataList.oilWellOpenTotal}}</div>
                         </div>
-
+                        
                     </div>
                     <div style="width: 50%">
                         <Echart :chart-data="option2"></Echart>
                         <div style="position:absolute;bottom:15%;right:5%;font-size: 10px;text-align: center">
                             <h5 style="color: #0d84ff">水井总井数/开井数(口)</h5>
-                            <div style="font-size: 20px;">{{ dataList.injWellTotal }}/{{ dataList.injWellOpenTotal }}
-                            </div>
+                            <div style="font-size: 20px;">{{dataList.injWellTotal}}/{{dataList.injWellOpenTotal}}</div>
                         </div>
-
+                        
                     </div>
                 </div>
             </el-col>
@@ -31,12 +29,12 @@
                 <el-row :gutter="10">
                     <el-col :span="8" v-for="(item, index) in data" :key="index">
                         <div style="float: left; width: 60px; height: 60px">
-                            <!--                            <svg-icon :icon-class="item.icon" style="width: 100%; height: 100%"/>-->
+<!--                            <svg-icon :icon-class="item.icon" style="width: 100%; height: 100%"/>-->
                             <el-image style="padding: 15%" :src="item.src"></el-image>
                         </div>
                         <div style="margin-top: 10px">
                             <div>{{ item.name }}</div>
-                            <div>{{ (item.value / 10000).toFixed(2) }}</div>
+                            <div>{{ item.value }}</div>
                         </div>
                     </el-col>
                 </el-row>
@@ -118,11 +116,11 @@ export default {
                             // margin: 10,
                             interval: 30, // 控制每隔多少个标签显示一个标签
                             formatter: function (value) {
-                                return Number(value.substring(5, 7)) + '月'; // 只保留月份部分
+                                return Number( value.substring(5, 7) )+ '月'; // 只保留月份部分
                             },
                         },
                         axisLine: {
-                            show: false, // 隐藏 x 轴线
+                            show: true, // 隐藏 x 轴线
                         },
                         splitLine: {
                             show: false, // 隐藏 x 轴分隔线
@@ -134,11 +132,11 @@ export default {
                         type: "value",
                         name: "日产 (m³/d)",
                         nameTextStyle: {
-                            padding: [0, 0, 100, 0], // 上、右、下、左
+                            padding: [0, 0, 60, 0], // 上、右、下、左
                         },
                         nameLocation: "center",
                         axisLine: {
-                            show: false,
+                            show: true,
                             lineStyle: {
                                 color: "#a9a8a8",
                             },
@@ -158,12 +156,12 @@ export default {
                         name: "年产(10⁴m³)",
                         position: "right",
                         nameTextStyle: {
-                            padding: [100, 0, 0, 0], // 上、右、下、左
+                            padding: [60, 0, 0, 0], // 上、右、下、左
                         },
                         nameLocation: "center",
                         scale: true,
                         axisLine: {
-                            show: false,
+                            show: true,
                             lineStyle: {
                                 color: "#a9a8a8",
                             },
@@ -199,18 +197,22 @@ export default {
                         symbolSize: 0, // 设置点的大小为 0，不会显示出来
                         type: "line",
                         yAxisIndex: 1,
-                        data: [],
+                        data: [
+                            
+                        ],
                     },
                     {
                         name: "计划累产",
                         type: "line",
                         symbolSize: 0, // 设置点的大小为 0，不会显示出来
                         yAxisIndex: 1,
-                        data: [],
+                        data: [
+                           
+                        ],
                     },
                 ],
             },
-            dataList: '',
+            dataList:'',
             data: [
                 {
                     src: new URL('./image/01.png', import.meta.url).href,
@@ -219,33 +221,33 @@ export default {
                     value: "0",
                 },
                 {
-                    src: new URL('./image/02.png', import.meta.url).href,
+                    src:new URL('./image/02.png', import.meta.url).href,
                     icon: "02",
                     name: "与前日日产油差值(m³)",
                     value: "0",
                 },
                 {
-                    src: new URL('./image/03.png', import.meta.url).href,
+                    src:new URL('./image/03.png', import.meta.url).href,
                     icon: "03",
                     name: "年累产油(10⁴m³)",
                     value: "0",
                 },
                 {
-                    src: new URL('./image/04.png', import.meta.url).href,
+                    src:new URL('./image/04.png', import.meta.url).href,
                     icon: "04",
                     name: "采收率(%)",
                     value: "0",
                 },
                 {
-                    src: new URL('./image/05.png', import.meta.url).href,
+                    src:new URL('./image/05.png', import.meta.url).href,
                     icon: "05",
                     name: "综合含水率(%)",
                     value: "0",
                 },
                 {
-                    src: new URL('./image/06.png', import.meta.url).href,
+                    src:new URL('./image/06.png', import.meta.url).href,
                     icon: "06",
-                    name: "地质储量(%)",
+                    name: "地质储量(10⁴m³)",
                     value: "0",
                 },
             ],
@@ -392,7 +394,7 @@ export default {
                             show: false,
                         },
                         pointer: {
-                            show: false,
+                            show:false,
                             length: "78%",
                             width: 2,
                             offsetCenter: [0, "-30%"],
@@ -660,7 +662,7 @@ export default {
                             show: false,
                         },
                         pointer: {
-                            show: false,
+                            show:false,
                             length: "78%",
                             width: 2,
                             offsetCenter: [0, "-30%"],
@@ -852,24 +854,24 @@ export default {
                 this.option.series[2].data[0].value = res.data.data.oilWellPercentage
                 this.option2.series[2].data[0].value = res.data.data.injWellPercentage
                 //头部表格
-                this.histogram.xAxis[0].data = res.data.data.linearDataSet[1].linearData.map(item => {
+                this.histogram.xAxis[0].data = res.data.data.linearDataSet[1].linearData.map(item=>{
                     return item.label
                 })
                 //计划日产
-                this.histogram.series[0].data = res.data.data.linearDataSet[1].linearData.map(item => {
+                this.histogram.series[0].data = res.data.data.linearDataSet[1].linearData.map(item=>{
                     return item.value
                 })
                 //实际日产
-                this.histogram.series[1].data = res.data.data.linearDataSet[0].linearData.map(item => {
+                this.histogram.series[1].data = res.data.data.linearDataSet[0].linearData.map(item=>{
                     return item.value
                 })
                 //计划累产
-                this.histogram.series[2].data = res.data.data.linearDataSetsSum[1].linearData.map(item => {
-                    return (item.value / 10000).toFixed(2)
+                this.histogram.series[2].data = res.data.data.linearDataSetsSum[1].linearData.map(item=>{
+                    return (item.value/10000).toFixed(2)
                 })
                 //实际累产
-                this.histogram.series[3].data = res.data.data.linearDataSetsSum[0].linearData.map(item => {
-                    return (item.value / 10000).toFixed(2)
+                this.histogram.series[3].data = res.data.data.linearDataSetsSum[0].linearData.map(item=>{
+                    return (item.value/10000).toFixed(2)
                 })
                 this.dataList = res.data.data
             })

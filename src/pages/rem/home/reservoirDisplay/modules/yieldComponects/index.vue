@@ -44,7 +44,7 @@ export default {
           itemGap: 35,
         },
         grid: {
-          left: "3%",
+          left: "5%",
           right: "4%",
           bottom: "8%",
           top:'10%',
@@ -88,7 +88,7 @@ export default {
               show: false,
             },
             axisLine: {
-              show: false,
+              show: true,
               lineStyle: {
                 color: "#a9a8a8",
                 width: 1,
@@ -96,6 +96,7 @@ export default {
               },
             },
             splitLine: {
+                show:false,
               lineStyle: {
                 color: "#a9a8a8",
               },

@@ -43,11 +43,18 @@ export default {
                     trigger: "item",
                     formatter: "{a} <br/>{b} : {c} ({d}%)",
                 },
+                grid: {
+                    left: '15%',
+                    right: '15%',
+                    top: '15%',
+                    bottom: '15%',
+
+                },
                 series: [
                     {
                         name: "问题井统计",
                         type: "pie",
-                        radius: ["30%", "80%"],
+                        radius: ["40%", "70%"],
                         center: ["50%", "50%"],
                         roseType: "radius",
                         data: [
@@ -89,7 +96,7 @@ export default {
                         label: {
                             show: false,
                             normal: {
-                                formatter: "{d}%",
+                                formatter: "{b}\n{c}口",
                                 show: true,
                                 position: "",
                             },

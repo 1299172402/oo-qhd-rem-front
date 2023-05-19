@@ -78,7 +78,7 @@ export default {
                     },
                 },
                 splitLine: {
-                    show: true,
+                    show: false,
                     lineStyle: {
                         color: 'rgba(143,164,204,.5)'
                     },

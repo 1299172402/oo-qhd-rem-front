@@ -105,7 +105,7 @@ export default {
               width: 1,
               type: "line",
             },
-            show: false,
+            show: true,
           },
         },
         series: [
