@@ -96,11 +96,11 @@ export default {
                             icon: "circle",
                         },
                         {
-                            name: "实际累产",
+                            name: "实际年累产",
                             icon: "circle",
                         },
                         {
-                            name: "计划累产",
+                            name: "计划年累产",
                             icon: "circle",
                         },
                     ],
@@ -153,7 +153,7 @@ export default {
                     },
                     {
                         type: "value",
-                        name: "年产(10⁴m³)",
+                        name: "年累产(10⁴m³)",
                         position: "right",
                         nameTextStyle: {
                             padding: [60, 0, 0, 0], // 上、右、下、左
