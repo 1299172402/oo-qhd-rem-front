@@ -18,6 +18,7 @@ import { LineChart } from "echarts/charts";
 import * as echarts from "echarts/core";
 import { GridComponent, TooltipComponent, LegendComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
+import {queryShutDownWellStatisCharts} from "@/api/rem/reservoirbillboards";
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 export default {
   props: ["infodata"],
@@ -28,9 +29,9 @@ export default {
     return {
       histogram: {
         grid: {
-          top: "20%",
+          top: "18",
           left: "5%",
-          right: "5%",
+          right: "6%",
           bottom: "8%",
           containLabel: true,
         },
@@ -46,7 +47,7 @@ export default {
             var data = "";
             for (var i = 0; i < params.length; i++) {
               if (params[i].seriesName == "关停井数") {
-                data += params[i].seriesName + ":  " + params[i].value + "%";
+                data += params[i].seriesName + ":  " + params[i].value + "个";
               } else {
                 data += params[i].seriesName + ":  " + params[i].value + "<br/>";
               }
@@ -63,7 +64,7 @@ export default {
         },
         xAxis: {
           type: "category",
-          data: ["1月", "2月", "3月", "4月"],
+          data: [],
           axisLine: {
             show: true,
           },
@@ -83,10 +84,8 @@ export default {
             name: "关停影响产量(10⁴m³)",
             nameTextStyle: {
               color: "#a9a8a8",
-
-              padding: [0, 0, 20, 0], // 上、右、下、左
+              padding: [0, 0, 26, 0], // 上、右、下、左
             },
-
             nameLocation: "center",
             splitLine: {
               show: false,
@@ -109,12 +108,12 @@ export default {
           },
           {
             type: "value",
-            name: "(%)",
+            name: "关停井数(个)",
             nameTextStyle: {
               color: "#a9a8a8",
-              padding: [0, 0, 0, 40], // 四个数字分别为上右下左与原位置距离
+                padding: [20, 0, 0, 0], // 上、右、下、左
             },
-            position: "right",
+              nameLocation: "center",
             splitLine: {
               show: false,
             },
@@ -164,10 +163,19 @@ export default {
             barWidth: 15,
             itemStyle: {
               normal: {
-                color: "#fdcb6c",
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                      {
+                          offset: 0,
+                          color: "rgb(250,198,87)",
+                      },
+                      {
+                          offset: 1,
+                          color: "rgb(255,111,53)",
+                      },
+                  ]),
               },
             },
-            data: [280, 210, 180, 170, 150, 145, 160, 130, 120, 120, 120, 120],
+            data: [],
           },
           {
             name: "关停井数",
@@ -177,16 +185,12 @@ export default {
             symbol: "circle", //标记的图形为实心圆
             symbolSize: 4, //标记的大小
             itemStyle: {
-              //折线拐点标志的样式
-              color: "#f3454b",
-              borderWidth: "2",
-              borderColor: "#f3454b",
-            },
-            itemStyle: {
+                //折线拐点标志的样式
+                borderWidth: "2",
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
-                  color: "#00D9EA",
+                  color: "rgb(36,222,255)",
                 },
                 {
                   offset: 1,
@@ -194,13 +198,30 @@ export default {
                 },
               ]),
             },
-            data: [88, 30, 35, 22, 40, 52, 75, 60, 53, 58, 50, 56],
+            data: [],
           },
         ],
       },
     };
   },
-  mounted() {},
+  mounted() {
+      let data = {
+          endTime:'2022-12-01',
+          startTime:'2020-12-01'
+      }
+      queryShutDownWellStatisCharts(data).then((res)=>{
+          console.log(res)
+          res.data.data.data.clyx.forEach((n)=>{
+              this.histogram.xAxis.data.push(n)
+          })
+          res.data.data.data.yearMoth.forEach((n)=>{
+              this.histogram.series[0].data.push(n)
+          })
+          res.data.data.data.wellNum.forEach((n)=>{
+              this.histogram.series[1].data.push(n)
+          })
+      })
+  },
   methods: {},
   computed: {
     getGlobeTheme(val) {
