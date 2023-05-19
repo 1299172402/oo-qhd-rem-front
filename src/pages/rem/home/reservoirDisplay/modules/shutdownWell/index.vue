@@ -6,7 +6,7 @@
           header-title="关停井统计"
           :is-show-max-btn="true"
       >
-          <button class="detailLinkBtn" @click="linkroute('operationOverview')">详细</button>
+          <button class="detailLinkBtn" @click="linkroute('shutdownDetection')">详细</button>
           <Echart :chart-data="histogram" width="100%" height="100%"></Echart>
       </info-window>
   </div>
@@ -222,7 +222,11 @@ export default {
           })
       })
   },
-  methods: {},
+  methods: {
+      linkroute(rname) {
+          this.$router.push({name: rname});
+      },
+  },
   computed: {
     getGlobeTheme(val) {
       return this.$store.state.setting.mode;
