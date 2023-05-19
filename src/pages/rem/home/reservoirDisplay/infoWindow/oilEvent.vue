@@ -89,5 +89,6 @@ export default {
 }
 ::v-deep#tableD .cell{
     height: 45px!important;
+    line-height: 45px!important;
 }
 </style>
