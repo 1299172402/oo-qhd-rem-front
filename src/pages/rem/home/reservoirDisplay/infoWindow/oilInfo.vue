@@ -8,7 +8,7 @@
       :is-show-max-btn="true"
     >
       <div class="g-w100 g-h100 g-row-flex" style="padding: 20px">
-        <button class="detailLinkBtn" @click="linkroute('operationOverview')">详细</button>
+<!--        <button class="detailLinkBtn" @click="linkroute('operationOverview')">详细</button>-->
         <remainingOil></remainingOil>
       </div>
     </info-window>

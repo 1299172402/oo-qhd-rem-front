@@ -5,7 +5,7 @@
         header-title="采油速度"
         :is-show-max-btn="true"
     >
-        <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>
+<!--        <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>-->
         <Echart :chart-data="productionSpeed" width="100%" height="100%"></Echart>
     </info-window>
 </template>

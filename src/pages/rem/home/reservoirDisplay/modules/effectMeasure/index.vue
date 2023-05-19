@@ -6,7 +6,7 @@
             header-title="措施效果跟踪表"
             :is-show-max-btn="true"
         >
-            <button class="detailLinkBtn" @click="linkroute('measuresPumpWellRecovery')">详细</button>
+            <button class="detailLinkBtn" @click="linkroute('analysisReport')">详细</button>
 <!--            <span-->
 <!--                style="font-size:14px;color: #1ec5e6; position: relative; top: -31px; left: 150px">措施潜力井统计表</span>-->
 <!--            <span style="font-size:14px;color: #1ec5e6; position: relative; top: -31px; left: 160px"-->
@@ -79,7 +79,10 @@ export default {
             queryMeasureEffectTrack({evaluationDate:new Date().getFullYear() +'-01-01',oilFieldId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{
                 this.tableData = res.data.data
             })
-        }
+        },
+        linkroute(rname) {
+            this.$router.push({name: rname});
+        },
     }
 };
 </script>

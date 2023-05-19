@@ -134,6 +134,8 @@ export default {
                         nameTextStyle: {
                             padding: [0, 0, 60, 0], // 上、右、下、左
                         },
+                        min:0,
+                        max:10000,
                         nameLocation: "center",
                         axisLine: {
                             show: true,
@@ -158,6 +160,8 @@ export default {
                         nameTextStyle: {
                             padding: [60, 0, 0, 0], // 上、右、下、左
                         },
+                        min:0,
+                        max:10000,
                         nameLocation: "center",
                         scale: true,
                         axisLine: {
@@ -853,6 +857,10 @@ export default {
                 this.data[5].value = res.data.data.reserves
                 this.option.series[2].data[0].value = res.data.data.oilWellPercentage
                 this.option2.series[2].data[0].value = res.data.data.injWellPercentage
+                this.histogram.yAxis[0].min = null
+                this.histogram.yAxis[0].max = null
+                this.histogram.yAxis[1].min = null
+                this.histogram.yAxis[1].max = null
                 //头部表格
                 this.histogram.xAxis[0].data = res.data.data.linearDataSet[1].linearData.map(item=>{
                     return item.label

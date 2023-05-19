@@ -6,7 +6,7 @@
             header-title="问题井统计"
             :is-show-max-btn="true"
         >
-            <button class="detailLinkBtn" @click="linkroute('operationOverview')">详细</button>
+            <button class="detailLinkBtn" @click="linkroute('analysisReport')">详细</button>
             <Echart :chart-data="histogram" width="100%" height="100%"></Echart>
         </info-window>
         <!-- :style="{
@@ -108,6 +108,9 @@ export default {
         this.getData()
     },
     methods: {
+        linkroute(rname) {
+            this.$router.push({name: rname});
+        },
         getData() {
             queryProblemWellStatis({date: new Date().format('YYYY-MM-DD')}).then(res => {
                 this.histogram.series[0].data[0].value = res.data.data[0].value

@@ -5,7 +5,7 @@
         header-title="自然递减率"
         :is-show-max-btn="true"
     >
-        <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>
+<!--        <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>-->
         <Echart :chart-data="naturalDeclineRate" width="100%" height="100%"></Echart>
     </info-window>
 </template>

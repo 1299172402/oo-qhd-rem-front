@@ -6,7 +6,7 @@
             header-title="秦皇岛32-6油田月度产量对比图"
             :is-show-max-btn="true"
         >
-            <button class="detailLinkBtn" @click="linkroute('fault')">详细</button>
+            <button class="detailLinkBtn" @click="linkroute('optimization')">详细</button>
             <Echart :chart-data="histogram" style="height: 100%"></Echart>
         </info-window>
     </div>
@@ -84,8 +84,8 @@ export default {
                         nameTextStyle: {
                             padding: [0, 0, 30, 0], // 上、右、下、左
                         },
-                        // min:0,
-                        // max:100,
+                        min:0,
+                        max:100,
                         nameLocation: "center",
                         axisLabel: {
                             color: "#a9a8a8",
@@ -113,7 +113,7 @@ export default {
                         name: "月度计划产量",
                         type: "bar",
                         barWidth: "12",
-                        data: [4, 3, 5, 4],
+                        data: [0],
                         itemStyle: {
                             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                                 {
@@ -135,7 +135,7 @@ export default {
                         name: "月度实际产量",
                         type: "bar",
                         barWidth: "12",
-                        data: [4, 3, 4, 5],
+                        data: [0],
                         itemStyle: {
                             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                                 {
@@ -162,19 +162,17 @@ export default {
         this.getinfo()
     },
     methods: {
+        linkroute(rname) {
+            this.$router.push({name: rname});
+        },
         getinfo() {
             monthlyProductionComparison({}).then(res => {
+                this.histogram.yAxis[0].min = null
+                this.histogram.yAxis[0].max = null
                 //
                 this.histogram.series[0].data = res.data.data.monthlyPlannedOutputVo.map(item => {
                     return item.allocProdMonthly
                 })
-                // let monthlyPlannedOutputVoArr = []
-                // for(let key in res.data.data.monthlyPlannedOutputVo){
-                //     monthlyPlannedOutputVoArr.push(res.data.data.monthlyPlannedOutputVo[key])
-                // }
-                //
-                // this.histogram.yAxis[0].min = null
-                // this.histogram.yAxis[0].max = null
                 this.histogram.series[1].data = res.data.data.monthlyActualOutputVoList.map(item => {
                     return item.checkedProdMonthly
                 })
