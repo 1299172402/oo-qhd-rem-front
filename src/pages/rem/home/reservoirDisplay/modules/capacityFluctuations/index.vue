@@ -39,7 +39,7 @@ export default {
           },
           grid: {
               top: 15,
-              left: 65,
+              left: 85,
               right: 10,
               bottom: 50,
           },
@@ -82,7 +82,7 @@ export default {
           nameTextStyle: {
             color: "#a9a8a8",
             padding: [0, 0, 30, 0],
-            fontSize: 16,
+            fontSize: 12,
           },
           axisLabel: {
             margin: 20,
