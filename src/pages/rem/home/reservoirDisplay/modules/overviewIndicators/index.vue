@@ -278,7 +278,7 @@ export default {
 
                             c: {
                                 fontSize: 10,
-                                color: "#fff",
+                                color: "#29EEF3",
                                 // padding: [5,0]
                             },
                         },
@@ -382,7 +382,7 @@ export default {
 
                             c: {
                                 fontSize: 10,
-                                color: "#fff",
+                                color: "#29EEF3",
                                 // padding: [5,0]
                             },
                         },
@@ -499,11 +499,13 @@ export default {
                 tooltip: {
                     trigger: value,
                     formatter: unit,
+                    position:'top',
                 },
                 series: [
                     {
                         type: "pie",
-                        selectedMode: "single",
+                        hoverAnimation: false, // 关闭鼠标经过时的动画
+                        // selectedMode: "single",
                         radius: [0, "75%"],
                         color: centerColor,
                         label: {
@@ -516,6 +518,7 @@ export default {
                     },
                     {
                         type: "pie",
+                        hoverAnimation: false, // 关闭鼠标经过时的动画
                         color: [valueColor, backColor],
                         radius: ["95%", "85%"],
                         labelLine: {
