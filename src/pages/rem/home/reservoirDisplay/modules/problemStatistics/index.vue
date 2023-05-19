@@ -47,7 +47,7 @@ export default {
                     {
                         name: "问题井统计",
                         type: "pie",
-                        radius: ["30%", "70%"],
+                        radius: ["30%", "60%"],
                         center: ["50%", "50%"],
                         // roseType: "radius",
                         data: [

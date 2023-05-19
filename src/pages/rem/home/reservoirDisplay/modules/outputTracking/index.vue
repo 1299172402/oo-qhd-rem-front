@@ -193,7 +193,7 @@ export default {
                         data: [],
                     },
                     {
-                        name: "实际累产",
+                        name: "实际年累产",
                         symbolSize: 0, // 设置点的大小为 0，不会显示出来
                         type: "line",
                         yAxisIndex: 1,
@@ -202,7 +202,7 @@ export default {
                         ],
                     },
                     {
-                        name: "计划累产",
+                        name: "计划年累产",
                         type: "line",
                         symbolSize: 0, // 设置点的大小为 0，不会显示出来
                         yAxisIndex: 1,

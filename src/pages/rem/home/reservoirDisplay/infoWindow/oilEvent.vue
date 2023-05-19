@@ -11,22 +11,27 @@
                 <div style="height: 250px; width: 100%" class="g-w100">
                     <button class="detailLinkBtn" @click="linkroute('oilEventDetail')">详细</button>
                     <el-table
+                        id="tableD"
                         :data="tableData"
                         highlight-current-row
-                        height="calc(100% - 50px)"
+                        height="calc(100% - 0px)"
                         style="margin-top: 10px;margin: 0"
-                        :row-style="{ height: '0px' }"
+                        :row-style="{ height: '70px' }"
                         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
                         header-cell-class-name="table_header"
                         :cell-style="{ 'text-align': 'center', padding: '2px' }"
                         :default-sort="{ prop: 'date', order: 'descending' }"
                     >
                         <el-table-column label="序号" min-width="60px" prop="ogfName" align="center">
-                            <template slot-scope="scope">
+                            <template slot-scope="scope" style="height: 100%">
                                 {{ scope.$index + 1 }}
                             </template>
                         </el-table-column>
-                        <el-table-column label="大事内容" min-width="180px" show-overflow-tooltip prop="remark" align="center"></el-table-column>
+                        <el-table-column label="大事内容" min-width="100px" prop="remark" align="center">
+                            <template slot-scope="scope">
+                                <div class="table-name">{{ scope.row.remark }}</div>
+                            </template>
+                        </el-table-column>
                         <el-table-column label="时间"  prop="startTime" align="center">
                             <template slot-scope="scope">
                                 <span>{{ scope.row.startTime?scope.row.startTime.split(' ')[0]:'' }}</span>
@@ -77,5 +82,12 @@ export default {
     border: 0;
     cursor: pointer;
     color: #ffffff;
+}
+.table-name {
+    line-height: 100%;
+    white-space: pre-wrap; /* 强制换行 */
+}
+::v-deep#tableD .cell{
+    height: 45px!important;
 }
 </style>

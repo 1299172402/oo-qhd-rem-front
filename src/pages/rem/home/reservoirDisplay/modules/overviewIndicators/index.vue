@@ -546,7 +546,7 @@ export default {
                     {
                         type: "pie",
 
-                        selectedMode: "single",
+                        // selectedMode: "single",
                         radius: [0, "75%"],
                         color: centerColor,
                         label: {
