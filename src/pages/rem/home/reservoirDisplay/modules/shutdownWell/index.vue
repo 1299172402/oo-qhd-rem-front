@@ -84,7 +84,7 @@ export default {
             name: "关停影响产量(10⁴m³)",
             nameTextStyle: {
               color: "#a9a8a8",
-              padding: [0, 0, 26, 0], // 上、右、下、左
+              padding: [0, 0, 18, 0], // 上、右、下、左
             },
             nameLocation: "center",
             splitLine: {
@@ -211,10 +211,10 @@ export default {
       }
       queryShutDownWellStatisCharts(data).then((res)=>{
           console.log(res)
-          res.data.data.data.clyx.forEach((n)=>{
+          res.data.data.data.yearMoth.forEach((n)=>{
               this.histogram.xAxis.data.push(n)
           })
-          res.data.data.data.yearMoth.forEach((n)=>{
+          res.data.data.data.clyx.forEach((n)=>{
               this.histogram.series[0].data.push(n)
           })
           res.data.data.data.wellNum.forEach((n)=>{
