@@ -43,20 +43,13 @@ export default {
                     trigger: "item",
                     formatter: "{a} <br/>{b} : {c} ({d}%)",
                 },
-                grid: {
-                    left: '15%',
-                    right: '15%',
-                    top: '15%',
-                    bottom: '15%',
-
-                },
                 series: [
                     {
                         name: "问题井统计",
                         type: "pie",
-                        radius: ["40%", "70%"],
+                        radius: ["30%", "70%"],
                         center: ["50%", "50%"],
-                        roseType: "radius",
+                        // roseType: "radius",
                         data: [
                             {
                                 value: 0,
