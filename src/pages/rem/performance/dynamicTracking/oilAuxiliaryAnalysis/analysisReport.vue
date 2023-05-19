@@ -174,7 +174,7 @@
                                 <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                 <!--生产动态项目-->
                                 <!-- :render-header="renderHeader" -->
-                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" align="center" width="120" sortable="custom" label-class-name="twoRowHeader">
+                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" align="center" min-width="160" sortable="custom" label-class-name="twoRowHeader">
                                     <template #header>
                                         <div class="headerSortRow1" v-if="item.name && item.name.split(' ')[1]">
                                             <span>{{ item.name.split(' ')[0] ? item.name.split(' ')[0] : ""}}</span>
@@ -210,7 +210,7 @@
                                             <span v-if="scope.row[item.code] == null"></span>
                                             <span v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel }}</span>
                                             <el-tooltip v-else class="item" effect="dark" :content="scope.row[item.code].value + ''" placement="top">
-                                                <span>{{ scope.row[item.code].showLabel }}</span>
+                                                <span>{{ scope.row[item.code].showLabel }}{{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(4):'-'}}</span>
                                             </el-tooltip>
                                         </template>
                                     </el-table-column>
@@ -347,7 +347,7 @@
                                     <div class="z-row-right">
                                         <div class="name">措施推荐</div>
                                         <div class="num">
-                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='地面调参'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
+                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='地面调参'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -422,7 +422,7 @@
                                     <div class="z-row-right" style="position: relative;top: 48px;">
                                         <div class="name">措施推荐</div>
                                         <div class="num">
-                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='换大泵'||item.name=='加深泵挂'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
+                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='换大泵'||item.name=='加深泵挂'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -498,7 +498,7 @@
                                         <div class="z-row-right" style="height:130px;position: relative;top: 48px;">
                                             <div class="name">措施推荐</div>
                                             <div class="num">
-                                                <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='换大泵'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
+                                                <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='换大泵'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span></span>
                                             </div>
                                         </div>
                                     </div>
@@ -568,7 +568,7 @@
                                         <div class="z-row-right" style="height:130px;position: relative;top: 48px;">
                                             <div class="name">措施推荐</div>
                                             <div class="num">
-                                                <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='换大泵'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
+                                                <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='换大泵'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') }}：<span style="color: #FFC835; font-size: 14px;"> {{ (item.value > 0 ? item.value : '(0)') }} </span></span>
                                             </div>
                                         </div>
                                     </div>
@@ -582,7 +582,7 @@
                                 <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                 <!--生产动态项目-->
                                 <!--  :label="item.name" :render-header="renderHeader" -->
-                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" align="center" width="120" sortable="custom" label-class-name="twoRowHeader">
+                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" align="center" min-width="160" sortable="custom" label-class-name="twoRowHeader">
                                     <template #header>
                                         <div class="headerSortRow1" v-if="item.name && item.name.split(' ')[1]">
                                             <span>{{ item.name.split(' ')[0] ? item.name.split(' ')[0] : ""}}</span>
@@ -618,7 +618,7 @@
                                             <span v-if="scope.row[item.code] == null"></span>
                                             <span v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel }}</span>
                                             <!-- <el-tooltip v-else class="item" effect="dark" :content="scope.row[item.code].value + ''" placement="top"> -->
-                                                <span v-else>{{ scope.row[item.code].showLabel }}{{scope.row[item.code].value?scope.row[item.code].value:'-'}}</span>
+                                                <span v-else>{{ scope.row[item.code].showLabel }}{{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(4):'-'}}</span>
                                             <!-- </el-tooltip> -->
                                         </template>
                                     </el-table-column>
