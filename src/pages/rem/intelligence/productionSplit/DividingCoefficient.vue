@@ -72,8 +72,8 @@
                     </el-select>
                     <el-button type="primary" style="margin-left: 20px" @click="handleAllSave">保存</el-button>
                     <el-button type="primary" @click="handleOperation">运行计算</el-button>
-                    <el-button type="primary" icon="el-icon-download" class="commonBtn" @click="downloadTable">下载</el-button>
                 </el-form-item>
+                <el-button type="primary" icon="el-icon-download" class="commonBtn" style="float: right" @click="downloadTable">下载</el-button>
             </el-form>
             <el-table
                 v-show="params.wellCategory === '01'"

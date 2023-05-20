@@ -62,6 +62,7 @@
                     class="commonBtn"
                     icon="el-icon-download"
                     @click="downloadTable"
+                    style="float: right"
                 >下载
                 </el-button>
             </el-form>

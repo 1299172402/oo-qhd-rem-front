@@ -77,6 +77,7 @@
                     class="commonBtn"
                     icon="el-icon-refresh"
                     style="margin-left: 20px"
+                    @click="resettingQuery"
                 >重置
                 </el-button>
             </el-form>
@@ -85,7 +86,7 @@
             header-title="产量劈分"
             style="margin-top: 20px;height: calc(100% - 80px)"
         >
-            <div style="float: left;margin-bottom: 20px">
+            <div style="margin-bottom: 20px">
                 <el-button
                     type="primary"
                     @click="splitSection('splitSection')"
@@ -102,6 +103,7 @@
                     class="commonBtn"
                     @click="doExportFile"
                     icon="el-icon-download"
+                    style="float: right"
                 >下载
                 </el-button>
             </div>
@@ -499,6 +501,13 @@ export default {
          */
         doSearch() {
             this.queryProductionSplit();
+        },
+        resettingQuery(){
+            this.queryData.wellId = ["DA0269628E74490ABDE198E7D1DBF3EA"];
+            this.queryData.wellCategory = '01'
+            this.queryData.blockId = '6CD7342CA6DD418183A4B3BC38584F7C'
+            this.queryData.value = [timeNew.format('YYYY-MM-DD'), lastDay.format('YYYY-MM-DD')]
+            this.doSearch()
         },
 
         /**

@@ -148,6 +148,8 @@
             },
             getData(){
                 let params = {
+                    ogfId:this.queryData.ogfId,
+                    platformId:this.queryData.platformId,
                     wellId:this.queryData.wellId,
                     chronicleTypeCode:this.queryData.event,
                     startTime:this.queryData.selectDate?this.queryData.selectDate[0]:'',

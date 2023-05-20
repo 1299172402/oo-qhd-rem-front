@@ -41,7 +41,7 @@
                 <el-button
                     type="primary"
                     class="confirmBut"
-                icon="el-icon-search"
+                    icon="el-icon-search"
                     size="mini"
                     @click="tableOilfield"
                 >搜索
@@ -51,16 +51,9 @@
                     class="commonBtn"
                     icon="el-icon-refresh"
                     size="mini"
+                    @click="reset"
                 >
                     重置
-                </el-button>
-                <el-button
-                    type="primary"
-                    class="commonBtn"
-                    size="mini"
-                    icon="el-icon-download"
-                    @click="downloadTable"
-                >下载
                 </el-button>
                 <el-button type="danger" style="float: right" class="countBut" @click="examine">
                     查看连通系数计算基础数据
@@ -118,6 +111,15 @@
                     :disabled="disabledComp || !form.tableData.length"
                     @click="preserve('form')"
                 >保存
+                </el-button>
+                <el-button
+                    type="primary"
+                    class="commonBtn"
+                    size="mini"
+                    icon="el-icon-download"
+                    style="float: right"
+                    @click="downloadTable"
+                >下载
                 </el-button>
             </div>
             <el-form ref="form" label-width="100px" style="height: 100%;" :model="form">
@@ -406,6 +408,13 @@ export default {
         },
         // 区块下拉点击事件
         changeBlock() {
+        },
+        //重置
+        reset(){
+            this.queryData.blockId = '6CD7342CA6DD418183A4B3BC38584F7C'
+            this.queryData.ogfId =  '3FC9A818F5BC43B88270DB80BBB3018F',
+            this.queryData.dateTime =  this.eeee(),
+            this.tableOilfield();
         },
         // 获取油田列表数据
         tableOilfield() {
