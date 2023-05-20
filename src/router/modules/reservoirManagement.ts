@@ -41,6 +41,27 @@ export default [
                 component: () => import('@/pages/rem/intelligence/connectivityData/connectivityCoefficientCalculatesProperty.vue'),
                 meta: { title: '基础计算数据',icon: 'icon' },
             },
+            {
+                path: 'optimization',
+                name: 'optimization',
+                component: () => import('@/pages/rem/intelligence/optimization/index.vue'),
+                meta: { title: '注采调配优化',icon: 'icon' },
+            },
+            //油藏管理-注采调配优化-查看详情
+            {
+                path: "optimizationDetail",
+                name: "optimizationDetail",
+                component: () => import("@/pages/rem/intelligence/optimization/view.vue"),
+                hidden: true,
+                meta: { title: "查看详情" },
+            },
+            {
+                path: 'optimizationResult',
+                name: 'optimizationResult',
+                hidden: true,
+                component: () => import('@/pages/rem/intelligence/optimization/result.vue'),
+                meta: {title: '方案详情', icon: 'icon'},
+            },
         ],
 
     },
