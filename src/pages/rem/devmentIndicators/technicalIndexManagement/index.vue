@@ -1476,6 +1476,7 @@
                             series.label = {
                                 show: true,
                                 position: 'top',
+                                color: "#8fa4cc",
                             }
                             let barData = item.linearData;
                             let seriesMess = [];
