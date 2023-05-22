@@ -84,7 +84,7 @@
                         <el-table-column prop="status" label="措施是否达标" width="80"></el-table-column>
                         <el-table-column label="类别" width="100">
                             <template slot-scope="scope">
-                                <div style="line-height: 18px;">计划<br />实际</div>
+                                <div style="line-height: 18px;">{{(measureVersion=='002003'||measureVersion=='001003'||measureVersion=='002002'||measureVersion=='001002')?'计划':'滚动预测'}}<br />实际</div>
                             </template>
                         </el-table-column>
                         <el-table-column :width="width +'px'">
@@ -96,7 +96,7 @@
                                     </div>
                                     <div class="icon0">
                                         <b class="b1"></b>
-                                        <span>计划/滚动预测</span>
+                                        <span>{{(measureVersion=='002003'||measureVersion=='001003'||measureVersion=='002002'||measureVersion=='001002')?'计划':'滚动预测'}}</span>   
                                     </div>
                                     <div class="icon0">
                                         <b class="b2"></b>
@@ -125,7 +125,7 @@
                                             :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 增产性措施`">
                                         <img src="@/assets/rem/plan/i1.png" alt="" v-if="scope.row.stimClassCode=='004'"
                                             :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 增注性措施`">
-                                        <img src="@/assets/rem/plan/i2.png" alt="" v-if="scope.row.stimClassCode=='002'"
+                                        <img src="@/assets/rem/plan/i2.png" alt="" v-else
                                             :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 维护性措施`">
                                     </div>
                                     <div class="vv-right">
@@ -205,7 +205,7 @@
                 spacing: '', //日期间距
                 mcWidth: '0px',
                 mcMgLeft: '',
-                // basicDays: ['-01-01', '-02-01', '-03-01', '-04-01', '-05-01', '-06-01', '-07-01', '-08-01', '-09-01','-10-01', '-11-01', '-12-01'],
+                // basicDays: ['-01-01', '-02-01', '-03-01', '-04-01', '-05-01', '-06-01', '-07-01', '-08-01', '-09-01  ','-10-01', '-11-01', '-12-01'],
                 basicDays:['年01月','年02月','年03月','年04月','年05月','年06月','年07月','年08月','年09月','年10月','年11月','年12月'],
                 days: [],
                 dateTime: new Date().format('yyyy'), //时间
@@ -248,9 +248,9 @@
                     }
                 ],
                 //措施版本
-                measureVersion: '',
+                measureVersion: '002003',   
                 measureVersionSelect: [
-                    {label: '全部',value: ''},
+                    // {label: '全部',value: ''},
                     {label:'分公司考核',value:'002003'},
                     {label:'分公司奋斗',value:'001003'},
                     {label:'有限考核',value:'002002'},

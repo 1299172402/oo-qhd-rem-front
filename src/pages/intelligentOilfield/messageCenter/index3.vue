@@ -31,7 +31,7 @@
             class="g-row-flex"
             style="margin-top: 15px"
             :style="{
-              color: $store.state.setting.mode === 'dark' ? '#fff' : '#3490D3',
+              color: $store.state.setting.mode === 'dark' ? '#fff' : '#0075E9',
               marginTop: index === 0 ? '0px' : '15px',
             }"
           >

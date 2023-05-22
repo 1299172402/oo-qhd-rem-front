@@ -5,7 +5,7 @@
     <!-- <div class="home-marquee-fa" style="margin-bottom: 20px">
       <div class="home-marquee_head">
         <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px">
-        <p style="margin-left: 10px; width: 70px;font-weight: 500;color: #3490d3;">
+        <p style="margin-left: 10px; width: 70px;font-weight: 500;color: #0075E9;">
           通知公告：
         </p>
       </div>

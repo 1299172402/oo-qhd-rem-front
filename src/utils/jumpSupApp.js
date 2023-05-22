@@ -10,3 +10,12 @@ export default function jumpSupApp(path, query = {}) {
   const donePath = index === -1 ? url.toString() : `${url.origin}/#/${url.search}`;
   window.open(donePath, "_blank");
 }
+
+export function addTokenToUrl(url) {
+  if (!url) {
+    // eslint-disable-next-line
+    return "javascript:void(0)";
+  }
+  url += `${url.indexOf("?") !== -1 ? "&" : "?"}access_token=${store.getters["user/token"]}`;
+  return url;
+}
