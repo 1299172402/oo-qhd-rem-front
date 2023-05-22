@@ -184,15 +184,6 @@ export default {
     bizPath: {
       type: String
     },
-    bucketName: {
-      type: String
-    },
-    videoBucketName: {
-      type: String
-    },
-    pictureBucketName: {
-      type: String
-    },
     uploadType: {
       type: String,
       default: "minio"
@@ -262,15 +253,7 @@ export default {
      * 使用统一的 axios 处理文件上传，方便统一拦截处理
      */
     httpRequest: function(val) {
-      const type = val.file.name.split(".").pop();
       const fd = new FormData();
-      if (this.pictureBucketName && this.defaultPictureType.includes(type)) {
-        fd.append("bucketName", this.pictureBucketName);
-      } else if (this.videoBucketName && this.defaultVideoType.includes(type)) {
-        fd.append("bucketName", this.videoBucketName);
-      } else {
-        fd.append("bucketName", this.bucketName);
-      }
       fd.append("file", val.file, val.file.name);
       fd.append("bizPath", this.bizPath);
       fd.append("uploadType", this.uploadType);
@@ -453,7 +436,7 @@ export default {
   }
 
   .light-text-style {
-    color: rgb(52, 144, 211);
+    color: #0075e9;
   }
 }
 
@@ -480,24 +463,24 @@ export default {
     }
 
     .light-hover-style:hover {
-      color: rgb(52, 144, 211);
+      color: #0075e9;
     }
   }
 }
 
 .upload-file-list .el-upload-list__item {
-  border: 1px solid rgb(52, 144, 211);
+  border: 1px solid #0075e9;
   line-height: 2;
   margin-bottom: 10px;
   position: relative;
   padding-left: 5px;
 
   .el-icon-document {
-    color: rgb(52, 144, 211);
+    color: #0075e9;
   }
 
   ::v-deep .el-link.el-link--primary {
-    color: rgb(52, 144, 211);
+    color: #0075e9;
   }
 }
 

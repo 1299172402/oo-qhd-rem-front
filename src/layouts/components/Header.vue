@@ -29,9 +29,9 @@
           </t-button> -->
         <!-- <search :layout="layout" /> -->
         <!-- </div> -->
-        <div :style="{color: $store.state.setting.mode==='dark'? ' var(--light-blue-color)':'#fff'}" style="font-size: 14px;font-weight: 700px;margin-left: 20px">
+        <!-- <div :style="{color: $store.state.setting.mode==='dark'? ' var(--light-blue-color)':'#fff'}" style="font-size: 14px;font-weight: 700px;margin-left: 20px">
           {{ $store.getters["user/tenantName"] }}
-        </div>
+        </div> -->
         <!-- <el-select
           v-if="tenantOptions.length > 1 && $store.getters['user/isGroupLogin']"
           v-model="valueA"
@@ -62,11 +62,14 @@
       </div>
       <template #operations>
         <div class="operations-container" style="margin-left: 20px">
+          <div :style="{color: $store.state.setting.mode==='dark'? ' var(--light-blue-color)':'#fff'}" style="margin-right: 5px;font-size: 14px;font-weight: 700px;margin-left: 20px">
+            {{ $store.getters["user/tenantName"] }}
+          </div>
           <!-- 搜索框 -->
           <!-- <search v-if="layout !== 'side'" :layout="layout" /> -->
           <audio ref="musicAudio" muted="muted" src="@/assets/messageVideo.wav" />
           <!-- 全局通知，通告 -->
-          <message @play-audio="playAudio" />
+          <message style="margin-top: 2px" @play-audio="playAudio" />
           <!-- 全局通知，通告 -->
           <notice />
           <!-- <t-button v-show="$store.getters['user/isGroupLogin']" theme="default" variant="text" @click="switchMode" style="color: var(--white-color)"
@@ -78,7 +81,20 @@
             @click="projectionMode"
             style="color: var(--white-color)"
           ><swap-icon style="color: var(--white-color);"/>进入大屏模式</t-button> -->
-
+          <t-tooltip placement="bottom" content="系统设置" style="color: var(--white-color);margin-top: 3px;margin-right: 0">
+            <t-button
+              theme="default"
+              shape="square"
+              variant="text"
+              style="background: transparent;border: 0;"
+              @click="toggleSettingPanel"
+            >
+              <svg-icon
+                :icon-class="$store.state.setting.mode==='light'?'my-setting-new':'my-setting-new-dark'"
+                class="panelIconClass"
+              />
+            </t-button>
+          </t-tooltip>
           <t-dropdown :min-column-width="125" trigger="click">
             <template #dropdown>
               <t-dropdown-menu>
@@ -100,10 +116,15 @@
               class="header-user-btn"
               theme="default"
               variant="text"
-              style="margin-bottom: 4px;"
+              style="margin: 0 0 1px -2px"
             >
               <template #icon>
-                <user-circle-icon class="header-user-avatar" style="color: var(--white-color)" />
+                <svg-icon
+                  :icon-class="$store.state.setting.mode==='light'?'person-new':'person-new-dark'"
+                  class="panelIconClass"
+                  style="margin-right: 4px"
+                />
+                <!-- <user-circle-icon class="header-user-avatar" style="color: var(--white-color)" /> -->
               </template>
               <div class="header-user-account" style="color: var(--white-color)">
                 {{ $store.state.user.userInfo.nickName }}
@@ -111,20 +132,6 @@
               </div>
             </t-button>
           </t-dropdown>
-          <t-tooltip placement="bottom" content="系统设置" style="color: var(--white-color)">
-            <t-button
-              theme="default"
-              shape="square"
-              variant="text"
-              style="background: transparent;border: 0;"
-              @click="toggleSettingPanel"
-            >
-              <svg-icon
-                icon-class="my-setting"
-                class="panelIconClass"
-              />
-            </t-button>
-          </t-tooltip>
         </div>
       </template>
     </t-head-menu>
@@ -803,7 +810,7 @@ export default Vue.extend({
 .operations-container {
   display: flex;
   align-items: center;
-  margin-right: 12px;
+  margin-right: 0;
 
   .t-popup__reference {
     display: flex;
@@ -883,6 +890,9 @@ export default Vue.extend({
   display: inline-flex;
   align-items: center;
   color: var(--td-text-color-primary);
+  font-size: 12px;
+  font-family: PingFangSC-Medium, "PingFang SC";
+  font-weight: 500;
 
   .t-icon {
     margin-left: 4px;
@@ -954,10 +964,14 @@ export default Vue.extend({
 </style>
 <style scoped>
 .panelIconClass {
-  width: 60px !important;
-  height: 25px !important;
+  width: 24px !important;
+  height: 24px !important;
   cursor: pointer;
   color: #fff;
+}
+
+.operations-container .t-button {
+  margin: 0 5px;
 }
 
 .scrollicon {

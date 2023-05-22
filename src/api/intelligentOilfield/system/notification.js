@@ -8,6 +8,14 @@ export function getList(query) {
   });
 }
 
+export function getByTenantId(query) {
+  return request({
+    url: "/system/instationmail/getByTenantId",
+    method: "get",
+    params: query
+  });
+}
+
 export function updateAllStatus(userId) {
   return request({
     url: `/system/instationmail/updateAllStatus/${userId}`,

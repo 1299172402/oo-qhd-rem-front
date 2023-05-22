@@ -10,7 +10,7 @@
     <div class="display-flex process-detail-main">
       <form-auto-create
         :ref="refName"
-        style="width: 300px; min-width: 300px; flex-wrap: nowrap; overflow-y: scroll; border: 1px solid #3490d3; padding: 20px;"
+        style="width: 300px; min-width: 300px; flex-wrap: nowrap; overflow-y: scroll; border: 1px solid #0075e9; padding: 20px;"
         :view-only="true"
         :model="model"
         :items="items"
@@ -362,7 +362,7 @@ export default {
   }
 
   /deep/ .node-setting {
-    border: 1px solid #3490d3;
+    border: 1px solid #0075e9;
     margin-left: 20px;
 
     .coll {
@@ -403,7 +403,7 @@ export default {
     margin-left: 20px;
 
     .img-container {
-      border: 1px solid #3490d3;
+      border: 1px solid #0075e9;
     }
   }
 }
@@ -447,7 +447,7 @@ export default {
     .tip {
       padding: 20px;
       margin-top: 20px;
-      border: 1px solid #3490d3;
+      border: 1px solid #0075e9;
       height: 130px;
     }
 

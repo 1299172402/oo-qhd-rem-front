@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import { getList, updateAllStatus } from "@/api/intelligentOilfield/system/notification.js";
+import { getByTenantId, updateAllStatus } from "@/api/intelligentOilfield/system/notification.js";
 
 export default {
   dicts: ["sys_normal_disable"],
@@ -176,12 +176,12 @@ export default {
       // 判断是那个列表先，在请求数据 num计算未读消息的数量
       if (this.activeName === "first") {
         // 消息列表
-        getList(this.queryParams).then(response => {
+        getByTenantId(this.queryParams).then(response => {
           this.dataList = response.data.rows;
           this.total = response.data.total;
           this.loading = false;
         });
-        getList({ userId: this.$store.getters["user/userDetail"].user.userId }).then(res => {
+        getByTenantId({ userId: this.$store.getters["user/userDetail"].user.userId }).then(res => {
           this.num = res.data.rows.filter(item => Number(item.status) === 0).length;
         });
       } else {
@@ -212,7 +212,7 @@ export default {
       });
     },
     getNoList() {
-      getList({ userId: this.$store.getters["user/userDetail"].user.userId, status: "0" }).then(res => {
+      getByTenantId({ userId: this.$store.getters["user/userDetail"].user.userId, status: "0" }).then(res => {
         this.$store.commit("notification/setMsgData", res.data.rows);
       });
     }

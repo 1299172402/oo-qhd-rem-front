@@ -11,7 +11,7 @@
 // 日期选择器范围
 .el-range-editor.el-input__inner {
   background: var(--opacity-blue-bg2);
-  background-image: var(--logo-bg) !important;
+  // background-image: var(--logo-bg) !important;
   background-size: unset !important;
   background-repeat: no-repeat !important;
   background-position: right top !important;
@@ -128,7 +128,7 @@
 
 .el-switch__core {
   background: rgba(220, 223, 230, 0.5);
-  transition: border-color 0s,background-color 0s;
+  transition: border-color 0s, background-color 0s;
 }
 
 .el-textarea__inner,
@@ -235,7 +235,7 @@
   color: gray;
 }
 
-.el-month-table td.current:not(.disabled) .cell{
+.el-month-table td.current:not(.disabled) .cell {
   background-color: #177ddc;
   border-radius: 4px;
   color: #fff;
@@ -245,4 +245,30 @@
   color: #177ddc;
   border: 1px solid #177ddc;
   border-radius: 4px;
+}
+
+.el-range-editor.is-active,
+.el-range-editor.is-active:hover {
+  border: 1px solid #00def0 !important;
+}
+
+.datePicker_changeColor {
+//   background: linear-gradient(90deg, #19354f 0%, rgba(25, 47, 66, 0.87) 52%, #132b40 100%) !important;
+  // TODO: Maybe change back，带图标的时候放开
+  background: var(--logo-bg) no-repeat right / contain, linear-gradient(90deg, #19354F 0%, rgba(25,47,66,0.87) 52%, #132B40 100%) !important;
+  border: 1px solid transparent !important;
+
+  input {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    color: #b3bdca !important;
+  }
+
+  .el-range-input:focus {
+    color: #24deff !important;
+  }
+
+  .el-range-input::placeholder {
+    color: #b3bdca !important;
+  }
 }

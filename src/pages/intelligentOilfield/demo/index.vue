@@ -11,7 +11,7 @@
       0、深浅色系切换主题颜色
     </div>
     <div class="g-row-flex">
-      <div style="background: #3490d3; width: 80px; height: 80px; color: #fff" class="g-row-flex-HV">
+      <div style="background: #0075e9; width: 80px; height: 80px; color: #fff" class="g-row-flex-HV">
         浅色系
       </div>
       <div
@@ -208,11 +208,26 @@
     </div>
     <treeselect
       v-model="selectValue"
-      style="width: 200px;"
+      style="width: 215px;"
       :options="deptOptions"
       :show-count="true"
       placeholder="请选择"
     />
+    <div class="spaceMargin">
+      2.7、下拉框-选中滑过高亮
+    </div>
+    <el-select
+      v-model="value"
+      placeholder="请选择"
+      class="selectColor"
+    >
+      <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      />
+    </el-select>
     <div class="headerTitle spaceMargin">
       3、输入框=========================================================================================
     </div>
@@ -235,9 +250,19 @@
       style="width: 300px"
       placeholder="请输入角色名称"
     />
+    <div class="spaceMargin">
+      3.3、背景蓝色无border输入框
+    </div>
+    <el-input
+      v-model="input"
+      suffix-icon="el-icon-search"
+      class="noBorderBlueBg"
+      style="width: 300px"
+      placeholder="请输入角色名称"
+    />
 
     <div class="spaceMargin">
-      3.3、文本域
+      3.4、文本域
     </div>
     <el-input v-model="input" type="textarea" style="width: 300px" />
 
@@ -285,6 +310,18 @@
     </div>
     <year-range
       v-model="yearRange"
+    />
+    <div class="spaceMargin">
+      4.1.4、日期范围选择器-选中滑过高亮
+    </div>
+    <el-date-picker
+      v-model="value1"
+      class="datePicker_changeColor"
+      type="daterange"
+      style="width: 400px"
+      range-separator="-"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
     />
     <div class="spaceMargin">
       4.2、日期选择器
@@ -632,6 +669,18 @@
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
     />
+    <div class="spaceMargin">
+      6.3、small小型无背景色小分页器
+    </div>
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.pageNum"
+      :limit.sync="queryParams.pageSize"
+      small
+      :background="true"
+      class="smallNoBg"
+    />
     <div class="headerTitle spaceMargin">
       7、单选按钮=========================================================================================
     </div>
@@ -807,12 +856,14 @@
     </div>
     <div class="marquee-fa" style="margin: 20px 0">
       <div class="marquee_head">
-        <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px">
-        <p style="margin-left: 10px; width: 70px">
+        <!-- <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px"> -->
+        <p style="margin-left: 10px; width: 90px">
           通知公告：
         </p>
       </div>
-      <marquee>{{ val }}</marquee>
+      <marquee class="scrollMarquee">
+        {{ val }}
+      </marquee>
     </div>
     <div class="headerTitle spaceMargin">
       17、上传图片/文件=========================================================================================

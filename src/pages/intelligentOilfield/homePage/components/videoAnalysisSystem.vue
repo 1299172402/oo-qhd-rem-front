@@ -42,7 +42,7 @@
       info-width="100%"
       info-height="100%"
       header-title="已授权业务"
-      :header-style="$store.state.setting.mode === 'dark'?{}:{color:'#3490D3'}"
+      :header-style="$store.state.setting.mode === 'dark'?{}:{color:'#0075E9'}"
     >
       <div class="g-w100 g-h100" style="padding: 20px 20px 10px;overflow-y: scroll">
         <el-row :gutter="20">

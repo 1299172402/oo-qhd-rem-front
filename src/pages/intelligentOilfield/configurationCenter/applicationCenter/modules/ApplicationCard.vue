@@ -162,7 +162,7 @@ div.info-window {
     display: flex;
     padding: 10px 0 5px 20px;
     flex-direction: column;
-    color: rgba(52, 144, 211, 1);
+    color: #0075e9;
     font-size: 14px;
 
     p {
@@ -202,7 +202,7 @@ div.info-window {
   div.app-button {
     cursor: pointer;
     height: 50px;
-    background-color: rgba(52, 144, 211, 0.10);
+    background-color: rgba(0,117,233, 0.10);
     text-align: center;
     display: flex;
     justify-content: space-around;
@@ -210,7 +210,7 @@ div.info-window {
 
     .svg-icon-class {
       font-size: 24px;
-      color: rgba(52, 144, 211, 1);
+      color: #0075e9;
 
       &:not(.delete):hover {
         color: var(--light-blue-color);

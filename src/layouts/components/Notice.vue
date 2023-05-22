@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-dialog
+      v-if="dialogVisible"
       title="站内信列表"
       :visible.sync="dialogVisible"
       width="1300px"
@@ -46,14 +47,14 @@
             <t-list-item v-for="(item, index) in unreadMsg" :key="index">
               <div>
                 <p class="msg-content">
-                  {{ item.content }}
+                  内容：{{ item.content }}
                 </p>
                 <p class="msg-type">
-                  {{ item.type }}
+                  发送方：{{ item.sender }}
                 </p>
               </div>
               <p class="msg-time">
-                {{ item.date }}
+                {{ item.createTime }}
               </p>
               <template #action>
                 <t-button size="small" variant="outline" @click="setRead('radio', item)">
@@ -89,7 +90,10 @@
           @click="isNoticeVisible = true"
         >
           <!-- <mail-icon style="color: var(--white-color);"/> -->
-          <svg-icon icon-class="message-logo" class="panelIconClass" />
+          <svg-icon
+            :icon-class="$store.state.setting.mode==='light'?'message-new':'message-new-dark'"
+            class="panelIconClass"
+          />
         </t-button>
       </t-badge>
     </t-popup>
@@ -100,7 +104,7 @@
 import Vue from "vue";
 import { mapState, mapGetters } from "vuex";
 // import { MailIcon } from 'tdesign-icons-vue';
-import { getList, updateAllStatus, updateOneStatus } from "@/api/intelligentOilfield/system/notification.js";
+import { getByTenantId, updateAllStatus, updateOneStatus } from "@/api/intelligentOilfield/system/notification.js";
 
 import { NotificationItem } from "@/interface";
 import stationMessage from "@/pages/intelligentOilfield/stationMessage/index.vue";
@@ -125,7 +129,7 @@ export default Vue.extend({
   },
   methods: {
     getList() {
-      getList({
+      getByTenantId({
         userId: this.$store.getters["user/userDetail"].user.userId, status: "0", pageNum: 1,
         pageSize: 100000
       }).then(res => {
@@ -286,5 +290,10 @@ export default Vue.extend({
       color: var(--td-text-color-secondary);
     }
   }
+}
+</style>
+<style scoped>
+.operations-container .t-button {
+  margin: 0 5px;
 }
 </style>

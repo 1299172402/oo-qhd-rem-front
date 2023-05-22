@@ -51,7 +51,8 @@
     "uuid": "^9.0.0",
     "sm4js": "^0.0.6",
     "d3": "^7.8.4",
-    "echarts-liquidfill": "^3.1.0"
+    "echarts-liquidfill": "^3.1.0",
+    "vue-giant-tree": "^0.1.5"
   },
   "devDependencies": {
     "@types/vue-color": "^2.4.3",

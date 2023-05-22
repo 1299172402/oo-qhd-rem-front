@@ -230,12 +230,14 @@
     </div>
     <div class="marquee-fa" style="margin: 20px 0">
       <div class="marquee_head">
-        <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px">
-        <p style="margin-left: 10px; width: 70px">
+        <!-- <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px"> -->
+        <p style="margin-left: 10px; width: 90px">
           通知公告：
         </p>
       </div>
-      <marquee>{{ val }}</marquee>
+      <marquee class="scrollMarquee">
+        {{ val }}
+      </marquee>
     </div>
     <!-- tabs标签页 -->
     <div style="margin: 10px 0">
