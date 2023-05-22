@@ -11,7 +11,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="油田">
+            <el-form-item label="油田:">
               <el-select v-model="queryData.ogfId" disabled>
                 <el-option
                   v-for="(item, index) in oilFields"
@@ -21,13 +21,13 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="平台" prop="pt">
+            <el-form-item label="平台:" prop="pt">
               <el-select v-model="queryData.pt" @change="onPlatfromChange">
                 <el-option v-for="item in platforms" :key="item.id" :label="item.platformName" :value="item.platformId">
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="井号">
+            <el-form-item label="井号:">
               <el-select v-model="queryData.wellId" @change="choicewellName">
                 <el-option v-for="item in wells" :key="item.wellId" :label="item.wellName" :value="item.wellId">
                 </el-option>
