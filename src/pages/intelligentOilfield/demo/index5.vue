@@ -7,7 +7,7 @@
           info-width="100%"
           info-height="100%"
           header-title="用户基础信息"
-          :header-style="$store.state.setting.mode === 'dark' ? {} : { color: '#3490D3' }"
+          :header-style="$store.state.setting.mode === 'dark' ? {} : { color: '#0075E9' }"
         >
           <div style="padding: 10px 20px; overflow: scroll" class="g-w100 g-h100">
             <div class="text-center">
@@ -69,7 +69,7 @@
           info-width="100%"
           info-height="100%"
           header-title="用户账号信息"
-          :header-style="$store.state.setting.mode === 'dark' ? {} : { color: '#3490D3' }"
+          :header-style="$store.state.setting.mode === 'dark' ? {} : { color: '#0075E9' }"
         >
           <div style="padding: 10px 20px; overflow: scroll" class="g-w100 g-h100">
             <el-form

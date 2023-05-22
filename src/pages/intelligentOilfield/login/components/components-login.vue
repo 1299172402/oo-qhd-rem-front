@@ -351,9 +351,6 @@ export default Vue.extend({
       if (type === "登录") {
         this.$store
           .dispatch("user/login", this.formData)
-          .then(() => {
-            this.getCode();
-          })
           .catch(() => {
             this.getCode();
           });

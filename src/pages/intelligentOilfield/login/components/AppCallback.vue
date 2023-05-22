@@ -52,7 +52,11 @@ export default {
           }
         });
       } else if (query.redirect) {
-        router.push(query.redirect);
+        delete query.access_token;
+        router.push({
+          path: query.redirect,
+          query
+        });
       } else {
         router.push("/");
       }

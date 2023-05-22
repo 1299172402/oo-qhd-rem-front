@@ -15,7 +15,7 @@
 .el-input__inner {
   background: transparent;
   color: var(--light-blue-color);
-  background-image: var(--logo-bg) !important;
+  // background-image: var(--logo-bg) !important;
   background-size: unset !important;
   background-repeat: no-repeat !important;
   background-position: right top !important;
@@ -23,12 +23,13 @@
   height: 34px;
 }
 
-.el-input__icon{
+.el-input__icon {
   //TODO: Maybe change back UI调整
   line-height: 34px;
 }
 
-.el-input-number.is-controls-right .el-input-number__decrease, .el-input-number.is-controls-right .el-input-number__increase {
+.el-input-number.is-controls-right .el-input-number__decrease,
+.el-input-number.is-controls-right .el-input-number__increase {
   //TODO: Maybe change back UI调整
   line-height: 17px;
 }
@@ -53,8 +54,8 @@
   }
 }
 
-.el-input.is-disabled .el-input__inner{
-  background: rgba(51,69,86,0.8);
+.el-input.is-disabled .el-input__inner {
+  background: rgba(51, 69, 86, 0.8);
   border: 1px solid #c0c4cc;
   opacity: 0.5;
   background-image: var(--logo-bg) !important;
@@ -64,7 +65,7 @@
 }
 
 .el-textarea.is-disabled .el-textarea__inner {
-  background: rgba(51,69,86,0.8);
+  background: rgba(51, 69, 86, 0.8);
   border: 1px solid #c0c4cc;
   opacity: 0.5;
   background-image: var(--logo-bg) !important;
@@ -73,14 +74,36 @@
 
 .el-autocomplete-suggestion {
   background: var(--drop-down-color);
-  border: none
+  border: none;
 }
 
-.el-autocomplete-suggestion li{
-  color: var(--white-opacity7)
+.el-autocomplete-suggestion li {
+  color: var(--white-opacity7);
 }
 
-.el-autocomplete-suggestion li:hover{
+.el-autocomplete-suggestion li:hover {
   color: var(--white-opacity7);
   background: linear-gradient(to right, rgba(2, 30, 54, 0.2), rgba(0, 144, 188, 0.8));
+}
+
+.noBorderBlueBg {
+  input {
+    border: none !important;
+  }
+
+  .el-input__inner {
+    // background: linear-gradient(360deg, rgba(0, 68, 115, 0.64) 0%, rgba(0, 72, 122, 0.16) 100%) !important;
+    // TODO: Maybe change back，带图标的时候放开
+      background: var(--logo-bg) no-repeat right / contain, linear-gradient(360deg, rgba(0,68,115,0.64) 0%, rgba(0,72,122,0.16) 100%) !important;
+    border-radius: 2px;
+    color: #24deff;
+  }
+
+  .el-icon-search::before {
+    color: #24deff;
+  }
+  
+  .el-input__inner::placeholder {
+    color: #24deff !important;
+  }
 }

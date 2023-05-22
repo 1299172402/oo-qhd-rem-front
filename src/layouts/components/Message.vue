@@ -25,29 +25,28 @@
           v-if="tableData.length > 0"
           ref="listDiv"
           style="height: 400px; overflow-y: scroll"
-          :scrollTop="scrollData"
           class="narrow-scrollbar"
           :split="true"
-          @scroll="ScrollM"
         >
           <t-list-item
             v-for="(item, index) in tableData"
             :key="index"
-            :style="{ background: item.typeColor, color: '#fff' }"
-            style="border-bottom: 1px solid #eee"
+            :style="{
+              color: item.typeColor,
+              borderBottom: $store.state.setting.mode === 'light' ? '1px solid #eee' : '1px solid gray',
+            }"
           >
             <div>
-              <p class="msg-content">
-                {{ item.alarmContent }}
-              </p>
-              <p class="msg-type">
+              <!-- eslint-disable vue/no-v-html -->
+              <p class="msg-content" v-html="item.alarmContent" />
+              <p class="msg-type" :style="{ color: item.typeColor }">
                 {{ item.levelName }}
               </p>
-              <p class="msg-type">
+              <p class="msg-type" :style="{ color: item.typeColor }">
                 {{ item.typeName }}
               </p>
             </div>
-            <p class="msg-time">
+            <p class="msg-time" :style="{ color: item.typeColor }">
               {{ item.alarmTime }}
             </p>
             <template #action>
@@ -83,7 +82,10 @@
         @click="updateData"
       >
         <!-- <notification-icon style="color: var(--white-color);"/> -->
-        <svg-icon icon-class="reminder" class="panelIconClass" />
+        <svg-icon
+          :icon-class="$store.state.setting.mode === 'light' ? 'notice-new' : 'notice-new-dark'"
+          class="panelIconClass"
+        />
       </t-button>
     </t-badge>
   </t-popup>
@@ -124,13 +126,13 @@ export default Vue.extend({
     ...mapState("notification", ["msgData"])
   },
   watch: {
-    isNoticeVisible() {
-      if (this.isNoticeVisible) {
-        this.getList(true);
-      } else {
-        this.tableData = [];
-      }
-    }
+    // isNoticeVisible() {
+    //   if (this.isNoticeVisible) {
+    //     this.getList(true);
+    //   } else {
+    //     this.tableData = [];
+    //   }
+    // }
   },
   mounted() {
     // this.initData();
@@ -147,7 +149,7 @@ export default Vue.extend({
           typeName: "测试报警类型",
           sourceName: "测试报警名称",
           alarmContent:
-            "测试报警内容很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长",
+            "测试报警内容很长很长很<br/>试验一下息息爱狭隘性很长很长很长很长很长很长很hah<br/>长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长",
           levelName: "一级",
           alarmTime: "2023/2/17 17:25:00",
           type: "我的",
@@ -191,15 +193,13 @@ export default Vue.extend({
         }
       ];
     },
-    ScrollM(e) {
-      this.scrollData = e.target.offsetTop;
-    },
     pollingTime() {
       window.clearInterval(this.timer);
       this.timer = window.setInterval(() => {
         setTimeout(() => {
           // 重新调用第一个页的接口
           this.getList(true);
+          if (this.$refs.listDiv) this.$refs.listDiv.scrollTop = 0;
           // TODO: Maybe change back
           // 调接口
           popoverRingMessage().then(response => {
@@ -259,50 +259,50 @@ export default Vue.extend({
       }
     },
     updateData() {
-      this.isNoticeVisible = true;
+      this.getList(true);
     },
     getList(firstPage) {
       //  TODO: Maybe change back
-      // const _res = [
-      //   {
-      //     typeName: "测试报警类型",
-      //     sourceName: "测试报警名称",
-      //     alarmContent:
-      //       "测试报警内容很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长",
-      //     levelName: "一级",
-      //     alarmTime: "2023/2/17 17:25:00",
-      //     type: "我的",
-      //     typeColor: "#E90202"
-      //   },
-      //   {
-      //     typeName: "测试报警类型1",
-      //     sourceName: "测试报警名称1",
-      //     alarmContent: "测试报警内容1",
-      //     levelName: "三级",
-      //     alarmTime: "2023/2/17 17:25:00",
-      //     type: "全部",
-      //     typeColor: "green"
+      //   const _res = [
+      //     {
+      //       typeName: "测试报警类型",
+      //       sourceName: "测试报警名称",
+      //       alarmContent:
+      //         "测试报警内容很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长",
+      //       levelName: "一级",
+      //       alarmTime: "2023/2/17 17:25:00",
+      //       type: "我的",
+      //       typeColor: "#E90202"
+      //     },
+      //     {
+      //       typeName: "测试报警类型1",
+      //       sourceName: "测试报警名称1",
+      //       alarmContent: "测试报警内容1",
+      //       levelName: "三级",
+      //       alarmTime: "2023/2/17 17:25:00",
+      //       type: "全部",
+      //       typeColor: "green"
 
-      //   },
-      //   {
-      //     typeName: "测试报警类型2",
-      //     sourceName: "测试报警名称2",
-      //     alarmContent: "测试报警内容2",
-      //     levelName: "二级",
-      //     alarmTime: "2023/2/17 17:25:00",
-      //     type: "我的",
-      //     typeColor: "#E90202"
-      //   },
-      //   {
-      //     typeName: "测试报警类型2",
-      //     sourceName: "测试报警名称2",
-      //     alarmContent: "测试报警内容2",
-      //     levelName: "二级",
-      //     alarmTime: "2023/2/17 17:25:00",
-      //     type: "我的",
-      //     typeColor: "#E90202"
-      //   }
-      // ];
+      //     },
+      //     {
+      //       typeName: "测试报警类型2",
+      //       sourceName: "测试报警名称2",
+      //       alarmContent: "测试报警内容2",
+      //       levelName: "二级",
+      //       alarmTime: "2023/2/17 17:25:00",
+      //       type: "我的",
+      //       typeColor: "#E90202"
+      //     },
+      //     {
+      //       typeName: "测试报警类型2",
+      //       sourceName: "测试报警名称2",
+      //       alarmContent: "测试报警内容2",
+      //       levelName: "二级",
+      //       alarmTime: "2023/2/17 17:25:00",
+      //       type: "我的",
+      //       typeColor: "#E90202"
+      //     }
+      //   ];
       // 获取列表
       if (process.env.NODE_ENV !== "development" && window.location.host !== "114.115.233.247:38085") {
         const param = {
@@ -317,7 +317,6 @@ export default Vue.extend({
         //   } else {
         //     this.tableData = [...this.tableData, ..._res];
         //   }
-        if (this.$refs.listDiv) this.$refs.listDiv.scrollTop = 0;
         queryAlcAlarmByParam(currentParam).then(response => {
           const _res = JSON.parse(JSON.stringify(response.data.rows));
           if (firstPage) {
@@ -330,9 +329,11 @@ export default Vue.extend({
       }
     },
     onPopupVisibleChange(visible: boolean, context) {
+      if (!visible) {
+        this.$refs.listDiv.scrollTop = 0;
+      }
       if (context.trigger === "trigger-element-click") {
         this.isNoticeVisible = true;
-        if (this.$refs.listDiv) this.$refs.listDiv.scrollTop = 0;
         return;
       }
       this.isNoticeVisible = visible;
