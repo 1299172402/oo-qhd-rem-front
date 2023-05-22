@@ -721,4 +721,24 @@ export default {
 ::v-deep .el-table__row {
     height: 65px;
 }
+#indexscv {
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto !important;;
+        line-height: 18px !important;
+        white-space: pre !important;;
+    }
+    ::v-deep .el-table__fixed-header-wrapper .cell {
+        height: auto;
+        line-height: 18px !important;
+        white-space: pre;
+    }
+    ::v-deep .cell:empty {
+        &::before {
+            content: "-";
+        }
+    }
+    .is-group{
+
+    }
+}
 </style>
