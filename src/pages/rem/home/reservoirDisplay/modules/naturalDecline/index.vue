@@ -5,7 +5,7 @@
         header-title="自然递减率"
         :is-show-max-btn="true"
     >
-        <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>
+<!--        <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>-->
         <Echart :chart-data="naturalDeclineRate" width="100%" height="100%"></Echart>
     </info-window>
 </template>
@@ -64,6 +64,8 @@ export default {
                 nameTextStyle: {
                     color: "#8FA4CC"
                 },
+                min:0,
+                max:100,
                 type: "value",
                 axisLabel: {
                     color: "#8FA4CC",
@@ -78,7 +80,7 @@ export default {
                     },
                 },
                 splitLine: {
-                    show: true,
+                    show: false,
                     lineStyle: {
                         color: 'rgba(143,164,204,.5)'
                     },
@@ -118,6 +120,8 @@ export default {
               });*/
                   seriesData = this.getBarChartSeries(barChartData);
                   //console.log(seriesData);
+                  this.naturalDeclineRate.yAxis.max = null
+                  this.naturalDeclineRate.yAxis.min = null
                   this.naturalDeclineRate.series.data = seriesData;
               }
           });

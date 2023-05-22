@@ -1,47 +1,70 @@
 <!-- 示例组件 -->
 <template>
-  <div style="font-size: 20px" class="g-w100 g-h100">
-    <info-window
-      info-width="100%"
-      info-height="100%"
-      header-title="油田大事件"
-      :is-show-max-btn="true"
-    >
-      <div class="g-w100 g-h100 g-row-flex" style="padding: 20px">
-          <div style="height: 250px; width: 100%" class="g-w100">
-            <button class="detailLinkBtn" @click="linkroute('oilEventDetail')">详细</button>
-            <el-row>
-              <el-col :span="2"> 1 </el-col>
-              <el-col :span="16"> 2023年3月3日-4日停产检修 </el-col>
-              <el-col :span="6"> 2023-02-26 </el-col>
-            </el-row>
-            <el-row style="margin-top: 20px">
-              <el-col :span="2">2 </el-col>
-              <el-col :span="16"> QHD32-6-F19井2023年3月13号转注</el-col>
-              <el-col :span="6"> 2023-02-27 </el-col>
-            </el-row>
-            <el-row style="margin-top: 20px">
-              <el-col :span="2">3</el-col>
-              <el-col :span="16"> 2023年3月3日-4日停产检修 </el-col>
-              <el-col :span="6"> 2023-02-23</el-col>
-            </el-row>
-          </div>
-      </div>
-    </info-window>
-  </div>
+    <div style="font-size: 20px" class="g-w100 g-h100">
+        <info-window
+            info-width="100%"
+            info-height="100%"
+            header-title="油田大事件"
+            :is-show-max-btn="true"
+        >
+            <div class="g-w100 g-h100 g-row-flex" style="">
+                <div style="height: 250px; width: 100%" class="g-w100">
+                    <button class="detailLinkBtn" @click="linkroute('oilEventDetail')">详细</button>
+                    <el-table
+                        id="tableD"
+                        :data="tableData"
+                        highlight-current-row
+                        height="calc(100% - 0px)"
+                        style="margin-top: 10px;margin: 0"
+                        :row-style="{ height: '70px' }"
+                        :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
+                        header-cell-class-name="table_header"
+                        :cell-style="{ 'text-align': 'center', padding: '2px' }"
+                        :default-sort="{ prop: 'date', order: 'descending' }"
+                    >
+                        <el-table-column label="序号" min-width="60px" prop="ogfName" align="center">
+                            <template slot-scope="scope" style="height: 100%">
+                                {{ scope.$index + 1 }}
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="大事内容" min-width="100px" prop="remark" align="center">
+                            <template slot-scope="scope">
+                                <div class="table-name">{{ scope.row.remark }}</div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="时间"  prop="startTime" align="center">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.startTime?scope.row.startTime.split(' ')[0]:'' }}</span>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </div>
+            </div>
+        </info-window>
+    </div>
 </template>
 <script>
+import {queryOilFieldIncident} from "@/api/rem/reservoirbillboards";
+
 export default {
-    components:{
+    components: {},
+    data() {
+        return {
+            tableData:[]
+        };
     },
-  data() {
-    return {
-    };
-  },
-    methods:{
+    mounted() {
+        this.getData()
+    },
+    methods: {
         linkroute(rname) {
             this.$router.push({name: rname});
         },
+        getData() {
+            queryOilFieldIncident({}).then(res => {
+                this.tableData = res.data.data.data.slice(0,3)
+            })
+        }
     }
 };
 </script>
@@ -59,5 +82,13 @@ export default {
     border: 0;
     cursor: pointer;
     color: #ffffff;
+}
+.table-name {
+    line-height: 100%;
+    white-space: pre-wrap; /* 强制换行 */
+}
+::v-deep#tableD .cell{
+    height: 45px!important;
+    line-height: 45px!important;
 }
 </style>

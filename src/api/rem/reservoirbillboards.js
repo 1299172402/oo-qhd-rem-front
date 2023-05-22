@@ -19,15 +19,51 @@ export function productionMetricsOverview({ date } = {}) {
     method: "get",
   });
 }
-export function queryMeasureEffectTrack({ platformId, timeGranularityCode, showNormal, oilFieldId, evaluationDate } = {}) {
+export function queryMeasureEffectTrack({ evaluationDate, oilFieldId, platformId, showNormal, timeGranularityCode } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/queryMeasureEffectTrack?platformId=${ platformId || "" }&timeGranularityCode=${ timeGranularityCode || "" }&showNormal=${ showNormal || "" }&oilFieldId=${ oilFieldId || "" }&evaluationDate=${ evaluationDate || "" }`,
+    url: `${baseUrl}/reservoirBillboards/queryMeasureEffectTrack?evaluationDate=${ evaluationDate || "" }&oilFieldId=${ oilFieldId || "" }&platformId=${ platformId || "" }&showNormal=${ showNormal || "" }&timeGranularityCode=${ timeGranularityCode || "" }`,
+    method: "get",
+  });
+}
+export function queryOilFieldIncident({ chronicleTypeCode, endTime, startTime, wellId } = {}) {
+  return request({
+    url: `${baseUrl}/reservoirBillboards/queryOilFieldIncident?chronicleTypeCode=${ chronicleTypeCode || "" }&endTime=${ endTime || "" }&startTime=${ startTime || "" }&wellId=${ wellId || "" }`,
+    method: "get",
+  });
+}
+export function queryOilFieldIncidentType() {
+  return request({
+    url: `${baseUrl}/reservoirBillboards/queryOilFieldIncidentType`,
+    method: "get",
+  });
+}
+export function queryPlanValueDict() {
+  return request({
+    url: `${baseUrl}/reservoirBillboards/queryPlanValueDict`,
     method: "get",
   });
 }
 export function queryProblemWellStatis({ date, platformId, wellId } = {}) {
   return request({
     url: `${baseUrl}/reservoirBillboards/queryProblemWellStatis?date=${ date || "" }&platformId=${ platformId || "" }&wellId=${ wellId || "" }`,
+    method: "get",
+  });
+}
+export function queryShutDownValueDict() {
+  return request({
+    url: `${baseUrl}/reservoirBillboards/queryShutDownValueDict`,
+    method: "get",
+  });
+}
+export function queryShutDownWellStatisCharts({ endTime, startTime } = {}) {
+  return request({
+    url: `${baseUrl}/reservoirBillboards/queryShutDownWellStatisCharts?endTime=${ endTime || "" }&startTime=${ startTime || "" }`,
+    method: "get",
+  });
+}
+export function queryShutDownWellStatisDetails({ endTime, injShutdownTypeCode, ogfId, pageNum, pageSize, platformId, shutdownPlanTypeCode, startTime, wellId } = {}) {
+  return request({
+    url: `${baseUrl}/reservoirBillboards/queryShutDownWellStatisDetails?endTime=${ endTime || "" }&injShutdownTypeCode=${ injShutdownTypeCode || "" }&ogfId=${ ogfId || "" }&pageNum=${ pageNum || "" }&pageSize=${ pageSize || "" }&platformId=${ platformId || "" }&shutdownPlanTypeCode=${ shutdownPlanTypeCode || "" }&startTime=${ startTime || "" }&wellId=${ wellId || "" }`,
     method: "get",
   });
 }

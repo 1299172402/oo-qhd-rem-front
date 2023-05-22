@@ -6,7 +6,7 @@
             header-title="秦皇岛32-6油田生产指标总览"
             :is-show-max-btn="true"
         >
-            <button class="detailLinkBtn" @click="linkroute('measuresPumpWellRecovery')">详细</button>
+            <button class="detailLinkBtn" @click="linkroute('technicalIndexManagement')">详细</button>
             <el-row :gutter="20" style="margin-bottom: 10px">
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
@@ -278,7 +278,7 @@ export default {
 
                             c: {
                                 fontSize: 10,
-                                color: "#fff",
+                                color: "#29EEF3",
                                 // padding: [5,0]
                             },
                         },
@@ -382,7 +382,7 @@ export default {
 
                             c: {
                                 fontSize: 10,
-                                color: "#fff",
+                                color: "#29EEF3",
                                 // padding: [5,0]
                             },
                         },
@@ -474,6 +474,9 @@ export default {
         };
     },
     methods: {
+        linkroute(rname) {
+            this.$router.push({name: rname});
+        },
         getData(){
             // new Date().format('YYYY-MM')
             productionMetricsOverview({date:'2020-01' + '-01'}).then(res=>{
@@ -499,11 +502,13 @@ export default {
                 tooltip: {
                     trigger: value,
                     formatter: unit,
+                    position:'top',
                 },
                 series: [
                     {
                         type: "pie",
-                        selectedMode: "single",
+                        hoverAnimation: false, // 关闭鼠标经过时的动画
+                        // selectedMode: "single",
                         radius: [0, "75%"],
                         color: centerColor,
                         label: {
@@ -516,6 +521,7 @@ export default {
                     },
                     {
                         type: "pie",
+                        hoverAnimation: false, // 关闭鼠标经过时的动画
                         color: [valueColor, backColor],
                         radius: ["95%", "85%"],
                         labelLine: {
@@ -546,7 +552,7 @@ export default {
                     {
                         type: "pie",
 
-                        selectedMode: "single",
+                        // selectedMode: "single",
                         radius: [0, "75%"],
                         color: centerColor,
                         label: {

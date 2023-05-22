@@ -8,7 +8,7 @@
       :is-show-max-btn="true"
     >
       <div class="g-w100 g-h100 g-row-flex" style="padding: 20px">
-        <button class="detailLinkBtn" @click="linkroute('fault')">详细</button>
+        <button class="detailLinkBtn" @click="linkroute">详细</button>
         <outputTracking></outputTracking>
       </div>
     </info-window>
@@ -25,10 +25,9 @@ export default {
     };
   },
     methods:{
-        linkroute(rname) {
+        linkroute() {
             this.$router.push({
-                path: "/plucking/mechanical/outerframe",
-                query: { key: rname },
+                path: "/plan/annualPlan",
             });
         },
     }

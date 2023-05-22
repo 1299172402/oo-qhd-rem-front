@@ -1,7 +1,7 @@
 <template>
     <div class="app-container" style="width: 100%; height: 100%">
-        <div class="text" style="width: 15%; height: 10%; margin-left: 5%; text-align: center; padding: 5px 0">
-            投产时间：2001-10
+        <div style="width: 15%; height: 10%; margin-left: 5%; text-align: center; padding: 5px 0">
+<!--            投产时间：2001-10-->
         </div>
         <Echart :chart-data="histogram" width="100%" height="65%"></Echart>
         <el-row :gutter="20">
@@ -34,7 +34,7 @@
                         </div>
                         <div style="margin-top: 10px">
                             <div>{{ item.name }}</div>
-                            <div>{{ (item.value/10000).toFixed(2) }}</div>
+                            <div>{{ item.value }}</div>
                         </div>
                     </el-col>
                 </el-row>
@@ -69,36 +69,9 @@ export default {
                 color: ["#00C1DE", "#6F7AF8", "#F5A547", "#3399ff"],
                 tooltip: {
                     trigger: "axis",
-
                     axisPointer: {
-                        type: "line",
-                        lineStyle: {
-                            color: "rgba(0,0,0,0.25)",
-                        },
+                        type: "shadow",
                     },
-                    padding: 12,
-                    textStyle: {
-                        color: "rgba(0,0,0,0.65);",
-                    },
-                    extraCssText: "box-shadow: 0 2px 4px 0 rgba(169,169,169,0.50); border-radius: 4px",
-                    formatter: function (param) {
-                        const d0 = param[0];
-                        const d1 = param[1];
-                        const d2 = param[2];
-                        const d3 = param[3];
-                        return `
-					<div class='slot-chart-tooltip'>
-					${d2.marker} <span class='slot-chart-name'>${d2.seriesName}</span>${d2.value}<br>
-					${d1.marker} <span class='slot-chart-name'>${d1.seriesName}</span>${d1.value}<br>
-          ${d0.marker} <span class='slot-chart-name'> ${d0.seriesName}</span>${d0.value}<br>
-          ${d3.marker} <span class='slot-chart-name'> ${d3.seriesName}</span>${d3.value}<br>
-
-
-					</div>
-				`;
-                    },
-                    // 					${d0.marker} <span class='slot-chart-name'>${d0.axisValue} ${d0.seriesName}</span>${d0.value}<br>
-                    // ${d3.marker} <span class='slot-chart-name'>${d3.axisValue} ${d3.seriesName}</span>${d3.value}<br>
                 },
                 grid: {
                     left: '5%',
@@ -123,11 +96,11 @@ export default {
                             icon: "circle",
                         },
                         {
-                            name: "实际累产",
+                            name: "实际年累产",
                             icon: "circle",
                         },
                         {
-                            name: "计划累产",
+                            name: "计划年累产",
                             icon: "circle",
                         },
                     ],
@@ -147,7 +120,8 @@ export default {
                             },
                         },
                         axisLine: {
-                            show: false, // 隐藏 x 轴线
+                            show: true, // 隐藏 x 轴线
+                            // color:'#a9a8a8'
                         },
                         splitLine: {
                             show: false, // 隐藏 x 轴分隔线
@@ -159,11 +133,13 @@ export default {
                         type: "value",
                         name: "日产 (m³/d)",
                         nameTextStyle: {
-                            padding: [0, 0, 100, 0], // 上、右、下、左
+                            padding: [0, 0, 60, 0], // 上、右、下、左
                         },
+                        min:0,
+                        max:10000,
                         nameLocation: "center",
                         axisLine: {
-                            show: false,
+                            show: true,
                             lineStyle: {
                                 color: "#a9a8a8",
                             },
@@ -180,15 +156,17 @@ export default {
                     },
                     {
                         type: "value",
-                        name: "年产(10⁴m³)",
+                        name: "年累产(10⁴m³)",
                         position: "right",
                         nameTextStyle: {
-                            padding: [100, 0, 0, 0], // 上、右、下、左
+                            padding: [60, 0, 0, 0], // 上、右、下、左
                         },
+                        min:0,
+                        max:10000,
                         nameLocation: "center",
                         scale: true,
                         axisLine: {
-                            show: false,
+                            show: true,
                             lineStyle: {
                                 color: "#a9a8a8",
                             },
@@ -220,7 +198,7 @@ export default {
                         data: [],
                     },
                     {
-                        name: "实际累产",
+                        name: "实际年累产",
                         symbolSize: 0, // 设置点的大小为 0，不会显示出来
                         type: "line",
                         yAxisIndex: 1,
@@ -229,7 +207,7 @@ export default {
                         ],
                     },
                     {
-                        name: "计划累产",
+                        name: "计划年累产",
                         type: "line",
                         symbolSize: 0, // 设置点的大小为 0，不会显示出来
                         yAxisIndex: 1,
@@ -274,7 +252,7 @@ export default {
                 {
                     src:new URL('./image/06.png', import.meta.url).href,
                     icon: "06",
-                    name: "地质储量(%)",
+                    name: "地质储量(10⁴m³)",
                     value: "0",
                 },
             ],
@@ -880,6 +858,10 @@ export default {
                 this.data[5].value = res.data.data.reserves
                 this.option.series[2].data[0].value = res.data.data.oilWellPercentage
                 this.option2.series[2].data[0].value = res.data.data.injWellPercentage
+                this.histogram.yAxis[0].min = null
+                this.histogram.yAxis[0].max = null
+                this.histogram.yAxis[1].min = null
+                this.histogram.yAxis[1].max = null
                 //头部表格
                 this.histogram.xAxis[0].data = res.data.data.linearDataSet[1].linearData.map(item=>{
                     return item.label

@@ -67,13 +67,20 @@
                             type: 'shadow',
                         },
                     },
+                    grid:{
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 100,
+                    },
                     legend: {
                         data: [],
                         textStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
                         },
-                        top: '8%',
+                        x:'center',
+                        bottom:30,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -84,6 +91,7 @@
                         boundaryGap: false,
                         axisLabel: {
                             color: '#8FA4CC',
+                            padding:[10,0,0,0],
                             fontSize: 14,
                             interval: function(index, val) {
                                 if (val.substr(-2) == '01') {
@@ -102,8 +110,11 @@
                             },
                         },
                     },
-                    yAxis: [{
+                    yAxis: [
+                        {
                             name: '日注水量m³/d',
+                            nameLocation:'middle',
+                            nameGap:80,
                             nameTextStyle: {
                                 color: '#8FA4CC',
                                 fontSize: 14,
@@ -132,6 +143,8 @@
                         },
                         {
                             name: '年注水量10⁴m³',
+                            nameLocation:'middle',
+                            nameGap:70,
                             nameTextStyle: {
                                 color: '#8FA4CC',
                                 fontSize: 14,
@@ -169,7 +182,7 @@
             };
         },
         mounted() {
-            this.height=document.getElementById('pagePanelNew').scrollHeight-40-46-50;
+            this.height=document.getElementById('pagePanelNew').scrollHeight-40-46-50-7-15;
             this.initData();
         },
         methods: {
@@ -328,10 +341,13 @@
 
 <style lang="scss" scoped>
     .tab-container{
-        height:100%;
+        height: 100%;
         overflow-y: scroll;
         overflow-x: hidden;
-        padding-right:20px;
+        padding-top:7px;
+        padding-left:7px;
+        padding-right:15px;
+        padding-bottom:15px;
     }
     #tableData{
         ::v-deep .el-table__header-wrapper .cell{

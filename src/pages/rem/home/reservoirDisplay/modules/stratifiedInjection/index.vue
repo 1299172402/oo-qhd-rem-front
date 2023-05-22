@@ -52,7 +52,9 @@ export default {
         barWidth: 15,
         xAxis: {
           type: "value",
+          max:10,
           splitLine: {
+              show:false,
             lineStyle: {
               color: "rgba(255,255,255,0.2)",
             },
@@ -61,6 +63,7 @@ export default {
             show: false,
           },
           axisLine: {
+              show:true,
             //  改变x轴颜色
             lineStyle: {
               color: "#a9a8a8",
@@ -86,7 +89,7 @@ export default {
           },
           axisLine: {
             //  改变y轴颜色
-            show: false,
+            show: true,
             lineStyle: {
               color: "#a9a8a8",
             },
@@ -199,7 +202,9 @@ export default {
     };
   },
   mounted() {},
-  methods: {},
+  methods: {
+      // 写接口时要把xAxis中的 min/max 赋值为null
+  },
 };
 </script>
 <style lang="scss" scoped>

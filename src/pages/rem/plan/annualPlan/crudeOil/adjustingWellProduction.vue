@@ -65,31 +65,40 @@
                             type: 'shadow',
                         },
                     },
+                    grid:{
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 100,
+                    },
                     legend: {
                         data: [],
                         textStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
                         },
+                        x:'center',
+                        bottom:30,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
                         itemGap: 14,
                     },
                     xAxis: [{
-                        name: '时间/日',
-                        nameTextStyle: {
-                            color: '#8FA4CC',
-                            fontSize: 14,
-                            align: 'center',
-                        },
-                        nameLocation: 'center',
-                        nameGap: 30,
+                        // name: '时间/日',
+                        // nameTextStyle: {
+                        //     color: '#8FA4CC',
+                        //     fontSize: 14,
+                        //     align: 'center',
+                        // },
+                        // nameLocation: 'center',
+                        // nameGap: 30,
                         type: 'category',
                         boundaryGap: false,
                         axisLabel: {
                             color: '#8FA4CC',
-                            fontSize: 10,
+                            padding:[10,0,0,0],
+                            fontSize: 14,
                             interval: function(index, val) {
                                 if (val.substr(-2) == '01') {
                                     return true;
@@ -97,7 +106,7 @@
                                     return false;
                                 }
                             },
-                            rotate: 20,
+                            // rotate: 20,
                         },
                         axisTick: {
                             show: false,
@@ -117,8 +126,7 @@
                                 fontSize: 14,
                             },
                             nameLocation: 'center',
-                            nameRotate: 90,
-                            nameGap: 35,
+                            nameGap:70,
                             axisLabel: {
                                 color: '#8FA4CC',
                                 fontSize: 14,
@@ -147,8 +155,7 @@
                                 fontSize: 14,
                             },
                             nameLocation: 'center',
-                            nameRotate: -90,
-                            nameGap: 25,
+                            nameGap:70,
                             axisLabel: {
                                 color: '#8FA4CC',
                                 fontSize: 14,
@@ -180,7 +187,7 @@
             };
         },
         mounted() {
-            this.height=document.getElementById('pagePanelNew').scrollHeight-40-46-50;
+            this.height=document.getElementById('pagePanelNew').scrollHeight-40-46-50-7-15;
             this.initData();
         },
         methods: {
@@ -341,7 +348,10 @@
         height: 100%;
         overflow-y: scroll;
         overflow-x: hidden;
-        padding-right: 20px;
+        padding-top:7px;
+        padding-left:7px;
+        padding-right:15px;
+        padding-bottom:15px;
         #tableData {
             ::v-deep .el-table__header-wrapper .cell {
                 height: auto;

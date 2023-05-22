@@ -1,15 +1,18 @@
 <template>
-  <video
-    id="my-video"
-    class="box"
-    height="100%"
-    width="100%"
-    autoplay
-    src="@/pages/rem/home/reservoirDisplay/modules/演示视频.mp4"
-  >
-    <div class="progress-bar"></div>
-    <div class="progress"></div>
-  </video>
+    <div class="box" style="width: 100%;height: 100%">
+        
+    </div>
+<!--  <video-->
+<!--    id="my-video"-->
+<!--    class="box"-->
+<!--    height="100%"-->
+<!--    width="100%"-->
+<!--    autoplay-->
+<!--    src="@/pages/rem/home/reservoirDisplay/modules/演示视频.mp4"-->
+<!--  >-->
+<!--    <div class="progress-bar"></div>-->
+<!--    <div class="progress"></div>-->
+<!--  </video>-->
 </template>
 
 <script>

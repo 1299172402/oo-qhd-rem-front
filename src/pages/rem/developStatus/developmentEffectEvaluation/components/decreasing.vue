@@ -161,7 +161,7 @@
                             },
                         },
                     },
-                    xAxis: {
+                    xAxis: {    
                         type: "category",
                         axisLabel: {
                             margin: 20,

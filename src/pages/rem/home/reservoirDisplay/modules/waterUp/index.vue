@@ -6,7 +6,7 @@
             header-title="含水上升"
             :is-show-max-btn="true"
         >
-            <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>
+<!--            <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>-->
             <Echart :chart-data="rateOfWaterCutRise" width="100%" height="100%"></Echart>
         </info-window>
     </div>
@@ -88,7 +88,7 @@ export default {
                     },
                 },
                 splitLine: {
-                    show: true,
+                    show: false,
                     lineStyle: {
                         color: 'rgba(143,164,204,.5)'
                     },
@@ -101,6 +101,8 @@ export default {
                     color: "#a9a8a8",
                     // padding: [0, 0, 0, 0], // 上、右、下、左
                 },
+                max:100,
+                min:0,
                 nameGap: 35,
                 type: "value",
                 axisLabel: {
@@ -115,7 +117,7 @@ export default {
                     },
                 },
                 splitLine: {
-                    show: true,
+                    show: false,
                     lineStyle: {
                         color: 'rgba(143,164,204,.5)'
                     },
@@ -146,6 +148,8 @@ export default {
                       legendData.push(item.label);
                       seriesData.push(this.waterContainRaiseLine(item));
                   });
+                  this.rateOfWaterCutRise.yAxis.min = null;
+                  this.rateOfWaterCutRise.yAxis.max = null;
                   this.rateOfWaterCutRise.legend.data = legendData;
                   this.rateOfWaterCutRise.series = seriesData;
               }

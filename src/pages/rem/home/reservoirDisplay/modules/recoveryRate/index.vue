@@ -5,7 +5,7 @@
         header-title="采油速度"
         :is-show-max-btn="true"
     >
-        <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>
+<!--        <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>-->
         <Echart :chart-data="productionSpeed" width="100%" height="100%"></Echart>
     </info-window>
 </template>
@@ -69,7 +69,7 @@ export default {
                 axisLine: {
                     show: true,
                     lineStyle: {
-                        color: '#698398',
+                        color: 'rgba(143,164,204,.5)',
                         width: 1,
                         type: 'solid'
                     }
@@ -89,6 +89,8 @@ export default {
                     nameTextStyle: {
                         color: '#8FA4CC'
                     },
+                    max:100,
+                    min:0,
                     nameGap: 44,
                     type: 'value',
                     minInterval: 0,
@@ -99,13 +101,13 @@ export default {
                         show: false
                     },
                     axisLine: {
-                        // show: true,
+                        show: true,
                         lineStyle: {
-                            color: '#2a4e6a'
+                            color: 'rgba(143,164,204,.5)'
                         }
                     },
                     splitLine: {
-                        show: true,
+                        show: false,
                         lineStyle: {
                             color: 'rgba(143,164,204,.3)'
                         }
@@ -117,6 +119,8 @@ export default {
                     nameTextStyle: {
                         color: '#8FA4CC'
                     },
+                    max:100,
+                    min:0,
                     nameGap: 44,
                     type: 'value',
                     minInterval: 0,
@@ -127,13 +131,13 @@ export default {
                         show: false
                     },
                     axisLine: {
-                        show: false,
+                        show: true,
                         lineStyle: {
-                            color: '#2a4e6a'
+                            color: 'rgba(143,164,204,.5)'
                         }
                     },
                     splitLine: {
-                        show: true,
+                        show: false,
                         lineStyle: {
                             color: 'rgba(143,164,204,.3)'
                         }
@@ -163,6 +167,10 @@ export default {
                       legendData.push(item.label);
                       seriesData.push(this.outputSpeedLine(item));
                   });
+                  this.productionSpeed.yAxis[0].min = null
+                  this.productionSpeed.yAxis[0].max = null
+                  this.productionSpeed.yAxis[1].min = null
+                  this.productionSpeed.yAxis[1].max = null
                   this.productionSpeed.legend.data = legendData;
                   this.productionSpeed.series = seriesData;
               } else {

@@ -5,7 +5,7 @@
         header-title="采出程度与含水率关系图"
         :is-show-max-btn="true"
     >
-        <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>
+<!--        <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>-->
         <Echart :chart-data="relationship" width="100%" height="100%"></Echart>
     </info-window>
 </template>
@@ -84,7 +84,7 @@ export default {
                     }
                 },
                 splitLine: {
-                    show: true,
+                    show: false,
                     lineStyle: {
                         color: 'rgba(143,164,204,.5)'
                     }
@@ -96,6 +96,8 @@ export default {
                 nameTextStyle: {
                     color: '#8FA4CC'
                 },
+                max:100,
+                min:0,
                 nameGap: 30,
                 type: 'value',
                 axisLabel: {
@@ -105,12 +107,13 @@ export default {
                     show: false
                 },
                 axisLine: {
+                    show:true,
                     lineStyle: {
                         color: 'rgba(143,164,204,.5)'
                     }
                 },
                 splitLine: {
-                    show: true,
+                    show: false,
                     lineStyle: {
                         color: 'rgba(143,164,204,.5)'
                     }
@@ -159,6 +162,8 @@ export default {
                   seriesData = [];
               }
           });
+          this.relationship.yAxis.min = null;
+          this.relationship.yAxis.max = null;
           this.relationship.legend.data = legendData;
           this.relationship.series = seriesData;
       },

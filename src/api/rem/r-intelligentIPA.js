@@ -1,5 +1,6 @@
 // 智能注采调配 api
 import Axios from "@/utils/request";
+
 const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
 // 首页 start ----
@@ -10,7 +11,7 @@ const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
  * params: {ogfId: '油田标识', blockId: '区块标识', dateTime: 'yyyy-MM'}
  * @returns {AxiosPromise}
  */
-export function getWellGroupBlock (params) {
+export function getWellGroupBlock(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/wellGroupBlock`,
         method: "post",
@@ -32,7 +33,7 @@ export function getWellGroupBlock (params) {
  * timeStatus  时间状态 月度：1，年度：2，阶段：3
  * @returns {AxiosPromise}
  */
-export function getStratifiedInjectionDetails (params) {
+export function getStratifiedInjectionDetails(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/stratifiedInjectionDetails`,
         method: "post",
@@ -54,7 +55,7 @@ export function getStratifiedInjectionDetails (params) {
  * timeStatus  时间状态 月度：1，年度：2，阶段：3
  * @returns {AxiosPromise}
  */
- export function getStratifiedInjectionDetailsComp (params) {
+export function getStratifiedInjectionDetailsComp(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/stratifiedInjectionDetailsComp`,
         method: "post",
@@ -68,7 +69,7 @@ export function getStratifiedInjectionDetails (params) {
  * 剩余油情况
  * @returns {AxiosPromise}
  */
-export function getResidueOilCondotion (params) {
+export function getResidueOilCondotion(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/residueOilCondition`,
         method: "get",
@@ -86,7 +87,7 @@ export function getResidueOilCondotion (params) {
  * params: {ogfId: '油田标识', blockId: '区块标识', dateTime: 'yyyy-MM'}
  * @returns {AxiosPromise}
  */
-export function getUltraShortShotStatistics (params) {
+export function getUltraShortShotStatistics(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/ultraShotStatistics`,
         method: "post",
@@ -111,7 +112,7 @@ export function getUltraShortShotStatistics (params) {
  * timeStatus  时间状态 月度：1，年度：2，阶段：3
  * @returns {AxiosPromise}
  */
-export function downloadStratifiedInjectionDetails (params) {
+export function downloadStratifiedInjectionDetails(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/stratifiedInjectionDetails/download`,
         method: "post",
@@ -125,15 +126,12 @@ export function downloadStratifiedInjectionDetails (params) {
 // 详情 end ----
 
 
-
-
-
 /**
- * 查询条件 
- * @returns 
+ * 查询条件
+ * @returns
  */
 //获取油田
-export function getOgfInfo () {
+export function getOgfInfo() {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/getAllOgf`,
         method: "get",
@@ -142,8 +140,9 @@ export function getOgfInfo () {
     });
 
 }
+
 //获取区块
-export function getblockData (params) {
+export function getblockData(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/getblockData`,
         method: "post",
@@ -152,12 +151,13 @@ export function getblockData (params) {
         return res.data.data
     });
 }
+
 /**
  * 根据区块标识和井别获取井信息- 井号下拉
  * @params {blockId:'油田id'，apprndixId:'井别'} params
  * @returns
  */
-export function getWellData (params) {
+export function getWellData(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/getWellData`,
         method: "post",
@@ -173,11 +173,10 @@ export function getWellData (params) {
 }
 
 
-
 /**
-* 产量劈分  
-*/
-export function getProductionSplit (params) {
+ * 产量劈分
+ */
+export function getProductionSplit(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/productionAplit`,
         method: "post",
@@ -191,7 +190,7 @@ export function getProductionSplit (params) {
 /**
  * 产量劈分 - 表格 - 下载
  */
- export function exportProductionSplit (params) {
+export function exportProductionSplit(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/exportProductionSplit`,
         method: "post",
@@ -202,9 +201,9 @@ export function getProductionSplit (params) {
 
 
 /**
-* 产量劈分 - 剖面 - 井
-*/
-export function getSelectWellGroup (params) {
+ * 产量劈分 - 剖面 - 井
+ */
+export function getSelectWellGroup(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/wellConnectivityEval/selectWellGroup`,
         method: "get",
@@ -214,10 +213,11 @@ export function getSelectWellGroup (params) {
     })
         ;
 }
+
 /**
- * 产量劈分 - 剖面 - 表格 
+ * 产量劈分 - 剖面 - 表格
  */
-export function getChopSection (params) {
+export function getChopSection(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/chopSection`,
         method: "post",
@@ -231,7 +231,7 @@ export function getChopSection (params) {
 /**
  * 劈分系数-水井下载
  */
- export function exportChopSection (params) {
+export function exportChopSection(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/exportChopSection`,
         method: "post",
@@ -244,7 +244,7 @@ export function getChopSection (params) {
 /**
  * 注采调配优化 - 单井月度配产计划表
  */
-export function getWellMonthAllocation (params) {
+export function getWellMonthAllocation(params) {
     return Axios({
         url: `${baseUrl}/injDeployOptimize/wellMonthAllocation`,
         method: "get",
@@ -254,10 +254,11 @@ export function getWellMonthAllocation (params) {
     })
 
 }
+
 /**
  * 注采调配优化 - 单井月度配注计划表
  */
-export function getWellMonthInj (params) {
+export function getWellMonthInj(params) {
     return Axios({
         url: `${baseUrl}/injDeployOptimize/wellMonthInj`,
         method: "post",
@@ -271,7 +272,7 @@ export function getWellMonthInj (params) {
 /**
  * 注采调配优化 - 单井月度配注计划表 - NEW
  */
- export function getChatPlanINjAlloc (params) {
+export function getChatPlanINjAlloc(params) {
     return Axios({
         url: `${baseUrl}/injDeployOptimize/chatPlanINjAlloc`,
         method: "POST",
@@ -285,32 +286,29 @@ export function getWellMonthInj (params) {
 /**
  * 注采调配优化 - 指定单井产量修改
  */
-export function wellAvgFluidProdAllocUpdate (params) {
+export function wellAvgFluidProdAllocUpdate(params) {
     return Axios({
         url: `${baseUrl}/injDeployOptimize/wellAvgFluidProdAllocUpdate`,
         method: "post",
         data: params
     }).then((res) => {
-        console.log(res)
         if (res.data.code == 0) {
             return true
         } else {
             return false
         }
     })
-
 }
 
 /**
  * 注采调配优化 - 指定单井产量修改
  */
- export function wellAvgFluidProdAllocUpdateNew (params) {
+export function wellAvgFluidProdAllocUpdateNew(params) {
     return Axios({
         url: `${baseUrl}/injDeployOptimize/wellAvgFluidProdAllocUpdateNew`,
         method: "post",
         data: params
     }).then((res) => {
-        console.log(res)
         if (res.data.code == 0) {
             return true
         } else {
@@ -323,7 +321,7 @@ export function wellAvgFluidProdAllocUpdate (params) {
 /**
  * 注采调配优化 - 指定单井产量
  */
-export function getWellAvgFluidProdAlloc (params) {
+export function getWellAvgFluidProdAlloc(params) {
     return Axios({
         url: `${baseUrl}/injDeployOptimize/wellAvgFluidProdAlloc`,
         method: "post",
@@ -338,7 +336,7 @@ export function getWellAvgFluidProdAlloc (params) {
 /**
  * 注采调配优化 - 指定注采比
  */
-export function getWellInjRatio (data) {
+export function getWellInjRatio(data) {
     return Axios({
         url: `${baseUrl}/injDeployOptimize/wellInjRatio`,
         method: "post",
@@ -357,7 +355,7 @@ export function getWellInjRatio (data) {
 /**
  * 注采调配优化 - 预测结果
  */
-export function getWellGuessResult (params) {
+export function getWellGuessResult(params) {
     return Axios({
         url: `${baseUrl}/injDeployOptimize/wellGuessResult`,
         method: "post",
@@ -370,7 +368,7 @@ export function getWellGuessResult (params) {
 /**
  * 设置对象树
  */
-export function getObjectTree () {
+export function getObjectTree() {
     return Axios({
         url: `${baseUrl}/baseData/setObjectTree`,
         method: "get",

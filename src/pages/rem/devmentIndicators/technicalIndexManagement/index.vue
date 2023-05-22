@@ -342,13 +342,13 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: "rgba(151,151,151,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                     },
@@ -366,14 +366,15 @@
                                 show: false,
                             },
                             axisLine: {
+                                show: true,
                                 lineStyle: {
-                                    color: "rgba(255,255,255,.16)",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
                                 show: false,
                                 lineStyle: {
-                                    color: "rgba(255,255,255,.16)",
+                                    color: "#8FA4CC",
                                 },
                             },
                         },
@@ -391,15 +392,16 @@
                                 show: false,
                             },
                             axisLine: {
+                                show: true,
                                 lineStyle: {
                                     //color: '#979797'
-                                    color: "rgba(255,255,255,.16)",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
                                 show: false,
                                 lineStyle: {
-                                    color: "rgba(255,255,255,.16)",
+                                    color: "#8FA4CC",
                                 },
                             },
                         },
@@ -442,13 +444,13 @@
                             show: true,
                             lineStyle: {
                                 //color: '#979797'
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
 
@@ -467,15 +469,16 @@
                             show: false,
                         },
                         axisLine: {
+                            show: true,
                             lineStyle: {
                                 //color: '#979797'
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                     }, ],
@@ -519,13 +522,13 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: "rgba(151,151,151,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
 
@@ -544,14 +547,15 @@
                             show: false,
                         },
                         axisLine: {
+                            show: true,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                     }, ],
@@ -595,13 +599,13 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: "rgba(151,151,151,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         data: [
@@ -633,15 +637,16 @@
                             show: false,
                         },
                         axisLine: {
+                            show: true,
                             lineStyle: {
                                 //color: '#979797'
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                     }, ],
@@ -710,13 +715,13 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: "rgba(151,151,151,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                     },
@@ -734,15 +739,16 @@
                             show: false,
                         },
                         axisLine: {
+                            show: true,
                             lineStyle: {
                                 //color: '#979797'
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                     }, ],
@@ -784,13 +790,13 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: "rgba(151,151,151,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         data: [
@@ -822,15 +828,16 @@
                             show: false,
                         },
                         axisLine: {
+                            show: true,
                             lineStyle: {
                                 //color: '#979797'
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                     }, ],
@@ -896,13 +903,13 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                color: "rgba(151,151,151,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         data: [],
@@ -921,14 +928,15 @@
                             show: false,
                         },
                         axisLine: {
+                            show: true,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                     }, ],
@@ -1468,6 +1476,7 @@
                             series.label = {
                                 show: true,
                                 position: 'top',
+                                color: "#8fa4cc",
                             }
                             let barData = item.linearData;
                             let seriesMess = [];
@@ -1524,6 +1533,7 @@
                             series.label = {
                                 show: true,
                                 position: 'top',
+                                color: "#8fa4cc",
                             }
                             let barData = item.linearData;
                             let seriesMess = [];

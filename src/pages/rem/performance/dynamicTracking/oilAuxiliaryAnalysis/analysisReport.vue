@@ -22,7 +22,7 @@
                     </el-select>
                     <span style="margin-left:15px;">评价时间：</span>
                     <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
-                    <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">检索</el-button>
+                    <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
             </headerSearch>
@@ -170,10 +170,21 @@
                     </div>
                     <div style="flex:1;min-height:380px;">
                         <pagePanel headerTitle="油井动态分析详情列表" style="margin-top:0;height:100%;">
-                            <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList">
+                            <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                 <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                 <!--生产动态项目-->
-                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" :label="item.name" :render-header="renderHeader" align="center" width="120" sortable="custom">
+                                <!-- :render-header="renderHeader" -->
+                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" align="center" min-width="160" sortable="custom" label-class-name="twoRowHeader">
+                                    <template #header>
+                                        <div class="headerSortRow1" v-if="item.name && item.name.split(' ')[1]">
+                                            <span>{{ item.name.split(' ')[0] ? item.name.split(' ')[0] : ""}}</span>
+                                            <br />
+                                            <span>{{ item.name.split(' ')[1] ? `(${item.name.split(' ')[1]})` : ""}}</span>
+                                        </div>
+                                        <div v-else>
+                                            <span>{{item.name}}</span>
+                                        </div>
+                                    </template>
                                     <template slot-scope="scope">
                                         <span v-if="scope.row.scdt[item.code] == null"></span>
                                         <span v-else-if="item.code == 'ZC'">{{ scope.row.scdt[item.code].showLabel }}</span>
@@ -184,12 +195,22 @@
                                 </el-table-column>
                                 <!--生产问题监测项目-->
                                 <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
-                                    <el-table-column v-for="(item, index) in problemMonitoringTab" :key="index" :prop="item.code" :label="item.name" align="center">
+                                    <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="100" :key="index" :prop="item.code" align="center" label-class-name="twoRowHeader">
+                                        <template #header>
+                                            <div v-if="item.isTwoHeader">
+                                                <span>{{item.name}}</span>
+                                                <br />
+                                                <span>{{item.unit}}</span>
+                                            </div>
+                                            <div v-else>
+                                                <span>{{item.name}}</span>
+                                            </div>
+                                        </template>
                                         <template slot-scope="scope">
                                             <span v-if="scope.row[item.code] == null"></span>
                                             <span v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel }}</span>
                                             <el-tooltip v-else class="item" effect="dark" :content="scope.row[item.code].value + ''" placement="top">
-                                                <span>{{ scope.row[item.code].showLabel }}</span>
+                                                <span>{{ scope.row[item.code].showLabel }}{{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(4):'-'}}</span>
                                             </el-tooltip>
                                         </template>
                                     </el-table-column>
@@ -213,7 +234,14 @@
                                             <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel }}</span>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="theDate" label="推荐日期" align="center" width="120px">
+                                    <el-table-column prop="theDate" align="center" min-width="130" label-class-name="twoRowHeader">
+                                        <template #header>
+                                            <div>
+                                                <span>推荐日期</span>
+                                                <br />
+                                                <span>(yyyy/mm/dd)</span>
+                                            </div>
+                                        </template>
                                         <template slot-scope="scope">
                                             <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq }}</span>
                                         </template>
@@ -225,7 +253,14 @@
                                     </el-table-column>
                                 </el-table-column>
                                 <!--措施效果数据-->
-                                <el-table-column prop="dailyOilIncrement" label="日增油量m³/d" align="center">
+                                <el-table-column prop="dailyOilIncrement" label="日增油量m³/d" align="center" label-class-name="twoRowHeader">
+                                    <template #header>
+                                        <div>
+                                            <span>日增油量</span>
+                                            <br />
+                                            <span>(m³/d)</span>
+                                        </div>
+                                    </template>
                                     <template slot-scope="scope">
                                         <span v-if="scope.row.rzyl == null || scope.row.rzyl.showMvalue == null"></span>
                                         <span v-else>{{ scope.row.rzyl.showMvalue }}</span>
@@ -258,7 +293,7 @@
                     </el-select>
                     <span style="margin-left:15px;">评价时间：</span>
                     <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
-                    <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">检索</el-button>
+                    <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
             </headerSearch>
@@ -291,14 +326,20 @@
                                         <div class="z_schedule">
                                             <span class="sp1">正常：</span>
                                             <div class="z_proess">
-                                                <span class="z_proess_sp1" :style="{width:productionNum.zczb+'%'}"><b>{{productionNum.zcnum}}</b></span>
+                                                <span class="z_proess_sp1" :style="{width:productionNum.zczb+'%'}">
+                                                    <b style="cursor: pointer;" @click="productionSwitch=true">{{productionNum.zcnum}}</b>
+                                                </span>
                                                 <span class="z_proess_sp2"></span>
                                             </div>
-                                            <span class="sp2">异常：<b>{{productionNum.ycnum}}</b></span>
+                                            <span class="sp2">异常：<b style="cursor: pointer;" @click="productionSwitch=false">{{productionNum.ycnum}}</b></span>
                                         </div>
                                     </div>  
                                     <div class="z-row-center">
-                                        <div class="numBtn" v-for="(item,index) in productionTrendsOptions" :key="index" v-if="item.name!='正常'">
+                                        <div class="numBtn" v-for="(item,index) in productionTrendsOptions" :key="index" v-if="item.name!='正常'&&item.value!=0&&!productionSwitch">
+                                            <span class="sp1">{{item.value}}</span>
+                                            <span class="sp2">{{item.name}}</span>
+                                        </div>
+                                        <div class="numBtn" v-for="(item,index) in productionTrendsOptions" :key="index" v-if="item.name=='正常'&&productionSwitch">
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
@@ -306,7 +347,7 @@
                                     <div class="z-row-right">
                                         <div class="name">措施推荐</div>
                                         <div class="num">
-                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='地面调参'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
+                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='地面调参'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -327,14 +368,20 @@
                                             <div class="z_schedule">
                                                 <span class="sp1">正常：</span>
                                                 <div class="z_proess">
-                                                    <span class="z_proess_sp1" :style="{width:oilWellConditionNum.zczb+'%'}"><b>{{oilWellConditionNum.zcnum}}</b></span>
+                                                    <span class="z_proess_sp1" :style="{width:oilWellConditionNum.zczb+'%'}">
+                                                        <b style="cursor: pointer;" @click="oilWellConditionSwitch=true">{{oilWellConditionNum.zcnum}}</b>
+                                                    </span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b>{{oilWellConditionNum.ycnum}}</b></span>
+                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="oilWellConditionSwitch=false">{{oilWellConditionNum.ycnum}}</b></span>
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" v-for="(item,index) in oilWellConditionOptions" :key="index" v-if="item.name!='正常'">
+                                            <div class="numBtn" v-for="(item,index) in oilWellConditionOptions" :key="index" v-if="item.name!='正常'&&item.value!=0&&!oilWellConditionSwitch">
+                                                <span class="sp1">{{item.value}}</span>
+                                                <span class="sp2">{{item.name}}</span>
+                                            </div>
+                                            <div class="numBtn" v-for="(item,index) in oilWellConditionOptions" :key="index" v-if="item.name=='正常'&&oilWellConditionSwitch">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
@@ -351,14 +398,20 @@
                                             <div class="z_schedule">
                                                 <span class="sp1">正常：</span>
                                                 <div class="z_proess">
-                                                    <span class="z_proess_sp1" :style="{width:relationshipNum.zczb+'%'}"><b>{{relationshipNum.zcnum}}</b></span>
+                                                    <span class="z_proess_sp1" :style="{width:relationshipNum.zczb+'%'}">
+                                                        <b style="cursor: pointer;" @click="relationshipSwitch=true">{{relationshipNum.zcnum}}</b>
+                                                    </span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b>{{relationshipNum.ycnum}}</b></span>
+                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="relationshipSwitch=false">{{relationshipNum.ycnum}}</b></span>
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" v-for="(item,index) in relationshipOptions" :key="index" v-if="item.name!='正常'">
+                                            <div class="numBtn" v-for="(item,index) in relationshipOptions" :key="index" v-if="item.name!='正常'&&item.value!=0&&!relationshipSwitch">
+                                                <span class="sp1">{{item.value}}</span>
+                                                <span class="sp2">{{item.name}}</span>
+                                            </div>
+                                            <div class="numBtn" v-for="(item,index) in relationshipOptions" :key="index" v-if="item.name!='正常'&&relationshipSwitch">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
@@ -369,7 +422,7 @@
                                     <div class="z-row-right" style="position: relative;top: 48px;">
                                         <div class="name">措施推荐</div>
                                         <div class="num">
-                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='换大泵'||item.name=='加深泵挂'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
+                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='换大泵'||item.name=='加深泵挂'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -391,14 +444,20 @@
                                                 <div class="z_schedule">
                                                     <span class="sp1">正常：</span>
                                                     <div class="z_proess">
-                                                        <span class="z_proess_sp1" :style="{width:diminishingNum.zczb+'%'}"><b>{{diminishingNum.zcnum}}</b></span>
+                                                        <span class="z_proess_sp1" :style="{width:diminishingNum.zczb+'%'}">
+                                                            <b style="cursor: pointer;" @click="diminishingSwitch=true">{{diminishingNum.zcnum}}</b>
+                                                        </span>
                                                         <span class="z_proess_sp2"></span>
                                                     </div>
-                                                    <span class="sp2">异常：<b>{{diminishingNum.ycnum}}</b></span>
+                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="diminishingSwitch=false">{{diminishingNum.ycnum}}</b></span>
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
-                                                <div class="numBtn" v-for="(item,index) in diminishingOptions" :key="index" v-if="item.name!='正常'">
+                                                <div class="numBtn" v-for="(item,index) in diminishingOptions" :key="index" v-if="item.name!='正常'&&item.value!=0&&!diminishingSwitch">
+                                                    <span class="sp1">{{item.value}}</span>
+                                                    <span class="sp2">{{item.name}}</span>
+                                                </div>
+                                                <div class="numBtn" v-for="(item,index) in diminishingOptions" :key="index" v-if="item.name=='正常'&&diminishingSwitch">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
@@ -415,14 +474,20 @@
                                                 <div class="z_schedule">
                                                     <span class="sp1">正常：</span>
                                                     <div class="z_proess">
-                                                        <span class="z_proess_sp1" :style="{width:fluidStrengthNum.zczb+'%'}"><b>{{fluidStrengthNum.zcnum}}</b></span>
+                                                        <span class="z_proess_sp1" :style="{width:fluidStrengthNum.zczb+'%'}">
+                                                            <b style="cursor: pointer;" @click="fluidStrengthSwitch=true">{{fluidStrengthNum.zcnum}}</b>
+                                                        </span>
                                                         <span class="z_proess_sp2"></span>
                                                     </div>
-                                                    <span class="sp2">异常：<b>{{fluidStrengthNum.ycnum}}</b></span>
+                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="fluidStrengthSwitch=false">{{fluidStrengthNum.ycnum}}</b></span>
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
-                                                <div class="numBtn" v-for="(item,index) in fluidStrengthOptions" :key="index" v-if="item.name!='正常'">
+                                                <div class="numBtn" v-for="(item,index) in fluidStrengthOptions" :key="index" v-if="item.name!='正常'&&item.value!=0&&!fluidStrengthSwitch">
+                                                    <span class="sp1">{{item.value}}</span>
+                                                    <span class="sp2">{{item.name}}</span>
+                                                </div>
+                                                <div class="numBtn" v-for="(item,index) in fluidStrengthOptions" :key="index" v-if="item.name=='正常'&&fluidStrengthSwitch">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
@@ -433,7 +498,7 @@
                                         <div class="z-row-right" style="height:130px;position: relative;top: 48px;">
                                             <div class="name">措施推荐</div>
                                             <div class="num">
-                                                <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='换大泵'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
+                                                <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='换大泵'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span></span>
                                             </div>
                                         </div>
                                     </div>
@@ -449,14 +514,20 @@
                                                 <div class="z_schedule">
                                                     <span class="sp1">正常：</span>
                                                     <div class="z_proess">
-                                                        <span class="z_proess_sp1" :style="{width:fluidProductionNum.zczb+'%'}"><b>{{fluidProductionNum.zcnum}}</b></span>
+                                                        <span class="z_proess_sp1" :style="{width:fluidProductionNum.zczb+'%'}">
+                                                            <b style="cursor: pointer;" @click="fluidProductionSwitch=true">{{fluidProductionNum.zcnum}}</b>
+                                                        </span>
                                                         <span class="z_proess_sp2"></span>
                                                     </div>
-                                                    <span class="sp2">异常：<b>{{fluidProductionNum.ycnum}}</b></span>
+                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="fluidProductionSwitch=false">{{fluidProductionNum.ycnum}}</b></span>
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
-                                                <div class="numBtn" v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name!='正常'">
+                                                <div class="numBtn" v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name!='正常'&&item.value!=0&&!fluidProductionSwitch">
+                                                    <span class="sp1">{{item.value}}</span>
+                                                    <span class="sp2">{{item.name}}</span>
+                                                </div>
+                                                <div class="numBtn" v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name=='正常'&&fluidProductionSwitch">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
@@ -473,14 +544,20 @@
                                                 <div class="z_schedule">
                                                     <span class="sp1">正常：</span>
                                                     <div class="z_proess">
-                                                        <span class="z_proess_sp1" :style="{width:mfluidProductionNum.zczb+'%'}"><b>{{mfluidProductionNum.zcnum}}</b></span>
+                                                        <span class="z_proess_sp1" :style="{width:mfluidProductionNum.zczb+'%'}">
+                                                            <b style="cursor: pointer;" @click="mfluidProductionSwitch=true">{{mfluidProductionNum.zcnum}}</b>
+                                                        </span>
                                                         <span class="z_proess_sp2"></span>
                                                     </div>
-                                                    <span class="sp2">异常：<b>{{mfluidProductionNum.ycnum}}</b></span>
+                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="mfluidProductionSwitch=false">{{mfluidProductionNum.ycnum}}</b></span>
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
-                                                <div class="numBtn" v-for="(item,index) in mfluidProductionOptions" :key="index" v-if="item.name!='正常'">
+                                                <div class="numBtn" v-for="(item,index) in mfluidProductionOptions" :key="index" v-if="item.name!='正常'&&item.value!=0&&!mfluidProductionSwitch">
+                                                    <span class="sp1">{{item.value}}</span>
+                                                    <span class="sp2">{{item.name}}</span>
+                                                </div>
+                                                <div class="numBtn" v-for="(item,index) in mfluidProductionOptions" :key="index" v-if="item.name=='正常'&&mfluidProductionSwitch">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
@@ -491,7 +568,7 @@
                                         <div class="z-row-right" style="height:130px;position: relative;top: 48px;">
                                             <div class="name">措施推荐</div>
                                             <div class="num">
-                                                <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='换大泵'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}</span>
+                                                <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='换大泵'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') }}：<span style="color: #FFC835; font-size: 14px;"> {{ (item.value > 0 ? item.value : '(0)') }} </span></span>
                                             </div>
                                         </div>
                                     </div>
@@ -501,10 +578,21 @@
                     </div>
                     <div style="height:340px;">
                         <info-window info-width="100%" info-height="100%" header-title="油井动态分析详情列表" :is-show-max-btn="false">
-                            <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList">
+                            <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                 <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                 <!--生产动态项目-->
-                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" :label="item.name" :render-header="renderHeader" align="center" width="120" sortable="custom">
+                                <!--  :label="item.name" :render-header="renderHeader" -->
+                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" align="center" min-width="160" sortable="custom" label-class-name="twoRowHeader">
+                                    <template #header>
+                                        <div class="headerSortRow1" v-if="item.name && item.name.split(' ')[1]">
+                                            <span>{{ item.name.split(' ')[0] ? item.name.split(' ')[0] : ""}}</span>
+                                            <br />
+                                            <span>{{ item.name.split(' ')[1] ? `(${item.name.split(' ')[1]})` : ""}}</span>
+                                        </div>
+                                        <div v-else>
+                                            <span>{{item.name}}</span>
+                                        </div>
+                                    </template>
                                     <template slot-scope="scope">
                                         <span v-if="scope.row.scdt[item.code] == null"></span>
                                         <span v-else-if="item.code == 'ZC'">{{ scope.row.scdt[item.code].showLabel }}</span>
@@ -515,13 +603,23 @@
                                 </el-table-column>
                                 <!--生产问题监测项目-->
                                 <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
-                                    <el-table-column v-for="(item, index) in problemMonitoringTab" :key="index" :prop="item.code" :label="item.name" align="center">
+                                    <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="100" :key="index" :prop="item.code" :label="item.name" align="center" width="180px" label-class-name="twoRowHeader">
+                                        <template #header>
+                                            <div v-if="item.isTwoHeader">
+                                                <span>{{item.name}}</span>
+                                                <br />
+                                                <span>{{item.unit}}</span>
+                                            </div>
+                                            <div v-else>
+                                                <span>{{item.name}}</span>
+                                            </div>
+                                        </template>
                                         <template slot-scope="scope">
                                             <span v-if="scope.row[item.code] == null"></span>
                                             <span v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel }}</span>
-                                            <el-tooltip v-else class="item" effect="dark" :content="scope.row[item.code].value + ''" placement="top">
-                                                <span>{{ scope.row[item.code].showLabel }}</span>
-                                            </el-tooltip>
+                                            <!-- <el-tooltip v-else class="item" effect="dark" :content="scope.row[item.code].value + ''" placement="top"> -->
+                                                <span v-else>{{ scope.row[item.code].showLabel }}{{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(4):'-'}}</span>
+                                            <!-- </el-tooltip> -->
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
@@ -536,14 +634,21 @@
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
-                                <!--措施推荐-->
+                                <!--措施初选-->
                                 <el-table-column prop="recommendedMeasures" label="措施初选" align="center">
                                     <el-table-column prop="measuresName" label="推荐措施" align="center">
                                         <template slot-scope="scope">
                                             <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel }}</span>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="theDate" label="推荐日期" align="center" width="120px">
+                                    <el-table-column prop="theDate" align="center"  min-width="130" label-class-name="twoRowHeader">
+                                        <template #header>
+                                            <div>
+                                                <span>推荐日期</span>
+                                                <br />
+                                                <span>(yyyy/mm/dd)</span>
+                                            </div>
+                                        </template>
                                         <template slot-scope="scope">
                                             <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq }}</span>
                                         </template>
@@ -555,7 +660,14 @@
                                     </el-table-column>
                                 </el-table-column>
                                 <!--措施效果数据-->
-                                <el-table-column prop="dailyOilIncrement" label="日增油量m³/d" align="center">
+                                <el-table-column prop="dailyOilIncrement" align="center" label-class-name="twoRowHeader">
+                                    <template #header>
+                                        <div>
+                                            <span>日增油量</span>
+                                            <br />
+                                            <span>(m³/d)</span>
+                                        </div>
+                                    </template>
                                     <template slot-scope="scope">
                                         <span v-if="scope.row.rzyl == null || scope.row.rzyl.showMvalue == null"></span>
                                         <span v-else>{{ scope.row.rzyl.showMvalue }}</span>
@@ -624,25 +736,36 @@
                 //生产问题监测表头
                 problemMonitoringTab: [{
                         code: "yjgk",
-                        name: "油井工况"
+                        name: "油井工况",
+                        isTwoHeader: false,
                     },
                     {
                         code: "gpgx",
-                        name: "供排关系"
+                        name: "供排关系",
+                        isTwoHeader: false,
                     }, {
                         code: "djl",
-                        name: "递减率"
+                        name: "递减率",
+                        isTwoHeader: true,
+                        unit: "(%)"
                     },
                     {
                         code: "cyqd",
-                        name: "采液强度"
+                        name: "采液强度",
+                        isTwoHeader: true,
+                        unit: "[t/(d.m)]"
+
                     }, {
                         code: "cyzs",
-                        name: "采液指数"
+                        name: "采液指数",
+                        isTwoHeader: true,
+                        unit: "[m³/(d.MPa)]"
                     },
                     {
                         code: "mcyzs",
-                        name: "米采液指数"
+                        name: "米采液指数",
+                        isTwoHeader: true,
+                        unit: "[m³/(d.MPa)]"
                     }
                 ],
                 //潜力分析表头
@@ -667,6 +790,7 @@
                     zczb:0,
                     yczb:0,
                 },
+                productionSwitch:false,//展示异常false, 正常 true
                 //油井工况
                 oilWellConditionOptions: [],
                 oilWellConditionNum:{
@@ -676,6 +800,7 @@
                     zczb:0,
                     yczb:0,
                 },
+                oilWellConditionSwitch:false,//展示异常false, 正常 true
                 //供排关系
                 relationshipOptions: [],
                 relationshipNum:{
@@ -685,6 +810,7 @@
                     zczb:0,
                     yczb:0,
                 },
+                relationshipSwitch:false,//展示异常false, 正常 true
                 //递减率
                 diminishingOptions: [],
                 diminishingNum:{
@@ -694,6 +820,7 @@
                     zczb:0,
                     yczb:0,
                 },
+                diminishingSwitch:false,//展示异常false, 正常 true
                 //采液强度
                 fluidStrengthOptions: [],
                 fluidStrengthNum:{
@@ -703,6 +830,7 @@
                     zczb:0,
                     yczb:0,
                 },
+                fluidStrengthSwitch:false,//展示异常false, 正常 true
                 //采液指数
                 fluidProductionOptions: [],
                 fluidProductionNum:{
@@ -712,6 +840,7 @@
                     zczb:0,
                     yczb:0,
                 },
+                fluidProductionSwitch:false,//展示异常false, 正常 true
                 //米采液指数
                 mfluidProductionOptions: [],
                 mfluidProductionNum:{
@@ -721,6 +850,7 @@
                     zczb:0,
                     yczb:0,
                 },
+                mfluidProductionSwitch:false,//展示异常false, 正常 true
                 //潜力分析可用项目
                 //提液潜力
                 extractionPotentialOptions: [],
@@ -803,6 +933,28 @@
             //检索之后的处理
             dealInitData() {
                 var wellInfo = this.dealTableData;
+                
+                
+                
+                if(wellInfo.length){
+                    wellInfo.forEach((el,i)=>{
+                        if(el.cyqd.showLabel&&el.cyqd.showLabel.includes('采液强度')){
+                            wellInfo[i].cyqd.showLabel=el.cyqd.showLabel.replace('采液强度','')
+                        }
+                        if(el.cyzs.showLabel&&el.cyzs.showLabel.includes('采液指数')){
+                            wellInfo[i].cyzs.showLabel=el.cyzs.showLabel.replace('采液指数','')
+                        }
+                        if(el.djl.showLabel&&el.djl.showLabel.includes('递减率')){
+                            wellInfo[i].djl.showLabel=el.djl.showLabel.replace('递减率','')
+                        }
+                        if(el.mcyzs.showLabel&&el.mcyzs.showLabel.includes('米采液指数')){
+                            wellInfo[i].mcyzs.showLabel=el.mcyzs.showLabel.replace('米采液指数','')
+                        }
+                    })
+                }
+                
+                
+                
                 if (wellInfo != null) {
                     this.tableData = wellInfo.splice(0, this.listPage * 50);
                     this.listPage = 2;
@@ -826,6 +978,8 @@
                     }
                 }
                 this.$refs.tableList.doLayout();
+                
+                console.log('this.tableData',this.tableData)
                 /*this.$nextTick(()=>{
 
                 })*/
@@ -854,7 +1008,7 @@
                         if (msg == "200") {
                             this.initTableData = JSON.parse(JSON.stringify(res.data.data));
                             this.dealTableData = res.data.data;
-                            console.log(this.initTableData)
+                            console.log(this.initTableData,789789789)
                         } else {
                             this.$message.error("综合信息查询失败")
                         }
@@ -1530,7 +1684,7 @@
                                 let myData = res.data.data.indicatorAnalysisDetailInfos;
                                 this.potentialWellNum=0;
                                 myData.forEach((el,i)=>{
-                                    this.potentialWellNum=Number(el.value);
+                                    this.potentialWellNum+=Number(el.value);
                                 })
                                 this.recommendedMeasuresOptions = myData;
                             }
@@ -2211,8 +2365,7 @@
                         top: 30px;
                     }
                     .btns0{
-                        // margin:5px 0;
-                        width:224px;
+                        min-width:224px;
                         height:70px;
                         padding-left:20px;
                         border: 1px solid;
@@ -2220,21 +2373,21 @@
                         background-image: var(--logo-bg) !important;
                         display: flex;
                         align-items: center;
-                        position: relative;
                         .helpImg{
                             width:52px;
                             height:52px;
                             margin-right:18px;
                         }
                         span{
+                            flex:1;
                             font-size: 50px;
                             color: #FFCA07;
                             font-weight: 600;
                         }
                         b{
-                            position: absolute;
-                            right:12px;
-                            top:4px;
+                            margin-right:10px;
+                            position: relative; 
+                            top:-18px;
                             font-size: 16px;
                             color: #24DEFF;
                         }
