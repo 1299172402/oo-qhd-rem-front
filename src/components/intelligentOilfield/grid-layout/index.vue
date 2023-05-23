@@ -135,7 +135,8 @@ export default {
   created() {
     // 拼接唯一标识id，通过“公司名称_路由name”
     this.pageName = `${this.companyName}_${this.$router.app?.$route?.name}`;
-    queryByPageName(this.pageName).then(res => {
+    const tenantId = this.$store.getters["user/tenantId"];
+    queryByPageName(this.pageName, tenantId).then(res => {
       if (res ? res.data.code === 200 : false) {
         if (res.data.data === null || res.data.data?.pageInfo === null) { // 首次获取面板赋值
           this.interfaceDataStore = JSON.parse(JSON.stringify(this.currentLayout)); // 用户存储上次编辑的面板【取消用】
@@ -177,7 +178,8 @@ export default {
       const queryParamsNew = {
         userId: this.$store.getters["user/userDetail"].user.userId,
         pageInfo: JSON.stringify(this.currentLayout), // 页面json
-        pageName: this.pageName
+        pageName: this.pageName,
+        tenantId: this.$store.getters["user/tenantId"]
       };
       savePage(queryParamsNew).then(res => {
         if (res ? res.data.code === 200 : false) {
