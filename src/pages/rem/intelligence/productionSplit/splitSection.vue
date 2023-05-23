@@ -71,7 +71,7 @@
                     disabled
                 >重置
                 </el-button>
-                <el-button type="primary" icon="el-icon-back" style="float: right" @click="back">返回</el-button>
+                <el-button type="primary"  style="float: right" @click="back">返回</el-button>
             </el-form>
         </header-search>
         <page-panel

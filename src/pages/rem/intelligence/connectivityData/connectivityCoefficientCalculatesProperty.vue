@@ -22,7 +22,7 @@
                 </el-form-item>
 <!--                <el-button type="primary" icon="el-icon-search" size="mini" class="confirmBut">确认</el-button>-->
 <!--                <el-button type="primary" icon="el-icon-refresh" size="mini" class="commonBtn">重置</el-button>-->
-                <el-button type="primary" icon="el-icon-back" @click="returnBut" class="confirmBut" style="float: right">返回</el-button>
+                <el-button type="primary"  @click="returnBut" class="confirmBut" style="float: right">返回</el-button>
             </el-form>
         </header-search>
         <page-panel header-title="井组参数配置">
