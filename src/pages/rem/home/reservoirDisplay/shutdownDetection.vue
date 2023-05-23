@@ -77,7 +77,7 @@
                             <el-button class="commonBtn" @click="result" icon="el-icon-refresh"> 重置</el-button>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary" icon="el-icon-back" @click="returnrouter">返回</el-button>
+                            <el-button type="primary" @click="returnrouter">返回</el-button>
                         </el-form-item>
                     </el-form>
                 </div>
