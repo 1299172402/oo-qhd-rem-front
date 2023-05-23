@@ -136,7 +136,7 @@ export function getOgfInfo() {
         url: `${baseUrl}/injectionProductionDeploy/getAllOgf`,
         method: "get",
     }).then((res) => {
-        return res.data.data
+        return res.data
     });
 
 }
@@ -148,7 +148,7 @@ export function getblockData(params) {
         method: "post",
         params: params
     }).then((res) => {
-        return res.data.data
+        return res.data
     });
 }
 
@@ -163,9 +163,9 @@ export function getWellData(params) {
         method: "post",
         params: params,
     }).then((res) => {
-        if (res.data.data) {
+        if (res.data) {
             // 返回数据 [{"wellGroupId":"井组标识", "wellGroupName":"井组名"}]
-            return res.data.data;
+            return res.data;
         } else {
             return [];
         }

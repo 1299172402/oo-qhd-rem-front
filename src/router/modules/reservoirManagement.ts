@@ -6,7 +6,7 @@ export default [
         name: 'intelligence',
         hidden:env == "development" ? false : true,
         component: Layout,
-        meta: { title: '智能注采调配(迁移中)', icon: 'client', single: false },
+        meta: { title: '智能注采调配', icon: 'client', single: false },
         children: [
             {
                 path: 'productionSplit',

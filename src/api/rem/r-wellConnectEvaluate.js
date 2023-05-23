@@ -1,6 +1,7 @@
 // 井间连通性评价 api
 import request from "@/utils/request";
 const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
+const baseUrlIpm = process.env.NODE_ENV == "production" ? "/ipm/api" : "/ipm/api"
 
 // export function getIsoline () {
 //     return request({
@@ -283,7 +284,7 @@ export function postWellgroupRevise (data) {
  */
 export function postdividingCoefficient (params) {
     return request({
-        url: `${baseUrl}/injectionProductionDeploy/dividingCoefficient`,
+        url: `${baseUrlIpm}/injectionProductionDeploy/dividingCoefficient`,
         method: "post",
         params,
     }).then((res) => {

@@ -23,9 +23,9 @@
                     <el-select v-model="queryData.blockId" filterable clearable>
                         <el-option
                             v-for="item in blockList"
-                            :key="item.fieldId"
-                            :label="item.name"
-                            :value=" item.fieldId"
+                            :key="item.blockId"
+                            :label="item.blockName"
+                            :value=" item.blockId"
                         ></el-option>
                     </el-select>
                 </el-form-item>
