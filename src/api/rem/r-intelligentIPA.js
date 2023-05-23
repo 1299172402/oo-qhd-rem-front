@@ -1,7 +1,7 @@
 // 智能注采调配 api
 import Axios from "@/utils/request";
 
-const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
+const baseUrl = process.env.NODE_ENV == "production" ? "/ipm/api" : "/ipm/api"
 
 // 首页 start ----
 
@@ -250,7 +250,7 @@ export function getWellMonthAllocation(params) {
         method: "get",
         params
     }).then((res) => {
-        return res.data.data
+        return res.data
     })
 
 }
@@ -327,7 +327,7 @@ export function getWellAvgFluidProdAlloc(params) {
         method: "post",
         params
     }).then((res) => {
-        return res.data.data
+        return res.data
     })
 
 }
