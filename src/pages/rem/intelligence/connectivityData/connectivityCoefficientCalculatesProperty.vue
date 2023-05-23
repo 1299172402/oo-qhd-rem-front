@@ -66,13 +66,13 @@
                 >下载
                 </el-button>
             </el-form>
-            <el-form ref="form" :rules="rules" label-width="100px" :model="form">
+            <el-form ref="form" :rules="rules" label-width="100px" :model="form" style="height: 100%">
                 <el-table
                     id="indexscv"
                     :data="form.tableWater"
                     highlight
                     style="margin-top: 10px"
-                    height="600"
+                    height="90%"
                     :span-method="mergeTable"
                 >
                     <el-table-column
