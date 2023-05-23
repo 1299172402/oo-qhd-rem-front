@@ -113,7 +113,7 @@
                                 :data="form.tableData2"
                                 id="indexscvSecond"
                                 highlight
-                                height="100%"
+                                height="95%"
                                 style="margin-top: 10px;min-height: 500px"
                                 :header-cell-style="tableColor"
                                 :cell-style="tableColorone"
