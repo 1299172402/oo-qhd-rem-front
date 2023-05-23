@@ -123,7 +123,7 @@
                 >下载
                 </el-button>
             </div>
-            <el-form ref="form" label-width="100px" style="height: 100%;" :model="form">
+            <el-form ref="form" style="height: 100%;" :model="form">
                 <el-table
                     :data="form.tableData"
                     id="indexscv"
@@ -411,11 +411,11 @@ export default {
         changeBlock() {
         },
         //重置
-        reset(){
+        reset() {
             this.queryData.blockId = '6CD7342CA6DD418183A4B3BC38584F7C'
-            this.queryData.ogfId =  '3FC9A818F5BC43B88270DB80BBB3018F',
-            this.queryData.dateTime =  this.eeee(),
-            this.tableOilfield();
+            this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F',
+                this.queryData.dateTime = this.eeee(),
+                this.tableOilfield();
         },
         // 获取油田列表数据
         tableOilfield() {
@@ -722,23 +722,27 @@ export default {
 ::v-deep .el-table__row {
     height: 65px;
 }
+
 #indexscv {
     ::v-deep .el-table__header-wrapper .cell {
         height: auto !important;;
         line-height: 18px !important;
         white-space: pre !important;;
     }
+
     ::v-deep .el-table__fixed-header-wrapper .cell {
         height: auto;
         line-height: 18px !important;
         white-space: pre;
     }
+
     ::v-deep .cell:empty {
         &::before {
             content: "-";
         }
     }
-    .is-group{
+
+    .is-group {
 
     }
 }

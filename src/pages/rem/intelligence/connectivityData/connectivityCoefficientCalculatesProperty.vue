@@ -66,7 +66,8 @@
                 >下载
                 </el-button>
             </el-form>
-            <el-form ref="form" :rules="rules" label-width="100px" :model="form" style="height: 100%">
+            <el-form ref="form" :rules="rules"  :model="form" style="height: 100%">
+          
                 <el-table
                     id="indexscv"
                     :data="form.tableWater"
@@ -94,7 +95,7 @@
                         :render-header="renderheader"
                         show-overflow-tooltip
                         align="center"
-                        class="align-middle"
+                    
                     >
                         <template slot-scope="scope">
                             <el-form-item
