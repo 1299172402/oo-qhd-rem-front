@@ -55,7 +55,7 @@
         <pagePanelNew style="height: calc(100% - 160px)">
             <el-row v-if="activeName == 'first'" :gutter="20" style="height:100%">
                 <el-col :span="6" style="height:100%">
-                    <pagePanel :headerTitle="title1" :title="title1"
+                    <pagePanel :headerTitle="title1" :title="title1" :show-btn="true"
                                style="text-align: center;height:calc(100% - 10px)">
                         <el-table
                             v-loading="tableData1.length>0?false:true"
@@ -82,7 +82,7 @@
                     </pagePanel>
                 </el-col>
                 <el-col :span="18" style="height:100%">
-                    <pagePanel :headerTitle="title2" style="height:calc(100% - 10px);">
+                    <pagePanel :headerTitle="title2" style="height:calc(100% - 10px);" :show-btn="true">
                         <div class="buttonBox">
                             <el-row :gutter="20">
                                 <el-col :span="22">

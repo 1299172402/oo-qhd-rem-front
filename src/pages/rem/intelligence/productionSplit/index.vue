@@ -2,7 +2,7 @@
     <div id="app-container" style="height: 100%">
         <header-search>
             <el-form style="margin-top: 20px" :inline="true">
-                <el-form-item label="油田：">
+                <el-form-item label="油田："> run
                     <el-select
                         v-model="queryData.ogfId"
                         disabled
@@ -83,6 +83,7 @@
             </el-form>
         </header-search>
         <page-panel
+            :show-btn="true"
             header-title="产量劈分"
             style="margin-top: 20px;height: calc(100% - 80px)"
         >

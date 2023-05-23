@@ -61,6 +61,7 @@
             </el-form>
         </header-search>
         <page-panel
+            :show-btn="true"
             header-title="连通系数计算"
             class="normalCard"
             style="color: white; height: calc(100% - 105px);width: 100%;"
