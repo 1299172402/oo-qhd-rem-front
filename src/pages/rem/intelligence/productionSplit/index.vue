@@ -117,7 +117,7 @@
                 style="width: 100%; margin-top: 10px"
                 :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
             >
-                <el-table-column prop="name" label="井号/层段" width="250">
+                <el-table-column prop="name" align="center" label="井号/层段"  width="250">
                     <template slot-scope="scope">
                         <span>{{ scope.row.name }}</span>
                     </template>
@@ -126,8 +126,9 @@
                 <el-table-column
                     prop="airPermeability"
                     align="center"
-                    label="渗透率（mD）"
+                    label="渗透率?（mD）"
                     min-width="100"
+                    :render-header="renderheader"
                 >
                     <template slot-scope="scope">
                         <span>{{ scope.row.airPermeability }}</span>
@@ -137,21 +138,22 @@
                 <el-table-column
                     prop="thicknessEffe"
                     align="center"
-                    label="有效厚度（m）"
+                    label="有效厚度?（m）"
                     min-width="100"
+                    :render-header="renderheader"
                 >
                     <template slot-scope="scope">
                         <span>{{ scope.row.thicknessEffe }}</span>
                     </template>
                 </el-table-column>
 
-                <el-table-column prop="oilSplitData" label="产油量（m³）" align="center" min-width="100">
+                <el-table-column prop="oilSplitData" label="产油量?（m³）" :render-header="renderheader" align="center" min-width="100">
                     <template slot-scope="scope">
                         <span>{{ scope.row.oilSplitData }}</span>
                     </template>
                 </el-table-column>
 
-                <el-table-column prop="oilRatio" label="产油量占比（%）" align="center" min-width="100">
+                <el-table-column prop="oilRatio" label="产油量占比?（%）" :render-header="renderheader" align="center" min-width="100">
                     <template slot-scope="scope">
                         <span>{{ scope.row.oilRatio }}</span>
                     </template>
@@ -159,16 +161,17 @@
 
                 <el-table-column
                     prop="waterSplitData"
-                    label="产水量（m³）"
+                    label="产水量?（m³）"
                     align="center"
                     min-width="100"
+                    :render-header="renderheader"
                 >
                     <!-- <template slot-scope="scope">
                       <span>{{ Math.round(scope.row.waterSplitData / 100) }}</span>
                     </template> -->
                 </el-table-column>
 
-                <el-table-column prop="waterRatio" label="产水量占比（%）" align="center" min-width="100">
+                <el-table-column prop="waterRatio" label="产水量占比?（%）" :render-header="renderheader" align="center" min-width="100">
                     <template slot-scope="scope">
                         <span>{{ scope.row.waterRatio }}</span>
                     </template>
@@ -191,7 +194,7 @@
                 style="width: 100%; margin-top: 10px"
                 :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
             >
-                <el-table-column prop="name" label="井号/层段" min-width="100">
+                <el-table-column prop="name" align="center" label="井号/层段" min-width="100">
                     <template slot-scope="scope">
                         <span>{{ scope.row.name }}</span>
                     </template>
@@ -200,8 +203,9 @@
                 <el-table-column
                     prop="airPermeability"
                     align="center"
-                    label="渗透率(mD)"
+                    label="渗透率?(mD)"
                     min-width="100"
+                    :render-header="renderheader"
                 >
                     <template slot-scope="scope">
                         <span>{{ scope.row.airPermeability }}</span>
@@ -211,15 +215,16 @@
                 <el-table-column
                     prop="thicknessEffe"
                     align="center"
-                    label="有效厚度（m）"
+                    label="有效厚度?（m）"
                     min-width="100"
+                    :render-header="renderheader"
                 >
                     <template slot-scope="scope">
                         <span>{{ scope.row.thicknessEffe }}</span>
                     </template>
                 </el-table-column>
 
-                <el-table-column prop="waterRatio" label="注水量（m³）" align="center" min-width="100">
+                <el-table-column prop="waterRatio" label="注水量?（m³）" :render-header="renderheader" align="center" min-width="100">
                     <template slot-scope="scope">
                         <span>{{ Math.round(scope.row.waterRatio) }}</span>
                     </template>
@@ -227,9 +232,10 @@
 
                 <el-table-column
                     prop="waterSplitData"
-                    label="注水占比（%）"
+                    label="注水占比?（%）"
                     align="center"
                     min-width="100"
+                    :render-header="renderheader"
                 >
                     <!-- <template slot-scope="scope">
                       <span>{{ Number(scope.row.waterSplitData / 100).toFixed(1) }}</span>
@@ -550,7 +556,13 @@ export default {
                 this.$message.error("请填写完毕")
             }
         },
-
+        renderheader(h, {column, $index}) {
+            return h('span', {}, [
+                h('span', {}, column.label.split('?')[0]),
+                h('br'),
+                h('span', {}, column.label.split('?')[1])
+            ]);
+        },
         selectWell(val) {
             console.log(val)
         }
@@ -599,5 +611,26 @@ export default {
     content: "\e6e0";
     color: #66ffff;
     font-size: 16px;
+}
+
+#clpf {
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto !important;;
+        line-height: 18px !important;
+        white-space: pre !important;;
+    }
+    ::v-deep .el-table__fixed-header-wrapper .cell {
+        height: auto;
+        line-height: 18px !important;
+        white-space: pre;
+    }
+    ::v-deep .cell:empty {
+        &::before {
+            content: "-";
+        }
+    }
+    .is-group{
+
+    }
 }
 </style>

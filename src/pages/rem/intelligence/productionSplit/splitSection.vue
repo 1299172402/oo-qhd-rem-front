@@ -134,7 +134,6 @@
             header-title="单井劈产剖面"
             v-if="params.wellCategory == '02'"
             style="position: relative; margin-top: 20px;height: calc(100% - 100px);"
-            align="center"
         >
             <el-button type="primary" @click="back" style="position: absolute; right: 50px; top: 0">返回</el-button>
             <el-container class="layout">
