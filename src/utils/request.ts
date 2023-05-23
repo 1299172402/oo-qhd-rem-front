@@ -192,9 +192,9 @@ instance.interceptors.response.use(
           }
         });
       } else {
-        // MessageBox.alert(err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错", "系统提示", {
-        //   type: "error"
-        // });
+        MessageBox.alert(err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错", "系统提示", {
+          type: "error"
+        });
       }
       return Promise.reject(err);
     }

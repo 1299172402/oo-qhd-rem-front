@@ -199,8 +199,8 @@ export default {
       }, 300);
     },
     computeNum() {
-      this.screenWidth = document.body.clientWidth;
-      this.screenHeight = document.body.clientHeight;
+      this.screenWidth = document.body.clientWidth * window.devicePixelRatio;
+      this.screenHeight = document.body.clientHeight * window.devicePixelRatio;
       this.singleHeight = (this.screenHeight - this.heightFromBottom) / this.rowNum; // 一份元素的高度
     },
     // 重置元素
@@ -272,14 +272,13 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  width: 1920px;
   height: 100%;
 }
 
 .fullWindow >>> .vue-grid-item {
   /* 最大化 */
-  width: 100% !important;
-  height: 100% !important;
+   width: 100vw !important;
+  height: 100vh !important;
   transform: translate3d(0, 0, 0) !important;
   z-index: 999;
   position: relative;

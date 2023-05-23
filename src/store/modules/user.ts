@@ -194,7 +194,7 @@ const actions = {
           username: userInfo.username,
           password: encryptlogin(userInfo.password, publicKey)
         };
-        login(params, query).then(res => {
+        login(params, query).then(async res => {
           if (res.data.code === 200) {
             if (userInfo.srid && res.data.data.redirectUrl) {
               // 参数携带srid需要直接进行跳转
@@ -222,7 +222,8 @@ const actions = {
               //   setExpiresIn(res.data.data.expires_in)
               //   commit('SET_EXPIRES_IN', res.data.data.expires_in)
               if (res.data.data.tenant_role_key) {
-                dispatch("getUserInfo", "firstLogin");
+                await store.dispatch("permission/initRoutes", store.getters["user/roles"]);
+                dispatch("getUserInfo", "firstLogin", true);
               } else {
                 message.error("该用户未分配租户，请联系管理员进行租户分配!");
               }
