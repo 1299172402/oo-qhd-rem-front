@@ -2,7 +2,7 @@
     <div id="app-container" style="height: 100%">
         <header-search>
             <el-form style="margin-top: 20px" :inline="true">
-                <el-form-item label="油田："> run
+                <el-form-item label="油田：">
                     <el-select
                         v-model="queryData.ogfId"
                         disabled
