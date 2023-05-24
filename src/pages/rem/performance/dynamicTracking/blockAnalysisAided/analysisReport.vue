@@ -1023,7 +1023,36 @@
                                 "Pattern": null,
                                 "TransViewX": 0,
                                 "TransViewY": 0
-                            }
+                            },
+                            "Label":[
+                              {
+                                  "ViewPen": {
+                                      "PenWidth": 0.5,
+                                      "PenColorA": 255,
+                                      "PenColorR": 255,
+                                      "PenColorG": 0,
+                                      "PenColorB": 0,
+                                      "PenDashStyle": 0
+                                  },
+                                  "ViewBrush": {
+                                      "FillStyle": 0,
+                                      "BrushColorG": 255,
+                                      "BrushColorA": 255,
+                                      "BrushColorR": 255,
+                                      "BrushColorB": 255
+                                  },
+                                  "Font": {
+                                      "FontName": "微软雅黑",
+                                      "FontSize": 10,
+                                      "Color": {
+                                          "ColorG": 0,
+                                          "ColorR": 255,
+                                          "ColorB": 0,
+                                          "ColorA": 255
+                                      },
+                                      "Weight": "bold" 
+                                  }
+                            }]
                         }, 
                         {
                             "WellDotTypeCode": "1",
@@ -1051,7 +1080,36 @@
                                 "Pattern": null,
                                 "TransViewX": 0,
                                 "TransViewY": 0
-                            }
+                            },
+                            "Label":[
+                              {
+                                  "ViewPen": {
+                                      "PenWidth": 0.5,
+                                      "PenColorA": 255,
+                                      "PenColorR": 0,
+                                      "PenColorG": 0,
+                                      "PenColorB": 255,
+                                      "PenDashStyle": 0
+                                  },
+                                  "ViewBrush": {
+                                      "FillStyle": 0,
+                                      "BrushColorG": 255,
+                                      "BrushColorA": 255,
+                                      "BrushColorR": 255,
+                                      "BrushColorB": 255
+                                  },
+                                  "Font": {
+                                      "FontName": "微软雅黑",
+                                      "FontSize": 10,
+                                      "Color": {
+                                          "ColorG": 0,
+                                          "ColorR": 0,
+                                          "ColorB": 255,
+                                          "ColorA": 255
+                                      },
+                                      "Weight": "bold" 
+                                  }
+                              }]
                         }
                     ],
                     Objects:[]
