@@ -264,7 +264,7 @@ export function getWellMonthInj(params) {
         method: "post",
         params: params
     }).then((res) => {
-        return res.data.data
+        return res.data
     })
 
 }
