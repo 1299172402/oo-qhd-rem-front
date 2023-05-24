@@ -1,6 +1,6 @@
 // 井间连通性评价 api
 import request from "@/utils/request";
-const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
+const baseUrl = process.env.NODE_ENV == "production" ? "/ipm/api" : "/ipm/api"
 const baseUrlIpm = process.env.NODE_ENV == "production" ? "/ipm/api" : "/ipm/api"
 
 // export function getIsoline () {
@@ -194,9 +194,9 @@ export function exportChopSection (params) {
         method: "post",
         data,
     }).then((res) => {
-        if (res.data.data) {
+        if (res.data) {
             // 返回数据 [{"wellGroupId":"井组标识", "wellGroupName":"井组名"}]
-            return res.data.data;
+            return res.data;
         } else {
             return [];
         }

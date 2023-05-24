@@ -44,7 +44,7 @@
       </header-search>
 <!--    </el-header>-->
 <!--    <el-main>-->
-      <pagePanel headerTitle="井组自定义" style="height: 75vh;" :show-btn="true">
+      <pagePanel headerTitle="井组自定义" style="height: 75vh;width: 100%" :show-btn="true">
         <div style="">
           <span></span>
           <div>
@@ -92,12 +92,12 @@
               </el-button>
           </div>
         </div>
-        <div style="display: flex;justify-content: space-around;margin-top: 15px;">
-          <div style="flex:3; margin-right: 20px;">
+        <div style="display: flex;justify-content: space-around;margin-top: 15px;width: 100%">
+          <div style=" margin-right: 20px;width: 30%">
             <el-table
               :data="tableData"
               highlight
-              style="margin-top:10px;"
+              style="margin-top:10px;width: 100%"
               height="550"
               :header-cell-style="wipeborder"
             >
@@ -107,13 +107,13 @@
               </el-table-column>
             </el-table>
           </div>
-          <div style="flex: 5;">
+          <div style="width: 70%">
             <el-table
               :data="tableData"
               id="indexscv"
               highlight
               border
-              style="margin-top:10px;"
+              style="margin-top:10px;width: 100%"
               height="550"
               :header-cell-style="wipeborder"
               :span-method="mergeTable"
@@ -130,7 +130,7 @@
                 <el-table-column prop="proWellNo" label="油井" show-overflow-tooltip align="center"></el-table-column>
                 <el-table-column label="操作" show-overflow-tooltip align="center">
                   <template slot-scope="scope">
-                    <el-button @click="deleteWellGroup(scope.row)" :disabled="disabledBtn || isDisabled">删除井组</el-button>
+                    <el-button type="text" @click="deleteWellGroup(scope.row)" :disabled="disabledBtn || isDisabled">删除井组</el-button>
                   </template>
                 </el-table-column>
               </el-table-column>
@@ -254,7 +254,7 @@ export default {
       query: {
         selectField: "3FC9A818F5BC43B88270DB80BBB3018F",
         value2: this.getDate(),
-        selectBlock: "6CD7342CA6DD418183A4B3BC38584F7C",
+        selectBlock: "F35E226D47CE4B09B497B852D774D122",
       },
       select: {
         selectBlock: "",
