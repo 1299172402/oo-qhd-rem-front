@@ -144,7 +144,7 @@
         </page-panel>
         <div v-if="params.wellCategory === '01'">
             <el-dialog title="修改" :visible.sync="redactBut" width="900px" append-to-body>
-                <el-form ref="form" label-width="100px" :model="form">
+                <el-form ref="form" label-width="100px" :model="form" style="height: 500px;overflow-y: scroll">
                     <el-card
                         class="box-card"
                         v-for="(interval, index) in form.table"
@@ -199,7 +199,7 @@
 
         <div v-if="params.wellCategory === '02'">
             <el-dialog title="修改" :visible.sync="redactBut" width="900px" append-to-body>
-                <el-form ref="form" label-width="100px" :model="form">
+                <el-form ref="form" label-width="100px" :model="form"  style="height: 500px;overflow-y: scroll">
                     <el-card
                         class="box-card"
                         v-for="(interval, index) in form.table"
@@ -564,7 +564,7 @@ export default {
                     startTime: this.params.value[0],
                     type: 0,
                 }).then((res) => {
-                    const aBlob = new Blob([res.data]);
+                    const aBlob = new Blob([res]);
                     FileSaver.saveAs(aBlob, `${wellName}单井劈分系数结果.xls`);
                 })
             } else if (this.params.wellCategory === '02') {
@@ -577,7 +577,7 @@ export default {
                     wellId: this.wellId,
                     blockId: this.params.blockId.value,
                 }).then((res) => {
-                    const aBlob = new Blob([res.data]);
+                    const aBlob = new Blob([res]);
                     FileSaver.saveAs(aBlob, `${wellName}单井劈分系数结果.xls`);
                 })
             }

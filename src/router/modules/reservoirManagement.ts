@@ -9,6 +9,13 @@ export default [
         meta: { title: '智能注采调配', icon: 'client', single: false },
         children: [
             {
+                path: 'index',
+                name: 'index',
+                hidden:true,
+                component: () => import('@/pages/rem/intelligence/index.vue'),
+                meta: { title: '首页',icon: 'icon' },
+            },
+            {
                 path: 'productionSplit',
                 name: 'productionSplit',
                 component: () => import('@/pages/rem/intelligence/productionSplit/index.vue'),

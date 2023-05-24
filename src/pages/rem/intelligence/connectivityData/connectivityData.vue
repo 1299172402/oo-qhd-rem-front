@@ -508,7 +508,7 @@ export default {
                     (item) => item.ogfId == this.queryData.ogfId
                 ).ogfName : '';
                 let blockName = this.blockList.length ? this.blockList.find(
-                    (item) => item.fieldId == this.queryData.blockId
+                    (item) => item.blockId == this.queryData.blockId
                 ).blockName : '';
                 const params = {
                     blockId: this.queryData.blockId, //区块id
@@ -546,7 +546,7 @@ export default {
                 blockName = this.blockList.find((item) => item.blockId == this.queryData.blockId).blockName;
             }
             downLoadUnicomModeloperationDto(this.form.tableData).then((res) => {
-                const aBlob = new Blob([res.data]);
+                const aBlob = new Blob([res]);
                 FileSaver.saveAs(aBlob, blockName + "连通系数计算结果表.xls");
             }).catch(() => {
                 this.$message.error('下载失败')

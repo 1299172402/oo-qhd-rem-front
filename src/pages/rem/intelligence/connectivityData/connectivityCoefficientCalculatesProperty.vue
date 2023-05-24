@@ -326,7 +326,7 @@ export default {
         // },
         downloadTable() {
             downloadGroupParamDTO(this.form.tableWater).then((res) => {
-                const aBlob = new Blob([res.data]);
+                const aBlob = new Blob([res]);
                 FileSaver.saveAs(aBlob, this.Select.blockName + "井组参数配置.xls");
             }).catch(() => {
                 this.$message.error('下载失败')

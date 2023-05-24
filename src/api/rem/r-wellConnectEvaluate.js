@@ -234,7 +234,7 @@ export function postCoefficientConnectionpreserve (params) {
         method: "post",
         data: params,
     }).then((res) => {
-        if (res.data.code == 0) {
+        if (res.data.code == 200) {
             return true;
         } else {
             return false;
@@ -288,7 +288,7 @@ export function postdividingCoefficient (params) {
         method: "post",
         params,
     }).then((res) => {
-        return res
+        return res.data
     });
 }
 

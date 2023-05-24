@@ -499,7 +499,7 @@ export default {
                 wellType: this.queryData.wellCategory,
                 blockId: this.queryData.blockId.value,
             }).then((res) => {
-                const aBlob = new Blob([res.data]);
+                const aBlob = new Blob([res]);
                 FileSaver.saveAs(aBlob, `产量劈分.xls`);
             })
         },
@@ -510,9 +510,12 @@ export default {
             this.queryProductionSplit();
         },
         resettingQuery(){
-            this.queryData.wellId = ["DA0269628E74490ABDE198E7D1DBF3EA"];
+            this.queryData.wellId = [""];
             this.queryData.wellCategory = '01'
-            this.queryData.blockId = '6CD7342CA6DD418183A4B3BC38584F7C'
+            this.queryData.blockId = {
+                value: "6CD7342CA6DD418183A4B3BC38584F7C",
+                label: "秦皇岛32-6南区",
+            },
             this.queryData.value = [timeNew.format('YYYY-MM-DD'), lastDay.format('YYYY-MM-DD')]
             this.doSearch()
         },
