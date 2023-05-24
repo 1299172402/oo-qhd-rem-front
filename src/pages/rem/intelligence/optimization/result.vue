@@ -59,7 +59,7 @@
             </div>
         </header-search>
         <pagePanelNew style="height: calc(100% - 140px)">
-            <el-row v-if="activeName == 'first'" :gutter="20" style="margin: 20px 20px;height: 100%">
+            <el-row v-if="activeName == 'first'" :gutter="20" style="margin: 0px 20px;height: 100%">
                 <el-col :span="6" style="height:100%">
                     <pagePanel :headerTitle="title1"
                                style="height:calc(100% - 25px)">
@@ -202,7 +202,6 @@
                     </pagePanel>
                 </el-col>
             </el-row>
-
             <iframe
                 style="height:100%; width:100%; border:none;"
                 v-show="activeName == 'second'"

@@ -195,14 +195,11 @@
                   </pagePanel>
               </el-col>
           </el-row>
-
-
           <iframe
               style="margin-top:20px; width: 100%; height: calc(100% - 20px)"
               v-show="activeName == 'second'"
               src="https://dl-front-qhd32-6znyt.tj.app.cnooc/sow/"
           ></iframe>
-        
       </pagePanelNew>
   </div>
 </template>
