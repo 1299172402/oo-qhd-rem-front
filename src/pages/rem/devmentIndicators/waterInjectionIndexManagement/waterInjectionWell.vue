@@ -2,7 +2,7 @@
 <template>
     <div class="app-container">
         
-        <header-search style="width:100%;height:80px;margin:0 7px;">
+        <header-search style="width:100%;height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
                 <div style="margin: 10px 20px 10px 0px">
                     作业公司：
@@ -34,7 +34,7 @@
             <pagePanel headerTitle="注水井分注率" style="height: 490px" showBtn>
                 <Echart :chart-data="waterInjectionRate" height="100%"></Echart>
             </pagePanel>
-            <pagePanel :headerTitle="`${oilFieldName || ''}注水井分注率明细*`" style="height: calc(100% - 530px);" showBtn>
+            <pagePanel :headerTitle="`${oilFieldName || ''}注水井分注率明细`" style="height: calc(100% - 530px);" showBtn>
                 <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#zhjfzlmx', `${oilFieldName || ''}注水井分注率明细`)">
                     下载
                 </el-button>
@@ -119,10 +119,10 @@
                         left: "center"
                     },
                     grid: {
-                        x: 100,
-                        y: 100,
-                        x2: 100,
-                        y2: 50,
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 60,
                     },
                     toolbox: {
                         show: true,
@@ -141,17 +141,17 @@
                         },
                     },
                     legend: {
-                        left: 0,
-                        top: 40,
+                        data: [],
                         textStyle: {
-                            color: "#8FA4CC",
+                            color: '#8FA4CC',
                             fontSize: 14,
                         },
-                        icon: "rect",
+                        x:'center',
+                        bottom:0,
+                        icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
                         itemGap: 14,
-                        data: [],
                     },
                     xAxis: {
                         name: "平台",
@@ -161,6 +161,8 @@
                         type: "category",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                         },
                         axisTick: {
                             show: false,
@@ -180,8 +182,11 @@
                     },
                     yAxis: [{
                         name: "注水井分注率 (%)",
+                        nameLocation:'middle',
+                        nameGap:70,
                         nameTextStyle: {
-                            color: "#8FA4CC"
+                            color: '#8FA4CC',
+                            fontSize: 14,
                         },
                         type: "value",
                         min: 0,

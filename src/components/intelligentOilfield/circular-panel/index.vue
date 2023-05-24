@@ -1,6 +1,6 @@
 <!--轮循面板组件-->
 <template>
-  <div class="g-w100 g-h100 panel">
+  <div v-loading="loading" class="g-w100 g-h100 panel">
     <!-- 非全屏展示 -->
     <el-carousel
       v-if="!$store.state.user.isMax"
@@ -102,6 +102,10 @@ export default {
         height: 0,
         width: 0
       })
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

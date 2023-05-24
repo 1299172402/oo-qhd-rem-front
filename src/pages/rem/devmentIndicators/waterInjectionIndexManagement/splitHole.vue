@@ -161,10 +161,10 @@
                         left: "center"
                     },
                     grid: {
-                        x: 100,
-                        y: 100,
-                        x2: 100,
-                        y2: 50,
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 60,
                     },
                     toolbox: {
                         show: true,
@@ -183,15 +183,14 @@
                         },
                     },
                     legend: {
-                        left: 0,
-                        top: 40,
                         data: [],
                         textStyle: {
-                            color: "#8FA4CC",
+                            color: '#8FA4CC',
                             fontSize: 14,
                         },
-                        color: "#8FA4CC",
-                        icon: "rect",
+                        x:'center',
+                        bottom:0,
+                        icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
                         itemGap: 14,
@@ -204,6 +203,8 @@
                         type: "category",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                         },
                         axisTick: {
                             show: false,
@@ -223,6 +224,8 @@
                     },
                     yAxis: [{
                         name: "分注井层段合格率 (%)",
+                        nameLocation:'middle',
+                        nameGap:70,
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },

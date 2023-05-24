@@ -13,10 +13,14 @@
                 </el-select>
                 <el-button icon="el-icon-search" type="primary" @click="doSearch">搜索</el-button>
                 <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
-                <el-button style="margin-left:auto!important;" type="primary" @click="development(oilfield, block)">开发现状表</el-button>
+                
             </div>
         </headerSearch>
         <pagePanelNew style="height: calc(100% - 100px);" class="z-main">
+            
+            <div class="pagepanel-btns" style="padding-top:20px;height:40px;display: flex;justify-content: flex-end;">
+                <el-button style="height:30px;" type="primary" @click="development(oilfield, block)">开发现状表</el-button>
+            </div>
             
             <pagePanel headerTitle="油田综合开发曲线" style="height: 650px;margin-bottom:20px;position: relative;">
                 <el-button type="primary" style="position:absolute;right:0;top:0;;height:30px;margin-right:0px;" @click="dialogVisible = true">选择指标信息</el-button>

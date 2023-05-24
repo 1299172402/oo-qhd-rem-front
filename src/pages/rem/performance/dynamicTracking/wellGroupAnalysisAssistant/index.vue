@@ -82,32 +82,37 @@
         </el-select>
         <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索 </el-button>
         <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
-        <el-button
-          type="primary"
-          icon="el-icon-upload2"
-          @click="ljpmUploadDialog"
-          style="margin-left: auto !important"
-          v-if="currentModule == 'connecting'"
-          >上传文档</el-button
-        >
-        <el-upload
-          ref="upload"
-          v-else
-          class="upload-demo"
-          action=""
-          :auto-upload="false"
-          :on-change="useUploadPic"
-          :show-file-list="false"
-          style="margin-left: auto !important"
-        >
-          <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
-        </el-upload>
-        <el-button type="primary" style="margin-left: 20px !important" icon="el-icon-download" @click="doDownLoad"
-          >下载</el-button
-        >
+        
       </div>
     </headerSearch>
     <pagePanelNew style="height: calc(100% - 100px)" class="g-w100">
+      
+      <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
+          <el-button
+            type="primary"
+            icon="el-icon-upload2"
+            @click="ljpmUploadDialog"
+            style="margin-left: auto !important"
+            v-if="currentModule == 'connecting'"
+            >上传文档</el-button
+          >
+          <el-upload
+            ref="upload"
+            v-else
+            class="upload-demo"
+            action=""
+            :auto-upload="false"
+            :on-change="useUploadPic"
+            :show-file-list="false"
+            style="margin-left: auto !important"
+          >
+            <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
+          </el-upload>
+          <el-button type="primary" style="margin-left: 20px !important" icon="el-icon-download" @click="doDownLoad"
+            >下载</el-button
+          >
+      </div>
+        
       <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
         <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
           <el-button

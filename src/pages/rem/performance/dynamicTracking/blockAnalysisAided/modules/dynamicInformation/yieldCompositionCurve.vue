@@ -3,19 +3,19 @@
     <div class="z-main">
         <div class="row1">
             <div class="flex-1" style="margin-right:20px;">
-                <pagePanel style="height:330px;" headerTitle="产量构成曲线" show-btn>
+                <pagePanel style="height:330px;margin-top:0;" headerTitle="产量构成曲线" show-btn>
                     <Echart ref="echartDown1" :chart-data="option" height="100%"></Echart>
                 </pagePanel>
             </div>
             <div class="flex-1">
-                <pagePanel style="height:330px;" headerTitle="措施产量构成曲线" show-btn>
+                <pagePanel style="height:330px;margin-top:0;" headerTitle="措施产量构成曲线" show-btn>
                     <Echart ref="echartDown2" :chart-data="option1" height="100%"></Echart>
                 </pagePanel>
             </div>
         </div>
         <div class="row2">
             <div class="flex-1" style="margin-right:20px;">
-                <pagePanel style="height:100%;" headerTitle="产量构成表" show-btn>
+                <pagePanel style="height:100%;margin-top:0;" headerTitle="产量构成表" show-btn>
                     <el-table id="tableData1" highlight :data="tableDataStruct" height="100%">
                         <el-table-column type="index" label="序号" align="center"></el-table-column>
                         <el-table-column prop="theDate" label="时间" align="center"></el-table-column>
@@ -27,7 +27,7 @@
                 </pagePanel>
             </div>
             <div class="flex-1">
-                <pagePanel style="height:100%;" headerTitle="措施产量构成表" show-btn>
+                <pagePanel style="height:100%;margin-top:0;" headerTitle="措施产量构成表" show-btn>
                     <el-table id="tableData2" highlight :data="tableDataProduct" height="100%">
                         <el-table-column type="index" label="序号" align="center"></el-table-column>
                         <el-table-column prop="theDate" label="时间" align="center"></el-table-column>
@@ -62,8 +62,8 @@ export default {
             option: {
                 grid: [{ x: '5%', y: '20%', width: '90%', height: '65%', containLabel: true }],
                 legend: {
-                    // left: 0,
-                    top:10,
+                    x:'center',
+                    bottom:0,
                     textStyle: {
                         color: '#24DEFF',
                     },
@@ -255,8 +255,8 @@ export default {
             option1: {
                 grid: [{ x: '5%', y: '20%', width: '90%', height: '65%', containLabel: true }],
                 legend: {
-                    // left: 0,
-                    top:10,
+                    x:'center',
+                    bottom:0,
                     textStyle: {
                         color: '#24DEFF'
                     },
@@ -557,7 +557,7 @@ export default {
         .row1{
             height:350px;
             display: flex;
-            align-items: center;
+            // align-items: center;
             .flex-1{
                 width:0;
                 flex:1;

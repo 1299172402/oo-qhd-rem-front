@@ -41,6 +41,7 @@
       </span>
       <pagination
         v-show="ipagination.total > 0"
+        key="role"
         :total="ipagination.total"
         :page.sync="ipagination.pageNum"
         :limit.sync="ipagination.pageSize"
@@ -130,5 +131,7 @@ export default {
 <style scoped lang="less">
 .el-table {
   border-bottom: 1px solid #ebeef5;
+  max-height: 450px;
+  overflow-y: auto;
 }
 </style>

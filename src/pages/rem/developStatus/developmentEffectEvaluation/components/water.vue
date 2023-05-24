@@ -95,6 +95,12 @@
                 pageSize: 10,
                 //含水上升率
                 rateOfWaterCutRise: {
+                    grid:{
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 70,
+                    },
                     tooltip: {
                         trigger: "axis",
                         axisPointer: {
@@ -117,13 +123,17 @@
                         },
                     },
                     legend: {
-                        left: 0,
+                        data: [],
                         textStyle: {
-                            color: "#24DEFF",
+                            color: '#24DEFF',
+                            fontSize: 14,
                         },
-                        data: [
-                            /*"油田1", "油田2", "Ⅰ期", "Ⅱ期", "理论曲线"*/
-                        ],
+                        x:'center',
+                        bottom:0,
+                        icon: 'rect',
+                        itemWidth: 12,
+                        itemHeight: 6,
+                        itemGap: 14,
                     },
                     xAxis: {
                         name: "含水率(%)",
@@ -131,11 +141,13 @@
                         nameTextStyle: {
                             color: "#8FA4CC",
                         },
-                        nameGap: 25,
+                        nameGap: 30,
                         //min:90,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                         },
                         axisTick: {
                             show: false,
@@ -147,7 +159,7 @@
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -155,11 +167,12 @@
                     },
                     yAxis: {
                         name: "含水上升率(%)",
-                        nameLocation: "center",
+                        nameLocation:'middle',
+                        nameGap:40,
                         nameTextStyle: {
-                            color: "#8FA4CC",
+                            color: '#8FA4CC',
+                            fontSize: 14,
                         },
-                        nameGap: 35,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",
@@ -168,12 +181,13 @@
                             show: false,
                         },
                         axisLine: {
+                            show: true,
                             lineStyle: {
-                                color: 'rgba(143,164,204,.5)'
+                                color: '#8FA4CC'
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -182,8 +196,14 @@
                     color: ["#24DEFF", "#00FFD4", "#387DFF", "#E9D456", "#CD3D00", "#8635FF"],
                     series: [],
                 },
-                //采出程度
+                //水驱指数
                 recoveryDegree: {
+                    grid:{
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 70,
+                    },
                     tooltip: {
                         trigger: "axis",
                         axisPointer: {
@@ -191,11 +211,17 @@
                         },
                     },
                     legend: {
-                        left: 0,
+                        data: ["累计水驱指数", "累积注采比", "月水驱指数"],
                         textStyle: {
                             color: "#24DEFF",
+                            fontSize: 14,
                         },
-                        data: ["累计水驱指数", "累积注采比", "月水驱指数"],
+                        x:'center',
+                        bottom:0,
+                        icon: 'rect',
+                        itemWidth: 12,
+                        itemHeight: 6,
+                        itemGap: 14,
                     },
                     toolbox: {
                         show: true,
@@ -214,11 +240,13 @@
                         nameTextStyle: {
                             color: "#8FA4CC",
                         },
-                        nameGap: 25,
+                        nameGap: 30,
                         //max: 60,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                         },
                         axisTick: {
                             show: false,
@@ -295,6 +323,12 @@
                 },
                 //存水率
                 waterRate: {
+                    grid:{
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 70,
+                    },
                     tooltip: {
                         trigger: "axis",
                         axisPointer: {
@@ -302,10 +336,17 @@
                         },
                     },
                     legend: {
-                        left: 0,
+                        data:[],
                         textStyle: {
                             color: "#24DEFF",
+                            fontSize: 14,
                         },
+                        x:'center',
+                        bottom:0,
+                        icon: 'rect',
+                        itemWidth: 12,
+                        itemHeight: 6,
+                        itemGap: 14,
                     },
                     toolbox: {
                         show: true,
@@ -324,10 +365,12 @@
                         nameTextStyle: {
                             color: "#8FA4CC",
                         },
-                        nameGap: 25,
+                        nameGap: 35,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                         },
                         axisTick: {
                             show: false,
@@ -339,7 +382,7 @@
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -360,12 +403,13 @@
                             show: false,
                         },
                         axisLine: {
+                            show:true,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },

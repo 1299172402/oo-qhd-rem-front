@@ -135,7 +135,8 @@ export default {
   created() {
     // 拼接唯一标识id，通过“公司名称_路由name”
     this.pageName = `${this.companyName}_${this.$router.app?.$route?.name}`;
-    queryByPageName(this.pageName).then(res => {
+    const tenantId = this.$store.getters["user/tenantId"];
+    queryByPageName(this.pageName, tenantId).then(res => {
       if (res ? res.data.code === 200 : false) {
         if (res.data.data === null || res.data.data?.pageInfo === null) { // 首次获取面板赋值
           this.interfaceDataStore = JSON.parse(JSON.stringify(this.currentLayout)); // 用户存储上次编辑的面板【取消用】
@@ -177,7 +178,8 @@ export default {
       const queryParamsNew = {
         userId: this.$store.getters["user/userDetail"].user.userId,
         pageInfo: JSON.stringify(this.currentLayout), // 页面json
-        pageName: this.pageName
+        pageName: this.pageName,
+        tenantId: this.$store.getters["user/tenantId"]
       };
       savePage(queryParamsNew).then(res => {
         if (res ? res.data.code === 200 : false) {
@@ -197,8 +199,8 @@ export default {
       }, 300);
     },
     computeNum() {
-      this.screenWidth = document.body.clientWidth;
-      this.screenHeight = document.body.clientHeight;
+      this.screenWidth = document.body.clientWidth * window.devicePixelRatio;
+      this.screenHeight = document.body.clientHeight * window.devicePixelRatio;
       this.singleHeight = (this.screenHeight - this.heightFromBottom) / this.rowNum; // 一份元素的高度
     },
     // 重置元素
@@ -270,14 +272,13 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  width: 1920px;
   height: 100%;
 }
 
 .fullWindow >>> .vue-grid-item {
   /* 最大化 */
-  width: 100% !important;
-  height: 100% !important;
+   width: 100vw !important;
+  height: 100vh !important;
   transform: translate3d(0, 0, 0) !important;
   z-index: 999;
   position: relative;

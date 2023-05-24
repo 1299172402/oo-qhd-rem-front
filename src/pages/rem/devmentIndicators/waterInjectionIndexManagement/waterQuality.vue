@@ -142,10 +142,10 @@
                         left: "center"
                     },
                     grid: {
-                        x: 100,
-                        y: 80,
-                        x2: 100,
-                        y2: 50,
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 60,
                     },
                     toolbox: {
                         show: true,
@@ -164,14 +164,14 @@
                         },
                     },
                     legend: {
-                        show: false,
-                        left: 0,
                         data: [],
                         textStyle: {
-                            color: "#8FA4CC",
+                            color: '#8FA4CC',
                             fontSize: 14,
                         },
-                        icon: "rect",
+                        x:'center',
+                        bottom:0,
+                        icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
                         itemGap: 14,
@@ -184,6 +184,8 @@
                         type: "category",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                         },
                         axisTick: {
                             show: false,
@@ -204,8 +206,11 @@
                     yAxis: [
                         {
                             name: "水质达标率 (%)",
+                            nameLocation:'middle',
+                            nameGap:70,
                             nameTextStyle: {
-                                color: "#8FA4CC"
+                                color: '#8FA4CC',
+                                fontSize: 14,
                             },
                             type: "value",
                             min: 0,

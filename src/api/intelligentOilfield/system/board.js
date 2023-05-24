@@ -47,7 +47,10 @@ export function getListBoard(query) {
   return request({
     url: "/system/board/getList",
     method: "get",
-    params: query
+    params: query,
+    headers: {
+      showLoading: false
+    }
   });
 }
 

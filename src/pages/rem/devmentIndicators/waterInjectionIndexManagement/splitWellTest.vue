@@ -2,7 +2,7 @@
 <template>
     <div class="app-container">
         
-        <header-search style="width:100%;height:80px;margin:0 7px;">
+        <header-search style="width:100%;height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
                 <div style="margin: 10px 20px 10px 0px;">
                     作业公司：
@@ -138,10 +138,10 @@
                         left: "center"
                     },
                     grid: {
-                        x: 100,
-                        y: 100,
-                        x2: 100,
-                        y2: 50,
+                        x: 120,
+                        y: 60,
+                        x2: 40,
+                        y2: 60,
                     },
                     toolbox: {
                         show: true,
@@ -160,17 +160,17 @@
                         },
                     },
                     legend: {
-                        left: 0,
-                        top: 40,
+                        data: [],
                         textStyle: {
-                            color: "#8FA4CC",
+                            color: '#8FA4CC',
                             fontSize: 14,
                         },
-                        icon: "rect",
+                        x:'center',
+                        bottom:0,
+                        icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
                         itemGap: 14,
-                        data: [],
                     },
                     xAxis: {
                         name: "年份",
@@ -180,6 +180,8 @@
                         type: "category",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                             formatter: function(val) {
                                 return val + "年";
                             },
@@ -203,8 +205,11 @@
                     yAxis: [
                         {
                             name: "分注井测试率 (%)",
+                            nameLocation:'middle',
+                            nameGap:70,
                             nameTextStyle: {
-                                color: "#8FA4CC"
+                                color: '#8FA4CC',
+                                fontSize: 14,
                             },
                             type: "value",
                             min: 0,

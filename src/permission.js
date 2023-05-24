@@ -66,7 +66,6 @@ router.beforeEach(async(to, from, next) => {
         } else {
           await store.dispatch("user/getUserInfo", "firstLogin");
         }
-        // 路由跳转前拦截：先获取登录时拿到的角色
         await store.dispatch("permission/initRoutes", store.getters["user/roles"]);
         next({ ...to });
       } catch (error) {
