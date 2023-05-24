@@ -221,7 +221,7 @@
       <div style="width: 100%;border: 1px solid #194363;"></div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="queryBut">搜索</el-button>
+        <el-button type="primary" @click="queryBut">确定</el-button>
       </span>
     </el-dialog>
     </div>
@@ -369,6 +369,7 @@ export default {
       }).finally(()=>{
         this.isDisabled = false
       })
+        this.tableOilfield()
     },
     // 去除边框线
     wipeborder ({ row, column, rowIndex, columnIndex }) {
@@ -401,6 +402,7 @@ export default {
       if (this.select.selectBlock != "0") data.methodCode = 1
       postsaveAndupdateWellGroup(data).then((res) => {
         this.transferData = []
+          console.log('.....->',res)
         if (res) {
           this.$message.success("成功")
           this.tableOilfield()
@@ -538,6 +540,7 @@ export default {
       getblock({
         ogfId: this.query.selectField
       }).then(({ blockList }) => {
+          console.log('blockList.data->',blockList)
         this.blanks = blockList
       });
     },
