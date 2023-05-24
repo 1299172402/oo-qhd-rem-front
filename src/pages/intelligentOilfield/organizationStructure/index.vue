@@ -119,6 +119,7 @@
           label="组织机构名称"
           width="260"
           align="left"
+          :show-overflow-tooltip="true"
         />
         <el-table-column
           prop="deptShort"

@@ -96,7 +96,7 @@ export default {
       if (userInfo?.userName) {
         data.username = userInfo.userName;
         // 说明是登录状态，如果用户名不一致，说明切换了用户
-        if (!this.localIsStoreUser()) {
+        if (this.localIsStoreUser() === false) {
           // 带着新 token 和老用户名比较
           this.setLocalToStoreToken();
         }
@@ -152,7 +152,10 @@ export default {
         // 当前登录已经退出了，有可能又重新登录了，所以这里不能清空 token
         // 判断如果当前用户一致，那可能是退出之后又重新登录了
         const appId = this.refreshTokenData.proxy[this.refreshTokenData.env].appId;
-        if (this.localIsStoreUser() && (!appId || appId === "$system$")) {
+        const localIsStoreUser = this.localIsStoreUser();
+        // localIsStoreUser 为 true 表示两次都是平台自己登录切换了用户
+        // localIsStoreUser 不为 false，还可能是子应用登录后跳走了没有存用户名，导致得到的结果是空
+        if ((!appId || appId === "$system$") && localIsStoreUser !== false && (localStorage.getItem(this.refreshTokenData.TOKEN_NAME) && this.$store.getters["user/token"] !== localStorage.getItem(this.refreshTokenData.TOKEN_NAME))) {
           // 避免切换租户后登出再登录，本页面还是老租户，仅平台走此逻辑
           this.reloadWindow("已在其他页面重新登录，页面将重新载入");
         } else {

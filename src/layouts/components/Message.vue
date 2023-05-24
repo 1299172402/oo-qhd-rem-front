@@ -36,19 +36,22 @@
               borderBottom: $store.state.setting.mode === 'light' ? '1px solid #eee' : '1px solid gray',
             }"
           >
-            <div>
-              <!-- eslint-disable vue/no-v-html -->
-              <p class="msg-content" v-html="item.alarmContent" />
-              <p class="msg-type" :style="{ color: item.typeColor }">
-                {{ item.levelName }}
-              </p>
-              <p class="msg-type" :style="{ color: item.typeColor }">
-                {{ item.typeName }}
+            <div class="g-row-flex">
+              <div class="g-row-flex">
+                <p class="msg-level" :style="{ background: item.typeColor }">
+                  {{ item.levelName }}
+                </p>
+                <p class="msg-type" :style="{ color: $store.state.setting.mode === 'dark' ? '#fff' : '#000' }">
+                  {{ item.typeName }}
+                </p>
+              </div>
+              <p class="msg-time">
+                {{ item.alarmTime }}
               </p>
             </div>
-            <p class="msg-time" :style="{ color: item.typeColor }">
-              {{ item.alarmTime }}
-            </p>
+            <!-- eslint-disable vue/no-v-html -->
+            <p class="msg-content" v-html="item.alarmContent" />
+
             <template #action>
               <t-button size="small" variant="outline" @click="sureWarn(item)">
                 {{ item.delType === "1" ? "确认" : "处理" }}
@@ -330,7 +333,7 @@ export default Vue.extend({
     },
     onPopupVisibleChange(visible: boolean, context) {
       if (!visible) {
-        this.$refs.listDiv.scrollTop = 0;
+        if (this.$refs.listDiv) this.$refs.listDiv.scrollTop = 0;
       }
       if (context.trigger === "trigger-element-click") {
         this.isNoticeVisible = true;
@@ -364,116 +367,135 @@ export default Vue.extend({
 <style lang="less" scoped>
 @import "@/style/variables.less";
 
-.header-msg {
-  width: 400px;
-  height: 500px;
+.t-popup__content {
+  padding: 0;
 
-  .empty-list {
-    height: calc(100% - 104px);
-    text-align: center;
-    padding-top: 135px;
-    font-size: 14px;
-    color: var(--td-text-color-secondary);
+  .header-msg {
+    width: 495px;
+    height: 500px;
 
-    img {
-      width: 63px;
-    }
-
-    p {
-      margin-top: 30px;
-    }
-  }
-
-  &-top {
-    position: relative;
-    height: 56px;
-    font-size: 16px;
-    color: var(--td-text-color-primary);
-    text-align: center;
-    line-height: 56px;
-    border-bottom: 1px solid var(--td-component-border);
-
-    .clear-btn {
-      position: absolute;
-      top: 12px;
-      right: 24px;
-    }
-  }
-
-  &-bottom {
-    height: 48px;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-
-    &-link {
-      text-decoration: none;
+    .empty-list {
+      height: calc(100% - 104px);
+      text-align: center;
+      padding-top: 135px;
       font-size: 14px;
-      color: var(--td-brand-color);
-      line-height: 48px;
-      cursor: pointer;
+      color: var(--td-text-color-secondary);
+
+      img {
+        width: 63px;
+      }
+
+      p {
+        margin-top: 30px;
+      }
     }
-  }
 
-  .t-list {
-    height: calc(100% - 104px);
-  }
+    &-top {
+      position: relative;
+      height: 56px;
+      font-size: 16px;
+      color: var(--td-text-color-primary);
+      text-align: center;
+      line-height: 56px;
+      border-bottom: 1px solid var(--td-component-border);
 
-  .t-list-item {
-    overflow: hidden;
-    width: 100%;
-    padding: 16px 24px;
-    border-radius: @border-radius;
-    font-size: 14px;
-    color: var(--td-text-color-primary);
-    line-height: 22px;
-    cursor: pointer;
+      .clear-btn {
+        position: absolute;
+        top: 12px;
+        right: 24px;
+      }
+    }
 
-    &:hover {
-      transition: background 0.2s ease;
-      background: var(--td-bg-color-container-hover);
+    &-bottom {
+      height: 48px;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+
+      &-link {
+        text-decoration: none;
+        font-size: 14px;
+        color: var(--td-brand-color);
+        line-height: 48px;
+        cursor: pointer;
+      }
+    }
+
+    .t-list {
+      height: calc(100% - 104px);
+    }
+
+    .t-list-item {
+      overflow: hidden;
+      width: 100%;
+      padding: 8px 16px;
+      border-radius: @border-radius;
+      font-size: 14px;
+      color: var(--td-text-color-primary);
+      line-height: 18px;
+      cursor: pointer;
+
+      &:hover {
+        transition: background 0.2s ease;
+        background: var(--td-bg-color-container-hover);
+
+        .msg-content {
+          color: var(--td-brand-color-8);
+          font-size: 12px;
+          margin-top: 5px;
+        }
+
+        .t-list-item__action {
+          button {
+            bottom: 16px;
+            opacity: 1;
+          }
+        }
+
+        .msg-time {
+          bottom: -6px;
+          opacity: 0;
+          font-size: 10px;
+        }
+      }
 
       .msg-content {
-        color: var(--td-brand-color-8);
+        margin-bottom: 10px;
+        font-size: 12px;
+        margin-top: 5px;
+      }
+
+      .msg-type {
+        color: var(--td-text-color-secondary);
+        font-size: 10px;
+        width: 289px;
+      }
+
+      .msg-level {
+        color: #fff;
+        width: fit-content;
+        border-radius: 4px;
+        font-size: 10px;
+        padding: 1px 10px;
+        margin-right: 5px;
+        transform: scale(0.83);
       }
 
       .t-list-item__action {
         button {
-          bottom: 16px;
-          opacity: 1;
+          opacity: 0;
+          position: absolute;
+          right: 24px;
+          top: 5px;
         }
       }
 
       .msg-time {
-        bottom: -6px;
-        opacity: 0;
+        transition: all 0.2s ease;
+        opacity: 1;
+        color: var(--td-text-color-secondary);
+        font-size: 10px;
       }
-    }
-
-    .msg-content {
-      margin-bottom: 16px;
-    }
-
-    .msg-type {
-      color: var(--td-text-color-secondary);
-    }
-
-    .t-list-item__action {
-      button {
-        opacity: 0;
-        position: absolute;
-        right: 24px;
-        bottom: -6px;
-      }
-    }
-
-    .msg-time {
-      transition: all 0.2s ease;
-      opacity: 1;
-      position: absolute;
-      right: 24px;
-      bottom: 16px;
-      color: var(--td-text-color-secondary);
     }
   }
 }

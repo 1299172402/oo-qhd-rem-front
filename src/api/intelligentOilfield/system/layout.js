@@ -11,9 +11,9 @@ export function savePage(data) {
 }
 
 // 查询接口/重置接口
-export function queryByPageName(pageName) {
+export function queryByPageName(pageName, tenantId) {
   return request({
-    url: `system/page/queryByPageName?pageName=${pageName}`,
+    url: `system/page/queryByPageName?pageName=${pageName}&tenantId=${tenantId}`,
     method: "get"
   });
 }
