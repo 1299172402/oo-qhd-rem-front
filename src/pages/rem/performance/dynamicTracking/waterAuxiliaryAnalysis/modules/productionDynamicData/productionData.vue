@@ -66,12 +66,14 @@
                     legend: {
                         textStyle: {
                             color: '#8FA4CC',
-                            fontSize: 14
+                            fontSize: 14,
                         },
+                        x:'center',
+                        bottom:0,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
-                        itemGap: 14
+                        itemGap: 14,
                     },
                     toolbox: {
                         show: true,
@@ -83,7 +85,9 @@
                             }
                         }
                     },
-                    grid: [{ left: '14%', top: '8%', width: '74%', height: '42%' }, { left: '14%', top: '52%', width: '74%', height: '42%' }],
+                    grid: [
+                        { left: '14%', top: '4%', width: '74%', height: '38%' }, 
+                        { left: '14%', top: '48%', width: '74%', height: '38%' }],
                     xAxis: [
                         {
                             gridIndex: 0,
@@ -121,11 +125,11 @@
                                 show: false
                             },
                             axisLine: {
+                                show: true,
                                 lineStyle: {
-                                    //color: '#979797'
-                                    color: 'rgba(255,255,255,.16)'
+                                    color: '#8FA4CC'
                                 }
-                            }
+                            },
                         }
                     ],
                     yAxis: [
@@ -150,9 +154,9 @@
                                 show: false
                             },
                             axisLine: {
-                                //show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797'
+                                    color: '#8FA4CC'
                                 }
                             },
                             splitLine: {
@@ -179,9 +183,9 @@
                                 show: false
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797'
+                                    color: '#8FA4CC'
                                 }
                             },
                             splitLine: {
@@ -209,9 +213,9 @@
                                 show: false
                             },
                             axisLine: {
-                                //   show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797'
+                                    color: '#8FA4CC'
                                 }
                             },
                             splitLine: {
@@ -237,9 +241,9 @@
                                 show: false
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797'
+                                    color: '#8FA4CC'
                                 }
                             },
                             splitLine: {
@@ -267,9 +271,9 @@
                                 show: false
                             },
                             axisLine: {
-                                show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797'
+                                    color: '#8FA4CC'
                                 }
                             },
                             splitLine: {
@@ -296,9 +300,9 @@
                                 show: false
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797'
+                                    color: '#8FA4CC'
                                 }
                             },
                             splitLine: {
@@ -326,9 +330,9 @@
                                 show: false
                             },
                             axisLine: {
-                                show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797'
+                                    color: '#8FA4CC'
                                 }
                             },
                             splitLine: {

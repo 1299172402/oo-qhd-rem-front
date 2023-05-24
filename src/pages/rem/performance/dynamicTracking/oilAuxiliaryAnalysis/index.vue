@@ -18,6 +18,11 @@
                 <el-button type="primary" icon="el-icon-search" style="margin-left: 15px;" @click="doSearch">搜索</el-button>
                 <el-button class="commonBtn" icon="el-icon-refresh" style="margin-right:auto;" @click="resetting">重置</el-button>
                 
+                
+            </div>
+        </headerSearch>
+        <pagePanelNew headerTitle="油井辅助分析" :style="{ height: this.currentModule == 'oilReport' ? 'auto' : 'calc(100% - 100px)' }" class="g-w100">
+            <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
                 <el-upload ref="upload" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess" v-show="currentModule == 'wellNetworkDiagram' ||currentModule == 'completionStringDrawing' || currentModule == 'fluidProducingProfile' ||currentModule == 'saturationLog' ||currentModule == 'wellTestReport'">
                     <el-button type="primary" icon="el-icon-download">上传文档</el-button>
                 </el-upload>
@@ -25,8 +30,6 @@
                 <el-button type="primary" icon="el-icon-download" @click="ljpmUploadDialog" v-if="activeName=='staticData'&&currentModule=='connecting'">上传文档</el-button>
                 <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" @click="doDownLoad">下载</el-button>
             </div>
-        </headerSearch>
-        <pagePanelNew headerTitle="油井辅助分析" :style="{ height: this.currentModule == 'oilReport' ? 'auto' : 'calc(100% - 100px)' }" class="g-w100">
             <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
                 <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
                     <div class="tab-view">
@@ -43,7 +46,9 @@
                 </el-tab-pane>
             </el-tabs>
             <keep-alive :include="[]" :max="10">
-                <component :is="component" ref="componentCustom" :oil-feild-id="selectOilField" :platform="selectPlatform" :well-id="selectWellId" :majorEventsBrieflyValue="majorEventsBrieflyValue" @childPara="changeChildParam"></component>
+                <component :is="component" ref="componentCustom" :oil-feild-id="selectOilField" :platform="selectPlatform" :well-id="selectWellId" :majorEventsBrieflyValue="majorEventsBrieflyValue" @childPara="changeChildParam">
+                    
+                </component>
             </keep-alive>
             <el-dialog custom-class="border" title="连井剖面图上传" :visible.sync="ljpmDialog" width="50%" :before-close="ljpmDialogClose">
                 <el-form ref="form" :model="ljUploadForm" label-width="80px">

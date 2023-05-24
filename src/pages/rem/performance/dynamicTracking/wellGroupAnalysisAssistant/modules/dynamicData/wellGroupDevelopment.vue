@@ -68,6 +68,8 @@
                             color: '#8FA4CC',
                             fontSize: 14,
                         },
+                        x:'center',
+                        bottom:5,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -131,9 +133,9 @@
                                 show: false,
                             },
                             axisLine: {
+                                show: true,
                                 lineStyle: {
-                                    //color: '#979797'
-                                    color: "rgba(255,255,255,.16)",
+                                    color: "#8FA4CC",
                                 },
                             },
                         },
@@ -165,9 +167,9 @@
                                 show: false,
                             },
                             axisLine: {
+                                show: true,
                                 lineStyle: {
-                                    //color: '#979797'
-                                    color: "rgba(255,255,255,.16)",
+                                    color: "#8FA4CC",
                                 },
                             },
                         },
@@ -199,9 +201,9 @@
                                 show: false,
                             },
                             axisLine: {
+                                show: true,
                                 lineStyle: {
-                                    //color: '#979797'
-                                    color: "rgba(255,255,255,.16)",
+                                    color: "#8FA4CC",
                                 },
                             },
                         },
@@ -227,9 +229,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -258,9 +260,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                // show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -288,9 +290,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -319,9 +321,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //   show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -347,9 +349,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -377,9 +379,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -406,9 +408,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -434,9 +436,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -464,9 +466,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -493,9 +495,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {
@@ -523,9 +525,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: "#979797",
+                                    color: "#8FA4CC",
                                 },
                             },
                             splitLine: {

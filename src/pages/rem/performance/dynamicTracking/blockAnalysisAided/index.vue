@@ -1,6 +1,7 @@
 <!-- 区块辅助分析 -->
 <template>
     <div class="app-container">
+        
         <headerSearch style="height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
                 <span class="title" style="margin-left: 20px">油田：</span>
@@ -19,20 +20,18 @@
                     <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId">
                     </el-option>
                 </el-select>
-                <el-button type="primary" icon="el-icon-search" style="margin-left: 20px;" @click="doSearch">搜索
-                </el-button>
-                
+                <el-button type="primary" icon="el-icon-search" style="margin-left: 20px;" @click="doSearch">搜索</el-button>
                 <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
-                
-                <el-upload ref="upload" style="margin-left: auto;" class="upload-demo" action="" :auto-upload="false"
-                    :on-change="useUploadPic" :show-file-list="false" v-show="canUpload">
-                    <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
-                </el-upload>
-                <el-button style="margin-left: 20px;" type="primary" icon="el-icon-download" @click="doDownLoad"
-                    v-show="canDownload">下载</el-button>
             </div>
         </headerSearch>
+        
         <pagePanelNew style="height: calc(100% - 100px)" class="g-w100">
+            <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
+                <el-upload ref="upload" style="margin-left: auto;" class="upload-demo" action="" :auto-upload="false" :on-change="useUploadPic" :show-file-list="false" v-show="canUpload">
+                    <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
+                </el-upload>
+                <el-button style="margin-left: 20px;" type="primary" icon="el-icon-download" @click="doDownLoad" v-show="canDownload">下载</el-button>
+            </div>
             <el-tabs class="g-pageHeader" style="margin-bottom:15px;" v-model="activeName" topline @tab-click="handleClick">
                 <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
                     <sliderTabs :tabs="item.modules" :currentModule="currentModule" @tabTabs="tabTabs"></sliderTabs>
@@ -42,6 +41,7 @@
                 <component :is="component" ref="componentCustom" :oilFieldId="selectOilField" :block-id="selectBlock" @childPara="changeChildParam"></component>
             </keep-alive>
         </pagePanelNew>
+        
     </div>
 </template>
 <script>

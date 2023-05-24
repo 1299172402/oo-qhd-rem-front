@@ -20,12 +20,15 @@
                 </el-select>
                 <el-button icon="el-icon-search" type="primary" @click="searchThing">搜索</el-button>
                 <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
-                <el-button icon="el-icon-s-promotion" type="primary" style="margin-left:auto!important;" @click="showOutputTracking">作业公司产量跟踪</el-button>
+                
             </div>
         </headerSearch>
         <div class="z-container">
             <pagePanelNew class="pagePanelNew">
                 <div class="pagePane-container">
+                    <div class="pagepanel-btns" style="height:30px;margin-bottom:10px;display: flex;justify-content: flex-end;margin-right:20px;">
+                        <el-button icon="el-icon-s-promotion" type="primary" style="height:30px;" @click="showOutputTracking">作业公司产量跟踪</el-button>
+                    </div>
                     <div class="rowBox" style="margin-bottom:20px;">
                         <div class="row" style="margin-right:20px;">
                             <info-window infoWidth="100%" infoHeight="456px" :headerTitle="oilFieldName + '产量跟踪预警分析'" isShowMaxBtn style="margin-top:0;">

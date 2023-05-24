@@ -2,7 +2,7 @@
 <template>
     <div class="app-container">
         
-        <header-search style="width:100%;height:80px;margin:0 7px;">
+        <header-search style="width:100%;height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
                 <div style="margin: 10px 20px 10px 0px">
                     作业公司：
@@ -30,7 +30,7 @@
         <page-panel-new class="app-content">
             <el-row style="height: 400px;" :gutter="20">
             	<el-col v-for="(item, index) in zbData" :key="index" :span="4">
-            		<pagePanel v-if="item.title == '注水指标总览'" class="fl" style="height: 180px;" :headerTitle="item.title" @click.native="cardClick(item, index)">
+            		<pagePanel v-if="item.title == '注水指标总览'" class="fl" style="height: 174px!important;" :headerTitle="item.title" @click.native="cardClick(item, index)">
             			<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center">
             				<span style="font-size: 30px; vertical-align: middle; color: rgb(143, 164, 204)">
             					{{ item.title }}
@@ -85,7 +85,7 @@
             		</pagePanel>
             	</el-col>
             </el-row>
-            <pagePanel headerTitle="注水指标管理" v-if="currentIndex == 0" style="height: calc(100% - 420px)" showBtn>
+            <pagePanel headerTitle="注水指标管理" v-if="currentIndex == 0" style="height: 500px" showBtn>
                 <div class="g-row-flex-V" style="justify-content: space-between; margin-bottom: 20px">
                     <div class="g-row-flex-V" style="flex-wrap: wrap">
                         <div style="margin-right: 20px">
@@ -123,7 +123,7 @@
                     <el-table-column prop="realCompareOilField" label="实际值与对标差值" align="center" :formatter="formatterNumber"></el-table-column>
                 </el-table>
             </pagePanel>
-            <pagePanel headerTitle="含水上升率" v-if="currentIndex == 5" style="height: calc(100% - 420px)" showBtn>
+            <pagePanel headerTitle="含水上升率" v-if="currentIndex == 5" style="height: 500px" showBtn>
                 <div class="g-row-flex-V" style="justify-content: space-between; margin-bottom: 20px">
                     <div class="g-row-flex-V" style="flex-wrap: wrap">
                         <div style="margin-right: 20px">
@@ -139,8 +139,8 @@
                 </div>
                 <Echart :chart-data="rateOfWaterCutRise" height="calc(100% - 65px)"></Echart>
             </pagePanel>
-            <pagePanel headerTitle="自然递减率" v-if="currentIndex == 9" style="height: calc(100% - 420px)" showBtn>
-                <div class="g-row-flex-V" style="justify-content: space-between; margin-bottom: 20px">
+            <pagePanel headerTitle="自然递减率" v-if="currentIndex == 9" style="height: 500px;" showBtn>
+                <div class="g-row-flex-V" style="justify-content: space-between;">
                     <div class="g-row-flex-V" style="flex-wrap: wrap">
                         <div style="margin-right: 20px">
                             平台：
@@ -372,10 +372,10 @@
                         left: "center",
                     },
                     grid: {
-                        x: 100,
-                        y: 100,
-                        x2: 100,
-                        y2: 50,
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 60,
                     },
                     toolbox: {
                         show: true,
@@ -394,17 +394,17 @@
                         },
                     },
                     legend: {
-                        left: 0,
-                        top: 40,
+                        data: [],
                         textStyle: {
-                            color: "#8FA4CC",
+                            color: '#8FA4CC',
                             fontSize: 14,
                         },
-                        // icon: "rect",
+                        x:'center',
+                        bottom:0,
+                        icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
                         itemGap: 14,
-                        data: [],
                     },
                     xAxis: {
                         name: "月份",
@@ -414,6 +414,8 @@
                         type: "category",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                             formatter: function(val) {
                                 return Number(val) + "月";
                             },
@@ -437,8 +439,11 @@
                     },
                     yAxis: [{
                         name: "含水上升率 (%)",
+                        nameLocation:'middle',
+                        nameGap:70,
                         nameTextStyle: {
-                            color: "#8FA4CC"
+                            color: '#8FA4CC',
+                            fontSize: 14,
                         },
                         type: "value",
                         minInterval: 1,
@@ -463,7 +468,6 @@
                         },
                     }, ],
                     color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#FF5844", "#DA835E", "#9A72FF", "#FF30AD", "#2ACAFF"],
-
                     series: [],
                 },
                 //自然递减率
@@ -477,10 +481,10 @@
                         left: "center",
                     },
                     grid: {
-                        x: 100,
-                        y: 100,
-                        x2: 100,
-                        y2: 50,
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 60,
                     },
                     toolbox: {
                         show: true,
@@ -499,17 +503,17 @@
                         },
                     },
                     legend: {
-                        left: 0,
-                        top: 40,
+                        data: [],
                         textStyle: {
-                            color: "#8FA4CC",
+                            color: '#8FA4CC',
                             fontSize: 14,
                         },
-                        // icon: "rect",
+                        x:'center',
+                        bottom:0,
+                        icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
                         itemGap: 14,
-                        data: [],
                     },
                     xAxis: {
                         name: "月份",
@@ -519,6 +523,8 @@
                         type: "category",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                             formatter: function(val) {
                                 return Number(val) + "月";
                             },
@@ -542,6 +548,8 @@
                     },
                     yAxis: [{
                         name: "自然递减率 (%)",
+                        nameLocation:'middle',
+                        nameGap:70,
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -566,8 +574,7 @@
                                 color: "rgba(255,255,255,.16)",
                             },
                         },
-                    }, ],
-
+                    }],
                     series: [],
                 },
                 //注水指标管理
@@ -1208,8 +1215,10 @@
     }
     ::v-deep .app-content{
         height: calc(100% - 100px)!important;
+        overflow-y: scroll;
         .g-w100:first-child{
           padding-top:0!important;  
+          height:auto!important;
         }
     }
     .formBox {

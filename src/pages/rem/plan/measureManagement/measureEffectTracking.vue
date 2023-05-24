@@ -160,7 +160,7 @@
                                 <span>{{ item.paramName }}</span>
                             </div>
                             <el-checkbox-group v-model="queryParams.paramCodes" style="display: inline-block">
-                                <el-checkbox v-for="(it, i) in item.childParams" :key="i" :label="it.paramCode" style="color: #ffffff" @change="isDisabled">{{ it.paramName }}</el-checkbox>
+                                <el-checkbox v-for="(it, i) in item.childParams" :key="i" :label="it.paramCode" @change="isDisabled">{{ it.paramName }}</el-checkbox>
                             </el-checkbox-group>
                         </el-row>
                         <div class="echarts-view">
@@ -1113,11 +1113,31 @@
                             type: 'shadow',
                         },
                     },
+                    grid:{
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 80,
+                    },
                     legend: {
                         data: ['油', '气', '水', '液'],
+                        textStyle: {
+                            color: '#8FA4CC',
+                            fontSize: 14,
+                        },
+                        x:'center',
+                        bottom:30,
+                        icon: 'rect',
+                        itemWidth: 12,
+                        itemHeight: 6,
+                        itemGap: 14,
                     },
                     xAxis: {
                         name: '时间',
+                        nameTextStyle: {
+                            color: '#8FA4CC',
+                            fontSize: 14,
+                        },
                         nameTextStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
@@ -1127,6 +1147,8 @@
                     },
                     yAxis: {
                         name: '流量Sm³/d',
+                        nameLocation:'middle',
+                        nameGap:70,
                         nameTextStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
@@ -1157,7 +1179,6 @@
                 },
                 // 水井折线图内容
                 waterOption: {
-                    title: {},
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -1165,36 +1186,29 @@
                         },
                     },
                     legend: {
+                        data: [],
                         textStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
                         },
+                        x:'center',
+                        bottom:0,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
                         itemGap: 14,
                     },
-                    /* toolbox: {
-                                  show : true,
-                                  feature : {
-                                    saveAsImage : {
-                                      name :'水井曲线对比分析图',
-                                      pixelRatio: 15,//值越大分辨率越高,下载的图片越清晰
-                                      backgroundColor:'#022644'
-                                    }
-                                  }
-                                }, */
                     grid: [{
                             left: '14%',
-                            top: '8%',
+                            top: '5%',
                             width: '74%',
-                            height: '42%',
+                            height: '35%',
                         },
                         {
                             left: '14%',
-                            top: '52%',
+                            top: '47%',
                             width: '74%',
-                            height: '42%',
+                            height: '40%',
                         },
                     ],
                     xAxis: [{
@@ -1226,8 +1240,7 @@
                             },
                             axisLine: {
                                 lineStyle: {
-                                    // color: '#979797'
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },
@@ -1252,7 +1265,6 @@
                                 fontSize: 14,
                             },
                             axisLabel: {
-                                // show: false,
                                 color: '#8FA4CC',
                             },
                             axisTick: {
@@ -1260,8 +1272,7 @@
                             },
                             axisLine: {
                                 lineStyle: {
-                                    // color: '#979797'
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },
@@ -1287,9 +1298,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                // show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -1316,9 +1327,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -1346,9 +1357,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //   show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -1374,9 +1385,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -1404,9 +1415,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -1433,9 +1444,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -1463,9 +1474,9 @@
                                 show: false,
                             },
                             axisLine: {
-                                //  show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
@@ -1503,14 +1514,14 @@
                             data: [],
                             axisLabel: {
                                 show: true,
-                                color: 'rgba(255,255,255,0)',
+                                color: '#8FA4CC',
                             },
                             axisTick: {
                                 show: false,
                             },
                             axisLine: {
                                 lineStyle: {
-                                    color: '#FFFFFF',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },
@@ -1519,14 +1530,14 @@
                             data: [],
                             type: 'category',
                             axisLabel: {
-                                color: '#FFFFFF',
+                                color: '#8FA4CC',
                             },
                             axisTick: {
                                 show: true,
                             },
                             axisLine: {
                                 lineStyle: {
-                                    color: '#FFFFFF',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },
@@ -1544,7 +1555,7 @@
                             scale: true,
                             axisLabel: {
                                 show: true,
-                                color: '#FFFFFF',
+                                color: '#8FA4CC',
                             },
                             axisTick: {
                                 show: false,
@@ -1552,13 +1563,13 @@
                             axisLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: '#FFFFFF',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },
@@ -1575,7 +1586,7 @@
                             scale: true,
                             axisLabel: {
                                 show: true,
-                                color: '#FFFFFF',
+                                color: '#8FA4CC',
                             },
                             axisTick: {
                                 show: false,
@@ -1583,13 +1594,13 @@
                             axisLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: '#FFFFFF',
+                                    color: '#8FA4CC',
                                 },
                             },
                             splitLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         },
@@ -2124,6 +2135,7 @@
                     this.waterOption.xAxis[0].data = xData;
                     this.waterOption.xAxis[1].data = xData;
                     this.waterOption.series = seriesData;
+                    this.waterOption.legend.data=legendData;
                     console.log('this.waterOption', this.waterOption)
                 });
             },
@@ -2342,8 +2354,7 @@
                             },
                             axisLine: {
                                 lineStyle: {
-                                    // color: '#979797'
-                                    color: 'rgba(255,255,255,.16)',
+                                    color: '#8FA4CC',
                                 },
                             },
                         })),
@@ -2381,7 +2392,7 @@
                                 axisLine: {
                                     // show: false,
                                     lineStyle: {
-                                        color: '#979797',
+                                        color: '#8FA4CC',
                                     },
                                 },
                                 splitLine: {

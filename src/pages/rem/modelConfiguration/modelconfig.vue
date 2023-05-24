@@ -13,33 +13,40 @@
                 <el-button type="primary" icon="el-icon-search" @click="queryTableDate">搜索</el-button>
                 <el-button class="commonBtn" icon="el-icon-refresh" style="margin-right:auto;" @click="resetting">重置</el-button>
                 
-                <el-button type="primary" v-if="isModuleBtn" @click="moduleDialog=true;">选定模型重算</el-button>
-                <el-button type="primary" @click="getModelInstructionManual">模型说明文档</el-button>
+                
             </div>
         </header-search>
         
         <page-panel-new style="height: calc(100% - 100px);">
-            <el-table  
-                width="100%"
-                height="calc(100% - 60px)"
-                :row-style="{ height: '0px' }"
-                :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-                :data="tableData"
-                :cell-style="{ padding: '6px', 'text-align': 'center' }"
-                :default-sort="{ prop: 'date', order: 'descending' }">
-                <el-table-column prop="modelName" label="模型名称" sortable width="250"></el-table-column>
-                <el-table-column prop="configId" label="配置项代码" sortable width="150"></el-table-column>
-                <el-table-column prop="configDescribe" label="配置项描述" min-width="860"></el-table-column>
-                <el-table-column prop="configValue" label="配置项值" width="100"></el-table-column>
-                <el-table-column prop="configUnit" label="配置项单位" width="100"></el-table-column>
-                <el-table-column prop="contrastMode" label="对比方式"  width="100"></el-table-column>
-                <el-table-column label="操作" width="150">
-                    <template slot-scope="scope">
-                        <el-button type="text" size="small" @click="openEditDialog(scope.row)">编辑</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <pagination v-if="page.total" :pageSizes="[15, 20, 40, 100]" :total="page.total" :page.sync="page.currentPage" :limit.sync="page.pageSize" @pagination="pagination" />
+            <div class="pagepanel-content" style="height:calc(100% - 60px)">
+                <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;">
+                    <el-button type="primary" v-if="isModuleBtn" @click="moduleDialog=true;">选定模型重算</el-button>
+                    <el-button type="primary" @click="getModelInstructionManual">模型说明文档</el-button>
+                </div>
+                <div class="pagepanel-table" style="height:calc(100% - 44px);">
+                    <el-table
+                        width="100%"
+                        height="100%"
+                        :row-style="{ height: '0px' }"
+                        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                        :data="tableData"
+                        :cell-style="{ padding: '6px', 'text-align': 'center' }"
+                        :default-sort="{ prop: 'date', order: 'descending' }">
+                        <el-table-column prop="modelName" label="模型名称" sortable width="250"></el-table-column>
+                        <el-table-column prop="configId" label="配置项代码" sortable width="150"></el-table-column>
+                        <el-table-column prop="configDescribe" label="配置项描述" min-width="860"></el-table-column>
+                        <el-table-column prop="configValue" label="配置项值" width="100"></el-table-column>
+                        <el-table-column prop="configUnit" label="配置项单位" width="100"></el-table-column>
+                        <el-table-column prop="contrastMode" label="对比方式"  width="100"></el-table-column>
+                        <el-table-column label="操作" width="150">
+                            <template slot-scope="scope">
+                                <el-button type="text" size="small" @click="openEditDialog(scope.row)">编辑</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <pagination v-if="page.total" :pageSizes="[15, 20, 40, 100]" :total="page.total" :page.sync="page.currentPage" :limit.sync="page.pageSize" @pagination="pagination" />
+                </div>
+            </div>
         </page-panel-new>
         
         <el-dialog title="编辑参数" :visible.sync="dialogVisible" width="500px">
@@ -440,5 +447,9 @@
 <style scoped="scoped" lang="scss">
     .app-container{
         height:100%;
+    }
+    ::v-deep .el-table .cell{
+        height:auto!important;
+        line-height: inherit!important;
     }
 </style>

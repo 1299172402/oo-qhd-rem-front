@@ -107,9 +107,11 @@
                     },
                     yAxis: {
                         name: "自然递减率(%)",
+                        nameLocation: "center",
                         nameTextStyle: {
-                            color: "#8FA4CC"
+                            color: "#8FA4CC",
                         },
+                        nameGap: 35,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",
@@ -178,9 +180,11 @@
                     },
                     yAxis: {
                         name: "综合递减率(%)",
+                        nameLocation: "center",
                         nameTextStyle: {
-                            color: "#8FA4CC"
+                            color: "#8FA4CC",
                         },
+                        nameGap: 35,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",
@@ -260,9 +264,11 @@
                     },
                     yAxis: {
                         name: "总递减率(%)",
+                        nameLocation: "center",
                         nameTextStyle: {
-                            color: "#8FA4CC"
+                            color: "#8FA4CC",
                         },
+                        nameGap: 35,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",

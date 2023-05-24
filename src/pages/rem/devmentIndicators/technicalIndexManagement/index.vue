@@ -24,7 +24,7 @@
                     </pagePanel>
                     <pagePanel v-else class="fl" style="height: 160px" :headerTitle="item.title">
                         <el-button style="position: absolute; z-index: 9; right: 10px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click.native="cardClick(item, index)">详情</el-button>
-                        <div style="display:flex;margin-left: 10px;">
+                        <div style="display:flex;margin-left: 10px;height:82px;">
                             <div style="width: 42%">
                                 <span style="vertical-align: middle">
                                     <span style="font-size: 26px;margin-right:6px;">{{ item.sz }}</span>
@@ -307,26 +307,31 @@
                             type: "shadow",
                         },
                     },
+                    grid:{
+                        x: 120,
+                        y: 20,
+                        x2: 120,
+                        y2: 60,
+                    },
                     legend: {
-                        left: 0,
                         data: [],
                         textStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
                         },
+                        x:'center',
+                        bottom:0,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "日期",
-                        nameTextStyle: {
-                            color: "#8FA4CC"
-                        },
                         type: "category",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                             interval: function(index, val) {
                                 //判断是否是一号
                                 if (val.substr(-2) == '01') {
@@ -340,7 +345,6 @@
                             show: false,
                         },
                         axisLine: {
-                            show: true,
                             lineStyle: {
                                 color: "#8FA4CC",
                             },
@@ -354,8 +358,11 @@
                     },
                     yAxis: [{
                             name: "日产m³/d",
+                            nameLocation:'middle',
+                            nameGap:70,
                             nameTextStyle: {
-                                color: "#8FA4CC"
+                                color: '#8FA4CC',
+                                fontSize: 14,
                             },
                             scale: true,
                             type: "value",
@@ -380,8 +387,11 @@
                         },
                         {
                             name: "年产10⁴m³",
+                            nameLocation:'middle',
+                            nameGap:70,
                             nameTextStyle: {
-                                color: "#8FA4CC"
+                                color: '#8FA4CC',
+                                fontSize: 14,
                             },
                             scale: true,
                             type: "value",
@@ -416,13 +426,20 @@
                             type: "shadow",
                         },
                     },
+                    grid:{
+                        x: 120,
+                        y: 20,
+                        x2: 120,
+                        y2: 60,
+                    },
                     legend: {
-                        left: 0,
                         data: [],
                         textStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
                         },
+                        x:'center',
+                        bottom:0,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -436,6 +453,8 @@
                         type: "category",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                         },
                         axisTick: {
                             show: false,
@@ -443,7 +462,6 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                //color: '#979797'
                                 color: "#8FA4CC",
                             },
                         },
@@ -457,8 +475,11 @@
                     },
                     yAxis: [{
                         name: "采油速度(%)",
+                        nameLocation:'middle',
+                        nameGap:70,
                         nameTextStyle: {
-                            color: "#8FA4CC"
+                            color: '#8FA4CC',
+                            fontSize: 14,
                         },
                         type: "value",
                         scale: true,
@@ -492,13 +513,20 @@
                             type: "shadow",
                         },
                     },
+                    grid:{
+                        x: 120,
+                        y: 20,
+                        x2: 120,
+                        y2: 80,
+                    },
                     legend: {
-                        left: 0,
                         data: [],
                         textStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
                         },
+                        x:'center',
+                        bottom:20,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -512,6 +540,8 @@
                         type: "category",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                             formatter: function(val) {
                                 return Number(val) + '月';
                             }
@@ -531,12 +561,14 @@
                                 color: "#8FA4CC",
                             },
                         },
-
                     },
                     yAxis: [{
                         name: "综合递减率(%)",
+                        nameLocation:'middle',
+                        nameGap:70,
                         nameTextStyle: {
-                            color: "#8FA4CC"
+                            color: '#8FA4CC',
+                            fontSize: 14,
                         },
                         type: "value",
                         axisLabel: {
@@ -569,13 +601,20 @@
                             type: "shadow",
                         },
                     },
+                    grid:{
+                        x: 120,
+                        y: 20,
+                        x2: 120,
+                        y2: 80,
+                    },
                     legend: {
-                        left: 0,
                         data: ["去年实际值", "今年实际值", "今年考核值"],
                         textStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
                         },
+                        x:'center',
+                        bottom:20,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -589,6 +628,8 @@
                         type: "category",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                             formatter: function(val) {
                                 return Number(val) + '月';
                             }
@@ -625,8 +666,11 @@
                     },
                     yAxis: [{
                         name: "含水上升率(%)",
+                        nameLocation:'middle',
+                        nameGap:70,
                         nameTextStyle: {
-                            color: "#8FA4CC"
+                            color: '#8FA4CC',
+                            fontSize: 14,
                         },
                         type: "value",
                         axisLabel: {
@@ -649,8 +693,7 @@
                                 color: "#8FA4CC",
                             },
                         },
-                    }, ],
-
+                    }],
                     series: [{
                             data: [5.5, 5.3, 5.1, 4.8, 5.4, 5.2, 5.6, 5.3, 5, 5.3, 5.2, 5.5],
                             type: "line",
@@ -688,13 +731,20 @@
                             type: "shadow",
                         },
                     },
+                    grid:{
+                        x: 120,
+                        y: 20,
+                        x2: 120,
+                        y2: 50,
+                    },
                     legend: {
-                        left: 0,
                         data: [],
                         textStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
                         },
+                        x:'center',
+                        bottom:0,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -727,8 +777,11 @@
                     },
                     yAxis: [{
                         name: "生产时率(%)",
+                        nameLocation:'middle',
+                        nameGap:70,
                         nameTextStyle: {
-                            color: "#8FA4CC"
+                            color: '#8FA4CC',
+                            fontSize: 14,
                         },
                         type: "value",
                         axisLabel: {
@@ -752,8 +805,6 @@
                             },
                         },
                     }, ],
-
-                    series: [],
                 },
                 //油井利用率
                 wellUtilization: {
@@ -763,13 +814,20 @@
                             type: "shadow",
                         },
                     },
+                    grid:{
+                        x: 120,
+                        y: 20,
+                        x2: 120,
+                        y2: 50,
+                    },
                     legend: {
-                        left: 0,
                         data: ["去年实际值", "今年实际值"],
                         textStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
                         },
+                        x:'center',
+                        bottom:0,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -816,8 +874,11 @@
                     },
                     yAxis: [{
                         name: "油井利用率(%)",
+                        nameLocation:'middle',
+                        nameGap:70,
                         nameTextStyle: {
-                            color: "#8FA4CC"
+                            color: '#8FA4CC',
+                            fontSize: 14,
                         },
                         type: "value",
                         axisLabel: {
@@ -841,7 +902,6 @@
                             },
                         },
                     }, ],
-
                     series: [{
                             data: [5.5, 5.3, 5.1, 4.8, 5.4, 5.2, 5.6, 5.3, 5, 5.3, 5.2, 5.5],
                             type: "bar",
@@ -873,13 +933,20 @@
                             type: "shadow",
                         },
                     },
+                    grid:{
+                        x: 120,
+                        y: 20,
+                        x2: 120,
+                        y2: 80,
+                    },
                     legend: {
-                        left: 0,
                         data: ["去年实际值", "今年实际值", "今年考核值"],
                         textStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
                         },
+                        x:'center',
+                        bottom:20,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -916,8 +983,11 @@
                     },
                     yAxis: [{
                         name: "自然递减率(%)",
+                        nameLocation:'middle',
+                        nameGap:70,
                         nameTextStyle: {
-                            color: "#8FA4CC"
+                            color: '#8FA4CC',
+                            fontSize: 14,
                         },
                         type: "value",
                         axisLabel: {

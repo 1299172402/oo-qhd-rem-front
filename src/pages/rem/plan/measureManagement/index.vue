@@ -77,7 +77,7 @@
                         <el-table-column prop="measureName3" label="措施作业天数(计划/实际)" width="110">
                             <template slot-scope="scope">
                                 <span v-if="scope.row.planMeasuresDayNum||scope.row.realityMeasuresDayNum">
-                                    {{scope.row.planMeasuresDayNum===null?'无':scope.row.planMeasuresDayNum}}/{{scope.row.realityMeasuresDayNum}}
+                                    {{scope.row.planMeasuresDayNum?scope.row.planMeasuresDayNum:0}}/{{scope.row.realityMeasuresDayNum}}
                                 </span>
                             </template>
                         </el-table-column>

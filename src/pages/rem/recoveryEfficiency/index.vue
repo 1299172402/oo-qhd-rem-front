@@ -32,7 +32,7 @@
         </header-search>
         <page-panel-new style="height: calc(100% - 100px);">
             <div style="height:100%">
-                <el-row style="height:126px;margin-bottom:20px;">
+                <el-row style="height:146px;margin-bottom:20px;">
                     <el-table 
                     :data="wellPerformanceAnalysis"
                     style="width:100%;"
@@ -632,16 +632,24 @@
                 paramater: {},
                 //水驱特征曲线曲线
                 option: {
+                    grid: {
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 80,
+                    },
                     legend: {
-                        top:10,
-                        left: 30,
-                        textStyle:{
-                            color: this.$store.state.setting.mode=='dark'?'#fff':'#000'
-                        },
                         data: [],
+                        textStyle:{
+                            color: this.$store.state.setting.mode=='dark'?'#fff':'#000',
+                            fontSize: 14,
+                        },
+                        x:'center',
+                        bottom:10,
                         icon: 'rect',
-                        itemHeight: 8,
-                        itemWidth: 16
+                        itemWidth: 12,
+                        itemHeight: 6,
+                        itemGap: 14,
                     },
                     tooltip: {
                         trigger: "axis",
@@ -661,6 +669,8 @@
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                         },
                         axisTick: {
                             show: false,
@@ -681,10 +691,12 @@
                     yAxis: {
                         name: "lgWp",
                         nameLocation: "center",
+                        nameLocation:'middle',
+                        nameGap:50,
                         nameTextStyle: {
-                            color: "#8FA4CC"
+                            color: '#8FA4CC',
+                            fontSize: 14,
                         },
-                        nameGap: 50,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",
@@ -703,8 +715,6 @@
                                 color: "#8FA4CC",
                             },
                         },
-
-
                     },
                     series: [
                         {
@@ -754,6 +764,12 @@
                     },
                 ],
                 optionTwo: {
+                    grid: {
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 80,
+                    },
                     tooltip: {
                         trigger: "axis",
                         axisPointer: {
@@ -761,17 +777,22 @@
                         },
                     },
                     legend: {
-                        left: 30,
+                        data:[],
                         textStyle: {
                             color: "#24DEFF",
+                            fontSize: 14,
                         },
-                        data: [],
-                        icon: 'circle',
-                        itemHeight: 12,
+                        x:'center',
+                        bottom:10,
+                        icon: 'rect',
+                        itemWidth: 12,
+                        itemHeight: 6,
+                        itemGap: 14,
                     },
                     xAxis: {
-                        name: "时间",
+                        // name: "时间",
                         type: 'category',
+                        nameLocation: "center",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
@@ -779,6 +800,8 @@
                         nameGap: 25,
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                         },
                         axisTick: {
                             show: false,
@@ -800,13 +823,16 @@
                         // data:[],
                         name: "日产油量/10*4m³",
                         nameLocation: "center",
+                        nameLocation:'middle',
                         nameTextStyle: {
-                            color: "#8FA4CC"
+                            color: "#8FA4CC",
+                            fontSize: 14,
                         },
-                        nameGap: 25,
+                        nameGap: 65,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
                         },
                         axisTick: {
                             show: false,
@@ -853,6 +879,12 @@
                 },
                 optionThree: {
                     color: [],
+                    grid: {
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 80,
+                    },
                     tooltip: {
                         trigger: "axis",
                         axisPointer: {
@@ -861,25 +893,29 @@
                         confine: true,
                     },
                     legend: {
-                        left: 30,
+                        data:[],
                         textStyle: {
                             color: "#24DEFF",
+                            fontSize: 14,
                         },
-                        data: [],
+                        x:'center',
+                        bottom:0,
                         icon: 'rect',
-                        itemHeight: 8,
-                        itemWidth: 16,
+                        itemWidth: 12,
+                        itemHeight: 6,
+                        itemGap: 14,
                     },
                     xAxis: {
                         name: "采出程度(%)",
-                        nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
-                        nameGap: 25,
+                        nameGap: 45,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                         },
                         axisTick: {
                             show: false,
@@ -900,13 +936,16 @@
                     yAxis: {
                         name: "综合含水率(%)",
                         nameLocation: "center",
+                        nameLocation:'middle',
                         nameTextStyle: {
-                            color: "#8FA4CC"
+                            color: "#8FA4CC",
+                            fontSize: 14,
                         },
-                        nameGap: 25,
+                        nameGap: 45,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
                         },
                         axisTick: {
                             show: false,
