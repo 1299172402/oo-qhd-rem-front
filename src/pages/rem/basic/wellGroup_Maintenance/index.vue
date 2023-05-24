@@ -329,6 +329,7 @@ export default {
             });
           })
         }
+        console.log('data--->',data)
         this.transferData = data
       })
 
@@ -450,6 +451,7 @@ export default {
       } else {
         // postCoefficientconnectivity(data).then((res) => {
         wellGroupDataById({wellGroupId: this.select.selectBlock}).then((res)=>{
+            console.log('------',res)
           let arr = []
           if(Array.isArray(res) && res.length){
             arr.push({
@@ -461,7 +463,6 @@ export default {
           }
           this.waterList = arr
           this.layerList = arr
-          
           res.forEach(item => {
             if (item.proWellId && item.proWellNo) {
               // let obj = {
@@ -506,6 +507,7 @@ export default {
         return this.blockList = [{ wellGroupId: '0', wellGroupName: "新增" }]
       }
       listGroupDataByBlockIdAndDate(data).then((res) => {
+        console.log('res111->',res)
         this.blockList = res
         this.blockList.unshift({
           wellGroupId: '0',

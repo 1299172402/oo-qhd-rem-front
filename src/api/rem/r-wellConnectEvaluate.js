@@ -81,8 +81,8 @@ export function getselectWellGroup (params) {
         method: "get",
         params,
     }).then((res) => {
-        if (res.data) {
-            return res.data;
+        if (res) {
+            return res;
         } else {
             return [];
         }
@@ -174,9 +174,9 @@ export function exportChopSection (params) {
         method: "GET",
         params,
     }).then((res) => {
-        if (res.data.data) {
+        if (res.data) {
             // 返回数据 [{"wellGroupId":"井组标识", "wellGroupName":"井组名"}]
-            return res.data.data;
+            return res.data;
         } else {
             return [];
         }
@@ -357,8 +357,8 @@ export function postselectProWellByGroup (params) {
         method: "post",
         params,
     }).then((res) => {
-        if (res.data.data) {
-            return res.data.data;
+        if (res.data) {
+            return res.data;
         } else {
             return [];
         }
