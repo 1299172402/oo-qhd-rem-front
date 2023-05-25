@@ -340,11 +340,13 @@
                                         </div>
                                     </div>  
                                     <div class="z-row-center">
-                                        <div class="numBtn" v-for="(item,index) in productionTrendsOptions" :key="index" v-if="item.name!='正常'&&item.value!=0&&!productionSwitch">
+                                        <div class="numBtn" v-for="(item,index) in productionTrendsOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!productionSwitch" 
+                                        @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'productionTrendsOptions')})">
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
-                                        <div class="numBtn" v-for="(item,index) in productionTrendsOptions" :key="index" v-if="item.name=='正常'&&productionSwitch">
+                                        <div class="numBtn" v-for="(item,index) in productionTrendsOptions" :key="index" v-if="item.name=='正常'&&productionSwitch"
+                                        @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'productionTrendsOptions')})">
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
@@ -352,14 +354,18 @@
                                     <div class="z-row-right">
                                         <div class="name">措施推荐</div>
                                         <div class="num">
-                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='地面调参'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span></span>
+                                            <span 
+                                                v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='地面调参'" 
+                                                @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'recommendedMeasuresOptions')})">
+                                            {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </info-window>
                     </div>
-                    <div class="v2 v3">
+                    <div class="v2 v3" style="height: 234px;">
                         <img src="@/assets/rem/performance/bgline0.png" alt="" class="bgline0">
                         <info-window info-width="100%"  info-height="100%"  header-title="油井工况诊断" :is-show-max-btn="false">
                             <div class="z-content2" style="height:100%;overflow-y: scroll;">
@@ -382,11 +388,15 @@
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" v-for="(item,index) in oilWellConditionOptions" :key="index" v-if="item.name!='正常'&&item.value!=0&&!oilWellConditionSwitch">
+                                            <div class="numBtn" 
+                                                v-for="(item,index) in oilWellConditionOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!oilWellConditionSwitch"
+                                                @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'oilWellConditionOptions')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
-                                            <div class="numBtn" v-for="(item,index) in oilWellConditionOptions" :key="index" v-if="item.name=='正常'&&oilWellConditionSwitch">
+                                            <div class="numBtn" 
+                                                v-for="(item,index) in oilWellConditionOptions" :key="index" v-if="item.name=='正常'&&oilWellConditionSwitch"
+                                                @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'oilWellConditionOptions')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
@@ -412,11 +422,15 @@
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" v-for="(item,index) in relationshipOptions" :key="index" v-if="item.name!='正常'&&item.value!=0&&!relationshipSwitch">
+                                            <div class="numBtn" 
+                                                v-for="(item,index) in relationshipOptions" :key="index" v-if="item.name!='正常'&&item.name!='合理区'&&(item.value!=0||item.isShow)&&!relationshipSwitch"
+                                                @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'relationshipOptions')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
-                                            <div class="numBtn" v-for="(item,index) in relationshipOptions" :key="index" v-if="item.name!='正常'&&relationshipSwitch">
+                                            <div class="numBtn" 
+                                                v-for="(item,index) in relationshipOptions" :key="index" v-if="(item.name=='正常'||item.name=='合理区')&&relationshipSwitch"
+                                                @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'relationshipOptions')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
@@ -424,10 +438,14 @@
                                     </div>
                                 </div>
                                 <div class="z3">
-                                    <div class="z-row-right" style="position: relative;top: 48px;">
+                                    <div class="z-row-right" style="position: relative;top: 16px;height:96px;">
                                         <div class="name">措施推荐</div>
                                         <div class="num">
-                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='换大泵'||item.name=='加深泵挂'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span></span>
+                                            <span 
+                                            v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='换大泵'||item.name=='加深泵挂'"
+                                            @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'recommendedMeasuresOptions')})">
+                                            {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -458,11 +476,15 @@
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
-                                                <div class="numBtn" v-for="(item,index) in diminishingOptions" :key="index" v-if="item.name!='正常'&&item.value!=0&&!diminishingSwitch">
+                                                <div class="numBtn" 
+                                                    v-for="(item,index) in diminishingOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!diminishingSwitch"
+                                                    @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'diminishingOptions')})">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
-                                                <div class="numBtn" v-for="(item,index) in diminishingOptions" :key="index" v-if="item.name=='正常'&&diminishingSwitch">
+                                                <div class="numBtn" 
+                                                    v-for="(item,index) in diminishingOptions" :key="index" v-if="item.name=='正常'&&diminishingSwitch"
+                                                    @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'diminishingOptions')})">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
@@ -488,11 +510,15 @@
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
-                                                <div class="numBtn" v-for="(item,index) in fluidStrengthOptions" :key="index" v-if="item.name!='正常'&&item.value!=0&&!fluidStrengthSwitch">
+                                                <div class="numBtn" 
+                                                    v-for="(item,index) in fluidStrengthOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)  &&!fluidStrengthSwitch"
+                                                    @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'fluidStrengthOptions')})">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
-                                                <div class="numBtn" v-for="(item,index) in fluidStrengthOptions" :key="index" v-if="item.name=='正常'&&fluidStrengthSwitch">
+                                                <div class="numBtn" 
+                                                    v-for="(item,index) in fluidStrengthOptions" :key="index" v-if="item.name=='正常'&&fluidStrengthSwitch"
+                                                    @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'fluidStrengthOptions')})">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
@@ -503,7 +529,11 @@
                                         <div class="z-row-right" style="height:130px;position: relative;top: 48px;">
                                             <div class="name">措施推荐</div>
                                             <div class="num">
-                                                <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='换大泵'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span></span>
+                                                <span 
+                                                v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"
+                                                @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'recommendedMeasuresOptions')})">
+                                                {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -528,11 +558,15 @@
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
-                                                <div class="numBtn" v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name!='正常'&&item.value!=0&&!fluidProductionSwitch">
+                                                <div class="numBtn" 
+                                                    v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!fluidProductionSwitch"
+                                                    @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'fluidProductionOptions')})">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
-                                                <div class="numBtn" v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name=='正常'&&fluidProductionSwitch">
+                                                <div class="numBtn" 
+                                                    v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name=='正常'&&fluidProductionSwitch"
+                                                    @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'fluidProductionOptions')})">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
@@ -558,11 +592,15 @@
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
-                                                <div class="numBtn" v-for="(item,index) in mfluidProductionOptions" :key="index" v-if="item.name!='正常'&&item.value!=0&&!mfluidProductionSwitch">
+                                                <div class="numBtn" 
+                                                    v-for="(item,index) in mfluidProductionOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!mfluidProductionSwitch"
+                                                    @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'mfluidProductionOptions')})">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
-                                                <div class="numBtn" v-for="(item,index) in mfluidProductionOptions" :key="index" v-if="item.name=='正常'&&mfluidProductionSwitch">
+                                                <div class="numBtn" 
+                                                    v-for="(item,index) in mfluidProductionOptions" :key="index" v-if="item.name=='正常'&&mfluidProductionSwitch"
+                                                    @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'mfluidProductionOptions')})">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
@@ -573,7 +611,7 @@
                                         <div class="z-row-right" style="height:130px;position: relative;top: 48px;">
                                             <div class="name">措施推荐</div>
                                             <div class="num">
-                                                <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='换大泵'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') }}：<span style="color: #FFC835; font-size: 14px;"> {{ (item.value > 0 ? item.value : '(0)') }} </span></span>
+                                                <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') }}：<span style="color: #FFC835; font-size: 14px;"> {{ (item.value > 0 ? item.value : '(0)') }} </span></span>
                                             </div>
                                         </div>
                                     </div>
@@ -623,7 +661,7 @@
                                             <span v-if="scope.row[item.code] == null"></span>
                                             <span v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel }}</span>
                                             <!-- <el-tooltip v-else class="item" effect="dark" :content="scope.row[item.code].value + ''" placement="top"> -->
-                                                <span v-else>{{ scope.row[item.code].showLabel }}{{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(4):'-'}}</span>
+                                                <span v-else>{{ scope.row[item.code].showLabel }}{{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2):'-'}}</span>
                                             <!-- </el-tooltip> -->
                                         </template>
                                     </el-table-column>
@@ -1204,6 +1242,7 @@
                                     if(el.name=='正常'){
                                         this.productionNum.zcnum=Number(el.value);
                                     }else{
+                                        myData[i].isShow=Number(el.value)?true:false;
                                         this.productionNum.ycnum+=Number(el.value);
                                     }
                                 })
@@ -1262,12 +1301,12 @@
                                     if(el.name=='正常'){
                                         this.oilWellConditionNum.zcnum=Number(el.value);
                                     }else{
+                                        myData[i].isShow=Number(el.value)?true:false;
                                         this.oilWellConditionNum.ycnum+=Number(el.value);
                                     }
                                 })
                                 this.oilWellConditionNum.zczb=this.oilWellConditionNum.zcnum/this.oilWellConditionNum.allnum * 100;
                                 this.oilWellConditionNum.yczb=this.oilWellConditionNum.yczb/this.oilWellConditionNum.allnum * 100;
-                                
                                 this.oilWellConditionOptions = myData;
                             }
                             resolve('success');
@@ -1321,14 +1360,15 @@
                                 this.relationshipNum.ycnum=0;
                                 myData.forEach((el,i)=>{
                                     this.relationshipNum.allnum+=Number(el.value);
-                                    if(el.name=='正常'){
-                                        this.relationshipNum.zcnum=Number(el.value);
+                                    if(el.name=='正常'||el.name=='合理区'){
+                                        this.relationshipNum.zcnum+=Number(el.value);
                                     }else{
+                                        myData[i].isShow=Number(el.value)?true:false;
                                         this.relationshipNum.ycnum+=Number(el.value);
                                     }
                                 })
-                                // this.relationshipNum.zczb=this.relationshipNum.zcnum/this.relationshipNum.allnum * 100;
-                                this.relationshipNum.zczb=100;
+                                this.relationshipNum.zczb=this.relationshipNum.zcnum/this.relationshipNum.allnum * 100;
+                                // this.relationshipNum.zczb=100;
                                 this.relationshipNum.yczb=this.relationshipNum.yczb/this.relationshipNum.allnum * 100;
                                 
                                 this.relationshipOptions = myData;
@@ -1376,6 +1416,7 @@
                                     if(el.name=='正常'){
                                         this.diminishingNum.zcnum=Number(el.value);
                                     }else{
+                                        myData[i].isShow=Number(el.value)?true:false;
                                         this.diminishingNum.ycnum+=Number(el.value);
                                     }
                                 })
@@ -1427,6 +1468,7 @@
                                     if(el.name=='正常'){
                                         this.fluidStrengthNum.zcnum=Number(el.value);
                                     }else{
+                                        myData[i].isShow=Number(el.value)?true:false;
                                         this.fluidStrengthNum.ycnum+=Number(el.value);
                                     }
                                 })
@@ -1478,6 +1520,7 @@
                                     if(el.name=='正常'){
                                         this.fluidProductionNum.zcnum=Number(el.value);
                                     }else{
+                                        myData[i].isShow=Number(el.value)?true:false;
                                         this.fluidProductionNum.ycnum+=Number(el.value);
                                     }
                                 })
@@ -1529,6 +1572,7 @@
                                     if(el.name=='正常'){
                                         this.mfluidProductionNum.zcnum=Number(el.value);
                                     }else{
+                                        myData[i].isShow=Number(el.value)?true:false;
                                         this.mfluidProductionNum.ycnum+=Number(el.value);
                                     }
                                 })
@@ -1763,6 +1807,7 @@
             },
             //选中项目
             selRadioIterm(val, tag) {
+                console.log('this.productionTrendsOptions',JSON.parse(JSON.stringify(this.productionTrendsOptions)))
                 this.scrollFlag = false;
                 let myData = []; //我的数据
                 let myWellCount = {}; //计算各项目的井数
@@ -1796,6 +1841,8 @@
                         }
                     }
                 }
+                console.log('myData',myData)
+                console.log('this.productionTrendsOptions',this.productionTrendsOptions)
                 //2、按照顺序初始化计数器、生成数据体
                 var tableData = this.initTableData;
                 var reData = [];
@@ -2402,12 +2449,14 @@
                     align-items: center;
                     justify-content: space-between;
                     position: relative;
+                    z-index: 3;
                     .bgline1{
                         width: 358px;
                         height: 43px;
                         position: absolute;
                         left: 180px;
                         top: 30px;
+                        z-index: -1;
                     }
                     .btns0{
                         min-width:224px;
@@ -2444,6 +2493,7 @@
                     width:100%;
                     height:164px;
                     position: relative;
+                    z-index: 2;
                     .bgline0{
                         width: 374px;
                         height: 134px;
@@ -2572,6 +2622,7 @@
                                 display: flex;
                                 flex-wrap: wrap;
                                 .numBtn{
+                                    cursor: pointer;
                                     min-width: 70px;
                                     border-radius:4px;
                                     height:60px;
@@ -2612,6 +2663,7 @@
                                     font-weight: 600;
                                 }
                                 .num{
+                                    cursor: pointer;
                                     flex-wrap: wrap;
                                     display: flex;
                                     align-items: center;
@@ -2778,6 +2830,7 @@
                                 display: flex;
                                 flex-wrap: wrap;
                                 .numBtn{
+                                    cursor: pointer;
                                     min-width: 70px;
                                     border-radius:4px;
                                     height:60px;
