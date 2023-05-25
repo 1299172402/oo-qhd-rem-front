@@ -410,10 +410,10 @@ export default {
                         });
                     }
                     postWellgroupRevise(params).then((res) => {
-                        if (res.status == 200) {
-                            this.$message({type: "success", message: "保存成功!"});
+                        if (res.code == 0) {
+                            this.$message.success("保存成功!");
                         } else {
-                            this.$message({type: "error", message: "保存失败!"});
+                            this.$message.error( "保存失败!");
                         }
                     });
                     this.modify = false;
