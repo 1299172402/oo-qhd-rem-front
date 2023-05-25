@@ -106,7 +106,7 @@
                               :header-cell-style="tableColor"
                               :cell-style="tableColorone"
                               :span-method="mergeTable"
-                              height="100%"
+                            
                           >
                               <el-table-column prop="injWellNo" label="注水井" align="center" min-width="120"></el-table-column>
                               <el-table-column

@@ -220,9 +220,9 @@
                     </pagePanel>
                 </el-col>
 
-                <el-col :span="8">
+                <el-col :span="8" style="height: 100%">
                     <pagePanel headerTitle="预测结果"
-                               style="min-height: 350px;max-height: 520px;margin-bottom: 20px;overflow-y: hidden"
+                               style="height:50%;margin-bottom: 20px;overflow-y: hidden"
                     >
 
                         <div style="display: flex; margin: 3px 10px 0 10px;justify-content: end;">
@@ -255,7 +255,7 @@
                             <el-table-column prop="layerRatio" label="层注采比" align="center"></el-table-column>
                         </el-table>
                     </pagePanel>
-                    <pagePanelNew style="height: 310px;">
+                    <pagePanelNew style="height: 45%;">
                         <el-button type="text" class="foreBtn">预测结果</el-button>
                         <Echart height="100%" :chart-data="getEchart()"></Echart>
                     </pagePanelNew>

@@ -108,18 +108,18 @@
                                 </el-col>
                             </el-row>
                         </div>
-                        <el-form ref="form" :rules="rules" label-width="100px" :model="form">
+                        <el-form ref="form" :rules="rules" style="height: 100%" label-width="100px" :model="form">
                             <el-table
                                 :data="form.tableData2"
                                 id="indexscvSecond"
                                 highlight
-                                height="95%"
-                                style="margin-top: 10px;min-height: 500px"
+                                style="margin-top: 10px"
                                 :header-cell-style="tableColor"
                                 :cell-style="tableColorone"
                                 :span-method="mergeTable"
+                                height="calc(100% - 30px)"
                             >
-                                <el-table-column prop="injWellNo" label="注水井" align="center"
+                                <el-table-column prop="injWellNo" label="注水井11" align="center"
                                                  min-width="120"></el-table-column>
                                 <el-table-column
                                     prop="injWellDaily"
