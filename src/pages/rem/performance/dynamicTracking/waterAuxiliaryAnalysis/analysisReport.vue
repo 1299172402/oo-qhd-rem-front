@@ -220,7 +220,12 @@
             </headerSearch> 
             <div class="app-container3">
                 <div class="leftBox">
-                    <img src="@/assets/rem/performance/yj_bg.png" alt="">
+                    <img src="@/assets/rem/performance/bg.gif" alt="" class="img1">
+                    <img src="@/assets/rem/performance/jing-small.png" alt="" class="img2">
+                    <img src="@/assets/rem/performance/shui-donghua.gif" alt="" class="img3">
+                    <img src="@/assets/rem/performance/di.png" alt="" class="img4">
+                    <img src="@/assets/rem/performance/01zhu.gif" alt="" class="img5">
+                    <img src="@/assets/rem/performance/bg.png" alt="" class="bg">
                 </div>
                 <div class="rightBox">
                     <div class="v1">
@@ -372,7 +377,7 @@
                             </div>
                         </info-window>
                     </div>
-                    <div style="height:340px;">
+                    <div style="height:360px;">
                         <info-window info-width="100%"  info-height="100%"  header-title="水井动态分析详情列表" :is-show-max-btn="false">
                             <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList">
                                 <el-table-column prop="wellId" label="井号" align="center" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
@@ -1620,11 +1625,50 @@
                 }
                 .leftBox{
                     width:563px;
-                    // height:100%;
-                    height:975px;
-                    img{
+                    height:968px;
+                    position: relative;
+                    .img1{
                         width:100%;
                         height:100%;
+                        position: absolute;
+                        left:0;
+                        top:0;
+                    }
+                    .img2{
+                        width:100%;
+                        height:100%;
+                        position: absolute;
+                        left:0;
+                        top:0;    
+                        z-index: 2;
+                    }
+                    .img3{
+                        position: absolute;
+                        left: 0;
+                        top: 146px;
+                        width: 563px;
+                        height: 378px;
+                    }
+                    .img4{
+                        width:100%;
+                        height:100%;
+                        position: absolute;
+                        left:0;
+                        top:0;    
+                    }
+                    .img5{
+                        width: 22px;
+                        height: 356px;
+                        position: absolute;
+                        left: 178px;
+                        top: 227px;
+                    }
+                    .bg{
+                        width:100%;
+                        height:100%;
+                        position: absolute;
+                        left:0;
+                        top:0;
                     }
                 }
                 .rightBox{

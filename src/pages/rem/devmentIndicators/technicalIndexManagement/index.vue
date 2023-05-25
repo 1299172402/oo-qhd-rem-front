@@ -15,7 +15,7 @@
         <page-panel-new class="app-content">
             <el-row style="height:390px;" :gutter="20">
                 <el-col v-for="(item, index) in zbData" :key="index" :span="6" style="margin-bottom: 10px" :class="{ active: currentIndex == index }">
-                    <pagePanel v-if="item.title == '技术指标总览'" class="fl" style="height: 160px" :headerTitle="item.title" @click.native="cardClick(item, index)">
+                    <pagePanel v-if="item.title == '技术指标总览'" class="fl" style="height: 156px!important;" :headerTitle="item.title" @click.native="cardClick(item, index)">
                         <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center">
                         	<span style="font-size: 30px; vertical-align: middle; color: rgb(143, 164, 204)">
                         		{{ item.title }}
@@ -67,7 +67,7 @@
                     </pagePanel>
                 </el-col>
             </el-row>
-            <pagePanel v-if="currentIndex == 0" headerTitle="技术指标管理" style="height: calc(100% - 390px);margin-top:0;" showBtn>
+            <pagePanel v-if="currentIndex == 0" headerTitle="技术指标管理" style="height: 500px;margin-top:0;" showBtn>
                 <div style="display:flex;align-items: center;height:40px;">
                     <span>对标油田：</span>
                     <el-select v-model="selectTargetOilFieldId" disabled>
@@ -89,13 +89,13 @@
                     </el-table>
                 </div>
             </pagePanel>
-            <pagePanel v-if="currentIndex == 1" headerTitle="年产油量" style="height: calc(100% - 390px);margin-top:0;" showBtn>
+            <pagePanel v-if="currentIndex == 1" headerTitle="年产油量" style="height: 500px;margin-top:0;" showBtn>
                 <Echart :chart-data="inOilProduction" style="height: 100%"></Echart>
             </pagePanel>
-            <pagePanel v-if="currentIndex == 2" headerTitle="采油速度" style="height: calc(100% - 390px);margin-top:0;" showBtn>
+            <pagePanel v-if="currentIndex == 2" headerTitle="采油速度" style="height: 500px;margin-top:0;" showBtn>
                 <Echart :chart-data="productionSpeed" style="height: 100%"></Echart>
             </pagePanel>
-            <pagePanel v-if="currentIndex == 3" headerTitle="综合递减率" style="height: calc(100% - 390px);margin-top:0;" showBtn>
+            <pagePanel v-if="currentIndex == 3" headerTitle="综合递减率" style="height: 500px;margin-top:0;" showBtn>
                 <span>区块：</span>
                 <el-select v-model="selectDecreaseBlock">
                     <el-option v-for="item in blockList" :key="item.fieldId" :label="item.name" :value="item.fieldId">
@@ -106,7 +106,7 @@
                 </el-button>
                 <Echart :chart-data="comprehensiveDeclineRate" style="height: 100%"></Echart>
             </pagePanel>
-            <pagePanel v-if="currentIndex == 4" headerTitle="含水上升率" style="height: calc(100% - 390px);margin-top:0;" showBtn>
+            <pagePanel v-if="currentIndex == 4" headerTitle="含水上升率" style="height: 500px;margin-top:0;" showBtn>
                 <span>平台：</span>
                 <el-select v-model="selectIncreasingRatePlatform" style="width: 220px;">
                     <el-option v-for="item in platformList" :key="item.platFormId" :label="item.platName" :value="item.platFormId">
@@ -117,13 +117,13 @@
                 </el-button>
                 <Echart :chart-data="rateOfWaterCutRise" style="height: 100%"></Echart>
             </pagePanel>
-            <pagePanel v-if="currentIndex == 5" headerTitle="生产时率" style="height: calc(100% - 390px);margin-top:0;" showBtn>
+            <pagePanel v-if="currentIndex == 5" headerTitle="生产时率" style="height: 500px;margin-top:0;" showBtn>
                 <Echart :chart-data="whenTheProductionRate" style="height: 100%"></Echart>
             </pagePanel>
-            <pagePanel v-if="currentIndex == 6" headerTitle="油井利用率" style="height: calc(100% - 390px);margin-top:0;" showBtn>
+            <pagePanel v-if="currentIndex == 6" headerTitle="油井利用率" style="height: 500px;margin-top:0;" showBtn>
                 <Echart :chart-data="wellUtilization" style="height: 100%"></Echart>
             </pagePanel>
-            <pagePanel v-if="currentIndex == 7" headerTitle="自然递减率" style="height: calc(100% - 390px);margin-top:0;" showBtn>
+            <pagePanel v-if="currentIndex == 7" headerTitle="自然递减率" style="height: 500px;margin-top:0;" showBtn>
                 <span>平台：</span>
                 <el-select v-model="selectNaturalDeclinePlatform" style="width: 220px;">
                     <el-option v-for="item in platformList" :key="item.platFormId" :label="item.platName" :value="item.platFormId">
@@ -145,6 +145,7 @@
     import { exportExcel } from "@/lib/exportExcel.js";
     import { fetchOilFields,fetchFields, fetchPlatforms } from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import { oilYear,compositeDeclineRate,proTimeRate,proWellUsageRate,natureDeclineRateForTech,waterCutRaiseRate,proSpeed,techIndicatorStat,} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+    import { searchOilProductionChart} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
 
     export default {
         components: {
@@ -300,7 +301,7 @@
                     }, ],
                 },
                 //年产油量
-                inOilProduction: {
+                inOilProduction2: {
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -418,6 +419,121 @@
                     ],
                     series: [],
                 },
+                inOilProduction: {//原油产量折线图
+                    color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#9A72FF', '#DA835E'],
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow',
+                        },
+                    },
+                    grid:{
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 80,
+                    },
+                    legend: {
+                        data: [],
+                        textStyle: {
+                            color: '#8FA4CC',
+                            fontSize: 14,
+                        },
+                        x:'center',
+                        bottom:10,
+                        icon: 'rect',
+                        itemWidth: 12,
+                        itemHeight: 6,
+                        itemGap: 14,
+                    },
+                    xAxis: [{
+                        type: 'category',
+                        boundaryGap: false,
+                        axisLabel: {
+                            color: '#8FA4CC',
+                            fontSize: 14,
+                            padding:[10,0,0,0],
+                            interval: function(index, val) {
+                                if (val.substr(-2) == '01') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            },
+                        },
+                        axisTick: {
+                            show: false,
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#8FA4CC',
+                            },
+                        },
+                    }, ],
+                    yAxis: [
+                        {
+                            name: '日产m³/d',
+                            nameLocation:'middle',
+                            nameGap:70,
+                            nameTextStyle: {
+                                color: '#8FA4CC',
+                                fontSize: 14,
+                            },
+                            type: 'value',
+                            scale: true,
+                            axisLabel: {
+                                color: '#8FA4CC',
+                                fontSize: 14,
+                            },
+                            axisTick: {
+                                show: false,
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#8FA4CC',
+                                },
+                            },
+                            splitLine: {
+                                show: false,
+                                lineStyle: {
+                                    color: '#8FA4CC',
+                                },
+                            },
+                        },
+                        {
+                            name: '年产10⁴m³',
+                            nameLocation:'middle',
+                            nameGap:70,
+                            nameTextStyle: {
+                                color: '#8FA4CC',
+                                fontSize: 14,
+                            },
+                            scale: true,
+                            type: 'value',
+                            axisLabel: {
+                                color: '#8FA4CC',
+                                fontSize: 14,
+                            },
+                            axisTick: {
+                                show: false,
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#8FA4CC',
+                                },
+                            },
+                            splitLine: {
+                                show: false,
+                                lineStyle: {
+                                    color: '#8FA4CC',
+                                },
+                            },
+                        },
+                    ],
+                    series: [],
+                },
                 //采油速度
                 productionSpeed: {
                     tooltip: {
@@ -507,15 +623,23 @@
                 },
                 //综合递减率
                 comprehensiveDeclineRate: {
+                    title: {
+                        text: "综合递减率",
+                        textStyle: {
+                            color: "#8FA4CC",
+                        },
+                        top: 10,
+                        left: "center",
+                    },
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
                             type: "shadow",
                         },
                     },
-                    grid:{
+                    grid: {
                         x: 120,
-                        y: 20,
+                        y: 30,
                         x2: 120,
                         y2: 80,
                     },
@@ -543,14 +667,15 @@
                             fontSize: 14,
                             padding:[10,0,0,0],
                             formatter: function(val) {
-                                return Number(val) + '月';
-                            }
+                                return Number(val) + "月";
+                            },
                         },
                         axisTick: {
                             show: false,
                         },
                         axisLine: {
                             show: true,
+                            onZero: false,
                             lineStyle: {
                                 color: "#8FA4CC",
                             },
@@ -558,7 +683,7 @@
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "#8FA4CC",
+                                color: "rgba(255,255,255,.16)",
                             },
                         },
                     },
@@ -571,6 +696,7 @@
                             fontSize: 14,
                         },
                         type: "value",
+                        minInterval: 1,
                         axisLabel: {
                             color: "#8FA4CC",
                         },
@@ -587,28 +713,47 @@
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "#8FA4CC",
+                                color: "rgba(255,255,255,.16)",
                             },
                         },
                     }, ],
+                    color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#FF5844", "#DA835E", "#9A72FF", "#FF30AD", "#2ACAFF"],
                     series: [],
                 },
                 //含水上升率
                 rateOfWaterCutRise: {
+                    title: {
+                        text: "含水上升率",
+                        textStyle: {
+                            color: "#8FA4CC",
+                        },
+                        top: 10,
+                        left: "center",
+                    },
+                    grid: {
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 80,
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name: "含水上升率",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: "#022644",
+                            },
+                        },
+                    },
                     tooltip: {
-                        trigger: 'axis',
+                        trigger: "axis",
                         axisPointer: {
                             type: "shadow",
                         },
                     },
-                    grid:{
-                        x: 120,
-                        y: 20,
-                        x2: 120,
-                        y2: 80,
-                    },
                     legend: {
-                        data: ["去年实际值", "今年实际值", "今年考核值"],
+                        data: [],
                         textStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
@@ -631,14 +776,15 @@
                             fontSize: 14,
                             padding:[10,0,0,0],
                             formatter: function(val) {
-                                return Number(val) + '月';
-                            }
+                                return Number(val) + "月";
+                            },
                         },
                         axisTick: {
                             show: false,
                         },
                         axisLine: {
                             show: true,
+                            onZero: false,
                             lineStyle: {
                                 color: "#8FA4CC",
                             },
@@ -646,26 +792,12 @@
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "#8FA4CC",
+                                color: "rgba(255,255,255,.16)",
                             },
                         },
-                        data: [
-                            "2020/01",
-                            "2020/02",
-                            "2020/03",
-                            "2020/04",
-                            "2020/05",
-                            "2020/06",
-                            "2020/07",
-                            "2020/08",
-                            "2020/09",
-                            "2020/10",
-                            "2020/11",
-                            "2020/12",
-                        ],
                     },
                     yAxis: [{
-                        name: "含水上升率(%)",
+                        name: "含水上升率 (%)",
                         nameLocation:'middle',
                         nameGap:70,
                         nameTextStyle: {
@@ -673,6 +805,7 @@
                             fontSize: 14,
                         },
                         type: "value",
+                        minInterval: 1,
                         axisLabel: {
                             color: "#8FA4CC",
                         },
@@ -683,45 +816,18 @@
                         axisLine: {
                             show: true,
                             lineStyle: {
-                                //color: '#979797'
                                 color: "#8FA4CC",
                             },
                         },
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "#8FA4CC",
+                                color: "rgba(255,255,255,.16)",
                             },
                         },
-                    }],
-                    series: [{
-                            data: [5.5, 5.3, 5.1, 4.8, 5.4, 5.2, 5.6, 5.3, 5, 5.3, 5.2, 5.5],
-                            type: "line",
-                            itemStyle: {
-                                normal: {
-                                    lineStyle: {
-                                        width: 5,
-                                        type: "dotted", //'dotted'虚线 'solid'实线
-                                    },
-                                },
-                            },
-                            name: "去年实际值",
-                        },
-                        {
-                            data: [5.2, 5.5, 5.7, 5.8, 6.0, 5.5, 5.3, 5.1, 4.8, 5.4, 5.2, 5.5],
-
-                            type: "line",
-
-                            name: "今年实际值",
-                        },
-                        {
-                            data: [5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6],
-
-                            type: "line",
-
-                            name: "今年考核值",
-                        },
-                    ],
+                    }, ],
+                    color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#FF5844", "#DA835E", "#9A72FF", "#FF30AD", "#2ACAFF"],
+                    series: [],
                 },
                 //生产时率
                 whenTheProductionRate: {
@@ -927,20 +1033,38 @@
                 },
                 //自然递减率
                 naturalDeclineRate: {
+                    title: {
+                        text: "自然递减率",
+                        textStyle: {
+                            color: "#8FA4CC",
+                        },
+                        top: 10,
+                        left: "center",
+                    },
+                    grid: {
+                        x: 120,
+                        y: 30,
+                        x2: 120,
+                        y2: 80,
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name: "自然递减率",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: "#022644",
+                            },
+                        },
+                    },
                     tooltip: {
-                        trigger: 'axis',
+                        trigger: "axis",
                         axisPointer: {
                             type: "shadow",
                         },
                     },
-                    grid:{
-                        x: 120,
-                        y: 20,
-                        x2: 120,
-                        y2: 80,
-                    },
                     legend: {
-                        data: ["去年实际值", "今年实际值", "今年考核值"],
+                        data: [],
                         textStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
@@ -960,15 +1084,18 @@
                         type: "category",
                         axisLabel: {
                             color: "#8FA4CC",
+                            fontSize: 14,
+                            padding:[10,0,0,0],
                             formatter: function(val) {
-                                return Number(val) + '月';
-                            }
+                                return Number(val) + "月";
+                            },
                         },
                         axisTick: {
                             show: false,
                         },
                         axisLine: {
                             show: true,
+                            onZero: false,
                             lineStyle: {
                                 color: "#8FA4CC",
                             },
@@ -976,20 +1103,19 @@
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "#8FA4CC",
+                                color: "rgba(255,255,255,.16)",
                             },
                         },
-                        data: [],
                     },
                     yAxis: [{
-                        name: "自然递减率(%)",
+                        name: "自然递减率 (%)",
                         nameLocation:'middle',
                         nameGap:70,
                         nameTextStyle: {
-                            color: '#8FA4CC',
-                            fontSize: 14,
+                            color: "#8FA4CC"
                         },
                         type: "value",
+                        minInterval: 1,
                         axisLabel: {
                             color: "#8FA4CC",
                         },
@@ -1006,43 +1132,15 @@
                         splitLine: {
                             show: false,
                             lineStyle: {
-                                color: "#8FA4CC",
+                                color: "rgba(255,255,255,.16)",
                             },
                         },
-                    }, ],
-
-                    series: [{
-                            data: [5.5, 5.3, 5.1, 4.8, 5.4, 5.2, 5.6, 5.3, 5, 5.3, 5.2, 5.5],
-                            type: "line",
-                            itemStyle: {
-                                normal: {
-                                    lineStyle: {
-                                        width: 5,
-                                        type: "dotted", //'dotted'虚线 'solid'实线
-                                    },
-                                },
-                            },
-                            name: "去年实际值",
-                        },
-                        {
-                            data: [5.2, 5.5, 5.7, 5.8, 6.0, 5.5, 5.3, 5.1, 4.8, 5.4, 5.2, 5.5],
-
-                            type: "line",
-
-                            name: "今年实际值",
-                        },
-                        {
-                            data: [5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6],
-
-                            type: "line",
-
-                            name: "今年考核值",
-                        },
-                    ],
+                    }],
+                    series: [],
                 },
                 //技术指标管理
                 tableData: [],
-                //缓存权限数据
+                //缓存权限数据  
                 myWidget: [],
                 userInfo: {},
                 //按钮权限组
@@ -1196,7 +1294,7 @@
                 });
             },
             //技术指标管理-年产油量
-            doOilYear(oilFieldId) {
+            doOilYear2(oilFieldId) {//原来用的是这个
                 let request = {
                     oilFieldId: oilFieldId
                 }
@@ -1241,6 +1339,63 @@
                         this.inOilProduction.legend.data = legendData;
                         //各线的数据
                         this.inOilProduction.series = seriesData;
+                    }
+                });
+            },
+            doOilYear(oilFieldId){//现在用的是这个
+                let request = {
+                    beginDate: "2023-01-01",
+                    endDate: "2023-12-31",
+                    oilFieldId,
+                    planTypeCode: "002003",
+                    rollForecastVersion: "202301",
+                    unitType: "m",
+                };
+                searchOilProductionChart(request).then((res) => {
+                    //图表数据
+                    let legendData = [];
+                    //数据数组
+                    let seriesData = [];
+                    //判断当前请求是否成功
+                    if (res.data.code == 200) {
+                        let charDataS = res.data.data.chart.linearDataSets;
+                        for (let i = 0; i < charDataS.length; i++) {
+                            //获得每一个折线数据
+                            let linearChart = charDataS[i];
+                            //向图例中添加 折线名称
+                            if (linearChart.label != '实际年产' && linearChart.label != '计划年产') {
+                                legendData.push(linearChart.label);
+                            } else if (linearChart.label == '实际年产') {
+                                legendData.push('实际年累产');
+                            } else if (linearChart.label == '计划年产') {
+                                legendData.push('计划年累产');
+                            }
+                            //向数据数组中添加 所有折线的信息
+                            seriesData.push(this.getLinearChartSeriesOilProduct(linearChart));
+                        }
+                        //图例数据
+                        this.inOilProduction.legend.data = legendData;
+                        //各线的数据
+                        this.inOilProduction.series = seriesData;
+                        if (this.searchForm.selectUnitOfProduction == 'm') {
+                            this.inOilProduction.yAxis[0].name = '日产m³/d';
+                            this.inOilProduction.yAxis[1].name = '年产10⁴m³';
+                        } else if (this.searchForm.selectUnitOfProduction == 't') {
+                            this.inOilProduction.yAxis[0].name = '日产t/d';
+                            this.inOilProduction.yAxis[1].name = '年产10⁴t';
+                        }
+                    } else {
+                        //图例数据
+                        this.inOilProduction.legend.data = legendData;
+                        //各线的数据
+                        this.inOilProduction.series = seriesData;
+                        if (this.searchForm.selectUnitOfProduction == 'm') {
+                            this.inOilProduction.yAxis[0].name = '日产m³/d';
+                            this.inOilProduction.yAxis[1].name = '年产10⁴m³';
+                        } else if (this.searchForm.selectUnitOfProduction == 't') {
+                            this.inOilProduction.yAxis[0].name = '日产t/d';
+                            this.inOilProduction.yAxis[1].name = '年产10⁴t';
+                        }
                     }
                 });
             },
@@ -1690,8 +1845,10 @@
     }
     ::v-deep .app-content{
         height: calc(100% - 100px)!important;
+        overflow-y: scroll;
         .g-w100:first-child{
-          padding-top:0!important;  
+          padding-top:0!important;
+          height:auto!important; 
         }
     }
     .formBox {

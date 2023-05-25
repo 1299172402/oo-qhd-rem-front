@@ -276,7 +276,7 @@
             //返回按钮
             close() {
                 const obj = {
-                    name: "waterInjectionProduction"
+                    name: "waterInjectionIndexManagement"
                 };
                 this.$tab.closeOpenPage(obj);
             },

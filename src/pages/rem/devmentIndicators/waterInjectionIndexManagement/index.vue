@@ -168,7 +168,7 @@
     import {getOrgInfo,getOgfInfo} from "@/api/oilDeposit/ipm-03/basedata.js";
     import dayjs from "dayjs";
     export default {
-        name: "waterInjectionProduction",
+        name: "waterInjectionIndexManagement",
         components: {
             Echart,
         },

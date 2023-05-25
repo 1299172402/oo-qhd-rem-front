@@ -35,7 +35,7 @@
             <pagePanel headerTitle="年注入量" style="height: 490px" showBtn>
                 <Echart :chart-data="inInjection" height="100%"></Echart>   
             </pagePanel>
-            <pagePanel :headerTitle="`${oilFieldName || ''}平台注入量`" style="height:calc(100% - 530px);" showBtn>
+            <pagePanel :headerTitle="`${oilFieldName || ''}平台注入量`" style="height:500px;" showBtn>
                 <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#ptnzrl', `${oilFieldName || ''}平台注入量`)">下载</el-button>
                 <el-table id="ptnzrl" :data="tableData" highlight height="100%">
                     <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
@@ -262,7 +262,7 @@
             //返回按钮
             close() {
                 const obj = {
-                    name: "waterInjectionProduction"
+                    name: "waterInjectionIndexManagement"
                 };
                 this.$tab.closeOpenPage(obj);
             },
@@ -385,8 +385,9 @@
     }
     ::v-deep .app-content{
         height: calc(100% - 100px)!important;
+        overflow-y: scroll;
         .g-w100:first-child{
-          padding-top:0!important;  
+          padding-top:0!important;
         }
     }
     

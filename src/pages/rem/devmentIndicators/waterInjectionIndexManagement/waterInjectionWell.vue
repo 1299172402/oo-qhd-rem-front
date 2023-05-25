@@ -34,7 +34,7 @@
             <pagePanel headerTitle="注水井分注率" style="height: 490px" showBtn>
                 <Echart :chart-data="waterInjectionRate" height="100%"></Echart>
             </pagePanel>
-            <pagePanel :headerTitle="`${oilFieldName || ''}注水井分注率明细`" style="height: calc(100% - 530px);" showBtn>
+            <pagePanel :headerTitle="`${oilFieldName || ''}注水井分注率明细`" style="height: 500px;" showBtn>
                 <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#zhjfzlmx', `${oilFieldName || ''}注水井分注率明细`)">
                     下载
                 </el-button>
@@ -234,7 +234,7 @@
             //返回按钮
             close() {
                 const obj = {
-                    name: "waterInjectionProduction"
+                    name: "waterInjectionIndexManagement"
                 };
                 this.$tab.closeOpenPage(obj);
             },
@@ -378,8 +378,9 @@
     }
     ::v-deep .app-content{
         height: calc(100% - 100px)!important;
+        overflow-y: scroll;
         .g-w100:first-child{
-          padding-top:0!important;  
+          padding-top:0!important;
         }
     }
     ::v-deep .el-main {

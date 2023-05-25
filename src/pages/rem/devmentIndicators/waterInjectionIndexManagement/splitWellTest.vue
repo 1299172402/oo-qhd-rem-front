@@ -48,7 +48,7 @@
                 <Echart :chart-data="separateInjectionWellTestRate" height="calc(100% - 65px)"></Echart>
             </pagePanel>
 
-            <pagePanel :headerTitle="`${oilFieldName || ''}分注井测试明细`" style="height:calc(100% - 530px);" showBtn>
+            <pagePanel :headerTitle="`${oilFieldName || ''}分注井测试明细`" style="height:500px;" showBtn>
                 <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#fzjcsmx', `${oilFieldName || ''}分注井测试明细`)">
                     下载
                 </el-button>
@@ -258,7 +258,7 @@
             //返回按钮
             close() {
                 const obj = {
-                    name: "waterInjectionProduction"
+                    name: "waterInjectionIndexManagement"
                 };
                 this.$tab.closeOpenPage(obj);
             },
@@ -412,8 +412,9 @@
     }
     ::v-deep .app-content{
         height: calc(100% - 100px)!important;
+        overflow-y: scroll;
         .g-w100:first-child{
-          padding-top:0!important;  
+          padding-top:0!important;
         }
     }
     
