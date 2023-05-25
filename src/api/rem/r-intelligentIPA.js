@@ -292,7 +292,7 @@ export function wellAvgFluidProdAllocUpdate(params) {
         method: "post",
         data: params
     }).then((res) => {
-        if (res.data.code == 0) {
+        if (!res) {
             return true
         } else {
             return false
