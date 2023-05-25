@@ -11,7 +11,7 @@ export default [
             {
                 path: 'index',
                 name: 'index',
-                hidden:true,
+                hidden:false,
                 component: () => import('@/pages/rem/intelligence/index.vue'),
                 meta: { title: '首页',icon: 'icon' },
             },

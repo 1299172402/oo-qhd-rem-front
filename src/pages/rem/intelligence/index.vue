@@ -2,7 +2,7 @@
     <!-- 智能注采调配首页 -->
     <!-- 每一个echarts请求都增加了最后一个死数据，有的echarts请求是直接写死，变量注释了，剩余油情况放了一张图片-->
     <!-- 智能注采调配首页 -->
-    <div class="app-container">
+    <div class="app-container" style="height:100%">
         <header-search>
             <div class="my-5" style="margin:20px 0">
                 <span>油田：</span>
@@ -50,7 +50,7 @@
         </header-search>
         <div style="display: flex;justify-content: space-around; height: 100%;">
             <div style="flex:4; height: 100%; margin-right: 15px;">
-                <page-panel :header-title="title" style=" height: 100%; ">
+                <page-panel :header-title="title" style=" height: 100%; " :show-btn="true">
                     <el-row :gutter="20" style="margin-bottom: 10px;">
                         <el-col :span="12">
                             <div class="grid-content bg-purple">
@@ -171,25 +171,16 @@
             </div>
 
             <div style="flex:4; height: 100%; margin-right: 15px;">
-                <page-panel header-title="分层注采量" style="height: 100%;position: relative; ">
-                    <el-button
-                        @click="getDetail"
-                        type="primary"
-                        style="position: absolute;top: 0;right: 10px;"
-                    >详细
-                    </el-button>
+                <page-panel header-title="分层注采量" style="height: 100%;position: relative; " :show-btn="true">
+                    <button class="detailLinkBtn" @click="getDetail">详细</button>
                     <div id="main" style="width: 100%; height: 100%"></div>
                 </page-panel>
             </div>
 
             <div style="width: 33%;height: 100%;display:flex;flex-direction: column;justify-content: space-between;">
-                <div style="flex: 3;margin-bottom: 15px;">
-                    <page-panel header-title="单井井底流压" style="height: 100%; ">
-                        <template slot="header">
-                            <div align="right" style="margin-right: 10px;">
-                                <el-button @click="detailed = true" type="primary">详细</el-button>
-                            </div>
-                        </template>
+                <div style="height:calc(60% - 15px);margin-bottom: 15px;">
+                    <page-panel header-title="单井井底流压" style="height: 100%; ":show-btn="true">
+                        <button class="detailLinkBtn" @click="detailed = true">详细</button>
                         <Echart
                             :chart-data="getResidueOilChart()"
                             height="100%"
@@ -211,8 +202,8 @@
                         </el-table>
                     </el-dialog>
                 </div>
-                <div style="flex: 2;">
-                    <page-panel header-title="超欠注情况统计" style="height: 100%;">
+                <div style="height:40%">
+                    <page-panel header-title="超欠注情况统计" style="height: 100%;" :show-btn="true">
                         <el-table
                             :data="tableData"
                             height="100%"
@@ -816,6 +807,19 @@ export default {
     text-align: center;
     line-height: 42px;
     box-shadow: 0px 0px 15px #66ffff inset;
+}
+.detailLinkBtn {
+    position: absolute;
+    right: 60px;
+    top: 5px;
+    width: 50px;
+    height: 20px;
+    background: linear-gradient(90deg, #0751b0, #50a6ec);
+    text-align: center;
+    font-size: smaller;
+    border: 0;
+    cursor: pointer;
+    color: #ffffff;
 }
 </style>
 

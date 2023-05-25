@@ -94,7 +94,7 @@ export function getUltraShortShotStatistics(params) {
         params
     }).then((res) => {
         // if(res.data.code === 0 && res.data.data)
-        return res.data.data
+        return res.data
 
     });
 }

@@ -61,9 +61,9 @@ export function getselectWellGroup (params) {
         method: "get",
         params,
     }).then((res) => {
-        if (res.data.data) {
+        if (res.data) {
             // 返回数据 [{"wellGroupId":"井组标识", "wellGroupName":"井组名"}]
-            return res.data.data;
+            return res.data;
         } else {
             return [];
         }
@@ -125,9 +125,9 @@ export function postCoefficientconnectivity (data) {
         method: "post",
         data,
     }).then((res) => {
-        if (res.data.data) {
+        if (res.data) {
             // 返回数据 [{"wellGroupId":"井组标识", "wellGroupName":"井组名"}]
-            return res.data.data;
+            return res.data;
         } else {
             return [];
         }
