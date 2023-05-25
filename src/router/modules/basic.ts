@@ -37,6 +37,12 @@ export default [
         component: () => import('@/pages/rem/basic/customQuery/index.vue'),
         meta: { title: '自定义查询' }
       },
+        {
+            path: 'wellGroup_Maintenance',
+            name: 'wellGroup_Maintenance',
+            component: () => import('@/pages/rem/basic/wellGroup_Maintenance/index.vue'),
+            meta: { title: '井组' }
+        },
     ],
   },
 ];
