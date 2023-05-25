@@ -75,9 +75,7 @@ export function getResidueOilCondotion(params) {
         method: "get",
         params
     }).then((res) => {
-        if (res.data.code === 0 && res.data.data)
-            // res.data.data.sort((a,b) => a.dhFlowingPress-b.dhFlowingPress)
-            return res.data.data
+        return res.data
     });
 }
 

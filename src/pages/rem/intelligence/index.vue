@@ -407,7 +407,8 @@ export default {
                 legend: {
                     textStyle: {
                         color: "#66ffff"
-                    }
+                    },
+                    bottom: "bottom",
                 },
                 tooltip: {
                     trigger: 'axis',

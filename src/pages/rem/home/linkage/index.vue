@@ -36,6 +36,13 @@ export default {
                 for(let i=0;i<7;i++){
                     this.$el.querySelectorAll('img')[i].style.display = 'none'
                 }
+                //报警信息================
+                if(this.loopNum == 2){
+                     this.currentLists[5].warningShowFlag = true
+                }
+                //======================
+                
+                
                 this.$el.querySelectorAll('img')[this.loopNum].style.display = 'block'
                 if(this.loopNum == 6){
                    this.loopNum = -1
@@ -72,7 +79,7 @@ export default {
                         pWidth: 'width:11vw',
                     },
                     imgUrl: new URL('./topBox/22.png', import.meta.url).href,
-                    showFlag:false
+                    showFlag:false,
                 },
 
                 {
@@ -115,7 +122,8 @@ export default {
                         pWidth: 'width:8.5vw'
                     },
                     imgUrl: new URL('./topBox/25.png', import.meta.url).href,
-                    showFlag:false
+                    showFlag:false,
+                    warningShowFlag:false
                 },
                 {
                     style: 'position:absolute;left: 2%;top: 60%;width:20%;height:40%;',

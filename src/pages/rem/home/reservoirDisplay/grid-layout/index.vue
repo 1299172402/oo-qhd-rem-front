@@ -276,7 +276,7 @@ export default {
                     return problemStatistics;
                 case "关停井统计":
                     return shutdownWell;
-                case "秦皇岛32-6南区":
+                case "单井井底流压":
                     return exhibition;
                 case "分层注入量":
                     return stratifiedInjection;

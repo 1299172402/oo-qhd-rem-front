@@ -108,7 +108,7 @@ export default {
                 { x: 0, y: 28, w: 3, h: 12, i: "5", name: "产能波动", show: true },
                 { x: 3, y: 28, w: 3, h: 12, i: "6", name: "问题井统计", show: true },
                 { x: 6, y: 28, w: 4, h: 12, i: "7", name: "关停井统计", show: true },
-                { x: 0, y: 40, w: 3, h: 20, i: "8", name: "秦皇岛32-6南区", show: true },
+                { x: 0, y: 40, w: 3, h: 20, i: "8", name: "单井井底流压", show: true },
                 { x: 3, y: 40, w: 3, h: 20, i: "9", name: "分层注入量", show: true },
                 { x: 6, y: 40, w: 4, h: 10, i: "10", name: "措施效果跟踪表", show: true },
                 { x: 6, y: 50, w: 4, h: 10, i: "11", name: "超欠注情况统计", show: true },

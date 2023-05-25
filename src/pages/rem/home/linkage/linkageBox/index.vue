@@ -1,9 +1,16 @@
 <template>
     <div class="box" @mouseenter="show = true" @mouseleave="show = false">
         <el-collapse-transition>
-            <div v-show="show||remHome || showFlag">
+            <div v-show="show||remHome || showFlag ||  warningShowFlag ">
                 <div class="transition-box">
                     <div class="transition-box-content" :style="{'background-image':`url(${currentList.imgUrl})` }">
+                        <div v-show="warningShowFlag" class="mcBox" style="">
+
+                        </div>
+                    </div>
+                    <div v-if="warningShowFlag">
+                        <button class="detailLinkBtn" @click="confirm()">确认</button>
+                        <button class="detailLinkBtn" @click="linkRoute()">分析</button>
                     </div>
                 </div>
             </div>
@@ -13,7 +20,7 @@
             <span class="btnGo"></span>
         </p>
         <el-collapse-transition>
-            <div v-show="show || showFlag" :style="currentList.boxStyle.bottomMargin">
+            <div v-show="show || showFlag || warningShowFlag" :style="currentList.boxStyle.bottomMargin">
                 <div class="transition-box-bottom">
                     <div class="pad">
                         <div>
@@ -55,8 +62,21 @@ export default {
     created() {
         console.log(this.currentList.imgUrl);
     },
+    computed:{
+        getWarningShowFlag(){
+            return this.currentList.warningShowFlag
+        }
+    },
+    watch:{
+        getWarningShowFlag:{
+            handler(Nval){
+                this.warningShowFlag = true
+            }
+        }
+    },
     data() {
         return {
+            warningShowFlag:this.currentList.warningShowFlag,
             show: false,
             content: false,
             selectIndex: 0,
@@ -78,7 +98,10 @@ export default {
         linkTo: function (url) {
             if (!url) return
             window.open(url, '_blank');
-        }
+        },
+        confirm(){
+            this.warningShowFlag = false
+        },
     }
 }
 </script>
@@ -181,6 +204,32 @@ export default {
     }
 }
 
+.detailLinkBtn {
+    width: 50px;
+    height: 20px;
+    background: linear-gradient(90deg, #0751b0, #50a6ec);
+    text-align: center;
+    font-size: smaller;
+    border: 0;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.mcBox{
+    animation:mcBox 1s linear infinite;
+    background:rgba(255,0,0,0.56);height:100%;width:100%;
+    //left: 20%;top:10%;
+    //border-radius: 60px;
+}
+
+@keyframes mcBox{
+    0%{
+        opacity:0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 </style>
 
 
