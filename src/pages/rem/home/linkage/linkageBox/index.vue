@@ -101,7 +101,13 @@ export default {
         },
         confirm(){
             this.warningShowFlag = false
+            // https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport
+            // window.open ( 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport','_blank')
         },
+        linkRoute(){
+            window.open  ('https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport','_blank');
+            // https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport
+        }
     }
 }
 </script>
