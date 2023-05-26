@@ -482,7 +482,6 @@ export default {
           item.wellIndex = wellIndex.toString();
           item.layerIndex = layerIndex.toString();
         })
-        console.log(arr)
         this.form.tableData2 = arr
         // this.getSpanArr(arr, 'injWellNo')
         this.groupBy(arr)
