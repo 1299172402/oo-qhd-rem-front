@@ -43,6 +43,21 @@ export function getListEnter(query) {
   });
 }
 
+export function getListEnterSelect(query) {
+  return request({
+    url: "/system/enter/officeSelected",
+    method: "get",
+    params: query
+  });
+}
+export function getListEnterAll(query) {
+  return request({
+    url: "/system/enter/officeSelector",
+    method: "get",
+    params: query
+  });
+}
+
 // 门户办公模式-选中
 export function selectEnter(data) {
   return request({

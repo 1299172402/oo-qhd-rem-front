@@ -25,6 +25,15 @@ export function validURL(url) {
 }
 
 /**
+ * @param {string} url
+ * @returns {Boolean}
+ */
+export function looselyValidURL(url) {
+  const reg = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})?(\/[\w!@#$%^&*;=?\/~+-]*)*$/;
+  return reg.test(url);
+}
+
+/**
  * @param {string} str
  * @returns {Boolean}
  */

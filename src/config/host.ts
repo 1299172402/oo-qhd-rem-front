@@ -47,9 +47,9 @@ export default {
   },
   stage: {
     ...config,
-    processAPI: "http://kd.bytzdev.xyz:38880/stage-api/workflow",
+    processAPI: "",
     // 正式环境接口地址
-    API: "http://kd.bytzdev.xyz:38880/stage-api",
+    API: "",
     // 正式环境 cdn 路径
     CDN: ""
   },

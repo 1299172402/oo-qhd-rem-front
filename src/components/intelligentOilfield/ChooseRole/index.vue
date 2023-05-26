@@ -11,6 +11,7 @@
     >
       <el-table
         ref="table"
+        class="dialog-table"
         :data="dataSource"
         border
         @selection-change="handleSelectionChange"
@@ -131,7 +132,5 @@ export default {
 <style scoped lang="less">
 .el-table {
   border-bottom: 1px solid #ebeef5;
-  max-height: 450px;
-  overflow-y: auto;
 }
 </style>

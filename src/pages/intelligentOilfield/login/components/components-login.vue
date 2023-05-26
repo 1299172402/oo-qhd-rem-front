@@ -124,7 +124,7 @@
           <t-tab-panel value="password" label="系统用户" style="padding: 50px 35px 20px">
             <t-form-item name="username">
               <div class="textDiv">
-                用户名&nbsp;|
+                用户名
               </div>
               <el-input
                 v-model="formData.username"
@@ -137,7 +137,7 @@
 
             <t-form-item name="password">
               <div class="textDiv">
-                密&nbsp;&nbsp;&nbsp;码&nbsp;|
+                密码
               </div>
               <el-input
                 v-model="formData.password"
@@ -149,9 +149,9 @@
               <div class="bottomBorderDiv" />
             </t-form-item>
 
-            <t-form-item name="yzm">
+            <t-form-item name="code">
               <div class="textDiv">
-                验证码&nbsp;|
+                验证码
               </div>
               <el-input
                 v-model="formData.code"
@@ -239,7 +239,7 @@ const FORM_RULES = {
   phone: [{ required: true, message: "手机号必填", type: "error" }],
   username: [{ required: true, message: "账号必填", type: "error" }],
   password: [{ required: true, message: "密码必填", type: "error" }],
-  verifyCode: [{ required: true, message: "验证码必填", type: "error" }]
+  code: [{ required: true, message: "验证码必填", type: "error" }]
 };
 /** 高级详情 */
 export default Vue.extend({
@@ -508,8 +508,24 @@ export default Vue.extend({
         font-weight: 400;
         color: #566570;
         margin-right: 0px;
-        width: 75px;
+        width: 4em;
         padding-left: 9px;
+        text-align: justify;
+        text-align-last: justify;
+        text-justify: distribute-all-lines;
+        position: relative;
+        &::after  {
+          content: "|";
+          display: inline-block;
+          position: absolute;
+          right: -1em;
+          top: -0.5px;
+        }
+      }
+
+      .loginInput.el-input {
+        flex: 1;
+        margin-left: 2em;
       }
       .borderDiv {
         width: 1px;

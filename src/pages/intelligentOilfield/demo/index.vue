@@ -1226,6 +1226,12 @@
         default-expand-all
       />
     </div>
+    <div class="spaceMargin">
+      26.3、树形多选控件【子系统提供】
+    </div>
+    <div style="width: 20%; height: 600px">
+      <tree-multiple-selection />
+    </div>
     <div style="margin: 40px 0">
       =================================end========================
     </div>
@@ -1241,6 +1247,7 @@ import searchTableMixin from "@/pages/common/mixins/searchTableMixin";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import yearRange from "@/components/intelligentOilfield/year-range/index.vue";
+import treeMultipleSelection from "@/components/intelligentOilfield/tree_multiple_selection/index.vue";
 
 export default {
   components: {
@@ -1249,7 +1256,8 @@ export default {
     verticalSwitchButton,
     FileUpload,
     Treeselect,
-    yearRange
+    yearRange,
+    treeMultipleSelection
   },
   mixins: [searchTableMixin],
   data() {

@@ -54,6 +54,28 @@ export function getListBoard(query) {
   });
 }
 
+export function getListBoardSelect(query) {
+  return request({
+    url: "/system/board/officeSelected",
+    method: "get",
+    params: query,
+    headers: {
+      showLoading: false
+    }
+  });
+}
+
+export function getListBoardAll(query) {
+  return request({
+    url: "/system/board/officeSelector",
+    method: "get",
+    params: query,
+    headers: {
+      showLoading: false
+    }
+  });
+}
+
 // 门户办公模式-选中
 export function selectBoard(data) {
   return request({

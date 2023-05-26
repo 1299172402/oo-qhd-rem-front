@@ -17,6 +17,21 @@ export function getList(query) {
   });
 }
 
+export function getListSelect(query) {
+  return request({
+    url: "/system/index/shadowSelected",
+    method: "get",
+    params: query
+  });
+}
+export function getListAll(query) {
+  return request({
+    url: "/system/index/shadowSelector",
+    method: "get",
+    params: query
+  });
+}
+
 // 门户投影模式-确定/取消
 export function sureIndex(data) {
   return request({
@@ -66,6 +81,9 @@ export function updateCustomPanel(data) {
 export function listByCustomId(customId) {
   return request({
     url: `/system/CustomPanel/listByCustomId/${customId}`,
-    method: "get"
+    method: "get",
+    headers: {
+      showLoading: false
+    }
   });
 }

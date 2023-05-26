@@ -177,3 +177,83 @@ export function monitorLinks(data) {
     data
   });
 }
+
+// 平台链路列表
+// 列表
+export function terraceList(query) {
+  return request({
+    url: "system/terrace/list",
+    method: "get",
+    params: query
+  });
+}
+
+// 新增
+export function addTerrace(data) {
+  return request({
+    url: "system/terrace/add",
+    method: "post",
+    data
+  });
+}
+
+// 修改
+export function editTerrace(data) {
+  return request({
+    url: "system/terrace/edit",
+    method: "post",
+    data
+  });
+}
+
+// 详情
+export function getTerraceDetail(terraceId) {
+  return request({
+    url: `system/terrace/${terraceId}`,
+    method: "get"
+  });
+}
+
+// 删除
+export function removeTerrace(terraceId) {
+  return request({
+    url: `system/terrace/${terraceId}`,
+    method: "post"
+  });
+}
+
+// 云端链路列表
+
+// 新增
+export function addLink(data) {
+  return request({
+    url: "system/link/add",
+    method: "post",
+    data
+  });
+}
+
+// 修改
+export function editLink(data) {
+  return request({
+    url: "system/link/edit",
+    method: "post",
+    data
+  });
+}
+
+// 详情
+export function getLinkDetail(linkId) {
+  return request({
+    url: `system/link/${linkId}`,
+    method: "get"
+  });
+}
+
+// 删除
+export function removeLink(linkId) {
+  return request({
+    url: `system/link/${linkId}`,
+    method: "post"
+  });
+}

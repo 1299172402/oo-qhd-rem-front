@@ -54,6 +54,7 @@
       </el-form>
       <el-table
         ref="table"
+        class="dialog-table"
         :data="dataSource"
         :row-key="getRowKey"
         @selection-change="handleSelectionChange"

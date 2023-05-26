@@ -52,6 +52,22 @@ export function getListBusiness(query) {
   });
 }
 
+export function getListBusinessSelect(query) {
+  return request({
+    url: "/system/business/shadowSelected",
+    method: "get",
+    params: query
+  });
+}
+
+export function getListBusinessAll(query) {
+  return request({
+    url: "/system/business/shadowSelector",
+    method: "get",
+    params: query
+  });
+}
+
 // 门户投影模式-选中业务中心
 export function selectBusiness(data) {
   return request({

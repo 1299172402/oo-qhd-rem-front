@@ -8,6 +8,8 @@ import router from "@/router/index";
 import { tansParams, blobValidate } from "@/utils/commonSettings";
 import errorCode from "@/utils/errorCode";
 
+const whiteListLoading = store.getters["permission/whiteListLoading"];
+
 let downloadLoadingInstance;
 
 // loading对象
@@ -86,7 +88,7 @@ instance.interceptors.request.use(
     //   config.headers.Authorization = `Bearer ${store.getters['user/token']}`;
     // }
     // 判断当前请求是否设置了不显示Loading
-    if (config.headers.showLoading !== false && config.url !== "system/rang/queryCurrent" && config.url.substring(0, config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && config.url !== "/system/monitor/links") {
+    if (config.headers.showLoading !== false && config.url.substring(0, config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && whiteListLoading.indexOf(config.url) === -1) {
       showLoading(config.headers.loadingTarget);
     }
     return config;

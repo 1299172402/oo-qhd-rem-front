@@ -372,9 +372,11 @@ export default {
       this.$modal
         .confirm("是否确认删除改字典？")
         .then(() => delType(dictIds))
-        .then(() => {
+        .then(res => {
           this.getList();
-          this.$modal.msgSuccess("删除成功");
+          if (res.data.code === 200) {
+            this.$modal.msgSuccess("删除成功");
+          }
         })
         .catch(() => { });
     },

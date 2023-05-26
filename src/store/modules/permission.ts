@@ -79,7 +79,9 @@ const state = {
   whiteListRouters: ["/login", "/appCallback"],
   routers: [],
   routerLink: "", // 增加路由链接
-  defaultTo: null
+  defaultTo: null,
+  // 去掉loading的白名单
+  whiteListLoading: ["system/rang/queryCurrent", "/system/monitor/links", "/system/enter/inEnter", "/system/enter/outEnter", "/system/business/inBusiness", "/system/business/outBusiness", "/system/board/inBoard", "/system/board/outBoard", "/system/app/saveAppUserRelation", "/system/index/inIndex", "/system/index/outIndex"]
 };
 // 遍历后台传来的路由字符串，转换为组件对象
 function filterAsyncRouter(asyncRouterMap, type = false) {
@@ -137,7 +139,8 @@ const getters = {
   routers: state => state.routers,
   whiteListRouters: state => state.whiteListRouters,
   routerLink: state => state.routerLink,
-  defaultTo: state => state.defaultTo
+  defaultTo: state => state.defaultTo,
+  whiteListLoading: state => state.whiteListLoading
 };
 const actions = {
   async initRoutes({ commit }) {

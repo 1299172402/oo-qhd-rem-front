@@ -10,6 +10,22 @@ export function applicationCenterList(data) {
   });
 }
 
+export function applicationCenterList2(data) {
+  return request({
+    url: `system/app/officeSelected?appName=${data.appName}&apply=${data.apply}&appCategory=${data.appCategory}`,
+    method: "get",
+    data
+  });
+}
+
+export function applicationCenterListAll(data) {
+  return request({
+    url: `system/app/officeSelector?appName=${data.appName}&apply=${data.apply}&appCategory=${data.appCategory}`,
+    method: "get",
+    data
+  });
+}
+
 // 应用中心-批量选中未选中应用确认
 export function batchUpdateApp(data) {
   return request({
