@@ -168,12 +168,18 @@
                             </el-col>
                         </el-row>
                     </div>
+                    <div style="display: flex;justify-content: flex-end;margin-bottom:10px;">
+                        <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)"
+                        @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate}})">
+                        归因分析详情
+                        </el-button>
+                        <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)" 
+                        @click="$router.push({path:'/plan/personnelMeasures',query:{platform,wellId,currentDate}})">措施推荐详情</el-button>
+                    </div>
                     <div style="flex:1;min-height:380px;">
                         <pagePanel headerTitle="油井动态分析详情列表" style="margin-top:0;height:100%;">
                             <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                 <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
-                                <!--生产动态项目-->
-                                <!-- :render-header="renderHeader" -->
                                 <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" align="center" min-width="160" sortable="custom" label-class-name="twoRowHeader">
                                     <template #header>
                                         <div class="headerSortRow1" v-if="item.name && item.name.split(' ')[1]">
@@ -210,12 +216,11 @@
                                             <span v-if="scope.row[item.code] == null"></span>
                                             <span v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel }}</span>
                                             <el-tooltip v-else class="item" effect="dark" :content="scope.row[item.code].value + ''" placement="top">
-                                                <span>{{ scope.row[item.code].showLabel }}{{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(4):'-'}}</span>
+                                                <span>{{ scope.row[item.code].showLabel }}{{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2):'-'}}</span>
                                             </el-tooltip>
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
-                  
                                 <!--潜力分析-->
                                 <el-table-column prop="potentialAnalysis" label="潜力分析" align="center">
                                     <el-table-column v-for="(item, index) in potentialAnalysisTab" :key="index" :prop="item.code" :label="item.name" align="center">
@@ -277,20 +282,28 @@
             <headerSearch style="height:80px;">
                 <div class="g-row-flex-V g-w100 g-h100">
                     <span>油田：</span>
-                    <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="changeOilFeild">
+                    <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="getFieldsData">
                         <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId" :disabled="item.disabled">
                         </el-option>
                     </el-select>
+                    
+                    <span style="margin-left:15px;">区块：</span>
+                    <el-select v-model="selectBlock" style="width: 180px" filterable clearable @change="queryPlatFormList">
+                        <el-option v-for="item in blocks" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
+                    </el-select>
+                    
                     <span style="margin-left:15px;">平台：</span>
-                    <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="changePlatForm">
+                    <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="queryOilWellListByPid">
                         <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId" :disabled="item.disabled">
                         </el-option>
                     </el-select>
+                    
                     <span style="margin-left:15px;">井号：</span>
                     <el-select v-model="wellId" class="f2" style="width:180px" filterable clearable>
                         <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled">
                         </el-option>
                     </el-select>
+                    
                     <span style="margin-left:15px;">评价时间：</span>
                     <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
@@ -448,6 +461,10 @@
                                             </span>
                                         </div>
                                     </div>
+                                    <div style="width: 250px;display: flex;justify-content: flex-end;margin-top: 30px;">
+                                        <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)"
+                                        @click="$router.push({path:'/plan/personnelMeasures',query:{platform,wellId,currentDate}})">措施推荐详情</el-button>
+                                    </div>
                                 </div>
                             </div>
                         </info-window>
@@ -535,6 +552,11 @@
                                                 {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span>
                                                 </span>
                                             </div>
+                                            <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;">
+                                                <el-button type="primary" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)" @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate}})">
+                                                    归因分析详情
+                                                </el-button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -607,14 +629,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="z3" style="opacity: 0;">
-                                        <div class="z-row-right" style="height:130px;position: relative;top: 48px;">
-                                            <div class="name">措施推荐</div>
-                                            <div class="num">
-                                                <span v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"> {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') }}：<span style="color: #FFC835; font-size: 14px;"> {{ (item.value > 0 ? item.value : '(0)') }} </span></span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <div class="z3" ></div>
                                 </div>
                             </div>
                         </info-window>
@@ -742,6 +757,7 @@
     } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
     import {
         fetchOilFields,
+        fetchFields,  
         fetchPlatforms,
         fetchProductionWellsByPlatform,
         fetchProductionWells
@@ -764,6 +780,9 @@
                 //油田筛选条件
                 ytData: [],
                 selYtdm: "", //选中项
+                //区块筛选条件
+                blocks:[],
+                selectBlock:'',
                 //平台筛选条件
                 ptData: [],
                 platform: "", //选中项
@@ -824,6 +843,13 @@
                 //选中分析项目
                 selCode: "",
                 selTag: "",
+                //换大泵
+                hdbSelCode:'',
+                //采液强度偏高
+                cyqdpgSelCode:'',
+                //采液强度偏低
+                cyqdpdSelCode:'',
+                
                 //生产动态可用项目
                 productionTrendsOptions: [],
                 productionNum:{
@@ -922,18 +948,82 @@
                 this.checkCurrentDate(); //初始化评价日期
                 this.queryOilFeildList(); //初始化油田
             },
-            //更改油田编码
-            changeOilFeild(val) {
-                this.queryPlatFormList();
+            //油井下拉框数据获取
+            queryOilFeildList(){
+                fetchOilFields().then((res) => {
+                    let msg = res.data.msg;
+                    if (msg == "success") {
+                        let myData = res.data.data.oilFields;
+                        this.ytData = myData;
+                        //初始选中油田
+                        if (this.selYtdm == "" || this.selYtdm == undefined) {
+                            this.selYtdm = '3FC9A818F5BC43B88270DB80BBB3018F'; //hwh xg 默认初始化 qhd326//myData[0].oilFieldId;
+                        }
+                        this.getFieldsData(); 
+                    }
+                });
             },
-            //更改平台编码
-            async changePlatForm(val) {
-                if (val && val != "") {
-                    await this.queryOilWellListByPid();
+            //区块下拉框数据获取
+            getFieldsData(){
+                let request = {
+                    oilFieldId: this.selYtdm
+                };
+                fetchFields(request).then((res) => {
+                    if (res.data.data.fields.length != 0) { //获得区块信息
+                        this.blocks = res.data.data.fields;
+                        //默认选中第一个区块信息
+                        this.selectBlock = this.blocks[0].fieldId;
+                        this.queryPlatFormList();
+                    }
+                });
+            },
+            //平台下拉选择
+            queryPlatFormList() {
+                this.paramMap.oilFieldId = this.selYtdm; //油田
+                this.paramMap.selectBlock=this.selectBlock;//区块
+                this.ptData=[];
+                this.wellData=[];
+                fetchPlatforms(this.paramMap).then((res) => {
+                    let msg = res.data.msg;
+                    if (msg == "success") {
+                        let myData = res.data.data.platform;
+                        this.ptData = myData;
+                        //初始选中油田
+                        if (!this.platform) {
+                            myData[0].platFormId=myData[0].oilFieldId;
+                            this.platform = myData[0].platFormId;
+                        } else {
+                            this.platform = '';
+                        }
+                        this.queryOilWellListByPid(); 
+                    }
+                });
+            },
+            //获取井号
+            async queryOilWellListByPid() {
+                if (this.platform == this.selYtdm) {
+                    this.paramMap.oilFieldId = this.selYtdm; //登记油田代码
+                    await fetchProductionWells(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.productionWells;
+                            this.wellData = myData;
+                        }
+                    });
+                } else {
+                    this.paramMap.platformId = this.platform?this.platform:this.ptData[0].oilFieldId; //登记平台代码
+                    await fetchProductionWellsByPlatform(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.productionWells;
+                            this.wellData = myData;
+                        }
+                    });
                 }
-                if (this.initTypes > 0) { //自动查询数据
+                
+                if(this.initTypes==1){//第一次加载
+                    this.initTypes=2;
                     this.doSearch();
-                    this.initTypes--;
                 }
             },
             //进行数据查询处理
@@ -944,14 +1034,11 @@
                 //重置
                 this.listPage = 1;
                 //重新初始化相关数据项目
-                // this.paramMap.evalTopic = "生产动态";
                 this.paramMap.evaluationDate = this.currentDate;
                 this.paramMap.oilFieldId = this.selYtdm;
                 this.paramMap.platformId = this.platform;
                 this.paramMap.timeGranularityCode = "";
                 this.paramMap.wellId = this.wellId;
-                //触发初始选中  （测试没有使用，需要异步使用，还需要）
-                //this.selRadioIterm(this.selCode, this.selTag);
                 Promise.all([
                     //执行提取
                     this.queryWellTable(),
@@ -976,9 +1063,6 @@
             //检索之后的处理
             dealInitData() {
                 var wellInfo = this.dealTableData;
-                
-                
-                
                 if(wellInfo.length){
                     wellInfo.forEach((el,i)=>{
                         if(el.cyqd.showLabel&&el.cyqd.showLabel.includes('采液强度')){
@@ -995,9 +1079,6 @@
                         }
                     })
                 }
-                
-                
-                
                 if (wellInfo != null) {
                     this.tableData = wellInfo.splice(0, this.listPage * 50);
                     this.listPage = 2;
@@ -1021,11 +1102,7 @@
                     }
                 }
                 this.$refs.tableList.doLayout();
-                
                 console.log('this.tableData',this.tableData)
-                /*this.$nextTick(()=>{
-
-                })*/
             },
             getMoreLog() {
                 if (this.scrollFlag) {
@@ -1260,58 +1337,29 @@
             //生产问题监测可用项目01,油井工况
             queryOilWellCondition() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.oilWellConditionOptions = [{
-                                code: "tag12",
-                                name: "正常",
-                                value: 200,
-                                wells: "JH1,JH2"
-                            },
-                            {
-                                code: "tag13",
-                                name: "管柱漏失",
-                                value: 0,
-                                wells: "JH7,JH9"
-                            },
-                            {
-                                code: "tag14",
-                                name: "泵效低",
-                                value: 0,
-                                wells: ""
-                            },
-                            {
-                                code: "tag15",
-                                name: "出砂",
-                                value: 1,
-                                wells: "JH1,JH6"
-                            }
-                        ];
+                    operatingStatus(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            
+                            this.oilWellConditionNum.allnum=0;
+                            this.oilWellConditionNum.zcnum=0;
+                            this.oilWellConditionNum.ycnum=0;
+                            myData.forEach((el,i)=>{
+                                this.oilWellConditionNum.allnum+=Number(el.value);
+                                if(el.name=='正常'){
+                                    this.oilWellConditionNum.zcnum=Number(el.value);
+                                }else{
+                                    myData[i].isShow=Number(el.value)?true:false;
+                                    this.oilWellConditionNum.ycnum+=Number(el.value);
+                                }
+                            })
+                            this.oilWellConditionNum.zczb=this.oilWellConditionNum.zcnum/this.oilWellConditionNum.allnum * 100;
+                            this.oilWellConditionNum.yczb=this.oilWellConditionNum.yczb/this.oilWellConditionNum.allnum * 100;
+                            this.oilWellConditionOptions = myData;
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        operatingStatus(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                
-                                this.oilWellConditionNum.allnum=0;
-                                this.oilWellConditionNum.zcnum=0;
-                                this.oilWellConditionNum.ycnum=0;
-                                myData.forEach((el,i)=>{
-                                    this.oilWellConditionNum.allnum+=Number(el.value);
-                                    if(el.name=='正常'){
-                                        this.oilWellConditionNum.zcnum=Number(el.value);
-                                    }else{
-                                        myData[i].isShow=Number(el.value)?true:false;
-                                        this.oilWellConditionNum.ycnum+=Number(el.value);
-                                    }
-                                })
-                                this.oilWellConditionNum.zczb=this.oilWellConditionNum.zcnum/this.oilWellConditionNum.allnum * 100;
-                                this.oilWellConditionNum.yczb=this.oilWellConditionNum.yczb/this.oilWellConditionNum.allnum * 100;
-                                this.oilWellConditionOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //生产问题监测可用项目02,供排关系
@@ -1459,7 +1507,6 @@
                             let msg = res.data.msg;
                             if (msg == "success") {
                                 let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                
                                 this.fluidStrengthNum.allnum=0;
                                 this.fluidStrengthNum.zcnum=0;
                                 this.fluidStrengthNum.ycnum=0;
@@ -1470,11 +1517,15 @@
                                     }else{
                                         myData[i].isShow=Number(el.value)?true:false;
                                         this.fluidStrengthNum.ycnum+=Number(el.value);
+                                        if(el.name=='采液强度偏高'){
+                                            this.cyqdpgSelCode=el.code;
+                                        }else if(el.name=='采液强度偏低'){
+                                            this.cyqdpdSelCode=el.code;
+                                        }
                                     }
                                 })
                                 this.fluidStrengthNum.zczb=this.fluidStrengthNum.zcnum/this.fluidStrengthNum.allnum * 100;
                                 this.fluidStrengthNum.yczb=this.fluidStrengthNum.yczb/this.fluidStrengthNum.allnum * 100;
-                                
                                 this.fluidStrengthOptions = myData;
                             }
                             resolve('success');
@@ -1734,6 +1785,11 @@
                                 this.potentialWellNum=0;
                                 myData.forEach((el,i)=>{
                                     this.potentialWellNum+=Number(el.value);
+                                    
+                                    if(el.name=='换大泵'){
+                                        this.hdbSelCode=el.code;
+                                    }
+                                    
                                 })
                                 this.recommendedMeasuresOptions = myData;
                             }
@@ -1807,7 +1863,6 @@
             },
             //选中项目
             selRadioIterm(val, tag) {
-                console.log('this.productionTrendsOptions',JSON.parse(JSON.stringify(this.productionTrendsOptions)))
                 this.scrollFlag = false;
                 let myData = []; //我的数据
                 let myWellCount = {}; //计算各项目的井数
@@ -1842,7 +1897,6 @@
                     }
                 }
                 console.log('myData',myData)
-                console.log('this.productionTrendsOptions',this.productionTrendsOptions)
                 //2、按照顺序初始化计数器、生成数据体
                 var tableData = this.initTableData;
                 var reData = [];
@@ -2164,110 +2218,6 @@
                     this.$refs.tableList.doLayout();
                 })
             },
-            //油井下拉框数据获取
-            queryOilFeildList() {
-                if (this.dataSource < 1) { //静态数据
-                    this.selYtdm = [{
-                        oilFieldId: "QHD326",
-                        name: "秦皇岛32-6"
-                    }];
-                    this.selYtdm = "QHD326";
-                    this.changeOilFeild(this.selYtdm); //级联条件处理
-                } else { //使用接口
-                    fetchOilFields().then((res) => {
-                        let msg = res.data.msg;
-                        if (msg == "success") {
-                            let myData = res.data.data.oilFields;
-                            this.ytData = myData;
-                            //初始选中油田
-                            if (this.selYtdm == "" || this.selYtdm == undefined) {
-                                this.selYtdm = '3FC9A818F5BC43B88270DB80BBB3018F'; //hwh xg 默认初始化 qhd326//myData[0].oilFieldId;
-                            }
-                            this.changeOilFeild(this.selYtdm); //级联条件处理
-                        }
-                    });
-                }
-            },
-            //初始平台下拉选择
-            queryPlatFormList() {
-                if (this.dataSource < 1) { //静态数据
-                    this.ptData = [{
-                            platFormId: "",
-                            platName: '全部'
-                        }, {
-                            platFormId: 'CEPI',
-                            platName: "CEPI"
-                        },
-                        {
-                            platFormId: 'CEPJ',
-                            platName: "CEPJ"
-                        }, {
-                            platFormId: 'WHPC',
-                            platName: "WHPC"
-                        }, {
-                            platFormId: 'WHPH',
-                            platName: "WHPH"
-                        }
-                    ];
-                    this.platform = "CEPI"; //选中
-                    this.changePlatForm(this.platform); //级联条件处理
-                } else { //使用接口fetchPlatforms
-                    this.paramMap.oilFieldId = this.selYtdm; //登记油田代码
-                    fetchPlatforms(this.paramMap).then((res) => {
-                        let msg = res.data.msg;
-                        if (msg == "success") {
-                            let myData = res.data.data.platform;
-                            this.ptData = myData;
-                            //初始选中油田
-                            if (!this.platform) {
-                                myData[0].platFormId=myData[0].oilFieldId;
-                                this.platform = myData[0].platFormId;
-                            } else {
-                                this.platform = '';
-                            }
-                            this.changePlatForm(this.platform); //级联条件处理
-                        }
-                    });
-                }
-            },
-            //初始油井下拉选择,根据油田
-            async queryOilWellList() {
-                if (this.dataSource < 1) { //静态数据
-                    this.wellData = [];
-                    this.wellId = ""; //选中
-                } else { //使用接口
-                    this.paramMap.oilFieldId = this.selYtdm; //登记油田代码
-                    await fetchProductionWells(this.paramMap).then((res) => {
-                        let msg = res.data.msg;
-                        if (msg == "success") {
-                            let myData = res.data.data.productionWells;
-                            this.wellData = myData;
-                        }
-                    });
-                }
-            },
-            //初始油井下拉选择,根据平台
-            async queryOilWellListByPid() {
-                if (this.dataSource < 1) { //静态数据
-                    this.wellData = [];
-                    this.wellId = ""; //选中
-                } else { //使用接口
-                    //判断平台全部情况 平台全部 的id 为 油田的id 所以通过判断油田和平台全部的id值是否相等调用不同方法
-                    if (this.platform == this.selYtdm) {
-                        await this.queryOilWellList();
-                    } else {
-                        this.paramMap.platformId = this.platform?this.platform:this.ptData[0].oilFieldId; //登记平台代码
-                        await fetchProductionWellsByPlatform(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.productionWells;
-                                this.wellData = myData;
-                            }
-                        });
-                    }
-                }
-            },
-
             //跳转到水井页面
             goWaterWell(val) {
                 if (val == "water") {
@@ -2509,6 +2459,7 @@
                         left: 180px;
                         top: -72px;
                     }
+                    
                     .z-content{
                         padding-left:36px;
                         .z-content-n{
@@ -2647,7 +2598,7 @@
                             .z-row-right{
                                 width: 250px;
                                 height: 100px;
-                                margin-right: 20px;
+                                margin-right: 40px;
                                 padding:0 30px 0 26px;
                                 padding-bottom:20px;
                                 border: 1px solid;
@@ -2687,7 +2638,7 @@
                         .z3{
                             flex:1;
                             display: flex;
-                            justify-content: flex-end;
+                            flex-direction: column;
                             .z-row-right{
                                 width:250px;
                                 height:110px;
@@ -2706,6 +2657,7 @@
                                     font-weight: 600;
                                 }
                                 .num{
+                                    cursor: pointer;
                                     padding-left:30px;
                                     flex-wrap: wrap;
                                     display: flex;
