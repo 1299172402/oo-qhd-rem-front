@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
+const baseUrl = process.env.NODE_ENV == "production" ? "/ipm/api" : "/ipm/api"
 
 export function getProductionSplit(data){
     return request({

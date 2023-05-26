@@ -180,7 +180,7 @@ export function getProductionSplit(params) {
         method: "post",
         params,
     }).then((res) => {
-        return res.data.data
+        return res.data
     })
         ;
 }
@@ -221,7 +221,7 @@ export function getChopSection(params) {
         method: "post",
         params
     }).then((res) => {
-        return res.data.data
+        return res.data
     })
         ;
 }

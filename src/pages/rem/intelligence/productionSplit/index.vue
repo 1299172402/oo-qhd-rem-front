@@ -444,7 +444,6 @@ export default {
                 return
             }
             getProductionSplit(params).then((res) => {
-                console.log(res)
                 res.forEach((item) => {
                     item.name = item.wellNo;
                     item.id = item.wellId;

@@ -376,7 +376,8 @@ export default {
         return;
       }
       getProductionSplit(params).then((res) => {
-        res.data.data.forEach((item) => {
+          console.log(res)
+        res.data.forEach((item) => {
           item.name = item.wellNo;
           item.id = item.wellId;
           item.airPermeability = Math.floor(item.airPermeability);

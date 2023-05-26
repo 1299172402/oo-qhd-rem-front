@@ -1,6 +1,6 @@
 <template>
     <div class="app-container" style="height: 100%;">
-        <header-search>
+        <header-search style="height: auto;display: grid">
             <el-form style="margin: 20px 0 10px 0" :inline="true">
                 <el-form-item label="油田：">
                     <el-select v-model="params.ogfId.value" disabled>
