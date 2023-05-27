@@ -60,7 +60,7 @@
 </template>
 
 <script>
-    import Echarts from "@/components/rem/tools/Echarts/index.vue";
+    import Echarts from "@/components/tools/Echarts/index.vue";
     import {produceData} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
     import {produceTableData} from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
     import FileSaver from 'file-saver';
@@ -105,7 +105,7 @@
                         itemGap: 14,
                     },
                     toolbox: {
-                        show: true,
+                        show: false,
                         itemSize: 20,
                         feature: {
                             saveAsImage: {
