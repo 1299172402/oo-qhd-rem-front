@@ -8,7 +8,7 @@
                 </el-tab-pane>
             </el-tabs>
         </div>
-        <header-search height="auto">
+        <header-search  style="height: auto;display: grid">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">
                 <span>油田：</span>
                 <el-select v-model="queryData.ogfId" filterable clearable disabled style="width:180px;">
@@ -365,7 +365,8 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                this.$router.push({name: "schemePrediction"})
+                window.open  ('https://ipm.tjioms-dev.tjltd.cnooc/#/waterManagement/merge','_blank');
+                // this.$router.push({name: "schemePrediction"})
             })
         },
         // 保存

@@ -1,77 +1,81 @@
 <template>
-    <div class="app-container" style="height: 100%">
-        <header-search>
+    <div style="height: 100%">
+        <header-search style="height: auto">
             <el-form style="margin: 20px 0 10px 0" :inline="true">
-                <el-form-item label="油田：">
-                    <el-select v-model="params.ogfId.value" disabled>
-                        <el-option
-                            v-for="item in params.ogfList"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                        ></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="区块：">
-                    <el-select v-model="params.blockId.value" disabled>
-                        <el-option
-                            v-for="item in params.blockList"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                        ></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="井别：">
-                    <el-select v-model="params.wellCategory" class="f2" style="width: 100px" filterable disabled>
-                        <el-option
-                            v-for="item  in wellCategoryList"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id"
-                        ></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="井号：">
-                    <el-select v-model="wellId" class="f2" disabled>
-                        <el-option
-                            v-for="item in params.wellId"
-                            :key="item.wellId"
-                            :label="item.wellName"
-                            :value="item.wellId"
-                        ></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="时间：">
-                    <el-date-picker
-                        v-model="params.value"
-                        type="daterange"
-                        range-separator="-"
-                        style="width: 250px"
-                        start-placeholder="开始日期"
-                        end-placeholder="结束日期"
-                        value-format="yyyy-MM-dd"
-                        disabled
-                    ></el-date-picker>
-                </el-form-item>
-                <el-button
-                    type="primary"
-                    icon="el-icon-search"
-                    style="margin-left: 20px"
-                    @click="doSearch"
-                    disabled
-                >搜索
-                </el-button>
-                <el-button
-                    type="primary"
-                    class="commonBtn"
-                    icon="el-icon-refresh"
-                    style="margin-left: 20px"
-                    @click="doSearch"
-                    disabled
-                >重置
-                </el-button>
-                <el-button type="primary"  style="float: right" @click="back">返回</el-button>
+                <el-row>
+                    <el-form-item label="油田：">
+                        <el-select v-model="params.ogfId.value" disabled>
+                            <el-option
+                                v-for="item in params.ogfList"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="区块：">
+                        <el-select v-model="params.blockId.value" disabled>
+                            <el-option
+                                v-for="item in params.blockList"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="井别：">
+                        <el-select v-model="params.wellCategory" class="f2" style="width: 100px" filterable disabled>
+                            <el-option
+                                v-for="item  in wellCategoryList"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="井号：">
+                        <el-select v-model="wellId" class="f2" disabled>
+                            <el-option
+                                v-for="item in params.wellId"
+                                :key="item.wellId"
+                                :label="item.wellName"
+                                :value="item.wellId"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="时间：">
+                        <el-date-picker
+                            v-model="params.value"
+                            type="daterange"
+                            range-separator="-"
+                            style="width: 250px"
+                            start-placeholder="开始日期"
+                            end-placeholder="结束日期"
+                            value-format="yyyy-MM-dd"
+                            disabled
+                        ></el-date-picker>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button
+                            type="primary"
+                            icon="el-icon-search"
+                            style="margin-left: 20px"
+                            @click="doSearch"
+                            disabled
+                        >搜索
+                        </el-button>
+                        <el-button
+                            type="primary"
+                            class="commonBtn"
+                            icon="el-icon-refresh"
+                            style="margin-left: 20px"
+                            @click="doSearch"
+                            disabled
+                        >重置
+                        </el-button>
+                    </el-form-item>
+                    <el-button style="float: right" type="primary" @click="back">返回</el-button>
+                </el-row>
             </el-form>
         </header-search>
         <page-panel

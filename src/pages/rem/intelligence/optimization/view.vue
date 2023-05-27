@@ -1,6 +1,6 @@
 <template>
     <div style="height:100%">
-        <header-search height="auto">
+        <header-search height="auto;">
             <div class="my-5" style="margin-top:20px;margin-bottom:20px;">
                 <span>油田：</span>
                 <el-select
@@ -45,23 +45,24 @@
                 <el-button class="commonBtn" @click="refresh" icon="el-icon-refresh"> 重置</el-button>
                 <el-button
                     type="primary"
-                    style="margin-left: 20px"
+                    style="float: right"
                     @click="returnroute"
                 >返回
                 </el-button>
                 <span class="fangan">
           <!-- <el-radio v-model="radio" label="1">小层配注优先</el-radio>
           <el-radio v-model="radio" label="2">整井配注优先</el-radio>-->
-          <el-radio-group v-model="radio" @input="qq">
-            <el-radio label="1">小层配注优先</el-radio>
-            <el-radio label="2">整井配注优先</el-radio>
-          </el-radio-group>
+        
         </span>
             </div>
         </header-search>
 
         <pagePanelNew style="height: calc(100% - 100px)">
-            <el-row :gutter="20" style="height: 100%">
+            <el-radio-group v-model="radio" @input="qq">
+                <el-radio label="1">小层配注优先</el-radio>
+                <el-radio label="2">整井配注优先</el-radio>
+            </el-radio-group>
+            <el-row :gutter="20" style="height: calc(100% - 20px)">
                 <el-col :span="6" style="height: 100%">
                     <pagePanel headerTitle="指定单井产量" style="height:calc(100% - 10px );">
                         <div align="left">
@@ -707,6 +708,15 @@ export default {
         },
         returnroute() {
             this.$router.go(-1)
+        },
+        refresh(){
+            const params = JSON.parse(localStorage.getItem('OPTIMIZATION'))
+            if (params && params.ogfId) {
+                this.queryData.ogfId = params.ogfId
+                this.queryData.blockId = params.blockId
+                this.queryData.dateTime = params.dateTime
+            }
+            this.queryWellAvgFluidProdAlloc();
         }
     },
 }

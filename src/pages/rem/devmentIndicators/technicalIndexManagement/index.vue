@@ -1214,6 +1214,7 @@
                 });
                 //以下接口平台 区块 参数默认为全部 全部默认为油田id
                 this.getTechIndicatorStat(this.selectOilFieldId, this.selectTargetOilFieldId, '', '', this.developmentPhase);
+                this.doOilYear2(this.selectOilFieldId);
                 this.doOilYear(this.selectOilFieldId);
                 this.doProSpeed(this.selectOilFieldId);
                 this.doCompositeDeclineRate(this.selectOilFieldId, this.selectOilFieldId);
@@ -1221,7 +1222,6 @@
                 this.doNatureDeclineRateForTech(this.selectOilFieldId, this.selectOilFieldId);
                 this.doProTimeRate(this.selectOilFieldId);
                 this.doProWellUsageRate(this.selectOilFieldId);
-
             },
             //获得区块类型
             getFetchFields(oilFieldId) {
@@ -1259,7 +1259,7 @@
                     let devPhaseCode = this.developmentPhase;
                     this.getTechIndicatorStat(oilFieldId, targetOilFieldId, outputDegreeCode, reservoirsTypeCode, devPhaseCode);
                 } else if (this.currentIndex == 1) { //年产油量
-                    this.doOilYear(oilFieldId);
+                    this.doOilYear2(oilFieldId);
                 } else if (this.currentIndex == 2) { //采油速度
                     this.doProSpeed(oilFieldId);
                 } else if (this.currentIndex == 3) { //综合递减率
@@ -1314,6 +1314,7 @@
                         //同比标量
                         zb.tb = detail.moy;
                         zb.tbTag = detail.yearOnYearTag;
+                        return false;
                         //获取折线图信息
                         let charDataS = res.data.data.chart.linearDataSets;
                         for (let i = 0; i < charDataS.length; i++) {
@@ -1335,10 +1336,10 @@
                         //各线的数据
                         this.inOilProduction.series = seriesData;
                     } else {
-                        //图例数据
-                        this.inOilProduction.legend.data = legendData;
-                        //各线的数据
-                        this.inOilProduction.series = seriesData;
+                        // //图例数据
+                        // this.inOilProduction.legend.data = legendData;
+                        // //各线的数据
+                        // this.inOilProduction.series = seriesData;
                     }
                 });
             },
@@ -1440,7 +1441,7 @@
                     oilFieldId: oilFieldId,
                 }
                 proSpeed(request).then((res) => {
-                    if (res.data.code == 0) {
+                    if (res.data.code == 200) {
                         //获得相关指标信息
                         let detail = res.data.data.indicatorContent;
                         let zb = this.zbData.find((item) => {
@@ -1454,7 +1455,7 @@
                         //同比数据
                         zb.tb = detail.moy;
                         zb.tbTag = detail.yearOnYearTag;
-
+                        
                         let legendData = [];
                         let series = {};
                         let seriesData = [];
@@ -1782,58 +1783,6 @@
             //导出excel表
             doDownIndex() {
                 exportExcel('#indexscv', '技术指标总览');
-            },
-            //获取当前页面的权限内容，并处理其逻辑问题
-            getPageAuthMessage() {
-                this.userInfo = VSAuth.getAuthInfo();
-                let myPath = this.$route.path;
-                //该值可以为空
-                let areaCode = "znytglxt";
-                let loginName = this.userInfo.userName;
-                getWidgetByAreaUser({
-                    "areaCode": areaCode,
-                    "loginName": loginName
-                }).then(res => {
-                    let myList = res.data.dataList;
-                    if (myList) {
-                        let pageMes = myList.find((item) => {
-                            return item.resPvalue == myPath
-                        });
-                        if (pageMes) {
-                            this.myWidget = pageMes.widgetList;
-                        }
-                        if (this.myWidget) {
-                            for (let indexNum in this.myWidget) {
-                                try {
-                                    let myWidgetItem = this.myWidget[indexNum];
-                                    switch (myWidgetItem.widgetCode) {
-                                        case "addInfo":
-                                            this.canAddInfo = true;
-                                            break;
-                                        case "updateInfo":
-                                            this.canUpdateInfo = true;
-                                            break;
-                                        case "sendInfo":
-                                            this.canSendInfo = true;
-                                            break;
-                                        case "deleteInfo":
-                                            this.canDeleteInfo = true;
-                                            break;
-                                        case "download":
-                                            this.canDownload = true;
-                                            break;
-                                        case "upload":
-                                            this.canUpload = true;
-                                            break;
-                                        default:
-                                    }
-                                } catch (e) {
-                                    continue;
-                                }
-                            }
-                        }
-                    }
-                });
             },
         }
     };

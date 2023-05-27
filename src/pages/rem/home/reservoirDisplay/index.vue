@@ -128,7 +128,6 @@ export default {
             });
         },
         comfirm() {
-            console.log(this.chooseList)
             this.dialogVisible = false
         }
     },

@@ -480,7 +480,6 @@ export default {
         getData(){
             // new Date().format('YYYY-MM')
             productionMetricsOverview({date:'2020-01' + '-01'}).then(res=>{
-                console.log(res);
                 this.dataList = res.data.data
                 if(!res.data.data.naturalDecline)  res.data.data.naturalDecline = 0
                 this.histogram.series[0].data[0].value = res.data.data.naturalDecline
@@ -512,7 +511,7 @@ export default {
                         radius: [0, "75%"],
                         color: centerColor,
                         label: {
-                            fontSize: 10,
+                            fontSize: 16,
                         },
                         data: [
                             {value: 0, name: value, label: {color: "white", position: "center"}},

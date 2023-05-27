@@ -105,9 +105,9 @@ export function getCorrectionOperation (params) {
         method: "post",
         params,
     }).then((res) => {
-        if (res.data.data) {
+        if (res.data) {
             // 返回数据 [{"wellGroupId":"井组标识", "wellGroupName":"井组名"}]
-            return res.data.data;
+            return res.data;
         } else {
             return [];
         }
@@ -234,7 +234,7 @@ export function postCoefficientConnectionpreserve (params) {
         method: "post",
         data: params,
     }).then((res) => {
-        if (res.data.code == 200) {
+        if (res.code == 0) {
             return true;
         } else {
             return false;

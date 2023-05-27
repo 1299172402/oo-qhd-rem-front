@@ -1,7 +1,7 @@
 <template>
   <div>
      <header-search class="g-w100 g-h100" style="height: auto">
-      <div style="padding-top: 12px; display: flex;margin-top:10px;margin-bottom:20px">
+      <div style="padding-top: 12px;margin-top:10px;margin-bottom:20px">
         <div class="fl">
           <span>油田：</span>
           <el-select v-model="params.ogfId" disabled>

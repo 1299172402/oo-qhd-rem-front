@@ -1,6 +1,7 @@
 <!-- 区块动态分析报告 -->
 <template>
     <div class="app-container">
+        
         <headerSearch style="height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
                 <div style="margin-left: 10px;">
@@ -25,6 +26,7 @@
                 </div>
             </div>
         </headerSearch>
+        
         <pagePanelNew style="height: calc(100% - 100px);" class="g-w100">
             <div class="btns" style="height:50px;;display: flex;padding-left:7px;">
                 <el-button type="primary" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
@@ -246,6 +248,7 @@
                 </div>
             </div>
         </pagePanelNew>
+    
     </div>
 </template>
 
@@ -1173,6 +1176,7 @@
 </script>
 
 <style lang="scss" scoped>
+    
     .app-container{
         height:100%;
         .pageHeader{
@@ -1444,8 +1448,6 @@
             background: transparent!important;
         }
     }
-    
-    
     .checkBtn2{
         width: 110px;
         height: 28px;
@@ -1467,4 +1469,5 @@
         background: rgba(143,164,204,0.18);
         font-size:14px;
     }
+
 </style>
