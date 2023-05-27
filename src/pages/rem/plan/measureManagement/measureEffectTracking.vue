@@ -1796,26 +1796,28 @@
                     });
                 }
                 console.log('this.wells.length',this.wells.length)
-                // if(this.wells.length){
-                //     this.selectWellId=this.wells[0].wellId;
-                // }else{
-                //     this.selectWellId='';
-                // }
+                if(this.selectPlatform==this.$route.query.platformId){//当前选择的平台 等于 传参过来的平台
+                    this.selectWellId=this.$route.query.selectWellId;
+                }else if(this.wells.length){
+                    this.selectWellId=this.wells[0].wellId;
+                }else{
+                    this.selectWellId='';
+                }
             },
             //搜索文件
             doSearch() {
                 let wellItem=this.wells.filter(el=> this.selectWellId ==el.wellId);
-                console.log(wellItem,123);
+                let wellTypeCode='';
                 if(wellItem.length){
-                    let wellTypeCode=wellItem[0].wellTypeCode;
-                    if (wellTypeCode == '002002001' || wellTypeCode=='003002001') {
-                        this.type = 0;
-                    } else if (wellTypeCode == '002003001' || wellTypeCode == '002004003001' || wellTypeCode == '003003001') {               
-                        this.type = 1;
-                    }
+                    wellTypeCode=wellItem[0].wellTypeCode;
                 }else{
-                    this.type=3;
+                    this.$message.warning('请选择井号！')
                     return false;
+                }
+                if (wellTypeCode == '002002001' || wellTypeCode=='003002001') {
+                    this.type = 0;
+                } else if (wellTypeCode == '002003001' || wellTypeCode == '002004003001' || wellTypeCode == '003003001') {               
+                    this.type = 1;
                 }
                 this.doSearchCharts();
                 this.getFetchMeasureStatInfos(

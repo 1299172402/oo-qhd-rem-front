@@ -17,8 +17,6 @@
                 </el-select>
                 <el-button type="primary" icon="el-icon-search" style="margin-left: 15px;" @click="doSearch">搜索</el-button>
                 <el-button class="commonBtn" icon="el-icon-refresh" style="margin-right:auto;" @click="resetting">重置</el-button>
-                
-                
             </div>
         </headerSearch>
         <pagePanelNew headerTitle="油井辅助分析" :style="{ height: this.currentModule == 'oilReport' ? 'auto' : 'calc(100% - 100px)' }" class="g-w100">

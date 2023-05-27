@@ -6,12 +6,12 @@
             <headerSearch style="height:80px;">
                 <div class="g-row-flex-V g-w100 g-h100">
                     <span>油田：</span>
-                    <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="changeOilFeild">
+                    <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="queryBlockList">
                         <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId">
                         </el-option>
                     </el-select>
                     <span style="margin-left:15px;">区块：</span>
-                    <el-select v-model="selBlock" class="f2" style="width:180px" filterable clearable @change="changeBlock">
+                    <el-select v-model="selBlock" class="f2" style="width:180px" filterable clearable @change="queryWellGroupList">
                         <el-option v-for="item in blockData" :key="item.fieldId" :label="item.name" :value="item.fieldId">
                         </el-option>
                     </el-select>
@@ -170,12 +170,12 @@
             <headerSearch style="height:80px;">
                 <div class="g-row-flex-V g-w100 g-h100">
                     <span>油田：</span>
-                    <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="changeOilFeild">
+                    <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="queryBlockList">
                         <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId">
                         </el-option>
                     </el-select>
                     <span style="margin-left:15px;">区块：</span>
-                    <el-select v-model="selBlock" class="f2" style="width:180px" filterable clearable @change="changeBlock">
+                    <el-select v-model="selBlock" class="f2" style="width:180px" filterable clearable @change="queryWellGroupList">
                         <el-option v-for="item in blockData" :key="item.fieldId" :label="item.name" :value="item.fieldId">
                         </el-option>
                     </el-select>
@@ -226,14 +226,26 @@
                                         <div class="z_schedule">
                                             <span class="sp1">正常：</span>
                                             <div class="z_proess">
-                                                <span class="z_proess_sp1" :style="{width:trendOfIndicatorsNum.zczb+'%'}"><b>{{trendOfIndicatorsNum.zcnum}}</b></span>
+                                                <span class="z_proess_sp1" :style="{width:trendOfIndicatorsNum.zczb+'%'}">
+                                                    <b style="cursor: pointer;" @click="trendOfIndicatorsSwitch=true">{{trendOfIndicatorsNum.zcnum}}</b>
+                                                </span>
                                                 <span class="z_proess_sp2"></span>
                                             </div>
-                                            <span class="sp2">异常：<b>{{trendOfIndicatorsNum.ycnum}}</b></span>
+                                            <span class="sp2">异常：<b style="cursor: pointer;" @click="trendOfIndicatorsSwitch=false">{{trendOfIndicatorsNum.ycnum}}</b></span>
                                         </div>
                                     </div>  
                                     <div class="z-row-center">
-                                        <div class="numBtn" v-for="(item,index) in trendOfIndicators" :key="index" v-if="item.name!='正常'">
+                                        <div class="numBtn" 
+                                            v-for="(item,index) in trendOfIndicators" :key="index" 
+                                            v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!trendOfIndicatorsSwitch"
+                                            @click="((val)=>{selRadioIterm(item.code,'trendOfIndicators')})">
+                                            <span class="sp1">{{item.value}}</span>
+                                            <span class="sp2">{{item.name}}</span>
+                                        </div>
+                                        <div class="numBtn" 
+                                            v-for="(item,index) in trendOfIndicators" :key="index" 
+                                            v-if="item.name=='正常'&&trendOfIndicatorsSwitch"
+                                            @click="((val)=>{selRadioIterm(item.code,'trendOfIndicators')})">
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
@@ -256,14 +268,26 @@
                                             <div class="z_schedule">
                                                 <span class="sp1">正常：</span>
                                                 <div class="z_proess">
-                                                    <span class="z_proess_sp1" :style="{width:injectionProductionBalanceNum.zczb+'%'}"><b>{{injectionProductionBalanceNum.zcnum}}</b></span>
+                                                    <span class="z_proess_sp1" :style="{width:injectionProductionBalanceNum.zczb+'%'}">
+                                                        <b style="cursor: pointer;" @click="injectionProductionBalanceSwitch=true">{{injectionProductionBalanceNum.zcnum}}</b>
+                                                    </span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b>{{injectionProductionBalanceNum.ycnum}}</b></span>
+                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="injectionProductionBalanceSwitch=false">{{injectionProductionBalanceNum.ycnum}}</b></span>
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" v-for="(item,index) in injectionProductionBalance" :key="index" v-if="item.name!='正常'">
+                                            <div class="numBtn" 
+                                                v-for="(item,index) in injectionProductionBalance" :key="index" 
+                                                v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!injectionProductionBalanceSwitch"
+                                                @click="((val)=>{selRadioIterm(item.code,'injectionProductionBalance')})">
+                                                <span class="sp1">{{item.value}}</span>
+                                                <span class="sp2">{{item.name}}</span>
+                                            </div>
+                                            <div class="numBtn"
+                                                v-for="(item,index) in injectionProductionBalance" :key="index" 
+                                                v-if="item.name=='正常'&&injectionProductionBalanceSwitch"
+                                                @click="((val)=>{selRadioIterm(item.code,'injectionProductionBalance')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
@@ -278,14 +302,26 @@
                                             <div class="z_schedule">
                                                 <span class="sp1">正常：</span>
                                                 <div class="z_proess">
-                                                    <span class="z_proess_sp1" :style="{width:injectionResponseAnalysisNum.zczb+'%'}"><b>{{injectionResponseAnalysisNum.zcnum}}</b></span>
+                                                    <span class="z_proess_sp1" :style="{width:injectionResponseAnalysisNum.zczb+'%'}">
+                                                        <b style="cursor: pointer;" @click="injectionResponseAnalysisSwitch=true">{{injectionResponseAnalysisNum.zcnum}}</b>
+                                                    </span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b>{{injectionResponseAnalysisNum.ycnum}}</b></span>
+                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="injectionResponseAnalysisSwitch=false">{{injectionResponseAnalysisNum.ycnum}}</b></span>
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" v-for="(item,index) in injectionResponseAnalysis" :key="index" v-if="item.name!='正常'">
+                                            <div class="numBtn" 
+                                                v-for="(item,index) in injectionResponseAnalysis" :key="index" 
+                                                v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!injectionResponseAnalysisSwitch"
+                                                @click="((val)=>{selRadioIterm(item.code,'injectionResponseAnalysis')})">
+                                                <span class="sp1">{{item.value}}</span>
+                                                <span class="sp2">{{item.name}}</span>
+                                            </div>
+                                            <div class="numBtn"
+                                                v-for="(item,index) in injectionResponseAnalysis" :key="index" 
+                                                v-if="item.name=='正常'&&injectionResponseAnalysisSwitch"
+                                                @click="((val)=>{selRadioIterm(item.code,'injectionResponseAnalysis')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
@@ -302,14 +338,26 @@
                                             <div class="z_schedule">
                                                 <span class="sp1">正常：</span>
                                                 <div class="z_proess">
-                                                    <span class="z_proess_sp1" :style="{width:thePressureToKeepNum.zczb+'%'}"><b>{{thePressureToKeepNum.zcnum}}</b></span>
+                                                    <span class="z_proess_sp1" :style="{width:thePressureToKeepNum.zczb+'%'}">
+                                                        <b style="cursor: pointer;" @click="thePressureToKeepSwitch=true">{{thePressureToKeepNum.zcnum}}</b>
+                                                    </span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b>{{thePressureToKeepNum.ycnum}}</b></span>
+                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="thePressureToKeepSwitch=false">{{thePressureToKeepNum.ycnum}}</b></span>
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" v-for="(item,index) in thePressureToKeep" :key="index" v-if="item.name!='正常'">
+                                            <div class="numBtn" 
+                                                v-for="(item,index) in thePressureToKeep" :key="index" 
+                                                v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!thePressureToKeepSwitch"
+                                                @click="((val)=>{selRadioIterm(item.code,'thePressureToKeep')})">
+                                                <span class="sp1">{{item.value}}</span>
+                                                <span class="sp2">{{item.name}}</span>
+                                            </div>
+                                            <div class="numBtn"
+                                                v-for="(item,index) in thePressureToKeep" :key="index" 
+                                                v-if="item.name=='正常'&&thePressureToKeepSwitch"
+                                                @click="((val)=>{selRadioIterm(item.code,'thePressureToKeep')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
@@ -320,7 +368,10 @@
                                     <div class="z-row-right" style="position: relative;top: 48px;">
                                         <div class="name">措施推荐</div>
                                         <div class="num">
-                                            <span v-for="(item,index) in recommendedMeasuresOptions" :key="index">{{item.name}}：{{item.value}}</span>
+                                            <span  v-for="(item,index) in recommendedMeasuresOptions" :key="index" @click="((val)=>{selRadioIterm(item.code,'recommendedMeasuresOptions')})">
+                                                {{item.name}}：
+                                                <b style="color: #FFC835; font-size: 14px;">{{item.value}}</b>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -423,7 +474,7 @@
                 selCode: "",
                 selTag: "",
                 //开发生产问题监测可用项目
-                //指标变化趋势
+                //指标变化趋势---zxb
                 trendOfIndicators: [],
                 trendOfIndicatorsNum:{
                     allnum:0,
@@ -432,7 +483,8 @@
                     zczb:0,
                     yczb:0,
                 },
-                //注水受效分析
+                trendOfIndicatorsSwitch:false,//展示异常false, 正常 true
+                //注水受效分析---zxb
                 injectionResponseAnalysis: [],
                 injectionResponseAnalysisNum:{
                     allnum:0,
@@ -441,7 +493,8 @@
                     zczb:0,
                     yczb:0,
                 },
-                //注采平衡
+                injectionResponseAnalysisSwitch:false,//展示异常false, 正常 true
+                //注采平衡---zxb
                 injectionProductionBalance: [],
                 injectionProductionBalanceNum:{
                     allnum:0,
@@ -450,7 +503,8 @@
                     zczb:0,
                     yczb:0,
                 },
-                //压力保持
+                injectionProductionBalanceSwitch:false,//展示异常false, 正常 true
+                //压力保持---zxb
                 thePressureToKeep: [],
                 thePressureToKeepNum:{
                     allnum:0,
@@ -459,6 +513,7 @@
                     zczb:0,
                     yczb:0,
                 },
+                thePressureToKeepSwitch:false,//展示异常false, 正常 true
                 //措施推荐可用项目
                 recommendedMeasuresOptions: [],
                 //获取措施效果数据
@@ -480,37 +535,79 @@
                 this.checkCurrentDate(); //初始化评价日期
                 this.queryOilFeildList(); //初始化油田
             },
-            //更改油田编码
-            changeOilFeild(val) {
-                let paramMap = {
-                    "oilFieldId": val
-                };
-                this.queryBlockList(paramMap);
-            },
-            //更改平台编码
-            changeBlock(val) {
-                this.queryWellGroupList();
-                if (this.initTypes > 0) { //自动查询数据
-                    this.doSearch();
-                    this.initTypes--;
+            //检查评价日期是否有效
+            checkCurrentDate() {
+                if (this.currentDate == null || this.currentDate == "" || this.currentDate == undefined) {
+                    this.currentDate = new Date().addDays(-1).format('yyyy-MM-dd');
                 }
+            },
+            //获取油田
+            queryOilFeildList() {
+                fetchOilFields().then((res) => {
+                    let msg = res.data.msg;
+                    if (msg == "success") {
+                        let myData = res.data.data.oilFields;
+                        this.ytData = myData;
+                        //初始选中油田
+                        if (this.selYtdm == "" || this.selYtdm == undefined) {
+                            this.selYtdm = '3FC9A818F5BC43B88270DB80BBB3018F'; //hwh xg 默认初始化qhd326 //myData[0].oilFieldId;
+                        }
+                        this.queryBlockList();
+                    }
+                });
+            },
+            //获取区块
+            queryBlockList(paramMap) {
+                fetchFields({oilFieldId:this.selYtdm}).then((res) => {
+                    let msg = res.data.msg;
+                    if (msg == "success") {
+                        let myData = res.data.data.fields;
+                        this.blockData = myData;
+                        //初始选中油田
+                        if (myData && myData[0]) {
+                            this.selBlock = myData[0].fieldId;
+                        }
+                        this.queryWellGroupList();
+                    }
+                });
+            },
+            //获取井组
+            queryWellGroupList() {
+                let oilFieldId = [];
+                if (this.selYtdm == this.selBlock) {
+                    this.blockData.forEach((item, index) => {
+                        oilFieldId.push(item.fieldId);
+                    })
+                } else {
+                    oilFieldId.push(this.selBlock);
+                }
+                wellGroups({oilFieldId}).then((res) => {
+                    if (res.data.code == 200) {
+                        this.searchKeys = '';
+                        this.wellGroupList = res.data.data.wellGroups;
+                        this.wellGroupList.unshift({name: '全部',wellGroupId: ''});
+                    }
+                    if(this.initTypes==1){
+                        this.doSearch();
+                        this.initTypes--;
+                    }
+                });
             },
             //进行数据查询处理
             doSearch() {
-                //加上重新搜索清空选择 和 表格数据
                 this.selCode = '';
                 this.tableData = [];
                 //重新初始化相关数据项目
                 let paramMap = {
+                    "oilFieldId": this.selYtdm,
+                    "fieldId": this.selBlock,
+                    "fileName": this.searchKeys,
+                    "wellGroupId": this.searchKeys,
+                    "yearMonth": this.currentDate,
                     "evalTopic": "",
                     "evalTypeId": "",
-                    "fieldId": this.selBlock,
                     "fieldLayerId": "",
-                    "fileName": this.searchKeys,
-                    "oilFieldId": this.selYtdm,
                     "path": "",
-                    "wellGroupId": this.searchKeys,
-                    "yearMonth": this.currentDate
                 };
                 this.queryTrendOfIndicators(paramMap); //指标变化趋势
                 this.queryInjectionResponseAnalysis(paramMap); //注水受效分析
@@ -521,287 +618,127 @@
                 //触发初始选中  （测试没有使用，需要异步使用，还需要）
                 this.selRadioIterm(this.selCode, this.selTag);
             },
-            //指标变化趋势
+            //指标变化趋势---zxb
             queryTrendOfIndicators(request) {
-                if (this.dataSource < 1) { //静态数据
-                    this.trendOfIndicators = [{
-                            code: "tag0",
-                            name: "正常",
-                            value: 200,
-                            wells: "JH1,JH2,JH3,JH4,JH5"
-                        },
-                        {
-                            code: "tag1",
-                            name: "液量上升",
-                            value: 2,
-                            wells: "JH1,JH7"
-                        },
-                        {
-                            code: "tag2",
-                            name: "液量下降",
-                            value: 2,
-                            wells: "JH8,JH5"
-                        },
-                        {
-                            code: "tag3",
-                            name: "含水上升",
-                            value: 1,
-                            wells: "JH2"
-                        },
-                        {
-                            code: "tag4",
-                            name: "含水下降",
-                            value: 2,
-                            wells: "JH3,JH4"
-                        },
-                        {
-                            code: "tag5",
-                            name: "泵入口压力上升",
-                            value: 0,
-                            wells: ""
-                        },
-                        {
-                            code: "tag6",
-                            name: "泵入口压力下降",
-                            value: 1,
-                            wells: "JH4"
-                        }
-                    ];
-                } else { //使用接口
-                    indicatorVariationTrendency(request).then((res) => {
-                        // debugger
-                        let msg = res.data.msg;
-                        if (msg == "success") {
-                            let myData = res.data.data.indicatorAnalysisDetailInfos;
-                            this.trendOfIndicatorsNum.allnum=0;
-                            this.trendOfIndicatorsNum.zcnum=0;
-                            this.trendOfIndicatorsNum.ycnum=0;
-                            myData.forEach((el,i)=>{
-                                this.trendOfIndicatorsNum.allnum+=Number(el.value);
-                                if(el.name=='正常'){
-                                    this.trendOfIndicatorsNum.zcnum=Number(el.value);
-                                }else{
-                                    this.trendOfIndicatorsNum.ycnum+=Number(el.value);
-                                }
-                            })
-                            this.trendOfIndicatorsNum.zczb=this.trendOfIndicatorsNum.zcnum/this.trendOfIndicatorsNum.allnum * 100;
-                            this.trendOfIndicatorsNum.yczb=this.trendOfIndicatorsNum.yczb/this.trendOfIndicatorsNum.allnum * 100;
-                            this.trendOfIndicators = myData;
-                        }
-                    });
-                }
+                indicatorVariationTrendency(request).then((res) => {
+                    let msg = res.data.msg;
+                    if (msg == "success") {
+                        let myData = res.data.data.indicatorAnalysisDetailInfos;
+                        this.trendOfIndicatorsNum.allnum=0;
+                        this.trendOfIndicatorsNum.zcnum=0;
+                        this.trendOfIndicatorsNum.ycnum=0;
+                        myData.forEach((el,i)=>{
+                            this.trendOfIndicatorsNum.allnum+=Number(el.value);
+                            if(el.name=='正常'){
+                                this.trendOfIndicatorsNum.zcnum=Number(el.value);
+                            }else{
+                                myData[i].isShow=Number(el.value)?true:false;
+                                this.trendOfIndicatorsNum.ycnum+=Number(el.value);
+                            }
+                        })
+                        this.trendOfIndicatorsNum.zczb=this.trendOfIndicatorsNum.zcnum/this.trendOfIndicatorsNum.allnum * 100;
+                        this.trendOfIndicatorsNum.yczb=this.trendOfIndicatorsNum.yczb/this.trendOfIndicatorsNum.allnum * 100;
+                        this.trendOfIndicators = myData;
+                    }
+                });
             },
-            //注水受效分析
+            //注水受效分析---zxb
             queryInjectionResponseAnalysis(request) {
-                if (this.dataSource < 1) { //静态数据
-                    this.injectionResponseAnalysis = [{
-                            code: "tag10",
-                            name: "平面水驱不均衡",
-                            value: 2,
-                            wells: "JH8,JH6"
-                        },
-                        {
-                            code: "tag11",
-                            name: "层间水淹差异",
-                            value: 2,
-                            wells: "JH7,JH9"
-                        },
-                        {
-                            code: "tag12",
-                            name: "正常",
-                            value: 5,
-                            wells: "JH1,JH2,JH3,JH4,JH5"
-                        }
-                    ];
-                } else { //使用接口
-                    injectionEffectivity(request).then((res) => {
-                        // debugger
-                        let msg = res.data.msg;
-                        if (msg == "success") {
-                            let myData = res.data.data.indicatorAnalysisDetailInfos;
-                            this.injectionResponseAnalysisNum.allnum=0;
-                            this.injectionResponseAnalysisNum.zcnum=0;
-                            this.injectionResponseAnalysisNum.ycnum=0;
-                            myData.forEach((el,i)=>{
-                                this.injectionResponseAnalysisNum.allnum+=Number(el.value);
-                                if(el.name=='正常'){
-                                    this.injectionResponseAnalysisNum.zcnum=Number(el.value);
-                                }else{
-                                    this.injectionResponseAnalysisNum.ycnum+=Number(el.value);
-                                }
-                            })
-                            this.injectionResponseAnalysisNum.zczb=this.injectionResponseAnalysisNum.zcnum/this.injectionResponseAnalysisNum.allnum * 100;
-                            this.injectionResponseAnalysisNum.yczb=this.injectionResponseAnalysisNum.yczb/this.injectionResponseAnalysisNum.allnum * 100;
-                            this.injectionResponseAnalysis = myData;
-                        }
-                    });
-                }
+                injectionEffectivity(request).then((res) => {
+                    let msg = res.data.msg;
+                    if (msg == "success") {
+                        let myData = res.data.data.indicatorAnalysisDetailInfos;
+                        this.injectionResponseAnalysisNum.allnum=0;
+                        this.injectionResponseAnalysisNum.zcnum=0;
+                        this.injectionResponseAnalysisNum.ycnum=0;
+                        myData.forEach((el,i)=>{
+                            this.injectionResponseAnalysisNum.allnum+=Number(el.value);
+                            if(el.name=='正常'){
+                                this.injectionResponseAnalysisNum.zcnum=Number(el.value);
+                            }else{
+                                myData[i].isShow=Number(el.value)?true:false;
+                                this.injectionResponseAnalysisNum.ycnum+=Number(el.value);
+                            }
+                        })
+                        this.injectionResponseAnalysisNum.zczb=this.injectionResponseAnalysisNum.zcnum/this.injectionResponseAnalysisNum.allnum * 100;
+                        this.injectionResponseAnalysisNum.yczb=this.injectionResponseAnalysisNum.yczb/this.injectionResponseAnalysisNum.allnum * 100;
+                        this.injectionResponseAnalysis = myData;
+                    }
+                });
             },
-            //注采平衡
+            //注采平衡---zxb
             queryInjectionProductionBalance(request) {
-                if (this.dataSource < 1) { //静态数据
-                    this.injectionProductionBalance = [{
-                            code: "tag21",
-                            name: "平衡",
-                            value: 200,
-                            wells: "JH1,JH2,JH3,JH4,JH5"
-                        },
-                        {
-                            code: "tag22",
-                            name: "不平衡",
-                            value: 2,
-                            wells: "JH3,JH4"
-                        }
-                    ];
-                } else { //使用接口
-                    proInjectBalance(request).then((res) => {
-                        // debugger
-                        let msg = res.data.msg;
-                        if (msg == "success") {
-                            let myData = res.data.data.indicatorAnalysisDetailInfos;
-                            this.injectionProductionBalanceNum.allnum=0;
-                            this.injectionProductionBalanceNum.zcnum=0;
-                            this.injectionProductionBalanceNum.ycnum=0;
-                            myData.forEach((el,i)=>{
-                                this.injectionProductionBalanceNum.allnum+=Number(el.value);
-                                if(el.name=='正常'){
-                                    this.injectionProductionBalanceNum.zcnum=Number(el.value);
-                                }else{
-                                    this.injectionProductionBalanceNum.ycnum+=Number(el.value);
-                                }
-                            })
-                            this.injectionProductionBalanceNum.zczb=this.injectionProductionBalanceNum.zcnum/this.injectionProductionBalanceNum.allnum * 100;
-                            this.injectionProductionBalanceNum.yczb=this.injectionProductionBalanceNum.yczb/this.injectionProductionBalanceNum.allnum * 100;
-                            this.injectionProductionBalance = myData;
-                        }
-                    });
-                }
+                proInjectBalance(request).then((res) => {
+                    let msg = res.data.msg;
+                    if (msg == "success") {
+                        let myData = res.data.data.indicatorAnalysisDetailInfos;
+                        this.injectionProductionBalanceNum.allnum=0;
+                        this.injectionProductionBalanceNum.zcnum=0;
+                        this.injectionProductionBalanceNum.ycnum=0;
+                        myData.forEach((el,i)=>{
+                            this.injectionProductionBalanceNum.allnum+=Number(el.value);
+                            if(el.name=='正常'){
+                                this.injectionProductionBalanceNum.zcnum=Number(el.value);
+                            }else{
+                                myData[i].isShow=Number(el.value)?true:false;
+                                this.injectionProductionBalanceNum.ycnum+=Number(el.value);
+                            }
+                        })
+                        this.injectionProductionBalanceNum.zczb=this.injectionProductionBalanceNum.zcnum/this.injectionProductionBalanceNum.allnum * 100;
+                        this.injectionProductionBalanceNum.yczb=this.injectionProductionBalanceNum.yczb/this.injectionProductionBalanceNum.allnum * 100;
+                        this.injectionProductionBalance = myData;
+                    }
+                });
             },
-            //压力保持
+            //压力保持---zxb
             queryThePressureToKeep(request) {
-                if (this.dataSource < 1) { //静态数据
-                    this.thePressureToKeep = [{
-                            code: "tag31",
-                            name: "好",
-                            value: 4,
-                            wells: "JH1,JH4,JH5"
-                        },
-                        {
-                            code: "tag32",
-                            name: "差",
-                            value: 2,
-                            wells: "JH3,JH4"
-                        }
-                    ];
-                } else { //使用接口
-                    pressureMaintain(request).then((res) => {
-                        // debugger
-                        let msg = res.data.msg;
-                        if (msg == "success") {
-                            let myData = res.data.data.indicatorAnalysisDetailInfos;
-                            this.thePressureToKeepNum.allnum=0;
-                            this.thePressureToKeepNum.zcnum=0;
-                            this.thePressureToKeepNum.ycnum=0;
-                            myData.forEach((el,i)=>{
-                                this.thePressureToKeepNum.allnum+=Number(el.value);
-                                if(el.name=='正常'){
-                                    this.thePressureToKeepNum.zcnum=Number(el.value);
-                                }else{
-                                    this.thePressureToKeepNum.ycnum+=Number(el.value);
-                                }
-                            })
-                            this.thePressureToKeepNum.zczb=this.thePressureToKeepNum.zcnum/this.thePressureToKeepNum.allnum * 100;
-                            this.thePressureToKeepNum.yczb=this.thePressureToKeepNum.yczb/this.thePressureToKeepNum.allnum * 100;
-                            this.thePressureToKeep = myData;
-                        }
-                    });
-                }
+                pressureMaintain(request).then((res) => {
+                    let msg = res.data.msg;
+                    if (msg == "success") {
+                        let myData = res.data.data.indicatorAnalysisDetailInfos;
+                        this.thePressureToKeepNum.allnum=0;
+                        this.thePressureToKeepNum.zcnum=0;
+                        this.thePressureToKeepNum.ycnum=0;
+                        myData.forEach((el,i)=>{
+                            this.thePressureToKeepNum.allnum+=Number(el.value);
+                            if(el.name=='正常'){
+                                this.thePressureToKeepNum.zcnum=Number(el.value);
+                            }else{
+                                myData[i].isShow=Number(el.value)?true:false;
+                                this.thePressureToKeepNum.ycnum+=Number(el.value);
+                            }
+                        })
+                        this.thePressureToKeepNum.zczb=this.thePressureToKeepNum.zcnum/this.thePressureToKeepNum.allnum * 100;
+                        this.thePressureToKeepNum.yczb=this.thePressureToKeepNum.yczb/this.thePressureToKeepNum.allnum * 100;
+                        this.thePressureToKeep = myData;
+                    }
+                });
             },
             //措施推荐可用项目
             queryRecommendedMeasures(paramMap) {
-                if (this.dataSource < 1) { //静态数据
-                    this.recommendedMeasuresOptions = [{
-                            code: "tagP1",
-                            name: "注采调配",
-                            value: 2,
-                            increase: 0,
-                            wells: "JH1,JH4"
-                        },
-                        {
-                            code: "tagP2",
-                            name: "调驱调剖",
-                            value: 4,
-                            increase: 0,
-                            wells: "JH8,JH9"
-                        },
-                        {
-                            code: "tagP8",
-                            name: "正常生产",
-                            value: 20,
-                            increase: 0,
-                            wells: "JH2,JH5,JH7"
-                        }
-                    ];
-                } else { //使用接口
-                    wellGroupRecommendMeasure(paramMap).then((res) => {
-                        let msg = res.data.msg;
-                        if (msg == "success") {
-                            let myData = res.data.data.indicatorAnalysisDetailInfos;
-                            this.potentialWellNum=0;
-                            myData.forEach((el,i)=>{
-                                this.potentialWellNum=Number(el.value);
-                            })
-                            this.recommendedMeasuresOptions = myData;
-                        }
-                    });
-                }
+                wellGroupRecommendMeasure(paramMap).then((res) => {
+                    let msg = res.data.msg;
+                    if (msg == "success") {
+                        let myData = res.data.data.indicatorAnalysisDetailInfos;
+                        this.potentialWellNum=0;
+                        myData.forEach((el,i)=>{
+                            this.potentialWellNum+=Number(el.value);
+                        })
+                        this.recommendedMeasuresOptions = myData;
+                    }
+                });
             },
             //措施推荐可用项目,获取措施效果数据
             queryProWellDynamicAnalysisDetail(paramMap) {
-                if (this.dataSource < 1) { //静态数据
-                    this.recommendedMeasuresData = [{
-                            wellId: "JH1",
-                            theDate: "2021-01-02",
-                            measuresCode: "tagP2",
-                            measuresName: "解堵",
-                            increaseVolume: 2,
-                            increaseQuality: 2,
-                            increaseVolumeC: 2,
-                            increaseQualityC: 2
-                        },
-                        {
-                            wellId: "JH2",
-                            theDate: "2021-01-01",
-                            measuresCode: "tagP6",
-                            measuresName: "开关层/补孔",
-                            increaseVolume: 2,
-                            increaseQuality: 2,
-                            increaseVolumeC: 2,
-                            increaseQualityC: 2
-                        },
-                        {
-                            wellId: "JH3",
-                            theDate: "2021-01-01",
-                            measuresCode: "tagP8",
-                            measuresName: "维持生产",
-                            increaseVolume: 2,
-                            increaseQuality: 2,
-                            increaseVolumeC: 2,
-                            increaseQualityC: 2
-                        }
-                    ];
-                    this.initRecommendedMeasuresWells(); //生成井清单
-                } else { //使用接口
-                    wellGroupDynamicAnalysisDetail(paramMap).then((res) => {
-                        let msg = res.data.msg;
-                        if (msg == "success") {
-                            let myData = res.data.data.evaluationResults;
-                            this.recommendedMeasuresData = myData;
-                            this.recommendedMeasuresWells = [];
-                            this.initRecommendedMeasuresWells(); //生成井清单
-                        }
-                    });
-                }
+                wellGroupDynamicAnalysisDetail(paramMap).then((res) => {
+                    let msg = res.data.msg;
+                    if (msg == "success") {
+                        let myData = res.data.data.evaluationResults;
+                        this.recommendedMeasuresData = myData;
+                        this.recommendedMeasuresWells = [];
+                        this.initRecommendedMeasuresWells(); //生成井清单
+                    }
+                });
             },
             //初始化有措施的井清单
             initRecommendedMeasuresWells() {
@@ -1123,96 +1060,10 @@
                     this.$refs.tableList.doLayout();
                 })
             },
-            //油井下拉框数据获取
-            queryOilFeildList() {
-                if (this.dataSource < 1) { //静态数据
-                    this.selYtdm = [{
-                        oilFieldId: "QHD326",
-                        name: "秦皇岛32-6"
-                    }];
-                    this.selYtdm = "QHD326";
-                    this.changeOilFeild(this.selYtdm); //级联条件处理
-                } else { //使用接口
-                    fetchOilFields().then((res) => {
-                        let msg = res.data.msg;
-                        if (msg == "success") {
-                            let myData = res.data.data.oilFields;
-                            this.ytData = myData;
-                            //初始选中油田
-                            if (this.selYtdm == "" || this.selYtdm == undefined) {
-                                this.selYtdm = '3FC9A818F5BC43B88270DB80BBB3018F'; //hwh xg 默认初始化qhd326 //myData[0].oilFieldId;
-                            }
-                            this.changeOilFeild(this.selYtdm); //级联条件处理
-                        }
-                    });
-                }
-            },
-            //初始区块下拉选择
-            queryBlockList(paramMap) {
-                if (this.dataSource < 1) { //静态数据
-                    this.blockData = [{
-                        fieldId: "",
-                        name: '全部'
-                    }, {
-                        fieldId: 'CEPI',
-                        name: "南区"
-                    }, {
-                        fieldId: 'CEPJ',
-                        name: "北区"
-                    }];
-                    this.selBlock = "CEPI"; //选中
-                    this.changeBlock(this.selBlock); //级联条件处理
-                } else { //使用接口fetchFields
-                    fetchFields(paramMap).then((res) => {
-                        let msg = res.data.msg;
-                        console.log("=========fetchFields", res);
-                        if (msg == "success") {
-                            let myData = res.data.data.fields;
-                            this.blockData = myData;
-                            //初始选中油田
-                            if (myData && myData[0]) {
-                                this.selBlock = myData[0].fieldId;
-                            }
-                            this.changeBlock(this.selBlock); //级联条件处理
-                        }
-                    });
-                }
-            },
-            //初始化井组下拉选择
-            queryWellGroupList() {
-                let oilFieldId = [];
-                if (this.selYtdm == this.selBlock) {
-                    this.blockData.forEach((item, index) => {
-                        oilFieldId.push(item.fieldId);
-                    })
-                } else {
-                    oilFieldId.push(this.selBlock);
-                }
-                let request = {
-                    oilFieldId: oilFieldId,
-                }
-                wellGroups(request).then((res) => {
-                    if (res.data.code == 200) {
-                        this.searchKeys = '';
-                        this.wellGroupList = res.data.data.wellGroups;
-                        this.wellGroupList.unshift({
-                            wellGroupId: '',
-                            name: '全部'
-                        });
-                    }
-                });
-            },
             //跳转到水井页面
             goWaterWell(val) {
                 if (val == "water") {
                     this.$router.push('/singleWellPerformance_water')
-                }
-            },
-            //检查评价日期是否有效
-            checkCurrentDate() {
-                if (this.currentDate == null || this.currentDate == "" || this.currentDate == undefined) {
-                    /*this.currentDate = this.getMyDate(-1);*/
-                    this.currentDate = new Date().addDays(-1).format('yyyy-MM-dd');
                 }
             },
             //跳转到分析
@@ -1225,24 +1076,6 @@
                         wellId: wellNumber,
                     }
                 })
-            },
-            //获得对应日期串
-            getMyDate(days) {
-                let date = new Date();
-                console.log("date0=" + date);
-                date = date.setDate(date.getDate() + days);
-                date = new Date(date);
-                console.log("date1=" + date);
-                let today = date.getDate();
-                if (parseInt(today) < 10) {
-                    today = '0' + today;
-                }
-                let dataMonth = date.getMonth() + 1;
-                if (parseInt(dataMonth) < 10) {
-                    dataMonth = '0' + dataMonth;
-                }
-                let newDate = date.getFullYear() + '-' + dataMonth + '-' + today;
-                return newDate;
             },
             //el table 表格头 标题单位样式
             renderHeader(h, {
@@ -1387,6 +1220,7 @@
                     position: absolute;
                     left:0;
                     top:0;
+                    z-index: 3;
                 }
                 .v0{
                     padding-left:400px;
@@ -1398,16 +1232,17 @@
                     align-items: center;
                     justify-content: space-between;
                     position: relative;
+                    z-index: 3;
                     .bgline1{
                         width: 358px;
                         height: 43px;
                         position: absolute;
                         left: 180px;
                         top: 30px;
+                        z-index: -1;
                     }
                     .btns0{
-                        // margin:5px 0;
-                        width:224px;
+                        min-width:224px;
                         height:70px;
                         padding-left:20px;
                         border: 1px solid;
@@ -1415,21 +1250,21 @@
                         background-image: var(--logo-bg) !important;
                         display: flex;
                         align-items: center;
-                        position: relative;
                         .helpImg{
                             width:52px;
                             height:52px;
                             margin-right:18px;
                         }
                         span{
+                            flex:1;
                             font-size: 50px;
                             color: #FFCA07;
                             font-weight: 600;
                         }
                         b{
-                            position: absolute;
-                            right:12px;
-                            top:4px;
+                            margin-right:10px;
+                            position: relative; 
+                            top:-18px;
                             font-size: 16px;
                             color: #24DEFF;
                         }
@@ -1439,8 +1274,9 @@
                     margin-bottom:30px;
                     padding-left:400px;
                     width:100%;
-                    height:328px;
+                    height:300px;
                     position: relative;
+                    z-index: 2;
                     .bgline0{
                         width: 374px;
                         height: 134px;
@@ -1448,7 +1284,6 @@
                         left: 172px;
                         top: -70px;
                     }
-                    
                     .bgline2{
                         width: 380px;
                         height: 271px;
@@ -1462,7 +1297,7 @@
                             margin-top:16px;
                             display: flex;
                             .z-row-left{
-                                margin-right:60px;
+                                width:380px;
                                 .z_title{
                                     display: flex;
                                     align-items: center;
@@ -1569,6 +1404,7 @@
                                 display: flex;
                                 flex-wrap: wrap;
                                 .numBtn{
+                                    cursor: pointer;
                                     width: 120px;
                                     border-radius:4px;
                                     height:68px;
@@ -1594,15 +1430,18 @@
                     }
                 }
                 .v3{
-                    height:300px;
+                    height:280px;
                     .z-content2{
                         padding-left:36px;
                         display: flex;
                         .z1{
+                            width: 636px;
                             margin-right:40px;
                         }
-                        .z3{
+                        .z2{
                             flex:1;
+                        }
+                        .z3{
                             display: flex;
                             justify-content: flex-end;
                             .z-row-right{
@@ -1629,9 +1468,10 @@
                                     align-items: center;
                                     justify-content: space-between;
                                     span{
-                                        width:100px;
+                                        cursor: pointer;
+                                        width:106px;
                                         font-size:12px;
-                                        text-align: right;
+                                        // text-align: right;
                                     }
                                 }
                             }
@@ -1640,7 +1480,7 @@
                             margin-top:16px;
                             display: flex;
                             .z-row-left{
-                                margin-right:60px;
+                                width:380px;
                                 .z_title{
                                     display: flex;
                                     align-items: center;
@@ -1747,6 +1587,7 @@
                                 display: flex;
                                 flex-wrap: wrap;
                                 .numBtn{
+                                    cursor:pointer;
                                     width: 120px;
                                     border-radius:4px;
                                     height:68px;
@@ -1768,7 +1609,6 @@
                                     }
                                 }
                             }
-                            
                         }
                     }
                 }

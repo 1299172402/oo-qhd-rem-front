@@ -39,7 +39,7 @@
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
-                    <span>措施版本：</span>
+                    <span>计划/预测版本：</span>
                     <el-select filterable v-model="measureVersion" style="width:170px;">
                         <el-option v-for="(item, index) in measureVersionSelect" :key="index" :label="item.label"
                             :value="item.value"></el-option>
@@ -47,15 +47,14 @@
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>时间:</span>
-                    <el-date-picker v-model="dateTime" style="width:160px;margin-left:10px" type="year"
-                        placeholder="选择日期" value-format="yyyy"></el-date-picker>
+                    <el-date-picker v-model="dateTime" style="width:160px;margin-left:10px" type="date"
+                        placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <el-button type="primary" icon="el-icon-search" @click="getFetchMeasureInfos">搜索</el-button>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
-                    
                 </div>
             </div>
         </headerSearch>
@@ -208,7 +207,7 @@
                 // basicDays: ['-01-01', '-02-01', '-03-01', '-04-01', '-05-01', '-06-01', '-07-01', '-08-01', '-09-01  ','-10-01', '-11-01', '-12-01'],
                 basicDays:['年01月','年02月','年03月','年04月','年05月','年06月','年07月','年08月','年09月','年10月','年11月','年12月'],
                 days: [],
-                dateTime: new Date().format('yyyy'), //时间
+                dateTime: new Date().format('yyyy-MM-dd'), //时间
                 queryParams: {
                     page: 1,
                     pageSize: 15,
@@ -386,8 +385,6 @@
                     wellName: '全部'
                 });
                 this.wellId = '';
-                //措施事件
-                this.getMeasureNameAndCode();
                 //措施版本
                 // await getMeasureVersion().then(res => {
                 //     if (res.data.code == 200) {
@@ -400,6 +397,47 @@
                 // })
                 //措施列表数据
                 this.getFetchMeasureInfos();
+            },
+            //措施列表数据
+            getFetchMeasureInfos() {
+                let params = {
+                    oilFieldId: this.selectOilField, //油田id
+                    platformId: this.selectPlatform, //平台id
+                    wellId: [this.wellId], //井号id
+                    measureId: this.measureId, //措施事件
+                    stimClassCode: this.stimClassCode, //措施类型
+                    measureVersion: this.measureVersion, //措施版本
+                    year: this.dateTime, //时间-年月日
+                    page: 1,
+                    pageSize: 10000,
+                }
+                getFetchMeasureInfos(params).then(res => {
+                    if (res.data.code == 200) {
+                        //措施事件
+                        this.getMeasureNameAndCode();
+                        this.tableData = res.data.data.measuresInfoList;
+                        this.days = [];
+                        this.basicDays.forEach((el, i) => {
+                            this.days.push(this.dateTime.split('-')[0] + el);
+                        })
+                        if (this.dateTime.split('-')[0] == '2023') {
+                            this.tableData[1].planMeasuresDayNum = '';
+                            this.tableData[1].planMeasuresEndTime = '';
+                            this.tableData[1].planMeasuresStartTime = '';
+                            this.tableData[1].realityMeasuresDayNum = '60'
+                            this.tableData[1].realityMeasuresEndTime = '2023-08-01';
+                            this.tableData[1].realityMeasuresStartTime = '2023-06-01';
+                        }
+                        this.pageTotal = this.tableData.length;
+                        this.initData2();
+                        this.mcMarginLeft();
+                        if (this.dateTime.split('-')[0] == '2023' && this.pageTotal) {
+                            this.isShowMC = true;
+                        } else {
+                            this.isShowMC = false;
+                        }
+                    }
+                })
             },
             //措施事件下拉框数据源
             getMeasureNameAndCode() {
@@ -422,45 +460,6 @@
                         this.measureId = '';
                     }
                 });
-            },
-            //措施列表数据
-            getFetchMeasureInfos() {
-                let params = {
-                    oilFieldId: this.selectOilField, //油田id
-                    platformId: this.selectPlatform, //平台id
-                    wellId: [this.wellId], //井号id
-                    measureId: this.measureId, //措施事件
-                    stimClassCode: this.stimClassCode, //措施类型
-                    measureVersion: this.measureVersion, //措施版本
-                    year: this.dateTime, //时间-年
-                    page: 1,
-                    pageSize: 10000,
-                }
-                getFetchMeasureInfos(params).then(res => {
-                    if (res.data.code == 200) {
-                        this.tableData = res.data.data.measuresInfoList;
-                        this.days = [];
-                        this.basicDays.forEach((el, i) => {
-                            this.days.push(this.dateTime + el);
-                        })
-                        if (this.dateTime == '2023') {
-                            this.tableData[1].planMeasuresDayNum = '';
-                            this.tableData[1].planMeasuresEndTime = '';
-                            this.tableData[1].planMeasuresStartTime = '';
-                            this.tableData[1].realityMeasuresDayNum = '60'
-                            this.tableData[1].realityMeasuresEndTime = '2023-08-01';
-                            this.tableData[1].realityMeasuresStartTime = '2023-06-01';
-                        }
-                        this.pageTotal = this.tableData.length;
-                        this.initData2();
-                        this.mcMarginLeft();
-                        if (this.dateTime == '2023' && this.pageTotal) {
-                            this.isShowMC = true;
-                        } else {
-                            this.isShowMC = false;
-                        }
-                    }
-                })
             },
             //如果是今年数据，根据当前日期显示出蒙层
             mcMarginLeft() {

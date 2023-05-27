@@ -6,20 +6,28 @@
             <headerSearch style="height:80px;">
                 <div class="g-row-flex-V g-w100 g-h100">
                     <span>油田：</span>
-                    <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="changeOilFeild">
+                    <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="getFieldsData">
                         <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId" :disabled="item.disabled">
                         </el-option>
                     </el-select>
+                    
+                    <span style="margin-left:15px;">区块：</span>
+                    <el-select v-model="selectBlock" style="width: 180px" filterable clearable @change="queryPlatFormList">
+                        <el-option v-for="item in blocks" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
+                    </el-select>
+                    
                     <span style="margin-left:15px;">平台：</span>
-                    <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="changePlatForm">
+                    <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="queryOilWellListByPid">
                         <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId" :disabled="item.disabled">
                         </el-option>
                     </el-select>
+                    
                     <span style="margin-left:15px;">井号：</span>
                     <el-select v-model="wellId" class="f2" style="width:180px" filterable clearable>
                         <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled">
                         </el-option>
                     </el-select>
+                    
                     <span style="margin-left:15px;">评价时间：</span>
                     <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
@@ -201,7 +209,7 @@
                                 </el-table-column>
                                 <!--生产问题监测项目-->
                                 <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
-                                    <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="100" :key="index" :prop="item.code" align="center" label-class-name="twoRowHeader">
+                                    <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="120" :key="index" :prop="item.code" align="center" label-class-name="twoRowHeader">
                                         <template #header>
                                             <div v-if="item.isTwoHeader">
                                                 <span>{{item.name}}</span>
@@ -215,9 +223,7 @@
                                         <template slot-scope="scope">
                                             <span v-if="scope.row[item.code] == null"></span>
                                             <span v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel }}</span>
-                                            <el-tooltip v-else class="item" effect="dark" :content="scope.row[item.code].value + ''" placement="top">
-                                                <span>{{ scope.row[item.code].showLabel }}{{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2):'-'}}</span>
-                                            </el-tooltip>
+                                            <span>{{replaceStr(scope.row[item.code].showLabel)}}{{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2):'-'}}</span>
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
@@ -661,7 +667,7 @@
                                 </el-table-column>
                                 <!--生产问题监测项目-->
                                 <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
-                                    <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="100" :key="index" :prop="item.code" :label="item.name" align="center" width="180px" label-class-name="twoRowHeader">
+                                    <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="120" :key="index" :prop="item.code" :label="item.name" align="center" width="180px" label-class-name="twoRowHeader">
                                         <template #header>
                                             <div v-if="item.isTwoHeader">
                                                 <span>{{item.name}}</span>
@@ -675,9 +681,7 @@
                                         <template slot-scope="scope">
                                             <span v-if="scope.row[item.code] == null"></span>
                                             <span v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel }}</span>
-                                            <!-- <el-tooltip v-else class="item" effect="dark" :content="scope.row[item.code].value + ''" placement="top"> -->
-                                                <span v-else>{{ scope.row[item.code].showLabel }}{{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2):'-'}}</span>
-                                            <!-- </el-tooltip> -->
+                                            <span v-else>{{replaceStr(scope.row[item.code].showLabel)}}{{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2):'-'}}</span>
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
@@ -2303,7 +2307,19 @@
                 let wellB = ob.wellName;
                 return this.wellNoSort(wellA, wellB);
             },
-        }
+            //替换表格文字
+			replaceStr(str){
+				if(str){
+					let strs=['递减率','采液强度','米采液指数','采液指数'];
+					for(let i=0;i<strs.length;i++){
+						if(str.includes(strs[i])){
+							return str.replace(strs[i],'')
+						}
+					}
+				}
+				return str;
+			},
+		}
     }
 </script>
 

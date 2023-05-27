@@ -297,7 +297,8 @@
                                                 v-for="(item,index) in recommendedMeasuresOptions" :key="index" 
                                                 v-if="item.name=='地面提压'||item.name=='测调'"
                                                 @click="((val)=>{selRadioIterm(item.code,'recommendedMeasuresOptions')})">
-                                                {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
+                                                {{item.name}}：
+                                                <b style="color: #FFC835; font-size: 14px;">{{item.value}}</b>
                                             </span>
                                         </div>
                                     </div>
@@ -349,7 +350,8 @@
                                                 v-for="(item,index) in recommendedMeasuresOptions" :key="index" 
                                                 v-if="item.name=='检查管柱'"
                                                 @click="((val)=>{selRadioIterm(item.code,'recommendedMeasuresOptions')})">
-                                                {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
+                                                {{item.name}}：
+                                                <b style="color: #FFC835; font-size: 14px;">{{item.value}}</b>
                                             </span>
                                         </div>
                                     </div>
@@ -400,7 +402,8 @@
                                             <span 
                                                 v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='储层改造'||item.name=='酸化解堵'||item.name=='恢复注水'"
                                                 @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'recommendedMeasuresOptions')})">
-                                                {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
+                                                {{item.name}}：
+                                                <b style="color: #FFC835; font-size: 14px;">{{item.value}}</b>
                                             </span>
                                         </div>
                                         
@@ -905,24 +908,6 @@
                 for (let i = 0; i < myData.length; i++) {
                     let myWellId = myData[i].wellId; //井号
                     //井层指标变化趋势trendOfIndicators
-                    /*for(let j=0;j<this.trendOfIndicators.length;j++){
-                      let t_data = this.trendOfIndicators[j];//每个数据项
-                      if(val==t_data.code){//选中项目不需要测试
-                        myData[i].trendOfIndicators = t_data.name;//默认
-                      }else{
-                        if(!isNaN(myWellCount[t_data.code])){
-                          t_count = myWellCount[t_data.code];
-                        }else{
-                          t_count = 0;//初始化
-                        }
-                        let t_subWells = ","+t_data.wells+",";
-                        if(t_subWells.includes(","+myWellId+",")){
-                          myData[i].trendOfIndicators = t_data.name;//默认
-                          t_count++;//计数
-                        }
-                        myWellCount[t_data.code] = t_count;//回写
-                      }
-                    }*/
                     for (let j = 0; j < this.trendOfIndicators.length; j++) {
                         let t_data = this.trendOfIndicators[j]; //每个数据项
                         if (val == t_data.code) { //选中项目不需要测试

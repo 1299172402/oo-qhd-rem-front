@@ -1,72 +1,58 @@
 <template>
-    <el-container class="layout">
-        <info-window infoWidth="100%" infoHeight="100%" headerTitle="附表16 秦皇岛32-6/渤中作业公司提高单井产量实施路径" :isShowMaxBtn="true" style="margin-top: 10px">
-            <el-table 
-                id="tableData" 
-                :data="tableData" 
-                border 
-                :header-cell-style="{ background: 'transparent', color: '#fff' }" 
-                :span-method="objectSpanMethodOne" 
-                highlight 
-                height="calc(100% - 40px)"
-                :row-class-name="tableRowClass" 
-                @cell-mouse-enter="cellMouseEnter"
-                @cell-mouse-leave="cellMouseLeave">
-                <el-table-column prop="xh" label="序号" align="center"></el-table-column>
-                <el-table-column prop="operationarea" label="作业公司" align="center" width="140"></el-table-column>
-                <el-table-column prop="oilField" label="油田" align="center" width="120"></el-table-column>
-                <el-table-column prop="kfjd" :label="`开发阶段\n（在生产、\n在建设、\n开发评价）`" align="center" width="120"></el-table-column>
-                <el-table-column prop="clsd" :label="`提高单井产量手段\n（包括但不限于\n稠油热采、低渗\n压裂、注气开发等）`" align="center" width="150"></el-table-column>
-                <el-table-column :label="`实施井数\n(口)`" align="center">
-                    <el-table-column prop="dxj" label="定向井" align="center"></el-table-column>
-                    <el-table-column prop="spj" label="水平井" align="center"></el-table-column>
-                    <el-table-column prop="ssjsxj" label="小计" align="center"></el-table-column>
-                </el-table-column>
-                <el-table-column label="提高单井产量情况" align="center">
-                    <el-table-column prop="pjcl" :label="`措施前单井\n平均产量\n(t/d)`" align="center" width="120"></el-table-column>
-                    <el-table-column prop="clyc" :label="`措施后单井\n平均产量预测\n（三个月）\n(t/d)`" align="center" width="120"></el-table-column>
-                    <el-table-column prop="zcps" label="增产倍数" align="center" width="120"></el-table-column>
-                </el-table-column>
-                <el-table-column prop="csjk" label="配套措施简况" align="center" width="120"></el-table-column>
-                <el-table-column :label="`不做措施产油量预测\n(10⁴t)`" align="center">
-                    <el-table-column prop="b2020" label="2020" align="center"></el-table-column>
-                    <el-table-column prop="b2021" label="2021" align="center"></el-table-column>
-                    <el-table-column prop="b2022" label="2022" align="center"></el-table-column>
-                    <el-table-column prop="b2023" label="2023" align="center"></el-table-column>
-                    <el-table-column prop="b2024" label="2024" align="center"></el-table-column>
-                    <el-table-column prop="b2025" label="2025" align="center"></el-table-column>
-                    <el-table-column prop="b2026" label="2026" align="center"></el-table-column>
-                    <el-table-column prop="b2027" label="2027" align="center"></el-table-column>
-                    <el-table-column prop="b2028" label="2028" align="center"></el-table-column>
-                    <el-table-column prop="b2029" label="2029" align="center"></el-table-column>
-                    <el-table-column prop="b2030" label="2030" align="center"></el-table-column>
-                </el-table-column>
-                <el-table-column :label="`做措施后产油量预测\n(10⁴t)`" align="center">
-                    <el-table-column prop="z2020" label="2020" align="center"></el-table-column>
-                    <el-table-column prop="z2021" label="2021" align="center"></el-table-column>
-                    <el-table-column prop="z2022" label="2022" align="center"></el-table-column>
-                    <el-table-column prop="z2023" label="2023" align="center"></el-table-column>
-                    <el-table-column prop="z2024" label="2024" align="center"></el-table-column>
-                    <el-table-column prop="z2025" label="2025" align="center"></el-table-column>
-                    <el-table-column prop="z2026" label="2026" align="center"></el-table-column>
-                    <el-table-column prop="z2027" label="2027" align="center"></el-table-column>
-                    <el-table-column prop="z2028" label="2028" align="center"></el-table-column>
-                    <el-table-column prop="z2029" label="2029" align="center"></el-table-column>
-                    <el-table-column prop="z2030" label="2030" align="center"></el-table-column>
-                </el-table-column>
-            </el-table>
-        </info-window>
-    </el-container>
+    <info-window infoWidth="100%" infoHeight="100%" headerTitle="附表16 秦皇岛32-6/渤中作业公司提高单井产量实施路径" :isShowMaxBtn="true">
+        <el-table id="tableData" class="doubleHeader" :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }" :data="tableData" header-cell-class-name="table_header"
+               :cell-style="{ padding: '6px', 'text-align': 'center' }" height="calc(100% - 40px)">
+            <el-table-column prop="xh" label="序号" align="center" fixed></el-table-column>
+            <el-table-column prop="operationarea" label="作业公司" align="center" width="140" fixed></el-table-column>
+            <el-table-column prop="oilField" label="油田" align="center" width="120" fixed></el-table-column>
+            <el-table-column prop="kfjd" :label="`开发阶段\n（在生产、\n在建设、\n开发评价）`" align="center" width="120"></el-table-column>
+            <el-table-column prop="clsd" :label="`提高单井产量手段\n（包括但不限于\n稠油热采、低渗\n压裂、注气开发等）`" align="center" width="150"></el-table-column>
+            <el-table-column :label="`实施井数\n(口)`" align="center">
+                <el-table-column prop="dxj" label="定向井" align="center"></el-table-column>
+                <el-table-column prop="spj" label="水平井" align="center"></el-table-column>
+                <el-table-column prop="ssjsxj" label="小计" align="center"></el-table-column>
+            </el-table-column>
+            <el-table-column label="提高单井产量情况" align="center">
+                <el-table-column prop="pjcl" :label="`措施前单井\n平均产量\n(t/d)`" align="center" width="120"></el-table-column>
+                <el-table-column prop="clyc" :label="`措施后单井\n平均产量预测\n（三个月）\n(t/d)`" align="center" width="120"></el-table-column>
+                <el-table-column prop="zcps" label="增产倍数" align="center" width="120"></el-table-column>
+            </el-table-column>
+            <el-table-column prop="csjk" label="配套措施简况" align="center" width="120"></el-table-column>
+            <el-table-column :label="`不做措施产油量预测\n(10⁴t)`" align="center">
+                <el-table-column prop="b2020" label="2020" align="center"></el-table-column>
+                <el-table-column prop="b2021" label="2021" align="center"></el-table-column>
+                <el-table-column prop="b2022" label="2022" align="center"></el-table-column>
+                <el-table-column prop="b2023" label="2023" align="center"></el-table-column>
+                <el-table-column prop="b2024" label="2024" align="center"></el-table-column>
+                <el-table-column prop="b2025" label="2025" align="center"></el-table-column>
+                <el-table-column prop="b2026" label="2026" align="center"></el-table-column>
+                <el-table-column prop="b2027" label="2027" align="center"></el-table-column>
+                <el-table-column prop="b2028" label="2028" align="center"></el-table-column>
+                <el-table-column prop="b2029" label="2029" align="center"></el-table-column>
+                <el-table-column prop="b2030" label="2030" align="center"></el-table-column>
+            </el-table-column>
+            <el-table-column :label="`做措施后产油量预测\n(10⁴t)`" align="center">
+                <el-table-column prop="z2020" label="2020" align="center"></el-table-column>
+                <el-table-column prop="z2021" label="2021" align="center"></el-table-column>
+                <el-table-column prop="z2022" label="2022" align="center"></el-table-column>
+                <el-table-column prop="z2023" label="2023" align="center"></el-table-column>
+                <el-table-column prop="z2024" label="2024" align="center"></el-table-column>
+                <el-table-column prop="z2025" label="2025" align="center"></el-table-column>
+                <el-table-column prop="z2026" label="2026" align="center"></el-table-column>
+                <el-table-column prop="z2027" label="2027" align="center"></el-table-column>
+                <el-table-column prop="z2028" label="2028" align="center"></el-table-column>
+                <el-table-column prop="z2029" label="2029" align="center"></el-table-column>
+                <el-table-column prop="z2030" label="2030" align="center"></el-table-column>
+            </el-table-column>
+        </el-table>
+    </info-window>
+    
 </template>
+
 <script>
     export default {
         data() {
             return {
-                hoverIndex:null,
-                page: 1,
-                pageSize: 10,
-                spanArrOne: [],
-                pos: "",
                 tableData: [
                     {
                         operationarea: "秦皇岛32-6/渤中",
@@ -175,107 +161,19 @@
                     },
                 ],
             };
-        },
-        mounted() {
-            this.getSpanArrOne(this.tableData);
-        },
-        methods: {
-            //合并
-            objectSpanMethodOne({row,column,rowIndex,columnIndex}) {
-                if (columnIndex >= 0 && columnIndex < 3) {
-                    if (!this.tableData[rowIndex]) {
-                        return {
-                            rowspan: 1,
-                            colspan: 1,
-                        };
-                    }
-                    if (this.tableData[rowIndex - 1] && this.tableData[rowIndex].contractNo === this.tableData[rowIndex - 1].contractNo) {
-                        if (this.tableData[rowIndex][column.property] === this.tableData[rowIndex - 1][column.property]) {
-                            return {
-                                rowspan: 0,
-                                colspan: 0,
-                            };
-                        }
-                    }
-                    if (this.tableData[rowIndex + 1] &&this.tableData[rowIndex].contractNo === this.tableData[rowIndex + 1].contractNo) {
-                        if (this.tableData[rowIndex][column.property] === this.tableData[rowIndex + 1][column.property]) {
-                            let conutRowSpan = 1,
-                                countIndex = 1;
-                            var len = this.tableData.length;
-                            //往下遍历 重复的列有几个 合并几个
-                            for (var i = rowIndex; i <= len; i++) {
-                                //遍历数组
-                                if (this.tableData[rowIndex + countIndex] &&this.tableData[rowIndex][column.property] === this.tableData[rowIndex + countIndex][column.property]) {
-                                    countIndex += 1;
-                                    conutRowSpan += 1;
-                                } else {
-                                    break;
-                                }
-                            }
-                            //2列1行
-                            return {
-                                rowspan: conutRowSpan,
-                                colspan: 1,
-                            }
-                        }
-                    }
-                } else {
-                    return {
-                        rowspan: 1,
-                        colspan: 1,
-                    };
-                }
-            },
-            // 因为要合并的行数是不固定的，此函数是实现合并随意行数的功能
-            getSpanArrOne(data) {
-                console.log("zmmm--", data); //从后台获取的数据
-                this.spanArrOne = [];
-                this.pos = 0;
-                for (var i = 0; i < data.length; i++) {
-                    if (i === 0) {
-                        // 如果是第一条记录（即索引是0的时候），向数组中加入１
-                        this.spanArrOne.push(1);
-                        this.pos = 0;
-                    } else {
-                        if (data[i].platform === data[i - 1].platform) {
-                            // 如果platform相等就累加，并且push 0
-                            this.spanArrOne[this.pos] += 1;
-                            this.spanArrOne.push(0);
-                        } else {
-                            // 不相等push 1
-                            this.spanArrOne.push(1);
-                            this.pos = i;
-                        }
-                    }
-                }
-            },
-            tableRowClass({rowIndex}){
-                if (rowIndex==this.hoverIndex ) {
-                    return "hover-bg";
-                }else{
-                    return ''
-                }
-            },
-            cellMouseEnter(row, column, cell, event) {
-                this.hoverIndex =0;
-            },
-            cellMouseLeave() {
-                this.hoverIndex = null;
-            }
-        },
+        }
     };
 </script>
 
 <style lang="scss" scoped>
-    ::v-deep .hover-bg{
-        .el-table__cell:nth-child(2),.el-table__cell:nth-child(3){
-            background: var(--opacity-blue-bg) !important;
-        }
+    ::v-deep .el-table__fixed-header-wrapper .cell {
+        line-height: 59px !important;
+        height: 59px !important;
     }
     #tableData {
         ::v-deep .el-table__header-wrapper .cell {
             height: auto;
-            line-height: 18px;
+            line-height: 20px;
             white-space: pre;
         }
 
@@ -285,9 +183,5 @@
             }
         }
     }
-
-    ::v-deep .el-table .el-table__body-wrapper .cell {
-        height: auto;
-        line-height: 40px;
-    }
 </style>
+

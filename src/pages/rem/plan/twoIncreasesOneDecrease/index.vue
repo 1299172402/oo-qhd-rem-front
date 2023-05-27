@@ -1,32 +1,36 @@
 <!-- 两提一降 -->
 <template>
-    <div>
-        <headerSearch style="height: 100%">
-            <vertical-switch-button :data-list="dataList1" button-width="100%" button-height="40px" btn-direction="row" style="flex-wrap: wrap; margin-top: 20px" @selectBtn="selectBtn" />
-        </headerSearch>
-        <div>
-            <schedule1 v-if="radio1 == 'schedule1'"></schedule1>
-            <schedule-2-1 v-if="radio1 == 'schedule21'"></schedule-2-1>
-            <schedule-2-2 v-if="radio1 == 'schedule22'"></schedule-2-2>
-            <schedule-3 v-if="radio1 == 'schedule3'"></schedule-3>
-            <Schedule4 v-if="radio1 == 'Schedule4'"></Schedule4>
-            <Schedule5 v-if="radio1 == 'Schedule5'"></Schedule5>
-            <Schedule6 v-if="radio1 == 'Schedule6'"></Schedule6>
-            <Schedule7 v-if="radio1 == 'Schedule7'"></Schedule7>
-            <Schedule8 v-if="radio1 == 'Schedule8'"></Schedule8>
-            <Schedule9 v-if="radio1 == 'Schedule9'"></Schedule9>
-            <schedule10 v-if="radio1 == 'Schedule10'"></schedule10>
-            <Schedule11 v-if="radio1 == 'Schedule11'"></Schedule11>
-            <Schedule12 v-if="radio1 == 'Schedule12'"></Schedule12>
-            <Schedule13 v-if="radio1 == 'Schedule13'"></Schedule13>
-            <Schedule14 v-if="radio1 == 'Schedule14'"></Schedule14>
-            <Schedule15 v-if="radio1 == 'Schedule15'"></Schedule15>
-            <Schedule16 v-if="radio1 == 'Schedule16'"></Schedule16>
-            <Schedule17 v-if="radio1 == 'Schedule17'"></Schedule17>
-            <Schedule18 v-if="radio1 == 'Schedule18'"></Schedule18>
-        </div>
+    <div class="app-container">
+        <pagePanelNew class="pagePanelNew" style="margin-top:0;">
+            <el-tabs class="g-pageHeader" v-model="activeName" topline>
+                <el-tab-pane v-for="(item, index) in dataList" :key="index" :label="item.name" :name="item.key"></el-tab-pane>
+            </el-tabs>
+            <div class='table-container' 
+                :style="{height:(activeName == 'Schedule11'|| activeName == 'Schedule12')?'650px':(activeName == 'Schedule14')?'700px':'450px'}">
+                <schedule1 v-if="activeName == 'schedule1'"></schedule1>
+                <schedule-2-1 v-if="activeName == 'schedule21'"></schedule-2-1>
+                <schedule-2-2 v-if="activeName == 'schedule22'"></schedule-2-2>
+                <schedule-3 v-if="activeName == 'schedule3'"></schedule-3>
+                <Schedule4 v-if="activeName == 'Schedule4'"></Schedule4>
+                <Schedule5 v-if="activeName == 'Schedule5'"></Schedule5>
+                <Schedule6 v-if="activeName == 'Schedule6'"></Schedule6>
+                <Schedule7 v-if="activeName == 'Schedule7'"></Schedule7>
+                <Schedule8 v-if="activeName == 'Schedule8'"></Schedule8>
+                <Schedule9 v-if="activeName == 'Schedule9'"></Schedule9>
+                <schedule10 v-if="activeName == 'Schedule10'"></schedule10>
+                <Schedule11 v-if="activeName == 'Schedule11'"></Schedule11>
+                <Schedule12 v-if="activeName == 'Schedule12'"></Schedule12>
+                <Schedule13 v-if="activeName == 'Schedule13'"></Schedule13>
+                <Schedule14 v-if="activeName == 'Schedule14'"></Schedule14>
+                <Schedule15 v-if="activeName == 'Schedule15'"></Schedule15>
+                <Schedule16 v-if="activeName == 'Schedule16'"></Schedule16>
+                <Schedule17 v-if="activeName == 'Schedule17'"></Schedule17>
+                <Schedule18 v-if="activeName == 'Schedule18'"></Schedule18>
+            </div>
+        </pagePanelNew>
     </div>
 </template>
+
 <script>
     import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
     import schedule1 from "./components/schedule1.vue";
@@ -73,8 +77,8 @@
         },
         data() {
             return {
-                radio1: "schedule1",
-                dataList1: [{
+                dataList: [
+                    {
                         name: "附件1",
                         key: "schedule1",
                         isChecked: true
@@ -170,32 +174,17 @@
                         isChecked: false
                     },
                 ],
+                activeName: "schedule1",
             };
-        },
-        methods: {
-            selectBtn(item) {
-                (this.name = item.key), (this.radio1 = item.key);
-            },
         },
     };
 </script>
 
 <style lang="scss" scoped>
-    :root[theme-mode="dark"] .el-table .cell {
-        height: auto;
-        line-height: 40px;
-    }
-
-    ::v-deep .el-radio-button--medium .el-radio-button__inner {
-        padding: 10px 10px;
-        font-size: 14px;
-
-        background-color: #031527;
-        border: 1px solid #00def0;
-    }
-
-    ::v-deep .el-card__body,
-    .el-main {
-        padding: 0px;
+    .app-container{
+        height:100%;
+        .pagePanelNew{
+            height:100%;
+        }
     }
 </style>
