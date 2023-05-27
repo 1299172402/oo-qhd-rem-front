@@ -13,7 +13,7 @@
       </el-col> -->
     </el-row>
     <pagePanel headerTitle="人员类型概况" style="height: calc(100% - 330px)">
-      <el-table highlight :data="peoplelist" style="width: 100%" :summary-method="getSummaries" show-summary>
+      <el-table highlight :data="peoplelist" height="100%" style="width: 100%" :summary-method="getSummaries" show-summary>
         <el-table-column prop="prodPlatFormName" label="平台" min-width="200px" align="center"> </el-table-column>
         <el-table-column prop="newsPapering" label="报务" min-width="80px" align="center"> </el-table-column>
         <el-table-column prop="mineStaff" min-width="120px" label="定员" align="center"> </el-table-column>

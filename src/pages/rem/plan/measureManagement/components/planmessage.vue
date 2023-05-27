@@ -10,30 +10,31 @@
         header-cell-class-name="table_header"
         :cell-style="{ 'text-align': 'center', padding: '2px' }"
         style="width: 100%; height: 100%"
+        id="xczyjhb"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column label="井基本信息" prop="name" align="center">
           <el-table-column label="井号" prop="one" align="center"></el-table-column>
           <el-table-column label="生产层位" prop="one" align="center"></el-table-column>
           <el-table-column label="所属区块" prop="one" align="center"></el-table-column>
-          <el-table-column label="油藏厚度（m）" width="130px" prop="one" align="center"></el-table-column>
-          <el-table-column label="水平段长度（m）" prop="one" align="center"></el-table-column>
+          <el-table-column :label="`油藏厚度 \n（m）`" width="130px" prop="one" align="center"></el-table-column>
+          <el-table-column :label="`水平段长度 \n（m）`" min-width="130px" prop="one" align="center"></el-table-column>
           <el-table-column label="完井方式" prop="one" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="生产现状" prop="name" align="center">
           <el-table-column label="投产日期" prop="one" align="center"></el-table-column>
-          <el-table-column label="日产液（m³/d）" prop="one" align="center"></el-table-column>
-          <el-table-column label="日产油（m³/d）" prop="one" align="center"></el-table-column>
-          <el-table-column label="含水（%）" prop="one" align="center"></el-table-column>
-          <el-table-column label="泵频（Hz）" prop="one" align="center"></el-table-column>
-          <el-table-column label="累产油（万方）" prop="one" align="center"></el-table-column>
-          <el-table-column label="地层压力测试时间" prop="one" align="center"></el-table-column>
-          <el-table-column label="测试压力值（MPa）" prop="one" align="center"></el-table-column>
-          <el-table-column label="流压（MPa）" prop="one" align="center"></el-table-column>
-          <el-table-column label="生产压差（MPa）" prop="one" align="center"></el-table-column>
+          <el-table-column :label="`日产液\n（m³/d）`" min-width="130px" prop="one" align="center"></el-table-column>
+          <el-table-column :label="`日产油\n（m³/d）`" min-width="130px" prop="one" align="center"></el-table-column>
+          <el-table-column :label="`含水\n（%）`" prop="one" align="center"></el-table-column>
+          <el-table-column :label="`泵频\n（Hz）`" prop="one" align="center"></el-table-column>
+          <el-table-column :label="`累产油\n（万方）`" prop="one" align="center"></el-table-column>
+          <el-table-column label="地层压力测试时间" prop="one" min-width="140px" align="center"></el-table-column>
+          <el-table-column :label="`测试压力值\n（MPa）`" min-width="130px" prop="one" align="center"></el-table-column>
+          <el-table-column :label="`流压\n（MPa）`" min-width="130px" prop="one" align="center"></el-table-column>
+          <el-table-column :label="`生产压差\n（MPa）`" min-width="130px" prop="one" align="center"></el-table-column>
           <el-table-column label="井控储量" prop="one" align="center"></el-table-column>
-          <el-table-column label="剩余可采储量" prop="one" align="center"></el-table-column>
-          <el-table-column label="采液指数（m³/d.MPa）" prop="one" align="center"></el-table-column>
+          <el-table-column label="剩余可采储量" prop="one" min-width="130px" align="center"></el-table-column>
+          <el-table-column :label="`采液指数\n（m³/d.MPa）`" min-width="130px" prop="one" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="预测值" prop="name" align="center">
           <el-table-column label="产液值" prop="one" align="center"></el-table-column>
@@ -51,7 +52,7 @@
           <el-table-column label="电泵情况" prop="one" align="center"></el-table-column>
           <el-table-column label="管柱情况" prop="one" align="center"></el-table-column>
           <el-table-column label="海管情况" prop="one" align="center"></el-table-column>
-          <el-table-column label="泵能耗预测" prop="one" align="center"></el-table-column>
+          <el-table-column label="泵能耗预测" min-width="130px" prop="one" align="center"></el-table-column>
           <el-table-column label="变频器" prop="one" align="center"></el-table-column>
           <el-table-column label="变压器" prop="one" align="center"></el-table-column>
         </el-table-column>
@@ -134,5 +135,12 @@ export default {
 }
 .pertable thead .el-table-column--selection .cell {
   display: none;
+}
+#xczyjhb {
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        line-height: 18px;
+        white-space: pre;
+    }
 }
 </style>

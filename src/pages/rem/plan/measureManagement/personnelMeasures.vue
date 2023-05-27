@@ -37,6 +37,8 @@
         <el-button size="medium" type="primary" @click="retrieval" icon="el-icon-search" style="margin-left: 10px"
           >搜索</el-button
         >
+          <el-button class="commonBtn" @click="reset" icon="el-icon-refresh"> 重置</el-button>
+          <el-button style="float: right" type="primary"  @click="returnrouter">返回</el-button>
       </el-form>
     </headerSearch>
     <div style="height: calc(100% - 92px)">
@@ -85,6 +87,7 @@ export default {
       platforms: [],
       platform:[],
       activeName: "personnelplan",
+        date:'',
     };
   },
   mounted() {
@@ -100,6 +103,7 @@ export default {
       "-" +
       (yesday.getDate() > 9 ? yesday.getDate() : "0" + yesday.getDate()); //字符串拼接转格式
     this.queryParams.endTime = yesday;
+      this.date = yesday
     this.getserch();
   },
   methods: {
@@ -131,10 +135,17 @@ export default {
           });
         } else {
           this.$message.error("系统错误请重新尝试或联系运维人员！");
+            this.queryParams.selectPlatform = '';
+            this.$refs.modal.show(this.queryParams);
         }
       });
     },
-    doChangePT() {},
+      reset(){
+        this.queryParams.endTime =   this.date
+      },
+      returnrouter() {
+          this.$router.go(-1);
+      },
   },
 };
 </script>

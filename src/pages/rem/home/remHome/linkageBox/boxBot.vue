@@ -31,7 +31,7 @@
                 <div class="pad">
                     <div>
                         <p v-show="!content" :key="index" v-for="(item,index) in currentList.boxBottomText">
-                            <span>{{item}}</span>
+                            <span style="cursor: pointer" @click="skippage(item.url)">{{item.name}}</span>
                             <span v-if="currentList.boxBottomContent" class="btnContent" @click="btnContent(index)">{{currentList.boxBottomContent[index].length>0?'>>':''}}</span>
                             <span v-else class="btnBack" @click="btnBack"></span>
                         </p>
@@ -73,7 +73,6 @@ export default {
     },
 
     mounted() {
-        console.log(this.currentList);
     },
     data() {
         return {
@@ -90,7 +89,6 @@ export default {
     },
     methods:{
         show:function(flag){
-            console.log(this.currentList.boxBottomText.length);
             if (flag){
                 this.showStyle.top = -this.currentList.boxBottomText.length * 2 +11 + 'vw';
                 // this.showStyle2.height = (this.currentList.boxBottomText.length *1 )+5 + 'vw';
@@ -98,6 +96,10 @@ export default {
                 this.showStyle.top = '18vw';
                 // this.showStyle2.height = '0';
             }     
+        },
+        skippage(page){
+            if (!page) return
+            window.open(page, '_blank');
         },
         btnBack:function(){
             if(this.currentList.boxBottomContent){

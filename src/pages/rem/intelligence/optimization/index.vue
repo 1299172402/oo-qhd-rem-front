@@ -119,7 +119,7 @@
                                 :span-method="mergeTable"
                                 height="calc(100% - 30px)"
                             >
-                                <el-table-column prop="injWellNo" label="注水井11" align="center"
+                                <el-table-column prop="injWellNo" label="注水井" align="center"
                                                  min-width="120"></el-table-column>
                                 <el-table-column
                                     prop="injWellDaily"

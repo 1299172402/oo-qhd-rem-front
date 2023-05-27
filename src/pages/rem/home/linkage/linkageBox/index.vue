@@ -60,7 +60,6 @@ export default {
         }
     },
     created() {
-        console.log(this.currentList.imgUrl);
     },
     computed:{
         getWarningShowFlag(){

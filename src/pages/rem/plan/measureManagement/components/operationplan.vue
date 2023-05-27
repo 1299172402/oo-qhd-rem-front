@@ -1,7 +1,7 @@
 <!-- 现场作业计划 -->
 <template>
   <div class="app-container" style="height: 100%">
-    <pagePanel headerTitle="现场作业计划表" style="height: 100%">
+    <pagePanel headerTitle="措施计划情况表" style="height: 100%">
       <el-table
         :data="noticeList"
         highlight-current-row
