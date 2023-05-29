@@ -1,25 +1,25 @@
 <!--井斜数据-->
 <template>
 <pagePanel headerTitle="井斜数据">
-    <el-table 
+    <el-table
         id="tableData"
         :data="tableData" :border="false" :row-style="{ height: '0px' }"
         header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
-        style="width:100%;" height="600px" :default-sort="{ prop: 'date', order: 'descending' }"
+        style="width:100%;" height="calc(100% - 101px)" :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-      <el-table-column type="index" label="序号" align="center" width="80"></el-table-column>
-      <el-table-column prop="wellName" label="井号" width="180" align="center"></el-table-column>
-      <el-table-column prop="measureDepth" :render-header="renderHeader" label="测点斜深 (m)" align="center"></el-table-column>
-      <el-table-column prop="measureVerticalDepth" :render-header="renderHeader" label="测点垂深 (m)" align="center"></el-table-column>
-      <el-table-column prop="deviationAngle" :render-header="renderHeader" label="井斜角 (°)" align="center"></el-table-column>
-      <el-table-column prop="azinuthAngle" :render-header="renderHeader" label="方位角 (°)" align="center"></el-table-column>
-      <el-table-column prop="displacement" :render-header="renderHeader" label="位移 (m)" align="center"> </el-table-column>
-      <el-table-column prop="closureAzimuth" :render-header="renderHeader" label="闭合方位 (°)" align="center"></el-table-column>
-      <el-table-column prop="closureDistance" :render-header="renderHeader" label="闭合距 (m)" align="center"></el-table-column>
-      <el-table-column prop="NSIncrement" label="坐标北南增量" align="center"></el-table-column>
-      <el-table-column prop="EWIncrement" label="坐标东西增量" align="center"></el-table-column>
-      <el-table-column prop="curvature" :render-header="renderHeader" label="狗腿度（曲度） (°/30m)" width="180" align="center"></el-table-column>
-      <el-table-column prop="remark" label="备注" min-width="180" align="center"></el-table-column>
+        <el-table-column type="index" label="序号"></el-table-column>
+        <el-table-column prop="wellName" label="井号"></el-table-column>
+        <el-table-column prop="measureDepth" :label="`测点斜深\n (m)`"></el-table-column>
+        <el-table-column prop="measureVerticalDepth" :label="`测点垂深\n (m)`"></el-table-column>
+        <el-table-column prop="deviationAngle" :label="`井斜角\n (°)`"></el-table-column>
+        <el-table-column prop="azinuthAngle" :label="`方位角\n (°)`"></el-table-column>
+        <el-table-column prop="displacement" :label="`位移\n (m)`"></el-table-column>
+        <el-table-column prop="closureAzimuth" :label="`闭合方位\n (°)`"></el-table-column>
+        <el-table-column prop="closureDistance" :label="`闭合距\n (m)`"></el-table-column>
+        <el-table-column prop="NSIncrement" :label="`坐标北南增量\n (m)`"></el-table-column>
+        <el-table-column prop="EWIncrement" :label="`坐标东西增量\n (m)`"></el-table-column>
+        <el-table-column prop="curvature" :label="`狗腿度（曲度）\n (°/30m)`"></el-table-column>
+        <el-table-column prop="remark" label="备注"></el-table-column>
     </el-table>
 </pagePanel>
 </template>
@@ -50,18 +50,18 @@ export default {
       this.doSearch();
     },
     //根据父组件传递过来的参数进行查询
-    doSearch() {
-      let request = {
-        ogfId: this.oilFeildId,
-        platformId: this.platform,
-        wellId: this.wellId,
-      };
-      deviationData(request).then((res) => {
-        if (res.data.code == 200) {
-          this.tableData = res.data.data.wellDeviation;
-        }
-      })
-    },
+      doSearch() {
+          let request = {
+              ogfId: this.oilFeildId,
+              platformId: this.platform,
+              wellId: this.wellId,
+          };
+          deviationData(request).then((res) => {
+              if (res.data.code == 200) {
+                  this.tableData = res.data.data.wellDeviation;
+              }
+          })
+      },
     //下载
     doDownLoad(){
       let fileName = '井斜数据';

@@ -25,16 +25,16 @@
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
-                    <span>措施类型：</span>
-                    <el-select v-model="measureId" style="width:170px;">
-                        <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name"
+                    <span>措施属性：</span>
+                    <el-select v-model="stimClassCode" filterable style="width:170px;" @change="getMeasureNameAndCode">
+                        <el-option v-for="(item, index) in stimClassCodeSelect" :key="index" :label="item.name"
                             :value="item.code"></el-option>
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
-                    <span>措施事件：</span>
-                    <el-select v-model="stimClassCode" filterable style="width:170px;">
-                        <el-option v-for="(item, index) in stimClassCodeSelect" :key="index" :label="item.name"
+                    <span>措施类型：</span>
+                    <el-select v-model="measureId" style="width:170px;">
+                        <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name"
                             :value="item.code"></el-option>
                     </el-select>
                 </div>
@@ -229,7 +229,7 @@
                 measureId: '',
                 // 措施事件
                 measuresTypes: [],
-                //措施类型
+                //措施属性
                 stimClassCode: '',
                 stimClassCodeSelect: [
                     {
@@ -237,7 +237,7 @@
                         code: ''
                     }, {
                         name: '维护性',
-                        code: '002'
+                        code: '001'
                     }, {
                         name: '增产性',
                         code: '003'
@@ -385,18 +385,33 @@
                     wellName: '全部'
                 });
                 this.wellId = '';
-                //措施版本
-                // await getMeasureVersion().then(res => {
-                //     if (res.data.code == 200) {
-                //         this.measureVersionSelect = res.data.data;
-                //         this.measureVersionSelect.unshift({
-                //             planTypeName: '全部',
-                //             planTypeCode: ''
-                //         });
-                //     }
-                // })
+                //措施类型
+                this.getMeasureNameAndCode();
                 //措施列表数据
                 this.getFetchMeasureInfos();
+            },
+            //措施类型下拉框数据源
+            getMeasureNameAndCode() {
+                let params = {
+                    oilFieldId: this.selectOilField, //油田id
+                    platformId: this.selectPlatform, //平台id
+                    wellId: [this.wellId], //井号id
+                    stimClassCode:this.stimClassCode,
+                    measureId: this.measuresType, //措施事件
+                    year: this.dateTime, //时间-年
+                    page: 1,
+                    pageSize: 1000,
+                }
+                nameAndCode(params).then((res) => {
+                    if (res.data.code == 200) {
+                        this.measuresTypes = res.data.data.namesAndCodes;
+                        this.measuresTypes.unshift({
+                            code: '',
+                            name: '全部'
+                        });
+                        this.measureId = '';
+                    }
+                });
             },
             //措施列表数据
             getFetchMeasureInfos() {
@@ -438,28 +453,6 @@
                         }
                     }
                 })
-            },
-            //措施事件下拉框数据源
-            getMeasureNameAndCode() {
-                let params = {
-                    oilFieldId: this.selectOilField, //油田id
-                    platformId: this.selectPlatform, //平台id
-                    wellId: [this.wellId], //井号id
-                    measureId: this.measuresType, //措施事件
-                    year: this.dateTime, //时间-年
-                    page: 1,
-                    pageSize: 1000,
-                }
-                nameAndCode(params).then((res) => {
-                    if (res.data.code == 200) {
-                        this.measuresTypes = res.data.data.namesAndCodes;
-                        this.measuresTypes.unshift({
-                            code: '',
-                            name: '全部'
-                        });
-                        this.measureId = '';
-                    }
-                });
             },
             //如果是今年数据，根据当前日期显示出蒙层
             mcMarginLeft() {

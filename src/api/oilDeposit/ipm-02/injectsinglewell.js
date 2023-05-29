@@ -1,6 +1,6 @@
 import Axios from '@/utils/request'
 
-const baseUrl = process.env.NODE_ENV == "production" ? "/ipm02/api" : "/ipm02/api"
+const baseUrl = process.env.NODE_ENV == "production" ? "/ipm/api" : "/ipm/api"
 
 export function getAllWaterInjectivity(data) {
   return Axios({

@@ -103,7 +103,7 @@ export default {
                         boxBottomText: [{
                             name: '定产配注方案',
                             url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence/optimization'
-                        }, {name: '注采优化方案', url: 'https://rem.tjioms-dev.tjltd.cnooc/#/waterflood/marge'}],
+                        }, {name: '注采优化方案', url: 'https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge?link=rem'}],
                         boxStyle: {
                             pWidth: 'width:8.5vw'
                         },

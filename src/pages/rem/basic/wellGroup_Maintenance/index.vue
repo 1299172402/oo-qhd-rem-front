@@ -377,9 +377,9 @@ export default {
         return 'border:none'
       }
 
-      if (rowIndex === 0) {
-        return 'border-bottom:1px solid #66ffff;box-shadow:0px -1px 5px #66ffff inset'
-      }
+      // if (rowIndex === 0) {
+      //   return 'border-bottom:1px solid #66ffff;box-shadow:0px -1px 5px #66ffff inset'
+      // }
     },
     // 新增/修改提交
     queryBut () {
@@ -624,7 +624,6 @@ export default {
 .dataCount {
   width: 100%;
   height: 280px;
-  border: 1px solid #00d6ec;
   display: flex;
   position: relative;
   top: 80px;
@@ -635,32 +634,28 @@ export default {
   .border:nth-child(1) {
     top: -1px;
     left: -1px;
-    border-top: 4px solid #00d6ec;
-    border-left: 4px solid #00d6ec;
+
     width: 40px;
     height: 40px;
   }
   .border:nth-child(2) {
     top: -1px;
     right: -1px;
-    border-top: 4px solid #00d6ec;
-    border-right: 4px solid #00d6ec;
+
     width: 40px;
     height: 40px;
   }
   .border:nth-child(3) {
     bottom: -1px;
     left: -1px;
-    border-bottom: 4px solid #00d6ec;
-    border-left: 4px solid #00d6ec;
+
     width: 40px;
     height: 40px;
   }
   .border:nth-child(4) {
     bottom: -1px;
     right: -1px;
-    border-bottom: 4px solid #00d6ec;
-    border-right: 4px solid #00d6ec;
+  
     width: 40px;
     height: 40px;
   }
@@ -686,7 +681,6 @@ export default {
 }
 
 ::v-deep .el-transfer-panel {
-  border: 1px solid #00def0 !important;
   background: rgba(255, 255, 255, 0) !important;
 }
 ::v-deep .el-transfer-panel .el-transfer-panel__header {
