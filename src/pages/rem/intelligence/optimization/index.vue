@@ -365,7 +365,8 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                window.open  ('https://ipm.tjioms-dev.tjltd.cnooc/#/waterManagement/merge','_blank');
+                
+                window.open('https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge?link=rem','_blank')
                 // this.$router.push({name: "schemePrediction"})
             })
         },

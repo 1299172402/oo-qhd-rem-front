@@ -105,19 +105,19 @@ export default {
                         boxText: '异常井监测',
                         boxBottomText: [{
                             name: '含水率变化监测',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicTrackingOilAuxiliary/analysisReport'
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport'
                         },
                             {
                                 name: '递减率变化监测',
-                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicTrackingOilAuxiliary/analysisReport'
+                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport'
                             },
                             {
                                 name: '产液量异常监测',
-                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicTrackingOilAuxiliary/analysisReport'
+                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport'
                             },
                             {
                                 name: '井底流压监测',
-                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicTrackingOilAuxiliary/analysisReport'
+                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport'
                             }],
                         boxStyle: {
                             pWidth: 'width:11vw',

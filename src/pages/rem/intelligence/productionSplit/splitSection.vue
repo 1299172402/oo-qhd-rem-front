@@ -55,25 +55,7 @@
                             disabled
                         ></el-date-picker>
                     </el-form-item>
-                    <el-form-item>
-                        <el-button
-                            type="primary"
-                            icon="el-icon-search"
-                            style="margin-left: 20px"
-                            @click="doSearch"
-                            disabled
-                        >搜索
-                        </el-button>
-                        <el-button
-                            type="primary"
-                            class="commonBtn"
-                            icon="el-icon-refresh"
-                            style="margin-left: 20px"
-                            @click="doSearch"
-                            disabled
-                        >重置
-                        </el-button>
-                    </el-form-item>
+                   
                     <el-button style="float: right" type="primary" @click="back">返回</el-button>
                 </el-row>
             </el-form>
