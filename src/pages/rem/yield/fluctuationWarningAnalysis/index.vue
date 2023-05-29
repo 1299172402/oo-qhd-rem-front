@@ -20,7 +20,6 @@
                 </el-select>
                 <el-button icon="el-icon-search" type="primary" @click="searchThing">搜索</el-button>
                 <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
-                
             </div>
         </headerSearch>
         <div class="z-container">
@@ -200,17 +199,19 @@
                 </el-table-column>
             </el-table>
         </el-dialog>
-        <el-dialog title="作业公司产量跟踪" :visible.sync="outputTracking" width="90%" height="60%">
-            <span class="f1">日期：</span>
-            <el-date-picker v-model="outputTrackingForm.queryDate" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd"></el-date-picker>
-            <span class="f1">产量单位选择：</span>
-            <el-select v-model="outputTrackingForm.selectUnitOfProduction" placeholder="请选择" style="width:100px;" class="f1">
-                <el-option v-for="item in outputTrackingForm.unitOfProduction" :key="item.value" :label="item.label" :value="item.value"></el-option>
-            </el-select>
-            <el-button type="primary" icon="el-icon-search" @click="queryOutputTrackingTableData">搜索</el-button>
-            <el-button type="primary" @click="downloadOutputTracking">下载</el-button>
-            <div height="100%" style="margin-top: 10px" title="作业公司产量跟踪">
-                <el-table :data="outputTrackingTableData" highlight style="width:100%;" max-height="500px">
+        <el-dialog title="作业公司产量跟踪" :visible.sync="outputTracking" width="90%">
+            <div class="elDialog-search">
+                <span class="f1">日期：</span>
+                <el-date-picker v-model="outputTrackingForm.queryDate" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd"></el-date-picker>
+                <span class="f1" style="margin-left:15px;">产量单位选择：</span>
+                <el-select v-model="outputTrackingForm.selectUnitOfProduction" placeholder="请选择" style="width:100px;" class="f1">
+                    <el-option v-for="item in outputTrackingForm.unitOfProduction" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                </el-select>
+                <el-button type="primary" icon="el-icon-search" style="margin-left:15px;" @click="queryOutputTrackingTableData">搜索</el-button>
+                <el-button type="primary" @click="downloadOutputTracking">下载</el-button>
+            </div>
+            <div style="margin-top: 10px">
+                <el-table :data="outputTrackingTableData" highlight style="width:100%;" height="500px">
                     <el-table-column fixed prop="type" :label="outputTrackingTableDate" align="center" width="300"></el-table-column>
                     <el-table-column label="作业公司" align="center">
                         <el-table-column prop="zygsjc" label="基础" align="center" width="100">
@@ -347,7 +348,10 @@
                             saveAsImage: {
                                 name: '产量跟踪预警分析',
                                 pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-                                backgroundColor: '#022644'
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
                             }
                         }
                     },

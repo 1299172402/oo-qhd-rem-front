@@ -1,6 +1,6 @@
 import Axios from '@/utils/request'
 
-const baseUrl = process.env.NODE_ENV == "production" ? "/ipm01/api" : "/ipm01/api"
+const baseUrl = process.env.NODE_ENV == "production" ? "/ipm/api" : "/ipm/api"
 
 
 export function getDocDownloadUrl(data){

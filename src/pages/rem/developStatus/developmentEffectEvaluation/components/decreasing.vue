@@ -3,31 +3,32 @@
     <div class="z-main">
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="自然递减率" style="height: 380px;margin-top:0;" show-btn>
+                <!-- <pagePanel headerTitle="自然递减率" style="height: 380px;margin-top:0;" show-btn></pagePanel> -->
+                <info-window infoWidth="100%" infoHeight="380px" headerTitle="自然递减率" isShowMaxBtn>
                     <Echart :chart-data="naturalDeclineRate" style="height: 100%"></Echart>
-                </pagePanel>
+                </info-window>
             </div>
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="综合递减率" style="height: 380px;margin-top:0;" show-btn>
+                <info-window infoWidth="100%" infoHeight="380px" headerTitle="综合递减率" isShowMaxBtn>
                     <Echart :chart-data="comprehensiveDeclineRate" style="height: 100%"></Echart>
-                </pagePanel>
+                </info-window>
             </div>
         </div>
-        <div class="rowBox">
+        <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="总递减率" style="width: 100%; height: 380px" show-btn>
+                <info-window infoWidth="100%" infoHeight="380px" headerTitle="总递减率" isShowMaxBtn>
                     <Echart :chart-data="totalDeclineRate" style="height: 100%"></Echart>
-                </pagePanel>
+                </info-window>
             </div>
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="产量标定法" style="width: 100%; height: 380px" show-btn>
+                <info-window infoWidth="100%" infoHeight="380px" headerTitle="产量标定法" isShowMaxBtn>
                     <Echart :chart-data="yieldCalibrationMethod" style="height: 100%"></Echart>
-                </pagePanel>
+                </info-window>
             </div>
         </div>
-        <div class="rowBox">
+        <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="指标评价结果表" style="height: 380px" show-btn>
+                <info-window infoWidth="100%" infoHeight="380px" headerTitle="指标评价结果表" isShowMaxBtn>
                     <el-table :data="tableData" highlight height="100%">
                         <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
                         <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
@@ -35,7 +36,7 @@
                         <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center"></el-table-column>
                         <el-table-column prop="result" label="结论" align="center"></el-table-column>
                     </el-table>
-                </pagePanel>
+                </info-window>
             </div>
             <div class="row" style="margin-right:20px;"></div>
         </div>
@@ -87,6 +88,9 @@
                                 pixelRatio: 15,
                                 //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0
+                                }
                             },
                         },
                     },
@@ -100,6 +104,7 @@
                             show: false,
                         },
                         axisLine: {
+                            onZero: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -126,7 +131,7 @@
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -160,6 +165,9 @@
                                 pixelRatio: 15,
                                 //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0
+                                }
                             },
                         },
                     },
@@ -173,6 +181,7 @@
                             show: false,
                         },
                         axisLine: {
+                            onZero: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -199,7 +208,7 @@
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -244,6 +253,9 @@
                                 pixelRatio: 15,
                                 //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0
+                                }
                             },
                         },
                     },
@@ -257,6 +269,7 @@
                             show: false,
                         },
                         axisLine: {
+                            onZero: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -283,7 +296,7 @@
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -329,6 +342,9 @@
                                 pixelRatio: 15,
                                 //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0
+                                }
                             },
                         },
                     },
@@ -342,6 +358,7 @@
                             show: false,
                         },
                         axisLine: {
+                            onZero: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -362,7 +379,7 @@
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -567,6 +584,7 @@
 
 <style lang="scss" scoped>
     .z-main {
+        padding-top:8px;
         padding-bottom: 8px;
         .rowBox {
             padding-left:8px;

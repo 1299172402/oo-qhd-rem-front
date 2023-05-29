@@ -6,9 +6,9 @@
         header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
         style="width:100%;" height="calc(100% - 101px)" :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-        <el-table-column type="index" label="序号" width="80"></el-table-column>
-        <el-table-column prop="wellNo" label="井号" width="140"></el-table-column>
-        <el-table-column prop="fieldName" label="区块" width="140"></el-table-column>
+        <el-table-column type="index" label="序号" width="80" fixed></el-table-column>
+        <el-table-column prop="wellNo" label="井号" width="140" fixed></el-table-column>
+        <el-table-column prop="fieldName" label="区块" width="140" fixed></el-table-column>
         <el-table-column prop="makeBeginDate" label="开工日期" width="120"></el-table-column>
         <el-table-column prop="makeEndDate" label="开井日期" width="120"></el-table-column>
         <el-table-column prop="measureType" label="措施类型"></el-table-column>

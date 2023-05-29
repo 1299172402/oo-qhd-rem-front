@@ -122,7 +122,8 @@
                             height: "24%"
                         },
                     ],
-                    xAxis: [{
+                    xAxis: [
+                        {
                             gridIndex: 0,
                             type: "category",
                             data: [

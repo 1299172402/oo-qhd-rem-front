@@ -33,7 +33,7 @@
                 <el-button type="primary" style="position:absolute;right:0;top:0;;height:26px;margin-right:20px;" @click="doDownExcel('#tableData', '油田综合开发历程')" v-show="canDownload">下载</el-button>
                 <div style="padding-bottom:5px;height:100%;">
                     <el-table id="tableData" :data="tableData" highlight height="100%">
-                        <el-table-column prop="phase" label="开发阶段" align="center" width="180px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="phase" label="开发阶段" align="center" width="180px" show-overflow-tooltip fixed></el-table-column>
                         <el-table-column prop="beginDate" label="阶段开始时间" align="center" width="120px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="endDate" label="阶段结束时间" align="center" width="120px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="interval" :label="`阶段历程时间\n (天)`" align="center" width="160px" show-overflow-tooltip></el-table-column>
