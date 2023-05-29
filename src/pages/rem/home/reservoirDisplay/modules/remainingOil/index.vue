@@ -1,18 +1,18 @@
 <template>
-    <div class="box" style="width: 100%;height: 100%">
-        
-    </div>
-<!--  <video-->
-<!--    id="my-video"-->
-<!--    class="box"-->
-<!--    height="100%"-->
-<!--    width="100%"-->
-<!--    autoplay-->
-<!--    src="@/pages/rem/home/reservoirDisplay/modules/演示视频.mp4"-->
-<!--  >-->
-<!--    <div class="progress-bar"></div>-->
-<!--    <div class="progress"></div>-->
-<!--  </video>-->
+<!--    <div class="box">-->
+<!--        <img :src="require('./oil.gif')" alt="" style="width: 100%;height: 100%">-->
+<!--    </div>-->
+  <video
+    id="my-video"
+    class="box"
+    height="100%"
+    width="100%"
+    autoplay
+    src="./剩余油.mp4"
+  >
+    <div class="progress-bar"></div>
+    <div class="progress"></div>
+  </video>
 </template>
 
 <script>
@@ -44,7 +44,7 @@ export default {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   text-align: center;
-  padding: 20px 10px;
+  padding: 4% 0 4% 0;
   overflow: hidden;
 }
 .progress-bar {
