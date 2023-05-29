@@ -364,7 +364,7 @@
             //点击二级菜单
             tabsClick(module){
                 if(module.name=='stratificationTesting'){//分层调配
-                    let url=`https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/waterRunningControl?selectOilField=${this.selectOilField}&selectPlatform=${this.selectPlatform}&selectWellId=${this.selectWellId}`;
+                    let url=`https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/waterRunningControl?selectOilField=${this.selectOilField}&selectPlatform=${this.selectPlatform}&selectWellId=${this.selectWellId}&link=rem`;
                     window.open(url,'_blank');
                 }
                 else if (module.name == "injectivityIndex") {
