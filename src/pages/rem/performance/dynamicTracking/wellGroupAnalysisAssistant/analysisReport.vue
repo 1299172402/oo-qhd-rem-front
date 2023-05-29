@@ -17,7 +17,7 @@
                     </el-select>
                     <span style="margin-left:15px;">水井井组：</span>
                     <el-select v-model="searchKeys" class="f2" style="width:180px" filterable clearable>
-                        <el-option v-for="item in wellGroupList" :key="item.wellGroupId" :label="item.name" :value="item.wellGroupId">
+                        <el-option v-for="item in wellGroupList" :key="item.wellGroupId" :label="item.wellGroupName" :value="item.wellGroupId">
                         </el-option>
                     </el-select>
                     <span style="margin-left:15px;">年月：</span>
@@ -181,7 +181,7 @@
                     </el-select>
                     <span style="margin-left:15px;">水井井组：</span>
                     <el-select v-model="searchKeys" class="f2" style="width:180px" filterable clearable>
-                        <el-option v-for="item in wellGroupList" :key="item.wellGroupId" :label="item.name" :value="item.wellGroupId">
+                        <el-option v-for="item in wellGroupList" :key="item.wellGroupId" :label="item.wellGroupName" :value="item.wellGroupId">
                         </el-option>
                     </el-select>
                     <span style="margin-left:15px;">年月：</span>
@@ -444,7 +444,8 @@
     import {
         fetchOilFields,
         fetchFields,
-        wellGroups
+        wellGroups,
+        selectWellGroup
     } from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import compareSort from "@/lib/compareSort.js";
     export default {
@@ -573,19 +574,11 @@
             },
             //获取井组
             queryWellGroupList() {
-                let oilFieldId = [];
-                if (this.selYtdm == this.selBlock) {
-                    this.blockData.forEach((item, index) => {
-                        oilFieldId.push(item.fieldId);
-                    })
-                } else {
-                    oilFieldId.push(this.selBlock);
-                }
-                wellGroups({oilFieldId}).then((res) => {
+                selectWellGroup({ogfId: this.selYtdm, blockId: this.selBlock, dateTime: new Date().format('yyyy-MM-dd')}).then((res) => {
                     if (res.data.code == 200) {
                         this.searchKeys = '';
-                        this.wellGroupList = res.data.data.wellGroups;
-                        this.wellGroupList.unshift({name: '全部',wellGroupId: ''});
+                        this.wellGroupList = res.data.data;
+                        this.wellGroupList.unshift({wellGroupName: '全部',wellGroupId: ''});
                     }
                     if(this.initTypes==1){
                         this.doSearch();

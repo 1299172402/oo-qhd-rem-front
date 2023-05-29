@@ -131,6 +131,19 @@ export function wellGroups(request) {
     data: request,
   });
 }
+/**
+ *  hwh
+ *  获得井组信息 - 新
+ * @param request
+ * @returns {AxiosPromise}
+ */
+export function selectWellGroup(params) {
+  return Axios({
+    url: `${baseUrl}/injectionProductionDeploy/wellConnectivityEval/selectWellGroup`,
+    method: "get",
+    params,
+  });
+}
 export function getLjpmWells(params) {
   return Axios({
     url: `${baseUrl}/primaryInfo/getWellInfo`,
