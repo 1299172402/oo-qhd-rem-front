@@ -92,7 +92,11 @@
             >
                 <el-table-column prop="name" label="层段" width="250"></el-table-column>
                 <!-- <el-table-column prop="singleLAyer" label="小层"></el-table-column> -->
-                <el-table-column prop="stateDate" label="开始时间" align="center"></el-table-column>
+                <el-table-column prop="stateDate" label="开始时间" align="center">
+                    <template slot-scope="scope">
+                        <div>{{ scope.row.stateDate.split(' ')[0] }}</div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="OpenStatus" label="状态" align="center">
                     <template slot-scope="scope">
                         <div>{{ scope.row.openStatus == true ? "打开" : "关闭" }}</div>
