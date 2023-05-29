@@ -199,7 +199,8 @@
                     <img src="@/assets/rem/performance/01cai.gif" alt="" class="img6">
                     <img src="@/assets/rem/performance/01zhu.gif" alt="" class="img5">
                     <img src="@/assets/rem/performance/01cai.gif" alt="" class="img7">
-                    <img src="@/assets/rem/performance/bg.png" alt="" class="bg">
+                    <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode=='dark'">
+                    <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else>
                 </div>
                 <div class="rightBox">
                     <div class="v1">

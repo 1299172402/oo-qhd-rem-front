@@ -3,45 +3,46 @@
     <div class="z-main">
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="采油速度" style="height: 370px;margin-top:0;" show-btn>
+                <!-- <pagePanel headerTitle="采油速度" style="height: 370px;margin-top:0;" show-btn></pagePanel> -->
+                <info-window infoWidth="100%" infoHeight="370px" headerTitle="采油速度" isShowMaxBtn>
                     <Echart :chart-data="productionSpeed" style="height: 100%"></Echart>
-                </pagePanel>
+                </info-window>
             </div>
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="采出程度" style="height: 370px;margin-top:0;" show-btn>
+                <info-window infoWidth="100%" infoHeight="370px" headerTitle="采出程度" isShowMaxBtn>
                     <Echart :chart-data="recoveryDegree" style="height: 100%;"></Echart>
-                </pagePanel>
+                </info-window>
             </div>
         </div>
-        <div class="rowBox">
+        <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="采出程度与含水率关系图" style="height: 380px" show-btn>
+                <info-window infoWidth="100%" infoHeight="380px" headerTitle="采出程度与含水率关系图" isShowMaxBtn>
                     <Echart :chart-data="relationship" style="height: 100%"></Echart>
-                </pagePanel>
+                </info-window>
             </div>
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="注采比" style="height: 380px" show-btn>
+                <info-window infoWidth="100%" infoHeight="380px" headerTitle="注采比" isShowMaxBtn>
                     <div class="search">
                         <span>合理注采比：</span>
                         <el-input-number v-model="lineStandOne" :controls="false" style="width: 180px;margin-right:15px;" @change="setFirstLine"></el-input-number>
                         <el-input-number v-model="lineStandTwo" :controls="false" style="width: 180px" @change="setSecondLine"></el-input-number>
                     </div>
                     <Echart :chart-data="injectionProductionRatio" style="height:calc(100% - 45px)"></Echart>
-                </pagePanel>
+                </info-window>
             </div>
         </div>
-        <div class="rowBox">
+        <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="地层总压降" style="height: 360px" show-btn>
+                <info-window infoWidth="100%" infoHeight="360px" headerTitle="地层总压降" isShowMaxBtn>
                     <div class="search">
                         <span>合理地层压力：</span>
                         <el-input-number v-model="lineStandThree" :controls="false" style="width: 180px" @change="setThirdLine"></el-input-number>
                     </div>
                     <Echart :chart-data="totalFormationPressureDrop" style="height:calc(100% - 45px);"></Echart>
-                </pagePanel>
+                </info-window>
             </div>
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="指标评价结果表" style="width: 100%; height: 360px" show-btn>
+                <info-window infoWidth="100%" infoHeight="360px" headerTitle="指标评价结果表" isShowMaxBtn>
                     <div class="search">
                         <span>对标油田：</span>
                         <el-select v-model="fields" style="width:180px;height:30px;margin-right:15px;" disabled>
@@ -72,7 +73,7 @@
                         <el-table-column prop="diffSimilarOilField" label="与同类型油田比较" align="center" width="80"></el-table-column>
                         <el-table-column prop="result" label="结论" align="center" width="80"></el-table-column>
                     </el-table>
-                </pagePanel>
+                </info-window>
             </div>
         </div>
     </div>
@@ -142,14 +143,15 @@
                                 name: '采油速度',
                                 pixelRatio: 15,
                                 //值越大分辨率越高,下载的图片越清晰
-                                backgroundColor: '#698398'
+                                backgroundColor: '#022644',
+                                iconStyle:{                                    opacity:0                                }
                             }
                         }
                     },
                     legend: {
                         data: [],
                         x:'center',
-                        bottom:0,
+                        bottom:10,
                         textStyle: {
                             color: '#24DEFF'
                         }
@@ -199,13 +201,13 @@
                                 show: false
                             },
                             axisLine: {
-                                // show: true,
+                                show: true,
                                 lineStyle: {
-                                    color: '#2a4e6a'
+                                    color: 'rgba(143,164,204,.5)'
                                 }
                             },
                             splitLine: {
-                                show: true,
+                                show: false,
                                 lineStyle: {
                                     color: 'rgba(143,164,204,.3)'
                                 }
@@ -227,13 +229,13 @@
                                 show: false
                             },
                             axisLine: {
-                                show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#2a4e6a'
+                                    color: 'rgba(143,164,204,.5)'
                                 }
                             },
                             splitLine: {
-                                show: true,
+                                show: false,
                                 lineStyle: {
                                     color: 'rgba(143,164,204,.3)'
                                 }
@@ -245,10 +247,10 @@
                 //采出程度
                 recoveryDegree: {
                     grid:{
-                        x: 120,
-                        y: 30,
-                        x2: 120,
-                        y2: 70,
+                        top:30,
+                        right:120,
+                        bottom: 90,
+                        left:120,
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -258,7 +260,7 @@
                     },
                     legend: {
                         x:'center',
-                        bottom:0,
+                        bottom:10,
                         textStyle: {
                             color: '#24DEFF'
                         }
@@ -270,7 +272,10 @@
                                 name: '地质储量采出程度',
                                 pixelRatio: 15,
                                 //值越大分辨率越高,下载的图片越清晰
-                                backgroundColor: '#022644'
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
                             }
                         }
                     },
@@ -292,15 +297,14 @@
                             show: false
                         },
                         axisLine: {
-                            show: false,
+                            show: true,
                             lineStyle: {
-                                color: '#2a4e6a'
+                                color: 'rgba(143,164,204,.5)'
                             }
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
-                                // color: '#2a4e6a',
                                 color: 'rgba(143,164,204,.3)'
                             }
                         }
@@ -311,7 +315,7 @@
                         nameTextStyle: {
                             color: '#8FA4CC'
                         },
-                        nameGap: 30,
+                        nameGap: 44,
                         type: 'value',
                         axisLabel: {
                             color: '#8FA4CC'
@@ -320,16 +324,14 @@
                             show: false
                         },
                         axisLine: {
-                            show:false,
+                            show:true,
                             lineStyle: {
-                                //color: '#979797'
-                                color: '#2a4e6a'
+                                color: 'rgba(143,164,204,.5)'
                             }
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
-                                // color: '#2a4e6a'
                                 color: 'rgba(143,164,204,.3)'
                             }
                         }
@@ -339,10 +341,10 @@
                 //采出程度与含水率关系图
                 relationship: {
                     grid:{
-                        x: 100,
-                        y: 20,
-                        x2: 100,
-                        y2: 100,
+                        top:30,
+                        right:120,
+                        bottom: 100,
+                        left:120,
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -367,7 +369,10 @@
                                 name: '采出程度与含水率关系',
                                 pixelRatio: 15,
                                 //值越大分辨率越高,下载的图片越清晰
-                                backgroundColor: '#022644'
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
                             }
                         }
                     },
@@ -377,7 +382,7 @@
                         nameTextStyle: {
                             color: '#8FA4CC'
                         },
-                        nameGap: 30,
+                        nameGap:40,
                         type: 'value',
                         axisLabel: {
                             color: '#8FA4CC',
@@ -393,9 +398,9 @@
                             }
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
-                                 color: 'rgba(143,164,204,.5)'
+                                color: 'rgba(143,164,204,.5)'
                             }
                         }
                     },
@@ -405,7 +410,7 @@
                         nameTextStyle: {
                             color: '#8FA4CC'
                         },
-                        nameGap: 30,
+                        nameGap: 44,
                         type: 'value',
                         axisLabel: {
                             color: '#8FA4CC'
@@ -414,12 +419,13 @@
                             show: false
                         },
                         axisLine: {
+                            show: true,
                             lineStyle: {
                                  color: 'rgba(143,164,204,.5)'
                             }
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
                                  color: 'rgba(143,164,204,.5)'
                             }
@@ -431,10 +437,10 @@
                 //注采比
                 injectionProductionRatio: {
                     grid:{
-                        top: "8%",
-                        right: "5%",
-                        bottom:"10%",
-                        left: "8%",
+                        top:10,
+                        right:120,
+                        bottom: 80,
+                        left:120,
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -452,19 +458,24 @@
                             saveAsImage: {
                                 name: '注采比',
                                 pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-                                backgroundColor: '#022644'
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
                             }
                         }
                     },
                     xAxis: {
                         type: 'category',
                         axisLabel: {
-                            color: '#8fa4cc'
+                            color: '#8fa4cc',
+                            padding:[10,0,0,0],
                         },
                         axisTick: {
                             show: false
                         },
                         axisLine: {
+                            show:true,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             }
@@ -474,8 +485,7 @@
                         name: '月度注采比',
                         nameLocation: 'center',
                         nameTextStyle: { color: '#8FA4CC' },
-                        nameGap: 30,
-                        //min:90,
+                        nameGap: 44,
                         max: 1.2,
                         interval: 0.2,
                         type: 'value',
@@ -492,7 +502,7 @@
                             }
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
                                  color: 'rgba(143,164,204,.5)'
                             }
@@ -532,10 +542,10 @@
                 //地层总压降
                 totalFormationPressureDrop: {
                     grid:{
-                        x: 50,
-                        y: 20,
-                        x2: 60,
-                        y2: 50,
+                        top:10,
+                        right:120,
+                        bottom: 80,
+                        left:120,
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -546,7 +556,7 @@
                     legend: {
                         data: ['合理地层压力', '压力保持水平'],
                         x:'center',
-                        bottom:0,
+                        bottom:30,
                         textStyle: {
                             color: '#fff'
                         }
@@ -557,7 +567,10 @@
                             saveAsImage: {
                                 name: '地层总压降',
                                 pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-                                backgroundColor: '#022644'
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
                             }
                         }
                     },
@@ -591,7 +604,7 @@
                             }
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
                                  color: 'rgba(143,164,204,.5)'
                             }
@@ -748,7 +761,6 @@
                 let series = {};
                 series.type = 'scatter';
                 series.symbolSize = 4;
-                /* series.symbol = 'none';*/
                 series.name = lineChart.label;
                 series.label = {
                     show: false,
@@ -899,6 +911,7 @@
 
 <style lang="scss" scoped>
     .z-main{
+        padding-top:8px;
         padding-bottom: 8px;
         .rowBox{
             padding-left:8px;
@@ -908,7 +921,9 @@
                 flex:1;
                 width:0;
                 .search {
-                    height:30px;
+                    padding-left:20px;
+                    padding-top:10px;
+                    height:40px;
                     margin-bottom:15px;
                     ::v-deep .el-select{
                         .el-input__inner{

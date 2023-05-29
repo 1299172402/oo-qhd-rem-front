@@ -20,9 +20,9 @@
                     header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
                     style="width:100%;padding:0 10px;" height="calc(100% - 10px)" :default-sort="{ prop: 'date', order: 'descending' }"
                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0'}">
-                    <el-table-column label="序号" type="index" align="center" width="100"></el-table-column>
-                    <el-table-column label="层位" prop="layer" align="center" width="140"></el-table-column>
-                    <el-table-column label="井筒" prop="wellbore" align="center" width="140"></el-table-column>
+                    <el-table-column label="序号" type="index" align="center" width="100" fixed></el-table-column>
+                    <el-table-column label="层位" prop="layer" align="center" width="140" fixed></el-table-column>
+                    <el-table-column label="井号" prop="wellbore" align="center" width="140" fixed></el-table-column>
                     <el-table-column :label="`顶界斜深\n(m)`" prop="topMd" align="center"></el-table-column>
                     <el-table-column :label="`底界斜深\n(m)`" prop="bottomMd" align="center"></el-table-column>
                     <el-table-column label="斜厚" prop="mdThickness" align="center"></el-table-column>

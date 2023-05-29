@@ -3,9 +3,9 @@
     <div class="z-main">
         <info-window style="margin-top:0;" infoWidth="100%" infoHeight="100%" headerTitle="压力数据" isShowMaxBtn>
             <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;" height="calc(100% - 10px)" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-                <el-table-column type="index" label="序号" width="80"></el-table-column>
-                <el-table-column prop="borepipeName" label="井管" width="140"></el-table-column>
-                <el-table-column prop="wellInterceptType" label="试井项目解析类型" width="140"></el-table-column>
+                <el-table-column type="index" label="序号" width="80" fixed></el-table-column>
+                <el-table-column prop="borepipeName" label="井号" width="140" fixed></el-table-column>
+                <el-table-column prop="wellInterceptType" label="试井项目解析类型" width="140" fixed></el-table-column>
                 <el-table-column prop="reducePressure" :label="`折算压力梯度\n(MPa/100m)`" width="140"></el-table-column>
                 <el-table-column prop="reduceTemperature" :label="`折算温度梯度\n(℃/100m)`" width="140"></el-table-column>
                 <el-table-column prop="midMD" :label="`油层中部斜深\n(m)`" width="140"></el-table-column>

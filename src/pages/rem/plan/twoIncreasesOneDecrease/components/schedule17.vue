@@ -8,7 +8,7 @@
             <el-table-column prop="yxjj" label="优先解决的问题" align="center" width="340"></el-table-column>
             <el-table-column prop="jjtj" label="主要解决途径" align="center" width="460"></el-table-column>
             <el-table-column prop="jdmb" :label="`阶段目标\n（油水井数比、阶段注采比、压力保持水平、\n含水上升率、自然递减率）`" align="center" width="340"></el-table-column>
-            <el-table-column prop="zxgz" :label="`控制递减综合治理专项工作\n（1~2年期）`" align="center" width="460"></el-table-column>
+            <el-table-column prop="zxgz" :label="`控制递减综合治理专项工作\n（1~2年期）`" align="center"></el-table-column>
         </el-table>
     </info-window>
 </template>

@@ -17,19 +17,23 @@
                 </el-date-picker>
                 <el-button icon="el-icon-search" type="primary" @click="searchThing">搜索</el-button>
                 <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+            </div>
+        </headerSearch>
+        <pagePanelNew style="height: calc(100% - 100px);" class="z-main">
+            <div style="padding-top:20px;">
                 <span style="margin-left:auto;">单位选择：</span>
                 <el-select v-model="selectUnitOfProduction" placeholder="请选择" style="width: 100px;margin-right:20px">
                     <el-option v-for="item in unitOfProduction" :key="item.value" :label="item.label" :value="item.value"></el-option>
                 </el-select>
                 <el-button type="primary" @click="searchThing">确定</el-button>
             </div>
-        </headerSearch>
-        <pagePanelNew style="height: calc(100% - 100px);" class="z-main">
-            <pagePanelNew headerTitle="" style="height:590px;margin-bottom:20px;position: relative;">
+            <!-- <pagePanelNew headerTitle="" style="height:590px;margin-bottom:20px;position: relative;">
                 <div style="height:100%;">
                     <Echart :chart-data="lineTable" height="570px"></Echart>
                 </div>
-            </pagePanelNew>
+            </pagePanelNew> -->
+            <Echart :chart-data="lineTable" height="570px" style="margin-bottom:20px;"></Echart>
+            
             <div style="height: 300px;">
                 <div style="padding-bottom:5px;height:100%;">
                     <el-table :data="messageResult" highlight style="width: 100%">
@@ -270,6 +274,7 @@
                                 show: false,
                             },
                             axisLine: {
+                                onZero:false,
                                 lineStyle: {
                                     color: 'rgba(143,164,204,.5)'
                                 },
@@ -296,13 +301,13 @@
                                 show: false,
                             },
                             axisLine: {
-                                show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797',
+                                    color: 'rgba(143,164,204,.5)',
                                 },
                             },
                             splitLine: {
-                                show: true,
+                                show: false,
                                 lineStyle: {
                                     color: 'rgba(143,164,204,.5)',
                                     type: 'dashed',
@@ -327,13 +332,13 @@
                                 show: false,
                             },
                             axisLine: {
-                                show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797',
+                                    color: 'rgba(143,164,204,.5)',
                                 },
                             },
                             splitLine: {
-                                show: true,
+                                show: false,
                                 lineStyle: {
                                     color: 'rgba(143,164,204,.5)',
                                     type: 'dashed',
@@ -358,13 +363,13 @@
                                 show: false,
                             },
                             axisLine: {
-                                show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797',
+                                    color: 'rgba(143,164,204,.5)',
                                 },
                             },
                             splitLine: {
-                                show: true,
+                                show: false,
                                 lineStyle: {
                                     color: 'rgba(143,164,204,.5)',
                                     type: 'dashed',
@@ -389,13 +394,13 @@
                                 show: false,
                             },
                             axisLine: {
-                                show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797',
+                                    color: 'rgba(143,164,204,.5)',
                                 },
                             },
                             splitLine: {
-                                show: true,
+                                show: false,
                                 lineStyle: {
                                     color: 'rgba(143,164,204,.5)',
                                     type: 'dashed',
@@ -420,13 +425,13 @@
                                 show: false,
                             },
                             axisLine: {
-                                show: false,
+                                show: true,
                                 lineStyle: {
-                                    color: '#979797',
+                                    color: 'rgba(143,164,204,.5)',
                                 },
                             },
                             splitLine: {
-                                show: true,
+                                show: false,
                                 lineStyle: {
                                     color: 'rgba(143,164,204,.5)',
                                     type: 'dashed',

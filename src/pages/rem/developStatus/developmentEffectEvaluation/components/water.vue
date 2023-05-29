@@ -3,25 +3,26 @@
     <div class="z-main">
         <div class="rowBox">
             <div class="row" style="margin-right: 20px">
-                <pagePanel headerTitle="含水上升率" style="height: 380px; margin-top: 0" show-btn>
+                <!-- <pagePanel headerTitle="含水上升率" style="height: 380px;margin-top:0;" show-btn></pagePanel> -->
+                <info-window infoWidth="100%" infoHeight="380px" headerTitle="含水上升率" isShowMaxBtn>
                     <Echart :chart-data="rateOfWaterCutRise" style="height: 100%"></Echart>
-                </pagePanel>
+                </info-window>
             </div>
             <div class="row" style="margin-right: 20px">
-                <pagePanel headerTitle="水驱指数" style="height: 380px; margin-top: 0" show-btn>
+                <info-window infoWidth="100%" infoHeight="380px" headerTitle="水驱指数" isShowMaxBtn>
                     <Echart :chart-data="recoveryDegree" style="height: 100%"></Echart>
-                </pagePanel>
+                </info-window>
             </div>
         </div>
-        <div class="rowBox">
+        <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right: 20px">
-                <pagePanel headerTitle="存水率" style="height: 380px" show-btn>
+                <info-window infoWidth="100%" infoHeight="380px" headerTitle="存水率" isShowMaxBtn>
                     <Echart :chart-data="waterRate" style="height: 100%"></Echart>
-                </pagePanel>
+                </info-window>
             </div>
             <!--含水类表格 -->
             <div class="row" style="margin-right: 20px">
-                <pagePanel headerTitle="指标评价结果表" style="height: 380px" show-btn>
+                <info-window infoWidth="100%" infoHeight="380px" headerTitle="指标评价结果表" isShowMaxBtn>
                     <el-table :data="tableData" highlight height="100%">
                         <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
                         <el-table-column prop="evaluationResult" label="评价结果" align="center">
@@ -53,7 +54,7 @@
                         </el-table-column>
                         <el-table-column prop="result" label="结论" align="center"></el-table-column>
                     </el-table>
-                </pagePanel>
+                </info-window>
             </div>
         </div>
     </div>
@@ -96,10 +97,10 @@
                 //含水上升率
                 rateOfWaterCutRise: {
                     grid:{
-                        x: 120,
-                        y: 30,
-                        x2: 120,
-                        y2: 70,
+                        top:30,
+                        right:120,
+                        bottom: 90,
+                        left:120,
                     },
                     tooltip: {
                         trigger: "axis",
@@ -119,6 +120,9 @@
                                 pixelRatio: 15,
                                 //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0
+                                }
                             },
                         },
                     },
@@ -129,7 +133,7 @@
                             fontSize: 14,
                         },
                         x:'center',
-                        bottom:0,
+                        bottom:10,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -154,6 +158,7 @@
                         },
                         axisLine: {
                             show: true,
+                            onZero: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -199,10 +204,10 @@
                 //水驱指数
                 recoveryDegree: {
                     grid:{
-                        x: 120,
-                        y: 30,
-                        x2: 120,
-                        y2: 70,
+                        top:30,
+                        right:120,
+                        bottom: 90,
+                        left:120,
                     },
                     tooltip: {
                         trigger: "axis",
@@ -217,7 +222,7 @@
                             fontSize: 14,
                         },
                         x:'center',
-                        bottom:0,
+                        bottom:10,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -231,6 +236,9 @@
                                 pixelRatio: 15,
                                 //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0
+                                }
                             },
                         },
                     },
@@ -324,10 +332,10 @@
                 //存水率
                 waterRate: {
                     grid:{
-                        x: 120,
-                        y: 30,
-                        x2: 120,
-                        y2: 70,
+                        top:30,
+                        right:120,
+                        bottom: 90,
+                        left:120,
                     },
                     tooltip: {
                         trigger: "axis",
@@ -342,7 +350,7 @@
                             fontSize: 14,
                         },
                         x:'center',
-                        bottom:0,
+                        bottom:10,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -356,6 +364,9 @@
                                 pixelRatio: 15,
                                 //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0
+                                }
                             },
                         },
                     },
@@ -377,6 +388,7 @@
                         },
                         axisLine: {
                             show: true,
+                            onZero: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -593,6 +605,7 @@
 
 <style lang="scss" scoped>
     .z-main {
+        padding-top:8px;
         padding-bottom: 8px;
 
         .rowBox {

@@ -3,21 +3,22 @@
     <div class="z-main">
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="剩余储采比" style="height: 380px;margin-top:0;" show-btn>
+                <!-- <pagePanel headerTitle="剩余储采比" style="height: 380px;margin-top:0;" show-btn></pagePanel> -->
+                <info-window infoWidth="100%" infoHeight="380px" headerTitle="剩余储采比" isShowMaxBtn>
                     <Echart :chart-data="reserveProductionRatio" style="height: 100%"></Echart>
-                </pagePanel>
+                </info-window>
             </div>
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="水驱动用程度" style="height: 380px;margin-top:0;" show-btn>
+                <info-window infoWidth="100%" infoHeight="380px" headerTitle="水驱动用程度" isShowMaxBtn>
                     <Echart :chart-data="degreeOfWaterDrive" style="height: 100%"></Echart>
-                </pagePanel>
+                </info-window>
             </div>
         </div>
-        <div class="rowBox">
+        <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="水驱控制程度" style="height: 380px;" show-btn>
+                <info-window infoWidth="100%" infoHeight="380px" headerTitle="水驱控制程度" isShowMaxBtn>
                     <Echart :chart-data="waterDriveControlDegree" style="height: 100%"></Echart>
-                </pagePanel>
+                </info-window>
             </div>
             <div class="row" style="margin-right:20px;"></div>
         </div>
@@ -65,6 +66,9 @@
                                 pixelRatio: 15,
                                 //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0
+                                }
                             },
                         },
                     },
@@ -155,6 +159,9 @@
                                 pixelRatio: 15,
                                 //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0
+                                }
                             },
                         },
                     },
@@ -229,7 +236,7 @@
                     },
                     ],
                 },
-                //储采比
+                //剩余储采比
                 reserveProductionRatio: {
                     tooltip: {
                         trigger: "axis",
@@ -245,6 +252,9 @@
                                 pixelRatio: 15,
                                 //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0
+                                }
                             },
                         },
                     },
@@ -255,7 +265,7 @@
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
-                        nameGap: 25,
+                        nameGap:34,
                         axisLabel: {
                             color: "#8FA4CC",
                         },
@@ -263,12 +273,13 @@
                             show: false,
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
                         },
                         axisLine: {
+                            show:true,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -295,37 +306,21 @@
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
                         },
                     },
                     series: [{
-                        data: [
-                        /*16, 14, 12, 10, 8, 7, 7.5, 8, 8, 8.5*/
-                        ],
+                        data: [],
                         type: "scatter",
                         label: {
                             show: false,
                             position: "top",
                             color: "#00D9EA",
                         },
-                        /*symbol: "none",*/
-                        /*itemStyle: {
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                          {
-                            offset: 0,
-                            color: "#49E1F0",
-                          },
-                          {
-                            offset: 1,
-                            color: "#24DEFF",
-                          },
-                        ]),
-                      },*/
-                    },
-                    ],
+                    }],
                 },
                 //水驱动用程度
                 degreeOfWaterDrive: {
@@ -343,6 +338,9 @@
                                 pixelRatio: 15,
                                 //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0
+                                }
                             },
                         },
                     },
@@ -361,6 +359,7 @@
                             show: false,
                         },
                         axisLine: {
+                            show:true,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -382,13 +381,13 @@
                             show: false,
                         },
                         axisLine: {
-                            show: false,
+                            show: true,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -433,6 +432,9 @@
                                 pixelRatio: 15,
                                 //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0
+                                }
                             },
                         },
                     },
@@ -451,6 +453,7 @@
                             show: false,
                         },
                         axisLine: {
+                            show:true,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -472,13 +475,13 @@
                             show: false,
                         },
                         axisLine: {
-                            show: false,
+                            show: true,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
                                 color: 'rgba(143,164,204,.5)'
                             },
@@ -533,19 +536,46 @@
                 };
                 reservoirsProRateChart(request).then((res) =>{
                     if (res.data.code == 200) {
+                        // let seriesData = [];
+                        // let lineData = res.data.data.chart.lineChartDataSets[0].numberPoints;
+                        // lineData.forEach((item, index) =>{
+                        //     let point = [];
+                        //     point.push(item.x);
+                        //     point.push(item.y);
+                        //     seriesData.push(point);
+                        // });
+                        // this.reserveProductionRatio.series[0].data = seriesData;
                         let seriesData = [];
-                        //let xData = [];
-                        //let linearChart = res.data.data.chart.lineChartDataSets;
-                        let lineData = res.data.data.chart.lineChartDataSets[0].numberPoints;
-                        lineData.forEach((item, index) =>{
-                            let point = [];
-                            point.push(item.x);
-                            point.push(item.y);
-                            seriesData.push(point);
+                        let lineData = res.data.data.chart.lineChartDataSets;
+                        lineData.forEach((item, index) => {
+                            seriesData.push(this.outputDegreeLine(item));
                         });
-                        this.reserveProductionRatio.series[0].data = seriesData;
+                        this.reserveProductionRatio.series = seriesData;
+                        
                     }
                 });
+            },
+            //储采比折线解析
+            outputDegreeLine(lineChart) {
+                let series = {};
+                series.type = 'scatter';
+                series.symbolSize = 4;
+                series.name = lineChart.label;
+                series.label = {
+                    show: false,
+                    position: 'top',
+                    color: '#00D9EA'
+                };
+                let seriesData = [];
+                let lineData = lineChart.numberPoints;
+                lineData.forEach((item, index) => {
+                    let point = [];
+                    point.push(item.x);
+                    point.push(item.y);
+                    seriesData.push(point);
+                });
+                series.data = seriesData;
+                return series;
             },
             //水驱动用程度
             getWaterControlDegreeChart(oilFieldId, fieldId) {
@@ -645,6 +675,7 @@
 
 <style lang="scss" scoped>
     .z-main {
+        padding-top:8px;
         padding-bottom: 8px;
         .rowBox {
             padding-left:8px;

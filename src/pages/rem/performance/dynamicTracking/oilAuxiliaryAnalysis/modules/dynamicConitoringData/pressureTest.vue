@@ -7,8 +7,8 @@
             header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
             style="width:100%;padding:0 10px;" height="calc(100% - 10px)" :default-sort="{ prop: 'date', order: 'descending' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-            <el-table-column type="index" label="序号"></el-table-column>
-            <el-table-column prop="borepipeName" label="井管" width="140px"></el-table-column>
+            <el-table-column type="index" label="序号" fixed></el-table-column>
+            <el-table-column prop="borepipeName" label="井号" width="140px" fixed></el-table-column>
             <el-table-column prop="wellInterceptType" label="试井项目解析类型" width="140"></el-table-column>
             <el-table-column prop="interpDate" label="解释时间" width="140">
                 <template slot-scope="scope">
