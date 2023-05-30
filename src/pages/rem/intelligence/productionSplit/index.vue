@@ -101,7 +101,6 @@
                 </el-button>
                 <el-button
                     type="primary"
-                    class="commonBtn"
                     @click="doExportFile"
                     icon="el-icon-download"
                     style="float: right"
