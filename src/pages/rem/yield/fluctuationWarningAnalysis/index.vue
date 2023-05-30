@@ -527,7 +527,10 @@
                             saveAsImage: {
                                 name: '单井产量波动分析',
                                 pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-                                backgroundColor: '#022644'
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
                             }
                         }
                     },
@@ -813,7 +816,7 @@
                 //当前时间需要修改样式
                 this.currentDate = this.selectDate[1];
                 //产量跟踪分析(开始日期，结束日期，选择区块，单位选择，油田)
-                this.getOutputTracinAnalysis(
+                await this.getOutputTracinAnalysis(
                     startDate,
                     endDate,
                     this.selectBlock,
@@ -897,8 +900,9 @@
                     path:'/yield/statisticalTableProduction',
                     query:{
                         wellIds:JSON.stringify(this.productAnaysisTable),
-                        prodDate:this.selectDate[1],
-                        prodDateCompare:new Date(this.selectDate[1]).addDays(-1).format('yyyy-MM-dd'),
+                        // prodDate:this.selectDate[1],
+                        prodDate:new Date(this.selectDate[1]).addDays(-1).format('yyyy-MM-dd'),
+                        prodDateCompare:new Date(this.selectDate[1]).addDays(-2).format('yyyy-MM-dd'),
                     }
                 })
             },
@@ -934,7 +938,7 @@
                 });
             },
             //油田产量跟踪预警分析
-            getOutputTracinAnalysis(beginDate, endDate, fieldId, outputUnit, wellId) {
+            async getOutputTracinAnalysis(beginDate, endDate, fieldId, outputUnit, wellId) {
                 //获取请求参数
                 let request = {
                     beginDate: beginDate,
@@ -946,7 +950,7 @@
                 //获取上层变量
                 let _this = this;
                 //请求获取油田产量跟踪预警分析
-                outputTracingAnalysis(request).then((res) => {
+                await outputTracingAnalysis(request).then((res) => {
                     //获得图表数据
                     let data = res.data.data.chart;
                     //获取图例数据
@@ -1011,6 +1015,7 @@
                     this.lineMin = linearData[0].value;
                 }
                 if (labelName == "实际产量") {
+                    this.currentDate=linearData[linearData.length-1].label;
                     seriesData.symbol = "circle";
                     seriesData.symbolSize = 5;
                     seriesData.showAllSymbol = true;

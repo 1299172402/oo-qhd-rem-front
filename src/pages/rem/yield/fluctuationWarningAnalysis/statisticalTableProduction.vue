@@ -210,7 +210,7 @@
                     if (res.data.code == 200) {
                         let platforms=res.data.data.platform;
                         platforms[0].platFormId=this.searchForm.ogfId;
-                        this.searchForm.platId=this.searchForm.ogfId;
+                        this.searchForm.platId=platforms[1].platFormId;
                         this.platforms =platforms;
                     } 
                 });

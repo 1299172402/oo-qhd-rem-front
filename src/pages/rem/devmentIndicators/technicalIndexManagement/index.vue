@@ -67,8 +67,8 @@
                     </pagePanel>
                 </el-col>
             </el-row>
-            <pagePanel v-if="currentIndex == 0" headerTitle="技术指标管理" style="height: 500px;margin-top:0;" showBtn>
-                <div style="display:flex;align-items: center;height:40px;">
+            <info-window v-if="currentIndex == 0" infoWidth="100%" infoHeight="500px" headerTitle="技术指标管理" isShowMaxBtn style="margin-top:0;">
+                <div style="display:flex;align-items: center;height:40px;padding-top:10px;">
                     <span>对标油田：</span>
                     <el-select v-model="selectTargetOilFieldId" disabled>
                         <el-option v-for="item in oilFieldList" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
@@ -80,7 +80,7 @@
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button icon="el-icon-download" type="primary" style="margin-left: auto!important;" @click="doDownIndex">下载</el-button>
                 </div>
-                <div style="margin-top: 10px;height:calc(100% - 40px);">
+                <div style="margin-top: 10px;height:calc(100% - 50px);">
                     <el-table id="indexscv" :data="tableData" highlight height="100%">
                         <el-table-column prop="name" label="指标" align="center"></el-table-column>
                         <el-table-column prop="real" label="实际值" align="center"></el-table-column>
@@ -88,52 +88,64 @@
                         <el-table-column prop="realCompareOilField" label="实际值与对标差值" align="center"></el-table-column>
                     </el-table>
                 </div>
-            </pagePanel>
-            <pagePanel v-if="currentIndex == 1" headerTitle="年产油量" style="height: 500px;margin-top:0;" showBtn>
+            </info-window>
+            <info-window v-if="currentIndex == 1" infoWidth="100%" infoHeight="500px" headerTitle="年产油量" isShowMaxBtn style="margin-top:0;">
                 <Echart :chart-data="inOilProduction" style="height: 100%"></Echart>
-            </pagePanel>
-            <pagePanel v-if="currentIndex == 2" headerTitle="采油速度" style="height: 500px;margin-top:0;" showBtn>
+            </info-window>
+            <info-window v-if="currentIndex == 2" infoWidth="100%" infoHeight="500px" headerTitle="采油速度" isShowMaxBtn style="margin-top:0;">
                 <Echart :chart-data="productionSpeed" style="height: 100%"></Echart>
-            </pagePanel>
-            <pagePanel v-if="currentIndex == 3" headerTitle="综合递减率" style="height: 500px;margin-top:0;" showBtn>
-                <span>区块：</span>
-                <el-select v-model="selectDecreaseBlock">
-                    <el-option v-for="item in blockList" :key="item.fieldId" :label="item.name" :value="item.fieldId">
-                    </el-option>
-                </el-select>
-                <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
-                    确定
-                </el-button>
-                <Echart :chart-data="comprehensiveDeclineRate" style="height: 100%"></Echart>
-            </pagePanel>
-            <pagePanel v-if="currentIndex == 4" headerTitle="含水上升率" style="height: 500px;margin-top:0;" showBtn>
-                <span>平台：</span>
-                <el-select v-model="selectIncreasingRatePlatform" style="width: 220px;">
-                    <el-option v-for="item in platformList" :key="item.platFormId" :label="item.platName" :value="item.platFormId">
-                    </el-option>
-                </el-select>
-                <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
-                    确定
-                </el-button>
-                <Echart :chart-data="rateOfWaterCutRise" style="height: 100%"></Echart>
-            </pagePanel>
-            <pagePanel v-if="currentIndex == 5" headerTitle="生产时率" style="height: 500px;margin-top:0;" showBtn>
+            </info-window>
+            <info-window v-if="currentIndex == 3" infoWidth="100%" infoHeight="500px" headerTitle="综合递减率" isShowMaxBtn style="margin-top:0;">
+                <div style="height:100%">
+                    <div style="display:flex;align-items: center;height:40px;padding-top:10px;">
+                        <span>区块：</span>
+                        <el-select v-model="selectDecreaseBlock">
+                            <el-option v-for="item in blockList" :key="item.fieldId" :label="item.name" :value="item.fieldId">
+                            </el-option>
+                        </el-select>
+                        <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
+                            确定
+                        </el-button>
+                    </div>
+                    <Echart :chart-data="comprehensiveDeclineRate" style="height:calc(100% - 50px)"></Echart>
+                </div>
+            </info-window>
+            <info-window v-if="currentIndex == 4" infoWidth="100%" infoHeight="500px" headerTitle="含水上升率" isShowMaxBtn style="margin-top:0;">
+                <div style="height:100%">
+                    <div style="display:flex;align-items: center;height:40px;padding-top:10px;">
+                        <span>平台：</span>
+                        <el-select v-model="selectIncreasingRatePlatform" style="width: 220px;">
+                            <el-option v-for="item in platformList" :key="item.platFormId" :label="item.platName" :value="item.platFormId">
+                            </el-option>
+                        </el-select>
+                        <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
+                            确定
+                        </el-button>
+                    </div>
+                    <Echart :chart-data="rateOfWaterCutRise" style="height:calc(100% - 50px)"></Echart>
+                </div>
+            </info-window>
+            <info-window v-if="currentIndex == 5" infoWidth="100%" infoHeight="500px" headerTitle="生产时率" isShowMaxBtn style="margin-top:0;">
                 <Echart :chart-data="whenTheProductionRate" style="height: 100%"></Echart>
-            </pagePanel>
-            <pagePanel v-if="currentIndex == 6" headerTitle="油井利用率" style="height: 500px;margin-top:0;" showBtn>
+            </info-window>
+            <info-window v-if="currentIndex == 6" infoWidth="100%" infoHeight="500px" headerTitle="油井利用率" isShowMaxBtn style="margin-top:0;">
                 <Echart :chart-data="wellUtilization" style="height: 100%"></Echart>
-            </pagePanel>
-            <pagePanel v-if="currentIndex == 7" headerTitle="自然递减率" style="height: 500px;margin-top:0;" showBtn>
-                <span>平台：</span>
-                <el-select v-model="selectNaturalDeclinePlatform" style="width: 220px;">
-                    <el-option v-for="item in platformList" :key="item.platFormId" :label="item.platName" :value="item.platFormId">
-                    </el-option>
-                </el-select>
-                <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
-                    确定
-                </el-button>
-                <Echart :chart-data="naturalDeclineRate" style="height: 100%"></Echart>
-            </pagePanel>
+            </info-window>
+            <info-window v-if="currentIndex == 7" infoWidth="100%" infoHeight="500px" headerTitle="自然递减率" isShowMaxBtn style="margin-top:0;">
+                <div style="height:100%">
+                    <div style="display:flex;align-items: center;height:40px;padding-top:10px;">
+                        <span>平台：</span>
+                        <el-select v-model="selectNaturalDeclinePlatform" style="width: 220px;">
+                            <el-option v-for="item in platformList" :key="item.platFormId" :label="item.platName" :value="item.platFormId">
+                            </el-option>
+                        </el-select>
+                        <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
+                            确定
+                        </el-button>
+                    </div>
+                    <Echart :chart-data="naturalDeclineRate" style="height:calc(100% - 50px)"></Echart>
+                </div>
+            </info-window>
         </page-panel-new>
         
     </div>
@@ -546,7 +558,7 @@
                         x: 120,
                         y: 20,
                         x2: 120,
-                        y2: 60,
+                        y2: 80,
                     },
                     legend: {
                         data: [],
@@ -555,7 +567,7 @@
                             fontSize: 14,
                         },
                         x:'center',
-                        bottom:0,
+                        bottom:10,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -650,7 +662,7 @@
                             fontSize: 14,
                         },
                         x:'center',
-                        bottom:20,
+                        bottom:10,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -743,6 +755,9 @@
                                 name: "含水上升率",
                                 pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0,
+                                }
                             },
                         },
                     },
@@ -759,7 +774,7 @@
                             fontSize: 14,
                         },
                         x:'center',
-                        bottom:20,
+                        bottom:10,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -839,9 +854,9 @@
                     },
                     grid:{
                         x: 120,
-                        y: 20,
+                        y: 30,
                         x2: 120,
-                        y2: 50,
+                        y2: 80,
                     },
                     legend: {
                         data: [],
@@ -850,7 +865,7 @@
                             fontSize: 14,
                         },
                         x:'center',
-                        bottom:0,
+                        bottom:20,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -922,9 +937,9 @@
                     },
                     grid:{
                         x: 120,
-                        y: 20,
+                        y: 30,
                         x2: 120,
-                        y2: 50,
+                        y2: 80,
                     },
                     legend: {
                         data: ["去年实际值", "今年实际值"],
@@ -933,7 +948,7 @@
                             fontSize: 14,
                         },
                         x:'center',
-                        bottom:0,
+                        bottom:20,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -1054,6 +1069,9 @@
                                 name: "自然递减率",
                                 pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0,
+                                }   
                             },
                         },
                     },
@@ -1070,7 +1088,7 @@
                             fontSize: 14,
                         },
                         x:'center',
-                        bottom:20,
+                        bottom:10,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
