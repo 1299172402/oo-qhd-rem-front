@@ -63,13 +63,7 @@
         </header-search>
         <pagePanel headerTitle="采液强度分析流程图" style="height: 140%" class="g-w100" :show-btn="true">
             <Echart :chart-data="option" style="height: 100%"></Echart>
-<!--            <el-button class="commonBtn" style="position: absolute;top:9%;right: 7%;height: 1px;line-height: 1px;font-size: 8px">推送</el-button>-->
-<!--            <el-button class="commonBtn" style="position: absolute;top:13%;right: 7%;height: 1px;line-height: 1px;font-size: 8px">推送</el-button>-->
-<!--            <el-button class="commonBtn" style="position: absolute;top:17%;right: 7%;height: 1px;line-height: 1px;font-size: 8px">推送</el-button>-->
-<!--            <el-button class="commonBtn" style="position: absolute;top:21%;right: 7%;height: 1px;line-height: 1px;font-size: 8px">推送</el-button> -->
-<!--            <el-button class="commonBtn" style="position: absolute;top:66%;right: 7%;height: 1px;line-height: 1px;font-size: 8px">推送</el-button>-->
-<!--            <el-button class="commonBtn" style="position: absolute;top:44%;right: 7%;height: 1px;line-height: 1px;font-size: 8px">推送</el-button>-->
-<!--            <el-button class="commonBtn" style="position: absolute;top:32%;right: 7%;height: 1px;line-height: 1px;font-size: 8px">推送</el-button>-->
+            <el-button class="commonBtn" style="position: absolute;top:8%;right: 7%;height: 1px;line-height: 1px;font-size: 8px">推送</el-button>
         </pagePanel>
         <pagePanel headerTitle="采液强度分析关键参数明细表" style="height: 100%" class="g-w100" :show-btn="true">
             <el-table
@@ -252,7 +246,7 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "与前置对比，温度上升(如:超过10%)",
+                                                            "name": "与前值对比，温度上升(如:超过10%)",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
@@ -268,7 +262,7 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "与前置对比，温度上升(如:超过10%)",
+                                                            "name": "与前值对比，温度上升(如:超过10%)",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
@@ -334,7 +328,7 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "与前置对比，泵效变大(如:超过10%)",
+                                                            "name": "与前值对比，泵效变大(如:超过10%)",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
@@ -350,7 +344,7 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "与前置对比，沉没度增加(如:超过10%)",
+                                                            "name": "与前值对比，沉没度增加(如:超过10%)",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
@@ -461,7 +455,7 @@ export default {
                     right: '20%',
                     symbolSize: 7,
                     labelLayout(params) {
-                        if(params.dataIndex == 5){   
+                        if(params.dataIndex == 5 || params.text.indexOf('与前值对比') !=-1){   
                             return {
                                 x: params.rect.x - 120,
                                 verticalAlign: 'middle',
@@ -470,7 +464,6 @@ export default {
                         }
                     },
                     label: {
-                        offset:[0,0],
                         position: 'left',
                         verticalAlign: 'middle',
                         align: 'right',
@@ -487,7 +480,7 @@ export default {
                             } else if (params.data.level === 6) {
                                 return '{f|' + params.name + '}'
                             } else if (params.data.level === 5) {
-                                params.name = params.name.replace(/(.{24})/g, "$1\n");
+                                params.name = params.name.replace(/(.{23})/g, "$1\n");
                                 return '{e|' + params.name + '}'
                             } else {
                                 let s = '{d|' + params.name + '}'
@@ -511,13 +504,13 @@ export default {
                                 padding: 6,
                                 borderRadius: 3,
                                 color: '#fff',
-                                backgroundColor: '#bec985'
+                                backgroundColor: '#446dd3'
                             },
                             d: {
                                 padding: 6,
                                 borderRadius: 3,
                                 color: '#fff',
-                                backgroundColor: '#9b6e4a'
+                                backgroundColor: '#904a9b'
                             },
                             e: {
                                 padding: 6,
@@ -529,7 +522,7 @@ export default {
                                 padding: 6,
                                 borderRadius: 3,
                                 color: '#fff',
-                                backgroundColor: '#789e2f',
+                                backgroundColor: '#9e2f5d',
                                 // width:'10px',
                             }
                         }
