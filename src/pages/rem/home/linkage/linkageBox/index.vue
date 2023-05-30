@@ -10,7 +10,7 @@
                     </div>
                     <div v-if="warningShowFlag">
                         <button class="detailLinkBtn" @click="confirm()">确认</button>
-                        <button class="detailLinkBtn" @click="linkRoute()">分析</button>
+                        <button class="detailLinkBtn" @click="linkTo(currentList.analysisUrl)">分析</button>
                     </div>
                 </div>
             </div>
@@ -102,10 +102,6 @@ export default {
             this.warningShowFlag = false
             // https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport
             // window.open ( 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport','_blank')
-        },
-        linkRoute(){
-            window.open  ('https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport','_parent');
-            // https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport
         }
     }
 }

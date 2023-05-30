@@ -73,8 +73,8 @@ export default {
                 {
                     style: 'position:absolute;left: 69%;top: 26%;width:20%;height:40%;',
                     boxText: '智能分注井调控测试',
-                    boxBottomText: ['智能分注井调控测试'],
-                    boxBottomContent: [[{name:'智能配水器调控模型',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/intelligentDispensing'}, '智能测试模型']],
+                    boxBottomText: [{name:'智能分注井调控测试',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/intelligentDispensing'}],
+                    boxBottomContent: [[{name:'智能配水器调控模型',url:''}, '智能测试模型']],
                     boxStyle: {
                         pWidth: 'width:11vw',
                     },
@@ -85,7 +85,7 @@ export default {
                 {
                     style: 'position:absolute;left: 57%;top: 60%;width:20%;height:40%;',
                     boxText: '注采调控油藏方案',
-                    boxBottomText: [{name:'分层注水优化',url:'https://rem.tjioms-dev.tjltd.cnooc/#/injection/optimization'}, '产液结构优化'],
+                    boxBottomText: [{name:'分层注水优化',url:'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence/optimization'}, '产液结构优化'],
                     boxBottomContent: [['智能滚动配注模型'], ['流场调控模型']],
                     boxStyle: {
                         pWidth: 'width:11vw'
@@ -96,11 +96,15 @@ export default {
                 {
                     style: 'position:absolute;left: 43%;top: 56%;width:20%;height:40%;',
                     boxText: '注采状况分析',
-                    boxBottomText: ['注采连通分析', '注采平衡分析', '采出状况分析'],
+                    boxBottomText: [
+                        {name:'注采连通分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/basic/maintenance'},
+                        {name:'注采平衡分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport'},
+                        {name:'采出状况分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport'}
+                    ],
                     boxBottomContent: [
-                        [{name:'注采连通性评价模型',url:'https://rem.tjioms-dev.tjltd.cnooc/#/basic/maintenance'}],
-                        [{name:'注采平衡分析模型',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport'}],
-                        [{name:'注采平衡分析采出状况分析模型',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport'}]
+                        [{name:'注采连通性评价模型',url:''}],
+                        [{name:'注采平衡分析模型',url:''}],
+                        [{name:'注采平衡分析采出状况分析模型',url:''}]
                     ],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
@@ -136,14 +140,15 @@ export default {
                         {name:'年度产量运行预警',url:'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentWarningCapacity'}
                     ],
                     boxBottomContent: [
-                        [{name:'年度产量趋势预测',url:'https://rem.tjioms-dev.tjltd.cnooc/#/yield/fluctuationWarningAnalysis'}]
+                        [{name:'年度产量趋势预测',url:'https://rem.tjioms-dev.tjltd.cnooc/#/modelConfiguration/modelconfig'}]
                     ],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
                     imgUrl: new URL('./topBox/21.png', import.meta.url).href,
                     showFlag:false,
-                    warningShowFlag : true
+                    warningShowFlag : true,
+                    analysisUrl:'https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?wellIds=%5B%5D&prodDate=2023-05-29&prodDateCompare=2023-05-28'
                 },
                 {
                     style: 'position:absolute;left: 20%;top: 0%;width:20%;height:40%;',
@@ -163,7 +168,7 @@ export default {
                 {
                     style: 'position:absolute;left: 58%;top: 36%;width:20%;height:40%;',
                     boxText: '分注分采调控策略',
-                    boxBottomText: [{name:'注采调控最优化方案',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/marge'}, '配注微调策略'],
+                    boxBottomText: [{name:'注采调控最优化方案',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge'}, '配注微调策略'],
                     boxBottomContent: [['智能分注调控策略优化模型', '智能分注调控策略优化模型'], ['配注方案分析评估模型']],
                     boxStyle: {
                         pWidth: 'width:11vw'
