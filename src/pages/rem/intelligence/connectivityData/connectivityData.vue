@@ -115,7 +115,6 @@
                 </el-button>
                 <el-button
                     type="primary"
-                    class="commonBtn"
                     size="mini"
                     icon="el-icon-download"
                     style="float: right"
@@ -600,7 +599,7 @@ export default {
                 row.column.label === "连通系数?(动态调整)" ||
                 row.column.label === "备注"
             ) {
-                return "color:#66ffff"; //修改的样式
+                return "color:#EB7A3D";
             } else {
                 return "";
             }

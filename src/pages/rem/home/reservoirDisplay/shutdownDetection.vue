@@ -99,7 +99,7 @@
             >
                 <el-table-column prop="wellName" label="井号"></el-table-column>
                 <el-table-column prop="appendixValueName" label="*关停分类"></el-table-column>
-                <el-table-column prop="reasonAppendixValueName" label="关停原因"></el-table-column>
+                <el-table-column prop="reasonAppendixValueName" label="*关停原因"></el-table-column>
                 <el-table-column prop="planAppendixValueName" label="*计划属性"></el-table-column>
                 <el-table-column prop="timeAppendixValueName" label="*时间属性"></el-table-column>
                 <el-table-column prop="beginDate" :label="`*关停开始时间\n(yyyy/mm/dd)`"></el-table-column>

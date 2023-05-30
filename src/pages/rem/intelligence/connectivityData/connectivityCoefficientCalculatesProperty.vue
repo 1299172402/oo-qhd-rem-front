@@ -59,7 +59,6 @@
                 <el-button
                     type="primary"
                     size="mini"
-                    class="commonBtn"
                     icon="el-icon-download"
                     @click="downloadTable"
                     style="float: right"

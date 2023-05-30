@@ -1,32 +1,14 @@
 <!-- 基础数据维护 - 密度维护表 -->
 <template>
-    <div class="app-container" style="height: calc(100% - 85px);width: 100%">
-        <div style="display: flex;height: 100%;">
-            <div style=" height: 111%">
-                <tree-multiple-selection/>
+    <div class="app-container" style="height: calc(100%);">
+        <div style="display: flex;flex-direction: row; height: 100%;">
+            <div style=" height: 100%">
+                <tree-multiple-selection :level = "'3'" @childinfo = 'childinfo'  @change="layoutChange"/>
             </div>
-
-            <div style="height: 100%;margin-left: 15px;width: auto">
+            <div
+                style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
                 <headerSearch class="g-w100 g-h100" style="height: auto">
                     <el-form :model="queryParams" :inline="true" style="margin-top: 18px">
-                        <el-form-item label="作业公司：">
-                            <el-select v-model="queryParams.orgId" disabled>
-                                <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.orgName"
-                                           :value="item.orgId">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="油田：">
-                            <el-select @change="getInfo()" v-model="queryParams.ogfId">
-                                <el-option
-                                    v-for="(item, index) in oilFields"
-                                    :key="index"
-                                    :label="item.ogfName"
-                                    :value="item.ogfId"
-                                >
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
                         <el-form-item label="产品类型：">
                             <el-select
                                 v-model="queryParams.productTypeCode"
@@ -59,8 +41,7 @@
                         </el-form-item>
                     </el-form>
                 </headerSearch>
-                <page-panel header-title="密度信息维护" style="height: 100%" :show-btn="true">
-
+                <page-panel header-title="密度信息维护" style="flex:1;overflow: hidden" :show-btn="true">
                     <el-row>
                         <el-button icon="el-icon-edit-outline" size="mini" @click="redact" type="primary">编辑
                         </el-button>
@@ -72,9 +53,10 @@
                     </el-row>
                     <el-table
                         :data="noticeList"
+                        ref="table"
                         @current-change="handleCurrentChange"
                         highlight-current-row
-                        height="calc(100% - 30px)"
+                        height="calc(100% - 35px)"
                         style="margin-top: 10px"
                         :row-style="{ height: '0px' }"
                         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
@@ -242,7 +224,7 @@
 </template>
 
 <script>
-import {getOilFieldList, queryProductList} from "@/api/rem/workcompanydesignate";
+import {queryProductList} from "@/api/rem/workcompanydesignate";
 import {queryDensityInfo, save} from "@/api/rem/density.js";
 import {mapGetters} from "vuex";
 import {queryOperatingCompanyDetail, queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
@@ -256,7 +238,6 @@ export default {
     },
     data() {
         return {
-            open: false, // 新增弹框
             dialogVisible: false, //运行计算展示弹窗
             oilfield: [],
             producttype: [],
@@ -264,14 +245,7 @@ export default {
             oilFields: [],
             // 表格数据
             noticeList: [],
-            // 是否展开，默认全部展开
-            isExpandAll: true,
-            deptList: [],
-            // 显示搜索条件
-            showSearch: true,
             // 总条数
-            total: 0,
-            tableList: ["oilFieldName"],
             ids: [],
             // 保存数组
             savelist: [],
@@ -304,6 +278,13 @@ export default {
         },
     },
     methods: {
+        // change时间
+        layoutChange() {
+            this.$refs.table.doLayout()
+        },
+        childinfo(a,b,c){
+            // console.log(a,b,c)
+        },
         /**
          *   获取下拉框数据
          * @param orgId 作业公司id
@@ -319,12 +300,6 @@ export default {
             queryOperatorsCheckFieldListsDetail({orgId: this.queryParams.orgId}).then(res => {
                 this.oilFields = res.data.data
             })
-            // // debugger
-            // getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
-            //   if (res.data.code == 200) {
-            //     this.oilFields = res.data.data;
-            //   }
-            // });
             queryProductList().then((res) => {
                 if (res.data.code == 200) {
                     this.producttype = res.data.data;
