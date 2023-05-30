@@ -20,6 +20,9 @@
 import linkageBox from "./linkageBox/index.vue";
 const env = import.meta.env.MODE;
 const baseUrl = env == "development"?'/src':''
+let curDate = new Date()
+let data1 = new Date(curDate.getTime() - 24*60*60*1000).format('YYYY-MM-DD')
+let data2 = new Date(curDate.getTime() - 24*60*60*1000*2).format('YYYY-MM-DD')
 export default {
     components:{
         linkageBox
@@ -148,7 +151,7 @@ export default {
                     imgUrl: new URL('./topBox/21.png', import.meta.url).href,
                     showFlag:false,
                     warningShowFlag : true,
-                    analysisUrl:'https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?wellIds=%5B%5D&prodDate=2023-05-29&prodDateCompare=2023-05-28'
+                    analysisUrl:`https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?wellIds=%5B%5D&prodDate=${data2}&prodDateCompare=${data1}`
                 },
                 {
                     style: 'position:absolute;left: 20%;top: 0%;width:20%;height:40%;',
