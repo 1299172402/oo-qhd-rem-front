@@ -73,7 +73,7 @@
                     <el-button type="primary" style="margin-left: 20px" @click="handleAllSave">保存</el-button>
                     <el-button type="primary" @click="handleOperation">运行计算</el-button>
                 </el-form-item>
-                <el-button type="primary" icon="el-icon-download" class="commonBtn" style="float: right" @click="downloadTable">下载</el-button>
+                <el-button type="primary" icon="el-icon-download" style="float: right" @click="downloadTable">下载</el-button>
             </el-form>
             <el-table
                 v-show="params.wellCategory === '01'"
@@ -420,7 +420,7 @@ export default {
                 row.column.label === "劈分系数" ||
                 row.column.label === "备注"
             ) {
-                return "color:#66ffff"; //修改的样式
+                return "color:#EB7A3D"; //修改的样式
             } else {
                 return "";
             }
