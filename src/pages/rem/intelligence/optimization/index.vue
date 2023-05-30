@@ -484,7 +484,10 @@ export default {
         }
     },
     mounted() {
-        this.doSearch()
+        if(this.$route.query.link == 'rem'){
+        }else{
+            this.doSearch()
+        }
     },
 }
 </script>
