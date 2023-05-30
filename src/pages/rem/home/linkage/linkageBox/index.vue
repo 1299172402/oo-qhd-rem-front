@@ -25,7 +25,7 @@
                     <div class="pad">
                         <div>
                             <p v-show="!content" :key="index" v-for="(item,index) in currentList.boxBottomText">
-                                <span @click="linkTo(item.url)">{{ item.name ? item.name : item }}</span>
+                                <span style="cursor: pointer" @click="linkTo(item.url)">{{ item.name ? item.name : item }}</span>
                                 <span v-if="currentList.boxBottomContent" class="btnContent" @click="btnContent(index)">{{ currentList.boxBottomContent[index].length > 0 ? '>>' : '' }}</span>
                                 <span v-else class="btnBack" @click="btnBack"></span>
                             </p>
@@ -96,7 +96,7 @@ export default {
         },
         linkTo: function (url) {
             if (!url) return
-            window.open(url, '_blank');
+            window.open(url, '_parent');
         },
         confirm(){
             this.warningShowFlag = false
@@ -104,7 +104,7 @@ export default {
             // window.open ( 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport','_blank')
         },
         linkRoute(){
-            window.open  ('https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport','_blank');
+            window.open  ('https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport','_parent');
             // https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport
         }
     }

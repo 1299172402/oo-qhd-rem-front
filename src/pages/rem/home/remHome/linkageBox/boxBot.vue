@@ -99,7 +99,7 @@ export default {
         },
         skippage(page){
             if (!page) return
-            window.open(page, '_blank');
+            window.open(page, '_parent');
         },
         btnBack:function(){
             if(this.currentList.boxBottomContent){

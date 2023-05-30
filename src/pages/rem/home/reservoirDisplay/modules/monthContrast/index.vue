@@ -6,7 +6,7 @@
             header-title="秦皇岛32-6油田月度产量对比图"
             :is-show-max-btn="true"
         >
-            <button class="detailLinkBtn" @click="linkroute('optimization')">详细</button>
+            <button class="detailLinkBtn" @click="linkroute('annualPlan')">详细</button>
             <Echart :chart-data="histogram" style="height: 100%"></Echart>
         </info-window>
     </div>
