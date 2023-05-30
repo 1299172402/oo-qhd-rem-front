@@ -186,7 +186,13 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "前日关停影响"
+                                                            "name": "与前值对比，生产时长增大(如:超10分钟)",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "前日关停影响"
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
@@ -202,8 +208,14 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "1、调整参数影响\n2、气举嘴、油嘴故障"
-                                                        }
+                                                            "name": "与前值对比，直径变大(如:超过10%)",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "1、调整参数影响\n2、气举嘴、油嘴故障"
+                                                                }
+                                                            ]
+                                                        },
                                                     ]
                                                 },
                                             ]
@@ -218,7 +230,13 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "集输管线穿孔(海上是否可忽略)"
+                                                            "name": "与前值对比，压力下降(如:下降0.2兆帕以上)",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "集输管线穿孔(海上是否可忽略)"
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
@@ -234,7 +252,13 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "关停层、封堵层失效等"
+                                                            "name": "与前置对比，温度上升(如:超过10%)",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "关停层、封堵层失效等"
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 },
@@ -244,7 +268,13 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "关停层、封堵层失效等"
+                                                            "name": "与前置对比，温度上升(如:超过10%)",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "关停层、封堵层失效等"
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
@@ -266,7 +296,13 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "1、更换设备影响\n2、调整参数影响\n3、设备故障影响"
+                                                            "name": "与前值对比，频率变大(如:超过10%)",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "1、更换设备影响\n2、调整参数影响\n3、设备故障影响"
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 },
@@ -276,7 +312,13 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "1、更换设备影响\n2、调整参数影响\n3、设备故障影响"
+                                                            "name": "与前值对比，转数变大(如:超过10%)",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "1、更换设备影响\n2、调整参数影响\n3、设备故障影响"
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
@@ -292,7 +334,13 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "1、注采调整影响\n2、洗井等影响"
+                                                            "name": "与前置对比，泵效变大(如:超过10%)",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "1、注采调整影响\n2、洗井等影响"
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 },
@@ -302,7 +350,13 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "1、注采调整影响\n2、洗井等影响"
+                                                            "name": "与前置对比，沉没度增加(如:超过10%)",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "1、注采调整影响\n2、洗井等影响"
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
@@ -324,7 +378,13 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "1、注采调整影响\n2、关停层、封堵层失效等"
+                                                            "name": "与前值对比，温度上升(如:超过10%)",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "1、注采调整影响\n2、关停层、封堵层失效等"
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 },
@@ -334,7 +394,13 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "1、注采调整影响\n2、关停层、封堵层失效等"
+                                                            "name": "与前值对比，压力上升(如:超过10%)",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "1、注采调整影响\n2、关停层、封堵层失效等"
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
@@ -350,7 +416,13 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "1、注采调整影响\n2、高含水层能量上升等影响\n3、固井质量差导致管外窜等"
+                                                            "name": "与前值对比，含水率上升(如:超过10%)",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "1、注采调整影响\n2、高含水层能量上升等影响\n3、固井质量差导致管外窜等"
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
@@ -366,7 +438,13 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "1、注调整影响\n2、高含水层能量上升等影响\n3、封隔器失效导致高能量层出液"
+                                                            "name": "与前值对比，动液面上升(如:超过10%)",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "1、注调整影响\n2、高含水层能量上升等影响\n3、封隔器失效导致高能量层出液"
+                                                                }
+                                                            ]
                                                         }
                                                     ]
                                                 }
@@ -382,7 +460,17 @@ export default {
                     bottom: '1%',
                     right: '20%',
                     symbolSize: 7,
+                    labelLayout(params) {
+                        if(params.dataIndex == 5){   
+                            return {
+                                x: params.rect.x - 120,
+                                verticalAlign: 'middle',
+                                align: 'left'
+                            }
+                        }
+                    },
                     label: {
+                        offset:[0,0],
                         position: 'left',
                         verticalAlign: 'middle',
                         align: 'right',
@@ -399,7 +487,7 @@ export default {
                             } else if (params.data.level === 6) {
                                 return '{f|' + params.name + '}'
                             } else if (params.data.level === 5) {
-                                params.name = params.name.replace(/(.{20})/g, "$1\n");
+                                params.name = params.name.replace(/(.{24})/g, "$1\n");
                                 return '{e|' + params.name + '}'
                             } else {
                                 let s = '{d|' + params.name + '}'
@@ -436,7 +524,6 @@ export default {
                                 borderRadius: 3,
                                 color: '#fff',
                                 backgroundColor: '#1ca3c1',
-                                offset:[100,100]
                             } ,
                             f: {
                                 padding: 6,
