@@ -30,16 +30,16 @@
         <page-panel-new class="app-content">
             <el-row style="height: 400px;" :gutter="20">
             	<el-col v-for="(item, index) in zbData" :key="index" :span="4">
-            		<pagePanel v-if="item.title == '注水指标总览'" class="fl" style="height: 174px!important;" :headerTitle="item.title" @click.native="cardClick(item, index)">
+            		<info-window v-if="item.title == '注水指标总览'" class="fl" :headerTitle="item.title" info-width="100%" info-height="180px" style="margin-top: 20px;" @click.native="cardClick(item, index)">
             			<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center">
             				<span style="font-size: 30px; vertical-align: middle; color: rgb(143, 164, 204)">
             					{{ item.title }}
             				</span>
             			</div>
-            		</pagePanel>
-            		<pagePanel v-else class="fl" style="height: 180px;" :headerTitle="item.title">
-            			<el-button style="position: absolute; z-index: 9; right: 10px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click.native="cardClick(item, index)">详情</el-button>
-            			<el-row>
+            		</info-window>
+            		<info-window v-else class="fl" :headerTitle="item.title" info-width="100%" info-height="180px" style="margin-top: 20px;">
+            			<el-button style="position: absolute; z-index: 9; right: 10px; top: 0; height: 32px; margin-top: 3px;line-height: 8px;" type="primary" @click.native="cardClick(item, index)">详情</el-button>
+            			<el-row style="padding-top: 20px;">
             				<el-col :span="14">
             					<div style="vertical-align: middle; text-align: center">
             						<span style="font-size: 26px">{{ item.sz }}</span>
@@ -82,11 +82,11 @@
             					<Echart :chart-data="option" height="100%" width="100%"></Echart>
             				</el-col>
             			</el-row>
-            		</pagePanel>
+            		</info-window>
             	</el-col>
             </el-row>
-            <pagePanel headerTitle="注水指标管理" v-if="currentIndex == 0" style="height: 500px" showBtn>
-                <div class="g-row-flex-V" style="justify-content: space-between; margin-bottom: 20px">
+            <info-window headerTitle="注水指标管理" v-if="currentIndex == 0" info-width="100%" info-height="500px" is-show-max-btn>
+                <div class="g-row-flex-V" style="justify-content: space-between; margin: 20px 0;">
                     <div class="g-row-flex-V" style="flex-wrap: wrap">
                         <div style="margin-right: 20px">
                             对标油田：
@@ -122,9 +122,9 @@
                     <el-table-column prop="compareOilField" label="对标 (羊三木)" align="center" :formatter="formatterNumber"></el-table-column>
                     <el-table-column prop="realCompareOilField" label="实际值与对标差值" align="center" :formatter="formatterNumber"></el-table-column>
                 </el-table>
-            </pagePanel>
-            <pagePanel headerTitle="含水上升率" v-if="currentIndex == 5" style="height: 500px" showBtn>
-                <div class="g-row-flex-V" style="justify-content: space-between; margin-bottom: 20px">
+            </info-window>
+            <info-window headerTitle="含水上升率" v-if="currentIndex == 5" info-width="100%" info-height="500px" is-show-max-btn>
+                <div class="g-row-flex-V" style="justify-content: space-between; margin: 20px 0;">
                     <div class="g-row-flex-V" style="flex-wrap: wrap">
                         <div style="margin-right: 20px">
                             平台：
@@ -137,10 +137,10 @@
                         </div>
                     </div>
                 </div>
-                <Echart :chart-data="rateOfWaterCutRise" height="calc(100% - 65px)"></Echart>
-            </pagePanel>
-            <pagePanel headerTitle="自然递减率" v-if="currentIndex == 9" style="height: 500px;" showBtn>
-                <div class="g-row-flex-V" style="justify-content: space-between;">
+                <Echart :chart-data="rateOfWaterCutRise" height="calc(100% - 75px)"></Echart>
+            </info-window>
+            <info-window headerTitle="自然递减率" v-if="currentIndex == 9" info-width="100%" info-height="500px" is-show-max-btn>
+                <div class="g-row-flex-V" style="justify-content: space-between; margin: 20px 0;">
                     <div class="g-row-flex-V" style="flex-wrap: wrap">
                         <div style="margin-right: 20px">
                             平台：
@@ -153,8 +153,8 @@
                         </div>
                     </div>
                 </div>
-                <Echart :chart-data="naturalDeclineRate" height="calc(100% - 65px)"></Echart>
-            </pagePanel>
+                <Echart :chart-data="naturalDeclineRate" height="calc(100% - 75px)"></Echart>
+            </info-window>
         </page-panel-new>
         
     </div>
@@ -1218,7 +1218,7 @@
         overflow-y: scroll;
         .g-w100:first-child{
           padding-top:0!important;  
-          height:auto!important;
+        //   height:auto!important;
         }
     }
     .formBox {

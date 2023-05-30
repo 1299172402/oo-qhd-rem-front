@@ -31,11 +31,11 @@
         </header-search>
         
         <page-panel-new class="app-content">
-            <pagePanel headerTitle="注水井分注率" style="height: 490px" showBtn>
+            <info-window headerTitle="注水井分注率" info-width="100%" info-height="500px" is-show-max-btn>
                 <Echart :chart-data="waterInjectionRate" height="100%"></Echart>
-            </pagePanel>
-            <pagePanel :headerTitle="`${oilFieldName || ''}注水井分注率明细`" style="height: 500px;" showBtn>
-                <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#zhjfzlmx', `${oilFieldName || ''}注水井分注率明细`)">
+            </info-window>
+            <info-window :headerTitle="`${oilFieldName || ''}注水井分注率明细`" info-width="100%" info-height="500px" is-show-max-btn>
+                <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 32px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#zhjfzlmx', `${oilFieldName || ''}注水井分注率明细`)">
                     下载
                 </el-button>
                 <el-table id="zhjfzlmx" :data="tableData" highlight height="100%">
@@ -54,7 +54,7 @@
                         <el-table-column prop="splitRatioRate" :label="`分注率\n(%)`" align="center" min-width="70"></el-table-column>
                     </el-table-column>
                 </el-table>
-            </pagePanel>
+            </info-window>
         </page-panel-new>
         
     </div>
@@ -131,6 +131,9 @@
                                 name: "注水井分注率",
                                 pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity: 0,
+                                }
                             },
                         },
                     },

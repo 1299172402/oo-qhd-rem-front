@@ -31,11 +31,11 @@
         </header-search>
 
         <page-panel-new class="app-content">
-            <pagePanel :headerTitle="`${oilFieldName || ''}注水水质达标率`" style="height: 490px;" showBtn>
+            <info-window :headerTitle="`${oilFieldName || ''}注水水质达标率`" info-width="100%" info-height="500px" is-show-max-btn>
                 <Echart :chart-data="standardRateOfInjectionWaterQuality" height="100%"></Echart>
-            </pagePanel>
-            <pagePanel :headerTitle="`${oilFieldName || ''}注水水质达标率*`" style="height: 490px;" showBtn>
-                <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#zsszkzzb', `${oilFieldName || ''}注水水质达标率`)">下载</el-button>
+            </info-window>
+            <info-window :headerTitle="`${oilFieldName || ''}注水水质达标率*`" info-width="100%" info-height="500px" is-show-max-btn>
+                <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 32px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#zsszkzzb', `${oilFieldName || ''}注水水质达标率`)">下载</el-button>
                 <el-table id="ysdcylbcsp" :data="tableData1" highlight height="100%">
                     <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
                     <el-table-column prop="ofgName" label="油田" align="center"></el-table-column>
@@ -62,10 +62,10 @@
                     <el-table-column prop="wellQualityNumber" :label="`水质达标率\n考核指标\n(%)`" align="center" min-width="100"></el-table-column>
                     <el-table-column prop="wellPlanNumber" :label="`水质达标率\n奋斗指标\n(%)`" align="center" min-width="100"></el-table-column>
                 </el-table>
-            </pagePanel>
+            </info-window>
             <div style="padding-bottom:20px;">
-                <pagePanel :headerTitle="`${oilFieldName || ''}注水水质控制指标*`" style="height: 490px;" showBtn>
-                    <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#zsszkzzb', `${oilFieldName || ''}注水水质控制指标`)">下载</el-button>
+                <info-window :headerTitle="`${oilFieldName || ''}注水水质控制指标*`" info-width="100%" info-height="500px" is-show-max-btn>
+                    <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 32px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#zsszkzzb', `${oilFieldName || ''}注水水质控制指标`)">下载</el-button>
                     <el-table id="zsszkzzb" :data="tableData2" highlight height="100%">
                         <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
                         <el-table-column prop="oilContent" :label="`含油量\n(mg/l)`" align="center"></el-table-column>
@@ -76,7 +76,7 @@
                         <el-table-column prop="fb" :label="`铁细菌\n(个/ml)`" align="center"></el-table-column>
                         <el-table-column prop="corrosionRate" :label="`腐蚀率\n(mm/a)`" align="center"></el-table-column>
                     </el-table>
-                </pagePanel>
+                </info-window>
             </div>
         </page-panel-new>
         
@@ -154,6 +154,9 @@
                                 name: "注水水质达标率",
                                 pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity: 0,
+                                }
                             },
                         },
                     },

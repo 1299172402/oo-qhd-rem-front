@@ -33,8 +33,8 @@
         
         <page-panel-new class="app-content">
             
-            <pagePanel headerTitle="分注井测试率" style="height: 490px" showBtn>
-                <div class="g-row-flex-V" style="margin-bottom: 20px">
+            <info-window headerTitle="分注井测试率" info-width="100%" info-height="500px" is-show-max-btn>
+                <div class="g-row-flex-V" style="margin: 20px 0;">
                     <div style="margin-right: 20px">
                         平台：
                         <el-select v-model="queryParams.platFormId" style="width: 220px">
@@ -45,11 +45,11 @@
                         <el-button icon="el-icon-search" type="primary" @click="doSearch">确定</el-button>
                     </div>
                 </div>
-                <Echart :chart-data="separateInjectionWellTestRate" height="calc(100% - 65px)"></Echart>
-            </pagePanel>
+                <Echart :chart-data="separateInjectionWellTestRate" height="calc(100% - 75px)"></Echart>
+            </info-window>
 
-            <pagePanel :headerTitle="`${oilFieldName || ''}分注井测试明细`" style="height:500px;" showBtn>
-                <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#fzjcsmx', `${oilFieldName || ''}分注井测试明细`)">
+            <info-window :headerTitle="`${oilFieldName || ''}分注井测试明细`" info-width="100%" info-height="500px" is-show-max-btn>
+                <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 32px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#fzjcsmx', `${oilFieldName || ''}分注井测试明细`)">
                     下载
                 </el-button>
                 <el-table id="fzjcsmx" :data="tableData" highlight height="100%">
@@ -60,7 +60,7 @@
                     <el-table-column prop="injSeparateTypeName" label="分注类型" align="center"></el-table-column>
                     <el-table-column prop="prodDate" :label="`调配日期\n(yyyy/mm/dd)`" :formatter="formatTime" align="center"></el-table-column>
                 </el-table>
-            </pagePanel>
+            </info-window>
         </page-panel-new>
         
     </div>
@@ -150,6 +150,9 @@
                                 name: "分注井测试率",
                                 pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity: 0,
+                                }
                             },
                         },
                     },

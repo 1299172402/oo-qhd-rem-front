@@ -32,11 +32,11 @@
         </header-search>
         
         <page-panel-new class="app-content">
-            <pagePanel headerTitle="年注入量" style="height: 490px" showBtn>
+            <info-window headerTitle="年注入量" info-width="100%" info-height="500px" is-show-max-btn>
                 <Echart :chart-data="inInjection" height="100%"></Echart>   
-            </pagePanel>
-            <pagePanel :headerTitle="`${oilFieldName || ''}平台注入量`" style="height:500px;" showBtn>
-                <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#ptnzrl', `${oilFieldName || ''}平台注入量`)">下载</el-button>
+            </info-window>
+            <info-window :headerTitle="`${oilFieldName || ''}平台注入量`" info-width="100%" info-height="500px" is-show-max-btn>
+                <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 32px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#ptnzrl', `${oilFieldName || ''}平台注入量`)">下载</el-button>
                 <el-table id="ptnzrl" :data="tableData" highlight height="100%">
                     <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
                     <el-table-column prop="platform_name" label="平台" align="center"></el-table-column>
@@ -44,7 +44,7 @@
                     <el-table-column prop="dailycount3" :label="`年考核注入量\n(10⁴m³)`" align="center"></el-table-column>
                     <el-table-column prop="dailycount1" :label="`年实际注入量\n(10⁴m³)`" align="center"></el-table-column>
                 </el-table>
-            </pagePanel>
+            </info-window>
         </page-panel-new>
     </div>
 </template>
@@ -119,6 +119,9 @@
                                 name: '年注入量',
                                 pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity: 0,
+                                }
                             },
                         },
                     },

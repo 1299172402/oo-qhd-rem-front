@@ -75,16 +75,16 @@
                         itemHeight: 6,
                         itemGap: 14,
                     },
-                    toolbox: {
-                        show: true,
-                        feature: {
-                            saveAsImage: {
-                                name: '水井曲线对比分析图',
-                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-                                backgroundColor: '#022644'
-                            }
-                        }
-                    },
+                    // toolbox: {
+                    //     show: true,
+                    //     feature: {
+                    //         saveAsImage: {
+                    //             name: '水井曲线对比分析图',
+                    //             pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                    //             backgroundColor: '#022644'
+                    //         }
+                    //     }
+                    // },
                     grid: [
                         { left: '14%', top: '4%', width: '74%', height: '38%' }, 
                         { left: '14%', top: '48%', width: '74%', height: '38%' }],

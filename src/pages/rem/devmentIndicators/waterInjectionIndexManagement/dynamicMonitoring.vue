@@ -32,8 +32,8 @@
         </header-search>
         
         <page-panel-new class="app-content">
-            <pagePanel headerTitle="动态监测完成率*" style="height: 490px;" showBtn>
-                <div class="g-row-flex-V" style="margin-bottom: 20px">
+            <info-window headerTitle="动态监测完成率*" info-width="100%" info-height="500px" is-show-max-btn>
+                <div class="g-row-flex-V" style="margin: 20px 0;">
                     <div style="margin-right: 20px">
                         区块：
                         <el-select v-model="queryParams.fileId">
@@ -50,10 +50,10 @@
                         <el-button icon="el-icon-search" type="primary" @click="doSearch">确定</el-button>
                     </div>
                 </div>
-                <Echart :chart-data="dynamicDetectionCompletionRate" height="calc(100% - 65px)"></Echart>
-            </pagePanel>
-            <pagePanel :headerTitle="`${oilFieldName}动态监测完成率*`" style="height:500px;" showBtn>
-                <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#dtjcwcl', `${oilFieldName || ''}动态监测完成率`)">
+                <Echart :chart-data="dynamicDetectionCompletionRate" height="calc(100% - 75px)"></Echart>
+            </info-window>
+            <info-window :headerTitle="`${oilFieldName}动态监测完成率*`" info-width="100%" info-height="500px" is-show-max-btn>
+                <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 32px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#dtjcwcl', `${oilFieldName || ''}动态监测完成率`)">
                     下载
                 </el-button>
                 <el-table id="dtjcwcl" :data="tableData" highlight height="100%">
@@ -84,7 +84,7 @@
                         <el-table-column prop="checkNumberTotal" label="合计" align="center"></el-table-column>
                     </el-table-column>
                 </el-table>
-            </pagePanel>
+            </info-window>
         </page-panel-new>
         
     </div>
@@ -165,6 +165,9 @@
                                 name: "动态监测完成率",
                                 pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity: 0,
+                                }
                             },
                         },
                     },

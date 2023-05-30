@@ -31,8 +31,8 @@
         </header-search>
         
         <page-panel-new class="app-content">
-            <pagePanel headerTitle="地层压力保持水平*" style="height: 490px" showBtn>
-                <div class="g-row-flex-V" style="margin-bottom: 20px">
+            <info-window headerTitle="地层压力保持水平*" info-width="100%" info-height="500px" is-show-max-btn>
+                <div class="g-row-flex-V" style="margin: 20px 0;">
                     <div style="margin-right: 20px">
                         区块：
                         <el-select v-model="queryParams.fileId">
@@ -49,10 +49,10 @@
                         <el-button icon="el-icon-search" type="primary" @click="doSearch">确定</el-button>
                     </div>
                 </div>
-                <Echart :chart-data="formationPressureRemainsLevel" height="calc(100% - 65px)"></Echart>
-            </pagePanel>
-            <pagePanel headerTitle="原始地层压力保持水平 (层位)*" style="height: 490px" showBtn>
-                <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#ysdcylbcsp', '原始地层压力保持水平 (层位)')">下载</el-button>
+                <Echart :chart-data="formationPressureRemainsLevel" height="calc(100% - 75px)"></Echart>
+            </info-window>
+            <info-window headerTitle="原始地层压力保持水平 (层位)*" info-width="100%" info-height="500px" is-show-max-btn>
+                <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 32px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#ysdcylbcsp', '原始地层压力保持水平 (层位)')">下载</el-button>
                 <el-table id="ysdcylbcsp" :data="tableData1" highlight height="100%">
                     <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
                     <el-table-column prop="ogfNo" label="油田" align="center"></el-table-column>
@@ -71,10 +71,10 @@
                         <el-table-column prop="pressureLevel" :label="`目前压力保持水平\n(%)`" align="center"></el-table-column>
                     </el-table-column>
                 </el-table>
-            </pagePanel>
+            </info-window>
             <div style="padding-bottom:20px;">
-                <pagePanel headerTitle="单井静压明细*" style="height: 490px" showBtn>
-                    <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#djjymx', '单井静压明细')">下载</el-button>
+                <info-window headerTitle="单井静压明细*" info-width="100%" info-height="500px" is-show-max-btn>
+                    <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 32px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#djjymx', '单井静压明细')">下载</el-button>
                     <el-table id="djjymx" :data="tableData2" highlight height="100%">
                         <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
                         <el-table-column prop="ogfNo" label="油田" align="center"></el-table-column>
@@ -85,7 +85,7 @@
                         <el-table-column prop="midOillayerStaticPress" :label="`油层中部压力\n(MPa)`" align="center"></el-table-column>
                         <el-table-column prop="measurePointPress" :label="`最大垂深测点压力\n(10⁴m³)`" align="center"></el-table-column>
                     </el-table>
-                </pagePanel>
+                </info-window>
             </div>
         </page-panel-new>
         
@@ -169,6 +169,9 @@
                                 name: "地层压力保持水平",
                                 pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity: 0,
+                                }
                             },
                         },
                     },
