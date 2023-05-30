@@ -5,13 +5,13 @@
     <!-- <el-row> -->
     <div class="imagesBox">
       <img
-        style="height: 100%"
+          style="height: 100%;border: #022743 solid 1px"
         src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"
       />
     </div>
     <div class="imagesBox">
       <img
-        style="height: 100%; margin-left: 20px"
+          style="height: 100%;border: #022743 solid 1px"
         src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"
       />
     </div>
