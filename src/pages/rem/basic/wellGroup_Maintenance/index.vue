@@ -82,7 +82,6 @@
 <!--              下载-->
 <!--            </el-button>-->
               <el-button
-                  class="commonBtn"
                   type="primary"
                   @click="preserve"
                   style="font-size: 12px; padding: 5px 10px 5px 10px; width: 85px;float: right"
