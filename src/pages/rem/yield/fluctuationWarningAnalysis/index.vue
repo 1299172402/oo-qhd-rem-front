@@ -429,7 +429,10 @@
                             saveAsImage: {
                                 name: '平台产量动态分析',
                                 pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-                                backgroundColor: '#022644'
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
                             }
                         }
                     },
