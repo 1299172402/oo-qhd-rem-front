@@ -232,8 +232,9 @@ export default {
         //若由REM跳转 聚焦吸水指数
         if(this.$route.query.link == 'rem'){
             this.activeName = "second"
+        }else{
+            this.queryTableData(this.form.tableData2)
         }
-        this.queryTableData(this.form.tableData2)
     },
     data() {
         return {
