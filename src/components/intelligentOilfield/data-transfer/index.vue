@@ -1,7 +1,10 @@
 <!--数据传输组件-->
 <template>
   <div class="g-w100 g-h00" style="background: transparent;height: 100%;position: relative;">
-    <div :style="[{ height: isQuickEntry ? '28%' : '44%' }]">
+    <!-- 2023/05/26注释,为设置自定义快捷入口不同高度 -->
+    <!-- TODO: Maybe change back -->
+    <!-- :style="[{ height: isQuickEntry ? '28%' : '44%' }]" -->
+    <div style="height: 44%">
       <div class="g-row-flex-V" style="margin-bottom: 10px">
         <div style="margin-right: 10px">
           {{ searchName }}：
@@ -34,7 +37,10 @@
       </div>
     </div>
     <div class="lineStyle" />
-    <div :style="[{ height: isQuickEntry ? '28%' : '44%' }]">
+    <!-- 2023/05/26注释,为设置自定义快捷入口不同高度 -->
+    <!-- TODO: Maybe change back -->
+    <!-- :style="[{ height: isQuickEntry ? '28%' : '44%' }]" -->
+    <div style="height: 44%">
       <div>{{ headerNameList[1].name }}</div>
       <div class="g-row-flex itemStyle">
         <div v-for="(item, index) in currentAllList" :key="index" style="margin: 0 10px 5px 0">
@@ -44,7 +50,9 @@
         </div>
       </div>
     </div>
-    <div v-if="isQuickEntry" class="lineStyle" />
+    <!-- 2023/05/26注释 -->
+    <!-- TODO: Maybe change back -->
+    <!-- <div v-if="isQuickEntry" class="lineStyle" />
     <div v-if="isQuickEntry" style="height: 28%;">
       <div>自定义快捷入口</div>
       <div class="g-row-flex itemStyle">
@@ -60,7 +68,7 @@
         </div>
         <i class="el-icon-circle-plus g-row-flex-V" style="font-size: 22px;color: var(--light-blue-color);cursor: pointer;line-height: 40px;height: 40px;" @click="addQuickEntry" />
       </div>
-    </div>
+    </div> -->
     <div
       slot="footer"
       class="dialog-footer g-row-flex-V"
@@ -112,6 +120,16 @@ export default {
     isQuickEntry: {
       type: Boolean,
       default: false
+    },
+    // 所有数据集合
+    totalDataList: {
+      type: Array,
+      default: () => []
+    },
+    // 穿梭框所属类型
+    transferType: {
+      type: String,
+      default: ""
     }
   },
   data() {
@@ -195,8 +213,32 @@ export default {
         }
         return result;
       });
+      // 所有集合状态改变
+      this.totalDataList.forEach(el => {
+        if (this.transferType === "看板中心") {
+          if (el.boardId === val.boardId) {
+            el.isSelected = "1";
+          }
+        } else if (this.transferType === "业务中心") {
+          if (el.businessId === val.businessId) {
+            el.isSelected = "1";
+          }
+        } else if (this.transferType === "指标中心") {
+          if (el.indexId === val.indexId) {
+            el.isSelected = "1";
+          }
+        } else if (this.transferType === "快捷入口") {
+          if (el.enterId === val.enterId) {
+            el.isSelected = "1";
+          }
+        } else if (this.transferType === "应用中心") {
+          if (el.appId === val.appId) {
+            el.isSelected = "1";
+          }
+        }
+      });
       this.currentSelectedList.push(val);
-      this.$emit("changeData", this.currentSelectedList, currentItem);
+      this.$emit("changeData", this.currentSelectedList, currentItem, this.totalDataList);
     },
     // 删除元素
     deleteItem(val) {
@@ -210,12 +252,38 @@ export default {
         }
         return result;
       });
-      if (val.enterUser === this.$store.getters["user/userDetail"].user.userId) { // 快捷入口的数据
-        this.currentQuickEntryList.push(val);
-      } else {
-        this.currentAllList.push(val);
-      }
-      this.$emit("changeData", this.currentSelectedList, currentItem);
+      // 所有集合状态改变
+      this.totalDataList.forEach(el => {
+        if (this.transferType === "看板中心") {
+          if (el.boardId === val.boardId) {
+            el.isSelected = "0";
+          }
+        } else if (this.transferType === "业务中心") {
+          if (el.businessId === val.businessId) {
+            el.isSelected = "0";
+          }
+        } else if (this.transferType === "指标中心") {
+          if (el.indexId === val.indexId) {
+            el.isSelected = "0";
+          }
+        } else if (this.transferType === "快捷入口") {
+          if (el.enterId === val.enterId) {
+            el.isSelected = "0";
+          }
+        } else if (this.transferType === "应用中心") {
+          if (el.appId === val.appId) {
+            el.isSelected = "0";
+          }
+        }
+      });
+      this.currentAllList.push(val);
+      //  2023/05/26注释,注释自定义快捷入口逻辑
+      //   if (val.enterUser === this.$store.getters["user/userDetail"].user.userId) { // 快捷入口的数据
+      //     this.currentQuickEntryList.push(val);
+      //   } else {
+      //     this.currentAllList.push(val);
+      //   }
+      this.$emit("changeData", this.currentSelectedList, currentItem, this.totalDataList);
     },
     submitForm() {
       this.indicatorSource = "";

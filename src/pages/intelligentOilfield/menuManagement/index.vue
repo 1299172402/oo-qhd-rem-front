@@ -407,14 +407,26 @@
                   </el-tooltip>
                   组件路径
                 </span>
-                <el-input v-model="form.component" placeholder="请输入组件路径" />
+                <input
+                  v-model.lazy="form.component"
+                  class="el-input__inner"
+                  placeholder="请输入组件路径"
+                >
+                <!-- TODO: Maybe change back -->
+                <!-- <el-input v-model="form.component" placeholder="请输入组件路径" /> -->
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="12">
             <div v-if="form.menuType != 'M'">
               <el-form-item>
-                <el-input v-model="form.perms" placeholder="请输入权限标识" maxlength="100" />
+                <input
+                  v-model.lazy="form.perms"
+                  class="el-input__inner"
+                  placeholder="请输入权限标识"
+                >
+                <!-- TODO: Maybe change back -->
+                <!-- <el-input v-model="form.perms" placeholder="请输入权限标识" maxlength="100" /> -->
                 <span slot="label">
                   <el-tooltip
                     content="控制器中定义的权限字符，如：@PreAuthorize(`@ss.hasPermi('system:user:list')`)"

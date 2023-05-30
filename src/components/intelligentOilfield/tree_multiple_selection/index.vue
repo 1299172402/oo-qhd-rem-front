@@ -1,17 +1,35 @@
 <template>
-  <div class="menu">
+  <div class="menu menuColor">
     <!--隐藏菜单-->
     <div class="ensconce">
       <h2>
-        <img src="@/assets/moreDetail.png" alt="">
-        目标导航
+        <img v-if="$store.state.setting.mode === 'dark'" src="@/assets/treeSelectDark2.png" alt="">
+        <img v-else src="@/assets/treeSelectWhite2.png" alt="">
+        <div class="navClass">
+          目标导航
+        </div>
       </h2>
     </div>
     <!--显示菜单-->
-    <div class="open" :class="$store.state.setting.mode === 'dark' ? 'open' : 'open-white'">
-      <div class="navH">
-        目标导航
-        <span><img class="obscure" src="@/assets/expend.png" alt=""></span>
+    <div class="open openColor" :class="$store.state.setting.mode === 'dark' ? 'open' : 'open-white'">
+      <div class="navH navHColor">
+        <div style="font-size: 14px;font-weight: 500;">
+          目标导航
+        </div>
+        <span>
+          <img
+            v-if="$store.state.setting.mode === 'dark'"
+            class="obscure"
+            src="@/assets/treeSelectDark1.png"
+            alt=""
+          >
+          <img
+            v-else
+            class="obscure"
+            src="@/assets/treeSelectWhite1.png"
+            alt=""
+          >
+        </span>
       </div>
       <div class="navBox">
         <el-tree
@@ -3628,13 +3646,13 @@ export default {
   float: left;
   -webkit-touch-callout: none;
   user-select: none;
+  box-shadow: 0 0 10px 0 rgba(144, 147, 153, 0.3);
 }
 
 .menu .ensconce {
   /* 隐藏菜单样式 */
   width: 0.3rem;
   height: 100%;
-  background-color: #20343c;
   float: left;
   text-align: center;
   position: relative;
@@ -3643,12 +3661,11 @@ export default {
 
 .menu .ensconce h2 {
   cursor: pointer;
-  color: #fff;
   font-size: 0.18rem;
   line-height: 0.5rem;
   width: 100%;
   position: absolute;
-  top: 25%;
+  top: 34%;
 }
 
 .menu .ensconce h2 img {
@@ -3659,7 +3676,6 @@ export default {
   /* 显示菜单样式 */
   width: 2.6rem;
   height: 100%;
-  background-color: #363a45;
   padding-bottom: 0.1rem;
   box-sizing: border-box;
   transition: all 0.8s ease;
@@ -3675,14 +3691,13 @@ export default {
 }
 
 .menu .open .navH {
-  height: 0.6rem;
-  background-color: #44495a;
-  line-height: 0.6rem;
-  text-align: center;
+  height: 0.4rem;
+  line-height: 0.4rem;
+  text-align: left;
   font-size: 0.18rem;
-  color: #fff;
   position: relative;
   box-sizing: border-box;
+  padding-left: 20px;
 }
 
 .menu .open .navH span {
@@ -3705,6 +3720,7 @@ export default {
   padding-left: 0.05rem;
   padding-right: 0.07rem;
   margin-top: 0.1rem;
+  padding-bottom: 70px;
 }
 
 .menu .open .navBox ul li {
@@ -3775,4 +3791,12 @@ export default {
   box-shadow: 3px 3px 3px #aa8c51;
 }
 
+.navClass {
+  font-size: 14px;
+  writing-mode: vertical-rl;
+  width: 38px;
+  margin: 0 auto;
+  letter-spacing: 0.5em;
+  font-weight: 500;
+}
 </style>

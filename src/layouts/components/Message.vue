@@ -36,22 +36,23 @@
               borderBottom: $store.state.setting.mode === 'light' ? '1px solid #eee' : '1px solid gray',
             }"
           >
-            <div class="g-row-flex">
+            <div class="g-w100 g-h100" style="padding: 8px 16px;" @click="sureWarn(item)">
               <div class="g-row-flex">
-                <p class="msg-level" :style="{ background: item.typeColor }">
-                  {{ item.levelName }}
-                </p>
-                <p class="msg-type" :style="{ color: $store.state.setting.mode === 'dark' ? '#fff' : '#000' }">
-                  {{ item.typeName }}
+                <div class="g-row-flex">
+                  <p class="msg-level" :style="{ background: item.typeColor }">
+                    {{ item.levelName }}
+                  </p>
+                  <p class="msg-type" :style="{ color: $store.state.setting.mode === 'dark' ? '#fff' : '#000' }">
+                    {{ item.typeName }}
+                  </p>
+                </div>
+                <p class="msg-time">
+                  {{ item.alarmTime }}
                 </p>
               </div>
-              <p class="msg-time">
-                {{ item.alarmTime }}
-              </p>
+              <!-- eslint-disable vue/no-v-html -->
+              <p class="msg-content" v-html="item.alarmContent" />
             </div>
-            <!-- eslint-disable vue/no-v-html -->
-            <p class="msg-content" v-html="item.alarmContent" />
-
             <template #action>
               <t-button size="small" variant="outline" @click="sureWarn(item)">
                 {{ item.delType === "1" ? "确认" : "处理" }}
@@ -428,7 +429,9 @@ export default Vue.extend({
     .t-list-item {
       overflow: hidden;
       width: 100%;
-      padding: 8px 16px;
+      // TODO: Maybe change back
+      // padding: 8px 16px;
+      padding: 0;
       border-radius: @border-radius;
       font-size: 14px;
       color: var(--td-text-color-primary);

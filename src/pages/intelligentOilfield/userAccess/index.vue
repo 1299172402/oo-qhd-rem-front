@@ -193,7 +193,7 @@
         </el-table-column>
         <el-table-column label="应用分类" :show-overflow-tooltip="true">
           <template slot-scope="scope">
-            {{ dict.type.sys_app_applyCenter?.find((dict) => dict.value == scope.row.appCategory)?.label }}
+            {{ dict.type.sys_app_applyCenter?.find((dict) => dict.value == scope.row.apply)?.label }}
           </template>
         </el-table-column>
         <el-table-column label="绑定租户" prop="tenants" />

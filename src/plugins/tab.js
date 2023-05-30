@@ -31,7 +31,7 @@ export default {
   // 关闭指定tab页签
   closePage(obj) {
     if (!obj) {
-      return store.dispatch("tagsView/delView", router.currentRoute).then(({ lastPath }) => router.push(lastPath || "/"));
+      return store.dispatch("tagsView/delView", router.currentRoute).then(({ lastPath }) => router.push(lastPath || store.getters["permission/defaultTo"])); // 此处修改仅针对门户，子应用无需同步
     }
     return store.dispatch("tagsView/delView", obj);
   },

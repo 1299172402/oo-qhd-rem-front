@@ -74,7 +74,7 @@
               <iframe
                 v-if="items.uploadingMode === '1'"
                 :id="'iframe_' + items.indexUrl"
-                :src="items.indexUrl"
+                :src="addToken(items.indexUrl)"
                 frameborder="0"
                 class="currentIframe"
               />
@@ -101,6 +101,7 @@ import textComQHD from "@/pages/intelligentOilfield/homePage/components/indexCen
 import barChartComQHD from "@/pages/intelligentOilfield/homePage/components/indexCenter/barChartComQHD.vue";
 import lineChartComQHD from "@/pages/intelligentOilfield/homePage/components/indexCenter/lineChartComQHD.vue";
 import pieChartComQHD from "@/pages/intelligentOilfield/homePage/components/indexCenter/pieChartComQHD.vue";
+import { addTokenToUrl } from "@/utils/jumpSupApp.js";
 
 export default {
   components: {
@@ -212,6 +213,9 @@ export default {
     this.getAllData();
   },
   methods: {
+    addToken(url) {
+      return addTokenToUrl(url);
+    },
     getComponent(e) {
       switch (e) {
         case "/textCom/textComDetail":

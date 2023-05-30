@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { validURL } from "@/utils/validate.js";
+import { looselyValidURL } from "@/utils/validate.js";
 import { autoAppSecret } from "@/api/intelligentOilfield/system/app.js";
 
 export default {
@@ -123,7 +123,7 @@ export default {
      * 校验根路径格式是否正确
      */
     validateBaseUrl(rule, value, callback) {
-      if (!validURL(value)) {
+      if (!looselyValidURL(value)) {
         callback(new Error("请输入正确的应用API根路径"));
       }
       callback();
