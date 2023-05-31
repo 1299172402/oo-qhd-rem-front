@@ -156,7 +156,7 @@
                 <div v-if="activeName=='waterDrive'" style="height:calc(100% - 202px);overflow-y: scroll;overflow-x: hidden;">
                     <div style="display: flex;align-items: center;margin-bottom:20px;">
                         <span>拟合起始时间：</span>
-                        <el-date-picker v-model="dateTime" type="monthrange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" @change="sqtzChart"></el-date-picker>
+                        <el-date-picker v-model="dateTime" type="monthrange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" @change="sqtzChart"></el-date-picker>
                         <el-radio-group v-model="radio1" style="margin-left:10px;">
                             <el-radio-button label="图表"></el-radio-button>
                             <el-radio-button label="数据"></el-radio-button>
@@ -224,7 +224,7 @@
                                 <el-row>
                                     <div style="display: flex;align-items: center;">
                                         <span>拟合起始时间：</span>
-                                        <el-date-picker v-model="dateTime1" type="monthrange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" @change="djqxChart"></el-date-picker>
+                                        <el-date-picker v-model="dateTime1" type="monthrange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" @change="djqxChart"></el-date-picker>
                                         <el-radio-group v-model="radio2" style="margin-left:15px;">
                                             <el-radio-button label="图表"></el-radio-button>
                                             <el-radio-button label="数据"></el-radio-button>
@@ -323,7 +323,7 @@
                                 <el-row style="margin-bottom:20px;">
                                     <div style="display: flex;align-items: center;">
                                         <span>拟合起始时间：</span>
-                                        <el-date-picker v-model="dateTime2" type="monthrange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" @change="tstbChart"></el-date-picker>
+                                        <el-date-picker v-model="dateTime2" type="monthrange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" @change="tstbChart"></el-date-picker>
                                         <el-radio-group v-model="radio4" style="margin-left:15px;">
                                             <el-radio-button label="图表"></el-radio-button>
                                             <el-radio-button label="数据"></el-radio-button>

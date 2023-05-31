@@ -9,9 +9,7 @@
 
 <script>
     import * as echarts from "echarts";
-    import {
-        mapState
-    } from "vuex";
+    import { mapState } from "vuex";
     import resize from "./mixins/resize";
     import FileSaver from "file-saver";
     export default {
@@ -195,6 +193,13 @@
                             } else if (event == "dblclick") {
                                 clearTimeout(this.dbFixed);
                                 this.$emit(event, ev);
+                            } else if(event=='legendselectchanged'){
+                                if(ev.name=='红色预警'|| ev.name =='蓝色预警' || ev.name== '黄色预警'){
+                                    this.chart.dispatchAction({
+                                        type: 'legendSelect',
+                                        name: ev.name
+                                    });
+                                }
                             } else {
                                 this.$emit(event, ev);
                             }

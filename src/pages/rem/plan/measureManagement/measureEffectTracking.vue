@@ -152,7 +152,7 @@
                     <div class="svg" v-else-if="oilTabType == '1'">
                         <div class="search-date">
                             <span>日期：</span>
-                            <el-date-picker v-model="dateDetail" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"  @change="createChange"></el-date-picker>
+                            <el-date-picker v-model="dateDetail" type="datetimerange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"  @change="createChange"></el-date-picker>
                             <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doSearchCharts">搜索</el-button>
                         </div>
                         <el-row v-for="(item, index) in checkList.filter((item) => {return item.isRealTime == 0;})" :key="index">
@@ -222,7 +222,7 @@
                     <div class="svg" v-if="waterTabType == '0'">
                         <div class="search-date">
                             <span>日期：</span>
-                            <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
+                            <el-date-picker v-model="selectData" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
                             <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">搜索</el-button>
                         </div>
                         <div class="echarts-view">
@@ -232,7 +232,7 @@
                     <div class="svg" v-if="waterTabType == '1'">
                         <div class="search-date">
                             <span>日期：</span>
-                            <el-date-picker v-model="selectRealData" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
+                            <el-date-picker v-model="selectRealData" type="datetimerange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
                             <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">搜索</el-button>
                         </div>
                         <div class="echarts-view">
@@ -1144,6 +1144,18 @@
                         },
                         type: 'category',
                         data: [],
+                        axisLabel: {
+                            show: false,
+                            color: '#8FA4CC',
+                        },
+                        axisTick: {
+                            show: false,
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#8FA4CC',
+                            },
+                        },
                     },
                     yAxis: {
                         name: '流量Sm³/d',
@@ -1154,6 +1166,19 @@
                             fontSize: 14,
                         },
                         type: 'value',
+                        axisLabel: {
+                            show: false,
+                            color: '#8FA4CC',
+                        },
+                        axisTick: {
+                            show: false,
+                        },
+                        axisLine: {
+                            show:true,
+                            lineStyle: {
+                                color: '#8FA4CC',
+                            },
+                        },
                     },
                     series: [{
                             name: '油',
@@ -2392,7 +2417,7 @@
                                     show: false,
                                 },
                                 axisLine: {
-                                    // show: false,
+                                    show: true,
                                     lineStyle: {
                                         color: '#8FA4CC',
                                     },

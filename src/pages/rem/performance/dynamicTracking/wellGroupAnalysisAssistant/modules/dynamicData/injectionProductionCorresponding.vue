@@ -3,7 +3,7 @@
     <div class="z-main">
         <div class="z-search" style="display:flex;align-items: center;">
             <span>日期：</span>
-            <el-date-picker v-model="selectDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
+            <el-date-picker v-model="selectDate" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
             <el-radio-group v-model="wellValue" @input="changeWell" style="margin-left:20px;">
               <el-radio-button v-for="well in wellList" :key="well.wellId" :label="well.wellId" >{{well.wellNo}}</el-radio-button>
             </el-radio-group>

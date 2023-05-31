@@ -151,10 +151,29 @@
                     </div>
                     <div style="flex:1;min-height:380px;">
                         <pagePanel headerTitle="水井动态分析详情列表" style="margin-top:0;height:100%;">
-                            <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList">
+                            <el-table 
+                            class="doubleHeader"
+                            :row-style="{ height: '0px' }"
+                            :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                            :data="tableData"
+                            header-cell-class-name="table_header"
+                            :cell-style="{ padding: '6px', 'text-align': 'center' }"
+                            :default-sort="{ prop: 'date', order: 'descending' }"
+                            height="100%"
+                            @sort-change="changeTableSort" ref="tableList">
                                 <el-table-column prop="wellId" label="井号" align="center" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                 <el-table-column prop="productionProblems" label="生产问题" align="center">
-                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" :label="item.name" :render-header="renderHeader" align="center" sortable="custom">
+                                    <el-table-column label-class-name="twoRowHeader" v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" :label="item.name" align="center" sortable="custom">
+                                        <template #header>
+                                            <div v-if="item.unit">
+                                                <span>{{item.name}}</span>
+                                                <br />
+                                                <span>{{item.unit}}</span>
+                                            </div>
+                                            <div v-else>
+                                                <span>{{item.name}}</span>
+                                            </div>
+                                        </template>
                                         <template slot-scope="{row}">
                                             <span v-if="!row[item.code+'Message']">{{row[item.code]}}</span>
                                             <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
@@ -162,7 +181,7 @@
                                             </el-tooltip>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column v-for="(item, index) in productionProblemsTab" :key="index" :prop="item.code" :label="item.name" align="center">
+                                    <el-table-column v-for="(item, index) in productionProblemsTab" :key="index" :prop="item.code" :label="item.name"  align="center">
                                         <template slot-scope="{row}">
                                             <span v-if="row[item.code+'Message']==''">{{row[item.code]}}</span>
                                             <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
@@ -441,10 +460,29 @@
                     </div>
                     <div style="height:360px;">
                         <info-window info-width="100%"  info-height="100%"  header-title="水井动态分析详情列表" :is-show-max-btn="false">
-                            <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList">
+                            <el-table
+                            class="doubleHeader"
+                            :row-style="{ height: '0px' }"
+                            :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                            :data="tableData"
+                            header-cell-class-name="table_header"
+                            :cell-style="{ padding: '6px', 'text-align': 'center' }"
+                            :default-sort="{ prop: 'date', order: 'descending' }"
+                            height="100%"
+                            @sort-change="changeTableSort" ref="tableList">
                                 <el-table-column prop="wellId" label="井号" align="center" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                 <el-table-column prop="productionProblems" label="生产问题" align="center">
-                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" :label="item.name" :render-header="renderHeader" align="center" sortable="custom">
+                                    <el-table-column label-class-name="twoRowHeader" v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" :label="item.name" align="center" sortable="custom">
+                                        <template #header>
+                                            <div v-if="item.unit">
+                                                <span>{{item.name}}</span>
+                                                <br />
+                                                <span>{{item.unit}}</span>
+                                            </div>
+                                            <div v-else>
+                                                <span>{{item.name}}</span>
+                                            </div>
+                                        </template>
                                         <template slot-scope="{row}">
                                             <span v-if="!row[item.code+'Message']">{{row[item.code]}}</span>
                                             <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
@@ -452,7 +490,7 @@
                                             </el-tooltip>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column v-for="(item, index) in productionProblemsTab" :key="index" :prop="item.code" :label="item.name" align="center">
+                                    <el-table-column v-for="(item, index) in productionProblemsTab" :key="index" :prop="item.code" :label="item.name"  align="center">
                                         <template slot-scope="{row}">
                                             <span v-if="row[item.code+'Message']==''">{{row[item.code]}}</span>
                                             <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
@@ -1180,13 +1218,12 @@
                     }
                     this.trendOfIndicators[j].value = t_count; //登记条数
                     if (t_count > 0) {
-                        let titleName = t_data.name + ' ' + (t_data.unit ? t_data.unit : '');
-                        if (titleName.lastIndexOf('m3') > -1) {
-                            titleName = titleName.replace('m3', 'm³');
-                        }
+                        let titleName = t_data.name;
+                        let unit=t_data.unit.replace('m3', 'm³');
                         this.trendOfIndicatorsTab.push({
                             code: t_data.code,
-                            name: titleName
+                            name: titleName,
+                            unit
                         });
                     }
                 }
@@ -1755,5 +1792,9 @@
 
     ::v-deep .el-table thead.is-group th {
         background: transparent;
+    }
+    ::v-deep .table_header .twoRowHeader{
+        display: flex!important;
+        justify-content: center;
     }
 </style>

@@ -9,8 +9,8 @@
                     header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
                     style="width:100%;padding:0 10px;" height="calc(100% - 10px)" :default-sort="{ prop: 'date', order: 'descending' }"
                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0'}">
-                    <el-table-column type="index" label="序号" width="80"></el-table-column>
-                    <el-table-column prop="borepipeNo" label="井号" width="160"></el-table-column>
+                    <el-table-column type="index" label="序号" width="80" fixed></el-table-column>
+                    <el-table-column prop="borepipeNo" label="井号" width="160" fixed></el-table-column>
                     <el-table-column prop="date" label="日期" width="100">
                         <template slot-scope="scope">
                           <span>{{scope.row.date | dateTimeFormat}}</span>
@@ -37,8 +37,8 @@
                     header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
                     style="width:100%;padding:0 10px;" height="calc(100% - 10px)" :default-sort="{ prop: 'date', order: 'descending' }"
                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0'}">
-                    <el-table-column type="index" label="序号" width="80"></el-table-column>
-                    <el-table-column prop="borepipeNo" label="井号" width="160"></el-table-column>
+                    <el-table-column type="index" label="序号" width="80" fixed></el-table-column>
+                    <el-table-column prop="borepipeNo" label="井号" width="160" fixed></el-table-column>
                     <el-table-column prop="date" label="日期" width="100">
                         <template slot-scope="scope">
                             <span>{{scope.row.date | dateTimeFormat}}</span>

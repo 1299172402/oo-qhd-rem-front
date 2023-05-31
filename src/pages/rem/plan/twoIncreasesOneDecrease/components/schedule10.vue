@@ -36,7 +36,7 @@
                     <el-table-column prop="qkzbbsx" label="不受效" align="center"></el-table-column>
                     <el-table-column prop="qkzbwzsj" label="无注水井" align="center"></el-table-column>
                 </el-table-column>
-                <el-table-column prop="note" label="备注" align="center" width="240"></el-table-column>
+                <el-table-column prop="note" label="备注" align="center" min-width="300"></el-table-column>
             </el-table>
         </info-window>
 </template>

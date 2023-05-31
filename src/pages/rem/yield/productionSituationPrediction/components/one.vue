@@ -3,7 +3,8 @@
     <div class="z-main" style="height:100%;">
         <div style="display: flex;align-items: center;margin-bottom:15px;">
             <span>日期：</span>
-            <el-date-picker v-model="searchForm.date" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" :picker-options="pickerOptions" style="margin-right:15px;"></el-date-picker>
+            <!-- :picker-options="pickerOptions"  -->
+            <el-date-picker v-model="searchForm.date" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" style="margin-right:15px;"></el-date-picker>
             <span>产量单位选择：</span>
             <el-select v-model="searchForm.unitType" placeholder="请选择" style="width:100px;margin-right:15px;">
                 <el-option v-for="item in unitTypeList" :key="item.value" :label="item.label" :value="item.value"></el-option>

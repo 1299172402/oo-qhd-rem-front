@@ -3,7 +3,7 @@
     <div class="z-main">
         <div class="z-search">
             <span>日期：</span>
-            <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
+            <el-date-picker v-model="selectData" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
         </div> 
         <div class="z-echarts">
             <info-window infoWidth="100%" :infoHeight="height+'px'" headerTitle="井组开发曲线图" isShowMaxBtn style="margin-top:0;">

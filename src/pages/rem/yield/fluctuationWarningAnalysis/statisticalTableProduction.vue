@@ -59,7 +59,7 @@
                       height="100%" 
                       :default-sort="{ prop: 'date', order: 'descending' }" 
                       :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-                      <el-table-column prop="wellNo" label="井号" width="150"/>
+                      <el-table-column prop="wellNo" label="井号" width="150" fixed/>
                       <el-table-column :label="searchForm.prodDate">
                         <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³/d)`" width="110" />      
                         <el-table-column prop="oilProdDaily" :label="`日产油\n(m³/d)`" width="110" />

@@ -1,21 +1,21 @@
 <!-- 生产数据 -->
 <template>
-    <div class="z-container">
+    <div class="z-main">
         <div class="z-search">
             <span>日期：</span>
-            <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" style="margin-right:15px;"></el-date-picker>
+            <el-date-picker v-model="selectData" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" style="margin-right:15px;"></el-date-picker>
             <el-select v-model="selectPosition" placeholder="请选择" filterable clearable style="width: 220px;margin-right:15px;">
                 <el-option v-for="item in position" :key="item.fieldLayerId" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
             <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
         </div>
-        <div class="z-echarts" :class="[isDevelop?'z-echarts-active':'']">
+        <div class="z-echarts" :style="{height:height+'px'}">
             <Echarts ref="echartDown" :chart-data="option" style="height:100%;"></Echarts>
         </div>
         <div class="develop">
             <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
         </div>
-        <info-window infoWidth="100%" infoHeight="190px" headerTitle="单井动态分析" v-show="isDevelop">
+        <info-window infoWidth="100%" infoHeight="500px" headerTitle="单井动态分析" v-show="isDevelop">
             <el-table
                 id="tableData" 
                 :data="tableData" :border="false" :row-style="{ height: '0px' }"
@@ -52,6 +52,7 @@
         },
         data() {
             return {
+                height:'',
                 selectData: [],
                 position:[],
                 selectPosition:'',
@@ -347,6 +348,7 @@
             };
         },
         mounted() {
+            this.height=document.getElementsByClassName('z-main')[0].offsetHeight-40-60-10;
             let year = new Date().getFullYear();
             this.selectData = [new Date(year + '-01-01').format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
             this.fieldLayersApi();
@@ -509,6 +511,12 @@
                 this.$nextTick(()=>{
                     this.$refs.echartDown.chart.resize();
                 })
+                if(this.isDevelop){
+                    this.$nextTick(()=>{
+                        let parentDom=document.getElementsByClassName('z-main')[0];
+                        parentDom.scrollBy({top:10000,behavior: 'smooth'});
+                    })
+                }
             },
             //下载echarts
             doDownLoad() {
@@ -528,21 +536,21 @@
 </script>
 
 <style lang="scss" scoped>
-    .z-container{
+    .z-main{
+        width: 100%;
         height:calc(100% - 101px);
+        overflow-y: scroll;
+        overflow-x: hidden;
         .z-search{
             height:60px;
             display: flex;
             align-items: center;
-            margin-bottom:15px;
         }
         .z-echarts{
             width:100%;
-            height:calc(100% - 60px - 40px);
+            height:500px;
         }
-        .z-echarts-active{
-            height:calc(100% - 60px - 40px - 190px);
-        }
+        
         #tableData{
             ::v-deep .el-table__header-wrapper .cell{
                 height: auto;

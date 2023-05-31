@@ -70,8 +70,9 @@
                         height="calc(100% - 44px)" :row-style="{ height: '0px' }"
                         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                         header-cell-class-name="table_header" :cell-style="{ padding: '2px', 'text-align': 'center' }"
-                        style="width: 100%;overflow-x: hidden;">
-                        <el-table-column prop="wellNo" label="井号" width="140"></el-table-column>
+                        style="width: 100%;overflow-x: hidden;"
+                        :default-sort = "{prop: 'wellNo', order: 'descending'}">
+                        <el-table-column prop="wellNo" label="井号" width="140" sortable></el-table-column>
                         <el-table-column prop="measureName" label="作业类型" width="80"></el-table-column>
                         <el-table-column prop="measureName3" label="措施作业天数(计划/实际)" width="110">
                             <template slot-scope="scope">

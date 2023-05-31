@@ -12,8 +12,8 @@
                     header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
                     style="width:100%;padding:0 10px;" height="calc(100% - 10px)" :default-sort="{ prop: 'date', order: 'descending' }"
                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0'}">
-                    <el-table-column type="index" label="序号"></el-table-column>
-                    <el-table-column prop="wellBore" label="井筒" width="140"></el-table-column>
+                    <el-table-column type="index" label="序号" fixed></el-table-column>
+                    <el-table-column prop="wellBore" label="井号" width="140" fixed></el-table-column>
                     <el-table-column prop="beginDate" label="解释开始时间" width="120">
                         <template slot-scope="scope">
                             <span>{{scope.row.beginDate | dateTimeFormat}}</span>

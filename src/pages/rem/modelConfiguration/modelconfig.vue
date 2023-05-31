@@ -12,8 +12,6 @@
                 <el-input style="width:200px;margin-right:15px;" v-model="searchForm.configId"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="queryTableDate">搜索</el-button>
                 <el-button class="commonBtn" icon="el-icon-refresh" style="margin-right:auto;" @click="resetting">重置</el-button>
-                
-                
             </div>
         </header-search>
         
@@ -74,25 +72,22 @@
             </div>
         </el-dialog>
         
-        <el-dialog title="选定模型重算" :visible.sync="moduleDialog" @closed="moduleDialogCancel">
+        <el-dialog title="选定模型重算" :visible.sync="moduleDialog" @closed="moduleDialogCancel"  width="600px">
             <div style="padding-bottom:20px;" v-if="dayOrMontKey==3">
                 <el-radio v-model="radio" label="2">月度</el-radio>
                 <el-radio v-model="radio" label="1">日度</el-radio>
             </div>
-            <el-form inline :model="moduleFrom" :rules="rulesModule" ref="moduleFrom">
+            <el-form :model="moduleFrom" :rules="rulesModule" ref="moduleFrom" label-width="120px">
                 <el-form-item label="模型名称">
                     <el-input type="text" v-model="searchForm.modelName" disabled></el-input>
                 </el-form-item>
                 <el-form-item label="模型代码">
                     <el-input type="text" v-model="moduleFrom.modelId" disabled></el-input>
                 </el-form-item>
-                <el-col :span="16">
-                    <el-form-item label="油田区块标识" prop="ogfId" style="width:100%;">
-                        <!-- <el-input type="text" v-model="moduleFrom.ogfId" disabled></el-input> -->
-                        <el-input type="text" v-model="ogfIdValue" disabled></el-input>
-                    </el-form-item>
-                </el-col>
-                <!-- 日度 -->
+                <el-form-item label="油田区块标识" prop="ogfId" style="width:100%;">
+                    <!-- <el-input type="text" v-model="moduleFrom.ogfId" disabled></el-input> -->
+                    <el-input type="text" v-model="ogfIdValue" disabled></el-input>
+                </el-form-item>
                 <el-form-item label="开始日期" prop="beginDate" v-if="radio==1">
                     <el-date-picker v-model="moduleFrom.beginDate" type="date" value-format="yyyy-MM-dd" placeholder="选择日期"></el-date-picker>
                 </el-form-item>
@@ -107,14 +102,10 @@
                     <el-date-picker v-model="moduleFrom.endMonth " type="month" value-format="yyyy-MM" placeholder="选择月"></el-date-picker>
                 </el-form-item>
             </el-form>
-            <el-row>
-                <el-col :span="2" :offset="17">
-                    <el-button @click="moduleDialogCancel" type="danger">取消</el-button>
-                </el-col>
-                <el-col :span="2" :offset="2">
-                    <el-button @click="moduleDialogSure" type="primary">确定</el-button>
-                </el-col>
-            </el-row>
+            <div slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="moduleDialogSure">确定</el-button>
+                <el-button class="cancelBtn" @click="moduleDialogCancel">取消</el-button>
+            </div>
         </el-dialog>
     
     </div>

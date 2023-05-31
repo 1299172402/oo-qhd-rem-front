@@ -6,14 +6,14 @@
                 <el-table-column prop="operationarea" label="作业公司" align="center" width="120" fixed></el-table-column>
                 <el-table-column prop="oilField" label="油田" align="center" width="120" fixed></el-table-column>
                 
-                <el-table-column prop="czwt" label="存在问题" align="center" width="340"></el-table-column>
+                <el-table-column prop="czwt" label="存在问题" align="center" width="400"></el-table-column>
                 <el-table-column prop="ghcsl" :label="`规划采收率\n(%)`" align="center" width="120"></el-table-column>
                 <el-table-column prop="sslj" label="实施路径" align="center" width="340"></el-table-column>
                 <el-table-column prop="ztmb" :label="`总体目标（油水井数比、阶段注采比、压力\n保持水平、含水上升率、自然递减率等）`" align="center" width="340"></el-table-column>
                 <el-table-column prop="slfd" :label="`提高采收率幅度\n（%）`" align="center" width="140"></el-table-column>
                 <el-table-column prop="kccl" :label="`增加石油可采储量\n(10⁴t)`" align="center" width="140"></el-table-column>
                 <el-table-column prop="zdcs" label="重大措施" align="center" width="340"></el-table-column>
-                <el-table-column prop="csjk" label="配套措施简况" align="center" width="340"></el-table-column>
+                <el-table-column prop="csjk" label="配套措施简况" align="center" min-width="340"></el-table-column>
             </el-table>
         </info-window>
 </template>
@@ -54,5 +54,13 @@
                 content: "-";
             }
         }
+    }
+    
+    ::v-deep .el-table .el-table__body .cell{
+        height: 80px !important;
+        line-height: 20px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 </style>

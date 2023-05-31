@@ -45,7 +45,7 @@
                     <el-table-column prop="dldq" label="(KW)" align="center" width="120"></el-table-column>
                 </el-table-column>
             </el-table-column>
-            <el-table-column prop="qksm" :label="`海管等其他设施情况说明\n（可合并单元格）`" align="center" width="340"></el-table-column>
+            <el-table-column prop="qksm" :label="`海管等其他设施情况说明\n（可合并单元格）`" align="center" width="800"></el-table-column>
             <el-table-column prop="note" label="主要结论" align="center" width="200"></el-table-column>
         </el-table>
     </info-window>
@@ -290,7 +290,6 @@
     #tableData {
         ::v-deep .el-table__header-wrapper .cell {
             height: auto;
-            // line-height: 18px;
             white-space: pre;
         }
 
@@ -299,5 +298,13 @@
                 content: "-";
             }
         }
+    }
+    
+    ::v-deep .el-table .el-table__body .cell{
+        height: 80px !important;
+        line-height: 20px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 </style>

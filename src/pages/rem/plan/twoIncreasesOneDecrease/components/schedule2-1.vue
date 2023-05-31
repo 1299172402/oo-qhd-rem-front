@@ -23,7 +23,7 @@
                 <el-table-column prop="planssubtotal" label="小计" width="100"></el-table-column>
             </el-table-column>
             <el-table-column prop="plannedusage" label="规划/计划动用方式" width="200"></el-table-column>
-            <el-table-column prop="remainingunused" label="剩余未动用主要原因" width="240"></el-table-column>
+            <el-table-column prop="remainingunused" label="剩余未动用主要原因" min-width="240"></el-table-column>
             
         </el-table>
     </info-window>

@@ -21,7 +21,7 @@
                 <el-table-column prop="kftz" :label="'预计开发投资\n(亿元)'" align="center" width="140"></el-table-column>
                 <el-table-column prop="ssnf" label="规划实施年份" align="center" width="140"></el-table-column>
             </el-table-column>
-            <el-table-column prop="csjk" label="配套措施简况" align="center" width="440"></el-table-column>
+            <el-table-column prop="csjk" label="配套措施简况" align="center" min-width="440"></el-table-column>
         </el-table>
     </info-window>
 </template>
@@ -66,5 +66,12 @@
                 content: "-";
             }
         }
+    }
+    ::v-deep .el-table .el-table__body .cell{
+        height: 80px !important;
+        line-height: 20px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 </style>

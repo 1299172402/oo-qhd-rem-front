@@ -3,18 +3,18 @@
     <div class="z-main" ref="zMain">
         <div class="z-search">
             <span>日期：</span>
-            <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"/>
+            <el-date-picker v-model="selectData" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"/>
             <el-select v-model="allocOrCalculate" placeholder="请选择" @change="selectChange" style="width:150px;margin-left:20px;">
                 <el-option :label="item.name" :value="item.code" v-for="(item,index) in selectAllocOrCalculate" :key="index"></el-option>
             </el-select>
         </div> 
-        <div class="z-echarts" :class="[isDevelop?'z-echarts-active':'']">
+        <div class="z-echarts" :style="{height:height+'px'}">
             <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
         </div>   
         <div class="develop">
             <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
         </div>
-        <info-window infoWidth="100%" infoHeight="190px" headerTitle="单井动态分析" v-show="isDevelop">
+        <info-window infoWidth="100%" infoHeight="500px" headerTitle="单井动态分析" v-show="isDevelop">
             <el-table
                 id="tableData" 
                 :data="tableData" :border="false" :row-style="{ height: '0px' }"
@@ -47,9 +47,9 @@
                 <el-table-column prop="pumpMotorTemp" :label="`马达温度\n (℃)`" width="140"></el-table-column>
                 <el-table-column prop="whTemp" :label="`井口温度\n (℃)`" width="140"></el-table-column>
                 <el-table-column prop="dhFlowingTemp" :label="`流温\n (℃)`"></el-table-column>
-                <el-table-column prop="cumOilProd" :label="`累产油\n (10m³)`" width="140"></el-table-column>
-                <el-table-column prop="cumFluidProd" :label="`累产液\n (10⁴m³)`" width="140"></el-table-column>
-                <el-table-column prop="cumGasProd" :label="`累产气\n (10⁴m³)`" width="140"></el-table-column>
+                <el-table-column prop="cumOilProd" :label="`累产油\n (10m³)`" width="140" :formatter="numberToFour"></el-table-column>
+                <el-table-column prop="cumFluidProd" :label="`累产液\n (10⁴m³)`" width="140" :formatter="numberToFour"></el-table-column>
+                <el-table-column prop="cumGasProd" :label="`累产气\n (10⁴m³)`" width="140" :formatter="numberToFour"></el-table-column>
                 <el-table-column prop="closeReason" label="关停原因" width="180"></el-table-column>
                 <el-table-column prop="closeDate" label="关停时间"></el-table-column>
                 <el-table-column prop="closePlan" label="关停计划" width="180"></el-table-column>
@@ -79,6 +79,7 @@
         },
         data() {
             return {
+                height:'',
                 selectData: [],
                 selectAllocOrCalculate:[
                     {name:'分配',code:'1'},
@@ -608,6 +609,8 @@
             }
         },
         mounted() {
+            this.height=document.getElementsByClassName('z-main')[0].offsetHeight-40-60-10;
+            console.log('this.height',this.height)
             let year = new Date().getFullYear();
             this.selectData = [new Date(year + '-01-01').format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
             this.doSearch();
@@ -783,6 +786,20 @@
                 this.$nextTick(()=>{
                     this.$refs.echartDown.chart.resize();
                 })
+                if(this.isDevelop){
+                    this.$nextTick(()=>{
+                        let parentDom=document.getElementsByClassName('z-main')[0];
+                        parentDom.scrollBy({top:10000,behavior: 'smooth'});
+                    })
+                }
+            },
+            //保留四位小数
+            numberToFour(row, column, cellValue, index) {
+                if (cellValue) {
+                    return Number(cellValue).toFixed(4);
+                } else {
+                    return '-';
+                }
             },
         }
     }
@@ -792,18 +809,15 @@
     .z-main{
         width: 100%;
         height:calc(100% - 101px);
+        overflow-y: scroll;
+        overflow-x: hidden;
         .z-search{
             height:60px;
         }
         
         .z-echarts{
             width:100%;
-            // height:490px;
-            height:calc(100% - 60px - 40px);
-        }
-        
-        .z-echarts-active{
-            height:calc(100% - 60px - 40px - 190px);
+            height:500px;
         }
         
         #tableData{

@@ -11,8 +11,8 @@
         <div class="z-row">
             <info-window infoWidth="100%" infoHeight="100%" headerTitle="吸水剖面测井结果表" isShowMaxBtn>
                 <el-table id="tableData" highlight :data="tableData" style="width: 100%" height="calc(100% - 10px)">
-                    <el-table-column prop="testWellTime" label="测井日期" align="center" width="120"></el-table-column>
-                    <el-table-column prop="layerName" label="解释层位" align="center" min-width="150"></el-table-column>
+                    <el-table-column prop="testWellTime" label="测井日期" align="center" width="120" fixed></el-table-column>
+                    <el-table-column prop="layerName" label="解释层位" align="center" min-width="150" fixed></el-table-column>
                     <el-table-column prop="dailyInj" :label="`吸水量\n(m³)`" align="center" min-width="80"></el-table-column>
                     <el-table-column prop="topDepth" :label="`顶界深度\n(m)`" align="center" min-width="80"></el-table-column>
                     <el-table-column prop="bottomDepth" :label="`底界深度\n(m)`" align="center" min-width="80"></el-table-column>

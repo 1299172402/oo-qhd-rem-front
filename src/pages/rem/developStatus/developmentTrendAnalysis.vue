@@ -13,7 +13,7 @@
                     <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                 </el-select>
                 <span>拟合起始时间：</span>
-                <el-date-picker v-model="selectDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="monthrange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" style="margin-right:20px">
+                <el-date-picker v-model="selectDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="monthrange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" style="margin-right:20px">
                 </el-date-picker>
                 <el-button icon="el-icon-search" type="primary" @click="searchThing">搜索</el-button>
                 <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>

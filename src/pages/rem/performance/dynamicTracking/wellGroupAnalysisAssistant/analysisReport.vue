@@ -99,9 +99,28 @@
                     </div>
                     <div style="flex:1;min-height:380px;">
                         <pagePanel headerTitle="井组动态分析详情列表" style="margin-top:0;height:100%;">
-                            <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList">
+                            <el-table 
+                                class="doubleHeader"
+                                :row-style="{ height: '0px' }"
+                                :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                                :data="tableData"
+                                header-cell-class-name="table_header"
+                                :cell-style="{ padding: '6px', 'text-align': 'center' }"
+                                :default-sort="{ prop: 'date', order: 'descending' }"
+                                height="100%"
+                                @sort-change="changeTableSort" ref="tableList">
                                 <el-table-column prop="wellId" align="center" label="井组" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
-                                <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" :label="item.name" :render-header="renderHeader" align="center" min-width="140" sortable="custom">
+                                <el-table-column label-class-name="twoRowHeader" v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" :label="item.name" align="center" sortable="custom" min-width="170">
+                                    <template #header>
+                                        <div v-if="item.unit">
+                                            <span>{{item.name}}</span>
+                                            <br />
+                                            <span>{{item.unit}}</span>
+                                        </div>
+                                        <div v-else>
+                                            <span>{{item.name}}</span>
+                                        </div>
+                                    </template>
                                     <template slot-scope="{row}">
                                         <span v-if="row[item.code+'Message']==''">{{row[item.code]}}</span>
                                         <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
@@ -138,27 +157,10 @@
                                     <el-table-column prop="theDate" min-width="140px" align="center" label="推荐日期"></el-table-column>
                                     <el-table-column prop="address" align="center" label="操作" min-width="140">
                                         <template slot-scope="scope">
-                                            <!--<el-button @click="handleClick(scope.row)" type="text" size="small">分析</el-button>-->
                                             <el-button type="text" size="small" @click="openAnalysis(scope.row.wellId)">分析</el-button>
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
-                                <!--<el-table-column align="center" label="预测增油量">
-                    <el-table-column prop="province" align="center" label="日增油">
-                      <el-table-column prop="increaseVolume" align="center" label="m³/d" width="140">
-                      </el-table-column>
-                      <el-table-column prop="increaseQuality" align="center" label="t/d" width="140">
-                      </el-table-column>
-                    </el-table-column>
-                    <el-table-column prop="city" align="center" label="累计油">
-                      <el-table-column prop="tenCube" align="center" label="m³" width="140">
-                       &lt;!&ndash; <template slot="increaseVolumeC">10<sup>4</sup>m³</template>&ndash;&gt;
-                      </el-table-column>
-                      <el-table-column prop="tenTon" align="center" label="t" width="140">
-                        &lt;!&ndash;<template slot="increaseQualityC">10<sup>4</sup>t</template>&ndash;&gt;
-                      </el-table-column>
-                    </el-table-column>
-                  </el-table-column>-->
                             </el-table>
                         </pagePanel>
                     </div>
@@ -995,13 +997,12 @@
                     }
                     this.trendOfIndicators[j].value = t_count; //登记条数
                     if (t_count > 0) {
-                        let titleName = t_data.name + ' ' + (t_data.unit ? t_data.unit : '');
-                        if (titleName.lastIndexOf('m3') > -1) {
-                            titleName = titleName.replace('m3', 'm³');
-                        }
+                        let titleName = t_data.name;
+                        let unit=t_data.unit.replace('m3', 'm³');
                         this.trendOfIndicatorsTab.push({
                             code: t_data.code,
-                            name: titleName
+                            name: titleName,
+                            unit
                         }); //添加动态表头
                     }
                 }
@@ -1727,5 +1728,9 @@
 
     ::v-deep .el-table thead.is-group th {
         background: transparent;
+    }
+    ::v-deep .table_header .twoRowHeader{
+        display: flex!important;
+        justify-content: center;
     }
 </style>

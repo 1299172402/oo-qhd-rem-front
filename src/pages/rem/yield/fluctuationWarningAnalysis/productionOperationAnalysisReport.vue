@@ -11,8 +11,8 @@
                     <div class="rowBox">
                         <div class="row" style="margin-right:20px;">
                             <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="" isShowMaxBtn>
-                                <el-table id="tableData0" :data="tableDataPtOne" highlight height="100%">
-                                    <el-table-column prop="platformName" label="平台" align="center" min-width="140"></el-table-column>
+                                <el-table id="tableData0" header-cell-class-name="table_header"  :data="tableDataPtOne" highlight height="100%">
+                                    <el-table-column prop="platformName" label="平台" align="center" min-width="140" fixed></el-table-column>
                                     <el-table-column prop="dayOutput" :label="'当日\n'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="140">
                                         <template slot-scope="{ row }">
                                             <span style="display: flex;align-items: center;justify-content: center;">
@@ -54,8 +54,8 @@
                         </div>
                         <div class="row" style="margin-right:20px;">
                             <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="" isShowMaxBtn>
-                                <el-table id="tableData1" :data="tableDataPtTwo" highlight height="100%">
-                                    <el-table-column prop="platformName" label="平台" align="center" min-width="140"></el-table-column>
+                                <el-table id="tableData1" header-cell-class-name="table_header"  :data="tableDataPtTwo" highlight height="100%">
+                                    <el-table-column prop="platformName" label="平台" align="center" min-width="140" fixed></el-table-column>
                                     <el-table-column prop="dayOutput" :label="'当日\n'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="140">
                                         <template slot-scope="{ row }">
                                             <span style="display: flex;align-items: center;justify-content: center;">
@@ -110,7 +110,7 @@
                                     height="100%" 
                                     :default-sort="{ prop: 'date', order: 'descending' }" 
                                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-                                    <el-table-column prop="wellNo" label="井号" width="120"></el-table-column>
+                                    <el-table-column prop="wellNo" label="井号" width="120" fixed></el-table-column>
                                     <el-table-column prop="prodDate" label="日期" width="120"></el-table-column>
                                     <el-table-column prop="prodDuration" :label="`生产时间\n(h)`" width=""></el-table-column>
                                     <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`" width=""></el-table-column>

@@ -12,7 +12,7 @@
                     <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                 </el-select>
                 <span>预警分析日期设置：</span>
-                <el-date-picker v-model="selectDate" :clearable="false" unlink-panels type="daterange" range-separator="至" start-placeholder="开始月份" end-placeholder="结束月份" value-format="yyyy-MM-dd" style="margin-right:15px;">
+                <el-date-picker v-model="selectDate" :clearable="false" unlink-panels type="daterange" range-separator="-" start-placeholder="开始月份" end-placeholder="结束月份" value-format="yyyy-MM-dd" style="margin-right:15px;">
                 </el-date-picker>
                 <span>产量单位选择：</span>
                 <el-select v-model="selectUnitOfProduction" placeholder="请选择" style="width:100px;margin-right:15px;">
@@ -31,7 +31,7 @@
                     <div class="rowBox" style="margin-bottom:20px;">
                         <div class="row" style="margin-right:20px;">
                             <info-window infoWidth="100%" infoHeight="456px" :headerTitle="oilFieldName + '产量跟踪预警分析'" isShowMaxBtn style="margin-top:0;">
-                                <div style="position: absolute;bottom: 8%;left:450px;">
+                                <!-- <div style="position: absolute;bottom: 8%;left:450px;">
                                     <div style="display:inline-block;margin: 10px">
                                         <div style="border-radius: 50%;height: 8px;width: 7.4px;background-color: #FF5844;display:inline-block;margin-right:4px;"></div>
                                         <span style="font-size: 14px;color: #8FA4CC">红色预警</span>
@@ -44,8 +44,8 @@
                                         <div style="border-radius: 50%;height: 8px;width: 7.4px;background-color: #F5BE43;display:inline-block;margin-right:4px;"></div>
                                         <span style="font-size: 14px;color: #8FA4CC">黄色预警</span>
                                     </div>
-                                </div>
-                                <Echart :chart-data="echartOption" height="400px" :events="['click']" @click="clickCall"></Echart>
+                                </div> -->
+                                <Echart :chart-data="echartOption" height="400px" :events="['click','legendselectchanged']" @click="clickCall"></Echart>
                             </info-window>
                         </div>
                     </div>
@@ -56,8 +56,8 @@
                         </div>
                         <div class="pageHeader" style="width:100%;display: flex;align-items: center;" v-if="isShowTable">
                             <span class="title">{{currentDate}}产量异常智能归因分析</span>
-                            <el-button type="primary" size="medium" style="margin-left:auto;height:30px;" @click="switchUpPage">产量运行分析报告下载</el-button>
-                            <el-button type="primary" size="medium" style="margin-left:10px!important;height:30px;" @click="switchDownPage">产量异常归因分析报告下载</el-button>
+                            <el-button type="primary" size="medium" style="margin-left:auto;height:30px;" @click="switchUpPage">产量运行分析报告</el-button>
+                            <el-button type="primary" size="medium" style="margin-left:10px!important;height:30px;" @click="switchDownPage">产量异常归因分析报告</el-button>
                         </div>
                     </div>
                     <div class="rowBox" style="margin-bottom:20px;" v-if="!isShowTable">
@@ -153,7 +153,7 @@
                                         <el-input v-model="setParaValue" style="width:80px;margin-right:10px;" type="text" size="medium" oninput="value=value.replace(/[^0-9.]/g,'')"></el-input>
                                         <el-input v-model="unitValue" style="width:50px;margin-right:10px;" size="medium" :readonly="true"></el-input>
                                         <el-button type="primary" style="height:36px;" @click="searchWellOutputWave">查询</el-button>
-                                        <el-button type="primary" style="height:36px;margin-left:10px!important;" @click="jumpMore">更多</el-button>
+                                        <el-button type="primary" style="height:36px;margin-left:auto!important;" @click="jumpMore">更多</el-button>
                                     </div>
                                     <div class="echartBox">
                                         <Echart :chart-data="barChart" height="300px"></Echart>
@@ -357,7 +357,7 @@
                     },
                     backgroundColor: "transparent",
                     color: ["#2ACAFF", "#72818B", "#9A72FF", "#00BC9C"],
-                    legend: [{
+                    legend:{
                         textStyle: {
                             color: "#8FA4CC",
                             fontSize: 14,
@@ -368,7 +368,7 @@
                         itemGap: 14,
                         x:'center',
                         bottom:30,
-                    }, ],
+                    },
                     xAxis: {
                         // name: "时间/天",
                         // nameTextStyle: {
@@ -801,6 +801,7 @@
                     }
                 }
             },
+           
             //初始化页面数据
             async initData() {
                 await fetchOilFields().then((res) => {
@@ -970,14 +971,63 @@
                         let lineChartArray = data.linearDataSets || [];
                         //遍历数组数据
                         for (let i = 0; i < lineChartArray.length; i++) {
-                            legendData.push(lineChartArray[i].label);
+                            legendData.push({
+                                name:lineChartArray[i].label,
+                                icon: "rect",
+                                itemWidth: 12,
+                                itemHeight: 6,
+                                itemGap: 14,
+                                textStyle: {
+                                    color: "#8FA4CC",
+                                    fontSize: 14,
+                                },
+                            });
                             series.push(_this.getEchartsLineSeries(lineChartArray[i], xSet));
                         }
+                        
+                        legendData.push({
+                            name:'红色预警',
+                            icon: "circle",
+                            itemGap: 14,
+                            itemStyle:{
+                                color:'#FF5844'
+                            },
+                            textStyle: {
+                                color: "#8FA4CC",
+                                fontSize: 14,
+                            },
+                        });
+                        legendData.push({
+                            name:'蓝色预警',
+                            icon: "circle",
+                            itemGap: 14,
+                            itemStyle:{
+                                color:'#1379F7'
+                            },
+                            textStyle: {
+                                color: "#8FA4CC",
+                                fontSize: 14,
+                            },
+                        });
+                        legendData.push({
+                            name:'黄色预警',
+                            icon: "circle",
+                            itemGap: 14,
+                            itemStyle:{
+                                color:'#F5BE43'
+                            },
+                            textStyle: {
+                                color: "#8FA4CC",
+                                fontSize: 14,
+                            },
+                        });
+                        series.push({name:'蓝色预警',data:[],type: "line"});
+                        series.push({name:'红色预警',data:[],type: "line"});
+                        series.push({name:'黄色预警',data:[],type: "line"});
                     }
-
-                    //向Echarts中添加参数
                     _this.echartOption.legend.data = legendData;
                     _this.echartOption.series = series;
+                    console.log('_this.echartOption',_this.echartOption)
                     if (this.lineMin) {
                         if (this.lineMin > 1000) {
                             this.lineMin = this.lineMin - 50;
@@ -1925,11 +1975,10 @@
                                 flex-direction: column;
                                 height:100%;
                                 .searchBox{
-                                    padding:10px 0;
-                                    padding-right:10px;
+                                    padding:10px;
                                     display: flex;
                                     align-items: center;
-                                    justify-content: flex-end;
+                                    // justify-content: flex-end;
                                 }
                                 .echartBox{
                                     flex:1;

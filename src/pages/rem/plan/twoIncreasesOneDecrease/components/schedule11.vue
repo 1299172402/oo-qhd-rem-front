@@ -37,7 +37,7 @@
                 <el-table-column prop="knwgjcs" :label="`作业区论证\n可内外挂井槽数`" align="center" width="130"></el-table-column>
                 <el-table-column prop="string-affectyield" :label="`需要工程校核、\n测算等需要\n第三方协助论证`" align="center" width="120"></el-table-column>
             </el-table-column>
-            <el-table-column prop="note" label="备注" align="center" width="240"></el-table-column>
+            <el-table-column prop="note" label="备注" align="center" min-width="700"></el-table-column>
             
         </el-table>
     </info-window>

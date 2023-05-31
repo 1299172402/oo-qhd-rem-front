@@ -476,7 +476,7 @@
                 if (lineChart.label == "含水上升率") {
                     series.type = "scatter";
                     series.symbol = "circle";
-                    series.symbolSize = 8;
+                    series.symbolSize = 4;
                 }
                 let seriesData = [];
                 let lineData = lineChart.numberPoints;
