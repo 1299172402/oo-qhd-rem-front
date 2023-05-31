@@ -113,8 +113,8 @@ export default {
     .textBox{
         background: radial-gradient(ellipse at center, #0d0171d6, #009eccf2);
         height: 11%;
-        position: absolute;
-        top: 90%;
+        position: relative;
+        //top: 90%;
         text-align: center;
         line-height: 1.8vw;
         border-radius: 20px;
