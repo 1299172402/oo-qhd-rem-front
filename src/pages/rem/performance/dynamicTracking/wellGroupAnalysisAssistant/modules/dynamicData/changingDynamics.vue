@@ -38,7 +38,7 @@
       style="margin-top: -30px"
     >
       <el-table-column type="index" label="序号" fixed width="50px" header-align="center"></el-table-column>
-      <el-table-column prop="waterWellName" fixed label="水井" min-width="100" header-align="center"></el-table-column>
+      <el-table-column prop="waterWellName" fixed label="水井" min-width="150" header-align="center"></el-table-column>
       <el-table-column prop="layerName" label="层位"  min-width="200" header-align="center"></el-table-column>
       <el-table-column prop="oilWellName" label="油井" min-width="130" header-align="center"></el-table-column>
       <el-table-column prop="effectivenessSituation" label="受效情况" header-align="center"></el-table-column>
@@ -86,7 +86,7 @@
           </template>
         </el-table-column>
       </el-table-column>
-      <el-table-column align="cnter" prop="remark"  min-width="130" label="备注" header-align="center"></el-table-column>
+      <el-table-column align="cnter" prop="remark" show-overflow-tooltip  min-width="130" label="备注" header-align="center"></el-table-column>
     </el-table>
     </div>
   </el-form>
