@@ -108,6 +108,7 @@ export default {
   },
   methods: {
     selectBtn(item) {
+        this.$refs.modal.show(this.queryParams);
       this.currentTab = item;
     },
     // 搜索按钮

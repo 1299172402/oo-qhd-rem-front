@@ -243,9 +243,11 @@ export default {
             this.queryParams.endTime = data.endTime
             this.queryParams.oilFieldId = data.selectOilField
             this.queryParams.platformId = data.selectPlatform
+            console.log(this.queryParams,'------------')
             this.getinfo()
         },
         getinfo() {
+            console.log(this.queryParams,'xxxxxxxx')
             queryPlatformPob(this.queryParams).then((data) => {
                 this.peoplelist = data.data;
                 this.$nextTick(() => {

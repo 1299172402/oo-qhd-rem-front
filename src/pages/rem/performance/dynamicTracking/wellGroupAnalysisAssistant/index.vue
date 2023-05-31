@@ -243,7 +243,6 @@ export default {
       newWellGroup: [],
       ljpmFileList: [],
       ljpmDialog: false,
-      queryParams: {},
       ljpmWellData: [],
       ljUploadForm: {
         direction: "横向",

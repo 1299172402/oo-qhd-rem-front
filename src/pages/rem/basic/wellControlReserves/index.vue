@@ -35,7 +35,7 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="queryserch()" icon="el-icon-search">搜索</el-button>
-              <el-button type="primary" @click="refresh()" icon="el-icon-refresh">重置</el-button>
+              <el-button class="commonBtn" @click="refresh()" icon="el-icon-refresh">重置</el-button>
             </el-form-item>
           </el-form>
         </div>
