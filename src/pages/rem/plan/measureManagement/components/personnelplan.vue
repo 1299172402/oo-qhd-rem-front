@@ -7,7 +7,7 @@
                 </pagePanel>
             </el-col>
             <el-col :span="12">
-                <pagePanel headerTitle="项目人数分布" style="height: calc(100% - 100px)">
+                <pagePanel headerTitle="项目人数分布" style="height: 250px">
                     <!--                <Echart :chart-data="option" :events="events" height="100%"></Echart>-->
                 </pagePanel>
             </el-col>
