@@ -228,6 +228,14 @@ export default {
         Iframe
     },
     mixins: [queryConditionMixin],
+    created(){
+        //若由REM跳转 聚焦吸水指数
+        if(this.$route.query.link == 'rem'){
+            this.activeName = "second"
+        }else{
+            this.queryTableData(this.form.tableData2)
+        }
+    },
     data() {
         return {
             queryData: {
@@ -475,11 +483,11 @@ export default {
             exportExcel("#indexscvSecond", this.title2);
         }
     },
-    created() {
-        this.queryTableData(this.form.tableData2)
-    },
     mounted() {
-        this.doSearch()
+        if(this.$route.query.link == 'rem'){
+        }else{
+            this.doSearch()
+        }
     },
 }
 </script>
