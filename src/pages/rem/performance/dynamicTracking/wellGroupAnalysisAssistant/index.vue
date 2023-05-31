@@ -87,7 +87,7 @@
     </headerSearch>
     <pagePanelNew style="height: calc(100% - 100px)" class="g-w100">
       
-      <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
+      <div class="pagepanel-btns" v-if="currentModule !='changingDynamics' && currentModule !='stateChange'&&currentModule !='dynamicsInjection' " style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
           <el-button
             type="primary"
             icon="el-icon-upload2"
@@ -143,42 +143,59 @@
       width="50%"
       :before-close="ljpmDialogClose"
     >
-      <el-form ref="form" :model="ljUploadForm" label-width="80px">
-        <el-form-item label="图片上传" style="width: 88px">
-          <el-upload
-            ref="ljpmUpload"
-            class="upload-demo"
-            action=""
-            :on-preview="handlePreview"
-            :before-remove="beforeRemove"
-            :on-change="ljpmChange"
-            :on-exceed="handleExceed"
-            :file-list="ljpmFileList"
-            :http-request="httpRequest"
-            :auto-upload="false"
-          >
-            <el-button slot="trigger" type="primary">选取文件</el-button>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="纵横方向">
-          <el-select v-model="ljUploadForm.direction" class="f2" style="width: 200px" clearable>
-            <el-option v-for="item in directionList" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="井号">
-          <el-transfer
-            filterable
-            :titles="['未选中', '已选中']"
-            :filter-method="filterMethod"
-            filter-placeholder="请输入"
-            :props="props"
-            v-model="ljUploadForm.chooseWell"
-            :data="ljpmWellData"
-          >
-          </el-transfer>
-        </el-form-item>
-      </el-form>
+        <el-row>
+            <el-form ref="form" :model="ljUploadForm" label-width="80px">
+                <el-col :span="12">
+                    <el-form-item label="图片上传" style="width: 88px">
+                        <!--          <el-upload-->
+                        <!--            ref="ljpmUpload"-->
+                        <!--            class="upload-demo"-->
+                        <!--            action=""-->
+                        <!--            :on-preview="handlePreview"-->
+                        <!--            :before-remove="beforeRemove"-->
+                        <!--            :on-change="ljpmChange"-->
+                        <!--            :on-exceed="handleExceed"-->
+                        <!--            :file-list="ljpmFileList"-->
+                        <!--            :http-request="httpRequest"-->
+                        <!--            :auto-upload="false"-->
+                        <!--          >-->
+                        <!--            <el-button slot="trigger" type="primary">选取文件</el-button>-->
+                        <!--          </el-upload>-->
+                        <file-upload
+                            :limit="1"
+                            :is-picture-card="true"
+                            :is-show-tip="false"
+                            biz-path="picture"
+                            bucket-name="zhy"
+                        />
+                    </el-form-item>
+                </el-col>
+               <el-col :span="12">
+                   <el-form-item label="纵横方向">
+                       <el-select v-model="ljUploadForm.direction" class="f2" style="width: 200px" clearable>
+                           <el-option v-for="item in directionList" :key="item.value" :label="item.label" :value="item.value">
+                           </el-option>
+                       </el-select>
+                   </el-form-item>
+               </el-col>
+               <el-col :span="24">
+                   <el-form-item label="井号">
+                       <el-transfer
+                           filterable
+                           :titles="['未选中', '已选中']"
+                           :filter-method="filterMethod"
+                           filter-placeholder="请输入"
+                           :props="props"
+                           v-model="ljUploadForm.chooseWell"
+                           :data="ljpmWellData"
+                       >
+                       </el-transfer>
+                   </el-form-item>
+               </el-col>
+               
+            </el-form>
+        </el-row>
+     
       <span slot="footer" class="dialog-footer">
         <el-button @click="ljpmDialogClose">取 消</el-button>
         <el-button type="primary" @click="ljpmUploadSave">确 定</el-button>
@@ -197,7 +214,11 @@ import {
   getLjpmWells,
 } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { wellGroupList } from "@/api/rem/wellgroupinformaintenance";
+import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
 export default {
+    components: {
+        FileUpload,
+    },
   name: "WellGroupAnalysisAssistant",
   data() {
     return {

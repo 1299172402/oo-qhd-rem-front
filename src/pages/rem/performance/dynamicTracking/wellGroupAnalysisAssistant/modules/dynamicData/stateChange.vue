@@ -1,6 +1,6 @@
 <!--注采井网状况变化-->
 <template>
-  <el-form label-width="90px">
+  <el-form label-width="90px" style="height: calc(100% - 60px)">
     <div style="display: flex">
       <el-form-item label="开始时间" style="height: 60px">
         <el-date-picker
@@ -34,6 +34,7 @@
       :cell-style="{ padding: '3px', 'text-align': 'center' }"
       :data="tableData"
       id="tableData"
+      height="83%"
       style="margin-top: -30px"
     >
       <el-table-column type="index" label="序号" width="50px" header-align="center"></el-table-column>
@@ -62,6 +63,7 @@
       :total="total"
       v-show="total > 0"
       @pagination="changepage"
+      style="position: absolute;bottom:-14px"
       :page.sync="pageNum"
       :limit.sync="pageSize"
     />
@@ -135,6 +137,9 @@ export default {
       this.secondMonth = this.queryData.secondMonth;
       this.firstMonth = this.queryData.firstMonth;
       this.itemKey++;
+        if(this.blockId == '3FC9A818F5BC43B88270DB80BBB3018F'){
+            this.blockId = ''
+        }
       let request = {
         // ogfId: this.oilFieldId,
         blockId: this.blockId,

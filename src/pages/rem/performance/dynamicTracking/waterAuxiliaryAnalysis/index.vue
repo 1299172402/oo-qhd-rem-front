@@ -368,7 +368,7 @@
                     window.open(url,'_blank');
                 }
                 else if (module.name == "injectivityIndex") {
-                    window.open("https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/waterRunningControl", "_blank");
+                    window.open("https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/waterRunningControl?link=rem", "_blank");
                 } else{
                     this.currentModule = module.name;
                 }

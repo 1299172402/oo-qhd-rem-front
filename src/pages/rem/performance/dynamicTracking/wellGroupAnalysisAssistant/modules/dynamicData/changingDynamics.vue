@@ -1,6 +1,6 @@
 <!--井组连通性变化动态-->
 <template>
-  <el-form label-width="90px">
+  <el-form label-width="90px" style="height: calc(100% - 110px)">
     <div style="display: flex">
       <el-form-item label="开始时间" style="height: 60px">
         <el-date-picker
@@ -34,6 +34,7 @@
       :cell-style="{ padding: '3px', 'text-align': 'center' }"
       :data="tableData"
       id="tableData"
+      height="90%"
       style="margin-top: -30px"
     >
       <el-table-column type="index" label="序号" fixed width="50px" header-align="center"></el-table-column>
@@ -150,10 +151,13 @@ export default {
       this.secondMonth = this.queryData.secondMonth;
       this.firstMonth = this.queryData.firstMonth;
       this.itemKey++;
+        if(this.blockId == '3FC9A818F5BC43B88270DB80BBB3018F'){
+            this.blockId = ''
+        }
       let request = {
         oilFieldId: this.oilFieldId,
+        fieldLayerId: this.layerId, 
         blockId: this.blockId,
-        fieldLayerId: this.layerId,
         wellGroupId: this.wellGroupId,
         secondMonth: this.queryData.secondMonth,
         firstMonth: this.queryData.firstMonth,
