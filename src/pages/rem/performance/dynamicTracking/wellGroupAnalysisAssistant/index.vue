@@ -714,7 +714,7 @@ export default {
       let wellGroupThing = this.wellGroup.find((item) => {
         return item.wellGroupId == this.selectWellGroup;
       });
-      this.$refs.componentCustom.wellGroupName = wellGroupThing.name;
+      this.$refs.componentCustom.wellGroupName = wellGroupThing?wellGroupThing.name:'';
       this.$refs.componentCustom.doDownLoad();
     },
     //判断上传文件是否是正确的类型

@@ -33,10 +33,11 @@
       :key="itemKey"
       :cell-style="{ padding: '3px', 'text-align': 'center' }"
       :data="tableData"
+      id="tableData"
       style="margin-top: -30px"
     >
-      <el-table-column type="index" label="序号" width="50px" header-align="center"></el-table-column>
-      <el-table-column prop="waterWellName" label="水井" min-width="100" header-align="center"></el-table-column>
+      <el-table-column type="index" label="序号" fixed width="50px" header-align="center"></el-table-column>
+      <el-table-column prop="waterWellName" fixed label="水井" min-width="100" header-align="center"></el-table-column>
       <el-table-column prop="layerName" label="层位"  min-width="200" header-align="center"></el-table-column>
       <el-table-column prop="oilWellName" label="油井" min-width="130" header-align="center"></el-table-column>
       <el-table-column prop="effectivenessSituation" label="受效情况" header-align="center"></el-table-column>
@@ -45,8 +46,8 @@
           <div>{{ queryData.firstMonth }}注水情况</div>
         </template>
         <el-table-column label="连通系数"  min-width="90" prop="firstMonthInjCoeff" header-align="center"> </el-table-column>
-        <el-table-column label="注水劈分量(m³)"  min-width="160" prop="firstMonthSplittingFluid" header-align="center"> </el-table-column>
-        <el-table-column label="产液劈分量(m³)"  min-width="160" prop="firstMonthSplittingInjectWater" header-align="center">
+        <el-table-column :label="`注水劈分量\n(m³)`"  min-width="160" prop="firstMonthSplittingFluid" header-align="center"> </el-table-column>
+        <el-table-column :label="`产液劈分量\n(m³)`"  min-width="160" prop="firstMonthSplittingInjectWater" header-align="center">
           <template slot-scope="scoped">
             {{ (scoped.row.firstMonthSplittingInjectWater).toFixed(2) }}
           </template>
@@ -57,8 +58,8 @@
           <div>{{ queryData.secondMonth }}注水情况</div>
         </template>
         <el-table-column label="连通系数" prop="secondMonthInjCoeff" header-align="center"> </el-table-column>
-        <el-table-column label="注水劈分量(m³)"  min-width="130" prop="secondMonthSplittingFluid" header-align="center"> </el-table-column>
-        <el-table-column label="产液劈分量(m³)"  min-width="130" prop="secondMonthSplittingInjectWater" header-align="center">
+        <el-table-column :label="`注水劈分量\n(m³)`"  min-width="130" prop="secondMonthSplittingFluid" header-align="center"> </el-table-column>
+        <el-table-column :label="`产液劈分量\n(m³)`"  min-width="130" prop="secondMonthSplittingInjectWater" header-align="center">
            <template slot-scope="scoped">
             {{ (scoped.row.secondMonthSplittingInjectWater).toFixed(2) }}
           </template>
@@ -70,7 +71,7 @@
         </template>
         <el-table-column label="连通系数" align="cnter" prop="adjustRangeInjCoeff" header-align="center">
         </el-table-column>
-        <el-table-column label="注水劈分量(m³)"  min-width="130" align="cnter" prop="adjustRangeSplittingInjectWater" header-align="center">
+        <el-table-column :label="`注水劈分量\n(m³)`"  min-width="130" align="cnter" prop="adjustRangeSplittingInjectWater" header-align="center">
         </el-table-column>
         <el-table-column
           label="产液劈分量(m³)"
@@ -174,10 +175,7 @@ export default {
       }
     },
     doDownLoad() {
-      let fileName = "措施效果";
-      if (this.wellGroupName) {
-        fileName = this.wellGroupName + fileName;
-      }
+      let fileName = "井组连通性变化动态";
       exportExcel("#tableData", fileName);
     },
   },
@@ -187,5 +185,18 @@ export default {
 <style lang="scss" scoped>
 ::v-deep .el-table .cell:empty::before {
   content: "-";
+}
+#tableData {
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        line-height: 23px;
+        white-space: pre;
+    }
+
+    ::v-deep .cell:empty {
+        &::before {
+            content: "-";
+        }
+    }
 }
 </style>

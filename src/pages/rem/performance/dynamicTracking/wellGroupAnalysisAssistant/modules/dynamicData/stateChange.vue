@@ -33,7 +33,7 @@
       :key="itemKey"
       :cell-style="{ padding: '3px', 'text-align': 'center' }"
       :data="tableData"
-      id="#zcjwzkbh"
+      id="tableData"
       style="margin-top: -30px"
     >
       <el-table-column type="index" label="序号" width="50px" header-align="center"></el-table-column>
@@ -50,7 +50,7 @@
         <el-table-column prop="effectDoubleWay" label="双向" header-align="center"> </el-table-column>
         <el-table-column prop="effectManyWay" label="多向" header-align="center"> </el-table-column>
         <el-table-column prop="effectControlledWayCount" label="小计" header-align="center"> </el-table-column>
-        <el-table-column prop="effectControlledWayRate" label="受控率(%)" header-align="center">
+        <el-table-column prop="effectControlledWayRate" :label="`受控率\n(%)`" header-align="center">
           <template slot-scope="scoped">
             {{ scoped.row.effectControlledWayRate * 100 }}
           </template>
@@ -165,12 +165,13 @@ export default {
         this.queryData.firstMonth = (m != 10) & (m != 11) & (m != 12) ? y + "-" + "0" + m : y + "-" + m;
       }
     },
+      
     doDownLoad() {
       let fileName = "注采井网状况变化";
       if (this.wellGroupName) {
         fileName = this.wellGroupName + fileName;
       }
-      exportExcel("#zcjwzkbh", fileName);
+      exportExcel("#tableData", fileName);
     },
   },
 };
@@ -179,5 +180,18 @@ export default {
 <style lang="scss" scoped>
 ::v-deep .el-table .cell:empty::before {
   content: "-";
+}
+#tableData {
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        line-height: 18px;
+        white-space: pre;
+    }
+
+    ::v-deep .cell:empty {
+        &::before {
+            content: "-";
+        }
+    }
 }
 </style>
