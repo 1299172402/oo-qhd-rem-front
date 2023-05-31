@@ -82,7 +82,6 @@ export default {
   }
 }
 .imagesBox {
-  border: 1px solid rgb(256, 256, 256);
   // width: 60%;
   text-align: center;
 }

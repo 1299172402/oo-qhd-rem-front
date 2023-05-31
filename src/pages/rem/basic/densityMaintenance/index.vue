@@ -256,6 +256,7 @@ export default {
                 ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 orgId: "715AD1CD60484BB59E737CD18A9DE44A",
             },
+            year:'',
             isDisabled: [true, true, true, true, true, true, true, true, true, true, true, true],
         };
     },
@@ -267,15 +268,10 @@ export default {
             m = "0" + m;
         }
         this.queryParams.year = String(y);
+        this.year = String(y);
         this.getList();
         this.getInfo();
         // this.choiceDepts(); // 获取组织机构
-    },
-    computed: {
-        ...mapGetters(["mapboxMap"]),
-        maxboxMap1() {
-            return this.mapboxMap;
-        },
     },
     methods: {
         // change时间
@@ -331,7 +327,6 @@ export default {
         redact() {
             var data = new Date();
             var m = data.getMonth() + 1;
-
             for (let i = 0; i < m; i++) {
                 this.$set(this.isDisabled, i, false);
             }
@@ -428,6 +423,7 @@ export default {
             (this.queryParams.ogfId = "3FC9A818F5BC43B88270DB80BBB3018F"),
                 (this.queryParams.orgId = "715AD1CD60484BB59E737CD18A9DE44A");
             this.queryParams.productTypeCode = "002001"
+            this.queryParams.year = this.year
             this.getInfo()
         },
     },
