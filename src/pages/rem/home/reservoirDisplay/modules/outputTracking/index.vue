@@ -75,7 +75,7 @@ export default {
                 },
                 grid: {
                     left: '5%',
-                    right: '5%',
+                    right: '6%',
                     top: 30,
                     bottom: 30,
                     show: false, // 隐藏坐标系网格线

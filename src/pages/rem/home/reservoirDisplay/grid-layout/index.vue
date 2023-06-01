@@ -1,7 +1,7 @@
 <!-- layout栅格布局：20行12列 -->
 <template>
     <div>
-        <div v-show="isOperation" class="g-w100 g-h100 boxOpacity"/>
+        <div v-show="isOperation" class="g-w100 g-h100 boxOpacity" />
         <div v-show="isOperation" class="topHeaderBtn">
             <el-button type="primary" :disabled="isDisableReset" @click="resetItem">
                 重置
@@ -63,16 +63,17 @@
                 </div>
                 <div style="position: relative;z-index: 1;">
                     <div class="operateBtn g-row-flex">
-                        <i v-show="isOperation" class="el-icon-rank vue-draggable-handle" style="margin: 0 0 0 10px"/>
+                        <i v-show="isOperation" class="el-icon-rank vue-draggable-handle" style="margin: 0 0 0 10px" />
                     </div>
                 </div>
-                <component :is="getContent(item)" :current-resize-list="currentResizeList" class="no-drag"/>
+                <component :is="getContent(item.name)" :current-resize-list="currentResizeList" class="no-drag" />
             </grid-item>
         </grid-layout>
     </div>
 </template>
 <script>
 import VueGridLayout from "vue-grid-layout";
+import { queryByPageName, savePage } from "@/api/intelligentOilfield/system/layout";
 import daily from "../infoWindow/daily.vue";
 import oilInfo from "../infoWindow/oilInfo.vue";
 import oilEvent from "../infoWindow/oilEvent.vue"
@@ -90,9 +91,6 @@ import recoverLevel from "../modules/recoverLevel/index.vue"
 import recoveryRate from "../modules/recoveryRate/index.vue"
 import waterUp from "../modules/waterUp/index.vue"
 import overviewIndicators from "../modules/overviewIndicators/index.vue"
-
-
-import {queryByPageName, savePage} from "@/api/intelligentOilfield/system/layout";
 
 export default {
     components: {
@@ -152,7 +150,8 @@ export default {
     created() {
         // 拼接唯一标识id，通过“公司名称_路由name”
         this.pageName = `${this.companyName}_${this.$router.app?.$route?.name}`;
-        queryByPageName(this.pageName).then(res => {
+        const tenantId = this.$store.getters["user/tenantId"];
+        queryByPageName(this.pageName, tenantId).then(res => {
             if (res ? res.data.code === 200 : false) {
                 if (res.data.data === null || res.data.data?.pageInfo === null) { // 首次获取面板赋值
                     this.interfaceDataStore = JSON.parse(JSON.stringify(this.currentLayout)); // 用户存储上次编辑的面板【取消用】
@@ -194,7 +193,8 @@ export default {
             const queryParamsNew = {
                 userId: this.$store.getters["user/userDetail"].user.userId,
                 pageInfo: JSON.stringify(this.currentLayout), // 页面json
-                pageName: this.pageName
+                pageName: this.pageName,
+                tenantId: this.$store.getters["user/tenantId"]
             };
             savePage(queryParamsNew).then(res => {
                 if (res ? res.data.code === 200 : false) {
@@ -214,8 +214,8 @@ export default {
             }, 300);
         },
         computeNum() {
-            this.screenWidth = document.body.clientWidth;
-            this.screenHeight = document.body.clientHeight;
+            this.screenWidth = document.body.clientWidth * window.devicePixelRatio;
+            this.screenHeight = document.body.clientHeight * window.devicePixelRatio;
             this.singleHeight = (this.screenHeight - this.heightFromBottom) / this.rowNum; // 一份元素的高度
         },
         // 重置元素
@@ -239,8 +239,7 @@ export default {
                         this.isOperation = false;
                     }
                 });
-            }).catch(() => {
-            });
+            }).catch(() => { });
         },
         // 取消元素
         cancelItem() {
@@ -254,12 +253,11 @@ export default {
                 this.getWidthHeight();
                 // 关闭编辑窗体
                 this.isOperation = false;
-            }).catch(() => {
-            });
+            }).catch(() => { });
         },
         getContent(i) {
-            if(i.show == true){
-                switch (i.name) {
+            // if(i.show == true){
+                switch (i) {
                 case "秦皇岛32-6油田日度产量跟踪" :
                     return daily;
                 case "剩余油情况":
@@ -300,7 +298,7 @@ export default {
                 default:
                     break;
                 }
-            }
+            // }
         },
         layoutUpdatedEvent(newLayout) {
             this.tempLayOut = newLayout;
@@ -310,7 +308,7 @@ export default {
 
         resizedEvent(i, newH, newW, newHPx, newWPx) {
             //   console.log(`RESIZED i=${i}, H=${newH}, W=${newW}, H(px)=${newHPx}, W(px)=${newWPx}`);
-            this.currentResizeList = {i, newH, newW, newHPx, newWPx};
+            this.currentResizeList = { i, newH, newW, newHPx, newWPx };
             this.currentLayout.find(item => item.i === i).height = newHPx;
             this.currentLayout.find(item => item.i === i).width = newWPx;
         }
@@ -323,14 +321,13 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
-    width: 1920px;
     height: 100%;
 }
 
 .fullWindow >>> .vue-grid-item {
     /* 最大化 */
-    width: 100% !important;
-    height: 100% !important;
+    width: 100vw !important;
+    height: 100vh !important;
     transform: translate3d(0, 0, 0) !important;
     z-index: 999;
     position: relative;
