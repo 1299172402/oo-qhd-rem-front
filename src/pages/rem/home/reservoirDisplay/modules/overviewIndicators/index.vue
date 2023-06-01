@@ -97,21 +97,21 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchart(dataList.waterInjectionWellInjection, '%', 'rgb(0,179,225)', 'rgb(38,43,90)', 'transparent')"></Echart>
+                            :chart-data="getEchart(dataList.waterInjectionWellInjection, '%', 'rgb(0,179,225)', 'rgba(38,43,90,0)', 'transparent')"></Echart>
                         <div class="chartText">分注井分注率</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchart(dataList.layerPassRate, '%', 'rgb(235,125,96)', 'rgb(38,43,90)', 'transparent')"></Echart>
+                            :chart-data="getEchart(dataList.layerPassRate, '%', 'rgb(235,125,96)', 'rgba(38,43,90,0)', 'transparent')"></Echart>
                         <div class="chartText">层段合格率</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchart(dataList.waterCutIncreaseRate, '%', 'rgb(164,227,77)', 'rgb(38,43,90)', 'transparent')"></Echart>
+                            :chart-data="getEchart(dataList.waterCutIncreaseRate, '%', 'rgb(164,227,77)', 'rgba(38,43,90,0)', 'transparent')"></Echart>
                         <div class="chartText">含水上升率</div>
                     </div>
                 </el-col>

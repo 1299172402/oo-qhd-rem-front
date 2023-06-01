@@ -15,6 +15,16 @@ export default [
                 component: () => import('@/pages/rem/intelligence/index.vue'),
                 meta: { title: '首页',icon: 'icon' },
             },
+            // 油藏管理-智能注采调配-首页详情
+            {
+                path: "intelligenceDetail",
+                component: () => import("@/pages/rem/intelligence/detail.vue"),
+                name: "intelligenceDetail",
+                hidden:true,
+                meta: {
+                    title: "详情"
+                },
+            },
             {
                 path: 'productionSplit',
                 name: 'productionSplit',

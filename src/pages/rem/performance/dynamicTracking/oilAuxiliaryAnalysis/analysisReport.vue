@@ -642,29 +642,35 @@
                         </info-window>
                     </div>
                     <div style="height:340px;">
-                        <info-window info-width="100%" info-height="100%" header-title="油井动态分析详情列表" :is-show-max-btn="false">
+                        <info-window info-width="100%" info-height="100%" header-title="油井动态分析详情列表" :is-show-max-btn="true">
                             <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                 <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                 <!--生产动态项目-->
-                                <!--  :label="item.name" :render-header="renderHeader" -->
-                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" align="center" min-width="160" sortable="custom" label-class-name="twoRowHeader">
+                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="160" sortable="custom" label-class-name="twoRowHeader">
+                                    
                                     <template #header>
-                                        <div class="headerSortRow1" v-if="item.name && item.name.split(' ')[1]">
+                                        <div class="headerSortRow1" v-if="item.name && item.name!='正常' && item.name.split(' ')[1]">
                                             <span>{{ item.name.split(' ')[0] ? item.name.split(' ')[0] : ""}}</span>
                                             <br />
                                             <span>{{ item.name.split(' ')[1] ? `(${item.name.split(' ')[1]})` : ""}}</span>
                                         </div>
                                         <div v-else>
-                                            <span>{{item.name}}</span>
+                                            <span>{{item.name=='正常'?'生产状态':item.name}}</span>
                                         </div>
                                     </template>
+                                    
                                     <template slot-scope="scope">
-                                        <span v-if="scope.row.scdt[item.code] == null"></span>
+                                        <span v-if="scope.row.scdt[item.code] == null">{{productionStatus(scope.row.scdt,item.code)}}</span>
+                                        
+                                        
                                         <span v-else-if="item.code == 'ZC'">{{ scope.row.scdt[item.code].showLabel }}</span>
+                                        
                                         <el-tooltip v-else class="item" effect="dark" :content="scope.row.scdt[item.code].value + ''" placement="top">
                                             <span>{{ scope.row.scdt[item.code].showLabel }}</span>
                                         </el-tooltip>
+                                        
                                     </template>
+                                    
                                 </el-table-column>
                                 <!--生产问题监测项目-->
                                 <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
@@ -769,6 +775,7 @@
     } from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import compareSort from "@/lib/compareSort.js";
     export default {
+        // name:'analysisReport',
         mixins: [compareSort],
         data() {
             return {
@@ -1088,7 +1095,7 @@
                     this.tableData = wellInfo.splice(0, this.listPage * 50);
                     this.listPage = 2;
                 } else {
-                    this.tableData = wellInfo
+                    this.tableData = wellInfo;
                 }
                 //3、根据每个项目的井数遍历检查表头
                 //productionTrendsOptions//生产动态
@@ -1096,18 +1103,20 @@
                 for (let j = 0; j < this.productionTrendsOptions.length; j++) {
                     let t_data = this.productionTrendsOptions[j]; //每个数据项
                     if (parseInt(t_data.value) > 0) {
-                        let titleName = t_data.name + ' ' + (t_data.unit ? t_data.unit : '');
+                        let titleName = t_data.name + (t_data.unit ? ' ' + t_data.unit : '');
                         if (titleName.lastIndexOf('m3') > -1) {
                             titleName = titleName.replace('m3', 'm³');
                         }
+                        console.log('titleName',titleName)
                         this.productionTrendsTab.push({
                             code: this.changeToVueCode(t_data.code, t_data.name),
                             name: titleName
                         });
                     }
                 }
-                this.$refs.tableList.doLayout();
+                console.log('this.productionTrendsTab',this.productionTrendsTab);
                 console.log('this.tableData',this.tableData)
+                this.$refs.tableList.doLayout();
             },
             getMoreLog() {
                 if (this.scrollFlag) {
@@ -1235,108 +1244,32 @@
             //生产动态可用项目
             queryProductionTrends() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.productionTrendsOptions = [{
-                                code: "tag0",
-                                name: "正常",
-                                value: 200,
-                                wells: "JH1,JH2,JH3,JH4,JH5"
-                            },
-                            {
-                                code: "tag1",
-                                name: "液量上升",
-                                value: 15,
-                                wells: "JH6,JH7"
-                            },
-                            {
-                                code: "tag2",
-                                name: "泵入口压力上升",
-                                value: 10,
-                                wells: "JH8,JH9"
-                            },
-                            {
-                                code: "tag3",
-                                name: "液量下降",
-                                value: 5,
-                                wells: ""
-                            },
-                            {
-                                code: "tag4",
-                                name: "泵入口压力下降",
-                                value: 5,
-                                wells: "JH2,JH6"
-                            },
-                            {
-                                code: "tag5",
-                                name: "含水上升",
-                                value: 15,
-                                wells: ""
-                            },
-                            {
-                                code: "tag6",
-                                name: "频率变化",
-                                value: 1,
-                                wells: "JH2,JH7"
-                            },
-                            {
-                                code: "tag7",
-                                name: "油嘴变化",
-                                value: 1,
-                                wells: ""
-                            },
-                            {
-                                code: "tag8",
-                                name: "含水下降",
-                                value: 2,
-                                wells: "JH6,JH9"
-                            },
-                            {
-                                code: "tag9",
-                                name: "油嘴变化",
-                                value: 5,
-                                wells: ""
-                            },
-                            {
-                                code: "tag10",
-                                name: "油量上升",
-                                value: 3,
-                                wells: "JH1,JH4"
-                            },
-                            {
-                                code: "tag11",
-                                name: "油量下降",
-                                value: 2,
-                                wells: ""
-                            }
-                        ];
+                    dynamicProd(this.paramMap).then((res) => {
+                        console.log(res,999)
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            this.productionNum.allnum=0;
+                            this.productionNum.zcnum=0;
+                            this.productionNum.ycnum=0;
+                            myData.forEach((el,i)=>{
+                                this.productionNum.allnum+=Number(el.value);
+                                if(el.name=='正常'){
+                                    this.productionNum.zcnum=Number(el.value);
+                                }else{
+                                    myData[i].isShow=Number(el.value)?true:false;
+                                    this.productionNum.ycnum+=Number(el.value);
+                                }
+                            })
+                            this.productionNum.zczb=this.productionNum.zcnum/this.productionNum.allnum * 100;
+                            this.productionNum.yczb=this.productionNum.yczb/this.productionNum.allnum * 100;
+                            this.productionTrendsOptions = myData;
+                            console.log('this.productionTrendsOptions',this.productionTrendsOptions)
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        dynamicProd(this.paramMap).then((res) => {
-                            console.log(res,999)
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                this.productionNum.allnum=0;
-                                this.productionNum.zcnum=0;
-                                this.productionNum.ycnum=0;
-                                myData.forEach((el,i)=>{
-                                    this.productionNum.allnum+=Number(el.value);
-                                    if(el.name=='正常'){
-                                        this.productionNum.zcnum=Number(el.value);
-                                    }else{
-                                        myData[i].isShow=Number(el.value)?true:false;
-                                        this.productionNum.ycnum+=Number(el.value);
-                                    }
-                                })
-                                this.productionNum.zczb=this.productionNum.zcnum/this.productionNum.allnum * 100;
-                                this.productionNum.yczb=this.productionNum.yczb/this.productionNum.allnum * 100;
-                                this.productionTrendsOptions = myData;
-                            }
-                            resolve('success');
-                        }).catch(error => {
-                            console.log(error)
-                        });
-                    }
+                    }).catch(error => {
+                        console.log(error)
+                    });
                 });
             },
             //生产问题监测可用项目01,油井工况
@@ -2320,6 +2253,32 @@
 				}
 				return str;
 			},
+            //深化点-生产状态
+            productionStatus(scdt,code){
+                if(code=='ZC'){//如果是正常
+                    let retStr='';
+                    for(let key in scdt.wellExe){
+                        if(scdt.wellExe[key]!='正常井'&& key=='GZTJ'){
+                            retStr=scdt.wellExe[key];
+                        }else if(scdt.wellExe[key]!='正常井'&& key=='XYJ'){
+                            retStr=scdt.wellExe[key];
+                        }else if(scdt.wellExe[key]!='正常井'&& key=='JP'){
+                            retStr=scdt.wellExe[key];
+                        }else if(scdt.wellExe[key]!='正常井'&& key=='GHSJ'){
+                            retStr=scdt.wellExe[key];
+                        }else if(scdt.wellExe[key]!='正常井'&& key=='DCJ'){
+                            retStr=scdt.wellExe[key];
+                        }
+                    }
+                    if(!retStr){
+                        return '正常';
+                    }else{
+                        return retStr;
+                    }
+                }else{
+                    return ''
+                }
+            },
 		}
     }
 </script>
@@ -2405,6 +2364,7 @@
                     position: absolute;
                     left:0;
                     top:0;
+                    z-index:3;
                 }
                 .v0{
                     padding-left:400px;
