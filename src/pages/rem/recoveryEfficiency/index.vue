@@ -32,17 +32,24 @@
         </header-search>
         <page-panel-new style="height: calc(100% - 100px);">
             <div style="height:100%">
-                <el-row style="height:146px;margin-bottom:20px;">
+                <el-row style="height:200px;margin-bottom:20px;">
+                    <div style="height:50px;">
+                        <span>单位切换：</span>
+                        <el-select v-model="unitType" placeholder="请选择" style="width:100px;" @change="oilFieldRecoveryRatioApi">
+                            <el-option label="m³" value="m³"></el-option>
+                            <el-option label="t" value="t"></el-option>
+                        </el-select>
+                    </div>
                     <el-table 
-                    :data="wellPerformanceAnalysis"
-                    style="width:100%;"
-                    height="100%" 
-                    class="doubleHeader"
-                    :row-style="{ height: '0px' }"
-                    :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-                    header-cell-class-name="table_header"
-                    :cell-style="{ padding: '6px', 'text-align': 'center' }"
-                    >
+                        :data="wellPerformanceAnalysis"
+                        style="width:100%;"
+                        height="150px" 
+                        class="doubleHeader"
+                        :row-style="{ height: '0px' }"
+                        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                        header-cell-class-name="table_header"
+                        :cell-style="{ padding: '6px', 'text-align': 'center' }"
+                        >
                         <el-table-column prop="name" label="油田(区块)" fixed></el-table-column>
                         <el-table-column label="储量状况">
                             <el-table-column label-class-name="twoRowHeader">
@@ -50,7 +57,7 @@
                                     <div>
                                         <span>地质储量</span>
                                         <br />
-                                        <span>(10⁴t)</span>
+                                        <span>({{unitType}})</span>
                                     </div>
                                 </template>
                                 <template slot-scope="scoped">
@@ -62,7 +69,7 @@
                                     <div>
                                         <span>可采储量</span>
                                         <br />
-                                        <span>(10⁴t)</span>
+                                        <span>({{unitType}})</span>
                                     </div>
                                 </template>
                                 <template slot-scope="scoped">
@@ -86,7 +93,7 @@
                                     <div>
                                         <span>累产油</span>
                                         <br />
-                                        <span>(10⁴t)</span>
+                                        <span>({{unitType}})</span>
                                     </div>
                                 </template>
                                 <template slot-scope="scoped">
@@ -98,7 +105,7 @@
                                     <div>
                                         <span>目前剩余可采储量</span>
                                         <br />
-                                        <span>(10⁴t)</span>
+                                        <span>({{unitType}})</span>
                                     </div>
                                 </template>
                                 <template slot-scope="scoped">
@@ -153,7 +160,7 @@
                         <el-tab-pane style="height: auto" v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name"></el-tab-pane>
                     </el-tabs>
                 </el-row>
-                <div v-if="activeName=='waterDrive'" style="height:calc(100% - 202px);overflow-y: scroll;overflow-x: hidden;">
+                <div v-if="activeName=='waterDrive'" style="height:calc(100% - 250px);overflow-y: scroll;overflow-x: hidden;">
                     <div style="display: flex;align-items: center;margin-bottom:20px;">
                         <span>拟合起始时间：</span>
                         <el-date-picker v-model="dateTime" type="monthrange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" @change="sqtzChart"></el-date-picker>
@@ -216,7 +223,7 @@
                         </el-col>
                     </el-row>
                 </div>
-                <div v-if="activeName=='decreasing'" style="height:calc(100% - 202px);overflow-y: scroll;overflow-x: hidden;">
+                <div v-if="activeName=='decreasing'" style="height:calc(100% - 250px);overflow-y: scroll;overflow-x: hidden;">
                     <el-row style="height:100%;width: 100%;" :gutter="20">
                         <!---左下-->
                         <el-col :span="24" style="height:100%">
@@ -315,7 +322,7 @@
                             </el-col>-->
                     </el-row>
                 </div>
-                <div v-if="activeName=='plateMethod'" style="height:calc(100% - 202px);overflow-y: scroll;overflow-x: hidden;">
+                <div v-if="activeName=='plateMethod'" style="height:calc(100% - 250px);overflow-y: scroll;overflow-x: hidden;">
                     <el-row style="height:100%;width: 100%;" :gutter="20">
                         <!---左下-->
                         <el-col :span="24" style="height:100%">
@@ -388,7 +395,7 @@
                         </el-col>
                     </el-row>
                 </div>
-                <div v-if="activeName=='empiricalFormula'" style="height:calc(100% - 202px);overflow-y: scroll;overflow-x: hidden;">
+                <div v-if="activeName=='empiricalFormula'" style="height:calc(100% - 250px);overflow-y: scroll;overflow-x: hidden;">
                     <el-row style="height:100%" :gutter="20">
                         <!---左下-->
                         <el-col :span="12" style="height:100%">
@@ -606,6 +613,9 @@
                 block: [],
                 cx: '',
                 blocks: [],
+                
+                //单位切换
+                unitType:'m³',
                 //拟合起始时间
                 dateTime: [],
                 dateTime1: [],
@@ -1199,19 +1209,24 @@
             },
             //搜索
             Retrieval() {
+                this.oilFieldRecoveryRatioApi();
+                this.sqtzChart();
+                this.djqxChart();
+                this.tstbChart();
+                this.jygsChart();
+            },
+            //单位切换-获取表格数据
+            oilFieldRecoveryRatioApi(){
                 let request = {
                     fieldId: this.selectBlock,
                     oilFieldId: this.selectOilField,
+                    unitType:this.unitType
                 }
                 this.wellPerformanceAnalysis = [];
                 oilFieldRecoveryRatio(request).then((res) => {
                     let data = res.data.data.recoveryRatioInfos;
                     this.wellPerformanceAnalysis = data;
                 });
-                this.sqtzChart();
-                this.djqxChart();
-                this.tstbChart();
-                this.jygsChart();
             },
             //水驱特征曲线
             sqtzChart() {
