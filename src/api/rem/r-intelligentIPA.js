@@ -55,11 +55,11 @@ export function getStratifiedInjectionDetails(params) {
  * timeStatus  时间状态 月度：1，年度：2，阶段：3
  * @returns {AxiosPromise}
  */
-export function getStratifiedInjectionDetailsComp(params) {
+export function getStratifiedInjectionDetailsComp(data) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/stratifiedInjectionDetailsComp`,
         method: "post",
-        params
+        data
     }).then((res) => {
         return res.data.data
     });

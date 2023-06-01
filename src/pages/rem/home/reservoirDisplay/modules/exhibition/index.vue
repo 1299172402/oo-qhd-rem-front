@@ -173,21 +173,27 @@ export default {
                   type: 'value',
                   name: '日产液量',
                   nameTextStyle: {
-                      color: '#fff'
+                      color: '#a9a8a8'
+                  },
+                  axisLine:{
+                      show:true
                   },
                   interval: 400,
                   axisLabel: {
-                      color: '#fff'
+                      color: '#a9a8a8'
                   }
               }, {
                   type: 'value',
                   name: '井底流压',
                   nameTextStyle: {
-                      color: '#fff'
+                      color: '#a9a8a8'
+                  },
+                  axisLine:{
+                      show:true
                   },
                   interval: 400,
                   axisLabel: {
-                      color: '#fff'
+                      color: '#a9a8a8'
                   }
               }],
               yAxis: {
