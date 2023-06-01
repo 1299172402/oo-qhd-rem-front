@@ -50,7 +50,7 @@
         </header-search>
         <div style="display: flex;justify-content: space-around; height: 100%;">
             <div style="flex:4; height: 100%; margin-right: 15px;">
-                <page-panel :header-title="title" style=" height: 100%; " :show-btn="true">
+                <page-panel :header-title="title" style=" height: auto; " :show-btn="true">
                     <el-row :gutter="20" style="margin-bottom: 10px;">
                         <el-col :span="12">
                             <div class="grid-content bg-purple">
@@ -170,14 +170,14 @@
                 </page-panel>
             </div>
 
-            <div style="flex:4; height: 100%; margin-right: 15px;">
+            <div style="flex:4; height: 118%; margin-right: 15px;">
                 <page-panel header-title="分层注采量" style="height: 100%;position: relative; " :show-btn="true">
                     <button class="detailLinkBtn" @click="getDetail">详细</button>
                     <div id="main" style="width: 100%; height: 100%"></div>
                 </page-panel>
             </div>
 
-            <div style="width: 33%;height: 100%;display:flex;flex-direction: column;justify-content: space-between;">
+            <div style="width: 33%;height: 118%;display:flex;flex-direction: column;justify-content: space-between;">
                 <div style="height:calc(60% - 15px);margin-bottom: 15px;">
                     <page-panel header-title="单井井底流压" style="height: 100%; ":show-btn="true">
                         <button class="detailLinkBtn" @click="detailed = true">详细</button>
@@ -419,14 +419,17 @@ export default {
                 grid: {
                     left: '10%',
                     right: '15%',
-                    bottom: '5%',
+                    bottom: '15%',
                     containLabel: true
                 },
                 xAxis: [{
                     type: 'value',
                     name: '日产液量',
                     nameTextStyle: {
-                        color: '#fff'
+                        color: '#a9a8a8'
+                    },
+                    axisLine:{
+                        show:true
                     },
                     interval: 400,
                     axisLabel: {
@@ -436,7 +439,10 @@ export default {
                     type: 'value',
                     name: '井底流压',
                     nameTextStyle: {
-                        color: '#fff'
+                        color: '#a9a8a8'
+                    },
+                    axisLine:{
+                        show:true
                     },
                     axisLabel: {
                         color: '#fff'
@@ -534,8 +540,8 @@ export default {
                             fontSize: 10,
                         },
                         data: [
-                            {value: 0, name: value, label: {color: 'white', position: 'center'}},
-                            {value: 1, name: unit, label: {color: 'white', position: 'inner'}},
+                            {value: 0, name: value, label: {color: '#a9a8a8', position: 'center'}},
+                            {value: 1, name: unit, label: {color: '#a9a8a8', position: 'inner'}},
                         ]
                     },
                     {

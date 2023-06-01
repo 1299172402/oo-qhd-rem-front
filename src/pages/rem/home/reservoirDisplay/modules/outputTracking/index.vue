@@ -6,7 +6,7 @@
         <Echart :chart-data="histogram" width="100%" height="65%"></Echart>
         <el-row :gutter="20">
             <el-col :span="7">
-                <div style="display: flex;position: relative;bottom: 60px">
+                <div style="display: flex;position: relative;bottom: 30px">
                     <div style="width: 50%">
                         <Echart :chart-data="option"></Echart>
                         <div style="position:absolute;bottom:15%;left:2%;font-size: 10px;text-align: center">
