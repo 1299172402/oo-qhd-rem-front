@@ -946,7 +946,7 @@ export default {
     &::before {
         content: "";
         width: 1px;
-        height: 100px;
+        height: 80px;
         background-color: #00b4ff;
         position: absolute;
         left: 50%;
@@ -960,7 +960,7 @@ export default {
         background-color: #00b4ff;
         position: absolute;
         left: 50%;
-        top: 32px;
+        top: 28px;
     }
 }
 </style>
