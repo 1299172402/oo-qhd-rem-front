@@ -100,7 +100,7 @@
                                     </el-button>
                                 </el-col>
                                 <el-col :span="2">
-                                    <el-button class="commonBtn" type="primary" icon="el-icon-download"
+                                    <el-button type="primary" icon="el-icon-download"
                                                @click="doDownLoadExcelh"
                                     >下载
                                     </el-button
