@@ -898,6 +898,7 @@ export default {
         postSort: 0,
         status: "0"
       },
+      initDeptId: undefined,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -905,7 +906,7 @@ export default {
         userName: undefined,
         phonenumber: undefined,
         status: undefined,
-        deptId: "100",
+        deptId: undefined,
         roleId: undefined,
         postId: undefined,
         nickName: undefined,
@@ -1055,9 +1056,11 @@ export default {
       treeselect().then(response => this.getDeptOptions(response.data.data))
         .then(response => {
           this.deptOptions = response;
+          this.initDeptId = this.deptOptions[0].id;
+          this.queryParams.deptId = this.initDeptId;
           this.getList();
           this.$nextTick(() => {
-            this.$refs.tree.setCurrentKey("100");
+            this.$refs.tree.setCurrentKey(this.initDeptId);
           });
         });
     },
@@ -1133,7 +1136,7 @@ export default {
     reset() {
       this.form = {
         userId: undefined,
-        deptId: "100",
+        deptId: this.initDeptId,
         userName: undefined,
         nickName: undefined,
         password: undefined,
