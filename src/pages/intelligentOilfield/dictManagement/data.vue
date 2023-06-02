@@ -79,7 +79,12 @@
           align="center"
         />
         <!-- <el-table-column label="字典编码" align="center" prop="dictCode" /> -->
-        <el-table-column label="字典标签" align="center" prop="dictLabel">
+        <el-table-column
+          label="字典标签"
+          show-overflow-tooltip
+          align="center"
+          prop="dictLabel"
+        >
           <template slot-scope="scope">
             <span v-if="scope.row.listClass == '' || scope.row.listClass == 'default'">{{ scope.row.dictLabel }}</span>
             <el-tag v-else :type="scope.row.listClass == 'primary' ? '' : scope.row.listClass">
@@ -89,7 +94,12 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="字典键值" align="center" prop="dictValue" />
+        <el-table-column
+          label="字典键值"
+          show-overflow-tooltip
+          align="center"
+          prop="dictValue"
+        />
         <el-table-column label="字典排序" align="center" prop="dictSort" />
         <el-table-column label="状态" align="center" prop="status">
           <template slot-scope="scope">
@@ -146,6 +156,7 @@
       :visible.sync="open"
       width="500px"
       append-to-body
+      :close-on-click-modal="false"
     >
       <el-form
         ref="form"

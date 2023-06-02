@@ -1,6 +1,6 @@
 .el-table tr {
   // color: rgba(0, 0, 0, 0.6);
-//   background: #f5f5f5;
+  // background: #f5f5f5;
   // TODO: Maybe change back，带图标的时候放开
   background: var(--logo-bg) no-repeat top right #f5f5f5;
   color: #606266;
@@ -12,7 +12,7 @@
   background: var(--white-color);
 }
 
-.el-table .cell{
+.el-table .cell {
   height: 40px;
   line-height: 40px;
 }
@@ -26,7 +26,7 @@
   //   height: 40px
 }
 
-.el-table tbody tr:hover>td {
+.el-table tbody tr:hover > td {
   background: var(--opacity-blue-bg);
 }
 
@@ -51,9 +51,22 @@
 }
 
 .el-table th.el-table__cell,
-.el-table th.el-table__cell.is-leaf{
+.el-table th.el-table__cell.is-leaf {
   background: unset !important;
   //opacity: 0.1;
+}
+
+.el-table__footer-wrapper td.el-table__cell {
+  border-top: 1px solid #e7e1e1;
+}
+
+.el-table .el-table__footer-wrapper th.el-table__cell,
+.el-table .el-table__footer-wrapper th.el-table__cell.is-leaf {
+  background: unset !important;
+}
+
+.el-table__fixed-footer-wrapper tbody td.el-table__cell {
+  border-top: 0 solid transparent;
 }
 
 .el-table td.el-table__cell,
@@ -62,7 +75,7 @@
 }
 // 表头显示双行（带单位）
 .doubleHeader .el-table__header-wrapper {
-  .cell{
+  .cell {
     height: auto !important;
   }
 }
@@ -120,7 +133,7 @@
   background: var(--logo-bg) no-repeat top right #0075E9 !important;
 }
 
-.infoHeaderBg{
+.infoHeaderBg {
 //   background: #fff;
   // TODO: Maybe change back，带图标的时候放开
   background: var(--logo-bg) no-repeat top right, #fff;
@@ -133,17 +146,17 @@
   position: relative;
   //   padding: 14px 14px 0;
   //   overflow: hidden;
-  box-shadow: 0 0 10px 0 rgba(144,147,153,0.3);
+  box-shadow: 0 0 10px 0 rgba(144, 147, 153, 0.3);
 }
 
 .panelBox {
   height: calc(100% - 90px);
   width: 100%;
-  box-shadow: 0 0 10px 0 rgba(144,147,153,0.3);
+  box-shadow: 0 0 10px 0 rgba(144, 147, 153, 0.3);
   border: unset;
 }
 
-.right{
+.right {
   height: calc(100vh - 145px);
 }
 
@@ -152,7 +165,7 @@
 }
 
 .el-table .ascending .sort-caret.ascending {
-  border-bottom-color: var(--light-blue-color)
+  border-bottom-color: var(--light-blue-color);
 }
 
 .el-table .sort-caret.ascending {
@@ -167,32 +180,37 @@
   background: transparent;
 }
 
-.el-table--border .el-table__cell, .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed {
+.el-table--border .el-table__cell,
+.el-table__body-wrapper .el-table--border.is-scrolling-left ~ .el-table__fixed {
   border-right: 1px solid #e7e1e1;
 }
 
-.el-table--border th.el-table__cell, .el-table__fixed-right-patch {
+.el-table--border th.el-table__cell,
+.el-table__fixed-right-patch {
   border-bottom: 1px solid #e7e1e1;
 }
 
-.el-table--border, .el-table--group {
+.el-table--border,
+.el-table--group {
   border: 1px solid #e7e1e1 !important;
 }
 
-.el-table--border::after, .el-table--group::after, .el-table::before {
-  background-color: rgba(242,244,246,1);
+.el-table--border::after,
+.el-table--group::after,
+.el-table::before {
+  background-color: rgba(242, 244, 246, 1);
 }
 
-.tablestyle{
-  .el-table__row{
+.tablestyle {
+  .el-table__row {
     line-height: 20px;
     font-family: PingFangSC-Regular, "PingFang SC";
   }
 }
 
-.el-table__cell{
+.el-table__cell {
   padding: 0 !important;
-  background: #fff;  
+  background: #fff;
 }
 //固定的表头表尾背景色
 .el-table__fixed-right,
@@ -213,9 +231,24 @@
     height: 34px;
     line-height: 34px;
   }
-    
 }
 
 .el-table--enable-row-transition .el-table__body td.el-table__cell {
   transition: background-color 0s ease;
+}
+
+.filterTable {
+  .el-icon-arrow-down {
+    background-image: url("@/assets/intelligentOilfield/loudou-light.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 14px;
+    height: 12px;
+    transform: none;
+    line-height: 1;
+  }
+
+  .el-icon-arrow-down::before {
+    color: transparent;
+  }
 }

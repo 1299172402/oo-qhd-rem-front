@@ -2631,21 +2631,21 @@ export default {
     "$store.state.setting.mode": {
       handler() {
         this.dataOptionLine.legend.textStyle.color = getComputedStyle(document.documentElement).getPropertyValue("--text1");
-        this.$refs.dataOptionLine.refreshEcharts();
+        this.$refs.dataOptionLine?.refreshEcharts();
         this.char8.legend.textStyle.color = getComputedStyle(document.documentElement).getPropertyValue("--text1");
-        this.$refs.char8.refreshEcharts();
+        this.$refs.char8?.refreshEcharts();
         this.dataZhuzhuang.legend.textStyle.color = getComputedStyle(document.documentElement).getPropertyValue("--text1");
-        this.$refs.dataZhuzhuang.refreshEcharts();
+        this.$refs.dataZhuzhuang?.refreshEcharts();
         this.char4.legend.textStyle.color = getComputedStyle(document.documentElement).getPropertyValue("--text1");
-        this.$refs.char4.refreshEcharts();
+        this.$refs.char4?.refreshEcharts();
         this.char5.legend.textStyle.color = getComputedStyle(document.documentElement).getPropertyValue("--text1");
-        this.$refs.char5.refreshEcharts();
+        this.$refs.char5?.refreshEcharts();
         this.char6.legend.textStyle.color = getComputedStyle(document.documentElement).getPropertyValue("--text1");
-        this.$refs.char6.refreshEcharts();
+        this.$refs.char6?.refreshEcharts();
         this.char7.legend.textStyle.color = getComputedStyle(document.documentElement).getPropertyValue("--text1");
-        this.$refs.char7.refreshEcharts();
+        this.$refs.char7?.refreshEcharts();
         this.char10.legend.textStyle.color = getComputedStyle(document.documentElement).getPropertyValue("--text1");
-        this.$refs.char10.refreshEcharts();
+        this.$refs.char10?.refreshEcharts();
       },
       deep: true,
       immediate: true

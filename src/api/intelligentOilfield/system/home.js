@@ -17,9 +17,9 @@ export function listNum(userId) {
 }
 
 // 获取通知公告
-export function noticeList(tenantId) {
+export function noticeList() {
   return request({
-    url: `/system/notice/noticeList/${tenantId}`,
+    url: "/system/notice/noticeList",
     method: "get"
   });
 }

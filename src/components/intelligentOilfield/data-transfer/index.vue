@@ -5,16 +5,32 @@
     <!-- TODO: Maybe change back -->
     <!-- :style="[{ height: isQuickEntry ? '28%' : '44%' }]" -->
     <div style="height: 44%">
-      <div class="g-row-flex-V" style="margin-bottom: 10px">
+      <div v-if="transferType === '快捷入口'" class="g-row-flex-V" style="margin-bottom: 10px">
+        <div style="margin-right: 10px">
+          快捷入口名称：
+        </div>
+        <div>
+          <el-input
+            v-model="enterInfo"
+            style="width: 220px"
+            size="medium"
+            clearable
+            placeholder="请输入快捷入口名称"
+            @change="changeSource(indicatorSource, enterInfo)"
+          />
+        </div>
+      </div>
+      <div v-if="transferType !== '快捷入口'" class="g-row-flex-V" style="margin-bottom: 10px">
         <div style="margin-right: 10px">
           {{ searchName }}：
         </div>
         <div>
           <el-select
             v-model="indicatorSource"
+            style="width: 220px"
             placeholder="请选择"
             clearable
-            @change="changeSource(indicatorSource)"
+            @change="changeSource(indicatorSource, enterInfo)"
           >
             <el-option
               v-for="item in searchOption"
@@ -134,6 +150,7 @@ export default {
   },
   data() {
     return {
+      enterInfo: "",
       options: [],
       indicatorSource: "",
       currentSelectedList: this.selectedList,
@@ -198,8 +215,8 @@ export default {
       this.$emit("addQuickEntry");
     },
     // 改变数据来源
-    changeSource(value) {
-      this.$emit("changeSource", value);
+    changeSource(value, name) {
+      this.$emit("changeSource", value, name);
     },
     // 选择数据到上面
     selectData(val) {
@@ -287,10 +304,12 @@ export default {
     },
     submitForm() {
       this.indicatorSource = "";
+      this.enterInfo = "";
       this.$emit("submitForm");
     },
     cancel() {
       this.indicatorSource = "";
+      this.enterInfo = "";
       this.$emit("cancel");
     }
   }

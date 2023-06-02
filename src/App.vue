@@ -36,6 +36,13 @@ export default Vue.extend({
   },
   mounted() {
     this.$store.dispatch("setting/changeTheme", { ...config });
+    window.addEventListener("message",
+      event => {
+        if (event.data?.type === "changeTheme") {
+          this.$store.dispatch("setting/changeTheme", { mode: event.data.mode });
+        }
+      }, false
+    );
   },
   methods: {
     reload() {

@@ -9,6 +9,7 @@ import { tansParams, blobValidate } from "@/utils/commonSettings";
 import errorCode from "@/utils/errorCode";
 
 const whiteListLoading = store.getters["permission/whiteListLoading"];
+const whiteListError = store.getters["permission/whiteListError"];
 
 let downloadLoadingInstance;
 
@@ -88,7 +89,7 @@ instance.interceptors.request.use(
     //   config.headers.Authorization = `Bearer ${store.getters['user/token']}`;
     // }
     // 判断当前请求是否设置了不显示Loading
-    if (config.headers.showLoading !== false && config.url.substring(0, config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && whiteListLoading.indexOf(config.url) === -1) {
+    if (config.headers.showLoading !== false && config.url.substring(0, config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && !config.url.includes("/system/CustomPanel/listByCustomId") && !config.url.includes("system/app/appListByUserIdAndTenantId") && whiteListLoading.indexOf(config.url) === -1) {
       showLoading(config.headers.loadingTarget);
     }
     return config;
@@ -143,10 +144,13 @@ instance.interceptors.response.use(
         }
       });
     } else if (response.data.code === 500) {
-      Message({
-        message: response.data.msg,
-        type: "error"
-      });
+      if (response.config.url.substring(0, response.config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && whiteListError.indexOf(response.config.url) === -1) {
+        // 过滤掉右上角小铃铛1min轮询接口,和报警信息列表接口的报错信息
+        Message({
+          message: response.data.msg,
+          type: "error"
+        });
+      }
       if (response.config.headers.showLoading !== false) {
         hideLoading();
       }
@@ -193,7 +197,8 @@ instance.interceptors.response.use(
             store.dispatch("permission/restore");
           }
         });
-      } else {
+      } else if (config.url.substring(0, config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && whiteListError.indexOf(config.url) === -1) {
+        // 过滤掉右上角小铃铛1min轮询接口,和报警信息列表接口的报错信息
         MessageBox.alert(err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错", "系统提示", {
           type: "error"
         });

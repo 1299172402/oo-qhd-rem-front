@@ -119,7 +119,7 @@ export default {
       this.$router.push({ name: "homeDetail", query: { tenantId, pathName: tenantName }, params: { tenantId }});
     },
     noticeList() {
-      noticeList(this.$store.getters["user/tenantId"]).then(response => {
+      noticeList().then(response => {
         response?.data?.data?.forEach(item => {
           this.val += `${item.noticeContent}                                                                                                    `;
         });

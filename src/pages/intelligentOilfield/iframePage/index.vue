@@ -1,6 +1,11 @@
 <!-- 后台——跳转内部链接页面 -->
 <template>
-  <iframe class="iframe-view" :src="$store.getters['permission/routerLink']" frameborder="0" />
+  <iframe
+    v-postTheme="$store.state.setting.mode"
+    class="iframe-view"
+    :src="$store.getters['permission/routerLink']"
+    frameborder="0"
+  />
 </template>
 
 <script>

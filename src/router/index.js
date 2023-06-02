@@ -50,6 +50,12 @@ const defaultRouterList = [
     component: () => import("@/pages/intelligentOilfield/login/components/AppCallback.vue")
   },
   {
+    path: "/appIframeView",
+    name: "appIframeView",
+    hidden: true,
+    component: () => import("@/pages/intelligentOilfield/iframePage/AppIframeView.vue")
+  },
+  {
     path: "/login",
     name: "login",
     beforeEnter: (to, from, next) => {

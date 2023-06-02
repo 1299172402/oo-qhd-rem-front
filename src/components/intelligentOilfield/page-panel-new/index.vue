@@ -5,26 +5,28 @@
     :class="isMax ? 'maxPage' : 'minPage'"
     :style="{background: $store.state.setting.mode === 'dark' ? isMax ? '#032a3b !important' : 'transparent' : '#FFFFFF'}"
   >
-    <div
-      v-if="showBtn"
-      style="width: 100%;text-align: right"
-    >
-      <el-tooltip
-        class="item"
-        effect="dark"
-        :content="isMax ? '最小化' : '最大化'"
-        placement="bottom"
+    <div style="width: 100%;height: 100%" :class="isMax ? $store.state.setting.mode === 'dark' ? 'maxDetail' : '' : ''">
+      <div
+        v-if="showBtn"
+        style="width: 100%;text-align: right"
       >
-        <svg-icon
-          :icon-class="isMax?'no-expand':'expand'"
-          :style="{fill: $store.state.setting.mode==='dark' ? '#ffffff' : '#0075e9'}"
-          class="panelIconClass"
-          @clickIcon="maximizeCom"
-        />
-      </el-tooltip>
-    </div>
-    <div style="padding: 0 20px 20px;height: 100%;" class="g-w100" :style="{height: showBtn ? 'calc(100%  - 32px)' : '100%', padding: showBtn ? '0 20px 20px 20px' : '15px 20px 20px 20px'}">
-      <slot />
+        <el-tooltip
+          class="item"
+          effect="dark"
+          :content="isMax ? '最小化' : '最大化'"
+          placement="bottom"
+        >
+          <svg-icon
+            :icon-class="isMax?'no-expand':'expand'"
+            :style="{fill: $store.state.setting.mode==='dark' ? '#ffffff' : '#0075e9'}"
+            class="panelIconClass"
+            @clickIcon="maximizeCom"
+          />
+        </el-tooltip>
+      </div>
+      <div style="padding: 0 20px 20px;height: 100%;" class="g-w100" :style="{height: showBtn ? 'calc(100%  - 32px)' : '100%', padding: showBtn ? '0 20px 20px 20px' : '15px 20px 20px 20px'}">
+        <slot />
+      </div>
     </div>
   </div>
 </template>
@@ -70,6 +72,13 @@ export default {
   width: 100% !important;
   height: 100% !important;
   margin: 0;
+}
+
+.maxDetail{
+  background-image: linear-gradient(360deg, rgba(0, 68, 115, 0.64) 0%, rgba(0, 72, 122, 0.16) 100%), url('/src/assets/backgroundImg.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .minPage {

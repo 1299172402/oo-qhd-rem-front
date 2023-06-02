@@ -64,17 +64,20 @@
                   :src="items.imgUrl ? items.imgUrl : ''"
                   alt=""
                   class="imgSetting"
-                  style="width: 40px;height: 40px"
+                  style="width: 56px;height: 56px"
                   @error="imgError(items)"
                 >
                 <!-- 增加未上传图标显示默认图标+首字母 -->
-                <div v-else class="bgImage g-row-flex-HV" style="width: 40px;height: 40px">
+                <!-- <div v-else class="bgImage g-row-flex-HV" style="width: 40px;height: 40px">
+                  {{ items.appName[0] }}
+                </div> -->
+                <div v-else class="squareImage g-row-flex-HV" style="width: 56px;height: 56px">
                   {{ items.appName[0] }}
                 </div>
                 <el-tooltip
                   effect="dark"
                   :content="items.appName"
-                  placement="top"
+                  placement="bottom"
                 >
                   <span class="textSpan">{{ items.appName }}</span>
                 </el-tooltip>

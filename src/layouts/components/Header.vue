@@ -638,7 +638,7 @@ export default Vue.extend({
       this.tenantCodeTenant(this.valueA, node.tenantId, node.tenantName);
     },
     noticeList() {
-      noticeList(this.$store.getters["user/tenantId"]).then(response => {
+      noticeList().then(response => {
         let val = "";
         response.data.data.forEach(item => {
           val += `${item.noticeContent}                                                                                                    `;

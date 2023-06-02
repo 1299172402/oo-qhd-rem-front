@@ -328,6 +328,7 @@ export default {
   z-index: 1;
   position: absolute;
   top: 10px;
-  right: 800px;
+  left: 50%;
+  transform: translate(-50%);
 }
 </style>

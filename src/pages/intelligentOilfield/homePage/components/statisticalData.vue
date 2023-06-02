@@ -63,22 +63,29 @@
           :arrow="echartsLists.length > 1 ? 'always' : 'never'"
         >
           <el-carousel-item v-for="(item, index) in echartsLists" :key="index">
+            <div ref="targetElements" :data-index="index" /> <!-- 目标元素，当滚动到该位置时加载子组件 -->
             <div
-              v-for="(items, index1) in item"
-              :key="index1"
-              class="indexCenter"
-              style="font-size: 0; margin: 10px 20px 10px 0"
+              v-if="showComponents[index]"
+              style="width: 100%; display: flex"
             >
+              <div
+                v-for="(items, index1) in item"
+                :key="index1"
+                class="indexCenter"
+                style="font-size: 0; margin: 10px 20px 10px 0;"
+              >
+                <iframe
+                  v-if="items.uploadingMode === '1'"
+                  :id="'iframe_' + items.indexUrl"
+                  v-postTheme="$store.state.setting.mode"
+                  :src="addToken(items.indexUrl)"
+                  frameborder="0"
+                  class="currentIframe"
+                />
+                <iframe-index v-else :template-html="items.indexCode" />
+              </div>
               <!-- TODO: Maybe change back -->
               <!-- <component :is="getComponent(items.indexUrl)" v-if="items.uploadingMode === '1'" /> -->
-              <iframe
-                v-if="items.uploadingMode === '1'"
-                :id="'iframe_' + items.indexUrl"
-                :src="addToken(items.indexUrl)"
-                frameborder="0"
-                class="currentIframe"
-              />
-              <iframe-index v-else :template-html="items.indexCode" />
             </div>
           </el-carousel-item>
         </el-carousel>
@@ -129,6 +136,7 @@ export default {
   },
   data() {
     return {
+      showComponents: [], // 存储每个子组件是否显示的状态
       imgList: [],
       imgList1: [],
       mode: "light",
@@ -167,6 +175,20 @@ export default {
         for (let F = 0; F < this.echartsList.length;) {
           this.echartsLists.push(this.echartsList.slice(F, (F += 6)));
         }
+        const options = {
+          root: null,
+          rootMargin: "0px",
+          threshold: 0 // 目标元素完全可见时触发加载
+        };
+        this.$nextTick(() => {
+          this.echartsLists.forEach((item, index) => {
+            const observer = new IntersectionObserver(this.handleIntersect, options);
+            const targetElement = this.$refs.targetElements[index];
+            if (targetElement) {
+              observer.observe(targetElement); // 监听目标元素
+            }
+          });
+        });
         this.$forceUpdate();
       },
       deep: true,
@@ -213,6 +235,14 @@ export default {
     this.getAllData();
   },
   methods: {
+    handleIntersect(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const index = entry.target.dataset.index;
+          this.$set(this.showComponents, index, true);
+        }
+      });
+    },
     addToken(url) {
       return addTokenToUrl(url);
     },

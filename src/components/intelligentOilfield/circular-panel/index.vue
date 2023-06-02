@@ -15,7 +15,7 @@
         :key="index"
         class="g-row-flex"
         style="flex-wrap: wrap"
-        :style="entranceType === 'UpperLower'?'':'justify-content:space-between'"
+        :style="entranceType === 'UpperLower'?'':'align-content: flex-start;'"
       >
         <!-- eslint-disable -->
         <div v-for="(item2, index) in item1" :key="index + 200" class="g-column-flex-HV">
@@ -24,17 +24,25 @@
             <img :src="item2.img" alt="" style="width: 56px;height: 56px" v-if="item2.img"/>
              <!-- TODO: Maybe change back -->
             <!-- <span v-else style="width:60px;height:60px" class="thumbnail">{{item2.name[0]}}</span> -->
-            <div v-else class="bgImage g-row-flex-HV" style="width: 56px;height: 56px">
+            <!-- 看板中心-圆形图片 -->
+            <div v-if="!item2.img && modelName === 'kanban'" class="circleImage g-row-flex-HV" style="width: 56px;height: 56px">
                 {{ item2.name[0] }}
             </div>
-            <div style="max-width: 68px;text-overflow: ellipsis;overflow: hidden;white-space: pre;" :title="item2.name" :style="{color:$store.state.setting.mode==='dark'?'#FFFFFF':'#606266'}">
+            <!-- 应用中心-方形图片 -->
+            <div v-if="!item2.img && modelName === 'application'" class="squareImage g-row-flex-HV" style="width: 56px;height: 56px">
+                {{ item2.name[0] }}
+            </div>
+            <div style="width: 68px;text-align: center;max-width: 68px;text-overflow: ellipsis;overflow: hidden;white-space: pre;" :title="item2.name" :style="{color:$store.state.setting.mode==='dark'?'#FFFFFF':'#606266'}">
               {{item2.name}}</div>
           </div>
           <!-- :class="index % 3 === 0 ? 'panelBlueColor' : index % 3 === 1 ? 'panelRedColor' : 'panelGreenColor'" -->
-          <div v-else class="panelBg g-row-flex-HV" :style="{background: $store.state.setting.mode === 'dark' ? '#3490D3' : '#51A1FF'}" @click="jumpLink(item2, index)">
-            <a :href="item2.url" :id="'hrefText' + index" target="_blank" v-show="false">跳转</a>
-            <div class="g-flex-row-HV textImageDiv">{{  item2.name }}</div>
-          </div>
+            <div v-else class="panelBg g-row-flex" :style="{color: $store.state.setting.mode === 'dark' ? '#fff' : '#51A1FF'}" @click="jumpLink(item2, index)">
+                <!-- TODO: Maybe change back -->
+                <!-- <a :href="item2.url" :id="'hrefText' + index" target="_blank" v-show="false">跳转</a>
+                <div class="g-flex-row-HV textImageDiv">{{  item2.name }}</div> -->
+                <div class="linkImage" style="margin-right: 10px;"></div>
+                <div class="textImageDivNew"  :title="item2.name">{{ item2.name }}</div>
+            </div>
         </div>
         <!-- eslint-disable -->
       </el-carousel-item>
@@ -44,24 +52,40 @@
         <div v-for="(item, index) in panels" :key="'fullScreen_'+index" class="g-column-flex" style="margin-top: 5px">
             <div class="g-column-flex-H panelDiv" @click="jumpLink(item, index)" v-if="entranceType === 'UpperLower'">
                 <img :src="item.img" alt="" style="width: 56px;height: 56px" v-if="item.img"/>
-                <div v-else class="bgImage g-row-flex-HV" style="width: 56px;height: 56px">
+                <!-- <div v-else class="bgImage g-row-flex-HV" style="width: 56px;height: 56px">
+                    {{ item.name[0] }}
+                </div> -->
+                <!-- 看板中心-圆形图片 -->
+                <div v-if="!item.img && modelName === 'kanban'" class="circleImage g-row-flex-HV" style="width: 56px;height: 56px">
                     {{ item.name[0] }}
                 </div>
-                <div style="max-width: 68px;text-overflow: ellipsis;overflow: hidden;white-space: pre;" :title="item.name" :style="{color:$store.state.setting.mode==='dark'?'#FFFFFF':'#606266'}">
-                {{item.name}}</div>
-            </div>
-            <div v-else class="panelBg g-row-flex-HV" @click="jumpLink(item, index)">
+                <!-- 应用中心-方形图片 -->
+                <div v-if="!item.img && modelName === 'application'" class="squareImage g-row-flex-HV" style="width: 56px;height: 56px">
+                    {{ item.name[0] }}
+                </div>
+                    <div style="width: 68px;text-align: center;max-width: 68px;text-overflow: ellipsis;overflow: hidden;white-space: pre;" :title="item.name" :style="{color:$store.state.setting.mode==='dark'?'#FFFFFF':'#606266'}">
+                    {{item.name}}</div>
+                </div>
+            <!-- <div v-else class="panelBg g-row-flex-HV" @click="jumpLink(item, index)">
                 <a :href="item.url" :id="'hrefText' + index" target="_blank" v-show="false">跳转</a>
                 <div class="g-flex-row-HV textImageDiv">{{  item.name }}</div>
-           </div>
+           </div> -->
+            <el-tooltip  v-else effect="dark" :content="item.name" placement="bottom" >
+            <div  class="panelBg g-row-flex" :style="{color: $store.state.setting.mode === 'dark' ? '#fff' : '#51A1FF'}" @click="jumpLink(item, index)" >
+                <!-- TODO: Maybe change back -->
+                <!-- <a :href="item.url" :id="'hrefText' + index" target="_blank" v-show="false">跳转</a>
+                <div class="g-flex-row-HV textImageDiv">{{  item.name }}</div> -->
+                <div class="linkImage" style="margin-right: 10px;"></div>
+                <div class="textImageDivNew">{{ item.name }}</div>
+            </div>
+          </el-tooltip>
          </div>
         </div>
     </div>
   </div>
 </template>
 <script>
-// <!-- TODO: Maybe change back -->
-// import { addAccessinfo } from "@/api/intelligentOilfield/system/user";
+import { addAccessinfo } from "@/api/intelligentOilfield/system/user";
 import jumpSupApp from "@/utils/jumpSupApp.js";
 
 export default {
@@ -164,8 +188,9 @@ export default {
         this.onePageNum = 0;
         // const onePageNumW = this.entranceType === 'UpperLower' ? parseInt((newVal.width - 42) / 80, 10) : parseInt((newVal.width - 42) / 124, 10);
         // const onePageNumH = this.entranceType === 'UpperLower' ? parseInt((newVal.height - 128) / 80, 10) : parseInt((newVal.height - 96) / 80, 10);
-        const onePageNumW = this.entranceType === "UpperLower" ? parseInt((newVal.width - 23) / 76, 10) : parseInt((newVal.width - 23) / 210, 10);
-        const onePageNumH = this.entranceType === "UpperLower" ? parseInt((newVal.height - 50 - 64 - 2 - (newVal.name === "应用中心" ? 42 : 0)) / 88, 10) : parseInt((newVal.height - 50 - 32 - 2 - 46) / 46, 10);
+        const onePageNumW = this.entranceType === "UpperLower" ? parseInt((newVal.width - 23) / 76, 10) : parseInt((newVal.width - 23) / 200, 10);
+        // 快捷入口蓝底白色版的:parseInt((newVal.height - 50 - 32 - 2 - 46) / 46, 10)
+        const onePageNumH = this.entranceType === "UpperLower" ? parseInt((newVal.height - 50 - 64 - 2 - (newVal.name === "应用中心" ? 42 : 0)) / 88, 10) : parseInt((newVal.height - 50 - 32 - 2 - 38) / 32, 10);
         if (newVal.width && onePageNumW > 0 && newVal.height && onePageNumH > 0) {
           this.onePageNum = onePageNumW * onePageNumH;
           // console.log('最后个数'+newVal.name, this.onePageNum);
@@ -188,13 +213,12 @@ export default {
         this.$emit("linkIframe", item);
       } else if (this.modelName === "application") { // 应用中心
         // 内部跳转的逻辑
-        // <!-- TODO: Maybe change back -->
-        //   const paramQuery = {
-        //     appId: item.appId,
-        //     appName: item.appName,
-        //     userId: this.$store.getters["user/userDetail"].user.userId
-        //   };
-        //   addAccessinfo(paramQuery).then(() => {});
+        const paramQuery = {
+          appId: item.appId,
+          appName: item.appName,
+          userId: this.$store.getters["user/userDetail"].user.userId
+        };
+        addAccessinfo(paramQuery).then(() => {});
         jumpSupApp(item.appPcAccessUrl);
         // document.getElementById(`hrefText${index}`).click();
       } else if (this.modelName === "enter") { // 快捷入口
@@ -250,22 +274,21 @@ export default {
 }
 
 .panelDiv {
+  padding: 0 8px;
   margin: 5px 0;
   cursor: pointer;
   font-size: 12px;
   font-family: PingFangSC-Medium, "PingFang SC";
   font-weight: 500;
   color: #909399;
-  width: 82px;
+  width: auto;
 }
 
 .panelBg {
-  width: 190px;
-  height: 36px;
+  width: 196px;
+  height: 30px;
   text-align: center;
-  line-height: 16px;
-  padding: 0 10px;
-  margin: 5px 10px;
+  margin: 0 10px;
   cursor: pointer;
   font-size: 12px;
   font-family: PingFangSC-Medium, "PingFang SC";
@@ -273,7 +296,6 @@ export default {
   // TODO: Maybe change back
 
   /* background: url('../../../assets/intelligentOilfield/enterImage.png'); */
-  background: #51a1ff;
   border-radius: 2px;
   color: #51a1ff;
   // border: 1px solid #51a1ff;
@@ -286,6 +308,23 @@ export default {
   /* font-weight: 600; */
   // color: #51a1ff;
   color: #fff;
+}
+
+.textImageDivNew {
+  font-size: 14px;
+  font-family: "PingFangSC-Semibold, PingFang SC";
+  font-weight: 500;
+  width: calc(100% - 26px);
+  text-align: left;
+  line-height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 30px;
+  word-break: break-all;
+  /* stylelint-disable */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }
 
 .panelBlueColor {

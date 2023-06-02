@@ -29,7 +29,7 @@ export function validURL(url) {
  * @returns {Boolean}
  */
 export function looselyValidURL(url) {
-  const reg = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})?(\/[\w!@#$%^&*;=?\/~+-]*)*$/;
+  const reg = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/;
   return reg.test(url);
 }
 

@@ -7,7 +7,7 @@
     @visible-change="onPopupVisibleChange"
   >
     <template #content>
-      <div class="header-msg" @wheel="scrollBarWheel">
+      <div class="header-msg">
         <div class="header-msg-top">
           <p>通知</p>
           <!-- TODO: Maybe change back -->
@@ -59,6 +59,9 @@
               </t-button>
             </template>
           </t-list-item>
+          <div class="g-row-flex-H">
+            加载中...
+          </div>
         </div>
 
         <div v-else class="empty-list">
@@ -139,14 +142,25 @@ export default Vue.extend({
     // }
   },
   mounted() {
+    window.addEventListener("scroll", this.handleScroll, true);
     // this.initData();
     this.getList(true);
     this.pollingTime();
   },
   destroyed() {
     window.clearInterval(this.timer);
+    window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
+    handleScroll(e) {
+      if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight && this.isNoticeVisible) {
+        this.queryParams.pageNum += 1;
+        const maxPageNum = Math.ceil(this.total / 10);
+        if (this.queryParams.pageNum <= maxPageNum) {
+          this.getList(false);
+        }
+      }
+    },
     initData() {
       this.tableData = [
         {
@@ -316,6 +330,7 @@ export default Vue.extend({
         const currentParam = firstPage ? param : this.queryParams;
         // TODO: Maybe change back
         //   if (firstPage) {
+        //     this.queryParams.pageNum = 1;
         //     this.tableData = _res;
         //     this.total = 21;
         //   } else {
@@ -324,6 +339,7 @@ export default Vue.extend({
         queryAlcAlarmByParam(currentParam).then(response => {
           const _res = JSON.parse(JSON.stringify(response.data.rows));
           if (firstPage) {
+            this.queryParams.pageNum = 1;
             this.tableData = _res;
             this.total = response.data.total;
           } else {

@@ -22,7 +22,12 @@
     >
       搜索
     </el-button>
-    <el-button size="mini" style="margin-top: 15px;float: right;margin-right: 10px;height: 30px" @click="resetData">
+    <el-button
+      size="mini"
+      class="cancelBtn"
+      style="margin-top: 15px;float: right;margin-right: 10px;height: 30px"
+      @click="resetData"
+    >
       重置
     </el-button>
     <div
