@@ -56,7 +56,15 @@ export default {
     "level": {
       type: String,
       default: "5"
-    }
+    },
+      "start": {
+          type: Number,
+          default: 0
+      },
+      "end": {
+          type: Number,
+          default: 0
+      }
   },
   data() {
     return {
@@ -131,18 +139,21 @@ export default {
       const params = { level: this.level, orgId: "715AD1CD60484BB59E737CD18A9DE44A" };
         getYczcTree(params).then((res)=>{
             this.deptOptions = res.data.data;
-            this.deptOptions.map((n)=>{
-                n.disabled  = true
-                n.children.map((v)=>{
-                    v.disabled = true
-                    v.children.map((x)=>{
-                        x.disabled = true
-                    })
-                })
-            })
+            this.setDisabledRecursive( this.deptOptions, this.start, this.end)
         })
     },
-    handleCheckChange(data, checked, indeterminate) {
+      setDisabledRecursive(options, minLevel = 0, maxLevel = Number.MAX_SAFE_INTEGER) {
+          options.forEach((option) => {
+              if (option.level < minLevel || option.level > maxLevel) {
+                  return
+              }
+              option.disabled = true
+              if (option.children) {
+                  this.setDisabledRecursive(option.children, minLevel, maxLevel)
+              }
+          })
+      },
+      handleCheckChange(data, checked, indeterminate) {
          this.$emit('childinfo',data, checked, indeterminate)
       },
   }
