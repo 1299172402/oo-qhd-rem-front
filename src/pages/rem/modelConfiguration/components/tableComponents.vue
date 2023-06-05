@@ -1,0 +1,205 @@
+<!-- 封装业务表格组件 -->
+<template>
+    <div class="z_container">
+        <div class="btns">
+            <div class="fonts" v-if="selectType!='通用配置'">
+                <span style="width:150px;" v-if="selectType=='按井配置'">井号：QHD32-6-A1</span>
+                <span style="width:110px;" v-if="selectType=='按井配置'||selectType=='按井型配置'">井型：定向井</span>
+                <span style="width:100px;" v-if="selectType=='按井配置'||selectType=='按井型配置'||selectType=='按区块配置'">区块：南区</span>
+                <span>油田：QHD32-6油田</span>
+            </div>
+            <el-button type="primary" @click="addTableRow">新增</el-button>
+        </div>
+        <div class="z-table">
+            <el-table width="100%" height="100%" :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }" :data="tableData" :cell-style="{ padding: '6px', 'text-align': 'center' }">
+                <el-table-column prop="modelName" label="模型名称"  width="250">
+                    <template slot-scope="scope">
+                        <div>
+                            <el-select v-model="scope.row.modelName" @change="modelOptionChange($event,scope.$index)" :filterable="true" :clearable="true" v-if="scope.row.state!=3">
+                                <el-option v-for="item in modeSelectList" :key="item.modelId" :label="item.modelName" :value="item.modelId"></el-option>
+                            </el-select>
+                            <span v-else>{{scope.row.modelName}}</span>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="modelId" label="模型ID"  width="100"></el-table-column>  
+                <el-table-column prop="configDescribe" label="配置项描述" >
+                    <template slot-scope="scope">
+                        <div>
+                            <el-input placeholder="输入配置项描述" v-model="scope.row.configDescribe" v-if="scope.row.state!=3"></el-input>
+                            <span v-else>{{scope.row.configDescribe}}</span>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="configId" label="配置项代码"  width="180">
+                    <template slot-scope="scope">
+                        <div>
+                            <el-input  placeholder="输入配置项代码" v-model="scope.row.configId" v-if="scope.row.state!=3"></el-input>
+                            <span v-else>{{scope.row.configId}}</span>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="configValue" label="配置项值" width="150">
+                    <template slot-scope="scope">
+                        <div>
+                            <el-input  placeholder="输入配置项值" v-model="scope.row.configValue" v-if="scope.row.state!=3"></el-input>
+                            <span v-else>{{scope.row.configValue}}</span>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="configUnit" label="配置项单位" width="150">
+                    <template slot-scope="scope">
+                        <div>
+                            <el-input  placeholder="输入配置项单位" v-model="scope.row.configUnit" v-if="scope.row.state!=3"></el-input>
+                            <span v-else>{{scope.row.configUnit}}</span>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="selectType" label="选值方式"  width="100"></el-table-column>
+                <el-table-column label="操作" width="150">
+                    <template slot-scope="scope">
+                        <el-button type="text" @click="saveTableRow(scope.row)" v-if="scope.row.state==1">保存</el-button>
+                        <el-button type="text" @click="calceTableRow(scope.$index)" v-if="scope.row.state==1">取消</el-button>
+                        <el-button type="text" @click="openEditDialog(scope.row,scope.$index)" v-if="scope.row.state!=1">{{scope.row.state==2?'取消':'编辑'}}</el-button>
+                        <el-button type="text" style="color: #f56c6c" @click="deleteTableRow(scope.row,scope.$index)" v-if="scope.row.state!=1">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            
+            <pagination v-show="page.total > 0" :total="page.total" :page.sync="page.currentPage" :limit.sync="page.pageSize" small :background="true" class="smallNoBg"  @pagination="pagination"/>
+            
+            
+            <!-- <pagination v-if="page.total" :pageSizes="[10, 20, 30, 40]" :total="page.total" :page.sync="page.currentPage" :limit.sync="page.pageSize" /> -->
+        </div>
+    </div>
+</template>
+
+<script>
+    import {queryTableData} from '@/api/modelConfiguration/config/modelConfigAPI';
+    export default{
+        props:{
+            selectType:{
+                type:String,
+                default:''
+            },
+            modeSelectList:{
+                type:Array,
+                default:()=>{
+                    return []
+                }
+            },
+            searchForm:{
+                type:Object,
+                default:()=>{
+                    return {}
+                }
+            }
+        },
+        data() {
+            return {
+                tableData:[//state 1新增 2编辑 3正常展示
+                    // {state:3,modelName:'1',modelId:'1',configDescribe:'1',configId:'1',configValue:'1',configUnit:'1',},
+                    // {state:3,modelName:'1',modelId:'1',configDescribe:'1',configId:'1',configValue:'1',configUnit:'1',},
+                ],
+                page: {
+                    total: 0, // 总页数
+                    currentPage: 1, // 当前页数
+                    pageSize: 20 // 每页显示多少条
+                },
+            }
+        },
+        mounted(){
+            this.queryTableDate();
+        },
+        methods:{
+            //查询列表数据
+            queryTableDate() {
+                let params={
+                    selectType:this.selectType,
+                    current: this.page.currentPage,
+                    size: this.page.pageSize,
+                    ...this.searchForm
+                }
+                queryTableData(params).then(response => {
+                    if( response.data.code==200){
+                        let data=response.data.data.records;
+                        if(data.length){
+                            for(let i=0;i<data.length;i++){
+                                data[i].state=3;
+                            }
+                        }
+                        this.tableData = data;
+                        this.page.total = response.data.data.total;
+                    }
+                })
+            },
+            //切换分页
+            pagination(e) {
+                this.page.currentPage = e.page;
+                this.page.pageSize = e.limit;
+                this.queryTableDate();
+            },
+            //change模型名称
+            modelOptionChange(e,index){
+                console.log(e,index)
+                this.$set(this.tableData[index],'modelId',e);
+            },
+            //新增
+            addTableRow(){
+                this.tableData.unshift({state:1,modelName:'',modelId:'',configDescribe:'',configId:'',configValue:'',configUnit:''})
+            },
+            //保存
+            saveTableRow(row){
+                this.$confirm('是否确定保存该条信息？', '提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning'
+                }).then(() => {
+                  
+                }).catch(() => {});
+            },
+            //取消
+            calceTableRow(index){
+                this.tableData.splice(index,1);
+            },
+            //编辑
+            openEditDialog(row,index){
+                let state=row.state==2?3:2;
+                this.$set(this.tableData[index],'state',state);
+            },
+            //删除
+            deleteTableRow(row,index){
+                this.$confirm(`你是否要删除${row.modelName}的模型配置，点击确定删除，点击取消，弹框关闭`, '提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning'
+                }).then(() => {
+                  this.tableData.splice(index,1);
+                }).catch(() => {});
+            },
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+    ::v-deep .el-table__row{
+        height:60px!important;
+    }
+    .z_container{
+        height:100%;
+        position: relative;
+        .btns{
+            height:50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .fonts{
+                display: flex;
+                align-items: center;
+            }
+        }
+        .z-table{
+            height:calc(100% - 50px - 70px);
+        }
+    }
+</style>

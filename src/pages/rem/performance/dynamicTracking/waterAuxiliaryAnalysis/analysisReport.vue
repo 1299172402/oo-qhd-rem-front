@@ -151,7 +151,7 @@
                     </div>
                     <div style="flex:1;min-height:380px;">
                         <pagePanel headerTitle="水井动态分析详情列表" style="margin-top:0;height:100%;">
-                            <el-table 
+                            <el-table
                             class="doubleHeader"
                             :row-style="{ height: '0px' }"
                             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"

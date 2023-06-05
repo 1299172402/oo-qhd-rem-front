@@ -4,20 +4,41 @@
         
         <header-search style="height: 80px">
             <div class="g-row-flex-V g-w100 g-h100">
-                <span>模型名称：</span>
-                <el-select v-model="searchForm.modelName" @change="modelOptionChange" :filterable="true" :clearable="true" style="margin-right:15px;">
-                    <el-option v-for="item in modelOptions" :key="item.modelId" :label="item.modelName" :value="item.modelName"></el-option>
+                <span>油田：</span>
+                <el-select v-model="searchForm.ogfId" disabled style="width:150px;margin-right:15px;">
+                    <el-option v-for="item in ogfSelectList" :key="item.id" :label="item.label" :value="item.id"></el-option>
                 </el-select>
+                <span>区块：</span>
+                <el-select v-model="searchForm.blockId" @change="blockChange" style="width:150px;margin-right:15px;">
+                    <el-option v-for="item in blockSelectList" :key="item.id" :label="item.label" :value="item.id"></el-option>
+                </el-select>
+                <span>井型：</span>
+                <el-select v-model="searchForm.wellType" @change="wellTypeChange" style="width:150px;margin-right:15px;">
+                    <el-option v-for="item in wellTypeSelectList" :key="item.id" :label="item.label" :value="item.id"></el-option>
+                </el-select>
+                <span>井号：</span>
+                <el-select v-model="searchForm.wellId" @change="wellIdChange" :filterable="true" :clearable="true" style="width:150px;margin-right:15px;">
+                    <el-option v-for="item in wellSelectList" :key="item.id" :label="item.label" :value="item.id"></el-option>
+                </el-select>
+                
+                <span>模型名称：</span>
+                <el-select v-model="searchForm.modelName" @change="modelChange" :filterable="true" :clearable="true" style="width:280px;margin-right:15px;">
+                    <el-option v-for="item in modeSelectList" :key="item.modelId" :label="item.modelName" :value="item.modelName"></el-option>
+                </el-select>
+                
                 <span>配置项代码：</span>
-                <el-input style="width:200px;margin-right:15px;" v-model="searchForm.configId"></el-input>
+                <el-input style="width:130px;margin-right:15px;" v-model="searchForm.configId" clearable></el-input>
+                
                 <el-button type="primary" icon="el-icon-search" @click="queryTableDate">搜索</el-button>
-                <el-button class="commonBtn" icon="el-icon-refresh" style="margin-right:auto;" @click="resetting">重置</el-button>
+                <el-button class="commonBtn" icon="el-icon-refresh" style="margin-left:15px!important;margin-right:auto;" @click="resetting">重置</el-button>
+                
             </div>
         </header-search>
         
         <page-panel-new style="height: calc(100% - 100px);">
             <div class="pagepanel-content" style="height:calc(100% - 60px)">
-                <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;">
+                <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;">
+                    <el-button type="primary" @click="getModelOperate">模型配置</el-button>
                     <el-button type="primary" v-if="isModuleBtn" @click="moduleDialog=true;">选定模型重算</el-button>
                     <el-button type="primary" @click="getModelInstructionManual">模型说明文档</el-button>
                 </div>
@@ -32,10 +53,11 @@
                         :default-sort="{ prop: 'date', order: 'descending' }">
                         <el-table-column prop="modelName" label="模型名称" sortable width="250"></el-table-column>
                         <el-table-column prop="configId" label="配置项代码" sortable width="150"></el-table-column>
-                        <el-table-column prop="configDescribe" label="配置项描述" min-width="860"></el-table-column>
+                        <el-table-column prop="configDescribe" label="配置项描述" min-width="760"></el-table-column>
                         <el-table-column prop="configValue" label="配置项值" width="100"></el-table-column>
                         <el-table-column prop="configUnit" label="配置项单位" width="100"></el-table-column>
                         <el-table-column prop="contrastMode" label="对比方式"  width="100"></el-table-column>
+                        <el-table-column prop="selectType" label="选值方式"  width="100"></el-table-column>
                         <el-table-column label="操作" width="150">
                             <template slot-scope="scope">
                                 <el-button type="text" size="small" @click="openEditDialog(scope.row)">编辑</el-button>
@@ -112,14 +134,8 @@
 </template>
 
 <script>
-    import {
-        queryTableData,
-        editModelConfigValue,
-        getAllModelName,
-        rangeSelDayApi,
-        selMonthRangeApi,
-        getModelInstructionManual
-    } from '@/api/modelConfiguration/config/modelConfigAPI';
+    import {queryTableData,editModelConfigValue,getAllModelName,rangeSelDayApi,selMonthRangeApi,getModelInstructionManual} from '@/api/modelConfiguration/config/modelConfigAPI.js';
+    import {getOgfList,getBlockList,getProdDailyTable,getWellList,getWell} from '@/api/oilDeposit/rem-04/modelConfiguration.js';
     import { saveAs } from "file-saver";
     export default {
         data() {
@@ -127,7 +143,6 @@
                 dialogVisible: false,
                 tableLoading: false,
                 tableData: [],
-                modelOptions: [],
                 rules: {
                     configValue: [{
                         required: true,
@@ -140,7 +155,16 @@
                     currentPage: 1, // 当前页数
                     pageSize: 20 // 每页显示多少条
                 },
+                ogfSelectList:[],
+                blockSelectList:[],
+                wellTypeSelectList:[],
+                wellSelectList:[],
+                modeSelectList: [],
                 searchForm: {
+                    ogfId:'',
+                    blockId:'',
+                    wellType:'',
+                    wellId :'',
                     modelName: '',
                     modelId: '',
                     configId: ''
@@ -287,7 +311,12 @@
                 dayOrMontKey: '1', //默认选中日度=1  月度=2 日月都有=3
             };
         },
-        created() {
+        async created() {
+            await this.getOgfListApi();
+            await this.getBlockList();
+            this.getProdDailyTableApi();
+            await this.getWellListApi();
+            
             this.getAllModelName();
             this.queryTableDate();
         },
@@ -300,15 +329,96 @@
             		this.queryTableDate();
             	})
             },
-            // 获取所有的模型名称
-            getAllModelName() {
-                getAllModelName().then(response => {
-                    if (response.data.code ==200) {
-                        this.modelOptions = response.data.data;
-                    } else {
-                        this.$message.error(response.data.msg);
-                    }
+            //获取油田下拉框数据源
+            async getOgfListApi(){
+                try{
+                    await getOgfList().then(res=>{
+                        if(res.data.code==200){
+                            let data=res.data.data;
+                            this.ogfSelectList=res.data.data;
+                            if(data.length){
+                                for(let i=0;i<data.length;i++){
+                                    if(data[i].label=='秦皇岛32-6油田'){
+                                        this.searchForm.ogfId=data[i].id;
+                                    }
+                                }
+                            }
+                        }
+                    })
+                }catch(err){
+                    console.log(err);
+                }
+            },
+            //根据油田id-获取区块数据源
+            async getBlockList(){
+                try{
+                    await getBlockList(this.searchForm).then(res=>{
+                        if(res.data.code==200){
+                            this.blockSelectList=res.data.data;
+                            this.blockSelectList.unshift({label:'全部',id:''})
+                        }
+                    })
+                }catch(err){
+                    console.log(err);
+                }
+            },
+            blockChange(){
+                this.searchForm.wellType ="";
+                this.searchForm.wellId ="";
+            },
+            //获取井型数据
+            async getProdDailyTableApi(){
+                try{
+                    await getProdDailyTable(this.searchForm).then(res=>{
+                        if(res.data.code==200){
+                            this.wellTypeSelectList=res.data.data;
+                        }
+                    })
+                } catch(err){
+                    console.log(err);
+                }
+            },
+            wellTypeChange(){
+                this.searchForm.wellId ="";
+            },
+            //获取井号数据源
+            getWellListApi(){
+                try{
+                    getWellList(this.searchForm).then(res=>{
+                        if(res.data.code==200){
+                            this.wellSelectList=res.data.data;
+                        }
+                    })
+                }catch(err){
+                    console.log(err);
+                }
+            },
+            //根据井号id-获取上级井型，区块，油田
+            wellIdChange(){
+                getWell({wellId:this.searchForm.wellId}).then(res=>{
+                    // blockId ：区块标识 ，
+                    // wellType：井型，
+                    // wellId ：井id，
+                    // ogfId：油田id
                 })
+            },
+            //获取模型名称数据源
+            getAllModelName() {
+                getAllModelName().then(res => {
+                    if (res.data.code ==200) {
+                        this.modeSelectList = res.data.data;
+                    } 
+                })
+            },
+            //根据模型名称获取模型id
+            modelChange() {
+                this.searchForm.modelId='';
+                for (const item of this.modeSelectList) { 
+                    if (item.modelName == this.searchForm.modelName) {
+                        this.searchForm.modelId = item.modelId;
+                        this.isModuleBtn = false;
+                    }
+                }
             },
             //查询列表数据
             queryTableDate() {
@@ -339,16 +449,13 @@
                     this.tableLoading = false;
                 });
             },
-            // 根据模型名称获取模型id
-            modelOptionChange() {
-                this.searchForm.modelId='';
-                for (const item of this.modelOptions) {
-                    if (item.modelName == this.searchForm.modelName) {
-                        this.searchForm.modelId = item.modelId;
-                        this.isModuleBtn = false;
-                    }
-                }
+            //切换分页
+            pagination(e) {
+                this.page.currentPage = e.page;
+                this.page.pageSize = e.limit;
+                this.queryTableDate();
             },
+            
             //打开弹出框
             openEditDialog(row) {
                 this.$nextTick(() => {
@@ -416,20 +523,18 @@
                 this.$refs['moduleFrom'].resetFields();
                 this.moduleDialog = false;
             },
-            
-            //切换分页
-            pagination(e) {
-                this.page.currentPage = e.page;
-                this.page.pageSize = e.limit;
-                this.queryTableDate();
-            },
-            
             //模型说明文档下载
             getModelInstructionManual() {
                 getModelInstructionManual().then(res => {
                     const blob = new Blob([res],{ type: "application/vnd.ms-excel" });
                     saveAs(blob, '油藏动态分析模型说明手册');
                 }).catch(() => {});
+            },
+            //跳转模型配置界面
+            getModelOperate(){
+                this.$router.push({
+                    path:'modelOperate'
+                })
             },
         },
     };

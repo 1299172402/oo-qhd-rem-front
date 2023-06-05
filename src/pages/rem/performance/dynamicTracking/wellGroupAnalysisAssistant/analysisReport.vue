@@ -99,59 +99,40 @@
                     </div>
                     <div style="flex:1;min-height:380px;">
                         <pagePanel headerTitle="井组动态分析详情列表" style="margin-top:0;height:100%;">
-                            <el-table 
-                                class="doubleHeader"
-                                :row-style="{ height: '0px' }"
-                                :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-                                :data="tableData"
-                                header-cell-class-name="table_header"
-                                :cell-style="{ padding: '6px', 'text-align': 'center' }"
-                                :default-sort="{ prop: 'date', order: 'descending' }"
-                                height="100%"
-                                @sort-change="changeTableSort" ref="tableList">
+                            <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList">
                                 <el-table-column prop="wellId" align="center" label="井组" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
-                                <el-table-column label-class-name="twoRowHeader" v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" :label="item.name" align="center" sortable="custom" min-width="170">
-                                    <template #header>
-                                        <div v-if="item.unit">
-                                            <span>{{item.name}}</span>
-                                            <br />
-                                            <span>{{item.unit}}</span>
-                                        </div>
-                                        <div v-else>
-                                            <span>{{item.name}}</span>
-                                        </div>
-                                    </template>
-                                    <template slot-scope="{row}">
-                                        <span v-if="row[item.code+'Message']==''">{{row[item.code]}}</span>
-                                        <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
-                                            <span>{{row[item.code]}}</span>
-                                        </el-tooltip>
-                                    </template>
-                                </el-table-column>
+                                <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" :label="item.name" :render-header="renderHeader" align="center" min-width="140" sortable="custom">
+                                      <template slot-scope="{row}">
+                                          <span v-if="row[item.code+'Message']==''">{{row[item.code]}}</span>
+                                          <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
+                                              <span>{{row[item.code]}}</span>
+                                          </el-tooltip>
+                                      </template>
+                                  </el-table-column>
                                 <el-table-column prop="injectionResponseAnalysis" align="center" label="注水受效" min-width="140">
-                                    <template slot-scope="{row}">
-                                        <span v-if="row['injectionResponseAnalysisMessage']==''">{{row['injectionResponseAnalysis']}}</span>
-                                        <el-tooltip v-else class="item" effect="dark" :content="row['injectionResponseAnalysisMessage']" placement="top">
-                                            <span>{{row['injectionResponseAnalysis']}}</span>
-                                        </el-tooltip>
-                                    </template>
-                                </el-table-column>
+                                      <template slot-scope="{row}">
+                                          <span v-if="row['injectionResponseAnalysisMessage']==''">{{row['injectionResponseAnalysis']}}</span>
+                                          <el-tooltip v-else class="item" effect="dark" :content="row['injectionResponseAnalysisMessage']" placement="top">
+                                              <span>{{row['injectionResponseAnalysis']}}</span>
+                                          </el-tooltip>
+                                      </template>
+                                  </el-table-column>
                                 <el-table-column prop="injectionProductionBalance" align="center" label="注水平衡" min-width="140">
-                                    <template slot-scope="{row}">
-                                        <span v-if="row['injectionProductionBalanceMessage']==''">{{row['injectionProductionBalance']}}</span>
-                                        <el-tooltip v-else class="item" effect="dark" :content="row['injectionProductionBalanceMessage']" placement="top">
-                                            <span>{{row['injectionProductionBalance']}}</span>
-                                        </el-tooltip>
-                                    </template>
-                                </el-table-column>
+                                      <template slot-scope="{row}">
+                                          <span v-if="row['injectionProductionBalanceMessage']==''">{{row['injectionProductionBalance']}}</span>
+                                          <el-tooltip v-else class="item" effect="dark" :content="row['injectionProductionBalanceMessage']" placement="top">
+                                              <span>{{row['injectionProductionBalance']}}</span>
+                                          </el-tooltip>
+                                      </template>
+                                  </el-table-column>
                                 <el-table-column prop="thePressureToKeep" align="center" label="压力保持" min-width="140">
-                                    <template slot-scope="{row}">
-                                        <span v-if="row['thePressureToKeepMessage']==''">{{row['thePressureToKeep']}}</span>
-                                        <el-tooltip v-else class="item" effect="dark" :content="row['thePressureToKeepMessage']" placement="top">
-                                            <span>{{row['thePressureToKeep']}}</span>
-                                        </el-tooltip>
-                                    </template>
-                                </el-table-column>
+                                      <template slot-scope="{row}">
+                                          <span v-if="row['thePressureToKeepMessage']==''">{{row['thePressureToKeep']}}</span>
+                                          <el-tooltip v-else class="item" effect="dark" :content="row['thePressureToKeepMessage']" placement="top">
+                                              <span>{{row['thePressureToKeep']}}</span>
+                                          </el-tooltip>
+                                      </template>
+                                  </el-table-column>
                                 <el-table-column align="center" label="措施初选">
                                     <el-table-column prop="measuresName" align="center" label="推荐措施" min-width="140"></el-table-column>
                                     <el-table-column prop="theDate" min-width="140px" align="center" label="推荐日期"></el-table-column>
