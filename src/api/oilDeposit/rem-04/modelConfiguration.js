@@ -65,8 +65,29 @@ export function addGeneralConfig(request) {
 //修改参数配置
 export function editGeneralConfig(request) {
   return Axios({
-    url: `${baseUrl}/generalConfigMt/editGeneralConfig`,
+    url: `${baseUrl}/generalConfigMt/editModelConfigValue`,
     method: "post",
-    data: request,
+    data: request,  
   });
 }
+
+//删除模型配置
+export function delGeneralConfig(request) {
+  return Axios({
+    url: `${baseUrl}/generalConfigMt/delGeneralConfig/${request.id}`,
+    method: "delete",
+  });
+}
+
+
+//大分页接口
+export function getPageBySelectType(request) {
+  return Axios({
+    url: `${baseUrl}/generalConfigMt/getPageBySelectType`,
+    method: "get",
+    params: request
+  });
+}
+
+
+

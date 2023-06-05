@@ -6,25 +6,25 @@
             <div class="g-row-flex-V g-w100 g-h100">
                 <span>油田：</span>
                 <el-select v-model="searchForm.ogfId" disabled style="width:150px;margin-right:15px;">
-                    <el-option v-for="item in ogfSelectList" :key="item.id" :label="item.label" :value="item.id"></el-option>
+                    <el-option v-for="(item,index) in ogfSelectList" :key="index" :label="item.label" :value="item.id"></el-option>
                 </el-select>
                 <span>区块：</span>
                 <el-select v-model="searchForm.blockId" @change="blockChange" style="width:150px;margin-right:15px;">
-                    <el-option v-for="item in blockSelectList" :key="item.id" :label="item.label" :value="item.id"></el-option>
+                    <el-option v-for="(item,index) in blockSelectList" :key="index" :label="item.label" :value="item.id"></el-option>
                 </el-select>
                 <span>井型：</span>
                 <el-select v-model="searchForm.wellType" @change="wellTypeChange" style="width:150px;margin-right:15px;">
-                    <el-option v-for="item in wellTypeSelectList" :key="item.id" :label="item.label" :value="item.id"></el-option>
+                    <el-option v-for="(item,index) in wellTypeSelectList" :key="index" :label="item.label" :value="item.id"></el-option>
                 </el-select>
                 <span>井号：</span>
                 <el-select v-model="searchForm.wellId" @change="wellIdChange" :filterable="true" :clearable="true" style="width:150px;margin-right:15px;">
-                    <el-option v-for="item in wellSelectList" :key="item.id" :label="item.label" :value="item.id"></el-option>
+                    <el-option v-for="(item,index) in wellSelectList" :key="index" :label="item.label" :value="item.id"></el-option>
                 </el-select>
                 
                 <span>模型名称：</span>
                 <el-select v-model="searchForm.modelName" @change="modelChange" :filterable="true" :clearable="true" style="width:280px;margin-right:15px;">
-                    <el-option v-for="item in modeSelectList" :key="item.modelId" :label="item.modelName" :value="item.modelName"></el-option>
-                </el-select>
+                    <el-option v-for="(item,index) in modeSelectList" :key="index" :label="item.modelName" :value="item.modelName"></el-option>
+                </el-select>   
                 
                 <span>配置项代码：</span>
                 <el-input style="width:130px;margin-right:15px;" v-model="searchForm.configId" clearable></el-input>
@@ -71,17 +71,23 @@
         
         <el-dialog title="编辑参数" :visible.sync="dialogVisible" width="500px">
             <el-form :model="editForm" :rules="rules" ref="editForm" label-width="80px">
+                <el-form-item label="应用对象">
+                    <el-input size="mini" :value="editForm.ogfName+(editForm.blockName?'-'+editForm.blockName+'-':'')+(editForm.wellTypeName?editForm.wellTypeName+'-':'')+(editForm.wellName?editForm.wellName:'')" disabled></el-input>
+                </el-form-item>
+                    <el-form-item label="选值方式">
+                        <el-input size="mini" v-model="editForm.selectType" disabled></el-input>
+                    </el-form-item>
                     <el-form-item label="模型ID">
-                        <el-input size="mini" v-model="editForm.modelId" disabled="true"></el-input>
+                        <el-input size="mini" v-model="editForm.modelId" disabled></el-input>
                     </el-form-item>
                     <el-form-item label="模型名称">
-                        <el-input size="mini" v-model="editForm.modelName" disabled="true"></el-input>
+                        <el-input size="mini" v-model="editForm.modelName" disabled></el-input>
                     </el-form-item>
                     <el-form-item label="配置描述">
-                        <el-input v-model="editForm.configDescribe" disabled="true" type="textarea"></el-input>
+                        <el-input v-model="editForm.configDescribe" disabled type="textarea"></el-input>
                     </el-form-item>
                     <el-form-item label="配置代码">
-                        <el-input size="mini" v-model="editForm.configId" disabled="true"></el-input>
+                        <el-input size="mini" v-model="editForm.configId" disabled></el-input>
                     </el-form-item>
                     <el-form-item label="配置项值" prop="configValue">
                         <el-input size="mini" v-model="editForm.configValue"></el-input>
