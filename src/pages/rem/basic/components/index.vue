@@ -1,7 +1,7 @@
 <template>
   <div class="menu menuColor">
     <!--隐藏菜单-->
-    <div class="ensconce">
+    <div class="ensconce" style="cursor: pointer">
       <h2>
         <img v-if="$store.state.setting.mode === 'dark'" src="@/assets/treeSelectDark2.png" alt="">
         <img v-else src="@/assets/treeSelectWhite2.png" alt="">
@@ -12,7 +12,7 @@
     </div>
     <!--显示菜单-->
     <div class="open openColor" :class="$store.state.setting.mode === 'dark' ? 'open' : 'open-white'">
-      <div class="navH navHColor">
+      <div class="navH navHColor" style="cursor: pointer">
         <div style="font-size: 14px;font-weight: 500;">
           目标导航
         </div>
@@ -92,7 +92,7 @@ export default {
     },
     init() {
       // 隐藏菜单
-      const obscure = document.querySelector(".navH span");
+      const obscure = document.querySelector(".navH");
       const open = document.querySelector(".open");
       const ensconce = document.querySelector(".ensconce");
       let that = this;
@@ -106,7 +106,7 @@ export default {
         }, 350);
       };
       // 显示菜单
-      const showC = document.querySelector(".ensconce h2");
+      const showC = document.querySelector(".ensconce");
       showC.onclick = function () {
         open.style.marginLeft = "0px";
         setTimeout(() => {
