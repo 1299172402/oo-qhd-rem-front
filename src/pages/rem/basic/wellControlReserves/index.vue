@@ -1,6 +1,11 @@
 <!-- 基础数据维护 - 井控储量数据界面 -->
 <template>
-  <div style="width: 100%; height: 100%" class="pageBox">
+  <div style="display: flex;flex-direction: row; width: 100%; height: 100%" class="pageBox">
+      <div style=" height: 100%">
+          <tree-multiple-selection :level = "'4'" @childinfo = 'childinfo'  @change="layoutChange"/>
+      </div>
+      <div
+          style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
     <header-search class="g-w100 g-h100" style="height: auto">
       <div class="g-row-flex-V g-w100 g-h100">
         <div style="margin-top: 20px">
@@ -102,6 +107,7 @@
         <div class="boxfoot"></div>
       </div>
     </pagePanel>
+      </div>
   </div>
 </template>
 <script>
@@ -114,6 +120,7 @@ import {
   fetchProductionWellsByPlatform,
 } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { queryLayerList, getOilFieldList } from "@/api/rem/workcompanydesignate";
+import treeMultipleSelection from "@/components/intelligentOilfield/tree_multiple_selection/index.vue";
 import { saveControlledReserves, getControlledReserves } from "@/api/rem/welldetailedevaluationresult";
 import { 
     queryOperatingCompanyDetail,
@@ -124,7 +131,7 @@ import {
 } from "@/api/basic/master";
 
 export default {
-  components: {},
+  components: {treeMultipleSelection},
   data() {
     return {
       cwOptions: [],
@@ -152,6 +159,14 @@ export default {
     this.queryserch();
   },
   methods: {
+      childinfo(a,b,c){
+          console.log('a->',a)
+          console.log('b->',b)
+          console.log('c->',c)
+      },
+      layoutChange() {
+          this.$refs.table.doLayout()
+      },
     getList() {
         //获取作业公司
         queryOperatingCompanyDetail({}).then(res=>{
