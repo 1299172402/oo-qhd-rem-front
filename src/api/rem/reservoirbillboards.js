@@ -19,15 +19,21 @@ export function productionMetricsOverview({ date } = {}) {
     method: "get",
   });
 }
+export function queryCapacityComposition() {
+  return request({
+    url: `${baseUrl}/reservoirBillboards/queryCapacityComposition`,
+    method: "get",
+  });
+}
 export function queryMeasureEffectTrack({ evaluationDate, oilFieldId, platformId, showNormal, timeGranularityCode } = {}) {
   return request({
     url: `${baseUrl}/reservoirBillboards/queryMeasureEffectTrack?evaluationDate=${ evaluationDate || "" }&oilFieldId=${ oilFieldId || "" }&platformId=${ platformId || "" }&showNormal=${ showNormal || "" }&timeGranularityCode=${ timeGranularityCode || "" }`,
     method: "get",
   });
 }
-export function queryOilFieldIncident({ chronicleTypeCode, endTime, startTime, wellId } = {}) {
+export function queryOilFieldIncident({ chronicleTypeCode, endTime, ogfId, platformId, startTime, wellId } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/queryOilFieldIncident?chronicleTypeCode=${ chronicleTypeCode || "" }&endTime=${ endTime || "" }&startTime=${ startTime || "" }&wellId=${ wellId || "" }`,
+    url: `${baseUrl}/reservoirBillboards/queryOilFieldIncident?chronicleTypeCode=${ chronicleTypeCode || "" }&endTime=${ endTime || "" }&ogfId=${ ogfId || "" }&platformId=${ platformId || "" }&startTime=${ startTime || "" }&wellId=${ wellId || "" }`,
     method: "get",
   });
 }
