@@ -1,113 +1,116 @@
 <!-- 基础数据维护 - 井控储量数据界面 -->
 <template>
-  <div style="display: flex;flex-direction: row; width: 100%; height: 100%" class="pageBox">
+  <div style="width: 100%; height: 100%" class="pageBox">
+    <div style="display: flex;flex-direction: row; height: 100%;">
+      
       <div style=" height: 100%">
-          <tree-multiple-selection :level = "'4'" @childinfo = 'childinfo'  @change="layoutChange"/>
+        <tree-multiple-selection :deptOptions="deptOptions" :level = "'5'" @childinfo = 'childinfo'  @change="layoutChange"/>
       </div>
       <div
-          style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
-    <header-search class="g-w100 g-h100" style="height: auto">
-      <div class="g-row-flex-V g-w100 g-h100">
-        <div style="margin-top: 20px">
-          <el-form :inline="true">
-            <el-form-item label="作业公司：">
-              <el-select v-model="queryData.orgId" disabled>
-                <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.orgName" :value="item.orgId">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="油田：">
-              <el-select v-model="queryData.ogfId" disabled>
-                <el-option
-                  v-for="(item, index) in oilFields"
-                  :key="index"
-                  :label="item.ogfName"
-                  :value="item.ogfId"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="平台：" prop="pt">
-              <el-select v-model="queryData.pt" @change="onPlatfromChange">
-                <el-option v-for="item in platforms" :key="item.id" :label="item.platformName" :value="item.platformId">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="井号：">
-              <el-select v-model="queryData.wellId" @change="choicewellName">
-                <el-option v-for="item in wells" :key="item.wellId" :label="item.wellName" :value="item.wellId">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="queryserch()" icon="el-icon-search">搜索</el-button>
-              <el-button class="commonBtn" @click="refresh()" icon="el-icon-refresh">重置</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </div>
-    </header-search>
-
-    <pagePanel headerTitle="单井储量信息维护界面" style="height: calc(100% - 100px)" class="g-w100" :show-btn="true">
-      <div class="alltitle">{{ wellName }}</div>
-      <div class="boxall" style="height: 500px; width: 900px; margin: auto">
-        <div style="margin-left:4%;margin-top:100px">
-          <el-form
-            :model="djclForm"
-            style="width: 800px; padding-top: 20px"
-            ref="djclForm"
-            label-width="110px"
-            class="demo-ruleForm"
-          >
-            <el-row>
-              <el-col :span="10">
-                <el-form-item label="层位选择" prop="cw">
-                  <el-select v-model="djclForm.layerId" @change="selectcw" placeholder="" style="width: 100.5%">
-                    <el-option
-                      v-for="item in cwOptions"
-                      :key="item.layerId"
-                      :label="item.layerName"
-                      :value="item.layerId"
-                    >
+        style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
+        <header-search class="g-w100 g-h100" style="height: auto">
+          <div class="g-row-flex-V g-w100 g-h100">
+            <div style="margin-top: 20px">
+              <el-form :inline="true">
+                <el-form-item label="作业公司：">
+                  <el-select v-model="queryData.orgId" disabled>
+                    <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.orgName" :value="item.orgId">
                     </el-option>
                   </el-select>
                 </el-form-item>
-              </el-col>
-              <el-col :span="2">&nbsp;</el-col>
-              <el-col :span="10">
-                <el-form-item label="有效厚度" prop="cw">
-                  <el-input v-model="djclForm.thicknessEffe" :disabled="edit"> <i slot="suffix">m</i></el-input>
+                <el-form-item label="油田：">
+                  <el-select v-model="queryData.ogfId" disabled>
+                    <el-option
+                      v-for="(item, index) in oilFields"
+                      :key="index"
+                      :label="item.ogfName"
+                      :value="item.ogfId"
+                    ></el-option>
+                  </el-select>
                 </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="10">
-                <el-form-item label="控制储量" prop="kzcl">
-                  <el-input v-model="djclForm.probReservesWell" :disabled="edit"> <i slot="suffix">m³</i></el-input>
+                <el-form-item label="平台：" prop="pt">
+                  <el-select v-model="queryData.pt" @change="onPlatfromChange">
+                    <el-option v-for="item in platforms" :key="item.id" :label="item.platformName" :value="item.platformId">
+                    </el-option>
+                  </el-select>
                 </el-form-item>
-              </el-col>
-              <el-col :span="2">&nbsp;</el-col>
-              <el-col :span="10">
-                <el-form-item label="控制面积" prop="kzmj">
-                  <el-input v-model="djclForm.controlArea" :disabled="edit">
-                    <i slot="suffix">m²</i>
-                  </el-input>
+                <el-form-item label="井号：">
+                  <el-select v-model="queryData.wellId" @change="choicewellName">
+                    <el-option v-for="item in wells" :key="item.wellId" :label="item.wellName" :value="item.wellId">
+                    </el-option>
+                  </el-select>
                 </el-form-item>
-              </el-col>
-              <!-- <el-col :span="2">㎡</el-col> -->
-            </el-row>
-            <el-row>
-              <el-col :span="24" align="right" style="padding-top: 20px">
-                <el-button type="primary" @click="redact" icon="el-icon-edit">编辑</el-button>
-                <el-button type="primary" @click="save">保存</el-button>
-                <el-button type="primary" icon="el-icon-search">运行计算</el-button>
-              </el-col>
-            </el-row>
-          </el-form>
-        </div>
-        <div class="boxfoot"></div>
+                <el-form-item>
+                  <el-button type="primary" @click="queryserch()" icon="el-icon-search">搜索</el-button>
+                  <el-button class="commonBtn" @click="refresh()" icon="el-icon-refresh">重置</el-button>
+                </el-form-item>
+              </el-form>
+            </div>
+          </div>
+        </header-search>
+    
+        <pagePanel headerTitle="单井储量信息维护界面" style="height: calc(100% - 100px)" class="g-w100" :show-btn="true">
+          <div class="alltitle">{{ wellName }}</div>
+          <div class="boxall" style="height: 500px; width: 900px; margin: auto">
+            <div style="margin-left:4%;margin-top:100px">
+              <el-form
+                :model="djclForm"
+                style="width: 800px; padding-top: 20px"
+                ref="djclForm"
+                label-width="110px"
+                class="demo-ruleForm"
+              >
+                <el-row>
+                  <el-col :span="10">
+                    <el-form-item label="层位选择" prop="cw">
+                      <el-select v-model="djclForm.layerId" @change="selectcw" placeholder="" style="width: 100.5%">
+                        <el-option
+                          v-for="item in cwOptions"
+                          :key="item.layerId"
+                          :label="item.layerName"
+                          :value="item.layerId"
+                        >
+                        </el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="2">&nbsp;</el-col>
+                  <el-col :span="10">
+                    <el-form-item label="有效厚度" prop="cw">
+                      <el-input v-model="djclForm.thicknessEffe" :disabled="edit"> <i slot="suffix">m</i></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="10">
+                    <el-form-item label="控制储量" prop="kzcl">
+                      <el-input v-model="djclForm.probReservesWell" :disabled="edit"> <i slot="suffix">m³</i></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="2">&nbsp;</el-col>
+                  <el-col :span="10">
+                    <el-form-item label="控制面积" prop="kzmj">
+                      <el-input v-model="djclForm.controlArea" :disabled="edit">
+                        <i slot="suffix">m²</i>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                  <!-- <el-col :span="2">㎡</el-col> -->
+                </el-row>
+                <el-row>
+                  <el-col :span="24" align="right" style="padding-top: 20px">
+                    <el-button type="primary" @click="redact" icon="el-icon-edit">编辑</el-button>
+                    <el-button type="primary" @click="save">保存</el-button>
+                    <el-button type="primary" icon="el-icon-search">运行计算</el-button>
+                  </el-col>
+                </el-row>
+              </el-form>
+            </div>
+            <div class="boxfoot"></div>
+          </div>
+        </pagePanel>
       </div>
-    </pagePanel>
-      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -120,7 +123,6 @@ import {
   fetchProductionWellsByPlatform,
 } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { queryLayerList, getOilFieldList } from "@/api/rem/workcompanydesignate";
-import treeMultipleSelection from "@/components/intelligentOilfield/tree_multiple_selection/index.vue";
 import { saveControlledReserves, getControlledReserves } from "@/api/rem/welldetailedevaluationresult";
 import { 
     queryOperatingCompanyDetail,
@@ -129,6 +131,7 @@ import {
     queryPlatformQueryWellListDetail,
     queryOilAndGasFieldQueryPositionDetail
 } from "@/api/basic/master";
+import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 
 export default {
   components: {treeMultipleSelection},
@@ -159,14 +162,6 @@ export default {
     this.queryserch();
   },
   methods: {
-      childinfo(a,b,c){
-          console.log('a->',a)
-          console.log('b->',b)
-          console.log('c->',c)
-      },
-      layoutChange() {
-          this.$refs.table.doLayout()
-      },
     getList() {
         //获取作业公司
         queryOperatingCompanyDetail({}).then(res=>{
@@ -364,6 +359,11 @@ export default {
           });
         });
       }
+    },
+    childinfo(data){
+      console.log(data)
+      this.queryData.pt = data[3].value
+      this.queryData.wellId = data[4].value
     },
   },
 };
