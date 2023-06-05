@@ -163,9 +163,10 @@
                         <!--          </el-upload>-->
                         <file-upload
                             :limit="1"
+                            v-model:biz-path="this.imageurl"
                             :is-picture-card="true"
                             :is-show-tip="false"
-                            biz-path="picture"
+                            biz-path="oo-qhd-rem-front/test"
                             bucket-name="zhy"
                         />
                     </el-form-item>
@@ -222,6 +223,8 @@ export default {
   name: "WellGroupAnalysisAssistant",
   data() {
     return {
+      imageurl:'',
+        // 文件上传预览
       fileList: [],
       //油田
       oilField: [],
