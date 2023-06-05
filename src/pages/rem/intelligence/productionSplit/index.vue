@@ -102,7 +102,6 @@
                 <el-button
                     type="primary"
                     @click="doExportFile"
-                    icon="el-icon-download"
                     style="float: right"
                 >下载
                 </el-button>
