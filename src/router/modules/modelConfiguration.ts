@@ -15,6 +15,12 @@ export default [
         meta: { title: "模型配置列表" },
         component: () => import("@/pages/rem/modelConfiguration/modelconfig.vue"),
       },
+      {
+        path: "modelOperate",
+        name: "modelOperate",
+        meta: { title: "模型配置" },
+        component: () => import("@/pages/rem/modelConfiguration/modelOperate.vue"),
+      },
     ],
   },
 ];
