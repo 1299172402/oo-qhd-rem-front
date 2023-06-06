@@ -23,16 +23,16 @@
                     <el-select v-if="selectType=='按井配置'" v-model="searchForm.wellId" @change="wellIdChange" style="width:150px;margin-right:15px;">
                         <el-option v-for="(item,index) in wellSelectList" :key="index" :label="item.label" :value="item.id"></el-option>
                     </el-select>
-                    <el-button type="primary" icon="el-icon-search" @click="">搜索</el-button>
+                    <el-button type="primary" icon="el-icon-search" @click="getPageBySelectTypeApi">搜索</el-button>
                     <el-button type="primary" style="margin-left:15px!important;" @click="addTable">新增</el-button>
                 </div>
                 <div class="childComponents" :style="{height:selectType=='通用配置'? '100%' : 'calc(100% - 50px)' }" v-if='modeSelectList.length'>
                     <tableComponents1 :selectType="selectType" :searchForm="searchForm" :modeSelectList="modeSelectList" v-if="selectType=='通用配置'"></tableComponents1>
                     <div class="tableHeight">
                         <div class="block-view" v-for="(item,index) in tableList" :key="index">
-                            <tableComponents2 :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList"  v-if="selectType=='按区块配置'" style="height:300px;"></tableComponents2>
-                            <tableComponents3 :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList"  v-if="selectType=='按井型配置'" style="height:300px;"></tableComponents3>
-                            <tableComponents4 :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList"  v-if="selectType=='按井配置'" style="height:300px;"></tableComponents4>
+                            <tableComponents2 :key="index"  :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList"  v-if="selectType=='按区块配置'" style="height:300px;"></tableComponents2>
+                            <tableComponents3 :key="index"  :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList"  v-if="selectType=='按井型配置'" style="height:300px;"></tableComponents3>
+                            <tableComponents4 :key="index"  :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList"  v-if="selectType=='按井配置'" style="height:300px;"></tableComponents4>
                         </div>
                     </div>
                     <pagination v-if="page.total&&selectType!='通用配置'" :pageSizes="[5, 10, 15]" :total="page.total" :page.sync="page.currentPage" :limit.sync="page.pageSize" @pagination="pagination" />
@@ -193,9 +193,20 @@
                 this.$nextTick(()=>{
                     this.selectLoading=true;
                 })
+                this.searchForm={
+                    ogfId:'',
+                    ogfName:'',
+                    blockId:'',
+                    blockName:'',
+                    wellType:'',
+                    wellId :'',
+                    wellName:'',
+                    modelName: '',
+                    modelId: '',
+                    configId: ''
+                };
                 console.log('this.selectType',this.selectType)
                 if(this.selectType!='通用配置'){
-                    console.log('??')
                     this.getPageBySelectTypeApi();
                 }
             },

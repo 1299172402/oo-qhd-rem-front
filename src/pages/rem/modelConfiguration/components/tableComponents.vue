@@ -105,6 +105,13 @@
             }
         },
         mounted(){
+            if(this.selectType!='通用配置'&&!this.searchForm.id){
+                console.log(this.searchForm)
+                console.log('走了')
+                return false;
+            }else{console.log(this.searchForm)
+                console.log('没走')
+            }
             this.queryTableDate();
         },
         methods:{
