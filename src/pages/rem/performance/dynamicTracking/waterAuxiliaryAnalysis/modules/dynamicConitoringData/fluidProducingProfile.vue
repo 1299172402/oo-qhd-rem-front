@@ -12,8 +12,8 @@
             <info-window infoWidth="100%" infoHeight="100%" headerTitle="吸水剖面测井结果表" isShowMaxBtn>
                 <el-table id="tableData" highlight :data="tableData" style="width: 100%" height="calc(100% - 10px)">
                     <el-table-column prop="productionInterval" label="解释井段" align="center" min-width="150" fixed></el-table-column>
-                    <el-table-column prop="injTotal" :label="`日总注入量\n(m³)`" align="center" min-width="80"></el-table-column>
-                    <el-table-column prop="relativeIntake" :label="`相对吸入量\n(m)`" align="center" min-width="80"></el-table-column>
+                    <el-table-column prop="injTotal" :label="`日总注入量\n(m³)`" align="center" min-width="100"></el-table-column>
+                    <el-table-column prop="relativeIntake" :label="`相对吸入量\n(m)`" align="center" min-width="100"></el-table-column>
                     <el-table-column prop="interpConclusion" :label="`解释结论\n(m)`" align="center" min-width="80"></el-table-column>
                     <el-table-column prop="injWhPressure" :label="`注入压力\n(MPa)`" align="center" min-width="80"></el-table-column>
                     <el-table-column prop="absoluteIntake" :label="`绝对吸入量\n(m³/(MPa·d))`" align="center" min-width="130"></el-table-column>

@@ -27,14 +27,26 @@
                     <el-button type="primary" style="margin-left:15px!important;" @click="addTable">新增</el-button>
                 </div>
                 <div class="childComponents" :style="{height:selectType=='通用配置'? '100%' : 'calc(100% - 50px)' }" v-if='modeSelectList.length'>
-                    <tableComponents1 :selectType="selectType" :searchForm="searchForm" :modeSelectList="modeSelectList" v-if="selectType=='通用配置'"></tableComponents1>
-                    <div class="tableHeight">
+                    <tableComponents :selectType="selectType" :searchForm="searchForm" :modeSelectList="modeSelectList" v-if="selectType=='通用配置'"></tableComponents>
+                    
+                    <div class="tableHeight" v-if="selectType=='按区块配置'" >
                         <div class="block-view" v-for="(item,index) in tableList" :key="index">
-                            <tableComponents2 :key="index"  :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList"  v-if="selectType=='按区块配置'" style="height:300px;"></tableComponents2>
-                            <tableComponents3 :key="index"  :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList"  v-if="selectType=='按井型配置'" style="height:300px;"></tableComponents3>
-                            <tableComponents4 :key="index"  :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList"  v-if="selectType=='按井配置'" style="height:300px;"></tableComponents4>
+                            <tableComponents :ref="'tableComponents'+index" :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList" style="height:300px;"></tableComponents>
                         </div>
                     </div>
+                    
+                    <div class="tableHeight" v-if="selectType=='按井型配置'" >
+                        <div class="block-view" v-for="(item,index) in tableList" :key="index">
+                            <tableComponents :ref="'tableComponents'+index" :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList" style="height:300px;"></tableComponents>
+                        </div>
+                    </div>
+                    
+                    <div class="tableHeight" v-if="selectType=='按井配置'" >
+                        <div class="block-view" v-for="(item,index) in tableList" :key="index">
+                            <tableComponents :ref="'tableComponents'+index" :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList" style="height:300px;"></tableComponents>
+                        </div>
+                    </div>
+                    
                     <pagination v-if="page.total&&selectType!='通用配置'" :pageSizes="[5, 10, 15]" :total="page.total" :page.sync="page.currentPage" :limit.sync="page.pageSize" @pagination="pagination" />
                 </div>
             </div>
@@ -45,12 +57,9 @@
 <script>
     import {getAllModelName,} from '@/api/modelConfiguration/config/modelConfigAPI.js';
     import {getOgfList,getBlockList,getProdDailyTable,getWellList,getWell,addGeneralConfig,getPageBySelectType} from '@/api/oilDeposit/rem-04/modelConfiguration.js';
-    import tableComponents1 from  './components/tableComponents.vue'
-    import tableComponents2 from  './components/tableComponents.vue'
-    import tableComponents3 from  './components/tableComponents.vue'
-    import tableComponents4 from  './components/tableComponents.vue'
+    import tableComponents from  './components/tableComponents.vue'
     export default {
-        components:{tableComponents1,tableComponents2,tableComponents3,tableComponents4},
+        components:{tableComponents},
         data() {
             return {
                 selectLoading:true,
@@ -74,9 +83,6 @@
                     wellType:'',
                     wellId :'',
                     wellName:'',
-                    modelName: '',
-                    modelId: '',
-                    configId: ''
                 },
                 tableList:[],
                 page: {
@@ -193,19 +199,11 @@
                 this.$nextTick(()=>{
                     this.selectLoading=true;
                 })
-                this.searchForm={
-                    ogfId:'',
-                    ogfName:'',
-                    blockId:'',
-                    blockName:'',
-                    wellType:'',
-                    wellId :'',
-                    wellName:'',
-                    modelName: '',
-                    modelId: '',
-                    configId: ''
-                };
-                console.log('this.selectType',this.selectType)
+                this.searchForm.blockId='';
+                this.searchForm.blockName='';
+                this.searchForm.wellType='';
+                this.searchForm.wellId ='';
+                this.searchForm.wellName='';
                 if(this.selectType!='通用配置'){
                     this.getPageBySelectTypeApi();
                 }
@@ -216,6 +214,11 @@
                     if(res.data.code==200){
                         this.tableList=res.data.data.records;
                         this.page.total=res.data.data.total;
+                        this.$nextTick(()=>{
+                            this.tableList.forEach((el,i)=>{
+                                this.$refs['tableComponents'+i][0].queryTableDate(el);
+                            })
+                        })
                     }else{
                         this.tableList=[];
                     }
@@ -263,6 +266,11 @@
                     wellTypeName:this.searchForm.wellTypeName,
                     wellId: this.searchForm.wellId,
                     wellName: this.searchForm.wellName
+                })
+                this.$nextTick(()=>{
+                    this.tableList.forEach((el,i)=>{
+                        this.$refs['tableComponents'+i][0].queryTableDate(el);
+                    })
                 })
             }
         },
