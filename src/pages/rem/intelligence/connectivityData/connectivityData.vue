@@ -116,7 +116,6 @@
                 <el-button
                     type="primary"
                     size="mini"
-                    icon="el-icon-download"
                     style="float: right"
                     @click="downloadTable"
                 >下载

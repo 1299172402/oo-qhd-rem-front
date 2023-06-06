@@ -59,7 +59,6 @@
                 <el-button
                     type="primary"
                     size="mini"
-                    icon="el-icon-download"
                     @click="downloadTable"
                     style="float: right"
                 >下载

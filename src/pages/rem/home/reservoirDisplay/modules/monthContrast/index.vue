@@ -171,10 +171,10 @@ export default {
                 this.histogram.yAxis[0].max = null
                 //
                 this.histogram.series[0].data = res.data.data.monthlyPlannedOutputVo.map(item => {
-                    return item.allocProdMonthly
+                    return Number(item.allocProdMonthly).toFixed(4)
                 })
                 this.histogram.series[1].data = res.data.data.monthlyActualOutputVoList.map(item => {
-                    return item.checkedProdMonthly
+                    return Number(item.checkedProdMonthly).toFixed(4)
                 })
             })
         }

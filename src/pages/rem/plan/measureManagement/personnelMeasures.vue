@@ -51,7 +51,6 @@
 </template>
 <script>
 import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
-import personnelplan from "./components/personnelplan.vue";
 import operationplan from "./components/operationplan.vue";
 import planmessage from "./components/planmessage.vue";
 import { getOilFieldList, queryProductList } from "@/api/rem/workcompanydesignate.js";  
@@ -67,18 +66,16 @@ import {
 export default {
   components: {
     verticalSwitchButton,
-    personnelplan,
     operationplan,
     planmessage,
   },
   data() {
     return {
       dataList: [
-        { name: "人员计划", value: "personnelplan", isChecked: true },
         { name: "现场作业计划", value: "operationplan", isChecked: false },
         { name: "措施计划情况", value: "planmessage", isChecked: false },
       ],
-      currentTab: "personnelplan",
+      currentTab: "operationplan",
       infodata: this.queryParams,
       queryParams: { endTime: "", 
       selectPlatform: '',
@@ -86,7 +83,7 @@ export default {
       oilFields: [],
       platforms: [],
       platform:[],
-      activeName: "personnelplan",
+      activeName: "operationplan",
         date:'',
     };
   },

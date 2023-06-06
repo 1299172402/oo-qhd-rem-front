@@ -3,13 +3,10 @@
     <div class="z-main">
         <page-panel-new style="height:100%;margin-top:0;" show-btn>
             <div class="z-container">
-                <el-carousel :interval="4000" :autoplay="false" indicator-position="none" arrow="hover">
-                    <el-carousel-item v-for="(item, index) in imageList" ref="imageCaeousel" :key="index" style="height: 100%; overflow-y: auto;">
-                        <el-image :src="item" style="width: 100%;">
-                            <div slot="error"></div>
-                        </el-image>
-                    </el-carousel-item>
-                </el-carousel>
+               
+                   <iframe style="height: 100%;width: 100%" :src="imageurl"></iframe>
+                  
+               
             </div>
         </page-panel-new>
     </div>
@@ -19,6 +16,8 @@
 <script>
     import { getSectionWell} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
     import { downFileList} from "@/lib/remBase64Download.js";
+    import {filePreview} from "@/components/upload/utils/file";
+    
     export default {
         props: {
             oilFeildId: {},
@@ -28,6 +27,7 @@
         data() {
             return {
                 imageList: [],
+                imageurl:''
             };
         },
         mounted() {
@@ -73,40 +73,43 @@
                     wellId: "09D30C16BD1D4F759D53F74941701307",
                 };
                 this.imageList = [];
-                getSectionWell(request).then((res) => {
-                    if (res.data.code == 200) {
-                        let imgData = res.data.data.data;
-                        let type = res.data.data.type;
-                        let firstParty = "data:" + type + ";base64,";
-                        if (imgData) {
-                            this.imageList.push(firstParty + imgData);
-                        }
-                        let wellIds = res.data.data.wellIds;
-                        if (wellIds != null && wellIds.length > 0) {
-                            wellIds.forEach((item, index) => {
-                                if (item != this.wellId) {
-                                    console.log(item)
-                                    var queryParam = {
-                                        ogfId: this.oilFeildId,
-                                        platformId: this.platform,
-                                        wellId: item,
-                                    };
-                                    getSectionWell(queryParam).then((res) => {
-                                        if (res.data.code == 200) {
-                                            console.log(res)
-                                            let imgDataChild = res.data.data.data;
-                                            let typeChild = res.data.data.type;
-                                            let firstPartyChild = "data:" + typeChild + ";base64,";
-                                            if (imgDataChild) {
-                                                this.imageList.push(firstPartyChild + imgDataChild);
-                                            }
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    }
-                });
+                filePreview('').then((res)=>{
+                    this.imageurl = res.data.data
+                })
+                // getSectionWell(request).then((res) => {
+                //     if (res.data.code == 200) {
+                //         let imgData = res.data.data.data;
+                //         let type = res.data.data.type;
+                //         let firstParty = "data:" + type + ";base64,";
+                //         if (imgData) {
+                //             this.imageList.push(firstParty + imgData);
+                //         }
+                //         let wellIds = res.data.data.wellIds;
+                //         if (wellIds != null && wellIds.length > 0) {
+                //             wellIds.forEach((item, index) => {
+                //                 if (item != this.wellId) {
+                //                     console.log(item)
+                //                     var queryParam = {
+                //                         ogfId: this.oilFeildId,
+                //                         platformId: this.platform,
+                //                         wellId: item,
+                //                     };
+                //                     getSectionWell(queryParam).then((res) => {
+                //                         if (res.data.code == 200) {
+                //                             console.log(res)
+                //                             let imgDataChild = res.data.data.data;
+                //                             let typeChild = res.data.data.type;
+                //                             let firstPartyChild = "data:" + typeChild + ";base64,";
+                //                             if (imgDataChild) {
+                //                                 this.imageList.push(firstPartyChild + imgDataChild);
+                //                             }
+                //                         }
+                //                     });
+                //                 }
+                //             });
+                //         }
+                //     }
+                // });
             },
             //下载
             doDownLoad() {

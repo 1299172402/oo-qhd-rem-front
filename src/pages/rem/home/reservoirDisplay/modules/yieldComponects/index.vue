@@ -17,7 +17,7 @@ import {LineChart} from "echarts/charts";
 import * as echarts from "echarts/core";
 import {GridComponent, TooltipComponent, LegendComponent} from "echarts/components";
 import {CanvasRenderer} from "echarts/renderers";
-
+import {queryCapacityComposition} from "@/api/rem/reservoirbillboards";
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 export default {
     props: ["infodata"],
@@ -77,7 +77,7 @@ export default {
                 yAxis: [
                     {
                         type: "value",
-                        name: '当年累产油量(10m⁴m³)',
+                        name: '当年累产油量(10⁴m³)',
                         nameLocation: "center",
                         nameTextStyle: {
                             padding: [0, 0, 20, 0], // 上、右、下、左
@@ -107,7 +107,7 @@ export default {
                     {
                         name: "当年累计产量",
                         type: "bar",
-                        data: [20, 50, 80, 58, 83, 68, 57, 80, 42, 66],
+                        data: [],
                         barWidth: 10, //柱子宽度
                         barGap: 1, //柱子之间间距
                         itemStyle: {
@@ -129,7 +129,7 @@ export default {
                     {
                         name: "滚动预测",
                         type: "bar",
-                        data: [50, 70, 60, 61, 75, 87, 60, 62, 86, 46],
+                        data: [],
                         barWidth: 10,
                         barGap: 1,
                         itemStyle: {
@@ -151,7 +151,7 @@ export default {
                     {
                         name: "分公司奋斗",
                         type: "bar",
-                        data: [70, 48, 73, 68, 53, 47, 50, 72, 96, 86],
+                        data: [],
                         barWidth: 10,
                         barGap: 1,
                         itemStyle: {
@@ -174,7 +174,7 @@ export default {
                     {
                         name: "分公司考核",
                         type: "bar",
-                        data: [56, 45, 56, 48, 65, 52, 55, 68, 72, 68],
+                        data: [],
                         barWidth: 10,
                         barGap: 1,
                         itemStyle: {
@@ -203,8 +203,20 @@ export default {
         } else {
             this.histogram.legend.textStyle.color = "#000000";
         }
+        this.getinfo()
     },
     methods: {
+        getinfo(){
+            queryCapacityComposition().then((res)=>{
+                    let arr = res.data.data
+                    arr.map((n)=>{
+                    this.histogram.series[0].data.push(Number((n.yearLc/10000).toFixed(2)))
+                    this.histogram.series[1].data.push(Number((n.gdyc/10000).toFixed(2)))
+                    this.histogram.series[2].data.push(Number((n.fgsfd/10000).toFixed(2)))
+                    this.histogram.series[3].data.push(Number((n.fgskh/10000).toFixed(2)))
+                })
+            })
+        },
         linkroute() {
             this.$router.push({
                 path: "/plan/annualPlan",
