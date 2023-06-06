@@ -4,11 +4,11 @@
     <!-- <iframe :src="image?(image+'#toolbar=0'):''" style="width: 100%;height:100%;"></iframe> -->
     <!-- <el-row> -->
     <img
-      style="height: 100%"
+      style="height: 100%;border: #022743 solid 1px"
       src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"
     />
     <img
-      style="height: 100%; margin-left: 20px"
+      style="height: 100%; margin-left: 20px;border: #022743 solid 1px"
       src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"
     />
     <!-- </el-row> -->
