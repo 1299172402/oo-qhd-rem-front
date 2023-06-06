@@ -13,11 +13,13 @@
                 <el-table-column
                     type="index"
                     label="序号"
+                    fixed
                     align="center"
                     width="80"
                 ></el-table-column>
                 <el-table-column
                     prop="borePipeName"
+                    fixed
                     label="井号"
                     align="center"
                     min-width="140"
@@ -265,5 +267,11 @@ export default {
 <style scoped lang="scss">
 ::v-deep .el-table .cell:empty::before{
   content: '-';
+}
+::v-deep .el-table__fixed-header-wrapper .cell{
+    height: auto !important;
+}
+::v-deep .el-table__header-wrapper .cell{
+    height: auto !important;
 }
 </style>

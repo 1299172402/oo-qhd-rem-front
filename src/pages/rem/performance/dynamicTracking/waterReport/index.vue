@@ -266,20 +266,18 @@ export default {
 .app-container {
   height: 100%;
 
-  .el-table {
-    overflow: scroll;
-  }
+  //.el-table {
+  //  overflow: scroll;
+  //}
 }
 
-::v-deep .el-table__header-wrapper {
-  .cell {
-    height: auto !important;
-  }
-}
+//::v-deep .el-table__header-wrapper {
+//  .cell {
+//    height: auto !important;
+//  }
+//}
 
-.pertable thead .el-table-column--selection .cell {
-  display: none;
-}
+
 ::v-deep .el-table__body-wrapper {
   height: calc(100% - 70px) !important;
 }
