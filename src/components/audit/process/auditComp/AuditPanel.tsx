@@ -331,19 +331,19 @@ export default Vue.extend({
     // 驳回组件
     const terminateEl = (
       <t-form-item
-        key="opinionRequired"
-        label="处理意见"
-        name="opinion"
+        key="terminateProcessReason"
+        label="驳回意见"
+        name="terminateProcessReason"
       >
         <t-textarea
-          placeholder="请输入处理意见"
+          placeholder="请输入驳回意见"
           clearable
-          onChange={val => { this.auditInfo.opinion = val; }} />
+          onChange={val => { this.auditInfo.terminateProcessReason = val; }} />
       </t-form-item>
     );
-    // 处理意见元素
+      // 处理意见元素
     const defaultOpinionEl = (<t-form-item
-      key="opinionRequired"
+      key="defaultOpinionRequired"
       label="处理意见"
       name="opinion"
     >
@@ -418,16 +418,11 @@ export default Vue.extend({
           </t-form-item> : null
         }
         {
-          //     退回操作 todo
-        }
-        {
-          // 意见元素
           this.flowShowComment ? terminateOrOpinionEl : null
         }
         {
-          !this.isResolve && this.auditInfo.currentAction.key !== "Reject" && this.defaultAction !== "Terminate" ? nextAuditUserEl : null
+          !this.isResolve && !["Reject", "Terminate"].includes(this.auditInfo.currentAction.key) && this.defaultAction !== "Terminate" ? nextAuditUserEl : null
         }
-
         {
           this.nodeType === "Delegate" && this.curFlowBackToMeMode !== "go" ? curFlowBackToMeModeEl : null
         }

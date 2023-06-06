@@ -47,6 +47,7 @@ router.beforeEach(async(to, from, next) => {
         store.commit("user/SETISGROUPLOGIN", true);
         next();
       } else {
+        store.commit("user/SETISGROUPLOGIN", false);
         defaultToWithoutPath = store.getters["permission/defaultTo"];
         if (to.path === "/login" || to.path === "/" || (to.path === "/pageInfo/error" && defaultToWithoutPath !== "/pageInfo/error")) {
           // 如果没有指定跳转地址，则获取默认路径或者可跳转菜单的第一个,并且切回后台模式

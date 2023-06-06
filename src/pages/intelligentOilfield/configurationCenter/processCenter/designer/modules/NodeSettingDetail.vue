@@ -1116,6 +1116,10 @@ export default {
 
     .el-table__cell {
       padding: 8px 0 !important;
+
+      .cell {
+        height: 100% !important;
+      }
     }
 
     .el-select .el-input {

@@ -37,6 +37,21 @@
   border-bottom: 1px solid var(--opacity-blue-bg);
 }
 
+//
+.el-table__footer-wrapper td.el-table__cell {
+  border-top: 1px solid var(--opacity-blue-bg);
+}
+
+.el-table .el-table__footer-wrapper th.el-table__cell,
+.el-table .el-table__footer-wrapper th.el-table__cell.is-leaf {
+  background: unset !important;
+}
+
+.el-table__fixed-footer-wrapper tbody td.el-table__cell {
+  color: rgba(255, 255, 255, 0.7);
+  border-top: 0 solid transparent;
+}
+
 .el-table tbody tr:last-child {
   border: 0;
 }
@@ -53,7 +68,9 @@
   border-radius: 3px;
 }
 
-*::-webkit-scrollbar-corner{background: transparent}
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
 
 .el-table .el-table__cell.gutter {
   background: transparent;
@@ -114,9 +131,9 @@
   //background: var(--logo-bg) no-repeat top right, linear-gradient(270deg, rgba(0, 96, 166, 0.5) 0%, #0060a6 100%) !important;
 }
 
-.infoHeaderBg{
-  //   background: linear-gradient(to right, rgba(0, 202, 255, 0.4), var(--opacity-blue-bg2));
-//   background: linear-gradient(270deg, rgba(0,202,255,0.68) 0%, rgba(0,150,255,0.29) 100%);
+.infoHeaderBg {
+  // background: linear-gradient(to right, rgba(0, 202, 255, 0.4), var(--opacity-blue-bg2));
+  // background: linear-gradient(270deg, rgba(0,202,255,0.68) 0%, rgba(0,150,255,0.29) 100%);
   // TODO: Maybe change back，带图标的时候放开
   background: var(--logo-bg) no-repeat top right, linear-gradient(to right, rgba(0, 202, 255, 0.4), var(--opacity-blue-bg2)) !important;
     
@@ -151,6 +168,12 @@
   color: var(--light-blue-color);
   background: var(--opacity-blue-bg);
   font-size: 14px;
+}
+
+.el-tag.el-tag--danger {
+  background-color: rgba(255, 49, 65, 0.2);
+  border-color: #ff4d4f;
+  color: #ff4d4f;
 }
 
 .el-table .descending .sort-caret.descending {
@@ -253,4 +276,42 @@
 
 .el-table--enable-row-transition .el-table__body td.el-table__cell {
   transition: background-color 0s ease;
+}
+
+.el-table-filter {
+  border: 1px solid #1b5782;
+  background: var(--drop-down-color);
+}
+
+.el-table-filter__bottom {
+  border-top: 1px solid #1b5782;
+}
+
+.el-table-filter__bottom button {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.el-table-filter__bottom button.is-disabled,
+.el-table-filter__bottom button.is-disabled:hover {
+  color: #606266;
+}
+
+.el-table-filter__bottom button:hover {
+  color: var(--light-blue-color);
+}
+
+.filterTable {
+  .el-icon-arrow-down {
+    background-image: url("@/assets/intelligentOilfield/loudou-dark.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 14px;
+    height: 12px;
+    transform: none;
+    line-height: 1;
+  }
+
+  .el-icon-arrow-down::before {
+    color: transparent;
+  }
 }

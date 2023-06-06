@@ -1,9 +1,11 @@
 import hasRole from "./permission/hasRole";
 import hasPermi from "./permission/hasPermi";
+import postTheme from "./postTheme";
 
 const install = function permiFun(Vue) {
   Vue.directive("hasRole", hasRole);
   Vue.directive("hasPermi", hasPermi);
+  Vue.directive("postTheme", postTheme);
 };
 
 if (window.Vue) {

@@ -33,6 +33,7 @@
       <bottom-button v-if="linkUrl !== ''" class="bottomBtn" @bigScreenMode="fullExit" />
       <iframe
         v-if="linkUrl !== ''"
+        v-postTheme="$store.state.setting.mode"
         :src="linkUrl"
         frameborder="0"
         class="g-w100 g-h100"

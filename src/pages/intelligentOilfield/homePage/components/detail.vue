@@ -221,7 +221,7 @@ export default {
       }
     },
     noticeList() {
-      noticeList(this.$store.getters["user/tenantId"]).then(response => {
+      noticeList().then(response => {
         response?.data?.data?.forEach(item => {
           this.val += `${item.noticeContent}                                                                                                    `;
         });

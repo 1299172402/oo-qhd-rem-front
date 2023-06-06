@@ -25,7 +25,7 @@
         </el-tooltip>
       </div>
     </div>
-    <div style="padding: 20px;height: calc(100% - 32px)" class="g-w100">
+    <div style="padding: 20px;height: calc(100% - 32px)" class="g-w100" :class="isMax ? $store.state.setting.mode === 'dark' ? 'maxDetail' : '' : ''">
       <slot />
     </div>
   </div>
@@ -72,6 +72,13 @@ export default {
   width: 100% !important;
   height: 100% !important;
   margin: 0;
+}
+
+.maxDetail{
+  background-image: linear-gradient(360deg, rgba(0, 68, 115, 0.64) 0%, rgba(0, 72, 122, 0.16) 100%), url('/src/assets/backgroundImg.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .minPage {
