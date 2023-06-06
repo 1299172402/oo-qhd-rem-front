@@ -66,12 +66,6 @@
                         <div class="chartText">综合时率</div>
                     </div>
                 </el-col>
-                <!-- <el-col :span="6">
-                  <div class="grid-content bg-purple">
-                    <Echart :chart-data="getEchartData(12, '口', 'rgb(36,151,194)', 'rgb(7,59,90)', 'rgb(36,151,194)')"></Echart>
-                    <div class="chartText">水井总井数</div>
-                  </div>
-                </el-col> -->
             </el-row>
             <el-row :gutter="20" style="padding: 0 20px">
                 <el-col :span="8">

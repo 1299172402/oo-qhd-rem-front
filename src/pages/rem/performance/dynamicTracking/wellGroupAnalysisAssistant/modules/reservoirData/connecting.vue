@@ -3,10 +3,7 @@
     <div class="z-main">
         <page-panel-new style="height:100%;margin-top:0;" show-btn>
             <div class="z-container">
-               
                    <iframe style="height: 100%;width: 100%" :src="imageurl"></iframe>
-                  
-               
             </div>
         </page-panel-new>
     </div>
@@ -73,7 +70,7 @@
                     wellId: "09D30C16BD1D4F759D53F74941701307",
                 };
                 this.imageList = [];
-                filePreview('').then((res)=>{
+                filePreview('9c85e26a546c3bf9345da285b3e098ed').then((res)=>{
                     this.imageurl = res.data.data
                 })
                 // getSectionWell(request).then((res) => {

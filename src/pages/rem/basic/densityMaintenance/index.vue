@@ -3,7 +3,7 @@
     <div class="app-container" style="height: calc(100%);">
         <div style="display: flex;flex-direction: row; height: 100%;">
             <div style=" height: 100%">
-                <tree-multiple-selection :deptOptions="deptOptions" :level = "'3'" @childinfo = 'childinfo'  @change="layoutChange"/>
+                <tree-multiple-selection :level = "'3'" :end="3" @childinfo = 'childinfo'  @change="layoutChange"/>
             </div>
             <div
                 style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
@@ -228,7 +228,7 @@ import {queryProductList} from "@/api/rem/workcompanydesignate";
 import {queryDensityInfo, save} from "@/api/rem/density.js";
 import {mapGetters} from "vuex";
 import {queryOperatingCompanyDetail, queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
-import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
+import treeMultipleSelection from "@/components/intelligentOilfield/tree_multiple_selection/index.vue";
 
 export default {
     name: "Notice",
@@ -258,7 +258,6 @@ export default {
             },
             year:'',
             isDisabled: [true, true, true, true, true, true, true, true, true, true, true, true],
-            deptOptions:[]
         };
     },
     created() {
@@ -273,15 +272,14 @@ export default {
         this.getList();
         this.getInfo();
         // this.choiceDepts(); // 获取组织机构
-        this.getTreeData()
     },
     methods: {
         // change时间
         layoutChange() {
             this.$refs.table.doLayout()
         },
-        childinfo(data){
-            console.log(data)
+        childinfo(a,b,c){
+            // console.log(a,b,c)
         },
         /**
          *   获取下拉框数据
