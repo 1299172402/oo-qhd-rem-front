@@ -7,7 +7,7 @@
             :is-show-max-btn="true"
         >
             <button class="detailLinkBtn" @click="linkroute('technicalIndexManagement')">详细</button>
-            <el-row :gutter="20" style="margin-bottom: 10px">
+            <el-row :gutter="20" style="margin-bottom: 10px;padding: 0 20px">
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <div class="yield water">
@@ -42,7 +42,7 @@
                     </div>
                 </el-col>
             </el-row>
-            <el-row :gutter="20">
+            <el-row :gutter="20" style="padding: 0 20px">
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
@@ -73,7 +73,7 @@
                   </div>
                 </el-col> -->
             </el-row>
-            <el-row :gutter="20">
+            <el-row :gutter="20" style="padding: 0 20px">
                 <el-col :span="8">
                     <div>
                         <Echart height="100%" :chart-data="histogram"></Echart>
@@ -93,7 +93,7 @@
                     </div>
                 </el-col>
             </el-row>
-            <el-row :gutter="20">
+            <el-row :gutter="20" style="padding: 0 20px">
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
