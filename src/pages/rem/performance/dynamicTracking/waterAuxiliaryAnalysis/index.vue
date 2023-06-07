@@ -67,13 +67,23 @@
                 <el-form ref="form" :model="ljUploadForm" label-width="80px">
                     <el-col :span="12">
                         <el-form-item label="图片上传" style="width: 88px">
+<!--                            <file-upload-->
+<!--                                :limit="1"-->
+<!--                                v-model:biz-path="this.imageurl"-->
+<!--                                :is-picture-card="true"-->
+<!--                                :is-show-tip="false"-->
+<!--                                biz-path="oo-qhd-rem-front/test"-->
+<!--                                bucket-name="zhy"-->
+<!--                            />-->
                             <file-upload
+                                v-model="this.imageurl"
+                                style="width: 250px"
                                 :limit="1"
-                                v-model:biz-path="this.imageurl"
-                                :is-picture-card="true"
+                                :fileSize="20"
                                 :is-show-tip="false"
-                                biz-path="oo-qhd-rem-front/test"
+                                biz-path="rem-front/text"
                                 bucket-name="zhy"
+                                :file-type="['pdf']"
                             />
                         </el-form-item>
                     </el-col>
