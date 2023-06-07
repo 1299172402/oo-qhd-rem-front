@@ -29,12 +29,6 @@ export default [
         meta: { title: '关停井跟踪',icon: 'icon' },
       },
       {
-        path: 'ipmHome',
-        name: 'ipmHome',
-        component: () => import('@/pages/rem/home/ipmHome/index.vue'),
-        meta: { title: '智能注采调配',icon: 'icon' },
-      },
-      {
         path: 'oilEventDetail',
         name: 'oilEventDetail',
         hidden: true,
