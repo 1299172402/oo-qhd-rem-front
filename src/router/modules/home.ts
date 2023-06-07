@@ -28,13 +28,6 @@ export default [
         component: () => import('@/pages/rem/home/reservoirDisplay/shutdownDetection.vue'),
         meta: { title: '关停井跟踪',icon: 'icon' },
       },
-      
-      {
-        path: 'remHome',
-        name: 'remHome',
-        component: () => import('@/pages/rem/home/remHome/index.vue'),
-        meta: { title: '油藏动态分析',icon: 'icon' },
-      },
       {
         path: 'ipmHome',
         name: 'ipmHome',

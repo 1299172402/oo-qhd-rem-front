@@ -111,6 +111,12 @@ export default [
                     },
                 ],
             },
+            {
+                path: 'remHome',
+                name: 'remHome',
+                component: () => import('@/pages/rem/home/remHome/index.vue'),
+                meta: { title: '油藏动态分析',icon: 'icon' },
+            },
         ],
     },
 ];
