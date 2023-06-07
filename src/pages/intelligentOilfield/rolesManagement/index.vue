@@ -406,7 +406,7 @@
         <el-form-item label="权限范围">
           <el-select v-model="form.dataScope" clearable @change="dataScopeSelectChange">
             <el-option
-              v-for="item in isFromApp ? dataScopeOptions.filter(v => v.value !== '2') : dataScopeOptions"
+              v-for="item in dataScopeOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -504,7 +504,6 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
-      isFromApp: false,
       // 是否显示弹出层（数据权限）
       openDataScope: false,
       menuExpand: false,
@@ -522,7 +521,7 @@ export default {
         },
         {
           value: "2",
-          label: "自定数据权限"
+          label: "自定义数据权限"
         },
         {
           value: "3",
@@ -841,11 +840,6 @@ export default {
     /** 分配数据权限操作 */
     handleDataScope(row) {
       this.reset();
-      if (this.appId !== "$system$") {
-        this.isFromApp = true;
-      } else {
-        this.isFromApp = false;
-      }
       const roleDeptTreeselect = this.getRoleDeptTreeselect(row.roleId);
       getRole(row.roleId).then(response => {
         this.form = response.data.data;

@@ -146,10 +146,10 @@ instance.interceptors.response.use(
     } else if (response.data.code === 500) {
       if (response.config.url.substring(0, response.config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && whiteListError.indexOf(response.config.url) === -1) {
         // 过滤掉右上角小铃铛1min轮询接口,和报警信息列表接口的报错信息
-        Message({
-          message: response.data.msg,
-          type: "error"
-        });
+        // Message({
+        //   message: response.data.msg,
+        //   type: "error"
+        // });
       }
       if (response.config.headers.showLoading !== false) {
         hideLoading();
@@ -199,9 +199,9 @@ instance.interceptors.response.use(
         });
       } else if (config.url.substring(0, config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && whiteListError.indexOf(config.url) === -1) {
         // 过滤掉右上角小铃铛1min轮询接口,和报警信息列表接口的报错信息
-        MessageBox.alert(err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错", "系统提示", {
-          type: "error"
-        });
+        // MessageBox.alert(err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错", "系统提示", {
+        //   type: "error"
+        // });
       }
       return Promise.reject(err);
     }

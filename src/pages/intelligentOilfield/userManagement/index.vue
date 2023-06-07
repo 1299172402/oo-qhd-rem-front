@@ -592,12 +592,29 @@
           </el-select>
         </el-form-item>
         <el-form-item label="用户岗位">
-          <el-select
+          <!-- TODO: Maybe change back 岗位多选 -->
+          <!-- <el-select
             v-model="form.postIds"
             filterable
             :disabled="form.ehr === '0' ? false : keys.includes('postIds')"
             class="customSelect"
-            multiple
+            placeholder="请选择用户岗位"
+            clearable
+            @change="changePost"
+          >
+            <el-option
+              v-for="item in postOptions"
+              :key="item.postId"
+              :label="item.postName"
+              :value="item.postId"
+              :disabled="item.status == 1"
+            />
+          </el-select> -->
+          <el-select
+            v-model="form.tempPostId"
+            filterable
+            :disabled="form.ehr === '0' ? false : keys.includes('postIds')"
+            class="customSelect"
             placeholder="请选择用户岗位"
             clearable
             @change="changePost"
@@ -952,7 +969,7 @@ export default {
         roleIds: [{ required: true, message: "用户角色不能为空", trigger: "blur" }],
         userType: [{ required: true, message: "账号类型不能为空", trigger: "blur" }],
         email: [
-          { required: true, message: "邮箱地址能为空", trigger: "blur" },
+          { required: true, message: "账号邮箱不能为空", trigger: "blur" },
           {
             type: "email",
             message: "请输入正确的邮箱地址",
@@ -963,7 +980,7 @@ export default {
           {
             pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
             message: "请输入正确的手机号码",
-            trigger: "blur"
+            trigger: ["blur", "change"]
           }
         ],
         idCard: [
@@ -1252,7 +1269,7 @@ export default {
         this.postOptions = response.data.posts;
         this.roleOptions = response.data.roles;
         this.form.postIds = response.data.postIds.length === 0 ? [] : response.data.postIds.toLocaleString().split(",");
-        // this.form.tempPostId = String(response.data.postIds.toLocaleString());
+        this.form.tempPostId = response.data.postIds.length === 0 ? [] : String(response.data.postIds.toLocaleString());
         this.form.roleIds = response.data.roleIds.length === 0 ? [] : response.data.roleIds.toLocaleString().split(",");
         this.open = true;
         this.title = "编辑用户";
@@ -1318,8 +1335,7 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      //   this.form.postIds = [];
-      //   this.form.postIds.push(this.form.tempPostId);
+      this.form.postIds = this.form.tempPostId ? this.form.tempPostId?.split(",") : [];
       this.queryParams.pageNum = 1;
       this.$refs.form.validate(valid => {
         if (valid) {

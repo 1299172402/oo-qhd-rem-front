@@ -171,10 +171,23 @@
       <el-row>
         <el-col :span="24">
           <el-form-item label="用户岗位">
-            <el-select
+            <!-- <el-select
               v-model="tempUser.postIds"
               disabled
               multiple
+              class="customSelect"
+              placeholder="暂无岗位"
+            >
+              <el-option
+                v-for="item in postOptions"
+                :key="item.postId"
+                :label="item.postName"
+                :value="item.postId"
+              />
+            </el-select> -->
+            <el-select
+              v-model="tempUser.tempPostId"
+              disabled
               class="customSelect"
               placeholder="暂无岗位"
             >
@@ -350,6 +363,7 @@ export default {
           remark: newVal.data?.remark,
           idCard: newVal.data?.idCard,
           //   postIds: newVal.postIds,
+          tempPostId: newVal.postIds?.length === 0 ? [] : String(newVal.postIds?.toLocaleString()),
           postIds: newVal.postIds?.length === 0 ? [] : newVal.postIds?.toLocaleString().split(","),
           roleIds: newVal.roleIds?.length === 0 ? [] : newVal.roleIds?.toLocaleString().split(","),
           //   tempPostId: String(newVal.tempPostId.toLocaleString()), // 临时的用户岗位
@@ -418,7 +432,7 @@ export default {
     submit() {
       //   this.tempUser.postIds = [];
       //   this.tempUser.postIds.push(this.tempUser.tempPostId);
-      //   console.log(' this.tempUser',  this.tempUser);
+      this.tempUser.postIds = this.tempUser.tempPostId ? this.tempUser.tempPostId?.split(",") : [];
       this.$refs.formRef.validate(valid => {
         if (valid) {
           updateUser(this.tempUser).then(res => {

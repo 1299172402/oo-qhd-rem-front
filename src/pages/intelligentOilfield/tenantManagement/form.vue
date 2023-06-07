@@ -94,8 +94,8 @@ export default {
           }
         ],
         tenantName: [{ required: true, message: "请输入租户名称", trigger: "blur" }],
-        deptId: [{ required: true, message: "请输入分配组织机构", trigger: "change" }],
-        status: [{ required: true, message: "请输入租户状态", trigger: "change" }]
+        deptId: [{ required: true, message: "请选择组织机构", trigger: "change" }],
+        status: [{ required: true, message: "请选择租户状态", trigger: "change" }]
       },
       returnName: "Tenant"
     };

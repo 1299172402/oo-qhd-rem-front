@@ -523,9 +523,6 @@ export default Vue.extend({
       immediate: true
     }
   },
-  mounted() {
-    this.getInitDeptds();
-  },
   methods: {
     playAudio(audio) {
       if (audio) {
