@@ -293,7 +293,7 @@
                                     </div>  
                                     <div class="z-row-center">
                                         
-                                        <div class="numBtn" 
+                                        <div class="numBtn"  :class="[item.code==selCode?'numBtnBgActive':'']"
                                             v-for="(item,index) in trendOfIndicators" :key="index" 
                                             v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!trendOfIndicatorsSwitch" 
                                             @click="((val)=>{selRadioIterm(item.code,'trendOfIndicators')})">
@@ -301,7 +301,7 @@
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
                                         
-                                        <div class="numBtn" 
+                                        <div class="numBtn"  :class="[item.code==selCode?'numBtnBgActive':'']"
                                             v-for="(item,index) in trendOfIndicators" :key="index" 
                                             v-if="item.name=='正常'&&trendOfIndicatorsSwitch"
                                             @click="((val)=>{selRadioIterm(item.code,'trendOfIndicators')})">
@@ -348,14 +348,14 @@
                                         </div>
                                     </div>  
                                     <div class="z-row-center">
-                                        <div class="numBtn" 
+                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                             v-for="(item,index) in wellboreReason" :key="index" 
                                             v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!wellboreReasonSwitch"
                                             @click="((val)=>{selRadioIterm(item.code,'wellboreReason')})">
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
-                                        <div class="numBtn" 
+                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                             v-for="(item,index) in wellboreReason" :key="index" 
                                             v-if="item.name=='正常'&&wellboreReasonSwitch"
                                             @click="((val)=>{selRadioIterm(item.code,'wellboreReason')})">
@@ -401,16 +401,16 @@
                                         </div>
                                     </div>  
                                     <div class="z-row-center">
-                                        <div class="numBtn" 
+                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                             v-for="(item,index) in workingCondition" :key="index" 
-                                            v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!workingCondSwitch"
+                                            v-if="item.name!='正常'&&item.name!='合格区'&&(item.value!=0||item.isShow)&&!workingCondSwitch"
                                             @click="((val)=>{selRadioIterm(item.code,'workingCondition')})">
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
-                                        <div class="numBtn" 
+                                        <div class="numBtn"  :class="[item.code==selCode?'numBtnBgActive':'']"
                                             v-for="(item,index) in workingCondition" :key="index" 
-                                             v-if="item.name=='正常'&&workingCondSwitch"
+                                             v-if="(item.name=='正常'||item.name=='合格区')&&workingCondSwitch"
                                             @click="((val)=>{selRadioIterm(item.code,'workingCondition')})">
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
@@ -445,11 +445,11 @@
                                         </div>
                                     </div>  
                                     <div class="z-row-center">
-                                        <div class="numBtn">
+                                        <div class="numBtn" v-if="false">
                                             <span class="sp1">0</span>
                                             <span class="sp2">注水强度偏高</span>
                                         </div>
-                                        <div class="numBtn">
+                                        <div class="numBtn" v-if="false">
                                             <span class="sp1">0</span>
                                             <span class="sp2">注水强度偏低</span>
                                         </div>
@@ -798,7 +798,7 @@
                         this.workingCondNum.ycnum=0;
                         myData.forEach((el,i)=>{
                             this.workingCondNum.allnum+=Number(el.value);
-                            if(el.name=='正常'){
+                            if(el.name=='正常'||el.name=='合格区'){
                                 this.workingCondNum.zcnum=Number(el.value);
                             }else{
                                 myData[i].isShow=Number(el.value)?true:false;
@@ -920,18 +920,18 @@
                 }
                 //进行运算
                 //1、获取选中井集合
-                if (eval("this." + tag)) {
-                    for (let i = 0; i < eval("this." + tag).length; i++) {
-                        let tData = eval("this." + tag)[i];
+                if (this[tag].length) {
+                    for (let i = 0; i < this[tag].length; i++) {
+                        let tData = this[tag][i];
                         console.log(tData);
                         if (val == tData.code) {
                             if (tData.wells == undefined || tData.wells == "" || tData.wells == "null") { //无数据
                                 myData = []; //没有数据
-                                eval("this." + tag)[i].value = 0; //井数
+                                this[tag][i].value = 0; //井数
                                 myWellCount[tData.code] = 0; //计数器
                             } else { //有数据
                                 let wellList = tData.wells.split(","); //我的井号串（逗号分割）
-                                eval("this." + tag)[i].value = wellList.length; //井数
+                                this[tag][i].value = wellList.length; //井数
                                 myWellCount[tData.code] = wellList.length; //计数器
                                 for (let j = 0; j < wellList.length; j++) {
                                     myData[j] = {
@@ -1219,7 +1219,11 @@
                     this.trendOfIndicators[j].value = t_count; //登记条数
                     if (t_count > 0) {
                         let titleName = t_data.name;
-                        let unit=t_data.unit.replace('m3', 'm³');
+                        console.log('t_data.unit',t_data.unit);
+                        let unit='';
+                        if(t_data.unit){
+                            unit=t_data.unit.replace('m3', 'm³');
+                        }
                         this.trendOfIndicatorsTab.push({
                             code: t_data.code,
                             name: titleName,
@@ -1297,6 +1301,38 @@
                 this.$nextTick(() => {
                     this.$refs.tableList.doLayout();
                 })
+                
+                //zxb-重新计算数量
+                let numKeys=['trendOfIndicatorsNum','wellboreReasonNum','workingCondNum'];
+                let datakeys=['trendOfIndicators','wellboreReason','workingCondition'];
+                for(let i=0;i<numKeys.length;i++){
+                    let numKey=numKeys[i];
+                    let dataKey=datakeys[i];
+                    this[numKey].allnum=0;
+                    this[numKey].zcnum=0;
+                    this[numKey].ycnum=0;
+                    this[dataKey].forEach((el,i)=>{
+                        console.log(this[dataKey][i].value,7777)
+                        console.log(Number(this[dataKey][i].value),999)
+                        this[numKey].allnum+=Number(this[dataKey][i].value);
+                        if(el.name=='正常'||el.name=='合格区'){
+                            this[numKey].zcnum=Number(this[dataKey][i].value);
+                        }else{
+                            this[numKey].ycnum+=Number(this[dataKey][i].value);
+                        }
+                    })
+                    this[numKey].zczb=this[numKey].zcnum/this[numKey].allnum * 100;
+                    this[numKey].yczb=this[numKey].yczb/this[numKey].allnum * 100;
+                    console.log('this[numKey]',this[numKey])
+                }
+                console.log('wellboreReason',this.wellboreReason)
+                //zxb-重新计算推荐井组
+                this.potentialWellNum=0;
+                for(let i=0;i<this.recommendedMeasuresOptions.length;i++){
+                    let el=this.recommendedMeasuresOptions[i];
+                    this.potentialWellNum+=Number(el.value);
+                }
+                
             },
             //跳转到油井页面
             goWaterWell(val) {
@@ -1674,6 +1710,9 @@
                                     .sp2{
                                         font-size: 12px;
                                     }
+                                }
+                                .numBtnBgActive{
+                                        background: var(--logo-bg) no-repeat top / contain, var(--primary-btn) !important;
                                 }
                             }
                             .z-row-right{
