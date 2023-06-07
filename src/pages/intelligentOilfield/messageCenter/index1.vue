@@ -12,6 +12,7 @@
         <div class="g-w100 g-h100" style="height: 700px">
           <iframe
             :id="'iframe_' + currentIframeObj.id"
+            v-postTheme="$store.state.setting.mode"
             :src="addToken(currentIframeObj.url)"
             frameborder="0"
             class="g-w100 g-h100"
@@ -1201,7 +1202,7 @@ export default {
         { name: "海上链路总览", url: "http://10.79.32.200:8080/resource/App_2d4a01bdc0a5336a8ddbe66c02becb1e/appCallback.html", id: "sea" },
         { name: "云端链路总览", url: "https://dds.tjioms-dev.tjltd.cnooc/#/bigDataPage/showData", id: "cloud" }
       ],
-      currentIframeObj: { name: "海上链路总览", url: "https://www.baidu.com/", id: "sea" }
+      currentIframeObj: { name: "海上链路总览", url: "http://10.79.32.200:8080/resource/App_2d4a01bdc0a5336a8ddbe66c02becb1e/appCallback.html", id: "sea" }
     };
   },
   computed: {
@@ -1318,9 +1319,11 @@ export default {
       return addTokenToUrl(url);
     },
     openIframeDialogMethods(iframeObj) {
-      this.currentIframeObj = iframeObj;
-      this.iframeDialogTitle = iframeObj.name;
-      this.openIframeDialog = true;
+    // TODO: Maybe change back
+    //   this.currentIframeObj = iframeObj;
+    //   this.iframeDialogTitle = iframeObj.name;
+    //   this.openIframeDialog = true;
+      window.open(addTokenToUrl(iframeObj.url), "_blank");
     },
     clickClouds() {
       this.openDialog = true;

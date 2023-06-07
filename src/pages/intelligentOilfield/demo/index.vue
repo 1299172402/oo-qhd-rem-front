@@ -648,6 +648,41 @@
       />
       <el-table-column prop="address" label="地址" />
     </el-table>
+    <div class="spaceMargin">
+      5.5、header可过滤表格
+    </div>
+    <el-table
+      ref="filterTable"
+      class="filterTable"
+      :data="tableDataFilter"
+      style="width: 540px"
+      :row-style="{ height: '0px' }"
+      :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+      header-cell-class-name="table_header"
+      :cell-style="{ padding: '6px', 'text-align': 'center' }"
+      :default-sort="{ prop: 'date', order: 'descending' }"
+    >
+      <el-table-column
+        prop="date"
+        label="日期"
+        sortable
+        width="180"
+        column-key="date"
+        :filters="[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]"
+        :filter-method="filterHandler"
+      />
+      <el-table-column
+        prop="name"
+        label="姓名"
+        width="180"
+      />
+      <el-table-column
+        prop="address"
+        label="地址"
+        width="180"
+        :formatter="formatter"
+      />
+    </el-table>
     <div class="headerTitle spaceMargin">
       6、分页=========================================================================================
     </div>
@@ -1201,6 +1236,7 @@
     <div style="width: 20%">
       <el-tree
         ref="tree"
+        :highlight-current="true"
         :data="deptOptions"
         :props="defaultProps"
         :expand-on-click-node="false"
@@ -1219,6 +1255,7 @@
       />
       <el-tree
         ref="tree"
+        :highlight-current="true"
         :data="deptOptions"
         :props="defaultProps"
         :expand-on-click-node="false"
@@ -1273,6 +1310,27 @@ export default {
       return data;
     };
     return {
+      tableDataFilter: [{
+        date: "2016-05-02",
+        name: "王小虎",
+        address: "上海市普陀区金沙江路 1518 弄",
+        tag: "家"
+      }, {
+        date: "2016-05-04",
+        name: "王小虎",
+        address: "上海市普陀区金沙江路 1517 弄",
+        tag: "公司"
+      }, {
+        date: "2016-05-01",
+        name: "王小虎",
+        address: "上海市普陀区金沙江路 1519 弄",
+        tag: "家"
+      }, {
+        date: "2016-05-03",
+        name: "王小虎",
+        address: "上海市普陀区金沙江路 1516 弄",
+        tag: "公司"
+      }],
       date4: "",
       yearRange: [],
       selectValue: undefined,
@@ -1773,6 +1831,22 @@ export default {
     });
   },
   methods: {
+    resetDateFilter() {
+      this.$refs.filterTable.clearFilter("date");
+    },
+    clearFilter() {
+      this.$refs.filterTable.clearFilter();
+    },
+    formatter(row) {
+      return row.address;
+    },
+    filterTag(value, row) {
+      return row.tag === value;
+    },
+    filterHandler(value, row, column) {
+      const property = column.property;
+      return row[property] === value;
+    },
     zoomOutCom() {},
     zoomOutComNew() {},
     // 筛选节点

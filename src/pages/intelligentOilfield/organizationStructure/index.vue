@@ -5,9 +5,7 @@
       <el-form
         v-show="showSearch"
         ref="queryForm"
-        label-height="80px"
         :model="queryParams"
-        :label-width="auto"
         :inline="true"
       >
         <el-form-item label="组织机构名称" prop="deptName">

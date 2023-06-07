@@ -104,17 +104,24 @@
                 },
             }
         },
-        mounted(){
-            this.queryTableDate();
+        created(){
+            if(this.selectType=='通用配置'){
+                this.queryTableDate(this.searchForm);
+            }
         },
         methods:{
             //查询列表数据
-            queryTableDate() {
+            queryTableDate(searchForm) {
+                if(!searchForm){
+                    this.tableData = [];
+                    this.page.total = 0;
+                    return false;
+                }
                 let params={
                     selectType:this.selectType,
                     current: this.page.currentPage,
                     size: this.page.pageSize,
-                    ...this.searchForm
+                    ...searchForm
                 }
                 queryTableData(params).then(response => {
                     if( response.data.code==200){

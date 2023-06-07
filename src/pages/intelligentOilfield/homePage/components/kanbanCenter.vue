@@ -5,6 +5,7 @@
       <bottom-button v-if="linkUrl !== ''" class="bottomBtn" @bigScreenMode="fullExit" />
       <iframe
         v-if="linkUrl !== ''"
+        v-postTheme="$store.state.setting.mode"
         :src="linkUrl"
         frameborder="0"
         class="g-w100 g-h100"
@@ -69,17 +70,20 @@
                   :src="items.imgUrl?items.imgUrl:''"
                   alt=""
                   class="imgSetting"
-                  style="width: 40px;height: 40px"
+                  style="width: 56px;height: 56px"
                   @error="imgError(items)"
                 >
                 <!-- 增加未上传图标显示默认图标+首字母 -->
-                <div v-else class="bgImage g-row-flex-HV" style="width: 40px;height: 40px">
+                <!-- <div v-else class="bgImage g-row-flex-HV" style="width: 40px;height: 40px">
+                  {{ items.boardName[0] }}
+                </div> -->
+                <div v-else class="circleImage g-row-flex-HV" style="width: 56px;height: 56px">
                   {{ items.boardName[0] }}
                 </div>
                 <el-tooltip
                   effect="dark"
                   :content="items.boardName"
-                  placement="top"
+                  placement="bottom"
                 >
                   <span class="textSpan">{{ items.boardName }}</span>
                 </el-tooltip>

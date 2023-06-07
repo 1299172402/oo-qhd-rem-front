@@ -22,11 +22,13 @@
         <div class="head-container" style="overflow: auto;">
           <el-tree
             ref="tree"
+            node-key="id"
             :data="deptOptions"
             :props="defaultProps"
             :expand-on-click-node="false"
             :filter-node-method="filterNode"
             default-expand-all
+            :highlight-current="true"
             @node-click="handleNodeClick"
           >
             <template slot-scope="{ node }">
@@ -321,7 +323,7 @@
                   v-model="scope.row.status"
                   active-value="0"
                   inactive-value="1"
-                  @change="handleStatusChange(scope.row)"
+                  @click.native="handleStatusChange(scope.row)"
                 />
               </template>
             </el-table-column>
@@ -385,7 +387,7 @@
                   style="margin-left: 20px;"
                   @command="(command) => handleCommand(command, scope.row)"
                 >
-                  <span class="el-dropdown-link" style="font-size: 12px">更多</span>
+                  <span class="el-dropdown-link">更多</span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item
                       v-hasPermi="['system:user:resetPwd']"
@@ -505,6 +507,7 @@
                 <el-input
                   v-if="form.ehr === '0' "
                   v-model="convertIdCard"
+                  class="seeSFZ"
                   placeholder="请输入身份证"
                   maxlength="30"
                   :disabled="isInputDisable"
@@ -512,6 +515,7 @@
                 <el-input
                   v-else
                   v-model="convertIdCard"
+                  class="seeSFZ"
                   placeholder="请输入身份证"
                   maxlength="30"
                   :disabled="keys.includes('idCard') || isInputDisable"
@@ -894,6 +898,7 @@ export default {
         postSort: 0,
         status: "0"
       },
+      initDeptId: undefined,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -1051,7 +1056,12 @@ export default {
       treeselect().then(response => this.getDeptOptions(response.data.data))
         .then(response => {
           this.deptOptions = response;
+          this.initDeptId = this.deptOptions[0].id;
+          this.queryParams.deptId = this.initDeptId;
           this.getList();
+          this.$nextTick(() => {
+            this.$refs.tree.setCurrentKey(this.initDeptId);
+          });
         });
     },
     /**
@@ -1101,17 +1111,20 @@ export default {
     // 用户状态修改
     handleStatusChange(row) {
       const text = row.status === "0" ? "启用" : "停用";
+      row.status = row.status === "0" ? "1" : "0";
       this.$modal
         .confirm(`确认要"${text}""${row.userName}"用户吗？`)
-        .then(() => changeUserStatus(row.userId, row.status))
-        .then(res => {
-          if (res ? res.data.code === 200 : false) {
-            this.$modal.msgSuccess(`${text}成功`);
-          }
-        })
-        .catch(() => {
-          row.status = row.status === "0" ? "1" : "0";
-        });
+        .then(() => {
+          row.status = row.status === "1" ? "0" : "1";
+          changeUserStatus(row.userId, row.status).then(res => {
+            if (res ? res.data.code === 200 : false) {
+              this.$modal.msgSuccess(`${text}成功`);
+            }
+          })
+            .catch(() => {
+              row.status = row.status === "0" ? "1" : "0";
+            });
+        }).catch(() => {});
     },
     // 取消按钮
     cancel(formName) {
@@ -1123,7 +1136,7 @@ export default {
     reset() {
       this.form = {
         userId: undefined,
-        deptId: undefined,
+        deptId: this.initDeptId,
         userName: undefined,
         nickName: undefined,
         password: undefined,
@@ -1183,7 +1196,6 @@ export default {
       this.keys = [];
       this.reset();
       this.isInputDisable = false;
-      this.getTreeselect();
       getUser().then(response => {
         this.postOptions = response.data.posts;
         this.roleOptions = response.data.roles;
@@ -1229,7 +1241,6 @@ export default {
     handleUpdate(row) {
       this.reset();
       this.isInputDisable = true;
-      this.getTreeselect();
       const userId = row.userId || this.ids;
       getNoEditable().then(res => {
         const objValue = JSON.parse(res.data.data);
@@ -1489,6 +1500,12 @@ export default {
       height: unset !important;
       line-height: unset !important;
     }
+  }
+}
+
+.seeSFZ {
+  /deep/ .el-input__inner {
+    padding-right: 34px;
   }
 }
 </style>

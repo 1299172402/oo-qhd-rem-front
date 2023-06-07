@@ -9,8 +9,8 @@ import {
 } from "@/components/audit/process/api/audit";
 import { actionApi } from "@/components/audit/process/auditSave/ActionApi";
 import ActionType from "@/components/audit/process/auditSave/ActionType";
-import { getValidateFormResult } from "@/components/audit/utils";
 import { postAction } from "@/api/common/manage";
+import { differentTypeRequire } from "@/components/audit/process/constant/rules";
 
 export default Vue.extend({
   name: "AuditPopup",
@@ -152,12 +152,17 @@ export default Vue.extend({
       const _this = this as any;
       let interrupt = false;
       _this.loading = true;
-      if (await getValidateFormResult(this.$refs.auditInfo, "form") !== true) {
+
+      const { dataReturned, action } = _this.$refs.auditInfo.auditDataReduction;
+      const fields = differentTypeRequire[action];
+      // 不同的操作进行不同的校验
+      const validateRes = fields ? await this.$refs.auditInfo.$refs.form.validate({ fields }) : await this.$refs.auditInfo.$refs.form.validate();
+      if (validateRes !== true) {
         _this.$message.warning("请将必填项填写完整");
         _this.loading = false;
         return;
       }
-      const { dataReturned, action } = _this.$refs.auditInfo.auditDataReduction;
+
       const _data = { ..._this.dataSource, procInstId: this.auditContext._processInstanceId };
       const data = Object.assign(_data, dataReturned);
 

@@ -122,7 +122,7 @@
         />
         <el-table-column
           label="通知租户"
-          prop="tenantName"
+          prop="tenantListName"
           width="200"
           align="center"
         />
@@ -200,21 +200,27 @@
         label-width="100px"
       >
         <el-row>
-          <el-col :span="12" :offset="6">
+          <el-col :span="12" :offset="3">
             <el-form-item label="通知内容" prop="noticeContent">
               <el-input
                 v-model="addform.noticeContent"
                 type="textarea"
                 :rows="2"
+                style="width: 300px"
                 placeholder="请输入内容"
               />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12" :offset="6">
+          <el-col :span="12" :offset="3">
             <el-form-item label="通知类型" prop="noticeType">
-              <el-select v-model="addform.noticeType" placeholder="请选择应用" clearable>
+              <el-select
+                v-model="addform.noticeType"
+                style="width: 300px"
+                placeholder="请选择应用"
+                clearable
+              >
                 <el-option
                   v-for="(item, index) in noticetypes"
                   :key="index"
@@ -226,7 +232,7 @@
           </el-col>
         </el-row>
         <el-row v-if="addform.noticeType === 1">
-          <el-col :span="12" :offset="6">
+          <el-col :span="12" :offset="3">
             <el-form-item label="发送时间" prop="radio">
               <div>
                 <el-radio v-model="addform.radio" :label="1">
@@ -251,15 +257,15 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12" :offset="6">
+          <el-col :span="12" :offset="3">
             <el-form-item label="通知对象" prop="tenantIds">
               <el-table
                 :data="tenantList"
                 row-key="tenantId"
                 :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
                 :default-expand-all="isExpandAll"
-                height="500px"
-                style="max-height: 500px; overflow: scroll"
+                height="auto"
+                style="max-height: 500px; overflow: scroll;width: 310px;max-width: 310px"
                 @selection-change="handleSelectionChange1"
               >
                 <el-table-column type="selection" width="50" align="center" />
@@ -272,7 +278,7 @@
                 <el-table-column
                   prop="tenantName"
                   label="部门名称"
-                  width="150"
+                  width="200"
                   align="center"
                 />
               </el-table>

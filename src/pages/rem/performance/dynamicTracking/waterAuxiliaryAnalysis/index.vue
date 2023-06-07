@@ -182,7 +182,7 @@
                         name: 'dynamicConitoringData',
                         modules: [
                             {
-                                label: '吸水剖面',
+                                label: '分层调配测试',
                                 name: 'fluidProducingProfile'
                             },
                             {
