@@ -23,7 +23,15 @@
         <pagePanelNew :style="{ height: currentModule == 'waterReport' ? 'auto' : 'calc(100% - 100px)' }" class="g-w100">
             
             <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
-                <el-upload ref="upload" style="margin-left: auto" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess">
+                <el-button
+                    type="primary"
+                    icon="el-icon-upload2"
+                    @click="ljpmUploadDialog"
+                    style="margin-left: auto !important"
+                    v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' "
+                >上传文档(钻完井资料的)</el-button
+                >
+                <el-upload v-else ref="upload" style="margin-left: auto" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess">
                     <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
                 </el-upload>
                 <el-button style="margin-left: 15px" type="primary" icon="el-icon-download" @click="doDownLoad">下载</el-button>
@@ -48,16 +56,57 @@
                 <component :is="component" ref="componentCustom" :oil-feild-id="selectOilField" :platform="selectPlatform" :well-id="selectWellId" @childPara="changeChildParam"></component>
             </keep-alive>
         </pagePanelNew>
+        <el-dialog
+            custom-class="border"
+            title="连井剖面图上传"
+            :visible.sync="ljpmDialog"
+            width="20%"
+            :before-close="ljpmDialogClose"
+        >
+            <el-row>
+                <el-form ref="form" :model="ljUploadForm" label-width="80px">
+                    <el-col :span="12">
+                        <el-form-item label="图片上传" style="width: 88px">
+                            <file-upload
+                                :limit="1"
+                                v-model:biz-path="this.imageurl"
+                                :is-picture-card="true"
+                                :is-show-tip="false"
+                                biz-path="oo-qhd-rem-front/test"
+                                bucket-name="zhy"
+                            />
+                        </el-form-item>
+                    </el-col>
+                </el-form>
+            </el-row>
+
+            <div slot="footer" class="dialog-footer" style="text-align: center">
+        <el-button @click="ljpmDialogClose">取 消</el-button>
+        <el-button type="primary" @click="ljpmUploadSave">确 定</el-button>
+      </div>
+        </el-dialog>
     </div>
 </template>
     
 <script>
     import { fetchOilFields,fetchPlatforms,fetchInjectionWells,fetchInjectionWellsByPlatform,uploadFile } from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import { getMajorEventsBriefly } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
+    import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
     export default {
         name: "WaterAuxiliaryAnalysis",
+        components: {FileUpload},
         data() {
             return {
+                imageurl:'',
+                props: {
+                    key: "wellId",
+                    label: "wellName",
+                },
+                ljpmWellData: [],
+                ljUploadForm: {
+                    direction: "横向",
+                    chooseWell: [],
+                },
                 majorEventsBrieflyValue: "", //大事间要绑定值
                 majorEventsBrieflyList: [], //大事间要数据源
                 //连井剖面是否选中
@@ -332,6 +381,30 @@
             this.initData();
         },
         methods: {
+            ljpmUploadSave() {
+                var fileType = this.$refs.ljpmUpload.fileList[0].raw.type;
+                if (this.isCorrectFileType(fileType)) {
+                    return true;
+                }
+                this.$refs.ljpmUpload.submit();
+            },
+            filterMethod(query, item) {
+                return item.wellName.indexOf(query) > -1;
+            },
+            ljpmDialogClose() {
+                this.ljUploadForm = {
+                    direction: "横向",
+                    chooseWell: [],
+                };
+                this.ljpmFileList = [];
+                this.ljpmDialog = false;
+            },
+            ljpmUploadDialog() {
+                console.log('123123123')
+                //打开弹窗
+                this.ljpmDialog = true;
+                this.getLjpmWells();
+            },
             resetting(){
                 let activeName=this.activeName;
                 let currentModule=this.currentModule;

@@ -109,8 +109,7 @@
             <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
           </el-upload>
           <el-button type="primary" style="margin-left: 20px !important" icon="el-icon-download" @click="doDownLoad"
-            >下载</el-button
-          >
+            >下载</el-button>
       </div>
         
       <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
