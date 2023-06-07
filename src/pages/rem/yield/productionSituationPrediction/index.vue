@@ -7,7 +7,7 @@
                     <el-tab-pane label="作业公司产量跟踪" name="作业公司产量跟踪"></el-tab-pane>
                     <el-tab-pane label="油田预测产量" name="油田预测产量"></el-tab-pane>
                     <el-tab-pane label="作业公司产量总览" name="作业公司产量总览"></el-tab-pane>
-                    <!-- <el-tab-pane label="单井产量预测" name="单井产量预测"></el-tab-pane> -->
+                    <el-tab-pane label="单井产量预测" name="单井产量预测"></el-tab-pane>
                 </el-tabs>
                 <div v-if="tabsValue=='作业公司产量跟踪'" style="height:calc(100% - 46px);padding-bottom:10px;">
                     <one ref="childComponent"></one>

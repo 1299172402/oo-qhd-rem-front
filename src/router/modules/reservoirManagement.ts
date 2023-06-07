@@ -2,8 +2,8 @@ import Layout from '@/layouts/index.vue';
 const env = import.meta.env.MODE;
 export default [
     {
-        path: '/intelligence',
-        name: 'intelligence',
+        path: '/intelligence1',
+        name: 'intelligence1',
         hidden:env == "development" ? false : true,
         component: Layout,
         meta: { title: '智能注采调配', icon: 'client', single: false },
