@@ -15,6 +15,12 @@ export default [
                 component: () => import('@/pages/rem/intelligence/index.vue'),
                 meta: { title: '首页',icon: 'icon' },
             },
+            {
+                path: 'ipmHome',
+                name: 'ipmHome',
+                component: () => import('@/pages/rem/home/ipmHome/index.vue'),
+                meta: { title: '智能注采调配',icon: 'icon' },
+            },
             // 油藏管理-智能注采调配-首页详情
             {
                 path: "intelligenceDetail",

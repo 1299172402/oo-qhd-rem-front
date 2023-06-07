@@ -1,9 +1,10 @@
 <template>
     <div class="app-container" style="width: 100%; height: 100%">
-        <div style="width: 15%; height: 10%; margin-left: 5%; text-align: center; padding: 5px 0">
-<!--            投产时间：2001-10-->
-        </div>
-        <Echart :chart-data="histogram" width="100%" height="65%"></Echart>
+<!--        <div style="width: 15%; height: 10%; margin-left: 5%; text-align: center; padding: 5px 0">-->
+<!--&lt;!&ndash;            投产时间：2001-10&ndash;&gt;-->
+<!--        </div>-->
+<!--        <Echart :chart-data="histogram" width="100%" height="65%"></Echart>-->
+        <Echart :chart-data="productLineChart" width="100%" height="75%"></Echart>
         <el-row :gutter="20">
             <el-col :span="7">
                 <div style="display: flex;position: relative;bottom: 30px">
@@ -50,6 +51,7 @@ import * as echarts from "echarts/core";
 import {GridComponent, TooltipComponent, LegendComponent} from "echarts/components";
 import {CanvasRenderer} from "echarts/renderers";
 import {queryYieldTracking} from "@/api/rem/reservoirbillboards.js"
+import {searchOilProductionChart} from "@/api/oilDeposit/rem-03/oilfieldmanageplan";
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 //前端细节区分
@@ -65,6 +67,122 @@ export default {
     },
     data() {
         return {
+            productLineChart: {//原油产量折线图
+                color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#9A72FF', '#DA835E'],
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow',
+                    },
+                },
+                grid:{
+                    x: 120,
+                    y: 30,
+                    x2: 120,
+                    y2: 100,
+                },
+                legend: {
+                    data: [],
+                    textStyle: {
+                        color: '#8FA4CC',
+                        fontSize: 14,
+                    },
+                    x:'center',
+                    bottom:30,
+                    icon: 'rect',
+                    itemWidth: 12,
+                    itemHeight: 6,
+                    itemGap: 14,
+                },
+                xAxis: [{
+                    type: 'category',
+                    boundaryGap: false,
+                    axisLabel: {
+                        color: '#8FA4CC',
+                        fontSize: 10,
+                        padding:[10,0,0,70],
+                        interval: function(index, val) {
+                            if (val.substr(-2) == '01') {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        },
+                    },
+                    axisTick: {
+                        show: false,
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#8FA4CC',
+                        },
+                    },
+                }, ],
+                yAxis: [
+                    {
+                        name: '日产m³/d',
+                        nameLocation:'middle',
+                        nameGap:70,
+                        nameTextStyle: {
+                            color: '#8FA4CC',
+                            fontSize: 14,
+                        },
+                        type: 'value',
+                        scale: true,
+                        axisLabel: {
+                            color: '#8FA4CC',
+                            fontSize: 14,
+                        },
+                        axisTick: {
+                            show: false,
+                        },
+                        axisLine: {
+                            show: true,
+                            lineStyle: {
+                                color: '#8FA4CC',
+                            },
+                        },
+                        splitLine: {
+                            show: false,
+                            lineStyle: {
+                                color: '#8FA4CC',
+                            },
+                        },
+                    },
+                    {
+                        name: '年产10⁴m³',
+                        nameLocation:'middle',
+                        nameGap:70,
+                        nameTextStyle: {
+                            color: '#8FA4CC',
+                            fontSize: 14,
+                        },
+                        scale: true,
+                        type: 'value',
+                        axisLabel: {
+                            color: '#8FA4CC',
+                            fontSize: 14,
+                        },
+                        axisTick: {
+                            show: false,
+                        },
+                        axisLine: {
+                            show: true,
+                            lineStyle: {
+                                color: '#8FA4CC',
+                            },
+                        },
+                        splitLine: {
+                            show: false,
+                            lineStyle: {
+                                color: '#8FA4CC',
+                            },
+                        },
+                    },
+                ],
+                series: [],
+            },
+            
             histogram: {
                 color: ["#00C1DE", "#6F7AF8", "#F5A547", "#3399ff"],
                 tooltip: {
@@ -434,7 +552,7 @@ export default {
                         detail: {
                             offsetCenter: ["4%", "-5%"],
                             formatter: function (value) {
-                                return "{value|" + value + "}";
+                                return "{value|" + value + "%}";
                             },
                             rich: {
                                 value: {
@@ -702,7 +820,7 @@ export default {
                         detail: {
                             offsetCenter: ["4%", "-5%"],
                             formatter: function (value) {
-                                return "{value|" + value + "}";
+                                return "{value|" + value + "%}";
                             },
                             rich: {
                                 value: {
@@ -815,8 +933,102 @@ export default {
     },
     mounted() {
         this.getData()
+        this.getSearchOilProductionChart();
     },
     methods: {
+        //原油产量统计图
+        getSearchOilProductionChart() {
+            let request = {
+                oilFieldId: '3FC9A818F5BC43B88270DB80BBB3018F',
+                unitType: 'm',
+                beginDate: '2023-01-01',
+                endDate: '2023-12-31',
+                planTypeCode: '002003',
+                rollForecastVersion: '202301',
+            };
+            searchOilProductionChart(request).then((res) => {
+                //图表数据
+                let legendData = [];
+                //数据数组
+                let seriesData = [];
+                //判断当前请求是否成功
+                if (res.data.code == 200) {
+                    let charDataS = res.data.data.chart.linearDataSets;
+                    for (let i = 0; i < charDataS.length; i++) {
+                        //获得每一个折线数据
+                        let linearChart = charDataS[i];
+                        //向图例中添加 折线名称
+                        if (linearChart.label != '实际年产' && linearChart.label != '计划年产') {
+                            legendData.push(linearChart.label);
+                        } else if (linearChart.label == '实际年产') {
+                            legendData.push('实际年累产');
+                        } else if (linearChart.label == '计划年产') {
+                            legendData.push('计划年累产');
+                        }
+                        //向数据数组中添加 所有折线的信息
+                        seriesData.push(this.getLinearChartSeriesOilProduct(linearChart));
+                    }
+                    //图例数据
+                    this.productLineChart.legend.data = legendData;
+                    //各线的数据
+                    this.productLineChart.series = seriesData;
+                    if (this.searchForm.selectUnitOfProduction == 'm') {
+                        this.productLineChart.yAxis[0].name = '日产m³/d';
+                        this.productLineChart.yAxis[1].name = '年产10⁴m³';
+                    } else if (this.searchForm.selectUnitOfProduction == 't') {
+                        this.productLineChart.yAxis[0].name = '日产t/d';
+                        this.productLineChart.yAxis[1].name = '年产10⁴t';
+                    }
+                } else {
+                    //图例数据
+                    this.productLineChart.legend.data = legendData;
+                    //各线的数据
+                    this.productLineChart.series = seriesData;
+                    if (this.searchForm.selectUnitOfProduction == 'm') {
+                        this.productLineChart.yAxis[0].name = '日产m³/d';
+                        this.productLineChart.yAxis[1].name = '年产10⁴m³';
+                    } else if (this.searchForm.selectUnitOfProduction == 't') {
+                        this.productLineChart.yAxis[0].name = '日产t/d';
+                        this.productLineChart.yAxis[1].name = '年产10⁴t';
+                    }
+                }
+            });
+        },
+        //原油产量 折线图数据解析
+        getLinearChartSeriesOilProduct(linearChart) {
+            // 单折线数据结构
+            let series = {};
+            series.name = linearChart.label;
+            series.type = 'line';
+            series.symbol = 'none';
+            let label = linearChart.label;
+            if (label == '实际日产') {
+                series.yAxisIndex = 0;
+            } else if (label == '考核日产') {
+                series.yAxisIndex = 0;
+            } else if (label == '滚动预测') {
+                series.yAxisIndex = 0;
+            } else if (label == '实际年产') {
+                series.yAxisIndex = 1;
+                series.name = '实际年累产';
+            } else if (label == '计划年产') {
+                series.yAxisIndex = 1;
+                series.name = '计划年累产';
+            } else if (label == '剩余水平') {
+                series.yAxisIndex = 0;
+            }
+            let seriesData = [];
+            let chartData = linearChart.linearData;
+            for (let i = 0; i < chartData.length; i++) {
+                let point = [];
+                //放入带入点
+                point.push(chartData[i].label);
+                point.push(chartData[i].value);
+                seriesData.push(point);
+            }
+            series.data = seriesData;
+            return series;
+        },
         getData() {
             queryYieldTracking({
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',

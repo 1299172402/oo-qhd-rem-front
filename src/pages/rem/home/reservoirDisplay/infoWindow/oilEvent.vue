@@ -8,31 +8,31 @@
             :is-show-max-btn="true"
         >
             <div class="g-w100 g-h100 g-row-flex" style="">
-                <div style="height: 250px; width: 100%" class="g-w100">
+                <div style="height: 100%; width: 100%" class="g-w100">
                     <button class="detailLinkBtn" @click="linkroute('oilEventDetail')">详细</button>
                     <el-table
                         id="tableD"
                         :data="tableData"
                         highlight-current-row
-                        height="calc(100% - 0px)"
+                        height="100%"
                         style="margin-top: 10px;margin: 0"
-                        :row-style="{ height: '70px' }"
+                        :row-style="{ height: '50px' }"
                         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
                         header-cell-class-name="table_header"
                         :cell-style="{ 'text-align': 'center', padding: '2px' }"
                         :default-sort="{ prop: 'date', order: 'descending' }"
                     >
-                        <el-table-column label="序号" min-width="60px" prop="ogfName" align="center">
+                        <el-table-column label="序号" min-width="30px" prop="ogfName" align="center">
                             <template slot-scope="scope" style="height: 100%">
                                 {{ scope.$index + 1 }}
                             </template>
                         </el-table-column>
-                        <el-table-column label="大事内容" min-width="100px" prop="remark" align="center">
+                        <el-table-column label="大事内容" prop="remark" align="center">
                             <template slot-scope="scope">
                                 <div class="table-name">{{ scope.row.remark }}</div>
                             </template>
                         </el-table-column>
-                        <el-table-column label="时间"  prop="startTime" align="center">
+                        <el-table-column label="时间" min-width="40px"  prop="startTime" align="center">
                             <template slot-scope="scope">
                                 <span>{{ scope.row.startTime?scope.row.startTime.split(' ')[0]:'' }}</span>
                             </template>
@@ -62,7 +62,7 @@ export default {
         },
         getData() {
             queryOilFieldIncident({}).then(res => {
-                this.tableData = res.data.data.data.slice(0,3)
+                this.tableData = res.data.data.data.slice(0,10)
             })
         }
     }
@@ -87,8 +87,7 @@ export default {
     line-height: 100%;
     white-space: pre-wrap; /* 强制换行 */
 }
-::v-deep#tableD .cell{
-    height: 45px!important;
-    line-height: 45px!important;
+::v-deep #tableD .cell{
+    height: auto !important;
 }
 </style>

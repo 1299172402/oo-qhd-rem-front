@@ -77,7 +77,7 @@ export default {
                     type: "category",
                 },
                 yAxis: {
-                    name: "变化量(口)",
+                    name: "变化井数(口)",
                     type: "value",
                     min:0,
                     max:100,
@@ -158,15 +158,19 @@ export default {
         },
         getinfo() {
             let params = {
-                dateComp: '2022-10-11',
-                date: '2022-10-12',
+                dateComp: new Date().getYesterday(),
+                date: new Date().format('YYYY-MM-DD'),
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'
             }
             getYieldFluctuation(params).then((res) => {
                 this.histogram.yAxis.min = null
                 this.histogram.yAxis.max = null
                 res.data.data.xdata.forEach((item) => {
-                    this.histogram.xAxis.data.push(item)
+                    if(item.indexOf('以上')!=-1){
+                        this.histogram.xAxis.data.push(item.replace(/以上/,'方以上'))
+                    }else{
+                        this.histogram.xAxis.data.push(item+'方')
+                    }
                 });
                 res.data.data.ydata.forEach((item) => {
                     this.histogram.series[0].data.push(item)
