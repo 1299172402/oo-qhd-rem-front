@@ -6,7 +6,7 @@
             header-title="产能波动"
             :is-show-max-btn="true"
         >
-            <button class="detailLinkBtn" @click="linkroute('fluctuationWarningAnalysis')">详细</button>
+            <button class="detailLinkBtn" @click="linkroute('statisticalTableProduction')">详细</button>
             <Echart :chart-data="histogram" height="100%"></Echart>
         </info-window>
     </div>
