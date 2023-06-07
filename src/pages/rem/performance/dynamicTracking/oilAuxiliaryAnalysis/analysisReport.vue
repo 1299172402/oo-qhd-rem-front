@@ -360,13 +360,15 @@
                                         </div>
                                     </div>  
                                     <div class="z-row-center">
-                                        <div class="numBtn" v-for="(item,index) in productionTrendsOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!productionSwitch" 
-                                        @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'productionTrendsOptions')})">
+                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                        v-for="(item,index) in productionTrendsOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!productionSwitch" 
+                                        @click="((val)=>{selRadioIterm(item.code,'productionTrendsOptions')})">
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
-                                        <div class="numBtn" v-for="(item,index) in productionTrendsOptions" :key="index" v-if="item.name=='正常'&&productionSwitch"
-                                        @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'productionTrendsOptions')})">
+                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                        v-for="(item,index) in productionTrendsOptions" :key="index" v-if="item.name=='正常'&&productionSwitch"
+                                        @click="((val)=>{selRadioIterm(item.code,'productionTrendsOptions')})">
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
@@ -376,7 +378,7 @@
                                         <div class="num">
                                             <span 
                                                 v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='地面调参'" 
-                                                @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'recommendedMeasuresOptions')})">
+                                                @click="((val)=>{selRadioIterm(item.code,'recommendedMeasuresOptions')})">
                                             {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span>
                                             </span>
                                         </div>
@@ -408,15 +410,15 @@
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" 
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                 v-for="(item,index) in oilWellConditionOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!oilWellConditionSwitch"
-                                                @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'oilWellConditionOptions')})">
+                                                @click="((val)=>{selRadioIterm(item.code,'oilWellConditionOptions')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
-                                            <div class="numBtn" 
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                 v-for="(item,index) in oilWellConditionOptions" :key="index" v-if="item.name=='正常'&&oilWellConditionSwitch"
-                                                @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'oilWellConditionOptions')})">
+                                                @click="((val)=>{selRadioIterm(item.code,'oilWellConditionOptions')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
@@ -442,15 +444,15 @@
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" 
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                 v-for="(item,index) in relationshipOptions" :key="index" v-if="item.name!='正常'&&item.name!='合理区'&&(item.value!=0||item.isShow)&&!relationshipSwitch"
-                                                @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'relationshipOptions')})">
+                                                @click="((val)=>{selRadioIterm(item.code,'relationshipOptions')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
-                                            <div class="numBtn" 
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                 v-for="(item,index) in relationshipOptions" :key="index" v-if="(item.name=='正常'||item.name=='合理区')&&relationshipSwitch"
-                                                @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'relationshipOptions')})">
+                                                @click="((val)=>{selRadioIterm(item.code,'relationshipOptions')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
@@ -500,15 +502,15 @@
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
-                                                <div class="numBtn" 
+                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                     v-for="(item,index) in diminishingOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!diminishingSwitch"
-                                                    @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'diminishingOptions')})">
+                                                    @click="((val)=>{selRadioIterm(item.code,'diminishingOptions')})">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
-                                                <div class="numBtn" 
+                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                     v-for="(item,index) in diminishingOptions" :key="index" v-if="item.name=='正常'&&diminishingSwitch"
-                                                    @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'diminishingOptions')})">
+                                                    @click="((val)=>{selRadioIterm(item.code,'diminishingOptions')})">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
@@ -534,15 +536,15 @@
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
-                                                <div class="numBtn" 
+                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                     v-for="(item,index) in fluidStrengthOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)  &&!fluidStrengthSwitch"
-                                                    @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'fluidStrengthOptions')})">
+                                                    @click="((val)=>{selRadioIterm(item.code,'fluidStrengthOptions')})">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
-                                                <div class="numBtn" 
+                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                     v-for="(item,index) in fluidStrengthOptions" :key="index" v-if="item.name=='正常'&&fluidStrengthSwitch"
-                                                    @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'fluidStrengthOptions')})">
+                                                    @click="((val)=>{selRadioIterm(item.code,'fluidStrengthOptions')})">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
@@ -587,15 +589,15 @@
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
-                                                <div class="numBtn" 
+                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                     v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!fluidProductionSwitch"
-                                                    @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'fluidProductionOptions')})">
+                                                    @click="((val)=>{selRadioIterm(item.code,'fluidProductionOptions')})">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
-                                                <div class="numBtn" 
+                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                     v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name=='正常'&&fluidProductionSwitch"
-                                                    @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'fluidProductionOptions')})">
+                                                    @click="((val)=>{selRadioIterm(item.code,'fluidProductionOptions')})">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
@@ -621,22 +623,22 @@
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
-                                                <div class="numBtn" 
+                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                     v-for="(item,index) in mfluidProductionOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!mfluidProductionSwitch"
-                                                    @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'mfluidProductionOptions')})">
+                                                    @click="((val)=>{selRadioIterm(item.code,'mfluidProductionOptions')})">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
-                                                <div class="numBtn" 
+                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                     v-for="(item,index) in mfluidProductionOptions" :key="index" v-if="item.name=='正常'&&mfluidProductionSwitch"
-                                                    @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'mfluidProductionOptions')})">
+                                                    @click="((val)=>{selRadioIterm(item.code,'mfluidProductionOptions')})">
                                                     <span class="sp1">{{item.value}}</span>
                                                     <span class="sp2">{{item.name}}</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="z3" ></div>
+                                    <div class="z3"></div>
                                 </div>
                             </div>
                         </info-window>
@@ -2155,6 +2157,37 @@
                 this.$nextTick(() => {
                     this.$refs.tableList.doLayout();
                 })
+                
+                //zxb-重新计算数量    
+                let numKeys=['productionNum','oilWellConditionNum','relationshipNum','diminishingNum','fluidStrengthNum','fluidProductionNum','mfluidProductionNum'];
+                let datakeys=['productionTrendsOptions','oilWellConditionOptions','relationshipOptions','diminishingOptions','fluidStrengthOptions','fluidProductionOptions','mfluidProductionOptions'];
+                for(let i=0;i<numKeys.length;i++){
+                    let numKey=numKeys[i];
+                    let dataKey=datakeys[i];
+                    this[numKey].allnum=0;
+                    this[numKey].zcnum=0;
+                    this[numKey].ycnum=0;
+                    this[dataKey].forEach((el,i)=>{
+                        console.log(this[dataKey][i].value,7777)
+                        console.log(Number(this[dataKey][i].value),999)
+                        this[numKey].allnum+=Number(this[dataKey][i].value);
+                        if(el.name=='正常'||el.name=='合格区'){
+                            this[numKey].zcnum=Number(this[dataKey][i].value);
+                        }else{
+                            this[numKey].ycnum+=Number(this[dataKey][i].value);
+                        }
+                    })
+                    this[numKey].zczb=this[numKey].zcnum/this[numKey].allnum * 100;
+                    this[numKey].yczb=this[numKey].yczb/this[numKey].allnum * 100;
+                    console.log('this[numKey]',this[numKey])
+                }
+                //zxb-重新计算推荐井组
+                this.potentialWellNum=0;
+                for(let i=0;i<this.recommendedMeasuresOptions.length;i++){
+                    let el=this.recommendedMeasuresOptions[i];
+                    this.potentialWellNum+=Number(el.value);
+                }
+                
             },
             //跳转到水井页面
             goWaterWell(val) {
@@ -2571,6 +2604,9 @@
                                         font-size: 12px;
                                     }
                                 }
+                                .numBtnBgActive{
+                                    background: var(--logo-bg) no-repeat top / contain, var(--primary-btn) !important;
+                                }
                             }
                             .z-row-right{
                                 width: 250px;
@@ -2779,6 +2815,9 @@
                                     .sp2{
                                         font-size: 12px;
                                     }
+                                }
+                                .numBtnBgActive{
+                                    background: var(--logo-bg) no-repeat top / contain, var(--primary-btn) !important;
                                 }
                             }
                             
