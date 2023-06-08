@@ -80,7 +80,10 @@
         </div>
       </div>
     </template>
-    <t-badge :count="total" dot :offset="[12, 3]">
+    <t-badge
+      :count="total"
+      :offset="[12, 3]"
+    >
       <t-button
         theme="default"
         shape="square"
@@ -382,9 +385,10 @@ export default Vue.extend({
 </script>
 
 <style>
-.t-badge--dot {
-  width: 10px;
-  height: 10px;
+.t-badge--circle{
+    color: transparent;
+    width: 10px;
+    height: 11px;
 }
 </style>
 <style lang="less" scoped>

@@ -81,7 +81,7 @@
           </div>
         </div>
       </template>
-      <t-badge :count="unreadMsg.length" dot :offset="[12, 3]">
+      <t-badge :count="unreadMsg.length" :offset="[10, 3]">
         <t-button
           theme="default"
           shape="square"
