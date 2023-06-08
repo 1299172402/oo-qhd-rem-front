@@ -2,8 +2,8 @@ import Layout from '@/layouts/index.vue';
 const env = import.meta.env.MODE;
 export default [
     {
-        path: '/intelligence',
-        name: 'intelligence',
+        path: '/intelligence1',
+        name: 'intelligence1',
         hidden:env == "development" ? false : true,
         component: Layout,
         meta: { title: '智能注采调配', icon: 'client', single: false },
@@ -14,6 +14,12 @@ export default [
                 hidden:false,
                 component: () => import('@/pages/rem/intelligence/index.vue'),
                 meta: { title: '首页',icon: 'icon' },
+            },
+            {
+                path: 'ipmHome',
+                name: 'ipmHome',
+                component: () => import('@/pages/rem/home/ipmHome/index.vue'),
+                meta: { title: '智能注采调配',icon: 'icon' },
             },
             // 油藏管理-智能注采调配-首页详情
             {

@@ -32,7 +32,7 @@
                 <template slot-scope="scope">
                     <el-date-picker v-model="scope.row.measureSeffectDate" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd"></el-date-picker>
                 </template>
-            </el-table-column>DAILY_ALLOCATING_BASE
+            </el-table-column>
             <el-table-column align="center" label="日增油/日产油" prop="" width="160">
                 <template slot-scope="scope">
                     <el-input-number v-model="scope.row.dailyAllocatingBase" :precision=4 size="medium" style="width:150px;" controls-position="right"></el-input-number>

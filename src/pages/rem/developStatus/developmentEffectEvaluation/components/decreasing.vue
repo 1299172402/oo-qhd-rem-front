@@ -216,7 +216,7 @@
                     },
                     series: [{
                         data: [],
-                        type: "scatter",
+                        type: "line",//scatter
                         barWidth: "20",
                         label: {
                             show: false,
@@ -304,7 +304,7 @@
                     },
                     series: [{
                         data: [],
-                        type: "scatter",
+                        type: "line",
                         barWidth: "20",
                         label: {
                             show: false,
@@ -387,7 +387,7 @@
                     },
                     series: [{
                         data: [],
-                        type: "scatter",
+                        type: "line",
                         barWidth: "20",
                         label: {
                             show: false,

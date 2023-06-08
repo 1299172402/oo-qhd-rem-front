@@ -228,14 +228,14 @@
                                         </div>
                                     </div>  
                                     <div class="z-row-center">
-                                        <div class="numBtn" 
+                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                             v-for="(item,index) in trendOfIndicators" :key="index" 
                                             v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!trendOfIndicatorsSwitch"
                                             @click="((val)=>{selRadioIterm(item.code,'trendOfIndicators')})">
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
-                                        <div class="numBtn" 
+                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                             v-for="(item,index) in trendOfIndicators" :key="index" 
                                             v-if="item.name=='正常'&&trendOfIndicatorsSwitch"
                                             @click="((val)=>{selRadioIterm(item.code,'trendOfIndicators')})">
@@ -270,14 +270,14 @@
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" 
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                 v-for="(item,index) in injectionProductionBalance" :key="index" 
                                                 v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!injectionProductionBalanceSwitch"
                                                 @click="((val)=>{selRadioIterm(item.code,'injectionProductionBalance')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
-                                            <div class="numBtn"
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                 v-for="(item,index) in injectionProductionBalance" :key="index" 
                                                 v-if="item.name=='正常'&&injectionProductionBalanceSwitch"
                                                 @click="((val)=>{selRadioIterm(item.code,'injectionProductionBalance')})">
@@ -304,14 +304,14 @@
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" 
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                 v-for="(item,index) in injectionResponseAnalysis" :key="index" 
                                                 v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!injectionResponseAnalysisSwitch"
                                                 @click="((val)=>{selRadioIterm(item.code,'injectionResponseAnalysis')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
-                                            <div class="numBtn"
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                 v-for="(item,index) in injectionResponseAnalysis" :key="index" 
                                                 v-if="item.name=='正常'&&injectionResponseAnalysisSwitch"
                                                 @click="((val)=>{selRadioIterm(item.code,'injectionResponseAnalysis')})">
@@ -340,14 +340,14 @@
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" 
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                 v-for="(item,index) in thePressureToKeep" :key="index" 
                                                 v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!thePressureToKeepSwitch"
                                                 @click="((val)=>{selRadioIterm(item.code,'thePressureToKeep')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
-                                            <div class="numBtn"
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                 v-for="(item,index) in thePressureToKeep" :key="index" 
                                                 v-if="item.name=='正常'&&thePressureToKeepSwitch"
                                                 @click="((val)=>{selRadioIterm(item.code,'thePressureToKeep')})">
@@ -1053,6 +1053,37 @@
                 this.$nextTick(() => {
                     this.$refs.tableList.doLayout();
                 })
+                
+                //zxb-重新计算数量
+                let numKeys=['trendOfIndicatorsNum','injectionProductionBalanceNum','injectionResponseAnalysisNum','thePressureToKeepNum'];
+                let datakeys=['trendOfIndicators','injectionProductionBalance','injectionResponseAnalysis','thePressureToKeep'];
+                for(let i=0;i<numKeys.length;i++){
+                    let numKey=numKeys[i];
+                    let dataKey=datakeys[i];
+                    this[numKey].allnum=0;
+                    this[numKey].zcnum=0;
+                    this[numKey].ycnum=0;
+                    this[dataKey].forEach((el,i)=>{
+                        console.log(this[dataKey][i].value,7777)
+                        console.log(Number(this[dataKey][i].value),999)
+                        this[numKey].allnum+=Number(this[dataKey][i].value);
+                        if(el.name=='正常'||el.name=='合格区'){
+                            this[numKey].zcnum=Number(this[dataKey][i].value);
+                        }else{
+                            this[numKey].ycnum+=Number(this[dataKey][i].value);
+                        }
+                    })
+                    this[numKey].zczb=this[numKey].zcnum/this[numKey].allnum * 100;
+                    this[numKey].yczb=this[numKey].yczb/this[numKey].allnum * 100;
+                    console.log('this[numKey]',this[numKey])
+                }
+                //zxb-重新计算推荐井组
+                this.potentialWellNum=0;
+                for(let i=0;i<this.recommendedMeasuresOptions.length;i++){
+                    let el=this.recommendedMeasuresOptions[i];
+                    this.potentialWellNum+=Number(el.value);
+                }
+                
             },
             //跳转到水井页面
             goWaterWell(val) {
@@ -1419,6 +1450,9 @@
                                         font-size: 12px;
                                     }
                                 }
+                                .numBtnBgActive{
+                                        background: var(--logo-bg) no-repeat top / contain, var(--primary-btn) !important;
+                                }
                             }
                         }
                     }
@@ -1601,6 +1635,9 @@
                                     .sp2{
                                         font-size: 12px;
                                     }
+                                }
+                                .numBtnBgActive{
+                                        background: var(--logo-bg) no-repeat top / contain, var(--primary-btn) !important;
                                 }
                             }
                         }

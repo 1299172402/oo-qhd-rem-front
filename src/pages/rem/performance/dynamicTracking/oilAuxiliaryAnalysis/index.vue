@@ -21,7 +21,15 @@
         </headerSearch>
         <pagePanelNew headerTitle="油井辅助分析" :style="{ height: this.currentModule == 'oilReport' ? 'auto' : 'calc(100% - 100px)' }" class="g-w100">
             <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
-                <el-upload ref="upload" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess" v-show="currentModule == 'wellNetworkDiagram' ||currentModule == 'completionStringDrawing' || currentModule == 'fluidProducingProfile' ||currentModule == 'saturationLog' ||currentModule == 'wellTestReport'">
+                <el-button
+                    type="primary"
+                    icon="el-icon-upload2"
+                    @click="ljpmUploadDialogLast"
+                    style="margin-left: auto !important"
+                    v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' "
+                >上传文档(钻完井资料的)</el-button
+                >
+                <el-upload v-else ref="upload" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess" v-show="currentModule == 'wellNetworkDiagram' ||currentModule == 'completionStringDrawing' || currentModule == 'fluidProducingProfile' ||currentModule == 'saturationLog' ||currentModule == 'wellTestReport'">
                     <el-button type="primary" icon="el-icon-download">上传文档</el-button>
                 </el-upload>
                 
@@ -72,14 +80,45 @@
                 </span>
             </el-dialog>
         </pagePanelNew>
+        <el-dialog
+            custom-class="border"
+            title="连井剖面图上传"
+            :visible.sync="ljpmDialogLast"
+            width="20%"
+            :before-close="ljpmDialogCloseLast"
+        >
+            <el-row>
+                <el-form ref="form" :model="ljUploadForm" label-width="80px">
+                    <el-col :span="12">
+                        <el-form-item label="图片上传" style="width: 88px">
+                            <file-upload
+                                :limit="1"
+                                v-model:biz-path="this.imageurl"
+                                :is-picture-card="true"
+                                :is-show-tip="false"
+                                biz-path="oo-qhd-rem-front/test"
+                                bucket-name="zhy"
+                            />
+                        </el-form-item>
+                    </el-col>
+                </el-form>
+            </el-row>
+
+            <div slot="footer" class="dialog-footer" style="text-align: center">
+                <el-button @click="ljpmDialogCloseLast">取 消</el-button>
+                <el-button type="primary" @click="ljpmUploadSaveLast">确 定</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
 <script>
     import { fetchOilFields,fetchPlatforms,uploadFile,ljpmImgUploadFile, fetchProductionWells,fetchProductionWellsByPlatform,getLjpmWells,} from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import { getMajorEventsBriefly} from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
+    import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
     export default {
         name: "OilAuxiliaryAnalysis",
+        components: {FileUpload},
         data() {
             return {
                 majorEventsBrieflyValue: "", //大事间要绑定值
@@ -320,6 +359,8 @@
                 ljpmTag: false,
                 //连井剖面弹窗
                 ljpmDialog: false,
+                //连井剖面弹窗
+                ljpmDialogLast: false,
                 //连井上传图片表单
                 props: {
                     key: "wellId",
@@ -465,6 +506,12 @@
             this.initData();
         },
         methods: {
+            ljpmUploadDialogLast() {
+                console.log('123123123')
+                //打开弹窗
+                this.ljpmDialogLast = true;
+                this.getLjpmWells();
+            },
             //重置
             resetting(){
                 let activeName=this.activeName;
@@ -839,7 +886,14 @@
                     return true;
                 }
             },
-            
+            ljpmDialogCloseLast() {
+                this.ljUploadForm = {
+                    direction: "横向",
+                    chooseWell: [],
+                };
+                this.ljpmFileList = [];
+                this.ljpmDialogLast = false;
+            },
             ljpmDialogClose() {
                 this.ljUploadForm = {
                     direction: "横向",
@@ -847,6 +901,13 @@
                 };
                 this.ljpmFileList = [];
                 this.ljpmDialog = false;
+            },
+            ljpmUploadSaveLast() {
+                var fileType = this.$refs.ljpmUpload.fileList[0].raw.type;
+                if (this.isCorrectFileType(fileType)) {
+                    return true;
+                }
+                this.$refs.ljpmUpload.submit();
             },
             ljpmUploadSave() {
                 if (this.ljUploadForm.chooseWell == null || this.ljUploadForm.chooseWell.length <= 0) {

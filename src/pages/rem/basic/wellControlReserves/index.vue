@@ -4,7 +4,7 @@
     <div style="display: flex;flex-direction: row; height: 100%;">
       
       <div style=" height: 100%">
-        <tree-multiple-selection :deptOptions="deptOptions" :level = "'5'" @childinfo = 'childinfo'  @change="layoutChange"/>
+        <tree-multiple-selection :level = "'5'" @childinfo = 'childinfo' />
       </div>
       <div
         style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
@@ -35,7 +35,7 @@
                   </el-select>
                 </el-form-item>
                 <el-form-item label="井号：">
-                  <el-select v-model="queryData.wellId" @change="choicewellName">
+                  <el-select v-model="queryData.wellId" >
                     <el-option v-for="item in wells" :key="item.wellId" :label="item.wellName" :value="item.wellId">
                     </el-option>
                   </el-select>
@@ -50,64 +50,67 @@
         </header-search>
     
         <pagePanel headerTitle="单井储量信息维护界面" style="height: calc(100% - 100px)" class="g-w100" :show-btn="true">
-          <div class="alltitle">{{ wellName }}</div>
-          <div class="boxall" style="height: 500px; width: 900px; margin: auto">
-            <div style="margin-left:4%;margin-top:100px">
-              <el-form
-                :model="djclForm"
-                style="width: 800px; padding-top: 20px"
-                ref="djclForm"
-                label-width="110px"
-                class="demo-ruleForm"
-              >
-                <el-row>
-                  <el-col :span="10">
-                    <el-form-item label="层位选择" prop="cw">
-                      <el-select v-model="djclForm.layerId" @change="selectcw" placeholder="" style="width: 100.5%">
-                        <el-option
-                          v-for="item in cwOptions"
-                          :key="item.layerId"
-                          :label="item.layerName"
-                          :value="item.layerId"
+            <div style="margin-top: 5%">
+                <div class="alltitle">{{ wellName }}</div>
+                <div class="boxall" style="height: 500px; width: 900px; margin: auto">
+                    <div style="margin-left:4%;margin-top:100px">
+                        <el-form
+                            :model="djclForm"
+                            style="width: 800px; padding-top: 20px"
+                            ref="djclForm"
+                            label-width="110px"
+                            class="demo-ruleForm"
                         >
-                        </el-option>
-                      </el-select>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="2">&nbsp;</el-col>
-                  <el-col :span="10">
-                    <el-form-item label="有效厚度" prop="cw">
-                      <el-input v-model="djclForm.thicknessEffe" :disabled="edit"> <i slot="suffix">m</i></el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-                <el-row>
-                  <el-col :span="10">
-                    <el-form-item label="控制储量" prop="kzcl">
-                      <el-input v-model="djclForm.probReservesWell" :disabled="edit"> <i slot="suffix">m³</i></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="2">&nbsp;</el-col>
-                  <el-col :span="10">
-                    <el-form-item label="控制面积" prop="kzmj">
-                      <el-input v-model="djclForm.controlArea" :disabled="edit">
-                        <i slot="suffix">m²</i>
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
-                  <!-- <el-col :span="2">㎡</el-col> -->
-                </el-row>
-                <el-row>
-                  <el-col :span="24" align="right" style="padding-top: 20px">
-                    <el-button type="primary" @click="redact" icon="el-icon-edit">编辑</el-button>
-                    <el-button type="primary" @click="save">保存</el-button>
-                    <el-button type="primary" icon="el-icon-search">运行计算</el-button>
-                  </el-col>
-                </el-row>
-              </el-form>
+                            <el-row>
+                                <el-col :span="10">
+                                    <el-form-item label="层位选择" prop="cw">
+                                        <el-select v-model="djclForm.layerId" @change="selectcw" placeholder="" style="width: 100.5%">
+                                            <el-option
+                                                v-for="item in cwOptions"
+                                                :key="item.layerId"
+                                                :label="item.layerName"
+                                                :value="item.layerId"
+                                            >
+                                            </el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="2">&nbsp;</el-col>
+                                <el-col :span="10">
+                                    <el-form-item label="有效厚度" prop="cw">
+                                        <el-input v-model="djclForm.thicknessEffe" :disabled="edit"> <i slot="suffix">m</i></el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="10">
+                                    <el-form-item label="控制储量" prop="kzcl">
+                                        <el-input v-model="djclForm.probReservesWell" :disabled="edit"> <i slot="suffix">m³</i></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="2">&nbsp;</el-col>
+                                <el-col :span="10">
+                                    <el-form-item label="控制面积" prop="kzmj">
+                                        <el-input v-model="djclForm.controlArea" :disabled="edit">
+                                            <i slot="suffix">m²</i>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <!-- <el-col :span="2">㎡</el-col> -->
+                            </el-row>
+                            <el-row>
+                                <el-col :span="24" align="right" style="padding-top: 20px">
+                                    <el-button type="primary" @click="redact" icon="el-icon-edit">编辑</el-button>
+                                    <el-button type="primary" @click="save">保存</el-button>
+                                    <el-button type="primary" icon="el-icon-search">运行计算</el-button>
+                                </el-col>
+                            </el-row>
+                        </el-form>
+                    </div>
+                    <div class="boxfoot"></div>
+                </div> 
             </div>
-            <div class="boxfoot"></div>
-          </div>
+          
         </pagePanel>
       </div>
     </div>
@@ -153,7 +156,7 @@ export default {
       platforms: [],
       oilFields: [],
       djclForm: {},
-      wellName: "QHD32-6-A1",
+      wellName: "",
     };
   },
   mounted() {
@@ -161,6 +164,18 @@ export default {
     this.getData();
     this.queryserch();
   },
+    watch: {
+        queryData: {
+            handler(val) {
+                    let obj = {};
+                    obj = this.wells.find((item) => {
+                        return item.wellId === val.wellId;
+                    });
+                    this.wellName = obj.wellName
+            },
+            deep: true,
+        }
+    },
   methods: {
     getList() {
         //获取作业公司
@@ -198,13 +213,6 @@ export default {
       //     });
       //   }
       // });
-    },
-    choicewellName(e) {
-      let obj = {};
-      obj = this.wells.find((item) => {
-        return item.wellId === e;
-      });
-      this.wellName = obj.wellName
     },
     selectcw() {
       let adta = {
@@ -284,6 +292,7 @@ export default {
         //根据平台获得井
         queryPlatformQueryWellListDetail({platformId:val}).then((res) => {
             this.wells = res.data.data
+            this.queryData.wellId =  this.wells[0].wellId
         })
     },
     // 重置仅重置搜索条件与下方查询内容无关
