@@ -285,7 +285,8 @@ export default {
                     label: "秦皇岛32-6",
                 }, //油田
                 blockId: {
-                    value: "6CD7342CA6DD418183A4B3BC38584F7C",
+                    // value: "6CD7342CA6DD418183A4B3BC38584F7C",
+                    value: "YCFXDY8B643EDC9007F96F570600457D",
                     label: "秦皇岛32-6南区",
                 }, //区块
                 wellCategory: "01", //井别
@@ -341,7 +342,7 @@ export default {
         } else {
             this.queryData.ogfId.value = "3FC9A818F5BC43B88270DB80BBB3018F"
             this.queryData.ogfId.label = "秦皇岛32-6"
-            this.queryData.blockId.value = "6CD7342CA6DD418183A4B3BC38584F7C"
+            this.queryData.blockId.value = "YCFXDY8B643EDC9007F96F570600457D"
             this.queryData.blockId.label = "秦皇岛32-6南区"
             this.queryData.wellCategory = "01"
             this.queryData.wellId = ["DA0269628E74490ABDE198E7D1DBF3EA"]
@@ -434,11 +435,7 @@ export default {
             };
             if (this.queryData.wellId.length == 0 || this.queryData.value.length == 0) {
                 this.tableData = []
-                this.$message({
-                    message: "井号，时间未选择",
-                    type: 'error',
-                    duration: 1500
-                })
+                this.$message.error("井号或时间未选择")
                 return
             }
             getProductionSplit(params).then((res) => {
