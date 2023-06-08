@@ -69,28 +69,25 @@ export default ({ mode }) => {
       port: 8080,
       open: true,
       proxy: {
-        // "/dev-api/rem/api/generalConfig": {
-        //   // 用于开发环境下的转发请求
-        //   // 更多请参考：https://vitejs.dev/config/#server-proxy
-        //   // target: 'http://10.247.187.28:8080/dev-api/',
-        //   // target: 'http://10.178.118.181:9220',
-        //   // target: 'http://10.178.118.184:9229', //姜
-        //   // target: "http://10.178.118.189:9203", //小黄
-        //   target:"http://10.178.118.180",//鹏举
-        //   // target: 'http://10.178.118.181:9207', //飞龙
-        //   // target: 'http://10.178.118.184:8080',
-        //   changeOrigin: true,
-        //   rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, ""),
-        // },
-        "/dev-api/masterService/api": {
-          // 主服务转发请求
-          // 接口网关地址：http://10.77.79.57:8080
-          // 接口微服务地址：http://10.77.78.243:8003
-          // 接口微服务名称：oo-csc-csc-masterdata-atom
-          target: "http://10.77.79.57:8080",
+        "/dev-api/rem/api": {
+          // 用于开发环境下的转发请求
+          // 更多请参考：https://vitejs.dev/config/#server-proxy
+          // target: 'http://10.247.187.28:8080/dev-api/',
+          // target: 'http://10.178.118.181:9220',
+          target: 'http://10.178.118.189:9203',
+          // target: "http://10.77.78.250:9213",
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/dev-api\/masterService\/api/, "/omc003d"),
+          rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, ""),
         },
+        // "/dev-api/masterService/api": {
+        //   // 主服务转发请求
+        //   // 接口网关地址：http://10.77.79.57:8080
+        //   // 接口微服务地址：http://10.77.78.243:8003
+        //   // 接口微服务名称：oo-csc-csc-masterdata-atom
+        //   target: "http://10.77.79.57:8080",
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(/^\/dev-api\/masterService\/api/, "/omc003d"),
+        // },
         "/dev-api": {
           // 用于开发环境下的转发请求
           // 更多请参考：https://vitejs.dev/config/#server-proxy
