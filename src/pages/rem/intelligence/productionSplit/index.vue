@@ -435,11 +435,7 @@ export default {
             };
             if (this.queryData.wellId.length == 0 || this.queryData.value.length == 0) {
                 this.tableData = []
-                this.$message({
-                    message: "井号，时间未选择",
-                    type: 'error',
-                    duration: 1500
-                })
+                this.$message.error("井号或时间未选择")
                 return
             }
             getProductionSplit(params).then((res) => {
