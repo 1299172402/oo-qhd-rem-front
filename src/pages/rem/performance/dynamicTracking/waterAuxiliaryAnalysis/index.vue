@@ -29,7 +29,7 @@
                     @click="ljpmUploadDialog"
                     style="margin-left: auto !important"
                     v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' "
-                >上传文档(钻完井资料的)</el-button
+                >上传文档</el-button
                 >
                 <el-upload v-else ref="upload" style="margin-left: auto" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess">
                     <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
@@ -58,25 +58,16 @@
         </pagePanelNew>
         <el-dialog
             custom-class="border"
-            title="连井剖面图上传"
+            title="上传文档"
             :visible.sync="ljpmDialog"
             width="20%"
             :before-close="ljpmDialogClose"
         >
             <el-row>
-                <el-form ref="form" :model="ljUploadForm" label-width="80px">
-                    <el-col :span="12">
-                        <el-form-item label="图片上传" style="width: 88px">
-<!--                            <file-upload-->
-<!--                                :limit="1"-->
-<!--                                v-model:biz-path="this.imageurl"-->
-<!--                                :is-picture-card="true"-->
-<!--                                :is-show-tip="false"-->
-<!--                                biz-path="oo-qhd-rem-front/test"-->
-<!--                                bucket-name="zhy"-->
-<!--                            />-->
+                <el-form ref="form" :model="ljUploadForm" label-width="40px">
+                        <el-form-item label="" style="width: 88px">
                             <file-upload
-                                v-model="this.imageurl"
+                                v-model="imageurl"
                                 style="width: 250px"
                                 :limit="1"
                                 :fileSize="20"
@@ -84,9 +75,9 @@
                                 biz-path="rem-front/text"
                                 bucket-name="zhy"
                                 :file-type="['pdf']"
+                                @change="getResData"
                             />
                         </el-form-item>
-                    </el-col>
                 </el-form>
             </el-row>
 
@@ -102,6 +93,7 @@
     import { fetchOilFields,fetchPlatforms,fetchInjectionWells,fetchInjectionWellsByPlatform,uploadFile } from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import { getMajorEventsBriefly } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
     import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
+    import {addRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
     export default {
         name: "WaterAuxiliaryAnalysis",
         components: {FileUpload},
@@ -389,8 +381,64 @@
         },
         mounted() {
             this.initData();
+            this.doSearch()
         },
         methods: {
+            uploadFile(params){
+                addRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        this.$message.success("文件上传成功!");
+                        this.ljpmDialog = false;
+                        this.doSearch()
+                        this.imageurl = ''; // 清空已选择的文件
+                        this.$refs.form.resetFields(); 
+                    }else {
+                        this.$message.error("文件上传失败!");
+                        this.ljpmDialog = false;
+                        this.doSearch()
+                        this.imageurl = ''; // 清空已选择的文件
+                        this.$refs.form.resetFields();
+                    }
+                });  
+            },
+            getResData(data){
+                console.log(data)
+                if (this.currentModule =='drillingReport'){
+                    //打开弹窗
+                    let params1 = {
+                        fileId: data[0].id,
+                        filestrId:data[0].name,
+                        operationId:this.selectWellId,
+                        operationType:'SJZWJBG',
+                        remUploadFileMinioId:'' ,
+                        uploadTime:''
+                    };
+                    this.uploadFile(params1)
+                    console.log('111111111',params1)
+                }else if(this.currentModule =='completionReport'){
+                    let params2 = {
+                        fileId: data[0].id,
+                        filestrId:data[0].name,
+                        operationId:this.selectWellId,
+                        operationType:'SJWJWGBG',
+                        remUploadFileMinioId:'' ,
+                        uploadTime:''
+                    }
+                    this.uploadFile(params2)
+                    console.log('2222222',params)
+                }else if(this.currentModule =='geologicalSummary'){
+                    let params3 = {
+                        fileId: data[0].id,
+                        filestrId:data[0].name,
+                        operationId:this.selectWellId,
+                        operationType:'SJWJDZZJ',
+                        remUploadFileMinioId:'' ,
+                        uploadTime:''
+                    }
+                    this.uploadFile(params3)
+                    console.log('333333',params)
+                }
+            },
             ljpmUploadSave() {
                 var fileType = this.$refs.ljpmUpload.fileList[0].raw.type;
                 if (this.isCorrectFileType(fileType)) {
@@ -410,10 +458,18 @@
                 this.ljpmDialog = false;
             },
             ljpmUploadDialog() {
-                console.log('123123123')
-                //打开弹窗
-                this.ljpmDialog = true;
-                this.getLjpmWells();
+                if (this.currentModule =='drillingReport'){
+                    this.ljpmDialog = true;
+                    console.log('111111111')
+                }else if(this.currentModule =='completionReport'){
+                    //打开弹窗
+                    this.ljpmDialog = true;
+                    console.log('2222222')
+                }else if(this.currentModule =='geologicalSummary'){
+                    //打开弹窗
+                    this.ljpmDialog = true;
+                    console.log('333333')
+                }
             },
             resetting(){
                 let activeName=this.activeName;
