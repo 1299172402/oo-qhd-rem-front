@@ -98,7 +98,7 @@
             <info-window v-if="currentIndex == 3" infoWidth="100%" infoHeight="500px" headerTitle="综合递减率" isShowMaxBtn style="margin-top:0;">
                 <div style="height:100%">
                     <div style="display:flex;align-items: center;height:40px;padding-top:10px;">
-                        <span>区块：</span>
+                        <span>油藏分析单元：</span>
                         <el-select v-model="selectDecreaseBlock">
                             <el-option v-for="item in blockList" :key="item.fieldId" :label="item.name" :value="item.fieldId">
                             </el-option>
@@ -113,9 +113,9 @@
             <info-window v-if="currentIndex == 4" infoWidth="100%" infoHeight="500px" headerTitle="含水上升率" isShowMaxBtn style="margin-top:0;">
                 <div style="height:100%">
                     <div style="display:flex;align-items: center;height:40px;padding-top:10px;">
-                        <span>平台：</span>
-                        <el-select v-model="selectIncreasingRatePlatform" style="width: 220px;">
-                            <el-option v-for="item in platformList" :key="item.platFormId" :label="item.platName" :value="item.platFormId">
+                        <span>油藏分析单元：</span>
+                        <el-select v-model="selectDecreaseBlock">
+                            <el-option v-for="item in blockList" :key="item.fieldId" :label="item.name" :value="item.fieldId">
                             </el-option>
                         </el-select>
                         <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
@@ -134,9 +134,9 @@
             <info-window v-if="currentIndex == 7" infoWidth="100%" infoHeight="500px" headerTitle="自然递减率" isShowMaxBtn style="margin-top:0;">
                 <div style="height:100%">
                     <div style="display:flex;align-items: center;height:40px;padding-top:10px;">
-                        <span>平台：</span>
-                        <el-select v-model="selectNaturalDeclinePlatform" style="width: 220px;">
-                            <el-option v-for="item in platformList" :key="item.platFormId" :label="item.platName" :value="item.platFormId">
+                        <span>油藏分析单元：</span>
+                        <el-select v-model="selectDecreaseBlock">
+                            <el-option v-for="item in blockList" :key="item.fieldId" :label="item.name" :value="item.fieldId">
                             </el-option>
                         </el-select>
                         <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
@@ -320,6 +320,19 @@
                             type: "shadow",
                         },
                     },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name: "年产油量",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0,
+                                }
+                            },
+                        },
+                    },
                     grid:{
                         x: 120,
                         y: 20,
@@ -439,6 +452,19 @@
                             type: 'shadow',
                         },
                     },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name: "年产油量",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0,
+                                }
+                            },
+                        },
+                    },
                     grid:{
                         x: 120,
                         y: 30,
@@ -554,6 +580,19 @@
                             type: "shadow",
                         },
                     },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name: "采油速度",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0,
+                                }
+                            },
+                        },
+                    },
                     grid:{
                         x: 120,
                         y: 20,
@@ -642,6 +681,19 @@
                         },
                         top: 10,
                         left: "center",
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name: "综合递减率",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0,
+                                }
+                            },
+                        },
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -852,6 +904,19 @@
                             type: "shadow",
                         },
                     },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name: "生产时率",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0,
+                                }
+                            },
+                        },
+                    },
                     grid:{
                         x: 120,
                         y: 30,
@@ -933,6 +998,19 @@
                         trigger: 'axis',
                         axisPointer: {
                             type: "shadow",
+                        },
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name: "油井利用率",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: "#022644",
+                                iconStyle:{
+                                    opacity:0,
+                                }
+                            },
                         },
                     },
                     grid:{
@@ -1284,15 +1362,17 @@
                     let blockId = this.selectDecreaseBlock;
                     this.doCompositeDeclineRate(oilFieldId, blockId);
                 } else if (this.currentIndex == 4) { //含水上升率
-                    let platformId = this.selectIncreasingRatePlatform;
-                    this.doWaterCutRaiseRate(oilFieldId, platformId);
+                    // let platformId = this.selectIncreasingRatePlatform;
+                    let blockId = this.selectDecreaseBlock;
+                    this.doWaterCutRaiseRate(oilFieldId, blockId);
                 } else if (this.currentIndex == 5) { //生产时率
                     this.doProTimeRate(oilFieldId);
                 } else if (this.currentIndex == 6) { //油井利用率
                     this.doProWellUsageRate(oilFieldId);
                 } else if (this.currentIndex == 7) { //自然递减率
-                    let platformId = this.selectNaturalDeclinePlatform;
-                    this.doNatureDeclineRateForTech(oilFieldId, platformId);
+                    // let platformId = this.selectNaturalDeclinePlatform;
+                    let blockId = this.selectDecreaseBlock;
+                    this.doNatureDeclineRateForTech(oilFieldId, blockId);
                 }
             },
             //技术指标管理-技术指标统计列表 首页
@@ -1500,7 +1580,7 @@
             doCompositeDeclineRate(oilFieldId, blockId) {
                 let request = {
                     oilFieldId: oilFieldId,
-                    blockId: blockId,
+                    fileId: blockId,
                 }
                 compositeDeclineRate(request).then((res) => {
                     if (res.data.code == 200) {
@@ -1562,10 +1642,10 @@
                 });
             },
             //含水上升率
-            doWaterCutRaiseRate(oilFieldId, platformId) {
+            doWaterCutRaiseRate(oilFieldId, blockId) {
                 let request = {
                     oilFieldId: oilFieldId,
-                    platformId: platformId,
+                    fileId: blockId,
                 }
                 waterCutRaiseRate(request).then((res) => {
                     if (res.data.code == 200) {
@@ -1624,10 +1704,10 @@
                 });
             },
             //自然递减率
-            doNatureDeclineRateForTech(oilFieldId, platformId) {
+            doNatureDeclineRateForTech(oilFieldId, blockId) {
                 let request = {
                     oilFieldId: oilFieldId,
-                    platformId: platformId,
+                    fileId: blockId,
                 }
                 natureDeclineRateForTech(request).then((res) => {
                     if (res.data.code == 200) {
