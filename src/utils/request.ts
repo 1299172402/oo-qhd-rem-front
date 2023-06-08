@@ -147,7 +147,7 @@ instance.interceptors.response.use(
       if (response.config.url.substring(0, response.config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && whiteListError.indexOf(response.config.url) === -1) {
         // 过滤掉右上角小铃铛1min轮询接口,和报警信息列表接口的报错信息
         Message({
-          message: response.data.msg,
+          message: "系统错误请重新尝试或联系运维人员！",
           type: "error"
         });
       }
