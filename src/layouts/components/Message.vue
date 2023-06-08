@@ -9,7 +9,7 @@
     <template #content>
       <div class="header-msg">
         <div class="header-msg-top">
-          <p>通知</p>
+          <p>通知（报警数目：{{ total }}）</p>
           <!-- TODO: Maybe change back -->
           <!-- <t-button
             v-if="tableData.length > 0"
@@ -80,7 +80,7 @@
         </div>
       </div>
     </template>
-    <t-badge :count="total" :offset="[10, 3]">
+    <t-badge :count="total" dot :offset="[12, 3]">
       <t-button
         theme="default"
         shape="square"
@@ -381,6 +381,12 @@ export default Vue.extend({
 });
 </script>
 
+<style>
+.t-badge--dot {
+  width: 10px;
+  height: 10px;
+}
+</style>
 <style lang="less" scoped>
 @import "@/style/variables.less";
 

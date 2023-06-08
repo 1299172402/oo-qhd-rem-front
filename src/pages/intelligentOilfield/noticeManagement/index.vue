@@ -11,7 +11,7 @@
         <el-form-item label="通知租户" prop="tenantId">
           <el-select
             v-model="queryParams.tenantId"
-            placeholder="请选择"
+            placeholder="请选择通知租户"
             clearable
             style="width: 240px"
           >
@@ -44,7 +44,7 @@
         <el-form-item label="类型" prop="noticeType">
           <el-select
             v-model="queryParams.noticeType"
-            placeholder="请选择"
+            placeholder="请选择类型"
             clearable
             style="width: 240px"
           >
@@ -249,7 +249,7 @@
                     type="datetime"
                     format="yyyy.MM.dd HH : mm"
                     value-format="yyyy-MM-dd HH:mm:00"
-                    placeholder="选择日期时间"
+                    placeholder="请选择定时时间"
                   />
                 </el-form-item>
               </div>
@@ -320,7 +320,7 @@ export default {
       addform: {
         noticeContent: "",
         noticeType: "",
-        radio: "",
+        radio: 1,
         sendTime: "",
         tenantIds: []
       },
@@ -328,11 +328,11 @@ export default {
       isExpandAll: true,
       tenantList: [],
       rules: {
-        noticeContent: [{ required: true, message: "通知内容不能为空", trigger: "blur" }],
-        noticeType: [{ required: true, message: "通知类型不能为空", trigger: "blur" }],
-        radio: [{ required: true, message: "发送时间不能为空", trigger: "blur" }],
-        sendTime: [{ required: true, message: "定时时间不能为空", trigger: "blur" }],
-        tenantIds: [{ required: true, message: "通知对象不能为空", trigger: "blur" }]
+        noticeContent: [{ required: true, message: "请输入通知内容", trigger: "blur" }],
+        noticeType: [{ required: true, message: "请选择通知类型", trigger: "blur" }],
+        radio: [{ required: true, message: "请选择发送时间", trigger: "blur" }],
+        sendTime: [{ required: true, message: "请选择定时时间", trigger: "blur" }],
+        tenantIds: [{ required: true, message: "请选择通知对象", trigger: "blur" }]
       },
       // 显示搜索条件
       showSearch: true,
@@ -417,7 +417,7 @@ export default {
       this.addform = {
         noticeContent: "",
         noticeType: "",
-        radio: "",
+        radio: 1,
         sendTime: "",
         tenantIds: []
       };

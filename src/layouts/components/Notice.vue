@@ -32,7 +32,7 @@
       <template #content>
         <div class="header-msg">
           <div class="header-msg-top">
-            <p>通知</p>
+            <p>通知（通知数目：{{ unreadMsg.length }}）</p>
             <t-button
               v-if="unreadMsg.length > 0"
               class="clear-btn"
@@ -81,7 +81,7 @@
           </div>
         </div>
       </template>
-      <t-badge :count="unreadMsg.length" :offset="[10, 3]">
+      <t-badge :count="unreadMsg.length" dot :offset="[12, 3]">
         <t-button
           theme="default"
           shape="square"

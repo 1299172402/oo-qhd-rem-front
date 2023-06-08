@@ -150,6 +150,9 @@ instance.interceptors.response.use(
         //   message: response.data.msg,
         //   type: "error"
         // });
+        MessageBox.alert("系统内部服务错误", "系统提示", {
+          type: "error"
+        });
       }
       if (response.config.headers.showLoading !== false) {
         hideLoading();
@@ -202,6 +205,9 @@ instance.interceptors.response.use(
         // MessageBox.alert(err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错", "系统提示", {
         //   type: "error"
         // });
+        MessageBox.alert("系统内部服务错误", "系统提示", {
+          type: "error"
+        });
       }
       return Promise.reject(err);
     }

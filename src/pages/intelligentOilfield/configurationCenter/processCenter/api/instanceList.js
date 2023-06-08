@@ -89,8 +89,8 @@ export function getByCandidateList(data, id) {
 // 删除候选人
 export function deleteCandidate(id) {
   return request({
-    url: `/app/rest/flow-admin/candidate/${id}`,
-    method: "DELETE"
+    url: `/app/rest/flow-admin/candidate/${id}/delete`,
+    method: "POST"
   });
 }
 
@@ -98,7 +98,7 @@ export function deleteCandidate(id) {
 export function addCandidate(id, data) {
   return request({
     url: `/app/rest/flow-admin/task/${id}/candidate`,
-    method: "PUT",
+    method: "POST",
     data
   });
 }

@@ -1,7 +1,6 @@
 <template>
   <common-dialog
     v-model="visible"
-    :loading="loading"
     label
     :view-only="true"
     :fullscreen="true"
@@ -74,7 +73,7 @@
       :url="userSelectUrl"
       label-prop="name"
       value-prop="id"
-      data-path="data.data"
+      data-path="data"
       @submit="addCandidate"
     />
   </common-dialog>
@@ -108,7 +107,6 @@ export default {
   },
   data() {
     return {
-      loading: false,
       fn: {
         list: data => getByCandidateList(data, this.id)
       },

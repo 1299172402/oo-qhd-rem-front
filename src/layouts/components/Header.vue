@@ -421,10 +421,10 @@ export default Vue.extend({
       // 表单校验
       rules: {
         userName: [
-          { required: true, message: "用户账号不能为空", trigger: "blur" },
+          { required: true, message: "请输入用户账号", trigger: "blur" },
           { min: 2, max: 20, message: "用户账号长度必须介于 2 和 20 之间", trigger: "blur" }
         ],
-        nickName: [{ required: true, message: "用户名称不能为空", trigger: "blur" }],
+        nickName: [{ required: true, message: "请输入用户名称", trigger: "blur" }],
         email: [
           {
             type: "email",
@@ -448,9 +448,9 @@ export default Vue.extend({
         ]
       },
       pwdRules: {
-        initPwd: [{ required: true, message: "旧密码不能为空", trigger: "blur" }],
+        initPwd: [{ required: true, message: "请输入旧密码", trigger: "blur" }],
         updatePwd: [
-          { required: true, message: "新密码不能为空", trigger: "blur" },
+          { required: true, message: "请输入新密码", trigger: "blur" },
           {
             pattern:
               /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{12,20}$/,
@@ -458,7 +458,7 @@ export default Vue.extend({
           }
         ],
         surePwd: [
-          { required: true, message: "确认密码不能为空", trigger: "blur" },
+          { required: true, message: "请输入确认密码", trigger: "blur" },
           { required: true, validator: equalToPassword, trigger: "blur" }
         ]
       },

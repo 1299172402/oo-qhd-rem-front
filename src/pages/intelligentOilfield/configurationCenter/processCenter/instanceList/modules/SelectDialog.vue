@@ -112,7 +112,7 @@ export default {
       }
       getOptions(this.url)
         .then(res => {
-          const data = get(res, this.dataPath);
+          const data = get(res, this.dataPath, res);
           this.options = data.map(item => {
             item.label = item[this.labelProp];
             item.value = item[this.valueProp];

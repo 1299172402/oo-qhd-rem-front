@@ -20,7 +20,7 @@
           <el-select
             v-model="queryParams.appId"
             style="width: 240px"
-            placeholder="请选择"
+            placeholder="请选择所属应用"
             clearable
             filterable
           >
@@ -35,7 +35,7 @@
         <el-form-item label="状态" prop="status">
           <el-select
             v-model="queryParams.status"
-            placeholder="菜单状态"
+            placeholder="请选择状态"
             clearable
             style="width: 240px"
           >
@@ -286,7 +286,7 @@
                 <el-input
                   slot="reference"
                   v-model="form.icon"
-                  placeholder="点击选择图标"
+                  placeholder="请选择图标"
                   clearable
                   @clear="clearIcon"
                 >
@@ -592,11 +592,11 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        menuName: [{ required: true, message: "菜单名称不能为空", trigger: "blur" }],
-        orderNum: [{ required: true, message: "菜单顺序不能为空", trigger: "blur" }],
-        path: [{ required: true, message: "路由名称不能为空", trigger: "blur" }],
-        component: [{ required: true, message: "组件路径不能为空", trigger: "blur" }],
-        link: [{ required: true, message: "路由地址不能为空", trigger: "blur" }]
+        menuName: [{ required: true, message: "请输入菜单名称", trigger: "blur" }],
+        orderNum: [{ required: true, message: "请输入菜单顺序", trigger: "blur" }],
+        path: [{ required: true, message: "请输入路由名称", trigger: "blur" }],
+        component: [{ required: true, message: "请输入组件路径", trigger: "blur" }],
+        link: [{ required: true, message: "请输入路由地址", trigger: "blur" }]
       },
       disabledHandle: false
     };

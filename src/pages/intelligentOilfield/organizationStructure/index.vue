@@ -363,9 +363,9 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        parentId: [{ required: true, message: "上级机构不能为空", trigger: "blur" }],
-        deptName: [{ required: true, message: "机构名称不能为空", trigger: "blur" }],
-        orderNum: [{ required: true, message: "显示排序不能为空", trigger: "blur" }],
+        parentId: [{ required: true, message: "请选择上级机构", trigger: "blur" }],
+        deptName: [{ required: true, message: "请输入机构名称", trigger: "blur" }],
+        orderNum: [{ required: true, message: "请输入显示排序", trigger: "blur" }],
         email: [
           {
             type: "email",
@@ -380,10 +380,10 @@ export default {
             trigger: "blur"
           }
         ],
-        type: [{ required: true, message: "机构类型不能为空", trigger: "change" }],
-        status: [{ required: true, message: "机构状态不能为空", trigger: "change" }],
+        type: [{ required: true, message: "请选择机构类型", trigger: "change" }],
+        status: [{ required: true, message: "请选择机构状态", trigger: "change" }],
         // isTenant: [{ required: true, message: '是否租户不能为空', trigger: 'change' }],
-        tenantRoleId: [{ required: true, message: "选择角色不能为空", trigger: "change" }]
+        tenantRoleId: [{ required: true, message: "请选择角色", trigger: "change" }]
       },
       roleList: [],
       keys: []

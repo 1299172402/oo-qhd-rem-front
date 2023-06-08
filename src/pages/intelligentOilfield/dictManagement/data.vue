@@ -19,7 +19,7 @@
         <el-form-item label="状态" prop="status">
           <el-select
             v-model="queryParams.status"
-            placeholder="数据状态"
+            placeholder="请选择状态"
             clearable
             style="width: 240px"
           >
@@ -180,7 +180,7 @@
           <el-input-number v-model="form.dictSort" controls-position="right" :min="0" />
         </el-form-item>
         <el-form-item label="回显样式" prop="listClass">
-          <el-select v-model="form.listClass" clearable>
+          <el-select v-model="form.listClass" clearable placeholder="请选择回显样式">
             <el-option
               v-for="item in listClassOptions"
               :key="item.value"
@@ -199,7 +199,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.remark" type="textarea" placeholder="请输入备注" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -282,9 +282,9 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        dictLabel: [{ required: true, message: "数据标签不能为空", trigger: "blur" }],
-        dictValue: [{ required: true, message: "数据键值不能为空", trigger: "blur" }],
-        dictSort: [{ required: true, message: "数据顺序不能为空", trigger: "blur" }]
+        dictLabel: [{ required: true, message: "请输入数据标签", trigger: "blur" }],
+        dictValue: [{ required: true, message: "请输入数据键值", trigger: "blur" }],
+        dictSort: [{ required: true, message: "请输入数据顺序", trigger: "blur" }]
       }
     };
   },

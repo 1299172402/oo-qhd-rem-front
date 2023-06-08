@@ -232,7 +232,7 @@ export default {
           prop: "defaultActViewComponent"
         },
         {
-          label: "租户id",
+          label: "租户编号",
           prop: "tenantId"
         },
         {

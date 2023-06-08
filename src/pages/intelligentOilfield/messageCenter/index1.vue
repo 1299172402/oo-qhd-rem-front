@@ -145,7 +145,7 @@
       style="height: calc(100% - 0px);"
     >
       <div class="g-row-flex" style="justify-content: flex-end">
-        <el-select v-model="zuhuModel" placeholder="请选择" clearable>
+        <el-select v-model="zuhuModel" placeholder="请选择租户" clearable>
           <el-option
             v-for="item in zuhuOptions"
             :key="item.value"
@@ -497,7 +497,7 @@
               <div class="g-w100" style="position: relative; margin-left: 72%; margin-top: 70px">
                 <!-- CEPJ -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('CEPJ')?.runningStatus === '0'">
+                <div v-if="findDataByCode('CEPJ')?.runningStatus === '0' && findDataByCode('CEPJ').allCount !== 0">
                   <div class="alarmPromptMessage" style="left: 95px; top: -10px">
                     !
                   </div>
@@ -523,7 +523,7 @@
                 </div>
                 <!-- WHPA -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('WHPA')?.runningStatus === '0'">
+                <div v-if="findDataByCode('WHPA')?.runningStatus === '0' && findDataByCode('WHPA').allCount !== 0">
                   <div class="alarmPromptMessage" style="left: -180px; top: -80px">
                     !
                   </div>
@@ -566,7 +566,7 @@
                 </div>
                 <!-- WHPE -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('WHPE')?.runningStatus === '0'">
+                <div v-if="findDataByCode('WHPE')?.runningStatus === '0' && findDataByCode('WHPE').allCount !== 0">
                   <div class="alarmPromptMessage" style="left: -211px; top: 8px">
                     !
                   </div>
@@ -609,7 +609,7 @@
                 </div>
                 <!-- WHPF -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('WHPF')?.runningStatus === '0'">
+                <div v-if="findDataByCode('WHPF')?.runningStatus === '0' && findDataByCode('WHPF').allCount !== 0">
                   <div class="alarmPromptMessage" style="left: 300px; top: 88px">
                     !
                   </div>
@@ -652,7 +652,7 @@
                 </div>
                 <!-- CEPL -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('CEPL')?.runningStatus === '0'">
+                <div v-if="findDataByCode('CEPL')?.runningStatus === '0' && findDataByCode('CEPL').allCount !== 0">
                   <div class="alarmPromptMessage" style="left: -181px; top: 100px">
                     !
                   </div>
@@ -695,7 +695,7 @@
                 </div>
                 <!-- EPP -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('EPP')?.runningStatus === '0'">
+                <div v-if="findDataByCode('EPP')?.runningStatus === '0' && findDataByCode('EPP').allCount !== 0">
                   <div class="alarmPromptMessage" style="left: 270px; top: 176px">
                     !
                   </div>
@@ -771,7 +771,7 @@
             />
             <!-- FPSO -->
             <!-- 带!号小报警 -->
-            <div v-if="findDataByCode('FPSO')?.runningStatus === '0'">
+            <div v-if="findDataByCode('FPSO')?.runningStatus === '0' && findDataByCode('FPSO').allCount !== 0">
               <div class="alarmPromptMessage" style="left: 588px; top: 262px">
                 !
               </div>
@@ -869,7 +869,7 @@
             <!-- CEPI -->
             <!-- :style="{ height: isFullScreen ? '990px' : '530px' }" -->
             <!-- 带!号小报警 -->
-            <div v-if="findDataByCode('CEPI')?.runningStatus === '0'">
+            <div v-if="findDataByCode('CEPI')?.runningStatus === '0' && findDataByCode('CEPI').allCount !== 0">
               <div class="alarmPromptMessage" style="left: 1158px; top: 362px">
                 !
               </div>
@@ -902,7 +902,7 @@
                 </div>
                 <!-- WHPH -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('WHPH')?.runningStatus === '0'">
+                <div v-if="findDataByCode('WHPH')?.runningStatus === '0' && findDataByCode('WHPH').allCount !== 0">
                   <div class="alarmPromptMessage" style="left: 270px; top: -85px">
                     !
                   </div>
@@ -945,7 +945,7 @@
                 </div>
                 <!-- WHPB -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('WHPB')?.runningStatus === '0'">
+                <div v-if="findDataByCode('WHPB')?.runningStatus === '0' && findDataByCode('WHPB').allCount !== 0">
                   <div class="alarmPromptMessage" style="left: -181px; top: 100px">
                     !
                   </div>
@@ -988,7 +988,7 @@
                 </div>
                 <!-- WHPC -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('WHPC')?.runningStatus === '0'">
+                <div v-if="findDataByCode('WHPC')?.runningStatus === '0' && findDataByCode('WHPC').allCount !== 0">
                   <div class="alarmPromptMessage" style="left: 300px; top: 8px">
                     !
                   </div>
@@ -1031,7 +1031,7 @@
                 </div>
                 <!-- CEPK -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('CEPK')?.runningStatus === '0'">
+                <div v-if="findDataByCode('CEPK')?.runningStatus === '0' && findDataByCode('CEPK').allCount !== 0">
                   <div class="alarmPromptMessage" style="left: -211px; top: 8px">
                     !
                   </div>
@@ -1074,7 +1074,7 @@
                 </div>
                 <!-- WHPD -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('WHPD')?.runningStatus === '0'">
+                <div v-if="findDataByCode('WHPD')?.runningStatus === '0' && findDataByCode('WHPD').allCount !== 0">
                   <div class="alarmPromptMessage" style="left: 270px; top: 100px">
                     !
                   </div>
@@ -1117,7 +1117,7 @@
                 </div>
                 <!-- WHPG -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('WHPG')?.runningStatus === '0'">
+                <div v-if="findDataByCode('WHPG')?.runningStatus === '0' && findDataByCode('WHPG').allCount !== 0">
                   <div class="alarmPromptMessage" style="left: -180px; top: -80px">
                     !
                   </div>

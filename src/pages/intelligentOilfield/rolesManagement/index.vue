@@ -30,7 +30,7 @@
         <el-form-item label="状态" prop="status">
           <el-select
             v-model="queryParams.status"
-            placeholder="角色状态"
+            placeholder="请选择角色状态"
             clearable
             style="width: 240px"
           >
@@ -46,7 +46,7 @@
           <el-select
             v-model="queryParams.appId"
             style="width: 240px"
-            placeholder="请选择"
+            placeholder="请选择所属应用"
             clearable
             filterable
           >
@@ -315,7 +315,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="角色类型" prop="roleType">
-              <el-select v-model="form.roleType" :disabled="!!($route.params.id || form.appId !== '$system$' )">
+              <el-select v-model="form.roleType" placeholder="请选择角色类型" :disabled="!!($route.params.id || form.appId !== '$system$' )">
                 <el-option
                   v-for="item in dict.type.sys_role_type"
                   :key="item.value"
@@ -566,11 +566,11 @@ export default {
       },
       // 表单校验
       rules: {
-        roleName: [{ required: true, message: "角色名称不能为空", trigger: "blur" }],
-        roleType: [{ required: true, message: "角色类型不能为空", trigger: "blur" }],
-        roleKey: [{ required: true, message: "权限字符不能为空", trigger: "blur" }],
-        roleSort: [{ required: true, message: "角色顺序不能为空", trigger: "blur" }],
-        status: [{ required: true, message: "角色状态不能为空", trigger: "change" }]
+        roleName: [{ required: true, message: "请输入角色名称", trigger: "blur" }],
+        roleType: [{ required: true, message: "请选择角色类型", trigger: "blur" }],
+        roleKey: [{ required: true, message: "请输入权限字符", trigger: "blur" }],
+        roleSort: [{ required: true, message: "请输入角色顺序", trigger: "blur" }],
+        status: [{ required: true, message: "请选择角色状态", trigger: "change" }]
         // isTenant: [{ required: true, message: '是否租户不能为空', trigger: 'change' }],
       },
       disabledHandle: false

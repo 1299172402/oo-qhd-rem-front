@@ -293,9 +293,9 @@ export default {
       },
       // 岗位表单校验
       postRules: {
-        postName: [{ required: true, message: "岗位名称不能为空", trigger: "blur" }],
-        postCode: [{ required: true, message: "岗位编码不能为空", trigger: "blur" }],
-        postSort: [{ required: true, message: "岗位顺序不能为空", trigger: "blur" }]
+        postName: [{ required: true, message: "请输入岗位名称", trigger: "blur" }],
+        postCode: [{ required: true, message: "请输入岗位编码", trigger: "blur" }],
+        postSort: [{ required: true, message: "请输入岗位顺序", trigger: "blur" }]
       }
     };
   },
@@ -363,7 +363,7 @@ export default {
           remark: newVal.data?.remark,
           idCard: newVal.data?.idCard,
           //   postIds: newVal.postIds,
-          tempPostId: newVal.postIds?.length === 0 ? [] : String(newVal.postIds?.toLocaleString()),
+          tempPostId: newVal.postIds?.length === 0 ? "" : String(newVal.postIds?.toLocaleString()),
           postIds: newVal.postIds?.length === 0 ? [] : newVal.postIds?.toLocaleString().split(","),
           roleIds: newVal.roleIds?.length === 0 ? [] : newVal.roleIds?.toLocaleString().split(","),
           //   tempPostId: String(newVal.tempPostId.toLocaleString()), // 临时的用户岗位

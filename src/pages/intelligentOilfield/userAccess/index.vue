@@ -30,7 +30,7 @@
         <el-form-item v-show="activeName === 'first'" label="组织机构" prop="deptId">
           <el-select
             v-model="queryParams.deptId"
-            placeholder="请选择"
+            placeholder="请选择组织机构"
             clearable
             style="width: 240px"
           >
@@ -48,7 +48,7 @@
             style="width: 240px"
             value-format="yyyy-MM-dd"
             type="date"
-            placeholder="选择时间"
+            placeholder="选择操作时间"
             @change="dateRange = []"
           />
         </el-form-item>
@@ -76,7 +76,7 @@
         <el-form-item v-show="activeName === 'second'" label="应用分类" prop="appCategory">
           <el-select
             v-model="queryParams.appCategory"
-            placeholder="请选择"
+            placeholder="请选择应用分类"
             clearable
             style="width: 240px"
           >
@@ -91,7 +91,7 @@
         <el-form-item v-show="activeName === 'second'" label="绑定租户" prop="tenantId">
           <el-select
             v-model="queryParams.tenantId"
-            placeholder="请选择"
+            placeholder="请选择绑定租户"
             clearable
             style="width: 240px"
           >

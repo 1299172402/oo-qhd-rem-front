@@ -100,14 +100,14 @@ export function scrollToElement(className = "has-error", options) {
   dom?.scrollIntoView(options || { block: "center" });
 }
 
-function getLengthLE(length, required = true, otherRuleArray = [], trigger = "change") {
+function getLengthLE(length, required = true, otherRuleArray = [], trigger = "change", message = "") {
   return [
     ...otherRuleArray,
     {
       required,
       validator(rule, value, callback) {
         if (!value) {
-          return rule.required ? callback(new Error("必填")) : callback();
+          return rule.required ? callback(new Error(`${message}必填`)) : callback();
         } if (value.length <= length) {
           return callback();
         }
@@ -119,6 +119,6 @@ function getLengthLE(length, required = true, otherRuleArray = [], trigger = "ch
 }
 
 // 必填且字数少于20个
-export const requiredLengthLE20 = getLengthLE(20);
+export const requiredLengthLE20 = (msg = "") => getLengthLE(20, undefined, undefined, undefined, msg);
 export const arrayRequired = [{ type: "array", required: true, message: "必填", trigger: ["blur", "change"] }];
 export const simpleRequired = [{ required: true, message: "必填", trigger: ["blur", "change"] }];
