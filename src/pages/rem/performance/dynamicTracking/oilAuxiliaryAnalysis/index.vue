@@ -27,7 +27,7 @@
                     @click="ljpmUploadDialogLast"
                     style="margin-left: auto !important"
                     v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' "
-                >上传文档(钻完井资料的)</el-button
+                >上传文档</el-button
                 >
                 <el-upload v-else ref="upload" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess" v-show="currentModule == 'wellNetworkDiagram' ||currentModule == 'completionStringDrawing' || currentModule == 'fluidProducingProfile' ||currentModule == 'saturationLog' ||currentModule == 'wellTestReport'">
                     <el-button type="primary" icon="el-icon-download">上传文档</el-button>
