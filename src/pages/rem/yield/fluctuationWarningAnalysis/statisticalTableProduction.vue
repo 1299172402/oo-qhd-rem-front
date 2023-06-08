@@ -57,25 +57,25 @@
                       :cell-style="{ padding: '6px', 'text-align': 'center' }"
                       style="width: 100%; margin: 20px 0" 
                       height="100%" 
-                      :default-sort="{ prop: 'date', order: 'descending' }" 
+                      :default-sort="{ prop: 'comparisonOilProduction', order: 'ascending' }" 
                       :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                       <el-table-column prop="wellNo" label="井号" width="150" fixed/>
                       <el-table-column :label="searchForm.prodDate">
-                        <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³/d)`" width="110" />      
-                        <el-table-column prop="oilProdDaily" :label="`日产油\n(m³/d)`" width="110" />
-                        <el-table-column prop="waterRatio" :label="`含水\n(%)`" width="110" />
-                        <el-table-column prop="dhFlowingPress" :label="`井底流压\n(Mpa)`" width="120" />
-                        <el-table-column prop="pumpFrequency" :label="`泵频率\n(Hz)`" width="110" />
+                        <el-table-column sortable prop="fluidProdDaily" :label="`日产液\n(m³/d)`" width="110" :formatter="formatter"/>      
+                        <el-table-column sortable prop="oilProdDaily" :label="`日产油\n(m³/d)`" width="110" />
+                        <el-table-column sortable prop="waterRatio" :label="`含水\n(%)`" width="110" />
+                        <el-table-column sortable prop="dhFlowingPress" :label="`井底流压\n(M pa)`" width="120" />
+                        <el-table-column sortable prop="pumpFrequency" :label="`泵频率\n(Hz)`" width="110" />
                       </el-table-column>
                       <el-table-column :label="searchForm.prodDateCompare">
-                        <el-table-column prop="fluidProdDailyCompare" :label="`日产液\n(m³/d)`" width="110" />
-                        <el-table-column prop="oilProdDailyCompare" :label="`日产油\n(m³/d)`" width="110" />
-                        <el-table-column prop="waterRatioCompare" :label="`含水\n(%)`" width="110" />
-                        <el-table-column prop="dhFlowingPressCompare" :label="`井底流压\n(Mpa)`" width="120" />
-                        <el-table-column prop="pumpFrequencyCompare" :label="`泵频率\n(Hz)`" width="110" />
+                        <el-table-column sortable prop="fluidProdDailyCompare" :label="`日产液\n(m³/d)`" width="110" />
+                        <el-table-column sortable prop="oilProdDailyCompare" :label="`日产油\n(m³/d)`" width="110" />
+                        <el-table-column sortable prop="waterRatioCompare" :label="`含水\n(%)`" width="110" />
+                        <el-table-column sortable prop="dhFlowingPressCompare" :label="`井底流压\n(M pa)`" width="120" />
+                        <el-table-column sortable prop="pumpFrequencyCompare" :label="`泵频率\n(Hz)`" width="110" />
                       </el-table-column>
                       <el-table-column label="变化量">
-                        <el-table-column :label="`产液对比\n(m³/d)`" width="160">
+                        <el-table-column sortable prop="fluidProdDaily" :label="`产液对比\n(m³/d)`" width="160">
                             <template slot-scope="{ row }">
                                 <span style="display: flex;align-items: center;justify-content: center;">
                                     {{ row.fluidProdDaily!==null?numReduce(row.fluidProdDaily,row.fluidProdDailyCompare):'-' }}
@@ -85,7 +85,7 @@
                                 </span>
                             </template>
                         </el-table-column>
-                        <el-table-column :label="`产油对比\n(m³/d)`" width="160">
+                        <el-table-column sortable prop="comparisonOilProduction" :label="`产油对比\n(m³/d)`" width="160">
                             <template slot-scope="{row,$index}">
                                 <span style="display: flex;align-items: center;justify-content: center;">
                                     {{row.oilProdDaily!==null?row.comparisonOilProduction:'-'}}
@@ -93,7 +93,7 @@
                                 </span>
                             </template>
                         </el-table-column>
-                        <el-table-column :label="`含水对比\n(%)`" width="160">
+                        <el-table-column sortable prop="waterRatio" :label="`含水对比\n(%)`" width="160">
                             <template slot-scope="{ row }">
                                 <span style="display: flex;align-items: center;justify-content: center;">
                                     {{ row.waterRatio!==null?numReduce(row.waterRatio,row.waterRatioCompare):'-' }}
@@ -103,12 +103,12 @@
                                 </span>
                             </template>
                         </el-table-column>
-                        <el-table-column :label="`井底流压对比\n(Mpa)`" width="170">
+                        <el-table-column sortable prop="dhFlowingPress" :label="`井底流压对比\n(M pa)`" width="170">
                             <template slot-scope="scope">
                                 {{scope.row.dhFlowingPress!==null?numReduce(scope.row.dhFlowingPress,scope.row.dhFlowingPressCompare):'-'}}
                             </template>
                         </el-table-column>
-                        <el-table-column :label="`泵频率对比\n(Hz)`" width="160">
+                        <el-table-column sortable prop="pumpFrequency" :label="`泵频率对比\n(Hz)`" width="160">
                             <template slot-scope="{ row }">
                                 <span style="display: flex;align-items: center;justify-content: center;">
                                     {{ row.pumpFrequency!==null?numReduce(row.pumpFrequency,row.pumpFrequencyCompare):'-' }}
@@ -171,7 +171,7 @@
                     wellId:'',
                     wellIds:[],//井标识集合
                     prodDate:new Date().addDays(-1).format('yyyy-MM-dd'),//对比基准日期
-                    prodDateCompare:new Date().format('yyyy-MM-dd'),//对比日期
+                    prodDateCompare:new Date().addDays(-2).format('yyyy-MM-dd'),//对比日期
                     influenceFactor:''//影响因素
                 },
                 //表格数据
@@ -186,9 +186,11 @@
         },
         mounted() {
             if(Object.keys(this.$route.query).length){
-                let wellIds=JSON.parse(this.$route.query.wellIds);
-                if(wellIds.length){
-                    this.searchForm.wellIds=wellIds.map(el=>el.borepipeId);
+                if(this.$route.query.wellIds){
+                    let wellIds=JSON.parse(this.$route.query.wellIds);
+                    if(wellIds.length){
+                        this.searchForm.wellIds=wellIds.map(el=>el.borepipeId);
+                    }
                 }
                 this.searchForm.prodDate=this.$route.query.prodDate,
                 this.searchForm.prodDateCompare=this.$route.query.prodDateCompare
@@ -354,6 +356,10 @@
                 }
                 return c = Number(a.toString().replace(".", "")), d = Number(b.toString().replace(".", "")), this.accMul(c / d, Math.pow(10, f - e));
             },
+            //保留两位小数
+            formatter(row){
+                console.log(row,88)
+            },
         },
     };
 </script>
@@ -370,6 +376,8 @@
         }
         
         
+      
+        
         #tableData{
             ::v-deep .el-table__header-wrapper{
                 .el-table__header{
@@ -379,6 +387,8 @@
                                 height: auto;
                                 line-height: 18px;
                                 white-space: pre;
+                                display: flex;
+                                justify-content: center;
                             } 
                         }
                     } 

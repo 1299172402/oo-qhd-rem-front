@@ -1,16 +1,17 @@
 <!--钻完井报告-->
 <template>
- <div class="z-main" style="display: flex; justify-content: space-around">
+ <div style="height: 100%;width: 100%">
     <!-- <iframe :src="image?(image+'#toolbar=0'):''" style="width: 100%;height:100%;"></iframe> -->
     <!-- <el-row> -->
-    <img
-      style="height: 100%;border: #022743 solid 1px"
-      src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"
-    />
-    <img
-      style="height: 100%; margin-left: 20px;border: #022743 solid 1px"
-      src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"
-    />
+<!--    <img-->
+<!--      style="height: 100%;border: #022743 solid 1px"-->
+<!--      src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"-->
+<!--    />-->
+<!--    <img-->
+<!--      style="height: 100%; margin-left: 20px;border: #022743 solid 1px"-->
+<!--      src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"-->
+<!--    />-->
+     <iframe style="height: 86%;width: 100%" :src="url"></iframe>
     <!-- </el-row> -->
   </div>
 </template>
@@ -18,6 +19,8 @@
 <script>
 import { testWellReport } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 import { downFile } from "@/lib/remBase64Download.js";
+import {filePreview} from "@/components/upload/utils/file";
+import {addRemUploadFileMinio, queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
 export default {
   props: {
     //选择油田
@@ -30,31 +33,36 @@ export default {
   data() {
     return {
       image: "",
+        url:''
     };
   },
   mounted() {
-    // this.doSearch();
+    this.doSearch();
   },
   methods: {
     //调用图片
     doSearch() {
-      let request = {
-        ogfId: this.oilFeildId,
-        platformId: this.platform,
-        wellId: this.wellId,
-      };
-      testWellReport(request).then((res) => {
-        if (res.data.code == 200) {
-          let imgData = res.data.data.data;
-          let type = res.data.data.type;
-          let firstParty = "data:" + type + ";base64,";
-          if (imgData) {
-            this.image = firstParty + imgData;
-          } else {
-            this.image = "";
-          }
+        console.log('wellId',this.wellId)
+        console.log('oilFeildId',this.oilFeildId)
+        console.log('platform',this.platform)
+        let params ={
+            operationId:this.wellId,
+            operationType:'SJZWJBG',
+            readOne:'one'
         }
-      });
+        queryRemUploadFileMinio(params).then((res) => {
+            console.log('this.res',res)
+            if (res.data.data.code == 200) {
+                let data =res.data.data.rows[0].fileId
+                filePreview(data).then((res)=>{
+                    console.log(res)
+                    this.url = res.data.data
+                })
+            }else {
+                this.$message.error("文件查询接口异常!");
+            }
+        });
+        
     },
     //下载
     doDownLoad() {

@@ -253,7 +253,7 @@ export default {
       query: {
         selectField: "3FC9A818F5BC43B88270DB80BBB3018F",
         value2: this.getDate(),
-        selectBlock: "F35E226D47CE4B09B497B852D774D122",
+        selectBlock: "YCFXDY8B643EDC9007F96F570600457D",
       },
       select: {
         selectBlock: "",
