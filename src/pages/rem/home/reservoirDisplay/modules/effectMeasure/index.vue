@@ -76,7 +76,7 @@ export default {
     },
     methods:{
         getData(){
-            queryMeasureEffectTrack({evaluationDate:new Date().getFullYear() +'-01-01',oilFieldId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{
+            queryMeasureEffectTrack({evaluationDate:'2023-02-20',oilFieldId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{
                 this.tableData = res.data.data
             })
         },
