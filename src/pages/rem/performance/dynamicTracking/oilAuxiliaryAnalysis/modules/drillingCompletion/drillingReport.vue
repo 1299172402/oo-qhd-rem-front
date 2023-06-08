@@ -13,8 +13,8 @@
 <!--    />-->
 <!--    &lt;!&ndash; </el-row> &ndash;&gt;-->
 <!--  </div>-->
-    <div>
-        <iframe style="height: 800px;width: 1500px" :src="url"></iframe>
+    <div style="height: 86%;width: 100%">
+        <iframe style="height: 100%;width: 100%" :src="url"></iframe>
     </div>
 </template>
 
@@ -43,12 +43,12 @@ export default {
   },
   methods: {
       doSearch() {
-          console.log('wellId',this.wellId)
-          console.log('oilFeildId',this.oilFeildId)
-          console.log('platform',this.platform)
+          console.log('wellId++++',this.wellId)
+          console.log('oilFeildId++++',this.oilFeildId)
+          console.log('platform+++',this.platform)
           let params ={
               operationId:this.wellId,
-              operationType:'YJWJWGBG',
+              operationType:'YJZWJBG',
               readOne:'one'
           }
           queryRemUploadFileMinio(params).then((res) => {
