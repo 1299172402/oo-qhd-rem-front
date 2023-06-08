@@ -1,16 +1,17 @@
 <!--钻完井报告-->
 <template>
- <div class="z-main" style="display: flex; justify-content: space-around">
+ <div>
     <!-- <iframe :src="image?(image+'#toolbar=0'):''" style="width: 100%;height:100%;"></iframe> -->
     <!-- <el-row> -->
-    <img
-      style="height: 100%;border: #022743 solid 1px"
-      src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"
-    />
-    <img
-      style="height: 100%; margin-left: 20px;border: #022743 solid 1px"
-      src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"
-    />
+<!--    <img-->
+<!--      style="height: 100%;border: #022743 solid 1px"-->
+<!--      src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"-->
+<!--    />-->
+<!--    <img-->
+<!--      style="height: 100%; margin-left: 20px;border: #022743 solid 1px"-->
+<!--      src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"-->
+<!--    />-->
+     <iframe style="height: 800px;width: 1500px" :src="url"></iframe>
     <!-- </el-row> -->
   </div>
 </template>
@@ -18,6 +19,7 @@
 <script>
 import { testWellReport } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 import { downFile } from "@/lib/remBase64Download.js";
+import {filePreview} from "@/components/upload/utils/file";
 export default {
   props: {
     //选择油田
@@ -30,6 +32,7 @@ export default {
   data() {
     return {
       image: "",
+        url:''
     };
   },
   mounted() {
@@ -38,23 +41,11 @@ export default {
   methods: {
     //调用图片
     doSearch() {
-      let request = {
-        ogfId: this.oilFeildId,
-        platformId: this.platform,
-        wellId: this.wellId,
-      };
-      testWellReport(request).then((res) => {
-        if (res.data.code == 200) {
-          let imgData = res.data.data.data;
-          let type = res.data.data.type;
-          let firstParty = "data:" + type + ";base64,";
-          if (imgData) {
-            this.image = firstParty + imgData;
-          } else {
-            this.image = "";
-          }
-        }
-      });
+        let data ="d13f13ac660fcc03011754cf14d5f14e"
+        filePreview(data).then((res)=>{
+            console.log(res)
+            this.url = res.data.data
+        })
     },
     //下载
     doDownLoad() {
