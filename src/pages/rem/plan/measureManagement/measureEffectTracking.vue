@@ -194,10 +194,10 @@
                     </div>
                     <div class="svg" v-else-if="oilTabType == '4'">
                             <info-window infoWidth="100%" infoHeight="100%" headerTitle="现场作业进度表">
-                                <!-- <template name="titleContent">
-                                    <el-button type="primary" style="height:30px;">下载</el-button>
-                                </template> -->
-                                <el-table :data="getWorkProgressData" highlight height="calc( 100% - 75px)"
+                                <div slot-name="titleContent">
+                                    <el-button type="primary" style="position: absolute;right:0px;top:6px;height:30px;" @click="downTable">下载</el-button>
+                                </div>
+                                <el-table id="tableData"  :data="getWorkProgressData" highlight height="calc( 100% - 75px)"
                                     :row-style="{ height: '0px' }"
                                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                                     header-cell-class-name="table_header"
@@ -260,6 +260,7 @@
     import {fetchOilFields,fetchPlatforms,fetchInjectionWells,fetchInjectionWellsByPlatform,fetchProductionWells,fetchProductionWellsByPlatform} from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import {nameAndCode} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
     import {getWorkProgress} from '@/api/oilDeposit/rem-04/plan.js';
+    import { exportExcel } from '@/lib/exportExcel.js';
     export default {
         // name: 'wellMonitoring',
         components: {
@@ -1829,12 +1830,14 @@
                     this.selectWellId='';
                 }
             },
+          
             //搜索文件
             doSearch() {
                 let wellItem=this.wells.filter(el=> this.selectWellId ==el.wellId);
                 let wellTypeCode='';
                 if(wellItem.length){
                     wellTypeCode=wellItem[0].wellTypeCode;
+                    this.wellBoreName=wellItem[0].wellName.replace('QHD','秦皇岛');
                 }else{
                     this.$message.warning('请选择井号！')
                     return false;
@@ -1854,12 +1857,14 @@
                     this.page,
                     this.pageSize,
                     this.wellType,
+                    this.wellBoreName
                 );
                 this.queryParams2.page =1;
                 this.getWorkProgress();
             },
             //化验数据列表
             getFetchMeasureStatInfos(oilFieldId, platformId, wellId, measureId, yearMonth, page, pageSize, wellType,wellBoreName) {
+                console.log('wellBoreName',wellBoreName)
                 const wellArray = [];
                 wellArray.push(wellId);
                 const wellBoreArray = [];
@@ -1880,7 +1885,7 @@
                 fetchMeasureStatInfos(request).then((res) => {
                     console.log(res, 99)
                     if (res.data.code == 200) {
-                        this.tableData = res.data.data.measureResultStat;
+                        this.tableData = res.data.data.measureResultStat;  
                         this.chemicalTableData = res.data.data.taskPlanExcuteRecordList;
                         if (this.type == 0) {
                             this.oilWellTableData = this.tableData;
@@ -2656,6 +2661,10 @@
                         this.oilOption2.series[2].data = seriesData3;
                         this.oilOption2.series[3].data = seriesData4;
                     });
+            },
+            //导出table
+            downTable() {
+                exportExcel('#tableData', this.searchForm.oilFieldName + '年度计划运行曲线表');
             },
         },
     };

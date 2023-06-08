@@ -13,6 +13,7 @@
                 <el-option v-for="item in unitTypeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
             </el-select>
             <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
+            <el-button class="commonBtn" icon="el-icon-refresh" style="margin-left:15px!important;margin-right:auto;" @click="resetting">重置</el-button>
         </div>
         <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="油田产量影响因素" isShowMaxBtn>
             <div slot-name="titleContent" style="position: absolute;right:52px;top:5px;">
@@ -163,6 +164,13 @@
             this.getForecastDate();
         },
         methods: {
+            //重置
+            resetting(){
+            	this.$nextTick(()=>{
+            		Object.assign(this.$data, this.$options.data());
+            		this.getForecastDate();
+            	})
+            },
             //获取滚动预测下拉框数据源
             getForecastDate() {
                 getForecastDate().then((res) => {
