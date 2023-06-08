@@ -1,7 +1,7 @@
 <template>
     <div style="height:100%;">
         <div class="titleBox">
-            <el-tabs v-model="activeName" class="g-pageHeader">
+            <el-tabs v-model="activeName" class="g-pageHeader" @tab-click="setWidth">
                 <el-tab-pane label="定产配注" name="first"></el-tab-pane>
                 <el-tab-pane label="智能配注" name="second">
                     <!-- <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> -->
@@ -52,8 +52,8 @@
           </span>
             </div>
         </header-search>
-        <pagePanelNew style="height: calc(100% - 160px)">
-            <el-row v-if="activeName == 'first'" :gutter="20" style="height:100%">
+        <pagePanelNew style="height: auto">
+            <el-row v-if="activeName == 'first'" :gutter="20" style="height:800px">
                 <el-col :span="6" style="height:100%">
                     <pagePanel :headerTitle="title1" :title="title1" :show-btn="true"
                                style="text-align: center;height:calc(100% - 10px)">
@@ -209,7 +209,8 @@
                 </el-col>
             </el-row>
             <iframe
-                style="height:100%; width:100%; border:none;"
+                ref="iframe"
+                :style="getStyle"
                 v-show="activeName == 'second'"
                 src="https://dl-front-qhd32-6znyt.tj.app.cnooc/sow/"
             ></iframe>
@@ -238,9 +239,11 @@ export default {
     },
     data() {
         return {
+            iframeWidth: 1,
             queryData: {
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
-                blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
+                // blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
+                blockId: 'YCFXDY8B643EDC9007F96F570600457D',
                 dateTime: this.eeee(),
                 // '2022-10'
                 // new Date().format("yyyy-MM")
@@ -264,6 +267,17 @@ export default {
             host: window.location.protocol + '//',
             saveLoad: false,
         }
+    },
+    computed: {
+        getStyle() {
+            return {
+                height:'800px',
+                width:'1720px',
+                border:"none",
+                transform: `scale(${ (this.iframeWidth - 40) / 1720 > 1 ? 1 : (this.iframeWidth - 40) / 1720})`,
+                transformOrigin: '0% 0%'
+            }
+        }  
     },
     methods: {
         // 合并单元格
@@ -481,9 +495,20 @@ export default {
         },
         doDownLoadExcelh() {
             exportExcel("#indexscvSecond", this.title2);
+        },
+        setWidth(){
+            this.iframeWidth = this.$refs.iframe.parentNode.clientWidth;
         }
     },
     mounted() {
+        this.$nextTick(()=>{
+            setTimeout(()=>{
+                window.addEventListener('resize',this.setWidth);
+            },1000)
+        })
+        this.$once('hook:beforeDestroy',()=>{
+            window.removeEventListener('resize',this.setWidth)
+        })
         if(this.$route.query.link == 'rem'){
         }else{
             this.doSearch()
