@@ -39,7 +39,9 @@ export default {
   data() {
     return {
       image: "",
-        url:''
+        url:'',
+        id:'',
+        fileName:'',
     };
   },
   mounted() {
@@ -59,6 +61,8 @@ export default {
               console.log('this.res',res)
               if (res.data.data.code == 200) {
                   let data =res.data.data.rows[0].fileId
+                  this.id = res.data.data.rows[0].fileId
+                  this.fileName = res.data.data.rows[0].filestrId
                   filePreview(data).then((res)=>{
                       console.log(res)
                       this.url = res.data.data
@@ -67,7 +71,6 @@ export default {
                   this.$message.error("文件查询接口异常!");
               }
           });
-
       },
     //调用图片
     // doSearch() {
