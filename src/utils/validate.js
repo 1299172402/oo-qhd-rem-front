@@ -107,7 +107,7 @@ function getLengthLE(length, required = true, otherRuleArray = [], trigger = "ch
       required,
       validator(rule, value, callback) {
         if (!value) {
-          return rule.required ? callback(new Error(`${message}必填`)) : callback();
+          return rule.required ? callback(new Error(`请输入${message}`)) : callback();
         } if (value.length <= length) {
           return callback();
         }

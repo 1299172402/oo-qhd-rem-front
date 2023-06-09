@@ -256,7 +256,15 @@
                 :normalizer="normalizer"
                 :show-count="true"
                 placeholder="选择上级菜单"
-              />
+              >
+                <label
+                  slot="option-label"
+                  slot-scope="{ node, labelClassName }"
+                  :class="labelClassName"
+                  :title="node.label"
+                >{{ node.label }}
+                </label>
+              </treeselect>
             </el-form-item>
           </el-col>
           <el-col :span="24">

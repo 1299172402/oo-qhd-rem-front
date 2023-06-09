@@ -25,10 +25,10 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="状态" prop="status">
+        <el-form-item label="字典状态" prop="status">
           <el-select
             v-model="queryParams.status"
-            placeholder="请选择状态"
+            placeholder="请选择字典状态"
             clearable
             style="width: 240px"
           >
@@ -122,7 +122,7 @@
           prop="dictType"
           :show-overflow-tooltip="true"
         />
-        <el-table-column label="状态" align="center" prop="status">
+        <el-table-column label="字典状态" align="center" prop="status">
           <template slot-scope="scope">
             <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status" />
           </template>
@@ -196,7 +196,7 @@
         <el-form-item label="字典类型" prop="dictType">
           <el-input v-model="form.dictType" placeholder="请输入字典类型" />
         </el-form-item>
-        <el-form-item label="状态" prop="status">
+        <el-form-item label="字典状态" prop="status">
           <el-radio-group v-model="form.status">
             <el-radio v-for="dict in dict.type.sys_normal_disable" :key="dict.value" :label="dict.value">
               {{

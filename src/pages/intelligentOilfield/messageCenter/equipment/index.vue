@@ -92,24 +92,6 @@
           </el-select>
         </el-form-item>
         <!-- 平台链路列表 -->
-        <el-form-item v-show="activeName === 'third'" label="平台名称">
-          <el-input
-            v-model="queryParams.terraceName"
-            placeholder="请输入平台名称"
-            clearable
-            style="width: 240px"
-            @keyup.enter.native="handleQuery"
-          />
-        </el-form-item>
-        <el-form-item v-show="activeName === 'third'" label="平台code">
-          <el-input
-            v-model="queryParams.terraceCode"
-            placeholder="请输入平台code"
-            clearable
-            style="width: 240px"
-            @keyup.enter.native="handleQuery"
-          />
-        </el-form-item>
         <el-form-item v-show="activeName === 'third'" label="父级平台">
           <el-select
             v-model="queryParams.parentName"
@@ -125,6 +107,24 @@
               :value="dict.label"
             />
           </el-select>
+        </el-form-item>
+        <el-form-item v-show="activeName === 'third'" label="平台名称">
+          <el-input
+            v-model="queryParams.terraceName"
+            placeholder="请输入平台名称"
+            clearable
+            style="width: 240px"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item v-show="activeName === 'third'" label="平台编码">
+          <el-input
+            v-model="queryParams.terraceCode"
+            placeholder="请输入平台编码"
+            clearable
+            style="width: 240px"
+            @keyup.enter.native="handleQuery"
+          />
         </el-form-item>
         <!-- 云端链路列表 -->
         <el-form-item v-show="activeName === 'fourth'" label="链路起点">
@@ -361,6 +361,12 @@
       >
         <el-table-column label="序号" type="index" width="100" />
         <el-table-column
+          prop="parentName"
+          label="父级平台"
+          width="80"
+          align="center"
+        />
+        <el-table-column
           prop="terraceName"
           label="平台名称"
           width="250"
@@ -368,14 +374,8 @@
           :show-overflow-tooltip="true"
         />
         <el-table-column
-          prop="parentName"
-          label="父级平台"
-          width="80"
-          align="center"
-        />
-        <el-table-column
           prop="terraceCode"
-          label="平台Code"
+          label="平台编码"
           width="200"
           align="center"
         />
@@ -658,8 +658,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="平台code" prop="terraceCode">
-              <el-input v-model="addPlatformForm.terraceCode" style="width: 300px" placeholder="请输入平台code" />
+            <el-form-item label="平台编码" prop="terraceCode">
+              <el-input v-model="addPlatformForm.terraceCode" style="width: 300px" placeholder="请输入平台编码" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -689,8 +689,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="起点code" prop="startPoint">
-              <el-input v-model="addCloudForm.startPoint" placeholder="请输入起点code" />
+            <el-form-item label="起点编码" prop="startPoint">
+              <el-input v-model="addCloudForm.startPoint" placeholder="请输入起点编码" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -699,8 +699,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="终点code" prop="endPoint">
-              <el-input v-model="addCloudForm.endPoint" placeholder="请输入终点code" />
+            <el-form-item label="终点编码" prop="endPoint">
+              <el-input v-model="addCloudForm.endPoint" placeholder="请输入终点编码" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -824,13 +824,13 @@ export default {
       platRules: {
         terraceName: [{ required: true, message: "请输入平台名称", trigger: "blur" }],
         parentName: [{ required: true, message: "请选择父级平台", trigger: "blur" }],
-        terraceCode: [{ required: true, message: "请输入平台code", trigger: "blur" }]
+        terraceCode: [{ required: true, message: "请输入平台编码", trigger: "blur" }]
       },
       cloudRules: {
         startDescribe: [{ required: true, message: "请输入链路起点", trigger: "blur" }],
         endDescribe: [{ required: true, message: "请输入链路终点", trigger: "blur" }],
-        startPoint: [{ required: true, message: "请输入起点code", trigger: "blur" }],
-        endPoint: [{ required: true, message: "请输入终点code", trigger: "blur" }],
+        startPoint: [{ required: true, message: "请输入起点编码", trigger: "blur" }],
+        endPoint: [{ required: true, message: "请输入终点编码", trigger: "blur" }],
         linkType: [{ required: true, message: "请选择链路类型", trigger: "blur" }]
       },
       activeName: "first", // first:设备系统列表；second:设备名称列表

@@ -226,7 +226,15 @@
                 :options="deptOptions"
                 :normalizer="normalizer"
                 placeholder="选择上级机构"
-              />
+              >
+                <label
+                  slot="option-label"
+                  slot-scope="{ node, labelClassName }"
+                  :class="labelClassName"
+                  :title="node.label"
+                >{{ node.label }}
+                </label>
+              </treeselect>
             </el-form-item>
           </el-col>
           <el-col :span="12">

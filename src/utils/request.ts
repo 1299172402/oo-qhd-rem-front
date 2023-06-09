@@ -128,16 +128,17 @@ instance.interceptors.response.use(
     if (response.data.code === 401 && interceptCount === 0) {
       interceptCount += 1;
       MessageBox.confirm("登录状态已过期,请重新登录", "系统提示", {
-        confirmButtonText: "重新登录",
+        confirmButtonText: "确定",
         type: "warning",
         showClose: false,
         closeOnClickModal: false,
         showCancelButton: false,
         customClass: "auto-refresh-token-alert-box",
         callback: () => {
-          router.replace({ path: "/" });
-          store.dispatch("user/logout");
           store.dispatch("permission/restore");
+          store.dispatch("user/logout").then(() => {
+            router.replace({ path: "/" });
+          });
           if (response.config.headers.showLoading !== false) {
             hideLoading();
           }
@@ -150,9 +151,16 @@ instance.interceptors.response.use(
         //   message: response.data.msg,
         //   type: "error"
         // });
-        MessageBox.alert("系统内部服务错误", "系统提示", {
-          type: "error"
-        });
+        if (response.config.url === "auth/login") {
+          Message({
+            message: response.data.msg,
+            type: "error"
+          });
+        } else {
+          MessageBox.alert("系统内部服务错误", "系统提示", {
+            type: "error"
+          });
+        }
       }
       if (response.config.headers.showLoading !== false) {
         hideLoading();
@@ -188,16 +196,17 @@ instance.interceptors.response.use(
     if (!config || !config.retry) {
       if (err.response?.data.code === 401) {
         MessageBox.confirm("登录状态已过期,请重新登录", "系统提示", {
-          confirmButtonText: "重新登录",
+          confirmButtonText: "确定",
           type: "warning",
           showClose: false,
           closeOnClickModal: false,
           showCancelButton: false,
           customClass: "auto-refresh-token-alert-box",
           callback: () => {
-            router.replace({ path: "/" });
-            store.dispatch("user/logout");
             store.dispatch("permission/restore");
+            store.dispatch("user/logout").then(() => {
+              router.replace({ path: "/" });
+            });
           }
         });
       } else if (config.url.substring(0, config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && whiteListError.indexOf(config.url) === -1) {
@@ -205,9 +214,15 @@ instance.interceptors.response.use(
         // MessageBox.alert(err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错", "系统提示", {
         //   type: "error"
         // });
-        MessageBox.alert("系统内部服务错误", "系统提示", {
-          type: "error"
-        });
+        if (config.url === "auth/login") {
+          MessageBox.alert(err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错", "系统提示", {
+            type: "error"
+          });
+        } else {
+          MessageBox.alert("系统内部服务错误", "系统提示", {
+            type: "error"
+          });
+        }
       }
       return Promise.reject(err);
     }

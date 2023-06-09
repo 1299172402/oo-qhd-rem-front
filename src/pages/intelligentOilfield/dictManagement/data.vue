@@ -16,10 +16,10 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="状态" prop="status">
+        <el-form-item label="数据状态" prop="status">
           <el-select
             v-model="queryParams.status"
-            placeholder="请选择状态"
+            placeholder="请选择数据状态"
             clearable
             style="width: 240px"
           >
@@ -101,7 +101,7 @@
           prop="dictValue"
         />
         <el-table-column label="字典排序" align="center" prop="dictSort" />
-        <el-table-column label="状态" align="center" prop="status">
+        <el-table-column label="数据状态" align="center" prop="status">
           <template slot-scope="scope">
             <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status" />
           </template>
@@ -189,7 +189,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="状态" prop="status">
+        <el-form-item label="数据状态" prop="status">
           <el-radio-group v-model="form.status">
             <el-radio v-for="dict in dict.type.sys_normal_disable" :key="dict.value" :label="dict.value">
               {{

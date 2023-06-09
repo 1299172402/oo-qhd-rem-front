@@ -76,7 +76,7 @@ export default {
     return {
       rules: {
         model: [
-          { required: true, message: "请选择", trigger: "change" }
+          { required: true, message: `请选择${this.title}`, trigger: "change" }
         ]
       },
       form: {

@@ -542,7 +542,16 @@
                 :options="deptOptions"
                 :show-count="true"
                 placeholder="请选择所属机构"
-              />
+                no-options-text="暂无数据"
+              >
+                <label
+                  slot="option-label"
+                  slot-scope="{ node, labelClassName }"
+                  :class="labelClassName"
+                  :title="node.label"
+                >{{ node.label }}
+                </label>
+              </treeselect>
             </el-form-item>
           </el-col>
           <el-col v-if="form.userId == undefined" :span="8">

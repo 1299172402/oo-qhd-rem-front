@@ -112,7 +112,7 @@ export default {
       this.$refs.form.clearValidate();
     },
     simpleRequired(msg = "") {
-      return [{ required: true, message: `${msg}必填`, trigger: ["change"] }];
+      return [{ required: true, message: `请输入${msg}`, trigger: ["change"] }];
     }
   }
 };

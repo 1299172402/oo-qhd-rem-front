@@ -386,9 +386,9 @@ export default Vue.extend({
 
 <style>
 .t-badge--circle{
-    color: transparent;
-    width: 10px;
-    height: 11px;
+  color: transparent;
+  width: 10px;
+  height: 11px;
 }
 </style>
 <style lang="less" scoped>

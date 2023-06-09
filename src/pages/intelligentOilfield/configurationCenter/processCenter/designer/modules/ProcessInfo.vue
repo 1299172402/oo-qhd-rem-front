@@ -144,7 +144,7 @@ export default {
           prop: "appId",
           itemSlot: "appSelect",
           required: true,
-          rules: [{ required: true, message: "应用必填", trigger: ["change"] }],
+          rules: [{ required: true, message: "请选择应用", trigger: ["change"] }],
           options: []
         },
         {
