@@ -34,7 +34,9 @@
                 <el-upload v-else ref="upload" style="margin-left: auto" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess">
                     <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
                 </el-upload>
-                <el-button style="margin-left: 15px" type="primary" icon="el-icon-download" @click="doDownLoad">下载</el-button>
+                
+                <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' " @click="doDownLoadNew">下载1111</el-button>
+                <el-button style="margin-left: 15px" type="primary" icon="el-icon-download" v-else @click="doDownLoad">下载</el-button>
             </div>
             
             <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
@@ -94,6 +96,8 @@
     import { getMajorEventsBriefly } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
     import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
     import {addRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {downFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         name: "WaterAuxiliaryAnalysis",
         components: {FileUpload},
@@ -384,6 +388,13 @@
             this.doSearch()
         },
         methods: {
+            doDownLoadNew(){
+                const id = this.$refs.componentCustom.id
+                let fileName = this.$refs.componentCustom.fileName
+                downFile(id).then((res) => {
+                    FileSaver.saveAs(res,`${fileName}`);
+                });
+            },
             uploadFile(params){
                 addRemUploadFileMinio(params).then((res) => {
                     if (res.data.code == 200) {

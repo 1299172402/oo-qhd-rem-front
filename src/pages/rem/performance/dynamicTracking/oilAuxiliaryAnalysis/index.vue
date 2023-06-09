@@ -34,7 +34,8 @@
                 </el-upload>
                 
                 <el-button type="primary" icon="el-icon-download" @click="ljpmUploadDialog" v-if="activeName=='staticData'&&currentModule=='connecting'">上传文档</el-button>
-                <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" @click="doDownLoad">下载</el-button>
+                <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' " :disabled="downloadButton" @click="doDownLoadNew">下载1111</el-button>
+                <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" v-else @click="doDownLoad">下载</el-button>
             </div>
             <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
                 <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
@@ -119,11 +120,16 @@
     import { getMajorEventsBriefly} from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
     import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
     import {addRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {downFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         name: "OilAuxiliaryAnalysis",
         components: {FileUpload},
         data() {
             return {
+                //文件下载的id
+                fileId:'',
+                downloadButton: false,
                 majorEventsBrieflyValue: "", //大事间要绑定值
                 majorEventsBrieflyList: [], //大事间要数据源
                 //选择油田
@@ -510,6 +516,13 @@
             this.initData();
         },
         methods: {
+            doDownLoadNew(){
+                const id = this.$refs.componentCustom.id
+                let fileName = this.$refs.componentCustom.fileName
+                downFile(id).then((res) => {
+                    FileSaver.saveAs(res,`${fileName}`);
+                });
+            },
             uploadFile(params){
                 this.ljpmDialogLast = false;
                 addRemUploadFileMinio(params).then((res) => {
@@ -529,7 +542,8 @@
                 });
             },
             getResData(data){
-                console.log(data)
+                console.log('data->',data)
+                // this.fileId = data[0].id
                 if (this.currentModule =='drillingReport'){
                     //打开弹窗
                     let params1 = {

@@ -33,10 +33,12 @@ export default {
     wellId: {},
   },
   data() {
-    return {
-      image: "",
-        url:''
-    };
+      return {
+          image: "",
+          url:'',
+          id:'',
+          fileName:'',
+      };
   },
   mounted() {
     this.doSearch();
@@ -56,6 +58,8 @@ export default {
               console.log('this.res',res)
               if (res.data.data.code == 200) {
                   let data =res.data.data.rows[0].fileId
+                  this.id = res.data.data.rows[0].fileId
+                  this.fileName = res.data.data.rows[0].filestrId
                   filePreview(data).then((res)=>{
                       console.log(res)
                       this.url = res.data.data
