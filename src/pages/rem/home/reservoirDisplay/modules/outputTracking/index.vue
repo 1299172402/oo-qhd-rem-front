@@ -608,7 +608,7 @@ export default {
                         progress: {
                             roundCap: true,
                             show: true,
-                            roundCap: true,
+                            
                             width: 3,
                         },
                         axisLine: {
@@ -876,7 +876,7 @@ export default {
                         progress: {
                             roundCap: true,
                             show: true,
-                            roundCap: true,
+                       
                             width: 3,
                         },
                         axisLine: {

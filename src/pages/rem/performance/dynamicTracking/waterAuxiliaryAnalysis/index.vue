@@ -82,8 +82,8 @@
             </el-row>
 
             <div slot="footer" class="dialog-footer" style="text-align: center">
-        <el-button @click="ljpmDialogClose">取 消</el-button>
-        <el-button type="primary" @click="ljpmUploadSave">确 定</el-button>
+        <el-button @click="ljpmDialogClose">关 闭</el-button>
+<!--        <el-button type="primary" @click="ljpmUploadSave">确 定</el-button>-->
       </div>
         </el-dialog>
     </div>
@@ -404,6 +404,7 @@
             getResData(data){
                 console.log(data)
                 if (this.currentModule =='drillingReport'){
+                    //SJZWJBG为水井钻完井报告
                     //打开弹窗
                     let params1 = {
                         fileId: data[0].id,
@@ -416,6 +417,7 @@
                     this.uploadFile(params1)
                     console.log('111111111',params1)
                 }else if(this.currentModule =='completionReport'){
+                    //SJWJWGBG为水井完井完工报告
                     let params2 = {
                         fileId: data[0].id,
                         filestrId:data[0].name,
@@ -428,6 +430,7 @@
                     console.log('2222222',params)
                 }else if(this.currentModule =='geologicalSummary'){
                     let params3 = {
+                        //SJWJDZZJ为水井完井地质总结
                         fileId: data[0].id,
                         filestrId:data[0].name,
                         operationId:this.selectWellId,

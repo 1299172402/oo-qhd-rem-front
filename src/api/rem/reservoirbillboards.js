@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
-export function getYieldFluctuation({ date, dateComp, ogfId } = {}) {
+export function getYieldFluctuation() {
   return request({
-    url: `${baseUrl}/reservoirBillboards/getYieldFluctuation?date=${ date || "" }&dateComp=${ dateComp || "" }&ogfId=${ ogfId || "" }`,
+    url: `${baseUrl}/reservoirBillboards/getYieldFluctuation`,
     method: "get",
   });
 }

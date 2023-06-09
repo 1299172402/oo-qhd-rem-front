@@ -17,8 +17,8 @@
 <!--    </div>-->
 <!--    &lt;!&ndash; </el-row> &ndash;&gt;-->
 <!--  </div>-->
-    <div>
-        <iframe style="height: 800px;width: 1500px" :src="url"></iframe>
+    <div style="height: 86%;width: 100%">
+        <iframe style="height: 100%;width: 100%" :src="url"></iframe>
     </div>
 </template>
 
@@ -47,12 +47,12 @@ export default {
   },
   methods: {
       doSearch() {
-          console.log('wellId',this.wellId)
-          console.log('oilFeildId',this.oilFeildId)
-          console.log('platform',this.platform)
+          console.log('wellId11',this.wellId)
+          console.log('oilFeildId11',this.oilFeildId)
+          console.log('platform1111',this.platform)
           let params ={
               operationId:this.wellId,
-              operationType:'YJZWJBG',
+              operationType:'YJWJWGBG',
               readOne:'one'
           }
           queryRemUploadFileMinio(params).then((res) => {
