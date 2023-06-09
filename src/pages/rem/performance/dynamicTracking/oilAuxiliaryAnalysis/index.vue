@@ -542,10 +542,9 @@
                 });
             },
             getResData(data){
-                console.log('data->',data)
+                   
                 // this.fileId = data[0].id
                 if (this.currentModule =='drillingReport'){
-                    //打开弹窗
                     let params1 = {
                         fileId: data[0].id,
                         filestrId:data[0].name,
