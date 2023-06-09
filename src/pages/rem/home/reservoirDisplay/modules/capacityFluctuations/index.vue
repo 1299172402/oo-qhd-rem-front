@@ -147,6 +147,8 @@ export default {
                     },
                 ],
             },
+            prodDate:'',
+            prodDateCompare:'',
         };
     },
     mounted() {
@@ -154,17 +156,17 @@ export default {
     },
     methods: {
         linkroute(rname) {
-            this.$router.push({name: rname});
+            this.$router.push({name: rname,query:{prodDate:this.prodDate,prodDateCompare:this.prodDateCompare}});
         },
         getinfo() {
-            let params = {
-                dateComp: new Date().getYesterday(),
-                date: new Date().format('YYYY-MM-DD'),
-                ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'
-            }
-            getYieldFluctuation(params).then((res) => {
+            getYieldFluctuation().then((res) => {
                 this.histogram.yAxis.min = null
                 this.histogram.yAxis.max = null
+                var previousDay = new Date(res.data.data.maxProdDate);
+                var previousDayTimestamp = previousDay.getTime() - (24 * 60 * 60 * 1000);
+                previousDay.setTime(previousDayTimestamp);
+                this.prodDate = res.data.data.maxProdDate
+                this.prodDateCompare = previousDay.format("yyyy-MM-dd")
                 res.data.data.xdata.forEach((item) => {
                     if(item.indexOf('以上')!=-1){
                         this.histogram.xAxis.data.push(item.replace(/以上/,'方以上'))
