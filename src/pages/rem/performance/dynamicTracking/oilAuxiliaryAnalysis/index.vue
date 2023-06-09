@@ -34,7 +34,7 @@
                 </el-upload>
                 
                 <el-button type="primary" icon="el-icon-download" @click="ljpmUploadDialog" v-if="activeName=='staticData'&&currentModule=='connecting'">上传文档</el-button>
-                <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' " :disabled="downloadButton" @click="doDownLoadNew">下载1111</el-button>
+                <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' " :disabled="downloadButton" @click="doDownLoadNew">下载</el-button>
                 <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" v-else @click="doDownLoad">下载</el-button>
             </div>
             <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
@@ -633,6 +633,7 @@
             },
             //初始化数据
             async initData() {
+               
                 let oilFeildId = this.$route.params.oilField;
                 console.log(this.$route.params);
                 let wellId = this.$route.params.wellId;
