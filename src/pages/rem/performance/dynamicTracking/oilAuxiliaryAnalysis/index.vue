@@ -27,7 +27,7 @@
                     @click="ljpmUploadDialogLast"
                     style="margin-left: auto !important"
                     v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' "
-                >上传文档(钻完井资料的)</el-button
+                >上传文档</el-button
                 >
                 <el-upload v-else ref="upload" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess" v-show="currentModule == 'wellNetworkDiagram' ||currentModule == 'completionStringDrawing' || currentModule == 'fluidProducingProfile' ||currentModule == 'saturationLog' ||currentModule == 'wellTestReport'">
                     <el-button type="primary" icon="el-icon-download">上传文档</el-button>
@@ -80,33 +80,35 @@
                 </span>
             </el-dialog>
         </pagePanelNew>
+        
         <el-dialog
             custom-class="border"
-            title="连井剖面图上传"
+            title="上传文档"
             :visible.sync="ljpmDialogLast"
             width="20%"
             :before-close="ljpmDialogCloseLast"
         >
             <el-row>
-                <el-form ref="form" :model="ljUploadForm" label-width="80px">
-                    <el-col :span="12">
-                        <el-form-item label="图片上传" style="width: 88px">
+                <el-form ref="form" :model="ljUploadForm" label-width="40px">
+                        <el-form-item label="" style="width: 88px">
                             <file-upload
+                                v-model="imageurl"
+                                style="width: 250px"
                                 :limit="1"
-                                v-model:biz-path="this.imageurl"
-                                :is-picture-card="true"
+                                :fileSize="20"
                                 :is-show-tip="false"
-                                biz-path="oo-qhd-rem-front/test"
+                                biz-path="rem-front/text"
                                 bucket-name="zhy"
+                                :file-type="['pdf']"
+                                @change="getResData"
                             />
                         </el-form-item>
-                    </el-col>
                 </el-form>
             </el-row>
 
             <div slot="footer" class="dialog-footer" style="text-align: center">
-                <el-button @click="ljpmDialogCloseLast">取 消</el-button>
-                <el-button type="primary" @click="ljpmUploadSaveLast">确 定</el-button>
+                <el-button @click="ljpmDialogCloseLast">关 闭</el-button>
+<!--                <el-button type="primary" @click="ljpmUploadSaveLast">确 定</el-button>-->
             </div>
         </el-dialog>
     </div>
@@ -116,6 +118,7 @@
     import { fetchOilFields,fetchPlatforms,uploadFile,ljpmImgUploadFile, fetchProductionWells,fetchProductionWellsByPlatform,getLjpmWells,} from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import { getMajorEventsBriefly} from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
     import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
+    import {addRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
     export default {
         name: "OilAuxiliaryAnalysis",
         components: {FileUpload},
@@ -127,6 +130,7 @@
                 selectOilField: "",
                 //油田列表
                 oilField: [],
+                imageurl:'',
                 //选择平台
                 selectPlatform: "",
                 //平台列表
@@ -506,11 +510,75 @@
             this.initData();
         },
         methods: {
+            uploadFile(params){
+                this.ljpmDialogLast = false;
+                addRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        this.$message.success("文件上传成功!");
+                        // this.ljpmDialogLast = false;
+                        this.doSearch()
+                        this.imageurl = ''; // 清空已选择的文件
+                        this.$refs.form.resetFields();
+                    }else {
+                        this.$message.error("文件上传失败!");
+                        this.ljpmDialog = false;
+                        this.doSearch()
+                        this.imageurl = ''; // 清空已选择的文件
+                        this.$refs.form.resetFields();
+                    }
+                });
+            },
+            getResData(data){
+                console.log(data)
+                if (this.currentModule =='drillingReport'){
+                    //打开弹窗
+                    let params1 = {
+                        fileId: data[0].id,
+                        filestrId:data[0].name,
+                        operationId:this.selectWellId,
+                        operationType:'YJZWJBG',
+                        remUploadFileMinioId:'' ,
+                        uploadTime:''
+                    };
+                    this.uploadFile(params1)
+                    console.log('111111111',params1)
+                }else if(this.currentModule =='completionReport'){
+                    let params2 = {
+                        fileId: data[0].id,
+                        filestrId:data[0].name,
+                        operationId:this.selectWellId,
+                        operationType:'YJWJWGBG',
+                        remUploadFileMinioId:'' ,
+                        uploadTime:''
+                    }
+                    this.uploadFile(params2)
+                    console.log('2222222',params)
+                }else if(this.currentModule =='geologicalSummary'){
+                    let params3 = {
+                        fileId: data[0].id,
+                        filestrId:data[0].name,
+                        operationId:this.selectWellId,
+                        operationType:'YJWJDZZJ',
+                        remUploadFileMinioId:'' ,
+                        uploadTime:''
+                    }
+                    this.uploadFile(params3)
+                    console.log('333333',params)
+                }
+            },
             ljpmUploadDialogLast() {
-                console.log('123123123')
-                //打开弹窗
-                this.ljpmDialogLast = true;
-                this.getLjpmWells();
+                if (this.currentModule =='drillingReport'){
+                    this.ljpmDialogLast = true;
+                    console.log('111111111')
+                }else if(this.currentModule =='completionReport'){
+                    //打开弹窗
+                    this.ljpmDialogLast = true;
+                    console.log('2222222')
+                }else if(this.currentModule =='geologicalSummary'){
+                    //打开弹窗
+                    this.ljpmDialogLast = true;
+                    console.log('333333')
+                }
             },
             //重置
             resetting(){

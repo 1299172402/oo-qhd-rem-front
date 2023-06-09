@@ -13,6 +13,7 @@
                 <el-option v-for="item in unitTypeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
             </el-select>
             <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
+            <el-button class="commonBtn" icon="el-icon-refresh" style="margin-left:15px!important;margin-right:auto;" @click="resetting">重置</el-button>
         </div>
         <el-table id="TaskOutputTrackingTable" :data="tableData" highlight height="calc(100% - 74px)" show-summary :summary-method="getSummaries">
             <el-table-column prop="wellType" label="累产/10⁴m³" align="center" min-width="130"></el-table-column>
@@ -79,6 +80,13 @@
             this.getForecastDate();
         },
         methods: {
+            //重置
+            resetting(){
+            	this.$nextTick(()=>{
+            		Object.assign(this.$data, this.$options.data());
+            		this.getForecastDate();
+            	})
+            },
             //获取滚动预测下拉框数据源
             getForecastDate() {
                 getForecastDate().then((res) => {
