@@ -138,7 +138,7 @@
                 this.conditions.ogfId = '';
                 this.conditions.platformId = '';
                 // 加载新数据
-                fetchALLOilFields(this.conditions.companyId).then((res) => {
+                await fetchALLOilFields(this.conditions.companyId).then((res) => {
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.oilFields;
