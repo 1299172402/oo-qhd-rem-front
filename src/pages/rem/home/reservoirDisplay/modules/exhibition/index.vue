@@ -152,7 +152,7 @@ export default {
           let option = {
               legend: {
                   textStyle: {
-                      color: "#66ffff"
+                      color: "#66ffff",
                   },
                   bottom: "bottom",
               },
@@ -165,7 +165,7 @@ export default {
               grid: {
                   left: '10%',
                   right: '15%',
-                  bottom: '12%',
+                  bottom: '11%',
                   top:'10%',
                   containLabel: true
               },
