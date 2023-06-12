@@ -216,6 +216,11 @@ export default {
 
   .el-table + .el-table {
     margin-left: 20px;
+
+    /deep/ .el-table__body-wrapper {
+      overflow-y: scroll;
+      height: 100%;
+    }
   }
 
   .all-app {

@@ -89,7 +89,7 @@ export default {
       this.isDispose = false;
       const $echartsDOM = document.getElementById(this.echartsComponents);
       this.myEcharts = this.$echarts.init($echartsDOM);
-      this.refreshEcharts();
+      // this.refreshEcharts();
     },
     refresh() {
       if (this.myEcharts) this.myEcharts.resize();
@@ -105,7 +105,11 @@ export default {
         this.myEcharts.clear();
         this.myEcharts.setOption(option, true, false, false);
         this.myEcharts.on("click", params => {
-          this.$emit("getParams", params, this.chartDataOptions);
+          this.$emit("get-params", params, this.chartDataOptions);
+        });
+        // 点击图例事件暴露
+        this.myEcharts.on("legendSelectChanged", params => {
+          this.$emit("legend-select-changed", params);
         });
       }
     }

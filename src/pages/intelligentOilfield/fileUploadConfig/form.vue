@@ -17,7 +17,12 @@
     >
       <el-form-item label="应用名称：" prop="appId" class="form-layout__item-col2">
         <div style="display: flex;">
-          <el-input v-model="model.bizName" :title="model.bizName" placeholder="请选择应用名称" />
+          <el-input
+            v-model="model.bizName"
+            readonly
+            :title="model.bizName"
+            placeholder="请点击右侧按钮选择应用"
+          />
           <application-choose :multiple="false" @on-select-app="handleSelectApp" />
         </div>
       </el-form-item>
@@ -43,12 +48,10 @@
       </el-form-item>
       <el-form-item
         v-if="model.uploadType === 'minio'"
+        label="minio桶："
         prop="bucketName"
         class="form-layout__item-col2"
       >
-        <span slot="label">
-          minio桶:
-        </span>
         <el-input v-model="model.bucketName" :title="model.bucketName" placeholder="请输入minio桶" />
       </el-form-item>
       <el-form-item

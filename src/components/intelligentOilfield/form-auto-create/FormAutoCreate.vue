@@ -13,7 +13,7 @@
         :key="item.prop"
         :name="item.prop"
         :prop="item.required ? item.prop : ''"
-        :rules="item.required ? item.rules || simpleRequired : []"
+        :rules="item.required ? item.rules || simpleRequired(item.label) : []"
         :class="item.class"
         :label="item.label"
       >
@@ -93,11 +93,6 @@ export default {
       default: "form-layout"
     }
   },
-  data() {
-    return {
-      simpleRequired: [{ required: true, message: "必填", trigger: ["change"] }]
-    };
-  },
   methods: {
     validate(showMessage = true, scrollTo = true) {
       return new Promise((resolve, reject) => {
@@ -115,6 +110,9 @@ export default {
     },
     clearValidate() {
       this.$refs.form.clearValidate();
+    },
+    simpleRequired(msg = "") {
+      return [{ required: true, message: `请输入${msg}`, trigger: ["change"] }];
     }
   }
 };

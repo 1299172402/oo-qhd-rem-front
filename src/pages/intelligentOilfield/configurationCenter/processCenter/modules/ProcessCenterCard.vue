@@ -17,7 +17,7 @@
     <div class="card-info">
       <div v-if="processCenterInfo.tenantId">
         <div class="card-info-item">
-          租户key：
+          租户编号：
           <span :class="`info-span__deep ${ $store.state.setting.mode === 'dark' ? 'dark-color' : '' }`"> {{ processCenterInfo.tenantCode }} </span>
         </div>
       </div>

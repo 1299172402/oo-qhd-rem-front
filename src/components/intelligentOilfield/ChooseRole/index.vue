@@ -13,10 +13,16 @@
         ref="table"
         class="dialog-table"
         :data="dataSource"
+        :row-key="(row) => row.roleId"
         border
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="55" align="center" />
+        <el-table-column
+          :reserve-selection="true"
+          type="selection"
+          width="55"
+          align="center"
+        />
         <el-table-column
           label="序号"
           type="index"
@@ -72,19 +78,23 @@ export default {
         current: 1,
         pageSize: 10,
         total: 0
-      }
+      },
+      roleIdList: []
     };
   },
-  created() {
-    this.getList();
+  watch: {
+    roleIds: {
+      handler(newValue) {
+        this.roleIdList = newValue;
+      }
+    }
   },
   methods: {
     getList() {
-      this.loading = true;
       listRole({ pageNum: this.ipagination.current, pageSize: this.ipagination.pageSize }).then(response => {
         this.dataSource = response.data.rows;
         this.ipagination.total = response.data.total;
-        this.loading = false;
+        this.handChangeSelection();
       });
     },
     /**
@@ -99,25 +109,26 @@ export default {
      * 设置已有用户选中状态
      */
     handChangeSelection() {
-      this.dataSource.forEach(row => {
-        if (this.roleIds.indexOf(row.roleId) >= 0) {
-          this.$refs.table.toggleRowSelection(row, true);
-        } else {
-          this.$refs.table.toggleRowSelection(row, false);
-        }
-      });
+      if (this.roleIdList.length) {
+        this.dataSource.forEach(row => {
+          const index = this.roleIdList.indexOf(row.roleId);
+          if (index !== -1) {
+            this.$refs.table.toggleRowSelection(row, true);
+            this.roleIdList.splice(index, 1);
+          }
+        });
+      }
     },
     handChooseUser() {
+      this.getList();
       this.dialogVisible = true;
-      this.$nextTick(() => {
-        this.handChangeSelection();
-      });
     },
     /**
      * 增加租户
      */
     addTenement() {
-      this.$emit("add-role", this.selectTenement);
+      this.$emit("add-role", this.selectTenement, this.roleIdList);
+      this.$refs.table.clearSelection();
       this.dialogVisible = false;
     },
     /**

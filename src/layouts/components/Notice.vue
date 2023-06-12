@@ -32,7 +32,7 @@
       <template #content>
         <div class="header-msg">
           <div class="header-msg-top">
-            <p>通知</p>
+            <p>通知（通知数目：{{ unreadMsg.length }}）</p>
             <t-button
               v-if="unreadMsg.length > 0"
               class="clear-btn"

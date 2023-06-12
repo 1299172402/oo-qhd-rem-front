@@ -81,7 +81,9 @@ export default {
   data() {
     return {
       model: {
-        mobile: []
+        mobile: "0",
+        appStatus: "0",
+        accessType: "0"
       },
       applicationInfo: {},
       tableData: [],
