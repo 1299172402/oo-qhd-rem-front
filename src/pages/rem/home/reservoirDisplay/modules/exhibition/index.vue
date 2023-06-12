@@ -228,6 +228,17 @@ export default {
           return option
       },
       getData(){
+          let dateTime = ''
+              let data = new Date()
+          if (data.getMonth() < 10) {
+              dateTime = data.getFullYear() + '-0' + (data.getMonth() + 1)
+          } else {
+              dateTime = data.getFullYear() + '-' + (data.getMonth() + 1)
+          }
+          let params = {
+              blockId: 'YCFXDY8B643EDC9007F96F570600457D',
+              yearMonth: dateTime,
+          }
           getResidueOilCondotion(params).then(res => {
               try {
                   this.residueOil = res.map(item => {
