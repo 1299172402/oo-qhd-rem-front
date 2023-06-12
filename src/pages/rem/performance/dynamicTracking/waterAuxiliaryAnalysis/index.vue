@@ -35,7 +35,7 @@
                     <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
                 </el-upload>
                 
-                <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' " @click="doDownLoadNew">下载1111</el-button>
+                <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' " @click="doDownLoadNew">下载</el-button>
                 <el-button style="margin-left: 15px" type="primary" icon="el-icon-download" v-else @click="doDownLoad">下载</el-button>
             </div>
             
