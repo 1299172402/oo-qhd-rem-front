@@ -37,6 +37,7 @@ import headerSearch from "@/components/intelligentOilfield/header-search/index.v
 import "@/utils/filter";
 import VXETable from "vxe-table";
 import "vxe-table/lib/style.css";
+import config from "../package.json";
 
 const env = import.meta.env.MODE;
 
@@ -75,6 +76,8 @@ Vue.use(TDesign);
 Vue.use(VueClipboard);
 DictData.install();
 
+// 控制台打印当前系统版本号
+window.console.log("当前系统版本：", config.version);
 const originPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {
   return originPush.call(this, location).catch(err => err);
