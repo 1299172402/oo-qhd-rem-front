@@ -608,6 +608,7 @@
                     yczb:0,
                 },
                 trendOfIndicatorsSwitch:false,//展示异常false, 正常 true
+                trendOfIndicatorsCode:'',//正常的code
                 //井层注水工况
                 workingCondition: [],
                 workingCondNum:{
@@ -738,7 +739,7 @@
                 }
             },
             //进行数据查询处理
-            doSearch() {
+            async doSearch() {
                 //加上重新搜索清空选择 和 表格数据
                 this.selCode = '';
                 this.tableData = [];
@@ -749,23 +750,22 @@
                 this.paramMap.platformId = this.platform;
                 this.paramMap.timeGranularityCode = "";
                 this.paramMap.wellId = this.wellId;
-
                 //执行提取
-                this.queryTrendOfIndicators(); //井层指标变化趋势
-                this.queryWorkingCondition(); //井层注水工况
-                this.queryTheGroundBecause(); //地面原因
-                this.queryWellboreReason(); //井筒原因
-                this.queryFormationReason(); //地层原因
-                this.queryStopInjectionRecovery(); //停注恢复
-                this.queryRecommendedMeasures(); //措施推荐
-                this.queryProWellDynamicAnalysisDetail(); //措施井数据
-
+                await this.queryTrendOfIndicators(); //井层指标变化趋势
+                await this.queryWorkingCondition(); //井层注水工况
+                await this.queryTheGroundBecause(); //地面原因
+                await this.queryWellboreReason(); //井筒原因
+                await this.queryFormationReason(); //地层原因
+                await this.queryStopInjectionRecovery(); //停注恢复
+                await this.queryRecommendedMeasures(); //措施推荐
+                await this.queryProWellDynamicAnalysisDetail(); //措施井数据
                 //触发初始选中 （测试没有使用，需要异步使用，还需要）
+                // this.selRadioIterm(this.trendOfIndicatorsCode,'trendOfIndicators');
                 this.selRadioIterm(this.selCode, this.selTag);
             },
             //井层指标变化趋势 || 注入动态---zxb
-            queryTrendOfIndicators() {
-                layerVariationTrend(this.paramMap).then((res) => {
+            async queryTrendOfIndicators() {
+                await layerVariationTrend(this.paramMap).then((res) => {
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
@@ -775,6 +775,7 @@
                         myData.forEach((el,i)=>{
                             this.trendOfIndicatorsNum.allnum+=Number(el.value);
                             if(el.name=='正常'){
+                                this.trendOfIndicatorsCode=el.code;
                                 this.trendOfIndicatorsNum.zcnum=Number(el.value);
                             }else{
                                 myData[i].isShow=Number(el.value)?true:false;
@@ -788,8 +789,8 @@
                 });
             },
             //井层注水工况---zxb
-            queryWorkingCondition() {
-                layerInjectionStatus(this.paramMap).then((res) => {
+            async queryWorkingCondition() {
+                await layerInjectionStatus(this.paramMap).then((res) => {
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
@@ -812,8 +813,8 @@
                 });
             },
             //地面原因
-            queryTheGroundBecause() {
-                groundReason(this.paramMap).then((res) => {
+            async queryTheGroundBecause() {
+                await groundReason(this.paramMap).then((res) => {
                     // debugger
                     let msg = res.data.msg;
                     if (msg == "success") {
@@ -824,8 +825,8 @@
                 });
             },
             //井筒原因---zxb
-            queryWellboreReason() {
-                wellBoreReason(this.paramMap).then((res) => {
+            async queryWellboreReason() {
+                await wellBoreReason(this.paramMap).then((res) => {
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
@@ -848,8 +849,8 @@
                 });
             },
             //地层原因
-            queryFormationReason() {
-                layerReason(this.paramMap).then((res) => {
+            async queryFormationReason() {
+                await layerReason(this.paramMap).then((res) => {
                     // debugger
                     let msg = res.data.msg;
                     if (msg == "success") {
@@ -860,9 +861,9 @@
                 });
             },
             //停注恢复
-            queryStopInjectionRecovery() {
-                injectionClosed(this.paramMap).then((res) => {
-                    // debugger
+            async queryStopInjectionRecovery() {
+                await injectionClosed(this.paramMap).then((res) => {
+                     // debugger
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
@@ -872,8 +873,8 @@
                 });
             },
             //措施推荐可用项目
-            queryRecommendedMeasures() {
-                injectionMeasureRecommend(this.paramMap).then((res) => {
+            async queryRecommendedMeasures() {
+                await injectionMeasureRecommend(this.paramMap).then((res) => {
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
@@ -886,8 +887,8 @@
                 });
             },
             //措施推荐可用项目,获取措施效果数据
-            queryProWellDynamicAnalysisDetail() {
-                injectionWellDynamicAnalysisDetail(this.paramMap).then((res) => {
+            async queryProWellDynamicAnalysisDetail() {
+                await injectionWellDynamicAnalysisDetail(this.paramMap).then((res) => {
                     console.log("myData11_tag", res);
                     let msg = res.data.msg;
                     if (msg == "success") {

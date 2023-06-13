@@ -483,70 +483,144 @@
                         <info-window info-width="100%" info-height="100%" header-title="油藏潜力分析" :is-show-max-btn="false">
                             <div style="height:100%;overflow-y: scroll;">
                                 <div class="z-content2">
-                                    <div class="z1" style="width:500px;">
-                                        <div class="z-content-n" style="flex-direction: column;">
-                                            <div class="z-row-left">
-                                                <div class="z_title">
-                                                    <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                                    <span>递减率</span>
-                                                </div>
-                                                <div class="z_schedule">
-                                                    <span class="sp1">正常：</span>
-                                                    <div class="z_proess">
-                                                        <span class="z_proess_sp1" :style="{width:diminishingNum.zczb+'%'}">
-                                                            <b style="cursor: pointer;" @click="diminishingSwitch=true">{{diminishingNum.zcnum}}</b>
-                                                        </span>
-                                                        <span class="z_proess_sp2"></span>
+                                    <div>
+                                        <div class="aaa" style="display: flex;">
+                                            <div class="z1" style="width:500px;">
+                                                <div class="z-content-n" style="flex-direction: column;">
+                                                    <div class="z-row-left">
+                                                        <div class="z_title">
+                                                            <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                                            <span>递减率</span>
+                                                        </div>
+                                                        <div class="z_schedule">
+                                                            <span class="sp1">正常：</span>
+                                                            <div class="z_proess">
+                                                                <span class="z_proess_sp1" :style="{width:diminishingNum.zczb+'%'}">
+                                                                    <b style="cursor: pointer;" @click="diminishingSwitch=true">{{diminishingNum.zcnum}}</b>
+                                                                </span>
+                                                                <span class="z_proess_sp2"></span>
+                                                            </div>
+                                                            <span class="sp2">异常：<b style="cursor: pointer;" @click="diminishingSwitch=false">{{diminishingNum.ycnum}}</b></span>
+                                                        </div>
+                                                    </div>  
+                                                    <div class="z-row-center">
+                                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                            v-for="(item,index) in diminishingOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!diminishingSwitch"
+                                                            @click="((val)=>{selRadioIterm(item.code,'diminishingOptions')})">
+                                                            <span class="sp1">{{item.value}}</span>
+                                                            <span class="sp2">{{item.name}}</span>
+                                                        </div>
+                                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                            v-for="(item,index) in diminishingOptions" :key="index" v-if="item.name=='正常'&&diminishingSwitch"
+                                                            @click="((val)=>{selRadioIterm(item.code,'diminishingOptions')})">
+                                                            <span class="sp1">{{item.value}}</span>
+                                                            <span class="sp2">{{item.name}}</span>
+                                                        </div>
                                                     </div>
-                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="diminishingSwitch=false">{{diminishingNum.ycnum}}</b></span>
                                                 </div>
-                                            </div>  
-                                            <div class="z-row-center">
-                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
-                                                    v-for="(item,index) in diminishingOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!diminishingSwitch"
-                                                    @click="((val)=>{selRadioIterm(item.code,'diminishingOptions')})">
-                                                    <span class="sp1">{{item.value}}</span>
-                                                    <span class="sp2">{{item.name}}</span>
-                                                </div>
-                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
-                                                    v-for="(item,index) in diminishingOptions" :key="index" v-if="item.name=='正常'&&diminishingSwitch"
-                                                    @click="((val)=>{selRadioIterm(item.code,'diminishingOptions')})">
-                                                    <span class="sp1">{{item.value}}</span>
-                                                    <span class="sp2">{{item.name}}</span>
+                                            </div>
+                                            <div class="z2" style="width:500px;">
+                                                <div class="z-content-n" style="flex-direction: column;">
+                                                    <div class="z-row-left">
+                                                        <div class="z_title">
+                                                            <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                                            <span>采液强度</span>
+                                                        </div>
+                                                        <div class="z_schedule">
+                                                            <span class="sp1">正常：</span>
+                                                            <div class="z_proess">
+                                                                <span class="z_proess_sp1" :style="{width:fluidStrengthNum.zczb+'%'}">
+                                                                    <b style="cursor: pointer;" @click="fluidStrengthSwitch=true">{{fluidStrengthNum.zcnum}}</b>
+                                                                </span>
+                                                                <span class="z_proess_sp2"></span>
+                                                            </div>
+                                                            <span class="sp2">异常：<b style="cursor: pointer;" @click="fluidStrengthSwitch=false">{{fluidStrengthNum.ycnum}}</b></span>
+                                                        </div>
+                                                    </div>  
+                                                    <div class="z-row-center">
+                                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                            v-for="(item,index) in fluidStrengthOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)  &&!fluidStrengthSwitch"
+                                                            @click="((val)=>{selRadioIterm(item.code,'fluidStrengthOptions')})">
+                                                            <span class="sp1">{{item.value}}</span>
+                                                            <span class="sp2">{{item.name}}</span>
+                                                        </div>
+                                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                            v-for="(item,index) in fluidStrengthOptions" :key="index" v-if="item.name=='正常'&&fluidStrengthSwitch"
+                                                            @click="((val)=>{selRadioIterm(item.code,'fluidStrengthOptions')})">
+                                                            <span class="sp1">{{item.value}}</span>
+                                                            <span class="sp2">{{item.name}}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="z2" style="width:500px;">
-                                        <div class="z-content-n" style="flex-direction: column;">
-                                            <div class="z-row-left">
-                                                <div class="z_title">
-                                                    <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                                    <span>采液强度</span>
-                                                </div>
-                                                <div class="z_schedule">
-                                                    <span class="sp1">正常：</span>
-                                                    <div class="z_proess">
-                                                        <span class="z_proess_sp1" :style="{width:fluidStrengthNum.zczb+'%'}">
-                                                            <b style="cursor: pointer;" @click="fluidStrengthSwitch=true">{{fluidStrengthNum.zcnum}}</b>
-                                                        </span>
-                                                        <span class="z_proess_sp2"></span>
+                                        <div class="aaa" style="display: flex;">
+                                            <div class="z1" style="width:500px;">
+                                                <div class="z-content-n" style="flex-direction: column;">
+                                                    <div class="z-row-left">
+                                                        <div class="z_title">
+                                                            <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                                            <span>采液指数</span>
+                                                        </div>
+                                                        <div class="z_schedule">
+                                                            <span class="sp1">正常：</span>
+                                                            <div class="z_proess">
+                                                                <span class="z_proess_sp1" :style="{width:fluidProductionNum.zczb+'%'}">
+                                                                    <b style="cursor: pointer;" @click="fluidProductionSwitch=true">{{fluidProductionNum.zcnum}}</b>
+                                                                </span>
+                                                                <span class="z_proess_sp2"></span>
+                                                            </div>
+                                                            <span class="sp2">异常：<b style="cursor: pointer;" @click="fluidProductionSwitch=false">{{fluidProductionNum.ycnum}}</b></span>
+                                                        </div>
+                                                    </div>  
+                                                    <div class="z-row-center">
+                                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                            v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!fluidProductionSwitch"
+                                                            @click="((val)=>{selRadioIterm(item.code,'fluidProductionOptions')})">
+                                                            <span class="sp1">{{item.value}}</span>
+                                                            <span class="sp2">{{item.name}}</span>
+                                                        </div>
+                                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                            v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name=='正常'&&fluidProductionSwitch"
+                                                            @click="((val)=>{selRadioIterm(item.code,'fluidProductionOptions')})">
+                                                            <span class="sp1">{{item.value}}</span>
+                                                            <span class="sp2">{{item.name}}</span>
+                                                        </div>
                                                     </div>
-                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="fluidStrengthSwitch=false">{{fluidStrengthNum.ycnum}}</b></span>
                                                 </div>
-                                            </div>  
-                                            <div class="z-row-center">
-                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
-                                                    v-for="(item,index) in fluidStrengthOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)  &&!fluidStrengthSwitch"
-                                                    @click="((val)=>{selRadioIterm(item.code,'fluidStrengthOptions')})">
-                                                    <span class="sp1">{{item.value}}</span>
-                                                    <span class="sp2">{{item.name}}</span>
-                                                </div>
-                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
-                                                    v-for="(item,index) in fluidStrengthOptions" :key="index" v-if="item.name=='正常'&&fluidStrengthSwitch"
-                                                    @click="((val)=>{selRadioIterm(item.code,'fluidStrengthOptions')})">
-                                                    <span class="sp1">{{item.value}}</span>
-                                                    <span class="sp2">{{item.name}}</span>
+                                            </div>
+                                            <div class="z2" style="width:500px;">
+                                                <div class="z-content-n" style="flex-direction: column;">
+                                                    <div class="z-row-left">
+                                                        <div class="z_title">
+                                                            <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                                            <span>米采液强度</span>
+                                                        </div>
+                                                        <div class="z_schedule">
+                                                            <span class="sp1">正常：</span>
+                                                            <div class="z_proess">
+                                                                <span class="z_proess_sp1" :style="{width:mfluidProductionNum.zczb+'%'}">
+                                                                    <b style="cursor: pointer;" @click="mfluidProductionSwitch=true">{{mfluidProductionNum.zcnum}}</b>
+                                                                </span>
+                                                                <span class="z_proess_sp2"></span>
+                                                            </div>
+                                                            <span class="sp2">异常：<b style="cursor: pointer;" @click="mfluidProductionSwitch=false">{{mfluidProductionNum.ycnum}}</b></span>
+                                                        </div>
+                                                    </div>  
+                                                    <div class="z-row-center">
+                                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                            v-for="(item,index) in mfluidProductionOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!mfluidProductionSwitch"
+                                                            @click="((val)=>{selRadioIterm(item.code,'mfluidProductionOptions')})">
+                                                            <span class="sp1">{{item.value}}</span>
+                                                            <span class="sp2">{{item.name}}</span>
+                                                        </div>
+                                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                            v-for="(item,index) in mfluidProductionOptions" :key="index" v-if="item.name=='正常'&&mfluidProductionSwitch"
+                                                            @click="((val)=>{selRadioIterm(item.code,'mfluidProductionOptions')})">
+                                                            <span class="sp1">{{item.value}}</span>
+                                                            <span class="sp2">{{item.name}}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -568,77 +642,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="z-content2">
-                                    <div class="z1" style="width:500px;">
-                                        <div class="z-content-n" style="flex-direction: column;">
-                                            <div class="z-row-left">
-                                                <div class="z_title">
-                                                    <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                                    <span>采液指数</span>
-                                                </div>
-                                                <div class="z_schedule">
-                                                    <span class="sp1">正常：</span>
-                                                    <div class="z_proess">
-                                                        <span class="z_proess_sp1" :style="{width:fluidProductionNum.zczb+'%'}">
-                                                            <b style="cursor: pointer;" @click="fluidProductionSwitch=true">{{fluidProductionNum.zcnum}}</b>
-                                                        </span>
-                                                        <span class="z_proess_sp2"></span>
-                                                    </div>
-                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="fluidProductionSwitch=false">{{fluidProductionNum.ycnum}}</b></span>
-                                                </div>
-                                            </div>  
-                                            <div class="z-row-center">
-                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
-                                                    v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!fluidProductionSwitch"
-                                                    @click="((val)=>{selRadioIterm(item.code,'fluidProductionOptions')})">
-                                                    <span class="sp1">{{item.value}}</span>
-                                                    <span class="sp2">{{item.name}}</span>
-                                                </div>
-                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
-                                                    v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name=='正常'&&fluidProductionSwitch"
-                                                    @click="((val)=>{selRadioIterm(item.code,'fluidProductionOptions')})">
-                                                    <span class="sp1">{{item.value}}</span>
-                                                    <span class="sp2">{{item.name}}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="z2" style="width:500px;">
-                                        <div class="z-content-n" style="flex-direction: column;">
-                                            <div class="z-row-left">
-                                                <div class="z_title">
-                                                    <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                                    <span>米采液强度</span>
-                                                </div>
-                                                <div class="z_schedule">
-                                                    <span class="sp1">正常：</span>
-                                                    <div class="z_proess">
-                                                        <span class="z_proess_sp1" :style="{width:mfluidProductionNum.zczb+'%'}">
-                                                            <b style="cursor: pointer;" @click="mfluidProductionSwitch=true">{{mfluidProductionNum.zcnum}}</b>
-                                                        </span>
-                                                        <span class="z_proess_sp2"></span>
-                                                    </div>
-                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="mfluidProductionSwitch=false">{{mfluidProductionNum.ycnum}}</b></span>
-                                                </div>
-                                            </div>  
-                                            <div class="z-row-center">
-                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
-                                                    v-for="(item,index) in mfluidProductionOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!mfluidProductionSwitch"
-                                                    @click="((val)=>{selRadioIterm(item.code,'mfluidProductionOptions')})">
-                                                    <span class="sp1">{{item.value}}</span>
-                                                    <span class="sp2">{{item.name}}</span>
-                                                </div>
-                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
-                                                    v-for="(item,index) in mfluidProductionOptions" :key="index" v-if="item.name=='正常'&&mfluidProductionSwitch"
-                                                    @click="((val)=>{selRadioIterm(item.code,'mfluidProductionOptions')})">
-                                                    <span class="sp1">{{item.value}}</span>
-                                                    <span class="sp2">{{item.name}}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="z3"></div>
                                 </div>
                             </div>
                         </info-window>
@@ -783,7 +786,6 @@
             return {
                 isNewformat:true,//默认新版本
                 potentialWellNum:0,//潜力井
-                
                 listPage: 1,
                 //数据来源,大于０为后台提取
                 dataSource: 1,
@@ -863,7 +865,6 @@
                 cyqdpgSelCode:'',
                 //采液强度偏低
                 cyqdpdSelCode:'',
-                
                 //生产动态可用项目
                 productionTrendsOptions: [],
                 productionNum:{
@@ -873,6 +874,7 @@
                     zczb:0,
                     yczb:0,
                 },
+                productionCode:'',//正常的code
                 productionSwitch:false,//展示异常false, 正常 true
                 //油井工况
                 oilWellConditionOptions: [],
@@ -1117,8 +1119,9 @@
                     }
                 }
                 console.log('this.productionTrendsTab',this.productionTrendsTab);
-                console.log('this.tableData',this.tableData)
+                console.log('this.tableData',this.tableData);
                 this.$refs.tableList.doLayout();
+                // this.selRadioIterm(this.productionCode,'productionTrendsOptions');
             },
             getMoreLog() {
                 if (this.scrollFlag) {
@@ -1257,7 +1260,9 @@
                             myData.forEach((el,i)=>{
                                 this.productionNum.allnum+=Number(el.value);
                                 if(el.name=='正常'){
+                                    console.log('正常',el)
                                     this.productionNum.zcnum=Number(el.value);
+                                    this.productionCode=el.code;
                                 }else{
                                     myData[i].isShow=Number(el.value)?true:false;
                                     this.productionNum.ycnum+=Number(el.value);
@@ -1837,6 +1842,7 @@
                     }
                 }
                 console.log('myData',myData)
+                console.log('this.productionTrendsOptions',this.productionTrendsOptions)
                 //2、按照顺序初始化计数器、生成数据体
                 var tableData = this.initTableData;
                 var reData = [];
@@ -2030,7 +2036,6 @@
                     }
                 }
 
-
                 //3、根据每个项目的井数遍历检查表头
                 //productionTrendsOptions//生产动态
                 this.productionTrendsTab = [];
@@ -2154,6 +2159,7 @@
                     this.recommendedMeasuresOptions[j].value = t_count; //登记条数
                 }
                 this.tableData = reData; //加载数据
+                console.log('this.tableData',this.tableData)
                 this.$nextTick(() => {
                     this.$refs.tableList.doLayout();
                 })
@@ -2168,8 +2174,6 @@
                     this[numKey].zcnum=0;
                     this[numKey].ycnum=0;
                     this[dataKey].forEach((el,i)=>{
-                        console.log(this[dataKey][i].value,7777)
-                        console.log(Number(this[dataKey][i].value),999)
                         this[numKey].allnum+=Number(this[dataKey][i].value);
                         if(el.name=='正常'||el.name=='合格区'){
                             this[numKey].zcnum=Number(this[dataKey][i].value);
@@ -2179,7 +2183,6 @@
                     })
                     this[numKey].zczb=this[numKey].zcnum/this[numKey].allnum * 100;
                     this[numKey].yczb=this[numKey].yczb/this[numKey].allnum * 100;
-                    console.log('this[numKey]',this[numKey])
                 }
                 //zxb-重新计算推荐井组
                 this.potentialWellNum=0;
