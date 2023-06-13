@@ -60,7 +60,7 @@ export function getStratifiedInjectionDetailsComp(data) {
         method: "post",
         data
     }).then((res) => {
-        return res.data.data
+        return res.data
     });
 }
 

@@ -62,7 +62,7 @@
       </div>
     </header-search>
     <page-panel header-title="分层注采详情" style="height:calc(100% - 80px);text-align: center; ">
-          <el-table v-show="!isTableComp" id="export1" :data="tableData" style="width: 100%" highlight>
+          <el-table v-show="!isTableComp" id="export1" :data="tableData" style="width: 100%;" height="100%" highlight>
             <el-table-column prop="date" label="层位" align="center">
               <template slot-scope="scope">
                 <span>{{ scope.row.productionIntervalNo }}</span>
@@ -101,7 +101,7 @@
           </el-table>
 
          <!-- 对比 table -->
-          <el-table v-show="isTableComp" id="exportCom" :data="tableData" style="width: 100%" highlight>
+          <el-table v-show="isTableComp" id="exportCom" :data="tableData" style="width: 100%" height="100%" highlight>
             <el-table-column prop="date" label="层位" min-width="240" align="center">
               <template slot-scope="scope">
                 <span>{{ scope.row.productionIntervalNo }}</span>
