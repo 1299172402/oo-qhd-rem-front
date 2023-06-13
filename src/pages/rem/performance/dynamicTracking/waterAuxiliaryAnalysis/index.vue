@@ -23,17 +23,20 @@
         <pagePanelNew :style="{ height: currentModule == 'waterReport' ? 'auto' : 'calc(100% - 100px)' }" class="g-w100">
             
             <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
-                <el-button
-                    type="primary"
-                    icon="el-icon-upload2"
-                    @click="ljpmUploadDialog"
-                    style="margin-left: auto !important"
-                    v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' "
-                >上传文档</el-button
-                >
-                <el-upload v-else ref="upload" style="margin-left: auto" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess">
-                    <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
-                </el-upload>
+                <div v-if="currentModule != 'tracer'">
+                    <el-button
+                        type="primary"
+                        icon="el-icon-upload2"
+                        @click="ljpmUploadDialog"
+                        style="margin-left: auto !important"
+                        v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' "
+                    >上传文档</el-button
+                    >
+                    <el-upload v-else ref="upload" style="margin-left: auto" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess">
+                        <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
+                    </el-upload>
+                </div>
+                
                 
                 <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' " @click="doDownLoadNew">下载</el-button>
                 <el-button style="margin-left: 15px" type="primary" icon="el-icon-download" v-else @click="doDownLoad">下载</el-button>
@@ -517,12 +520,12 @@
             //点击二级菜单
             tabsClick(module){
                 if(module.name=='stratificationTesting'){//分层调配
-                    let url=`https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/waterRunningControl?selectOilField=${this.selectOilField}&selectPlatform=${this.selectPlatform}&selectWellId=${this.selectWellId}&link=rem`;
+                    let url=`https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge`;
                     window.open(url,'_blank');
                 }
                 else if (module.name == "injectivityIndex") {
                     window.open("https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/waterRunningControl?link=rem", "_blank");
-                } else{
+                }else{
                     this.currentModule = module.name;
                 }
             },
