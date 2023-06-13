@@ -574,12 +574,12 @@ export default {
                     postCoefficientConnectionpreserve(params).then(bool => {
                         if (bool) {
                             this.modify = false
-                            getUnicomInjSplit({
-                                blockId: this.queryData.blockId,
-                                dateTime: this.queryData.dateTime,
-                            }).then((res) => {
-                                this.tableWater = res;
-                            });
+                            // getUnicomInjSplit({
+                            //     blockId: this.queryData.blockId,
+                            //     dateTime: this.queryData.dateTime,
+                            // }).then((res) => {
+                            //     this.tableWater = res;
+                            // }); --404接口
                             this.$message.success("保存成功")
                         } else {
                             this.$message.error("保存失败")

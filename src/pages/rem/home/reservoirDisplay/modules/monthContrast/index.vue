@@ -167,6 +167,8 @@ export default {
         },
         getinfo() {
             monthlyProductionComparison({}).then(res => {
+                console.log(res)
+                debugger
                 this.histogram.yAxis[0].min = null
                 this.histogram.yAxis[0].max = null
                 //
