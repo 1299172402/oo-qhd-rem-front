@@ -65,14 +65,14 @@
                         <el-table-column sortable prop="oilProdDaily" :label="`日产油\n(m³/d)`" width="110"  :formatter="formatter"/>
                         <el-table-column sortable prop="waterRatio" :label="`含水\n(%)`" width="110"  :formatter="formatter"/>
                         <el-table-column sortable prop="dhFlowingPress" :label="`井底流压\n(M pa)`" width="120"  :formatter="formatter"/>
-                        <el-table-column sortable prop="pumpFrequency" :label="`泵频率\n(Hz)`" width="110"  :formatter="formatter"/>
+                        <el-table-column sortable prop="pumpFrequency" :label="`泵频率\n(Hz)`" width="110"/>
                       </el-table-column>
                       <el-table-column :label="searchForm.prodDateCompare">
                         <el-table-column sortable prop="fluidProdDailyCompare" :label="`日产液\n(m³/d)`" width="110"  :formatter="formatter"/>
                         <el-table-column sortable prop="oilProdDailyCompare" :label="`日产油\n(m³/d)`" width="110"  :formatter="formatter"/>
                         <el-table-column sortable prop="waterRatioCompare" :label="`含水\n(%)`" width="110" :formatter="formatter"/>
-                        <el-table-column sortable prop="dhFlowingPressCompare" :label="`井底流压\n(M pa)`" width="120"  :formatter="formatter"/>
-                        <el-table-column sortable prop="pumpFrequencyCompare" :label="`泵频率\n(Hz)`" width="110"  :formatter="formatter"/>
+                        <el-table-column sortable prop="dhFlowingPressCompare" :label="`井底流压\n(MPa)`" width="120"  :formatter="formatter"/>
+                        <el-table-column sortable prop="pumpFrequencyCompare" :label="`泵频率\n(Hz)`" width="110"/>
                       </el-table-column>
                       <el-table-column label="变化量">
                         <el-table-column sortable prop="fluidProdDaily" :label="`产液对比\n(m³/d)`" width="160">
@@ -89,9 +89,9 @@
                             <template slot-scope="{row,$index}">
                                 <span style="display: flex;align-items: center;justify-content: center;">
                                     
-                                    <span style="width:60px;">{{row.oilProdDaily!==null?row.comparisonOilProduction:'-'}}</span>
+                                    <span style="width:60px;text-align: right;margin-right:10px;">{{row.oilProdDaily!==null?row.comparisonOilProduction:'-'}}</span>
                                     
-                                    <span style="width:30px;display:flex;justify-content: end;">
+                                    <span style="width:30px;display:flex;justify-content:flex-end;">
                                         <span style="height:13px;display:flex;" v-if="row.comparisonOilWidth!==0 && row.comparisonOilProduction < 0">
                                             <span v-if="row.oilProdDaily!==null" :style="{width:row.comparisonOilWidth+'px',height:'13px',backgroundColor:'red'}"></span>
                                         </span>
@@ -118,7 +118,7 @@
                                 </span>
                             </template>
                         </el-table-column>
-                        <el-table-column sortable prop="dhFlowingPress" :label="`井底流压对比\n(M pa)`" width="170">
+                        <el-table-column sortable prop="dhFlowingPress" :label="`井底流压对比\n(MPa)`" width="170">
                             <template slot-scope="scope">
                                 {{scope.row.dhFlowingPress!==null?numReduce(scope.row.dhFlowingPress,scope.row.dhFlowingPressCompare):'-'}}
                             </template>
@@ -373,6 +373,7 @@
             },
             //保留两位小数
             formatter(row, column, cellValue, index){
+                console.log(row, column, cellValue, index)
                 if (cellValue) {
                     return Number(cellValue).toFixed(2);
                 } else {
