@@ -113,7 +113,7 @@ export function getInitiatedList(data) {
   });
 }
 
-// 我的事项-物联网待办
+// 我的事项-作业票待办
 export function getInternetList(query) {
   return request({
     url: "system/supOS/todo/paginate",
@@ -122,10 +122,18 @@ export function getInternetList(query) {
   });
 }
 
-// 我的事项-物联网待办处理
+// 我的事项-作业票待办处理
 export function getInternetDeal(taskId, processId, url) {
   return request({
     url: `system/supOS/todo/skipUrl?taskId=${taskId}&processId=${processId}&pageUrl=${url}`,
+    method: "get"
+  });
+}
+
+// 自定义面板弹窗-子菜单应用下拉来源
+export function listMenu(appId) {
+  return request({
+    url: `system/menu/listMenu?appId=${appId}`,
     method: "get"
   });
 }

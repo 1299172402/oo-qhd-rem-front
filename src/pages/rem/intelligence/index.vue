@@ -266,7 +266,7 @@ export default {
             baseUrl: process.env.NODE_ENV == "production" ? '/rem/' : '/',
             queryData: {
                 //区块
-                blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
+                blockId: 'YCFXDY8B643EDC9007F96F570600457D',
                 //选择时间
                 dateTime: this.eeee(),
                 //油田

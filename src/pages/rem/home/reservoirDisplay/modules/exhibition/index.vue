@@ -152,7 +152,7 @@ export default {
           let option = {
               legend: {
                   textStyle: {
-                      color: "#66ffff"
+                      color: "#66ffff",
                   },
                   bottom: "bottom",
               },
@@ -165,7 +165,7 @@ export default {
               grid: {
                   left: '10%',
                   right: '15%',
-                  bottom: '5%',
+                  bottom: '11%',
                   top:'10%',
                   containLabel: true
               },
@@ -228,6 +228,17 @@ export default {
           return option
       },
       getData(){
+          let dateTime = ''
+              let data = new Date()
+          if (data.getMonth() < 10) {
+              dateTime = data.getFullYear() + '-0' + (data.getMonth() + 1)
+          } else {
+              dateTime = data.getFullYear() + '-' + (data.getMonth() + 1)
+          }
+          let params = {
+              blockId: 'YCFXDY8B643EDC9007F96F570600457D',
+              yearMonth: dateTime,
+          }
           getResidueOilCondotion(params).then(res => {
               try {
                   this.residueOil = res.map(item => {

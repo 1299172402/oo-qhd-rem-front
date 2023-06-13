@@ -30,7 +30,15 @@
             :options="deptOptions"
             :show-count="true"
             placeholder="请选择所属机构"
-          />
+          >
+            <label
+              slot="option-label"
+              slot-scope="{ node, labelClassName }"
+              :class="labelClassName"
+              :title="node.label"
+            >{{ node.label }}
+            </label>
+          </treeselect>
         </el-form-item>
         <el-form-item label="租户状态：" prop="status">
           <el-radio-group v-model="model.status">
@@ -77,7 +85,7 @@ export default {
         tenantCode: undefined,
         tenantName: undefined,
         deptId: undefined,
-        status: undefined,
+        status: "0",
         appList: []
       },
       fn: {
@@ -94,8 +102,8 @@ export default {
           }
         ],
         tenantName: [{ required: true, message: "请输入租户名称", trigger: "blur" }],
-        deptId: [{ required: true, message: "请输入分配组织机构", trigger: "change" }],
-        status: [{ required: true, message: "请输入租户状态", trigger: "change" }]
+        deptId: [{ required: true, message: "请选择组织机构", trigger: "change" }],
+        status: [{ required: true, message: "请选择租户状态", trigger: "change" }]
       },
       returnName: "Tenant"
     };

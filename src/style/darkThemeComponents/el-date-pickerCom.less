@@ -95,6 +95,12 @@
   background: #409eff;
 }
 
+ /* stylelint-disable */
+.el-time-spinner__item:hover:not(.disabled):not(.active) {
+  background: #409eff;
+  cursor: pointer;
+}
+
 .el-time-panel__content::after,
 .el-time-panel__content::before {
   margin-top: -8px;
@@ -206,6 +212,7 @@
 .el-month-table td.end-date .cell,
 .el-month-table td.start-date .cell {
   background-color: #177ddc;
+  color: #fff;
 }
 
 .el-month-table td .cell {

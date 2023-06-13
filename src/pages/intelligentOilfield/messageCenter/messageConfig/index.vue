@@ -165,7 +165,7 @@ const columns = [
 ];
 export default {
   name: "MessageSubject",
-  dicts: ["sys_active_type"],
+  dicts: ["sys_active_type", "sys_message_type"],
   components: {
     ConfigForm
   },
@@ -180,6 +180,7 @@ export default {
         /* { type: "PUSH", text: "移动云推送" }, */
         { type: "LETTER", text: "站内信" }
       ],
+      messageTypelabel: {},
       triggerTypes: [
         { type: "USER", text: "用户触达" },
         { type: "SERVICE", text: "服务触达" }
@@ -194,6 +195,9 @@ export default {
   },
   created() {
     this.getList();
+    this.$on("dictReady", () => {
+      this.messageTypelabel = this.dict.label.sys_message_type;
+    });
   },
   activated() {
     this.getList();
@@ -235,15 +239,7 @@ export default {
           re = re && re === "USER" ? "用户触达" : "服务触达";
           break;
         case "messageType":
-          switch (re) {
-            case "MAIL": re = "邮件"; break;
-            case "SMS": re = "短信"; break;
-            case "PUSH": re = "移动云推送"; break;
-            case "LETTER": re = "站内信"; break;
-            case "EQUIPMENT": re = "设备状态"; break;
-            case "FORWARDING": re = "服务转发"; break;
-            default: break;
-          }
+          re = this.messageTypelabel[re] || re || "";
           break;
         case "grantedTenants":
           re = re && re.map(item => item.tenantName).join(",");

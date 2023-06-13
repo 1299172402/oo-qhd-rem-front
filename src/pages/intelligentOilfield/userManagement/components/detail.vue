@@ -130,7 +130,7 @@ export default {
     getUser() {
       getUser(this.$route.query.userId).then(response => {
         this.allDatas = response.data;
-        this.allDatas.tempPostId = parseInt(response.data.postIds.toLocaleString(), 10);
+        this.allDatas.tempPostId = parseInt(response.data.postIds?.toLocaleString(), 10);
         this.roleOptions = response.data.roles;
         this.postOptions = response.data.posts;
 

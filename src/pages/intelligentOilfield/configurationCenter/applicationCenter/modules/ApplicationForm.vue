@@ -86,8 +86,8 @@
         </el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item v-if="isPC" label="网页端入口URL" prop="appPcAccessUrl">
-      <el-input v-model="model.appPcAccessUrl" placeholder="请输入网页端入口URL" clearable />
+    <el-form-item v-if="isPC" label="网页端入口链接" prop="appPcAccessUrl">
+      <el-input v-model="model.appPcAccessUrl" placeholder="请输入网页端入口链接" clearable />
     </el-form-item>
     <el-form-item v-if="isMobile" label="选择移动端" prop="accessType">
       <el-radio-group v-model="model.accessType">
@@ -104,8 +104,8 @@
         <el-input v-model="model.appAndriodSchema" placeholder="请输入Android应用Scheme" clearable />
       </el-form-item>
     </template>
-    <el-form-item v-else-if="isMobile && model.accessType === '1'" label="移动端入口URL" prop="appMobileAccessUrl">
-      <el-input v-model="model.appMobileAccessUrl" placeholder="请输入移动端入口URL" clearable />
+    <el-form-item v-else-if="isMobile && model.accessType === '1'" label="移动端入口链接" prop="appMobileAccessUrl">
+      <el-input v-model="model.appMobileAccessUrl" placeholder="请输入移动端入口链接" clearable />
     </el-form-item>
   </el-form>
 </template>
@@ -142,11 +142,11 @@ export default {
         appImg: [{ required: false, message: "请上传应用图标", trigger: ["change", "blur"] }],
         appStatus: [{ required: true, message: "请选择应用状态", trigger: ["change", "blur"] }],
         mobile: [{ required: true, message: "请选择支持终端", trigger: ["change", "blur"] }],
-        appPcAccessUrl: [{ required: true, message: "请输入PC端入口URL", trigger: ["change", "blur"] }],
+        appPcAccessUrl: [{ required: true, message: "请输入网页端入口链接", trigger: ["change", "blur"] }],
         accessType: [{ required: true, message: "请选择移动端", trigger: ["change", "blur"] }],
         appIosSchema: [{ required: true, message: "请输入iOS应用Scheme", trigger: ["change", "blur"] }],
         appAndriodSchema: [{ required: true, message: "请输入Android应用Scheme", trigger: ["change", "blur"] }],
-        appMobileAccessUrl: [{ required: true, message: "请输入移动端入口URL", trigger: ["change", "blur"] }]
+        appMobileAccessUrl: [{ required: true, message: "请输入移动端入口链接", trigger: ["change", "blur"] }]
       }
     };
   },

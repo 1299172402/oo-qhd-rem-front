@@ -89,6 +89,10 @@
       1.17、水球图B
     </div>
     <charts-components :chart-data-options="char14" style="width: 600px; height: 400px" />
+    <div class="spaceMargin">
+      1.18、多Y轴状折线图
+    </div>
+    <charts-components :chart-data-options="char15" style="width: 600px; height: 400px" />
     <!-- TODO: Maybe change back -->
     <!-- <div id="lineContainer" ref="lineContainer" style="width: 50%; height: 410px" /> -->
     <div class="headerTitle spaceMargin">
@@ -2233,6 +2237,214 @@ export default {
             color: "rgba(67,209,100,.3)"
           }
         }]
+      },
+      char15: {
+        title: {
+          textStyle: {
+            color: "#088AD5"
+          }
+        },
+        color: colors,
+        tooltip: {
+          trigger: "axis"
+        },
+        grid: {
+          top: "5%",
+          left: "25%",
+          right: "13%",
+          bottom: "18%"
+          // TODO: Maybe change back
+          // containLabel: true
+        },
+        toolbox: {
+          feature: {
+            dataView: {
+              show: false,
+              readOnly: false
+            },
+            restore: {
+              show: false
+            },
+            saveAsImage: {
+              show: false
+            }
+          }
+        },
+        legend: {
+          textStyle: {
+            color: getComputedStyle(document.documentElement).getPropertyValue("--text1"),
+            fontSize: 14
+          },
+          x: "center", // 可设定图例在左、右、居中
+          y: "bottom", // 可设定图例在上、下、居中
+          padding: [3, 0, 20, 0], // 可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
+          position: "right",
+          data: ["设备新增数量", "产品新增数量", "厂商新增数量"]
+        },
+        xAxis: [
+          {
+            type: "category",
+            // axisTick: {
+            //   alignWithLabel: false
+            // },
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: "#ECEDF0", // y轴线的颜色（若只设置了y轴线的颜色，未设置y轴文字的颜色，则y轴文字会默认跟设置的y轴线颜色一致）
+                width: 1, // y轴线的宽度
+                type: "dashed" // y轴线为实线
+              }
+            },
+            axisLabel: {
+              color: "#8FA4CC",
+              fontSize: 14
+            },
+            data: [
+              "2016-01",
+              "2016-02",
+              "2016-03",
+              "2016-04",
+              "2016-05",
+              "2016-06",
+              "2016-07",
+              "2016-08",
+              "2016-09",
+              "2016-10",
+              "2016-11",
+              "2016-12"
+            ]
+          }
+        ],
+        yAxis: [
+          {
+            type: "value",
+            name: "设备新增数量",
+            nameTextStyle: {
+              color: "#8FA4CC",
+              fontSize: 14
+            },
+            // 居中
+            nameLocation: "middle",
+            // 坐标轴名称与轴线之间的距离。
+            nameGap: 55,
+            min: 0,
+            max: 11000,
+            position: "left",
+            axisLine: {
+              lineStyle: {
+                color: colors[2]
+              },
+              show: true
+            },
+            axisLabel: {
+              show: true,
+              margin: 15,
+              textStyle: {
+                color: "#8FA4CC",
+                fontSize: 14
+              }
+            },
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: "grey",
+                opacity: 0.23,  // y轴线的颜色（若只设置了y轴线的颜色，未设置y轴文字的颜色，则y轴文字会默认跟设置的y轴线颜色一致）
+                width: 1, // y轴线的宽度
+                type: "solid" // y轴线为实线
+              }
+            },
+            axisTick: {
+              show: true
+            }
+          },
+          {
+            type: "value",
+            name: "产品新增数量",
+            nameTextStyle: {
+              fontSize: 14
+            },
+            // 居中
+            nameLocation: "middle",
+            // 坐标轴名称与轴线之间的距离。
+            nameGap: 50,
+            min: 0,
+            max: 200,
+            position: "right",
+            axisLine: {
+              lineStyle: {
+                color: colors[0]
+              },
+              show: true
+            },
+            axisLabel: {
+              formatter: "{value}",
+              textStyle: {
+                fontSize: 14
+              }
+            },
+            axisTick: {
+              show: true
+            },
+            splitLine: {
+              show: false
+            }
+          },
+          {
+            type: "value",
+            nameTextStyle: {
+              fontSize: 14
+            },
+            name: "厂商新增数量",
+            // 居中
+            nameLocation: "middle",
+            // 坐标轴名称与轴线之间的距离。
+            nameGap: 40,
+            min: 0,
+            max: 200,
+            position: "left",
+            offset: 80,
+            axisLine: {
+              lineStyle: {
+                color: colors[1]
+              },
+              show: true
+            },
+            axisLabel: {
+              formatter: "{value}",
+              textStyle: {
+                fontSize: 14
+              }
+            },
+            axisTick: {
+              show: true
+            },
+            splitLine: {
+              show: false
+            }
+          }
+        ],
+        series: [
+          {
+            name: "设备新增数量",
+            type: "bar",
+            barGap: 0.2,
+            barWidth: 10,
+            data: [
+              10000, 2000, 1065, 3620, 6530, 9510, 2000, 3002, 3580, 5063, 1520, 9000
+            ]
+          },
+          {
+            name: "产品新增数量",
+            type: "line",
+            yAxisIndex: 1,
+            data: [10, 50, 100, 32, 56, 87, 41, 25, 46, 96, 30, 150]
+          },
+          {
+            name: "厂商新增数量",
+            type: "line",
+            data: [1200, 1850, 206, 36, 255, 1800, 1600, 4547, 9958, 69, 93, 150]
+          }
+        ]
       },
       char9: {
         "backgroundColor": "transparent",

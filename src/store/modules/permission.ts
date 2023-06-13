@@ -83,7 +83,7 @@ const state = {
   // 去掉loading的白名单
   whiteListLoading: ["system/rang/queryCurrent", "/system/monitor/links", "/system/enter/inEnter", "/system/enter/outEnter", "/system/business/inBusiness", "/system/business/outBusiness", "/system/board/inBoard", "/system/board/outBoard", "/system/app/saveAppUserRelation", "/system/index/inIndex", "/system/index/outIndex"],
   // 报错白名单[主要是报警信息接口的报错处理]
-  whiteListError: ["system/rang/queryCurrent", "/gem001b/alarmCountMonthlyStatistics", "/gem001b/queryLevelSelectOptionList", "/gem001b/getAlcSourceList"]
+  whiteListError: ["system/rang/queryCurrent", "/gem001b/alarmCountMonthlyStatistics", "/gem001b/queryLevelSelectOptionList", "/gem001b/getAlcSourceList", "/system/instationmail/getByTenantId"]
 };
 // 遍历后台传来的路由字符串，转换为组件对象
 function filterAsyncRouter(asyncRouterMap, type = false) {

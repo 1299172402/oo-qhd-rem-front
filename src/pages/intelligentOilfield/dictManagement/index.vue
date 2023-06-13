@@ -25,10 +25,10 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="状态" prop="status">
+        <el-form-item label="字典状态" prop="status">
           <el-select
             v-model="queryParams.status"
-            placeholder="字典状态"
+            placeholder="请选择字典状态"
             clearable
             style="width: 240px"
           >
@@ -122,7 +122,7 @@
           prop="dictType"
           :show-overflow-tooltip="true"
         />
-        <el-table-column label="状态" align="center" prop="status">
+        <el-table-column label="字典状态" align="center" prop="status">
           <template slot-scope="scope">
             <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status" />
           </template>
@@ -182,6 +182,7 @@
       :visible.sync="open"
       width="500px"
       append-to-body
+      :close-on-click-modal="false"
     >
       <el-form
         ref="form"
@@ -195,7 +196,7 @@
         <el-form-item label="字典类型" prop="dictType">
           <el-input v-model="form.dictType" placeholder="请输入字典类型" />
         </el-form-item>
-        <el-form-item label="状态" prop="status">
+        <el-form-item label="字典状态" prop="status">
           <el-radio-group v-model="form.status">
             <el-radio v-for="dict in dict.type.sys_normal_disable" :key="dict.value" :label="dict.value">
               {{
@@ -205,7 +206,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.remark" type="textarea" placeholder="请输入备注" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -268,8 +269,8 @@ export default {
       },
       // 表单校验
       rules: {
-        dictName: [{ required: true, message: "字典名称不能为空", trigger: "blur" }],
-        dictType: [{ required: true, message: "字典类型不能为空", trigger: "blur" }]
+        dictName: [{ required: true, message: "请输入字典名称", trigger: "blur" }],
+        dictType: [{ required: true, message: "请输入字典类型", trigger: "blur" }]
       }
     };
   },

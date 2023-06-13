@@ -142,7 +142,7 @@ export default Vue.extend({
         item.attachmentsArray = (item.attachments && item.attachments.split("|")) || [];
         item.up = false;
       });
-      this.commentList = list || [];
+      this.commentList = list.reverse() || [];
     },
     async nextNodeInfo() {
       const { data } = await actionApi(ActionType.Model, this.businessType, this.dataSource) as any;
@@ -338,21 +338,17 @@ export default Vue.extend({
         <t-tab-panel value="1" label="审批" destroyOnHide={false}>
           <AuditPanel ref={"auditInfo"} dataSource={this.info}/>
         </t-tab-panel>
-        <t-tab-panel value="2" label="审批流信息">
-          <AuditFlowPanel dataSource={this.commentList} />
-        </t-tab-panel>
-        <t-tab-panel value="3" label="审批地图">
-          <AuditMapPanel procInstId={this.dataSource?.procInstId} dataSource={this.diagram} />
+        <t-tab-panel style={"display: flex"} value="2" label="审批信息">
+          <AuditFlowPanel style={"flex: 2"} dataSource={this.commentList} />
+          <AuditMapPanel style={"flex: 3"} procInstId={this.dataSource?.procInstId} dataSource={this.diagram} />
         </t-tab-panel>
       </t-tabs>
     );
     const ViewContent = (
       <t-tabs value={this.tabIndex} onChange={val => { this.tabIndex = val; }}>
-        <t-tab-panel value="1" label="审批流信息">
-          <AuditFlowPanel dataSource={this.commentList} />
-        </t-tab-panel>
-        <t-tab-panel value="2" label="审批地图">
-          <AuditMapPanel procInstId={this.dataSource?.procInstId} dataSource={this.diagram} />
+        <t-tab-panel style={"display: flex"} value="1" label="审批信息">
+          <AuditFlowPanel style={"flex: 2"} dataSource={this.commentList} />
+          <AuditMapPanel style={"flex: 3"} procInstId={this.dataSource?.procInstId} dataSource={this.diagram} />
         </t-tab-panel>
       </t-tabs>
     );
