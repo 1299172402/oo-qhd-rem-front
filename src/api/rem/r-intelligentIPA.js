@@ -18,8 +18,7 @@ export function getWellGroupBlock(params) {
         params
     }).then((res) => {
         // if(res.data.code === 0 && res.data.data)
-
-        return res.data.data
+        return res.data
     });
 }
 
@@ -40,7 +39,7 @@ export function getStratifiedInjectionDetails(params) {
         params
     }).then((res) => {
         // if(res.data.code === 0 && res.data.data)
-        return res.data.data
+        return res.data
 
     });
 }
