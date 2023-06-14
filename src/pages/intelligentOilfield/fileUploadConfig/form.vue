@@ -77,7 +77,7 @@
         </el-select>
       </el-form-item>
       <el-form-item
-        v-if="model.uploadType === 'minio' && model.appId !== '$system$'"
+        v-if="(model.uploadType === 'minio' || model.uploadType === 'local') && model.appId !== '$system$'"
         label="所属租户："
         prop="tenantCode"
         class="form-layout__item-col2"

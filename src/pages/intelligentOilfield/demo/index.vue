@@ -774,7 +774,7 @@
       </span>
     </el-dialog>
     <div class="headerTitle spaceMargin">
-      10、Message消息提示=========================================================================================
+      10.1、Message消息提示=========================================================================================
     </div>
     <el-button :plain="true" class="commonBtn" @click="opensuccess">
       成功消息提示
@@ -787,6 +787,21 @@
     </el-button>
     <el-button :plain="true" class="commonBtn" @click="openerror">
       失败消息提示
+    </el-button>
+    <div class="headerTitle spaceMargin">
+      10.2、Notification通知提示=========================================================================================
+    </div>
+    <el-button :plain="true" class="commonBtn" @click="opensuccess1">
+      右侧成功消息提示
+    </el-button>
+    <el-button :plain="true" class="commonBtn" @click="openwarn1">
+      右侧警告消息提示
+    </el-button>
+    <el-button :plain="true" class="commonBtn" @click="openinfo1">
+      右侧消息消息提示
+    </el-button>
+    <el-button :plain="true" class="commonBtn" @click="openerror1">
+      右侧失败消息提示
     </el-button>
     <div class="headerTitle spaceMargin">
       11、Alert警告提示=========================================================================================
@@ -1285,7 +1300,7 @@
   </div>
 </template>
 <script>
-import { Message } from "element-ui";
+import { Message, Notification } from "element-ui";
 import horizontalSwitchBtn from "@/components/intelligentOilfield/horizontal-switch-button/index.vue";
 import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 import marquee from "@/components/intelligentOilfield/marquee-window/index.vue";
@@ -1814,15 +1829,15 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: "请输入活动名称", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
+          { required: true, message: "请输入活动名称" },
+          { min: 3, max: 5, message: "长度在 3 到 5 个字符" }
         ],
-        region: [{ required: true, message: "请选择活动区域", trigger: "change" }],
-        date1: [{ type: "date", required: true, message: "请选择日期", trigger: "change" }],
-        date2: [{ type: "date", required: true, message: "请选择时间", trigger: "change" }],
-        type: [{ type: "array", required: true, message: "请至少选择一个活动性质", trigger: "change" }],
-        resource: [{ required: true, message: "请选择活动资源", trigger: "change" }],
-        desc: [{ required: true, message: "请填写活动形式", trigger: "blur" }]
+        region: [{ required: true, message: "请选择活动区域" }],
+        date1: [{ type: "date", required: true, message: "请选择日期" }],
+        date2: [{ type: "date", required: true, message: "请选择时间" }],
+        type: [{ type: "array", required: true, message: "请至少选择一个活动性质" }],
+        resource: [{ required: true, message: "请选择活动资源" }],
+        desc: [{ required: true, message: "请填写活动形式" }]
       },
       //   transfer穿梭窗
       data: generateData(),
@@ -1944,6 +1959,41 @@ export default {
       Message({
         type: "error",
         message: "这是一条异常消息，会主动消失"
+      });
+    },
+    // message弹出框（四种）
+    openwarn1() {
+      Notification({
+        title: "",
+        message: "“修改指标'111'失败，该指标名称已存在",
+        type: "warning",
+        duration: 1000,
+        offset: 50
+      });
+    },
+    opensuccess1() {
+      Notification({
+        title: "",
+        message: "这是一条成功的提示消息",
+        type: "success",
+        duration: 1000,
+        offset: 50
+      });
+    },
+    openinfo1() {
+      Notification.info({
+        title: "",
+        message: "这是一条消息的提示消息",
+        duration: 1000,
+        offset: 50
+      });
+    },
+    openerror1() {
+      Notification.error({
+        title: "",
+        message: "r\n### Error querying database.Cause: com.kingbase8.uti1.KSOLException: 错误: 已缓冲的计划不能改变结果类型\r\n###The error may exist in file [D:  xm lupp-backend' 'cnooc-",
+        duration: 1000,
+        offset: 50
       });
     },
     next() {

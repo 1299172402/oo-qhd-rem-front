@@ -35,9 +35,29 @@ export default Vue.extend({
     }
   },
   mounted() {
+    const firstLoading = document.querySelector("#first-loading");
+    if (firstLoading) {
+      // 如果本身是iframe，那么就立即关闭动画
+      if (window.top !== window) {
+        firstLoading.remove();
+      } else if (!window.location.href.includes("appIframeView")) {
+        // 如果本身不是iframe，且当前页面不是“appIframeView”页面，则在1.5s后关闭动画
+        setTimeout(() => {
+          firstLoading.remove();
+        }, 1500);
+      }
+    }
     this.$store.dispatch("setting/changeTheme", { ...config });
     window.addEventListener("message",
       event => {
+        if (event.data?.type === "iframeLoaded") {
+          const firstLoading = document.querySelector("#first-loading");
+          if (firstLoading) {
+            setTimeout(() => {
+              firstLoading.remove();
+            }, 500);
+          }
+        }
         if (event.data?.type === "changeTheme") {
           this.$store.dispatch("setting/changeTheme", { mode: event.data.mode });
         }

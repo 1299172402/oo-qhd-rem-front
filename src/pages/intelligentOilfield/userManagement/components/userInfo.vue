@@ -266,24 +266,22 @@ export default {
       // 表单校验
       rules: {
         userName: [
-          { min: 2, max: 20, message: "用户账号长度必须介于 2 和 20 之间", trigger: "blur" }
+          { min: 2, max: 20, message: "用户账号长度必须介于 2 和 20 之间" }
         ],
         email: [
           {
             type: "email",
-            message: "'请输入正确的邮箱地址",
-            trigger: ["blur", "change"]
+            message: "'请输入正确的邮箱地址"
           }
         ],
         phonenumber: [
           {
             pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-            message: "请输入正确的手机号码",
-            trigger: "blur"
+            message: "请输入正确的手机号码"
           }
         ],
         idCard: [
-          //   { min: 8, max: 20, message: '用户密码长度必须介于 8 和 20 之间', trigger: 'blur' },
+          //   { min: 8, max: 20, message: '用户密码长度必须介于 8 和 20 之间'},
           {
             pattern:
               /^\d{6}((((((19|20)\d{2})(0[13-9]|1[012])(0[1-9]|[12]\d|30))|(((19|20)\d{2})(0[13578]|1[02])31)|((19|20)\d{2})02(0[1-9]|1\d|2[0-8])|((((19|20)([13579][26]|[2468][048]|0[48]))|(2000))0229))\d{3})|((((\d{2})(0[13-9]|1[012])(0[1-9]|[12]\d|30))|((\d{2})(0[13578]|1[02])31)|((\d{2})02(0[1-9]|1\d|2[0-8]))|(([13579][26]|[2468][048]|0[048])0229))\d{2}))(\d|X|x)$/,
@@ -293,9 +291,9 @@ export default {
       },
       // 岗位表单校验
       postRules: {
-        postName: [{ required: true, message: "请输入岗位名称", trigger: "blur" }],
-        postCode: [{ required: true, message: "请输入岗位编码", trigger: "blur" }],
-        postSort: [{ required: true, message: "请输入岗位顺序", trigger: "blur" }]
+        postName: [{ required: true, message: "请输入岗位名称" }],
+        postCode: [{ required: true, message: "请输入岗位编码" }],
+        postSort: [{ required: true, message: "请输入岗位顺序" }]
       }
     };
   },

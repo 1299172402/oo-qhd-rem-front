@@ -566,12 +566,12 @@ export default {
       },
       // 表单校验
       rules: {
-        roleName: [{ required: true, message: "请输入角色名称", trigger: "blur" }],
-        roleType: [{ required: true, message: "请选择角色类型", trigger: "blur" }],
-        roleKey: [{ required: true, message: "请输入权限字符", trigger: "blur" }],
-        roleSort: [{ required: true, message: "请输入角色顺序", trigger: "blur" }],
-        status: [{ required: true, message: "请选择角色状态", trigger: "change" }]
-        // isTenant: [{ required: true, message: '是否租户不能为空', trigger: 'change' }],
+        roleName: [{ required: true, message: "请输入角色名称" }],
+        roleType: [{ required: true, message: "请选择角色类型" }],
+        roleKey: [{ required: true, message: "请输入权限字符" }],
+        roleSort: [{ required: true, message: "请输入角色顺序" }],
+        status: [{ required: true, message: "请选择角色状态" }]
+        // isTenant: [{ required: true, message: '是否租户不能为空' }],
       },
       disabledHandle: false
     };

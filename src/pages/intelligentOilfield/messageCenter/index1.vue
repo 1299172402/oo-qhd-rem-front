@@ -81,6 +81,7 @@
             </div>
             <!-- Maritime_FPSO -  Clouds_IOT-->
             <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.runningStatus === '1'"
               linear-id="Maritime_FPSO_Clouds_IOT"
               :start-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
               :end-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
@@ -99,6 +100,7 @@
 
             <!-- Maritime_CEPJ -  Clouds_IOT-->
             <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT')?.runningStatus === '1'"
               linear-id="Maritime_CEPJ_Clouds_IOT"
               :start-color="findDataByLink('Maritime_CEPJ', 'Clouds_IOT')"
               :end-color="findDataByLink('Maritime_CEPJ', 'Clouds_IOT')"
@@ -116,6 +118,7 @@
             />
             <!-- Maritime_CEPI -  Clouds_IOT-->
             <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.runningStatus === '1'"
               linear-id="Maritime_CEPI_Clouds_IOT"
               :start-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
               :end-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
@@ -206,6 +209,7 @@
 
             <!-- BigData_Apps - Msg-->
             <line-svg
+              :is-flow="findDataByStartAndEnd('BigData_Apps', 'Msg')?.runningStatus === '1'"
               linear-id="BigData_Apps_Msg"
               :start-color="findDataByLink('BigData_Apps', 'Msg')"
               :end-color="findDataByLink('BigData_Apps', 'Msg')"
@@ -236,6 +240,7 @@
             </div>
             <!-- BigData_Apps - Alarm-->
             <line-svg
+              :is-flow="findDataByStartAndEnd('BigData_Apps', 'Alarm')?.runningStatus === '1'"
               linear-id="BigData_Apps_Alarm"
               :start-color="findDataByLink('BigData_Apps', 'Alarm')"
               :end-color="findDataByLink('BigData_Apps', 'Alarm')"
@@ -263,6 +268,7 @@
             </div>
             <!-- BigData_Aggs -  BigData_Apps-->
             <line-svg
+              :is-flow="findDataByStartAndEnd('BigData_Aggs', 'BigData_Apps')?.runningStatus === '1'"
               linear-id="BigData_Aggs_BigData_Apps"
               :start-color="findDataByLink('BigData_Aggs', 'BigData_Apps')"
               :end-color="findDataByLink('BigData_Aggs', 'BigData_Apps')"
@@ -292,6 +298,7 @@
             </div>
             <!-- BigData -  BigData_Aggs-->
             <line-svg
+              :is-flow="findDataByStartAndEnd('BigData', 'BigData_Aggs')?.runningStatus === '1'"
               linear-id="Queue_BigData"
               :start-color="findDataByLink('BigData', 'BigData_Aggs')"
               :end-color="findDataByLink('BigData', 'BigData_Aggs')"
@@ -325,6 +332,7 @@
             </div>
             <!-- Queue -  BigData-->
             <line-svg
+              :is-flow="findDataByStartAndEnd('Queue', 'BigData')?.runningStatus === '1'"
               linear-id="Queue_BigData"
               :start-color="findDataByLink('Queue', 'BigData')"
               :end-color="findDataByLink('Queue', 'BigData')"
@@ -369,6 +377,7 @@
             </div>
             <!-- Queue -  Kudu-->
             <line-svg
+              :is-flow="findDataByStartAndEnd('Queue', 'Kudu')?.runningStatus === '1'"
               linear-id="Queue_Kudu"
               :start-color="findDataByLink('Queue', 'Kudu')"
               :end-color="findDataByLink('Queue', 'Kudu')"
@@ -400,6 +409,7 @@
             </div>
             <!-- Clouds_IOT -  Queue-->
             <line-svg
+              :is-flow="findDataByStartAndEnd('Clouds_IOT', 'Queue')?.runningStatus === '1'"
               linear-id="Clouds_IOT_Queue"
               :start-color="findDataByLink('Clouds_IOT', 'Queue')"
               :end-color="findDataByLink('Clouds_IOT', 'Queue')"
@@ -433,6 +443,7 @@
             <!-- 一整条线 -->
             <!-- Maritime_FPSO -  Clouds_IOT-->
             <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.runningStatus === '1'"
               linear-id="Maritime_FPSO_Clouds_IOT1"
               :start-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
               :end-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
@@ -449,6 +460,7 @@
               @click-line="openPointsLink(findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl)"
             />
             <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.runningStatus === '1'"
               linear-id="Maritime_FPSO_Clouds_IOT2"
               :start-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
               :end-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
@@ -465,6 +477,7 @@
               @click-line="openPointsLink(findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl)"
             />
             <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.runningStatus === '1'"
               linear-id="Maritime_FPSO_Clouds_IOT3"
               :start-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
               :end-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
@@ -497,17 +510,19 @@
               <div class="g-w100" style="position: relative; margin-left: 72%; margin-top: 70px">
                 <!-- CEPJ -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('CEPJ')?.runningStatus === '0' && findDataByCode('CEPJ').allCount !== 0">
+                <div v-if="findDataByCode('CEPJ')?.runningStatus === '0'">
                   <div class="alarmPromptMessage" style="left: 95px; top: -10px">
                     !
                   </div>
-                  <svg
-                    style="background: transparent; width: 140px; height: 52px; position: absolute; left: 110px; top: -45px"
-                  >
-                    <polyline points="0,40 35,5 150,5" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-                  </svg>
-                  <div class="warnText" style="left: 122px; top: -65px; width: 125px;text-align: center;">
-                    系统故障：{{ findDataByCode('CEPJ').damageCount }}/{{ findDataByCode('CEPJ').allCount }}
+                  <div v-if="findDataByCode('CEPJ').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 110px; top: -45px"
+                    >
+                      <polyline points="0,40 35,5 150,5" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                    </svg>
+                    <div class="warnText" style="left: 122px; top: -65px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('CEPJ').damageCount }}/{{ findDataByCode('CEPJ').allCount }}
+                    </div>
                   </div>
                 </div>
                 <div
@@ -523,17 +538,19 @@
                 </div>
                 <!-- WHPA -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('WHPA')?.runningStatus === '0' && findDataByCode('WHPA').allCount !== 0">
+                <div v-if="findDataByCode('WHPA')?.runningStatus === '0'">
                   <div class="alarmPromptMessage" style="left: -180px; top: -80px">
                     !
                   </div>
-                  <svg
-                    style="background: transparent; width: 140px; height: 52px; position: absolute; left: -310px; top: -80px"
-                  >
-                    <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-                  </svg>
-                  <div class="warnText" style="left: -315px; top: -65px; width: 125px; text-align: center;">
-                    系统故障：{{ findDataByCode('WHPA').damageCount }}/{{ findDataByCode('WHPA').allCount }}
+                  <div v-if="findDataByCode('WHPA').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -310px; top: -80px"
+                    >
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                    </svg>
+                    <div class="warnText" style="left: -315px; top: -65px; width: 125px; text-align: center;">
+                      系统故障：{{ findDataByCode('WHPA').damageCount }}/{{ findDataByCode('WHPA').allCount }}
+                    </div>
                   </div>
                 </div>
                 <div
@@ -550,6 +567,7 @@
                     {{ findDataByCode("WHPA")?.terraceName }}
                   </span>
                   <line-svg
+                    :is-flow="findDataByCode('WHPA')?.runningStatus === '1'"
                     :linear-id="findDataByCode('WHPA')?.terraceCode"
                     :start-color="getDataStatus('WHPA', 'color')"
                     :end-color="getDataStatus('WHPA', 'color')"
@@ -566,17 +584,19 @@
                 </div>
                 <!-- WHPE -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('WHPE')?.runningStatus === '0' && findDataByCode('WHPE').allCount !== 0">
+                <div v-if="findDataByCode('WHPE')?.runningStatus === '0'">
                   <div class="alarmPromptMessage" style="left: -211px; top: 8px">
                     !
                   </div>
-                  <svg
-                    style="background: transparent; width: 140px; height: 52px; position: absolute; left: -349px; top: 16px"
-                  >
-                    <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-                  </svg>
-                  <div class="warnText" style="left: -359px; top: 32px; width: 125px;text-align: center;">
-                    系统故障：{{ findDataByCode('WHPE').damageCount }}/{{ findDataByCode('WHPE').allCount }}
+                  <div v-if="findDataByCode('WHPE').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -349px; top: 16px"
+                    >
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                    </svg>
+                    <div class="warnText" style="left: -359px; top: 32px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('WHPE').damageCount }}/{{ findDataByCode('WHPE').allCount }}
+                    </div>
                   </div>
                 </div>
                 <div
@@ -593,6 +613,7 @@
                     {{ findDataByCode("WHPE")?.terraceName }}
                   </span>
                   <line-svg
+                    :is-flow="findDataByCode('WHPE')?.runningStatus === '1'"
                     :linear-id="findDataByCode('WHPE')?.terraceCode"
                     :start-color="getDataStatus('WHPE', 'color')"
                     :end-color="getDataStatus('WHPE', 'color')"
@@ -609,17 +630,19 @@
                 </div>
                 <!-- WHPF -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('WHPF')?.runningStatus === '0' && findDataByCode('WHPF').allCount !== 0">
+                <div v-if="findDataByCode('WHPF')?.runningStatus === '0'">
                   <div class="alarmPromptMessage" style="left: 300px; top: 88px">
                     !
                   </div>
-                  <svg
-                    style="background: transparent; width: 140px; height: 52px; position: absolute; left: 310px; top: 100px"
-                  >
-                    <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-                  </svg>
-                  <div class="warnText" style="left: 332px; top: 117px; width: 125px;text-align: center;">
-                    系统故障：{{ findDataByCode('WHPF').damageCount }}/{{ findDataByCode('WHPF').allCount }}
+                  <div v-if="findDataByCode('WHPF').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 310px; top: 100px"
+                    >
+                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                    </svg>
+                    <div class="warnText" style="left: 332px; top: 117px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('WHPF').damageCount }}/{{ findDataByCode('WHPF').allCount }}
+                    </div>
                   </div>
                 </div>
                 <div
@@ -636,6 +659,7 @@
                     {{ findDataByCode("WHPF")?.terraceName }}
                   </span>
                   <line-svg
+                    :is-flow="findDataByCode('WHPF')?.runningStatus === '1'"
                     :linear-id="findDataByCode('WHPF')?.terraceCode"
                     :start-color="getDataStatus('WHPF', 'color')"
                     :end-color="getDataStatus('WHPF', 'color')"
@@ -652,17 +676,19 @@
                 </div>
                 <!-- CEPL -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('CEPL')?.runningStatus === '0' && findDataByCode('CEPL').allCount !== 0">
+                <div v-if="findDataByCode('CEPL')?.runningStatus === '0'">
                   <div class="alarmPromptMessage" style="left: -181px; top: 100px">
                     !
                   </div>
-                  <svg
-                    style="background: transparent; width: 140px; height: 52px; position: absolute; left: -314px; top: 106px"
-                  >
-                    <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-                  </svg>
-                  <div class="warnText" style="left: -329px; top: 124px; width: 125px;text-align: center;">
-                    系统故障：{{ findDataByCode('CEPL').damageCount }}/{{ findDataByCode('CEPL').allCount }}
+                  <div v-if="findDataByCode('CEPL').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -314px; top: 106px"
+                    >
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                    </svg>
+                    <div class="warnText" style="left: -329px; top: 124px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('CEPL').damageCount }}/{{ findDataByCode('CEPL').allCount }}
+                    </div>
                   </div>
                 </div>
                 <div
@@ -679,6 +705,7 @@
                     {{ findDataByCode("CEPL")?.terraceName }}
                   </span>
                   <line-svg
+                    :is-flow="findDataByCode('CEPL')?.runningStatus === '1'"
                     :linear-id="findDataByCode('CEPL')?.terraceCode"
                     :start-color="getDataStatus('CEPL', 'color')"
                     :end-color="getDataStatus('CEPL', 'color')"
@@ -695,17 +722,19 @@
                 </div>
                 <!-- EPP -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('EPP')?.runningStatus === '0' && findDataByCode('EPP').allCount !== 0">
+                <div v-if="findDataByCode('EPP')?.runningStatus === '0'">
                   <div class="alarmPromptMessage" style="left: 270px; top: 176px">
                     !
                   </div>
-                  <svg
-                    style="background: transparent; width: 140px; height: 52px; position: absolute; left: 275px; top: 183px"
-                  >
-                    <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-                  </svg>
-                  <div class="warnText" style="left: 299px; top: 200px; width: 125px;text-align: center;">
-                    系统故障：{{ findDataByCode('EPP').damageCount }}/{{ findDataByCode('EPP').allCount }}
+                  <div v-if="findDataByCode('EPP').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 275px; top: 183px"
+                    >
+                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                    </svg>
+                    <div class="warnText" style="left: 299px; top: 200px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('EPP').damageCount }}/{{ findDataByCode('EPP').allCount }}
+                    </div>
                   </div>
                 </div>
                 <div
@@ -722,6 +751,7 @@
                     {{ findDataByCode("EPP")?.terraceName }}
                   </span>
                   <line-svg
+                    :is-flow="findDataByCode('EPP')?.runningStatus === '1'"
                     :linear-id="findDataByCode('EPP')?.terraceCode"
                     :start-color="getDataStatus('EPP', 'color')"
                     :end-color="getDataStatus('EPP', 'color')"
@@ -754,6 +784,7 @@
             </div> -->
             <!-- 一整条线 -->
             <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT')?.runningStatus === '1'"
               linear-id="Maritime_CEPJ_Clouds_IOT1"
               :start-color="findDataByLink('Maritime_CEPJ', 'Clouds_IOT')"
               :end-color="findDataByLink('Maritime_CEPJ', 'Clouds_IOT')"
@@ -771,17 +802,19 @@
             />
             <!-- FPSO -->
             <!-- 带!号小报警 -->
-            <div v-if="findDataByCode('FPSO')?.runningStatus === '0' && findDataByCode('FPSO').allCount !== 0">
+            <div v-if="findDataByCode('FPSO')?.runningStatus === '0'">
               <div class="alarmPromptMessage" style="left: 588px; top: 262px">
                 !
               </div>
-              <svg
-                style="background: transparent; width: 140px; height: 52px; position: absolute; left: 450px; top: 235px"
-              >
-                <polyline points="150,40 105,5 0,5" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-              </svg>
-              <div class="warnText" style="left: 440px; top: 216px; width: 125px;text-align: center;">
-                系统故障：{{ findDataByCode('FPSO').damageCount }}/{{ findDataByCode('FPSO').allCount }}
+              <div v-if="findDataByCode('FPSO').allCount !== 0">
+                <svg
+                  style="background: transparent; width: 140px; height: 52px; position: absolute; left: 450px; top: 235px"
+                >
+                  <polyline points="150,40 105,5 0,5" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                </svg>
+                <div class="warnText" style="left: 440px; top: 216px; width: 125px;text-align: center;">
+                  系统故障：{{ findDataByCode('FPSO').damageCount }}/{{ findDataByCode('FPSO').allCount }}
+                </div>
               </div>
             </div>
             <div class="centerSystem g-w100 g-h100">
@@ -802,6 +835,7 @@
             <!-- Maritime_CEPI -  Clouds_IOT-->
             <!-- 一整条线 -->
             <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.runningStatus === '1'"
               linear-id="Maritime_CEPI_Clouds_IOT1"
               :start-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
               :end-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
@@ -819,6 +853,7 @@
             />
             <!-- 顶部线 -->
             <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.runningStatus === '1'"
               linear-id="Maritime_CEPI_Clouds_IOT2"
               :start-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
               :end-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
@@ -836,6 +871,7 @@
             />
             <!-- 右侧线 -->
             <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.runningStatus === '1'"
               linear-id="Maritime_CEPI_Clouds_IOT3"
               :start-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
               :end-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
@@ -869,22 +905,24 @@
             <!-- CEPI -->
             <!-- :style="{ height: isFullScreen ? '990px' : '530px' }" -->
             <!-- 带!号小报警 -->
-            <div v-if="findDataByCode('CEPI')?.runningStatus === '0' && findDataByCode('CEPI').allCount !== 0">
+            <div v-if="findDataByCode('CEPI')?.runningStatus === '0'">
               <div class="alarmPromptMessage" style="left: 1158px; top: 362px">
                 !
               </div>
-              <svg
-                style="width: 30px; height: 80px; position: absolute; left: 1153px; top: 372px"
-              >
-                <polyline points="15,0 15,80" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-              </svg>
-              <svg
-                style="width: 120px; height: 15px; position: absolute; left: 1168px; top: 449px"
-              >
-                <polyline points="0,3 120,3" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-              </svg>
-              <div class="warnText" style="left: 1168px; top: 430px; width: 125px;text-align: center;">
-                系统故障：{{ findDataByCode('CEPI').damageCount }}/{{ findDataByCode('CEPI').allCount }}
+              <div v-if="findDataByCode('CEPI').allCount !== 0">
+                <svg
+                  style="width: 30px; height: 80px; position: absolute; left: 1153px; top: 372px"
+                >
+                  <polyline points="15,0 15,80" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                </svg>
+                <svg
+                  style="width: 120px; height: 15px; position: absolute; left: 1168px; top: 449px"
+                >
+                  <polyline points="0,3 120,3" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                </svg>
+                <div class="warnText" style="left: 1168px; top: 430px; width: 125px;text-align: center;">
+                  系统故障：{{ findDataByCode('CEPI').damageCount }}/{{ findDataByCode('CEPI').allCount }}
+                </div>
               </div>
             </div>
             <div class="rightSystem g-w100 g-h100">
@@ -902,17 +940,19 @@
                 </div>
                 <!-- WHPH -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('WHPH')?.runningStatus === '0' && findDataByCode('WHPH').allCount !== 0">
+                <div v-if="findDataByCode('WHPH')?.runningStatus === '0'">
                   <div class="alarmPromptMessage" style="left: 270px; top: -85px">
                     !
                   </div>
-                  <svg
-                    style="background: transparent; width: 140px; height: 52px; position: absolute; left: 275px; top: -80px"
-                  >
-                    <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-                  </svg>
-                  <div class="warnText" style="left: 298px; top: -64px; width: 125px;text-align: center;">
-                    系统故障：{{ findDataByCode('WHPH').damageCount }}/{{ findDataByCode('WHPH').allCount }}
+                  <div v-if="findDataByCode('WHPH').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 275px; top: -80px"
+                    >
+                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                    </svg>
+                    <div class="warnText" style="left: 298px; top: -64px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('WHPH').damageCount }}/{{ findDataByCode('WHPH').allCount }}
+                    </div>
                   </div>
                 </div>
                 <div
@@ -929,6 +969,7 @@
                     {{ findDataByCode("WHPH")?.terraceName }}
                   </span>
                   <line-svg
+                    :is-flow="findDataByCode('WHPH')?.runningStatus === '1'"
                     :linear-id="findDataByCode('WHPH')?.terraceCode"
                     :start-color="getDataStatus('WHPH', 'color')"
                     :end-color="getDataStatus('WHPH', 'color')"
@@ -945,17 +986,19 @@
                 </div>
                 <!-- WHPB -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('WHPB')?.runningStatus === '0' && findDataByCode('WHPB').allCount !== 0">
+                <div v-if="findDataByCode('WHPB')?.runningStatus === '0'">
                   <div class="alarmPromptMessage" style="left: -181px; top: 100px">
                     !
                   </div>
-                  <svg
-                    style="background: transparent; width: 140px; height: 52px; position: absolute; left: -314px; top: 106px"
-                  >
-                    <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-                  </svg>
-                  <div class="warnText" style="left: -329px; top: 124px; width: 125px;text-align: center;">
-                    系统故障：{{ findDataByCode('WHPB').damageCount }}/{{ findDataByCode('WHPB').allCount }}
+                  <div v-if="findDataByCode('WHPB').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -314px; top: 106px"
+                    >
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                    </svg>
+                    <div class="warnText" style="left: -329px; top: 124px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('WHPB').damageCount }}/{{ findDataByCode('WHPB').allCount }}
+                    </div>
                   </div>
                 </div>
                 <div
@@ -972,6 +1015,7 @@
                     {{ findDataByCode("WHPB")?.terraceName }}
                   </span>
                   <line-svg
+                    :is-flow="findDataByCode('WHPB')?.runningStatus === '1'"
                     :linear-id="findDataByCode('WHPB')?.terraceCode"
                     :start-color="getDataStatus('WHPB', 'color')"
                     :end-color="getDataStatus('WHPB', 'color')"
@@ -988,17 +1032,19 @@
                 </div>
                 <!-- WHPC -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('WHPC')?.runningStatus === '0' && findDataByCode('WHPC').allCount !== 0">
+                <div v-if="findDataByCode('WHPC')?.runningStatus === '0'">
                   <div class="alarmPromptMessage" style="left: 300px; top: 8px">
                     !
                   </div>
-                  <svg
-                    style="background: transparent; width: 140px; height: 52px; position: absolute; left: 310px; top: 20px"
-                  >
-                    <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-                  </svg>
-                  <div class="warnText" style="left: 332px; top: 37px; width: 125px;text-align: center;">
-                    系统故障：{{ findDataByCode('WHPC').damageCount }}/{{ findDataByCode('WHPC').allCount }}
+                  <div v-if="findDataByCode('WHPC').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 310px; top: 20px"
+                    >
+                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                    </svg>
+                    <div class="warnText" style="left: 332px; top: 37px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('WHPC').damageCount }}/{{ findDataByCode('WHPC').allCount }}
+                    </div>
                   </div>
                 </div>
                 <div
@@ -1015,6 +1061,7 @@
                     findDataByCode("WHPC")?.terraceName
                   }}</span>
                   <line-svg
+                    :is-flow="findDataByCode('WHPC')?.runningStatus === '1'"
                     :linear-id="findDataByCode('WHPC')?.terraceCode"
                     :start-color="getDataStatus('WHPC', 'color')"
                     :end-color="getDataStatus('WHPC', 'color')"
@@ -1031,17 +1078,19 @@
                 </div>
                 <!-- CEPK -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('CEPK')?.runningStatus === '0' && findDataByCode('CEPK').allCount !== 0">
+                <div v-if="findDataByCode('CEPK')?.runningStatus === '0'">
                   <div class="alarmPromptMessage" style="left: -211px; top: 8px">
                     !
                   </div>
-                  <svg
-                    style="background: transparent; width: 140px; height: 52px; position: absolute; left: -349px; top: 16px"
-                  >
-                    <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-                  </svg>
-                  <div class="warnText" style="left: -359px; top: 32px; width: 125px;text-align: center;">
-                    系统故障：{{ findDataByCode('CEPK').damageCount }}/{{ findDataByCode('CEPK').allCount }}
+                  <div v-if="findDataByCode('CEPK').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -349px; top: 16px"
+                    >
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                    </svg>
+                    <div class="warnText" style="left: -359px; top: 32px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('CEPK').damageCount }}/{{ findDataByCode('CEPK').allCount }}
+                    </div>
                   </div>
                 </div>
                 <div
@@ -1058,6 +1107,7 @@
                     findDataByCode("CEPK")?.terraceName
                   }}</span>
                   <line-svg
+                    :is-flow="findDataByCode('CEPK')?.runningStatus === '1'"
                     :linear-id="findDataByCode('CEPK')?.terraceCode"
                     :start-color="getDataStatus('CEPK', 'color')"
                     :end-color="getDataStatus('CEPK', 'color')"
@@ -1074,17 +1124,19 @@
                 </div>
                 <!-- WHPD -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('WHPD')?.runningStatus === '0' && findDataByCode('WHPD').allCount !== 0">
+                <div v-if="findDataByCode('WHPD')?.runningStatus === '0'">
                   <div class="alarmPromptMessage" style="left: 270px; top: 100px">
                     !
                   </div>
-                  <svg
-                    style="background: transparent; width: 140px; height: 52px; position: absolute; left: 275px; top: 103px"
-                  >
-                    <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-                  </svg>
-                  <div class="warnText" style="left: 299px; top: 120px; width: 125px;text-align: center;">
-                    系统故障：{{ findDataByCode('WHPD').damageCount }}/{{ findDataByCode('WHPD').allCount }}
+                  <div v-if="findDataByCode('WHPD').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 275px; top: 103px"
+                    >
+                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                    </svg>
+                    <div class="warnText" style="left: 299px; top: 120px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('WHPD').damageCount }}/{{ findDataByCode('WHPD').allCount }}
+                    </div>
                   </div>
                 </div>
                 <div
@@ -1101,6 +1153,7 @@
                     findDataByCode("WHPD")?.terraceName
                   }}</span>
                   <line-svg
+                    :is-flow="findDataByCode('WHPD')?.runningStatus === '1'"
                     :linear-id="findDataByCode('WHPD')?.terraceCode"
                     :start-color="getDataStatus('WHPD', 'color')"
                     :end-color="getDataStatus('WHPD', 'color')"
@@ -1117,17 +1170,19 @@
                 </div>
                 <!-- WHPG -->
                 <!-- 带!号小报警 -->
-                <div v-if="findDataByCode('WHPG')?.runningStatus === '0' && findDataByCode('WHPG').allCount !== 0">
+                <div v-if="findDataByCode('WHPG')?.runningStatus === '0'">
                   <div class="alarmPromptMessage" style="left: -180px; top: -80px">
                     !
                   </div>
-                  <svg
-                    style="background: transparent; width: 140px; height: 52px; position: absolute; left: -310px; top: -80px"
-                  >
-                    <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-                  </svg>
-                  <div class="warnText" style="left: -315px; top: -65px; width: 125px; text-align: center;">
-                    系统故障：{{ findDataByCode('WHPG').damageCount }}/{{ findDataByCode('WHPG').allCount }}
+                  <div v-if="findDataByCode('WHPG').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -310px; top: -80px"
+                    >
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                    </svg>
+                    <div class="warnText" style="left: -315px; top: -65px; width: 125px; text-align: center;">
+                      系统故障：{{ findDataByCode('WHPG').damageCount }}/{{ findDataByCode('WHPG').allCount }}
+                    </div>
                   </div>
                 </div>
                 <div
@@ -1144,6 +1199,7 @@
                     {{ findDataByCode("WHPG")?.terraceName }}
                   </span>
                   <line-svg
+                    :is-flow="findDataByCode('WHPG')?.runningStatus === '1'"
                     :linear-id="findDataByCode('WHPG')?.terraceCode"
                     :start-color="getDataStatus('WHPG', 'color')"
                     :end-color="getDataStatus('WHPG', 'color')"
@@ -1175,6 +1231,7 @@ import { addTokenToUrl } from "@/utils/jumpSupApp.js";
 import dayjs from "dayjs";
 
 export default {
+  dicts: ["hailu_has_token", "hailu_link_url"],
   name: "Message",
   components: {
     lineSvg

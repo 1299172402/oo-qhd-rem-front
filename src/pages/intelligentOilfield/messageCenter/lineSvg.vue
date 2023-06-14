@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-lone-template -->
 <!-- svg线路网络图 -->
 <template>
   <div class="svg-border-view" :style="{left: positionLeft}" @click="clickLine">
@@ -13,20 +14,41 @@
           <stop offset="0%" :stop-color="startColor" />
           <stop offset="100%" :stop-color="endColor" />
         </linearGradient>
-        <polyline
-          :points="setPoints"
-          style="fill: transparent;"
-          :style="{stroke: $store.state.setting.mode === 'dark'? 'var(--opacity-blue-bg)' : 'rgba(0,96,166,0.3)', strokeWidth: divStrokeWidth}"
-        />
-        <polyline
-          :points="setPoints"
-          :style="{strokeWidth: ballStrokeWidth, stroke: `url(#${linearId})`}"
-          style="
+        <!-- 线路流动 -->
+        <template v-if="isFlow">
+          <polyline
+            :points="setPoints"
+            style="fill: transparent;"
+            :style="{stroke: $store.state.setting.mode === 'dark'? 'var(--opacity-blue-bg)' : 'rgba(0,96,166,0.3)', strokeWidth: divStrokeWidth}"
+          />
+          <polyline
+            :points="setPoints"
+            :style="{strokeWidth: ballStrokeWidth, stroke: `url(#${linearId})`}"
+            style="
             fill: transparent;
             stroke-dasharray: 0, 20;
             stroke-linecap: round;
           "
-        />
+          />
+        </template>
+        <!-- 线路不流动 -->
+        <template v-else>
+          <polyline
+            :points="setPoints"
+            style="fill: transparent;animation: dash 0s linear infinite;"
+            :style="{stroke: $store.state.setting.mode === 'dark'? 'var(--opacity-blue-bg)' : 'rgba(0,96,166,0.3)', strokeWidth: divStrokeWidth}"
+          />
+          <polyline
+            :points="setPoints"
+            :style="{strokeWidth: ballStrokeWidth, stroke: `url(#${linearId})`}"
+            style="
+            fill: transparent;
+            stroke-dasharray: 0, 20;
+            stroke-linecap: round;
+            animation: dash 0s linear infinite;
+          "
+          />
+        </template>
       </svg>
     </div>
   </div>
@@ -35,6 +57,11 @@
 <script>
 export default {
   props: {
+    // 线路是否流动，默认流动
+    isFlow: {
+      type: Boolean,
+      default: true
+    },
     // 线段唯一id，为了区分不同段的颜色
     linearId: {
       type: String,
