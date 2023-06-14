@@ -6,7 +6,7 @@
           header-title="分层注入量"
           :is-show-max-btn="true"
       >
-          <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>
+          <button class="detailLinkBtn" @click="linkroute('intelligenceDetail')">详细</button>
           <Echart :chart-data="option" width="100%" height="100%"></Echart>
       </info-window>
   </div>
@@ -93,6 +93,9 @@ export default {
       this.queryStratifiedInjectionDetails()
   },
   methods: {
+      linkroute(rname) {
+          this.$router.push({name: rname});
+      },
       //分层注采量
       queryStratifiedInjectionDetails() {
           let params = {
