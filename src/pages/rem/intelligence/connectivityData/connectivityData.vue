@@ -410,8 +410,8 @@ export default {
         },
         //重置
         reset() {
-            this.queryData.blockId = '6CD7342CA6DD418183A4B3BC38584F7C'
-            this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F',
+            this.queryData.blockId = "6CD7342CA6DD418183A4B3BC38584F7C",
+                this.queryData.ogfId = "3FC9A818F5BC43B88270DB80BBB3018F",
                 this.queryData.dateTime = this.eeee(),
                 this.tableOilfield();
         },
