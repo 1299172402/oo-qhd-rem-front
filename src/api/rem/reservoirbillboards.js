@@ -17,6 +17,9 @@ export function productionMetricsOverview({ date } = {}) {
   return request({
     url: `${baseUrl}/reservoirBillboards/productionMetricsOverview?date=${ date || "" }`,
     method: "get",
+    headers: {
+      showLoading: false
+    }
   });
 }
 export function queryCapacityComposition() {
@@ -29,6 +32,9 @@ export function queryMeasureEffectTrack({ evaluationDate, oilFieldId, platformId
   return request({
     url: `${baseUrl}/reservoirBillboards/queryMeasureEffectTrack?evaluationDate=${ evaluationDate || "" }&oilFieldId=${ oilFieldId || "" }&platformId=${ platformId || "" }&showNormal=${ showNormal || "" }&timeGranularityCode=${ timeGranularityCode || "" }`,
     method: "get",
+    headers: {
+      showLoading: false
+    }
   });
 }
 export function queryOilFieldIncident({ chronicleTypeCode, endTime, ogfId, platformId, startTime, wellId } = {}) {
