@@ -131,7 +131,7 @@ export default {
           label: "模型key",
           prop: "key",
           required: true,
-          rules: requiredLengthLE20,
+          rules: requiredLengthLE20("模型key"),
           tip: "flow_add_edit_model_key"
         },
         {
@@ -144,7 +144,7 @@ export default {
           prop: "appId",
           itemSlot: "appSelect",
           required: true,
-          rules: [{ required: true, message: "必填", trigger: ["change"] }],
+          rules: [{ required: true, message: "请选择应用", trigger: ["change"] }],
           options: []
         },
         {

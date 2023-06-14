@@ -104,7 +104,6 @@
       :url="userSelectUrl"
       label-prop="name"
       value-prop="id"
-      data-path="data.data"
       @submit="appointUser"
     />
     <candidate :id="candidateId" v-model="candidateVisible" :task-id="id" />

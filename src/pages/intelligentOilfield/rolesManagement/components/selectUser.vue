@@ -34,7 +34,15 @@
           :options="deptOptions"
           :show-count="true"
           placeholder="请选择所属机构"
-        />
+        >
+          <label
+            slot="option-label"
+            slot-scope="{ node, labelClassName }"
+            :class="labelClassName"
+            :title="node.label"
+          >{{ node.label }}
+          </label>
+        </treeselect>
       </el-form-item>
       <el-form-item>
         <el-button

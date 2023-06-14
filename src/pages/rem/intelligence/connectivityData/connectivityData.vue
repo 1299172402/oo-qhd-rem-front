@@ -280,7 +280,7 @@ export default {
         return {
             queryData: {
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
-                blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
+                blockId: 'YCFXDY8B643EDC9007F96F570600457D',
                 dateTime: this.eeee(),
             },
             //   new Date().format("yyyy-MM")
@@ -410,8 +410,8 @@ export default {
         },
         //重置
         reset() {
-            this.queryData.blockId = '6CD7342CA6DD418183A4B3BC38584F7C'
-            this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F',
+            this.queryData.blockId = "6CD7342CA6DD418183A4B3BC38584F7C",
+                this.queryData.ogfId = "3FC9A818F5BC43B88270DB80BBB3018F",
                 this.queryData.dateTime = this.eeee(),
                 this.tableOilfield();
         },
@@ -574,12 +574,12 @@ export default {
                     postCoefficientConnectionpreserve(params).then(bool => {
                         if (bool) {
                             this.modify = false
-                            getUnicomInjSplit({
-                                blockId: this.queryData.blockId,
-                                dateTime: this.queryData.dateTime,
-                            }).then((res) => {
-                                this.tableWater = res;
-                            });
+                            // getUnicomInjSplit({
+                            //     blockId: this.queryData.blockId,
+                            //     dateTime: this.queryData.dateTime,
+                            // }).then((res) => {
+                            //     this.tableWater = res;
+                            // }); --404接口
                             this.$message.success("保存成功")
                         } else {
                             this.$message.error("保存失败")

@@ -228,14 +228,14 @@
                                         </div>
                                     </div>  
                                     <div class="z-row-center">
-                                        <div class="numBtn" 
+                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                             v-for="(item,index) in trendOfIndicators" :key="index" 
                                             v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!trendOfIndicatorsSwitch"
                                             @click="((val)=>{selRadioIterm(item.code,'trendOfIndicators')})">
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
-                                        <div class="numBtn" 
+                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                             v-for="(item,index) in trendOfIndicators" :key="index" 
                                             v-if="item.name=='正常'&&trendOfIndicatorsSwitch"
                                             @click="((val)=>{selRadioIterm(item.code,'trendOfIndicators')})">
@@ -270,14 +270,14 @@
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" 
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                 v-for="(item,index) in injectionProductionBalance" :key="index" 
                                                 v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!injectionProductionBalanceSwitch"
                                                 @click="((val)=>{selRadioIterm(item.code,'injectionProductionBalance')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
-                                            <div class="numBtn"
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                 v-for="(item,index) in injectionProductionBalance" :key="index" 
                                                 v-if="item.name=='正常'&&injectionProductionBalanceSwitch"
                                                 @click="((val)=>{selRadioIterm(item.code,'injectionProductionBalance')})">
@@ -304,14 +304,14 @@
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" 
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                 v-for="(item,index) in injectionResponseAnalysis" :key="index" 
                                                 v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!injectionResponseAnalysisSwitch"
                                                 @click="((val)=>{selRadioIterm(item.code,'injectionResponseAnalysis')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
-                                            <div class="numBtn"
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                 v-for="(item,index) in injectionResponseAnalysis" :key="index" 
                                                 v-if="item.name=='正常'&&injectionResponseAnalysisSwitch"
                                                 @click="((val)=>{selRadioIterm(item.code,'injectionResponseAnalysis')})">
@@ -340,14 +340,14 @@
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
-                                            <div class="numBtn" 
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                 v-for="(item,index) in thePressureToKeep" :key="index" 
                                                 v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!thePressureToKeepSwitch"
                                                 @click="((val)=>{selRadioIterm(item.code,'thePressureToKeep')})">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
                                             </div>
-                                            <div class="numBtn"
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
                                                 v-for="(item,index) in thePressureToKeep" :key="index" 
                                                 v-if="item.name=='正常'&&thePressureToKeepSwitch"
                                                 @click="((val)=>{selRadioIterm(item.code,'thePressureToKeep')})">
@@ -487,6 +487,7 @@
                     yczb:0,
                 },
                 trendOfIndicatorsSwitch:false,//展示异常false, 正常 true
+                trendOfIndicatorsCode:'',//正常的code
                 //注水受效分析---zxb
                 injectionResponseAnalysis: [],
                 injectionResponseAnalysisNum:{
@@ -589,7 +590,7 @@
                 });
             },
             //进行数据查询处理
-            doSearch() {
+            async doSearch() {
                 this.selCode = '';
                 this.tableData = [];
                 //重新初始化相关数据项目
@@ -604,18 +605,19 @@
                     "fieldLayerId": "",
                     "path": "",
                 };
-                this.queryTrendOfIndicators(paramMap); //指标变化趋势
-                this.queryInjectionResponseAnalysis(paramMap); //注水受效分析
-                this.queryInjectionProductionBalance(paramMap); //注采平衡
-                this.queryThePressureToKeep(paramMap); //压力保持
-                this.queryRecommendedMeasures(paramMap); //措施推荐
-                this.queryProWellDynamicAnalysisDetail(paramMap); //措施井数据
+                await this.queryTrendOfIndicators(paramMap); //指标变化趋势
+                await this.queryInjectionResponseAnalysis(paramMap); //注水受效分析
+                await this.queryInjectionProductionBalance(paramMap); //注采平衡
+                await this.queryThePressureToKeep(paramMap); //压力保持
+                await this.queryRecommendedMeasures(paramMap); //措施推荐
+                await this.queryProWellDynamicAnalysisDetail(paramMap); //措施井数据
                 //触发初始选中  （测试没有使用，需要异步使用，还需要）
-                this.selRadioIterm(this.selCode, this.selTag);
+                this.selRadioIterm(this.trendOfIndicatorsCode,'trendOfIndicators');
+                // this.selRadioIterm(this.selCode, this.selTag);
             },
             //指标变化趋势---zxb
-            queryTrendOfIndicators(request) {
-                indicatorVariationTrendency(request).then((res) => {
+            async queryTrendOfIndicators(request) {
+                await indicatorVariationTrendency(request).then((res) => {
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
@@ -625,6 +627,7 @@
                         myData.forEach((el,i)=>{
                             this.trendOfIndicatorsNum.allnum+=Number(el.value);
                             if(el.name=='正常'){
+                                this.trendOfIndicatorsCode=el.code;
                                 this.trendOfIndicatorsNum.zcnum=Number(el.value);
                             }else{
                                 myData[i].isShow=Number(el.value)?true:false;
@@ -638,8 +641,8 @@
                 });
             },
             //注水受效分析---zxb
-            queryInjectionResponseAnalysis(request) {
-                injectionEffectivity(request).then((res) => {
+            async queryInjectionResponseAnalysis(request) {
+                await injectionEffectivity(request).then((res) => {
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
@@ -662,8 +665,8 @@
                 });
             },
             //注采平衡---zxb
-            queryInjectionProductionBalance(request) {
-                proInjectBalance(request).then((res) => {
+            async queryInjectionProductionBalance(request) {
+                await proInjectBalance(request).then((res) => {
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
@@ -686,8 +689,8 @@
                 });
             },
             //压力保持---zxb
-            queryThePressureToKeep(request) {
-                pressureMaintain(request).then((res) => {
+            async queryThePressureToKeep(request) {
+                await pressureMaintain(request).then((res) => {
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
@@ -710,8 +713,8 @@
                 });
             },
             //措施推荐可用项目
-            queryRecommendedMeasures(paramMap) {
-                wellGroupRecommendMeasure(paramMap).then((res) => {
+            async queryRecommendedMeasures(paramMap) {
+                await wellGroupRecommendMeasure(paramMap).then((res) => {
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
@@ -724,8 +727,8 @@
                 });
             },
             //措施推荐可用项目,获取措施效果数据
-            queryProWellDynamicAnalysisDetail(paramMap) {
-                wellGroupDynamicAnalysisDetail(paramMap).then((res) => {
+            async queryProWellDynamicAnalysisDetail(paramMap) {
+                await wellGroupDynamicAnalysisDetail(paramMap).then((res) => {
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.evaluationResults;
@@ -997,7 +1000,10 @@
                     this.trendOfIndicators[j].value = t_count; //登记条数
                     if (t_count > 0) {
                         let titleName = t_data.name;
-                        let unit=t_data.unit.replace('m3', 'm³');
+                        let unit='';
+                        if(t_data.unit){
+                            unit=t_data.unit.replace('m3', 'm³');
+                        }
                         this.trendOfIndicatorsTab.push({
                             code: t_data.code,
                             name: titleName,
@@ -1053,6 +1059,37 @@
                 this.$nextTick(() => {
                     this.$refs.tableList.doLayout();
                 })
+                
+                //zxb-重新计算数量
+                let numKeys=['trendOfIndicatorsNum','injectionProductionBalanceNum','injectionResponseAnalysisNum','thePressureToKeepNum'];
+                let datakeys=['trendOfIndicators','injectionProductionBalance','injectionResponseAnalysis','thePressureToKeep'];
+                for(let i=0;i<numKeys.length;i++){
+                    let numKey=numKeys[i];
+                    let dataKey=datakeys[i];
+                    this[numKey].allnum=0;
+                    this[numKey].zcnum=0;
+                    this[numKey].ycnum=0;
+                    this[dataKey].forEach((el,i)=>{
+                        console.log(this[dataKey][i].value,7777)
+                        console.log(Number(this[dataKey][i].value),999)
+                        this[numKey].allnum+=Number(this[dataKey][i].value);
+                        if(el.name=='正常'||el.name=='合格区'){
+                            this[numKey].zcnum=Number(this[dataKey][i].value);
+                        }else{
+                            this[numKey].ycnum+=Number(this[dataKey][i].value);
+                        }
+                    })
+                    this[numKey].zczb=this[numKey].zcnum/this[numKey].allnum * 100;
+                    this[numKey].yczb=this[numKey].yczb/this[numKey].allnum * 100;
+                    console.log('this[numKey]',this[numKey])
+                }
+                //zxb-重新计算推荐井组
+                this.potentialWellNum=0;
+                for(let i=0;i<this.recommendedMeasuresOptions.length;i++){
+                    let el=this.recommendedMeasuresOptions[i];
+                    this.potentialWellNum+=Number(el.value);
+                }
+                
             },
             //跳转到水井页面
             goWaterWell(val) {
@@ -1419,6 +1456,9 @@
                                         font-size: 12px;
                                     }
                                 }
+                                .numBtnBgActive{
+                                        background: var(--logo-bg) no-repeat top / contain, var(--primary-btn) !important;
+                                }
                             }
                         }
                     }
@@ -1601,6 +1641,9 @@
                                     .sp2{
                                         font-size: 12px;
                                     }
+                                }
+                                .numBtnBgActive{
+                                        background: var(--logo-bg) no-repeat top / contain, var(--primary-btn) !important;
                                 }
                             }
                         }

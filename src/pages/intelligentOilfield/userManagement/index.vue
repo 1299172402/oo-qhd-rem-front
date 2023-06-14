@@ -474,7 +474,7 @@
                   v-for="dict in dict.type.sys_user_account_type"
                   :key="dict.value"
                   :label="dict.label"
-                  :value="dict.label"
+                  :value="dict.value"
                 />
               </el-select>
             </el-form-item>
@@ -542,7 +542,16 @@
                 :options="deptOptions"
                 :show-count="true"
                 placeholder="请选择所属机构"
-              />
+                no-options-text="暂无数据"
+              >
+                <label
+                  slot="option-label"
+                  slot-scope="{ node, labelClassName }"
+                  :class="labelClassName"
+                  :title="node.label"
+                >{{ node.label }}
+                </label>
+              </treeselect>
             </el-form-item>
           </el-col>
           <el-col v-if="form.userId == undefined" :span="8">
@@ -592,12 +601,29 @@
           </el-select>
         </el-form-item>
         <el-form-item label="用户岗位">
-          <el-select
+          <!-- TODO: Maybe change back 岗位多选 -->
+          <!-- <el-select
             v-model="form.postIds"
             filterable
             :disabled="form.ehr === '0' ? false : keys.includes('postIds')"
             class="customSelect"
-            multiple
+            placeholder="请选择用户岗位"
+            clearable
+            @change="changePost"
+          >
+            <el-option
+              v-for="item in postOptions"
+              :key="item.postId"
+              :label="item.postName"
+              :value="item.postId"
+              :disabled="item.status == 1"
+            />
+          </el-select> -->
+          <el-select
+            v-model="form.tempPostId"
+            filterable
+            :disabled="form.ehr === '0' ? false : keys.includes('postIds')"
+            class="customSelect"
             placeholder="请选择用户岗位"
             clearable
             @change="changePost"
@@ -924,19 +950,19 @@ export default {
       ],
       // 岗位表单校验
       postRules: {
-        postName: [{ required: true, message: "岗位名称不能为空", trigger: "blur" }],
-        postCode: [{ required: true, message: "岗位编码不能为空", trigger: "blur" }],
-        postSort: [{ required: true, message: "岗位顺序不能为空", trigger: "blur" }]
+        postName: [{ required: true, message: "请输入岗位名称", trigger: "blur" }],
+        postCode: [{ required: true, message: "请输入岗位编码", trigger: "blur" }],
+        postSort: [{ required: true, message: "请输入岗位顺序", trigger: "blur" }]
       },
       // 表单校验
       rules: {
         userName: [
-          { required: true, message: "用户账号不能为空", trigger: "blur" },
+          { required: true, message: "请输入用户账号", trigger: "blur" },
           { min: 2, max: 20, message: "用户账号长度必须介于 2 和 20 之间", trigger: "blur" }
         ],
-        nickName: [{ required: true, message: "用户名称不能为空", trigger: "blur" }],
+        nickName: [{ required: true, message: "请输入用户名称", trigger: "blur" }],
         password: [
-          { required: true, message: "用户密码不能为空", trigger: "blur" },
+          { required: true, message: "请输入用户密码", trigger: "blur" },
           //   { min: 8, max: 20, message: '用户密码长度必须介于 8 和 20 之间', trigger: 'blur' },
           {
             pattern:
@@ -945,14 +971,14 @@ export default {
           }
         ],
         surePassword: [
-          { required: true, message: "确认密码不能为空", trigger: "blur" },
+          { required: true, message: "请输入确认密码", trigger: "blur" },
           { required: true, validator: equalToPassword, trigger: "blur" }
         ],
-        deptId: [{ required: true, message: "所属机构不能为空", trigger: "blur" }],
-        roleIds: [{ required: true, message: "用户角色不能为空", trigger: "blur" }],
-        userType: [{ required: true, message: "账号类型不能为空", trigger: "blur" }],
+        deptId: [{ required: true, message: "请选择所属机构", trigger: "blur" }],
+        roleIds: [{ required: true, message: "请选择用户角色", trigger: "blur" }],
+        userType: [{ required: true, message: "请选择账号类型", trigger: "blur" }],
         email: [
-          { required: true, message: "邮箱地址能为空", trigger: "blur" },
+          { required: true, message: "请输入账号邮箱", trigger: "blur" },
           {
             type: "email",
             message: "请输入正确的邮箱地址",
@@ -963,11 +989,11 @@ export default {
           {
             pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
             message: "请输入正确的手机号码",
-            trigger: "blur"
+            trigger: ["blur", "change"]
           }
         ],
         idCard: [
-          // { required: true, message: "身份证不能为空", trigger: "blur" },
+          // { required: true, message: "请输入身份证", trigger: "blur" },
           //   { min: 8, max: 20, message: '用户密码长度必须介于 8 和 20 之间', trigger: 'blur' },
           {
             pattern:
@@ -978,13 +1004,13 @@ export default {
       },
       // 密码校验
       pwdRules: {
-        initPwd: [{ required: true, message: "当前密码不能为空", trigger: "blur" }],
+        initPwd: [{ required: true, message: "请输入当前密码", trigger: "blur" }],
         updatePwd: [
-          { required: true, message: "修改密码不能为空", trigger: "blur" },
+          { required: true, message: "请输入修改密码", trigger: "blur" },
           { min: 12, max: 20, message: "密码长度必须介于 12 和 20 之间", trigger: "blur" }
         ],
         surePwd: [
-          { required: true, message: "确认密码不能为空", trigger: "blur" },
+          { required: true, message: "请输入确认密码", trigger: "blur" },
           { required: true, validator: equalToPassword, trigger: "blur" }
         ]
       },
@@ -1252,7 +1278,7 @@ export default {
         this.postOptions = response.data.posts;
         this.roleOptions = response.data.roles;
         this.form.postIds = response.data.postIds.length === 0 ? [] : response.data.postIds.toLocaleString().split(",");
-        // this.form.tempPostId = String(response.data.postIds.toLocaleString());
+        this.form.tempPostId = response.data.postIds.length === 0 ? "" : String(response.data.postIds.toLocaleString());
         this.form.roleIds = response.data.roleIds.length === 0 ? [] : response.data.roleIds.toLocaleString().split(",");
         this.open = true;
         this.title = "编辑用户";
@@ -1318,8 +1344,7 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      //   this.form.postIds = [];
-      //   this.form.postIds.push(this.form.tempPostId);
+      this.form.postIds = this.form.tempPostId ? this.form.tempPostId?.split(",") : [];
       this.queryParams.pageNum = 1;
       this.$refs.form.validate(valid => {
         if (valid) {

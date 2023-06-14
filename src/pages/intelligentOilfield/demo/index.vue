@@ -212,7 +212,15 @@
       :options="deptOptions"
       :show-count="true"
       placeholder="请选择"
-    />
+    >
+      <label
+        slot="option-label"
+        slot-scope="{ node, labelClassName }"
+        :class="labelClassName"
+        :title="node.label"
+      >{{ node.label }}
+      </label>
+    </treeselect>
     <div class="spaceMargin">
       2.7、下拉框-选中滑过高亮
     </div>
@@ -852,9 +860,11 @@
     <div class="spaceMargin">
       15.1、elementUI的tabs标签页【建议作为第一级标题】
     </div>
-    <el-tabs v-model="activeName" class="g-pageHeader">
-      <el-tab-pane label="用户管理" name="first" />
-      <el-tab-pane label="配置管理" name="second" />
+    <el-tabs v-model="activeName" class="g-pageHeader" style="width: 350px">
+      <el-tab-pane label="开发生产中心" name="1" />
+      <el-tab-pane label="安全管理中心" name="2" />
+      <el-tab-pane label="设备设施中心" name="3" />
+      <el-tab-pane label="通用技术中心" name="4" />
     </el-tabs>
     <div class="spaceMargin">
       15.2、自定义的tabs切换按钮（横向，可传值，可传背景色和border色系，可控制深浅色系颜色）
@@ -1720,7 +1730,7 @@ export default {
       date1: "",
       date2: "",
       val: "安全生产创效益，违规操作酿祸端",
-      activeName: "first",
+      activeName: "1",
       input: "",
       checkList: ["复选框 A"],
       activeTabIndex: 0,

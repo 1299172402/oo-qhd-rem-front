@@ -126,15 +126,14 @@
             <info-window headerTitle="含水上升率" v-if="currentIndex == 5" info-width="100%" info-height="500px" is-show-max-btn>
                 <div class="g-row-flex-V" style="justify-content: space-between; margin: 20px 0;">
                     <div class="g-row-flex-V" style="flex-wrap: wrap">
-                        <div style="margin-right: 20px">
-                            平台：
-                            <el-select v-model="queryParams.platFormId" style="width: 220px">
-                                <el-option v-for="item in platformList" :key="item.platFormId" :label="item.platName" :value="item.platFormId"></el-option>
-                            </el-select>
-                        </div>
-                        <div>
-                            <el-button type="primary" @click="doSearch">确定</el-button>
-                        </div>
+                        <span>油藏分析单元：</span>
+                        <el-select v-model="queryParams.fileId">
+                            <el-option v-for="item in blockList" :key="item.fieldId" :label="item.name" :value="item.fieldId">
+                            </el-option>
+                        </el-select>
+                        <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
+                            确定
+                        </el-button>
                     </div>
                 </div>
                 <Echart :chart-data="rateOfWaterCutRise" height="calc(100% - 75px)"></Echart>
@@ -142,15 +141,14 @@
             <info-window headerTitle="自然递减率" v-if="currentIndex == 9" info-width="100%" info-height="500px" is-show-max-btn>
                 <div class="g-row-flex-V" style="justify-content: space-between; margin: 20px 0;">
                     <div class="g-row-flex-V" style="flex-wrap: wrap">
-                        <div style="margin-right: 20px">
-                            平台：
-                            <el-select v-model="queryParams.platFormId" style="width: 220px">
-                                <el-option v-for="item in platformList" :key="item.platFormId" :label="item.platName" :value="item.platFormId"></el-option>
-                            </el-select>
-                        </div>
-                        <div>
-                            <el-button type="primary" @click="doSearch">确定</el-button>
-                        </div>
+                        <span>油藏分析单元：</span>
+                        <el-select v-model="queryParams.fileId">
+                            <el-option v-for="item in blockList" :key="item.fieldId" :label="item.name" :value="item.fieldId">
+                            </el-option>
+                        </el-select>
+                        <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
+                            确定
+                        </el-button>
                     </div>
                 </div>
                 <Echart :chart-data="naturalDeclineRate" height="calc(100% - 75px)"></Echart>
@@ -303,6 +301,8 @@
                         label: "WHPH",
                     },
                 ],
+                //区块下拉数据
+                blockList:[],
                 //开发阶段列表
                 developmentPhaseList: [
                     {
@@ -685,6 +685,7 @@
                 //对标油田默认qhd3-26油田
                 this.queryParams.targetOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
                 this.getFetchPlatforms();
+                this.getFetchFields();
                 //下面初始化调用各个接口 因为默认的全部平台和全部区块为 油田id 所以这样的区块平台默认写为油田id
                 this.doInjectionIndicatorStat();
                 this.doInjectionYear();
@@ -728,6 +729,15 @@
                         this.queryParams.platFormId = res.data.data.platform[0].platFormId;
                     }
                 });
+            },
+            //获得区块类型
+            getFetchFields() {
+                fetchFields(this.queryParams).then((res) => {
+                    if (res.data.code == 200) {
+                        this.blockList = res.data.data.fields;
+                        this.queryParams.fileId = res.data.data.fields[0].fieldId;
+                    }
+                })
             },
             //查询
             doSearch() {

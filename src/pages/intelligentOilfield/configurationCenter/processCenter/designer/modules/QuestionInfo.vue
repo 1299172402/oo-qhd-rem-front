@@ -1,6 +1,6 @@
 <template>
   <span class="question-info">
-    <el-tooltip effect="dark" placement="right">
+    <el-tooltip popper-class="tooltip-width-auto" effect="dark" placement="right">
       <i class="cursor--pointer el-icon-question" />
       <div
         slot="content"

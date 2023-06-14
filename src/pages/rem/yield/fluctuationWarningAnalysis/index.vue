@@ -550,8 +550,10 @@
                             show: false,
                         },
                         axisLine: {
+                            show: true,
+                            onZero: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                     },
@@ -563,6 +565,7 @@
                             lineHeight: 40,
                         },
                         type: "value",
+                        // scale: true,
                         axisLabel: {
                             color: "#8FA4CC",
                             fontSize: 14,
@@ -571,15 +574,15 @@
                             show: false,
                         },
                         axisLine: {
-                            show: false,
+                            show: true,
                             lineStyle: {
-                                color: "rgba(151,151,151,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                         splitLine: {
-                            show: true,
+                            show: false,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)",
+                                color: "#8FA4CC",
                             },
                         },
                     },
@@ -588,10 +591,24 @@
                         label: {
                             show: true,
                         },
+                        markLine:{
+                            lineStyle: {
+                                type: "solid",
+                                color: "#8FA4CC",
+                            },
+                            symbol: "none",
+                            animation: false,
+                            silent: true,
+                            data: [{
+                                yAxis: 0,
+                                name: "",
+                                label: {
+                                    show: false,
+                                },
+                            }, ],
+                        },
                         barWidth: 22,
-                        data: [
-
-                        ],
+                        data: [],
                     },
                 },
                 //异常数据信息

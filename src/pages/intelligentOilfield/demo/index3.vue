@@ -10,7 +10,7 @@
           <el-input v-model="input" placeholder="请输入角色名称" />
         </el-form-item>
         <el-form-item label="状态" prop="title">
-          <el-select v-model="value" placeholder="请选择" clearable>
+          <el-select v-model="value" placeholder="请选择状态" clearable>
             <el-option
               v-for="item in options"
               :key="item.value"

@@ -342,8 +342,6 @@ const actions = {
       commit("setUserInfo", {
         roles: []
       });
-
-    //   }
     });
   },
   exchangeTenant({ commit }, info) {

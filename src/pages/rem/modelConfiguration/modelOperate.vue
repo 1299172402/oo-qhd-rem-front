@@ -81,6 +81,7 @@
                     blockId:'',
                     blockName:'',
                     wellType:'',
+                    wellTypeName:'',
                     wellId :'',
                     wellName:'',
                 },
@@ -180,8 +181,17 @@
                 for(let i=0;i<this.wellSelectList.length;i++){
                     if(this.searchForm.wellId==this.wellSelectList[i].id){
                         this.searchForm.wellName=this.wellSelectList[i].label;
+                        break;
                     }
                 }
+                getWell({wellId:this.searchForm.wellId}).then(res=>{
+                    if(res.data.code==200){
+                        let data=res.data.data;
+                        this.searchForm.blockId=data.blockId;
+                        this.searchForm.wellType=data.wellType;
+                        console.log('this.searchForm',this.searchForm)
+                    }
+                })
             },
             //获取所有的模型名称
             getAllModelName() {
@@ -209,20 +219,28 @@
                 }
             },
             //获取大分页接口
-            getPageBySelectTypeApi(){
-                getPageBySelectType({selectType:this.selectType,...this.searchForm,size:this.page.pageSize,current:this.page.currentPage}).then(res=>{
-                    if(res.data.code==200){
-                        this.tableList=res.data.data.records;
-                        this.page.total=res.data.data.total;
-                        this.$nextTick(()=>{
-                            this.tableList.forEach((el,i)=>{
-                                this.$refs['tableComponents'+i][0].queryTableDate(el);
-                            })
-                        })
-                    }else{
-                        this.tableList=[];
+            async getPageBySelectTypeApi(){
+                try{
+                    let selectType=this.selectType.includes('按')?this.selectType.substring(1):this.selectType;
+                    await getPageBySelectType({selectType,...this.searchForm,size:this.page.pageSize,current:this.page.currentPage}).then(res=>{
+                        if(res.data.code==200){
+                            this.tableList=res.data.data.records;
+                            this.page.total=res.data.data.total;
+                        }else{
+                            this.tableList=[];
+                        }
+                    })
+                    console.log('大分页接口请求完毕');
+                    await this.$nextTick();
+                    for(let i=0;i<this.tableList.length;i++){
+                        let el=this.tableList[i];
+                        let searchForm={...el,selectType};
+                        await this.$refs['tableComponents'+i][0].queryTableDate(searchForm);
+                        console.log(`列表${i}接口请求完毕`)
                     }
-                })
+                } catch(err){
+                    console.log(err);
+                }
             },
             //切换分页
             pagination(e) {
@@ -231,7 +249,7 @@
                 this.getPageBySelectTypeApi();
             },
             //新增
-            addTable(){
+            async addTable(){
                 if(this.selectType=='按区块配置'){
                     if(!this.searchForm.blockId){
                         this.$message.warning('请选择区块！');
@@ -257,20 +275,39 @@
                         return false;
                     }
                 }
-                this.tableList.unshift({
-                    ogfId: this.searchForm.ogfId,
-                    ogfName: this.searchForm.ogfName,
-                    blockId:this.searchForm.blockId,
-                    blockName:this.searchForm.blockName,
-                    wellType:this.searchForm.wellType,
-                    wellTypeName:this.searchForm.wellTypeName,
-                    wellId: this.searchForm.wellId,
-                    wellName: this.searchForm.wellName
-                })
+                console.log('开始请求大分页接口');
+                await this.getPageBySelectTypeApi();
+                console.log(2)
+                let selectType=this.selectType.includes('按')?this.selectType.substring(1):this.selectType;
                 this.$nextTick(()=>{
-                    this.tableList.forEach((el,i)=>{
-                        this.$refs['tableComponents'+i][0].queryTableDate(el);
-                    })
+                    let isExist=false;//新增数据时，是否存在该分类，默认不存在。
+                    if(this.tableList.length){
+                        let el=this.tableList[0];
+                        if(this.selectType=='按区块配置'&&this.searchForm.blockId==el.blockId){
+                            isExist=true;
+                        }else if(this.selectType=='按井型配置'&&this.searchForm.blockId==el.blockId&&this.searchForm.wellType==el.wellType){
+                            isExist=true;
+                        }else if(this.selectType=='按井配置'&&this.searchForm.blockId==el.blockId&&this.searchForm.wellType==el.wellType&&this.searchForm.wellId==el.wellId){
+                            isExist=true;
+                        }
+                    }
+                    if(isExist){
+                        this.$refs['tableComponents0'][0].addTableRow();
+                    }else{
+                        this.tableList.unshift({
+                            ogfId: this.searchForm.ogfId,
+                            ogfName: this.searchForm.ogfName,
+                            blockId:this.searchForm.blockId,
+                            blockName:this.searchForm.blockName,
+                            wellType:this.searchForm.wellType,
+                            wellTypeName:this.searchForm.wellTypeName,
+                            wellId: this.searchForm.wellId,
+                            wellName: this.searchForm.wellName
+                        })
+                        this.$nextTick(()=>{
+                            this.$refs['tableComponents0'][0].addTableRow(); 
+                        })
+                    }
                 })
             }
         },

@@ -68,9 +68,9 @@ export default {
       },
       // 表单校验
       rules: {
-        oldPassword: [{ required: true, message: "旧密码不能为空", trigger: "blur" }],
+        oldPassword: [{ required: true, message: "请输入旧密码", trigger: "blur" }],
         newPassword: [
-          { required: true, message: "新密码不能为空", trigger: "blur" },
+          { required: true, message: "请输入新密码", trigger: "blur" },
           //   { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
           {
             pattern:
@@ -79,7 +79,7 @@ export default {
           }
         ],
         confirmPassword: [
-          { required: true, message: "确认密码不能为空", trigger: "blur" },
+          { required: true, message: "请输入确认密码", trigger: "blur" },
           { required: true, validator: equalToPassword, trigger: "blur" }
         ]
       }

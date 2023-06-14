@@ -183,6 +183,7 @@ const columns = [
 ];
 export default {
   name: "MessageLog",
+  dicts: ["sys_message_type"],
   components: {
     MailView,
     SmsView,
@@ -197,6 +198,7 @@ export default {
       showSearch: true,
       // 查询参数
       total: 0,
+      messageTypelabel: {},
       queryParams: {
         pageNo: 1,
         pageSize: 10
@@ -210,6 +212,11 @@ export default {
       this.queryParams.sentTimeStart = this.dataTimeRange && this.dataTimeRange[0];
       this.queryParams.sentTimeEnd = this.dataTimeRange && this.dataTimeRange[1];
     }
+  },
+  created() {
+    this.$on("dictReady", () => {
+      this.messageTypelabel = this.dict.label.sys_message_type;
+    });
   },
   mounted() {
     this.getList();
@@ -247,15 +254,7 @@ export default {
       let re = get(row, prop);
       switch (prop) {
         case "messageType":
-          switch (re) {
-            case "MAIL": re = "邮件"; break;
-            case "SMS": re = "短信"; break;
-            case "PUSH": re = "移动云推送"; break;
-            case "LETTER": re = "站内信"; break;
-            case "EQUIPMENT": re = "设备状态"; break;
-            case "FORWARDING": re = "服务转发"; break;
-            default: break;
-          }
+          re = this.messageTypelabel[re] || re || "";
           break;
         case "sentTime":
           re = re || "-"; break;

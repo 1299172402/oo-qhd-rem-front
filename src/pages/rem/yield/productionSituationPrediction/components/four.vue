@@ -1,4 +1,4 @@
-<!--日度措施配产-->
+<!--单井产量预测-->
 <template>
     <div class="z-main" style="height:100%;">
         <div style="display: flex;align-items: center;margin-bottom:15px;">   
@@ -20,10 +20,13 @@
                 </el-option>
             </el-select>
             <el-button type="primary" icon="el-icon-search" @click="searchDataFromServer">搜索</el-button>
+            <el-button class="commonBtn" icon="el-icon-refresh" style="margin-left:15px!important;margin-right:auto;" @click="resetting">重置</el-button>
+        </div>
+        <div style="height:50px;display: flex;align-items: center;">
             <el-button type="primary" icon="el-icon-add" @click="save">保存</el-button>
             <el-button type="primary" @click="showAddDialog">添加</el-button>
         </div>
-        <el-table :data="tableData" height="calc(100% - 58px)">
+        <el-table :data="tableData" height="calc(100% - 58px - 50px)">
             <el-table-column type="index" width="50"></el-table-column>
             <el-table-column align="left" label="当前作业井名" prop="wellNo" width="150"></el-table-column>
             <el-table-column align="center" label="当前作业措施" prop="measureTypeName" width="150"></el-table-column>
@@ -32,7 +35,7 @@
                 <template slot-scope="scope">
                     <el-date-picker v-model="scope.row.measureSeffectDate" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd"></el-date-picker>
                 </template>
-            </el-table-column>DAILY_ALLOCATING_BASE
+            </el-table-column>
             <el-table-column align="center" label="日增油/日产油" prop="" width="160">
                 <template slot-scope="scope">
                     <el-input-number v-model="scope.row.dailyAllocatingBase" :precision=4 size="medium" style="width:150px;" controls-position="right"></el-input-number>
@@ -106,6 +109,13 @@
             this.init();
         },
         methods: {
+            //重置
+            resetting(){
+            	this.$nextTick(()=>{
+            		Object.assign(this.$data, this.$options.data());
+            		this.init();
+            	})
+            },
             async init() {
                 await this.searchCompanyList();
                 await this.changeOGFList(); 
@@ -128,7 +138,7 @@
                 this.conditions.ogfId = '';
                 this.conditions.platformId = '';
                 // 加载新数据
-                fetchALLOilFields(this.conditions.companyId).then((res) => {
+                await fetchALLOilFields(this.conditions.companyId).then((res) => {
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.oilFields;

@@ -102,7 +102,7 @@
                             >保存
                             </el-button>
                         </div>
-                        <el-form ref="form" :rules="rules" label-width="100px" :model="form">
+                        <el-form ref="form" :rules="rules" label-width="100px" style="height: calc(100% - 50px)" :model="form">
                             <el-table
                                 :data="form.tableData2"
                                 id="indexscv"
@@ -217,7 +217,7 @@ import {
     getWellMonthAllocation,
     getWellMonthInj,
     getChatPlanINjAlloc,
-    wellAvgFluidProdAllocUpdate
+    wellAvgFluidProdAllocUpdate, wellAvgFluidProdAllocUpdateNew
 } from "@/api/rem/r-intelligentIPA.js";
 import Iframe from '@/components/rem/tools/iframe.vue'
 
@@ -367,7 +367,6 @@ export default {
         },
         // 保存
         handleSubmit(form) {
-
             this.$refs[form].validate((valid) => {
                 if (valid) {
                     this.saveLoad = true

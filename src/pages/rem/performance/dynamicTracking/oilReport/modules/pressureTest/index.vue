@@ -3,18 +3,17 @@
   <div class="app-container">
     <pagePanel headerTitle="压力数据">
       <el-table
-        id="tableData"
         :data="tableData"
         :border="false"
         :row-style="{ height: '0px' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '6px', 'text-align': 'center' }"
-        style="width: 100%; padding: 20px 0; height: 500px"
+        style="width: 100%;  height: 500px"
         :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       >
-        <el-table-column type="index" label="序号" align="center"> </el-table-column>
-        <el-table-column prop="borepipeName" label="井管" align="center" width="140px"> </el-table-column>
+        <el-table-column type="index" label="序号" fixed align="center"> </el-table-column>
+        <el-table-column prop="borepipeName" fixed label="井管" align="center" width="140px"> </el-table-column>
         <el-table-column prop="wellInterceptType" label="试井项目解析类型" min-width="140" align="center">
         </el-table-column>
         <el-table-column prop="interpDate" label="解释时间" align="center" width="140">
@@ -194,5 +193,8 @@ export default {
 }
 ::v-deep .el-table__body-wrapper {
   height: calc(100% - 70px) !important;
+}
+::v-deep .el-table__fixed-header-wrapper .cell{
+   height: auto !important;
 }
 </style>

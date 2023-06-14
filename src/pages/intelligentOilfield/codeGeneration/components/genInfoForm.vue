@@ -79,7 +79,15 @@
             :normalizer="normalizer"
             :show-count="true"
             placeholder="请选择系统菜单"
-          />
+          >
+            <label
+              slot="option-label"
+              slot-scope="{ node, labelClassName }"
+              :class="labelClassName"
+              :title="node.label"
+            >{{ node.label }}
+            </label>
+          </treeselect>
         </el-form-item>
       </el-col>
 

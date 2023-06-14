@@ -390,8 +390,8 @@ export function getwaterWellAndLayerData (params) {
         method: "get",
         params
     }).then((res) => {
-        if (res.data.data) {
-            return res.data.data;
+        if (res.data) {
+            return res.data;
         } else {
             return [];
         }
@@ -409,8 +409,8 @@ export function getlayerListByWaterWellId (params) {
         method: "get",
         params
     }).then((res) => {
-        if (res.data.data) {
-            return res.data.data;
+        if (res.data) {
+            return res.data;
         } else {
             return [];
         }

@@ -23,10 +23,23 @@
         <pagePanelNew :style="{ height: currentModule == 'waterReport' ? 'auto' : 'calc(100% - 100px)' }" class="g-w100">
             
             <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
-                <el-upload ref="upload" style="margin-left: auto" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess">
-                    <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
-                </el-upload>
-                <el-button style="margin-left: 15px" type="primary" icon="el-icon-download" @click="doDownLoad">下载</el-button>
+                <div v-if="currentModule != 'tracer'">
+                    <el-button
+                        type="primary"
+                        icon="el-icon-upload2"
+                        @click="ljpmUploadDialog"
+                        style="margin-left: auto !important"
+                        v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' "
+                    >上传文档</el-button
+                    >
+                    <el-upload v-else ref="upload" style="margin-left: auto" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess">
+                        <el-button type="primary" icon="el-icon-upload2">上传文档</el-button>
+                    </el-upload>
+                </div>
+                
+                
+                <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' " @click="doDownLoadNew">下载</el-button>
+                <el-button style="margin-left: 15px" type="primary" icon="el-icon-download" v-else @click="doDownLoad">下载</el-button>
             </div>
             
             <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
@@ -48,16 +61,61 @@
                 <component :is="component" ref="componentCustom" :oil-feild-id="selectOilField" :platform="selectPlatform" :well-id="selectWellId" @childPara="changeChildParam"></component>
             </keep-alive>
         </pagePanelNew>
+        <el-dialog
+            custom-class="border"
+            title="上传文档"
+            :visible.sync="ljpmDialog"
+            width="20%"
+            :before-close="ljpmDialogClose"
+        >
+            <el-row>
+                <el-form ref="form" :model="ljUploadForm" label-width="40px">
+                        <el-form-item label="" style="width: 88px">
+                            <file-upload
+                                v-model="imageurl"
+                                style="width: 250px"
+                                :limit="1"
+                                :fileSize="20"
+                                :is-show-tip="false"
+                                biz-path="rem-front/text"
+                                bucket-name="zhy"
+                                :file-type="['pdf']"
+                                @change="getResData"
+                            />
+                        </el-form-item>
+                </el-form>
+            </el-row>
+
+            <div slot="footer" class="dialog-footer" style="text-align: center">
+        <el-button @click="ljpmDialogClose">关 闭</el-button>
+<!--        <el-button type="primary" @click="ljpmUploadSave">确 定</el-button>-->
+      </div>
+        </el-dialog>
     </div>
 </template>
     
 <script>
     import { fetchOilFields,fetchPlatforms,fetchInjectionWells,fetchInjectionWellsByPlatform,uploadFile } from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import { getMajorEventsBriefly } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
+    import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
+    import {addRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {downFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         name: "WaterAuxiliaryAnalysis",
+        components: {FileUpload},
         data() {
             return {
+                imageurl:'',
+                props: {
+                    key: "wellId",
+                    label: "wellName",
+                },
+                ljpmWellData: [],
+                ljUploadForm: {
+                    direction: "横向",
+                    chooseWell: [],
+                },
                 majorEventsBrieflyValue: "", //大事间要绑定值
                 majorEventsBrieflyList: [], //大事间要数据源
                 //连井剖面是否选中
@@ -330,8 +388,106 @@
         },
         mounted() {
             this.initData();
+            this.doSearch()
         },
         methods: {
+            doDownLoadNew(){
+                const id = this.$refs.componentCustom.id
+                let fileName = this.$refs.componentCustom.fileName
+                downFile(id).then((res) => {
+                    FileSaver.saveAs(res,`${fileName}`);
+                });
+            },
+            uploadFile(params){
+                addRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        this.$message.success("文件上传成功!");
+                        this.ljpmDialog = false;
+                        this.doSearch()
+                        this.imageurl = ''; // 清空已选择的文件
+                        this.$refs.form.resetFields(); 
+                    }else {
+                        this.$message.error("文件上传失败!");
+                        this.ljpmDialog = false;
+                        this.doSearch()
+                        this.imageurl = ''; // 清空已选择的文件
+                        this.$refs.form.resetFields();
+                    }
+                });  
+            },
+            getResData(data){
+                console.log(data)
+                if (this.currentModule =='drillingReport'){
+                    //SJZWJBG为水井钻完井报告
+                    //打开弹窗
+                    let params1 = {
+                        fileId: data[0].id,
+                        filestrId:data[0].name,
+                        operationId:this.selectWellId,
+                        operationType:'SJZWJBG',
+                        remUploadFileMinioId:'' ,
+                        uploadTime:''
+                    };
+                    this.uploadFile(params1)
+                    console.log('111111111',params1)
+                }else if(this.currentModule =='completionReport'){
+                    //SJWJWGBG为水井完井完工报告
+                    let params2 = {
+                        fileId: data[0].id,
+                        filestrId:data[0].name,
+                        operationId:this.selectWellId,
+                        operationType:'SJWJWGBG',
+                        remUploadFileMinioId:'' ,
+                        uploadTime:''
+                    }
+                    this.uploadFile(params2)
+                    console.log('2222222',params)
+                }else if(this.currentModule =='geologicalSummary'){
+                    let params3 = {
+                        //SJWJDZZJ为水井完井地质总结
+                        fileId: data[0].id,
+                        filestrId:data[0].name,
+                        operationId:this.selectWellId,
+                        operationType:'SJWJDZZJ',
+                        remUploadFileMinioId:'' ,
+                        uploadTime:''
+                    }
+                    this.uploadFile(params3)
+                    console.log('333333',params)
+                }
+            },
+            ljpmUploadSave() {
+                var fileType = this.$refs.ljpmUpload.fileList[0].raw.type;
+                if (this.isCorrectFileType(fileType)) {
+                    return true;
+                }
+                this.$refs.ljpmUpload.submit();
+            },
+            filterMethod(query, item) {
+                return item.wellName.indexOf(query) > -1;
+            },
+            ljpmDialogClose() {
+                this.ljUploadForm = {
+                    direction: "横向",
+                    chooseWell: [],
+                };
+                this.ljpmFileList = [];
+                this.ljpmDialog = false;
+            },
+            ljpmUploadDialog() {
+                if (this.currentModule =='drillingReport'){
+                    this.ljpmDialog = true;
+                    console.log('111111111')
+                }else if(this.currentModule =='completionReport'){
+                    //打开弹窗
+                    this.ljpmDialog = true;
+                    console.log('2222222')
+                }else if(this.currentModule =='geologicalSummary'){
+                    //打开弹窗
+                    this.ljpmDialog = true;
+                    console.log('333333')
+                }
+            },
             resetting(){
                 let activeName=this.activeName;
                 let currentModule=this.currentModule;
@@ -364,12 +520,12 @@
             //点击二级菜单
             tabsClick(module){
                 if(module.name=='stratificationTesting'){//分层调配
-                    let url=`https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/waterRunningControl?selectOilField=${this.selectOilField}&selectPlatform=${this.selectPlatform}&selectWellId=${this.selectWellId}&link=rem`;
+                    let url=`https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge`;
                     window.open(url,'_blank');
                 }
                 else if (module.name == "injectivityIndex") {
-                    window.open("https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/waterRunningControl?link=rem", "_blank");
-                } else{
+                    window.open("https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge", "_blank");
+                }else{
                     this.currentModule = module.name;
                 }
             },

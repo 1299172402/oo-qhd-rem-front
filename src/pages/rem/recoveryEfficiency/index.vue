@@ -171,7 +171,7 @@
                     </div>
                     <el-row style="height:100%" :gutter="20">
                         <el-col :span="14" style="height:100%">
-                            <info-window style="margin-top:0;" infoWidth="100%" infoHeight="340px" headerTitle="" isShowMaxBtn>
+                            <info-window style="margin-top:0;" infoWidth="100%" infoHeight="340px" headerTitle="水驱特征曲线法" isShowMaxBtn>
                                 <div style="height:100%" v-if="radio1=='图表'">
                                     <Echart :chart-data="option" height="100%"></Echart>
                                 </div>

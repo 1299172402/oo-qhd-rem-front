@@ -51,7 +51,7 @@ export default {
       tenantId: "",
       items: [
         {
-          label: "租户id：",
+          label: "租户编号：",
           prop: "id",
           disabled: true
         },
@@ -62,16 +62,16 @@ export default {
           rules: requiredLengthLE20
         },
         {
-          label: "baseUri：",
+          label: "基本链接：",
           prop: "baseUri",
           placeholder: "http(s)://"
         },
         {
-          label: "TOKEN头：",
+          label: "令牌头：",
           prop: "tokenHeader"
         },
         {
-          label: "TOKEN：",
+          label: "令牌：",
           prop: "token",
           type: "textarea"
         },
@@ -121,12 +121,12 @@ export default {
           type: "textarea"
         },
         {
-          label: "PC待办任务地址：",
+          label: "桌面端待办任务地址：",
           prop: "auditPageUrl",
           placeholder: "http(s)://"
         },
         {
-          label: "Mobile待办任务地址：",
+          label: "移动端待办任务地址：",
           prop: "mobileAuditPageUrl",
           placeholder: "http(s)://"
         }

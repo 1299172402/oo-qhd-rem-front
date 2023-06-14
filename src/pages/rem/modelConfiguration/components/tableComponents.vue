@@ -96,11 +96,12 @@
         },
         data() {
             return {
+                params:{},
                 tableData:[],//state 1新增 2编辑 3正常展示
                 page: {
                     total: 0, // 总页数
                     currentPage: 1, // 当前页数
-                    pageSize: 20 // 每页显示多少条
+                    pageSize: 10 // 每页显示多少条
                 },
             }
         },
@@ -111,19 +112,19 @@
         },
         methods:{
             //查询列表数据
-            queryTableDate(searchForm) {
+            async queryTableDate(searchForm) {
+                this.queryData=searchForm;
                 if(!searchForm){
                     this.tableData = [];
                     this.page.total = 0;
                     return false;
                 }
                 let params={
-                    selectType:this.selectType,
                     current: this.page.currentPage,
                     size: this.page.pageSize,
-                    ...searchForm
+                    ...this.queryData
                 }
-                queryTableData(params).then(response => {
+                await queryTableData(params).then(response => {
                     if( response.data.code==200){
                         let data=response.data.data.records;
                         if(data.length){
@@ -158,7 +159,7 @@
                   cancelButtonText: '取消',
                   type: 'warning'
                 }).then(() => {
-                    addGeneralConfig({selectType:this.selectType,...this.searchForm,...row}).then(res=>{
+                    addGeneralConfig({...this.queryData,...row}).then(res=>{
                        this.$message.success('保存成功！')
                        this.$set(this.tableData[index],'state',3);
                     })
@@ -180,7 +181,7 @@
                   cancelButtonText: '取消',
                   type: 'warning'
                 }).then(() => {
-                    editGeneralConfig({selectType:this.selectType,...this.searchForm,...row}).then(res=>{
+                    editGeneralConfig({...this.queryData,...row}).then(res=>{
                        this.$message.success('编辑成功！');
                        this.$set(this.tableData[index],'state',3);
                     })
@@ -195,8 +196,7 @@
                 }).then(() => {
                     delGeneralConfig({id:row.id}).then(res=>{
                         this.$message.success('删除成功！')
-                        // this.tableData.splice(index,1);
-                        this.queryTableDate();
+                        this.queryTableDate(this.queryData);
                     })
                 }).catch(() => {});
             },
