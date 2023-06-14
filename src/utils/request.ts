@@ -65,7 +65,7 @@ function hideLoading() {
 
 const instance = axios.create({
   baseURL: API_HOST,
-  timeout: 10000,
+  timeout: 30000,
   withCredentials: true,
   headers: {
     "App-Id": proxy[env].appId
