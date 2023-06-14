@@ -275,7 +275,7 @@ export function getChatPlanINjAlloc(params) {
         method: "POST",
         data: params
     }).then((res) => {
-        return res.data.data
+        return res.data
     })
 
 }
@@ -306,7 +306,7 @@ export function wellAvgFluidProdAllocUpdateNew(params) {
         method: "post",
         data: params
     }).then((res) => {
-        if (res.data.code == 0) {
+        if (res.code == 0) {
             return true
         } else {
             return false
@@ -339,12 +339,7 @@ export function getWellInjRatio(data) {
         method: "post",
         data
     }).then((res) => {
-        if (res.data.code == 0) {
-            console.log(res.data.data)
-            return res.data.data
-        } else {
-            return null
-        }
+            return res.data
     })
 
 }
@@ -358,7 +353,7 @@ export function getWellGuessResult(params) {
         method: "post",
         data: params
     }).then((res) => {
-        return res.data.data
+        return res.data
     })
 }
 
