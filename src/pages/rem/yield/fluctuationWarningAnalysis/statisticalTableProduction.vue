@@ -88,23 +88,17 @@
                         <el-table-column sortable prop="comparisonOilProduction" :label="`产油对比\n(m³/d)`" width="160">
                             <template slot-scope="{row,$index}">
                                 <span style="display: flex;align-items: center;justify-content: center;">
-                                    
                                     <span style="width:60px;text-align: right;margin-right:10px;">{{row.oilProdDaily!==null?row.comparisonOilProduction:'-'}}</span>
-                                    
                                     <span style="width:30px;display:flex;justify-content:flex-end;">
                                         <span style="height:13px;display:flex;" v-if="row.comparisonOilWidth!==0 && row.comparisonOilProduction < 0">
                                             <span v-if="row.oilProdDaily!==null" :style="{width:row.comparisonOilWidth+'px',height:'13px',backgroundColor:'red'}"></span>
                                         </span>
                                     </span>
-                                    
-                                    
                                     <span style="width:1px;height:40px;background: #8FA4CC;" v-if="row.comparisonOilWidth!==0"></span>
-                                    
                                     <span style="width:30px;height:13px;display:flex;" v-if="row.comparisonOilWidth!==0 && row.comparisonOilProduction > 0">
                                         <span v-if="row.oilProdDaily!==null" :style="{width:row.comparisonOilWidth+'px',height:'13px',backgroundColor:'green'}"></span>
                                     </span>
                                     <span style="width:30px;height:13px;display:flex;" v-else></span>
-                                    
                                 </span>
                             </template>
                         </el-table-column>
