@@ -64,7 +64,7 @@
                         <el-table-column sortable prop="fluidProdDaily" :label="`日产液\n(m³/d)`" width="110" :formatter="formatter"/>      
                         <el-table-column sortable prop="oilProdDaily" :label="`日产油\n(m³/d)`" width="110"  :formatter="formatter"/>
                         <el-table-column sortable prop="waterRatio" :label="`含水\n(%)`" width="110"  :formatter="formatter"/>
-                        <el-table-column sortable prop="dhFlowingPress" :label="`井底流压\n(M pa)`" width="120"  :formatter="formatter"/>
+                        <el-table-column sortable prop="dhFlowingPress" :label="`井底流压\n(Mpa)`" width="120"  :formatter="formatter"/>
                         <el-table-column sortable prop="pumpFrequency" :label="`泵频率\n(Hz)`" width="110"/>
                       </el-table-column>
                       <el-table-column :label="searchForm.prodDateCompare">
