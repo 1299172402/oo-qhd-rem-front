@@ -5,7 +5,7 @@
         header-title="超欠注情况统计"
         :is-show-max-btn="true"
     >
-        <button class="detailLinkBtn" @click="linkroute('measuresPumpWellRecovery')">详细</button>
+        <button class="detailLinkBtn" @click="linkroute('/intelligence1/index')">详细</button>
         <el-table
             :data="tableData"
             height="100%"
@@ -58,6 +58,9 @@ export default {
         this.queryUltraShortShotStatistics()
     },
     methods: {
+        linkroute(rname) {
+            this.$router.push({path: rname,query: {link:'remHome'}});
+        },
         renderheader(h, {column, $index}) {
             return h('span', {}, [
                 h('span', {}, column.label.split('?')[0]),

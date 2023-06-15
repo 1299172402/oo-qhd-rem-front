@@ -46,6 +46,13 @@
                     style="margin-left: 20px"
                 >搜索
                 </el-button>
+                <el-button
+                    v-if="this.$route.query.link == 'remHome'"
+                    @click="returnBack"
+                    type="primary"
+                    style="margin-left: 20px;float: right"
+                >返回
+                </el-button>
             </div>
         </header-search>
         <div style="display: flex;justify-content: space-around; height: 100%;">
@@ -297,6 +304,9 @@ export default {
         this.searchList()
     },
     methods: {
+        returnBack(){
+            this.$router.go(-1)
+        },
         renderheader(h, {column, $index}) {
             return h('span', {}, [
                 h('span', {}, column.label.split('?')[0]),
