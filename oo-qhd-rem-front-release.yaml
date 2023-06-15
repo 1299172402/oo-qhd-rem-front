@@ -129,7 +129,7 @@ spec:
     spec:
       containers:
         - name: oo-qhd-rem-front-release
-          image: swr.zhydc-nyyjy-1.r410.cnooc/cloud-znyt-release/oo-qhd-rem-front-release:1.0.0
+          image: swr.zhydc-nyyjy-1.r410.cnooc/cloud-znyt-release/oo-qhd-rem-front-release:{{version}}
           env:
             - name: PAAS_APP_NAME
               value: oo-qhd-rem-front-release
