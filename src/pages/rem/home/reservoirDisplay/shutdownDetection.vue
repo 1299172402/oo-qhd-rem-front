@@ -76,8 +76,8 @@
                             <el-button type="primary" @click="queryinfo" icon="el-icon-search">搜索</el-button>
                             <el-button class="commonBtn" @click="result" icon="el-icon-refresh"> 重置</el-button>
                         </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" @click="returnrouter">返回</el-button>
+                        <el-form-item style="float: right">
+                            <el-button  style="float: right" type="primary" @click="returnrouter">返回</el-button>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -92,6 +92,7 @@
                 :cell-style="{ padding: '3px', 'text-align': 'center' }"
                 :data="tableData"
                 border
+                width="100%"
                 ref="reset"
                 style="width: 100%; height: calc(100% - 40px )"
                 id="cjyzsj"
@@ -105,7 +106,7 @@
                 <el-table-column prop="beginDate" :label="`*关停开始时间\n(yyyy/mm/dd)`"></el-table-column>
                 <el-table-column prop="endDate" :label="`*关停结束时间\n(yyyy/mm/dd)`"></el-table-column>
                 <el-table-column prop="impactProdution" :label="`影响产量\n(m³)`"></el-table-column>
-                <el-table-column prop="remark" label="备注"></el-table-column>
+                <el-table-column prop="remark" show-overflow-tooltip label="备注"></el-table-column>
             </el-table>
             <pagination
                 v-show="total > 0"
@@ -311,10 +312,10 @@ export default {
     // padding-bottom: 10px;
 }
 
-::v-deep .el-table .cell {
-    white-space: pre-line;
-}
-
+//::v-deep .el-table .cell {
+//    white-space: pre-line;
+//}
+//
 ::v-deep .el-table .cell:empty::before {
     content: "-";
 }
