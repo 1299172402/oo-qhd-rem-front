@@ -1,4 +1,4 @@
-<!-- 油井分析报告 -->
+<!-- 水井分析报告 -->
 <template>
   <div class="app-container">
 <!--    <headerSearch class="g-w100 g-h100" style="height: auto">-->
@@ -63,7 +63,7 @@
       </el-row>
 <!--      基础数据-->
       <el-row :gutter="20">
-          <fundamentalData :queryData="queryData" ref="toolchild3"></fundamentalData>
+          <fundamentalData :queryData="queryData"></fundamentalData>
       </el-row>
 <!--      临井数据-->
       <el-row :gutter="20">
