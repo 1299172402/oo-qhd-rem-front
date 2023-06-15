@@ -104,7 +104,7 @@ export default {
       linkroute(name) {
           this.$router.push({
               path: name,
-              query:{ link:'03' }
+              query:{ link:'water' }
           });
       },
       //自然递减率

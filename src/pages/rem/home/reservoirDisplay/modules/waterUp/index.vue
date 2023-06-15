@@ -136,7 +136,7 @@ export default {
       linkroute(name) {
           this.$router.push({
               path: name,
-              query:{ link:'04' }
+              query:{ link:'decreasing' }
           });
       },
       //含水上升率

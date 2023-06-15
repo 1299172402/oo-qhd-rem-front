@@ -132,7 +132,7 @@ export default {
       linkroute(name) {
           this.$router.push({
               path: name,
-              query:{ link:'01' }
+              query:{ link:'evaluation' }
           });
       },
       //采出程度与含水率关系图

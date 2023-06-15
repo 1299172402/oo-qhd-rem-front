@@ -155,7 +155,7 @@ export default {
       linkroute(name) {
           this.$router.push({
               path: name,
-              query:{ link:'01' }
+              query:{ link:'evaluation' }
           });
       },
       //产能类 采油速度
