@@ -5,7 +5,7 @@
         header-title="采出程度与含水率关系图"
         :is-show-max-btn="true"
     >
-<!--        <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>-->
+        <button class="detailLinkBtn" @click="linkroute('/developStatus/developmentEffectEvaluation')">详细</button>
         <Echart :chart-data="relationship" width="100%" height="100%"></Echart>
     </info-window>
 </template>
@@ -129,6 +129,12 @@ export default {
       this.getOutputDegreeTongChart()
   },
   methods: {
+      linkroute(name) {
+          this.$router.push({
+              path: name,
+              query:{ link:'01' }
+          });
+      },
       //采出程度与含水率关系图
       getOutputDegreeTongChart(oilFieldId, fieldId) {
           let request = {

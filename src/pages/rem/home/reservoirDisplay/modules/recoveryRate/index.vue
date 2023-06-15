@@ -5,7 +5,7 @@
         header-title="采油速度"
         :is-show-max-btn="true"
     >
-<!--        <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>-->
+        <button class="detailLinkBtn" @click="linkroute('/developStatus/developmentEffectEvaluation')">详细</button>
         <Echart :chart-data="productionSpeed" width="100%" height="100%"></Echart>
     </info-window>
 </template>
@@ -152,6 +152,12 @@ export default {
       this.getOutputSpeed()
   },
   methods: {
+      linkroute(name) {
+          this.$router.push({
+              path: name,
+              query:{ link:'01' }
+          });
+      },
       //产能类 采油速度
       getOutputSpeed(oilFieldId, fieldId) {
           let request = {
