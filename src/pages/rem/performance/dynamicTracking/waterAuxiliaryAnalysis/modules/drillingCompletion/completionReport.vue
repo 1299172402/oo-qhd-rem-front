@@ -55,8 +55,8 @@ export default {
               readOne:'one'
           }
           queryRemUploadFileMinio(params).then((res) => {
-              console.log('this.res',res)
-              if (res.data.data.code == 200) {
+              console.log('this.res///////////',res)
+              if (res.data.code == 200) {
                   let data =res.data.data[0].fileId
                   this.id = res.data.data[0].fileId
                   this.fileName = res.data.data[0].filestrId
