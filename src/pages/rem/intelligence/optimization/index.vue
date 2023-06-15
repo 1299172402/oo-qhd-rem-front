@@ -120,7 +120,7 @@
                                 height="calc(100% - 30px)"
                             >
                                 <el-table-column prop="injWellNo" label="注水井" align="center"
-                                                 min-width="120"></el-table-column>
+                                                 min-width="180px"></el-table-column>
                                 <el-table-column
                                     prop="injWellDaily"
                                     :render-header="renderheader"
@@ -196,7 +196,7 @@
                                                     <span>{{ scope.row.froecastInjDaily / scope.row.configurationInjDaily }}</span>
                                     </template>-->
                                 </el-table-column>
-                                <el-table-column prop="remark" label="备注" align="center" min-width="150">
+                                <el-table-column prop="remark" show-overflow-tooltip label="备注" align="center" min-width="150">
                                     <template slot-scope="scope">
                                         <el-input v-if="modify" v-model="scope.row.remark"/>
                                         <span v-else>{{ scope.row.remark }}</span>

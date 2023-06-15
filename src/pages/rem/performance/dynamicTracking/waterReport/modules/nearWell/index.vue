@@ -2,49 +2,78 @@
 <template>
   <div class="app-container">
     <pagePanel headerTitle="邻井数据">
-<!--      <el-form style="padding-left: 20%" label-width="110px">-->
-<!--        <el-row :gutter="20">-->
-<!--          <el-form-item label="平台"> </el-form-item>-->
-<!--           <el-form-item label="井坐标位置"> </el-form-item>-->
-<!--        </el-row>-->
-<!--        <el-row :gutter="20">-->
-<!--          <el-col :span="12"> <el-form-item label="井型"> </el-form-item></el-col>-->
-<!--          <el-col :span="12"> <el-form-item label="井别"> </el-form-item></el-col>-->
-<!--        </el-row>-->
-<!--        <el-row :gutter="20">-->
-<!--          <el-col :span="12"> <el-form-item label="井基准图"> </el-form-item></el-col>-->
-<!--          <el-col :span="12"> <el-form-item label="补心海拔"> </el-form-item></el-col>-->
-<!--        </el-row>-->
-<!--        <el-row :gutter="20">-->
-<!--          <el-col :span="12"> <el-form-item label="完钻井深"> </el-form-item></el-col>-->
-<!--          <el-col :span="12"> <el-form-item label="完钻垂深"> </el-form-item></el-col>-->
-<!--        </el-row>-->
-<!--      </el-form>-->
+        <el-table
+            id="tableData"
+            :data="tableData"
+            :border="false"
+            :row-style="{ height: '0px' }"
+            header-cell-class-name="table_header"
+            :cell-style="{ padding: '6px', 'text-align': 'center' }"
+            style="width:100%;"
+            height="100%"
+            :default-sort="{ prop: 'date', order: 'descending' }"
+            :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        >
+            <el-table-column type="index" width="60" label="序号"></el-table-column>
+            <el-table-column prop="wellNo" label="井号" width="130"></el-table-column>
+            <el-table-column prop="oilPoolMiddlePree" label="油藏中部压力">
+            </el-table-column>
+            <el-table-column prop="recdInjAllnWell" label="推荐注入井配注量"></el-table-column>
+            <el-table-column prop="dailyFluidProd" label="日产液量"></el-table-column>
+            <el-table-column prop="dailyOilProd" label="日产油量"></el-table-column>
+            <el-table-column prop="comeWaterCut" label="综合含水率"></el-table-column>
+            <el-table-column prop="dailyGasProd" label="日产气量"></el-table-column>
+            <el-table-column prop="dailyGasFluidProd" label="气液比"></el-table-column>
+            <el-table-column prop="wellBottomStaticPree" label="井底静压"></el-table-column>
+            <el-table-column prop="wellBottomPree" label="井底流压"></el-table-column>
+            <el-table-column prop="fluidStaticPree" label="产液指数"></el-table-column>
+        </el-table>
     </pagePanel>
   </div>
 </template>
 
 <script>
+import { queryAdjacentWellData} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
+import {exportExcel} from "@/lib/exportExcel.js";
+import {downFile} from "@/lib/remBase64Download";
 export default {
+    props: {
+        //选择油田
+        oilFeildId: {},
+        //选择平台
+        platform: {},
+        //选择井号
+        wellId: {},
+        queryData:{}
+    },
   data() {
     return {
       tableData: [],
     };
   },
-  created() {
-    // var date = new Date();
-    // var months = date.getMonth() + 1;
-    // var m = '0' + (months - 1);
-    // var y = date.getFullYear();
-    // if (months == 1) {
-    //   y--;
-    //   m = '12';
-    // }
-    // this.getData();
+    mounted() {
+    this.doSearch();
   },
+    watch:{
+        queryData:{
+            handler(Nval){
+                let data = {
+                    wellId: Nval.selectWellId
+                }
+                queryAdjacentWellData(data).then((res)=>{
+                    this.tableData = res.data.data
+                })
+            }
+        }
+    },
   methods: {
-    passValue(val) {
-      console.log(val);
+      doSearch() {
+          let data = {
+              wellId:this.queryData.selectWellId
+          }
+          queryAdjacentWellData(data).then((res)=>{
+            this.tableData = res.data.data
+        })
     },
   },
 };
