@@ -68,10 +68,10 @@ export default {
       },
       // 表单校验
       rules: {
-        oldPassword: [{ required: true, message: "请输入旧密码", trigger: "blur" }],
+        oldPassword: [{ required: true, message: "请输入旧密码" }],
         newPassword: [
-          { required: true, message: "请输入新密码", trigger: "blur" },
-          //   { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
+          { required: true, message: "请输入新密码" },
+          //   { min: 6, max: 20, message: '长度在 6 到 20 个字符'},
           {
             pattern:
               /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{12,20}$/,
@@ -79,8 +79,8 @@ export default {
           }
         ],
         confirmPassword: [
-          { required: true, message: "请输入确认密码", trigger: "blur" },
-          { required: true, validator: equalToPassword, trigger: "blur" }
+          { required: true, message: "请输入确认密码" },
+          { required: true, validator: equalToPassword }
         ]
       }
     };

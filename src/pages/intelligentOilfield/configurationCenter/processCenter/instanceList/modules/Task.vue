@@ -37,6 +37,7 @@
         <el-table
           height="calc(100% - 130px)"
           :data="dataSource"
+          style="min-height: 300px;"
         >
           <el-table-column label="id" prop="id" :show-overflow-tooltip="true" />
           <el-table-column label="名称" prop="name" :show-overflow-tooltip="true" />

@@ -112,7 +112,7 @@ export default {
         }
         const app = {
           oauthLogoutApiUrl: "/auth/logout",
-          oauthCallbackApiUrl: "/auth/callback"
+          oauthCallbackApiUrl: ""
         };
         Object.keys(app).forEach(item => {
           this.$set(this.appInfo, item, `${val}${app[item]}`);

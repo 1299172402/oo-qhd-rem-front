@@ -421,22 +421,20 @@ export default Vue.extend({
       // 表单校验
       rules: {
         userName: [
-          { required: true, message: "请输入用户账号", trigger: "blur" },
-          { min: 2, max: 20, message: "用户账号长度必须介于 2 和 20 之间", trigger: "blur" }
+          { required: true, message: "请输入用户账号" },
+          { min: 2, max: 20, message: "用户账号长度必须介于 2 和 20 之间" }
         ],
-        nickName: [{ required: true, message: "请输入用户名称", trigger: "blur" }],
+        nickName: [{ required: true, message: "请输入用户名称" }],
         email: [
           {
             type: "email",
-            message: "请输入正确的邮箱地址",
-            trigger: ["blur", "change"]
+            message: "请输入正确的邮箱地址"
           }
         ],
         phonenumber: [
           {
             pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-            message: "请输入正确的手机号码",
-            trigger: "blur"
+            message: "请输入正确的手机号码"
           }
         ],
         idCard: [
@@ -448,9 +446,9 @@ export default Vue.extend({
         ]
       },
       pwdRules: {
-        initPwd: [{ required: true, message: "请输入旧密码", trigger: "blur" }],
+        initPwd: [{ required: true, message: "请输入旧密码" }],
         updatePwd: [
-          { required: true, message: "请输入新密码", trigger: "blur" },
+          { required: true, message: "请输入新密码" },
           {
             pattern:
               /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{12,20}$/,
@@ -458,8 +456,8 @@ export default Vue.extend({
           }
         ],
         surePwd: [
-          { required: true, message: "请输入确认密码", trigger: "blur" },
-          { required: true, validator: equalToPassword, trigger: "blur" }
+          { required: true, message: "请输入确认密码" },
+          { required: true, validator: equalToPassword }
         ]
       },
       // 表单参数
@@ -511,13 +509,15 @@ export default Vue.extend({
   watch: {
     iconvisible: {
       handler() {
-        this.containerWidth();
+        // TODO: Maybe change back
+        // this.containerWidth();
       },
       immediate: true
     },
     "$store.state.user.isGroupLogin": {
       handler() {
         this.getInitDeptds();
+        this.containerWidth();
       },
       deep: true,
       immediate: true

@@ -12,7 +12,7 @@
       label-width="100px"
     >
       <el-form-item label="变量名称" prop="name">
-        <el-input v-model="form.name" placeholder="请输入变量名称" />
+        <el-input v-model="form.name" :disabled="isEdit" placeholder="请输入变量名称" />
       </el-form-item>
       <el-form-item :label="`请选择类型`" prop="type">
         <el-select

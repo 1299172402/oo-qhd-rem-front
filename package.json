@@ -1,6 +1,6 @@
 {
   "name": "intelligent-oilfield",
-  "version": "1.0.1.20230613_beta",
+  "version": "1.1.1.20230614_beta",
   "private": false,
   "scripts": {
     "prepare": "husky install",
