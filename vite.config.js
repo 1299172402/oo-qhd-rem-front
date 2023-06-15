@@ -69,19 +69,19 @@ export default ({ mode }) => {
       port: 8080,
       open: true,
       proxy: {
-        // "/dev-api/rem/api": {
-        //   // 用于开发环境下的转发请求
-        //   // 更多请参考：https://vitejs.dev/config/#server-proxy
-        //   // target: 'http://10.247.187.28:8080/dev-api/',
-        //   // target: 'http://10.178.118.181:9220',
-        //   // target: 'http://10.178.118.184:9229', //姜
-        //   target: "http://10.178.118.189:9203", //小黄
-        //   // target:"http://10.178.118.180",//鹏举
-        //   // target: 'http://10.178.118.181:9207', //飞龙
-        //   // target: 'http://10.178.118.184:8080',
-        //   changeOrigin: true,
-        //   rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, ""),
-        // },
+        "/dev-api/rem/api": {
+          // 用于开发环境下的转发请求
+          // 更多请参考：https://vitejs.dev/config/#server-proxy
+          // target: 'http://10.247.187.28:8080/dev-api/',
+          // target: 'http://10.178.118.181:9220',
+          // target: 'http://10.178.118.184:9229', //姜
+          target: "http://10.178.118.189:9203", //小黄
+          // target:"http://10.178.118.180",//鹏举
+          // target: 'http://10.178.118.181:9207', //飞龙
+          // target: 'http://10.178.118.184:8080',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, ""),
+        },
         "/dev-api/prm/api": {
           // 用于开发环境下的转发请求
           // 更多请参考：https://vitejs.dev/config/#server-proxy

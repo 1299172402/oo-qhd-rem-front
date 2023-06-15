@@ -121,7 +121,7 @@
                             </pagePanel>
                         </el-col>
                     </el-row>
-                    <el-row style="height:auto" :gutter="15" class="cont mt-5">
+                    <el-row style="height: auto" :gutter="15" class="cont mt-5">
                         <el-col :span="12">
                             <pagePanel headerTitle="潜力分析" style="margin-top:0;height:100%;">
                                 <el-row :gutter="20">
@@ -184,7 +184,7 @@
                         <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)" 
                         @click="$router.push({path:'/plan/personnelMeasures',query:{platform,wellId,currentDate}})">措施推荐详情</el-button>
                     </div>
-                    <div style="flex:1;min-height:380px;">
+                    <div style="flex:1;min-height:540px;">
                         <pagePanel headerTitle="油井动态分析详情列表" style="margin-top:0;height:100%;">
                             <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                 <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
@@ -1310,488 +1310,212 @@
             //生产问题监测可用项目02,供排关系
             queryRelationship() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.relationshipOptions = [{
-                                code: "tag16",
-                                name: "合理",
-                                value: 140,
-                                wells: "JH9,JH1"
-                            },
-                            {
-                                code: "tag17",
-                                name: "参数偏大",
-                                value: 10,
-                                wells: ""
-                            },
-                            {
-                                code: "tag18",
-                                name: "参数偏小",
-                                value: 0,
-                                wells: "JH2,JH3,JH4"
-                            },
-                            {
-                                code: "tag19",
-                                name: "生产异常区",
-                                value: 1,
-                                wells: ""
-                            },
-                            {
-                                code: "tag20",
-                                name: "待落实区",
-                                value: 5,
-                                wells: "JH2,JH7"
-                            }
-                        ];
+                    supplyDischargeRelationship(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            this.relationshipNum.allnum=0;
+                            this.relationshipNum.zcnum=0;
+                            this.relationshipNum.ycnum=0;
+                            myData.forEach((el,i)=>{
+                                this.relationshipNum.allnum+=Number(el.value);
+                                if(el.name=='正常'||el.name=='合理区'){
+                                    this.relationshipNum.zcnum+=Number(el.value);
+                                }else{
+                                    myData[i].isShow=Number(el.value)?true:false;
+                                    this.relationshipNum.ycnum+=Number(el.value);
+                                }
+                            })
+                            this.relationshipNum.zczb=this.relationshipNum.zcnum/this.relationshipNum.allnum * 100;
+                            // this.relationshipNum.zczb=100;
+                            this.relationshipNum.yczb=this.relationshipNum.yczb/this.relationshipNum.allnum * 100;
+                            
+                            this.relationshipOptions = myData;
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        supplyDischargeRelationship(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                this.relationshipNum.allnum=0;
-                                this.relationshipNum.zcnum=0;
-                                this.relationshipNum.ycnum=0;
-                                myData.forEach((el,i)=>{
-                                    this.relationshipNum.allnum+=Number(el.value);
-                                    if(el.name=='正常'||el.name=='合理区'){
-                                        this.relationshipNum.zcnum+=Number(el.value);
-                                    }else{
-                                        myData[i].isShow=Number(el.value)?true:false;
-                                        this.relationshipNum.ycnum+=Number(el.value);
-                                    }
-                                })
-                                this.relationshipNum.zczb=this.relationshipNum.zcnum/this.relationshipNum.allnum * 100;
-                                // this.relationshipNum.zczb=100;
-                                this.relationshipNum.yczb=this.relationshipNum.yczb/this.relationshipNum.allnum * 100;
-                                
-                                this.relationshipOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //生产问题监测可用项目03,递减率
             queryDiminishing() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.diminishingOptions = [{
-                                code: "tag21",
-                                name: "高",
-                                value: 20,
-                                wells: "JH3,JH7"
-                            },
-                            {
-                                code: "tag22",
-                                name: "正常",
-                                value: 140,
-                                wells: "JH2,JH3,JH4"
-                            },
-                            {
-                                code: "tag23",
-                                name: "低",
-                                value: 20,
-                                wells: "JH8,JH3"
-                            }
-                        ];
+                    declineRate(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            
+                            this.diminishingNum.allnum=0;
+                            this.diminishingNum.zcnum=0;
+                            this.diminishingNum.ycnum=0;
+                            myData.forEach((el,i)=>{
+                                this.diminishingNum.allnum+=Number(el.value);
+                                if(el.name=='正常'){
+                                    this.diminishingNum.zcnum=Number(el.value);
+                                }else{
+                                    myData[i].isShow=Number(el.value)?true:false;
+                                    this.diminishingNum.ycnum+=Number(el.value);
+                                }
+                            })
+                            this.diminishingNum.zczb=this.diminishingNum.zcnum/this.diminishingNum.allnum * 100;
+                            this.diminishingNum.yczb=this.diminishingNum.yczb/this.diminishingNum.allnum * 100;
+                            
+                            this.diminishingOptions = myData;
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        declineRate(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                
-                                this.diminishingNum.allnum=0;
-                                this.diminishingNum.zcnum=0;
-                                this.diminishingNum.ycnum=0;
-                                myData.forEach((el,i)=>{
-                                    this.diminishingNum.allnum+=Number(el.value);
-                                    if(el.name=='正常'){
-                                        this.diminishingNum.zcnum=Number(el.value);
-                                    }else{
-                                        myData[i].isShow=Number(el.value)?true:false;
-                                        this.diminishingNum.ycnum+=Number(el.value);
-                                    }
-                                })
-                                this.diminishingNum.zczb=this.diminishingNum.zcnum/this.diminishingNum.allnum * 100;
-                                this.diminishingNum.yczb=this.diminishingNum.yczb/this.diminishingNum.allnum * 100;
-                                
-                                this.diminishingOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //生产问题监测可用项目04,采液强度
             queryFluidStrength() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.fluidStrengthOptions = [{
-                                code: "tag24",
-                                name: "高",
-                                value: 20,
-                                wells: ""
-                            },
-                            {
-                                code: "tag25",
-                                name: "合理",
-                                value: 140,
-                                wells: "JH2,JH3,JH4"
-                            },
-                            {
-                                code: "tag26",
-                                name: "低",
-                                value: 20,
-                                wells: "JH7"
-                            }
-                        ];
-                        resolve('success');
-                    } else { //使用接口
-                        fluidProducingIntensity(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                this.fluidStrengthNum.allnum=0;
-                                this.fluidStrengthNum.zcnum=0;
-                                this.fluidStrengthNum.ycnum=0;
-                                myData.forEach((el,i)=>{
-                                    this.fluidStrengthNum.allnum+=Number(el.value);
-                                    if(el.name=='正常'){
-                                        this.fluidStrengthNum.zcnum=Number(el.value);
-                                    }else{
-                                        myData[i].isShow=Number(el.value)?true:false;
-                                        this.fluidStrengthNum.ycnum+=Number(el.value);
-                                        if(el.name=='采液强度偏高'){
-                                            this.cyqdpgSelCode=el.code;
-                                        }else if(el.name=='采液强度偏低'){
-                                            this.cyqdpdSelCode=el.code;
-                                        }
+                    fluidProducingIntensity(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            this.fluidStrengthNum.allnum=0;
+                            this.fluidStrengthNum.zcnum=0;
+                            this.fluidStrengthNum.ycnum=0;
+                            myData.forEach((el,i)=>{
+                                this.fluidStrengthNum.allnum+=Number(el.value);
+                                if(el.name=='正常'){
+                                    this.fluidStrengthNum.zcnum=Number(el.value);
+                                }else{
+                                    myData[i].isShow=Number(el.value)?true:false;
+                                    this.fluidStrengthNum.ycnum+=Number(el.value);
+                                    if(el.name=='采液强度偏高'){
+                                        this.cyqdpgSelCode=el.code;
+                                    }else if(el.name=='采液强度偏低'){
+                                        this.cyqdpdSelCode=el.code;
                                     }
-                                })
-                                this.fluidStrengthNum.zczb=this.fluidStrengthNum.zcnum/this.fluidStrengthNum.allnum * 100;
-                                this.fluidStrengthNum.yczb=this.fluidStrengthNum.yczb/this.fluidStrengthNum.allnum * 100;
-                                this.fluidStrengthOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                                }
+                            })
+                            this.fluidStrengthNum.zczb=this.fluidStrengthNum.zcnum/this.fluidStrengthNum.allnum * 100;
+                            this.fluidStrengthNum.yczb=this.fluidStrengthNum.yczb/this.fluidStrengthNum.allnum * 100;
+                            this.fluidStrengthOptions = myData;
+                        }
+                        resolve('success');
+                    });
                 });
             },
             //生产问题监测可用项目05,采液指数
             queryFluidProduction() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.fluidProductionOptions = [{
-                                code: "tag30",
-                                name: "高",
-                                value: 20,
-                                wells: "JH2,JH3,JH4"
-                            },
-                            {
-                                code: "tag31",
-                                name: "合理",
-                                value: 140,
-                                wells: "JH1,JH3,JH7"
-                            },
-                            {
-                                code: "tag32",
-                                name: "低",
-                                value: 20,
-                                wells: "JH2,JH4"
-                            }
-                        ];
+                    fluidProductivityIndex(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            
+                            this.fluidProductionNum.allnum=0;
+                            this.fluidProductionNum.zcnum=0;
+                            this.fluidProductionNum.ycnum=0;
+                            myData.forEach((el,i)=>{
+                                this.fluidProductionNum.allnum+=Number(el.value);
+                                if(el.name=='正常'){
+                                    this.fluidProductionNum.zcnum=Number(el.value);
+                                }else{
+                                    myData[i].isShow=Number(el.value)?true:false;
+                                    this.fluidProductionNum.ycnum+=Number(el.value);
+                                }
+                            })
+                            this.fluidProductionNum.zczb=this.fluidProductionNum.zcnum/this.fluidProductionNum.allnum * 100;
+                            this.fluidProductionNum.yczb=this.fluidProductionNum.yczb/this.fluidProductionNum.allnum * 100;
+                            
+                            this.fluidProductionOptions = myData;
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        fluidProductivityIndex(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                
-                                this.fluidProductionNum.allnum=0;
-                                this.fluidProductionNum.zcnum=0;
-                                this.fluidProductionNum.ycnum=0;
-                                myData.forEach((el,i)=>{
-                                    this.fluidProductionNum.allnum+=Number(el.value);
-                                    if(el.name=='正常'){
-                                        this.fluidProductionNum.zcnum=Number(el.value);
-                                    }else{
-                                        myData[i].isShow=Number(el.value)?true:false;
-                                        this.fluidProductionNum.ycnum+=Number(el.value);
-                                    }
-                                })
-                                this.fluidProductionNum.zczb=this.fluidProductionNum.zcnum/this.fluidProductionNum.allnum * 100;
-                                this.fluidProductionNum.yczb=this.fluidProductionNum.yczb/this.fluidProductionNum.allnum * 100;
-                                
-                                this.fluidProductionOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //生产问题监测可用项目06,米采液指数
             queryMfluidProduction() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.mfluidProductionOptions = [{
-                                code: "tag40",
-                                name: "高",
-                                value: 20,
-                                wells: ""
-                            },
-                            {
-                                code: "tag41",
-                                name: "合理",
-                                value: 140,
-                                wells: "JH2,JH3,JH4"
-                            },
-                            {
-                                code: "tag42",
-                                name: "低",
-                                value: 20,
-                                wells: ""
-                            }
-                        ];
+                    fluidProductivityIndexMeter(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            
+                            this.mfluidProductionNum.allnum=0;
+                            this.mfluidProductionNum.zcnum=0;
+                            this.mfluidProductionNum.ycnum=0;
+                            myData.forEach((el,i)=>{
+                                this.mfluidProductionNum.allnum+=Number(el.value);
+                                if(el.name=='正常'){
+                                    this.mfluidProductionNum.zcnum=Number(el.value);
+                                }else{
+                                    myData[i].isShow=Number(el.value)?true:false;
+                                    this.mfluidProductionNum.ycnum+=Number(el.value);
+                                }
+                            })
+                            this.mfluidProductionNum.zczb=this.mfluidProductionNum.zcnum/this.mfluidProductionNum.allnum * 100;
+                            this.mfluidProductionNum.yczb=this.mfluidProductionNum.yczb/this.mfluidProductionNum.allnum * 100;
+                            
+                            this.mfluidProductionOptions = myData;
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        fluidProductivityIndexMeter(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                
-                                this.mfluidProductionNum.allnum=0;
-                                this.mfluidProductionNum.zcnum=0;
-                                this.mfluidProductionNum.ycnum=0;
-                                myData.forEach((el,i)=>{
-                                    this.mfluidProductionNum.allnum+=Number(el.value);
-                                    if(el.name=='正常'){
-                                        this.mfluidProductionNum.zcnum=Number(el.value);
-                                    }else{
-                                        myData[i].isShow=Number(el.value)?true:false;
-                                        this.mfluidProductionNum.ycnum+=Number(el.value);
-                                    }
-                                })
-                                this.mfluidProductionNum.zczb=this.mfluidProductionNum.zcnum/this.mfluidProductionNum.allnum * 100;
-                                this.mfluidProductionNum.yczb=this.mfluidProductionNum.yczb/this.mfluidProductionNum.allnum * 100;
-                                
-                                this.mfluidProductionOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //潜力分析可用项目01,提液潜力
             queryExtractionPotential() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.extractionPotentialOptions = [{
-                                code: "tag50",
-                                name: "油藏提液潜力",
-                                value: 20,
-                                wells: ""
-                            },
-                            {
-                                code: "tag51",
-                                name: "工况提液潜力",
-                                value: 5,
-                                wells: "JH2,JH9,JH4"
-                            },
-                            {
-                                code: "tag52",
-                                name: "停产井",
-                                value: 0,
-                                wells: ""
-                            },
-                            {
-                                code: "tag53",
-                                name: "维持生产",
-                                value: 160,
-                                wells: "JH6,JH4"
-                            }
-                        ];
+                    potential(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            this.extractionPotentialOptions = myData;
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        potential(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                this.extractionPotentialOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //潜力分析可用项目02,储量动用
             queryReserveProduction() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.reserveProductionOptions = [{
-                                code: "tag60",
-                                name: "开层潜力",
-                                value: 20,
-                                wells: "JH2,JH9,JH5"
-                            },
-                            {
-                                code: "tag61",
-                                name: "恢复生产潜力",
-                                value: 0,
-                                wells: ""
-                            },
-                            {
-                                code: "tag62",
-                                name: "正常",
-                                value: 180,
-                                wells: "JH8,JH3,JH1"
-                            }
-                        ];
+                    reserveProducing(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            this.reserveProductionOptions = myData;
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        reserveProducing(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                this.reserveProductionOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //措施推荐可用项目
             queryRecommendedMeasures() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.recommendedMeasuresOptions = [{
-                                code: "tagP1",
-                                name: "检泵",
-                                value: 20,
-                                increase: 10,
-                                wells: ""
-                            },
-                            {
-                                code: "tagP2",
-                                name: "解堵",
-                                value: 4,
-                                increase: 0,
-                                wells: ""
-                            },
-                            {
-                                code: "tagP3",
-                                name: "注采调配",
-                                value: 4,
-                                increase: 30,
-                                wells: "JH2,JH3,JH4"
-                            },
-                            {
-                                code: "tagP4",
-                                name: "储层改造",
-                                value: 0,
-                                increase: 0,
-                                wells: ""
-                            },
-                            {
-                                code: "tagP5",
-                                name: "恢复生产",
-                                value: 1,
-                                increase: 0,
-                                wells: ""
-                            },
-                            {
-                                code: "tagP6",
-                                name: "开关层/补孔",
-                                value: 10,
-                                increase: 20,
-                                wells: "JH7,JH6,JH3"
-                            },
-                            {
-                                code: "tagP7",
-                                name: "调整生产制度",
-                                value: 2,
-                                increase: 0,
-                                wells: ""
-                            },
-                            {
-                                code: "tagP8",
-                                name: "维持生产",
-                                value: 240,
-                                increase: 0,
-                                wells: "JH2,JH5,JH7"
-                            }
-                        ];
+                    measureRecommend(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            this.potentialWellNum=0;
+                            myData.forEach((el,i)=>{
+                                this.potentialWellNum+=Number(el.value);
+                                
+                                if(el.name=='换大泵'){
+                                    this.hdbSelCode=el.code;
+                                }
+                                
+                            })
+                            this.recommendedMeasuresOptions = myData;
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        measureRecommend(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                this.potentialWellNum=0;
-                                myData.forEach((el,i)=>{
-                                    this.potentialWellNum+=Number(el.value);
-                                    
-                                    if(el.name=='换大泵'){
-                                        this.hdbSelCode=el.code;
-                                    }
-                                    
-                                })
-                                this.recommendedMeasuresOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //措施推荐可用项目,获取措施效果数据
             queryProWellDynamicAnalysisDetail() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.recommendedMeasuresData = [{
-                                wellId: "JH1",
-                                theDate: "2021-01-02",
-                                measuresCode: "tagP2",
-                                measuresName: "解堵",
-                                increaseVolume: 2,
-                                increaseQuality: 2,
-                                increaseVolumeC: 2,
-                                increaseQualityC: 2
-                            },
-                            {
-                                wellId: "JH2",
-                                theDate: "2021-01-01",
-                                measuresCode: "tagP6",
-                                measuresName: "开关层/补孔",
-                                increaseVolume: 2,
-                                increaseQuality: 2,
-                                increaseVolumeC: 2,
-                                increaseQualityC: 2
-                            },
-                            {
-                                wellId: "JH3",
-                                theDate: "2021-01-01",
-                                measuresCode: "tagP8",
-                                measuresName: "维持生产",
-                                increaseVolume: 2,
-                                increaseQuality: 2,
-                                increaseVolumeC: 2,
-                                increaseQualityC: 2
-                            }
-                        ];
-                        this.initRecommendedMeasuresWells(); //生成井清单
+                    proWellDynamicAnalysisDetail(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.evaluationResults;
+                            this.recommendedMeasuresData = myData;
+                            this.recommendedMeasuresWells = [];
+                            this.initRecommendedMeasuresWells(); //生成井清单
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        proWellDynamicAnalysisDetail(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.evaluationResults;
-                                this.recommendedMeasuresData = myData;
-                                this.recommendedMeasuresWells = [];
-                                this.initRecommendedMeasuresWells(); //生成井清单
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //初始化有措施的井清单
@@ -1817,19 +1541,19 @@
                 if (val == undefined || val == "") {
                     return false; //无效参数
                 }
-                //进行运算
+              
                 //1、获取选中井集合
-                if (eval("this." + tag)) {
-                    for (let i = 0; i < eval("this." + tag).length; i++) {
-                        let tData = eval("this." + tag)[i];
+                if (this[tag]) {
+                    for (let i = 0; i < this[tag].length; i++) {
+                        let tData = this[tag][i];
                         if (val == tData.code) {
-                            if (tData.wells == undefined || tData.wells == "" || tData.wells == "null") { //无数据
+                            if ( !tData.wells || tData.wells == "null") { //无数据
                                 myData = []; //没有数据
-                                eval("this." + tag)[i].value = 0; //井数
+                                this[tag][i].value = 0; //井数
                                 myWellCount[tData.code] = 0; //计数器
                             } else { //有数据
                                 let wellList = tData.wells.split(","); //我的井号串（逗号分割）
-                                eval("this." + tag)[i].value = wellList.length; //井数
+                                this[tag][i].value = wellList.length; //井数
                                 myWellCount[tData.code] = wellList.length; //计数器
                                 for (let j = 0; j < wellList.length; j++) {
                                     myData[j] = {
@@ -1841,184 +1565,52 @@
                         }
                     }
                 }
-                console.log('myData',myData)
-                console.log('this.productionTrendsOptions',this.productionTrendsOptions)
+                
                 //2、按照顺序初始化计数器、生成数据体
-                var tableData = this.initTableData;
-                console.log('tableData',tableData)
-                var reData = [];
-                for (var i = 0; i < tableData.length; i++) {
-                    var item = tableData[i];
-                    var wellIdFilter = item.wellName;
-                    for (var j = 0; j < myData.length; j++) {
-                        var itemDb = myData[j];
+                let tableData = this.initTableData;
+                let reData = [];
+                for (let i = 0; i < tableData.length; i++) {
+                    let item = tableData[i];
+                    let wellIdFilter = item.wellName;
+                    for (let j = 0; j < myData.length; j++) {
+                        let itemDb = myData[j];
                         if (wellIdFilter == itemDb.wellId) {
                             reData.push(item);
                             break;
                         }
                     }
                 }
-
                 for (let i = 0; i < myData.length; i++) {
                     let myWellId = myData[i].wellId; //井号
-                    //productionTrendsOptions//生产动态
-                    for (let j = 0; j < this.productionTrendsOptions.length; j++) {
-                        let t_data = this.productionTrendsOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
+                    let forEachDataList=[
+                        {key:'生产动态',name:'productionTrendsOptions'},
+                        {key:'油井工况',name:'oilWellConditionOptions'},
+                        {key:'供排关系',name:'relationshipOptions'},
+                        {key:'递减率',name:'diminishingOptions'},
+                        {key:'采液强度',name:'fluidStrengthOptions'},
+                        {key:'采液指数',name:'fluidProductionOptions'},
+                        {key:'米采液指数',name:'mfluidProductionOptions'},
+                        {key:'提液潜力',name:'extractionPotentialOptions'},
+                        {key:'储量动用',name:'reserveProductionOptions'},
+                        {key:'措施推荐',name:'recommendedMeasuresOptions'},
+                    ];
+                    for(let k=0;k<forEachDataList.length;k++){
+                        let name=forEachDataList[k].name;
+                        let data=this[name];
+                        for (let j = 0; j < data.length; j++) {
+                            let t_data = data[j]; //每个数据项
+                            if (val != t_data.code) { //选中项目不需要测试
+                                if (!isNaN(myWellCount[t_data.code])) {
+                                    t_count = myWellCount[t_data.code];
+                                } else {
+                                    t_count = 0; //初始化
+                                }
+                                let t_subWells = "," + t_data.wells + ",";
+                                if (t_subWells.includes("," + myWellId + ",")) {
+                                    t_count++; //计数
+                                }
+                                myWellCount[t_data.code] = t_count; //回写
                             }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //oilWellConditionOptions//油井工况，（单列）
-                    for (let j = 0; j < this.oilWellConditionOptions.length; j++) {
-                        let t_data = this.oilWellConditionOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //relationshipOptions//供排关系，（单列）
-                    for (let j = 0; j < this.relationshipOptions.length; j++) {
-                        let t_data = this.relationshipOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //diminishingOptions//递减率，（单列）
-                    for (let j = 0; j < this.diminishingOptions.length; j++) {
-                        let t_data = this.diminishingOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //fluidStrengthOptions//采液强度，（单列）
-                    for (let j = 0; j < this.fluidStrengthOptions.length; j++) {
-                        let t_data = this.fluidStrengthOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //fluidProductionOptions//采液指数，（单列）
-                    for (let j = 0; j < this.fluidProductionOptions.length; j++) {
-                        let t_data = this.fluidProductionOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //mfluidProductionOptions//米采液指数，（单列）
-                    for (let j = 0; j < this.mfluidProductionOptions.length; j++) {
-                        let t_data = this.mfluidProductionOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //extractionPotentialOptions//提液潜力，（单列）
-                    for (let j = 0; j < this.extractionPotentialOptions.length; j++) {
-                        let t_data = this.extractionPotentialOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //reserveProductionOptions//储量动用，（单列）
-                    for (let j = 0; j < this.reserveProductionOptions.length; j++) {
-                        let t_data = this.reserveProductionOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //recommendedMeasuresOptions//措施推荐；不需要考虑数据项
-                    for (let j = 0; j < this.recommendedMeasuresOptions.length; j++) {
-                        let t_data = this.recommendedMeasuresOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
                         }
                     }
                     //有推荐措施时，附加措施效果数据
@@ -2036,135 +1628,41 @@
                         myData[i].increaseQualityC = t_partData.increaseQualityC;
                     }
                 }
-
+                
                 //3、根据每个项目的井数遍历检查表头
-                //productionTrendsOptions//生产动态
+                let forEachKeys=['productionTrendsOptions','oilWellConditionOptions','relationshipOptions','diminishingOptions','fluidStrengthOptions','fluidProductionOptions','mfluidProductionOptions','extractionPotentialOptions','reserveProductionOptions','recommendedMeasuresOptions'];
                 this.productionTrendsTab = [];
-                for (let j = 0; j < this.productionTrendsOptions.length; j++) {
-                    let t_data = this.productionTrendsOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.productionTrendsOptions[j].value = t_count; //登记条数
-                    if (t_count > 0) {
-                        let titleName = t_data.name + ' ' + (t_data.unit ? t_data.unit : '');
-                        if (titleName.lastIndexOf('m3') > -1) {
-                            titleName = titleName.replace('m3', 'm³');
+                for(let i=0;i<forEachKeys.length;i++){
+                    let key=forEachKeys[i];
+                    let data=this[key];
+                    for (let j = 0; j < data.length; j++) {
+                        let t_data = data[j]; //每个数据项
+                        //获得相关井数
+                        if (!isNaN(myWellCount[t_data.code])) {
+                            t_count = myWellCount[t_data.code];
+                        } else {
+                            t_count = 0; //初始化
                         }
-                        this.productionTrendsTab.push({
-                            code: this.changeToVueCode(t_data.code, t_data.name),
-                            name: titleName
-                        });
+                        data[j].value = t_count; //登记条数
+                        if(key=='productionTrendsOptions'){
+                            if (t_count > 0) {
+                                let titleName = t_data.name + ' ' + (t_data.unit ? t_data.unit : '');
+                                if (titleName.lastIndexOf('m3') > -1) {
+                                    titleName = titleName.replace('m3', 'm³');
+                                }
+                                this.productionTrendsTab.push({
+                                    code: this.changeToVueCode(t_data.code, t_data.name),
+                                    name: titleName
+                                });
+                            }
+                        }
                     }
-                }
-                //oilWellConditionOptions//油井工况，（单列）
-                for (let j = 0; j < this.oilWellConditionOptions.length; j++) {
-                    let t_data = this.oilWellConditionOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.oilWellConditionOptions[j].value = t_count; //登记条数
-                }
-                //relationshipOptions//供排关系，（单列）
-                for (let j = 0; j < this.relationshipOptions.length; j++) {
-                    let t_data = this.relationshipOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.relationshipOptions[j].value = t_count; //登记条数
-                }
-                //diminishingOptions//递减率，（单列）
-                for (let j = 0; j < this.diminishingOptions.length; j++) {
-                    let t_data = this.diminishingOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.diminishingOptions[j].value = t_count; //登记条数
-                }
-                //fluidStrengthOptions//采液强度，（单列）
-                for (let j = 0; j < this.fluidStrengthOptions.length; j++) {
-                    let t_data = this.fluidStrengthOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.fluidStrengthOptions[j].value = t_count; //登记条数
-                }
-                //fluidProductionOptions//采液指数，（单列）
-                for (let j = 0; j < this.fluidProductionOptions.length; j++) {
-                    let t_data = this.fluidProductionOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.fluidProductionOptions[j].value = t_count; //登记条数
-                }
-                //mfluidProductionOptions//米采液指数，（单列）
-                for (let j = 0; j < this.mfluidProductionOptions.length; j++) {
-                    let t_data = this.mfluidProductionOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.mfluidProductionOptions[j].value = t_count; //登记条数
-                }
-                //extractionPotentialOptions//提液潜力，（单列）
-                for (let j = 0; j < this.extractionPotentialOptions.length; j++) {
-                    let t_data = this.extractionPotentialOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.extractionPotentialOptions[j].value = t_count; //登记条数
-                }
-                //reserveProductionOptions//储量动用，（单列）
-                for (let j = 0; j < this.reserveProductionOptions.length; j++) {
-                    let t_data = this.reserveProductionOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.reserveProductionOptions[j].value = t_count; //登记条数
-                }
-                //recommendedMeasuresOptions//措施推荐；不需要考虑数据项
-                for (let j = 0; j < this.recommendedMeasuresOptions.length; j++) {
-                    let t_data = this.recommendedMeasuresOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.recommendedMeasuresOptions[j].value = t_count; //登记条数
                 }
                 this.tableData = reData; //加载数据
                 console.log('this.tableData',this.tableData)
                 this.$nextTick(() => {
                     this.$refs.tableList.doLayout();
                 })
-                
                 //zxb-重新计算数量    
                 let numKeys=['productionNum','oilWellConditionNum','relationshipNum','diminishingNum','fluidStrengthNum','fluidProductionNum','mfluidProductionNum'];
                 let datakeys=['productionTrendsOptions','oilWellConditionOptions','relationshipOptions','diminishingOptions','fluidStrengthOptions','fluidProductionOptions','mfluidProductionOptions'];
@@ -2191,7 +1689,6 @@
                     let el=this.recommendedMeasuresOptions[i];
                     this.potentialWellNum+=Number(el.value);
                 }
-                
             },
             //跳转到水井页面
             goWaterWell(val) {
@@ -2321,7 +1818,6 @@
 </script>
 
 <style lang="scss" scoped>
-    
     .z_app_container{
         height:100%;
         .app-container{
