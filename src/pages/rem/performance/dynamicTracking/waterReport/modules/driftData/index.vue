@@ -7,7 +7,7 @@
             :cell-style="{ padding: '6px', 'text-align': 'center' }"
             style="width:100%;" height="calc(100% - 10px)" :default-sort="{ prop: 'date', order: 'descending' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-            <el-table-column type="index" label="序号"></el-table-column>
+            <el-table-column type="index" width="60" label="序号"></el-table-column>
             <el-table-column prop="wellName" label="井号"></el-table-column>
             <el-table-column prop="measureDepth" :label="`测点斜深\n (m)`"></el-table-column>
             <el-table-column prop="measureVerticalDepth" :label="`测点垂深\n (m)`"></el-table-column>

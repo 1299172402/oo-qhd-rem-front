@@ -3,7 +3,6 @@
 </template>
 
 <script>
-// require('echarts-wordcloud');
 export default {
   name: "EchartsComponents",
   props: {
@@ -96,10 +95,10 @@ export default {
     },
     // 图表刷新
     refreshEcharts() {
-      //   const that = this
       // 在渲染点击事件之前先清除点击事件
       if (this.myEcharts) {
         this.myEcharts.off("click");
+        this.myEcharts.off("legendSelectChanged");
         // 渲染数据
         const option = this.chartDataOptions;
         this.myEcharts.clear();
@@ -109,6 +108,8 @@ export default {
         });
         // 点击图例事件暴露
         this.myEcharts.on("legendSelectChanged", params => {
+          // eslint-disable-next-line no-restricted-globals
+          event.stopPropagation();
           this.$emit("legend-select-changed", params);
         });
       }

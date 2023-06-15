@@ -2,10 +2,12 @@
 <template>
   <common-dialog
     v-model="visible"
+    :dialog-title="`${type[action]}消息主题`"
     label=""
     height="1"
     :view-only="isView"
     @ok="save"
+    @close="() => { $refs.form.resetFields(); }"
   >
     <el-form
       ref="form"
@@ -162,20 +164,25 @@ export default {
       },
       rules: {
         title: [
-          { required: true, message: "请输入主题名称", trigger: "blur" },
-          { min: 1, max: 64, message: "长度在 1 到 64 个字符", trigger: "blur" }
+          { required: true, message: "请输入主题名称", trigger: ["blur", "change"] },
+          { min: 1, max: 64, message: "长度在 1 到 64 个字符", trigger: ["blur", "change"] }
         ],
         triggerType: [{ required: true, message: "请选择触达类型", trigger: "change" }],
         messageType: [{ required: true, message: "请选择", trigger: "change" }],
         appId: [{ required: true, message: "请选择", trigger: "change" }],
         exposeKey: [
-          { required: true, message: "请输入消息接收标识", trigger: "blur" },
-          { min: 1, max: 16, message: "长度在 1 到 16 个字符", trigger: "blur" }
+          { required: true, message: "请输入消息接收标识", trigger: ["blur", "change"] },
+          { min: 1, max: 16, message: "长度在 1 到 16 个字符", trigger: ["blur", "change"] }
         ],
         exposeUri: [
-          { required: true, message: "请输入消息接收URI", trigger: "blur" },
-          { min: 1, max: 128, message: "长度在 1 到 128 个字符", trigger: "blur" }
+          { required: true, message: "请输入消息接收URI", trigger: ["blur", "change"] },
+          { min: 1, max: 128, message: "长度在 1 到 128 个字符", trigger: ["blur", "change"] }
         ]
+      },
+      type: {
+        "Add": "新增",
+        "View": "查看",
+        "Edit": "编辑"
       }
     };
   },

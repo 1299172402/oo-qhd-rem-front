@@ -116,6 +116,9 @@ export default {
     };
   },
   mounted() {
+    if(this.$route.query.link){
+        this.tabsValue=this.$route.query.link;
+    }
     this.initData();
   },
   methods: {
