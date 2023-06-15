@@ -67,6 +67,7 @@
             :visible.sync="ljpmDialog"
             width="20%"
             :before-close="ljpmDialogClose"
+            :style="{ 'min-width': '1800px' }"
         >
             <el-row>
                 <el-form ref="form" :model="ljUploadForm" label-width="40px">
@@ -400,6 +401,7 @@
             },
             uploadFile(params){
                 addRemUploadFileMinio(params).then((res) => {
+                    console.log('res->>>>>>',res)
                     if (res.data.code == 200) {
                         this.$message.success("文件上传成功!");
                         this.ljpmDialog = false;
