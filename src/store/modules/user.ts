@@ -303,12 +303,6 @@ const actions = {
           commit("SETLOGOUT", res.data.user?.logout);
           commit("SETUSERDETAILS", res.data);
 
-          commit("SETISGROUPLOGIN", false);
-          if (firstLogin === "firstLogin") {
-            if (proxy[env].appId === "$system$" || env === "development") {
-              router.push("/");
-            }
-          }
           if (res.data.roles && res.data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
             commit("SET_ROLES", res.data.roles);
             commit("SET_PERMISSIONS", res.data.permissions);
@@ -322,6 +316,12 @@ const actions = {
             name: "td_dev",
             roles: user.roles.length > 0 ? user.roles : ["ALL_ROUTERS"]
           });
+          if (firstLogin === "firstLogin") {
+            commit("SETISGROUPLOGIN", false);
+            if (proxy[env].appId === "$system$" || env === "development") {
+              router.push("/");
+            }
+          }
           resolve(res);
         }
       }).catch(error => {

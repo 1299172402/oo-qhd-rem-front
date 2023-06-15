@@ -37,7 +37,7 @@
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
-                    <el-button type="primary" icon="el-icon-search" @click="getWellOutputWaveTable">搜索</el-button>
+                    <el-button type="primary" icon="el-icon-search" @click="getWellOutputWaveTable(true)">搜索</el-button>
                 </div>
             </div>
         </headerSearch>
@@ -62,17 +62,17 @@
                       <el-table-column prop="wellNo" label="井号" width="150" fixed/>
                       <el-table-column :label="searchForm.prodDate">
                         <el-table-column sortable prop="fluidProdDaily" :label="`日产液\n(m³/d)`" width="110" :formatter="formatter"/>      
-                        <el-table-column sortable prop="oilProdDaily" :label="`日产油\n(m³/d)`" width="110" />
-                        <el-table-column sortable prop="waterRatio" :label="`含水\n(%)`" width="110" />
-                        <el-table-column sortable prop="dhFlowingPress" :label="`井底流压\n(M pa)`" width="120" />
-                        <el-table-column sortable prop="pumpFrequency" :label="`泵频率\n(Hz)`" width="110" />
+                        <el-table-column sortable prop="oilProdDaily" :label="`日产油\n(m³/d)`" width="110"  :formatter="formatter"/>
+                        <el-table-column sortable prop="waterRatio" :label="`含水\n(%)`" width="110"  :formatter="formatter"/>
+                        <el-table-column sortable prop="dhFlowingPress" :label="`井底流压\n(Mpa)`" width="120"  :formatter="formatter"/>
+                        <el-table-column sortable prop="pumpFrequency" :label="`泵频率\n(Hz)`" width="110"/>
                       </el-table-column>
                       <el-table-column :label="searchForm.prodDateCompare">
-                        <el-table-column sortable prop="fluidProdDailyCompare" :label="`日产液\n(m³/d)`" width="110" />
-                        <el-table-column sortable prop="oilProdDailyCompare" :label="`日产油\n(m³/d)`" width="110" />
-                        <el-table-column sortable prop="waterRatioCompare" :label="`含水\n(%)`" width="110" />
-                        <el-table-column sortable prop="dhFlowingPressCompare" :label="`井底流压\n(M pa)`" width="120" />
-                        <el-table-column sortable prop="pumpFrequencyCompare" :label="`泵频率\n(Hz)`" width="110" />
+                        <el-table-column sortable prop="fluidProdDailyCompare" :label="`日产液\n(m³/d)`" width="110"  :formatter="formatter"/>
+                        <el-table-column sortable prop="oilProdDailyCompare" :label="`日产油\n(m³/d)`" width="110"  :formatter="formatter"/>
+                        <el-table-column sortable prop="waterRatioCompare" :label="`含水\n(%)`" width="110" :formatter="formatter"/>
+                        <el-table-column sortable prop="dhFlowingPressCompare" :label="`井底流压\n(MPa)`" width="120"  :formatter="formatter"/>
+                        <el-table-column sortable prop="pumpFrequencyCompare" :label="`泵频率\n(Hz)`" width="110"/>
                       </el-table-column>
                       <el-table-column label="变化量">
                         <el-table-column sortable prop="fluidProdDaily" :label="`产液对比\n(m³/d)`" width="160">
@@ -88,8 +88,17 @@
                         <el-table-column sortable prop="comparisonOilProduction" :label="`产油对比\n(m³/d)`" width="160">
                             <template slot-scope="{row,$index}">
                                 <span style="display: flex;align-items: center;justify-content: center;">
-                                    {{row.oilProdDaily!==null?row.comparisonOilProduction:'-'}}
-                                    <span v-if="row.oilProdDaily!==null" :style="{width:row.comparisonOilWidth+'px',height:'13px',backgroundColor:'#ff9716',marginLeft:'4px'}"></span>
+                                    <span style="width:60px;text-align: right;margin-right:10px;">{{row.oilProdDaily!==null?row.comparisonOilProduction:'-'}}</span>
+                                    <span style="width:30px;display:flex;justify-content:flex-end;">
+                                        <span style="height:13px;display:flex;" v-if="row.comparisonOilWidth!==0 && row.comparisonOilProduction < 0">
+                                            <span v-if="row.oilProdDaily!==null" :style="{width:row.comparisonOilWidth+'px',height:'13px',backgroundColor:'red'}"></span>
+                                        </span>
+                                    </span>
+                                    <span style="width:1px;height:40px;background: #8FA4CC;" v-if="row.comparisonOilWidth!==0"></span>
+                                    <span style="width:30px;height:13px;display:flex;" v-if="row.comparisonOilWidth!==0 && row.comparisonOilProduction > 0">
+                                        <span v-if="row.oilProdDaily!==null" :style="{width:row.comparisonOilWidth+'px',height:'13px',backgroundColor:'green'}"></span>
+                                    </span>
+                                    <span style="width:30px;height:13px;display:flex;" v-else></span>
                                 </span>
                             </template>
                         </el-table-column>
@@ -103,7 +112,7 @@
                                 </span>
                             </template>
                         </el-table-column>
-                        <el-table-column sortable prop="dhFlowingPress" :label="`井底流压对比\n(M pa)`" width="170">
+                        <el-table-column sortable prop="dhFlowingPress" :label="`井底流压对比\n(MPa)`" width="170">
                             <template slot-scope="scope">
                                 {{scope.row.dhFlowingPress!==null?numReduce(scope.row.dhFlowingPress,scope.row.dhFlowingPressCompare):'-'}}
                             </template>
@@ -283,8 +292,8 @@
                 this.searchForm.wellId = '';
             },
             //产量波动统计表
-            getWellOutputWaveTable() {
-                if(this.searchForm.wellId){
+            getWellOutputWaveTable(isWellIdsNull) {
+                if(this.searchForm.wellId || isWellIdsNull){
                     this.searchForm.wellIds=[];
                 }
                 getWellOutputWaveTable(this.searchForm).then((res) => {
@@ -296,7 +305,7 @@
                                 if(el.oilProdDaily!==null){//产油对比
                                     let comparisonOilProduction=this.numReduce(el.oilProdDaily,el.oilProdDailyCompare);
                                     tableData[i].comparisonOilProduction=comparisonOilProduction;
-                                    minMax.push(comparisonOilProduction)
+                                    minMax.push(Math.abs(comparisonOilProduction));
                                 }
                             })
                             this.min=Math.min(...minMax);   
@@ -305,7 +314,7 @@
                             let linearScale=numScale.domain([this.min,this.max]).range([this.min2,this.max2]);
                             tableData.forEach((el,i)=>{
                                 if(el.oilProdDaily!==null){//产油对比
-                                    tableData[i].comparisonOilWidth=linearScale(el.comparisonOilProduction);
+                                    tableData[i].comparisonOilWidth=linearScale(Math.abs(el.comparisonOilProduction));
                                 }
                             })
                             console.log('table数据',tableData);
@@ -357,8 +366,13 @@
                 return c = Number(a.toString().replace(".", "")), d = Number(b.toString().replace(".", "")), this.accMul(c / d, Math.pow(10, f - e));
             },
             //保留两位小数
-            formatter(row){
-                console.log(row,88)
+            formatter(row, column, cellValue, index){
+                console.log(row, column, cellValue, index)
+                if (cellValue) {
+                    return Number(cellValue).toFixed(2);
+                } else {
+                    return '-';
+                }
             },
         },
     };

@@ -14,13 +14,10 @@
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
 import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
-import {LineChart} from "echarts/charts";
 import * as echarts from "echarts/core";
 import {GridComponent, TooltipComponent, LegendComponent} from "echarts/components";
 import {CanvasRenderer} from "echarts/renderers";
 import {monthlyProductionComparison} from "@/api/rem/reservoirbillboards";
-
-echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 export default {
     props: ["infodata"],
     components: {
@@ -84,8 +81,8 @@ export default {
                         nameTextStyle: {
                             padding: [0, 0, 30, 0], // 上、右、下、左
                         },
-                        min:0,
-                        max:100,
+                        min: 0,
+                        max: 100,
                         nameLocation: "center",
                         axisLabel: {
                             color: "#a9a8a8",
@@ -126,10 +123,6 @@ export default {
                                 },
                             ]),
                         },
-                        /*showBackground: true,
-                      backgroundStyle: {
-                        color: 'rgba(143,164,204,0.2)',
-                      },*/
                     },
                     {
                         name: "月度实际产量",
@@ -148,10 +141,6 @@ export default {
                                 },
                             ]),
                         },
-                        /*showBackground: true,
-                      backgroundStyle: {
-                        color: 'rgba(143,164,204,0.2)',
-                      },*/
                     },
                 ],
             },
@@ -169,12 +158,11 @@ export default {
             monthlyProductionComparison({}).then(res => {
                 this.histogram.yAxis[0].min = null
                 this.histogram.yAxis[0].max = null
-                //
                 this.histogram.series[0].data = res.data.data.monthlyPlannedOutputVo.map(item => {
                     return Number(item.allocProdMonthly).toFixed(4)
                 })
                 this.histogram.series[1].data = res.data.data.monthlyActualOutputVoList.map(item => {
-                    return Number(item.checkedProdMonthly).toFixed(4)
+                    return Number(item.checkedProdMonthly / 10000).toFixed(4)
                 })
             })
         }
@@ -182,23 +170,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-// .f1 {
-//   margin: 10px;
-// }
-.cont {
-    & > div {
-        margin-top: 20px;
-    }
-}
-
-.m1 {
-    margin-top: 10px;
-}
-
-.f1 {
-    margin-left: 10px;
-}
-
 .detailLinkBtn {
     position: absolute;
     right: 50px;

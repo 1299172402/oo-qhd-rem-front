@@ -5,102 +5,100 @@
         header-title="超欠注情况统计"
         :is-show-max-btn="true"
     >
-        <button class="detailLinkBtn" @click="linkroute('measuresPumpWellRecovery')">详细</button>
+        <button class="detailLinkBtn" @click="linkroute('/intelligence1/index')">详细</button>
         <el-table
             :data="tableData"
-            highlight-current-row
             height="100%"
-            id="tableData"
-            :row-style="{ height: '0px' }"
-            :header-cell-style="{ 'text-align': 'center', padding: '0px', color: '' }"
-            header-cell-class-name="table_header"
-            :cell-style="{ 'text-align': 'center', padding: '0px' }"
-            :default-sort="{ prop: 'date', order: 'descending' }"
             style="width: 100%"
+            :header-cell-style="headerColor"
         >
-            <el-table-column width="50px">
+            <el-table-column prop="date" label="序号" align="center" width="50">
+                <template slot-scope="scope">{{ scope.$index + 1 }}</template>
+            </el-table-column>
+            <el-table-column prop="wellName" label="井号" width="130"
+                             align="center"></el-table-column>
+            <el-table-column prop="productionIntervalNo" label="层位" align="center" width="200">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.productionIntervalNo }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="injPump" label="注水工况" align="center">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.injPump }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="overflowInj" align="center" width="90">
                 <template slot="header">
-                    <div style="color: #1ec5e6">序号</div>
+                    超/欠注量</br>(m³/d)
                 </template>
                 <template slot-scope="scope">
-                    {{ scope.$index + 1 }}
+                    <span>{{ scope.row.overflowInj }}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="well" label="">
-                <template slot="header">
-                    <div style="color: #1ec5e6">井号</div>
-                </template>
-            </el-table-column>
-            <el-table-column prop="date" width="100px" label="">
-                <template slot="header">
-                    <div style="color: #1ec5e6">层位</div>
-                </template>
-            </el-table-column>
-            <el-table-column prop="address" label="">
-                <template slot="header">
-                    <div style="color: #1ec5e6">注水工况</div>
-                </template>
-            </el-table-column>
-            <el-table-column prop="addoil" label="">
-                <template slot="header">
-                    <div style="color: #1ec5e6">
-                        超/欠注量 <br />
-                        (m³/d)
-                    </div>
-                </template>
-            </el-table-column>
+            <el-table-column prop="dayNum" label="天数?(d)" :render-header="renderheader"
+                             width="70" align="center"></el-table-column>
+            <el-table-column prop="injAllocRatio" label="比例?(%)" :render-header="renderheader"
+                             width="70" align="center"></el-table-column>
         </el-table>
+
     </info-window>
-    
+
 </template>
 
 <script>
+import {getUltraShortShotStatistics} from "@/api/rem/r-intelligentIPA";
+
 export default {
-  data() {
-    return {
-      tableData: [
-        {
-          date: "Nml-3",
-          well: "QHD32-6-A01",
-          address: "欠注",
-          addoil: "82",
+    data() {
+        return {
+            tableData: [],
+        };
+    },
+    mounted() {
+        this.queryUltraShortShotStatistics()
+    },
+    methods: {
+        linkroute(rname) {
+            this.$router.push({path: rname,query: {link:'remHome'}});
         },
-        {
-         date: "Nml-3",
-          well: "QHD32-6-A02",
-          address: "欠注",
-          addoil: "87",
+        renderheader(h, {column, $index}) {
+            return h('span', {}, [
+                h('span', {}, column.label.split('?')[0]),
+                h('br'),
+                h('span', {}, column.label.split('?')[1])
+            ]);
         },
-        {
-          date: "Nml-3",
-          well: "QHD32-6-A03",
-         address: "欠注",
-          addoil: "28",
+        //超欠注情况统计
+        queryUltraShortShotStatistics() {
+            let queryData = {
+                //区块
+                blockId: 'YCFXDY8B643EDC9007F96F570600457D',
+                //选择时间
+                dateTime: new Date().format('YYYY-MM') ,
+                //油田
+                ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'
+            }
+            getUltraShortShotStatistics(queryData).then((res) => {
+                this.tableData = res.ultraShortShotData
+            })
         },
-        {
-         date: "Nml-2",
-          well: "QHD32-6-A01",
-         address: "超注",
-          addoil: "42",
-        },
-      ],
-    };
-  },
+    }
 };
 </script>
 
 <style lang="scss" scoped>
 #tableData {
-  ::v-deep .el-table__header-wrapper .cell {
-    height: auto;
-    line-height: 18px;
-    white-space: pre;
-  }
-  ::v-deep .cell:empty {
-    &::before {
-      content: "-";
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        line-height: 18px;
+        white-space: pre;
     }
-  }
+
+    ::v-deep .cell:empty {
+        &::before {
+            content: "-";
+        }
+    }
 }
 
 .detailLinkBtn {

@@ -6,19 +6,21 @@
           header-title="分层注入量"
           :is-show-max-btn="true"
       >
-          <button class="detailLinkBtn" @click="linkroute('manufacturerOperationTime')">详细</button>
-          <Echart :chart-data="histogram" width="100%" height="100%"></Echart>
+          <button class="detailLinkBtn" @click="linkroute('/intelligence1/index')">详细</button>
+          <Echart :chart-data="option" width="100%" height="100%"></Echart>
       </info-window>
   </div>
 </template>
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
-import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 import { LineChart } from "echarts/charts";
 import * as echarts from "echarts/core";
 import { GridComponent, TooltipComponent, LegendComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
+import {
+    getStratifiedInjectionDetails,
+} from "@/api/rem/r-intelligentIPA.js";
 export default {
   props: ["infodata"],
   components: {
@@ -26,184 +28,98 @@ export default {
   },
   data() {
     return {
-      histogram: {
-        legend: {
-          data: ["月注水量(10⁴m³)", "月配注量(10⁴m³)", "产液量(10⁴m³)"],
-          bottom: "bottom",
-          textStyle: {
-            color: "#a9a8a8",
-            fontSize: 16,
-          },
-        },
-          tooltip: {
-              trigger: "axis",
-              axisPointer: {
-                  type: "shadow",
-              },
-          },
-        grid: {
-          left: 20,
-          right: 30,
-          top: 0,
-          bottom: '10%',
-          show: false, // 隐藏坐标系网格线
-          containLabel: true,
-        },
-        barWidth: 15,
-        xAxis: {
-          type: "value",
-          max:10,
-          splitLine: {
-              show:false,
-            lineStyle: {
-              color: "rgba(255,255,255,0.2)",
+        option : {
+            title: {
+                text: ''
             },
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-              show:true,
-            //  改变x轴颜色
-            lineStyle: {
-              color: "#a9a8a8",
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
             },
-          },
-          axisLabel: {
-            //  改变x轴字体颜色和大小
-            textStyle: {
-              color: "#a9a8a8",
-              fontSize: 16,
-            },
-          },
-        },
-        yAxis: {
-          type: "category",
-          //   Ⅰ、Ⅱ、Ⅲ、Ⅳ、Ⅴ、Ⅵ、Ⅶ、Ⅷ、Ⅸ
-          data: ["nm1", "nm2", "nm3", "nm4", "nm5"],
-          splitLine: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            //  改变y轴颜色
-            show: true,
-            lineStyle: {
-              color: "#a9a8a8",
-            },
-          },
-          axisLabel: {
-            //  改变y轴字体颜色和大小
-            //formatter: '{value} m³ ', //  给y轴添加单位
-            textStyle: {
-              color: "#a9a8a8",
-              fontSize: 16,
-            },
-          },
-        },
-        series: [
-          {
-            type: "bar",
-            name: "月注水量(10⁴m³)",
-            itemStyle: {
-              normal: {
-                label: {
-                  show: true, //开启显示
-                  position: "right", //在上方显示
-                  textStyle: {
-                    //数值样式
-                    color: "rgba(250,250,250,0.6)",
-                    fontSize: 16,
-                    fontWeight: 600,
-                  },
+            legend: {
+                textStyle: {
+                    color: "#66ffff"
                 },
-                color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [
-                  {
-                    offset: 0,
-                    color: "rgba(85,209,255,1)",
-                  },
-                  {
-                    offset: 1,
-                    color: "rgba(45,130,255,1)",
-                  },
-                ]),
-
-                borderWidth: 0,
-              },
+                bottom: "bottom",
             },
-            data: [4, 9, 9, 8, 6],
-          },
-          {
-            type: "bar",
-            name: "月配注量(10⁴m³)",
-            itemStyle: {
-              normal: {
-                label: {
-                  show: true, //开启显示
-                  position: "right", //在上方显示
-                  textStyle: {
-                    //数值样式
-                    color: "rgba(250,250,250,0.6)",
-                    fontSize: 16,
-                    fontWeight: 600,
-                  },
+            grid: {
+                left: '10%',
+                right: '10%',
+                top: '5%',
+                bottom: '5%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                boundaryGap: [0, 1],
+                axisLabel: {
+                    color: '#a9a8a8'
                 },
-                color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [
-                  {
-                    offset: 0,
-                    color: "rgba(0,248,205,1)",
-                  },
-                  {
-                    offset: 1,
-                    color: "rgb(7,117,59)",
-                  },
-                ]),
-
-                borderWidth: 0,
-              },
             },
-            data: [2, 3, 5, 10, 5],
-          },
-          {
-            type: "bar",
-            name: "产液量(10⁴m³)",
-            itemStyle: {
-              normal: {
-                label: {
-                  show: true, //开启显示
-                  position: "right", //在上方显示
-                  textStyle: {
-                    //数值样式
-                    color: "rgba(250,250,250,0.6)",
-                    fontSize: 16,
-                    fontWeight: 600,
-                  },
+            yAxis: {
+                type: 'category',
+                data: '',
+                axisLabel: {
+                    color: '#a9a8a8'
+                }
+            },
+            series: [
+                {
+                    name: '月注水量(10⁴m³)',
+                    type: 'bar',
+                    color: 'rgb(9,141,234)',
+                    data: '',
                 },
-                color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [
-                  {
-                    offset: 0,
-                    color: "rgba(255,199,87,1)",
-                  },
-                  {
-                    offset: 1,
-                    color: "rgba(255,114,53,1)",
-                  },
-                ]),
-
-                borderWidth: 0,
-              },
-            },
-            data: [2, 3, 5, 7, 8],
-          },
-        ],
-      },
+                {
+                    name: '月配注量(10⁴m³)',
+                    type: 'bar',
+                    color: 'rgb(4,182,131)',
+                    data: ''
+                },
+                {
+                    name: '月产液量(10⁴m³)',
+                    type: 'bar',
+                    color: 'rgb(255,156,70)',
+                    data: ''
+                }
+            ]
+        }
+        
     };
   },
-  mounted() {},
+  mounted() {
+      // this.queryStratifiedInjectionDetails()
+  },
   methods: {
-      // 写接口时要把xAxis中的 min/max 赋值为null
+      linkroute(rname) {
+          this.$router.push({path: rname,query: {link:'remHome'}});
+      },
+      //分层注采量
+      queryStratifiedInjectionDetails() {
+          let params = {
+              blockId: 'YCFXDY8B643EDC9007F96F570600457D',
+              startTime: new Date().format('YYYY-MM'),
+              timeStatus: '1',
+              type: 1
+          }
+          getStratifiedInjectionDetails(params).then((res) => {
+              let productionIntervalNo=[],inj=[],injAlloc=[],fluidProd=[]
+              res.forEach((item) => {
+                  if(item.productionIntervalNo){
+                      productionIntervalNo.push(String(item.productionIntervalNo))
+                      inj.push(Number(item.inj).toFixed(2))
+                      injAlloc.push(Number(item.injAlloc).toFixed(2))
+                      fluidProd.push(Number(item.fluidProd).toFixed(2))
+                  }
+              })
+              this.option.yAxis.data = productionIntervalNo
+              this.option.series[0].data = inj
+              this.option.series[1].data = injAlloc
+              this.option.series[2].data = fluidProd
+          })
+      },
   },
 };
 </script>

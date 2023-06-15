@@ -576,8 +576,22 @@ export default {
           }
         }
       });
+        // debugger
+      let obj = {
+          blockId: "YCFXDY8B643EDC9007F96F570600457D",
+          dateTime: "",
+          ogfId: "",
+          wellDataDtoList: [
+              {
+                  wellId: "",
+                  wellName: ""
+              }
+          ],
+          wellGroupId: ""
+      }
+       
       //动态资料-井组配注变化动态||井组连通性变化动态||注采井网状态变化 调zxp这个接口
-      wellGroupList(requestWellGroups).then((res) => {
+      wellGroupList(obj).then((res) => {
         if (res.data.code == 200 && res.data.data && res.data.data.length) {
           this.newWellGroup = res.data.data;
         }
@@ -633,11 +647,28 @@ export default {
           this.wellGroup = res.data.data.wellGroups;
         }
       });
-      wellGroupList(request).then((res) => {
-        if (res.data.code == 200) {
-          this.newWellGroup = res.data.data;
+      let blockId = this.selectBlock
+        if(blockId == '3FC9A818F5BC43B88270DB80BBB3018F'){
+            blockId = 'YCFXDY8B643EDC9007F96F570600457D'
         }
-      });
+        let obj = {
+            blockId: blockId,
+            dateTime: "",
+            ogfId: "",
+            wellDataDtoList: [
+                {
+                    wellId: "",
+                    wellName: ""
+                }
+            ],
+            wellGroupId: ""
+        }
+        //动态资料-井组配注变化动态||井组连通性变化动态||注采井网状态变化 调zxp这个接口
+        wellGroupList(obj).then((res) => {
+            if (res.data.code == 200 && res.data.data && res.data.data.length) {
+                this.newWellGroup = res.data.data;
+            }
+        });
     },
     //改变选中井组切换内容
     changeSelectWellCentre() {},

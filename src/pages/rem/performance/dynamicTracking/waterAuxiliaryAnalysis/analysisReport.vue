@@ -5,24 +5,35 @@
         <div class="app-container" v-if="!isNewformat">
             <headerSearch style="height:80px;">
                 <div class="g-row-flex-V g-w100 g-h100">
+                    
                     <span>油田：</span>
-                    <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="changeOilFeild">
+                    <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="getFieldsData">
                         <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId" :disabled="item.disabled"></el-option>
                     </el-select>
+                    
+                    <span style="margin-left:15px;">区块：</span>
+                    <el-select v-model="selectBlock" style="width: 180px" filterable clearable @change="queryPlatFormList">
+                        <el-option v-for="item in blocks" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
+                    </el-select>
+                    
                     <span style="margin-left:15px;">平台：</span>
-                    <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="changePlatForm">
+                    <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="queryWellListByPid">
                         <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId" :disabled="item.disabled"></el-option>
                     </el-select>
+                    
                     <span style="margin-left:15px;">井号：</span>
                     <el-select v-model="wellId" class="f2" style="width:180px" filterable clearable>
                         <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled"></el-option>
                     </el-select>
+                    
                     <span style="margin-left:15px;">评价时间：</span>
                     <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
+                    
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+                    
                 </div>
-            </headerSearch>
+            </headerSearch> 
             <pagePanelNew style="height: calc(100% - 100px);" class="g-w100">
                 <div class="btns" style="height:50px;display: flex;padding-left:7px;">
                     <el-button type="primary" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
@@ -458,7 +469,7 @@
                             </div>
                         </info-window>
                     </div>
-                    <div style="height:360px;">
+                    <div style="height:540px;">
                         <info-window info-width="100%"  info-height="100%"  header-title="水井动态分析详情列表" :is-show-max-btn="false">
                             <el-table
                             class="doubleHeader"
@@ -608,6 +619,7 @@
                     yczb:0,
                 },
                 trendOfIndicatorsSwitch:false,//展示异常false, 正常 true
+                trendOfIndicatorsCode:'',//正常的code
                 //井层注水工况
                 workingCondition: [],
                 workingCondNum:{
@@ -738,34 +750,31 @@
                 }
             },
             //进行数据查询处理
-            doSearch() {
+            async doSearch() {
                 //加上重新搜索清空选择 和 表格数据
                 this.selCode = '';
                 this.tableData = [];
                 //重新初始化相关数据项目
-                // this.paramMap.evalTopic = "生产动态";
                 this.paramMap.evaluationDate = this.currentDate;
                 this.paramMap.oilFieldId = this.selYtdm;
                 this.paramMap.platformId = this.platform;
                 this.paramMap.timeGranularityCode = "";
                 this.paramMap.wellId = this.wellId;
-
                 //执行提取
-                this.queryTrendOfIndicators(); //井层指标变化趋势
-                this.queryWorkingCondition(); //井层注水工况
-                this.queryTheGroundBecause(); //地面原因
-                this.queryWellboreReason(); //井筒原因
-                this.queryFormationReason(); //地层原因
-                this.queryStopInjectionRecovery(); //停注恢复
-                this.queryRecommendedMeasures(); //措施推荐
-                this.queryProWellDynamicAnalysisDetail(); //措施井数据
-
+                await this.queryTrendOfIndicators(); //井层指标变化趋势
+                await this.queryWorkingCondition(); //井层注水工况
+                await this.queryTheGroundBecause(); //地面原因
+                await this.queryWellboreReason(); //井筒原因
+                await this.queryFormationReason(); //地层原因
+                await this.queryStopInjectionRecovery(); //停注恢复
+                await this.queryRecommendedMeasures(); //措施推荐
+                await this.queryProWellDynamicAnalysisDetail(); //措施井数据
                 //触发初始选中 （测试没有使用，需要异步使用，还需要）
                 this.selRadioIterm(this.selCode, this.selTag);
             },
             //井层指标变化趋势 || 注入动态---zxb
-            queryTrendOfIndicators() {
-                layerVariationTrend(this.paramMap).then((res) => {
+            async queryTrendOfIndicators() {
+                await layerVariationTrend(this.paramMap).then((res) => {
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
@@ -775,6 +784,7 @@
                         myData.forEach((el,i)=>{
                             this.trendOfIndicatorsNum.allnum+=Number(el.value);
                             if(el.name=='正常'){
+                                this.trendOfIndicatorsCode=el.code;
                                 this.trendOfIndicatorsNum.zcnum=Number(el.value);
                             }else{
                                 myData[i].isShow=Number(el.value)?true:false;
@@ -788,8 +798,8 @@
                 });
             },
             //井层注水工况---zxb
-            queryWorkingCondition() {
-                layerInjectionStatus(this.paramMap).then((res) => {
+            async queryWorkingCondition() {
+                await layerInjectionStatus(this.paramMap).then((res) => {
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
@@ -812,8 +822,8 @@
                 });
             },
             //地面原因
-            queryTheGroundBecause() {
-                groundReason(this.paramMap).then((res) => {
+            async queryTheGroundBecause() {
+                await groundReason(this.paramMap).then((res) => {
                     // debugger
                     let msg = res.data.msg;
                     if (msg == "success") {
@@ -824,8 +834,8 @@
                 });
             },
             //井筒原因---zxb
-            queryWellboreReason() {
-                wellBoreReason(this.paramMap).then((res) => {
+            async queryWellboreReason() {
+                await wellBoreReason(this.paramMap).then((res) => {
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
@@ -848,8 +858,8 @@
                 });
             },
             //地层原因
-            queryFormationReason() {
-                layerReason(this.paramMap).then((res) => {
+            async queryFormationReason() {
+                await layerReason(this.paramMap).then((res) => {
                     // debugger
                     let msg = res.data.msg;
                     if (msg == "success") {
@@ -860,9 +870,9 @@
                 });
             },
             //停注恢复
-            queryStopInjectionRecovery() {
-                injectionClosed(this.paramMap).then((res) => {
-                    // debugger
+            async queryStopInjectionRecovery() {
+                await injectionClosed(this.paramMap).then((res) => {
+                     // debugger
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
@@ -872,8 +882,8 @@
                 });
             },
             //措施推荐可用项目
-            queryRecommendedMeasures() {
-                injectionMeasureRecommend(this.paramMap).then((res) => {
+            async queryRecommendedMeasures() {
+                await injectionMeasureRecommend(this.paramMap).then((res) => {
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
@@ -886,8 +896,8 @@
                 });
             },
             //措施推荐可用项目,获取措施效果数据
-            queryProWellDynamicAnalysisDetail() {
-                injectionWellDynamicAnalysisDetail(this.paramMap).then((res) => {
+            async queryProWellDynamicAnalysisDetail() {
+                await injectionWellDynamicAnalysisDetail(this.paramMap).then((res) => {
                     console.log("myData11_tag", res);
                     let msg = res.data.msg;
                     if (msg == "success") {
@@ -1204,12 +1214,12 @@
                         myData[i].increaseQualityC = t_partData.increaseQualityC;
                     }
                 }
-                console.log(myData)
+                
                 //3、根据每个项目的井数遍历检查表头
                 //井层指标变化趋势  trendOfIndicators
                 this.trendOfIndicatorsTab = [];
                 for (let j = 0; j < this.trendOfIndicators.length; j++) {
-                    let t_data = this.trendOfIndicators[j]; //每个数据项
+                    let t_data = this.trendOfIndicators[j];
                     //获得相关井数
                     if (!isNaN(myWellCount[t_data.code])) {
                         t_count = myWellCount[t_data.code];
@@ -1219,7 +1229,6 @@
                     this.trendOfIndicators[j].value = t_count; //登记条数
                     if (t_count > 0) {
                         let titleName = t_data.name;
-                        console.log('t_data.unit',t_data.unit);
                         let unit='';
                         if(t_data.unit){
                             unit=t_data.unit.replace('m3', 'm³');
@@ -1298,10 +1307,11 @@
                     this.recommendedMeasuresOptions[j].value = t_count; //登记条数
                 }
                 this.tableData = myData; //加载数据
+                console.log('myData',myData);
+                console.log('trendOfIndicatorsTab',this.trendOfIndicatorsTab)
                 this.$nextTick(() => {
                     this.$refs.tableList.doLayout();
                 })
-                
                 //zxb-重新计算数量
                 let numKeys=['trendOfIndicatorsNum','wellboreReasonNum','workingCondNum'];
                 let datakeys=['trendOfIndicators','wellboreReason','workingCondition'];
@@ -1312,8 +1322,6 @@
                     this[numKey].zcnum=0;
                     this[numKey].ycnum=0;
                     this[dataKey].forEach((el,i)=>{
-                        console.log(this[dataKey][i].value,7777)
-                        console.log(Number(this[dataKey][i].value),999)
                         this[numKey].allnum+=Number(this[dataKey][i].value);
                         if(el.name=='正常'||el.name=='合格区'){
                             this[numKey].zcnum=Number(this[dataKey][i].value);
@@ -1323,16 +1331,13 @@
                     })
                     this[numKey].zczb=this[numKey].zcnum/this[numKey].allnum * 100;
                     this[numKey].yczb=this[numKey].yczb/this[numKey].allnum * 100;
-                    console.log('this[numKey]',this[numKey])
                 }
-                console.log('wellboreReason',this.wellboreReason)
                 //zxb-重新计算推荐井组
                 this.potentialWellNum=0;
                 for(let i=0;i<this.recommendedMeasuresOptions.length;i++){
                     let el=this.recommendedMeasuresOptions[i];
                     this.potentialWellNum+=Number(el.value);
                 }
-                
             },
             //跳转到油井页面
             goWaterWell(val) {

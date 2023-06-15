@@ -1,5 +1,6 @@
 <template>
   <iframe
+    ref="iframe"
     v-postTheme="$store.state.setting.mode"
     class="iframe-view"
     :src="src"
@@ -14,6 +15,17 @@ export default {
   computed: {
     src: function() {
       return addTokenToUrl(this.$route.query.src);
+    }
+  },
+  mounted() {
+    this.$refs.iframe.addEventListener("load", this.iframeLoad);
+  },
+  beforeDestroy() {
+    this.$refs.iframe.removeEventListener("load", this.iframeLoad);
+  },
+  methods: {
+    iframeLoad() {
+      window.parent.postMessage({ type: "iframeLoaded" });
     }
   }
 };

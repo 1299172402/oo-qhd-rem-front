@@ -282,9 +282,9 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        dictLabel: [{ required: true, message: "请输入数据标签", trigger: "blur" }],
-        dictValue: [{ required: true, message: "请输入数据键值", trigger: "blur" }],
-        dictSort: [{ required: true, message: "请输入数据顺序", trigger: "blur" }]
+        dictLabel: [{ required: true, message: "请输入数据标签" }],
+        dictValue: [{ required: true, message: "请输入数据键值" }],
+        dictSort: [{ required: true, message: "请输入数据顺序" }]
       }
     };
   },

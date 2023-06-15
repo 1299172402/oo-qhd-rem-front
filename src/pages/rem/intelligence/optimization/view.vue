@@ -120,17 +120,17 @@
                                        :loading="saveInLoad">保存
                             </el-button>
                         </div>
-                        <el-form ref="form" :rules="rules" label-width="100px" :model="form">
+                        <el-form ref="form" :rules="rules" label-width="100px" style="height: 100%" :model="form">
                             <el-table
                                 v-if="radio == 1"
                                 :data="form.tableData2"
                                 id="indexscv"
                                 highlight
-                                style="margin-top: 10px"
+                                style="margin-top: 10px;"
                                 :cell-style="tableColorone"
                                 :header-cell-style="tableColor1"
                                 :span-method="arrheader"
-                                height="100%"
+                                height="calc(100% - 40px)"
                             >
                                 <!-- :span-method="arrheader" -->
                                 <el-table-column prop="injWellNo" label="水井井号" width="150"
@@ -242,6 +242,7 @@
                             <el-button align="left" style="width: 100%;">{{ yucejieguo }}</el-button>
                         </div>
                         <el-table :data="tableData3" id="indexscv" highlight
+                                  height="calc(100% - 80px)"
                                   style="margin-top: 10px;max-height: 430px;overflow-y: auto;">
                             <el-table-column prop="layerNo" label="层名" show-overflow-tooltip min-width="200"
                                              align="center"></el-table-column>
@@ -408,7 +409,6 @@ export default {
             this.queryWellInjRatio()
         },
         queryBut() {
-            this.queryWellGuessResult()
             this.queryWellAvgFluidProdAlloc()
             this.queryWellInjRatio()
         },
@@ -466,6 +466,7 @@ export default {
                 })
                 localStorage.setItem('SINGLEWELL_TABLE', JSON.stringify(storeList))
                 this.tableData1 = wellDataList
+                this.queryWellInjRatio()
             })
         },
         //指定注采比
@@ -509,6 +510,7 @@ export default {
                 // this.getSpanArr(arr, 'injWellNo')
                 this.groupBy(arr)
                 this.ying = eval(res.groupWaterInferData)
+                this.queryWellGuessResult()
                 this.$message.success("保存成功")
             }).catch(() => {
                 this.$message.error("请配置井组参数信息!")

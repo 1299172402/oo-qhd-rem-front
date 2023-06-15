@@ -146,12 +146,6 @@
             <p>编辑面板</p>
           </div>
         </t-form>
-        <div class="setting-info">
-          <p>请复制后手动修改配置文件: /src/config/style.ts</p>
-          <t-button theme="primary" variant="text" @click="handleCopy">
-            复制配置项
-          </t-button>
-        </div>
       </div>
     </t-drawer>
   </div>
@@ -281,13 +275,6 @@ export default {
         userId: this.$store.getters["user/userDetail"].user.userId
       };
       setpageConfig(data).then(() => {});
-    },
-    handleCopy(): void {
-      const text = JSON.stringify(this.formData, null, 4);
-      this.$copyText(text).then(() => {
-        this.$message.closeAll();
-        this.$message.success("复制成功");
-      });
     },
     changeColor(hex: string) {
       const { setting } = this.$store.state;

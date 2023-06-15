@@ -37,6 +37,7 @@ import headerSearch from "@/components/intelligentOilfield/header-search/index.v
 import "@/utils/filter";
 import VXETable from "vxe-table";
 import "vxe-table/lib/style.css";
+import config from "../package.json";
 
 const env = import.meta.env.MODE;
 
@@ -75,6 +76,8 @@ Vue.use(TDesign);
 Vue.use(VueClipboard);
 DictData.install();
 
+// 控制台打印当前系统版本号
+window.console.log("当前系统版本：", config.version);
 const originPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {
   return originPush.call(this, location).catch(err => err);
@@ -84,7 +87,6 @@ const originReplace = VueRouter.prototype.replace;
 VueRouter.prototype.replace = function replace(location) {
   return originReplace.call(this, location).catch(err => err);
 };
-
 Date.prototype.format=function(e){let t=e;return t=t.replace(/yyyy|YYYY/,this.getFullYear()),t=t.replace(/MM/,this.getMonth()+1>9?(this.getMonth()+1).toString():"0".concat(this.getMonth()+1)),t=t.replace(/dd|DD/,this.getDate()>9?this.getDate().toString():"0".concat(this.getDate())),t=t.replace(/hh/,this.getHours()>9?this.getHours().toString():"0".concat(this.getHours())),t=t.replace(/mm/,this.getMinutes()>9?this.getMinutes().toString():"0".concat(this.getMinutes())),t=t.replace(/ss/,this.getSeconds()>9?this.getSeconds().toString():"0".concat(this.getSeconds()))},Date.prototype.addDays=function(e){return this.setDate(this.getDate()+e),this};
 Date.prototype.format=function(e){let t=e;return t=t.replace(/yyyy|YYYY/,this.getFullYear()),t=t.replace(/MM/,this.getMonth()+1>9?(this.getMonth()+1).toString():"0".concat(this.getMonth()+1)),t=t.replace(/dd|DD/,this.getDate()>9?this.getDate().toString():"0".concat(this.getDate())),t=t.replace(/hh/,this.getHours()>9?this.getHours().toString():"0".concat(this.getHours())),t=t.replace(/mm/,this.getMinutes()>9?this.getMinutes().toString():"0".concat(this.getMinutes())),t=t.replace(/ss/,this.getSeconds()>9?this.getSeconds().toString():"0".concat(this.getSeconds()))},Date.prototype.addDays=function(e){return this.setDate(this.getDate()+e),this};
 Date.prototype.getYesterday=function(e){return new Date(new Date().getTime() - 24 * 60 * 60 * 1000).format('YYYY-MM-DD') }

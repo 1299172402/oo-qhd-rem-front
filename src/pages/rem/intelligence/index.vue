@@ -46,11 +46,18 @@
                     style="margin-left: 20px"
                 >搜索
                 </el-button>
+                <el-button
+                    v-if="this.$route.query.link == 'remHome'"
+                    @click="returnBack"
+                    type="primary"
+                    style="margin-left: 20px;float: right"
+                >返回
+                </el-button>
             </div>
         </header-search>
         <div style="display: flex;justify-content: space-around; height: 100%;">
-            <div style="flex:4; height: 100%; margin-right: 15px;">
-                <page-panel :header-title="title" style=" height: auto; " :show-btn="true">
+            <div style="flex:4; height: 118%; margin-right: 15px;">
+                <page-panel :header-title="title" style=" height: 100% " :show-btn="true">
                     <el-row :gutter="20" style="margin-bottom: 10px;">
                         <el-col :span="12">
                             <div class="grid-content bg-purple">
@@ -190,7 +197,7 @@
                     </page-panel>
                     <el-dialog :visible.sync="detailed" title="单井井底流压">
                         <el-table :data="residueOil" height="600">
-                            <el-table-column prop="date" label="序号" align="center" width="50">
+                            <el-table-column prop="date" label="序号" align="center" width="80">
                                 <template slot-scope="scope">{{ scope.$index + 1 }}</template>
                             </el-table-column>
                             <el-table-column prop="wellNo" label="井号" align="center">
@@ -210,17 +217,17 @@
                             style="width: 100%"
                             :header-cell-style="headerColor"
                         >
-                            <el-table-column prop="date" label="序号" align="center" width="40">
+                            <el-table-column prop="date" label="序号" align="center" width="50">
                                 <template slot-scope="scope">{{ scope.$index + 1 }}</template>
                             </el-table-column>
                             <el-table-column prop="wellName" label="井号" width="130"
                                              align="center"></el-table-column>
-                            <el-table-column prop="productionIntervalNo" label="层位" align="center">
+                            <el-table-column prop="productionIntervalNo" label="层位" align="center" width="200">
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.productionIntervalNo }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="injPump" label="注水工况" align="center">
+                            <el-table-column prop="injPump" label="注水工况" align="center" >
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.injPump }}</span>
                                 </template>
@@ -297,6 +304,9 @@ export default {
         this.searchList()
     },
     methods: {
+        returnBack(){
+            this.$router.go(-1)
+        },
         renderheader(h, {column, $index}) {
             return h('span', {}, [
                 h('span', {}, column.label.split('?')[0]),
@@ -386,10 +396,12 @@ export default {
                 this.injAllocList = []
                 this.fluidProdList = []
                 res.forEach((item) => {
-                    this.dataList.push(String(item.productionIntervalNo))
-                    this.injList.push(Number(item.inj).toFixed(2))
-                    this.injAllocList.push(Number(item.injAlloc).toFixed(2))
-                    this.fluidProdList.push(Number(item.fluidProd).toFixed(2))
+                    if(item.productionIntervalNo){
+                        this.dataList.push(String(item.productionIntervalNo))
+                        this.injList.push(Number(item.inj).toFixed(2))
+                        this.injAllocList.push(Number(item.injAlloc).toFixed(2))
+                        this.fluidProdList.push(Number(item.fluidProd).toFixed(2))
+                    }
                 })
                 this.getMainEchart()
             })
@@ -433,7 +445,7 @@ export default {
                     },
                     interval: 400,
                     axisLabel: {
-                        color: '#fff'
+                        color: '#a9a8a8'
                     }
                 }, {
                     type: 'value',
@@ -445,14 +457,14 @@ export default {
                         show:true
                     },
                     axisLabel: {
-                        color: '#fff'
+                        color: '#a9a8a8'
                     }
                 }],
                 yAxis: {
                     type: 'category',
                     data: [],
                     axisLabel: {
-                        color: '#fff'
+                        color: '#a9a8a8'
                     }
                 }
             };
@@ -588,28 +600,28 @@ export default {
                 legend: {
                     textStyle: {
                         color: "#66ffff"
-                    }
+                    },
+                    bottom: "bottom",
                 },
                 grid: {
                     left: '10%',
                     right: '10%',
+                    top: '5%',
                     bottom: '5%',
                     containLabel: true
                 },
                 xAxis: {
                     type: 'value',
                     boundaryGap: [0, 1],
-                    min: '0',
-                    max: "100",
                     axisLabel: {
-                        color: '#fff'
+                        color: '#a9a8a8'
                     }
                 },
                 yAxis: {
                     type: 'category',
                     data: this.dataList,
                     axisLabel: {
-                        color: '#fff'
+                        color: '#a9a8a8'
                     }
                 },
                 series: [

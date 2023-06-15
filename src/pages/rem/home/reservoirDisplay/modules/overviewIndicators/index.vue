@@ -6,7 +6,7 @@
             header-title="秦皇岛32-6油田生产指标总览"
             :is-show-max-btn="true"
         >
-            <button class="detailLinkBtn" @click="linkroute('technicalIndexManagement')">详细</button>
+            <button class="detailLinkBtn" @click="linkroute('/intelligence1/index')">详细</button>
             <el-row :gutter="20" style="margin-bottom: 10px;padding: 0 20px">
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
@@ -469,7 +469,7 @@ export default {
     },
     methods: {
         linkroute(rname) {
-            this.$router.push({name: rname});
+            this.$router.push({path: rname,query: {link:'remHome'}});
         },
         getData(){
             // new Date().format('YYYY-MM')

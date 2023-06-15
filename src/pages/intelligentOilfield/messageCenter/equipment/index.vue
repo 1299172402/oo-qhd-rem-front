@@ -811,27 +811,27 @@ export default {
       addCloudForm: {},
       // 表单校验
       rules: {
-        systemName: [{ required: true, message: "请输入系统名称", trigger: "blur" }],
-        terraceId: [{ required: true, message: "请选择所属平台", trigger: "blur" }],
-        systemCode: [{ required: true, message: "请输入系统编号", trigger: "blur" }]
+        systemName: [{ required: true, message: "请输入系统名称" }],
+        terraceId: [{ required: true, message: "请选择所属平台" }],
+        systemCode: [{ required: true, message: "请输入系统编号" }]
       },
       equRules: {
-        equipmentType: [{ required: true, message: "请输入设备名称", trigger: "blur" }],
-        systemId: [{ required: true, message: "请选择设备所属系统", trigger: "blur" }],
-        equipmentCode: [{ required: true, message: "请输入设备编号", trigger: "blur" }],
-        terraceId: [{ required: true, message: "请选择设备所属平台", trigger: "blur" }]
+        equipmentType: [{ required: true, message: "请输入设备名称" }],
+        systemId: [{ required: true, message: "请选择设备所属系统" }],
+        equipmentCode: [{ required: true, message: "请输入设备编号" }],
+        terraceId: [{ required: true, message: "请选择设备所属平台" }]
       },
       platRules: {
-        terraceName: [{ required: true, message: "请输入平台名称", trigger: "blur" }],
-        parentName: [{ required: true, message: "请选择父级平台", trigger: "blur" }],
-        terraceCode: [{ required: true, message: "请输入平台编码", trigger: "blur" }]
+        terraceName: [{ required: true, message: "请输入平台名称" }],
+        parentName: [{ required: true, message: "请选择父级平台" }],
+        terraceCode: [{ required: true, message: "请输入平台编码" }]
       },
       cloudRules: {
-        startDescribe: [{ required: true, message: "请输入链路起点", trigger: "blur" }],
-        endDescribe: [{ required: true, message: "请输入链路终点", trigger: "blur" }],
-        startPoint: [{ required: true, message: "请输入起点编码", trigger: "blur" }],
-        endPoint: [{ required: true, message: "请输入终点编码", trigger: "blur" }],
-        linkType: [{ required: true, message: "请选择链路类型", trigger: "blur" }]
+        startDescribe: [{ required: true, message: "请输入链路起点" }],
+        endDescribe: [{ required: true, message: "请输入链路终点" }],
+        startPoint: [{ required: true, message: "请输入起点编码" }],
+        endPoint: [{ required: true, message: "请输入终点编码" }],
+        linkType: [{ required: true, message: "请选择链路类型" }]
       },
       activeName: "first", // first:设备系统列表；second:设备名称列表
       systemPlatformList: [],
