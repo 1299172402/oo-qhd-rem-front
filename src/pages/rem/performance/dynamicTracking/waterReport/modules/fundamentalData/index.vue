@@ -14,7 +14,7 @@
                 :default-sort="{ prop: 'date', order: 'descending' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
             >
-                <el-table-column type="index" label="序号"></el-table-column>
+                <el-table-column type="index" width="60" label="序号"></el-table-column>
                 <el-table-column prop="platformName" label="平台" width="130"></el-table-column>
                 <el-table-column prop="coordX" label="井坐标位置">
                     <template slot-scope="scope">
