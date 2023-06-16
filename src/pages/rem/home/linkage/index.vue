@@ -17,7 +17,9 @@
 </template>
 
 <script>
+import request from '@/utils/request'
 import linkageBox from "./linkageBox/index.vue";
+import {InjectionProdInfo} from "@/api/rem/injectionproductionlinkage";
 const env = import.meta.env.MODE;
 const baseUrl = env == "development"?'/src':''
 let curDate = new Date()
@@ -29,23 +31,37 @@ export default {
     },
     mounted(){
         this.arrowFun()
+        this.getWarningInfo()
+        this.timmerWarning = setInterval(()=>{
+            this.getWarningInfo()
+        },1000 * 10)
     },
     methods: {
+        getWarningInfo(){
+            this.currentLists.forEach((i,index)=>{
+                i.warningShowFlag = false
+            })
+            request({
+                url: `/amm/api/gem001b/queryAlcAlarm`,
+                method: "get",
+            }).then(res=>{
+                res.data.data.forEach(item=>{
+                    this.currentLists.forEach((i,index)=>{
+                        if(i.typeIdList.indexOf(item.typeId) != -1){
+                            this.currentLists[index].warningShowFlag = true
+                        }
+                    })
+                })
+            })
+        },
         arrowFun(){
-            setInterval(()=>{
+            this.timmer = setInterval(()=>{
                 if(this.loopNum!= -1 && this.loopNum < 5) this.currentLists[this.loopImgNum[this.loopNum ]].showFlag = true
                 if(this.loopNum!= -1 && this.loopNum < 5) this.currentLists[this.loopImgNumClose[this.loopNum ]].showFlag = false
                 this.loopNum ++                
                 for(let i=0;i<7;i++){
                     this.$el.querySelectorAll('img')[i].style.display = 'none'
                 }
-                //报警信息================
-                // if(this.loopNum == 2){
-                //      this.currentLists[6].warningShowFlag = true
-                // }
-                //======================
-                
-                
                 this.$el.querySelectorAll('img')[this.loopNum].style.display = 'block'
                 if(this.loopNum == 6){
                    this.loopNum = -1
@@ -53,10 +69,10 @@ export default {
             },2000)
         }
     },
-    created() {
-    },
     data(){
         return {
+            timmer:'',
+            timmerWarning:'',
             baseUrl : env == "development"?'/src':'',
             loopNum: 0,
             loopImgNum: [6,4,1,10,7],
@@ -71,7 +87,9 @@ export default {
                         pWidth: 'width:11vw',
                     },
                     imgUrl: new URL('./topBox/23.png', import.meta.url).href,
-                    showFlag:false
+                    showFlag:false,
+                    typeIdList:[],
+                    warningShowFlag : false,
                 },
                 {
                     style: 'position:absolute;left: 69%;top: 26%;width:20%;height:40%;',
@@ -83,6 +101,8 @@ export default {
                     },
                     imgUrl: new URL('./topBox/22.png', import.meta.url).href,
                     showFlag:false,
+                    typeIdList:[],
+                    warningShowFlag : false,
                 },
 
                 {
@@ -94,7 +114,9 @@ export default {
                         pWidth: 'width:11vw'
                     },
                     imgUrl: new URL('./topBox/24.png', import.meta.url).href,
-                    showFlag:false
+                    showFlag:false,
+                    typeIdList:[],
+                    warningShowFlag : false,
                 },
                 {
                     style: 'position:absolute;left: 43%;top: 56%;width:20%;height:40%;',
@@ -113,7 +135,9 @@ export default {
                         pWidth: 'width:8.5vw'
                     },
                     imgUrl: new URL('./topBox/13.png', import.meta.url).href,//暂无图片
-                    showFlag:false
+                    showFlag:false,
+                    typeIdList:[],
+                    warningShowFlag : false,
                 },
                 {
                     style: 'position:absolute;left: 30%;top: 60%;width:20%;height:40%;',
@@ -123,7 +147,9 @@ export default {
                         pWidth: 'width:8.5vw'
                     },
                     imgUrl: new URL('./topBox/11.png', import.meta.url).href,
-                    showFlag:false
+                    showFlag:false,
+                    typeIdList:[],
+                    warningShowFlag : false,
                 },
                 {
                     style: 'position:absolute;left: 17%;top: 56%;width:20%;height:40%;',
@@ -134,7 +160,8 @@ export default {
                     },
                     imgUrl: new URL('./topBox/25.png', import.meta.url).href,
                     showFlag:false,
-                    warningShowFlag:false
+                    typeIdList:[],
+                    warningShowFlag : false,
                 },
                 {
                     style: 'position:absolute;left: 2%;top: 60%;width:20%;height:40%;',
@@ -150,7 +177,8 @@ export default {
                     },
                     imgUrl: new URL('./topBox/21.png', import.meta.url).href,
                     showFlag:false,
-                    warningShowFlag : true,
+                    typeIdList:[],
+                    warningShowFlag : false,
                     analysisUrl:`https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?wellIds=%5B%5D&prodDate=${data2}&prodDateCompare=${data1}`
                 },
                 {
@@ -166,7 +194,9 @@ export default {
                         pWidth: 'width:8.5vw'
                     },
                     imgUrl: new URL('./topBox/12.png', import.meta.url).href,
-                    showFlag:false
+                    showFlag:false,
+                    typeIdList:['BJ-SBSS-001','BJ-SBSS-002','BJ-SBSS-003','BJ-SBSS-004','BJ-SBSS-005','BJ-SBSS-009','BJ-SBSS-010','BJ-SBSS-011','BJ-SBSS-012','BJ-SBSS-013'],
+                    warningShowFlag : false,
                 },
                 {
                     style: 'position:absolute;left: 58%;top: 36%;width:20%;height:40%;',
@@ -177,7 +207,9 @@ export default {
                         pWidth: 'width:11vw'
                     },
                     imgUrl: new URL('./topBox/26.png', import.meta.url).href,
-                    showFlag:false
+                    showFlag:false,
+                    typeIdList:[],
+                    warningShowFlag : false,
                 },
                 {
                     style: 'position:absolute;left: 55%;top: 2%;width:20%;height:40%;',
@@ -194,7 +226,9 @@ export default {
                         pWidth: 'width:7vw'
                     },
                     imgUrl: new URL('./topBox/10.png', import.meta.url).href,
-                    showFlag:false
+                    showFlag:false,
+                    typeIdList:[],
+                    warningShowFlag : false,
                 },
                 {
                     style: 'position:absolute;left: 72%;top: 0%;width:20%;height:40%;',
@@ -211,10 +245,16 @@ export default {
                         pWidth: 'width:7vw',
                     },
                     imgUrl: new URL('./topBox/28.png', import.meta.url).href,
-                    showFlag:false
+                    showFlag:false,
+                    typeIdList:[],
+                    warningShowFlag : false,
                 },
             ]
         }
+    },
+    beforeDestroy() {
+        clearInterval(this.timmer)
+        clearInterval(this.timmerWarning)
     }
 }
 </script>
