@@ -389,4 +389,9 @@ export function getSectionWell(request){
     data: request,
   });
 }
-
+export function queryAdjacentWellData({ wellId } = {}) {
+    return Axios({
+        url: `${baseUrl}/oilAnalysisReportController/queryAdjacentWellData?wellId=${ wellId || "" }`,
+        method: "get",
+    });
+}

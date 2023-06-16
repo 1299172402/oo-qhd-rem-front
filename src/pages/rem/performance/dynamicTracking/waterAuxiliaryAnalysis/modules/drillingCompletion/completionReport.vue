@@ -61,7 +61,7 @@ export default {
                   this.id = res.data.data[0].fileId
                   this.fileName = res.data.data[0].filestrId
                   filePreview(data).then((res)=>{
-                      console.log(res)
+                      console.log('123123123',res)
                       this.url = res.data.data
                   })
               }else {

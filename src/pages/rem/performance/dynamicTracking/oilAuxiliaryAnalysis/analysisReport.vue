@@ -187,29 +187,34 @@
                     <div style="flex:1;min-height:540px;">
                         <pagePanel headerTitle="油井动态分析详情列表" style="margin-top:0;height:100%;">
                             <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
+                                <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                 <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
-                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" align="center" min-width="160" sortable="custom" label-class-name="twoRowHeader">
+                                <!--生产动态项目-->
+                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="160" sortable="custom" label-class-name="twoRowHeader">
+                                    
                                     <template #header>
-                                        <div class="headerSortRow1" v-if="item.name && item.name.split(' ')[1]">
+                                        <div class="headerSortRow1" v-if="item.name && item.name!='正常' && item.name.split(' ')[1]">
                                             <span>{{ item.name.split(' ')[0] ? item.name.split(' ')[0] : ""}}</span>
                                             <br />
                                             <span>{{ item.name.split(' ')[1] ? `(${item.name.split(' ')[1]})` : ""}}</span>
                                         </div>
                                         <div v-else>
-                                            <span>{{item.name}}</span>
+                                            <span>{{item.name=='正常'?'生产状态':item.name}}</span>
                                         </div>
                                     </template>
+                                    
                                     <template slot-scope="scope">
-                                        <span v-if="scope.row.scdt[item.code] == null"></span>
-                                        <span v-else-if="item.code == 'ZC'">{{ scope.row.scdt[item.code].showLabel }}</span>
+                                        <span v-if="scope.row.scdt[item.code] == null">{{productionStatus(scope.row.scdt,item.code)}}</span>
+                                        <span v-else-if="item.code == 'ZC'">{{ scope.row.scdt[item.code].showLabel ? scope.row.scdt[item.code].showLabel :'-' }}</span>
                                         <el-tooltip v-else class="item" effect="dark" :content="scope.row.scdt[item.code].value + ''" placement="top">
-                                            <span>{{ scope.row.scdt[item.code].showLabel }}</span>
+                                            <span>{{ scope.row.scdt[item.code].showLabel ? scope.row.scdt[item.code].showLabel :'-' }}</span>
                                         </el-tooltip>
                                     </template>
+                                    
                                 </el-table-column>
                                 <!--生产问题监测项目-->
                                 <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
-                                    <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="120" :key="index" :prop="item.code" align="center" label-class-name="twoRowHeader">
+                                    <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="120" :key="index" :prop="item.code" :label="item.name" align="center" width="180px" label-class-name="twoRowHeader">
                                         <template #header>
                                             <div v-if="item.isTwoHeader">
                                                 <span>{{item.name}}</span>
@@ -221,9 +226,14 @@
                                             </div>
                                         </template>
                                         <template slot-scope="scope">
-                                            <span v-if="scope.row[item.code] == null"></span>
-                                            <span v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel }}</span>
-                                            <span>{{replaceStr(scope.row[item.code].showLabel)}}{{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2):'-'}}</span>
+                                            <span class="1" v-if="scope.row[item.code] == null"></span>
+                                            <span class="2" v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel?scope.row[item.code].showLabel:'-' }}</span>
+                                            <span class="3" v-else style="display: flex;align-items: center;justify-content: center;">
+                                               {{replaceStr(scope.row[item.code].showLabel)}}
+                                               {{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2): !replaceStr(scope.row[item.code].showLabel)?'-':''}}
+                                                <img src="@/assets/rem/yieId/upTriangle.png" v-if="replaceStr(scope.row[item.code].showLabel)=='偏高'" style="width:20px;height:20px;">
+                                                <img src="@/assets/rem/yieId/downTriangle.png" v-if="replaceStr(scope.row[item.code].showLabel)=='偏低'"  style="width:20px;height:20px;">
+                                            </span>
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
@@ -232,20 +242,18 @@
                                     <el-table-column v-for="(item, index) in potentialAnalysisTab" :key="index" :prop="item.code" :label="item.name" align="center">
                                         <template slot-scope="scope">
                                             <span v-if="scope.row[item.code] == null"></span>
-                                            <!--                    <el-tooltip v-else class="item" effect="dark" :content="scope.row[item.code].value + ''" placement="top">-->
-                                            <span>{{ scope.row[item.code].showLabel }}</span>
-                                            <!--                    </el-tooltip>-->
+                                            <span>{{ scope.row[item.code].showLabel?scope.row[item.code].showLabel:'-' }}</span>
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
-                                <!--措施推荐-->
+                                <!--措施初选-->
                                 <el-table-column prop="recommendedMeasures" label="措施初选" align="center">
                                     <el-table-column prop="measuresName" label="推荐措施" align="center">
                                         <template slot-scope="scope">
-                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel }}</span>
+                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel ? scope.row.cscx.showLabel  :'-' }}</span>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="theDate" align="center" min-width="130" label-class-name="twoRowHeader">
+                                    <el-table-column prop="theDate" align="center"  min-width="130" label-class-name="twoRowHeader">
                                         <template #header>
                                             <div>
                                                 <span>推荐日期</span>
@@ -254,7 +262,7 @@
                                             </div>
                                         </template>
                                         <template slot-scope="scope">
-                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq }}</span>
+                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq ? scope.row.cscx.tjrq :'-'}}</span>
                                         </template>
                                     </el-table-column>
                                     <el-table-column label="操作" align="center">
@@ -263,8 +271,8 @@
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
-                                <!--措施效果数据-->
-                                <el-table-column prop="dailyOilIncrement" label="日增油量m³/d" align="center" label-class-name="twoRowHeader">
+                                <!--日增油量-->
+                                <el-table-column prop="dailyOilIncrement" align="center" label-class-name="twoRowHeader">
                                     <template #header>
                                         <div>
                                             <span>日增油量</span>
@@ -273,8 +281,8 @@
                                         </div>
                                     </template>
                                     <template slot-scope="scope">
-                                        <span v-if="scope.row.rzyl == null || scope.row.rzyl.showMvalue == null"></span>
-                                        <span v-else>{{ scope.row.rzyl.showMvalue }}</span>
+                                        <span v-if="scope.row.rzyl == null || scope.row.rzyl.showMvalue == null">-</span>
+                                        <span v-else>{{ scope.row.rzyl.showMvalue ? scope.row.rzyl.showMvalue : '-'}}</span>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -1536,7 +1544,13 @@
                 let myData = []; //我的数据
                 let myWellCount = {}; //计算各项目的井数
                 let t_count = 0; //计数器
-                this.selCode = val; //选中项目
+                if(this.selCode!=val){
+                    this.selCode = val; //选中项目
+                }else{
+                    this.doSearch();
+                    return false;
+                }
+                
                 this.selTag = tag; //选中数据集
                 if (val == undefined || val == "") {
                     return false; //无效参数
