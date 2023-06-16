@@ -579,7 +579,7 @@ export default {
                             //     dateTime: this.queryData.dateTime,
                             // }).then((res) => {
                             //     this.tableWater = res;
-                            // }); --404接口
+                            // }); 
                             this.$message.success("保存成功")
                         } else {
                             this.$message.error("保存失败")
