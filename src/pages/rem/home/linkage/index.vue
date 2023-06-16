@@ -227,7 +227,7 @@ export default {
                     },
                     imgUrl: new URL('./topBox/10.png', import.meta.url).href,
                     showFlag:false,
-                    typeIdList:[],
+                    typeIdList:['BJ-SC-002'],
                     warningShowFlag : false,
                 },
                 {
@@ -246,7 +246,7 @@ export default {
                     },
                     imgUrl: new URL('./topBox/28.png', import.meta.url).href,
                     showFlag:false,
-                    typeIdList:[],
+                    typeIdList:['BJ-SC-003'],
                     warningShowFlag : false,
                 },
             ]
