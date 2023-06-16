@@ -241,7 +241,7 @@ export default {
 }
 
 .panel .el-carousel__indicators--outside button {
-  background-color: #3f87bc !important;
+  background: var(--dot-bg) !important;
 }
 
 .panel .el-carousel__container {

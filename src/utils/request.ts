@@ -75,6 +75,30 @@ const instance = axios.create({
   }
 });
 
+function logoutBox(response = null) {
+  const alertDom = document.querySelector(".auto-refresh-token-alert-box");
+  if (alertDom || router.app?.$route?.path === "/" || router.app?.$route?.path === "/login") {
+    return;
+  }
+  MessageBox.confirm("登录状态已过期,请重新登录", "系统提示", {
+    confirmButtonText: "确定",
+    type: "warning",
+    showClose: false,
+    closeOnClickModal: false,
+    showCancelButton: false,
+    customClass: "auto-refresh-token-alert-box",
+    callback: () => {
+      store.dispatch("permission/restore");
+      store.dispatch("user/logout").then(() => {
+        router.replace({ path: "/" });
+      });
+      if (response?.config?.headers?.showLoading !== false) {
+        hideLoading();
+      }
+    }
+  });
+}
+
 // eslint-disable-next-line
 // @ts-ignore
 // axios的retry ts类型有问题
@@ -130,23 +154,7 @@ instance.interceptors.response.use(
     }
     if (response.data.code === 401 && interceptCount === 0) {
       interceptCount += 1;
-      MessageBox.confirm("登录状态已过期,请重新登录", "系统提示", {
-        confirmButtonText: "确定",
-        type: "warning",
-        showClose: false,
-        closeOnClickModal: false,
-        showCancelButton: false,
-        customClass: "auto-refresh-token-alert-box",
-        callback: () => {
-          store.dispatch("permission/restore");
-          store.dispatch("user/logout").then(() => {
-            router.replace({ path: "/" });
-          });
-          if (response.config.headers.showLoading !== false) {
-            hideLoading();
-          }
-        }
-      });
+      logoutBox(response);
     } else if (response.data.code === 500) {
       if (response.config.url.substring(0, response.config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && whiteListError.indexOf(response.config.url) === -1) {
       // 过滤掉右上角小铃铛1min轮询接口,和报警信息列表接口的报错信息
@@ -207,20 +215,7 @@ instance.interceptors.response.use(
     // }
     if (!config || !config.retry) {
       if (err.response?.data.code === 401) {
-        MessageBox.confirm("登录状态已过期,请重新登录", "系统提示", {
-          confirmButtonText: "确定",
-          type: "warning",
-          showClose: false,
-          closeOnClickModal: false,
-          showCancelButton: false,
-          customClass: "auto-refresh-token-alert-box",
-          callback: () => {
-            store.dispatch("permission/restore");
-            store.dispatch("user/logout").then(() => {
-              router.replace({ path: "/" });
-            });
-          }
-        });
+        logoutBox();
       } else if (config.url.substring(0, config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && whiteListError.indexOf(config.url) === -1) {
         // 过滤掉右上角小铃铛1min轮询接口,和报警信息列表接口的报错信息
         // TODO: Maybe change back，弹窗形式

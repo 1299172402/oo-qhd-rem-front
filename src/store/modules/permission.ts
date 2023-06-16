@@ -81,7 +81,7 @@ const state = {
   routerLink: "", // 增加路由链接
   defaultTo: null,
   // 去掉loading的白名单
-  whiteListLoading: ["system/rang/queryCurrent", "/system/monitor/links", "/system/enter/inEnter", "/system/enter/outEnter", "/system/business/inBusiness", "/system/business/outBusiness", "/system/board/inBoard", "/system/board/outBoard", "/system/app/saveAppUserRelation", "/system/index/inIndex", "/system/index/outIndex"],
+  whiteListLoading: ["/system/SysMenuAccess/add", "system/rang/queryCurrent", "/system/monitor/links", "/system/app/saveAppUserRelation"],
   // 报错白名单[主要是报警信息接口的报错处理]
   whiteListError: ["system/rang/queryCurrent", "/gem001b/alarmCountMonthlyStatistics", "/gem001b/queryLevelSelectOptionList", "/gem001b/getAlcSourceList", "/system/instationmail/getByTenantId"]
 };
