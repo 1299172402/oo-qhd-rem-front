@@ -9,7 +9,7 @@ metadata:
     - manager: Go-http-client
       operation: Update
       apiVersion: apps/v1
-      time: '2023-06-15T07:20:38Z'
+      time: '2023-06-16T02:54:56Z'
       fieldsType: FieldsV1
       fieldsV1:
         f:metadata:
@@ -84,7 +84,7 @@ metadata:
     - manager: kube-controller-manager
       operation: Update
       apiVersion: apps/v1
-      time: '2023-06-15T07:20:56Z'
+      time: '2023-06-16T02:55:02Z'
       fieldsType: FieldsV1
       fieldsV1:
         f:metadata:
@@ -129,7 +129,7 @@ spec:
     spec:
       containers:
         - name: oo-qhd-rem-front-release
-          image: swr.zhydc-nyyjy-1.r410.cnooc/cloud-znyt-release/oo-qhd-rem-front-release:{{version}}
+          image: swr.zhydc-nyyjy-1.r410.cnooc/cloud-znyt-release/oo-qhd-rem-front-release:1.0.0
           env:
             - name: PAAS_APP_NAME
               value: oo-qhd-rem-front-release
