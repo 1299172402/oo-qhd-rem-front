@@ -75,12 +75,17 @@ export default ({ mode }) => {
           // target: 'http://10.247.187.28:8080/dev-api/',
           // target: 'http://10.178.118.181:9220',
           // target: 'http://10.178.118.184:9229', //姜
-          target: "http://10.178.118.189:9203", //小黄
-          // target:"http://10.178.118.180",//鹏举
+          // target: "http://10.178.118.189:9203", //小黄
           // target: 'http://10.178.118.181:9207', //飞龙
           // target: 'http://10.178.118.184:8080',
+          target: 'http://10.178.118.203:9207',//台式
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, ""),
+        },
+        "/dev-api/ipm/api": {
+          target: 'http://10.178.118.203:9223',//台式
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/dev-api\/ipm\/api/, ""),
         },
         "/dev-api/prm/api": {
           // 用于开发环境下的转发请求
@@ -91,14 +96,20 @@ export default ({ mode }) => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api\/prm\/api/, ""),
         },
+        "/dev-api/amm/api": {
+          //用于注采联动代理转发
+          target: "http://amm.tjioms-dev.tjltd.cnooc",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/dev-api\/amm\/api/, "/prod-api"),
+        },
         "/dev-api/masterService/api": {
           // 主服务转发请求
           // 接口网关地址：http://10.77.79.57:8080
           // 接口微服务地址：http://10.77.78.243:8003
           // 接口微服务名称：oo-csc-csc-masterdata-atom
-          target: "http://10.77.79.57:8080",
+          target: "http://10.77.78.243:8003",
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/dev-api\/masterService\/api/, "/omc003d"),
+          rewrite: (path) => path.replace(/^\/dev-api\/masterService\/api/, ""),
         },
         "/dev-api": {
           // 用于开发环境下的转发请求

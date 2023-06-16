@@ -30,8 +30,10 @@ export default {
         linkageBox
     },
     mounted(){
+        //转动弹出图片循环
         this.arrowFun()
         this.getWarningInfo()
+        //预警信息轮询查询
         this.timmerWarning = setInterval(()=>{
             this.getWarningInfo()
         },1000 * 10)
