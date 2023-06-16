@@ -65,7 +65,7 @@ export default {
                   this.fileName = res.data.data[0].filestrId
                   filePreview(data).then((res)=>{
                       console.log(res)
-                      this.url = res.data.data
+                      this.url = res.data.data.replace(/^http?:\/\/\S+\//,'/file-api/')
                   })
               }else {
                   this.$message.error("文件查询接口异常!");
