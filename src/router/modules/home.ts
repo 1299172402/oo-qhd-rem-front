@@ -20,7 +20,7 @@ export default [
         path: 'reservoirDisplay',
         name: 'reservoirDisplay',
         component: () => import('@/pages/rem/home/reservoirDisplay/index.vue'),
-        meta: { title: '油藏看板',icon: 'icon' },
+        meta: { title: '油藏看版',icon: 'icon' },
       },
       {
         path: 'shutdownDetection',
