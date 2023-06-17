@@ -51,6 +51,7 @@ export default {
                     this.currentLists.forEach((i,index)=>{
                         if(i.typeIdList.indexOf(item.typeId) != -1){
                             this.currentLists[index].warningShowFlag = true
+                            clearInterval(this.timmer)
                         }
                     })
                 })
@@ -110,7 +111,7 @@ export default {
                 {
                     style: 'position:absolute;left: 57%;top: 60%;width:20%;height:40%;',
                     boxText: '注采调控油藏方案',
-                    boxBottomText: [{name:'分层注水优化',url:'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence/optimization'}, '产液结构优化'],
+                    boxBottomText: [{name:'分层注水优化',url:'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization'}, '产液结构优化'],
                     boxBottomContent: [['智能滚动配注模型'], ['流场调控模型']],
                     boxStyle: {
                         pWidth: 'width:11vw'
@@ -124,7 +125,7 @@ export default {
                     style: 'position:absolute;left: 43%;top: 56%;width:20%;height:40%;',
                     boxText: '注采状况分析',
                     boxBottomText: [
-                        {name:'注采连通分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/basic/maintenance'},
+                        {name:'注采连通分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/basic/wellGroup_Maintenance'},
                         {name:'注采平衡分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport'},
                         {name:'采出状况分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport'}
                     ],
@@ -144,7 +145,7 @@ export default {
                 {
                     style: 'position:absolute;left: 30%;top: 60%;width:20%;height:40%;',
                     boxText: '剩余油分布',
-                    boxBottomText: [{name:'动态分析法/数模剩余油分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence/optimization?link=rem'}],
+                    boxBottomText: [{name:'动态分析法/数模剩余油分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization?link=rem'}],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
@@ -203,7 +204,7 @@ export default {
                 {
                     style: 'position:absolute;left: 58%;top: 36%;width:20%;height:40%;',
                     boxText: '分注分采调控策略',
-                    boxBottomText: [{name:'注采调控最优化方案',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge'}, '配注微调策略'],
+                    boxBottomText: [{name:'注采调控最优化方案',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge?route=rem'}, {name:'配注微调策略',url:'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization?link=rem'}],
                     boxBottomContent: [['智能分注调控策略优化模型', '智能分注调控策略优化模型'], ['配注方案分析评估模型']],
                     boxStyle: {
                         pWidth: 'width:11vw'
