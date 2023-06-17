@@ -549,7 +549,7 @@ export default {
                         radius: [0, "75%"],
                         color: centerColor,
                         label: {
-                            fontSize: 10,
+                            fontSize: 15,
                         },
                         data: [
                             {value: 0, name: value, label: {color:'#29EEF3', position: "center"}},
