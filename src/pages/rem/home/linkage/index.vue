@@ -44,7 +44,7 @@ export default {
                 i.warningShowFlag = false
             })
             request({
-                url: `/amm/api/gem001b/queryAlcAlarm`,
+                url: `/gem001b/queryAlcAlarm`,
                 method: "get",
             }).then(res=>{
                 res.data.data.forEach(item=>{
