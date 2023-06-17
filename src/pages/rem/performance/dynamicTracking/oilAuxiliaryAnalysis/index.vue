@@ -581,15 +581,12 @@
             ljpmUploadDialogLast() {
                 if (this.currentModule =='drillingReport'){
                     this.ljpmDialogLast = true;
-                    console.log('111111111')
                 }else if(this.currentModule =='completionReport'){
                     //打开弹窗
                     this.ljpmDialogLast = true;
-                    console.log('2222222')
                 }else if(this.currentModule =='geologicalSummary'){
                     //打开弹窗
                     this.ljpmDialogLast = true;
-                    console.log('333333')
                 }
             },
             //重置

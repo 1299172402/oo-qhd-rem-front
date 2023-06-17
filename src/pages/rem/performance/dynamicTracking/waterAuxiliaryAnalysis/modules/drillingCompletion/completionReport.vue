@@ -46,22 +46,17 @@ export default {
   methods: {
     //调用图片
       doSearch() {
-          console.log('wellId',this.wellId)
-          console.log('oilFeildId',this.oilFeildId)
-          console.log('platform',this.platform)
           let params ={
               operationId:this.wellId,
               operationType:'SJWJWGBG',
               readOne:'one'
           }
           queryRemUploadFileMinio(params).then((res) => {
-              console.log('this.res///////////',res)
               if (res.data.code == 200) {
                   let data =res.data.data[0].fileId
                   this.id = res.data.data[0].fileId
                   this.fileName = res.data.data[0].filestrId
                   filePreview(data).then((res)=>{
-                      console.log('123123123',res)
                       this.url = res.data.data
                   })
               }else {
