@@ -252,7 +252,7 @@ export default {
       transferData: [],
       query: {
         selectField: "3FC9A818F5BC43B88270DB80BBB3018F",
-        value2: this.getDate(),
+        value2: '',
         selectBlock: "YCFXDY8B643EDC9007F96F570600457D",
       },
       select: {
@@ -283,6 +283,7 @@ export default {
     }
   },
   created () {
+    this.getDate()
     //获取油田下拉数据
     this.selectData()
     this.selectblock()
@@ -291,20 +292,20 @@ export default {
   computed:{
     disabledBtn: function (){
       return this.computedDate !== this.query.value2
-    }
+    },
   },
   methods: {
       reset() {
           this.query.selectBlock = this.blanks[0].fieldId;
-          this.query.value2 = this.getDate(),
+          this.getDate(),
           this.tableOilfield();
       },
     getDate () {
       let data = new Date()
       if ((data.getMonth() +1) < 10) {
-        return data.getFullYear() + '-0' + (data.getMonth()+1)
+        this.query.value2 = data.getFullYear() + '-0' + (data.getMonth()+1);
       } else {
-        return data.getFullYear() + '-' + (data.getMonth()+1)
+        this.query.value2 = data.getFullYear() + '-' + (data.getMonth()+1);
       }
     },
     queryBlock () {
