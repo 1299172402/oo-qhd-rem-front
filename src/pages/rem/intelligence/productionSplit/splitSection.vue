@@ -241,7 +241,6 @@ export default {
                         this.data.show.push(item)
                     })
                 } else if (this.params.wellCategory == '01') {
-                    console.log(res)
                     if (!this.data) {
                         this.data = {};
                     }
@@ -252,10 +251,8 @@ export default {
                             this.data[item.stateDate] = [];
                         }
                         this.data[item.stateDate].push(item);
-                        console.log(this.data)
                     });
                 }
-                ;
             })
 
         },
