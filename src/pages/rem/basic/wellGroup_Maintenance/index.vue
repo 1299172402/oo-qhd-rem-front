@@ -296,7 +296,8 @@ export default {
   methods: {
       reset() {
           this.query.selectBlock = this.blanks[0].fieldId;
-          (this.query.value2 = this.getDate()), this.tableOilfield();
+          this.query.value2 = this.getDate(),
+          this.tableOilfield();
       },
     getDate () {
       let data = new Date()
