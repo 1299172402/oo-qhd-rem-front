@@ -325,24 +325,24 @@ export default Vue.extend({
           <AuditPanel ref={"auditInfo"} dataSource={this.info}/>
         </t-tab-panel>
         <t-tab-panel style={"display: flex"} value="2" label="审批信息">
-          <AuditFlowPanel style={"flex: 2"} dataSource={this.commentList} />
+          <AuditFlowPanel style={"flex: 1"} dataSource={this.commentList} />
           <t-divider style={"min-height: 568px"} layout="vertical" />
-          <AuditMapPanel style={"flex: 3; min-height: 568px"} procInstId={this.dataSource?.procInstId} dataSource={this.diagram} />
+          <AuditMapPanel style={"flex: 2; min-height: 568px"} procInstId={this.dataSource?.procInstId} dataSource={this.diagram} />
         </t-tab-panel>
       </t-tabs>
     );
     const ViewContent = (
       <t-tabs class="audit-content" value={this.tabIndex} onChange={val => { this.tabIndex = val; }}>
         <t-tab-panel style={"display: flex"} value="1" label="审批信息">
-          <AuditFlowPanel style={"flex: 2"} dataSource={this.commentList} />
+          <AuditFlowPanel style={"flex: 1"} dataSource={this.commentList} />
           <t-divider style={"min-height: 568px"} layout="vertical" />
-          <AuditMapPanel style={"flex: 3; min-height: 568px"} procInstId={this.dataSource?.procInstId} dataSource={this.diagram} />
+          <AuditMapPanel style={"flex: 2; min-height: 568px"} procInstId={this.dataSource?.procInstId} dataSource={this.diagram} />
         </t-tab-panel>
       </t-tabs>
     );
     return (
       <t-dialog
-        width={"70%"}
+        width={"80%"}
         placement={"center"}
         visible={this.visible}
         onClose={this.closeModel}

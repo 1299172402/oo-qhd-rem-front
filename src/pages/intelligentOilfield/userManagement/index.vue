@@ -533,8 +533,32 @@
           </el-col>
         </el-row>
         <el-row />
-        <el-row type="flex" justify="start">
+        <el-row v-if="form.userId == undefined" style="display: block;">
           <el-col :span="8">
+            <el-form-item label="用户密码" prop="password">
+              <el-input
+                v-model="form.password"
+                placeholder="请输入用户密码"
+                type="password"
+                maxlength="20"
+                show-password
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="确认密码" prop="surePassword">
+              <el-input
+                v-model="form.surePassword"
+                placeholder="请输入确认密码"
+                type="password"
+                maxlength="20"
+                show-password
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row type="flex" justify="start">
+          <el-col>
             <el-form-item label="所属机构" prop="deptId">
               <treeselect
                 v-model="form.deptId"
@@ -553,28 +577,6 @@
                 >{{ node.label }}
                 </label>
               </treeselect>
-            </el-form-item>
-          </el-col>
-          <el-col v-if="form.userId == undefined" :span="8">
-            <el-form-item label="用户密码" prop="password">
-              <el-input
-                v-model="form.password"
-                placeholder="请输入用户密码"
-                type="password"
-                maxlength="20"
-                show-password
-              />
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item v-if="form.userId == undefined" label="确认密码" prop="surePassword">
-              <el-input
-                v-model="form.surePassword"
-                placeholder="请输入确认密码"
-                type="password"
-                maxlength="20"
-                show-password
-              />
             </el-form-item>
           </el-col>
         </el-row>

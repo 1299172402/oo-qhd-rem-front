@@ -228,3 +228,21 @@ export function uploadFile(updateSupport, data) {
     data
   });
 }
+
+// 访问菜单页面，调用统计接口，传参menuName：菜单名称和menuPath：访问莱单路径
+export function sysMenuAccess(data) {
+  return request({
+    url: "/system/SysMenuAccess/add",
+    method: "post",
+    data
+  });
+}
+
+// 检验当前token是否过期
+export function checkAndRefreshToken(data) {
+  return request({
+    url: "/auth/checkAndRefreshToken",
+    method: "post",
+    data
+  });
+}

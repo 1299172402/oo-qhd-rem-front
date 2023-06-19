@@ -249,13 +249,14 @@
       >
         <el-row>
           <el-col :span="24">
-            <el-form-item label="上级菜单">
+            <el-form-item label="上级菜单" prop="parentId">
               <treeselect
                 v-model="form.parentId"
                 :options="menuOptions"
                 :normalizer="normalizer"
                 :show-count="true"
                 placeholder="选择上级菜单"
+                @input="inputChange"
               >
                 <label
                   slot="option-label"
@@ -630,7 +631,8 @@ export default {
         path: [{ validator: checkPath, trigger: "change" }],
         orderNum: [{ required: true, message: "请输入菜单排序" }],
         component: [{ required: true, message: "请输入组件路径" }],
-        link: [{ required: true, message: "请输入路由地址" }]
+        link: [{ required: true, message: "请输入路由地址" }],
+        parentId: [{ required: true, message: "请选择上级菜单" }]
       },
       disabledHandle: false
     };
@@ -647,6 +649,13 @@ export default {
     this.getList();
   },
   methods: {
+    inputChange() {
+      if (!this.form.validateField) {
+        this.$refs.form.validateField("parentId");
+      } else {
+        this.$refs.form.clearValidate("parentId");
+      }
+    },
     validateText() {
       this.$refs.form.validateField("menuName");
     },

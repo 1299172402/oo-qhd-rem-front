@@ -17,10 +17,10 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <!-- <el-form-item label="权限字符" prop="roleKey">
+        <!-- <el-form-item label="角色编码" prop="roleKey">
         <el-input
           v-model="queryParams.roleKey"
-          placeholder="请输入权限字符"
+          placeholder="请输入角色编码"
           clearable
           size="small"
           style="width: 240px"
@@ -303,12 +303,12 @@
           <el-col :span="12">
             <el-form-item prop="roleKey">
               <span slot="label">
-                <el-tooltip content="控制器中定义的权限字符，如：@PreAuthorize(`@ss.hasRole('admin')`)" placement="top">
+                <el-tooltip content="控制器中定义的角色编码，如：@PreAuthorize(`@ss.hasRole('admin')`)" placement="top">
                   <i class="el-icon-question" />
                 </el-tooltip>
-                权限字符
+                角色编码
               </span>
-              <el-input v-model="form.roleKey" placeholder="请输入权限字符" />
+              <el-input v-model="form.roleKey" placeholder="请输入角色编码" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -400,7 +400,7 @@
         <el-form-item label="角色名称">
           <el-input v-model="form.roleName" :disabled="true" />
         </el-form-item>
-        <el-form-item label="权限字符">
+        <el-form-item label="角色编码">
           <el-input v-model="form.roleKey" :disabled="true" />
         </el-form-item>
         <el-form-item label="权限范围">
@@ -568,7 +568,7 @@ export default {
       rules: {
         roleName: [{ required: true, message: "请输入角色名称" }],
         roleType: [{ required: true, message: "请选择角色类型" }],
-        roleKey: [{ required: true, message: "请输入权限字符" }],
+        roleKey: [{ required: true, message: "请输入角色编码" }],
         roleSort: [{ required: true, message: "请输入角色顺序" }],
         status: [{ required: true, message: "请选择角色状态" }]
         // isTenant: [{ required: true, message: '是否租户不能为空' }],

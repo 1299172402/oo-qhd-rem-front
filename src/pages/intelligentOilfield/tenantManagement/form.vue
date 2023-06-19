@@ -9,16 +9,16 @@
       >
         <el-form-item prop="tenantCode">
           <span slot="label">
-            <el-tooltip content="租户code应具备明显的区分表示 eg:秦皇岛32-6code为QHD32-6" placement="top">
+            <el-tooltip content="租户编码应具备明显的区分表示 eg:秦皇岛32-6code为QHD32-6" placement="top">
               <i class="el-icon-question" />
             </el-tooltip>
-            租户code：
+            租户编码：
           </span>
           <el-input
             v-model="model.tenantCode"
             :disabled="isView"
             :title="model.tenantCode"
-            placeholder="请输入租户code"
+            placeholder="请输入租户编码"
           />
         </el-form-item>
         <el-form-item label="租户名称：" prop="tenantName">
@@ -94,7 +94,7 @@ export default {
       deptOptions: [],
       rules: {
         tenantCode: [
-          { required: true, message: "请输入租户code", trigger: "blur" },
+          { required: true, message: "请输入租户编码", trigger: "blur" },
           {
             pattern: /^[A-Za-z0-9_-]{1,15}$/,
             message: "仅能包含大写字母、小写字母、数字、短横线和下划线,且最长不能超过15个字符",
