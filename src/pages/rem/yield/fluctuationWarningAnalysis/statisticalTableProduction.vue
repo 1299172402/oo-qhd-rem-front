@@ -143,7 +143,7 @@
     import { exportExcel } from '@/lib/exportExcel.js';
     import * as D3 from "d3"
     export default {
-        // name: 'statisticalTableProduction',
+        name: 'statisticalTableProduction',
         data() {
             return {
                 //油田下拉框

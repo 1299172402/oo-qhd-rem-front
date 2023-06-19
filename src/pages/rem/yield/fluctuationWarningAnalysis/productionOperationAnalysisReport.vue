@@ -166,6 +166,7 @@
     import { getProdDailyTable } from "@/api/oilDeposit/rem-04/yieId.js"
     import FileSaver from 'file-saver';
     export default {
+        name:'productionOperationAnalysisReport',
         filters: {
             getFixNumberTwo(val) {
                 return val.toFixed(4);

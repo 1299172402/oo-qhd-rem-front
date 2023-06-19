@@ -208,8 +208,8 @@
     import {fetchOilFields,fetchFields} from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import {exportExcel} from '@/lib/exportExcel.js';
     import {chart,devPhaseInfos,devStatusInfos} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
-    // import { getWidgetByAreaUser} from '@/api/oilDeposit/rmm-01/rmm01.js';
     export default {
+        name:'developmenthistory',
         components: {
             Echart,
         },

@@ -144,6 +144,7 @@
     import {getOgfList,getBlockList,getProdDailyTable,getWellList,getWell} from '@/api/oilDeposit/rem-04/modelConfiguration.js';
     import { saveAs } from "file-saver";
     export default {
+        name:'modelconfig',
         data() {
             return {
                 dialogVisible: false,

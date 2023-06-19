@@ -59,6 +59,7 @@
     import {getOgfList,getBlockList,getProdDailyTable,getWellList,getWell,addGeneralConfig,getPageBySelectType} from '@/api/oilDeposit/rem-04/modelConfiguration.js';
     import tableComponents from  './components/tableComponents.vue'
     export default {
+        name:'modelOperate',
         components:{tableComponents},
         data() {
             return {

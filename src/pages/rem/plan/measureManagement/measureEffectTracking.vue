@@ -262,7 +262,7 @@
     import {getWorkProgress} from '@/api/oilDeposit/rem-04/plan.js';
     import { exportExcel } from '@/lib/exportExcel.js';
     export default {
-        // name: 'wellMonitoring',
+        name: 'measureEffectTracking',
         components: {
             verticalSwitchButton,
             Echarts,

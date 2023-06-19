@@ -160,6 +160,7 @@
     import { searchOilProductionChart} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
 
     export default {
+        name:'technicalIndexManagement',
         components: {
             Echart
         },
