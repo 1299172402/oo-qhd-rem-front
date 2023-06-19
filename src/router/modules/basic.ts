@@ -41,7 +41,7 @@ export default [
             path: 'wellGroup_Maintenance',
             name: 'wellGroup_Maintenance',
             component: () => import('@/pages/rem/basic/wellGroup_Maintenance/index.vue'),
-            meta: { title: '井组' }
+            meta: { title: '井组自定义维护' }
         },
     ],
   },

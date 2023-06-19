@@ -284,7 +284,7 @@ import {fetchProductionWells} from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import {queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
 
 export default {
-    name: "CustomQuery",
+    name: "customQuery",
     components: {
         ProductionData,
     },

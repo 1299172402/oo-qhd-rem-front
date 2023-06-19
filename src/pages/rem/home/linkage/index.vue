@@ -46,6 +46,9 @@ export default {
             request({
                 url: `/gem001b/queryAlcAlarm`,
                 method: "get",
+                headers: {
+                    showLoading: false
+                }
             }).then(res=>{
                 res.data.data.forEach(item=>{
                     this.currentLists.forEach((i,index)=>{

@@ -275,7 +275,7 @@ let lastDay = new Date(timeNew.getFullYear(), timeNew.getMonth() + 1, 0);
 let stopTime = new Date('2020-1-1')
 let filterTime = new Date();
 export default {
-    name: 'app',
+    name: 'productionSplit',
     components: {},
     data() {
         return {

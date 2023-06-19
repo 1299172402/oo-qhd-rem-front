@@ -137,6 +137,7 @@ import {
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 
 export default {
+  name:'reserves',
   components: {treeMultipleSelection},
   data() {
     return {

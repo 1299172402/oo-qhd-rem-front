@@ -243,6 +243,7 @@ import {
   postsaveAndupdateWellGroup, delectByWellGroupId, saveAllWellGroup
 } from "@/api/rem/r-wellConnectEvaluate.js"
 export default {
+  name: "wellGroup_Maintenance",
   components: {
     // NormalCard
   },

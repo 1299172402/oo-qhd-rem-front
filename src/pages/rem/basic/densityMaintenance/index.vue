@@ -231,7 +231,7 @@ import {queryOperatingCompanyDetail, queryOperatorsCheckFieldListsDetail} from "
 import treeMultipleSelection from "@/components/intelligentOilfield/tree_multiple_selection/index.vue";
 
 export default {
-    name: "Notice",
+    name: "density",
     dicts: ["sys_normal_disable"],
     components: {
         treeMultipleSelection
