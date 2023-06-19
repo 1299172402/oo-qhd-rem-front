@@ -183,9 +183,9 @@
                                 :data="form.tableData2"
                                 id="indexscv"
                                 highlight
-                                height="100%"
                                 :span-method="arrheader1"
                                 style="margin-top: 10px"
+                                height="calc(100% - 40px)"
                             >
                                 <!-- :span-method="arrheader1" -->
                                 <el-table-column prop="injWellNo" label="水井井号" align="center"
