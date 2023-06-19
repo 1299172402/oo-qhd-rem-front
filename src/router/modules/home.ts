@@ -18,7 +18,7 @@ export default [
       },
       {
         path: 'reservoirDisplay',
-        name: 'reservoirDisplay',
+        name: 'ReservoirDisplay',
         component: () => import('@/pages/rem/home/reservoirDisplay/index.vue'),
         meta: { title: '油藏看版',icon: 'icon' },
       },
