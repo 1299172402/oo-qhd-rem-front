@@ -4,7 +4,7 @@ export default [
     {
         path: '/intelligence1',
         name: 'intelligence1',
-        hidden:env == "development" ? false : true,
+        hidden:true,
         component: Layout,
         meta: { title: '智能注采调配', icon: 'client', single: false },
         children: [
