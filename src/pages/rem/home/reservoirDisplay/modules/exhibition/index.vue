@@ -241,6 +241,7 @@ export default {
           let params = {
               blockId: 'YCFXDY8B643EDC9007F96F570600457D',
               // yearMonth: dateTime,
+              //修改取数的日期为5月
               yearMonth: '2023-05',
           }
           getResidueOilCondotion(params).then(res => {
