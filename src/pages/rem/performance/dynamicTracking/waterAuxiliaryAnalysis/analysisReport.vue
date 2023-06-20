@@ -103,7 +103,7 @@
                                 </pagePanel>
                             </el-col>
                             <el-col :span="4" style="height: 100%">
-                                <pagePanel headerTitle="注水动态" style="margin-top:0;height:100%;">
+                                <pagePanel headerTitle="注水强度" style="margin-top:0;height:100%;">
                                     <el-row :gutter="10" style="height: 100%">
                                         <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'recommendedMeasuresOptions')})">
                                             <!-- <el-col v-for="(item,index) in recommendedMeasuresOptions" :key="index" :span="12">
@@ -120,6 +120,17 @@
                                             <el-col :span="24">
                                                 <el-radio-button class="checkButton">
                                                     注水强度偏低（0）
+                                                </el-radio-button>
+                                            </el-col>
+                                           
+                                            <el-col :span="24">
+                                                <el-radio-button class="checkButton">
+                                                    注水强度变高（0）
+                                                </el-radio-button>
+                                            </el-col>
+                                            <el-col :span="24">
+                                                <el-radio-button class="checkButton">
+                                                    注水强度变低（0）
                                                 </el-radio-button>
                                             </el-col>
                                             <el-col :span="24">
@@ -192,6 +203,7 @@
                                             </el-tooltip>
                                         </template>
                                     </el-table-column>
+                                    <el-table-column label="注水强度"></el-table-column>
                                     <el-table-column v-for="(item, index) in productionProblemsTab" :key="index" :prop="item.code" :label="item.name"  align="center">
                                         <template slot-scope="{row}">
                                             <span v-if="row[item.code+'Message']==''">{{row[item.code]}}</span>

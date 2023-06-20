@@ -371,7 +371,6 @@ export default {
       }
     },
     childinfo(data){
-      console.log(data)
       this.queryData.pt = data[3].value
       this.queryData.wellId = data[4].value
     },

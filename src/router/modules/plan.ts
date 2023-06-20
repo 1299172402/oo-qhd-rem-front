@@ -43,7 +43,7 @@ export default [
                 meta: { title: "措施效果跟踪",icon: "icon"},
             },
             {
-                hidden: true,
+                hidden: false,
                 path: "personnelMeasures",
                 name: "personnelMeasures",
                 component: () => import("@/pages/rem/plan/measureManagement/personnelMeasures.vue"),

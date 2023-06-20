@@ -68,7 +68,8 @@
             </el-button>
             <el-button
               type="primary"
-              style="font-size: 12px;padding: 5px 10px 5px 10px; width: 85px;"
+              :loading="loading"
+              @click="calculate"
             >
               <i class="el-icon-s-platform el-icon--left" />
               运行计算
@@ -249,6 +250,7 @@ export default {
   },
   data () {
     return {
+      loading:false,
       options: [],
       transferData: [],
       query: {
@@ -584,6 +586,16 @@ export default {
         this.isDisabled = false
       })
     },
+      calculate(){
+          // 运行计算测试效果
+            this.loading = true
+          // const firstLoading = document.querySelector("#first-loading");
+          setTimeout(() => {
+              this.loading = false
+              this.$message.error('计算失败')
+          }, 2000);
+      }
+      
   }
 }
 </script>
