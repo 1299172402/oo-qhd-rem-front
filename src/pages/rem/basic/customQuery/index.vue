@@ -190,7 +190,6 @@
             v-else-if="activeEchart"
             style="height: calc(100% - 112px); padding-bottom: 60px"
         >
-            <!--            <ProductionData></ProductionData>-->
             <el-table
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
@@ -278,16 +277,12 @@
 </template>
 
 <script>
-import ProductionData from "@/pages/rem/basic/customQuery/modules/index.vue";
 import {queryCustomQueryList} from "@/api/basic/basic";
 import {fetchProductionWells} from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import {queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
 
 export default {
     name: "customQuery",
-    components: {
-        ProductionData,
-    },
     mounted() {
         const year = new Date().getFullYear();
         this.selectDate = [new Date(`${year}-01-01`).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
@@ -935,7 +930,6 @@ export default {
             let sqlStrAnd = "",
                 sqlStrOr = "";
             let flag = true;
-            console.log(this.tableRow);
             this.tableRow.forEach((item) => {
                 if (item.type && item.name && item.model && item.val) {
                     if (item.type == "AND") {
@@ -981,7 +975,6 @@ export default {
             });
             this.dialogVisible = false;
             this.activeEchart = !this.activeEchart;
-            console.log(this.selectDate);
             let params = {
                 condList: condListFormat, //字段名字
                 // sqlSent:sqlStr,//拼接sql
