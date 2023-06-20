@@ -240,7 +240,8 @@ export default {
           }
           let params = {
               blockId: 'YCFXDY8B643EDC9007F96F570600457D',
-              yearMonth: dateTime,
+              // yearMonth: dateTime,
+              yearMonth: '2023-05',
           }
           getResidueOilCondotion(params).then(res => {
               try {
