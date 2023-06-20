@@ -260,6 +260,7 @@ import {exportExcel} from "@/lib/exportExcel";
 import FileSaver from "file-saver";
 
 export default {
+    name:'connectivityData',
     components: {},
     mixins: [queryConditionMixin],
     data() {

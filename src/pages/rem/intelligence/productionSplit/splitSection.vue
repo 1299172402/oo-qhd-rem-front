@@ -177,6 +177,7 @@ import {getChopSection} from '@/api/rem/r-intelligentIPA.js';
 
 
 export default {
+    name:'splitSection',
     components: {
         Echart,
     },

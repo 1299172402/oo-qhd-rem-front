@@ -186,7 +186,7 @@
 
             <div style="width: 33%;height: 118%;display:flex;flex-direction: column;justify-content: space-between;">
                 <div style="height:calc(60% - 15px);margin-bottom: 15px;">
-                    <page-panel header-title="单井井底流压" style="height: 100%; ":show-btn="true">
+                    <page-panel header-title="单井井底流压" style="height: 100%;" :show-btn="true">
                         <button class="detailLinkBtn" @click="detailed = true">详细</button>
                         <Echart
                             :chart-data="getResidueOilChart()"
@@ -234,7 +234,7 @@
                             </el-table-column>
                             <el-table-column prop="overflowInj" align="center" width="90">
                                 <template slot="header">
-                                    超/欠注量</br>(m³/d)
+                                    超/欠注量<br/>(m³/d)
                                 </template>
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.overflowInj }}</span>
@@ -264,6 +264,7 @@ import {
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 
 export default {
+    name:'index',
     components: {
         Echart
     },

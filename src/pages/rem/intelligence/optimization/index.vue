@@ -225,6 +225,7 @@ import Iframe from '@/components/rem/tools/iframe.vue'
 import {exportExcel} from '@/lib/exportExcel';
 
 export default {
+    name:'optimization',
     components: {
         Iframe
     },

@@ -24,6 +24,7 @@ import linkageBoxTop from "@/pages/rem/home/remHome/linkageBox/boxTop.vue";
 import linkageBoxBot from "@/pages/rem/home/remHome/linkageBox/boxBot.vue";
 
 export default {
+    name:'ipmHome',
     components: {
         linkageBoxTop,
         linkageBoxBot

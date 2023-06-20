@@ -272,6 +272,7 @@ import {v4 as uuidv4} from 'uuid';
 import FileSaver from "file-saver";
 
 export default {
+    name:'DividingCoefficient',
     components: {},
     data() {
         // 油井
