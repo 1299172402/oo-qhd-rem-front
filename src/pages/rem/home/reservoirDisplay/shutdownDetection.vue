@@ -129,6 +129,7 @@ import {
 import {queryShutDownWellStatisDetails, queryShutDownValueDict, queryPlanValueDict} from '@/api/rem/reservoirbillboards'
 
 export default {
+    name:'shutdownDetection',
     components: {},
     props: {
         infoData: {

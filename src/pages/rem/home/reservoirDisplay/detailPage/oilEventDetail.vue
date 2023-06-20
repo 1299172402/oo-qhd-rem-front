@@ -93,6 +93,7 @@
     } from "@/api/basic/master";
     import {queryOilFieldIncident, queryOilFieldIncidentType} from "@/api/rem/reservoirbillboards";
     export default {
+        name:'oilEventDetail',
         data(){
             return {
                 pageTotal:'',
