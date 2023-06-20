@@ -847,7 +847,7 @@ export default Vue.extend({
 
 .header-logo-container {
   width: 184px;
-//   height: 26px;
+  //   height: 26px;
   // TODO: 内网 Maybe change back
   height: 55px;
   align-items: center;

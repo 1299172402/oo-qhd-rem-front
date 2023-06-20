@@ -1,6 +1,6 @@
 {
   "name": "intelligent-oilfield",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "private": false,
   "scripts": {
     "prepare": "husky install",

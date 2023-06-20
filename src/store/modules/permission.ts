@@ -80,8 +80,10 @@ const state = {
   routers: [],
   routerLink: "", // 增加路由链接
   defaultTo: null,
+  // 滚动页面请求接口是否加loading
+  scrollLoading: true,
   // 去掉loading的白名单
-  whiteListLoading: ["/system/SysMenuAccess/add", "system/rang/queryCurrent", "/system/monitor/links", "/system/app/saveAppUserRelation"],
+  whiteListLoading: ["/auth/checkAndRefreshToken", "/system/SysMenuAccess/add", "system/rang/queryCurrent", "/system/monitor/links", "/system/app/saveAppUserRelation"],
   // 报错白名单[主要是报警信息接口的报错处理]
   whiteListError: ["system/rang/queryCurrent", "/gem001b/alarmCountMonthlyStatistics", "/gem001b/queryLevelSelectOptionList", "/gem001b/getAlcSourceList", "/system/instationmail/getByTenantId"]
 };
@@ -134,6 +136,9 @@ const mutations = {
   },
   setDefaultTo: (state, defaultTo) => {
     state.defaultTo = defaultTo;
+  },
+  setScrollLoading: (state, scrollLoading) => {
+    state.scrollLoading = scrollLoading;
   }
 };
 
@@ -143,7 +148,8 @@ const getters = {
   routerLink: state => state.routerLink,
   defaultTo: state => state.defaultTo,
   whiteListLoading: state => state.whiteListLoading,
-  whiteListError: state => state.whiteListError
+  whiteListError: state => state.whiteListError,
+  scrollLoading: state => state.scrollLoading
 };
 const actions = {
   async initRoutes({ commit }) {
