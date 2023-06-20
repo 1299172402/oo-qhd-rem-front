@@ -258,6 +258,7 @@
     import { outputStatusAnalysis, areaDiagram, stableBaseAnalysis, proInjectionBalanceAnalysis, proStatusAnalysis} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
     import { fetchFields,fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
     export default {
+        name:'blockAnalysisReport',
         components: {H5Chart,H5Chart2},
         data() {
             return {

@@ -44,13 +44,11 @@
                         <el-col :span="6" style="height: auto">
                             <pagePanel headerTitle="生产动态" style="margin-top:0;height:100%;">
                                 <el-row :gutter="10">
-                                    <el-radio-group v-model="selCode" @change="((val)=>{selRadioIterm(val,'productionTrendsOptions')})">
-                                        <el-col v-for="(item,index) in productionTrendsOptions" :key="index" :span="12">
-                                            <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                            </el-radio-button>
-                                        </el-col>
-                                    </el-radio-group>
+                                    <el-col v-for="(item,index) in productionTrendsOptions" :key="index" :span="12">
+                                        <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'productionTrendsOptions')">
+                                            {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                        </el-button>
+                                    </el-col>
                                 </el-row>
                             </pagePanel>
                         </el-col>
@@ -58,64 +56,52 @@
                             <pagePanel headerTitle="生产问题监测" style="margin-top:0;height:100%;">
                                 <el-row :gutter="5">
                                     <el-col :span="8">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">油井工况</el-button>
-                                        <el-radio-group v-model="selCode" style="margin-top:5px;width: 100%" @change="((val)=>{selRadioIterm(val,'oilWellConditionOptions')})">
-                                            <el-col v-for="(item,index) in oilWellConditionOptions" :key="index" :span="12">
-                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                                </el-radio-button>
-                                            </el-col>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">油井工况</el-button>
+                                        <el-col v-for="(item,index) in oilWellConditionOptions" :key="index" :span="12">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'oilWellConditionOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
                                     </el-col>
                                     <el-col :span="3">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">供排关系</el-button>
-                                        <el-radio-group v-model="selCode" style="margin-top:5px;width: 100%;" @change="((val)=>{selRadioIterm(val,'relationshipOptions')})">
-                                            <el-col v-for="(item,index) in relationshipOptions" :key="index" :span="24">
-                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                                </el-radio-button>
-                                            </el-col>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">供排关系</el-button>
+                                        <el-col v-for="(item,index) in relationshipOptions" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'relationshipOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
                                     </el-col>
                                     <el-col :span="3">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">递减率</el-button>
-                                        <el-radio-group v-model="selCode" style="margin-top:5px;width: 100%;" @change="((val)=>{selRadioIterm(val,'diminishingOptions')})">
-                                            <el-col v-for="(item,index) in diminishingOptions" :key="index" :span="24">
-                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                                </el-radio-button>
-                                            </el-col>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">递减率</el-button>
+                                        <el-col v-for="(item,index) in diminishingOptions" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'diminishingOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
                                     </el-col>
                                     <el-col :span="3">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">采液强度</el-button>
-                                        <el-radio-group v-model="selCode" style="margin-top:5px;width: 100%;" @change="((val)=>{selRadioIterm(val,'fluidStrengthOptions')})">
-                                            <el-col v-for="(item,index) in fluidStrengthOptions" :key="index" :span="24">
-                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                                </el-radio-button>
-                                            </el-col>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">采液强度</el-button>
+                                        <el-col v-for="(item,index) in fluidStrengthOptions" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'fluidStrengthOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
                                     </el-col>
                                     <el-col :span="3">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">采液指数</el-button>
-                                        <el-radio-group v-model="selCode" style="margin-top:5px;width: 100%;" @change="((val)=>{selRadioIterm(val,'fluidProductionOptions')})">
-                                            <el-col v-for="(item,index) in fluidProductionOptions" :key="index" :span="24">
-                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                                </el-radio-button>
-                                            </el-col>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">采液指数</el-button>
+                                        <el-col v-for="(item,index) in fluidProductionOptions" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'fluidProductionOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
                                     </el-col>
                                     <el-col :span="4">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">米采液指数</el-button>
-                                        <el-radio-group v-model="selCode" style="margin-top:5px;width: 100%;" @change="((val)=>{selRadioIterm(val,'mfluidProductionOptions')})">
-                                            <el-col v-for="(item,index) in mfluidProductionOptions" :key="index" :span="24">
-                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                                </el-radio-button>
-                                            </el-col>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">米采液指数</el-button>
+                                        <el-col v-for="(item,index) in mfluidProductionOptions" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'mfluidProductionOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
                                     </el-col>
                                 </el-row>
                             </pagePanel>
@@ -124,26 +110,23 @@
                     <el-row style="height: auto" :gutter="15" class="cont mt-5">
                         <el-col :span="12">
                             <pagePanel headerTitle="潜力分析" style="margin-top:0;height:100%;">
-                                <el-row :gutter="20">
+                                <el-row :gutter="10">
                                     <el-col :span="12">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">提液潜力</el-button>
-                                        <el-radio-group v-model="selCode" style="margin-top:5px;width: 100%;" @change="((val)=>{selRadioIterm(val,'extractionPotentialOptions')})">
-                                            <el-col v-for="(item,index) in extractionPotentialOptions" :key="index" :span="24">
-                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                                </el-radio-button>
-                                            </el-col>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">提液潜力</el-button>
+                                        <el-col v-for="(item,index) in extractionPotentialOptions" :key="index" :span="12">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'extractionPotentialOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
                                     </el-col>
                                     <el-col :span="12">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">储量动用</el-button>
-                                        <el-radio-group v-model="selCode" style="margin-top:5px;width: 100%" @change="((val)=>{selRadioIterm(val,'reserveProductionOptions')})">
-                                            <el-col v-for="(item,index) in reserveProductionOptions" :key="index" :span="24">
-                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                                </el-radio-button>
-                                            </el-col>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">储量动用</el-button>
                                         </el-radio-group>
+                                        <el-col v-for="(item,index) in reserveProductionOptions" :key="index" :span="12">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'reserveProductionOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
                                     </el-col>
                                 </el-row>
                             </pagePanel>
@@ -151,13 +134,11 @@
                         <el-col :span="12">
                             <pagePanel headerTitle="措施推荐" style="margin-top:0;height:100%;">
                                 <el-row :gutter="10" style="height: 100%">
-                                    <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'recommendedMeasuresOptions')})">
-                                        <el-col v-for="(item,index) in recommendedMeasuresOptions" :key="index" :span="12">
-                                            <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                            </el-radio-button>
-                                        </el-col>
-                                    </el-radio-group>
+                                    <el-col v-for="(item,index) in recommendedMeasuresOptions" :key="index" :span="12">
+                                        <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'recommendedMeasuresOptions')">
+                                            {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                        </el-button>
+                                    </el-col>
                                 </el-row>
                             </pagePanel>
                         </el-col>
@@ -788,7 +769,7 @@
     } from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import compareSort from "@/lib/compareSort.js";
     export default {
-        // name:'analysisReport',
+        name:'oilAnalysisReport',
         mixins: [compareSort],
         data() {
             return {
@@ -1104,7 +1085,7 @@
                     })
                 }
                 if (wellInfo != null) {
-                    this.tableData = wellInfo.splice(0, this.listPage * 50);
+                    this.tableData = wellInfo;
                     this.listPage = 2;
                 } else {
                     this.tableData = wellInfo;
@@ -1130,19 +1111,6 @@
                 console.log('this.tableData',this.tableData);
                 this.$refs.tableList.doLayout();
                 // this.selRadioIterm(this.productionCode,'productionTrendsOptions');
-            },
-            getMoreLog() {
-                if (this.scrollFlag) {
-                    var wellInfo = this.dealTableData;
-                    console.log(wellInfo.length, this.listPage * 50)
-                    if (wellInfo != null && wellInfo.length > 0) {
-                        console.log(this.listPage, (this.listPage - 1) * 50, 50)
-                        this.tableData = this.tableData.concat(wellInfo.splice(0, 50));
-                        this.listPage += 1;
-                        this.dom.scrollTop = this.dom.scrollTop - 200
-                    }
-                    console.log(this.tableData.length)
-                }
             },
             queryWellTable() {
                 return new Promise((resolve, reject) => {
@@ -1540,6 +1508,7 @@
             },
             //选中项目
             selRadioIterm(val, tag) {
+                console.log(val,this.selCode,888)
                 this.scrollFlag = false;
                 let myData = []; //我的数据
                 let myWellCount = {}; //计算各项目的井数
@@ -1547,6 +1516,7 @@
                 if(this.selCode!=val){
                     this.selCode = val; //选中项目
                 }else{
+                    this.selCode='';
                     this.doSearch();
                     return false;
                 }
@@ -2001,6 +1971,7 @@
                                         margin-right:10px;
                                     }
                                     span{
+                                        padding-left:30px;
                                         font-size: 16px;
                                         // color: #FFFFFF;
                                         text-align: center;
@@ -2242,6 +2213,7 @@
                                         margin-right:10px;
                                     }
                                     span{
+                                        padding-left:30px;
                                         font-size: 16px;
                                         // color: #FFFFFF;
                                         text-align: center;
@@ -2417,6 +2389,26 @@
         }
     }
     
+    .z-button{
+        width: 100%;
+        height: 28px;
+        font-size:14px;
+        text-align: center;
+        border-color: var(--light-blue-color);
+        color: var(--white-color);
+        transition: all 0s;
+        height: 34px;
+        line-height: 8px;
+        border-radius: 0 !important;
+        background: rgba(143, 164, 204, 0.3);
+        background-size: 100% 100% !important;
+        &:hover{
+            border-image: var(--primary-btn);
+            border-color: var(--light-blue-color);
+            background: var(--primary-btn) !important;
+        }
+    }
+    
     .checkBtn {
         width: 110px;
         height: 28px;
@@ -2435,6 +2427,11 @@
         text-align: center;
         background: rgb(2, 43, 117);
         color:#fff;
+    }
+    .selectButton{
+        border-image: var(--primary-btn);
+        border-color: var(--light-blue-color);
+        background: var(--primary-btn) !important;
     }
     
     .noCheckBtn {
