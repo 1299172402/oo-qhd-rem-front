@@ -74,10 +74,10 @@ export default ({ mode }) => {
           // 更多请参考：https://vitejs.dev/config/#server-proxy
           // target: 'http://10.247.187.28:8080/dev-api/',
           // target: 'http://10.178.118.181:9220',
-          target: 'http://10.178.118.189:9203',
+          target: 'http://10.178.118.189:8081',
           // target: "http://10.77.78.250:9213",
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, ""),
+          rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, "/rem/api"),
         },
         // "/dev-api/masterService/api": {
         //   // 主服务转发请求
