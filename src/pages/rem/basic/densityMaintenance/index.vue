@@ -231,7 +231,7 @@ import {queryOperatingCompanyDetail, queryOperatorsCheckFieldListsDetail} from "
 import treeMultipleSelection from "@/components/intelligentOilfield/tree_multiple_selection/index.vue";
 
 export default {
-    name: "Notice",
+    name: "density",
     dicts: ["sys_normal_disable"],
     components: {
         treeMultipleSelection
@@ -271,6 +271,7 @@ export default {
         this.year = String(y);
         this.getList();
         this.getInfo();
+        
         // this.choiceDepts(); // 获取组织机构
     },
     methods: {
@@ -352,6 +353,20 @@ export default {
             // }
         },
         inputChange(monthNum) {
+            const MONTHS = {
+                1: 'january',
+                2: 'february',
+                3: 'march',
+                4: 'april',
+                5: 'may',
+                6: 'june',
+                7: 'july',
+                8: 'august',
+                9: 'september',
+                10: 'october',
+                11: 'november',
+                12: 'december'
+            };
             let month = this.noticeList[0];
             let monthDen = 0;
             switch (monthNum) {
@@ -392,7 +407,6 @@ export default {
                     monthDen = month.december;
                     break;
             }
-
             switch (monthNum) {
                 case 1:
                     month.february = monthDen;

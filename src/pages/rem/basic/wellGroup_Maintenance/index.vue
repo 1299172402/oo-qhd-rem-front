@@ -68,7 +68,8 @@
             </el-button>
             <el-button
               type="primary"
-              style="font-size: 12px;padding: 5px 10px 5px 10px; width: 85px;"
+              :loading="loading"
+              @click="calculate"
             >
               <i class="el-icon-s-platform el-icon--left" />
               运行计算
@@ -243,16 +244,18 @@ import {
   postsaveAndupdateWellGroup, delectByWellGroupId, saveAllWellGroup
 } from "@/api/rem/r-wellConnectEvaluate.js"
 export default {
+  name: "wellGroup_Maintenance",
   components: {
     // NormalCard
   },
   data () {
     return {
+      loading:false,
       options: [],
       transferData: [],
       query: {
         selectField: "3FC9A818F5BC43B88270DB80BBB3018F",
-        value2: this.getDate(),
+        value2: '',
         selectBlock: "YCFXDY8B643EDC9007F96F570600457D",
       },
       select: {
@@ -283,6 +286,7 @@ export default {
     }
   },
   created () {
+    this.getDate()
     //获取油田下拉数据
     this.selectData()
     this.selectblock()
@@ -291,19 +295,20 @@ export default {
   computed:{
     disabledBtn: function (){
       return this.computedDate !== this.query.value2
-    }
+    },
   },
   methods: {
       reset() {
           this.query.selectBlock = this.blanks[0].fieldId;
-          (this.query.value2 = this.getDate()), this.tableOilfield();
+          this.getDate(),
+          this.tableOilfield();
       },
     getDate () {
       let data = new Date()
       if ((data.getMonth() +1) < 10) {
-        return data.getFullYear() + '-0' + (data.getMonth()+1)
+        this.query.value2 = data.getFullYear() + '-0' + (data.getMonth()+1);
       } else {
-        return data.getFullYear() + '-' + (data.getMonth()+1)
+        this.query.value2 = data.getFullYear() + '-' + (data.getMonth()+1);
       }
     },
     queryBlock () {
@@ -328,7 +333,6 @@ export default {
             });
           })
         }
-        console.log('data--->',data)
         this.transferData = data
       })
 
@@ -401,7 +405,6 @@ export default {
       if (this.select.selectBlock != "0") data.methodCode = 1
       postsaveAndupdateWellGroup(data).then((res) => {
         this.transferData = []
-          console.log('.....->',res)
         if (res) {
           this.$message.success("成功")
           this.tableOilfield()
@@ -452,7 +455,6 @@ export default {
       } else {
         // postCoefficientconnectivity(data).then((res) => {
         wellGroupDataById({wellGroupId: this.select.selectBlock}).then((res)=>{
-            console.log('------',res)
           let arr = []
           if(Array.isArray(res) && res.length){
             arr.push({
@@ -508,7 +510,6 @@ export default {
         return this.blockList = [{ wellGroupId: '0', wellGroupName: "新增" }]
       }
       listGroupDataByBlockIdAndDate(data).then((res) => {
-        console.log('res111->',res)
         this.blockList = res
         this.blockList.unshift({
           wellGroupId: '0',
@@ -539,7 +540,6 @@ export default {
       getblock({
         ogfId: this.query.selectField
       }).then(({ blockList }) => {
-          console.log('blockList.data->',blockList)
         this.blanks = blockList
       });
     },
@@ -574,7 +574,6 @@ export default {
         } else {
           this.tableData = []
         }
-        console.log(this.tableData)
       });
     },
     // 保存
@@ -587,6 +586,16 @@ export default {
         this.isDisabled = false
       })
     },
+      calculate(){
+          // 运行计算测试效果
+            this.loading = true
+          // const firstLoading = document.querySelector("#first-loading");
+          setTimeout(() => {
+              this.loading = false
+              this.$message.error('计算失败')
+          }, 2000);
+      }
+      
   }
 }
 </script>

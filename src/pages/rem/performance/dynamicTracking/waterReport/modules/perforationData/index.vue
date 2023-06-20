@@ -7,7 +7,7 @@
          :cell-style="{ padding: '6px', 'text-align': 'center' }"
         style="width:100%;" height="calc(100% - 10px)" :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-        <el-table-column type="index" label="序号" fixed></el-table-column>
+        <el-table-column type="index" width="60" label="序号" fixed></el-table-column>
         <el-table-column prop="wellNo" label="井号" width="130" fixed></el-table-column>
         <el-table-column prop="perfLayer" label="小层" width="200" fixed></el-table-column>
         <el-table-column prop="topDepth" :label="`井段顶斜深\n (m)`" min-width="120"></el-table-column>

@@ -45,23 +45,19 @@ export default {
   },
   methods: {
       doSearch() {
-          console.log('wellId222',this.wellId)
-          console.log('oilFeildId222',this.oilFeildId)
-          console.log('platform22222',this.platform)
           let params ={
               operationId:this.wellId,
               operationType:'YJWJDZZJ',
               readOne:'one'
           }
           queryRemUploadFileMinio(params).then((res) => {
-              console.log('this.res',res)
               if (res.data.code == 200) {
                   let data =res.data.data[0].fileId
                   this.id = res.data.data[0].fileId
                   this.fileName = res.data.data[0].filestrId
                   filePreview(data).then((res)=>{
-                      console.log(res)
-                      this.url = res.data.data
+                      this.url = res.data.data.replace(/^http?:\/\/\S+\//,'/file-api/')
+     
                   })
               }else {
                   this.$message.error("文件查询接口异常!");

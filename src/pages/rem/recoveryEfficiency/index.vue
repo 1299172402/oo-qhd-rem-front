@@ -565,6 +565,7 @@
     import {fetchOilFields,fetchFields,fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import {oilFieldRecoveryRatio, waterDriveChartData,  declineChartData, tongChartData, experienceFormulaCalResult,experienceFormulaParameter} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
     export default {
+        name:'recoveryEfficiency',
         computed:{
             ...mapState({
                 mode: state=> state.setting.mode

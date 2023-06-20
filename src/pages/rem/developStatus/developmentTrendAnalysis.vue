@@ -49,6 +49,7 @@
     import {fetchOilFields,fetchFields} from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import {searchDevTrendAnalysis} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
     export default {
+        name:'developmentTrendAnalysis',
         components: {
             Echart,
         },

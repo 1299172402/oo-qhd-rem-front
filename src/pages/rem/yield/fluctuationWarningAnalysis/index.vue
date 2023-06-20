@@ -283,7 +283,7 @@
     import {getReportFroms} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js'
     import {exportComplexHeaderExcelFromJson} from '@/lib/exportExcel.js';
     export default {
-        // name: 'fluctuationWarningAnalysis',
+        name: 'fluctuationWarningAnalysis',
         components: {
             Echart,
         },

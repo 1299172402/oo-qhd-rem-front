@@ -36,6 +36,7 @@
 import { fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { searchLongTermPlan } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 export default {
+  name:'mediumLongTermPlanning',
   data() {
     return {
       //选择油田

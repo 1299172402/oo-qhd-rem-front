@@ -222,6 +222,7 @@ import {
 import Iframe from '@/components/rem/tools/iframe.vue'
 
 export default {
+    name:'optimizationResult',
     components: {
         Iframe
     },

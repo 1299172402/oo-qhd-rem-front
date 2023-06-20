@@ -166,6 +166,7 @@ import { exportExcel } from '@/lib/exportExcel';
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 
 export default {
+  name:'intelligenceDetail',
   components: {
   },
   mixins: [queryConditionMixin],

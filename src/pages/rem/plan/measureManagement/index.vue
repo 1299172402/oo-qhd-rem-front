@@ -194,7 +194,7 @@
         exportExcel
     } from '@/lib/exportExcel.js';
     export default {
-        name: 'newPlanIndex',
+        name: 'measureManagement',
         components: {
             fieldOperations
         },

@@ -34,7 +34,6 @@
         watch:{
           queryData:{
               handler(Nval){
-                  console.log(Nval);
                   let params = {
                       ogfId: Nval.ogfId,
                       platformId: Nval.platform,

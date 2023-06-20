@@ -198,6 +198,7 @@ import HelpHint from "@/pages/rem/intelligence/connectivityData/tooltig.vue"
 import FileSaver from "file-saver";
 
 export default {
+    name:'coefficientCalculates',
     components: {
         HelpHint
     },

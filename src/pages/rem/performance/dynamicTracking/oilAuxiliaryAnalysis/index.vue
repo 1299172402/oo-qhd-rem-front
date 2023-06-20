@@ -87,6 +87,7 @@
             :visible.sync="ljpmDialogLast"
             width="20%"
             :before-close="ljpmDialogCloseLast"
+            :style="{ 'min-width': '1800px' }"
         >
             <el-row>
                 <el-form ref="form" :model="ljUploadForm" label-width="40px">
@@ -527,7 +528,7 @@
                 addRemUploadFileMinio(params).then((res) => {
                     if (res.data.code == 200) {
                         this.$message.success("文件上传成功!");
-                        // this.ljpmDialogLast = false;
+                        this.ljpmDialogLast = false;
                         this.doSearch()
                         this.imageurl = ''; // 清空已选择的文件
                         this.$refs.form.resetFields();
@@ -541,7 +542,6 @@
                 });
             },
             getResData(data){
-                   
                 // this.fileId = data[0].id
                 if (this.currentModule =='drillingReport'){
                     let params1 = {
@@ -581,15 +581,12 @@
             ljpmUploadDialogLast() {
                 if (this.currentModule =='drillingReport'){
                     this.ljpmDialogLast = true;
-                    console.log('111111111')
                 }else if(this.currentModule =='completionReport'){
                     //打开弹窗
                     this.ljpmDialogLast = true;
-                    console.log('2222222')
                 }else if(this.currentModule =='geologicalSummary'){
                     //打开弹窗
                     this.ljpmDialogLast = true;
-                    console.log('333333')
                 }
             },
             //重置

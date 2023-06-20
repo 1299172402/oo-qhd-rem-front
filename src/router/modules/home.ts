@@ -17,10 +17,10 @@ export default [
         meta: { title: '注采联动',icon: 'icon' },
       },
       {
-        path: 'reservoirDisplay',
-        name: 'reservoirDisplay',
+        path: 'oilexhibition',
+        name: 'oilexhibition',
         component: () => import('@/pages/rem/home/reservoirDisplay/index.vue'),
-        meta: { title: '油藏看板',icon: 'icon' },
+        meta: { title: '油藏看版',icon: 'icon' },
       },
       {
         path: 'shutdownDetection',

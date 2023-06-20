@@ -8,10 +8,10 @@
 
                         </div>
                     </div>
-                    <div v-if="warningShowFlag">
-                        <button class="detailLinkBtn" @click="confirm()">确认</button>
-                        <button class="detailLinkBtn" @click="linkTo(currentList.analysisUrl)">分析</button>
-                    </div>
+<!--                    <div v-if="warningShowFlag">-->
+<!--                        <button class="detailLinkBtn" @click="confirm()">确认</button>-->
+<!--                        <button class="detailLinkBtn" @click="linkTo(currentList.analysisUrl)">分析</button>-->
+<!--                    </div>-->
                 </div>
             </div>
         </el-collapse-transition>
@@ -129,7 +129,7 @@ export default {
             display: inline-block !important;
             width: 45%;
             height: 50%;
-            margin: 1.6vw 0 0 0.5vw !important;
+            margin: 2vw 0 0 0.5vw !important;
             background-size: cover !important;
             //}
         }

@@ -401,7 +401,6 @@
             },
             uploadFile(params){
                 addRemUploadFileMinio(params).then((res) => {
-                    console.log('res->>>>>>',res)
                     if (res.data.code == 200) {
                         this.$message.success("文件上传成功!");
                         this.ljpmDialog = false;
@@ -418,7 +417,6 @@
                 });  
             },
             getResData(data){
-                console.log(data)
                 if (this.currentModule =='drillingReport'){
                     //SJZWJBG为水井钻完井报告
                     //打开弹窗
@@ -431,7 +429,6 @@
                         uploadTime:''
                     };
                     this.uploadFile(params1)
-                    console.log('111111111',params1)
                 }else if(this.currentModule =='completionReport'){
                     //SJWJWGBG为水井完井完工报告
                     let params2 = {
@@ -443,7 +440,6 @@
                         uploadTime:''
                     }
                     this.uploadFile(params2)
-                    console.log('2222222',params)
                 }else if(this.currentModule =='geologicalSummary'){
                     let params3 = {
                         //SJWJDZZJ为水井完井地质总结
@@ -455,7 +451,6 @@
                         uploadTime:''
                     }
                     this.uploadFile(params3)
-                    console.log('333333',params)
                 }
             },
             ljpmUploadSave() {
@@ -479,15 +474,12 @@
             ljpmUploadDialog() {
                 if (this.currentModule =='drillingReport'){
                     this.ljpmDialog = true;
-                    console.log('111111111')
                 }else if(this.currentModule =='completionReport'){
                     //打开弹窗
                     this.ljpmDialog = true;
-                    console.log('2222222')
                 }else if(this.currentModule =='geologicalSummary'){
                     //打开弹窗
                     this.ljpmDialog = true;
-                    console.log('333333')
                 }
             },
             resetting(){

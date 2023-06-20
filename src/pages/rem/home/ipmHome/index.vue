@@ -24,6 +24,7 @@ import linkageBoxTop from "@/pages/rem/home/remHome/linkageBox/boxTop.vue";
 import linkageBoxBot from "@/pages/rem/home/remHome/linkageBox/boxBot.vue";
 
 export default {
+    name:'ipmHome',
     components: {
         linkageBoxTop,
         linkageBoxBot
@@ -31,51 +32,9 @@ export default {
     mounted() {
         this.arrowFun()
     },
-    methods: {
-        arrowFun() {
-            setInterval(() => {
-                // console.log(this.currentLists[this.loopNum]);
-                console.log(this.loopNum);
-                if (this.loopNum != -1 && this.loopNum < 3) {
-                    this.currentLists[1][this.loopNum].showFlag = true
-                }
-                if (this.loopNum > 0 && this.loopNum < 4) {
-                    this.currentLists[1][this.loopNum - 1].showFlag = false
-                }
-                if (this.loopNum == 2) this.currentLists[1][this.loopNum].mcShow = true
-
-
-                if (this.loopNum == 3) {
-                    this.currentLists[0][2].showFlag = true
-                }
-                if (this.loopNum == 4) {
-                    this.currentLists[0][2].showFlag = false
-                    this.currentLists[0][1].showFlag = true
-                }
-                if (this.loopNum == 5) {
-                    this.currentLists[0][1].showFlag = false
-                    this.currentLists[0][0].showFlag = true
-                }
-                if (this.loopNum == -1) {
-                    this.currentLists[0][0].showFlag = false
-                }
-                // if(this.loopNum != 2 && this.loopNum > 3 ) this.currentLists[0][this.loopNum-4].showFlag = false
-
-                // if(this.loopNum > 2 && this.loopNum <6 ) { this.currentLists[0][this.loopNum-3].showFlag = true }
-                // if(this.loopNum > 2 && this.loopNum <7 ) { this.currentLists[0][this.loopNum-4].showFlag = false }
-                this.loopNum++
-                for (let i = 0; i < 7; i++) {
-                    this.$el.querySelectorAll('img')[i].style.display = 'none'
-                }
-                this.$el.querySelectorAll('img')[this.loopNum].style.display = 'block'
-                if (this.loopNum == 6) {
-                    this.loopNum = -1
-                }
-            }, 2000)
-        }
-    },
     data() {
         return {
+            timer:'',
             loopNum: 0,
             show: true,
             currentLists: [
@@ -200,6 +159,52 @@ export default {
                 ]
             ]
         }
+    },
+    methods: {
+        arrowFun() {
+            this.timer = setInterval(() => {
+                // console.log(this.currentLists[this.loopNum]);
+                console.log(this.loopNum);
+                if (this.loopNum != -1 && this.loopNum < 3) {
+                    this.currentLists[1][this.loopNum].showFlag = true
+                }
+                if (this.loopNum > 0 && this.loopNum < 4) {
+                    this.currentLists[1][this.loopNum - 1].showFlag = false
+                }
+                if (this.loopNum == 2) this.currentLists[1][this.loopNum].mcShow = true
+
+
+                if (this.loopNum == 3) {
+                    this.currentLists[0][2].showFlag = true
+                }
+                if (this.loopNum == 4) {
+                    this.currentLists[0][2].showFlag = false
+                    this.currentLists[0][1].showFlag = true
+                }
+                if (this.loopNum == 5) {
+                    this.currentLists[0][1].showFlag = false
+                    this.currentLists[0][0].showFlag = true
+                }
+                if (this.loopNum == -1) {
+                    this.currentLists[0][0].showFlag = false
+                }
+                // if(this.loopNum != 2 && this.loopNum > 3 ) this.currentLists[0][this.loopNum-4].showFlag = false
+
+                // if(this.loopNum > 2 && this.loopNum <6 ) { this.currentLists[0][this.loopNum-3].showFlag = true }
+                // if(this.loopNum > 2 && this.loopNum <7 ) { this.currentLists[0][this.loopNum-4].showFlag = false }
+                this.loopNum++
+                for (let i = 0; i < 7; i++) {
+                    this.$el.querySelectorAll('img')[i].style.display = 'none'
+                }
+                this.$el.querySelectorAll('img')[this.loopNum].style.display = 'block'
+                if (this.loopNum == 6) {
+                    this.loopNum = -1
+                }
+            }, 2000)
+        }
+    },
+    beforeDestroy() {
+        clearInterval(this.timer)
     }
 }
 </script>
