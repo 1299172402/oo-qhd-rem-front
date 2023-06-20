@@ -20,8 +20,9 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="平台:">
-                            <el-select v-model="queryData.assetCode" @change="choicewell" style="width: 220px">
+                            <el-select v-model="queryData.assetCode" @change="choicewell" clearable style="width: 220px">
                                 <el-option
+                                    clearable
                                     v-for="(item, index) in platforms"
                                     :key="index"
                                     :label="item.platformName"
@@ -31,7 +32,7 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="井号:">
-                            <el-select v-model="queryData.well" style="width: 170px">
+                            <el-select v-model="queryData.well" clearable style="width: 170px">
                                 <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellNo"
                                            :value="item.wellId">
                                 </el-option>
@@ -40,7 +41,7 @@
                         <el-form-item label="日期:">
                             <el-date-picker
                                 value-format="yyyy-MM-dd"
-                                :clearable="false"
+                                clearable
                                 v-model="queryData.month"
                                 type="date"
                                 key="1"
@@ -720,7 +721,6 @@ export default {
                     };
                     queryPlatformQueryWellListDetail(requestPlat).then((res) => {
                         this.wellList = res.data.data;
-                        this.queryData.well = ''
                     });
                     queryListOfOilfieldQueryPlatformsDetail(requestPlat).then((res) => {
                         if (res.data.code == 200) {
@@ -739,6 +739,11 @@ export default {
         choicewell() {
             queryPlatformQueryWellListDetail({platformId: this.queryData.assetCode}).then((res) => {
                 this.wellList = res.data.data;
+                if(res.data.data.length){
+                    this.queryData.well = res.data.data[0].wellId
+                }else{
+                    this.queryData.well = ''
+                }
             });
         },
         // 返回按钮
