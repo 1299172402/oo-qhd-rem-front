@@ -411,7 +411,6 @@ export default {
         },
         queryBut() {
             this.queryWellAvgFluidProdAlloc()
-            this.queryWellInjRatio()
         },
         queryEdit() {
             if (this.radio == '1') {
@@ -511,7 +510,6 @@ export default {
                 // this.getSpanArr(arr, 'injWellNo')
                 this.groupBy(arr)
                 this.ying = eval(res.groupWaterInferData)
-                this.queryWellGuessResult()
                 this.$message.success("保存成功")
             }).catch(() => {
                 this.$message.error("请配置井组参数信息!")
