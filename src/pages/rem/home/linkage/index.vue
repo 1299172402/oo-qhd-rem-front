@@ -88,7 +88,7 @@ export default {
                 {
                     style: 'position:absolute;left: 80%;top: 21%;width:20%;height:40%;',
                     boxText: '智能分采井调控测试',
-                    boxBottomText: [{name:'智能配产器调控模型',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/intelligentSubMining'}, '举升设备调控模型', '智能测试模型'],
+                    boxBottomText: [{name:'智能配产器调控模型',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/intelligentDispensing/intelligentSubMining'}, '举升设备调控模型', '智能测试模型'],
                     boxStyle: {
                         pWidth: 'width:11vw',
                     },
@@ -129,8 +129,8 @@ export default {
                     boxText: '注采状况分析',
                     boxBottomText: [
                         {name:'注采连通分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/basic/wellGroup_Maintenance'},
-                        {name:'注采平衡分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport'},
-                        {name:'采出状况分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport'}
+                        {name:'注采平衡分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport'},
+                        {name:'采出状况分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport'}
                     ],
                     boxBottomContent: [
                         [{name:'注采连通性评价模型',url:''}],
@@ -160,7 +160,7 @@ export default {
                 {
                     style: 'position:absolute;left: 17%;top: 56%;width:20%;height:40%;',
                     boxText: '调整区块确定',
-                    boxBottomText: [{name:'层间/平面矛盾分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport'}],
+                    boxBottomText: [{name:'层间/平面矛盾分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport'}],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
