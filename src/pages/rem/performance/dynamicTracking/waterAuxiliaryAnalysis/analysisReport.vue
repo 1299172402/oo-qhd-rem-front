@@ -702,15 +702,21 @@
             },
             //获取注水强度数据
             getzsqdData(){
+                let assetCode = this.platform,reservoirUnitId = this.selectBlock
+                if(assetCode == '3FC9A818F5BC43B88270DB80BBB3018F' ){
+                    assetCode = ''
+                }
+                if(reservoirUnitId == '3FC9A818F5BC43B88270DB80BBB3018F' ){
+                    reservoirUnitId = ''
+                }
                 let params = {
-                    assetCode:this.platform,
+                    assetCode:assetCode,
                     date:this.currentDate,
                     ogfId:this.selYtdm,
-                    reservoirUnitId:this.selectBlock,
+                    reservoirUnitId:reservoirUnitId,
                     wellId:this.wellId
                 }
                 queryEvaluationWaterInjCount(params).then((res) =>{
-                    console.log('res----->',res)
                      this.zsqdForm = res.data.data[0]
                 })
             },
@@ -822,6 +828,8 @@
                 await this.queryStopInjectionRecovery(); //停注恢复
                 await this.queryRecommendedMeasures(); //措施推荐
                 await this.queryProWellDynamicAnalysisDetail(); //措施井数据
+                await this.getzsqdData(); //zxp
+                
                 //触发初始选中 （测试没有使用，需要异步使用，还需要）
                 // this.selRadioIterm(this.selCode, this.selTag);
                 if(this.collectWells.length){
