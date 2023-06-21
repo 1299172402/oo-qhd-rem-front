@@ -159,7 +159,7 @@
                     </div>
                     <div style="display: flex;justify-content: flex-end;margin-bottom:10px;">
                         <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)"
-                        @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate}})">
+                        @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':'1'}})">
                         归因分析详情
                         </el-button>
                         <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)" 
