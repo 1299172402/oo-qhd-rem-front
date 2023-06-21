@@ -91,9 +91,9 @@
             >
                 <el-table-column prop="null" label="井号"></el-table-column>
                 <el-table-column prop="null" label="日期（年月）"></el-table-column>
-                <el-table-column v-if="link == 1" prop="null" :label="`采液强度\n(m³/mPa)`"></el-table-column>
-                <el-table-column v-if="link == 2" prop="null" :label="`采液指数\n(m³/mPa)`"></el-table-column>
-                <el-table-column v-if="link == 3" prop="null" :label="`米采液指数\n(m³/mPa)`"></el-table-column>
+                <el-table-column v-if="link == 1" prop="null" :label="`采液强度\n(m³/d·m)`"></el-table-column>
+                <el-table-column v-if="link == 2" prop="null" :label="`采液指数\n(m³/mPa·d)`"></el-table-column>
+                <el-table-column v-if="link == 3" prop="null" :label="`米采液指数\n(m³/mPa·d·m)`"></el-table-column>
                 <el-table-column prop="null" label="产液量"></el-table-column>
                 <el-table-column prop="null" label="生产时率"></el-table-column>
                 <el-table-column prop="null" label="泵效"></el-table-column>
