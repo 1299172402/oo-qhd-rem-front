@@ -7,7 +7,6 @@
       header="设置"
       :close-btn="true"
       :on-close-btn-click="handleCloseDrawer"
-      :on-close="setpageConfigs"
       class="setting-drawer-container"
     >
       <div class="setting-container">
@@ -215,6 +214,7 @@ export default {
         // 没有在formData中 需要从store中同步过来
         const { isSidebarCompact } = this.$store.state.setting;
         this.$store.dispatch("setting/changeTheme", { ...newVal, isSidebarCompact });
+        this.setpageConfigs();
       },
       deep: true
     }

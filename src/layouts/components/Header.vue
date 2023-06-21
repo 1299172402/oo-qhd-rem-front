@@ -515,8 +515,10 @@ export default Vue.extend({
       immediate: true
     },
     "$store.state.user.isGroupLogin": {
-      handler() {
-        this.getInitDeptds();
+      handler(newVal) {
+        if (newVal) {
+          this.getInitDeptds();
+        }
         this.containerWidth();
       },
       deep: true,

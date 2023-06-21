@@ -83,7 +83,7 @@ const state = {
   // 滚动页面请求接口是否加loading
   scrollLoading: true,
   // 去掉loading的白名单
-  whiteListLoading: ["/auth/checkAndRefreshToken", "/system/SysMenuAccess/add", "system/rang/queryCurrent", "/system/monitor/links", "/system/app/saveAppUserRelation"],
+  whiteListLoading: ["/system/pageConfig/saveOrUpdatePageConfig", "/auth/checkAndRefreshToken", "/system/SysMenuAccess/add", "system/rang/queryCurrent", "/system/monitor/links", "/system/app/saveAppUserRelation"],
   // 报错白名单[主要是报警信息接口的报错处理]
   whiteListError: ["system/rang/queryCurrent", "/gem001b/alarmCountMonthlyStatistics", "/gem001b/queryLevelSelectOptionList", "/gem001b/getAlcSourceList", "/system/instationmail/getByTenantId"]
 };
