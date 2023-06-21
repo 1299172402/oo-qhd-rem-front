@@ -99,26 +99,26 @@
                             <el-col :span="4" style="height: 100%">
                                 <pagePanel headerTitle="注水强度" style="margin-top:0;height:100%;">
                                     <el-row :gutter="10" style="height: 100%">
-                                        <el-radio-group v-model="selCode" style="width: 100%;">
+                                        <el-radio-group v-model="selCode"  style="width: 100%;">
                                             <!-- 等模型 -->
                                             <el-col :span="24">
-                                                <el-radio-button class="checkButton">
+                                                <el-radio-button class="checkButton" label="0001">
                                                     注水强度偏高{{`(` + this.zsqdForm.evaluationBiasTall + `)`}}
                                                 </el-radio-button>
                                             </el-col>
                                             <el-col :span="24">
-                                                <el-radio-button class="checkButton">
+                                                <el-radio-button class="checkButton" label="0002">
                                                     注水强度偏低{{`(` +  this.zsqdForm.evaluationBiasLow  + `)`}}
                                                 </el-radio-button>
                                             </el-col>
                                            
                                             <el-col :span="24">
-                                                <el-radio-button class="checkButton">
+                                                <el-radio-button class="checkButton" label="BG" >
                                                     注水强度变高{{`(` +  this.zsqdForm.evaluationChangeTall  + `)`}}
                                                 </el-radio-button>
                                             </el-col>
                                             <el-col :span="24">
-                                                <el-radio-button class="checkButton">
+                                                <el-radio-button class="checkButton" label="BD">
                                                     注水强度变低{{`(` +  this.zsqdForm.evaluationChangeLow  + `)`}}
                                                 </el-radio-button>
                                             </el-col>
@@ -159,15 +159,18 @@
                                             <td class="checkBtn">选中</td>
                                             <td class="about">相关</td>
                                             <td class="noCheckBtn">未选中</td>
+                                                <td v-if="selCode=='BD'  ||selCode=='BG' " class="noCheckBtn"><el-button type="primary"  @click="$router.push({name:'attributtonAnalysis',query:{'selectBlock':selectBlock,'platform':platform,'wellId':wellId,'link':4,'evalResult':selCode}} )">
+                                                    归因分析详情
+                                                </el-button></td>
                                         </tr>
                                     </table>
                                 </el-col>
                             </el-row>
-                            <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;">
-                                <el-button type="primary" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)" @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate}})">
-                                    归因分析详情
-                                </el-button>
-                            </div>
+<!--                            <div  style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;">-->
+<!--                                <el-button type="primary"  @click="$router.push({path:'attributtonAnalysis'})">-->
+<!--                                    归因分析详情-->
+<!--                                </el-button>-->
+<!--                            </div>-->
                         </div>
                     </div>
                     <div style="flex:1;min-height:380px;">
@@ -694,6 +697,9 @@
             this.getzsqdData()
         },
         methods: {
+            clickmodel(){
+                console.log(123)  
+            },
             //获取注水强度数据
             getzsqdData(){
                 let params = {
