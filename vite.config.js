@@ -82,11 +82,11 @@ export default ({ mode }) => {
         //   changeOrigin: true,
         //   rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, ""),
         // },
-        "/dev-api/ipm/api": {
-          target: 'http://10.178.118.203:9223',//台式
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/dev-api\/ipm\/api/, ""),
-        },
+        // "/dev-api/ipm/api": {
+        //   target: 'http://10.178.118.203:9223',//台式
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(/^\/dev-api\/ipm\/api/, ""),
+        // },
         "/dev-api/prm/api": {
           // 用于开发环境下的转发请求
           // 更多请参考：https://vitejs.dev/config/#server-proxy
