@@ -3,7 +3,7 @@
     <div style="width: 100%; height: calc(100% - 90px)" class="pageBox">
         <header-search class="g-w100 g-h100" style="height: auto">
             <div class="g-row-flex-V g-w100 g-h100">
-                <div style="margin-top: 10px; width: 100%">
+                <div style="width: 100%">
                     <el-form :inline="true">
                         <el-form-item label="作业公司:" style="margin-left: 30px">
                             <el-select v-model="queryData.orgId" disabled>
@@ -20,7 +20,8 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="平台:">
-                            <el-select v-model="queryData.assetCode" @change="choicewell" clearable style="width: 220px">
+                            <el-select v-model="queryData.assetCode" @change="choicewell" clearable
+                                       style="width: 220px">
                                 <el-option
                                     clearable
                                     v-for="(item, index) in platforms"
@@ -56,19 +57,25 @@
                         </el-form-item>
 
                         <el-form-item style="float: right">
-                            <el-button type="primary" @click="returnrouter">返回</el-button>
+                            <el-button type="primary" @click="returnRouter">返回</el-button>
                         </el-form-item>
                     </el-form>
                 </div>
             </div>
         </header-search>
-        <pagePanel v-if="link!=4" :headerTitle="title" style="height: 120%" :show-btn="true">
-            <Echart :chart-data="option" style="height: 100%"></Echart>
-        </pagePanel>
-        <pagePanel v-else :headerTitle="title" style="height: 120%" :show-btn="true">
+        <pagePanel v-if="link==4" :headerTitle="title" style="height: 120%" :show-btn="true">
             <Echart :chart-data="option2" style="height: 100%"></Echart>
         </pagePanel>
-        <pagePanel v-if="link!='4'" headerTitle="采液强度分析关键参数明细表" style="height: 100%" :show-btn="true">
+        <pagePanel v-else-if="link==5" :headerTitle="title" style="height: 120%" :show-btn="true">
+            <Echart :chart-data="option3" style="height: 100%"></Echart>
+        </pagePanel>
+        <pagePanel v-else-if="link==6" :headerTitle="title" style="height: 120%" :show-btn="true">
+            <Echart :chart-data="option4" style="height: 100%"></Echart>
+        </pagePanel>
+        <pagePanel v-else :headerTitle="title" style="height: 120%" :show-btn="true">
+            <Echart :chart-data="option" style="height: 100%"></Echart>
+        </pagePanel>
+        <pagePanel v-if="link=='1'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
             <el-table
                 height="100%"
                 :row-style="{ height: '0px' }"
@@ -83,16 +90,70 @@
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
                 <el-table-column prop="null" label="井号"></el-table-column>
-                <el-table-column prop="null" :label="`采液强度\n(m³/mPa)`"></el-table-column>
-                <el-table-column prop="null" label="含水率(%)"></el-table-column>
-                <el-table-column prop="null" label="动液面(m)"></el-table-column>
-                <el-table-column prop="null" label="储层物性"></el-table-column>
-                <el-table-column prop="null" :label="`地层压力\n(mPa)`">></el-table-column>
-                <el-table-column prop="null" :label="`*关停结束时间\n(yyyy/mm/dd)`"></el-table-column>
-                <el-table-column prop="null" label="出砂情况"></el-table-column>
+                <el-table-column prop="null" label="日期（年月）"></el-table-column>
+                <el-table-column v-if="link == 1" prop="null" :label="`采液强度\n(m³/mPa)`"></el-table-column>
+                <el-table-column v-if="link == 2" prop="null" :label="`采液指数\n(m³/mPa)`"></el-table-column>
+                <el-table-column v-if="link == 3" prop="null" :label="`米采液指数\n(m³/mPa)`"></el-table-column>
+                <el-table-column prop="null" label="产液量"></el-table-column>
+                <el-table-column prop="null" label="生产时率"></el-table-column>
+                <el-table-column prop="null" label="泵效"></el-table-column>
+                <el-table-column prop="null" label="含水率"></el-table-column>
+                <el-table-column prop="null" label="流压"></el-table-column>
+                <el-table-column prop="null" label="归因"></el-table-column>
+                <el-table-column prop="null" label="措施"></el-table-column>
             </el-table>
         </pagePanel>
-        <pagePanel v-else headerTitle="注水强度归因分析明细表" style="height: 100%" :show-btn="true">
+        <pagePanel v-if="link=='5'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
+            <el-table
+                height="100%"
+                :row-style="{ height: '0px' }"
+                :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                header-cell-class-name="table_header"
+                :cell-style="{ padding: '3px', 'text-align': 'center' }"
+                :data="tableData"
+                border
+                ref="reset"
+                style="width: 100%; height: 100%"
+                id="cjyzsj"
+                :default-sort="{ prop: 'date', order: 'descending' }"
+            >
+                <el-table-column prop="null" label="井号"></el-table-column>
+                <el-table-column prop="null" label="日期"></el-table-column>
+                <el-table-column prop="null" label="递减率"></el-table-column>
+                <el-table-column prop="null" label="月度产液量"></el-table-column>
+                <el-table-column prop="null" label="生产时率"></el-table-column>
+                <el-table-column prop="null" label="含水率"></el-table-column>
+                <el-table-column prop="null" label="排量效率"></el-table-column>
+                <el-table-column prop="null" label="流压"></el-table-column>
+                <el-table-column prop="null" label="归因"></el-table-column>
+                <el-table-column prop="null" label="措施"></el-table-column>
+            </el-table>
+        </pagePanel>
+        <pagePanel v-if="link=='6'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
+            <el-table
+                height="100%"
+                :row-style="{ height: '0px' }"
+                :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                header-cell-class-name="table_header"
+                :cell-style="{ padding: '3px', 'text-align': 'center' }"
+                :data="tableData"
+                border
+                ref="reset"
+                style="width: 100%; height: 100%"
+                id="cjyzsj"
+                :default-sort="{ prop: 'date', order: 'descending' }"
+            >
+                <el-table-column prop="null" label="井号"></el-table-column>
+                <el-table-column prop="null" label="日期"></el-table-column>
+                <el-table-column prop="null" label="井组压力保持评价"></el-table-column>
+                <el-table-column prop="null" label="井组月度产液量"></el-table-column>
+                <el-table-column prop="null" label="注采平衡分析结果"></el-table-column>
+                <el-table-column prop="null" label="井组水井分层月注水量"></el-table-column>
+                <el-table-column prop="null" label="归因"></el-table-column>
+                <el-table-column prop="null" label="下步措施"></el-table-column>
+            </el-table>
+        </pagePanel>
+        <pagePanel v-if="link=='4'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
             <el-table
                 height="100%"
                 :row-style="{ height: '0px' }"
@@ -108,7 +169,7 @@
                 <el-table-column prop="wellNo" label="井号"></el-table-column>
                 <el-table-column prop="evalTime" label="日期">
                     <template slot-scope="scope">
-                        <span>{{scope.row.evalTime?scope.row.evalTime.split(' ')[0]:'-'}}</span>
+                        <span>{{ scope.row.evalTime ? scope.row.evalTime.split(' ')[0] : '-' }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="layerName" show-overflow-tooltip label="层位"></el-table-column>
@@ -132,8 +193,7 @@ import {
     queryOperatingCompanyDetail,
     queryPlatformQueryWellListDetail,
 } from "@/api/rem/marster.js";
-import { queryOilAndGasFieldQueryPositionDetail } from "@/api/basic/master";
-import { queryWaterInjIntensityAttributeAnalysis } from "@/api/rem/waterinjintensityattributeanalysis.js"
+import {queryWaterInjIntensityAttributeAnalysis} from "@/api/rem/waterinjintensityattributeanalysis.js"
 
 export default {
     components: {
@@ -148,18 +208,14 @@ export default {
                 orgId: "715AD1CD60484BB59E737CD18A9DE44A",
                 well: ""
             },
-            pickerOption: {
-                disabledDate(time) {
-                    return time.getTime() > Date.now();
-                },
-            },
             tableData: [],
             oilFields: [],
             platforms: [],
             wellList: {},
             zygsSelect: [], //作业公司
-            title:'油井采液强度归因分析',
-            link:'4',
+            title: '油井采液强度归因分析',
+            link: '1',
+            evalResult:'',
             option: {
                 tooltip: {
                     trigger: 'item',
@@ -167,7 +223,7 @@ export default {
                 },
                 series: [{
                     type: 'tree',
-                    data:[
+                    data: [
                         {
                             "level": 1,
                             "name": "采液指数不合理",
@@ -204,7 +260,7 @@ export default {
                                                 }
                                             ]
                                         },
-                                        
+
                                         {
                                             "level": 3,
                                             "name": "判断油嘴和泵频率",
@@ -223,7 +279,7 @@ export default {
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
-                                                                            "name": "归因3：目前处于中低含水期\n下步措施：存在乳化风险", 
+                                                                            "name": "归因3：目前处于中低含水期\n下步措施：存在乳化风险",
                                                                         }
                                                                     ]
                                                                 },
@@ -255,7 +311,7 @@ export default {
                                                                         }
                                                                     ]
                                                                 }
-                                                                
+
                                                             ]
                                                         },
                                                         {
@@ -294,7 +350,7 @@ export default {
                                                                 }
                                                             ]
                                                         }
-                                                        
+
                                                     ]
                                                 },
                                                 {
@@ -327,10 +383,10 @@ export default {
                         }
                     ],
                     top: '1%',
-                    left: '7%',
+                    left: '10%',
                     bottom: '1%',
                     right: '20%',
-                    symbol : 'none',
+                    symbol: 'none',
                     symbolSize: 7,
                     label: {
                         position: 'left',
@@ -347,13 +403,13 @@ export default {
                                 return '{b|' + params.name + '}'
                             } else if (params.data.level === 3 && params.data.name) {
                                 return '{c|' + params.name + '}'
-                            }  else if (params.data.level === 4 && params.data.name) {
+                            } else if (params.data.level === 4 && params.data.name) {
                                 return '{d|' + params.name + '}'
                             } else if (params.data.level === 6 && params.data.name) {
                                 return '{f|' + params.name + '}'
                             } else if (params.data.level === 5 && params.data.name) {
                                 return '{e|' + params.name + '}'
-                            }  else if (params.data.level === 7 && params.data.name) {
+                            } else if (params.data.level === 7 && params.data.name) {
                                 return '{h|' + params.name + '}'
                             } else {
                                 return ''
@@ -389,7 +445,7 @@ export default {
                                 borderRadius: 3,
                                 color: '#fff',
                                 backgroundColor: '#1ca3c1',
-                            } ,
+                            },
                             f: {
                                 padding: 6,
                                 borderRadius: 3,
@@ -418,7 +474,7 @@ export default {
                     },
 
                     emphasis: {
-                        disabled:true,
+                        disabled: true,
                         focus: 'ancestor',
                     },
                     select: {
@@ -437,7 +493,7 @@ export default {
                 },
                 series: [{
                     type: 'tree',
-                    data:[
+                    data: [
                         {
                             "level": 1,
                             "name": "注水强度不合理",
@@ -481,15 +537,15 @@ export default {
                                                 {
                                                     "level": 4,
                                                     "name": "",
-                                                    "children":[
+                                                    "children": [
                                                         {
                                                             "level": 5,
                                                             "name": "",
-                                                            "children":[
+                                                            "children": [
                                                                 {
                                                                     "level": 6,
                                                                     "name": "",
-                                                                    "children":[
+                                                                    "children": [
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因2：调整参数影响。\n下步措施：提高生产时率",
@@ -573,7 +629,7 @@ export default {
                     left: '7%',
                     bottom: '1%',
                     right: '15%',
-                    symbol : 'none',
+                    symbol: 'none',
                     symbolSize: 7,
                     label: {
                         position: 'left',
@@ -590,13 +646,13 @@ export default {
                                 return '{b|' + params.name + '}'
                             } else if (params.data.level === 3 && params.data.name) {
                                 return '{c|' + params.name + '}'
-                            }else if (params.data.level === 4 && params.data.name) {
+                            } else if (params.data.level === 4 && params.data.name) {
                                 return '{d|' + params.name + '}'
                             } else if (params.data.level === 5 && params.data.name) {
                                 return '{e|' + params.name + '}'
-                            }else if (params.data.level === 6 && params.data.name) {
+                            } else if (params.data.level === 6 && params.data.name) {
                                 return '{f|' + params.name + '}'
-                            }else if (params.data.level === 7 && params.data.name) {
+                            } else if (params.data.level === 7 && params.data.name) {
                                 return '{a|' + params.name + '}'
                             } else {
                                 return ''
@@ -632,7 +688,7 @@ export default {
                                 borderRadius: 3,
                                 color: '#fff',
                                 backgroundColor: '#1ca3c1',
-                            } ,
+                            },
                             f: {
                                 padding: 6,
                                 borderRadius: 3,
@@ -659,7 +715,7 @@ export default {
                     },
 
                     emphasis: {
-                        disabled:true,
+                        disabled: true,
                         focus: 'ancestor',
                     },
                     select: {
@@ -671,43 +727,458 @@ export default {
                     animationDurationUpdate: 750
                 }]
             },
-            
+            option3: {
+                tooltip: {
+                    trigger: 'item',
+                    triggerOn: 'mousemove'
+                },
+                series: [{
+                    type: 'tree',
+                    data: [
+                        {
+                            "level": 1,
+                            "name": "油井递减率高",
+                            "children": [
+                                {
+                                    "level": 2,
+                                    "name": "判断月度产液量",
+                                    "children": [
+                                        {
+                                            "level": 99,
+                                            "name": "归因7：①注采失调；②水线突进。\n下步措施：产液结构优化调整、优化注水",
+                                        },
+                                        {
+                                            "level": 3,
+                                            "name": "判断月度含水率",
+                                            "children": [
+                                                {
+                                                    "level": 4,
+                                                    "name": "",
+                                                    "children": [
+                                                        {
+                                                            "level": 5,
+                                                            "name": "关联水井注水量分析（通过井组关系获取）",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "归因9：注水调配英雄。\n下步措施：调整配注量",
+                                                                },
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "归因10：①封隔器失效；②水线突进。\n下步措施：①卡封；②产液结构优化调整",
+                                                                }
+                                                            ]
+                                                        }
+                                                        
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "level": 3,
+                                            "name": "判断月度生产时率",
+                                            "children": [
+                                                {
+                                                    "level": 99,
+                                                    "name": "归因1：直接关联关停记录表。\n下步措施：提高生产时率",
+                                                },
+                                                {
+                                                    "level": 4,
+                                                    "name": "判断油嘴和泵频率",
+                                                    "children": [
+                                                        {
+                                                            "level": 99,
+                                                            "name": "归因2：调整参数影响。\n下步措施：参数二次调整",
+                                                        },
+                                                        {
+                                                            "level": 5,
+                                                            "name": "判断排量效率",
+                                                            "children": [
+                                                                {
+                                                                    "level": 5,
+                                                                    "name": "判断流压",
+                                                                    "children": [
+                                                                        {
+                                                                            "level": 99,
+                                                                            "name": "归因3：注采失调。\n下步措施：排查周边井组状态",
+                                                                        },
+                                                                        {
+                                                                            "level": 99,
+                                                                            "name": "归因4：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵、查管柱；②邻井排查；③上作业",
+                                                                        },
+                                                                        {
+                                                                            "level": 99,
+                                                                            "name": "归因6：地层能量不足。\n下步措施：优化注水",
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "level": 5,
+                                                                    "name": "判断泵工况（已有成果）",
+                                                                    "children": [
+                                                                        {
+                                                                            "level": 99,
+                                                                            "name": "归因5：举升设备异常。\n下步措施：检泵",
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        
+                                    ]
+                                },
+                            ]
+                        }
+                    ],
+                    top: '1%',
+                    left: '7%',
+                    bottom: '1%',
+                    right: '22%',
+                    symbol: 'none',
+                    symbolSize: 7,
+                    label: {
+                        position: 'left',
+                        verticalAlign: 'middle',
+                        align: 'right',
+                        fontSize: 12,
+                        lineHeight: 24,
+                        // width: 100,
+                        // ellipsis: false,
+                        formatter: function (params) {
+                            if (params.data.level === 1 && params.data.name) {
+                                return '{a|' + params.name + '}'
+                            } else if (params.data.level === 2 && params.data.name) {
+                                return '{b|' + params.name + '}'
+                            } else if (params.data.level === 3 && params.data.name) {
+                                return '{c|' + params.name + '}'
+                            } else if (params.data.level === 4 && params.data.name) {
+                                return '{d|' + params.name + '}'
+                            } else if (params.data.level === 5 && params.data.name) {
+                                return '{e|' + params.name + '}'
+                            } else if (params.data.level === 6 && params.data.name) {
+                                return '{f|' + params.name + '}'
+                            } else if (params.data.level === 7 && params.data.name) {
+                                return '{a|' + params.name + '}'
+                            }else if (params.data.level === 99 && params.data.name) {
+                                return '{f|' + params.name + '}'
+                            } else {
+                                return ''
+                            }
+                        },
+                        rich: {
+                            a: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#546fc6'
+                            },
+                            b: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#7ab1a6'
+                            },
+                            c: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#446dd3'
+                            },
+                            d: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#904a9b'
+                            },
+                            e: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#1ca3c1',
+                            },
+                            f: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#9e2f5d',
+                                // width:'10px',
+                            },
+                            z: {
+                                color: '#ec1111',
+                                fontWeight: 'bold'
+                                // width:'10px',
+                            }
+                        }
+                    },
+                    lineStyle: {
+                        color: '#91cd75'
+                    },
+                    leaves: {
+                        label: {
+                            position: 'right',
+                            verticalAlign: 'middle',
+                            align: 'left'
+                        }
+                    },
+
+                    emphasis: {
+                        disabled: true,
+                        focus: 'ancestor',
+                    },
+                    select: {
+                        disabled: true
+                    },
+                    selectedMode: "multiple",
+                    expandAndCollapse: false,
+                    animationDuration: 550,
+                    animationDurationUpdate: 750
+                }]
+            },
+            option4: {
+                tooltip: {
+                    trigger: 'item',
+                    triggerOn: 'mousemove'
+                },
+                series: [{
+                    type: 'tree',
+                    data: [
+                        {
+                            "level": 1,
+                            "name": "井组产油量降低",
+                            "children": [
+                                {
+                                    "level": 2,
+                                    "name": "调用井组压力保持评价模型",
+                                    "children": [
+                                        {
+                                            "level": 3,
+                                            "name": "判断井组月度产液量",
+                                            "children": [
+                                                {
+                                                    "level": 4,
+                                                    "name": "判断井组月度注水量",
+                                                    "children": [
+                                                        {
+                                                            "level": 6,
+                                                            "name": "归因5：①封隔器失效；②水线突进。\n下步措施：①卡封；②产液结构优化调整", 
+                                                        },
+                                                        {
+                                                            "level": 5,
+                                                            "name": "分析示踪剂（来水方向）",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "归因4：注水调配影响。\n下步措施：调整配注量",
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "level": 4,
+                                                    "name": "油井采液强度指标归因分析模型",
+                                                    "children": [
+                                                        {
+                                                            "level": 6,
+                                                            "name": "归因统计分析（一井或多井）",
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "level": 3,
+                                            "name": "调用井组注采平衡分析模型",
+                                            "children": [
+                                                {
+                                                    "level": 4,
+                                                    "name": "分析井组水井分层月注水量（单井加和）",
+                                                    "children": [
+                                                        {
+                                                            "level": 5,
+                                                            "name": "油井采液强度指标归因分析模型",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "归因统计分析（一井或多井）",
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "level": 5,
+                                                            "name": "分析井组内水井分层月注水量",
+                                                            "children": [
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "归因1：井组超注。\n下步措施：控水调配注",
+                                                                },
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "归因2：注采关系失调。\n下步措施：调整产液结构",
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "level": 4,
+                                                    "name": "",
+                                                    "children": [
+                                                        {
+                                                            "level": 6,
+                                                            "name": "归因3：层内非均质性强。\n下步措施：调剖堵水", 
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                    ]
+                                },
+                            ]
+                        }
+                    ],
+                    top: '1%',
+                    left: '8%',
+                    bottom: '1%',
+                    right: '22%',
+                    symbol: 'none',
+                    symbolSize: 7,
+                    label: {
+                        position: 'left',
+                        verticalAlign: 'middle',
+                        align: 'right',
+                        fontSize: 12,
+                        lineHeight: 24,
+                        // width: 100,
+                        // ellipsis: false,
+                        formatter: function (params) {
+                            if (params.data.level === 1 && params.data.name) {
+                                return '{a|' + params.name + '}'
+                            } else if (params.data.level === 2 && params.data.name) {
+                                return '{b|' + params.name + '}'
+                            } else if (params.data.level === 3 && params.data.name) {
+                                return '{c|' + params.name + '}'
+                            } else if (params.data.level === 4 && params.data.name) {
+                                return '{d|' + params.name + '}'
+                            } else if (params.data.level === 5 && params.data.name) {
+                                return '{e|' + params.name + '}'
+                            } else if (params.data.level === 6 && params.data.name) {
+                                return '{f|' + params.name + '}'
+                            } else if (params.data.level === 7 && params.data.name) {
+                                return '{a|' + params.name + '}'
+                            } else {
+                                return ''
+                            }
+                        },
+                        rich: {
+                            a: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#546fc6'
+                            },
+                            b: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#7ab1a6'
+                            },
+                            c: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#446dd3'
+                            },
+                            d: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#904a9b'
+                            },
+                            e: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#1ca3c1',
+                            },
+                            f: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#9e2f5d',
+                                // width:'10px',
+                            },
+                            z: {
+                                color: '#ec1111',
+                                fontWeight: 'bold'
+                                // width:'10px',
+                            }
+                        }
+                    },
+                    lineStyle: {
+                        color: '#91cd75'
+                    },
+                    leaves: {
+                        label: {
+                            position: 'right',
+                            verticalAlign: 'middle',
+                            align: 'left'
+                        }
+                    },
+
+                    emphasis: {
+                        disabled: true,
+                        focus: 'ancestor',
+                    },
+                    select: {
+                        disabled: true
+                    },
+                    selectedMode: "multiple",
+                    expandAndCollapse: false,
+                    animationDuration: 550,
+                    animationDurationUpdate: 750
+                }]
+            },
         };
     },
     mounted() {
         this.getData();
-        this.getFormData();
         this.queryData.month = this.$route.query.currentDate
+        if(this.$route.query.platform == '3FC9A818F5BC43B88270DB80BBB3018F'){
+            this.$route.query.platform = ''
+        }
         this.queryData.assetCode = this.$route.query.platform
         this.queryData.well = this.$route.query.wellId
-        if(this.link == '4'){
-            this.title = '水井注水强度归因分析'
-        }else{
+        this.evalResult = this.$route.query.evalResult
+        this.link = this.$route.query.link
+        if (this.link == '4') {
+            this.title = '注水强度归因分析'
+            this.getFormData();
+        } else if (this.link == '1') {
+            this.option.series[0].data[0].name = '油井采液强度不合理'
             this.title = '油井采液强度归因分析'
+        } else if (this.link == '2') {
+            this.option.series[0].data[0].name = '油井采液指数不合理'
+            this.title = '油井采液指数归因分析'
+        } else if (this.link == '3') {
+            this.option.series[0].data[0].name = '油井米采液指数不合理'
+            this.title = '油井米采液指数归因分析'
+        }else if(this.link == '5'){
+            this.title = '油井递减率归因分析'
+        }else if(this.link == '6'){
+            this.title = '井组生产动态归因分析'
         }
     },
     methods: {
-        getLayer(){
-            queryOilAndGasFieldQueryPositionDetail({ogfId:this.queryData.ogfId}).then((res) => {
-                this.cwOptions = res.data.data;
-            });  
-        },
-        getData() {
-            var data = new Date();
-            var time = data.getTime() - 24 * 60 * 60 * 1000;
-            var time = new Date().getTime() - 24 * 60 * 60 * 1000;
-            var yesday = new Date(time); // 获取的是前一天日期
-            yesday =
-                yesday.getFullYear() +
-                "-" +
-                (yesday.getMonth() > 9 ? yesday.getMonth() + 1 : "0" + (yesday.getMonth() + 1)) +
-                "-" +
-                (yesday.getDate() > 9 ? yesday.getDate() : "0" + yesday.getDate()); //字符串拼接转格式
-            this.queryData.month = yesday;
-            queryOperatingCompanyDetail({}).then((res) => {
+        async getData() {
+            await queryOperatingCompanyDetail({}).then((res) => {
                 this.zygsSelect = res.data.data;
             });
-            queryOperatorsCheckFieldListsDetail({orgId: "715AD1CD60484BB59E737CD18A9DE44A"}).then((res) => {
+            await queryOperatorsCheckFieldListsDetail({orgId: "715AD1CD60484BB59E737CD18A9DE44A"}).then((res) => {
                 if (res.data.code == 200) {
                     this.oilFields = res.data.data;
                     if (this.oilFields.length == 0) {
@@ -730,7 +1201,7 @@ export default {
                                     n.platformId = "";
                                 }
                             });
-                            this.queryData.assetCode = "";
+                            // this.queryData.assetCode = "";
                         }
                     });
                 }
@@ -739,33 +1210,35 @@ export default {
         choicewell() {
             queryPlatformQueryWellListDetail({platformId: this.queryData.assetCode}).then((res) => {
                 this.wellList = res.data.data;
-                if(res.data.data.length){
+                if (res.data.data.length) {
                     this.queryData.well = res.data.data[0].wellId
-                }else{
+                } else {
                     this.queryData.well = ''
                 }
             });
         },
         // 返回按钮
-        returnrouter() {
+        returnRouter() {
             this.$router.go(-1);
         },
-        doSearch(){
+        doSearch() {
             this.getFormData()
         },
-        getFormData(){
+        getFormData() {
             let params = {
                 date: this.queryData.month,
                 wellId: this.queryData.well,
                 assetCode: this.queryData.assetCode,
                 ogfId: this.queryData.ogfId,
                 operationZone: this.queryData.orgId,
-                evalResult:'BG',
-                evalTypeId:'ZS'
+                evalResult: this.evalResult,
+                evalTypeId: 'ZS'
             }
-            queryWaterInjIntensityAttributeAnalysis(params).then(res=>{
-                this.tableData = res.data.data
-            })
+            if (this.link == '4') {
+                queryWaterInjIntensityAttributeAnalysis(params).then(res => {
+                    this.tableData = res.data.data
+                })
+            }
         }
     },
 };
