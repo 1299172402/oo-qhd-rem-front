@@ -103,28 +103,28 @@
                                             <!-- 等模型 -->
                                             <el-col :span="24">
                                                 <el-radio-button class="checkButton">
-                                                    注水强度偏高（0）
+                                                    注水强度偏高{{`(` + this.zsqdForm.evaluationBiasTall + `)`}}
                                                 </el-radio-button>
                                             </el-col>
                                             <el-col :span="24">
                                                 <el-radio-button class="checkButton">
-                                                    注水强度偏低（0）
+                                                    注水强度偏低{{`(` +  this.zsqdForm.evaluationBiasLow  + `)`}}
                                                 </el-radio-button>
                                             </el-col>
                                            
                                             <el-col :span="24">
                                                 <el-radio-button class="checkButton">
-                                                    注水强度变高（0）
+                                                    注水强度变高{{`(` +  this.zsqdForm.evaluationChangeTall  + `)`}}
                                                 </el-radio-button>
                                             </el-col>
                                             <el-col :span="24">
                                                 <el-radio-button class="checkButton">
-                                                    注水强度变低（0）
+                                                    注水强度变低{{`(` +  this.zsqdForm.evaluationChangeLow  + `)`}}
                                                 </el-radio-button>
                                             </el-col>
                                             <el-col :span="24">
                                                 <el-radio-button class="checkButton">
-                                                    正常（0）
+                                                    正常{{`(` +  this.zsqdForm.evaluationNormal  + `)`}}
                                                 </el-radio-button>
                                             </el-col>
                                         </el-radio-group>
@@ -163,6 +163,11 @@
                                     </table>
                                 </el-col>
                             </el-row>
+                            <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;">
+                                <el-button type="primary" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)" @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate}})">
+                                    归因分析详情
+                                </el-button>
+                            </div>
                         </div>
                     </div>
                     <div style="flex:1;min-height:380px;">
@@ -569,7 +574,8 @@
         layerReason,
         injectionClosed,
         injectionMeasureRecommend,
-        injectionWellDynamicAnalysisDetail
+        injectionWellDynamicAnalysisDetail,
+        queryEvaluationWaterInjCount
     } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
     import {
         fetchFields,
@@ -613,6 +619,8 @@
                     code: "workingCondition",
                     name: "注水工况"
                 }],
+                //注水强度form菜单数据
+                zsqdForm:[],
                 //超欠注原因分析表头
                 overUnderInjectionAnalysisTab: [{
                         code: "theGroundBecause",
@@ -683,8 +691,23 @@
         mounted() {
             this.checkCurrentDate(); //初始化评价日期
             this.queryOilFeildList(); //初始化油田
+            this.getzsqdData()
         },
         methods: {
+            //获取注水强度数据
+            getzsqdData(){
+                let params = {
+                    assetCode:this.platform,
+                    date:this.currentDate,
+                    ogfId:this.selYtdm,
+                    reservoirUnitId:this.selectBlock,
+                    wellId:this.wellId
+                }
+                queryEvaluationWaterInjCount(params).then((res) =>{
+                    console.log('res----->',res)
+                     this.zsqdForm = res.data.data[0]
+                })
+            },
             //重置
             resetting(){
                 this.$nextTick(()=>{
