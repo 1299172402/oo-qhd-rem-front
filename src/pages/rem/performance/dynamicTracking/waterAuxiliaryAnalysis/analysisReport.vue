@@ -159,7 +159,7 @@
                                             <td class="checkBtn">选中</td>
                                             <td class="about">相关</td>
                                             <td class="noCheckBtn">未选中</td>
-                                                <td v-if="selCode=='BD'  ||selCode=='BG' " class="noCheckBtn"><el-button type="primary"  @click="$router.push({name:'attributtonAnalysis',query:{'selectBlock':selectBlock,'platform':platform,'wellId':wellId,'link':4,'evalResult':selCode}} )">
+                                                <td v-if="selCode=='BD'  ||selCode=='BG' " class="noCheckBtn"><el-button type="primary"  @click="$router.push({name:'attributtonAnalysis',query:{'selectBlock':selectBlock,'platform':platform,'wellId':wellId,'link':4,'evalResult':selCode,'currentDate':currentDate}} )">
                                                     归因分析详情
                                                 </el-button></td>
                                         </tr>
