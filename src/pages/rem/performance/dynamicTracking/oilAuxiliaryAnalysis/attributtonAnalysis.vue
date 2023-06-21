@@ -75,34 +75,6 @@
         <pagePanel v-else :headerTitle="title" style="height: 120%" :show-btn="true">
             <Echart :chart-data="option" style="height: 100%"></Echart>
         </pagePanel>
-        <pagePanel v-if="link=='1'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
-            <el-table
-                height="100%"
-                :row-style="{ height: '0px' }"
-                :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-                header-cell-class-name="table_header"
-                :cell-style="{ padding: '3px', 'text-align': 'center' }"
-                :data="tableData"
-                border
-                ref="reset"
-                style="width: 100%; height: 100%"
-                id="cjyzsj"
-                :default-sort="{ prop: 'date', order: 'descending' }"
-            >
-                <el-table-column prop="null" label="井号"></el-table-column>
-                <el-table-column prop="null" label="日期（年月）"></el-table-column>
-                <el-table-column v-if="link == 1" prop="null" :label="`采液强度\n(m³/d·m)`"></el-table-column>
-                <el-table-column v-if="link == 2" prop="null" :label="`采液指数\n(m³/mPa·d)`"></el-table-column>
-                <el-table-column v-if="link == 3" prop="null" :label="`米采液指数\n(m³/mPa·d·m)`"></el-table-column>
-                <el-table-column prop="null" label="产液量"></el-table-column>
-                <el-table-column prop="null" label="生产时率"></el-table-column>
-                <el-table-column prop="null" label="泵效"></el-table-column>
-                <el-table-column prop="null" label="含水率"></el-table-column>
-                <el-table-column prop="null" label="流压"></el-table-column>
-                <el-table-column prop="null" label="归因"></el-table-column>
-                <el-table-column prop="null" label="措施"></el-table-column>
-            </el-table>
-        </pagePanel>
         <pagePanel v-if="link=='5'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
             <el-table
                 height="100%"
@@ -183,6 +155,35 @@
                 <el-table-column prop="vauleMeasure" show-overflow-tooltip label="建议措施"></el-table-column>
             </el-table>
         </pagePanel>
+        <pagePanel v-else :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
+            <el-table
+                height="100%"
+                :row-style="{ height: '0px' }"
+                :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                header-cell-class-name="table_header"
+                :cell-style="{ padding: '3px', 'text-align': 'center' }"
+                :data="tableData_oil"
+                border
+                ref="reset"
+                style="width: 100%; height: 100%"
+                id="cjyzsj"
+                :default-sort="{ prop: 'date', order: 'descending' }"
+            >
+                <el-table-column prop="a" label="井号"></el-table-column>
+                <el-table-column prop="b" label="日期（年月）"></el-table-column>
+                <el-table-column v-if="link == 1" prop="c" :label="`采液强度\n(m³/d·m)`"></el-table-column>
+                <el-table-column v-if="link == 2" prop="d" :label="`采液指数\n(m³/mPa·d)`"></el-table-column>
+                <el-table-column v-if="link == 3" prop="e" :label="`米采液指数\n(m³/mPa·d·m)`"></el-table-column>
+                <el-table-column prop="f" label="产液量"></el-table-column>
+                <el-table-column prop="g" label="生产时率"></el-table-column>
+                <el-table-column prop="h" label="泵效"></el-table-column>
+                <el-table-column prop="i" label="含水率"></el-table-column>
+                <el-table-column prop="j" label="流压"></el-table-column>
+                <el-table-column prop="k" show-overflow-tooltip label="归因"></el-table-column>
+                <el-table-column prop="l" show-overflow-tooltip label="措施"></el-table-column>
+            </el-table>
+        </pagePanel>
+        
     </div>
 </template>
 <script>
@@ -209,6 +210,15 @@ export default {
                 well: ""
             },
             tableData: [],
+            tableData_oil:[
+                {
+                    a:'秦皇岛32-6-J24H',b:' 2023-01-01',c:'采液强度偏高',f:'210.12',g:'24',h:'',i:'94.48',j:"7.4",k:'地层能量不足',l:'优化注水',
+                },
+                {
+                    a:'秦皇岛32-6-E33H',b:' 2023-01-01',c:'采液强度偏高',f:'172.11',g:'24',h:'',i:'92.74',j:"8.2",k:'目前处于中低含水期',l:'存在乳化风险，加强\n' +
+                        '观察',
+                }
+            ],
             oilFields: [],
             platforms: [],
             wellList: {},
