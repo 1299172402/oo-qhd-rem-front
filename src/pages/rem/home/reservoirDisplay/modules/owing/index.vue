@@ -74,7 +74,9 @@ export default {
                 //区块
                 blockId: 'YCFXDY8B643EDC9007F96F570600457D',
                 //选择时间
-                dateTime: new Date().format('YYYY-MM') ,
+                // dateTime: new Date().format('YYYY-MM') ,
+                //修改取数的日期为5月
+                dateTime: '2023-05',
                 //油田
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'
             }
