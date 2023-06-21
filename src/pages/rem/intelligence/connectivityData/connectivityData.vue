@@ -387,7 +387,6 @@ export default {
         // 获取油田下拉数据
         selectData() {
             getoilfield().then(({ogfId}) => {
-                console.log(ogfId)
                 this.oilList = ogfId;
             });
         },
