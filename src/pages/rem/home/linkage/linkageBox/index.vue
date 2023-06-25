@@ -1,7 +1,8 @@
 <template>
-    <div class="box" @mouseenter="show = true" @mouseleave="show = false">
+<!--    <div class="box" @mouseenter="show = true" @mouseleave="show = false">-->
+    <div class="box" @mouseenter="mouseenter" @mouseleave="mouseleave">
         <el-collapse-transition>
-            <div v-show="show||remHome || showFlag ||  warningShowFlag ">
+            <div v-show="show || showFlag ||  warningShowFlag ">
                 <div class="transition-box">
                     <div class="transition-box-content" :style="{'background-image':`url(${currentList.imgUrl})` }">
                         <div v-show="warningShowFlag" class="mcBox" style="">
@@ -53,7 +54,6 @@ export default {
             default: () => {
             }
         },
-        remHome: false,
         showFlag: {
             type: Boolean,
             default: false
@@ -100,8 +100,14 @@ export default {
         },
         confirm(){
             this.warningShowFlag = false
-            // https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport
-            // window.open ( 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport','_blank')
+        },
+        mouseenter(){
+            this.show = true
+            this.$emit('stopTimer')
+        },
+        mouseleave(){
+            this.show = false
+            this.$emit('startTimer')
         }
     }
 }

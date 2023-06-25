@@ -1,7 +1,7 @@
 <template>
     <div class="container" style="position: relative">
         <div class="topBanner">注采联动</div>
-        <linkageBox :style="item.style" :showFlag="item.showFlag" :currentList="item" :key="index" v-for="(item,index) in currentLists"></linkageBox>
+        <linkageBox @stopTimer="stopTimer" @startTimer="startTimer" :style="item.style" :showFlag="item.showFlag" :currentList="item" :key="index" v-for="(item,index) in currentLists"></linkageBox>
         <div class="studySelf">
             <div class="studySelfInside"></div>
             <span>模型自学习</span>
@@ -31,7 +31,7 @@ export default {
     },
     mounted(){
         //转动弹出图片循环
-        this.arrowFun()
+        // this.arrowFun()
         this.getWarningInfo()
         //预警信息轮询查询
         this.timmerWarning = setInterval(()=>{
@@ -50,14 +50,20 @@ export default {
                     showLoading: false
                 }
             }).then(res=>{
+                let isConditionMet = false; // 标志变量，初始值为false
                 res.data.data.forEach(item=>{
                     this.currentLists.forEach((i,index)=>{
                         if(i.typeIdList.indexOf(item.typeId) != -1){
                             this.currentLists[index].warningShowFlag = true
-                            clearInterval(this.timmer)
+                            isConditionMet = true; // 设置标志变量为true
                         }
                     })
                 })
+                if (!isConditionMet) {
+                    // this.arrowFun()
+                }else{
+                    clearInterval(this.timmer)
+                }
             })
         },
         arrowFun(){
@@ -73,6 +79,15 @@ export default {
                    this.loopNum = -1
                 }
             },2000)
+        },
+        stopTimer(){
+            this.currentLists.forEach(item=>{
+                item.showFlag = false
+            })
+            clearInterval(this.timmer)
+        },
+        startTimer(){
+            this.arrowFun()
         }
     },
     data(){
