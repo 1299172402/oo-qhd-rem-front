@@ -121,7 +121,6 @@
                                     </el-col>
                                     <el-col :span="12">
                                         <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">储量动用</el-button>
-                                        </el-radio-group>
                                         <el-col v-for="(item,index) in reserveProductionOptions" :key="index" :span="12">
                                             <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'reserveProductionOptions')">
                                                 {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}

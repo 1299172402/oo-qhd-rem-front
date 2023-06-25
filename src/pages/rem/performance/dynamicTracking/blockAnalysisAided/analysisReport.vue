@@ -38,13 +38,21 @@
                     <pagePanel headerTitle="主要开发矛盾洞察" style="margin-top:0;min-height:500px;">
                         <el-row :gutter="30" style="text-align: center;height:calc(100% - 55px);">
                             <el-col :span="6">
-                                <el-button class="commonBtn" style="width:100%;cursor: inherit;">开采现状(地层压力)分析</el-button>
-                                <el-row>
+                                <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:5px;">开采现状(地层压力)分析</el-button>
+                                <!-- <el-row>
                                     <el-radio-group v-model="indexChangeTrend" @change="((val)=>{selRadioIterm(val,'indexChangeTrendList')})">
                                         <el-radio-button v-for="(item,index) in indexChangeTrendList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'" style="width: 100%;">
                                             {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
                                         </el-radio-button>
                                     </el-radio-group>
+                                </el-row> -->
+                                
+                                <el-row>
+                                    <el-col v-for="(item,index) in indexChangeTrendList" :key="index" :span="24">
+                                        <el-button class="z-button" style="height:34px!important;line-height: 8px;"  :class="[item.value>0?'about1':'',item.code==indexChangeTrend?'selectButton':'']" @click.stop="selRadioIterm(item.code,'indexChangeTrendList')">
+                                            {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                        </el-button>
+                                    </el-col>
                                 </el-row>
                             </el-col>
                             <el-col :span="6">
@@ -144,16 +152,26 @@
                                     <div class="z_schedule">
                                         <span class="sp1">正常：</span>
                                         <div class="z_proess">
-                                            <span class="z_proess_sp1"><b>182</b></span>
+                                            <span class="z_proess_sp1" :style="{width:indexChangeTrendNum.zczb+'%'}">
+                                                <b style="cursor: pointer;" @click="indexChangeTrendSwitch=true">{{indexChangeTrendNum.zcnum}}</b>
+                                            </span>
                                             <span class="z_proess_sp2"></span>
                                         </div>
-                                        <span class="sp2">异常：<b>30</b></span>
+                                        <span class="sp2">异常：<b style="cursor: pointer;" @click="indexChangeTrendSwitch=false">{{indexChangeTrendNum.ycnum}}</b></span>
                                     </div>
-                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{selRadioIterm(val,'indexChangeTrendList')})" style="width:100%;">
-                                        <el-radio-button v-for="(item,index) in indexChangeTrendList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'" style="width: 46%;margin-right:10px;" v-if="item.value > 0">
-                                            {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                        </el-radio-button>
-                                    </el-radio-group>
+                                    <el-row :gutter="10">
+                                        <el-col v-for="(item,index) in indexChangeTrendList" :key="index" :span="24">
+                                            
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==indexChangeTrend?'selectButton':'']" v-if="!item.name.includes('正常')&&(item.value!=0||item.isShow)&&!indexChangeTrendSwitch"  @click.stop="selRadioIterm(item.code,'indexChangeTrendList')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                            
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==indexChangeTrend?'selectButton':'']" v-if="item.name.includes('正常')&&indexChangeTrendSwitch" @click.stop="selRadioIterm(item.code,'indexChangeTrendList')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                            
+                                        </el-col>
+                                    </el-row>
                                 </div>
                                 <div class="z-row">
                                     <div class="z_title">
@@ -163,16 +181,23 @@
                                     <div class="z_schedule">
                                         <span class="sp1">正常：</span>
                                         <div class="z_proess">
-                                            <span class="z_proess_sp1"><b>182</b></span>
+                                            <span class="z_proess_sp1" :style="{width:stabilityFoundationAnalysisNum.zczb+'%'}">
+                                                <b style="cursor: pointer;" @click="stabilityFoundationAnalysisSwitch=true">{{stabilityFoundationAnalysisNum.zcnum}}</b>
+                                            </span>
                                             <span class="z_proess_sp2"></span>
                                         </div>
-                                        <span class="sp2">异常：<b>30</b></span>
+                                        <span class="sp2">异常：<b style="cursor: pointer;" @click="stabilityFoundationAnalysisSwitch=false">{{stabilityFoundationAnalysisNum.ycnum}}</b></span>
                                     </div>
-                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{selRadioIterm(val,'stabilityFoundationAnalysisList')})" style="width:100%;">
-                                        <el-radio-button v-for="(item,index) in stabilityFoundationAnalysisList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'"  style="width: 46%;margin-right:10px;" v-if="item.value > 0">
-                                            {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                        </el-radio-button>
-                                    </el-radio-group>
+                                    <el-row :gutter="10">
+                                        <el-col v-for="(item,index) in stabilityFoundationAnalysisList" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==indexChangeTrend?'selectButton':'']" v-if="!item.name.includes('正常')&&(item.value!=0||item.isShow)&&!stabilityFoundationAnalysisSwitch"  @click.stop="selRadioIterm(item.code,'stabilityFoundationAnalysisList')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==indexChangeTrend?'selectButton':'']" v-if="item.name.includes('正常')&&stabilityFoundationAnalysisSwitch" @click.stop="selRadioIterm(item.code,'stabilityFoundationAnalysisList')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
+                                    </el-row>
                                 </div>
                                 <div class="z-row">
                                     <div class="z_title2">
@@ -182,16 +207,23 @@
                                     <div class="z_schedule">
                                         <span class="sp1">正常：</span>
                                         <div class="z_proess">
-                                            <span class="z_proess_sp1"><b>182</b></span>
+                                            <span class="z_proess_sp1" :style="{width:injectionProductionBalanceAnalysisNum.zczb+'%'}">
+                                                <b style="cursor: pointer;" @click="injectionProductionBalanceAnalysisSwitch=true">{{injectionProductionBalanceAnalysisNum.zcnum}}</b>
+                                            </span>
                                             <span class="z_proess_sp2"></span>
                                         </div>
-                                        <span class="sp2">异常：<b>30</b></span>
+                                        <span class="sp2">异常：<b style="cursor: pointer;" @click="injectionProductionBalanceAnalysisSwitch=false">{{injectionProductionBalanceAnalysisNum.ycnum}}</b></span>
                                     </div>
-                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{selRadioIterm(val,'injectionProductionBalanceAnalysisList')})" style="width:100%;">
-                                        <el-radio-button v-for="(item,index) in injectionProductionBalanceAnalysisList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'" style="width: 46%;margin-right:10px;" v-if="item.value > 0">
-                                            {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                        </el-radio-button>
-                                    </el-radio-group>
+                                    <el-row :gutter="10">
+                                        <el-col v-for="(item,index) in injectionProductionBalanceAnalysisList" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==indexChangeTrend?'selectButton':'']" v-if="!item.name.includes('正常')&&(item.value!=0||item.isShow)&&!injectionProductionBalanceAnalysisSwitch"  @click.stop="selRadioIterm(item.code,'injectionProductionBalanceAnalysisList')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==indexChangeTrend?'selectButton':'']" v-if="item.name.includes('正常')&&injectionProductionBalanceAnalysisSwitch" @click.stop="selRadioIterm(item.code,'injectionProductionBalanceAnalysisList')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
+                                    </el-row>
                                 </div>
                                 <div class="z-row">
                                     <div class="z_title2">
@@ -201,16 +233,23 @@
                                     <div class="z_schedule">
                                         <span class="sp1">正常：</span>
                                         <div class="z_proess">
-                                            <span class="z_proess_sp1"><b>182</b></span>
+                                            <span class="z_proess_sp1" :style="{width:recoveryAnalysisNum.zczb+'%'}">
+                                                <b style="cursor: pointer;" @click="recoveryAnalysisSwitch=true">{{recoveryAnalysisNum.zcnum}}</b>
+                                            </span>
                                             <span class="z_proess_sp2"></span>
                                         </div>
-                                        <span class="sp2">异常：<b>30</b></span>
+                                        <span class="sp2">异常：<b style="cursor: pointer;" @click="recoveryAnalysisSwitch=false">{{recoveryAnalysisNum.ycnum}}</b></span>
                                     </div>
-                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{selRadioIterm(val,'recoveryAnalysisList')})" style="width:100%;">
-                                        <el-radio-button v-for="(item,index) in recoveryAnalysisList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'" style="width: 46%;margin-right:10px;" v-if="item.value > 0">
-                                            {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                        </el-radio-button>
-                                    </el-radio-group>
+                                    <el-row :gutter="10">
+                                        <el-col v-for="(item,index) in recoveryAnalysisList" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==indexChangeTrend?'selectButton':'']" v-if="!item.name.includes('正常')&&(item.value!=0||item.isShow)&&!recoveryAnalysisSwitch"  @click.stop="selRadioIterm(item.code,'recoveryAnalysisList')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==indexChangeTrend?'selectButton':'']" v-if="item.name.includes('正常')&&recoveryAnalysisSwitch" @click.stop="selRadioIterm(item.code,'recoveryAnalysisList')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
+                                    </el-row>
                                 </div>
                             </div>
                         </div>
@@ -284,6 +323,7 @@
                     zczb:0,
                     yczb:0,
                 },
+                indexChangeTrendSwitch:false,
                 //开采现状(注水受效)分析
                 stabilityFoundationAnalysisList: [],
                 stabilityFoundationAnalysisNum:{
@@ -293,6 +333,7 @@
                     zczb:0,
                     yczb:0,
                 },
+                stabilityFoundationAnalysisSwitch:false,
                 //注采平衡分析
                 injectionProductionBalanceAnalysisList: [],
                 injectionProductionBalanceAnalysisNum:{
@@ -302,6 +343,7 @@
                     zczb:0,
                     yczb:0,
                 },
+                injectionProductionBalanceAnalysisSwitch:false,
                 //采出状况分析
                 recoveryAnalysisList: [],
                 recoveryAnalysisNum:{
@@ -311,6 +353,7 @@
                     zczb:0,
                     yczb:0,
                 },
+                recoveryAnalysisSwitch:false,
                 
                 //相关井组
                 wellList: [],
@@ -434,10 +477,8 @@
                         this.indexChangeTrendNum.ycnum=0;
                         myData.forEach((el,i)=>{
                             this.indexChangeTrendNum.allnum+=Number(el.value);
-                            if(el.name=='正常'){
-                                console.log('正常',el)
+                            if(el.name.includes('正常')){
                                 this.indexChangeTrendNum.zcnum=Number(el.value);
-                                this.productionCode=el.code;
                             }else{
                                 myData[i].isShow=Number(el.value)?true:false;
                                 this.indexChangeTrendNum.ycnum+=Number(el.value);
@@ -445,6 +486,7 @@
                         })
                         this.indexChangeTrendNum.zczb=this.indexChangeTrendNum.zcnum/this.indexChangeTrendNum.allnum * 100;
                         this.indexChangeTrendNum.yczb=this.indexChangeTrendNum.yczb/this.indexChangeTrendNum.allnum * 100;
+                        console.log('this.indexChangeTrendNum',this.indexChangeTrendNum)
                         this.indexChangeTrendList = myData;
                     }
                 });
@@ -474,10 +516,8 @@
                         this.stabilityFoundationAnalysisNum.ycnum=0;
                         myData.forEach((el,i)=>{
                             this.stabilityFoundationAnalysisNum.allnum+=Number(el.value);
-                            if(el.name=='正常'){
-                                console.log('正常',el)
+                            if(el.name.includes('正常')){
                                 this.stabilityFoundationAnalysisNum.zcnum=Number(el.value);
-                                this.productionCode=el.code;
                             }else{
                                 myData[i].isShow=Number(el.value)?true:false;
                                 this.stabilityFoundationAnalysisNum.ycnum+=Number(el.value);
@@ -509,7 +549,24 @@
                 };
                 proInjectionBalanceAnalysis(request).then((data) => {
                     if (data.data.data != null) {
-                        this.injectionProductionBalanceAnalysisList = data.data.data.indicatorAnalysisDetailInfos;
+                        let myData=data.data.data.indicatorAnalysisDetailInfos;
+                        this.injectionProductionBalanceAnalysisNum.allnum=0;
+                        this.injectionProductionBalanceAnalysisNum.zcnum=0;
+                        this.injectionProductionBalanceAnalysisNum.ycnum=0;
+                        myData.forEach((el,i)=>{
+                            this.injectionProductionBalanceAnalysisNum.allnum+=Number(el.value);
+                            if(el.name.includes('正常')){
+                                this.injectionProductionBalanceAnalysisNum.zcnum=Number(el.value);
+                            }else{
+                                myData[i].isShow=Number(el.value)?true:false;
+                                this.injectionProductionBalanceAnalysisNum.ycnum+=Number(el.value);
+                            }
+                        })
+                        if(this.injectionProductionBalanceAnalysisNum.zcnum!==0 && this.injectionProductionBalanceAnalysisNum.allnum!==0){
+                            this.injectionProductionBalanceAnalysisNum.zczb=this.injectionProductionBalanceAnalysisNum.zcnum/this.injectionProductionBalanceAnalysisNum.allnum * 100;
+                        }
+                        this.injectionProductionBalanceAnalysisNum.yczb=this.injectionProductionBalanceAnalysisNum.yczb/this.injectionProductionBalanceAnalysisNum.allnum * 100;
+                        this.injectionProductionBalanceAnalysisList = myData;
                     }
             
                 });
@@ -533,7 +590,24 @@
                 };
                 outputStatusAnalysis(request).then((data) => {
                     if (data.data.data != null) {
-                        this.recoveryAnalysisList = data.data.data.indicatorAnalysisDetailInfos;
+                        let myData=data.data.data.indicatorAnalysisDetailInfos;
+                        this.recoveryAnalysisNum.allnum=0;
+                        this.recoveryAnalysisNum.zcnum=0;
+                        this.recoveryAnalysisNum.ycnum=0;
+                        myData.forEach((el,i)=>{
+                            this.recoveryAnalysisNum.allnum+=Number(el.value);
+                            if(el.name.includes('正常')){
+                                this.recoveryAnalysisNum.zcnum=Number(el.value);
+                            }else{
+                                myData[i].isShow=Number(el.value)?true:false;
+                                this.recoveryAnalysisNum.ycnum+=Number(el.value);
+                            }
+                        })
+                        if(this.recoveryAnalysisNum.zcnum!==0 && this.recoveryAnalysisNum.allnum!==0){
+                            this.recoveryAnalysisNum.zczb=this.recoveryAnalysisNum.zcnum/this.recoveryAnalysisNum.allnum * 100;
+                        }
+                        this.recoveryAnalysisNum.yczb=this.recoveryAnalysisNum.yczb/this.recoveryAnalysisNum.allnum * 100;
+                        this.recoveryAnalysisList = myData;
                     }
                 });
             },
@@ -576,6 +650,7 @@
             searchThing() {
                 this.indexChangeTrend = '';
                 this.selCode = '';
+                this.myList=[];
                 this.getProStatusAnalysis()
                 this.getStableBaseAnalysis()
                 this.getProInjectionBalanceAnalysis()
@@ -588,7 +663,15 @@
                 let myData = []; //我的数据
                 let myWellCount = {}; //计算各项目的井数
                 let t_count = 0; //计数器
-                this.selCode = val; //选中项目
+                
+                if(this.indexChangeTrend!=val){
+                    this.indexChangeTrend = val; //选中项目
+                }else{
+                    this.indexChangeTrend='';
+                    this.searchThing();
+                    return false;
+                }
+                
                 this.selTag = tag; //选中数据集
                 if (val == undefined || val == "") {
                     return false; //无效参数
@@ -1291,6 +1374,7 @@
                 display: flex;
                 .z-row{
                     flex:1;
+                    padding-right: 20px;
                     .z_title{
                         display: flex;
                         align-items: center;
@@ -1310,7 +1394,7 @@
                         &::before{
                             content:'';
                             background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                            width:110px;
+                            width:200px;
                             height:32px;
                             position: absolute;
                             left:60px;
@@ -1337,7 +1421,7 @@
                         &::before{
                             content:'';
                             background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                            width:110px;
+                            width:200px;
                             height:32px;
                             position: absolute;
                             left:50px;
@@ -1358,14 +1442,13 @@
                     .z_proess{
                         width:182px;
                         height:16px;
+                        padding: 1px;
                         border: 1px solid rgba(41,171,226,1);
                         margin-right:16px;
                         display: flex;
                         align-items: center;
-                        padding:2px;
                         .z_proess_sp1{
-                            width:70%;
-                            height:12px;
+                            height:100%;
                             background: linear-gradient(to right, #2cbdfb 0%, #80e2bf 50%, #befe93 100%);
                             b{
                                 font-size: 14px;
@@ -1373,13 +1456,13 @@
                                 letter-spacing: 0;
                                 font-weight: 700;
                                 position: relative;
-                                top:-4px;
+                                top:-6px;
                                 left:14px;
                             }
                         }
                         .z_proess_sp2{
-                            width:30%;
-                            height:12px;
+                            flex:1;
+                            height:100%;
                             background: linear-gradient(to right, #ffc255 0%, #ff9c46 50%, #ff7b39 100%);
                         }
                     }
@@ -1509,6 +1592,28 @@
         background: rgba(143, 164, 204, 0.3);
     }
     
+    
+    .z-button{
+        width: 100%;
+        height: 34px!important;
+        margin-bottom: 5px;
+        font-size:14px;
+        text-align: center;
+        border-color: var(--light-blue-color);
+        color: var(--white-color);
+        transition: all 0s;
+        line-height: 8px;
+        border-radius: 0 !important;
+        background: rgba(143, 164, 204, 0.3);
+        background-size: 100% 100% !important;
+        white-space: pre-wrap;
+        &:hover{
+            border-image: var(--primary-btn);
+            border-color: var(--light-blue-color);
+            background: var(--primary-btn) !important;
+        }
+    }
+    
     //默认未选中
     ::v-deep .checkButton {
         margin-top: 5px;
@@ -1568,4 +1673,66 @@
         font-size:14px;
     }
 
+
+    .numBtn{
+        cursor: pointer;
+        min-width: 70px;
+        border-radius:4px;
+        height:60px;
+        padding:0 10px;
+        margin-right:8px;
+        margin-bottom:8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
+        .sp1{
+            font-size: 16px;
+            color: #FFCA07;
+            font-weight: 600;
+        }
+        .sp2{
+            font-size: 12px;
+        }
+    }
+    .numBtnBgActive{
+        background: var(--logo-bg) no-repeat top / contain, var(--primary-btn) !important;
+    }
+    
+    
+    
+    .checkBtn {
+        width: 110px;
+        height: 28px;
+        font-size:14px;
+        text-align: center;
+        border-image: var(--primary-btn);
+        background: var(--logo-bg) no-repeat top / contain, var(--primary-btn) !important;
+        background-size: 100% 100% !important;
+        color:#fff;
+    }
+    
+    .about {
+        width: 110px;
+        height: 28px;
+        font-size:14px;
+        text-align: center;
+        background: rgb(2, 43, 117);
+        color:#fff;
+    }
+    .selectButton{
+        border-image: var(--primary-btn);
+        border-color: var(--light-blue-color);
+        background: var(--primary-btn) !important;
+    }
+    
+    .noCheckBtn {
+        width: 110px;
+        height: 28px;
+        font-size:14px;
+        text-align: center;
+        background: rgba(143, 164, 204, 0.3);
+    }
+    
 </style>
