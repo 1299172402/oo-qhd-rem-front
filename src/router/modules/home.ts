@@ -19,7 +19,7 @@ export default [
       {
         path: 'oilexhibition',
         name: 'oilexhibition',
-        component: () => import('@/pages/rem/home/reservoirDisplay/index.vue'),
+        component: () => import('@/pages/rem/home/reservoirDisplay/oilexhibition.vue'),
         meta: { title: '油藏看版',icon: 'icon' },
       },
       {
