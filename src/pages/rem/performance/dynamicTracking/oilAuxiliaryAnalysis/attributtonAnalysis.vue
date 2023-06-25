@@ -182,7 +182,7 @@
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
                 <el-table-column prop="wellName" label="井号"></el-table-column>
-                <el-table-column prop="date" label="日期（年月）">
+                <el-table-column prop="date" label="日期">
                     <template slot-scope="scope">
                         <span> {{ scope.row.date ? scope.row.date.split(' ')[0] : '' }} </span>
                     </template>
