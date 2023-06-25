@@ -158,8 +158,8 @@
                     </div>
                     <div style="display: flex;justify-content: flex-end;margin-bottom:10px;">
                         <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)"
-                        @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':'1'}})">
-                        归因分析详情
+                        @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':'1',evalResult:cyqdpgSelCode }})">
+                        归因分析详情2
                         </el-button>
                         <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)" 
                         @click="$router.push({path:'/plan/personnelMeasures',query:{platform,wellId,currentDate}})">措施推荐详情</el-button>
@@ -625,7 +625,7 @@
                                             </div>
                                             <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;">
                                                 <el-button type="primary" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)" @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate}})">
-                                                    归因分析详情
+                                                    归因分析详情1
                                                 </el-button>
                                             </div>
                                         </div>
