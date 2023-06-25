@@ -33,14 +33,14 @@
                 <el-button type="primary" @click="switchVersions">切换版式</el-button>
             </div>
             <!-- 旧版 -->
-            <div style="height:calc(100% - 50px);padding-bottom:8px;overflow-y: scroll;" v-if="!isNewformat">
+            <div class="old" style="height:calc(100% - 50px);padding-bottom:8px;overflow-y: scroll;" v-if="!isNewformat">
                 <div style="margin-left:8px;margin-right:20px;">
                     <pagePanel headerTitle="主要开发矛盾洞察" style="margin-top:0;min-height:500px;">
                         <el-row :gutter="30" style="text-align: center;height:calc(100% - 55px);">
                             <el-col :span="6">
                                 <el-button class="commonBtn" style="width:100%;cursor: inherit;">开采现状(地层压力)分析</el-button>
                                 <el-row>
-                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{changeFx(val,'indexChangeTrendList')})">
+                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{selRadioIterm(val,'indexChangeTrendList')})">
                                         <el-radio-button v-for="(item,index) in indexChangeTrendList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'" style="width: 100%;">
                                             {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
                                         </el-radio-button>
@@ -50,7 +50,7 @@
                             <el-col :span="6">
                                 <el-button class="commonBtn" style="width:100%;cursor: inherit;">开采现状(注水受效)分析</el-button>
                                 <el-row style="width: 100%;">
-                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{changeFx(val,'stabilityFoundationAnalysisList')})">
+                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{selRadioIterm(val,'stabilityFoundationAnalysisList')})">
                                         <el-radio-button v-for="(item,index) in stabilityFoundationAnalysisList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'" style="width: 100%;">
                                             {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
                                         </el-radio-button>
@@ -60,7 +60,7 @@
                             <el-col :span="6">
                                 <el-button class="commonBtn" style="width:100%;cursor: inherit;">注采平衡分析</el-button>
                                 <el-row>
-                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{changeFx(val,'injectionProductionBalanceAnalysisList')})">
+                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{selRadioIterm(val,'injectionProductionBalanceAnalysisList')})">
                                         <el-radio-button v-for="(item,index) in injectionProductionBalanceAnalysisList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'" style="width: 100%;">
                                             {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
                                         </el-radio-button>
@@ -70,7 +70,7 @@
                             <el-col :span="6" style="height: 100%">
                                 <el-button class="commonBtn" style="width:100%;cursor: inherit;">采出状况分析</el-button>
                                 <el-row style="height: 60%">
-                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{changeFx(val,'recoveryAnalysisList')})">
+                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{selRadioIterm(val,'recoveryAnalysisList')})">
                                         <el-radio-button v-for="(item,index) in recoveryAnalysisList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'" style="width: 100%;">
                                             {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
                                         </el-radio-button>
@@ -119,7 +119,7 @@
                 </div>
             </div>
             <!-- 新版 -->
-            <div style="height:calc(100% - 50px);padding-bottom:8px;overflow-y: scroll;" v-if="isNewformat">
+            <div class="new" style="height:calc(100% - 50px);padding-bottom:8px;overflow-y: scroll;" v-if="isNewformat">
                 <div style="margin-left:8px;margin-right:7px;height:auto;">
                     <pagePanel headerTitle="主要开发矛盾洞察" style="margin-top:0;height:100%;">
                         <div class="z-content" style="height:calc(100% - 55px);">
@@ -149,7 +149,7 @@
                                         </div>
                                         <span class="sp2">异常：<b>30</b></span>
                                     </div>
-                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{changeFx(val,'indexChangeTrendList')})" style="width:100%;">
+                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{selRadioIterm(val,'indexChangeTrendList')})" style="width:100%;">
                                         <el-radio-button v-for="(item,index) in indexChangeTrendList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'" style="width: 46%;margin-right:10px;" v-if="item.value > 0">
                                             {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
                                         </el-radio-button>
@@ -168,7 +168,7 @@
                                         </div>
                                         <span class="sp2">异常：<b>30</b></span>
                                     </div>
-                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{changeFx(val,'stabilityFoundationAnalysisList')})" style="width:100%;">
+                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{selRadioIterm(val,'stabilityFoundationAnalysisList')})" style="width:100%;">
                                         <el-radio-button v-for="(item,index) in stabilityFoundationAnalysisList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'"  style="width: 46%;margin-right:10px;" v-if="item.value > 0">
                                             {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
                                         </el-radio-button>
@@ -187,7 +187,7 @@
                                         </div>
                                         <span class="sp2">异常：<b>30</b></span>
                                     </div>
-                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{changeFx(val,'injectionProductionBalanceAnalysisList')})" style="width:100%;">
+                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{selRadioIterm(val,'injectionProductionBalanceAnalysisList')})" style="width:100%;">
                                         <el-radio-button v-for="(item,index) in injectionProductionBalanceAnalysisList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'" style="width: 46%;margin-right:10px;" v-if="item.value > 0">
                                             {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
                                         </el-radio-button>
@@ -206,7 +206,7 @@
                                         </div>
                                         <span class="sp2">异常：<b>30</b></span>
                                     </div>
-                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{changeFx(val,'recoveryAnalysisList')})" style="width:100%;">
+                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{selRadioIterm(val,'recoveryAnalysisList')})" style="width:100%;">
                                         <el-radio-button v-for="(item,index) in recoveryAnalysisList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'" style="width: 46%;margin-right:10px;" v-if="item.value > 0">
                                             {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
                                         </el-radio-button>
@@ -236,7 +236,7 @@
                                 </div>
                                 <div :class="[$store.state.setting.mode=='light'?'remark0':'remark']" v-show="myList.length>0">相关内容:</div>
                                 <div style="width: 100%;height:340px;overflow: auto; margin-top: 15px;display: flex;flex-wrap: wrap;">
-                                    <div v-for="(item,index) in myList" :key="index" :class="[$store.state.setting.mode=='light'?'z-well0':'z-well']">
+                                    <div v-for="(item,index) in myList" :key="index" :class="[$store.state.setting.mode=='light'?'z-well0':'z-well']" @click="getBorepipeTypeApi(item.well)">
                                         <span>{{item.well}}</span>
                                         <img src="@/assets/rem/performance/sjt0.png" alt="" v-if="$store.state.setting.mode=='light'">
                                         <img src="@/assets/rem/performance/sjt.png" alt="" v-else>
@@ -257,6 +257,7 @@
     import H5Chart2 from "@/components/tools/H5Chart/index.vue";
     import { outputStatusAnalysis, areaDiagram, stableBaseAnalysis, proInjectionBalanceAnalysis, proStatusAnalysis} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
     import { fetchFields,fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
+    import { getBorepipeType } from "@/api/oilDeposit/ipm-03/basedata.js";
     export default {
         name:'blockAnalysisReport',
         components: {H5Chart,H5Chart2},
@@ -270,20 +271,47 @@
                 selectBlock: "",
                 //日期
                 rq: "",
-                //默认新版式
+                //默认显示新版式
                 isNewformat:true,
-                //是否加载完成
-                loadFinish: false,
                 url: '\/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient.html',
                 layerData: null,//图层组件数据
                 //开采现状(地层压力)分析
                 indexChangeTrendList: [],
+                indexChangeTrendNum:{
+                    allnum:0,
+                    zcnum:0,
+                    ycnum:0,
+                    zczb:0,
+                    yczb:0,
+                },
                 //开采现状(注水受效)分析
                 stabilityFoundationAnalysisList: [],
+                stabilityFoundationAnalysisNum:{
+                    allnum:0,
+                    zcnum:0,
+                    ycnum:0,
+                    zczb:0,
+                    yczb:0,
+                },
                 //注采平衡分析
                 injectionProductionBalanceAnalysisList: [],
+                injectionProductionBalanceAnalysisNum:{
+                    allnum:0,
+                    zcnum:0,
+                    ycnum:0,
+                    zczb:0,
+                    yczb:0,
+                },
                 //采出状况分析
                 recoveryAnalysisList: [],
+                recoveryAnalysisNum:{
+                    allnum:0,
+                    zcnum:0,
+                    ycnum:0,
+                    zczb:0,
+                    yczb:0,
+                },
+                
                 //相关井组
                 wellList: [],
                 tableData: [],
@@ -330,20 +358,42 @@
             },
             //切换版式
             switchVersions(){
-                this.loadFinish=false;
                 this.isNewformat=!this.isNewformat;
-                this.$nextTick(()=>{
-                    this.initData();
+                setTimeout(()=>{
+                    if (this.layerData.data.mutiLayerPicResponse) {
+                        if(!this.myList.length){
+                            this.sjcl(this.layerData.data.mutiLayerPicResponse);
+                        }else{
+                            this.setProminentWell(this.layerData.data.mutiLayerPicResponse)
+                        }
+                    } else {
+                        this.isNewformat?this.$refs.H5Chart2.setSampleDate(null):this.$refs.H5Chart.setSampleDate(null);
+                    }
                 })
             },
-            getfetchOilFields1() { //油田
-                fetchOilFields().then((data) => {
+            async initData() {
+                await fetchOilFields().then((data) => {
                     if (data != null) {
                         this.fieldsData = data.data.data.oilFields;
                         this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F'; //hwh xg 默认初始化qhd326  //this.fieldsData[0].oilFieldId;
                         this.getFieldsData(this.selectOilField);
                     }
                 });
+                let fieldsPara = {
+                    oilFieldId: this.selectOilField
+                }
+                await fetchFields(fieldsPara).then((res) => {
+                    if (res.data.data.fields.length != 0) { //获得区块信息
+                        this.blocks = res.data.data.fields;
+                        //默认选中第一个区块信息
+                        this.selectBlock = this.blocks[0].fieldId;
+                    }
+                });
+                this.getProStatusAnalysis();
+                this.getStableBaseAnalysis();
+                this.getProInjectionBalanceAnalysis();
+                this.outputStatusAnalysis()
+                this.clickAnalysis();
             },
             //获得区块信息
             getFieldsData(oilFieldId) {
@@ -357,17 +407,7 @@
                         this.selectBlock = this.blocks[0].fieldId;
                     }
                 });
-
-            },
-            //查询
-            searchThing() {
-                this.indexChangeTrend = '';
-                this.selCode = '';
-                this.getProStatusAnalysis()
-                this.getStableBaseAnalysis()
-                this.getProInjectionBalanceAnalysis()
-                this.outputStatusAnalysis()
-                this.clickAnalysis();
+            
             },
             getProStatusAnalysis() { //0304-开采状况分析（模型计算）
                 //选中油田值
@@ -388,7 +428,24 @@
                 };
                 proStatusAnalysis(request).then((data) => {
                     if (data.data.data != null) {
-                        this.indexChangeTrendList = data.data.data.indicatorAnalysisDetailInfos;
+                        let myData=data.data.data.indicatorAnalysisDetailInfos;
+                        this.indexChangeTrendNum.allnum=0;
+                        this.indexChangeTrendNum.zcnum=0;
+                        this.indexChangeTrendNum.ycnum=0;
+                        myData.forEach((el,i)=>{
+                            this.indexChangeTrendNum.allnum+=Number(el.value);
+                            if(el.name=='正常'){
+                                console.log('正常',el)
+                                this.indexChangeTrendNum.zcnum=Number(el.value);
+                                this.productionCode=el.code;
+                            }else{
+                                myData[i].isShow=Number(el.value)?true:false;
+                                this.indexChangeTrendNum.ycnum+=Number(el.value);
+                            }
+                        })
+                        this.indexChangeTrendNum.zczb=this.indexChangeTrendNum.zcnum/this.indexChangeTrendNum.allnum * 100;
+                        this.indexChangeTrendNum.yczb=this.indexChangeTrendNum.yczb/this.indexChangeTrendNum.allnum * 100;
+                        this.indexChangeTrendList = myData;
                     }
                 });
             },
@@ -411,7 +468,24 @@
                 };
                 stableBaseAnalysis(request).then((data) => {
                     if (data.data.data != null) {
-                        this.stabilityFoundationAnalysisList = data.data.data.indicatorAnalysisDetailInfos;
+                        let myData=data.data.data.indicatorAnalysisDetailInfos;
+                        this.stabilityFoundationAnalysisNum.allnum=0;
+                        this.stabilityFoundationAnalysisNum.zcnum=0;
+                        this.stabilityFoundationAnalysisNum.ycnum=0;
+                        myData.forEach((el,i)=>{
+                            this.stabilityFoundationAnalysisNum.allnum+=Number(el.value);
+                            if(el.name=='正常'){
+                                console.log('正常',el)
+                                this.stabilityFoundationAnalysisNum.zcnum=Number(el.value);
+                                this.productionCode=el.code;
+                            }else{
+                                myData[i].isShow=Number(el.value)?true:false;
+                                this.stabilityFoundationAnalysisNum.ycnum+=Number(el.value);
+                            }
+                        })
+                        this.stabilityFoundationAnalysisNum.zczb=this.stabilityFoundationAnalysisNum.zcnum/this.stabilityFoundationAnalysisNum.allnum * 100;
+                        this.stabilityFoundationAnalysisNum.yczb=this.stabilityFoundationAnalysisNum.yczb/this.stabilityFoundationAnalysisNum.allnum * 100;
+                        this.stabilityFoundationAnalysisList = myData;
                         console.log(data.data.data)
                     }
                 });
@@ -437,7 +511,7 @@
                     if (data.data.data != null) {
                         this.injectionProductionBalanceAnalysisList = data.data.data.indicatorAnalysisDetailInfos;
                     }
-
+            
                 });
             },
             outputStatusAnalysis() { //0304-采出状况分析（模型计算）
@@ -463,7 +537,54 @@
                     }
                 });
             },
-            changeFx(val, tag) {
+            
+            clickAnalysis(code = '', evalTopic = '') {
+                let yearMonth = this.rq;
+                let oilFieldId = this.selectOilField;
+                let fieldId = this.selectBlock;
+                let evalTypeId = code
+                console.log("evalTypeId----" + evalTypeId)
+                let request = {
+                    evalTopic: evalTopic,
+                    evalTypeId: evalTypeId,
+                    fieldId: fieldId, //区块
+                    fileName: 'quyutu',
+                    oilFieldId: oilFieldId, //油田
+                    path: "field",
+                    seasonCode: "",
+                    yearMonth: yearMonth,
+                };
+                areaDiagram(request).then((data) => {
+                    this.layerData = data.data;
+                    if (data.data.data.mutiLayerPicResponse) {
+                        if(!this.myList.length){
+                            this.sjcl(data.data.data.mutiLayerPicResponse);
+                        }else{
+                            this.setProminentWell(data.data.data.mutiLayerPicResponse)
+                        }
+                    } else {
+                        if(this.isNewformat){
+                            this.$refs.H5Chart2.setSampleDate(null);
+                        }else{
+                            this.$refs.H5Chart.setSampleDate(null);
+                        }
+                    }
+                });
+            },
+            
+            //查询
+            searchThing() {
+                this.indexChangeTrend = '';
+                this.selCode = '';
+                this.getProStatusAnalysis()
+                this.getStableBaseAnalysis()
+                this.getProInjectionBalanceAnalysis()
+                this.outputStatusAnalysis()
+                this.clickAnalysis();
+            },
+            
+            //点击
+            selRadioIterm(val, tag) {
                 let myData = []; //我的数据
                 let myWellCount = {}; //计算各项目的井数
                 let t_count = 0; //计数器
@@ -725,39 +846,8 @@
                 //没用
                 this.indexChangeTrendCod = 2;
                 this.clickAnalysis(indexCode, indexName);
-            },
-            clickAnalysis(code = '', evalTopic = '') {
-                let yearMonth = this.rq;
-                let oilFieldId = this.selectOilField;
-                let fieldId = this.selectBlock;
-                let evalTypeId = code
-                console.log("evalTypeId----" + evalTypeId)
-                let request = {
-                    evalTopic: evalTopic,
-                    evalTypeId: evalTypeId,
-                    fieldId: fieldId, //区块
-                    fileName: 'quyutu',
-                    oilFieldId: oilFieldId, //油田
-                    path: "field",
-                    seasonCode: "",
-                    yearMonth: yearMonth,
-                };
-                areaDiagram(request).then((data) => {
-                    this.layerData = data.data;
-                    if (data.data.data.mutiLayerPicResponse) {
-                        if(!this.myList.length){
-                            this.sjcl(data.data.data.mutiLayerPicResponse);
-                        }else{
-                            this.setProminentWell(data.data.data.mutiLayerPicResponse)
-                        }
-                    } else {
-                        if(this.isNewformat){
-                            this.$refs.H5Chart2.setSampleDate(null);
-                        }else{
-                            this.$refs.H5Chart.setSampleDate(null);
-                        }
-                    }
-                });
+                
+                console.log('this.myList',this.myList);
             },
             //zwm写 hwh修改复用--等值线图
             sjcl(tc) {
@@ -841,11 +931,14 @@
                 Layers[0] = Layers_cont;
                 data.Layers = Layers;
                 console.log('源数据',data);
-                console.log('this。myList',this.myList)
                 if(this.isNewformat){
-                    this.$refs.H5Chart2.setSampleDate(data);
+                    setTimeout(()=>{
+                        this.$refs.H5Chart2.setSampleDate(data);
+                    },500)
                 }else{
-                    this.$refs.H5Chart.setSampleDate(data);
+                    setTimeout(()=>{
+                        this.$refs.H5Chart.setSampleDate(data);
+                    },500)
                 }
             },
             //突出井号
@@ -1119,7 +1212,7 @@
                     Objects:[]
                 };
                 this.myList.forEach((el,i)=>{
-                    if(el.wellCoord!==null){
+                    if(el.wellCoord!==null){    
                         LayersItem.Objects.push({
                             "ObjType": 110,
                             "CoordX": el.wellCoord[0].coordX,
@@ -1132,9 +1225,19 @@
                 data.Layers.push(LayersItem);
                 console.log('绘制突出井号数据源',data)
                 if(this.isNewformat){
-                    this.$refs.H5Chart2.setProminentWell(data);
+                    setTimeout(()=>{
+                        this.sjcl(this.layerData.data.mutiLayerPicResponse);
+                        setTimeout(()=>{
+                            this.$refs.H5Chart2.setProminentWell(data);
+                        },1500)
+                    },500)
                 }else{
-                    this.$refs.H5Chart.setProminentWell(data);
+                    setTimeout(()=>{
+                        this.sjcl(this.layerData.data.mutiLayerPicResponse);
+                        setTimeout(()=>{
+                            this.$refs.H5Chart.setProminentWell(data);
+                        },1500)
+                    },500)
                 }
             },
             //区块模型配置页面跳转
@@ -1143,35 +1246,29 @@
                     path: "blockAnalysisAided"
                 });
             },
-            async initData() {
-                await fetchOilFields().then((data) => {
-                    if (data != null) {
-                        this.fieldsData = data.data.data.oilFields;
-                        this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F'; //hwh xg 默认初始化qhd326  //this.fieldsData[0].oilFieldId;
-                        this.getFieldsData(this.selectOilField);
-                    }
-                });
-                let fieldsPara = {
-                    oilFieldId: this.selectOilField
-                }
-                await fetchFields(fieldsPara).then((res) => {
-                    if (res.data.data.fields.length != 0) { //获得区块信息
-                        this.blocks = res.data.data.fields;
-                        //默认选中第一个区块信息
-                        this.selectBlock = this.blocks[0].fieldId;
-                    }
-                });
-                this.getProStatusAnalysis();
-                this.getStableBaseAnalysis();
-                this.getProInjectionBalanceAnalysis();
-                this.outputStatusAnalysis()
-                this.clickAnalysis();
-            },
+            //跳转区块分析
             switchToAnaylsis() {
                 this.$router.push({
                     name: 'blockAnalysisAided',
                 });
-            }
+            },
+            //点击井跳转 动态分析界面
+            getBorepipeTypeApi(wellNo){
+                getBorepipeType(wellNo).then(res=>{
+                    if(res.data.code==200){
+                        let data=res.data.data;
+                        if(data==1){//水井
+                            this.$router.push({
+                                path:`/dynamicManagement/dynamicTrackingWaterAuxiliary/waterAnalysisReport?wellNo=${wellNo}`
+                            })
+                        }else if(data==2){//油井
+                            this.$router.push({
+                                path:`/dynamicManagement/dynamicTrackingOilAuxiliary/oilAnalysisReport?wellNo=${wellNo}`
+                            })
+                        }
+                    }
+                })
+            },
         },
     };
 </script>

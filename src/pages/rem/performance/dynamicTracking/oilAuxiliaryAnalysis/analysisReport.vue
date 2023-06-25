@@ -1028,6 +1028,10 @@
                 
                 if(this.initTypes==1){//第一次加载
                     this.initTypes=2;
+                    if(this.$route.query.wellNo){//判断路由是否有井号参数
+                        let wellItem=this.wellData.find(e=>e.wellName==this.$route.query.wellNo);
+                        this.wellId=wellItem.wellId;
+                    }
                     this.doSearch();
                 }
             },
@@ -1109,7 +1113,9 @@
                 }
                 console.log('this.productionTrendsTab',this.productionTrendsTab);
                 console.log('this.tableData',this.tableData);
-                this.$refs.tableList.doLayout();
+                this.$nextTick(()=>{
+                    this.$refs.tableList.doLayout();
+                })
                 // this.selRadioIterm(this.productionCode,'productionTrendsOptions');
             },
             queryWellTable() {
