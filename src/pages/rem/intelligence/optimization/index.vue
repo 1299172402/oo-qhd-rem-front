@@ -511,6 +511,7 @@ export default {
             window.removeEventListener('resize',this.setWidth)
         })
         if(this.$route.query.link == 'rem'){
+            this.activeName = 'second'
             this.doSearch()
         }else{
             this.doSearch()
