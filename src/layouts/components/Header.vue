@@ -515,8 +515,10 @@ export default Vue.extend({
       immediate: true
     },
     "$store.state.user.isGroupLogin": {
-      handler() {
-        this.getInitDeptds();
+      handler(newVal) {
+        if (newVal) {
+          this.getInitDeptds();
+        }
         this.containerWidth();
       },
       deep: true,
@@ -847,7 +849,7 @@ export default Vue.extend({
 
 .header-logo-container {
   width: 184px;
-//   height: 26px;
+  //   height: 26px;
   // TODO: 内网 Maybe change back
   height: 55px;
   align-items: center;

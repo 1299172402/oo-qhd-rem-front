@@ -68,7 +68,7 @@ function hideLoading() {
 
 const instance = axios.create({
   baseURL: API_HOST,
-  timeout: 30000,
+  timeout: 10000,
   withCredentials: true,
   headers: {
     "App-Id": proxy[env].appId
@@ -116,7 +116,7 @@ instance.interceptors.request.use(
     //   config.headers.Authorization = `Bearer ${store.getters['user/token']}`;
     // }
     // 判断当前请求是否设置了不显示Loading
-    if (config.headers.showLoading !== false && config.url.substring(0, config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && !config.url.includes("/system/CustomPanel/listByCustomId") && !config.url.includes("system/app/appListByUserIdAndTenantId") && whiteListLoading.indexOf(config.url) === -1) {
+    if (store.getters["permission/scrollLoading"] && config.headers.showLoading !== false && !config.url.includes("/system/CustomPanel/listByCustomId") && !config.url.includes("system/app/appListByUserIdAndTenantId") && whiteListLoading.indexOf(config.url) === -1) {
       showLoading(config.headers.loadingTarget);
     }
     return config;
