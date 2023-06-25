@@ -162,25 +162,29 @@
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                 header-cell-class-name="table_header"
                 :cell-style="{ padding: '3px', 'text-align': 'center' }"
-                :data="tableData_oil"
+                :data="tableData"
                 border
                 ref="reset"
                 style="width: 100%; height: 100%"
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column prop="a" label="井号"></el-table-column>
-                <el-table-column prop="b" label="日期（年月）"></el-table-column>
-                <el-table-column v-if="link == 1" prop="c" :label="`采液强度\n(m³/d·m)`"></el-table-column>
+                <el-table-column prop="wellName" label="井号"></el-table-column>
+                <el-table-column prop="date" label="日期（年月）">
+                    <template slot-scope="scope">
+                        <span> {{ scope.row.date ? scope.row.date.split(' ')[0] : '' }} </span>
+                    </template>
+                </el-table-column>
+                <el-table-column v-if="link == 1" prop="intensity" :label="`采液强度\n(m³/d·m)`"></el-table-column>
                 <el-table-column v-if="link == 2" prop="d" :label="`采液指数\n(m³/mPa·d)`"></el-table-column>
                 <el-table-column v-if="link == 3" prop="e" :label="`米采液指数\n(m³/mPa·d·m)`"></el-table-column>
-                <el-table-column prop="f" label="产液量"></el-table-column>
-                <el-table-column prop="g" label="生产时率"></el-table-column>
-                <el-table-column prop="h" label="泵效"></el-table-column>
-                <el-table-column prop="i" label="含水率"></el-table-column>
-                <el-table-column prop="j" label="流压"></el-table-column>
-                <el-table-column prop="k" show-overflow-tooltip label="归因"></el-table-column>
-                <el-table-column prop="l" show-overflow-tooltip label="措施"></el-table-column>
+                <el-table-column prop="yield" label="产液量"></el-table-column>
+                <el-table-column prop="monthlyProdEff" label="生产时率"></el-table-column>
+                <el-table-column prop="pumpEfficiency" label="泵效"></el-table-column>
+                <el-table-column prop="watCnt" label="含水率"></el-table-column>
+                <el-table-column prop="flwPrs" label="流压"></el-table-column>
+                <el-table-column prop="attribution" show-overflow-tooltip label="归因"></el-table-column>
+                <el-table-column prop="measure" show-overflow-tooltip label="措施"></el-table-column>
             </el-table>
         </pagePanel>
         
@@ -195,6 +199,7 @@ import {
     queryPlatformQueryWellListDetail,
 } from "@/api/rem/marster.js";
 import {queryWaterInjIntensityAttributeAnalysis} from "@/api/rem/waterinjintensityattributeanalysis.js"
+import {analyzeOilWellFluidAttributionQuery} from "@/api/rem/attributionanalysis";
 
 export default {
     components: {
@@ -210,15 +215,6 @@ export default {
                 well: ""
             },
             tableData: [],
-            tableData_oil:[
-                {
-                    a:'秦皇岛32-6-J24H',b:' 2023-01-01',c:'采液强度偏高',f:'210.12',g:'24',h:'',i:'94.48',j:"7.4",k:'地层能量不足',l:'优化注水',
-                },
-                {
-                    a:'秦皇岛32-6-E33H',b:' 2023-01-01',c:'采液强度偏高',f:'172.11',g:'24',h:'',i:'92.74',j:"8.2",k:'目前处于中低含水期',l:'存在乳化风险，加强\n' +
-                        '观察',
-                }
-            ],
             oilFields: [],
             platforms: [],
             wellList: {},
@@ -1167,7 +1163,6 @@ export default {
         this.link = this.$route.query.link
         if (this.link == '4') {
             this.title = '注水强度归因分析'
-            this.getFormData();
         } else if (this.link == '1') {
             this.option.series[0].data[0].name = '油井采液强度不合理'
             this.title = '油井采液强度归因分析'
@@ -1182,6 +1177,7 @@ export default {
         }else if(this.link == '6'){
             this.title = '井组生产动态归因分析'
         }
+        this.getFormData();
     },
     methods: {
         async getData() {
@@ -1246,6 +1242,11 @@ export default {
             }
             if (this.link == '4') {
                 queryWaterInjIntensityAttributeAnalysis(params).then(res => {
+                    this.tableData = res.data.data
+                })
+            }
+            if (this.link == '1') {
+                analyzeOilWellFluidAttributionQuery(params).then(res => {
                     this.tableData = res.data.data
                 })
             }
