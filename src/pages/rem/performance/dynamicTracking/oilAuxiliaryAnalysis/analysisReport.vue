@@ -158,8 +158,8 @@
                     </div>
                     <div style="display: flex;justify-content: flex-end;margin-bottom:10px;">
                         <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)"
-                        @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':'1',evalResult:cyqdpgSelCode }})">
-                        归因分析详情2
+                        @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':'1',evalResult:selCode }})">
+                        归因分析详情
                         </el-button>
                         <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)" 
                         @click="$router.push({path:'/plan/personnelMeasures',query:{platform,wellId,currentDate}})">措施推荐详情</el-button>
