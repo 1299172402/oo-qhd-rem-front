@@ -41,11 +41,23 @@
                         </el-form-item>
                         <el-form-item label="日期:">
                             <el-date-picker
+                                v-if="link == 4"
                                 value-format="yyyy-MM-dd"
                                 clearable
                                 v-model="queryData.month"
                                 type="date"
                                 key="1"
+                                style="width: 170px"
+                                placeholder="选择月"
+                            >
+                            </el-date-picker>
+                            <el-date-picker
+                                v-if="link == 1"
+                                value-format="yyyy-MM"
+                                clearable
+                                v-model="queryData.month"
+                                type="month"
+                                key="2"
                                 style="width: 170px"
                                 placeholder="选择月"
                             >
