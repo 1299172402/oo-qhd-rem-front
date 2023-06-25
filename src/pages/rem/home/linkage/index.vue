@@ -184,7 +184,7 @@ export default {
                     imgUrl: new URL('./topBox/21.png', import.meta.url).href,
                     showFlag:false,
                     typeIdList:[],
-                    warningShowFlag : false,
+                    warningShowFlag : true,
                     analysisUrl:`https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?wellIds=%5B%5D&prodDate=${data2}&prodDateCompare=${data1}`
                 },
                 {
