@@ -52,7 +52,7 @@
                             >
                             </el-date-picker>
                             <el-date-picker
-                                v-if="link == 1"
+                                v-if="link == 1 || link == 2 || link == 3"
                                 value-format="yyyy-MM"
                                 clearable
                                 v-model="queryData.month"
