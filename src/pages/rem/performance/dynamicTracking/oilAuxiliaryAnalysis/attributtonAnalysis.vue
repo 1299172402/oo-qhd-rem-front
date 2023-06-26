@@ -42,6 +42,7 @@
                         <el-form-item label="日期:">
                             <el-date-picker
                                 v-if="link == 4"
+                                disabled
                                 value-format="yyyy-MM-dd"
                                 clearable
                                 v-model="queryData.month"
@@ -54,6 +55,7 @@
                             <el-date-picker
                                 v-if="link == 1 || link == 2 || link == 3"
                                 value-format="yyyy-MM"
+                                disabled
                                 clearable
                                 v-model="queryData.month"
                                 type="month"
@@ -184,7 +186,7 @@
                 <el-table-column prop="wellName" label="井号"></el-table-column>
                 <el-table-column prop="date" label="日期">
                     <template slot-scope="scope">
-                        <span> {{ scope.row.date ? scope.row.date.split(' ')[0] : '' }} </span>
+                        <span> {{ scope.row.date ? scope.row.date.split(' ')[0].replace(/-01/g,'') : '' }} </span>
                     </template>
                 </el-table-column>
                 <el-table-column v-if="link == 1" prop="intensity" :label="`采液强度\n(m³/d·m)`"></el-table-column>
