@@ -1,10 +1,8 @@
 <template>
     <div class="container" style="position: relative">
         <div class="topBanner">油藏动态分析</div>
-        <linkageBoxBot :style="item.style" :remHome="true" :currentList="item" :key="index"
-                       v-for="(item,index) in currentLists[0]"></linkageBoxBot>
-        <linkageBoxTop :style="item.style" :remHome="true" :currentList="item" :key="index"
-                       v-for="(item,index) in currentLists[1]"></linkageBoxTop>
+        <linkageBoxBot @stopTimer="stopTimer" refs="boxBots" :style="item.style" :currentList="item" :key="index"
+                       v-for="(item,index) in currentLists"></linkageBoxBot>
         <div class="studySelf">
             <div class="studySelfInside"></div>
             <span>模型自学习</span>
@@ -33,7 +31,10 @@ export default {
     },
     methods: {
         arrowFun() {
-            setInterval(() => {
+            this.timer = setInterval(() => {
+                if(this.loopNum == -1) this.currentLists[5].showFlag = false
+                if(this.loopNum<7 && this.loopNum >0) this.currentLists[this.loopNum -1].showFlag = false
+                if(this.loopNum<6 && this.loopNum !=-1) this.currentLists[this.loopNum].showFlag = true
                 this.loopNum++
                 for (let i = 0; i < 7; i++) {
                     this.$el.querySelectorAll('img')[i].style.display = 'none'
@@ -42,124 +43,139 @@ export default {
                 if (this.loopNum == 6) {
                     this.loopNum = -1
                 }
-            }, 1000)
+            }, 2000)
+        },
+        stopTimer(flag){
+            if(flag){
+                this.currentLists.forEach(item=>{item.showFlag = false})
+                clearInterval(this.timer)
+            }else{
+                this.arrowFun()
+            }
         }
+    },
+    beforeDestroy() {
+        clearInterval(this.timer)
     },
     data() {
         return {
+            timer:'',
             loopNum: 0,
             show: true,
             currentLists: [
-                [
-                    {
-                        style: 'position:absolute;left: 10%;top: 55%;width:20%;height:40%;',
-                        boxText: '措施建议',
-                        boxBottomText: [{name: '智能分注井C1并执行存在风险!'}],
-                        boxStyle: {
-                            pWidth: 'width:8.5vw'
-                        },
-                        imgUrl: new URL('./remHome/04.png', import.meta.url).href,//暂无图片
-                        down: true,
+                {
+                    style: 'position:absolute;left: 10%;top: 8%;width:20%;height:40%;',
+                    boxText: '异常井监测',
+                    boxBottomText: [{
+                        name: '含水率变化监测',
+                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/oilAnalysisReport'
                     },
-                    {
-                        style: 'position:absolute;left: 40%;top: 55%;width:20%;height:40%;',
-                        boxText: '产量预测',
-                        boxBottomText: [{
-                            name: '递减率分析',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentEffectEvaluation?link=decreasing'
-                        }, {
-                            name: '产量变化趋势分析',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentTrendAnalysis'
-                        }, {
-                            name: '采收率分析',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/recoveryEfficiency/index'
-                        }],
-                        boxBottomContent: [['递减预测', '开发趋势分析'], ['数据驱动的油藏开发规律动态预测', '产量构成曲线'], ['采收率预测']],
-                        boxStyle: {
-                            pWidth: 'width:8.5vw'
-                        },
-                        imgUrl: new URL('./remHome/05.png', import.meta.url).href,
-                        down: true,
-                    },
-                    {
-                        style: 'position:absolute;left: 70%;top: 55%;width:20%;height:40%;',
-                        boxText: '开发指标评价',
-                        boxBottomText: [{
-                            name: '开发指标分析',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/devmentIndicators/waterInjectionIndexManagement'
-                        }, {
-                            name: '管理指标分析',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/devmentIndicators/technicalIndexManagement'
-                        }],
-                        boxBottomContent: [['开发技术指标管理', '开发效果评价'], ['注水指标管理', '措施效果评价']],
-                        boxStyle: {
-                            pWidth: 'width:8.5vw'
-                        },
-                        imgUrl: new URL('./remHome/06.png', import.meta.url).href,
-                        down: true,
-                    },
-                ],
-                [
-                    {
-                        style: 'position:absolute;left: 10%;top: 8%;width:20%;height:40%;',
-                        boxText: '异常井监测',
-                        boxBottomText: [{
-                            name: '含水率变化监测',
+                        {
+                            name: '递减率变化监测',
                             url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/oilAnalysisReport'
                         },
-                            {
-                                name: '递减率变化监测',
-                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport'
-                            },
-                            {
-                                name: '产液量异常监测',
-                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport'
-                            },
-                            {
-                                name: '井底流压监测',
-                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport'
-                            }],
-                        boxStyle: {
-                            pWidth: 'width:11vw',
+                        {
+                            name: '产液量异常监测',
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/oilAnalysisReport'
                         },
-                        imgUrl: new URL('./remHome/01.png', import.meta.url).href,
-                        down: false,
-                    },
-                    {
-                        style: 'position:absolute;left: 40%;top: 8%;width:20%;height:40%;',
-                        boxText: '单井/井组/区块分析',
-                        boxBottomText: [{name: '水质分析'},
-                            {
-                                name: '注采比分析',
-                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport'
-                            },
-                            {name: '来水方向分析',url: ''},
-                            {
-                                name: '储量动用情况',
-                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentEffectEvaluation?link=reserves'
-                            }],
-                        boxBottomContent: [[], [{name:'开发效果评价',url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport'}], [], []],
-                        boxStyle: {
-                            pWidth: 'width:11vw',
-                        },
-                        imgUrl: new URL('./remHome/02.png', import.meta.url).href,
-                        down: false,
-                    },
-
-                    {
-                        style: 'position:absolute;left: 70%;top: 8%;width:20%;height:40%;',
-                        boxText: '剩余油分布状况分析',
-                        boxBottomText: [{
-                            name: '剩余油甜点分析',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence/optimization'
+                        {
+                            name: '井底流压监测',
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/oilAnalysisReport'
                         }],
-                        boxStyle: {
-                            pWidth: 'width:11vw'
-                        },
-                        imgUrl: new URL('./remHome/03.png', import.meta.url).href,
-                        down: false,
+                    boxStyle: {
+                        pWidth: 'width:11vw;margin-left: 4.5vw;',
                     },
-                ]
+                    imgUrl: new URL('./remHome/01.png', import.meta.url).href,
+                    down: true,
+                    showFlag:false
+                },
+                {
+                    style: 'position:absolute;left: 40%;top: 8%;width:20%;height:40%;',
+                    boxText: '单井/井组/区块分析',
+                    boxBottomText: [{name: '水质分析'},
+                        {
+                            name: '注采比分析',
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport'
+                        },
+                        {name: '来水方向分析',url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport'},
+                        {
+                            name: '储量动用情况',
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentEffectEvaluation?link=reserves'
+                        }],
+                    boxBottomContent: [[], [{name:'开发效果评价',url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport'}], [], []],
+                    boxStyle: {
+                        pWidth: 'width:11vw;margin-left: 4.5vw;',
+                    },
+                    imgUrl: new URL('./remHome/02.png', import.meta.url).href,
+                    down: true,
+                    showFlag:false
+                },
+
+                {
+                    style: 'position:absolute;left: 70%;top: 8%;width:20%;height:40%;',
+                    boxText: '剩余油分布状况分析',
+                    boxBottomText: [{
+                        name: '剩余油甜点分析',
+                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence/optimization'
+                    }],
+                    boxStyle: {
+                        pWidth: 'width:11vw;margin-left: 4.5vw;'
+                    },
+                    imgUrl: new URL('./remHome/03.png', import.meta.url).href,
+                    down: true,
+                    showFlag:false
+                },
+              
+                {
+                    style: 'position:absolute;left: 70%;top: 55%;width:20%;height:40%;',
+                    boxText: '开发指标评价',
+                    boxBottomText: [{
+                        name: '开发指标分析',
+                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/devmentIndicators/waterInjectionIndexManagement'
+                    }, {
+                        name: '管理指标分析',
+                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/devmentIndicators/technicalIndexManagement'
+                    }],
+                    boxBottomContent: [['开发技术指标管理', '开发效果评价'], ['注水指标管理', '措施效果评价']],
+                    boxStyle: {
+                        pWidth: 'width:8.5vw;margin-left: 6vw;'
+                    },
+                    imgUrl: new URL('./remHome/06.png', import.meta.url).href,
+                    down: true,
+                    showFlag:false
+                },
+                {
+                    style: 'position:absolute;left: 40%;top: 55%;width:20%;height:40%;',
+                    boxText: '产量预测',
+                    boxBottomText: [{
+                        name: '递减率分析',
+                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentEffectEvaluation?link=decreasing'
+                    }, {
+                        name: '产量变化趋势分析',
+                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentTrendAnalysis'
+                    }, {
+                        name: '采收率分析',
+                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/recoveryEfficiency/index'
+                    }],
+                    boxBottomContent: [['递减预测', '开发趋势分析'], ['数据驱动的油藏开发规律动态预测', '产量构成曲线'], ['采收率预测']],
+                    boxStyle: {
+                        pWidth: 'width:8.5vw;margin-left: 6vw;'
+                    },
+                    imgUrl: new URL('./remHome/05.png', import.meta.url).href,
+                    down: true,
+                    showFlag:false
+                },
+                {
+                    style: 'position:absolute;left: 10%;top: 55%;width:20%;height:40%;',
+                    boxText: '措施建议',
+                    boxBottomText: [{name: '智能分注井C1并执行存在风险!'}],
+                    boxStyle: {
+                        pWidth: 'width:8.5vw;margin-left: 6vw;'
+                    },
+                    imgUrl: new URL('./remHome/04.png', import.meta.url).href,//暂无图片
+                    down: true,
+                    showFlag:false
+                },
             ]
         }
     }

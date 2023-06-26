@@ -1,6 +1,6 @@
 <template>
-    <div class="box" @mouseenter="show(true,true)" @mouseleave="show(false,true)">
-        <div class="warp" style="overflow:hidden">
+    <div class="box" @mouseenter="show(true)" @mouseleave="show(false)">
+        <div class="warp" :style="!currentList.down ?'overflow:visible':'overflow:hidden'">
             <div class="transition-box">
                 <div class="transition-box-content" :style="{'background-image':`url(${currentList.imgUrl})`}">
                 </div>
@@ -10,7 +10,24 @@
                 <span class="btnGo"></span>
             </p>
 
-            <div :style="showStyle" class="transition-box-bottom bo2">
+<!--            <div v-show="!currentList.down" :style="showStyle2" class="transition-box-bottom bo1">-->
+<!--                <div class="pad">-->
+<!--                    <div>-->
+<!--                        <p v-show="!content" :key="index" v-for="(item,index) in currentList.boxBottomText">-->
+<!--                            <span>{{item}}</span>-->
+<!--                            <span v-if="currentList.boxBottomContent" class="btnContent" @click="btnContent(index)">{{currentList.boxBottomContent[index].length>0?'>>':''}}</span>-->
+<!--                            <span v-else class="btnBack" @click="btnBack"></span>-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <p v-show="content" :key="index" v-for="(item,index) in selectObj[selectIndex]">-->
+<!--                            <span>{{item}}</span>-->
+<!--                            <span class="btnBack" @click="btnBack"></span>-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div v-show="currentList.down || showFlag" :style="showStyle" class="transition-box-bottom bo2">
                 <div class="pad">
                     <div>
                         <p v-show="!content" :key="index" v-for="(item,index) in currentList.boxBottomText">
@@ -21,7 +38,7 @@
                     </div>
                     <div>
                         <p v-show="content" :key="index" v-for="(item,index) in selectObj[selectIndex]">
-                            <span>{{item.name?item.name:item}}</span>
+                            <span>{{item}}</span>
                             <span class="btnBack" @click="btnBack"></span>
                         </p>
                     </div>
@@ -40,15 +57,22 @@ export default {
            type:Object,
            default:()=>{}
        },
+       remHome:false ,
+        showFlag: {
+            type : Boolean,
+            default : false
+        }
     },
     watch:{
-        currentList:{
+        showFlag:{
             handler(Nval){
-                console.log(Nval);
-                this.show(Nval.showFlag)
+                this.show(Nval)
             },
             deep:true
-        }
+        },
+    },
+
+    mounted() {
     },
     data() {
         return {
@@ -57,19 +81,21 @@ export default {
             showStyle:{
                 top:'18vw'
             },
+            // showStyle2:{
+            //   height:'0'  
+            // },
             selectObj:this.currentList.boxBottomContent?this.currentList.boxBottomContent:[1]
         }
     },
     methods:{
-        show:function(flag,mouse){
+        show:function(flag){
             if (flag){
                 this.showStyle.top = -this.currentList.boxBottomText.length * 2 +11 + 'vw';
+                // this.showStyle2.height = (this.currentList.boxBottomText.length *1 )+5 + 'vw';
             } else{
                 this.showStyle.top = '18vw';
+                // this.showStyle2.height = '0';
             }     
-            if(mouse){
-                this.$emit('stopTimer',flag)
-            }
         },
         skippage(page){
             if (!page) return
@@ -124,6 +150,7 @@ export default {
         line-height: 1.8vw;
         border-radius: 20px;
         font-size: 0.8vw;
+        margin-left: 6vw;
         z-index: 9;
         .btnGo{
             background-image: url("@/assets/linkage/btn.png");
