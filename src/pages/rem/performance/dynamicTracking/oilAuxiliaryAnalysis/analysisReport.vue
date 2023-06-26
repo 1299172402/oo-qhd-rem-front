@@ -624,8 +624,9 @@
                                                 </span>
                                             </div>
                                             <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;">
-                                                <el-button type="primary" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)" @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate}})">
-                                                    归因分析详情1
+                                                <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)"
+                                                           @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':'1',evalResult:selCode }})">
+                                                    归因分析详情
                                                 </el-button>
                                             </div>
                                         </div>
