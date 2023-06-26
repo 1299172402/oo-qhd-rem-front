@@ -468,20 +468,20 @@
                                         <div class="z_schedule">
                                             <span class="sp1">正常：</span>
                                             <div class="z_proess">
-                                                <span class="z_proess_sp1" style="width:0%"><b>0</b></span>
+                                                <span class="z_proess_sp1" style="width:0%"><b>{{isNaN(zsqdForm.evaluationNormal)?'0':zsqdForm.evaluationNormal }}</b></span>
                                                 <span class="z_proess_sp2"></span>
                                             </div>
-                                            <span class="sp2">异常：<b>0</b></span>
+                                            <span class="sp2">异常：<b>{{ isNaN(Number(zsqdForm.evaluationBiasTall) +  Number(zsqdForm.evaluationBiasLow) + Number(zsqdForm.evaluationChangeTall) + Number(zsqdForm.evaluationChangeLow)) ? 0 : Number(zsqdForm.evaluationBiasTall) +  Number(zsqdForm.evaluationBiasLow) + Number(zsqdForm.evaluationChangeTall) + Number(zsqdForm.evaluationChangeLow)}}</b></span>
                                         </div>
                                     </div>  
                                     <div class="z-row-center">
-                                        <div class="numBtn" v-if="false">
-                                            <span class="sp1">0</span>
+                                        <div class="numBtn" @click="$router.push({name:'attributtonAnalysis',query:{'selectBlock':selectBlock,'platform':platform,'wellId':wellId,'link':4,'evalResult':selCode,'currentDate':currentDate}})" v-if="Number(zsqdForm.evaluationBiasTall)>0">
+                                            <span class="sp1">{{zsqdForm.evaluationBiasTall}}</span>
                                             <span class="sp2">注水强度偏高</span>
                                         </div>
-                                        <div class="numBtn" v-if="false">
-                                            <span class="sp1">0</span>
-                                            <span class="sp2">注水强度偏低</span>
+                                        <div class="numBtn" @click="$router.push({name:'attributtonAnalysis',query:{'selectBlock':selectBlock,'platform':platform,'wellId':wellId,'link':4,'evalResult':selCode,'currentDate':currentDate}})" v-if="Number(zsqdForm.evaluationBiasLow)>0">
+                                            <span class="sp1">{{zsqdForm.evaluationBiasLow}}</span>
+                                            <span   class="sp2">注水强度偏低</span>
                                         </div>
                                     </div>
                                 </div>
@@ -721,6 +721,7 @@
                     wellId:this.wellId
                 }
                 queryEvaluationWaterInjCount(params).then((res) =>{
+                    console.log(res)
                      this.zsqdForm = res.data.data[0]
                 })
             },
