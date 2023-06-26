@@ -7,6 +7,13 @@ export function getOgfInfo(orgId) {
     method: "get",
   });
 }
+//根据井号查出是水井还是油井
+export function getBorepipeType(wellNo) {
+  return Axios({
+    url: `${baseUrl}//baseData/getBorepipeType?wellNo=${wellNo}`,
+    method: "get",
+  });
+}
 export function getOrgInfo() {
   return Axios({
     url: `${baseUrl}/baseData/getOrgInfo`,

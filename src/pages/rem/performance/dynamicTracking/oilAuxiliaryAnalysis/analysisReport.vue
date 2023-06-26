@@ -121,7 +121,6 @@
                                     </el-col>
                                     <el-col :span="12">
                                         <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">储量动用</el-button>
-                                        </el-radio-group>
                                         <el-col v-for="(item,index) in reserveProductionOptions" :key="index" :span="12">
                                             <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'reserveProductionOptions')">
                                                 {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
@@ -159,7 +158,7 @@
                     </div>
                     <div style="display: flex;justify-content: flex-end;margin-bottom:10px;">
                         <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)"
-                        @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate}})">
+                        @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':'1',evalResult:selCode }})">
                         归因分析详情
                         </el-button>
                         <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)" 
@@ -626,7 +625,7 @@
                                             </div>
                                             <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;">
                                                 <el-button type="primary" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)" @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate}})">
-                                                    归因分析详情
+                                                    归因分析详情1
                                                 </el-button>
                                             </div>
                                         </div>
@@ -1028,6 +1027,10 @@
                 
                 if(this.initTypes==1){//第一次加载
                     this.initTypes=2;
+                    if(this.$route.query.wellNo){//判断路由是否有井号参数
+                        let wellItem=this.wellData.find(e=>e.wellName==this.$route.query.wellNo);
+                        this.wellId=wellItem.wellId;
+                    }
                     this.doSearch();
                 }
             },
@@ -1109,7 +1112,9 @@
                 }
                 console.log('this.productionTrendsTab',this.productionTrendsTab);
                 console.log('this.tableData',this.tableData);
-                this.$refs.tableList.doLayout();
+                this.$nextTick(()=>{
+                    this.$refs.tableList.doLayout();
+                })
                 // this.selRadioIterm(this.productionCode,'productionTrendsOptions');
             },
             queryWellTable() {

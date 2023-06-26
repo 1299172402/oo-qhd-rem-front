@@ -120,7 +120,7 @@
         },
         methods:{
             goBack(){
-                this.$router.push({name:'reservoirDisplay'})
+                this.$router.push({name:'oilexhibition'})
             },
             getList() {
                 //根据作业公司查询油田

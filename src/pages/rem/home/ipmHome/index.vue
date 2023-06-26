@@ -44,10 +44,10 @@ export default {
                         boxText: '注采结构优化',
                         boxBottomText: [{
                             name: '注采强度判定',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/analysisReport'
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport'
                         }, {
                             name: '井组注采比分析',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingWellGroup/analysisReport'
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport'
                         }],
                         boxStyle: {
                             pWidth: 'width:8.5vw'
@@ -61,8 +61,8 @@ export default {
                         boxText: '区块注采方案',
                         boxBottomText: [{
                             name: '定产配注方案',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence/optimization'
-                        }, {name: '注采优化方案', url: 'https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge?link=rem'}],
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization'
+                        }, {name: '注采优化方案', url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimizationDetail'}],
                         boxStyle: {
                             pWidth: 'width:8.5vw'
                         },
@@ -89,19 +89,19 @@ export default {
                         // boxBottomText: ['单井分层液量', '区块分层液量', '劈分剖面','劈分系数'],
                         boxBottomText: [{
                             name: '单井分层液量',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence/productionSplit'
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/productionSplit'
                         },
                             {
                                 name: '区块分层液量',
-                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence/productionSplit'
+                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/productionSplit'
                             },
                             {
                                 name: '劈分剖面',
-                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence/splitSection'
+                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/splitSection'
                             },
                             {
                                 name: '劈分系数',
-                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence/productionSplit'
+                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/DividingCoefficient'
                             }],
                         boxStyle: {
                             pWidth: 'width:11vw',
@@ -121,11 +121,11 @@ export default {
                         },
                             {
                                 name: '井间连通系数',
-                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence/connectivityData'
+                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/connectivityData'
                             },
                             {
                                 name: '平面液量分流',
-                                url: ''
+                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/connectivityData'
                             },],
                         boxStyle: {
                             pWidth: 'width:11vw',
@@ -142,12 +142,12 @@ export default {
                         // boxBottomText: ['分层剩余油分布', '平面剩余油分布'],
                         boxBottomText: [{
                             name: '分层剩余油分布',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence/optimization'
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization?link=rem'
                         },
-                            {
-                                name: '平面剩余油分布',
-                                url: ''
-                            }],
+                        {
+                            name: '平面剩余油分布',
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization?link=rem'
+                        }],
                         boxStyle: {
                             pWidth: 'width:11vw'
                         },

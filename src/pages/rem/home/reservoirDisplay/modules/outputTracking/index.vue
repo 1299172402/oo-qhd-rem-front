@@ -27,7 +27,7 @@
                 </div>
             </el-col>
             <el-col :span="17" style="margin-top: 15px">
-                <el-row :gutter="10">
+                <el-row :gutter="20">
                     <el-col :span="8" v-for="(item, index) in data" :key="index">
                         <div style="float: left; width: 60px; height: 60px">
 <!--                            <svg-icon :icon-class="item.icon" style="width: 100%; height: 100%"/>-->

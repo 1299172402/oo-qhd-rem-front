@@ -1,6 +1,8 @@
 <template>
   <div class="myWrapper">
-    <router-view />
+    <keep-alive>
+      <router-view />
+    </keep-alive>
   </div>
 </template>
 <style lang="less" scoped>

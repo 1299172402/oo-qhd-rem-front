@@ -66,7 +66,7 @@ export default {
                         boxText: '产量预测',
                         boxBottomText: [{
                             name: '递减率分析',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentEffectEvaluation'
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentEffectEvaluation?link=decreasing'
                         }, {
                             name: '产量变化趋势分析',
                             url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentTrendAnalysis'
@@ -105,7 +105,7 @@ export default {
                         boxText: '异常井监测',
                         boxBottomText: [{
                             name: '含水率变化监测',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport'
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/oilAnalysisReport'
                         },
                             {
                                 name: '递减率变化监测',
@@ -131,14 +131,14 @@ export default {
                         boxBottomText: [{name: '水质分析'},
                             {
                                 name: '注采比分析',
-                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentEffectEvaluation'
+                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport'
                             },
-                            {name: '来水方向分析'},
+                            {name: '来水方向分析',url: ''},
                             {
                                 name: '储量动用情况',
-                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentEffectEvaluation'
+                                url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentEffectEvaluation?link=reserves'
                             }],
-                        boxBottomContent: [[], ['开发效果评价'], [], []],
+                        boxBottomContent: [[], [{name:'开发效果评价',url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport'}], [], []],
                         boxStyle: {
                             pWidth: 'width:11vw',
                         },

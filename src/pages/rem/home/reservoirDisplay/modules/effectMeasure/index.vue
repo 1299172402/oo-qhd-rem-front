@@ -6,7 +6,7 @@
             header-title="措施效果跟踪表"
             :is-show-max-btn="true"
         >
-            <button class="detailLinkBtn" @click="linkroute('analysisReport')">详细</button>
+            <button class="detailLinkBtn" @click="linkroute('oilAnalysisReport')">详细</button>
 <!--            <span-->
 <!--                style="font-size:14px;color: #1ec5e6; position: relative; top: -31px; left: 150px">措施潜力井统计表</span>-->
 <!--            <span style="font-size:14px;color: #1ec5e6; position: relative; top: -31px; left: 160px"-->

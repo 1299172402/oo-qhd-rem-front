@@ -909,6 +909,7 @@
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
+                        console.log('asda',myData)
                         this.trendOfIndicatorsNum.allnum=0;
                         this.trendOfIndicatorsNum.zcnum=0;
                         this.trendOfIndicatorsNum.ycnum=0;

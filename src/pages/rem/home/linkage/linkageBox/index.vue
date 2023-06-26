@@ -1,17 +1,18 @@
 <template>
-    <div class="box" @mouseenter="show = true" @mouseleave="show = false">
+<!--    <div class="box" @mouseenter="show = true" @mouseleave="show = false">-->
+    <div class="box" @mouseenter="mouseenter" @mouseleave="mouseleave">
         <el-collapse-transition>
-            <div v-show="show||remHome || showFlag ||  warningShowFlag ">
+            <div v-show="show || showFlag ||  warningShowFlag ">
                 <div class="transition-box">
                     <div class="transition-box-content" :style="{'background-image':`url(${currentList.imgUrl})` }">
                         <div v-show="warningShowFlag" class="mcBox" style="">
 
                         </div>
                     </div>
-<!--                    <div v-if="warningShowFlag">-->
-<!--                        <button class="detailLinkBtn" @click="confirm()">确认</button>-->
-<!--                        <button class="detailLinkBtn" @click="linkTo(currentList.analysisUrl)">分析</button>-->
-<!--                    </div>-->
+                    <div v-if="warningShowFlag">
+                        <button class="detailLinkBtn" @click="confirm()">确认</button>
+                        <button class="detailLinkBtn" @click="linkTo(currentList.analysisUrl)">分析</button>
+                    </div>
                 </div>
             </div>
         </el-collapse-transition>
@@ -25,7 +26,8 @@
                     <div class="pad">
                         <div>
                             <p v-show="!content" :key="index" v-for="(item,index) in currentList.boxBottomText">
-                                <span style="cursor: pointer" @click="linkTo(item.url)">{{ item.name ? item.name : item }}</span>
+                                <span v-if="item.url" style="cursor: pointer" @click="linkTo(item.url)">{{ item.name ? item.name : item }}</span>
+                                <span v-if="!item.url" style="pointer-events: none;color:#5a5959;font-weight:bolder">{{ item.name ? item.name : item }}</span>
                                 <span v-if="currentList.boxBottomContent" class="btnContent" @click="btnContent(index)">{{ currentList.boxBottomContent[index].length > 0 ? '>>' : '' }}</span>
                                 <span v-else class="btnBack" @click="btnBack"></span>
                             </p>
@@ -53,7 +55,6 @@ export default {
             default: () => {
             }
         },
-        remHome: false,
         showFlag: {
             type: Boolean,
             default: false
@@ -100,8 +101,14 @@ export default {
         },
         confirm(){
             this.warningShowFlag = false
-            // https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport
-            // window.open ( 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport','_blank')
+        },
+        mouseenter(){
+            this.show = true
+            this.$emit('stopTimer')
+        },
+        mouseleave(){
+            this.show = false
+            this.$emit('startTimer')
         }
     }
 }

@@ -395,3 +395,11 @@ export function queryAdjacentWellData({ wellId } = {}) {
         method: "get",
     });
 }
+
+export function queryEvaluationWaterInjCount({ assetCode ,date,ogfId , reservoirUnitId, wellId} = {},) {
+    return Axios({
+        url: `${baseUrl}/evaluationWaterInjCount/queryEvaluationWaterInjCount?assetCode=${ assetCode || "" }&date=${ date || "" }&ogfId=${ ogfId || "" }&reservoirUnitId=${ reservoirUnitId || "" }&wellId=${ wellId || "" }`,
+        method: "get",
+    });
+}
+

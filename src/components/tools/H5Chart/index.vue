@@ -139,6 +139,7 @@
                 // }
             },
             setProminentWell(data){
+                console.log('子组件',data)
                 this.w.fView.SetFrameData(data);
                 this.w.fView.View.MakeAviod();//井号避让，根据情况自决定是否选用
                 this.w.fView.ZoomAll();//全图

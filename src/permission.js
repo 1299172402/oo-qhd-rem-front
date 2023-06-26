@@ -105,7 +105,8 @@ router.afterEach(() => {
         if (!tokenIsLose) {
         // 不做统计的白名单：投影和办公
           if (currentRoute.path !== "/portal/officeMode" && currentRoute.path !== "/portal/projectionMode") {
-          // 2.通过currentRoute.params判断是否为二级页面
+            store.commit("permission/setScrollLoading", true);
+            // 2.通过currentRoute.params判断是否为二级页面
             if (JSON.stringify(currentRoute.params) === "{}") { // 一级页面不带query传参
               params = {
                 menuName: currentRoute.meta.title,
