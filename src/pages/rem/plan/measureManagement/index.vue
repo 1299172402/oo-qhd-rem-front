@@ -48,7 +48,7 @@
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <span>时间:</span>
                     <el-date-picker v-model="dateTime" style="width:160px;margin-left:10px" type="date"
-                        placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
+                        placeholder="选择日期" value-format="yyyy-MM-dd" :clearable="false"></el-date-picker>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <el-button type="primary" icon="el-icon-search" @click="getFetchMeasureInfos">搜索</el-button>

@@ -80,7 +80,10 @@
                         feature: {
                             saveAsImage: {
                                 pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-                                backgroundColor: '#022644'
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
                             }
                         }
                     },

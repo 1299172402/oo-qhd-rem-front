@@ -2399,13 +2399,15 @@
     
     .z-button{
         width: 100%;
-        height: 28px;
+        height: 46px!important;
+        line-height: 16px!important;
+        white-space: pre-line;
+        
         font-size:14px;
         text-align: center;
         border-color: var(--light-blue-color);
         color: var(--white-color);
         transition: all 0s;
-        height: 34px;
         line-height: 8px;
         border-radius: 0 !important;
         background: rgba(143, 164, 204, 0.3);

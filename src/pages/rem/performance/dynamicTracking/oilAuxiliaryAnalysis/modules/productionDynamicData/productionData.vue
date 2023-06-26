@@ -8,7 +8,7 @@
                 <el-option :label="item.name" :value="item.code" v-for="(item,index) in selectAllocOrCalculate" :key="index"></el-option>
             </el-select>
         </div> 
-        <div class="z-echarts" :style="{height:height+'px'}">
+        <div class="z-echarts" >
             <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
         </div>   
         <div class="develop">
@@ -609,7 +609,7 @@
             }
         },
         mounted() {
-            this.height=document.getElementsByClassName('z-main')[0].offsetHeight-40-60-10;
+            this.height=document.getElementsByClassName('z-main')[0].offsetHeight-40-50-10;
             console.log('this.height',this.height)
             let year = new Date().getFullYear();
             this.selectData = [new Date(year + '-01-01').format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
@@ -812,7 +812,7 @@
         overflow-y: scroll;
         overflow-x: hidden;
         .z-search{
-            height:60px;
+            height:50px;
         }
         
         .z-echarts{
