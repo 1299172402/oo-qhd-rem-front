@@ -18,7 +18,7 @@
                 </div>
                 <div style="margin-left: 10px;">
                     <span>日期：</span>
-                    <el-date-picker v-model="rq" type="date" value-format="yyyy-MM-dd" placeholder="年-月-日"></el-date-picker>
+                    <el-date-picker v-model="rq" type="date" value-format="yyyy-MM-dd"></el-date-picker>
                 </div>
                 <div style="margin-left: 10px;">
                     <el-button icon="el-icon-search" style="margin-left: 20px; width: 90px" type="primary" @click="searchThing">搜索</el-button>
@@ -297,6 +297,7 @@
     import { outputStatusAnalysis, areaDiagram, stableBaseAnalysis, proInjectionBalanceAnalysis, proStatusAnalysis} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
     import { fetchFields,fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import { getBorepipeType } from "@/api/oilDeposit/ipm-03/basedata.js";
+    import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js"
     export default {
         name:'blockAnalysisReport',
         components: {H5Chart,H5Chart2},
@@ -382,21 +383,16 @@
                 this.getFieldsData(val);
             }
         },
-        created() {
-            //初始化时间
-            this.rq = new Date().addDays(-1).format('yyyy-MM-dd');
-            this.rq='2022-05-01';
-        },
+      
         mounted() {
-            this.initData();
+            this.getDateApi();
         },
         methods: {
             //重置
             resetting(){
                 this.$nextTick(()=>{
                 	Object.assign(this.$data, this.$options.data());
-                	this.rq = new Date().addDays(-1).format('yyyy-MM-dd');
-                	this.initData();
+                	this.getDateApi();
                 })
             },
             //切换版式
@@ -414,6 +410,16 @@
                     }
                 })
             },
+            //本接口获取最后一次模型计算出来的结果，返回最后一次跑模型的日期。
+            getDateApi(){
+                getDate({wellMenu:'WELL_BLOCK'}).then(res=>{
+                    if(res.data.code==200){
+                        this.rq=res.data.data;   
+                    }
+                    this.initData();
+                })
+            },
+            //初始数据
             async initData() {
                 await fetchOilFields().then((data) => {
                     if (data != null) {

@@ -29,7 +29,7 @@
                     </el-select>
                     
                     <span style="margin-left:15px;">评价时间：</span>
-                    <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
@@ -299,7 +299,7 @@
                     </el-select>
                     
                     <span style="margin-left:15px;">评价时间：</span>
-                    <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
@@ -582,7 +582,7 @@
                                                     <div class="z-row-left">
                                                         <div class="z_title">
                                                             <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                                            <span>米采液强度</span>
+                                                            <span>米采液指数</span>
                                                         </div>
                                                         <div class="z_schedule">
                                                             <span class="sp1">正常：</span>
@@ -767,6 +767,7 @@
         fetchProductionWellsByPlatform,
         fetchProductionWells
     } from "@/api/oilDeposit/rem-02/primaryinfo.js";
+    import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js"
     import compareSort from "@/lib/compareSort.js";
     export default {
         name:'oilAnalysisReport',
@@ -943,15 +944,22 @@
             }
         },
         mounted() {
-            this.checkCurrentDate(); //初始化评价日期
-            this.queryOilFeildList(); //初始化油田
+            this.getDateApi(); //初始化油田
         },
         methods: {
             //重置
             resetting(){
                 Object.assign(this.$data, this.$options.data());
-                this.checkCurrentDate(); //初始化评价日期
-                this.queryOilFeildList(); //初始化油田
+                this.getDateApi(); //初始化油田
+            },
+            //本接口获取最后一次模型计算出来的结果，返回最后一次跑模型的日期。
+            getDateApi(){
+                getDate({wellMenu:'WELL_OIL'}).then(res=>{
+                    if(res.data.code==200){
+                        this.currentDate=res.data.data;   
+                    }
+                    this.queryOilFeildList();
+                })
             },
             //油井下拉框数据获取
             queryOilFeildList(){
@@ -1686,13 +1694,7 @@
                     this.$router.push('/singleWellPerformance_water')
                 }
             },
-            //检查评价日期是否有效
-            checkCurrentDate() {
-                if (this.currentDate == null || this.currentDate == "" || this.currentDate == undefined) {
-                    //this.currentDate = this.getMyDate(-1);
-                    this.currentDate = new Date().addDays(-1).format('yyyy-MM-dd');
-                }
-            },
+           
             //跳转到分析
             openAnalysis(wellNumber) {
                 this.$router.push({
