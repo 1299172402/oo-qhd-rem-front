@@ -698,33 +698,8 @@
         mounted() {
             this.checkCurrentDate(); //初始化评价日期
             this.queryOilFeildList(); //初始化油田
-            this.getzsqdData()
         },
         methods: {
-            clickmodel(){
-                console.log(123)  
-            },
-            //获取注水强度数据
-            getzsqdData(){
-                let assetCode = this.platform,reservoirUnitId = this.selectBlock
-                if(assetCode == '3FC9A818F5BC43B88270DB80BBB3018F' ){
-                    assetCode = ''
-                }
-                if(reservoirUnitId == '3FC9A818F5BC43B88270DB80BBB3018F' ){
-                    reservoirUnitId = ''
-                }
-                let params = {
-                    assetCode:assetCode,
-                    date:this.currentDate,
-                    ogfId:this.selYtdm,
-                    reservoirUnitId:reservoirUnitId,
-                    wellId:this.wellId
-                }
-                queryEvaluationWaterInjCount(params).then((res) =>{
-                    console.log(res)
-                     this.zsqdForm = res.data.data[0]
-                })
-            },
             //重置
             resetting(){
                 this.$nextTick(()=>{
@@ -732,6 +707,13 @@
                 	this.checkCurrentDate(); //初始化评价日期
                 	this.queryOilFeildList(); //初始化油田
                 })
+            },
+            //检查评价日期是否有效
+            checkCurrentDate() {
+                if (this.currentDate == null || this.currentDate == "" || this.currentDate == undefined) {
+                    //this.currentDate = this.getMyDate(-1);
+                    this.currentDate = new Date().addDays(-1).format('yyyy-MM-dd');
+                }
             },
             //获取油田数据
             queryOilFeildList() {
@@ -813,6 +795,26 @@
                     this.doSearch();
                 }
             },
+            //获取注水强度数据
+            getzsqdData(){
+                let assetCode = this.platform,reservoirUnitId = this.selectBlock
+                if(assetCode == '3FC9A818F5BC43B88270DB80BBB3018F' ){
+                    assetCode = ''
+                }
+                if(reservoirUnitId == '3FC9A818F5BC43B88270DB80BBB3018F' ){
+                    reservoirUnitId = ''
+                }
+                let params = {
+                    assetCode:assetCode,
+                    date:this.currentDate,
+                    ogfId:this.selYtdm,
+                    reservoirUnitId:reservoirUnitId,
+                    wellId:this.wellId
+                }
+                queryEvaluationWaterInjCount(params).then((res) =>{
+                     this.zsqdForm = res.data.data[0]
+                })
+            },
             //进行数据查询处理
             async doSearch() {
                 //加上重新搜索清空选择 和 表格数据
@@ -850,7 +852,7 @@
                     this.queryTableData(myData);
                 }
             },
-            queryTableData(myData,val=''){
+            queryTableData(myData,val='123'){
                 let myWellCount = {}; //计算各项目的井数
                 let t_count = 0; //计数器
                 //2、按照顺序初始化计数器、生成数据体
@@ -881,12 +883,12 @@
                             }
                             let t_subWells = "," + t_data.wells + ",";
                             if (t_subWells.includes("," + myWellId + ",")) {
-                                myData[i][t_data.code] = '是'; //默认
+                                // myData[i][t_data.code] = '是'; //默认
                                 t_count++; //计数
                             }
                             myWellCount[t_data.code] = t_count; //回写
                         }
-                        //深化点-点击井号展示井位
+                        //深化点-点击井号展示层位
                         console.log('messData----------aaaaaaaaaaaa',messData)
                         if(messData&&messData.evalBasisLayers){
                             let key1=t_data.code + 'Message';
@@ -951,6 +953,7 @@
                             }
                             myWellCount[t_data.code] = t_count; //回写
                         }
+                        //深化点-点击井号展示层位
                         if(messData&&messData.evalBasisLayers){
                             let key1='workingConditionMessage';
                             let evalBasisLayers=messData.evalBasisLayers;//层位数据
@@ -1072,6 +1075,7 @@
                             }
                             myWellCount[t_data.code] = t_count; //回写
                         }
+                        //深化点-点击井号展示层位
                         if(messData&&messData.evalBasisLayers){
                             let key1='wellboreReasonMessage';
                             let evalBasisLayers=messData.evalBasisLayers;//层位数据
@@ -1131,7 +1135,7 @@
                             }
                             myWellCount[t_data.code] = t_count; //回写
                         }
-                        //深化点-点击井号展示井位
+                        //深化点-点击井号展示层位
                         if(messData&&messData.evalBasisLayers){
                             let key1='formationReasonMessage';
                             let evalBasisLayers=messData.evalBasisLayers;//层位数据
@@ -1190,7 +1194,7 @@
                             }
                             myWellCount[t_data.code] = t_count; //回写
                         }
-                        //深化点-点击井号展示井位
+                        //深化点-点击井号展示层位
                         if(messData&&messData.evalBasisLayers){
                             let key1='stopInjectionRecoveryMessage';
                             let evalBasisLayers=messData.evalBasisLayers;//层位数据
@@ -1954,13 +1958,7 @@
                     }
                 });
             },
-            //检查评价日期是否有效
-            checkCurrentDate() {
-                if (this.currentDate == null || this.currentDate == "" || this.currentDate == undefined) {
-                    //this.currentDate = this.getMyDate(-1);
-                    this.currentDate = new Date().addDays(-1).format('yyyy-MM-dd');
-                }
-            },
+            
             //获得对应日期串
             getMyDate(days) {
                 let date = new Date();

@@ -274,7 +274,7 @@
                                     <p>{{tagMessage}}</p>
                                 </div>
                                 <div :class="[$store.state.setting.mode=='light'?'remark0':'remark']" v-show="myList.length>0">相关内容:</div>
-                                <div style="width: 100%;height:340px;overflow: auto; margin-top: 15px;display: flex;flex-wrap: wrap;">
+                                <div style="width: 100%;max-height:340px;overflow: auto; margin-top: 15px;display: flex;flex-wrap: wrap;">
                                     <div v-for="(item,index) in myList" :key="index" :class="[$store.state.setting.mode=='light'?'z-well0':'z-well']" @click="getBorepipeTypeApi(item.well)">
                                         <span>{{item.well}}</span>
                                         <img src="@/assets/rem/performance/sjt0.png" alt="" v-if="$store.state.setting.mode=='light'">
