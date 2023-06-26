@@ -157,9 +157,9 @@
                         </el-row>
                     </div>
                     <div style="display: flex;justify-content: flex-end;margin-bottom:10px;">
-                        <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)"
-                        @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':'1',evalResult:selCode }})">
-                        归因分析详情12
+                        <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='0050102'||selCode=='0050101' || selCode=='0060101' || selCode=='0060102'|| selCode=='0070101'|| selCode=='0070102')"
+                        @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':linkdata(),evalResult:selCode }})">
+                        归因分析详情
                         </el-button>
                         <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)" 
                         @click="$router.push({path:'/plan/personnelMeasures',query:{platform,wellId,currentDate}})">措施推荐详情</el-button>
@@ -472,7 +472,7 @@
                             <div style="height:100%;overflow-y: scroll;">
                                 <div class="z-content2">
                                     <div  style="flex:1;">
-                                        <div class="aaa" style="flex;1;display: flex;">
+                                        <div class="aaa" style="flex:1;display: flex;">
                                             <div class="z1" style="width:100%;">
                                                 <div class="z-content-n" style="flex-direction: column;">
                                                     <div class="z-row-left">
@@ -625,8 +625,8 @@
                                             </div>
                                             <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;">
                                                 <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='0050102'||selCode=='0050101' || selCode=='0060101' || selCode=='0060102'|| selCode=='0070101'|| selCode=='0070102')"
-                                                           @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':'1',evalResult:selCode }})">
-                                                    归因分析详情345
+                                                           @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':linkdata(),evalResult:selCode }})">
+                                                    归因分析详情
                                                 </el-button>
                                             </div>
                                         </div>
@@ -1766,6 +1766,17 @@
                 let wellA = oa.wellName;
                 let wellB = ob.wellName;
                 return this.wellNoSort(wellA, wellB);
+            },
+            // 判断数据
+            linkdata(){
+                    if(this.selCode=='0050102'||this.selCode=='0050101' ){
+                        return 1
+                    }else if (this.selCode=='0060102'||this.selCode=='0060101' ){
+                        return 2
+                    }else if (this.selCode=='0070102'||this.selCode=='0070101' ){
+                        return 3
+                    }
+                    
             },
             //替换表格文字
 			replaceStr(str){
