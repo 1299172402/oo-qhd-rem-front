@@ -1,50 +1,49 @@
 <template>
   <!-- 井组参数配置 -->
 <!--  <el-container>-->
-    <div>
+    <div style="height: 100%;">
 <!--    <el-header style="margin-top: 15px;">-->
       <header-search class="g-w100 g-h100" style="height: auto">
-      <div class="disflex" style="margin: 20px">
-        <div>
-          <span>油田：</span>
-          <el-select v-model="query.selectField" class="f2" @change="changeOilfield" disabled>
-            <el-option
-              v-for="item in options"
-              :key="item.ogfId"
-              :value="item.ogfId"
-              :label="item.ogfName"
-            ></el-option>
-          </el-select>
-        </div>
-        <div>
-          <span>区块：</span>
-          <el-select v-model="query.selectBlock" placeholder="请选择" class="f2" ref="elselect1">
-            <el-option
-              v-for="item in blanks"
-              :key="item.blockId"
-              :label="item.blockName"
-              :value="item.blockId"
-            ></el-option>
-          </el-select>
-        </div>
-        <div >
-          <span>时间：</span>
-          <el-date-picker
-            v-model="query.value2"
-            type="month"
-            placeholder="请选择"
-            style="width: 117px;"
-            value-format="yyyy-MM"
-            :picker-options="pickerOptions"
-          ></el-date-picker>
-          <el-button style="margin-left: 20px" type="primary" size="mini" icon="el-icon-search" class="confirmBut" @click="tableOilfield" :disabled="isDisabled">搜索</el-button>
-            <el-button class="commonBtn" @click="reset" icon="el-icon-refresh"> 重置 </el-button>
-        </div>
-      </div>
+          <el-form :inline="true" label-width="40px">
+              <el-form-item label="油田:">
+                  <el-select v-model="query.selectField" style="margin-left: 20px"  class="f2" @change="changeOilfield" disabled>
+                      <el-option
+                          v-for="item in options"
+                          :key="item.ogfId"
+                          :value="item.ogfId"
+                          :label="item.ogfName"
+                      ></el-option>
+                  </el-select>
+              </el-form-item>
+              <el-form-item label="区块:">
+                  <el-select v-model="query.selectBlock" style="margin-left: 20px" placeholder="请选择" class="f2" ref="elselect1">
+                      <el-option
+                          v-for="item in blanks"
+                          :key="item.blockId"
+                          :label="item.blockName"
+                          :value="item.blockId"
+                      ></el-option>
+                  </el-select>
+              </el-form-item>
+              <el-form-item label="时间:">
+                  <el-date-picker
+                      v-model="query.value2"
+                      type="month"
+                      placeholder="请选择"
+                      style="margin-left: 20px"
+                      value-format="yyyy-MM"
+                      :picker-options="pickerOptions"
+                  ></el-date-picker>
+              </el-form-item>
+              <el-button style="margin-left: 20px" type="primary" size="mini" icon="el-icon-search" class="confirmBut" @click="tableOilfield" :disabled="isDisabled">搜索</el-button>
+              <el-button class="commonBtn" @click="reset" icon="el-icon-refresh"> 重置 </el-button>
+              <el-button type="primary"  v-if="this.$route.query.link == 'linkage'" style="float: right"  @click="goBack" > 返回 </el-button>
+          </el-form>
+        
       </header-search>
 <!--    </el-header>-->
 <!--    <el-main>-->
-      <pagePanel headerTitle="井组自定义" style="height: 75vh;width: 100%" :show-btn="true">
+      <pagePanel headerTitle="井组自定义" style="height: calc(100% - 100px);width: 100%" :show-btn="true">
         <div style="">
           <span></span>
           <div>
@@ -92,13 +91,13 @@
               </el-button>
           </div>
         </div>
-        <div style="display: flex;justify-content: space-around;margin-top: 15px;width: 100%">
+        <div style="display: flex;justify-content: space-around;margin-top: 15px;height:100%;width: 100%">
           <div style=" margin-right: 20px;width: 30%">
             <el-table
               :data="tableData"
               highlight
               style="margin-top:10px;width: 100%"
-              height="550"
+              height="calc(100% - 80px)"
               :header-cell-style="wipeborder"
             >
               <el-table-column label="井组关系" align="center">
@@ -107,14 +106,14 @@
               </el-table-column>
             </el-table>
           </div>
-          <div style="width: 70%">
+          <div style="width: 70%;height: 100%">
             <el-table
               :data="tableData"
               id="indexscv"
               highlight
               border
-              style="margin-top:10px;width: 100%"
-              height="550"
+              style="margin-top:10px;width: 100%;"
+              height="calc(100% - 80px)"
               :header-cell-style="wipeborder"
               :span-method="mergeTable"
             >
@@ -576,6 +575,9 @@ export default {
         }
       });
     },
+      goBack() {
+          this.$router.go(-1);
+      },
     // 保存
     saveBut(){
       this.isDisabled = true

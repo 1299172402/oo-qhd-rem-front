@@ -143,7 +143,7 @@ export default {
                     style: 'position:absolute;left: 43%;top: 56%;width:20%;height:40%;',
                     boxText: '注采状况分析',
                     boxBottomText: [
-                        {name:'注采连通分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/basic/wellGroup_Maintenance'},
+                        {name:'注采连通分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/basic/wellGroup_Maintenance?link=linkage'},
                         {name:'注采平衡分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport'},
                         {name:'采出状况分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport'}
                     ],
