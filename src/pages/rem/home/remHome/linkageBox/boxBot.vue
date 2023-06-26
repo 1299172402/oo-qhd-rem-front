@@ -21,7 +21,7 @@
                     </div>
                     <div>
                         <p v-show="content" :key="index" v-for="(item,index) in selectObj[selectIndex]">
-                            <span>{{item.name?item.name:item}}</span>
+                            <span style="cursor: pointer" @click="skippage(item.url)">{{item.name?item.name:item}}</span>
                             <span class="btnBack" @click="btnBack"></span>
                         </p>
                     </div>
