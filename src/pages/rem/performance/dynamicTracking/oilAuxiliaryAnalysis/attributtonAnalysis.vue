@@ -169,7 +169,7 @@
         </pagePanel>
         <pagePanel v-else :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
             <el-table
-                height="100%"
+                height="calc(100% - 50px)"
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                 header-cell-class-name="table_header"
@@ -188,8 +188,8 @@
                     </template>
                 </el-table-column>
                 <el-table-column v-if="link == 1" prop="intensity" :label="`采液强度\n(m³/d·m)`"></el-table-column>
-                <el-table-column v-if="link == 2" prop="d" :label="`采液指数\n(m³/mPa·d)`"></el-table-column>
-                <el-table-column v-if="link == 3" prop="e" :label="`米采液指数\n(m³/mPa·d·m)`"></el-table-column>
+                <el-table-column v-if="link == 2" prop="fluidProductionIndex" :label="`采液指数\n(m³/mPa·d)`"></el-table-column>
+                <el-table-column v-if="link == 3" prop="metreFluidProductionIndex" :label="`米采液指数\n(m³/mPa·d·m)`"></el-table-column>
                 <el-table-column prop="yield" label="产液量"></el-table-column>
                 <el-table-column prop="monthlyProdEff" label="生产时率"></el-table-column>
                 <el-table-column prop="pumpEfficiency" label="泵效"></el-table-column>
@@ -198,6 +198,13 @@
                 <el-table-column prop="attribution" show-overflow-tooltip label="归因"></el-table-column>
                 <el-table-column prop="measure" show-overflow-tooltip label="措施"></el-table-column>
             </el-table>
+            <pagination
+                :pageSizes="[15, 20, 40, 100]"
+                :total="pageTotal"
+                :page.sync="queryData.page"
+                :limit.sync="queryData.pageSize"
+                @pagination="pagination"
+            />
         </pagePanel>
         
     </div>
@@ -211,7 +218,7 @@ import {
     queryPlatformQueryWellListDetail,
 } from "@/api/rem/marster.js";
 import {queryWaterInjIntensityAttributeAnalysis} from "@/api/rem/waterinjintensityattributeanalysis.js"
-import {analyzeOilWellFluidAttributionQuery} from "@/api/rem/attributionanalysis";
+import {analyzeOilWellFluidAttributionQuery} from "@/api/rem/wellmonthlyanalysis";
 
 export default {
     components: {
@@ -219,12 +226,15 @@ export default {
     },
     data() {
         return {
+            pageTotal:'',
             queryData: {
                 assetCode: "",
                 month: "",
                 ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 orgId: "715AD1CD60484BB59E737CD18A9DE44A",
-                well: ""
+                well: "",
+                pageNum:"1",
+                pageSize:"15",
             },
             tableData: [],
             oilFields: [],
@@ -1235,6 +1245,12 @@ export default {
                 }
             });
         },
+        //切换分页
+        pagination(e) {
+            this.queryData.pageNum = e.page;
+            this.queryData.pageSize = e.limit;
+            this.getFormData()
+        },
         // 返回按钮
         returnRouter() {
             this.$router.go(-1);
@@ -1250,16 +1266,19 @@ export default {
                 ogfId: this.queryData.ogfId,
                 operationZone: this.queryData.orgId,
                 evalResult: this.evalResult,
-                evalTypeId: 'ZS'
+                evalTypeId: 'ZS',
+                pageNum:this.queryData.pageNum,
+                pageSize:this.queryData.pageSize
             }
             if (this.link == '4') {
                 queryWaterInjIntensityAttributeAnalysis(params).then(res => {
                     this.tableData = res.data.data
                 })
             }
-            if (this.link == '1') {
+            if (this.link == '1' || this.link == '2' || this.link == '3') {
                 analyzeOilWellFluidAttributionQuery(params).then(res => {
-                    this.tableData = res.data.data
+                    this.tableData = res.data.data.rows
+                    this.pageTotal = res.data.data.total
                 })
             }
         }
