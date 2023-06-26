@@ -159,7 +159,7 @@
                     <div style="display: flex;justify-content: flex-end;margin-bottom:10px;">
                         <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)"
                         @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':'1',evalResult:selCode }})">
-                        归因分析详情
+                        归因分析详情12
                         </el-button>
                         <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)" 
                         @click="$router.push({path:'/plan/personnelMeasures',query:{platform,wellId,currentDate}})">措施推荐详情</el-button>
@@ -562,7 +562,7 @@
                                                         </div>
                                                     </div>  
                                                     <div class="z-row-center">
-                                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                        <div class="numBtn"  :class="[item.code==selCode?'numBtnBgActive':'']"
                                                             v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!fluidProductionSwitch"
                                                             @click="((val)=>{selRadioIterm(item.code,'fluidProductionOptions')})">
                                                             <span class="sp1">{{item.value}}</span>
@@ -624,9 +624,9 @@
                                                 </span>
                                             </div>
                                             <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;">
-                                                <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)"
+                                                <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='0050102'||selCode=='0050101' || selCode=='0060101' || selCode=='0060102'|| selCode=='0070101'|| selCode=='0070102')"
                                                            @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':'1',evalResult:selCode }})">
-                                                    归因分析详情
+                                                    归因分析详情345
                                                 </el-button>
                                             </div>
                                         </div>
