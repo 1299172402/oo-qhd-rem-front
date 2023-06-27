@@ -221,6 +221,7 @@ import {
 } from "@/api/rem/marster.js";
 import {queryWaterInjIntensityAttributeAnalysis} from "@/api/rem/waterinjintensityattributeanalysis.js"
 import {analyzeOilWellFluidAttributionQuery} from "@/api/rem/wellmonthlyanalysis";
+import {oilWellFluidQuery} from "@/api/rem/oilwellfluid";
 
 export default {
     components: {
@@ -1278,7 +1279,7 @@ export default {
                 })
             }
             if (this.link == '1' || this.link == '2' || this.link == '3') {
-                analyzeOilWellFluidAttributionQuery(params).then(res => {
+                oilWellFluidQuery(params).then(res => {
                     this.tableData = res.data.data.rows
                     this.pageTotal = res.data.data.total
                 })
