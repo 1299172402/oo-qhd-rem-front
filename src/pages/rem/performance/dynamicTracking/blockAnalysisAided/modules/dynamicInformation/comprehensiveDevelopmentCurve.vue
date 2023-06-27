@@ -41,10 +41,10 @@
                         { x: '180', y: '20%', width: '88%', height: '7%' },
                         { x: '180', y: '30%', width: '88%', height: '7%' },
                         { x: '180', y: '40%', width: '88%', height: '7%' },
-                        { x: '180', y: '50%', width: '88%', height: '7%' },
-                        { x: '180', y: '60%', width: '88%', height: '7%' },
-                        { x: '180', y: '70%', width: '88%', height: '7%' },
-                        { x: '180', y: '80%', width: '88%', height: '7%' },
+                        { x: '180', y: '50%', width: '88%', height: '6%' },
+                        { x: '180', y: '60%', width: '88%', height: '6%' },
+                        { x: '180', y: '70%', width: '88%', height: '6%' },
+                        { x: '180', y: '80%', width: '88%', height: '6%' },
                         { x: '180', y: '90%', width: '88%', height: '6%' }
                     ],
                     tooltip: {
@@ -1150,6 +1150,7 @@
 <style lang="scss" scoped>
     .z-main{
         height:calc(100% - 101px);
+        overflow-y:scroll;
         .positionBtn{
             position: absolute;
             right:56px;

@@ -237,7 +237,7 @@ export default {
         }else{
             this.queryTableData(this.form.tableData2)
         }
-        this.src = 'https://dl-front-qhd32-6znyt.tj.app.cnooc/sow/'
+        this.src = 'http://10.77.78.250:9116'
     },
     data() {
         return {

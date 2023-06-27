@@ -18,7 +18,7 @@
                 <div v-if="tabsValue=='作业公司产量总览'" style="height:calc(100% - 46px);overflow-y: scroll;">
                     <three ref="childComponent"></three>
                 </div>
-                <div v-if="tabsValue=='单井产量预测'">
+                <div v-if="tabsValue=='单井产量预测'" style="height:calc(100% - 46px);overflow-y: scroll;">
                     <four ref="childComponent" ></four>
                 </div>
             </div>
