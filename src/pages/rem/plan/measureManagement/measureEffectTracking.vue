@@ -902,7 +902,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#9dce2f',
+                                color: 'rgb(255,0,0)',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -1021,7 +1021,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#f300f1',
+                                color: 'rgb(165,42,42)',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -1830,7 +1830,7 @@
                     this.selectWellId='';
                 }
             },
-          
+            
             //搜索文件
             doSearch() {
                 let wellItem=this.wells.filter(el=> this.selectWellId ==el.wellId);
@@ -2043,7 +2043,7 @@
                             } else if (lineName == '折算基准面流压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 1;
-                                series.itemStyle={color:'#fe10f6'}
+                                series.itemStyle={color:'rgb(165,42,42)'}
                             } else if (lineName == '日产液量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
@@ -2059,7 +2059,7 @@
                             } else if (lineName == '气油比') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 5;
-                                series.itemStyle={color:'#9dce2f'}
+                                series.itemStyle={color:'rgb(255,0,0)'}
                             } else if (lineName == '生产时间') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 6;

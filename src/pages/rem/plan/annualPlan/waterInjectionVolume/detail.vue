@@ -68,33 +68,27 @@
                             fontSize: 14,
                         },
                         x:'center',
-                        bottom:30,
+                        bottom:10,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
                         itemGap: 14,
                     },
                     xAxis: {
-                        // name: '时间/日期',
-                        // nameTextStyle: {
-                        //     color: '#8FA4CC',
-                        //     fontSize: 14,
-                        // },
-                        // nameLocation: 'center',
-                        // nameGap: 30,
                         type: 'category',
                         axisLabel: {
                             color: '#8FA4CC',
                             padding:[10,0,0,0],
-                            fontSize: 14,
+                            fontSize: 12,
                             interval: function(index, val) {
+                                console.log('val',val.substr(-2))
                                 if (val.substr(-2) == '01') {
-                                    return true;
+                                    return true
                                 } else {
                                     return false;
                                 }
                             },
-                            // rotate: 20,
+                            rotate: '45'
                         },
                         axisTick: {
                             show: false,

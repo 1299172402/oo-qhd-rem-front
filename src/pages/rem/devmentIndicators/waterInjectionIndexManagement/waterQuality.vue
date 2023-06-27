@@ -143,9 +143,9 @@
                     },
                     grid: {
                         x: 120,
-                        y: 30,
+                        y: 80,
                         x2: 120,
-                        y2: 60,
+                        y2: 100,
                     },
                     toolbox: {
                         show: true,
@@ -173,7 +173,7 @@
                             fontSize: 14,
                         },
                         x:'center',
-                        bottom:0,
+                        bottom:20,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
