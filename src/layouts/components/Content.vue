@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" mode="out-in">
-    <keep-alive :include="aliveViews">
+    <keep-alive :include="[...aliveViews,'blank']">
       <router-view v-if="!isRefreshing" :key="$route.path" />
     </keep-alive>
   </transition>

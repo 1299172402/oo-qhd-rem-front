@@ -40,7 +40,7 @@
         </t-layout>
       </t-layout>
     </template>
-    <setting />
+    <Setting />
   </div>
 </template>
 
