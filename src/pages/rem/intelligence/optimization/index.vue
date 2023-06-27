@@ -212,7 +212,7 @@
                 ref="iframe"
                 :style="getStyle"
                 v-show="activeName == 'second'"
-                src="https://dl-front-qhd32-6znyt.tj.app.cnooc/sow/"
+                :src="src"
             ></iframe>
 
         </pagePanelNew>
@@ -221,13 +221,13 @@
 <script>
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {getWellMonthAllocation, getWellMonthInj, wellAvgFluidProdAllocUpdate} from "@/api/rem/r-intelligentIPA.js";
-import Iframe from '@/components/rem/tools/iframe.vue'
+// import Iframe from '@/components/rem/tools/iframe.vue'
 import {exportExcel} from '@/lib/exportExcel';
 
 export default {
     name:'optimization',
     components: {
-        Iframe
+        // Iframe
     },
     mixins: [queryConditionMixin],
     created(){
@@ -237,6 +237,7 @@ export default {
         }else{
             this.queryTableData(this.form.tableData2)
         }
+        this.src = 'https://dl-front-qhd32-6znyt.tj.app.cnooc/sow/'
     },
     data() {
         return {
@@ -267,6 +268,7 @@ export default {
             mergeObj: {},
             host: window.location.protocol + '//',
             saveLoad: false,
+            src:'',
         }
     },
     computed: {

@@ -46,9 +46,21 @@
                     </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
-                    <span>时间:</span>
-                    <el-date-picker v-model="dateTime" style="width:160px;margin-left:10px" type="date"
-                        placeholder="选择日期" value-format="yyyy-MM-dd" :clearable="false"></el-date-picker>
+                    <span>年份:</span>
+                    <el-date-picker v-model="dateTime" style="width:160px;margin-left:10px" type="year"
+                        placeholder="选择年" value-format="yyyy" :clearable="false"></el-date-picker>
+                </div>
+                <div style="margin-right:15px;margin-bottom:10px;">
+                    <span>开始月份：</span>
+                    <el-select v-model="beginMonth" style="width:100px;" placeholder="选择开始月">
+                        <el-option v-for="(item, index) in 12" :key="index" :label="(index+1)+'月'" :value="index+1"></el-option>
+                    </el-select>
+                </div>
+                <div style="margin-right:15px;margin-bottom:10px;">
+                    <span>结束月份：</span>
+                    <el-select v-model="endMonth" style="width:100px;" placeholder="选择结束月">
+                        <el-option v-for="(item, index) in 12" :key="index" :label="(index+1)+'月'" :value="index+1"></el-option>
+                    </el-select>
                 </div>
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <el-button type="primary" icon="el-icon-search" @click="getFetchMeasureInfos">搜索</el-button>
@@ -71,7 +83,7 @@
                         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                         header-cell-class-name="table_header" :cell-style="{ padding: '2px', 'text-align': 'center' }"
                         style="width: 100%;overflow-x: hidden;"
-                        :default-sort = "{prop: 'wellNo', order: 'descending'}">
+                        >
                         <el-table-column prop="wellNo" label="井号" width="140" sortable></el-table-column>
                         <el-table-column prop="measureName" label="作业类型" width="80"></el-table-column>
                         <el-table-column prop="measureName3" label="措施作业天数(计划/实际)" width="110">
@@ -205,10 +217,12 @@
                 spacing: '', //日期间距
                 mcWidth: '0px',
                 mcMgLeft: '',
-                // basicDays: ['-01-01', '-02-01', '-03-01', '-04-01', '-05-01', '-06-01', '-07-01', '-08-01', '-09-01  ','-10-01', '-11-01', '-12-01'],
                 basicDays:['年01月','年02月','年03月','年04月','年05月','年06月','年07月','年08月','年09月','年10月','年11月','年12月'],
                 days: [],
-                dateTime: new Date().format('yyyy-MM-dd'), //时间
+                // dateTime: new Date().format('yyyy'), //时间
+                dateTime:'2022',
+                beginMonth:1,//开始月份
+                endMonth:12,//结束月份
                 queryParams: {
                     page: 1,
                     pageSize: 15,
@@ -333,7 +347,6 @@
                     this.spacing = Math.floor((this.width - 936 - 44 - 20) / 11);
                     console.log('日期间距', this.spacing)
                     this.initData();
-                
                     //监听页面缩放
                     this.screenWidth = document.body.clientWidth;
                     window.onresize = () => {
@@ -369,7 +382,7 @@
                     if (res.data.code == 200) {
                         const wellData = res.data.data.productionWells;
                         const wellList = wellData.filter(el => el.wellName);
-                        this.wells = [...wellList];
+                        this.wells = [...this.wells,...wellList];
                     }
                 });
                 await fetchInjectionWells({
@@ -416,6 +429,14 @@
             },
             //措施列表数据
             getFetchMeasureInfos() {
+                if(!this.dateTime){
+                    this.$message.warning('开始年份不能为空！')
+                    return false;
+                }
+                if(this.endMonth<this.beginMonth){
+                    this.$message.warning('结束月份不能低于开始月份！')
+                    return false;
+                }
                 let params = {
                     oilFieldId: this.selectOilField, //油田id
                     platformId: this.selectPlatform, //平台id
@@ -424,6 +445,8 @@
                     stimClassCode: this.stimClassCode, //措施类型
                     measureVersion: this.measureVersion, //措施版本
                     year: this.dateTime, //时间-年月日
+                    beginDate:this.dateTime+'-'+(this.beginMonth<10?'0'+this.beginMonth : this.beginMonth)+'-01',
+                    endDate:this.dateTime+'-'+(this.endMonth<10?'0'+this.endMonth : this.endMonth)+'-31',
                     page: 1,
                     pageSize: 10000,
                 }

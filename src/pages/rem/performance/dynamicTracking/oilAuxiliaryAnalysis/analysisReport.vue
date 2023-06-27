@@ -641,7 +641,7 @@
                                 <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                 <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                 <!--生产动态项目-->
-                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="160" sortable="custom" label-class-name="twoRowHeader">
+                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="150" sortable="custom" label-class-name="twoRowHeader">
                                     
                                     <template #header>
                                         <div class="headerSortRow1" v-if="item.name && item.name!='正常' && item.name.split(' ')[1]">
@@ -665,7 +665,7 @@
                                 </el-table-column>
                                 <!--生产问题监测项目-->
                                 <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
-                                    <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="120" :key="index" :prop="item.code" :label="item.name" align="center" width="180px" label-class-name="twoRowHeader">
+                                    <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="100" :key="index" :prop="item.code" :label="item.name" align="center" width="180px" label-class-name="twoRowHeader">
                                         <template #header>
                                             <div v-if="item.isTwoHeader">
                                                 <span>{{item.name}}</span>
