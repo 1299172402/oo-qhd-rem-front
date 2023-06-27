@@ -282,7 +282,8 @@ export default {
             queryData: {
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
                 blockId: 'YCFXDY8B643EDC9007F96F570600457D',
-                dateTime: this.eeee(),
+                // dateTime: this.eeee(),
+                dateTime: '2023-03',
             },
             //   new Date().format("yyyy-MM")
             form: {

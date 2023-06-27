@@ -18,7 +18,7 @@
                 </div>
                 <div style="margin-left: 10px;">
                     <span>日期：</span>
-                    <el-date-picker v-model="rq" type="date" value-format="yyyy-MM-dd" placeholder="年-月-日"></el-date-picker>
+                    <el-date-picker v-model="rq" type="date" value-format="yyyy-MM-dd"></el-date-picker>
                 </div>
                 <div style="margin-left: 10px;">
                     <el-button icon="el-icon-search" style="margin-left: 20px; width: 90px" type="primary" @click="searchThing">搜索</el-button>
@@ -39,14 +39,6 @@
                         <el-row :gutter="30" style="text-align: center;height:calc(100% - 55px);">
                             <el-col :span="6">
                                 <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:5px;">开采现状(地层压力)分析</el-button>
-                                <!-- <el-row>
-                                    <el-radio-group v-model="indexChangeTrend" @change="((val)=>{selRadioIterm(val,'indexChangeTrendList')})">
-                                        <el-radio-button v-for="(item,index) in indexChangeTrendList" :key="index" :label="item.code" :class="item.value>0?'checkButton about1':'checkButton'" style="width: 100%;">
-                                            {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                        </el-radio-button>
-                                    </el-radio-group>
-                                </el-row> -->
-                                
                                 <el-row>
                                     <el-col v-for="(item,index) in indexChangeTrendList" :key="index" :span="24">
                                         <el-button class="z-button" style="height:34px!important;line-height: 8px;"  :class="[item.value>0?'about1':'',item.code==indexChangeTrend?'selectButton':'']" @click.stop="selRadioIterm(item.code,'indexChangeTrendList')">
@@ -108,7 +100,7 @@
                             </el-col>
                             <el-col :span="11" style="margin-left:10px;height: 100%;">
                                 <el-col :span="20" style="height: 100%;">
-                                    <div style="width:100%;height: 15%;overflow: auto;">
+                                    <div style="width:100%;height: 15%;overflow: auto;" v-if="tagMessage!='null'">
                                         <p>{{tagMessage}}</p>
                                     </div>
                                     <span v-show="myList.length>0" style="font-size: 14px;margin-top: 20px;"><b>相关内容:</b></span>
@@ -257,7 +249,7 @@
                 </div>
                 <div style="margin-left:8px;margin-right:7px;height:498px;display: flex;">
                     <div style="flex:1;margin-right:10px;height:498px;">
-                        <pagePanelNew headerTitle="" style="height:100%;">
+                        <pagePanelNew headerTitle="" style="height:100%;" showBtn>
                             <div style="height:100%;">
                                 <div style="display: flex;justify-content: flex-end;margin-bottom:10px;">
                                     <el-button class="commonBtn" @click="switchToAnaylsis">区块分析</el-button>
@@ -269,12 +261,12 @@
                     <div style="width:664px;height:100%;">
                         <pagePanelNew headerTitle="" style="height:100%;">
                             <el-col :span="24" style="height: 100%;">
-                                <div class="tips" v-show="myList.length>0">
+                                <div class="tips" v-show="myList.length>0 && tagMessage!='null'">
                                     <img src="@/assets/rem/performance/zy.png" alt="">
                                     <p>{{tagMessage}}</p>
                                 </div>
                                 <div :class="[$store.state.setting.mode=='light'?'remark0':'remark']" v-show="myList.length>0">相关内容:</div>
-                                <div style="width: 100%;height:340px;overflow: auto; margin-top: 15px;display: flex;flex-wrap: wrap;">
+                                <div style="width: 100%;max-height:340px;overflow: auto; margin-top: 15px;display: flex;flex-wrap: wrap;">
                                     <div v-for="(item,index) in myList" :key="index" :class="[$store.state.setting.mode=='light'?'z-well0':'z-well']" @click="getBorepipeTypeApi(item.well)">
                                         <span>{{item.well}}</span>
                                         <img src="@/assets/rem/performance/sjt0.png" alt="" v-if="$store.state.setting.mode=='light'">
@@ -297,11 +289,14 @@
     import { outputStatusAnalysis, areaDiagram, stableBaseAnalysis, proInjectionBalanceAnalysis, proStatusAnalysis} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
     import { fetchFields,fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import { getBorepipeType } from "@/api/oilDeposit/ipm-03/basedata.js";
+    import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js"
     export default {
         name:'blockAnalysisReport',
         components: {H5Chart,H5Chart2},
         data() {
             return {
+                //接受路由参数
+                queryLink:'',//如果为1 默认选中注采平衡分析分类中的第一个，如果为2默认选中采出状况分析下的第一个
                 //油田
                 fieldsData: [{oilFieldId: ""}],
                 selectOilField: "",
@@ -382,21 +377,17 @@
                 this.getFieldsData(val);
             }
         },
-        created() {
-            //初始化时间
-            this.rq = new Date().addDays(-1).format('yyyy-MM-dd');
-            this.rq='2022-05-01';
-        },
+      
         mounted() {
-            this.initData();
+            this.queryLink=this.$route.query.link;
+            this.getDateApi();
         },
         methods: {
             //重置
             resetting(){
                 this.$nextTick(()=>{
                 	Object.assign(this.$data, this.$options.data());
-                	this.rq = new Date().addDays(-1).format('yyyy-MM-dd');
-                	this.initData();
+                	this.getDateApi();
                 })
             },
             //切换版式
@@ -414,6 +405,16 @@
                     }
                 })
             },
+            //本接口获取最后一次模型计算出来的结果，返回最后一次跑模型的日期。
+            getDateApi(){
+                getDate({wellMenu:'WELL_BLOCK'}).then(res=>{
+                    if(res.data.code==200){
+                        this.rq=res.data.data;   
+                    }
+                    this.initData();
+                })
+            },
+            //初始数据
             async initData() {
                 await fetchOilFields().then((data) => {
                     if (data != null) {
@@ -434,9 +435,17 @@
                 });
                 this.getProStatusAnalysis();
                 this.getStableBaseAnalysis();
-                this.getProInjectionBalanceAnalysis();
-                this.outputStatusAnalysis()
+                await this.getProInjectionBalanceAnalysis();
+                await this.outputStatusAnalysis()
                 this.clickAnalysis();
+                //判断路由参数
+                if(this.queryLink==1&&this.injectionProductionBalanceAnalysisList.length){
+                    let code=this.injectionProductionBalanceAnalysisList[0].code;
+                    this.selRadioIterm(code,'injectionProductionBalanceAnalysisList');
+                }else if(this.queryLink==2&&this.recoveryAnalysisList.length){
+                    let code=this.recoveryAnalysisList[0].code;
+                    this.selRadioIterm(code,'recoveryAnalysisList');
+                }
             },
             //获得区块信息
             getFieldsData(oilFieldId) {
@@ -450,7 +459,6 @@
                         this.selectBlock = this.blocks[0].fieldId;
                     }
                 });
-            
             },
             getProStatusAnalysis() { //0304-开采状况分析（模型计算）
                 //选中油田值
@@ -530,7 +538,7 @@
                     }
                 });
             },
-            getProInjectionBalanceAnalysis() { //注采平衡分析
+            async getProInjectionBalanceAnalysis() { //注采平衡分析
                 //选中油田值
                 let oilFieldId = this.selectOilField;
                 //选中区块
@@ -547,7 +555,7 @@
                     seasonCode: "",
                     yearMonth: currentDate,
                 };
-                proInjectionBalanceAnalysis(request).then((data) => {
+                await proInjectionBalanceAnalysis(request).then((data) => {
                     if (data.data.data != null) {
                         let myData=data.data.data.indicatorAnalysisDetailInfos;
                         this.injectionProductionBalanceAnalysisNum.allnum=0;
@@ -571,7 +579,7 @@
             
                 });
             },
-            outputStatusAnalysis() { //0304-采出状况分析（模型计算）
+            async outputStatusAnalysis() { //0304-采出状况分析（模型计算）
                 //选中油田值
                 let oilFieldId = this.selectOilField;
                 //选中区块
@@ -588,7 +596,7 @@
                     seasonCode: "",
                     yearMonth: currentDate,
                 };
-                outputStatusAnalysis(request).then((data) => {
+                await outputStatusAnalysis(request).then((data) => {
                     if (data.data.data != null) {
                         let myData=data.data.data.indicatorAnalysisDetailInfos;
                         this.recoveryAnalysisNum.allnum=0;
@@ -645,7 +653,6 @@
                     }
                 });
             },
-            
             //查询
             searchThing() {
                 this.indexChangeTrend = '';

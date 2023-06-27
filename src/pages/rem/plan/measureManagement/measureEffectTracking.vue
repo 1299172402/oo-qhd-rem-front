@@ -146,7 +146,7 @@
                             <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">搜索</el-button>
                         </div>
                         <div class="echarts-view">
-                            <echarts :chart-data="oilOption" height="100%"></echarts>
+                            <echarts :chart-data="oilOption" height="580px"></echarts>
                         </div>
                     </div>
                     <div class="svg" v-else-if="oilTabType == '1'">
@@ -621,7 +621,7 @@
                             fontSize: 14,
                         },
                         x:'center',
-                        bottom:-5,
+                        bottom:0,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -632,19 +632,19 @@
                             left: '14%',
                             top: '4%',
                             width: '74%',
-                            height: '25%',
+                            height: '30%',
                         },
                         {
                             left: '14%',
-                            top: '33%',
+                            top: '38%',
                             width: '74%',
                             height: '25%',
                         },
                         {
                             left: '14%',
-                            top: '62%',
+                            top: '66%',
                             width: '74%',
-                            height: '28%',
+                            height: '25%',
                         },
                     ],
                     xAxis: [
@@ -2702,7 +2702,9 @@
                 }
         
                 .echarts-view {
+                    // height:700px;
                     flex: 1;
+                    overflow-y:scroll;
                 }
         
                 .table-view {

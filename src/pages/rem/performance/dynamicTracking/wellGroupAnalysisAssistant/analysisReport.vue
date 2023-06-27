@@ -21,7 +21,7 @@
                         </el-option>
                     </el-select>
                     <span style="margin-left:15px;">年月：</span>
-                    <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
@@ -178,7 +178,7 @@
                         </el-option>
                     </el-select>
                     <span style="margin-left:15px;">年月：</span>
-                    <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
@@ -461,6 +461,7 @@
         wellGroups,
         selectWellGroup
     } from "@/api/oilDeposit/rem-02/primaryinfo.js";
+    import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js"
     import compareSort from "@/lib/compareSort.js";
     export default {
         name:'wellGroupAnalysisReport',
@@ -543,21 +544,22 @@
             }
         },
         mounted() {
-            this.checkCurrentDate(); //初始化评价日期
-            this.queryOilFeildList(); //初始化油田
+            this.getDateApi();
         },
         methods: {
             //重置
             resetting(){
                 Object.assign(this.$data, this.$options.data());
-                this.checkCurrentDate(); //初始化评价日期
-                this.queryOilFeildList(); //初始化油田
+                this.getDateApi();
             },
-            //检查评价日期是否有效
-            checkCurrentDate() {
-                if (this.currentDate == null || this.currentDate == "" || this.currentDate == undefined) {
-                    this.currentDate = new Date().addDays(-1).format('yyyy-MM-dd');
-                }
+            //本接口获取最后一次模型计算出来的结果，返回最后一次跑模型的日期。
+            getDateApi(){
+                getDate({wellMenu:'WELL_INJ'}).then(res=>{
+                    if(res.data.code==200){
+                        this.currentDate=res.data.data;   
+                    }
+                    this.queryOilFeildList();
+                })
             },
             //获取油田
             queryOilFeildList() {

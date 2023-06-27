@@ -124,7 +124,7 @@ import {productionMetricsOverview} from "@/api/rem/reservoirbillboards";
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 let value = 0;
-let name = "统计";
+let name = "";
 export default {
     props: ["infodata"],
     components: {
@@ -478,15 +478,15 @@ export default {
                 if(!res.data.data.naturalDecline)  res.data.data.naturalDecline = 0
                 this.histogram.series[0].data[0].value = res.data.data.naturalDecline
                 this.histogram.series[0].data[1].value = 100 - res.data.data.naturalDecline
-                this.histogram.title.text = "{a|" + res.data.data.naturalDecline + "%}{c|\n" +   "统计}"
+                this.histogram.title.text = "{a|" + res.data.data.naturalDecline + "%}{c|\n" +   "}"
                 if(!res.data.data.overallDecline)  res.data.data.overallDecline = 0
                 this.histogram2.series[0].data[0].value = res.data.data.overallDecline
                 this.histogram2.series[0].data[1].value = 100 - res.data.data.overallDecline
-                this.histogram2.title.text = "{a|" + res.data.data.overallDecline + "%}{c|\n" +   "统计}"
+                this.histogram2.title.text = "{a|" + res.data.data.overallDecline + "%}{c|\n" +   "}"
                 if(!res.data.data.wholeDeclineRate)  res.data.data.wholeDeclineRate = 0
                 this.histogram3.series[0].data[0].value = res.data.data.wholeDeclineRate
                 this.histogram3.series[0].data[1].value = 100 - res.data.data.wholeDeclineRate
-                this.histogram3.title.text = "{a|" + res.data.data.wholeDeclineRate + "%}{c|\n" +   "统计}"
+                this.histogram3.title.text = "{a|" + res.data.data.wholeDeclineRate + "%}{c|\n" +   "}"
             })  
         },
         //图表

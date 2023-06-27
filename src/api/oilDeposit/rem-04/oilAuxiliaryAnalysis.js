@@ -60,3 +60,12 @@ export function produceTableData(request) {
   });
 }
 
+//
+
+export function getDate(params) {
+  return Axios({
+    url: `${baseUrl}/primaryInfo/getDate`,
+    method: "get",
+    params,
+  });
+}
