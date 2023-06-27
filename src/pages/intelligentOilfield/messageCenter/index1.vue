@@ -166,17 +166,21 @@
         <!-- <el-button style="position: absolute; top: -33px; left: 0" type="primary" @click="handleToPage()">
           信息维护
         </el-button> -->
+        <!-- TODO: Maybe change back -->
+        <!-- @click="openIframeDialogMethods(ifameList[0])" -->
         <el-button
           style="position: absolute; top: -33px; left: 0"
           type="primary"
-          @click="openIframeDialogMethods(ifameList[0])"
+          @click="openIframeDialogLink(dict.type.hailu_link_url.find(item=>item.value === '海上链路总览URL').label, dict.type.hailu_has_token.find(item=>item.value === '海上链路总览是否带token').label)"
         >
           {{ ifameList[0].name }}
         </el-button>
+        <!-- TODO: Maybe change back -->
+        <!-- @click="openIframeDialogMethods(ifameList[1])" -->
         <el-button
           style="position: absolute; top: -33px; left: 110px"
           type="primary"
-          @click="openIframeDialogMethods(ifameList[1])"
+          @click="openIframeDialogLink(dict.type.hailu_link_url.find(item=>item.value === '云端链路总览URL').label, dict.type.hailu_has_token.find(item=>item.value === '云端链路总览是否带token').label)"
         >
           {{ ifameList[1].name }}
         </el-button>
@@ -1381,6 +1385,13 @@ export default {
     //   this.iframeDialogTitle = iframeObj.name;
     //   this.openIframeDialog = true;
       window.open(addTokenToUrl(iframeObj.url), "_blank");
+    },
+    openIframeDialogLink(Url, hasToken) {
+      if (hasToken === "true") {
+        window.open(addTokenToUrl(Url), "_blank");
+      } else {
+        window.open(Url, "_blank");
+      }
     },
     clickClouds() {
       this.openDialog = true;

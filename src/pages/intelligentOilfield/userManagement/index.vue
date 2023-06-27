@@ -17,6 +17,7 @@
             size="small"
             prefix-icon="el-icon-search"
             style="margin-bottom: 10px; height: 40px"
+            @clear="getTreeselect"
           />
         </div>
         <div class="head-container" style="overflow: auto;">
@@ -374,7 +375,7 @@
                 <el-button
                   v-if="scope.row.userId !== '1'"
                   v-hasPermi="['system:user:remove']"
-                  :disabled="scope.row.ehr === '1' "
+                  :disabled="scope.row.ehr === '1'"
                   type="text"
                   class="delbutton"
                   @click="handleDelete(scope.row)"
@@ -391,7 +392,7 @@
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item
                       v-hasPermi="['system:user:resetPwd']"
-                      :disabled="scope.row.ehr === '1' "
+                      :disabled="scope.row.ehr === '1'"
                       command="handleResetPwd"
                       icon="el-icon-key"
                     >

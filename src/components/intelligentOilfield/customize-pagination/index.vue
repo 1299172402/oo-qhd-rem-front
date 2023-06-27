@@ -95,10 +95,16 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .pagination-container {
   /* background: #fff; */
   padding: 23px 0 20px;
+
+  ::v-deep .el-pagination {
+    .el-input__validateIcon {
+      display: none;
+    }
+  }
 }
 
 .pagination-container.hidden {

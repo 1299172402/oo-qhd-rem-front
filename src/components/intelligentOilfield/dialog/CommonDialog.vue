@@ -5,7 +5,7 @@
       v-bind="btn"
       :icon="btnIcon"
       :type="btn.type || btnType"
-      @click="visible = true; $emit('open')"
+      @click="visible = true;"
     >
       {{ label }}
     </el-button>

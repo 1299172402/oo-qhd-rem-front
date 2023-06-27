@@ -219,7 +219,7 @@ export default {
 
     /deep/ .el-table__body-wrapper {
       overflow-y: scroll;
-      height: 100%;
+      height: calc(100% - 35px);
     }
   }
 
