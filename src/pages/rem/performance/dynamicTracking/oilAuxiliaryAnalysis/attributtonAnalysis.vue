@@ -207,13 +207,13 @@
                 <el-table-column prop="attribution" min-width="250" show-overflow-tooltip label="归因"></el-table-column>
                 <el-table-column prop="measure" min-width="250" show-overflow-tooltip label="措施"></el-table-column>
             </el-table>
-<!--            <pagination-->
-<!--                :pageSizes="[15, 20, 40, 100]"-->
-<!--                :total="pageTotal"-->
-<!--                :page.sync="queryData.page"-->
-<!--                :limit.sync="queryData.pageSize"-->
-<!--                @pagination="pagination"-->
-<!--            />-->
+            <pagination
+                :pageSizes="[15, 20, 40, 100]"
+                :total="pageTotal"
+                :page.sync="queryData.page"
+                :limit.sync="queryData.pageSize"
+                @pagination="pagination"
+            />
         </pagePanel>
         
     </div>
@@ -1282,7 +1282,8 @@ export default {
             }
             if (this.link == '4') {
                 queryWaterInjIntensityAttributeAnalysis(params).then(res => {
-                    this.tableData = res.data.data
+                    this.tableData = res.data.data.rows
+                    this.pageTotal = res.data.data.total
                 })
             }
             if (this.link == '1' || this.link == '2' || this.link == '3') {
