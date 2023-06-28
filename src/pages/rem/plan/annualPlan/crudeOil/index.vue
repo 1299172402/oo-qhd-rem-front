@@ -34,6 +34,7 @@
 </template>
 
 <script>
+    import dayjs from "dayjs";
     import Echart from '@/components/tools/Echarts/index.vue';
     import { searchOilProductionChart, searchOilProductionTable} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
     import { exportExcel } from '@/lib/exportExcel.js';
@@ -71,7 +72,7 @@
                         x: 120,
                         y: 30,
                         x2: 120,
-                        y2: 100,
+                        y2: 150,
                     },
                     legend: {
                         data: [],
@@ -80,7 +81,7 @@
                             fontSize: 14,
                         },
                         x:'center',
-                        bottom:30,
+                        bottom:60,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -100,6 +101,9 @@
                                     return false;
                                 }
                             },
+                            formatter:function(value, index){
+                                return value.substring(0,7);
+                            }
                         },
                         axisTick: {
                             show: false,
@@ -173,6 +177,31 @@
                         },
                     ],
                     series: [],
+                    dataZoom:{
+                        type: 'slider',
+                        realtime:true, //拖动滚动条时是否动态的更新图表数据
+                        height:10,//滚动条高度
+                        startValue:'',//滚动条开始位置
+                        endValue:'',//结束位置
+                        zoomLock:true,
+                        showDetail:false,
+                        brushSelect: false,
+                        backgroundColor:'rgba(0,0,0,0)',
+                        dataBackground:{
+                            lineStyle:{
+                              color:'rgba(0,0,0,0)'  
+                            },
+                            areaStyle:{
+                                color:'rgba(0,0,0,0)',
+                                opacity:1
+                            },
+                        },
+                        selectedDataBackground:{
+                            areaStyle :{
+                                color:'rgba(0,0,0,0)'
+                            } 
+                        },
+                    }
                 },
                 isDevelop:false,//是否展示表格
                 runTimeData: [],//原油产量表格数据
@@ -194,6 +223,13 @@
             },
             //原油产量统计图
             getSearchOilProductionChart() {
+                this.productLineChart.dataZoom.startValue=this.searchForm.selectDate[0];
+                let endValue=dayjs(this.searchForm.selectDate[0]).add(11, 'month').format('YYYY-MM-DD');
+                let a=endValue.split('-');
+                let m=a[1].includes('0')?a[1].substring(1) : a[1];
+                a[2]=new Date(a[0], m, 0).getDate();
+                endValue=a.join('-');
+                this.productLineChart.dataZoom.endValue=endValue;
                 let request = {
                     oilFieldId: this.searchForm.selectOilField,
                     unitType: this.searchForm.selectUnitOfProduction,

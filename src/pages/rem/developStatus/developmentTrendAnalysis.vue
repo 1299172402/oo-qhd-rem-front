@@ -32,7 +32,8 @@
                     <Echart :chart-data="lineTable" height="570px"></Echart>
                 </div>
             </pagePanelNew> -->
-            <Echart :chart-data="lineTable" height="570px" style="margin-bottom:20px;"></Echart>
+            <Echart :chart-data="lineTable" height="600px" style="margin-bottom:20px;"></Echart>
+            
             
             <div style="height: 300px;">
                 <div style="padding-bottom:5px;height:100%;">
@@ -153,31 +154,31 @@
                             x: '8%',
                             y: '4%',
                             width: '90%',
-                            height: '18%'
+                            height: '15%'
                         },
                         {
                             x: '8%',
                             y: '22%',
                             width: '90%',
-                            height: '18%'
+                            height: '15%'
                         },
                         {
                             x: '8%',
                             y: '40%',
                             width: '90%',
-                            height: '18%'
+                            height: '15%'
                         },
                         {
                             x: '8%',
                             y: '58%',
                             width: '90%',
-                            height: '18%'
+                            height: '15%'
                         },
                         {
                             x: '8%',
                             y: '76%',
                             width: '90%',
-                            height: '18%'
+                            height: '15%'
                         },
                     ],
                     axisPointer: {
@@ -195,7 +196,7 @@
                                 fontSize: 14,
                             },
                             axisLabel: {
-                                fontSize:18,
+                                fontSize:12,
                                 show: false,
                                 color: '#8FA4CC',
                             },
@@ -286,7 +287,8 @@
                     yAxis: [
                         {
                             gridIndex: 0,
-                            name: '产液量（10⁴m³）',
+                            name: '产液量\n（10⁴m³）',
+                            nameGap:60,
                             nameLocation: 'center',
                             nameRotate: 0,
                             scale: true,
@@ -295,7 +297,7 @@
                                 fontSize: 14,
                             },
                             axisLabel: {
-                                show: false,
+                                show: true,
                                 color: '#8FA4CC',
                             },
                             axisTick: {
@@ -318,7 +320,8 @@
                         {
                             gridIndex: 1,
                             scale: true,
-                            name: '产油量（10⁴m³）',
+                            name: '产油量\n（10⁴m³）',
+                            nameGap:60,
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameTextStyle: {
@@ -326,7 +329,7 @@
                                 fontSize: 14,
                             },
                             axisLabel: {
-                                show: false,
+                                show: true,
                                 color: '#8FA4CC',
                             },
                             axisTick: {
@@ -349,7 +352,8 @@
                         {
                             gridIndex: 2,
                             scale: true,
-                            name: '含水率（%）',
+                            name: '含水率\n（%）',
+                            nameGap:60,
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameTextStyle: {
@@ -357,7 +361,7 @@
                                 fontSize: 14,
                             },
                             axisLabel: {
-                                show: false,
+                                show: true,
                                 color: '#8FA4CC',
                             },
                             axisTick: {
@@ -380,7 +384,8 @@
                         {
                             gridIndex: 3,
                             scale: true,
-                            name: '含水上升率（%）',
+                            name: '含水上升率\n（%）',
+                            nameGap:60,
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameTextStyle: {
@@ -388,7 +393,7 @@
                                 fontSize: 14,
                             },
                             axisLabel: {
-                                show: false,
+                                show: true,
                                 color: '#8FA4CC',
                             },
                             axisTick: {
@@ -411,7 +416,8 @@
                         {
                             gridIndex: 4,
                             scale: true,
-                            name: '综合递减率（%）',
+                            name: '综合递减率\n（%）',
+                            nameGap:60,
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameTextStyle: {
@@ -419,7 +425,7 @@
                                 fontSize: 14,
                             },
                             axisLabel: {
-                                show: false,
+                                show: true,
                                 color: '#8FA4CC',
                             },
                             axisTick: {
@@ -448,7 +454,7 @@
                             yAxisIndex: 0,
                             data: [],
                             label: {
-                                show: true,
+                                show: false,
                                 color: '#8FA4CC',
                                 fontSize: 14,
                             },
@@ -478,7 +484,7 @@
                             yAxisIndex: 1,
                             data: [],
                             label: {
-                                show: true,
+                                show: false,
                                 color: '#8FA4CC',
                                 fontSize: 14,
                             },
@@ -508,7 +514,7 @@
                             yAxisIndex: 2,
                             data: [],
                             label: {
-                                show: true,
+                                show: false,
                                 color: '#8FA4CC',
                                 fontSize: 14,
                             },
@@ -543,7 +549,7 @@
                             yAxisIndex: 3,
                             data: [],
                             label: {
-                                show: true,
+                                show: false,
                                 color: '#8FA4CC',
                                 fontSize: 14,
                             },
@@ -573,7 +579,7 @@
                             yAxisIndex: 4,
                             data: [],
                             label: {
-                                show: true,
+                                show: false,
                                 color: '#8FA4CC',
                                 fontSize: 14,
                             },
@@ -723,9 +729,9 @@
                 this.lineTable.series[0].data = y;
                 this.lineTable.xAxis[0].data = x;
                 if (this.selectUnitOfProduction == 'm') {
-                    this.lineTable.yAxis[0].name = '产液量（10⁴m³）';
+                    this.lineTable.yAxis[0].name = '产液量\n（10⁴m³）';
                 } else if (this.selectUnitOfProduction == 't') {
-                    this.lineTable.yAxis[0].name = '产液量（10⁴t）';
+                    this.lineTable.yAxis[0].name = '产液量\n（10⁴t）';
                 }
             },
             //折线图-产油
@@ -746,9 +752,9 @@
                 this.lineTable.series[1].data = y;
                 this.lineTable.xAxis[1].data = x;
                 if (this.selectUnitOfProduction == 'm') {
-                    this.lineTable.yAxis[1].name = '产油量（10⁴m³）';
+                    this.lineTable.yAxis[1].name = '产油量\n（10⁴m³）';
                 } else if (this.selectUnitOfProduction == 't') {
-                    this.lineTable.yAxis[1].name = '产油量（10⁴t）';
+                    this.lineTable.yAxis[1].name = '产油量\n（10⁴t）';
                 }
             },
             //折线图-含水上升率
