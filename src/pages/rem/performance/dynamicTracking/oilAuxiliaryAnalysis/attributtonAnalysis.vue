@@ -34,7 +34,7 @@
                         </el-form-item>
                         <el-form-item label="井号:">
                             <el-select v-model="queryData.well" clearable style="width: 170px">
-                                <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellNo"
+                                <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellName"
                                            :value="item.wellId">
                                 </el-option>
                             </el-select>
