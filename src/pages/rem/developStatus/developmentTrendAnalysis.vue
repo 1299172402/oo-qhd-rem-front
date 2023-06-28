@@ -13,7 +13,7 @@
                     <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                 </el-select>
                 <span>拟合起始时间：</span>
-                <el-date-picker v-model="selectDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="monthrange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" style="margin-right:20px">
+                <el-date-picker v-model="selectDate" format="yyyy-MM" value-format="yyyy-MM" type="monthrange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :clearable="false" style="margin-right:20px">
                 </el-date-picker>
                 <el-button icon="el-icon-search" type="primary" @click="searchThing">搜索</el-button>
                 <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
@@ -49,6 +49,7 @@
     import Echart from '@/components/tools/Echarts/index.vue';
     import {fetchOilFields,fetchFields} from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import {searchDevTrendAnalysis} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+    import {getSearchDevTrendAnalysisDate} from '@/api/oilDeposit/rem-04/developStatus.js';
     export default {
         name:'developmentTrendAnalysis',
         components: {
@@ -103,8 +104,10 @@
                         value: '11',
                     },
                 ],
+                //最大不能超过次日期
+                maxDate:'',
                 //选择时间
-                selectDate: [],
+                selectDate: ['2023-01'],
                 //表格数据
                 messageResult: [],
                 //折线曲线 x轴
@@ -606,14 +609,24 @@
                 }
             }
         },
-        mounted() {
-            this.initData();
+        async mounted() {
+            await this.getSearchDevTrendAnalysisDateApi();
+            await this.initData();
         },
         methods: {
             //重置
             resetting(){
                 Object.assign(this.$data, this.$options.data());
                 this.initData();
+            },
+            //获取搜索时间-最大日期
+            async getSearchDevTrendAnalysisDateApi(){
+                await getSearchDevTrendAnalysisDate().then(res=>{
+                    if(res.data.code==200){
+                        this.maxDate=res.data.data;
+                        this.selectDate.push(this.maxDate)
+                    }
+                })
             },
             async initData() {
                 await fetchOilFields().then((res) => {
@@ -838,6 +851,10 @@
                 let beginDate = this.selectDate[0];
                 //结束日期
                 let endDate = this.selectDate[1];
+                if(endDate>this.maxDate){
+                    this.$message.warning(`结束月份不能大于${this.maxDate}`);
+                    return false;
+                }
                 //单位
                 let unitType = this.selectUnitOfProduction;
                 // 查询图形数据（区块，油田，当前日s期，单位）

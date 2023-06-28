@@ -262,7 +262,7 @@
     import {getWorkProgress} from '@/api/oilDeposit/rem-04/plan.js';
     import { exportExcel } from '@/lib/exportExcel.js';
     export default {
-        name: 'measureEffectTracking',
+        // name: 'measureEffectTracking',
         components: {
             verticalSwitchButton,
             Echarts,
@@ -468,7 +468,7 @@
                     {
                         paramName: '气油比',
                         paramCode: '003006',
-                        unit: '',
+                        unit: 'm³/t',
                     },
                     {
                         paramName: '生产时间',
@@ -897,7 +897,7 @@
                         },
                         {
                             gridIndex: 1,
-                            name: '气\n油\n比\n',
+                            name: '气\n油\n比\n\m³/t',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
