@@ -456,7 +456,12 @@
                                                 <b style="color: #FFC835; font-size: 14px;">{{item.value}}</b>
                                             </span>
                                         </div>
-                                        
+                                        <span style="position: absolute;right:-45px;bottom: -40px">
+                                                 <el-button type="primary"  v-if="selCode&&(selCode=='0050102'||selCode=='0050101' || selCode=='0060101' || selCode=='0060102'|| selCode=='0070101'|| selCode=='0070102')"
+                                                            @click="$router.push({name:'attributtonAnalysis',query:{'selectBlock':selectBlock,'platform':platform,'wellId':wellId,'link':4,'evalResult':selCode,'currentDate':currentDate}})">
+                                                    归因分析详情
+                                                </el-button>
+                                            </span>
                                     </div>
                                 </div>
                                 <div class="z-content-n">
@@ -473,15 +478,19 @@
                                             </div>
                                             <span class="sp2">异常：<b>{{ isNaN(Number(zsqdForm.evaluationBiasTall) +  Number(zsqdForm.evaluationBiasLow) + Number(zsqdForm.evaluationChangeTall) + Number(zsqdForm.evaluationChangeLow)) ? 0 : Number(zsqdForm.evaluationBiasTall) +  Number(zsqdForm.evaluationBiasLow) + Number(zsqdForm.evaluationChangeTall) + Number(zsqdForm.evaluationChangeLow)}}</b></span>
                                         </div>
-                                    </div>  
+                                    </div>
                                     <div class="z-row-center">
-                                        <div class="numBtn" @click="$router.push({name:'attributtonAnalysis',query:{'selectBlock':selectBlock,'platform':platform,'wellId':wellId,'link':4,'evalResult':selCode,'currentDate':currentDate}})" v-if="Number(zsqdForm.evaluationBiasTall)>0">
+                                        <div class="numBtn"  :class="['0050101'==selCode?'numBtnBgActive':'']"
+                                             v-if="zsqdForm.evaluationBiasTall != 0"
+                                             @click="((val)=>{selCode='0050101';})">
                                             <span class="sp1">{{zsqdForm.evaluationBiasTall}}</span>
                                             <span class="sp2">注水强度偏高</span>
                                         </div>
-                                        <div class="numBtn" @click="$router.push({name:'attributtonAnalysis',query:{'selectBlock':selectBlock,'platform':platform,'wellId':wellId,'link':4,'evalResult':selCode,'currentDate':currentDate}})" v-if="Number(zsqdForm.evaluationBiasLow)>0">
+                                        <div class="numBtn"  :class="['0050102'==selCode?'numBtnBgActive':'']"
+                                             v-if="zsqdForm.evaluationBiasLow != 0"
+                                             @click="((val)=>{selCode='0050102';})">
                                             <span class="sp1">{{zsqdForm.evaluationBiasLow}}</span>
-                                            <span   class="sp2">注水强度偏低</span>
+                                            <span class="sp2">注水强度偏低</span>
                                         </div>
                                     </div>
                                 </div>
@@ -813,6 +822,7 @@
                     wellId:this.wellId
                 }
                 queryEvaluationWaterInjCount(params).then((res) =>{
+                    console.log(res)
                      this.zsqdForm = res.data.data[0]
                 })
             },
@@ -1517,7 +1527,7 @@
             },
             //选中项目
             selRadioIterm(val, tag) {
-                console.log(val,888,this.selCode,999)
+                console.log(val,this.selCode)
                 let myData = []; //我的数据
                 let myWellCount = {}; //计算各项目的井数
                 let t_count = 0; //计数器
