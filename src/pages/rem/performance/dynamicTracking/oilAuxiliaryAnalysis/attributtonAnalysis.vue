@@ -103,17 +103,28 @@
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column prop="null" min-width="150" label="井号"></el-table-column>
-                <el-table-column prop="null" min-width="150" label="日期"></el-table-column>
-                <el-table-column prop="null" min-width="150" :label="`递减率\n(%)`"></el-table-column>
-                <el-table-column prop="null" min-width="150" :label="`月度产液量\n(m³)`"></el-table-column>
-                <el-table-column prop="null" min-width="150" :label="`生产时率\n(%)`"></el-table-column>
-                <el-table-column prop="null" min-width="150" :label="`含水率\n(%)`"></el-table-column>
-                <el-table-column prop="null" min-width="150" label="排量效率"></el-table-column>
-                <el-table-column prop="null" min-width="150" :label="`流压\n(MPa)`"></el-table-column>
-                <el-table-column prop="null" min-width="250" label="归因"></el-table-column>
-                <el-table-column prop="null" min-width="250" label="措施"></el-table-column>
+                <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
+                <el-table-column prop="date" min-width="150" label="日期">
+                    <template slot-scope="scope">
+                        <span> {{ scope.row.date ? scope.row.date.split(' ')[0].replace(/-01/g,'') : '' }} </span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="declineRate" min-width="150" :label="`递减率\n(%)`"></el-table-column>
+                <el-table-column prop="yield" min-width="150" :label="`月度产液量\n(m³)`"></el-table-column>
+                <el-table-column prop="monthlyProdEff" min-width="150" :label="`生产时率\n(%)`"></el-table-column>
+                <el-table-column prop="watCnt" min-width="150" :label="`含水率\n(%)`"></el-table-column>
+                <el-table-column prop="pumpEfficiency" min-width="150" label="排量效率"></el-table-column>
+                <el-table-column prop="flwPrs" min-width="150" :label="`流压\n(MPa)`"></el-table-column>
+                <el-table-column prop="attribution" min-width="250" label="归因" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="measure" min-width="250" label="措施" show-overflow-tooltip></el-table-column>
             </el-table>
+            <pagination
+                :pageSizes="[15, 20, 40, 100]"
+                :total="pageTotal"
+                :page.sync="queryData.page"
+                :limit.sync="queryData.pageSize"
+                @pagination="pagination"
+            />
         </pagePanel>
         <pagePanel v-if="link=='6'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
             <el-table
@@ -1282,6 +1293,12 @@ export default {
             }
             if (this.link == '4') {
                 queryWaterInjIntensityAttributeAnalysis(params).then(res => {
+                    this.tableData = res.data.data.rows
+                    this.pageTotal = res.data.data.total
+                })
+            }
+            if (this.link == '5') {
+                oilWellFluidQuery(params).then(res => {
                     this.tableData = res.data.data.rows
                     this.pageTotal = res.data.data.total
                 })
