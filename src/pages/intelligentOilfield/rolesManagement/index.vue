@@ -315,7 +315,12 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="角色类型" prop="roleType">
-              <el-select v-model="form.roleType" placeholder="请选择角色类型" :disabled="!!($route.params.id || form.appId !== '$system$' )">
+              <el-select
+                v-model="form.roleType"
+                style="width: 267px"
+                placeholder="请选择角色类型"
+                :disabled="!!($route.params.id || form.appId !== '$system$' )"
+              >
                 <el-option
                   v-for="item in dict.type.sys_role_type"
                   :key="item.value"
@@ -327,7 +332,12 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="角色顺序" prop="roleSort">
-              <el-input-number v-model="form.roleSort" controls-position="right" :min="0" />
+              <el-input-number
+                v-model="form.roleSort"
+                style="width: 267px"
+                controls-position="right"
+                :min="0"
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -404,7 +414,12 @@
           <el-input v-model="form.roleKey" :disabled="true" />
         </el-form-item>
         <el-form-item label="权限范围">
-          <el-select v-model="form.dataScope" clearable @change="dataScopeSelectChange">
+          <el-select
+            v-model="form.dataScope"
+            style="width: 360px"
+            clearable
+            @change="dataScopeSelectChange"
+          >
             <el-option
               v-for="item in dataScopeOptions"
               :key="item.value"
@@ -436,7 +451,20 @@
             :check-strictly="!form.deptCheckStrictly"
             empty-text="加载中，请稍候"
             :props="defaultProps"
-          />
+          >
+            <!--知识点过长处理，鼠标悬浮文字弹框显示全部内容-->
+            <span slot-scope="{ node }" class="custom-tree-node">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                :content="node.label"
+                placement="top-start"
+              >
+                <span> {{ node.label | ellipsis(16) }} </span>
+              </el-tooltip>
+              <div />
+            </span>
+          </el-tree>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

@@ -541,6 +541,9 @@ export default Vue.extend({
       });
     },
     getInitDeptds() {
+      // 解决无租户不显示门户的面板
+      this.$store.commit("user/SETTENANTID", "");
+      this.$store.commit("user/SETTENANTName", "");
       getTenantsByUserId(this.$store.getters["user/userDetail"].user.userId).then(response => {
         // 租户列表
         this.tenantOptions = response.data.data;
@@ -693,11 +696,13 @@ export default Vue.extend({
     },
     /** 提交按钮 */
     submitForm() {
+      this.form.postIds = this.form.tempPostId ? this.form.tempPostId?.split(",") : [];
       this.$refs.form.validate(valid => {
         if (valid) {
           updateUseridcard(this.form).then(res => {
             if (res ? res.data.code === 200 : false) {
               this.$modal.msgSuccess("修改成功");
+              this.$store.commit("user/setUserInfo", this.form);
               this.open = false;
             }
           });
@@ -739,6 +744,10 @@ export default Vue.extend({
       });
       getUser(userId).then(response => {
         this.form = response.data.data;
+        this.form.idCard = response.data.data.idCard;
+        this.form.postIds = response.data.postIds.length === 0 ? [] : response.data.postIds.toLocaleString().split(",");
+        this.form.tempPostId = response.data.postIds.length === 0 ? "" : String(response.data.postIds.toLocaleString());
+        this.form.roleIds = response.data.roleIds.length === 0 ? [] : response.data.roleIds.toLocaleString().split(",");
         this.open = true;
         this.title = "账号管理";
       });

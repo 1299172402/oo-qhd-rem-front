@@ -93,6 +93,7 @@
         </el-col>
       </el-row>
       <el-table
+        ref="tableList"
         :data="userList"
         height="calc(100% - 114px)"
         :row-style="{ height: '0px' }"
@@ -100,9 +101,15 @@
         header-cell-class-name="table_header"
         :cell-style="{ padding: '2px', 'text-align': 'center' }"
         style="width: 100%; height: 100%"
+        :row-key="(row) => row.userId"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="55" align="center" />
+        <el-table-column
+          type="selection"
+          width="55"
+          :reserve-selection="true"
+          align="center"
+        />
         <el-table-column label="序号" type="index" width="80" />
         <el-table-column label="用户账号" prop="userName" :show-overflow-tooltip="true" />
         <el-table-column label="用户名称" prop="nickName" :show-overflow-tooltip="true" />
@@ -218,6 +225,7 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      this.$refs.tableList.clearSelection();
       this.queryParams.pageNum = 1;
       this.getList();
     },
@@ -235,6 +243,7 @@ export default {
     },
     /** 打开授权用户表弹窗 */
     openSelectUser() {
+      this.$refs.tableList.clearSelection();
       this.$refs.select.show();
     },
     /** 取消授权按钮操作 */
@@ -248,13 +257,14 @@ export default {
           if (res ? res.data.code === 200 : false) {
             this.getList();
             this.$modal.msgSuccess("取消授权成功");
+            this.$refs.tableList.clearSelection();
           }
         });
     },
     /** 批量取消授权按钮操作 */
     cancelAuthUserAll() {
       const { roleId } = this.queryParams;
-      const userIds = this.userIds.join(",");
+      const userIds = this.userIds;
       this.$modal
         .confirm("是否取消选中用户授权数据项？")
         .then(() => authUserCancelAll({ roleId, userIds }))
@@ -262,6 +272,7 @@ export default {
           if (res ? res.data.code === 200 : false) {
             this.getList();
             this.$modal.msgSuccess("取消授权成功");
+            this.$refs.tableList.clearSelection();
           }
         });
     }
