@@ -911,12 +911,11 @@
                         {
                             type: 'line',
                             name: '油田日产液/（m³/d）',
-
                             symbol: 'none',
                             xAxisIndex: 2,
                             yAxisIndex: 2,
                             itemStyle: {
-                                color: '#E9D456',
+                                color: 'rgb(165,42,42)',
                             },
                             data: [],
                         },
@@ -928,7 +927,7 @@
                             xAxisIndex: 2,
                             yAxisIndex: 2,
                             itemStyle: {
-                                color: '#B0B0B0',
+                                color: 'rgb(0,255,0)',
                             },
                             data: [],
                         },
@@ -940,7 +939,7 @@
                             xAxisIndex: 3,
                             yAxisIndex: 3,
                             itemStyle: {
-                                color: '#FF7135',
+                                color: 'rgb(165,42,42)',
                             },
                             data: [],
                         },
@@ -952,7 +951,7 @@
                             xAxisIndex: 3,
                             yAxisIndex: 3,
                             itemStyle: {
-                                color: '#B0B0B0',
+                                color: 'rgb(0,255,0)',
                             },
                             data: [],
                         },
@@ -976,7 +975,7 @@
                             xAxisIndex: 5,
                             yAxisIndex: 5,
                             itemStyle: {
-                                color: '#E9D456',
+                                color: 'rgb(255,0,0)',
                             },
                             data: [],
                         },
@@ -988,7 +987,7 @@
                             xAxisIndex: 6,
                             yAxisIndex: 6,
                             itemStyle: {
-                                color: '#24DEFF',
+                                color: 'rgb(0,255,255)',
                             },
                             data: [],
                         },

@@ -399,7 +399,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#9dce2f',
+                                color: 'rgb(255,0,0)',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -518,7 +518,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color:'#f300f1',
+                                color:'rgb(165,42,42)',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -669,7 +669,7 @@
                             } else if (lineName == '井口温度') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 7;
-                                series.itemStyle={color:'#5a9df2'}
+                                series.itemStyle={color:'rgb(255,0,0)'}
                             } else if (lineName == '气油比') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 5;
@@ -681,11 +681,11 @@
                             } else  if (lineName == '日产液量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
-                                series.itemStyle={color:'#f300f1'}
+                                series.itemStyle={color:'rgb(165,42,42)'}
                             } else if (lineName == '日产油量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 8;
-                                series.itemStyle={color:'#018000'}
+                                series.itemStyle={color:'rgb(0,255,0)'}
                             } else if (lineName == '日产气量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 10;
@@ -693,11 +693,11 @@
                             } else if (lineName == '日产油') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 8;
-                                series.itemStyle={color:'#018000'}
+                                series.itemStyle={color:'rgb(0,255,0)'}
                             } else if (lineName == '日产液') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
-                                series.itemStyle={color:'#f300f1'}
+                                series.itemStyle={color:'rgb(165,42,42)'}
                             } else  {
                                 continue;
                             }

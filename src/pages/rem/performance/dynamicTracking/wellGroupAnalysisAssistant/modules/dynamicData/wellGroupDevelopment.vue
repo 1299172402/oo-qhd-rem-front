@@ -340,7 +340,7 @@
                             nameGap: 50,
                             nameRotate: 0,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "rgb(165,42,42)",
                                 fontSize: 14,
                             },
                             scale: true,
@@ -354,7 +354,7 @@
                             axisLine: {
                                 show: true,
                                 lineStyle: {
-                                    color: "#8FA4CC",
+                                    color: "rgb(165,42,42)",
                                 },
                             },
                             splitLine: {
@@ -368,7 +368,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "rgb(0,255,0)",
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -485,7 +485,7 @@
                             nameRotate: 360,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "rgb(255,0,0)",
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -514,7 +514,7 @@
                             nameRotate: 360,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "rgb(0,255,255)",
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -586,9 +586,11 @@
                                 if (chartDatalabel == '日产液') {
                                     series.xAxisIndex = 1;
                                     series.yAxisIndex = 4;
+                                    series.itemStyle={color:'rgb(165,42,42)'}
                                 } else if (chartDatalabel == '日产油') {
                                     series.xAxisIndex = 1;
                                     series.yAxisIndex = 5;
+                                    series.itemStyle={color:'rgb(0,255,255)'}
                                 } else if (chartDatalabel == '含水率') {
                                     series.xAxisIndex = 1;
                                     series.yAxisIndex = 6;
@@ -601,6 +603,7 @@
                                 } else if (chartDatalabel == '气油比') {
                                     series.xAxisIndex = 2;
                                     series.yAxisIndex = 9;
+                                    series.itemStyle={color:'rgb(255,0,0)'}
                                 } else if (chartDatalabel == '油井总井数') {
                                     series.xAxisIndex = 0;
                                     series.yAxisIndex = 0;
@@ -616,6 +619,7 @@
                                 } else if (chartDatalabel == '日注水') {
                                     series.xAxisIndex = 2;
                                     series.yAxisIndex = 10;
+                                    series.itemStyle={color:'rgb(0,255,255)'}
                                 } else {
                                     return true;
                                 }

@@ -317,7 +317,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#fff',
+                                color: 'rgb(0,255,255)',
                                 fontSize: 14
                             },
                             position: 'right',
@@ -403,7 +403,7 @@
                                 } else if (chartDatalabel == '日注水量') {
                                     series.xAxisIndex = 1;
                                     series.yAxisIndex = 5;
-                                    series.color = '#8bc813';
+                                    series.color = 'rgb(0,255,255)';
                                 } else if (chartDatalabel == '井口压力') {
                                     series.xAxisIndex = 0;
                                     series.yAxisIndex = 1;
