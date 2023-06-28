@@ -921,7 +921,6 @@ export default {
         getGlobeTheme: {
             immediate: true,
             handler(Nval) {
-                console.log(Nval);
                 if (Nval == "dark") {
                     this.histogram.legend.textStyle.color = "#ffffff";
                 } else {
@@ -972,13 +971,13 @@ export default {
                     this.productLineChart.legend.data = legendData;
                     //各线的数据
                     this.productLineChart.series = seriesData;
-                    if (this.searchForm.selectUnitOfProduction == 'm') {
+                    // if (this.searchForm.selectUnitOfProduction == 'm') {
                         this.productLineChart.yAxis[0].name = '日产m³/d';
                         this.productLineChart.yAxis[1].name = '年产10⁴m³';
-                    } else if (this.searchForm.selectUnitOfProduction == 't') {
-                        this.productLineChart.yAxis[0].name = '日产t/d';
-                        this.productLineChart.yAxis[1].name = '年产10⁴t';
-                    }
+                    // } else if (this.searchForm.selectUnitOfProduction == 't') {
+                    //     this.productLineChart.yAxis[0].name = '日产t/d';
+                    //     this.productLineChart.yAxis[1].name = '年产10⁴t';
+                    // }
                 } else {
                     //图例数据
                     this.productLineChart.legend.data = legendData;

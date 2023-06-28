@@ -10,7 +10,6 @@
             :data="tableData"
             height="100%"
             style="width: 100%"
-            :header-cell-style="headerColor"
         >
             <el-table-column prop="date" label="序号" align="center" width="50">
                 <template slot-scope="scope">{{ scope.$index + 1 }}</template>

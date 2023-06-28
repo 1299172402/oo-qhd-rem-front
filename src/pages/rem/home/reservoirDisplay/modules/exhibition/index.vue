@@ -256,7 +256,6 @@ export default {
 
               this.ResidueOilRank = res.slice(0, 10);
               this.ResidueOilRank.sort((a, b) => a.dhFlowingPress - b.dhFlowingPress)
-              console.log(this.ResidueOilRank)
           })  
       },
     //图表
