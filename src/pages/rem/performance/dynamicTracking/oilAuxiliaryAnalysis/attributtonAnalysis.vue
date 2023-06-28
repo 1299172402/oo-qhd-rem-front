@@ -103,16 +103,16 @@
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column prop="null" label="井号"></el-table-column>
-                <el-table-column prop="null" label="日期"></el-table-column>
-                <el-table-column prop="null" :label="`递减率\n(%)`"></el-table-column>
-                <el-table-column prop="null" :label="`月度产液量\n(m³)`"></el-table-column>
-                <el-table-column prop="null" :label="`生产时率\n(%)`"></el-table-column>
-                <el-table-column prop="null" :label="`含水率\n(%)`"></el-table-column>
-                <el-table-column prop="null" label="排量效率"></el-table-column>
-                <el-table-column prop="null" :label="`流压\n(MPa)`"></el-table-column>
-                <el-table-column prop="null" label="归因"></el-table-column>
-                <el-table-column prop="null" label="措施"></el-table-column>
+                <el-table-column prop="null" min-width="150" label="井号"></el-table-column>
+                <el-table-column prop="null" min-width="150" label="日期"></el-table-column>
+                <el-table-column prop="null" min-width="150" :label="`递减率\n(%)`"></el-table-column>
+                <el-table-column prop="null" min-width="150" :label="`月度产液量\n(m³)`"></el-table-column>
+                <el-table-column prop="null" min-width="150" :label="`生产时率\n(%)`"></el-table-column>
+                <el-table-column prop="null" min-width="150" :label="`含水率\n(%)`"></el-table-column>
+                <el-table-column prop="null" min-width="150" label="排量效率"></el-table-column>
+                <el-table-column prop="null" min-width="150" :label="`流压\n(MPa)`"></el-table-column>
+                <el-table-column prop="null" min-width="250" label="归因"></el-table-column>
+                <el-table-column prop="null" min-width="250" label="措施"></el-table-column>
             </el-table>
         </pagePanel>
         <pagePanel v-if="link=='6'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
@@ -129,14 +129,14 @@
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column prop="null" label="井号"></el-table-column>
-                <el-table-column prop="null" label="日期"></el-table-column>
-                <el-table-column prop="null" label="井组压力保持评价"></el-table-column>
-                <el-table-column prop="null" :label="`井组月度产液量\n(m³)`"></el-table-column>
-                <el-table-column prop="null" label="注采平衡分析结果"></el-table-column>
-                <el-table-column prop="null" :label="`井组水井分层月注水量\n(m³)`"></el-table-column>
-                <el-table-column prop="null" label="归因"></el-table-column>
-                <el-table-column prop="null" label="下步措施"></el-table-column>
+                <el-table-column prop="null" min-width="150" label="井号"></el-table-column>
+                <el-table-column prop="null" min-width="150" label="日期"></el-table-column>
+                <el-table-column prop="null" min-width="150" label="井组压力保持评价"></el-table-column>
+                <el-table-column prop="null" min-width="150" :label="`井组月度产液量\n(m³)`"></el-table-column>
+                <el-table-column prop="null" min-width="150" label="注采平衡分析结果"></el-table-column>
+                <el-table-column prop="null" min-width="150" :label="`井组水井分层月注水量\n(m³)`"></el-table-column>
+                <el-table-column prop="null" min-width="250" label="归因"></el-table-column>
+                <el-table-column prop="null" min-width="250" label="下步措施"></el-table-column>
             </el-table>
         </pagePanel>
         <pagePanel v-if="link=='4'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
@@ -152,22 +152,29 @@
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column prop="wellNo" label="井号"></el-table-column>
-                <el-table-column prop="evalTime" label="日期">
+                <el-table-column prop="wellNo" min-width="150" label="井号"></el-table-column>
+                <el-table-column prop="evalTime" min-width="150" label="日期">
                     <template slot-scope="scope">
                         <span>{{ scope.row.evalTime ? scope.row.evalTime.split(' ')[0] : '-' }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="layerName" show-overflow-tooltip label="层位"></el-table-column>
-                <el-table-column prop="itemValue" :label="`注水强度\n(m³/d·m)`"></el-table-column>
-                <el-table-column prop="evalResult" show-overflow-tooltip label="评价结论"></el-table-column>
-                <el-table-column prop="injDuration" :label="`生产时长\n(h)`"></el-table-column>
-                <el-table-column prop="injDaily" :label="`注入量\n(m³)`"></el-table-column>
-                <el-table-column prop="whInjPress" :label="`注入压力\n(mPa)`"></el-table-column>
-                <el-table-column prop="injAllocationRate" :label="`配注量\n(m³/d)`"></el-table-column>
-                <el-table-column prop="valueAttribution" show-overflow-tooltip label="归因"></el-table-column>
-                <el-table-column prop="vauleMeasure" show-overflow-tooltip label="建议措施"></el-table-column>
+                <el-table-column prop="layerName" min-width="200" show-overflow-tooltip label="层位"></el-table-column>
+                <el-table-column prop="itemValue" min-width="150" :label="`注水强度\n(m³/d·m)`"></el-table-column>
+                <el-table-column prop="evalResult" min-width="200" show-overflow-tooltip label="评价结论"></el-table-column>
+                <el-table-column prop="injDuration" min-width="150" :label="`生产时长\n(h)`"></el-table-column>
+                <el-table-column prop="injDaily" min-width="150" :label="`注入量\n(m³)`"></el-table-column>
+                <el-table-column prop="whInjPress" min-width="150" :label="`注入压力\n(mPa)`"></el-table-column>
+                <el-table-column prop="injAllocationRate" min-width="150" :label="`配注量\n(m³/d)`"></el-table-column>
+                <el-table-column prop="valueAttribution" min-width="200" show-overflow-tooltip label="归因"></el-table-column>
+                <el-table-column prop="vauleMeasure" min-width="200" show-overflow-tooltip label="建议措施"></el-table-column>
             </el-table>
+            <pagination
+                :pageSizes="[15, 20, 40, 100]"
+                :total="pageTotal"
+                :page.sync="queryData.page"
+                :limit.sync="queryData.pageSize"
+                @pagination="pagination"
+            />
         </pagePanel>
         <pagePanel v-if="link=='1' || link=='2' || link=='3'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
             <el-table
@@ -183,30 +190,30 @@
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column prop="wellName" label="井号"></el-table-column>
-                <el-table-column prop="date" label="日期">
+                <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
+                <el-table-column prop="date" min-width="150" label="日期">
                     <template slot-scope="scope">
                         <span> {{ scope.row.date ? scope.row.date.split(' ')[0].replace(/-01/g,'') : '' }} </span>
                     </template>
                 </el-table-column>
-                <el-table-column v-if="link == 1" prop="intensity" :label="`采液强度\n(m³/d·m)`"></el-table-column>
-                <el-table-column v-if="link == 2" prop="fluidProductionIndex" :label="`采液指数\n(m³/mPa·d)`"></el-table-column>
-                <el-table-column v-if="link == 3" prop="metreFluidProductionIndex" :label="`米采液指数\n(m³/mPa·d·m)`"></el-table-column>
-                <el-table-column prop="yield" :label="`产液量\n(m³)`"></el-table-column>
-                <el-table-column prop="monthlyProdEff" :label="`生产时率\n(%)`"></el-table-column>
-                <el-table-column prop="pumpEfficiency" label="泵效"></el-table-column>
-                <el-table-column prop="watCnt" :label="`含水率\n(%)`"></el-table-column>
-                <el-table-column prop="flwPrs" :label="`流压\n(MPa)`"></el-table-column>
-                <el-table-column prop="attribution" show-overflow-tooltip label="归因"></el-table-column>
-                <el-table-column prop="measure" show-overflow-tooltip label="措施"></el-table-column>
+                <el-table-column v-if="link == 1" prop="intensity" min-width="150" :label="`采液强度\n(m³/d·m)`"></el-table-column>
+                <el-table-column v-if="link == 2" prop="fluidProductionIndex" min-width="150" :label="`采液指数\n(m³/mPa·d)`"></el-table-column>
+                <el-table-column v-if="link == 3" prop="metreFluidProductionIndex" min-width="150" :label="`米采液指数\n(m³/mPa·d·m)`"></el-table-column>
+                <el-table-column prop="yield" min-width="150" :label="`产液量\n(m³)`"></el-table-column>
+                <el-table-column prop="monthlyProdEff" min-width="150" :label="`生产时率\n(%)`"></el-table-column>
+                <el-table-column prop="pumpEfficiency" min-width="150" label="泵效"></el-table-column>
+                <el-table-column prop="watCnt" min-width="150" :label="`含水率\n(%)`"></el-table-column>
+                <el-table-column prop="flwPrs" min-width="150" :label="`流压\n(MPa)`"></el-table-column>
+                <el-table-column prop="attribution" min-width="250" show-overflow-tooltip label="归因"></el-table-column>
+                <el-table-column prop="measure" min-width="250" show-overflow-tooltip label="措施"></el-table-column>
             </el-table>
-            <pagination
-                :pageSizes="[15, 20, 40, 100]"
-                :total="pageTotal"
-                :page.sync="queryData.page"
-                :limit.sync="queryData.pageSize"
-                @pagination="pagination"
-            />
+<!--            <pagination-->
+<!--                :pageSizes="[15, 20, 40, 100]"-->
+<!--                :total="pageTotal"-->
+<!--                :page.sync="queryData.page"-->
+<!--                :limit.sync="queryData.pageSize"-->
+<!--                @pagination="pagination"-->
+<!--            />-->
         </pagePanel>
         
     </div>
