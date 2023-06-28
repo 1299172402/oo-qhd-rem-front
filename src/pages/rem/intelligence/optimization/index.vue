@@ -237,7 +237,7 @@ export default {
         }else{
             this.queryTableData(this.form.tableData2)
         }
-        this.src = 'http://10.77.78.250:9116'
+        this.src = 'https://intelinj.tjioms-dev.tjltd.cnooc/'
     },
     data() {
         return {
