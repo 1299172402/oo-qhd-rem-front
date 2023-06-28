@@ -614,4 +614,10 @@ export default {
 .el-icon-my-export2:before {
     content: "\e611";
 }
+
+::v-deep .el-table__header-wrapper .cell {
+    height: auto !important;
+    line-height: 18px !important;
+    white-space: pre !important;
+}
 </style>
