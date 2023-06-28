@@ -481,13 +481,13 @@
                                     </div>
                                     <div class="z-row-center">
                                         <div class="numBtn"  :class="['0050101'==selCode?'numBtnBgActive':'']"
-                                             v-if="zsqdForm.evaluationBiasTall != 0"
+                                             v-if=" zsqdForm.evaluationBiasTall && zsqdForm.evaluationBiasTall != 0"
                                              @click="((val)=>{selCode='0050101';})">
                                             <span class="sp1">{{zsqdForm.evaluationBiasTall}}</span>
                                             <span class="sp2">注水强度偏高</span>
                                         </div>
                                         <div class="numBtn"  :class="['0050102'==selCode?'numBtnBgActive':'']"
-                                             v-if="zsqdForm.evaluationBiasLow != 0"
+                                             v-if="zsqdForm.evaluationBiasLow && zsqdForm.evaluationBiasLow != 0"
                                              @click="((val)=>{selCode='0050102';})">
                                             <span class="sp1">{{zsqdForm.evaluationBiasLow}}</span>
                                             <span class="sp2">注水强度偏低</span>
