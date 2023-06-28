@@ -95,6 +95,10 @@
                                     </tr>
                                 </table>
                             </el-col>
+                            <el-button type="primary" style="position: relative;right:-93%" v-if="selCode&&(selCode=='2010802')"
+                                       @click="$router.push({name:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':6,evalResult:selCode }})">
+                                归因分析详情
+                            </el-button>
                         </el-row>
                     </div>
                     <div style="flex:1;min-height:380px;">
@@ -243,6 +247,12 @@
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
+                                    </div>
+                                    <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;left:-30px">
+                                        <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='2010802')"
+                                                   @click="$router.push({name:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':6,evalResult:selCode }})">
+                                            归因分析详情
+                                        </el-button>
                                     </div>
                                 </div>
                             </div>
