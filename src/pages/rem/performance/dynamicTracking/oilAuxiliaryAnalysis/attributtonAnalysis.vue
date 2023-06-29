@@ -99,7 +99,7 @@
         </pagePanel>
         <pagePanel v-if="link=='5'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
             <el-table
-                height="100%"
+                height="calc(100% - 50px)"
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                 header-cell-class-name="table_header"
@@ -137,7 +137,7 @@
         </pagePanel>
         <pagePanel v-if="link=='6'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
             <el-table
-                height="100%"
+                height="calc(100% - 50px)"
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                 header-cell-class-name="table_header"
@@ -173,7 +173,7 @@
         </pagePanel>
         <pagePanel v-if="link=='4'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
             <el-table
-                height="100%"
+                height="calc(100% - 50px)"
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                 :cell-style="{ padding: '3px', 'text-align': 'center' }"
