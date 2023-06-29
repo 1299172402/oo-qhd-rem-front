@@ -66,7 +66,7 @@ export function authUserCancelAll(data) {
   return request({
     url: "/system/post/authUser/cancelAll",
     method: "post",
-    params: data
+    data
   });
 }
 // 授权用户选择
@@ -74,7 +74,7 @@ export function authUserSelectAll(data) {
   return request({
     url: "/system/post/authUser/selectAll",
     method: "post",
-    params: data
+    data
   });
 }
 

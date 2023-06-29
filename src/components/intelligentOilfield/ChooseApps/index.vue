@@ -7,9 +7,9 @@
       btn-type="primary"
       dialog-title="选择应用"
       :append-to-body="true"
-      @closed="visible=false"
+      @closed="handleClosed"
       @ok="handleApplication"
-      @open="handleOpen"
+      @open="searchQuery"
     >
       <el-form
         ref="queryForm"
@@ -145,8 +145,32 @@ export default {
         appName: ""
       },
       columns,
-      appIds: []
+      defaultLoad: false
     };
+  },
+  computed: {
+    dataChange() {
+      const { dataSource, tableData } = this;
+      return { dataSource, appIds: tableData.map(item => item.appId) };
+    }
+  },
+  watch: {
+    dataChange: {
+      handler(val) {
+        if (val.dataSource.length && val.appIds.length) {
+          this.$nextTick(() => {
+            val.dataSource.forEach(row => {
+              if (val.appIds.indexOf(row.appId) >= 0) {
+                this.$refs.table?.toggleRowSelection(row, true);
+              } else {
+                this.$refs.table?.toggleRowSelection(row, false);
+              }
+            });
+          });
+        }
+      },
+      immediate: true
+    }
   },
   methods: {
     indexMethod(index) {
@@ -157,27 +181,6 @@ export default {
         this.$emit("on-select-app", data);
         this.visible = false;
       }
-    },
-    /**
-     * 弹窗打开操作
-     */
-    handleOpen() {
-      this.$nextTick(() => {
-        this.getAppIds();
-        this.dataSource.forEach(row => {
-          if (this.appIds.indexOf(row.appId) >= 0) {
-            this.$refs.table.toggleRowSelection(row, true);
-          } else {
-            this.$refs.table.toggleRowSelection(row, false);
-          }
-        });
-      });
-    },
-    /**
-     * 获取已选appId集合
-     */
-    getAppIds() {
-      this.appIds = this.tableData.map(item => item.appId);
     },
     /**
      * 选择租户
@@ -197,6 +200,10 @@ export default {
      */
     getRowKey(row) {
       return row.appId;
+    },
+    handleClosed() {
+      this.queryParams = {};
+      this.visible = false;
     }
   }
 };

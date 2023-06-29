@@ -89,6 +89,7 @@
     import { reasonAnalysis,reasonAnayLysisReport } from "@/api/oilDeposit/rem-02/outputmanagement.js";
     import { exportExcel } from "@/lib/exportExcel.js";
     export default {
+        name:'analysisAbnormal',
         data() {
             return {
                 //区块id

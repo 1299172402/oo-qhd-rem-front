@@ -290,18 +290,17 @@ export default {
   }
 
   ::v-deep .el-carousel__indicator--horizontal .el-carousel__button {
-    width: 10px;
-    height: 10px;
-    background: rgb(144, 144, 144);
-    border: 1px solid rgb(144, 144, 144);
+    width: 8px;
+    height: 8px;
+    background: var(--dot-bg);
     border-radius: 50%;
-    opacity: 0.5;
+    opacity: 0.24;
   }
 
   ::v-deep .el-carousel__indicator--horizontal.is-active .el-carousel__button {
-    width: 10px;
-    height: 10px;
-    background: var(--light-blue-color);
+    width: 8px;
+    height: 8px;
+    background: var(--dot-bg);
     border-radius: 50%;
     opacity: 1;
   }

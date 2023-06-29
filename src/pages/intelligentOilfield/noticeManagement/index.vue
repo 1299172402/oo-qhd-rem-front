@@ -328,11 +328,11 @@ export default {
       isExpandAll: true,
       tenantList: [],
       rules: {
-        noticeContent: [{ required: true, message: "请输入通知内容", trigger: "blur" }],
-        noticeType: [{ required: true, message: "请选择通知类型", trigger: "blur" }],
-        radio: [{ required: true, message: "请选择发送时间", trigger: "blur" }],
-        sendTime: [{ required: true, message: "请选择定时时间", trigger: "blur" }],
-        tenantIds: [{ required: true, message: "请选择通知对象", trigger: "blur" }]
+        noticeContent: [{ required: true, message: "请输入通知内容" }],
+        noticeType: [{ required: true, message: "请选择通知类型" }],
+        radio: [{ required: true, message: "请选择发送时间" }],
+        sendTime: [{ required: true, message: "请选择定时时间" }],
+        tenantIds: [{ required: true, message: "请选择通知对象" }]
       },
       // 显示搜索条件
       showSearch: true,

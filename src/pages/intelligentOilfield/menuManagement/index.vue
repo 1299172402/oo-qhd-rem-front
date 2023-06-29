@@ -249,13 +249,14 @@
       >
         <el-row>
           <el-col :span="24">
-            <el-form-item label="上级菜单">
+            <el-form-item label="上级菜单" prop="parentId">
               <treeselect
                 v-model="form.parentId"
                 :options="menuOptions"
                 :normalizer="normalizer"
                 :show-count="true"
                 placeholder="选择上级菜单"
+                @input="inputChange"
               >
                 <label
                   slot="option-label"
@@ -296,6 +297,7 @@
                   v-model="form.icon"
                   placeholder="请选择图标"
                   clearable
+                  readonly
                   @clear="clearIcon"
                 >
                   <svg-icon
@@ -312,23 +314,32 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="菜单名称" prop="menuName">
+              <span style="position: absolute;left: -79px;color: #f56c6c;">*</span>
               <textarea
+                id="menuName"
                 v-model.lazy="form.menuName"
                 :rows="1"
                 class="el-textarea__inner"
                 placeholder="请输入菜单名称"
+                @input="validateText"
                 @keydown="handlePushKeyword($event)"
               />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="菜单排序" prop="orderNum">
-              <el-input-number v-model="form.orderNum" controls-position="right" :min="0" />
+              <el-input-number
+                v-model="form.orderNum"
+                style="width: 210px"
+                controls-position="right"
+                :min="0"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <div v-if="form.menuType != 'F'">
               <el-form-item prop="path">
+                <span style="position: absolute;left: -95px;color: #f56c6c;">*</span>
                 <span slot="label">
                   <el-tooltip content="路由name名称" placement="top">
                     <i class="el-icon-question" />
@@ -336,10 +347,12 @@
                   路由名称
                 </span>
                 <textarea
+                  id="path"
                   v-model.lazy="form.path"
                   :rows="1"
                   class="el-textarea__inner"
                   placeholder="请输入路由名称"
+                  @input="validateText2"
                   @keydown="handlePushKeyword($event)"
                 />
               </el-form-item>
@@ -569,6 +582,26 @@ export default {
     }
   },
   data() {
+    const checkName = (rule, value, callback) => {
+      const textarea = document.getElementById("menuName");
+      // 获取当前值
+      const value2 = textarea.value;
+      if (!value2) {
+        callback(new Error("请输入菜单名称"));
+      } else {
+        callback();
+      }
+    };
+    const checkPath = (rule, value, callback) => {
+      const textarea = document.getElementById("path");
+      // 获取当前值
+      const value2 = textarea.value;
+      if (!value2) {
+        callback(new Error("请输入路由名称"));
+      } else {
+        callback();
+      }
+    };
     return {
       searchOption: [],
       appSelect: [],
@@ -600,11 +633,12 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        menuName: [{ required: true, message: "请输入菜单名称", trigger: "blur" }],
-        orderNum: [{ required: true, message: "请输入菜单顺序", trigger: "blur" }],
-        path: [{ required: true, message: "请输入路由名称", trigger: "blur" }],
-        component: [{ required: true, message: "请输入组件路径", trigger: "blur" }],
-        link: [{ required: true, message: "请输入路由地址", trigger: "blur" }]
+        menuName: [{ validator: checkName, trigger: "change" }],
+        path: [{ validator: checkPath, trigger: "change" }],
+        orderNum: [{ required: true, message: "请输入菜单排序" }],
+        component: [{ required: true, message: "请输入组件路径" }],
+        link: [{ required: true, message: "请输入路由地址" }],
+        parentId: [{ required: true, message: "请选择上级菜单" }]
       },
       disabledHandle: false
     };
@@ -621,6 +655,19 @@ export default {
     this.getList();
   },
   methods: {
+    inputChange() {
+      if (!this.form.validateField) {
+        this.$refs.form.validateField("parentId");
+      } else {
+        this.$refs.form.clearValidate("parentId");
+      }
+    },
+    validateText() {
+      this.$refs.form.validateField("menuName");
+    },
+    validateText2() {
+      this.$refs.form.validateField("path");
+    },
     handlePushKeyword(event) {
       if (event.keyCode === 13) {
         event.preventDefault(); // 阻止浏览器默认换行操作
@@ -744,6 +791,7 @@ export default {
       this.getTreeselect();
       if (type === "外层新增") {
         this.isShowRadioBtnM = true;
+        this.form.icon = "build";
       }
       if (row && row.menuId) {
         this.form.parentId = row.menuId;

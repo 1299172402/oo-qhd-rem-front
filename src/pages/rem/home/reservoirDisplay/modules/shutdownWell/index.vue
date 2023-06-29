@@ -227,7 +227,6 @@ export default {
           this.histogram.yAxis[0].max = null
           this.histogram.yAxis[1].min = null
           this.histogram.yAxis[1].max = null
-          console.log(res)
           res.data.data.data.yearMoth.forEach((n)=>{
               this.histogram.xAxis.data.push(n)
           })

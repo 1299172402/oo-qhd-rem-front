@@ -1,5 +1,5 @@
 import axios from "axios";
-import { MessageBox, Message, Loading } from "element-ui";
+import { MessageBox, Message, Loading, Notification } from "element-ui";
 import _ from "lodash";
 import { saveAs } from "file-saver";
 import proxy from "../config/host";
@@ -43,6 +43,9 @@ const quickCloseLoading = ["projectionMode", "officeMode"];
 function showLoading(target) {
   // 后面这个判断很重要，因为关闭时加了抖动，此时loading对象可能还存在，
   // 但needLoadingRequestCount已经变成0.避免这种情况下会重新创建个loading
+  if (document.querySelector("#first-loading")) {
+    return;
+  }
   if (needLoadingRequestCount === 0 && !loading) {
     loading = Loading.service({
       lock: true,
@@ -72,6 +75,30 @@ const instance = axios.create({
   }
 });
 
+function logoutBox(response = null) {
+  const alertDom = document.querySelector(".auto-refresh-token-alert-box");
+  if (alertDom || router.app?.$route?.path === "/" || router.app?.$route?.path === "/login") {
+    return;
+  }
+  MessageBox.confirm("登录状态已过期,请重新登录", "系统提示", {
+    confirmButtonText: "确定",
+    type: "warning",
+    showClose: false,
+    closeOnClickModal: false,
+    showCancelButton: false,
+    customClass: "auto-refresh-token-alert-box",
+    callback: () => {
+      store.dispatch("permission/restore");
+      store.dispatch("user/logout").then(() => {
+        router.replace({ path: "/" });
+      });
+      if (response?.config?.headers?.showLoading !== false) {
+        hideLoading();
+      }
+    }
+  });
+}
+
 // eslint-disable-next-line
 // @ts-ignore
 // axios的retry ts类型有问题
@@ -89,7 +116,7 @@ instance.interceptors.request.use(
     //   config.headers.Authorization = `Bearer ${store.getters['user/token']}`;
     // }
     // 判断当前请求是否设置了不显示Loading
-    if (config.headers.showLoading !== false && config.url.substring(0, config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && !config.url.includes("/system/CustomPanel/listByCustomId") && !config.url.includes("system/app/appListByUserIdAndTenantId") && whiteListLoading.indexOf(config.url) === -1) {
+    if (store.getters["permission/scrollLoading"] && config.headers.showLoading !== false && !config.url.includes("/system/CustomPanel/listByCustomId") && !config.url.includes("system/app/appListByUserIdAndTenantId") && whiteListLoading.indexOf(config.url) === -1) {
       showLoading(config.headers.loadingTarget);
     }
     return config;
@@ -127,40 +154,33 @@ instance.interceptors.response.use(
     }
     if (response.data.code === 401 && interceptCount === 0) {
       interceptCount += 1;
-      MessageBox.confirm("登录状态已过期,请重新登录", "系统提示", {
-        confirmButtonText: "确定",
-        type: "warning",
-        showClose: false,
-        closeOnClickModal: false,
-        showCancelButton: false,
-        customClass: "auto-refresh-token-alert-box",
-        callback: () => {
-          store.dispatch("permission/restore");
-          store.dispatch("user/logout").then(() => {
-            router.replace({ path: "/" });
-          });
-          if (response.config.headers.showLoading !== false) {
-            hideLoading();
-          }
-        }
-      });
+      logoutBox(response);
     } else if (response.data.code === 500) {
       if (response.config.url.substring(0, response.config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && whiteListError.indexOf(response.config.url) === -1) {
-        // 过滤掉右上角小铃铛1min轮询接口,和报警信息列表接口的报错信息
-        // Message({
-        //   message: response.data.msg,
-        //   type: "error"
-        // });
-        if (response.config.url === "auth/login") {
-          Message({
-            message: response.data.msg,
-            type: "error"
-          });
-        } else {
-          MessageBox.alert("系统内部服务错误", "系统提示", {
-            type: "error"
-          });
-        }
+      // 过滤掉右上角小铃铛1min轮询接口,和报警信息列表接口的报错信息
+      // TODO: Maybe change back，第一版顶部吐司形式
+      // Message({
+      //   message: response.data.msg,
+      //   type: "error"
+      // });
+      // TODO: Maybe change back，第二版弹窗形式+登录正常校验
+      // if (response.config.url === "auth/login") {
+      //   Message({
+      //     message: response.data.msg,
+      //     type: "error"
+      //   });
+      // } else {
+      //   MessageBox.alert("系统内部服务错误", "系统提示", {
+      //     type: "error"
+      //   });
+      // }
+      // 第三版右侧错误提示信息
+        Notification.error({
+          title: "",
+          message: response.data.msg,
+          duration: 1000,
+          offset: 50
+        });
       }
       if (response.config.headers.showLoading !== false) {
         hideLoading();
@@ -195,32 +215,37 @@ instance.interceptors.response.use(
     // }
     if (!config || !config.retry) {
       if (err.response?.data.code === 401) {
-        MessageBox.confirm("登录状态已过期,请重新登录", "系统提示", {
-          confirmButtonText: "确定",
-          type: "warning",
-          showClose: false,
-          closeOnClickModal: false,
-          showCancelButton: false,
-          customClass: "auto-refresh-token-alert-box",
-          callback: () => {
-            store.dispatch("permission/restore");
-            store.dispatch("user/logout").then(() => {
-              router.replace({ path: "/" });
-            });
-          }
-        });
+        logoutBox();
       } else if (config.url.substring(0, config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && whiteListError.indexOf(config.url) === -1) {
         // 过滤掉右上角小铃铛1min轮询接口,和报警信息列表接口的报错信息
+        // TODO: Maybe change back，弹窗形式
         // MessageBox.alert(err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错", "系统提示", {
         //   type: "error"
         // });
-        if (config.url === "auth/login") {
-          MessageBox.alert(err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错", "系统提示", {
-            type: "error"
+        // TODO: Maybe change back，第二版弹窗形式+登录正常校验
+        // if (config.url === "auth/login") {
+        //   MessageBox.alert(err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错", "系统提示", {
+        //     type: "error"
+        //   });
+        // } else {
+        //   MessageBox.alert("系统内部服务错误", "系统提示", {
+        //     type: "error"
+        //   });
+        // }
+        // 第三版右侧错误提示信息，特殊处理404
+        if (err.response?.status === 404) {
+          Notification.error({
+            title: "",
+            message: "系统内部服务错误",
+            duration: 1000,
+            offset: 50
           });
         } else {
-          MessageBox.alert("系统内部服务错误", "系统提示", {
-            type: "error"
+          Notification.error({
+            title: "",
+            message: err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错",
+            duration: 1000,
+            offset: 50
           });
         }
       }

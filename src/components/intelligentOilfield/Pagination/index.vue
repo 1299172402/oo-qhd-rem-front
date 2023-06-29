@@ -107,6 +107,10 @@ export default {
 
   ::v-deep .el-pagination {
     text-align: inherit;
+
+    ::v-deep .el-input__validateIcon {
+      display: none;
+    }
   }
 }
 

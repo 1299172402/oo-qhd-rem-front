@@ -21,7 +21,7 @@
                         </el-option>
                     </el-select>
                     <span style="margin-left:15px;">年月：</span>
-                    <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
@@ -37,36 +37,36 @@
                             <pagePanel headerTitle="开发生产问题监测" style="margin-top:0;height:100%;">
                                 <el-row :gutter="10">
                                     <el-col :span="9">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">动态变化趋势</el-button>
-                                        <el-radio-group v-model="selCode" class="z-radio-group" @change="((val)=>{selRadioIterm(val,'trendOfIndicators')})">
-                                            <el-radio-button v-for="(item,index) in trendOfIndicators" :key="index" :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
-                                            </el-radio-button>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">动态变化趋势</el-button>
+                                        <el-col v-for="(item,index) in trendOfIndicators" :key="index" :span="12">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'trendOfIndicators')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>   
                                     </el-col>
                                     <el-col :span="5">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">注水受效分析</el-button>
-                                        <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'injectionResponseAnalysis')})">
-                                            <el-radio-button v-for="(item,index) in injectionResponseAnalysis" :key="index" :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
-                                            </el-radio-button>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">注水受效分析</el-button>
+                                        <el-col v-for="(item,index) in injectionResponseAnalysis" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'injectionResponseAnalysis')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>   
                                     </el-col>
                                     <el-col :span="5">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">注采平衡</el-button>
-                                        <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'injectionProductionBalance')})">
-                                            <el-radio-button v-for="(item,index) in injectionProductionBalance" :key="index" :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
-                                            </el-radio-button>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">注采平衡</el-button>
+                                        <el-col v-for="(item,index) in injectionProductionBalance" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'injectionProductionBalance')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>   
                                     </el-col>
                                     <el-col :span="5">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">压力保持</el-button>
-                                        <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'thePressureToKeep')})">
-                                            <el-radio-button v-for="(item,index) in thePressureToKeep" :key="index" :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
-                                            </el-radio-button>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">压力保持</el-button>
+                                        <el-col v-for="(item,index) in thePressureToKeep" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'thePressureToKeep')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>   
                                     </el-col>
                                 </el-row>
                             </pagePanel>
@@ -74,11 +74,11 @@
                         <el-col :span="5" style="height: 100%">
                             <pagePanel headerTitle="措施推荐" style="margin-top:0;height:100%;">
                                 <el-row :gutter="10" style="height: 100%">
-                                    <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'recommendedMeasuresOptions')})">
-                                        <el-radio-button v-for="(item,index) in recommendedMeasuresOptions" :key="index" :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                            {{item.name+(item.value>0?'('+item.value+')':'(0)')}}
-                                        </el-radio-button>
-                                    </el-radio-group>
+                                    <el-col v-for="(item,index) in recommendedMeasuresOptions" :key="index" :span="24">
+                                        <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'recommendedMeasuresOptions')">
+                                            {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                        </el-button>
+                                    </el-col>  
                                 </el-row>
                             </pagePanel>
                         </el-col>
@@ -95,12 +95,17 @@
                                     </tr>
                                 </table>
                             </el-col>
+                            <el-button type="primary" style="position: relative;right:-93%" v-if="selCode&&(selCode=='2010802')"
+                                       @click="$router.push({name:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':6,evalResult:selCode }})">
+                                归因分析详情
+                            </el-button>
                         </el-row>
                     </div>
                     <div style="flex:1;min-height:380px;">
                         <pagePanel headerTitle="井组动态分析详情列表" style="margin-top:0;height:100%;">
                             <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
-                                <el-table-column prop="wellId" align="center" label="井组" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
+                                <el-table-column prop="wellId" label="井号" align="center" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
+                                <el-table-column prop="wellId" align="center" label="井组" width="200px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                 <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code"  align="center" min-width="170" sortable="custom" label-class-name="twoRowHeader">
                                     <template #header>
                                         <div class="headerSortRow1">
@@ -177,7 +182,7 @@
                         </el-option>
                     </el-select>
                     <span style="margin-left:15px;">年月：</span>
-                    <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
@@ -242,6 +247,12 @@
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
+                                    </div>
+                                    <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;left:-30px">
+                                        <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='2010802')"
+                                                   @click="$router.push({name:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':6,evalResult:selCode }})">
+                                            归因分析详情
+                                        </el-button>
                                     </div>
                                 </div>
                             </div>
@@ -374,7 +385,8 @@
                     <div style="height:680px;">
                         <info-window info-width="100%"  info-height="100%"  header-title="井组动态分析详情列表" :is-show-max-btn="false">
                             <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
-                                <el-table-column prop="wellId" align="center" label="井组" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
+                                <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
+                                <el-table-column prop="wellId" align="center" label="井组" width="200px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                 <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code"  align="center" min-width="170" sortable="custom" label-class-name="twoRowHeader">
                                     <template #header>
                                         <div class="headerSortRow1">
@@ -383,42 +395,52 @@
                                             <span>{{ item.unit}}</span>
                                         </div>
                                     </template>
-                                    
                                     <template slot-scope="{row}">
-                                        <span v-if="row[item.code+'Message']==''">{{row[item.code]}}</span>
-                                        <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
-                                            <span>{{row[item.code]}}</span>
-                                        </el-tooltip>
+                                        <span style="display: flex;align-items: center;justify-content: center;">
+                                            <span v-if="row[item.code+'Message']==''">{{row[item.code]?row[item.code]:'-'}}</span>
+                                            <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
+                                                <span>{{row[item.code]?row[item.code]:'-'}}</span>
+                                            </el-tooltip>
+                                            <img src="@/assets/rem/yieId/upTriangle.png" v-if="row[item.code+'Message']&&row[item.code+'Message'].includes('高')" style="width:20px;height:20px;">
+                                            <img src="@/assets/rem/yieId/downTriangle.png" v-if="row[item.code+'Message']&&row[item.code+'Message'].includes('低')"  style="width:20px;height:20px;">
+                                        </span>
                                     </template>
-                                      
                                   </el-table-column>
                                 <el-table-column prop="injectionResponseAnalysis" align="center" label="注水受效" min-width="140">
                                       <template slot-scope="{row}">
-                                          <span v-if="row['injectionResponseAnalysisMessage']==''">{{row['injectionResponseAnalysis']}}</span>
+                                          <span v-if="row['injectionResponseAnalysisMessage']==''">{{row['injectionResponseAnalysis']?row['injectionResponseAnalysis']:'-'}}</span>
                                           <el-tooltip v-else class="item" effect="dark" :content="row['injectionResponseAnalysisMessage']" placement="top">
-                                              <span>{{row['injectionResponseAnalysis']}}</span>
+                                              <span>{{row['injectionResponseAnalysis']?row['injectionResponseAnalysis']:'-'}}</span>
                                           </el-tooltip>
                                       </template>
                                   </el-table-column>
                                 <el-table-column prop="injectionProductionBalance" align="center" label="注水平衡" min-width="140">
                                       <template slot-scope="{row}">
-                                          <span v-if="row['injectionProductionBalanceMessage']==''">{{row['injectionProductionBalance']}}</span>
+                                          <span v-if="row['injectionProductionBalanceMessage']==''">{{row['injectionProductionBalance']?row['injectionProductionBalance']:'-'}}</span>
                                           <el-tooltip v-else class="item" effect="dark" :content="row['injectionProductionBalanceMessage']" placement="top">
-                                              <span>{{row['injectionProductionBalance']}}</span>
+                                              <span>{{row['injectionProductionBalance']?row['injectionProductionBalance']:'-'}}</span>
                                           </el-tooltip>
                                       </template>
                                   </el-table-column>
                                 <el-table-column prop="thePressureToKeep" align="center" label="压力保持" min-width="140">
                                       <template slot-scope="{row}">
-                                          <span v-if="row['thePressureToKeepMessage']==''">{{row['thePressureToKeep']}}</span>
+                                          <span v-if="row['thePressureToKeepMessage']==''">{{row['thePressureToKeep']?row['thePressureToKeep']:'-'}}</span>
                                           <el-tooltip v-else class="item" effect="dark" :content="row['thePressureToKeepMessage']" placement="top">
-                                              <span>{{row['thePressureToKeep']}}</span>
+                                              <span>{{row['thePressureToKeep']?row['thePressureToKeep']:'-'}}</span>
                                           </el-tooltip>
                                       </template>
                                   </el-table-column>
                                 <el-table-column align="center" label="措施初选">
-                                    <el-table-column prop="measuresName" align="center" label="推荐措施" min-width="140"></el-table-column>
-                                    <el-table-column prop="theDate" min-width="140px" align="center" label="推荐日期"></el-table-column>
+                                    <el-table-column prop="measuresName" align="center" label="推荐措施" min-width="140">
+                                        <template slot-scope="{row}">
+                                             <span>{{row.measuresName?row.measuresName:'-'}}</span>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="theDate" min-width="140px" align="center" label="推荐日期">
+                                        <template slot-scope="{row}">
+                                             <span>{{row.theDate?row.theDate:'-'}}</span>
+                                        </template>
+                                    </el-table-column>
                                     <el-table-column prop="address" align="center" label="操作" min-width="140">
                                         <template slot-scope="scope">
                                             <el-button type="text" size="small" @click="openAnalysis(scope.row.wellId)">分析</el-button>
@@ -449,11 +471,14 @@
         wellGroups,
         selectWellGroup
     } from "@/api/oilDeposit/rem-02/primaryinfo.js";
+    import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js"
     import compareSort from "@/lib/compareSort.js";
     export default {
+        name:'wellGroupAnalysisReport',
         mixins: [compareSort],
         data() {
             return {
+                collectWells:[],//收集井
                 isNewformat:true,//默认新版本
                 potentialWellNum:0,//潜力井
                 //数据来源,大于０为后台提取
@@ -529,21 +554,22 @@
             }
         },
         mounted() {
-            this.checkCurrentDate(); //初始化评价日期
-            this.queryOilFeildList(); //初始化油田
+            this.getDateApi();
         },
         methods: {
             //重置
             resetting(){
                 Object.assign(this.$data, this.$options.data());
-                this.checkCurrentDate(); //初始化评价日期
-                this.queryOilFeildList(); //初始化油田
+                this.getDateApi();
             },
-            //检查评价日期是否有效
-            checkCurrentDate() {
-                if (this.currentDate == null || this.currentDate == "" || this.currentDate == undefined) {
-                    this.currentDate = new Date().addDays(-1).format('yyyy-MM-dd');
-                }
+            //本接口获取最后一次模型计算出来的结果，返回最后一次跑模型的日期。
+            getDateApi(){
+                getDate({wellMenu:'WELL_INJ'}).then(res=>{
+                    if(res.data.code==200){
+                        this.currentDate=res.data.data;   
+                    }
+                    this.queryOilFeildList();
+                })
             },
             //获取油田
             queryOilFeildList() {
@@ -612,8 +638,282 @@
                 await this.queryRecommendedMeasures(paramMap); //措施推荐
                 await this.queryProWellDynamicAnalysisDetail(paramMap); //措施井数据
                 //触发初始选中  （测试没有使用，需要异步使用，还需要）
-                this.selRadioIterm(this.trendOfIndicatorsCode,'trendOfIndicators');
-                // this.selRadioIterm(this.selCode, this.selTag);
+                // this.selRadioIterm(this.trendOfIndicatorsCode,'trendOfIndicators');
+                if(this.collectWells.length){
+                    let data=[];
+                    for(let i=0;i<this.collectWells.length;i++){
+                        data.push(...this.collectWells[i]);
+                    }  
+                    data= [...new Set(data)];
+                    let myData=[];
+                    data.forEach((el,i)=>{
+                        myData.push({wellId:el})
+                    });
+                    this.queryTableData(myData);
+                }
+            },
+            queryTableData(myData,val=''){
+                console.log('myData1234567',myData)
+                let myWellCount = {}; //计算各项目的井数
+                let t_count = 0; //计数器
+                for (let i = 0; i < myData.length; i++) {
+                    let myWellId = myData[i].wellId; //井号
+                    //指标变化趋势 trendOfIndicators
+                    for (let j = 0; j < this.trendOfIndicators.length; j++) {
+                        let t_data = this.trendOfIndicators[j]; //每个数据项
+                        if (val == t_data.code) { //选中项目不需要测试
+                            myData[i][t_data.code] = '是'; //默认
+                            //添加详情信息
+                            if (t_data.basis == null) {
+                                myData[i][t_data.code + 'Message'] = '';
+                            } else {
+                                let messData = t_data.basis.find((item) => {
+                                    return item.well == myWellId
+                                });
+                                myData[i][t_data.code + 'Message'] = messData ? messData.message ? messData.message : '' : '';
+                                myData[i][t_data.code] = messData ? messData.itemValue ? messData.itemValue : '' : '';
+                            }
+                        } else {
+                            if (!isNaN(myWellCount[t_data.code])) {
+                                t_count = myWellCount[t_data.code];
+                            } else {
+                                t_count = 0; //初始化
+                            }
+                            let t_subWells = "," + t_data.wells + ",";
+                            if (t_subWells.includes("," + myWellId + ",")) {
+                                myData[i][t_data.code] = '是'; //默认
+                                //添加详情信息
+                                if (t_data.basis == null) {
+                                    myData[i][t_data.code + 'Message'] = '';
+                                } else {
+                                    let messData = t_data.basis.find((item) => {
+                                        return item.well == myWellId
+                                    });
+                                    myData[i][t_data.code + 'Message'] = messData ? messData.message ? messData.message : '' : '';
+                                    myData[i][t_data.code] = messData ? messData.itemValue ? messData.itemValue : '' : '';
+                                }
+                                t_count++; //计数
+                            }
+                            myWellCount[t_data.code] = t_count; //回写
+                        }
+                    }
+                    //注水受效分析 injectionResponseAnalysis
+                    for (let j = 0; j < this.injectionResponseAnalysis.length; j++) {
+                        let t_data = this.injectionResponseAnalysis[j]; //每个数据项
+                        if (val == t_data.code) { //选中项目不需要测试
+                            myData[i].injectionResponseAnalysis = t_data.name; //默认
+                            //添加详情信息
+                            if (t_data.basis == null) {
+                                myData[i]['injectionResponseAnalysisMessage'] = '';
+                            } else {
+                                let messData = t_data.basis.find((item) => {
+                                    return item.well == myWellId
+                                });
+                                myData[i]['injectionResponseAnalysisMessage'] = messData ? messData.message ? messData.message : '' : '';
+                            }
+                        } else {
+                            if (!isNaN(myWellCount[t_data.code])) {
+                                t_count = myWellCount[t_data.code];
+                            } else {
+                                t_count = 0; //初始化
+                            }
+                            let t_subWells = "," + t_data.wells + ",";
+                            if (t_subWells.includes("," + myWellId + ",")) {
+                                myData[i].injectionResponseAnalysis = t_data.name; //默认
+                                //添加详情信息
+                                if (t_data.basis == null) {
+                                    myData[i]['injectionResponseAnalysisMessage'] = '';
+                                } else {
+                                    let messData = t_data.basis.find((item) => {
+                                        return item.well == myWellId
+                                    });
+                                    myData[i]['injectionResponseAnalysisMessage'] = messData ? messData.message ? messData.message : '' : '';
+                                }
+                                t_count++; //计数
+                            }
+                            myWellCount[t_data.code] = t_count; //回写
+                        }
+                    }
+                    //注采平衡 injectionProductionBalance
+                    for (let j = 0; j < this.injectionProductionBalance.length; j++) {
+                        let t_data = this.injectionProductionBalance[j]; //每个数据项
+                        if (val == t_data.code) { //选中项目不需要测试
+                            myData[i].injectionProductionBalance = t_data.name; //默认
+                            //添加详情信息
+                            if (t_data.basis == null) {
+                                myData[i]['injectionProductionBalanceMessage'] = '';
+                            } else {
+                                let messData = t_data.basis.find((item) => {
+                                    return item.well == myWellId
+                                });
+                                myData[i]['injectionProductionBalanceMessage'] = messData ? messData.message ? messData.message : '' : '';
+                            }
+                        } else {
+                            if (!isNaN(myWellCount[t_data.code])) {
+                                t_count = myWellCount[t_data.code];
+                            } else {
+                                t_count = 0; //初始化
+                            }
+                            let t_subWells = "," + t_data.wells + ",";
+                            if (t_subWells.includes("," + myWellId + ",")) {
+                                myData[i].injectionProductionBalance = t_data.name; //默认
+                                //添加详情信息
+                                if (t_data.basis == null) {
+                                    myData[i]['injectionProductionBalanceMessage'] = '';
+                                } else {
+                                    let messData = t_data.basis.find((item) => {
+                                        return item.well == myWellId
+                                    });
+                                    myData[i]['injectionProductionBalanceMessage'] = messData ? messData.message ? messData.message : '' : '';
+                                }
+                                t_count++; //计数
+                            }
+                            myWellCount[t_data.code] = t_count; //回写
+                        }
+                    }
+                    //压力保持 thePressureToKeep
+                    for (let j = 0; j < this.thePressureToKeep.length; j++) {
+                        let t_data = this.thePressureToKeep[j]; //每个数据项
+                        if (val == t_data.code) { //选中项目不需要测试
+                            myData[i].thePressureToKeep = t_data.name; //默认
+                            //添加详情信息
+                            if (t_data.basis == null) {
+                                myData[i]['thePressureToKeepMessage'] = '';
+                            } else {
+                                let messData = t_data.basis.find((item) => {
+                                    return item.well == myWellId
+                                });
+                                myData[i]['thePressureToKeepMessage'] = messData ? messData.message ? messData.message : '' : '';
+                            }
+                        } else {
+                            if (!isNaN(myWellCount[t_data.code])) {
+                                t_count = myWellCount[t_data.code];
+                            } else {
+                                t_count = 0; //初始化
+                            }
+                            let t_subWells = "," + t_data.wells + ",";
+                            if (t_subWells.includes("," + myWellId + ",")) {
+                                myData[i].thePressureToKeep = t_data.name; //默认
+                                //添加详情信息
+                                if (t_data.basis == null) {
+                                    myData[i]['thePressureToKeepMessage'] = '';
+                                } else {
+                                    let messData = t_data.basis.find((item) => {
+                                        return item.well == myWellId
+                                    });
+                                    myData[i]['thePressureToKeepMessage'] = messData ? messData.message ? messData.message : '' : '';
+                                }
+                                t_count++; //计数
+                            }
+                            myWellCount[t_data.code] = t_count; //回写
+                        }
+                    }
+                    //recommendedMeasuresOptions//措施推荐；不需要考虑数据项
+                    for (let j = 0; j < this.recommendedMeasuresOptions.length; j++) {
+                        let t_data = this.recommendedMeasuresOptions[j]; //每个数据项
+                        if (val == t_data.code) { //选中项目不需要测试
+                            //myData[i][t_data.code] = '是';//默认
+                        } else {
+                            if (!isNaN(myWellCount[t_data.code])) {
+                                t_count = myWellCount[t_data.code];
+                            } else {
+                                t_count = 0; //初始化
+                            }
+                            let t_subWells = "," + t_data.wells + ",";
+                            if (t_subWells.includes("," + myWellId + ",")) {
+                                //myData[i][t_data.code] = '是';//默认
+                                t_count++; //计数
+                            }
+                            myWellCount[t_data.code] = t_count; //回写
+                        }
+                    }
+                    //有推荐措施时，附加措施效果数据
+                    let t_index = this.recommendedMeasuresWells[myWellId];
+                    if (!isNaN(t_index)) { //转移措施数据
+                        let t_partData = this.recommendedMeasuresData[t_index]; //推荐措施的数据
+                        myData[i].theDate = t_partData.theDate;
+                        myData[i].measuresCode = t_partData.measuresCode;
+                        myData[i].measuresName = t_partData.measuresName;
+                        myData[i].increaseVolume = t_partData.increaseVolume;
+                        myData[i].increaseQuality = t_partData.increaseQuality;
+                        myData[i].increaseVolumeC = t_partData.increaseVolumeC;
+                        myData[i].increaseQualityC = t_partData.increaseQualityC;
+                    }
+                }
+                //3、根据每个项目的井数遍历检查表头
+                //指标变化趋势 trendOfIndicators
+                this.trendOfIndicatorsTab = [];
+                for (let j = 0; j < this.trendOfIndicators.length; j++) {
+                    let t_data = this.trendOfIndicators[j]; //每个数据项
+                    //获得相关井数
+                    if (!isNaN(myWellCount[t_data.code])) {
+                        t_count = myWellCount[t_data.code];
+                    } else {
+                        t_count = 0; //初始化
+                    }
+                    this.trendOfIndicators[j].value = t_count; //登记条数
+                    if (t_count > 0) {
+                        let titleName = t_data.name;
+                        let unit='';
+                        if(t_data.unit){
+                            unit=t_data.unit.replace('m3', 'm³');
+                        }
+                        this.trendOfIndicatorsTab.push({
+                            code: t_data.code,
+                            name: titleName,
+                            unit
+                        }); //添加动态表头
+                    }
+                }
+                //注水受效分析 injectionResponseAnalysis
+                for (let j = 0; j < this.injectionResponseAnalysis.length; j++) {
+                    let t_data = this.injectionResponseAnalysis[j]; //每个数据项
+                    //获得相关井数
+                    if (!isNaN(myWellCount[t_data.code])) {
+                        t_count = myWellCount[t_data.code];
+                    } else {
+                        t_count = 0; //初始化
+                    }
+                    this.injectionResponseAnalysis[j].value = t_count; //登记条数
+                }
+                //注采平衡 injectionProductionBalance
+                for (let j = 0; j < this.injectionProductionBalance.length; j++) {
+                    let t_data = this.injectionProductionBalance[j]; //每个数据项
+                    //获得相关井数
+                    if (!isNaN(myWellCount[t_data.code])) {
+                        t_count = myWellCount[t_data.code];
+                    } else {
+                        t_count = 0; //初始化
+                    }
+                    this.injectionProductionBalance[j].value = t_count; //登记条数
+                }
+                //压力保持 thePressureToKeep
+                for (let j = 0; j < this.thePressureToKeep.length; j++) {
+                    let t_data = this.thePressureToKeep[j]; //每个数据项
+                    //获得相关井数
+                    if (!isNaN(myWellCount[t_data.code])) {
+                        t_count = myWellCount[t_data.code];
+                    } else {
+                        t_count = 0; //初始化
+                    }
+                    this.thePressureToKeep[j].value = t_count; //登记条数
+                }
+                //recommendedMeasuresOptions//措施推荐；不需要考虑数据项
+                for (let j = 0; j < this.recommendedMeasuresOptions.length; j++) {
+                    let t_data = this.recommendedMeasuresOptions[j]; //每个数据项
+                    //获得相关井数
+                    if (!isNaN(myWellCount[t_data.code])) {
+                        t_count = myWellCount[t_data.code];
+                    } else {
+                        t_count = 0; //初始化
+                    }
+                    this.recommendedMeasuresOptions[j].value = t_count; //登记条数
+                }
+                this.tableData = myData; 
+                console.log('this.tableData',this.tableData)
+                this.$nextTick(() => {
+                    this.$refs.tableList.doLayout();
+                })
             },
             //指标变化趋势---zxb
             async queryTrendOfIndicators(request) {
@@ -621,13 +921,17 @@
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
+                        console.log('asda',myData)
                         this.trendOfIndicatorsNum.allnum=0;
                         this.trendOfIndicatorsNum.zcnum=0;
                         this.trendOfIndicatorsNum.ycnum=0;
                         myData.forEach((el,i)=>{
+                            if(el.wells){
+                                let wells=el.wells.split(',');
+                                this.collectWells.push(wells);
+                            }
                             this.trendOfIndicatorsNum.allnum+=Number(el.value);
                             if(el.name=='正常'){
-                                this.trendOfIndicatorsCode=el.code;
                                 this.trendOfIndicatorsNum.zcnum=Number(el.value);
                             }else{
                                 myData[i].isShow=Number(el.value)?true:false;
@@ -650,6 +954,10 @@
                         this.injectionResponseAnalysisNum.zcnum=0;
                         this.injectionResponseAnalysisNum.ycnum=0;
                         myData.forEach((el,i)=>{
+                            if(el.wells){
+                                let wells=el.wells.split(',');
+                                this.collectWells.push(wells);
+                            }
                             this.injectionResponseAnalysisNum.allnum+=Number(el.value);
                             if(el.name=='正常'){
                                 this.injectionResponseAnalysisNum.zcnum=Number(el.value);
@@ -674,6 +982,10 @@
                         this.injectionProductionBalanceNum.zcnum=0;
                         this.injectionProductionBalanceNum.ycnum=0;
                         myData.forEach((el,i)=>{
+                            if(el.wells){
+                                let wells=el.wells.split(',');
+                                this.collectWells.push(wells);
+                            }
                             this.injectionProductionBalanceNum.allnum+=Number(el.value);
                             if(el.name=='正常'){
                                 this.injectionProductionBalanceNum.zcnum=Number(el.value);
@@ -698,6 +1010,10 @@
                         this.thePressureToKeepNum.zcnum=0;
                         this.thePressureToKeepNum.ycnum=0;
                         myData.forEach((el,i)=>{
+                            if(el.wells){
+                                let wells=el.wells.split(',');
+                                this.collectWells.push(wells);
+                            }
                             this.thePressureToKeepNum.allnum+=Number(el.value);
                             if(el.name=='正常'){
                                 this.thePressureToKeepNum.zcnum=Number(el.value);
@@ -752,10 +1068,16 @@
                 let myData = []; //我的数据
                 let myWellCount = {}; //计算各项目的井数
                 let t_count = 0; //计数器
-                this.selCode = val; //选中项目
                 this.selTag = tag; //选中数据集
                 if (val == undefined || val == "") {
                     return false; //无效参数
+                }
+                if(this.selCode!=val){
+                    this.selCode = val; //选中项目
+                }else{
+                    this.selCode='';
+                    this.doSearch();
+                    return false;
                 }
                 //进行运算
                 //1、获取选中井集合
@@ -787,24 +1109,6 @@
                 for (let i = 0; i < myData.length; i++) {
                     let myWellId = myData[i].wellId; //井号
                     //指标变化趋势 trendOfIndicators
-                    /*for(let j=0;j<this.trendOfIndicators.length;j++){
-                      let t_data = this.trendOfIndicators[j];//每个数据项
-                      if(val==t_data.code){//选中项目不需要测试
-                        myData[i].trendOfIndicators = t_data.name;//默认
-                      }else{
-                        if(!isNaN(myWellCount[t_data.code])){
-                          t_count = myWellCount[t_data.code];
-                        }else{
-                          t_count = 0;//初始化
-                        }
-                        let t_subWells = ","+t_data.wells+",";
-                        if(t_subWells.includes(","+myWellId+",")){
-                          myData[i].trendOfIndicators = t_data.name;//默认
-                          t_count++;//计数
-                        }
-                        myWellCount[t_data.code] = t_count;//回写
-                      }
-                    }*/
                     for (let j = 0; j < this.trendOfIndicators.length; j++) {
                         let t_data = this.trendOfIndicators[j]; //每个数据项
                         if (val == t_data.code) { //选中项目不需要测试
@@ -1056,6 +1360,7 @@
                     this.recommendedMeasuresOptions[j].value = t_count; //登记条数
                 }
                 this.tableData = myData; //加载数据
+                console.log('this.tableData',this.tableData)
                 this.$nextTick(() => {
                     this.$refs.tableList.doLayout();
                 })
@@ -1339,6 +1644,7 @@
                                         margin-right:10px;
                                     }
                                     span{
+                                        padding-left:30px;
                                         font-size: 16px;
                                         // color: #FFFFFF;
                                         text-align: center;
@@ -1348,7 +1654,7 @@
                                     &::before{
                                         content:'';
                                         background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                                        width:110px;
+                                        width:150px;
                                         height:32px;
                                         position: absolute;
                                         left:60px;
@@ -1366,6 +1672,7 @@
                                         margin-right:20px;
                                     }
                                     span{
+                                        padding-left:30px;
                                         font-size: 16px;
                                         // color: #FFFFFF;
                                         text-align: center;
@@ -1525,6 +1832,7 @@
                                         margin-right:10px;
                                     }
                                     span{
+                                        padding-left:30px;
                                         font-size: 16px;
                                         // color: #FFFFFF;
                                         text-align: center;
@@ -1534,7 +1842,7 @@
                                     &::before{
                                         content:'';
                                         background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                                        width:110px;
+                                        width:150px;
                                         height:32px;
                                         position: absolute;
                                         left:60px;
@@ -1552,6 +1860,7 @@
                                         margin-right:20px;
                                     }
                                     span{
+                                        padding-left:30px;
                                         font-size: 16px;
                                         // color: #FFFFFF;
                                         text-align: center;
@@ -1561,7 +1870,7 @@
                                     &::before{
                                         content:'';
                                         background-image: linear-gradient(137deg, rgba(141,205,251,0.00) 0%, rgba(54,151,222,0.41) 30%, rgba(17,110,177,0.54) 67%, rgba(2,95,161,0.20) 88%, rgba(148,210,253,0.00) 100%);
-                                        width:110px;
+                                        width:150px;
                                         height:32px;
                                         position: absolute;
                                         left:50px;
@@ -1690,27 +1999,38 @@
             }
         }
     }
-    
-    ::v-deep .z-radio-group{
-        width:100%;
-        display:flex;
-        flex-wrap:wrap;
-        .el-radio-button{
-            width:237px;
-            margin-right:10px;
-        }
-        .el-radio-button:nth-child(2n){
-            margin-right:0;
-        }
-    }
-    
     //相关
     ::v-deep .about1 {
-        background: rgb(2, 43, 117);
+        background: rgb(2, 43, 117)!important;
         .el-radio-button__inner{
             color:#fff;
             background: transparent!important;
         }
+    }
+     
+    .z-button{
+        width: 100%;
+        height: 28px;
+        font-size:14px;
+        text-align: center;
+        border-color: var(--light-blue-color);
+        color: var(--white-color);
+        transition: all 0s;
+        height: 34px;
+        line-height: 8px;
+        border-radius: 0 !important;
+        background: rgba(143, 164, 204, 0.3);
+        background-size: 100% 100% !important;
+        &:hover{
+            border-image: var(--primary-btn);
+            border-color: var(--light-blue-color);
+            background: var(--primary-btn) !important;
+        }
+    }
+    .selectButton{
+        border-image: var(--primary-btn);
+        border-color: var(--light-blue-color);
+        background: var(--primary-btn) !important;
     }
     
     .checkBtn {
@@ -1723,7 +2043,6 @@
         background-size: 100% 100% !important;
         color:#fff;
     }
-    
     .about {
         width: 110px;
         height: 28px;
@@ -1732,7 +2051,6 @@
         background: rgb(2, 43, 117);
         color:#fff;
     }
-    
     .noCheckBtn {
         width: 110px;
         height: 28px;
@@ -1740,34 +2058,15 @@
         text-align: center;
         background: rgba(143, 164, 204, 0.3);
     }
+    
 
-
-    ::v-deep .editInput {
-        width: 100%;
-    }
-
-    ::v-deep .title_1 {
-        display: inline-block;
-        text-align: center;
-    }
-
-
-    .my-5 {
-        &>*:not(span) {
-            margin-right: 10px;
-        }
-
-        &>span {
-            margin-right: 4px;
-        }
-    }
-
+    
+    //表格
     .table-fixed {
         ::v-deep .el-table__body-wrapper {
             height: calc(84% - 44px) !important;
         }
     }
-
     ::v-deep .el-table thead.is-group th {
         background: transparent;
     }

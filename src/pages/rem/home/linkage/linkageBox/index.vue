@@ -1,7 +1,8 @@
 <template>
-    <div class="box" @mouseenter="show = true" @mouseleave="show = false">
+<!--    <div class="box" @mouseenter="show = true" @mouseleave="show = false">-->
+    <div class="box" @mouseenter="mouseenter" @mouseleave="mouseleave">
         <el-collapse-transition>
-            <div v-show="show||remHome || showFlag ||  warningShowFlag ">
+            <div v-show="show || showFlag ||  warningShowFlag ">
                 <div class="transition-box">
                     <div class="transition-box-content" :style="{'background-image':`url(${currentList.imgUrl})` }">
                         <div v-show="warningShowFlag" class="mcBox" style="">
@@ -25,7 +26,8 @@
                     <div class="pad">
                         <div>
                             <p v-show="!content" :key="index" v-for="(item,index) in currentList.boxBottomText">
-                                <span style="cursor: pointer" @click="linkTo(item.url)">{{ item.name ? item.name : item }}</span>
+                                <span v-if="item.url" style="cursor: pointer" @click="linkTo(item.url)">{{ item.name ? item.name : item }}</span>
+                                <span v-if="!item.url" style="pointer-events: none;color:#5a5959;font-weight:bolder">{{ item.name ? item.name : item }}</span>
                                 <span v-if="currentList.boxBottomContent" class="btnContent" @click="btnContent(index)">{{ currentList.boxBottomContent[index].length > 0 ? '>>' : '' }}</span>
                                 <span v-else class="btnBack" @click="btnBack"></span>
                             </p>
@@ -53,7 +55,6 @@ export default {
             default: () => {
             }
         },
-        remHome: false,
         showFlag: {
             type: Boolean,
             default: false
@@ -100,8 +101,14 @@ export default {
         },
         confirm(){
             this.warningShowFlag = false
-            // https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport
-            // window.open ( 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/analysisReport','_blank')
+        },
+        mouseenter(){
+            this.show = true
+            this.$emit('stopTimer')
+        },
+        mouseleave(){
+            this.show = false
+            this.$emit('startTimer')
         }
     }
 }
@@ -129,7 +136,7 @@ export default {
             display: inline-block !important;
             width: 45%;
             height: 50%;
-            margin: 1.6vw 0 0 0.5vw !important;
+            margin: 2vw 0 0 0.5vw !important;
             background-size: cover !important;
             //}
         }

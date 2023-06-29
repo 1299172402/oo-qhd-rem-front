@@ -7,6 +7,7 @@
     v-bind="$attrs"
     dialog-title="流程变量列表"
     @open="getData"
+    @close="() => { dataSource = []; }"
   >
     <div class="app-container">
       <el-form
@@ -37,6 +38,7 @@
         <el-table
           height="calc(100% - 130px)"
           :data="dataSource"
+          style="min-height: 300px;"
         >
           <el-table-column label="id" prop="id" :show-overflow-tooltip="true" />
           <el-table-column label="名称" prop="name" :show-overflow-tooltip="true" />
@@ -136,11 +138,11 @@ export default {
      * 获取实例信息，节点选项
      */
     getData() {
-      this.loadData();
       getById(this.id)
         .then(res => {
           this.taskInfo = res;
           this.taskInfo.processInstanceId = res.id;
+          this.loadData();
         }).catch(() => {
           this.visible = false;
           this.$message.error("信息获取失败！");

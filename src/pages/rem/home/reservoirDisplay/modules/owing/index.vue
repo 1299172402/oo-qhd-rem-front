@@ -5,12 +5,11 @@
         header-title="超欠注情况统计"
         :is-show-max-btn="true"
     >
-        <button class="detailLinkBtn" @click="linkroute('measuresPumpWellRecovery')">详细</button>
+        <button class="detailLinkBtn" @click="linkroute('/intelligence1/index')">详细</button>
         <el-table
             :data="tableData"
             height="100%"
             style="width: 100%"
-            :header-cell-style="headerColor"
         >
             <el-table-column prop="date" label="序号" align="center" width="50">
                 <template slot-scope="scope">{{ scope.$index + 1 }}</template>
@@ -58,6 +57,9 @@ export default {
         this.queryUltraShortShotStatistics()
     },
     methods: {
+        linkroute(rname) {
+            this.$router.push({path: rname,query: {link:'remHome'}});
+        },
         renderheader(h, {column, $index}) {
             return h('span', {}, [
                 h('span', {}, column.label.split('?')[0]),
@@ -71,7 +73,9 @@ export default {
                 //区块
                 blockId: 'YCFXDY8B643EDC9007F96F570600457D',
                 //选择时间
-                dateTime: new Date().format('YYYY-MM') ,
+                // dateTime: new Date().format('YYYY-MM') ,
+                //修改取数的日期为5月
+                dateTime: '2023-05',
                 //油田
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'
             }

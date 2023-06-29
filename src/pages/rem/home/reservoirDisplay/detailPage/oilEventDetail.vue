@@ -93,6 +93,7 @@
     } from "@/api/basic/master";
     import {queryOilFieldIncident, queryOilFieldIncidentType} from "@/api/rem/reservoirbillboards";
     export default {
+        name:'oilEventDetail',
         data(){
             return {
                 pageTotal:'',
@@ -119,7 +120,7 @@
         },
         methods:{
             goBack(){
-                this.$router.push({name:'reservoirDisplay'})
+                this.$router.push({name:'oilexhibition'})
             },
             getList() {
                 //根据作业公司查询油田

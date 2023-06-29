@@ -52,6 +52,7 @@ import reserves from "./components/reserves.vue";
 import water from "./components/water.vue";
 import decreasing from "./components/decreasing.vue";
 export default {
+  name:'developmentEffectEvaluation',
   components: {
     Echart,
     evaluation,
@@ -116,6 +117,9 @@ export default {
     };
   },
   mounted() {
+    if(this.$route.query.link){
+        this.tabsValue=this.$route.query.link;
+    }
     this.initData();
   },
   methods: {

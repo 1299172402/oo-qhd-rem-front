@@ -8,7 +8,7 @@
                 <el-option :label="item.name" :value="item.code" v-for="(item,index) in selectAllocOrCalculate" :key="index"></el-option>
             </el-select>
         </div> 
-        <div class="z-echarts" :style="{height:height+'px'}">
+        <div class="z-echarts" >
             <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
         </div>   
         <div class="develop">
@@ -399,7 +399,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#9dce2f',
+                                color: 'rgb(255,0,0)',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -518,7 +518,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color:'#f300f1',
+                                color:'rgb(165,42,42)',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -609,7 +609,7 @@
             }
         },
         mounted() {
-            this.height=document.getElementsByClassName('z-main')[0].offsetHeight-40-60-10;
+            this.height=document.getElementsByClassName('z-main')[0].offsetHeight-40-50-10;
             console.log('this.height',this.height)
             let year = new Date().getFullYear();
             this.selectData = [new Date(year + '-01-01').format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
@@ -669,7 +669,7 @@
                             } else if (lineName == '井口温度') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 7;
-                                series.itemStyle={color:'#5a9df2'}
+                                series.itemStyle={color:'rgb(255,0,0)'}
                             } else if (lineName == '气油比') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 5;
@@ -681,11 +681,11 @@
                             } else  if (lineName == '日产液量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
-                                series.itemStyle={color:'#f300f1'}
+                                series.itemStyle={color:'rgb(165,42,42)'}
                             } else if (lineName == '日产油量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 8;
-                                series.itemStyle={color:'#018000'}
+                                series.itemStyle={color:'rgb(0,255,0)'}
                             } else if (lineName == '日产气量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 10;
@@ -693,11 +693,11 @@
                             } else if (lineName == '日产油') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 8;
-                                series.itemStyle={color:'#018000'}
+                                series.itemStyle={color:'rgb(0,255,0)'}
                             } else if (lineName == '日产液') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
-                                series.itemStyle={color:'#f300f1'}
+                                series.itemStyle={color:'rgb(165,42,42)'}
                             } else  {
                                 continue;
                             }
@@ -812,7 +812,7 @@
         overflow-y: scroll;
         overflow-x: hidden;
         .z-search{
-            height:60px;
+            height:50px;
         }
         
         .z-echarts{

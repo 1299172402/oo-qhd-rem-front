@@ -6,7 +6,7 @@
             header-title="秦皇岛32-6油田生产指标总览"
             :is-show-max-btn="true"
         >
-            <button class="detailLinkBtn" @click="linkroute('technicalIndexManagement')">详细</button>
+            <button class="detailLinkBtn" @click="linkroute('/intelligence1/index')">详细</button>
             <el-row :gutter="20" style="margin-bottom: 10px;padding: 0 20px">
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
@@ -62,7 +62,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(dataList.comRate, '%', 'rgb(247,181,0)', 'rgb(41,72,94)', 'rgb(247,181,0)')"></Echart>
+                            :chart-data="getEchartData(isNaN(((dataList.productionEfficiency * dataList.oilWellUtilizationRate)/100).toFixed(2)) ? '' : ((dataList.productionEfficiency * dataList.oilWellUtilizationRate)/100).toFixed(2), '%', 'rgb(247,181,0)', 'rgb(41,72,94)', 'rgb(247,181,0)')"></Echart>
                         <div class="chartText">综合时率</div>
                     </div>
                 </el-col>
@@ -124,7 +124,7 @@ import {productionMetricsOverview} from "@/api/rem/reservoirbillboards";
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 let value = 0;
-let name = "统计";
+let name = "";
 export default {
     props: ["infodata"],
     components: {
@@ -469,7 +469,7 @@ export default {
     },
     methods: {
         linkroute(rname) {
-            this.$router.push({name: rname});
+            this.$router.push({path: rname,query: {link:'remHome'}});
         },
         getData(){
             // new Date().format('YYYY-MM')
@@ -478,15 +478,15 @@ export default {
                 if(!res.data.data.naturalDecline)  res.data.data.naturalDecline = 0
                 this.histogram.series[0].data[0].value = res.data.data.naturalDecline
                 this.histogram.series[0].data[1].value = 100 - res.data.data.naturalDecline
-                this.histogram.title.text = "{a|" + res.data.data.naturalDecline + "%}{c|\n" +   "统计}"
+                this.histogram.title.text = "{a|" + res.data.data.naturalDecline + "%}{c|\n" +   "}"
                 if(!res.data.data.overallDecline)  res.data.data.overallDecline = 0
                 this.histogram2.series[0].data[0].value = res.data.data.overallDecline
                 this.histogram2.series[0].data[1].value = 100 - res.data.data.overallDecline
-                this.histogram2.title.text = "{a|" + res.data.data.overallDecline + "%}{c|\n" +   "统计}"
+                this.histogram2.title.text = "{a|" + res.data.data.overallDecline + "%}{c|\n" +   "}"
                 if(!res.data.data.wholeDeclineRate)  res.data.data.wholeDeclineRate = 0
                 this.histogram3.series[0].data[0].value = res.data.data.wholeDeclineRate
                 this.histogram3.series[0].data[1].value = 100 - res.data.data.wholeDeclineRate
-                this.histogram3.title.text = "{a|" + res.data.data.wholeDeclineRate + "%}{c|\n" +   "统计}"
+                this.histogram3.title.text = "{a|" + res.data.data.wholeDeclineRate + "%}{c|\n" +   "}"
             })  
         },
         //图表
@@ -549,7 +549,7 @@ export default {
                         radius: [0, "75%"],
                         color: centerColor,
                         label: {
-                            fontSize: 10,
+                            fontSize: 15,
                         },
                         data: [
                             {value: 0, name: value, label: {color:'#29EEF3', position: "center"}},

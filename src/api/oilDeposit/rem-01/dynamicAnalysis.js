@@ -389,4 +389,17 @@ export function getSectionWell(request){
     data: request,
   });
 }
+export function queryAdjacentWellData({ wellId } = {}) {
+    return Axios({
+        url: `${baseUrl}/oilAnalysisReportController/queryAdjacentWellData?wellId=${ wellId || "" }`,
+        method: "get",
+    });
+}
+
+export function queryEvaluationWaterInjCount({ assetCode ,date,ogfId , reservoirUnitId, wellId} = {},) {
+    return Axios({
+        url: `${baseUrl}/evaluationWaterInjCount/queryEvaluationWaterInjCount?assetCode=${ assetCode || "" }&date=${ date || "" }&ogfId=${ ogfId || "" }&reservoirUnitId=${ reservoirUnitId || "" }&wellId=${ wellId || "" }`,
+        method: "get",
+    });
+}
 

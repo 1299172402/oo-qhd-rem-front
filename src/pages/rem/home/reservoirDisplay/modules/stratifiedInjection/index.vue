@@ -6,7 +6,7 @@
           header-title="分层注入量"
           :is-show-max-btn="true"
       >
-          <button class="detailLinkBtn" @click="linkroute('intelligenceDetail')">详细</button>
+          <button class="detailLinkBtn" @click="linkroute('/intelligence1/index')">详细</button>
           <Echart :chart-data="option" width="100%" height="100%"></Echart>
       </info-window>
   </div>
@@ -94,7 +94,7 @@ export default {
   },
   methods: {
       linkroute(rname) {
-          this.$router.push({name: rname});
+          this.$router.push({path: rname,query: {link:'remHome'}});
       },
       //分层注采量
       queryStratifiedInjectionDetails() {

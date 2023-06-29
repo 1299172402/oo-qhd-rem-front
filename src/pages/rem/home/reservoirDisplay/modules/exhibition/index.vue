@@ -6,7 +6,7 @@
           header-title="单井井底流压"
           :is-show-max-btn="true"
       >
-        <button class="detailLinkBtn" @click="linkroute('productionIndex')">详细</button>
+        <button class="detailLinkBtn" @click="linkroute('/intelligence1/index')">详细</button>
 <!--        <el-row :gutter="20" style="margin-bottom: 10px">-->
 <!--          <el-col :span="12">-->
 <!--            <div class="grid-content bg-purple">-->
@@ -148,6 +148,9 @@ export default {
       this.getData()
   },
   methods: {
+      linkroute(rname) {
+          this.$router.push({path: rname,query: {link:'remHome'}});
+      },
       getResidueOilChart() {
           let option = {
               legend: {
@@ -237,7 +240,9 @@ export default {
           }
           let params = {
               blockId: 'YCFXDY8B643EDC9007F96F570600457D',
-              yearMonth: dateTime,
+              // yearMonth: dateTime,
+              //修改取数的日期为5月
+              yearMonth: '2023-05',
           }
           getResidueOilCondotion(params).then(res => {
               try {
@@ -251,7 +256,6 @@ export default {
 
               this.ResidueOilRank = res.slice(0, 10);
               this.ResidueOilRank.sort((a, b) => a.dhFlowingPress - b.dhFlowingPress)
-              console.log(this.ResidueOilRank)
           })  
       },
     //图表

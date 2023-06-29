@@ -53,6 +53,7 @@
     import Schedule17 from "./components/schedule17.vue";
     import Schedule18 from "./components/schedule18.vue";
     export default {
+        name:'twoIncreasesOneDecrease',
         components: {
             verticalSwitchButton,
             schedule1,

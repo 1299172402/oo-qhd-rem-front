@@ -17,10 +17,10 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <!-- <el-form-item label="权限字符" prop="roleKey">
+        <!-- <el-form-item label="角色编码" prop="roleKey">
         <el-input
           v-model="queryParams.roleKey"
-          placeholder="请输入权限字符"
+          placeholder="请输入角色编码"
           clearable
           size="small"
           style="width: 240px"
@@ -303,19 +303,24 @@
           <el-col :span="12">
             <el-form-item prop="roleKey">
               <span slot="label">
-                <el-tooltip content="控制器中定义的权限字符，如：@PreAuthorize(`@ss.hasRole('admin')`)" placement="top">
+                <el-tooltip content="控制器中定义的角色编码，如：@PreAuthorize(`@ss.hasRole('admin')`)" placement="top">
                   <i class="el-icon-question" />
                 </el-tooltip>
-                权限字符
+                角色编码
               </span>
-              <el-input v-model="form.roleKey" placeholder="请输入权限字符" />
+              <el-input v-model="form.roleKey" placeholder="请输入角色编码" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="角色类型" prop="roleType">
-              <el-select v-model="form.roleType" placeholder="请选择角色类型" :disabled="!!($route.params.id || form.appId !== '$system$' )">
+              <el-select
+                v-model="form.roleType"
+                style="width: 267px"
+                placeholder="请选择角色类型"
+                :disabled="!!($route.params.id || form.appId !== '$system$' )"
+              >
                 <el-option
                   v-for="item in dict.type.sys_role_type"
                   :key="item.value"
@@ -327,7 +332,12 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="角色顺序" prop="roleSort">
-              <el-input-number v-model="form.roleSort" controls-position="right" :min="0" />
+              <el-input-number
+                v-model="form.roleSort"
+                style="width: 267px"
+                controls-position="right"
+                :min="0"
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -400,11 +410,16 @@
         <el-form-item label="角色名称">
           <el-input v-model="form.roleName" :disabled="true" />
         </el-form-item>
-        <el-form-item label="权限字符">
+        <el-form-item label="角色编码">
           <el-input v-model="form.roleKey" :disabled="true" />
         </el-form-item>
         <el-form-item label="权限范围">
-          <el-select v-model="form.dataScope" clearable @change="dataScopeSelectChange">
+          <el-select
+            v-model="form.dataScope"
+            style="width: 360px"
+            clearable
+            @change="dataScopeSelectChange"
+          >
             <el-option
               v-for="item in dataScopeOptions"
               :key="item.value"
@@ -436,7 +451,20 @@
             :check-strictly="!form.deptCheckStrictly"
             empty-text="加载中，请稍候"
             :props="defaultProps"
-          />
+          >
+            <!--知识点过长处理，鼠标悬浮文字弹框显示全部内容-->
+            <span slot-scope="{ node }" class="custom-tree-node">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                :content="node.label"
+                placement="top-start"
+              >
+                <span> {{ node.label | ellipsis(16) }} </span>
+              </el-tooltip>
+              <div />
+            </span>
+          </el-tree>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -566,12 +594,12 @@ export default {
       },
       // 表单校验
       rules: {
-        roleName: [{ required: true, message: "请输入角色名称", trigger: "blur" }],
-        roleType: [{ required: true, message: "请选择角色类型", trigger: "blur" }],
-        roleKey: [{ required: true, message: "请输入权限字符", trigger: "blur" }],
-        roleSort: [{ required: true, message: "请输入角色顺序", trigger: "blur" }],
-        status: [{ required: true, message: "请选择角色状态", trigger: "change" }]
-        // isTenant: [{ required: true, message: '是否租户不能为空', trigger: 'change' }],
+        roleName: [{ required: true, message: "请输入角色名称" }],
+        roleType: [{ required: true, message: "请选择角色类型" }],
+        roleKey: [{ required: true, message: "请输入角色编码" }],
+        roleSort: [{ required: true, message: "请输入角色顺序" }],
+        status: [{ required: true, message: "请选择角色状态" }]
+        // isTenant: [{ required: true, message: '是否租户不能为空' }],
       },
       disabledHandle: false
     };

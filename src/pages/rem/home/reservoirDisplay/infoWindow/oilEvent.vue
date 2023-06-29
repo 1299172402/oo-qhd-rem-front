@@ -30,7 +30,7 @@
                         </el-table-column>
                         <el-table-column label="大事内容" prop="remark" align="center">
                             <template slot-scope="scope">
-                                <div class="table-name">{{ scope.row.remark }}</div>
+                                <div style="text-align: left" class="table-name">{{ scope.row.remark }}</div>
                             </template>
                         </el-table-column>
                         <el-table-column label="时间" min-width="40px" prop="startTime" align="center">

@@ -86,7 +86,7 @@
 </template>
 <script>
 import { addAccessinfo } from "@/api/intelligentOilfield/system/user";
-import jumpSupApp from "@/utils/jumpSupApp.js";
+import jumpSupApp, { addTokenToUrl } from "@/utils/jumpSupApp.js";
 
 export default {
   props: {
@@ -222,7 +222,7 @@ export default {
         jumpSupApp(item.appPcAccessUrl);
         // document.getElementById(`hrefText${index}`).click();
       } else if (this.modelName === "enter") { // 快捷入口
-        jumpSupApp(item.enterUrl);
+        window.open(addTokenToUrl(item.enterUrl), "_blank");
       }
     }
   }
@@ -241,7 +241,7 @@ export default {
 }
 
 .panel .el-carousel__indicators--outside button {
-  background-color: #3f87bc !important;
+  background: var(--dot-bg) !important;
 }
 
 .panel .el-carousel__container {

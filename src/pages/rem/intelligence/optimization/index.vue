@@ -7,6 +7,7 @@
                     <!-- <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> -->
                 </el-tab-pane>
             </el-tabs>
+            <el-button v-if ="activeName =='second' && this.$route.query.link " style="position: absolute;right: 20px;top:110px" type="primary" @click="gogo">返回</el-button>
         </div>
         <header-search  style="height: auto;display: grid">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">
@@ -120,7 +121,7 @@
                                 height="calc(100% - 30px)"
                             >
                                 <el-table-column prop="injWellNo" label="注水井" align="center"
-                                                 min-width="120"></el-table-column>
+                                                 min-width="180px"></el-table-column>
                                 <el-table-column
                                     prop="injWellDaily"
                                     :render-header="renderheader"
@@ -196,7 +197,7 @@
                                                     <span>{{ scope.row.froecastInjDaily / scope.row.configurationInjDaily }}</span>
                                     </template>-->
                                 </el-table-column>
-                                <el-table-column prop="remark" label="备注" align="center" min-width="150">
+                                <el-table-column prop="remark" show-overflow-tooltip label="备注" align="center" min-width="150">
                                     <template slot-scope="scope">
                                         <el-input v-if="modify" v-model="scope.row.remark"/>
                                         <span v-else>{{ scope.row.remark }}</span>
@@ -212,7 +213,7 @@
                 ref="iframe"
                 :style="getStyle"
                 v-show="activeName == 'second'"
-                src="https://dl-front-qhd32-6znyt.tj.app.cnooc/sow/"
+                :src="src"
             ></iframe>
 
         </pagePanelNew>
@@ -221,12 +222,13 @@
 <script>
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {getWellMonthAllocation, getWellMonthInj, wellAvgFluidProdAllocUpdate} from "@/api/rem/r-intelligentIPA.js";
-import Iframe from '@/components/rem/tools/iframe.vue'
+// import Iframe from '@/components/rem/tools/iframe.vue'
 import {exportExcel} from '@/lib/exportExcel';
 
 export default {
+    name:'optimization',
     components: {
-        Iframe
+        // Iframe
     },
     mixins: [queryConditionMixin],
     created(){
@@ -236,6 +238,7 @@ export default {
         }else{
             this.queryTableData(this.form.tableData2)
         }
+        this.src = 'https://intelinj.tjioms-dev.tjltd.cnooc/'
     },
     data() {
         return {
@@ -266,6 +269,7 @@ export default {
             mergeObj: {},
             host: window.location.protocol + '//',
             saveLoad: false,
+            src:'',
         }
     },
     computed: {
@@ -500,6 +504,9 @@ export default {
             this.iframeWidth = this.$refs.iframe.parentNode.clientWidth;
         }
     },
+    gogo() {
+        window.open('https://rem.tjioms-dev.tjltd.cnooc/#/reservoirDisplay/linkage', "_parent");
+    },
     mounted() {
         this.$nextTick(()=>{
             setTimeout(()=>{
@@ -510,7 +517,10 @@ export default {
             window.removeEventListener('resize',this.setWidth)
         })
         if(this.$route.query.link == 'rem'){
+            this.activeName = 'second'
+            this.doSearch()
         }else{
+            this.activeName = 'first'
             this.doSearch()
         }
     },
@@ -608,5 +618,11 @@ export default {
 
 .el-icon-my-export2:before {
     content: "\e611";
+}
+
+::v-deep .el-table__header-wrapper .cell {
+    height: auto !important;
+    line-height: 18px !important;
+    white-space: pre !important;
 }
 </style>

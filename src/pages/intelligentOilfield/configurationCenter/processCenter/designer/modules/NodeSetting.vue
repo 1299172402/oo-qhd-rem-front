@@ -61,6 +61,7 @@
           :data="item.activityRules"
           border
           height="200px"
+          style="max-width: 1240px;"
         >
           <el-table-column prop="priority" label="优先级" :show-overflow-tooltip="true" />
           <el-table-column prop="name" label="规则名称" :show-overflow-tooltip="true" />

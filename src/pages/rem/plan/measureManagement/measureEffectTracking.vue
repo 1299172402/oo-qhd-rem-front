@@ -146,7 +146,7 @@
                             <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">搜索</el-button>
                         </div>
                         <div class="echarts-view">
-                            <echarts :chart-data="oilOption" height="100%"></echarts>
+                            <echarts :chart-data="oilOption" height="580px"></echarts>
                         </div>
                     </div>
                     <div class="svg" v-else-if="oilTabType == '1'">
@@ -262,7 +262,7 @@
     import {getWorkProgress} from '@/api/oilDeposit/rem-04/plan.js';
     import { exportExcel } from '@/lib/exportExcel.js';
     export default {
-        // name: 'wellMonitoring',
+        // name: 'measureEffectTracking',
         components: {
             verticalSwitchButton,
             Echarts,
@@ -468,7 +468,7 @@
                     {
                         paramName: '气油比',
                         paramCode: '003006',
-                        unit: '',
+                        unit: 'm³/t',
                     },
                     {
                         paramName: '生产时间',
@@ -621,7 +621,7 @@
                             fontSize: 14,
                         },
                         x:'center',
-                        bottom:-5,
+                        bottom:0,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -632,19 +632,19 @@
                             left: '14%',
                             top: '4%',
                             width: '74%',
-                            height: '25%',
+                            height: '30%',
                         },
                         {
                             left: '14%',
-                            top: '33%',
+                            top: '38%',
                             width: '74%',
                             height: '25%',
                         },
                         {
                             left: '14%',
-                            top: '62%',
+                            top: '66%',
                             width: '74%',
-                            height: '28%',
+                            height: '25%',
                         },
                     ],
                     xAxis: [
@@ -897,12 +897,12 @@
                         },
                         {
                             gridIndex: 1,
-                            name: '气\n油\n比\n',
+                            name: '气\n油\n比\n\m³/t',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#9dce2f',
+                                color: 'rgb(255,0,0)',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -1021,7 +1021,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#f300f1',
+                                color: 'rgb(165,42,42)',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -1830,7 +1830,7 @@
                     this.selectWellId='';
                 }
             },
-          
+            
             //搜索文件
             doSearch() {
                 let wellItem=this.wells.filter(el=> this.selectWellId ==el.wellId);
@@ -2043,7 +2043,7 @@
                             } else if (lineName == '折算基准面流压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 1;
-                                series.itemStyle={color:'#fe10f6'}
+                                series.itemStyle={color:'rgb(165,42,42)'}
                             } else if (lineName == '日产液量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
@@ -2059,7 +2059,7 @@
                             } else if (lineName == '气油比') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 5;
-                                series.itemStyle={color:'#9dce2f'}
+                                series.itemStyle={color:'rgb(255,0,0)'}
                             } else if (lineName == '生产时间') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 6;
@@ -2702,7 +2702,9 @@
                 }
         
                 .echarts-view {
+                    // height:700px;
                     flex: 1;
+                    overflow-y:scroll;
                 }
         
                 .table-view {

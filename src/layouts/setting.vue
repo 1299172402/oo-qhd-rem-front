@@ -7,7 +7,6 @@
       header="设置"
       :close-btn="true"
       :on-close-btn-click="handleCloseDrawer"
-      :on-close="setpageConfigs"
       class="setting-drawer-container"
     >
       <div class="setting-container">
@@ -146,12 +145,6 @@
             <p>编辑面板</p>
           </div>
         </t-form>
-        <div class="setting-info">
-          <p>请复制后手动修改配置文件: /src/config/style.ts</p>
-          <t-button theme="primary" variant="text" @click="handleCopy">
-            复制配置项
-          </t-button>
-        </div>
       </div>
     </t-drawer>
   </div>
@@ -221,6 +214,7 @@ export default {
         // 没有在formData中 需要从store中同步过来
         const { isSidebarCompact } = this.$store.state.setting;
         this.$store.dispatch("setting/changeTheme", { ...newVal, isSidebarCompact });
+        this.setpageConfigs();
       },
       deep: true
     }
@@ -281,13 +275,6 @@ export default {
         userId: this.$store.getters["user/userDetail"].user.userId
       };
       setpageConfig(data).then(() => {});
-    },
-    handleCopy(): void {
-      const text = JSON.stringify(this.formData, null, 4);
-      this.$copyText(text).then(() => {
-        this.$message.closeAll();
-        this.$message.success("复制成功");
-      });
     },
     changeColor(hex: string) {
       const { setting } = this.$store.state;

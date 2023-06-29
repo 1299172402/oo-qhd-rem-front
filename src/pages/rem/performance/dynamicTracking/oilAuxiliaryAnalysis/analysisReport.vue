@@ -29,7 +29,7 @@
                     </el-select>
                     
                     <span style="margin-left:15px;">评价时间：</span>
-                    <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
@@ -44,13 +44,11 @@
                         <el-col :span="6" style="height: auto">
                             <pagePanel headerTitle="生产动态" style="margin-top:0;height:100%;">
                                 <el-row :gutter="10">
-                                    <el-radio-group v-model="selCode" @change="((val)=>{selRadioIterm(val,'productionTrendsOptions')})">
-                                        <el-col v-for="(item,index) in productionTrendsOptions" :key="index" :span="12">
-                                            <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                            </el-radio-button>
-                                        </el-col>
-                                    </el-radio-group>
+                                    <el-col v-for="(item,index) in productionTrendsOptions" :key="index" :span="12">
+                                        <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'productionTrendsOptions')">
+                                            {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                        </el-button>
+                                    </el-col>
                                 </el-row>
                             </pagePanel>
                         </el-col>
@@ -58,92 +56,76 @@
                             <pagePanel headerTitle="生产问题监测" style="margin-top:0;height:100%;">
                                 <el-row :gutter="5">
                                     <el-col :span="8">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">油井工况</el-button>
-                                        <el-radio-group v-model="selCode" style="margin-top:5px;width: 100%" @change="((val)=>{selRadioIterm(val,'oilWellConditionOptions')})">
-                                            <el-col v-for="(item,index) in oilWellConditionOptions" :key="index" :span="12">
-                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                                </el-radio-button>
-                                            </el-col>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">油井工况</el-button>
+                                        <el-col v-for="(item,index) in oilWellConditionOptions" :key="index" :span="12">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'oilWellConditionOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
                                     </el-col>
                                     <el-col :span="3">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">供排关系</el-button>
-                                        <el-radio-group v-model="selCode" style="margin-top:5px;width: 100%;" @change="((val)=>{selRadioIterm(val,'relationshipOptions')})">
-                                            <el-col v-for="(item,index) in relationshipOptions" :key="index" :span="24">
-                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                                </el-radio-button>
-                                            </el-col>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">供排关系</el-button>
+                                        <el-col v-for="(item,index) in relationshipOptions" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'relationshipOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
                                     </el-col>
                                     <el-col :span="3">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">递减率</el-button>
-                                        <el-radio-group v-model="selCode" style="margin-top:5px;width: 100%;" @change="((val)=>{selRadioIterm(val,'diminishingOptions')})">
-                                            <el-col v-for="(item,index) in diminishingOptions" :key="index" :span="24">
-                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                                </el-radio-button>
-                                            </el-col>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">递减率</el-button>
+                                        <el-col v-for="(item,index) in diminishingOptions" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'diminishingOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
                                     </el-col>
                                     <el-col :span="3">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">采液强度</el-button>
-                                        <el-radio-group v-model="selCode" style="margin-top:5px;width: 100%;" @change="((val)=>{selRadioIterm(val,'fluidStrengthOptions')})">
-                                            <el-col v-for="(item,index) in fluidStrengthOptions" :key="index" :span="24">
-                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                                </el-radio-button>
-                                            </el-col>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">采液强度</el-button>
+                                        <el-col v-for="(item,index) in fluidStrengthOptions" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'fluidStrengthOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
                                     </el-col>
                                     <el-col :span="3">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">采液指数</el-button>
-                                        <el-radio-group v-model="selCode" style="margin-top:5px;width: 100%;" @change="((val)=>{selRadioIterm(val,'fluidProductionOptions')})">
-                                            <el-col v-for="(item,index) in fluidProductionOptions" :key="index" :span="24">
-                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                                </el-radio-button>
-                                            </el-col>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">采液指数</el-button>
+                                        <el-col v-for="(item,index) in fluidProductionOptions" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'fluidProductionOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
                                     </el-col>
                                     <el-col :span="4">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">米采液指数</el-button>
-                                        <el-radio-group v-model="selCode" style="margin-top:5px;width: 100%;" @change="((val)=>{selRadioIterm(val,'mfluidProductionOptions')})">
-                                            <el-col v-for="(item,index) in mfluidProductionOptions" :key="index" :span="24">
-                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                                </el-radio-button>
-                                            </el-col>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">米采液指数</el-button>
+                                        <el-col v-for="(item,index) in mfluidProductionOptions" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'mfluidProductionOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
                                     </el-col>
                                 </el-row>
                             </pagePanel>
                         </el-col>
                     </el-row>
-                    <el-row style="height:auto" :gutter="15" class="cont mt-5">
+                    <el-row style="height: auto" :gutter="15" class="cont mt-5">
                         <el-col :span="12">
                             <pagePanel headerTitle="潜力分析" style="margin-top:0;height:100%;">
-                                <el-row :gutter="20">
+                                <el-row :gutter="10">
                                     <el-col :span="12">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">提液潜力</el-button>
-                                        <el-radio-group v-model="selCode" style="margin-top:5px;width: 100%;" @change="((val)=>{selRadioIterm(val,'extractionPotentialOptions')})">
-                                            <el-col v-for="(item,index) in extractionPotentialOptions" :key="index" :span="24">
-                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                                </el-radio-button>
-                                            </el-col>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">提液潜力</el-button>
+                                        <el-col v-for="(item,index) in extractionPotentialOptions" :key="index" :span="12">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'extractionPotentialOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
                                     </el-col>
                                     <el-col :span="12">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;">储量动用</el-button>
-                                        <el-radio-group v-model="selCode" style="margin-top:5px;width: 100%" @change="((val)=>{selRadioIterm(val,'reserveProductionOptions')})">
-                                            <el-col v-for="(item,index) in reserveProductionOptions" :key="index" :span="24">
-                                                <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                                </el-radio-button>
-                                            </el-col>
-                                        </el-radio-group>
+                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">储量动用</el-button>
+                                        <el-col v-for="(item,index) in reserveProductionOptions" :key="index" :span="12">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'reserveProductionOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>
                                     </el-col>
                                 </el-row>
                             </pagePanel>
@@ -151,13 +133,11 @@
                         <el-col :span="12">
                             <pagePanel headerTitle="措施推荐" style="margin-top:0;height:100%;">
                                 <el-row :gutter="10" style="height: 100%">
-                                    <el-radio-group v-model="selCode" style="width: 100%;" @change="((val)=>{selRadioIterm(val,'recommendedMeasuresOptions')})">
-                                        <el-col v-for="(item,index) in recommendedMeasuresOptions" :key="index" :span="12">
-                                            <el-radio-button :class="item.value>0?'checkButton about1':'checkButton'" :label="item.code">
-                                                {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                            </el-radio-button>
-                                        </el-col>
-                                    </el-radio-group>
+                                    <el-col v-for="(item,index) in recommendedMeasuresOptions" :key="index" :span="12">
+                                        <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'recommendedMeasuresOptions')">
+                                            {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                        </el-button>
+                                    </el-col>
                                 </el-row>
                             </pagePanel>
                         </el-col>
@@ -177,39 +157,44 @@
                         </el-row>
                     </div>
                     <div style="display: flex;justify-content: flex-end;margin-bottom:10px;">
-                        <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)"
-                        @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate}})">
+                        <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='0050102'||selCode=='0050101' || selCode=='0060101' || selCode=='0060102'|| selCode=='0070101'|| selCode=='0070102')"
+                        @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':linkdata(),evalResult:selCode }})">
                         归因分析详情
                         </el-button>
                         <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)" 
                         @click="$router.push({path:'/plan/personnelMeasures',query:{platform,wellId,currentDate}})">措施推荐详情</el-button>
                     </div>
-                    <div style="flex:1;min-height:380px;">
+                    <div style="flex:1;min-height:540px;">
                         <pagePanel headerTitle="油井动态分析详情列表" style="margin-top:0;height:100%;">
                             <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
+                                <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                 <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
-                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="index" :prop="item.code" align="center" min-width="160" sortable="custom" label-class-name="twoRowHeader">
+                                <!--生产动态项目-->
+                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="160" sortable="custom" label-class-name="twoRowHeader">
+                                    
                                     <template #header>
-                                        <div class="headerSortRow1" v-if="item.name && item.name.split(' ')[1]">
+                                        <div class="headerSortRow1" v-if="item.name && item.name!='正常' && item.name.split(' ')[1]">
                                             <span>{{ item.name.split(' ')[0] ? item.name.split(' ')[0] : ""}}</span>
                                             <br />
                                             <span>{{ item.name.split(' ')[1] ? `(${item.name.split(' ')[1]})` : ""}}</span>
                                         </div>
                                         <div v-else>
-                                            <span>{{item.name}}</span>
+                                            <span>{{item.name=='正常'?'生产状态':item.name}}</span>
                                         </div>
                                     </template>
+                                    
                                     <template slot-scope="scope">
-                                        <span v-if="scope.row.scdt[item.code] == null"></span>
-                                        <span v-else-if="item.code == 'ZC'">{{ scope.row.scdt[item.code].showLabel }}</span>
+                                        <span v-if="scope.row.scdt[item.code] == null">{{productionStatus(scope.row.scdt,item.code)}}</span>
+                                        <span v-else-if="item.code == 'ZC'">{{ scope.row.scdt[item.code].showLabel ? scope.row.scdt[item.code].showLabel :'-' }}</span>
                                         <el-tooltip v-else class="item" effect="dark" :content="scope.row.scdt[item.code].value + ''" placement="top">
-                                            <span>{{ scope.row.scdt[item.code].showLabel }}</span>
+                                            <span>{{ scope.row.scdt[item.code].showLabel ? scope.row.scdt[item.code].showLabel :'-' }}</span>
                                         </el-tooltip>
                                     </template>
+                                    
                                 </el-table-column>
                                 <!--生产问题监测项目-->
                                 <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
-                                    <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="120" :key="index" :prop="item.code" align="center" label-class-name="twoRowHeader">
+                                    <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="120" :key="index" :prop="item.code" :label="item.name" align="center" width="180px" label-class-name="twoRowHeader">
                                         <template #header>
                                             <div v-if="item.isTwoHeader">
                                                 <span>{{item.name}}</span>
@@ -221,9 +206,14 @@
                                             </div>
                                         </template>
                                         <template slot-scope="scope">
-                                            <span v-if="scope.row[item.code] == null"></span>
-                                            <span v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel }}</span>
-                                            <span>{{replaceStr(scope.row[item.code].showLabel)}}{{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2):'-'}}</span>
+                                            <span class="1" v-if="scope.row[item.code] == null"></span>
+                                            <span class="2" v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel?scope.row[item.code].showLabel:'-' }}</span>
+                                            <span class="3" v-else style="display: flex;align-items: center;justify-content: center;">
+                                               {{replaceStr(scope.row[item.code].showLabel)}}
+                                               {{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2): !replaceStr(scope.row[item.code].showLabel)?'-':''}}
+                                                <img src="@/assets/rem/yieId/upTriangle.png" v-if="replaceStr(scope.row[item.code].showLabel)=='偏高'" style="width:20px;height:20px;">
+                                                <img src="@/assets/rem/yieId/downTriangle.png" v-if="replaceStr(scope.row[item.code].showLabel)=='偏低'"  style="width:20px;height:20px;">
+                                            </span>
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
@@ -232,20 +222,18 @@
                                     <el-table-column v-for="(item, index) in potentialAnalysisTab" :key="index" :prop="item.code" :label="item.name" align="center">
                                         <template slot-scope="scope">
                                             <span v-if="scope.row[item.code] == null"></span>
-                                            <!--                    <el-tooltip v-else class="item" effect="dark" :content="scope.row[item.code].value + ''" placement="top">-->
-                                            <span>{{ scope.row[item.code].showLabel }}</span>
-                                            <!--                    </el-tooltip>-->
+                                            <span>{{ scope.row[item.code].showLabel?scope.row[item.code].showLabel:'-' }}</span>
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
-                                <!--措施推荐-->
+                                <!--措施初选-->
                                 <el-table-column prop="recommendedMeasures" label="措施初选" align="center">
                                     <el-table-column prop="measuresName" label="推荐措施" align="center">
                                         <template slot-scope="scope">
-                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel }}</span>
+                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel ? scope.row.cscx.showLabel  :'-' }}</span>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="theDate" align="center" min-width="130" label-class-name="twoRowHeader">
+                                    <el-table-column prop="theDate" align="center"  min-width="130" label-class-name="twoRowHeader">
                                         <template #header>
                                             <div>
                                                 <span>推荐日期</span>
@@ -254,7 +242,7 @@
                                             </div>
                                         </template>
                                         <template slot-scope="scope">
-                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq }}</span>
+                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq ? scope.row.cscx.tjrq :'-'}}</span>
                                         </template>
                                     </el-table-column>
                                     <el-table-column label="操作" align="center">
@@ -263,8 +251,8 @@
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
-                                <!--措施效果数据-->
-                                <el-table-column prop="dailyOilIncrement" label="日增油量m³/d" align="center" label-class-name="twoRowHeader">
+                                <!--日增油量-->
+                                <el-table-column prop="dailyOilIncrement" align="center" label-class-name="twoRowHeader">
                                     <template #header>
                                         <div>
                                             <span>日增油量</span>
@@ -273,8 +261,8 @@
                                         </div>
                                     </template>
                                     <template slot-scope="scope">
-                                        <span v-if="scope.row.rzyl == null || scope.row.rzyl.showMvalue == null"></span>
-                                        <span v-else>{{ scope.row.rzyl.showMvalue }}</span>
+                                        <span v-if="scope.row.rzyl == null || scope.row.rzyl.showMvalue == null">-</span>
+                                        <span v-else>{{ scope.row.rzyl.showMvalue ? scope.row.rzyl.showMvalue : '-'}}</span>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -311,7 +299,7 @@
                     </el-select>
                     
                     <span style="margin-left:15px;">评价时间：</span>
-                    <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
@@ -391,7 +379,7 @@
                         <img src="@/assets/rem/performance/bgline0.png" alt="" class="bgline0">
                         <info-window info-width="100%"  info-height="100%"  header-title="油井工况诊断" :is-show-max-btn="false">
                             <div class="z-content2" style="height:100%;overflow-y: scroll;">
-                                <div class="z1" style="width:500px;">
+                                <div class="z1" style="flex:1;">
                                     <div class="z-content-n" style="flex-direction: column;">
                                         <div class="z-row-left">
                                             <div class="z_title">
@@ -425,7 +413,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="z2" style="width:500px;">
+                                <div class="z2" style="flex:1;">
                                     <div class="z-content-n" style="flex-direction: column;">
                                         <div class="z-row-left">
                                             <div class="z_title">
@@ -483,9 +471,9 @@
                         <info-window info-width="100%" info-height="100%" header-title="油藏潜力分析" :is-show-max-btn="false">
                             <div style="height:100%;overflow-y: scroll;">
                                 <div class="z-content2">
-                                    <div>
-                                        <div class="aaa" style="display: flex;">
-                                            <div class="z1" style="width:500px;">
+                                    <div  style="flex:1;">
+                                        <div class="aaa" style="flex:1;display: flex;">
+                                            <div class="z1" style="width:100%;">
                                                 <div class="z-content-n" style="flex-direction: column;">
                                                     <div class="z-row-left">
                                                         <div class="z_title">
@@ -519,7 +507,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="z2" style="width:500px;">
+                                            <div class="z2" style="width:100%;">
                                                 <div class="z-content-n" style="flex-direction: column;">
                                                     <div class="z-row-left">
                                                         <div class="z_title">
@@ -554,8 +542,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="aaa" style="display: flex;">
-                                            <div class="z1" style="width:500px;">
+                                        <div class="aaa" style="flex:1;display: flex;">
+                                            <div class="z1" style="width:100%;">
                                                 <div class="z-content-n" style="flex-direction: column;">
                                                     <div class="z-row-left">
                                                         <div class="z_title">
@@ -574,7 +562,7 @@
                                                         </div>
                                                     </div>  
                                                     <div class="z-row-center">
-                                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                        <div class="numBtn"  :class="[item.code==selCode?'numBtnBgActive':'']"
                                                             v-for="(item,index) in fluidProductionOptions" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!fluidProductionSwitch"
                                                             @click="((val)=>{selRadioIterm(item.code,'fluidProductionOptions')})">
                                                             <span class="sp1">{{item.value}}</span>
@@ -589,12 +577,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="z2" style="width:500px;">
+                                            <div class="z2" style="width:100%;">
                                                 <div class="z-content-n" style="flex-direction: column;">
                                                     <div class="z-row-left">
                                                         <div class="z_title">
                                                             <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                                            <span>米采液强度</span>
+                                                            <span>米采液指数</span>
                                                         </div>
                                                         <div class="z_schedule">
                                                             <span class="sp1">正常：</span>
@@ -636,7 +624,8 @@
                                                 </span>
                                             </div>
                                             <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;">
-                                                <el-button type="primary" v-if="selCode&&(selCode==cyqdpgSelCode||selCode==cyqdpdSelCode)" @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate}})">
+                                                <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='0050102'||selCode=='0050101' || selCode=='0060101' || selCode=='0060102'|| selCode=='0070101'|| selCode=='0070102'|| selCode=='0040101')"
+                                                           @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':linkdata(),evalResult:selCode }})">
                                                     归因分析详情
                                                 </el-button>
                                             </div>
@@ -646,12 +635,13 @@
                             </div>
                         </info-window>
                     </div>
-                    <div style="height:340px;">
+                    <div style="height:540px;">
                         <info-window info-width="100%" info-height="100%" header-title="油井动态分析详情列表" :is-show-max-btn="true">
                             <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
+                                <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                 <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                 <!--生产动态项目-->
-                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="160" sortable="custom" label-class-name="twoRowHeader">
+                                <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="150" sortable="custom" label-class-name="twoRowHeader">
                                     
                                     <template #header>
                                         <div class="headerSortRow1" v-if="item.name && item.name!='正常' && item.name.split(' ')[1]">
@@ -666,20 +656,16 @@
                                     
                                     <template slot-scope="scope">
                                         <span v-if="scope.row.scdt[item.code] == null">{{productionStatus(scope.row.scdt,item.code)}}</span>
-                                        
-                                        
-                                        <span v-else-if="item.code == 'ZC'">{{ scope.row.scdt[item.code].showLabel }}</span>
-                                        
+                                        <span v-else-if="item.code == 'ZC'">{{ scope.row.scdt[item.code].showLabel ? scope.row.scdt[item.code].showLabel :'-' }}</span>
                                         <el-tooltip v-else class="item" effect="dark" :content="scope.row.scdt[item.code].value + ''" placement="top">
-                                            <span>{{ scope.row.scdt[item.code].showLabel }}</span>
+                                            <span>{{ scope.row.scdt[item.code].showLabel ? scope.row.scdt[item.code].showLabel :'-' }}</span>
                                         </el-tooltip>
-                                        
                                     </template>
                                     
                                 </el-table-column>
                                 <!--生产问题监测项目-->
                                 <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
-                                    <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="120" :key="index" :prop="item.code" :label="item.name" align="center" width="180px" label-class-name="twoRowHeader">
+                                    <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="100" :key="index" :prop="item.code" :label="item.name" align="center" width="180px" label-class-name="twoRowHeader">
                                         <template #header>
                                             <div v-if="item.isTwoHeader">
                                                 <span>{{item.name}}</span>
@@ -691,9 +677,14 @@
                                             </div>
                                         </template>
                                         <template slot-scope="scope">
-                                            <span v-if="scope.row[item.code] == null"></span>
-                                            <span v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel }}</span>
-                                            <span v-else>{{replaceStr(scope.row[item.code].showLabel)}}{{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2):'-'}}</span>
+                                            <span class="1" v-if="scope.row[item.code] == null"></span>
+                                            <span class="2" v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel?scope.row[item.code].showLabel:'-' }}</span>
+                                            <span class="3" v-else style="display: flex;align-items: center;justify-content: center;">
+                                               {{replaceStr(scope.row[item.code].showLabel)}}
+                                               {{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2): !replaceStr(scope.row[item.code].showLabel)?'-':''}}
+                                                <img src="@/assets/rem/yieId/upTriangle.png" v-if="replaceStr(scope.row[item.code].showLabel)=='偏高'" style="width:20px;height:20px;">
+                                                <img src="@/assets/rem/yieId/downTriangle.png" v-if="replaceStr(scope.row[item.code].showLabel)=='偏低'"  style="width:20px;height:20px;">
+                                            </span>
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
@@ -702,9 +693,7 @@
                                     <el-table-column v-for="(item, index) in potentialAnalysisTab" :key="index" :prop="item.code" :label="item.name" align="center">
                                         <template slot-scope="scope">
                                             <span v-if="scope.row[item.code] == null"></span>
-                                            <!--                    <el-tooltip v-else class="item" effect="dark" :content="scope.row[item.code].value + ''" placement="top">-->
-                                            <span>{{ scope.row[item.code].showLabel }}</span>
-                                            <!--                    </el-tooltip>-->
+                                            <span>{{ scope.row[item.code].showLabel?scope.row[item.code].showLabel:'-' }}</span>
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
@@ -712,7 +701,7 @@
                                 <el-table-column prop="recommendedMeasures" label="措施初选" align="center">
                                     <el-table-column prop="measuresName" label="推荐措施" align="center">
                                         <template slot-scope="scope">
-                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel }}</span>
+                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel ? scope.row.cscx.showLabel  :'-' }}</span>
                                         </template>
                                     </el-table-column>
                                     <el-table-column prop="theDate" align="center"  min-width="130" label-class-name="twoRowHeader">
@@ -724,7 +713,7 @@
                                             </div>
                                         </template>
                                         <template slot-scope="scope">
-                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq }}</span>
+                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq ? scope.row.cscx.tjrq :'-'}}</span>
                                         </template>
                                     </el-table-column>
                                     <el-table-column label="操作" align="center">
@@ -733,7 +722,7 @@
                                         </template>
                                     </el-table-column>
                                 </el-table-column>
-                                <!--措施效果数据-->
+                                <!--日增油量-->
                                 <el-table-column prop="dailyOilIncrement" align="center" label-class-name="twoRowHeader">
                                     <template #header>
                                         <div>
@@ -743,8 +732,8 @@
                                         </div>
                                     </template>
                                     <template slot-scope="scope">
-                                        <span v-if="scope.row.rzyl == null || scope.row.rzyl.showMvalue == null"></span>
-                                        <span v-else>{{ scope.row.rzyl.showMvalue }}</span>
+                                        <span v-if="scope.row.rzyl == null || scope.row.rzyl.showMvalue == null">-</span>
+                                        <span v-else>{{ scope.row.rzyl.showMvalue ? scope.row.rzyl.showMvalue : '-'}}</span>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -778,9 +767,10 @@
         fetchProductionWellsByPlatform,
         fetchProductionWells
     } from "@/api/oilDeposit/rem-02/primaryinfo.js";
+    import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js"
     import compareSort from "@/lib/compareSort.js";
     export default {
-        // name:'analysisReport',
+        name:'oilAnalysisReport',
         mixins: [compareSort],
         data() {
             return {
@@ -954,15 +944,22 @@
             }
         },
         mounted() {
-            this.checkCurrentDate(); //初始化评价日期
-            this.queryOilFeildList(); //初始化油田
+            this.getDateApi(); //初始化油田
         },
         methods: {
             //重置
             resetting(){
                 Object.assign(this.$data, this.$options.data());
-                this.checkCurrentDate(); //初始化评价日期
-                this.queryOilFeildList(); //初始化油田
+                this.getDateApi(); //初始化油田
+            },
+            //本接口获取最后一次模型计算出来的结果，返回最后一次跑模型的日期。
+            getDateApi(){
+                getDate({wellMenu:'WELL_OIL'}).then(res=>{
+                    if(res.data.code==200){
+                        this.currentDate=res.data.data;   
+                    }
+                    this.queryOilFeildList();
+                })
             },
             //油井下拉框数据获取
             queryOilFeildList(){
@@ -1039,6 +1036,10 @@
                 
                 if(this.initTypes==1){//第一次加载
                     this.initTypes=2;
+                    if(this.$route.query.wellNo){//判断路由是否有井号参数
+                        let wellItem=this.wellData.find(e=>e.wellName==this.$route.query.wellNo);
+                        this.wellId=wellItem.wellId;
+                    }
                     this.doSearch();
                 }
             },
@@ -1096,7 +1097,7 @@
                     })
                 }
                 if (wellInfo != null) {
-                    this.tableData = wellInfo.splice(0, this.listPage * 50);
+                    this.tableData = wellInfo;
                     this.listPage = 2;
                 } else {
                     this.tableData = wellInfo;
@@ -1120,21 +1121,10 @@
                 }
                 console.log('this.productionTrendsTab',this.productionTrendsTab);
                 console.log('this.tableData',this.tableData);
-                this.$refs.tableList.doLayout();
+                this.$nextTick(()=>{
+                    this.$refs.tableList.doLayout();
+                })
                 // this.selRadioIterm(this.productionCode,'productionTrendsOptions');
-            },
-            getMoreLog() {
-                if (this.scrollFlag) {
-                    var wellInfo = this.dealTableData;
-                    console.log(wellInfo.length, this.listPage * 50)
-                    if (wellInfo != null && wellInfo.length > 0) {
-                        console.log(this.listPage, (this.listPage - 1) * 50, 50)
-                        this.tableData = this.tableData.concat(wellInfo.splice(0, 50));
-                        this.listPage += 1;
-                        this.dom.scrollTop = this.dom.scrollTop - 200
-                    }
-                    console.log(this.tableData.length)
-                }
             },
             queryWellTable() {
                 return new Promise((resolve, reject) => {
@@ -1310,488 +1300,212 @@
             //生产问题监测可用项目02,供排关系
             queryRelationship() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.relationshipOptions = [{
-                                code: "tag16",
-                                name: "合理",
-                                value: 140,
-                                wells: "JH9,JH1"
-                            },
-                            {
-                                code: "tag17",
-                                name: "参数偏大",
-                                value: 10,
-                                wells: ""
-                            },
-                            {
-                                code: "tag18",
-                                name: "参数偏小",
-                                value: 0,
-                                wells: "JH2,JH3,JH4"
-                            },
-                            {
-                                code: "tag19",
-                                name: "生产异常区",
-                                value: 1,
-                                wells: ""
-                            },
-                            {
-                                code: "tag20",
-                                name: "待落实区",
-                                value: 5,
-                                wells: "JH2,JH7"
-                            }
-                        ];
+                    supplyDischargeRelationship(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            this.relationshipNum.allnum=0;
+                            this.relationshipNum.zcnum=0;
+                            this.relationshipNum.ycnum=0;
+                            myData.forEach((el,i)=>{
+                                this.relationshipNum.allnum+=Number(el.value);
+                                if(el.name=='正常'||el.name=='合理区'){
+                                    this.relationshipNum.zcnum+=Number(el.value);
+                                }else{
+                                    myData[i].isShow=Number(el.value)?true:false;
+                                    this.relationshipNum.ycnum+=Number(el.value);
+                                }
+                            })
+                            this.relationshipNum.zczb=this.relationshipNum.zcnum/this.relationshipNum.allnum * 100;
+                            // this.relationshipNum.zczb=100;
+                            this.relationshipNum.yczb=this.relationshipNum.yczb/this.relationshipNum.allnum * 100;
+                            
+                            this.relationshipOptions = myData;
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        supplyDischargeRelationship(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                this.relationshipNum.allnum=0;
-                                this.relationshipNum.zcnum=0;
-                                this.relationshipNum.ycnum=0;
-                                myData.forEach((el,i)=>{
-                                    this.relationshipNum.allnum+=Number(el.value);
-                                    if(el.name=='正常'||el.name=='合理区'){
-                                        this.relationshipNum.zcnum+=Number(el.value);
-                                    }else{
-                                        myData[i].isShow=Number(el.value)?true:false;
-                                        this.relationshipNum.ycnum+=Number(el.value);
-                                    }
-                                })
-                                this.relationshipNum.zczb=this.relationshipNum.zcnum/this.relationshipNum.allnum * 100;
-                                // this.relationshipNum.zczb=100;
-                                this.relationshipNum.yczb=this.relationshipNum.yczb/this.relationshipNum.allnum * 100;
-                                
-                                this.relationshipOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //生产问题监测可用项目03,递减率
             queryDiminishing() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.diminishingOptions = [{
-                                code: "tag21",
-                                name: "高",
-                                value: 20,
-                                wells: "JH3,JH7"
-                            },
-                            {
-                                code: "tag22",
-                                name: "正常",
-                                value: 140,
-                                wells: "JH2,JH3,JH4"
-                            },
-                            {
-                                code: "tag23",
-                                name: "低",
-                                value: 20,
-                                wells: "JH8,JH3"
-                            }
-                        ];
+                    declineRate(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            
+                            this.diminishingNum.allnum=0;
+                            this.diminishingNum.zcnum=0;
+                            this.diminishingNum.ycnum=0;
+                            myData.forEach((el,i)=>{
+                                this.diminishingNum.allnum+=Number(el.value);
+                                if(el.name=='正常'){
+                                    this.diminishingNum.zcnum=Number(el.value);
+                                }else{
+                                    myData[i].isShow=Number(el.value)?true:false;
+                                    this.diminishingNum.ycnum+=Number(el.value);
+                                }
+                            })
+                            this.diminishingNum.zczb=this.diminishingNum.zcnum/this.diminishingNum.allnum * 100;
+                            this.diminishingNum.yczb=this.diminishingNum.yczb/this.diminishingNum.allnum * 100;
+                            
+                            this.diminishingOptions = myData;
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        declineRate(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                
-                                this.diminishingNum.allnum=0;
-                                this.diminishingNum.zcnum=0;
-                                this.diminishingNum.ycnum=0;
-                                myData.forEach((el,i)=>{
-                                    this.diminishingNum.allnum+=Number(el.value);
-                                    if(el.name=='正常'){
-                                        this.diminishingNum.zcnum=Number(el.value);
-                                    }else{
-                                        myData[i].isShow=Number(el.value)?true:false;
-                                        this.diminishingNum.ycnum+=Number(el.value);
-                                    }
-                                })
-                                this.diminishingNum.zczb=this.diminishingNum.zcnum/this.diminishingNum.allnum * 100;
-                                this.diminishingNum.yczb=this.diminishingNum.yczb/this.diminishingNum.allnum * 100;
-                                
-                                this.diminishingOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //生产问题监测可用项目04,采液强度
             queryFluidStrength() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.fluidStrengthOptions = [{
-                                code: "tag24",
-                                name: "高",
-                                value: 20,
-                                wells: ""
-                            },
-                            {
-                                code: "tag25",
-                                name: "合理",
-                                value: 140,
-                                wells: "JH2,JH3,JH4"
-                            },
-                            {
-                                code: "tag26",
-                                name: "低",
-                                value: 20,
-                                wells: "JH7"
-                            }
-                        ];
-                        resolve('success');
-                    } else { //使用接口
-                        fluidProducingIntensity(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                this.fluidStrengthNum.allnum=0;
-                                this.fluidStrengthNum.zcnum=0;
-                                this.fluidStrengthNum.ycnum=0;
-                                myData.forEach((el,i)=>{
-                                    this.fluidStrengthNum.allnum+=Number(el.value);
-                                    if(el.name=='正常'){
-                                        this.fluidStrengthNum.zcnum=Number(el.value);
-                                    }else{
-                                        myData[i].isShow=Number(el.value)?true:false;
-                                        this.fluidStrengthNum.ycnum+=Number(el.value);
-                                        if(el.name=='采液强度偏高'){
-                                            this.cyqdpgSelCode=el.code;
-                                        }else if(el.name=='采液强度偏低'){
-                                            this.cyqdpdSelCode=el.code;
-                                        }
+                    fluidProducingIntensity(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            this.fluidStrengthNum.allnum=0;
+                            this.fluidStrengthNum.zcnum=0;
+                            this.fluidStrengthNum.ycnum=0;
+                            myData.forEach((el,i)=>{
+                                this.fluidStrengthNum.allnum+=Number(el.value);
+                                if(el.name=='正常'){
+                                    this.fluidStrengthNum.zcnum=Number(el.value);
+                                }else{
+                                    myData[i].isShow=Number(el.value)?true:false;
+                                    this.fluidStrengthNum.ycnum+=Number(el.value);
+                                    if(el.name=='采液强度偏高'){
+                                        this.cyqdpgSelCode=el.code;
+                                    }else if(el.name=='采液强度偏低'){
+                                        this.cyqdpdSelCode=el.code;
                                     }
-                                })
-                                this.fluidStrengthNum.zczb=this.fluidStrengthNum.zcnum/this.fluidStrengthNum.allnum * 100;
-                                this.fluidStrengthNum.yczb=this.fluidStrengthNum.yczb/this.fluidStrengthNum.allnum * 100;
-                                this.fluidStrengthOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                                }
+                            })
+                            this.fluidStrengthNum.zczb=this.fluidStrengthNum.zcnum/this.fluidStrengthNum.allnum * 100;
+                            this.fluidStrengthNum.yczb=this.fluidStrengthNum.yczb/this.fluidStrengthNum.allnum * 100;
+                            this.fluidStrengthOptions = myData;
+                        }
+                        resolve('success');
+                    });
                 });
             },
             //生产问题监测可用项目05,采液指数
             queryFluidProduction() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.fluidProductionOptions = [{
-                                code: "tag30",
-                                name: "高",
-                                value: 20,
-                                wells: "JH2,JH3,JH4"
-                            },
-                            {
-                                code: "tag31",
-                                name: "合理",
-                                value: 140,
-                                wells: "JH1,JH3,JH7"
-                            },
-                            {
-                                code: "tag32",
-                                name: "低",
-                                value: 20,
-                                wells: "JH2,JH4"
-                            }
-                        ];
+                    fluidProductivityIndex(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            
+                            this.fluidProductionNum.allnum=0;
+                            this.fluidProductionNum.zcnum=0;
+                            this.fluidProductionNum.ycnum=0;
+                            myData.forEach((el,i)=>{
+                                this.fluidProductionNum.allnum+=Number(el.value);
+                                if(el.name=='正常'){
+                                    this.fluidProductionNum.zcnum=Number(el.value);
+                                }else{
+                                    myData[i].isShow=Number(el.value)?true:false;
+                                    this.fluidProductionNum.ycnum+=Number(el.value);
+                                }
+                            })
+                            this.fluidProductionNum.zczb=this.fluidProductionNum.zcnum/this.fluidProductionNum.allnum * 100;
+                            this.fluidProductionNum.yczb=this.fluidProductionNum.yczb/this.fluidProductionNum.allnum * 100;
+                            
+                            this.fluidProductionOptions = myData;
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        fluidProductivityIndex(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                
-                                this.fluidProductionNum.allnum=0;
-                                this.fluidProductionNum.zcnum=0;
-                                this.fluidProductionNum.ycnum=0;
-                                myData.forEach((el,i)=>{
-                                    this.fluidProductionNum.allnum+=Number(el.value);
-                                    if(el.name=='正常'){
-                                        this.fluidProductionNum.zcnum=Number(el.value);
-                                    }else{
-                                        myData[i].isShow=Number(el.value)?true:false;
-                                        this.fluidProductionNum.ycnum+=Number(el.value);
-                                    }
-                                })
-                                this.fluidProductionNum.zczb=this.fluidProductionNum.zcnum/this.fluidProductionNum.allnum * 100;
-                                this.fluidProductionNum.yczb=this.fluidProductionNum.yczb/this.fluidProductionNum.allnum * 100;
-                                
-                                this.fluidProductionOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //生产问题监测可用项目06,米采液指数
             queryMfluidProduction() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.mfluidProductionOptions = [{
-                                code: "tag40",
-                                name: "高",
-                                value: 20,
-                                wells: ""
-                            },
-                            {
-                                code: "tag41",
-                                name: "合理",
-                                value: 140,
-                                wells: "JH2,JH3,JH4"
-                            },
-                            {
-                                code: "tag42",
-                                name: "低",
-                                value: 20,
-                                wells: ""
-                            }
-                        ];
+                    fluidProductivityIndexMeter(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            
+                            this.mfluidProductionNum.allnum=0;
+                            this.mfluidProductionNum.zcnum=0;
+                            this.mfluidProductionNum.ycnum=0;
+                            myData.forEach((el,i)=>{
+                                this.mfluidProductionNum.allnum+=Number(el.value);
+                                if(el.name=='正常'){
+                                    this.mfluidProductionNum.zcnum=Number(el.value);
+                                }else{
+                                    myData[i].isShow=Number(el.value)?true:false;
+                                    this.mfluidProductionNum.ycnum+=Number(el.value);
+                                }
+                            })
+                            this.mfluidProductionNum.zczb=this.mfluidProductionNum.zcnum/this.mfluidProductionNum.allnum * 100;
+                            this.mfluidProductionNum.yczb=this.mfluidProductionNum.yczb/this.mfluidProductionNum.allnum * 100;
+                            
+                            this.mfluidProductionOptions = myData;
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        fluidProductivityIndexMeter(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                
-                                this.mfluidProductionNum.allnum=0;
-                                this.mfluidProductionNum.zcnum=0;
-                                this.mfluidProductionNum.ycnum=0;
-                                myData.forEach((el,i)=>{
-                                    this.mfluidProductionNum.allnum+=Number(el.value);
-                                    if(el.name=='正常'){
-                                        this.mfluidProductionNum.zcnum=Number(el.value);
-                                    }else{
-                                        myData[i].isShow=Number(el.value)?true:false;
-                                        this.mfluidProductionNum.ycnum+=Number(el.value);
-                                    }
-                                })
-                                this.mfluidProductionNum.zczb=this.mfluidProductionNum.zcnum/this.mfluidProductionNum.allnum * 100;
-                                this.mfluidProductionNum.yczb=this.mfluidProductionNum.yczb/this.mfluidProductionNum.allnum * 100;
-                                
-                                this.mfluidProductionOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //潜力分析可用项目01,提液潜力
             queryExtractionPotential() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.extractionPotentialOptions = [{
-                                code: "tag50",
-                                name: "油藏提液潜力",
-                                value: 20,
-                                wells: ""
-                            },
-                            {
-                                code: "tag51",
-                                name: "工况提液潜力",
-                                value: 5,
-                                wells: "JH2,JH9,JH4"
-                            },
-                            {
-                                code: "tag52",
-                                name: "停产井",
-                                value: 0,
-                                wells: ""
-                            },
-                            {
-                                code: "tag53",
-                                name: "维持生产",
-                                value: 160,
-                                wells: "JH6,JH4"
-                            }
-                        ];
+                    potential(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            this.extractionPotentialOptions = myData;
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        potential(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                this.extractionPotentialOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //潜力分析可用项目02,储量动用
             queryReserveProduction() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.reserveProductionOptions = [{
-                                code: "tag60",
-                                name: "开层潜力",
-                                value: 20,
-                                wells: "JH2,JH9,JH5"
-                            },
-                            {
-                                code: "tag61",
-                                name: "恢复生产潜力",
-                                value: 0,
-                                wells: ""
-                            },
-                            {
-                                code: "tag62",
-                                name: "正常",
-                                value: 180,
-                                wells: "JH8,JH3,JH1"
-                            }
-                        ];
+                    reserveProducing(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            this.reserveProductionOptions = myData;
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        reserveProducing(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                this.reserveProductionOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //措施推荐可用项目
             queryRecommendedMeasures() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.recommendedMeasuresOptions = [{
-                                code: "tagP1",
-                                name: "检泵",
-                                value: 20,
-                                increase: 10,
-                                wells: ""
-                            },
-                            {
-                                code: "tagP2",
-                                name: "解堵",
-                                value: 4,
-                                increase: 0,
-                                wells: ""
-                            },
-                            {
-                                code: "tagP3",
-                                name: "注采调配",
-                                value: 4,
-                                increase: 30,
-                                wells: "JH2,JH3,JH4"
-                            },
-                            {
-                                code: "tagP4",
-                                name: "储层改造",
-                                value: 0,
-                                increase: 0,
-                                wells: ""
-                            },
-                            {
-                                code: "tagP5",
-                                name: "恢复生产",
-                                value: 1,
-                                increase: 0,
-                                wells: ""
-                            },
-                            {
-                                code: "tagP6",
-                                name: "开关层/补孔",
-                                value: 10,
-                                increase: 20,
-                                wells: "JH7,JH6,JH3"
-                            },
-                            {
-                                code: "tagP7",
-                                name: "调整生产制度",
-                                value: 2,
-                                increase: 0,
-                                wells: ""
-                            },
-                            {
-                                code: "tagP8",
-                                name: "维持生产",
-                                value: 240,
-                                increase: 0,
-                                wells: "JH2,JH5,JH7"
-                            }
-                        ];
+                    measureRecommend(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.indicatorAnalysisDetailInfos;
+                            this.potentialWellNum=0;
+                            myData.forEach((el,i)=>{
+                                this.potentialWellNum+=Number(el.value);
+                                
+                                if(el.name=='换大泵'){
+                                    this.hdbSelCode=el.code;
+                                }
+                                
+                            })
+                            this.recommendedMeasuresOptions = myData;
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        measureRecommend(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.indicatorAnalysisDetailInfos;
-                                this.potentialWellNum=0;
-                                myData.forEach((el,i)=>{
-                                    this.potentialWellNum+=Number(el.value);
-                                    
-                                    if(el.name=='换大泵'){
-                                        this.hdbSelCode=el.code;
-                                    }
-                                    
-                                })
-                                this.recommendedMeasuresOptions = myData;
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //措施推荐可用项目,获取措施效果数据
             queryProWellDynamicAnalysisDetail() {
                 return new Promise((resolve, reject) => {
-                    if (this.dataSource < 1) { //静态数据
-                        this.recommendedMeasuresData = [{
-                                wellId: "JH1",
-                                theDate: "2021-01-02",
-                                measuresCode: "tagP2",
-                                measuresName: "解堵",
-                                increaseVolume: 2,
-                                increaseQuality: 2,
-                                increaseVolumeC: 2,
-                                increaseQualityC: 2
-                            },
-                            {
-                                wellId: "JH2",
-                                theDate: "2021-01-01",
-                                measuresCode: "tagP6",
-                                measuresName: "开关层/补孔",
-                                increaseVolume: 2,
-                                increaseQuality: 2,
-                                increaseVolumeC: 2,
-                                increaseQualityC: 2
-                            },
-                            {
-                                wellId: "JH3",
-                                theDate: "2021-01-01",
-                                measuresCode: "tagP8",
-                                measuresName: "维持生产",
-                                increaseVolume: 2,
-                                increaseQuality: 2,
-                                increaseVolumeC: 2,
-                                increaseQualityC: 2
-                            }
-                        ];
-                        this.initRecommendedMeasuresWells(); //生成井清单
+                    proWellDynamicAnalysisDetail(this.paramMap).then((res) => {
+                        let msg = res.data.msg;
+                        if (msg == "success") {
+                            let myData = res.data.data.evaluationResults;
+                            this.recommendedMeasuresData = myData;
+                            this.recommendedMeasuresWells = [];
+                            this.initRecommendedMeasuresWells(); //生成井清单
+                        }
                         resolve('success');
-                    } else { //使用接口
-                        proWellDynamicAnalysisDetail(this.paramMap).then((res) => {
-                            let msg = res.data.msg;
-                            if (msg == "success") {
-                                let myData = res.data.data.evaluationResults;
-                                this.recommendedMeasuresData = myData;
-                                this.recommendedMeasuresWells = [];
-                                this.initRecommendedMeasuresWells(); //生成井清单
-                            }
-                            resolve('success');
-                        });
-                    }
+                    });
                 });
             },
             //初始化有措施的井清单
@@ -1808,28 +1522,36 @@
             },
             //选中项目
             selRadioIterm(val, tag) {
+                console.log(val,this.selCode,888)
                 this.scrollFlag = false;
                 let myData = []; //我的数据
                 let myWellCount = {}; //计算各项目的井数
                 let t_count = 0; //计数器
-                this.selCode = val; //选中项目
+                if(this.selCode!=val){
+                    this.selCode = val; //选中项目
+                }else{
+                    this.selCode='';
+                    this.doSearch();
+                    return false;
+                }
+                
                 this.selTag = tag; //选中数据集
                 if (val == undefined || val == "") {
                     return false; //无效参数
                 }
-                //进行运算
+              
                 //1、获取选中井集合
-                if (eval("this." + tag)) {
-                    for (let i = 0; i < eval("this." + tag).length; i++) {
-                        let tData = eval("this." + tag)[i];
+                if (this[tag]) {
+                    for (let i = 0; i < this[tag].length; i++) {
+                        let tData = this[tag][i];
                         if (val == tData.code) {
-                            if (tData.wells == undefined || tData.wells == "" || tData.wells == "null") { //无数据
+                            if ( !tData.wells || tData.wells == "null") { //无数据
                                 myData = []; //没有数据
-                                eval("this." + tag)[i].value = 0; //井数
+                                this[tag][i].value = 0; //井数
                                 myWellCount[tData.code] = 0; //计数器
                             } else { //有数据
                                 let wellList = tData.wells.split(","); //我的井号串（逗号分割）
-                                eval("this." + tag)[i].value = wellList.length; //井数
+                                this[tag][i].value = wellList.length; //井数
                                 myWellCount[tData.code] = wellList.length; //计数器
                                 for (let j = 0; j < wellList.length; j++) {
                                     myData[j] = {
@@ -1841,183 +1563,52 @@
                         }
                     }
                 }
-                console.log('myData',myData)
-                console.log('this.productionTrendsOptions',this.productionTrendsOptions)
+                
                 //2、按照顺序初始化计数器、生成数据体
-                var tableData = this.initTableData;
-                var reData = [];
-                for (var i = 0; i < tableData.length; i++) {
-                    var item = tableData[i];
-                    var wellIdFilter = item.wellName;
-                    for (var j = 0; j < myData.length; j++) {
-                        var itemDb = myData[j];
+                let tableData = this.initTableData;
+                let reData = [];
+                for (let i = 0; i < tableData.length; i++) {
+                    let item = tableData[i];
+                    let wellIdFilter = item.wellName;
+                    for (let j = 0; j < myData.length; j++) {
+                        let itemDb = myData[j];
                         if (wellIdFilter == itemDb.wellId) {
                             reData.push(item);
                             break;
                         }
                     }
                 }
-
                 for (let i = 0; i < myData.length; i++) {
                     let myWellId = myData[i].wellId; //井号
-                    //productionTrendsOptions//生产动态
-                    for (let j = 0; j < this.productionTrendsOptions.length; j++) {
-                        let t_data = this.productionTrendsOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
+                    let forEachDataList=[
+                        {key:'生产动态',name:'productionTrendsOptions'},
+                        {key:'油井工况',name:'oilWellConditionOptions'},
+                        {key:'供排关系',name:'relationshipOptions'},
+                        {key:'递减率',name:'diminishingOptions'},
+                        {key:'采液强度',name:'fluidStrengthOptions'},
+                        {key:'采液指数',name:'fluidProductionOptions'},
+                        {key:'米采液指数',name:'mfluidProductionOptions'},
+                        {key:'提液潜力',name:'extractionPotentialOptions'},
+                        {key:'储量动用',name:'reserveProductionOptions'},
+                        {key:'措施推荐',name:'recommendedMeasuresOptions'},
+                    ];
+                    for(let k=0;k<forEachDataList.length;k++){
+                        let name=forEachDataList[k].name;
+                        let data=this[name];
+                        for (let j = 0; j < data.length; j++) {
+                            let t_data = data[j]; //每个数据项
+                            if (val != t_data.code) { //选中项目不需要测试
+                                if (!isNaN(myWellCount[t_data.code])) {
+                                    t_count = myWellCount[t_data.code];
+                                } else {
+                                    t_count = 0; //初始化
+                                }
+                                let t_subWells = "," + t_data.wells + ",";
+                                if (t_subWells.includes("," + myWellId + ",")) {
+                                    t_count++; //计数
+                                }
+                                myWellCount[t_data.code] = t_count; //回写
                             }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //oilWellConditionOptions//油井工况，（单列）
-                    for (let j = 0; j < this.oilWellConditionOptions.length; j++) {
-                        let t_data = this.oilWellConditionOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //relationshipOptions//供排关系，（单列）
-                    for (let j = 0; j < this.relationshipOptions.length; j++) {
-                        let t_data = this.relationshipOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //diminishingOptions//递减率，（单列）
-                    for (let j = 0; j < this.diminishingOptions.length; j++) {
-                        let t_data = this.diminishingOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //fluidStrengthOptions//采液强度，（单列）
-                    for (let j = 0; j < this.fluidStrengthOptions.length; j++) {
-                        let t_data = this.fluidStrengthOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //fluidProductionOptions//采液指数，（单列）
-                    for (let j = 0; j < this.fluidProductionOptions.length; j++) {
-                        let t_data = this.fluidProductionOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //mfluidProductionOptions//米采液指数，（单列）
-                    for (let j = 0; j < this.mfluidProductionOptions.length; j++) {
-                        let t_data = this.mfluidProductionOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //extractionPotentialOptions//提液潜力，（单列）
-                    for (let j = 0; j < this.extractionPotentialOptions.length; j++) {
-                        let t_data = this.extractionPotentialOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //reserveProductionOptions//储量动用，（单列）
-                    for (let j = 0; j < this.reserveProductionOptions.length; j++) {
-                        let t_data = this.reserveProductionOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
-                        }
-                    }
-                    //recommendedMeasuresOptions//措施推荐；不需要考虑数据项
-                    for (let j = 0; j < this.recommendedMeasuresOptions.length; j++) {
-                        let t_data = this.recommendedMeasuresOptions[j]; //每个数据项
-                        if (val != t_data.code) { //选中项目不需要测试
-                            if (!isNaN(myWellCount[t_data.code])) {
-                                t_count = myWellCount[t_data.code];
-                            } else {
-                                t_count = 0; //初始化
-                            }
-                            let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
-                                t_count++; //计数
-                            }
-                            myWellCount[t_data.code] = t_count; //回写
                         }
                     }
                     //有推荐措施时，附加措施效果数据
@@ -2035,135 +1626,41 @@
                         myData[i].increaseQualityC = t_partData.increaseQualityC;
                     }
                 }
-
+                
                 //3、根据每个项目的井数遍历检查表头
-                //productionTrendsOptions//生产动态
+                let forEachKeys=['productionTrendsOptions','oilWellConditionOptions','relationshipOptions','diminishingOptions','fluidStrengthOptions','fluidProductionOptions','mfluidProductionOptions','extractionPotentialOptions','reserveProductionOptions','recommendedMeasuresOptions'];
                 this.productionTrendsTab = [];
-                for (let j = 0; j < this.productionTrendsOptions.length; j++) {
-                    let t_data = this.productionTrendsOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.productionTrendsOptions[j].value = t_count; //登记条数
-                    if (t_count > 0) {
-                        let titleName = t_data.name + ' ' + (t_data.unit ? t_data.unit : '');
-                        if (titleName.lastIndexOf('m3') > -1) {
-                            titleName = titleName.replace('m3', 'm³');
+                for(let i=0;i<forEachKeys.length;i++){
+                    let key=forEachKeys[i];
+                    let data=this[key];
+                    for (let j = 0; j < data.length; j++) {
+                        let t_data = data[j]; //每个数据项
+                        //获得相关井数
+                        if (!isNaN(myWellCount[t_data.code])) {
+                            t_count = myWellCount[t_data.code];
+                        } else {
+                            t_count = 0; //初始化
                         }
-                        this.productionTrendsTab.push({
-                            code: this.changeToVueCode(t_data.code, t_data.name),
-                            name: titleName
-                        });
+                        data[j].value = t_count; //登记条数
+                        if(key=='productionTrendsOptions'){
+                            if (t_count > 0) {
+                                let titleName = t_data.name + ' ' + (t_data.unit ? t_data.unit : '');
+                                if (titleName.lastIndexOf('m3') > -1) {
+                                    titleName = titleName.replace('m3', 'm³');
+                                }
+                                this.productionTrendsTab.push({
+                                    code: this.changeToVueCode(t_data.code, t_data.name),
+                                    name: titleName
+                                });
+                            }
+                        }
                     }
-                }
-                //oilWellConditionOptions//油井工况，（单列）
-                for (let j = 0; j < this.oilWellConditionOptions.length; j++) {
-                    let t_data = this.oilWellConditionOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.oilWellConditionOptions[j].value = t_count; //登记条数
-                }
-                //relationshipOptions//供排关系，（单列）
-                for (let j = 0; j < this.relationshipOptions.length; j++) {
-                    let t_data = this.relationshipOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.relationshipOptions[j].value = t_count; //登记条数
-                }
-                //diminishingOptions//递减率，（单列）
-                for (let j = 0; j < this.diminishingOptions.length; j++) {
-                    let t_data = this.diminishingOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.diminishingOptions[j].value = t_count; //登记条数
-                }
-                //fluidStrengthOptions//采液强度，（单列）
-                for (let j = 0; j < this.fluidStrengthOptions.length; j++) {
-                    let t_data = this.fluidStrengthOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.fluidStrengthOptions[j].value = t_count; //登记条数
-                }
-                //fluidProductionOptions//采液指数，（单列）
-                for (let j = 0; j < this.fluidProductionOptions.length; j++) {
-                    let t_data = this.fluidProductionOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.fluidProductionOptions[j].value = t_count; //登记条数
-                }
-                //mfluidProductionOptions//米采液指数，（单列）
-                for (let j = 0; j < this.mfluidProductionOptions.length; j++) {
-                    let t_data = this.mfluidProductionOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.mfluidProductionOptions[j].value = t_count; //登记条数
-                }
-                //extractionPotentialOptions//提液潜力，（单列）
-                for (let j = 0; j < this.extractionPotentialOptions.length; j++) {
-                    let t_data = this.extractionPotentialOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.extractionPotentialOptions[j].value = t_count; //登记条数
-                }
-                //reserveProductionOptions//储量动用，（单列）
-                for (let j = 0; j < this.reserveProductionOptions.length; j++) {
-                    let t_data = this.reserveProductionOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.reserveProductionOptions[j].value = t_count; //登记条数
-                }
-                //recommendedMeasuresOptions//措施推荐；不需要考虑数据项
-                for (let j = 0; j < this.recommendedMeasuresOptions.length; j++) {
-                    let t_data = this.recommendedMeasuresOptions[j]; //每个数据项
-                    //获得相关井数
-                    if (!isNaN(myWellCount[t_data.code])) {
-                        t_count = myWellCount[t_data.code];
-                    } else {
-                        t_count = 0; //初始化
-                    }
-                    this.recommendedMeasuresOptions[j].value = t_count; //登记条数
                 }
                 this.tableData = reData; //加载数据
                 console.log('this.tableData',this.tableData)
                 this.$nextTick(() => {
                     this.$refs.tableList.doLayout();
                 })
-                
                 //zxb-重新计算数量    
                 let numKeys=['productionNum','oilWellConditionNum','relationshipNum','diminishingNum','fluidStrengthNum','fluidProductionNum','mfluidProductionNum'];
                 let datakeys=['productionTrendsOptions','oilWellConditionOptions','relationshipOptions','diminishingOptions','fluidStrengthOptions','fluidProductionOptions','mfluidProductionOptions'];
@@ -2190,7 +1687,6 @@
                     let el=this.recommendedMeasuresOptions[i];
                     this.potentialWellNum+=Number(el.value);
                 }
-                
             },
             //跳转到水井页面
             goWaterWell(val) {
@@ -2198,13 +1694,7 @@
                     this.$router.push('/singleWellPerformance_water')
                 }
             },
-            //检查评价日期是否有效
-            checkCurrentDate() {
-                if (this.currentDate == null || this.currentDate == "" || this.currentDate == undefined) {
-                    //this.currentDate = this.getMyDate(-1);
-                    this.currentDate = new Date().addDays(-1).format('yyyy-MM-dd');
-                }
-            },
+           
             //跳转到分析
             openAnalysis(wellNumber) {
                 this.$router.push({
@@ -2277,6 +1767,19 @@
                 let wellB = ob.wellName;
                 return this.wellNoSort(wellA, wellB);
             },
+            // 判断数据
+            linkdata(){
+                const codeMapping = {
+                    '0050102': 1,
+                    '0050101': 1,
+                    '0060102': 2,
+                    '0060101': 2,
+                    '0070102': 3,
+                    '0070101': 3,
+                    '0040101': 5
+                };
+                return codeMapping[this.selCode] || 0;
+            },
             //替换表格文字
 			replaceStr(str){
 				if(str){
@@ -2320,7 +1823,6 @@
 </script>
 
 <style lang="scss" scoped>
-    
     .z_app_container{
         height:100%;
         .app-container{
@@ -2349,7 +1851,10 @@
                 .leftBox{
                     width:563px;
                     height:1240px;
-                    position: relative;
+                    // position: relative;
+                    position: absolute;
+                    left:0;
+                    top:0;
                     .img1{
                         width:100%;
                         height:100%;
@@ -2397,9 +1902,6 @@
                 .rightBox{
                     width:100%;
                     height:100%;
-                    position: absolute;
-                    left:0;
-                    top:0;
                     z-index:3;
                 }
                 .v0{
@@ -2490,6 +1992,7 @@
                                         margin-right:10px;
                                     }
                                     span{
+                                        padding-left:30px;
                                         font-size: 16px;
                                         // color: #FFFFFF;
                                         text-align: center;
@@ -2651,39 +2154,68 @@
                         .z1{
                             margin-right:40px;
                         }
-                        .z3{
-                            flex:1;
-                            display: flex;
-                            flex-direction: column;
-                            .z-row-right{
-                                width:250px;
-                                height:110px;
-                                margin-right:20px;
-                                padding-bottom:20px;
-                                border: 1px solid;
-                                border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
-                                background-image: var(--logo-bg) !important;
-                                .name{
-                                    padding-top:14px;
-                                    margin-bottom:14px;
-                                    font-size: 18px;
-                                    color: #24DEFF;
-                                    text-align: center;
-                                    line-height: 25px;
-                                    font-weight: 600;
-                                }
-                                .num{
-                                    cursor: pointer;
-                                    padding-left:30px;
-                                    flex-wrap: wrap;
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: space-between;
-                                    span{
-                                        width:100px;
-                                        font-size:12px;
-                                        // text-align: right;
-                                    }
+                        // .z3{
+                        //     flex:1;
+                        //     display: flex;
+                        //     flex-direction: column;
+                        //     .z-row-right{
+                        //         width:250px;
+                        //         height:110px;
+                        //         margin-right:20px;
+                        //         padding-bottom:20px;
+                        //         border: 1px solid;
+                        //         border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
+                        //         background-image: var(--logo-bg) !important;
+                        //         .name{
+                        //             padding-top:14px;
+                        //             margin-bottom:14px;
+                        //             font-size: 18px;
+                        //             color: #24DEFF;
+                        //             text-align: center;
+                        //             line-height: 25px;
+                        //             font-weight: 600;
+                        //         }
+                        //         .num{
+                        //             cursor: pointer;
+                        //             padding-left:30px;
+                        //             flex-wrap: wrap;
+                        //             display: flex;
+                        //             align-items: center;
+                        //             justify-content: space-between;
+                        //             span{
+                        //                 width:100px;
+                        //                 font-size:12px;
+                        //                 // text-align: right;
+                        //             }
+                        //         }
+                        //     }
+                        // }
+                        .z-row-right{
+                            width: 250px;
+                            height: 100px;
+                            margin-right: 40px;
+                            padding:0 30px 0 26px;
+                            padding-bottom:20px;
+                            border: 1px solid;
+                            border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
+                            background-image: var(--logo-bg) !important;
+                            .name{
+                                padding-top:14px;
+                                margin-bottom:14px;
+                                font-size: 18px;
+                                color: #24DEFF;
+                                text-align: center;
+                                line-height: 25px;
+                                font-weight: 600;
+                            }
+                            .num{
+                                cursor: pointer;
+                                flex-wrap: wrap;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                span{
+                                    font-size:12px;
                                 }
                             }
                         }
@@ -2702,6 +2234,7 @@
                                         margin-right:10px;
                                     }
                                     span{
+                                        padding-left:30px;
                                         font-size: 16px;
                                         // color: #FFFFFF;
                                         text-align: center;
@@ -2877,6 +2410,28 @@
         }
     }
     
+    .z-button{
+        width: 100%;
+        height: 46px!important;
+        line-height: 16px!important;
+        white-space: pre-line;
+        
+        font-size:14px;
+        text-align: center;
+        border-color: var(--light-blue-color);
+        color: var(--white-color);
+        transition: all 0s;
+        line-height: 8px;
+        border-radius: 0 !important;
+        background: rgba(143, 164, 204, 0.3);
+        background-size: 100% 100% !important;
+        &:hover{
+            border-image: var(--primary-btn);
+            border-color: var(--light-blue-color);
+            background: var(--primary-btn) !important;
+        }
+    }
+    
     .checkBtn {
         width: 110px;
         height: 28px;
@@ -2895,6 +2450,11 @@
         text-align: center;
         background: rgb(2, 43, 117);
         color:#fff;
+    }
+    .selectButton{
+        border-image: var(--primary-btn);
+        border-color: var(--light-blue-color);
+        background: var(--primary-btn) !important;
     }
     
     .noCheckBtn {

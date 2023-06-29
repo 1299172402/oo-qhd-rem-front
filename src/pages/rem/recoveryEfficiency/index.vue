@@ -36,8 +36,8 @@
                     <div style="height:50px;">
                         <span>单位切换：</span>
                         <el-select v-model="unitType" placeholder="请选择" style="width:100px;" @change="oilFieldRecoveryRatioApi">
-                            <el-option label="m³" value="m³"></el-option>
-                            <el-option label="t" value="t"></el-option>
+                            <el-option label="10⁴m³" value="10⁴m³"></el-option>
+                            <el-option label="10⁴t" value="10⁴t"></el-option>
                         </el-select>
                     </div>
                     <el-table 
@@ -249,34 +249,39 @@
                                     </el-radio-group>
                                 </el-row>
                                 <el-row v-if="radio2=='图表'">
-                                    <Echart :chart-data="optionTwo" height="300px"></Echart>
+                                    <info-window style="margin-top:0;" infoWidth="100%" infoHeight="300px" headerTitle="递减曲线法" isShowMaxBtn>
+                                        <Echart :chart-data="optionTwo" height="100%"></Echart>
+                                    </info-window>
                                 </el-row>
                                 <el-row v-if="radio2=='数据'">
                                     <div style="height:300px">
-                                        <el-table highlight :data="djtableDate" height="calc(100% - 40px)" class="doubleHeader">
-                                            <el-table-column align="center" type="index" label="序号"></el-table-column>
-                                            <el-table-column align="center" prop="theDate" show-overflow-tooltip label-class-name="twoRowHeader">
-                                                <template slot="header">
-                                                    <div>
-                                                        <span>日期</span>
-                                                        <br />
-                                                        <span>(yyyy/mm/dd)</span>
-                                                    </div>
-                                                </template>
-                                            </el-table-column>
-                                            <el-table-column align="center" prop="x" label="x" :formatter="toPrecise"></el-table-column>
-                                            <el-table-column align="center" prop="y" label-class-name="twoRowHeader" :formatter="toPrecise">
-                                                <template slot="header">
-                                                    <div>
-                                                        <span>y</span>
-                                                        <br />
-                                                        <span>(10⁴m³)</span>
-                                                    </div>
-                                                </template>
-                                            </el-table-column>
-                                        </el-table>
+                                        <info-window style="margin-top:0;" infoWidth="100%" infoHeight="300px" headerTitle="递减曲线法" isShowMaxBtn>
+                                            <el-table highlight :data="djtableDate" height="100%" class="doubleHeader">
+                                                <el-table-column align="center" type="index" label="序号"></el-table-column>
+                                                <el-table-column align="center" prop="theDate" show-overflow-tooltip label-class-name="twoRowHeader">
+                                                    <template slot="header">
+                                                        <div>
+                                                            <span>日期</span>
+                                                            <br />
+                                                            <span>(yyyy/mm/dd)</span>
+                                                        </div>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column align="center" prop="x" label="x" :formatter="toPrecise"></el-table-column>
+                                                <el-table-column align="center" prop="y" label-class-name="twoRowHeader" :formatter="toPrecise">
+                                                    <template slot="header">
+                                                        <div>
+                                                            <span>y</span>
+                                                            <br />
+                                                            <span>(10⁴m³)</span>
+                                                        </div>
+                                                    </template>
+                                                </el-table-column>
+                                            </el-table>
+                                        </info-window>
                                     </div>
                                 </el-row>
+                                
                                 <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-top:20px;margin-bottom:20px;margin-left: 0;">
                                     <span>计算结果</span>
                                 </div>
@@ -338,40 +343,44 @@
                                     </div>  
                                 </el-row>
                                 <el-row v-if="radio4 == '图表'">
-                                    <Echart :chart-data="optionThree" height="300px"></Echart>
+                                    <info-window style="margin-top:0;" infoWidth="100%" infoHeight="300px" headerTitle="童氏图版法" isShowMaxBtn>
+                                        <Echart :chart-data="optionThree" height="100%"></Echart>
+                                    </info-window>
                                 </el-row>
                                 <el-row v-if="radio4 == '数据'">
                                     <div style="height:300px">
-                                        <el-table highlight :data="tstableDate" height="calc(100% - 40px)" class="doubleHeader">
-                                            <el-table-column align="center" type="index" label="序号"></el-table-column>
-                                            <el-table-column align="center" prop="theDate" show-overflow-tooltip label-class-name="twoRowHeader">
-                                                <template slot="header">
-                                                    <div>
-                                                        <span>日期</span>
-                                                        <br />
-                                                        <span>(yyyy/mm/dd)</span>
-                                                    </div>
-                                                </template>
-                                            </el-table-column>
-                                            <el-table-column align="center" prop="x" :formatter="toPrecise" label-class-name="twoRowHeader">
-                                                <template slot="header">
-                                                    <div>
-                                                        <span>x</span>
-                                                        <br />
-                                                        <span>(%)</span>
-                                                    </div>
-                                                </template>
-                                            </el-table-column>
-                                            <el-table-column align="center" prop="y" :formatter="toPrecise" label-class-name="twoRowHeader">
-                                                <template slot="header">
-                                                    <div>
-                                                        <span>y</span>
-                                                        <br />
-                                                        <span>(%)</span>
-                                                    </div>
-                                                </template>
-                                            </el-table-column>
-                                        </el-table>
+                                        <info-window style="margin-top:0;" infoWidth="100%" infoHeight="300px" headerTitle="童氏图版法" isShowMaxBtn>
+                                            <el-table highlight :data="tstableDate" height="100%" class="doubleHeader">
+                                                <el-table-column align="center" type="index" label="序号"></el-table-column>
+                                                <el-table-column align="center" prop="theDate" show-overflow-tooltip label-class-name="twoRowHeader">
+                                                    <template slot="header">
+                                                        <div>
+                                                            <span>日期</span>
+                                                            <br />
+                                                            <span>(yyyy/mm/dd)</span>
+                                                        </div>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column align="center" prop="x" :formatter="toPrecise" label-class-name="twoRowHeader">
+                                                    <template slot="header">
+                                                        <div>
+                                                            <span>x</span>
+                                                            <br />
+                                                            <span>(%)</span>
+                                                        </div>
+                                                    </template>
+                                                </el-table-column>
+                                                <el-table-column align="center" prop="y" :formatter="toPrecise" label-class-name="twoRowHeader">
+                                                    <template slot="header">
+                                                        <div>
+                                                            <span>y</span>
+                                                            <br />
+                                                            <span>(%)</span>
+                                                        </div>
+                                                    </template>
+                                                </el-table-column>
+                                            </el-table>
+                                        </info-window>
                                     </div>
                                 </el-row>
                                 <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-top:20px;margin-bottom:20px;margin-left: 0;">
@@ -518,10 +527,10 @@
                                 </el-row>
                                 <el-row style="height:10%;margin-top: 20px;">
                                     <el-col style="margin-left:140px" :span="6">
-                                        <el-button type="primary" @click="getExperienceFormulaParameter()">参数读取</el-button>
+                                        <el-button type="primary" @click="getExperienceFormulaParameter">参数读取</el-button>
                                     </el-col>
                                     <el-col :span="6">
-                                        <el-button type="primary" @click="jygsChart()">开始计算</el-button>
+                                        <el-button type="primary" @click="jygsChart">开始计算</el-button>
                                     </el-col>
                                 </el-row>
                             </div>
@@ -565,6 +574,7 @@
     import {fetchOilFields,fetchFields,fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import {oilFieldRecoveryRatio, waterDriveChartData,  declineChartData, tongChartData, experienceFormulaCalResult,experienceFormulaParameter} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
     export default {
+        name:'recoveryEfficiency',
         computed:{
             ...mapState({
                 mode: state=> state.setting.mode
@@ -615,7 +625,7 @@
                 blocks: [],
                 
                 //单位切换
-                unitType:'m³',
+                unitType:'10⁴m³',
                 //拟合起始时间
                 dateTime: [],
                 dateTime1: [],
@@ -754,7 +764,7 @@
                     ]
                 },
                 //tabs切换值
-                activeName: '',
+                activeName: 'waterDrive',
                 //标签名称
                 tabs: [{
                         label: "水驱特征曲线",
@@ -1104,43 +1114,10 @@
             }
         },
         created() {
-            //初始化时间,选择tabs值
-            let today = new Date();
-            let date = {
-                year: today.getFullYear(),
-                month: today.getMonth() + 1,
-            }
-            var mon = "";
-            if (date.month < 10) {
-                mon = date.year + "-0" + date.month;
-            } else {
-                mon = date.year + "-" + date.month;
-            }
-            let today1 = new Date().addDays(-30);
-            let date1 = {
-                year: today1.getFullYear(),
-                month: today1.getMonth() + 1,
-            }
-            var mon1 = "";
-            if (date1.month < 10) {
-                mon1 = date1.year + "-0" + date1.month;
-            } else {
-                mon1 = date1.year + "-" + date1.month;
-            }
-            this.dateTime = [mon1, mon];
-            this.dateTime1 = [mon1, mon];
-            this.dateTime2 = [mon1, mon];
-            this.dateTime = [new Date().addDays(-365).format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
-            this.dateTime1 = [new Date().addDays(-365).format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
-            this.dateTime2 = [new Date().addDays(-365).format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
-            this.activeName = 'waterDrive';
-            console.log(this.mode)
-            console.log(this.$store.state.setting.mode)
+            this.initDate();
         },
         mounted() {
-            //获取油田id
             this.getOilFields();
-            //获取区块id
             this.getFieldsData("3FC9A818F5BC43B88270DB80BBB3018F");
             this.getFieldOilLayers();
             this.Retrieval();
@@ -1148,14 +1125,51 @@
         methods: {
             //重置
             resetting(){
-                this.selectOilField='3FC9A818F5BC43B88270DB80BBB3018F';
-                this.selectBlock='3FC9A818F5BC43B88270DB80BBB3018F';
-                this.cx='';
-                this.Retrieval();
+                this.$nextTick(()=>{
+                    this.initDate();
+                    this.getOilFields();
+                    this.getFieldsData("3FC9A818F5BC43B88270DB80BBB3018F");
+                    this.getFieldOilLayers();
+                    this.paramater={};
+                    this.Retrieval();
+                })
+                
             },
             //切换tabs
             handleClick() {
                 console.log(this.activeName)
+            },
+            //初始化日期
+            initDate(){
+                //初始化时间,选择tabs值
+                let today = new Date();
+                let date = {
+                    year: today.getFullYear(),
+                    month: today.getMonth() + 1,
+                }
+                var mon = "";
+                if (date.month < 10) {
+                    mon = date.year + "-0" + date.month;
+                } else {
+                    mon = date.year + "-" + date.month;
+                }
+                let today1 = new Date().addDays(-30);
+                let date1 = {
+                    year: today1.getFullYear(),
+                    month: today1.getMonth() + 1,
+                }
+                var mon1 = "";
+                if (date1.month < 10) {
+                    mon1 = date1.year + "-0" + date1.month;
+                } else {
+                    mon1 = date1.year + "-" + date1.month;
+                }
+                this.dateTime = [mon1, mon];
+                this.dateTime1 = [mon1, mon];
+                this.dateTime2 = [mon1, mon];
+                this.dateTime = [new Date().addDays(-365).format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
+                this.dateTime1 = [new Date().addDays(-365).format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
+                this.dateTime2 = [new Date().addDays(-365).format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
             },
             //获取油田信息
             getOilFields() {

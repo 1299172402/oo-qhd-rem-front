@@ -183,9 +183,9 @@
                                 :data="form.tableData2"
                                 id="indexscv"
                                 highlight
-                                height="100%"
                                 :span-method="arrheader1"
                                 style="margin-top: 10px"
+                                height="calc(100% - 40px)"
                             >
                                 <!-- :span-method="arrheader1" -->
                                 <el-table-column prop="injWellNo" label="水井井号" align="center"
@@ -278,6 +278,7 @@ import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {arrayFindAll} from "@/lib/arrayFind";
 
 export default {
+    name:'optimizationDetail',
     components: {
         Echart
     },
@@ -410,7 +411,6 @@ export default {
         },
         queryBut() {
             this.queryWellAvgFluidProdAlloc()
-            this.queryWellInjRatio()
         },
         queryEdit() {
             if (this.radio == '1') {
@@ -510,7 +510,6 @@ export default {
                 // this.getSpanArr(arr, 'injWellNo')
                 this.groupBy(arr)
                 this.ying = eval(res.groupWaterInferData)
-                this.queryWellGuessResult()
                 this.$message.success("保存成功")
             }).catch(() => {
                 this.$message.error("请配置井组参数信息!")

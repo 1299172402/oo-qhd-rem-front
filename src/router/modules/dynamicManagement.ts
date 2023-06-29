@@ -15,8 +15,8 @@ export default [
                 component: () => import("@/layouts/blank.vue"),
                 children: [
                     {
-                        path: "analysisReport",
-                        name: "analysisReport",
+                        path: "oilAnalysisReport",
+                        name: "oilAnalysisReport",
                         component: () => import("@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/analysisReport.vue"),
                         meta: { title: "油井动态分析报告", icon: "icon" },
                     },
@@ -33,20 +33,6 @@ export default [
                         component: () => import("@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/index.vue"),
                         meta: { title: "油井辅助分析", icon: "icon" },
                     },
-                    // {
-                    //     hidden: false,
-                    //     path: 'oilReport',
-                    //     name: 'oilReport',
-                    //     component: () => import('@/pages/rem/performance/dynamicTracking/oilReport/index.vue'),
-                    //     meta: { title: '油井分析报告', icon: 'icon' },
-                    // },
-                    // {
-                    //     hidden: false,
-                    //     path: 'waterReport',
-                    //     name: 'waterReport',
-                    //     component: () => import('@/pages/rem/performance/dynamicTracking/waterReport/index.vue'),
-                    //     meta: { title: '水井分析报告', icon: 'icon' },
-                    // },
                 ],
             },
             {
@@ -56,8 +42,8 @@ export default [
                 component: () => import("@/layouts/blank.vue"),
                 children: [
                     {
-                        path: "analysisReport",
-                        name: "analysisReport",
+                        path: "waterAnalysisReport",
+                        name: "waterAnalysisReport",
                         component: () => import("@/pages/rem/performance/dynamicTracking/waterAuxiliaryAnalysis/analysisReport.vue"),
                         meta: { title: "水井动态分析报告", icon: "icon" },
                     },
@@ -78,8 +64,8 @@ export default [
                 meta: { title: "井组动态分析", single: false },
                 children: [
                     {
-                        path: "analysisReport",
-                        name: "analysisReport",
+                        path: "wellGroupAnalysisReport",
+                        name: "wellGroupAnalysisReport",
                         component: () => import("@/pages/rem/performance/dynamicTracking/wellGroupAnalysisAssistant/analysisReport.vue"),
                         meta: { title: "井组动态分析报告", icon: "icon" },
                     },
@@ -98,8 +84,8 @@ export default [
                 meta: { title: "区块动态分析", single: false },
                 children: [
                     {
-                        path: "analysisReport",
-                        name: "analysisReport",
+                        path: "blockAnalysisReport",
+                        name: "blockAnalysisReport",
                         component: () => import("@/pages/rem/performance/dynamicTracking/blockAnalysisAided/analysisReport.vue"),
                         meta: { title: "区块动态分析报告", icon: "icon" },
                     },

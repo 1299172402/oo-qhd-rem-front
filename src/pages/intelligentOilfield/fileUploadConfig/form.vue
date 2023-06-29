@@ -3,7 +3,8 @@
   <form-section
     submit-text=""
     save-text="保存"
-    cancel-text="取消"
+    :cancel-text="isView ? '关闭' : '取消'"
+    :action="$route.query.action"
     :return-name="returnName"
     @save="handleOk"
   >
@@ -77,7 +78,7 @@
         </el-select>
       </el-form-item>
       <el-form-item
-        v-if="model.uploadType === 'minio' && model.appId !== '$system$'"
+        v-if="(model.uploadType === 'minio' || model.uploadType === 'local') && model.appId !== '$system$'"
         label="所属租户："
         prop="tenantCode"
         class="form-layout__item-col2"

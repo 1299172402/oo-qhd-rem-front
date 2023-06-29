@@ -421,22 +421,20 @@ export default Vue.extend({
       // 表单校验
       rules: {
         userName: [
-          { required: true, message: "请输入用户账号", trigger: "blur" },
-          { min: 2, max: 20, message: "用户账号长度必须介于 2 和 20 之间", trigger: "blur" }
+          { required: true, message: "请输入用户账号" },
+          { min: 2, max: 20, message: "用户账号长度必须介于 2 和 20 之间" }
         ],
-        nickName: [{ required: true, message: "请输入用户名称", trigger: "blur" }],
+        nickName: [{ required: true, message: "请输入用户名称" }],
         email: [
           {
             type: "email",
-            message: "请输入正确的邮箱地址",
-            trigger: ["blur", "change"]
+            message: "请输入正确的邮箱地址"
           }
         ],
         phonenumber: [
           {
             pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-            message: "请输入正确的手机号码",
-            trigger: "blur"
+            message: "请输入正确的手机号码"
           }
         ],
         idCard: [
@@ -448,9 +446,9 @@ export default Vue.extend({
         ]
       },
       pwdRules: {
-        initPwd: [{ required: true, message: "请输入旧密码", trigger: "blur" }],
+        initPwd: [{ required: true, message: "请输入旧密码" }],
         updatePwd: [
-          { required: true, message: "请输入新密码", trigger: "blur" },
+          { required: true, message: "请输入新密码" },
           {
             pattern:
               /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{12,20}$/,
@@ -458,8 +456,8 @@ export default Vue.extend({
           }
         ],
         surePwd: [
-          { required: true, message: "请输入确认密码", trigger: "blur" },
-          { required: true, validator: equalToPassword, trigger: "blur" }
+          { required: true, message: "请输入确认密码" },
+          { required: true, validator: equalToPassword }
         ]
       },
       // 表单参数
@@ -511,13 +509,17 @@ export default Vue.extend({
   watch: {
     iconvisible: {
       handler() {
-        this.containerWidth();
+        // TODO: Maybe change back
+        // this.containerWidth();
       },
       immediate: true
     },
     "$store.state.user.isGroupLogin": {
-      handler() {
-        this.getInitDeptds();
+      handler(newVal) {
+        if (newVal) {
+          this.getInitDeptds();
+        }
+        this.containerWidth();
       },
       deep: true,
       immediate: true
@@ -539,6 +541,9 @@ export default Vue.extend({
       });
     },
     getInitDeptds() {
+      // 解决无租户不显示门户的面板
+      this.$store.commit("user/SETTENANTID", "");
+      this.$store.commit("user/SETTENANTName", "");
       getTenantsByUserId(this.$store.getters["user/userDetail"].user.userId).then(response => {
         // 租户列表
         this.tenantOptions = response.data.data;
@@ -691,11 +696,13 @@ export default Vue.extend({
     },
     /** 提交按钮 */
     submitForm() {
+      this.form.postIds = this.form.tempPostId ? this.form.tempPostId?.split(",") : [];
       this.$refs.form.validate(valid => {
         if (valid) {
           updateUseridcard(this.form).then(res => {
             if (res ? res.data.code === 200 : false) {
               this.$modal.msgSuccess("修改成功");
+              this.$store.commit("user/setUserInfo", this.form);
               this.open = false;
             }
           });
@@ -737,6 +744,10 @@ export default Vue.extend({
       });
       getUser(userId).then(response => {
         this.form = response.data.data;
+        this.form.idCard = response.data.data.idCard;
+        this.form.postIds = response.data.postIds.length === 0 ? [] : response.data.postIds.toLocaleString().split(",");
+        this.form.tempPostId = response.data.postIds.length === 0 ? "" : String(response.data.postIds.toLocaleString());
+        this.form.roleIds = response.data.roleIds.length === 0 ? [] : response.data.roleIds.toLocaleString().split(",");
         this.open = true;
         this.title = "账号管理";
       });
@@ -847,7 +858,7 @@ export default Vue.extend({
 
 .header-logo-container {
   width: 184px;
-//   height: 26px;
+  //   height: 26px;
   // TODO: 内网 Maybe change back
   height: 55px;
   align-items: center;

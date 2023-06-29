@@ -6,7 +6,6 @@
       :theme="theme"
       :value="active"
       :collapsed="collapsed"
-      :default-expanded="defaultExpanded"
       :expand-type="showLogo ? 'popup' : 'normal'"
     >
       <template #logo>
@@ -83,15 +82,6 @@ export default Vue.extend({
     };
   },
   computed: {
-    defaultExpanded() {
-      const path = this.active;
-      const parentPath = path.substring(0, path.lastIndexOf("/"));
-      if (parentPath.lastIndexOf("/")) {
-        const threeLevel = parentPath.substring(0, parentPath.lastIndexOf("/"));
-        return threeLevel === "" ? [] : [threeLevel, parentPath];
-      }
-      return parentPath === "" ? [] : [parentPath];
-    },
     iconName(): string {
       return this.$store.state.setting.isSidebarCompact ? "menu-fold" : "menu-unfold";
     },

@@ -277,7 +277,7 @@ export default {
 
 .fullWindow >>> .vue-grid-item {
   /* 最大化 */
-   width: 100vw !important;
+  width: 100vw !important;
   height: 100vh !important;
   transform: translate3d(0, 0, 0) !important;
   z-index: 999;

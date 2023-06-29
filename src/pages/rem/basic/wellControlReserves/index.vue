@@ -137,6 +137,7 @@ import {
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 
 export default {
+  name:'reserves',
   components: {treeMultipleSelection},
   data() {
     return {
@@ -370,7 +371,6 @@ export default {
       }
     },
     childinfo(data){
-      console.log(data)
       this.queryData.pt = data[3].value
       this.queryData.wellId = data[4].value
     },

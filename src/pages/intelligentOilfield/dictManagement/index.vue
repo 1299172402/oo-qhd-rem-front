@@ -269,8 +269,8 @@ export default {
       },
       // 表单校验
       rules: {
-        dictName: [{ required: true, message: "请输入字典名称", trigger: "blur" }],
-        dictType: [{ required: true, message: "请输入字典类型", trigger: "blur" }]
+        dictName: [{ required: true, message: "请输入字典名称" }],
+        dictType: [{ required: true, message: "请输入字典类型" }]
       }
     };
   },

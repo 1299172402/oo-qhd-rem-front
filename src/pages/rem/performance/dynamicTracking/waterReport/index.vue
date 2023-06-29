@@ -1,42 +1,6 @@
-<!-- 油井分析报告 -->
+<!-- 水井分析报告 -->
 <template>
   <div class="app-container">
-<!--    <headerSearch class="g-w100 g-h100" style="height: auto">-->
-<!--      <el-form :model="queryData" :inline="true" style="margin-top: 18px">-->
-<!--        <el-form-item label="作业公司：">-->
-<!--          <el-select v-model="queryData.orgId" disabled>-->
-<!--            <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.deptName" :value="item.deptId">-->
-<!--            </el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="油田：">-->
-<!--          <el-select v-model="queryData.ogfId" disabled>-->
-<!--            <el-option v-for="(item, index) in oilFields" :key="index" :label="item.name" :value="item.oilFieldId">-->
-<!--            </el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="平台：" prop="createBy">-->
-<!--          <el-select v-model="queryData.assetCode" @change="doChangePT" style="width: 220px">-->
-<!--            <el-option v-for="(item, index) in platforms" :key="index" :label="item.platName" :value="item.platFormId">-->
-<!--            </el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="井名：" prop="createBy">-->
-<!--          <el-select v-model="queryData.selectWellId" style="width: 220px">-->
-<!--            <el-option-->
-<!--              v-for="item in wellData"-->
-<!--              :key="item.wellId"-->
-<!--              :label="item.wellName"-->
-<!--              :value="item.wellId"-->
-<!--              :disabled="item.disabled"-->
-<!--            ></el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item>-->
-<!--          <el-button icon="el-icon-search" @click="getData" size="mini" type="primary">搜索</el-button>-->
-<!--        </el-form-item>-->
-<!--      </el-form>-->
-<!--    </headerSearch>-->
 <!--      单井基本信息表-->
       <el-row :gutter="20">
           <individualWellBasicInformationSheet :queryData="queryData"></individualWellBasicInformationSheet>
@@ -63,7 +27,7 @@
       </el-row>
 <!--      基础数据-->
       <el-row :gutter="20">
-          <fundamentalData :queryData="queryData" ref="toolchild3"></fundamentalData>
+          <fundamentalData :queryData="queryData"></fundamentalData>
       </el-row>
 <!--      临井数据-->
       <el-row :gutter="20">

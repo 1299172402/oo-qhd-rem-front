@@ -144,6 +144,7 @@
       </el-row>
       <el-table
         v-if="activeName === 'first'"
+        class="doubleHeader"
         :data="userList"
         height="calc(100% - 113px)"
         :row-style="{ height: '0px' }"
@@ -158,11 +159,21 @@
         <el-table-column label="用户名称" prop="nickName" />
         <el-table-column label="用户账号" prop="userName" />
         <el-table-column label="组织机构" prop="dept.deptName" />
-        <el-table-column label="访问时间" align="center" prop="loginDate">
-          <template slot-scope="scope">
-            <span>{{ parseTime(scope.row.loginDate) }}</span>
+        <el-table-column label="访问次数" prop="visits" />
+        <el-table-column label="访问时长" prop="visitHour">
+          <template #header>
+            <div class="headerSortRow1">
+              <span>访问时长</span>
+              <br>
+              <span>(小时)</span>
+            </div>
           </template>
         </el-table-column>
+        <el-table-column
+          label="访问有效时间"
+          align="center"
+          prop="effectiveHour"
+        />
         <el-table-column label="访问页面" prop="accessPage" width="150" />
         <!-- <el-table-column label="状态" align="center">
           <template slot-scope="scope">

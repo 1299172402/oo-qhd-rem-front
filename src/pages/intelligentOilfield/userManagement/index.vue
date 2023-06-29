@@ -17,6 +17,7 @@
             size="small"
             prefix-icon="el-icon-search"
             style="margin-bottom: 10px; height: 40px"
+            @clear="getTreeselect"
           />
         </div>
         <div class="head-container" style="overflow: auto;">
@@ -374,7 +375,7 @@
                 <el-button
                   v-if="scope.row.userId !== '1'"
                   v-hasPermi="['system:user:remove']"
-                  :disabled="scope.row.ehr === '1' "
+                  :disabled="scope.row.ehr === '1'"
                   type="text"
                   class="delbutton"
                   @click="handleDelete(scope.row)"
@@ -391,7 +392,7 @@
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item
                       v-hasPermi="['system:user:resetPwd']"
-                      :disabled="scope.row.ehr === '1' "
+                      :disabled="scope.row.ehr === '1'"
                       command="handleResetPwd"
                       icon="el-icon-key"
                     >
@@ -533,28 +534,8 @@
           </el-col>
         </el-row>
         <el-row />
-        <el-row type="flex" justify="start">
+        <el-row v-if="form.userId == undefined" style="display: block;">
           <el-col :span="8">
-            <el-form-item label="所属机构" prop="deptId">
-              <treeselect
-                v-model="form.deptId"
-                :disabled="form.ehr === '0' ? false : keys.includes('deptId')"
-                :options="deptOptions"
-                :show-count="true"
-                placeholder="请选择所属机构"
-                no-options-text="暂无数据"
-              >
-                <label
-                  slot="option-label"
-                  slot-scope="{ node, labelClassName }"
-                  :class="labelClassName"
-                  :title="node.label"
-                >{{ node.label }}
-                </label>
-              </treeselect>
-            </el-form-item>
-          </el-col>
-          <el-col v-if="form.userId == undefined" :span="8">
             <el-form-item label="用户密码" prop="password">
               <el-input
                 v-model="form.password"
@@ -566,7 +547,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item v-if="form.userId == undefined" label="确认密码" prop="surePassword">
+            <el-form-item label="确认密码" prop="surePassword">
               <el-input
                 v-model="form.surePassword"
                 placeholder="请输入确认密码"
@@ -574,6 +555,29 @@
                 maxlength="20"
                 show-password
               />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row type="flex" justify="start">
+          <el-col>
+            <el-form-item label="所属机构" prop="deptId">
+              <treeselect
+                v-model="form.deptId"
+                :disabled="form.ehr === '0' ? false : keys.includes('deptId')"
+                :options="deptOptions"
+                :show-count="true"
+                placeholder="请选择所属机构"
+                no-options-text="暂无数据"
+                @input="inputChange"
+              >
+                <label
+                  slot="option-label"
+                  slot-scope="{ node, labelClassName }"
+                  :class="labelClassName"
+                  :title="node.label"
+                >{{ node.label }}
+                </label>
+              </treeselect>
             </el-form-item>
           </el-col>
         </el-row>
@@ -950,20 +954,20 @@ export default {
       ],
       // 岗位表单校验
       postRules: {
-        postName: [{ required: true, message: "请输入岗位名称", trigger: "blur" }],
-        postCode: [{ required: true, message: "请输入岗位编码", trigger: "blur" }],
-        postSort: [{ required: true, message: "请输入岗位顺序", trigger: "blur" }]
+        postName: [{ required: true, message: "请输入岗位名称" }],
+        postCode: [{ required: true, message: "请输入岗位编码" }],
+        postSort: [{ required: true, message: "请输入岗位顺序" }]
       },
       // 表单校验
       rules: {
         userName: [
-          { required: true, message: "请输入用户账号", trigger: "blur" },
-          { min: 2, max: 20, message: "用户账号长度必须介于 2 和 20 之间", trigger: "blur" }
+          { required: true, message: "请输入用户账号" },
+          { min: 2, max: 20, message: "用户账号长度必须介于 2 和 20 之间" }
         ],
-        nickName: [{ required: true, message: "请输入用户名称", trigger: "blur" }],
+        nickName: [{ required: true, message: "请输入用户名称" }],
         password: [
-          { required: true, message: "请输入用户密码", trigger: "blur" },
-          //   { min: 8, max: 20, message: '用户密码长度必须介于 8 和 20 之间', trigger: 'blur' },
+          { required: true, message: "请输入用户密码" },
+          //   { min: 8, max: 20, message: '用户密码长度必须介于 8 和 20 之间' },
           {
             pattern:
               /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F])[\da-zA-Z\x21-\x2f\x3a-\x40\x5b-\x60\x7B-\x7F]{12,20}$/,
@@ -971,30 +975,28 @@ export default {
           }
         ],
         surePassword: [
-          { required: true, message: "请输入确认密码", trigger: "blur" },
-          { required: true, validator: equalToPassword, trigger: "blur" }
+          { required: true, message: "请输入确认密码" },
+          { required: true, validator: equalToPassword }
         ],
-        deptId: [{ required: true, message: "请选择所属机构", trigger: "blur" }],
-        roleIds: [{ required: true, message: "请选择用户角色", trigger: "blur" }],
-        userType: [{ required: true, message: "请选择账号类型", trigger: "blur" }],
+        deptId: [{ required: true, message: "请选择所属机构" }],
+        roleIds: [{ required: true, message: "请选择用户角色" }],
+        userType: [{ required: true, message: "请选择账号类型" }],
         email: [
-          { required: true, message: "请输入账号邮箱", trigger: "blur" },
+          { required: true, message: "请输入账号邮箱" },
           {
             type: "email",
-            message: "请输入正确的邮箱地址",
-            trigger: ["blur", "change"]
+            message: "请输入正确的邮箱地址"
           }
         ],
         phonenumber: [
           {
             pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-            message: "请输入正确的手机号码",
-            trigger: ["blur", "change"]
+            message: "请输入正确的手机号码"
           }
         ],
         idCard: [
-          // { required: true, message: "请输入身份证", trigger: "blur" },
-          //   { min: 8, max: 20, message: '用户密码长度必须介于 8 和 20 之间', trigger: 'blur' },
+          // { required: true, message: "请输入身份证" },
+          //   { min: 8, max: 20, message: '用户密码长度必须介于 8 和 20 之间' },
           {
             pattern:
               /^\d{6}((((((19|20)\d{2})(0[13-9]|1[012])(0[1-9]|[12]\d|30))|(((19|20)\d{2})(0[13578]|1[02])31)|((19|20)\d{2})02(0[1-9]|1\d|2[0-8])|((((19|20)([13579][26]|[2468][048]|0[48]))|(2000))0229))\d{3})|((((\d{2})(0[13-9]|1[012])(0[1-9]|[12]\d|30))|((\d{2})(0[13578]|1[02])31)|((\d{2})02(0[1-9]|1\d|2[0-8]))|(([13579][26]|[2468][048]|0[048])0229))\d{2}))(\d|X|x)$/,
@@ -1004,14 +1006,14 @@ export default {
       },
       // 密码校验
       pwdRules: {
-        initPwd: [{ required: true, message: "请输入当前密码", trigger: "blur" }],
+        initPwd: [{ required: true, message: "请输入当前密码" }],
         updatePwd: [
-          { required: true, message: "请输入修改密码", trigger: "blur" },
-          { min: 12, max: 20, message: "密码长度必须介于 12 和 20 之间", trigger: "blur" }
+          { required: true, message: "请输入修改密码" },
+          { min: 12, max: 20, message: "密码长度必须介于 12 和 20 之间" }
         ],
         surePwd: [
-          { required: true, message: "请输入确认密码", trigger: "blur" },
-          { required: true, validator: equalToPassword, trigger: "blur" }
+          { required: true, message: "请输入确认密码" },
+          { required: true, validator: equalToPassword }
         ]
       },
       keys: [],
@@ -1060,6 +1062,13 @@ export default {
     }
   },
   methods: {
+    inputChange() {
+      if (!this.form.deptId) {
+        this.$refs.form.validateField("deptId");
+      } else {
+        this.$refs.form.clearValidate("deptId");
+      }
+    },
     changePost() {
       this.$forceUpdate();
     },

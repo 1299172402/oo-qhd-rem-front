@@ -115,8 +115,7 @@
                     <div style="display:flex;align-items: center;height:40px;padding-top:10px;">
                         <span>油藏分析单元：</span>
                         <el-select v-model="selectDecreaseBlock">
-                            <el-option v-for="item in blockList" :key="item.fieldId" :label="item.name" :value="item.fieldId">
-                            </el-option>
+                            <el-option v-for="item in blockList" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                         </el-select>
                         <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">
                             确定
@@ -160,6 +159,7 @@
     import { searchOilProductionChart} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
 
     export default {
+        name:'technicalIndexManagement',
         components: {
             Echart
         },
