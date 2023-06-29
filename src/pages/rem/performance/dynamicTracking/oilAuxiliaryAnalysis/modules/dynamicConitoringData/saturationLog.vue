@@ -2,7 +2,7 @@
 <template>
     <div class="z-main">
         <div class="z-left-view">
-            <iframe :src="image?(image+'#toolbar=0'):''" style="width:100%;height:100%;"></iframe>
+            <iframe style="height: 100%;width: 100%" :src="url"></iframe>
         </div>
         <div class="z-right-view">
             <info-window infoWidth="100%" infoHeight="calc(100%)" headerTitle="饱和度测井数据">
@@ -39,8 +39,9 @@
 </template>
 
 <script>
-    import { saturationLoggingInterpretation } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
-    import {downFile} from "@/lib/remBase64Download.js";
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {filePreview} from "@/components/upload/utils/file";
+    import {saturationLoggingInterpretation} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
     import {exportExcel} from "@/lib/exportExcel.js";
     export default {
         filters: {
@@ -62,18 +63,36 @@
         },
         data() {
             return {
-                radio: 3,
-                src: '../../static/img/oilAuxiliaryAnalysis/productionDynamicData/fluidProducingProfile.jpg',
+                id:'',
+                fileName:'',
+                url:'',
                 tableData: [],
-                image: '',
             };
         },
         mounted() {
             this.doSearch();
         },
         methods: {
-            //根据父组件传递过来的参数进行查询
             doSearch() {
+                let params = {
+                    operationId: this.wellId,
+                    operationType: 'OILBHDCJ',
+                    readOne: 'one'
+                }
+                queryRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        if(res.data.data.length){
+                            this.id = res.data.data[0].fileId;
+                            this.fileName = res.data.data[0].filestrId;
+                            filePreview(this.id).then((res) => {
+                                this.url = res.data.data
+                            })
+                        }
+                    } else {
+                        this.$message.error("文件查询接口异常!");
+                    }
+                });
+                //获取表格数据
                 let request = {
                     ogfId: this.oilFeildId,
                     platformId: this.platform,
@@ -81,14 +100,6 @@
                 };
                 saturationLoggingInterpretation(request).then((res) => {
                     if (res.data.code == 200) {
-                        let imgData = res.data.data.data;
-                        let type = res.data.data.type;
-                        let firstParty = 'data:' + type + ';base64,';
-                        if (imgData) {
-                            this.image = firstParty + imgData;
-                        } else {
-                            this.image = '';
-                        }
                         this.tableData = res.data.data.saturationLoggingInterpretations;
                     }
                 })

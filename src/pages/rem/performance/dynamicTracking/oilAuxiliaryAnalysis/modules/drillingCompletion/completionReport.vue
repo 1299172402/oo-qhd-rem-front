@@ -23,8 +23,6 @@
 </template>
 
 <script>
-import { testWellReport } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
-import { downFile } from "@/lib/remBase64Download.js";
 import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
 import {filePreview} from "@/components/upload/utils/file";
 export default {
@@ -67,34 +65,14 @@ export default {
               }
           });
       },
-    //调用图片
-    // doSearch() {
-    //   let request = {
-    //     ogfId: this.oilFeildId,
-    //     platformId: this.platform,
-    //     wellId: this.wellId,
-    //   };
-    //   testWellReport(request).then((res) => {
-    //     if (res.data.code == 200) {
-    //       let imgData = res.data.data.data;
-    //       let type = res.data.data.type;
-    //       let firstParty = "data:" + type + ";base64,";
-    //       if (imgData) {
-    //         this.image = firstParty + imgData;
-    //       } else {
-    //         this.image = "";
-    //       }
-    //     }
-    //   });
-    // },
-    //下载
-    doDownLoad() {
-      let fileName = "试井报告";
-      if (this.wellName) {
-        fileName = this.wellName + fileName;
-      }
-      downFile(this.image, fileName);
-    },
+        //下载
+        doDownLoad() {
+          let fileName = "试井报告";
+          if (this.wellName) {
+            fileName = this.wellName + fileName;
+          }
+          downFile(this.image, fileName);
+        },
   },
 };
 </script>
