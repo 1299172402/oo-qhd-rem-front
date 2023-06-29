@@ -583,51 +583,6 @@
                     }
                 });
             },
-<<<<<<< Updated upstream
-            getResData(data){
-                // this.fileId = data[0].id
-                if (this.currentModule =='drillingReport'){
-                    let params1 = {
-                        fileId: data[0].id,
-                        filestrId:data[0].name,
-                        operationId:this.selectWellId,
-                        operationType:'YJZWJBG',
-                        remUploadFileMinioId:'' ,
-                        uploadTime:''
-                    };
-                    this.uploadFile(params1)
-                }else if(this.currentModule =='completionReport'){
-                    let params2 = {
-                        fileId: data[0].id,
-                        filestrId:data[0].name,
-                        operationId:this.selectWellId,
-                        operationType:'YJWJWGBG',
-                        remUploadFileMinioId:'' ,
-                        uploadTime:''
-                    }
-                    this.uploadFile(params2)
-                }else if(this.currentModule =='geologicalSummary'){
-                    let params3 = {
-                        fileId: data[0].id,
-                        filestrId:data[0].name,
-                        operationId:this.selectWellId,
-                        operationType:'YJWJDZZJ',
-                        remUploadFileMinioId:'' ,
-                        uploadTime:''
-                    }
-                    this.uploadFile(params3)
-                }
-            },
-            ljpmUploadDialogLast() {
-                if (this.currentModule =='drillingReport'){
-                    this.ljpmDialogLast = true;
-                }else if(this.currentModule =='completionReport'){
-                    //打开弹窗
-                    this.ljpmDialogLast = true;
-                }else if(this.currentModule =='geologicalSummary'){
-                    //打开弹窗
-                    this.ljpmDialogLast = true;
-=======
             //minIo-下载
             doDownLoadNew(){
                 const id = this.$refs.componentCustom.id
@@ -638,7 +593,6 @@
                 //如果是产液剖面||饱和度测井-则下载表格
                 if(this.currentModule=='fluidProducingProfile'||this.currentModule=='saturationLog'){
                     this.$refs.componentCustom.doDownLoad();
->>>>>>> Stashed changes
                 }
             },
             //重置

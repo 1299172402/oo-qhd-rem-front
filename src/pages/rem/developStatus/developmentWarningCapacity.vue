@@ -1,5 +1,8 @@
 <template>
-    <div style="height: 100%">
+    <div style="height: 100%;position: relative;">
+        <div class="btns" style="position: absolute;right:0;top:0px;z-index: 99;">
+            <el-button type="primary" style="margin-left:auto!important;" v-if="$route.query.page" @click="goBack">返回</el-button>
+        </div>
         <el-tabs class="g-pageHeader" v-model="radioValue" @tab-click="qeruyAlLData">
             <el-tab-pane v-for="(item, index) in tabList1" :key="index" :label="item.name" :name="item.name" />
         </el-tabs>
@@ -719,6 +722,12 @@
                     return "warning-row";
                 }
                 return "";
+            },
+            //返回
+            goBack(){
+                this.$router.push({
+                    path:'/'+this.$route.query.page
+                })
             },
         },
     };
