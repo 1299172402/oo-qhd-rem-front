@@ -148,7 +148,7 @@
       style="height: calc(100% - 0px);"
     >
       <div class="g-row-flex" style="justify-content: flex-end">
-        <el-select v-model="zuhuModel" placeholder="请选择租户" clearable>
+        <el-select v-model="zuhuModel" placeholder="请选择租户">
           <el-option
             v-for="item in zuhuOptions"
             :key="item.value"
@@ -1529,6 +1529,7 @@ export default {
   width: 1280px;
   height: 100px;
   margin-top: -111px;
+  z-index: -1;
 }
 
 .bottomWaterBg {

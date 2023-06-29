@@ -237,7 +237,7 @@
             :default-sort="{ prop: 'date', order: 'descending' }"
             @selection-change="handleSelectionChange"
           >
-            <el-table-column type="selection" width="50" align="center" />
+            <!-- <el-table-column type="selection" width="50" align="center" /> -->
             <el-table-column label="序号" type="index" width="50" />
             <!-- <el-table-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible" /> -->
             <el-table-column
@@ -812,7 +812,7 @@ import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import proxy from "@/config/host";
 import { getCodeImg } from "@/api/intelligentOilfield/login";
 import { encryptlogin } from "@/utils/jsencrypt";
-import { getInfoByCode } from "@/api/intelligentOilfield/system/applicationCenter/tenant.js";
+/* import { getInfoByCode } from "@/api/intelligentOilfield/system/applicationCenter/tenant.js"; */
 
 export default {
   name: "User",
@@ -1103,7 +1103,7 @@ export default {
      * 如果是租户管理员则只能看到对应部门下的数据
      */
     getDeptOptions(data) {
-      if (this.userInfo.userName !== "admin" && this.userInfo.isTenantAdmin && this.userInfo.currentTenantCode) {
+      /* if (this.userInfo.userName !== "admin" && this.userInfo.isTenantAdmin && this.userInfo.currentTenantCode) {
         return getInfoByCode(this.userInfo.currentTenantCode)
           .then(v => {
             const { deptId } = v.data.data;
@@ -1129,7 +1129,7 @@ export default {
             }
             return [];
           });
-      }
+      } */
       return Promise.resolve(data);
     },
     // 筛选节点

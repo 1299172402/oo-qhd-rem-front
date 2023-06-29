@@ -71,7 +71,6 @@
         </el-col>
       </el-row>
       <el-table :data="dataList" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="55" align="center" />
         <el-table-column
           label="序号"
           type="index"
@@ -177,7 +176,13 @@
           <el-input v-model="form.cssClass" placeholder="请输入样式属性" />
         </el-form-item>
         <el-form-item label="显示排序" prop="dictSort">
-          <el-input-number v-model="form.dictSort" controls-position="right" :min="0" />
+          <el-input-number
+            id="dictSort"
+            ref="dictSort"
+            v-model="form.dictSort"
+            controls-position="right"
+            :min="0"
+          />
         </el-form-item>
         <el-form-item label="回显样式" prop="listClass">
           <el-select v-model="form.listClass" clearable placeholder="请选择回显样式">
@@ -284,10 +289,20 @@ export default {
       rules: {
         dictLabel: [{ required: true, message: "请输入数据标签" }],
         dictValue: [{ required: true, message: "请输入数据键值" }],
-        dictSort: [{ required: true, message: "请输入数据顺序" }]
-      }
+        dictSort: [{ required: true, message: "请输入显示排序" }]
+      },
+      timer: null
     };
   },
+  // watch: {
+  //   form: {
+  //     handler(newVal) {
+  //       console.log(newVal);
+  //     },
+  //     deep: true,
+  //     immediate: true
+  //   }
+  // },
   created() {
     const dictId = this.$route.params && this.$route.params.dictId;
     this.getType(dictId);
@@ -297,6 +312,18 @@ export default {
     this.getType(dictId);
   },
   methods: {
+    sortBlur() {
+      clearInterval(this.timer);
+    },
+    changeSort() {
+      this.timer = setInterval(() => {
+        this.form.dictSort = this.$refs.dictSort.$children[0].value;
+        this.$forceUpdate();
+        this.$nextTick(() => {
+          this.$refs.form.validateField("dictSort");
+        });
+      }, 1000);
+    },
     /** 查询字典类型详细 */
     getType(dictId) {
       getType(dictId).then(response => {

@@ -81,7 +81,7 @@
           </el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="租户使用授权：">
+      <el-form-item label="租户使用授权：" prop="grantedTenants">
         <el-button
           v-if="!isView"
           type="primary"
@@ -124,6 +124,7 @@ import CommonDialog from "@/components/intelligentOilfield/dialog/CommonDialog.v
 import QuestionInfo from "@/pages/intelligentOilfield/configurationCenter/processCenter/designer/modules/QuestionInfo.vue";
 import { saveConfig, getConfig } from "@/api/intelligentOilfield/messaging";
 import { listApp } from "@/api/intelligentOilfield/system/applicationCenter/applicationCenter.js";
+import { looselyValidURL } from "@/utils/validate.js";
 
 export default {
   components: {
@@ -168,15 +169,19 @@ export default {
           { min: 1, max: 64, message: "长度在 1 到 64 个字符", trigger: ["blur", "change"] }
         ],
         triggerType: [{ required: true, message: "请选择触达类型", trigger: "change" }],
-        messageType: [{ required: true, message: "请选择", trigger: "change" }],
-        appId: [{ required: true, message: "请选择", trigger: "change" }],
+        messageType: [{ required: true, message: "请选择消息类型", trigger: "change" }],
+        appId: [{ required: true, message: "请选择绑定应用", trigger: "change" }],
         exposeKey: [
           { required: true, message: "请输入消息接收标识", trigger: ["blur", "change"] },
           { min: 1, max: 16, message: "长度在 1 到 16 个字符", trigger: ["blur", "change"] }
         ],
         exposeUri: [
           { required: true, message: "请输入消息接收URI", trigger: ["blur", "change"] },
-          { min: 1, max: 128, message: "长度在 1 到 128 个字符", trigger: ["blur", "change"] }
+          { min: 1, max: 128, message: "长度在 1 到 128 个字符", trigger: ["blur", "change"] },
+          { validator: this.validateBaseUrl, trigger: ["change", "blur"] }
+        ],
+        grantedTenants: [
+          { required: true, message: "请授权使用租户", trigger: ["change"] }
         ]
       },
       type: {
@@ -283,6 +288,15 @@ export default {
     changeApp(appId) {
       const app = this.appList.find(item => item.appId === appId);
       this.form.requestType = app && app.appType === "0" ? "INNER" : "HTTP";
+    },
+    /**
+     * 校验根路径格式是否正确
+     */
+    validateBaseUrl(rule, value, callback) {
+      if (!looselyValidURL(value)) {
+        callback(new Error("请输入正确的消息接收处理API地址"));
+      }
+      callback();
     }
   }
 };

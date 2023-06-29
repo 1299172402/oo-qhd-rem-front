@@ -8,15 +8,22 @@
       :visible.sync="dialogVisible"
       top="30vh"
       width="40%"
+      @close="cancel"
     >
       <el-table
         ref="table"
         class="dialog-table"
         :data="dataSource"
+        row-key="tenantId"
         border
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="55" align="center" />
+        <el-table-column
+          type="selection"
+          width="55"
+          :reserve-selection="true"
+          align="center"
+        />
         <el-table-column
           label="序号"
           type="index"
@@ -75,16 +82,12 @@ export default {
       }
     };
   },
-  created() {
-    this.getList();
-  },
   methods: {
     getList() {
-      this.loading = true;
       tenantList({ pageNum: this.ipagination.current, pageSize: this.ipagination.pageSize }).then(response => {
         this.dataSource = response.data.rows;
         this.ipagination.total = response.data.total;
-        this.loading = false;
+        this.handChangeSelection();
       });
     },
     /**
@@ -99,19 +102,20 @@ export default {
      * 设置已有用户选中状态
      */
     handChangeSelection() {
-      this.dataSource.forEach(row => {
-        if (this.tenantIds.indexOf(row.tenantId) >= 0) {
-          this.$refs.table.toggleRowSelection(row, true);
-        } else {
-          this.$refs.table.toggleRowSelection(row, false);
-        }
-      });
+      if (this.tenantIds.length) {
+        this.$nextTick(() => {
+          this.dataSource.forEach(row => {
+            const index = this.tenantIds.indexOf(row.tenantId);
+            if (index !== -1) {
+              this.$refs.table.toggleRowSelection(row, true);
+            }
+          });
+        });
+      }
     },
     handChooseUser() {
+      this.getList();
       this.dialogVisible = true;
-      this.$nextTick(() => {
-        this.handChangeSelection();
-      });
     },
     /**
      * 增加租户
@@ -125,6 +129,9 @@ export default {
      */
     handleSelectionChange(val) {
       this.selectTenement = val;
+    },
+    cancel() {
+      this.$refs.table.clearSelection();
     }
   }
 };

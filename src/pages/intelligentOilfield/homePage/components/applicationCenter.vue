@@ -190,15 +190,13 @@ export default {
     },
     toClick(item) {
       // 应用中心
-      if (item.appType === "0") { // 内部跳转的逻辑
-        const paramQuery = {
-          appId: item.appId,
-          appName: item.appName,
-          userId: this.$store.getters["user/userDetail"].user.userId
-        };
-        addAccessinfo(paramQuery).then(() => {});
-        jumpSupApp(item.appPcAccessUrl);
-      }
+      const paramQuery = {
+        appId: item.appId,
+        appName: item.appName,
+        userId: this.$store.getters["user/userDetail"].user.userId
+      };
+      addAccessinfo(paramQuery).then(() => {});
+      jumpSupApp(item.appPcAccessUrl);
     },
     initData() {
       this.allPanels = [];
