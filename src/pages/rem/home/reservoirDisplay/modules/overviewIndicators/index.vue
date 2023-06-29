@@ -473,7 +473,7 @@ export default {
         },
         getData(){
             // new Date().format('YYYY-MM')
-            productionMetricsOverview({date:'2022-01' + '-01'}).then(res=>{
+            productionMetricsOverview({date:'2022-12' + '-01'}).then(res=>{
                 this.dataList = res.data.data
                 if(!res.data.data.naturalDecline)  res.data.data.naturalDecline = 0
                 this.histogram.series[0].data[0].value = res.data.data.naturalDecline
