@@ -64,8 +64,8 @@
             </el-table-column>
             <el-table-column align="center" label="操作" width="200">
                 <template slot-scope="scope">
-                    <el-button v-model="scope.row.wellMeasureImprovementId" size="small" @click="calcSingleWellMeasure(scope.row)">计算配产量</el-button>
-                    <el-button v-model="scope.row.wellMeasureImprovementId" size="small" @click="deleteRow(scope.$index,scope.row)">删除</el-button>
+                    <el-button type="text" @click="calcSingleWellMeasure(scope.row)">计算配产量</el-button>
+                    <el-button type="text" style="color: #f56c6c" @click="deleteRow(scope.$index,scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>

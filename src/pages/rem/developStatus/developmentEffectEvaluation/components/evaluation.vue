@@ -153,7 +153,7 @@
                         x:'center',
                         bottom:10,
                         textStyle: {
-                            color: '#24DEFF'
+                            color: '#8FA4CC'
                         }
                     },
                     xAxis: {
@@ -262,7 +262,7 @@
                         x:'center',
                         bottom:10,
                         textStyle: {
-                            color: '#24DEFF'
+                            color: '#8FA4CC'
                         }
                     },
                     toolbox: {
@@ -357,7 +357,7 @@
                         x:'center',
                         bottom:0,
                         textStyle: {
-                            color: '#24DEFF'
+                            color: '#8FA4CC'
                         },
                         data: [],
                         itemGap: 5
@@ -558,7 +558,7 @@
                         x:'center',
                         bottom:30,
                         textStyle: {
-                            color: '#fff'
+                            color: '#8FA4CC'
                         }
                     },
                     toolbox: {

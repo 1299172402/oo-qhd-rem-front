@@ -3,7 +3,8 @@
   <form-section
     submit-text=""
     save-text="保存"
-    cancel-text="取消"
+    :cancel-text="isView ? '关闭' : '取消'"
+    :action="$route.query.action"
     :return-name="returnName"
     @save="handleOk"
   >

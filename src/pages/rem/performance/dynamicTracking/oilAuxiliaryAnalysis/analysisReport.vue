@@ -624,7 +624,7 @@
                                                 </span>
                                             </div>
                                             <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;">
-                                                <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='0050102'||selCode=='0050101' || selCode=='0060101' || selCode=='0060102'|| selCode=='0070101'|| selCode=='0070102')"
+                                                <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='0050102'||selCode=='0050101' || selCode=='0060101' || selCode=='0060102'|| selCode=='0070101'|| selCode=='0070102'|| selCode=='0040101')"
                                                            @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':linkdata(),evalResult:selCode }})">
                                                     归因分析详情
                                                 </el-button>
@@ -1769,14 +1769,16 @@
             },
             // 判断数据
             linkdata(){
-                    if(this.selCode=='0050102'||this.selCode=='0050101' ){
-                        return 1
-                    }else if (this.selCode=='0060102'||this.selCode=='0060101' ){
-                        return 2
-                    }else if (this.selCode=='0070102'||this.selCode=='0070101' ){
-                        return 3
-                    }
-                    
+                const codeMapping = {
+                    '0050102': 1,
+                    '0050101': 1,
+                    '0060102': 2,
+                    '0060101': 2,
+                    '0070102': 3,
+                    '0070101': 3,
+                    '0040101': 5
+                };
+                return codeMapping[this.selCode] || 0;
             },
             //替换表格文字
 			replaceStr(str){

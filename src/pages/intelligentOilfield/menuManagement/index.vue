@@ -297,6 +297,7 @@
                   v-model="form.icon"
                   placeholder="请选择图标"
                   clearable
+                  readonly
                   @clear="clearIcon"
                 >
                   <svg-icon
@@ -327,7 +328,12 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="菜单排序" prop="orderNum">
-              <el-input-number v-model="form.orderNum" controls-position="right" :min="0" />
+              <el-input-number
+                v-model="form.orderNum"
+                style="width: 210px"
+                controls-position="right"
+                :min="0"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -785,6 +791,7 @@ export default {
       this.getTreeselect();
       if (type === "外层新增") {
         this.isShowRadioBtnM = true;
+        this.form.icon = "build";
       }
       if (row && row.menuId) {
         this.form.parentId = row.menuId;

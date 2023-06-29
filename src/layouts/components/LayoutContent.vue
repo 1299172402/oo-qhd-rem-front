@@ -120,7 +120,9 @@ export default Vue.extend({
 
       this.$store.commit("tabRouter/subtractCurrentTabRouter", { path, routeIdx });
       if (path === this.$router.history?.current?.path) {
-        this.$router.push(nextRouter.path);
+        // url带query参数
+        const tabRouterItem = this.tabRouterList.find(item => item.path === nextRouter.path) || nextRouter.path;
+        this.$router.push({ path: nextRouter.path, query: tabRouterItem.query || {}});
       }
     },
     handleChangeCurrentTab(path: string) {
@@ -176,8 +178,9 @@ export default Vue.extend({
         }
         // const nextRouteIdx = type === 'behind' ? tabRouters.length - 1 : type === 'other' ? 0 : 1;
         const nextRouter = this.tabRouterList[nextRouteIdx];
-
-        this.$router.push(nextRouter.path);
+        // url带query参数
+        const tabRouterItem = this.tabRouterList.find(item => item.path === nextRouter.path) || nextRouter.path;
+        this.$router.push({ path: nextRouter.path, query: tabRouterItem.query || {}});
       }
 
       this.activeTabPath = null;

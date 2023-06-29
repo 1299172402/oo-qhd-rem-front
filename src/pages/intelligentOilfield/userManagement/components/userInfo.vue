@@ -69,7 +69,7 @@
         <el-col :span="8">
           <el-form-item label="账号类型" prop="userType">
             <el-input
-              v-model="tempUser.userType"
+              v-model="currentUserType"
               disabled
               placeholder="暂无数据"
               maxlength="11"
@@ -298,6 +298,17 @@ export default {
     };
   },
   computed: {
+    currentUserType() {
+      switch (this.tempUser.userType) {
+        case "0":
+          return "系统用户";
+        case "1":
+          return "集团内部用户";
+        case "2":
+          return "集团外部用户";
+      }
+      return "系统用户";
+    },
     convertIdCard: {
       get() {
         if (this.isInputDisable) {

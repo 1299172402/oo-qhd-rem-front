@@ -62,7 +62,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(dataList.comRate, '%', 'rgb(247,181,0)', 'rgb(41,72,94)', 'rgb(247,181,0)')"></Echart>
+                            :chart-data="getEchartData(isNaN(((dataList.productionEfficiency * dataList.oilWellUtilizationRate)/100).toFixed(2)) ? '' : ((dataList.productionEfficiency * dataList.oilWellUtilizationRate)/100).toFixed(2), '%', 'rgb(247,181,0)', 'rgb(41,72,94)', 'rgb(247,181,0)')"></Echart>
                         <div class="chartText">综合时率</div>
                     </div>
                 </el-col>

@@ -7,6 +7,7 @@
                     <!-- <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> -->
                 </el-tab-pane>
             </el-tabs>
+            <el-button v-if ="activeName =='second' && this.$route.query.link " style="position: absolute;right: 20px;top:110px" type="primary" @click="gogo">返回</el-button>
         </div>
         <header-search  style="height: auto;display: grid">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">
@@ -237,7 +238,7 @@ export default {
         }else{
             this.queryTableData(this.form.tableData2)
         }
-        this.src = 'http://10.77.78.250:9116'
+        this.src = 'https://intelinj.tjioms-dev.tjltd.cnooc/'
     },
     data() {
         return {
@@ -503,6 +504,9 @@ export default {
             this.iframeWidth = this.$refs.iframe.parentNode.clientWidth;
         }
     },
+    gogo() {
+        window.open('https://rem.tjioms-dev.tjltd.cnooc/#/reservoirDisplay/linkage', "_parent");
+    },
     mounted() {
         this.$nextTick(()=>{
             setTimeout(()=>{
@@ -516,6 +520,7 @@ export default {
             this.activeName = 'second'
             this.doSearch()
         }else{
+            this.activeName = 'first'
             this.doSearch()
         }
     },
@@ -613,5 +618,11 @@ export default {
 
 .el-icon-my-export2:before {
     content: "\e611";
+}
+
+::v-deep .el-table__header-wrapper .cell {
+    height: auto !important;
+    line-height: 18px !important;
+    white-space: pre !important;
 }
 </style>

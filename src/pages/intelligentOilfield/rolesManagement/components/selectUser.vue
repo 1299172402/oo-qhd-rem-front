@@ -7,6 +7,7 @@
     width="1000px"
     top="5vh"
     append-to-body
+    @close="cancelBtn"
   >
     <el-form ref="queryForm" :model="queryParams" :inline="true">
       <el-form-item label="用户账号" prop="userName">
@@ -68,10 +69,11 @@
         ref="table"
         :data="userList"
         height="260px"
+        :row-key="(row) => row.userId"
         @row-click="clickRow"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="55" />
+        <el-table-column type="selection" width="55" :reserve-selection="true" />
         <el-table-column label="用户账号" prop="userName" :show-overflow-tooltip="true" />
         <el-table-column label="用户名称" prop="nickName" :show-overflow-tooltip="true" />
         <el-table-column label="所属机构" prop="dept.deptName" :show-overflow-tooltip="true" />
@@ -159,7 +161,11 @@ export default {
   methods: {
     cancelBtn() {
       this.visible = false;
-      this.resetQuery();
+      this.resetForm("queryForm");
+      this.$nextTick(() => {
+        this.queryParams.pageNum = 1;
+        this.$refs.table.clearSelection();
+      });
     },
     /** 查询部门下拉树结构 */
     getTreeselect() {
@@ -191,6 +197,7 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      this.$refs.table.clearSelection();
       this.queryParams.pageNum = 1;
       this.getList();
     },
@@ -204,7 +211,7 @@ export default {
     /** 选择授权用户操作 */
     handleSelectUser() {
       const { roleId } = this.queryParams;
-      const userIds = this.userIds.join(",");
+      const userIds = this.userIds;
       if (userIds === "") {
         this.$modal.msgError("请选择要分配的用户");
         return;

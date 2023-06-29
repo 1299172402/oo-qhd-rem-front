@@ -13,7 +13,7 @@
                     <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                 </el-select>
                 <span>拟合起始时间：</span>
-                <el-date-picker v-model="selectDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="monthrange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" style="margin-right:20px">
+                <el-date-picker v-model="selectDate" format="yyyy-MM" value-format="yyyy-MM" type="monthrange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :clearable="false" style="margin-right:20px">
                 </el-date-picker>
                 <el-button icon="el-icon-search" type="primary" @click="searchThing">搜索</el-button>
                 <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
@@ -32,7 +32,8 @@
                     <Echart :chart-data="lineTable" height="570px"></Echart>
                 </div>
             </pagePanelNew> -->
-            <Echart :chart-data="lineTable" height="570px" style="margin-bottom:20px;"></Echart>
+            <Echart :chart-data="lineTable" height="600px" style="margin-bottom:20px;"></Echart>
+            
             
             <div style="height: 300px;">
                 <div style="padding-bottom:5px;height:100%;">
@@ -48,6 +49,7 @@
     import Echart from '@/components/tools/Echarts/index.vue';
     import {fetchOilFields,fetchFields} from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import {searchDevTrendAnalysis} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+    import {getSearchDevTrendAnalysisDate} from '@/api/oilDeposit/rem-04/developStatus.js';
     export default {
         name:'developmentTrendAnalysis',
         components: {
@@ -102,8 +104,10 @@
                         value: '11',
                     },
                 ],
+                //最大不能超过次日期
+                maxDate:'',
                 //选择时间
-                selectDate: [],
+                selectDate: ['2023-01'],
                 //表格数据
                 messageResult: [],
                 //折线曲线 x轴
@@ -153,31 +157,31 @@
                             x: '8%',
                             y: '4%',
                             width: '90%',
-                            height: '18%'
+                            height: '15%'
                         },
                         {
                             x: '8%',
                             y: '22%',
                             width: '90%',
-                            height: '18%'
+                            height: '15%'
                         },
                         {
                             x: '8%',
                             y: '40%',
                             width: '90%',
-                            height: '18%'
+                            height: '15%'
                         },
                         {
                             x: '8%',
                             y: '58%',
                             width: '90%',
-                            height: '18%'
+                            height: '15%'
                         },
                         {
                             x: '8%',
                             y: '76%',
                             width: '90%',
-                            height: '18%'
+                            height: '15%'
                         },
                     ],
                     axisPointer: {
@@ -195,7 +199,7 @@
                                 fontSize: 14,
                             },
                             axisLabel: {
-                                fontSize:18,
+                                fontSize:12,
                                 show: false,
                                 color: '#8FA4CC',
                             },
@@ -286,7 +290,8 @@
                     yAxis: [
                         {
                             gridIndex: 0,
-                            name: '产液量（10⁴m³）',
+                            name: '产液量\n（10⁴m³）',
+                            nameGap:60,
                             nameLocation: 'center',
                             nameRotate: 0,
                             scale: true,
@@ -295,7 +300,7 @@
                                 fontSize: 14,
                             },
                             axisLabel: {
-                                show: false,
+                                show: true,
                                 color: '#8FA4CC',
                             },
                             axisTick: {
@@ -318,7 +323,8 @@
                         {
                             gridIndex: 1,
                             scale: true,
-                            name: '产油量（10⁴m³）',
+                            name: '产油量\n（10⁴m³）',
+                            nameGap:60,
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameTextStyle: {
@@ -326,7 +332,7 @@
                                 fontSize: 14,
                             },
                             axisLabel: {
-                                show: false,
+                                show: true,
                                 color: '#8FA4CC',
                             },
                             axisTick: {
@@ -349,7 +355,8 @@
                         {
                             gridIndex: 2,
                             scale: true,
-                            name: '含水率（%）',
+                            name: '含水率\n（%）',
+                            nameGap:60,
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameTextStyle: {
@@ -357,7 +364,7 @@
                                 fontSize: 14,
                             },
                             axisLabel: {
-                                show: false,
+                                show: true,
                                 color: '#8FA4CC',
                             },
                             axisTick: {
@@ -380,7 +387,8 @@
                         {
                             gridIndex: 3,
                             scale: true,
-                            name: '含水上升率（%）',
+                            name: '含水上升率\n（%）',
+                            nameGap:60,
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameTextStyle: {
@@ -388,7 +396,7 @@
                                 fontSize: 14,
                             },
                             axisLabel: {
-                                show: false,
+                                show: true,
                                 color: '#8FA4CC',
                             },
                             axisTick: {
@@ -411,7 +419,8 @@
                         {
                             gridIndex: 4,
                             scale: true,
-                            name: '综合递减率（%）',
+                            name: '综合递减率\n（%）',
+                            nameGap:60,
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameTextStyle: {
@@ -419,7 +428,7 @@
                                 fontSize: 14,
                             },
                             axisLabel: {
-                                show: false,
+                                show: true,
                                 color: '#8FA4CC',
                             },
                             axisTick: {
@@ -448,7 +457,7 @@
                             yAxisIndex: 0,
                             data: [],
                             label: {
-                                show: true,
+                                show: false,
                                 color: '#8FA4CC',
                                 fontSize: 14,
                             },
@@ -478,7 +487,7 @@
                             yAxisIndex: 1,
                             data: [],
                             label: {
-                                show: true,
+                                show: false,
                                 color: '#8FA4CC',
                                 fontSize: 14,
                             },
@@ -508,7 +517,7 @@
                             yAxisIndex: 2,
                             data: [],
                             label: {
-                                show: true,
+                                show: false,
                                 color: '#8FA4CC',
                                 fontSize: 14,
                             },
@@ -543,7 +552,7 @@
                             yAxisIndex: 3,
                             data: [],
                             label: {
-                                show: true,
+                                show: false,
                                 color: '#8FA4CC',
                                 fontSize: 14,
                             },
@@ -573,7 +582,7 @@
                             yAxisIndex: 4,
                             data: [],
                             label: {
-                                show: true,
+                                show: false,
                                 color: '#8FA4CC',
                                 fontSize: 14,
                             },
@@ -600,14 +609,24 @@
                 }
             }
         },
-        mounted() {
-            this.initData();
+        async mounted() {
+            await this.getSearchDevTrendAnalysisDateApi();
+            await this.initData();
         },
         methods: {
             //重置
             resetting(){
                 Object.assign(this.$data, this.$options.data());
                 this.initData();
+            },
+            //获取搜索时间-最大日期
+            async getSearchDevTrendAnalysisDateApi(){
+                await getSearchDevTrendAnalysisDate().then(res=>{
+                    if(res.data.code==200){
+                        this.maxDate=res.data.data;
+                        this.selectDate.push(this.maxDate)
+                    }
+                })
             },
             async initData() {
                 await fetchOilFields().then((res) => {
@@ -723,9 +742,9 @@
                 this.lineTable.series[0].data = y;
                 this.lineTable.xAxis[0].data = x;
                 if (this.selectUnitOfProduction == 'm') {
-                    this.lineTable.yAxis[0].name = '产液量（10⁴m³）';
+                    this.lineTable.yAxis[0].name = '产液量\n（10⁴m³）';
                 } else if (this.selectUnitOfProduction == 't') {
-                    this.lineTable.yAxis[0].name = '产液量（10⁴t）';
+                    this.lineTable.yAxis[0].name = '产液量\n（10⁴t）';
                 }
             },
             //折线图-产油
@@ -746,9 +765,9 @@
                 this.lineTable.series[1].data = y;
                 this.lineTable.xAxis[1].data = x;
                 if (this.selectUnitOfProduction == 'm') {
-                    this.lineTable.yAxis[1].name = '产油量（10⁴m³）';
+                    this.lineTable.yAxis[1].name = '产油量\n（10⁴m³）';
                 } else if (this.selectUnitOfProduction == 't') {
-                    this.lineTable.yAxis[1].name = '产油量（10⁴t）';
+                    this.lineTable.yAxis[1].name = '产油量\n（10⁴t）';
                 }
             },
             //折线图-含水上升率
@@ -832,6 +851,10 @@
                 let beginDate = this.selectDate[0];
                 //结束日期
                 let endDate = this.selectDate[1];
+                if(endDate>this.maxDate){
+                    this.$message.warning(`结束月份不能大于${this.maxDate}`);
+                    return false;
+                }
                 //单位
                 let unitType = this.selectUnitOfProduction;
                 // 查询图形数据（区块，油田，当前日s期，单位）

@@ -16,7 +16,6 @@
                 ref="ruleForm"
                 :model="chooseList"
                 style="width: 600px"
-                :rules="rules"
                 label-width="100px"
                 class="demo-ruleForm"
             >

@@ -9,7 +9,7 @@
       <div class="form-section__content">
         <slot />
       </div>
-      <el-row v-if="!isView || $slots.btn" class="submit-btns-box">
+      <el-row class="submit-btns-box">
         <div class="border-top">
           <el-button
             v-if="cancelText"

@@ -129,7 +129,7 @@
                     legend: {
                         data: [],
                         textStyle: {
-                            color: '#24DEFF',
+                            color: '#8FA4CC',
                             fontSize: 14,
                         },
                         x:'center',
@@ -218,7 +218,7 @@
                     legend: {
                         data: ["累计水驱指数", "累积注采比", "月水驱指数"],
                         textStyle: {
-                            color: "#24DEFF",
+                            color: "#8FA4CC",
                             fontSize: 14,
                         },
                         x:'center',
@@ -346,7 +346,7 @@
                     legend: {
                         data:[],
                         textStyle: {
-                            color: "#24DEFF",
+                            color: "#8FA4CC",
                             fontSize: 14,
                         },
                         x:'center',
