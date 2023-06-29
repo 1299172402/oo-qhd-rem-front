@@ -240,7 +240,7 @@
                                  :label="`米采液指数\n(m³/mPa·d·m)`"></el-table-column>
                 <el-table-column prop="yield" min-width="150" :label="`产液量\n(m³)`"></el-table-column>
                 <el-table-column prop="monthlyProdEff" min-width="150" :label="`生产时率\n(%)`"></el-table-column>
-                <el-table-column prop="pumpEfficiency" min-width="150" label="泵效"></el-table-column>
+<!--                <el-table-column prop="pumpEfficiency" min-width="150" label="泵效"></el-table-column>-->
                 <el-table-column prop="watCnt" min-width="150" :label="`含水率\n(%)`"></el-table-column>
                 <el-table-column prop="flwPrs" min-width="150" :label="`流压\n(MPa)`"></el-table-column>
                 <el-table-column prop="attribution" min-width="250" show-overflow-tooltip
