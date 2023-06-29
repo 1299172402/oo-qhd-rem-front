@@ -553,7 +553,6 @@
                         uploadTime:''
                     };
                     this.uploadFile(params1)
-                    console.log('111111111',params1)
                 }else if(this.currentModule =='completionReport'){
                     let params2 = {
                         fileId: data[0].id,
@@ -564,7 +563,6 @@
                         uploadTime:''
                     }
                     this.uploadFile(params2)
-                    console.log('2222222',params)
                 }else if(this.currentModule =='geologicalSummary'){
                     let params3 = {
                         fileId: data[0].id,
@@ -575,7 +573,6 @@
                         uploadTime:''
                     }
                     this.uploadFile(params3)
-                    console.log('333333',params)
                 }
             },
             ljpmUploadDialogLast() {

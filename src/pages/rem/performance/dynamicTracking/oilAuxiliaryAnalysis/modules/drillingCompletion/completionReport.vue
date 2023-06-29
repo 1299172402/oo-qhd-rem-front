@@ -52,7 +52,7 @@ export default {
           let params ={
               operationId:this.wellId,
               operationType:'YJWJWGBG',
-              readOne:'one'
+              readOne:'one' 
           }
           queryRemUploadFileMinio(params).then((res) => {
               if (res.data.code == 200) {
