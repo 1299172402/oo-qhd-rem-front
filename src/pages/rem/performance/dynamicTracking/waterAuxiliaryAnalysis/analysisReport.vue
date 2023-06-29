@@ -22,7 +22,7 @@
                         <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled"></el-option>
                     </el-select>
                     <span style="margin-left:15px;">评价时间：</span>
-                    <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
@@ -276,7 +276,7 @@
                         <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled"></el-option>
                     </el-select>
                     <span style="margin-left:15px;">评价时间：</span>
-                    <el-date-picker v-model="currentDate" type="date" placeholder="年/月/日" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
@@ -591,6 +591,7 @@ import {
     fetchInjectionWells,
     fetchInjectionWellsByPlatform
 } from "@/api/oilDeposit/rem-02/primaryinfo.js";
+import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js"
 export default {
     name:'waterAnalysisReport',
     data() {
@@ -696,24 +697,24 @@ export default {
         }
     },
     mounted() {
-        this.checkCurrentDate(); //初始化评价日期
-        this.queryOilFeildList(); //初始化油田
+        this.getDateApi();
     },
     methods: {
         //重置
         resetting(){
             this.$nextTick(()=>{
                 Object.assign(this.$data, this.$options.data());
-                this.checkCurrentDate(); //初始化评价日期
                 this.queryOilFeildList(); //初始化油田
             })
         },
-        //检查评价日期是否有效
-        checkCurrentDate() {
-            if (this.currentDate == null || this.currentDate == "" || this.currentDate == undefined) {
-                //this.currentDate = this.getMyDate(-1);
-                this.currentDate = new Date().addDays(-1).format('yyyy-MM-dd');
-            }
+        //本接口获取最后一次模型计算出来的结果，返回最后一次跑模型的日期。
+        getDateApi(){
+            getDate({wellMenu:'WELL_INJ'}).then(res=>{
+                if(res.data.code==200){
+                    this.currentDate=res.data.data;
+                }
+                this.queryOilFeildList();
+            })
         },
         //获取油田数据
         queryOilFeildList() {
@@ -1548,7 +1549,8 @@ export default {
                             myWellCount[tData.code] = wellList.length; //计数器
                             for (let j = 0; j < wellList.length; j++) {
                                 myData[j] = {
-                                    wellId: wellList[j]
+                                    wellId: wellList[j],
+                                    children:[]
                                 }; //初始容器
                             }
                         }
@@ -1556,24 +1558,27 @@ export default {
                     }
                 }
             }
+            console.log('myData',myData)
             //2、按照顺序初始化计数器、生成数据体
             for (let i = 0; i < myData.length; i++) {
                 let myWellId = myData[i].wellId; //井号
                 //井层指标变化趋势trendOfIndicators
                 for (let j = 0; j < this.trendOfIndicators.length; j++) {
                     let t_data = this.trendOfIndicators[j]; //每个数据项
-                    if (val == t_data.code) { //选中项目不需要测试
+                    let messData={};
+                    //添加详情信息
+                    if (t_data.basis == null) {
+                        myData[i][t_data.code + 'Message'] = '';
+                    } else {
+                        messData = t_data.basis.find((item) => {
+                            return item.well == myWellId
+                        });
+                        myData[i][t_data.code + 'Message'] = messData&& messData.message ? messData.message : '' ;
+                        myData[i][t_data.code] = messData&&messData.itemValue ? messData.itemValue : '';
+                    }
+                    //选中项目不需要测试
+                    if (val == t_data.code) {
                         myData[i][t_data.code] = '是'; //默认
-                        //添加详情信息
-                        if (t_data.basis == null) {
-                            myData[i][t_data.code + 'Message'] = '';
-                        } else {
-                            let messData = t_data.basis.find((item) => {
-                                return item.well == myWellId
-                            });
-                            myData[i][t_data.code + 'Message'] = messData ? messData.message ? messData.message : '' : '';
-                            myData[i][t_data.code] = messData ? messData.itemValue ? messData.itemValue : '' : '';
-                        }
                     } else {
                         if (!isNaN(myWellCount[t_data.code])) {
                             t_count = myWellCount[t_data.code];
@@ -1582,36 +1587,62 @@ export default {
                         }
                         let t_subWells = "," + t_data.wells + ",";
                         if (t_subWells.includes("," + myWellId + ",")) {
-                            myData[i][t_data.code] = '是'; //默认
-                            //添加详情信息
-                            if (t_data.basis == null) {
-                                myData[i][t_data.code + 'Message'] = '';
-                            } else {
-                                let messData = t_data.basis.find((item) => {
-                                    return item.well == myWellId
-                                });
-                                myData[i][t_data.code + 'Message'] = messData ? messData.message ? messData.message : '' : '';
-                                myData[i][t_data.code] = messData ? messData.itemValue ? messData.itemValue : '' : '';
-                            }
+                            // myData[i][t_data.code] = '是'; //默认
                             t_count++; //计数
                         }
                         myWellCount[t_data.code] = t_count; //回写
+                    }
+                    //深化点-点击井号展示层位
+                    console.log('messData----------aaaaaaaaaaaa',messData)
+                    if(messData&&messData.evalBasisLayers){
+                        let key1=t_data.code + 'Message';
+                        let key2=t_data.code;
+                        let evalBasisLayers=messData.evalBasisLayers;//层位数据
+                        let children=myData[i].children;
+                        if(children.length){
+                            for(let a=0;a<evalBasisLayers.length;a++){
+                                let isFindOut=false;//默认没有查到
+                                for(let b=0;b<children.length;b++){
+                                    if(evalBasisLayers[a].layerCode == children[b].wellId){
+                                        isFindOut=true;
+                                        children[b][key1]=evalBasisLayers[a].message;
+                                        children[b][key2]=evalBasisLayers[a].itemValue;
+                                    }
+                                }
+                                if(!isFindOut){
+                                    children.push({
+                                        wellId:evalBasisLayers[a].layerCode,
+                                        [key1]:evalBasisLayers[a].message,
+                                        [key2]:evalBasisLayers[a].itemValue,
+                                    })
+                                }
+                            }
+                        }else{
+                            evalBasisLayers.forEach((el,i)=>{
+                                children.push({
+                                    wellId:el.layerCode,
+                                    [key1]:el.message,
+                                    [key2]:el.itemValue
+                                })
+                            })
+                        }
                     }
                 }
                 //井层注水工况workingCondition
                 for (let j = 0; j < this.workingCondition.length; j++) {
                     let t_data = this.workingCondition[j]; //每个数据项
+                    let messData={};
+                    //添加详情信息
+                    if (t_data.basis == null) {
+                        myData[i]['workingConditionMessage'] = '';
+                    } else {
+                        messData = t_data.basis.find((item) => {
+                            return item.well == myWellId
+                        });
+                        myData[i]['workingConditionMessage'] = messData ? messData.message ? messData.message : '' : '';
+                    }
                     if (val == t_data.code) { //选中项目不需要测试
                         myData[i].workingCondition = t_data.name; //默认
-                        //添加详情信息
-                        if (t_data.basis == null) {
-                            myData[i]['workingConditionMessage'] = '';
-                        } else {
-                            let messData = t_data.basis.find((item) => {
-                                return item.well == myWellId
-                            });
-                            myData[i]['workingConditionMessage'] = messData ? messData.message ? messData.message : '' : '';
-                        }
                     } else {
                         if (!isNaN(myWellCount[t_data.code])) {
                             t_count = myWellCount[t_data.code];
@@ -1621,34 +1652,57 @@ export default {
                         let t_subWells = "," + t_data.wells + ",";
                         if (t_subWells.includes("," + myWellId + ",")) {
                             myData[i].workingCondition = t_data.name; //默认
-                            //添加详情信息
-                            if (t_data.basis == null) {
-                                myData[i]['workingConditionMessage'] = '';
-                            } else {
-                                let messData = t_data.basis.find((item) => {
-                                    return item.well == myWellId
-                                });
-                                myData[i]['workingConditionMessage'] = messData ? messData.message ? messData.message : '' : '';
-                            }
                             t_count++; //计数
                         }
                         myWellCount[t_data.code] = t_count; //回写
+                    }
+                    //深化点-点击井号展示层位
+                    if(messData&&messData.evalBasisLayers){
+                        let key1='workingConditionMessage';
+                        let evalBasisLayers=messData.evalBasisLayers;//层位数据
+                        let children=myData[i].children;
+                        if(children.length){
+                            for(let a=0;a<evalBasisLayers.length;a++){
+                                let isFindOut=false;//默认没有查到
+                                for(let b=0;b<children.length;b++){
+                                    if(evalBasisLayers[a].layerCode == children[b].wellId){
+                                        isFindOut=true;
+                                        children[b][key1]=evalBasisLayers[a].message;
+                                    }
+                                }
+                                if(!isFindOut){
+                                    children.push({
+                                        wellId:evalBasisLayers[a].layerCode,
+                                        [key1]:evalBasisLayers[a].message,
+                                    })
+                                }
+                            }
+                        }else{
+                            evalBasisLayers.forEach((el,i)=>{
+                                children.push({
+                                    wellId:el.layerCode,
+                                    [key1]:el.message,
+                                })
+                            })
+                        }
                     }
                 }
                 //地面原因 theGroundBecause
                 for (let j = 0; j < this.theGroundBecause.length; j++) {
                     let t_data = this.theGroundBecause[j]; //每个数据项
-                    if (val == t_data.code) { //选中项目不需要测试
+                    let messData={};
+                    //添加详情信息
+                    if (t_data.basis == null) {
+                        myData[i]['theGroundBecauseMessage'] = '';
+                    } else {
+                        messData = t_data.basis.find((item) => {
+                            return item.well == myWellId
+                        });
+                        myData[i]['theGroundBecauseMessage'] = messData ? messData.message ? messData.message : '' : '';
+                    }
+                    //选中项目不需要测试
+                    if (val == t_data.code) {
                         myData[i].theGroundBecause = t_data.name; //默认
-                        //添加详情信息
-                        if (t_data.basis == null) {
-                            myData[i]['theGroundBecauseMessage'] = '';
-                        } else {
-                            let messData = t_data.basis.find((item) => {
-                                return item.well == myWellId
-                            });
-                            myData[i]['theGroundBecauseMessage'] = messData ? messData.message ? messData.message : '' : '';
-                        }
                     } else {
                         if (!isNaN(myWellCount[t_data.code])) {
                             t_count = myWellCount[t_data.code];
@@ -1658,34 +1712,59 @@ export default {
                         let t_subWells = "," + t_data.wells + ",";
                         if (t_subWells.includes("," + myWellId + ",")) {
                             myData[i].theGroundBecause = t_data.name; //默认
-                            //添加详情信息
-                            if (t_data.basis == null) {
-                                myData[i]['theGroundBecauseMessage'] = '';
-                            } else {
-                                let messData = t_data.basis.find((item) => {
-                                    return item.well == myWellId
-                                });
-                                myData[i]['theGroundBecauseMessage'] = messData ? messData.message ? messData.message : '' : '';
-                            }
                             t_count++; //计数
                         }
                         myWellCount[t_data.code] = t_count; //回写
+                    }
+                    //深化点-点击井号展示井位
+                    console.log('messData----------aaaaaaaaaaaa',messData)
+                    if(messData&&messData.evalBasisLayers){
+                        let key1='theGroundBecauseMessage';
+                        let evalBasisLayers=messData.evalBasisLayers;//层位数据
+                        let children=myData[i].children;
+                        if(children.length){
+                            for(let a=0;a<evalBasisLayers.length;a++){
+                                let isFindOut=false;//默认没有查到
+                                for(let b=0;b<children.length;b++){
+                                    if(evalBasisLayers[a].layerCode == children[b].wellId){
+                                        isFindOut=true;
+                                        children[b][key1]=evalBasisLayers[a].message;
+                                    }
+                                }
+                                if(!isFindOut){
+                                    children.push({
+                                        wellId:evalBasisLayers[a].layerCode,
+                                        [key1]:evalBasisLayers[a].message,
+                                    })
+                                }
+                            }
+                        }else{
+                            evalBasisLayers.forEach((el,i)=>{
+                                children.push({
+                                    wellId:el.layerCode,
+                                    [key1]:el.message,
+                                })
+                            })
+                        }
                     }
                 }
                 //井筒原因  wellboreReason
                 for (let j = 0; j < this.wellboreReason.length; j++) {
                     let t_data = this.wellboreReason[j]; //每个数据项
-                    if (val == t_data.code) { //选中项目不需要测试
+                    let messData={};
+                    //添加详情信息
+                    if (t_data.basis == null) {
+                        myData[i]['wellboreReasonMessage'] = '';
+                    } else {
+                        messData = t_data.basis.find((item) => {
+                            return item.well == myWellId
+                        });
+                        myData[i]['wellboreReasonMessage'] = messData ? messData.message ? messData.message : '' : '';
+                    }
+                    //选中项目不需要测试
+                    if (val == t_data.code) {
                         myData[i].wellboreReason = t_data.name; //默认
-                        //添加详情信息
-                        if (t_data.basis == null) {
-                            myData[i]['wellboreReasonMessage'] = '';
-                        } else {
-                            let messData = t_data.basis.find((item) => {
-                                return item.well == myWellId
-                            });
-                            myData[i]['wellboreReasonMessage'] = messData ? messData.message ? messData.message : '' : '';
-                        }
+
                     } else {
                         if (!isNaN(myWellCount[t_data.code])) {
                             t_count = myWellCount[t_data.code];
@@ -1695,34 +1774,57 @@ export default {
                         let t_subWells = "," + t_data.wells + ",";
                         if (t_subWells.includes("," + myWellId + ",")) {
                             myData[i].wellboreReason = t_data.name; //默认
-                            //添加详情信息
-                            if (t_data.basis == null) {
-                                myData[i]['wellboreReasonMessage'] = '';
-                            } else {
-                                let messData = t_data.basis.find((item) => {
-                                    return item.well == myWellId
-                                });
-                                myData[i]['wellboreReasonMessage'] = messData ? messData.message ? messData.message : '' : '';
-                            }
                             t_count++; //计数
                         }
                         myWellCount[t_data.code] = t_count; //回写
+                    }
+                    //深化点-点击井号展示层位
+                    if(messData&&messData.evalBasisLayers){
+                        let key1='wellboreReasonMessage';
+                        let evalBasisLayers=messData.evalBasisLayers;//层位数据
+                        let children=myData[i].children;
+                        if(children.length){
+                            for(let a=0;a<evalBasisLayers.length;a++){
+                                let isFindOut=false;//默认没有查到
+                                for(let b=0;b<children.length;b++){
+                                    if(evalBasisLayers[a].layerCode == children[b].wellId){
+                                        isFindOut=true;
+                                        children[b][key1]=evalBasisLayers[a].message;
+                                    }
+                                }
+                                if(!isFindOut){
+                                    children.push({
+                                        wellId:evalBasisLayers[a].layerCode,
+                                        [key1]:evalBasisLayers[a].message,
+                                    })
+                                }
+                            }
+                        }else{
+                            evalBasisLayers.forEach((el,i)=>{
+                                children.push({
+                                    wellId:el.layerCode,
+                                    [key1]:el.message,
+                                })
+                            })
+                        }
                     }
                 }
                 //地层原因 formationReason
                 for (let j = 0; j < this.formationReason.length; j++) {
                     let t_data = this.formationReason[j]; //每个数据项
-                    if (val == t_data.code) { //选中项目不需要测试
+                    let messData={};
+                    //添加详情信息
+                    if (t_data.basis == null) {
+                        myData[i]['formationReasonMessage'] = '';
+                    } else {
+                        messData = t_data.basis.find((item) => {
+                            return item.well == myWellId
+                        });
+                        myData[i]['formationReasonMessage'] = messData ? messData.message ? messData.message : '' : '';
+                    }
+                    //选中项目不需要测试
+                    if (val == t_data.code) {
                         myData[i].formationReason = t_data.name; //默认
-                        //添加详情信息
-                        if (t_data.basis == null) {
-                            myData[i]['formationReasonMessage'] = '';
-                        } else {
-                            let messData = t_data.basis.find((item) => {
-                                return item.well == myWellId
-                            });
-                            myData[i]['formationReasonMessage'] = messData ? messData.message ? messData.message : '' : '';
-                        }
                     } else {
                         if (!isNaN(myWellCount[t_data.code])) {
                             t_count = myWellCount[t_data.code];
@@ -1732,34 +1834,56 @@ export default {
                         let t_subWells = "," + t_data.wells + ",";
                         if (t_subWells.includes("," + myWellId + ",")) {
                             myData[i].formationReason = t_data.name; //默认
-                            //添加详情信息
-                            if (t_data.basis == null) {
-                                myData[i]['formationReasonMessage'] = '';
-                            } else {
-                                let messData = t_data.basis.find((item) => {
-                                    return item.well == myWellId
-                                });
-                                myData[i]['formationReasonMessage'] = messData ? messData.message ? messData.message : '' : '';
-                            }
                             t_count++; //计数
                         }
                         myWellCount[t_data.code] = t_count; //回写
+                    }
+                    //深化点-点击井号展示层位
+                    if(messData&&messData.evalBasisLayers){
+                        let key1='formationReasonMessage';
+                        let evalBasisLayers=messData.evalBasisLayers;//层位数据
+                        let children=myData[i].children;
+                        if(children.length){
+                            for(let a=0;a<evalBasisLayers.length;a++){
+                                let isFindOut=false;//默认没有查到
+                                for(let b=0;b<children.length;b++){
+                                    if(evalBasisLayers[a].layerCode == children[b].wellId){
+                                        isFindOut=true;
+                                        children[b][key1]=evalBasisLayers[a].message;
+                                    }
+                                }
+                                if(!isFindOut){
+                                    children.push({
+                                        wellId:evalBasisLayers[a].layerCode,
+                                        [key1]:evalBasisLayers[a].message,
+                                    })
+                                }
+                            }
+                        }else{
+                            evalBasisLayers.forEach((el,i)=>{
+                                children.push({
+                                    wellId:el.layerCode,
+                                    [key1]:el.message,
+                                })
+                            })
+                        }
                     }
                 }
                 //停注恢复 stopInjectionRecovery
                 for (let j = 0; j < this.stopInjectionRecovery.length; j++) {
                     let t_data = this.stopInjectionRecovery[j]; //每个数据项
+                    let messData={};
+                    //添加详情信息
+                    if (t_data.basis == null) {
+                        myData[i]['stopInjectionRecoveryMessage'] = '';
+                    } else {
+                        messData = t_data.basis.find((item) => {
+                            return item.well == myWellId
+                        });
+                        myData[i]['stopInjectionRecoveryMessage'] = messData ? messData.message ? messData.message : '' : '';
+                    }
                     if (val == t_data.code) { //选中项目不需要测试
                         myData[i].stopInjectionRecovery = t_data.name; //默认
-                        //添加详情信息
-                        if (t_data.basis == null) {
-                            myData[i]['stopInjectionRecoveryMessage'] = '';
-                        } else {
-                            let messData = t_data.basis.find((item) => {
-                                return item.well == myWellId
-                            });
-                            myData[i]['stopInjectionRecoveryMessage'] = messData ? messData.message ? messData.message : '' : '';
-                        }
                     } else {
                         if (!isNaN(myWellCount[t_data.code])) {
                             t_count = myWellCount[t_data.code];
@@ -1769,18 +1893,39 @@ export default {
                         let t_subWells = "," + t_data.wells + ",";
                         if (t_subWells.includes("," + myWellId + ",")) {
                             myData[i].stopInjectionRecovery = t_data.name; //默认
-                            //添加详情信息
-                            if (t_data.basis == null) {
-                                myData[i]['stopInjectionRecoveryMessage'] = '';
-                            } else {
-                                let messData = t_data.basis.find((item) => {
-                                    return item.well == myWellId
-                                });
-                                myData[i]['stopInjectionRecoveryMessage'] = messData ? messData.message ? messData.message : '' : '';
-                            }
                             t_count++; //计数
                         }
                         myWellCount[t_data.code] = t_count; //回写
+                    }
+                    //深化点-点击井号展示层位
+                    if(messData&&messData.evalBasisLayers){
+                        let key1='stopInjectionRecoveryMessage';
+                        let evalBasisLayers=messData.evalBasisLayers;//层位数据
+                        let children=myData[i].children;
+                        if(children.length){
+                            for(let a=0;a<evalBasisLayers.length;a++){
+                                let isFindOut=false;//默认没有查到
+                                for(let b=0;b<children.length;b++){
+                                    if(evalBasisLayers[a].layerCode == children[b].wellId){
+                                        isFindOut=true;
+                                        children[b][key1]=evalBasisLayers[a].message;
+                                    }
+                                }
+                                if(!isFindOut){
+                                    children.push({
+                                        wellId:evalBasisLayers[a].layerCode,
+                                        [key1]:evalBasisLayers[a].message,
+                                    })
+                                }
+                            }
+                        }else{
+                            evalBasisLayers.forEach((el,i)=>{
+                                children.push({
+                                    wellId:el.layerCode,
+                                    [key1]:el.message,
+                                })
+                            })
+                        }
                     }
                 }
                 //recommendedMeasuresOptions//措施推荐；不需要考虑数据项
