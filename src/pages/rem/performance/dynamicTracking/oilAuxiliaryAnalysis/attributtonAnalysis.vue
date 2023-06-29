@@ -1239,7 +1239,7 @@ export default {
         this.queryData.well = this.$route.query.wellId
         this.evalResult = this.$route.query.evalResult
         this.link = this.$route.query.link
-        console.log(this.link);
+        this.tableData = []
         if (this.link == '4') {
             this.title = '注水强度归因分析'
         } else if (this.link == '1') {
