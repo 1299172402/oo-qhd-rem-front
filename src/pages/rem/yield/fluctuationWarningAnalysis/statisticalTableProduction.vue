@@ -45,7 +45,7 @@
             <pagePanelNew style="height:100%;margin-top:0;">
                 <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
                     <span>秦皇岛32-6油田单井产量变化</span>
-                    <el-button type="primary" style="height:30px;" @click="$router.go(-1)">返回</el-button>
+                    <el-button type="primary" style="height:30px;" @click="goBack">返回</el-button>
                 </div>
                 <div class="tableBox" id="tableBox" style="height:calc(100% - 75px)">
                     <el-table 
@@ -373,6 +373,19 @@
                 } else {
                     return '-';
                 }
+            },
+            //返回
+            goBack(){
+                if(this.$route.query.page){
+                    this.$router.push({
+                        path:'/'+this.$route.query.page
+                    })
+                }else{
+                    this.$router.push({
+                        path:'/yield/fluctuationWarningAnalysis'
+                    })
+                }
+                
             },
         },
     };

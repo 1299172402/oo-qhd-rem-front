@@ -17,13 +17,15 @@
                     <el-option label="以水井为中心" value="WATERCENTRE"></el-option>
                     <el-option label="以油井为中心" value="OILCENTRE"></el-option>
                 </el-select>
+                
                 <span class="title">井组：</span>
-                <el-select v-if="currentModule != 'dynamicsInjection' &&currentModule != 'changingDynamics' &&currentModule != 'stateChange'" v-model="selectWellGroup" placeholder="请选择" filterable clearable style="margin-right: 15px">
+                <!-- <el-select v-if="currentModule != 'dynamicsInjection' &&currentModule != 'changingDynamics' &&currentModule != 'stateChange'" v-model="selectWellGroup" placeholder="请选择" filterable clearable style="margin-right: 15px">
                     <el-option v-for="item in wellGroup" :key="item.wellGroupId" :label="item.name" :value="item.wellGroupId"></el-option>
-                </el-select>
-                <el-select v-else v-model="selectWellGroup" placeholder="请选择" filterable clearable style="margin-right: 15px">
+                </el-select> -->
+                <el-select  v-model="selectWellGroup" placeholder="请选择" filterable clearable style="margin-right: 15px">
                     <el-option v-for="item in newWellGroup" :key="item.wellGroupId" :label="item.wellGroupName" :value="item.wellGroupId"></el-option>
                 </el-select>
+                
                 <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索 </el-button>
                 <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
             </div>
@@ -431,22 +433,6 @@
                     }
                 });
                 //井组信息初始化
-                let requestWellGroups = {
-                    oilFieldId: this.block.map((item) => item.fieldId),
-                    wellCentre: this.wellCentre,
-                };
-                wellGroups(requestWellGroups).then((res) => {
-                    if (res.data.code == 200 && res.data.data && res.data.data.wellGroups.length) {
-                        this.wellGroup = res.data.data.wellGroups;
-                        if (this.$route.params.wellId) {
-                            //先走传参
-                            this.selectWellGroup = this.$route.params.wellId;
-                        } else if (this.wellGroup && this.wellGroup.length) {
-                            this.selectWellGroup = this.wellGroup[0].wellGroupId;
-                        }
-                    }
-                });
-                // debugger
                 let obj = {
                     blockId: "YCFXDY8B643EDC9007F96F570600457D",
                     dateTime: "",
@@ -457,10 +443,10 @@
                     }],
                     wellGroupId: ""
                 }
-                //动态资料-井组配注变化动态||井组连通性变化动态||注采井网状态变化 调zxp这个接口
                 wellGroupList(obj).then((res) => {
                     if (res.data.code == 200 && res.data.data && res.data.data.length) {
                         this.newWellGroup = res.data.data;
+                        this.selectWellGroup = this.newWellGroup[0].wellGroupId;
                     }
                 });
                 this.doSearch();
@@ -506,14 +492,6 @@
                 } else {
                     oilFieldId.push(this.selectBlock);
                 }
-                let request = {
-                    oilFieldId: oilFieldId,
-                };
-                wellGroups(request).then((res) => {
-                    if (res.data.code == 200) {
-                        this.wellGroup = res.data.data.wellGroups;
-                    }
-                });
                 let blockId = this.selectBlock
                 if (blockId == '3FC9A818F5BC43B88270DB80BBB3018F') {
                     blockId = 'YCFXDY8B643EDC9007F96F570600457D'
@@ -532,6 +510,7 @@
                 wellGroupList(obj).then((res) => {
                     if (res.data.code == 200 && res.data.data && res.data.data.length) {
                         this.newWellGroup = res.data.data;
+                        this.selectWellGroup= this.newWellGroup[0].wellGroupId
                     }
                 });
             },

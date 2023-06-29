@@ -28,9 +28,11 @@
         </headerSearch>
         
         <pagePanelNew style="height: calc(100% - 100px);" class="g-w100">
-            <div class="btns" style="height:50px;;display: flex;padding-left:7px;">
+            <div class="btns" style="width:100%;height:50px;;display: flex;padding-left:7px;">
                 <el-button type="primary" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
                 <el-button type="primary" @click="switchVersions">切换版式</el-button>
+                
+                <el-button type="primary" style="margin-left:auto!important;" v-if="$route.query.page" @click="goBack">返回</el-button>
             </div>
             <!-- 旧版 -->
             <div class="old" style="height:calc(100% - 50px);padding-bottom:8px;overflow-y: scroll;" v-if="!isNewformat">
@@ -1357,6 +1359,12 @@
                             })
                         }
                     }
+                })
+            },
+            //返回
+            goBack(){
+                this.$router.push({
+                    path:'/'+this.$route.query.page
                 })
             },
         },

@@ -200,7 +200,7 @@ export default {
                     showFlag:false,
                     typeIdList:[],
                     warningShowFlag : true,
-                    analysisUrl:`https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?wellIds=%5B%5D&prodDate=${data2}&prodDateCompare=${data1}`
+                    analysisUrl:`https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?wellIds=%5B%5D&prodDate=${data2}&prodDateCompare=${data1}&page=reservoirDisplay/linkage`
                 },
                 {
                     style: 'position:absolute;left: 20%;top: 0%;width:20%;height:40%;',
