@@ -190,7 +190,7 @@ export default {
                     boxBottomText: [
                         {name:'年度产量运行预警',url:'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentWarningCapacity?page=reservoirDisplay/linkage'}
                     ],
-                    boxBottomContent: [u
+                    boxBottomContent: [
                         [{name:'年度产量趋势预测',url:'https://rem.tjioms-dev.tjltd.cnooc/#/modelConfiguration/modelconfig?page=reservoirDisplay/linkage'}]
                     ],
                     boxStyle: {
