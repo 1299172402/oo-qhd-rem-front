@@ -20,7 +20,7 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="平台:">
-                            <el-select v-model="queryData.assetCode" @change="choicewell" clearable
+                            <el-select v-model="queryData.assetCode" @change="choicewell" clearable disabled
                                        style="width: 220px">
                                 <el-option
                                     clearable
@@ -32,8 +32,16 @@
                                 </el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="井号:">
-                            <el-select v-model="queryData.well" clearable style="width: 170px">
+                        <el-form-item v-if="link == 6" label="水井井组:">
+                            <el-select v-model="queryData.wellGroup" style="width:180px" filterable clearable>
+                                <el-option v-for="item in wellGroupList" :key="item.wellGroupId"
+                                           :label="item.wellGroupName" :value="item.wellGroupId">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item v-if="link == 1 || link == 2 || link == 3 || link == 4 || link == 5 "
+                                      label="井号:">
+                            <el-select v-model="queryData.well" clearable style="width: 170px" disabled>
                                 <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellName"
                                            :value="item.wellId">
                                 </el-option>
@@ -77,17 +85,17 @@
                 </div>
             </div>
         </header-search>
+        <pagePanel v-if="link==1 || link==2 || link==3" :headerTitle="title" style="height: 120%" :show-btn="true">
+            <Echart :chart-data="option" style="height: 100%"></Echart>
+        </pagePanel>
         <pagePanel v-if="link==4" :headerTitle="title" style="height: 120%" :show-btn="true">
             <Echart :chart-data="option2" style="height: 100%"></Echart>
         </pagePanel>
-        <pagePanel v-else-if="link==5" :headerTitle="title" style="height: 120%" :show-btn="true">
+        <pagePanel v-if="link==5" :headerTitle="title" style="height: 120%" :show-btn="true">
             <Echart :chart-data="option3" style="height: 100%"></Echart>
         </pagePanel>
-        <pagePanel v-else-if="link==6" :headerTitle="title" style="height: 120%" :show-btn="true">
+        <pagePanel v-if="link==6" :headerTitle="title" style="height: 120%" :show-btn="true">
             <Echart :chart-data="option4" style="height: 100%"></Echart>
-        </pagePanel>
-        <pagePanel v-else :headerTitle="title" style="height: 120%" :show-btn="true">
-            <Echart :chart-data="option" style="height: 100%"></Echart>
         </pagePanel>
         <pagePanel v-if="link=='5'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
             <el-table
@@ -106,7 +114,7 @@
                 <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期">
                     <template slot-scope="scope">
-                        <span> {{ scope.row.date ? scope.row.date.split(' ')[0].replace(/-01/g,'') : '' }} </span>
+                        <span> {{ scope.row.date ? scope.row.date.split(' ')[0].replace(/-01/g, '') : '' }} </span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="declineRate" min-width="150" :label="`递减率\n(%)`"></el-table-column>
@@ -115,7 +123,8 @@
                 <el-table-column prop="watCnt" min-width="150" :label="`含水率\n(%)`"></el-table-column>
                 <el-table-column prop="pumpEfficiency" min-width="150" label="排量效率"></el-table-column>
                 <el-table-column prop="flwPrs" min-width="150" :label="`流压\n(MPa)`"></el-table-column>
-                <el-table-column prop="attribution" min-width="250" label="归因" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="attribution" min-width="250" label="归因"
+                                 show-overflow-tooltip></el-table-column>
                 <el-table-column prop="measure" min-width="250" label="措施" show-overflow-tooltip></el-table-column>
             </el-table>
             <pagination
@@ -140,15 +149,27 @@
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column prop="null" min-width="150" label="井号"></el-table-column>
-                <el-table-column prop="null" min-width="150" label="日期"></el-table-column>
-                <el-table-column prop="null" min-width="150" label="井组压力保持评价"></el-table-column>
-                <el-table-column prop="null" min-width="150" :label="`井组月度产液量\n(m³)`"></el-table-column>
-                <el-table-column prop="null" min-width="150" label="注采平衡分析结果"></el-table-column>
-                <el-table-column prop="null" min-width="150" :label="`井组水井分层月注水量\n(m³)`"></el-table-column>
-                <el-table-column prop="null" min-width="250" label="归因"></el-table-column>
-                <el-table-column prop="null" min-width="250" label="下步措施"></el-table-column>
+                <el-table-column prop="wellGroupName" min-width="250" label="井组名称"></el-table-column>
+                <el-table-column prop="date" min-width="150" label="日期"></el-table-column>
+                <el-table-column prop="pressureEvaluation" min-width="150" label="井组压力保持评价"></el-table-column>
+                <el-table-column prop="monthlyLiquidProduction" min-width="150"
+                                 :label="`井组月度产液量\n(m³)`"></el-table-column>
+                <el-table-column prop="balanceAnalysisResult" min-width="150"
+                                 label="注采平衡分析结果"></el-table-column>
+                <el-table-column prop="monthlyWaterInjection" min-width="180"
+                                 :label="`井组月注水量\n(m³)`"></el-table-column>
+                <el-table-column show-overflow-tooltip prop="attribution" min-width="250"
+                                 label="归因"></el-table-column>
+                <el-table-column show-overflow-tooltip prop="measure" min-width="250"
+                                 label="下步措施"></el-table-column>
             </el-table>
+            <pagination
+                :pageSizes="[15, 20, 40, 100]"
+                :total="pageTotal"
+                :page.sync="queryData.page"
+                :limit.sync="queryData.pageSize"
+                @pagination="pagination"
+            />
         </pagePanel>
         <pagePanel v-if="link=='4'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
             <el-table
@@ -171,13 +192,16 @@
                 </el-table-column>
                 <el-table-column prop="layerName" min-width="200" show-overflow-tooltip label="层位"></el-table-column>
                 <el-table-column prop="itemValue" min-width="150" :label="`注水强度\n(m³/d·m)`"></el-table-column>
-                <el-table-column prop="evalResult" min-width="200" show-overflow-tooltip label="评价结论"></el-table-column>
+                <el-table-column prop="evalResult" min-width="200" show-overflow-tooltip
+                                 label="评价结论"></el-table-column>
                 <el-table-column prop="injDuration" min-width="150" :label="`生产时长\n(h)`"></el-table-column>
                 <el-table-column prop="injDaily" min-width="150" :label="`注入量\n(m³)`"></el-table-column>
                 <el-table-column prop="whInjPress" min-width="150" :label="`注入压力\n(mPa)`"></el-table-column>
                 <el-table-column prop="injAllocationRate" min-width="150" :label="`配注量\n(m³/d)`"></el-table-column>
-                <el-table-column prop="valueAttribution" min-width="200" show-overflow-tooltip label="归因"></el-table-column>
-                <el-table-column prop="vauleMeasure" min-width="200" show-overflow-tooltip label="建议措施"></el-table-column>
+                <el-table-column prop="valueAttribution" min-width="200" show-overflow-tooltip
+                                 label="归因"></el-table-column>
+                <el-table-column prop="vauleMeasure" min-width="200" show-overflow-tooltip
+                                 label="建议措施"></el-table-column>
             </el-table>
             <pagination
                 :pageSizes="[15, 20, 40, 100]"
@@ -187,7 +211,8 @@
                 @pagination="pagination"
             />
         </pagePanel>
-        <pagePanel v-if="link=='1' || link=='2' || link=='3'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
+        <pagePanel v-if="link=='1' || link=='2' || link=='3'" :headerTitle="title+'明细表'" style="height: 100%"
+                   :show-btn="true">
             <el-table
                 height="calc(100% - 50px)"
                 :row-style="{ height: '0px' }"
@@ -204,18 +229,22 @@
                 <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期">
                     <template slot-scope="scope">
-                        <span> {{ scope.row.date ? scope.row.date.split(' ')[0].replace(/-01/g,'') : '' }} </span>
+                        <span> {{ scope.row.date ? scope.row.date.split(' ')[0].replace(/-01/g, '') : '' }} </span>
                     </template>
                 </el-table-column>
-                <el-table-column v-if="link == 1" prop="intensity" min-width="150" :label="`采液强度\n(m³/d·m)`"></el-table-column>
-                <el-table-column v-if="link == 2" prop="fluidProductionIndex" min-width="150" :label="`采液指数\n(m³/mPa·d)`"></el-table-column>
-                <el-table-column v-if="link == 3" prop="metreFluidProductionIndex" min-width="150" :label="`米采液指数\n(m³/mPa·d·m)`"></el-table-column>
+                <el-table-column v-if="link == 1" prop="intensity" min-width="150"
+                                 :label="`采液强度\n(m³/d·m)`"></el-table-column>
+                <el-table-column v-if="link == 2" prop="fluidProductionIndex" min-width="150"
+                                 :label="`采液指数\n(m³/mPa·d)`"></el-table-column>
+                <el-table-column v-if="link == 3" prop="metreFluidProductionIndex" min-width="150"
+                                 :label="`米采液指数\n(m³/mPa·d·m)`"></el-table-column>
                 <el-table-column prop="yield" min-width="150" :label="`产液量\n(m³)`"></el-table-column>
                 <el-table-column prop="monthlyProdEff" min-width="150" :label="`生产时率\n(%)`"></el-table-column>
                 <el-table-column prop="pumpEfficiency" min-width="150" label="泵效"></el-table-column>
                 <el-table-column prop="watCnt" min-width="150" :label="`含水率\n(%)`"></el-table-column>
                 <el-table-column prop="flwPrs" min-width="150" :label="`流压\n(MPa)`"></el-table-column>
-                <el-table-column prop="attribution" min-width="250" show-overflow-tooltip label="归因"></el-table-column>
+                <el-table-column prop="attribution" min-width="250" show-overflow-tooltip
+                                 label="归因"></el-table-column>
                 <el-table-column prop="measure" min-width="250" show-overflow-tooltip label="措施"></el-table-column>
             </el-table>
             <pagination
@@ -226,7 +255,6 @@
                 @pagination="pagination"
             />
         </pagePanel>
-        
     </div>
 </template>
 <script>
@@ -240,31 +268,36 @@ import {
 import {queryWaterInjIntensityAttributeAnalysis} from "@/api/rem/waterinjintensityattributeanalysis.js"
 import {analyzeOilWellFluidAttributionQuery} from "@/api/rem/wellmonthlyanalysis";
 import {oilWellFluidQuery} from "@/api/rem/oilwellfluid";
+import {selectWellGroup} from "@/api/oilDeposit/rem-02/primaryinfo";
+import {queryProductionAnalysisList} from "@/api/rem/productionanalysis";
 
 export default {
+    name:'a',
     components: {
         Echart
     },
     data() {
         return {
-            pageTotal:'',
+            pageTotal: 0,
             queryData: {
                 assetCode: "",
                 month: "",
                 ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 orgId: "715AD1CD60484BB59E737CD18A9DE44A",
                 well: "",
-                pageNum:"1",
-                pageSize:"15",
+                pageNum: 1,
+                pageSize: 15,
+                wellGroup: ''
             },
             tableData: [],
             oilFields: [],
             platforms: [],
             wellList: {},
+            wellGroupList: [],
             zygsSelect: [], //作业公司
             title: '油井采液强度归因分析',
             link: '1',
-            evalResult:'',
+            evalResult: '',
             option: {
                 tooltip: {
                     trigger: 'item',
@@ -818,7 +851,7 @@ export default {
                                                                 }
                                                             ]
                                                         }
-                                                        
+
                                                     ]
                                                 }
                                             ]
@@ -877,7 +910,7 @@ export default {
                                                 }
                                             ]
                                         },
-                                        
+
                                     ]
                                 },
                             ]
@@ -912,7 +945,7 @@ export default {
                                 return '{f|' + params.name + '}'
                             } else if (params.data.level === 7 && params.data.name) {
                                 return '{a|' + params.name + '}'
-                            }else if (params.data.level === 99 && params.data.name) {
+                            } else if (params.data.level === 99 && params.data.name) {
                                 return '{f|' + params.name + '}'
                             } else {
                                 return ''
@@ -1013,7 +1046,7 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 6,
-                                                            "name": "归因5：①封隔器失效；②水线突进。\n下步措施：①卡封；②产液结构优化调整", 
+                                                            "name": "归因5：①封隔器失效；②水线突进。\n下步措施：①卡封；②产液结构优化调整",
                                                         },
                                                         {
                                                             "level": 5,
@@ -1079,7 +1112,7 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 6,
-                                                            "name": "归因3：层内非均质性强。\n下步措施：调剖堵水", 
+                                                            "name": "归因3：层内非均质性强。\n下步措施：调剖堵水",
                                                         }
                                                     ]
                                                 }
@@ -1194,16 +1227,19 @@ export default {
             },
         };
     },
-    mounted() {
+    activated() {
+        // 在组件被激活时执行操作
         this.getData();
         this.queryData.month = this.$route.query.currentDate
-        if(this.$route.query.platform == '3FC9A818F5BC43B88270DB80BBB3018F'){
+        this.queryData.wellGroup = this.$route.query.searchKeys?this.$route.query.searchKeys:''
+        if (this.$route.query.platform == '3FC9A818F5BC43B88270DB80BBB3018F') {
             this.$route.query.platform = ''
         }
         this.queryData.assetCode = this.$route.query.platform
         this.queryData.well = this.$route.query.wellId
         this.evalResult = this.$route.query.evalResult
         this.link = this.$route.query.link
+        console.log(this.link);
         if (this.link == '4') {
             this.title = '注水强度归因分析'
         } else if (this.link == '1') {
@@ -1215,12 +1251,20 @@ export default {
         } else if (this.link == '3') {
             this.option.series[0].data[0].name = '油井米采液指数不合理'
             this.title = '油井米采液指数归因分析'
-        }else if(this.link == '5'){
+        } else if (this.link == '5') {
             this.title = '油井递减率归因分析'
-        }else if(this.link == '6'){
+        } else if (this.link == '6') {
+            this.queryData.month = '2023-03'
+            // this.queryData.wellGroup = 
             this.title = '井组生产动态归因分析'
         }
         this.getFormData();
+    },
+    created() {
+        this.link = this.$route.query.link
+    },
+    mounted() {
+        
     },
     methods: {
         async getData() {
@@ -1239,6 +1283,15 @@ export default {
                     const requestPlat = {
                         ogfId: this.selectOilField,
                     };
+                    selectWellGroup({
+                        ogfId: this.selectOilField,
+                        dateTime: new Date().format('yyyy-MM-dd')
+                    }).then((res) => {
+                        if (res.data.code == 200) {
+                            this.wellGroupList = res.data.data;
+                            this.wellGroupList.unshift({wellGroupName: '全部', wellGroupId: ''});
+                        }
+                    });
                     queryPlatformQueryWellListDetail(requestPlat).then((res) => {
                         this.wellList = res.data.data;
                     });
@@ -1288,8 +1341,9 @@ export default {
                 operationZone: this.queryData.orgId,
                 evalResult: this.evalResult,
                 evalTypeId: 'ZS',
-                pageNum:this.queryData.pageNum,
-                pageSize:this.queryData.pageSize
+                pageNum: this.queryData.pageNum,
+                pageSize: this.queryData.pageSize,
+                objectId: this.queryData.wellGroup
             }
             if (this.link == '4') {
                 queryWaterInjIntensityAttributeAnalysis(params).then(res => {
@@ -1297,13 +1351,13 @@ export default {
                     this.pageTotal = res.data.data.total
                 })
             }
-            if (this.link == '5') {
-                oilWellFluidQuery(params).then(res => {
+            if (this.link == '6') {
+                queryProductionAnalysisList(params).then(res => {
                     this.tableData = res.data.data.rows
                     this.pageTotal = res.data.data.total
                 })
             }
-            if (this.link == '1' || this.link == '2' || this.link == '3') {
+            if (this.link == '1' || this.link == '2' || this.link == '3' || this.link == '5') {
                 oilWellFluidQuery(params).then(res => {
                     this.tableData = res.data.data.rows
                     this.pageTotal = res.data.data.total
