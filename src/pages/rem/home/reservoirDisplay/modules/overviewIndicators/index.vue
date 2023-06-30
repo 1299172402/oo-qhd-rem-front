@@ -98,7 +98,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchart(dataList.layerPassRate, '%', 'rgb(235,125,96)', 'rgba(38,43,90,0)', 'transparent')"></Echart>
+                            :chart-data="getEchart(infolist, '%', 'rgb(235,125,96)', 'rgba(38,43,90,0)', 'transparent')"></Echart>
                         <div class="chartText">层段合格率</div>
                     </div>
                 </el-col>
@@ -121,7 +121,7 @@ import * as echarts from "echarts/core";
 import {GridComponent, TooltipComponent, LegendComponent} from "echarts/components";
 import {CanvasRenderer} from "echarts/renderers";
 import {productionMetricsOverview} from "@/api/rem/reservoirbillboards";
-
+import {dividingLayerQualityRate} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 let value = 0;
 let name = "";
@@ -135,6 +135,7 @@ export default {
         this.histogram2.series[1].splitLine.lineStyle.color = this.$store.state.setting.mode == 'dark' ? 'rgb(3,42,59)' : '#fff'
         this.histogram3.series[1].splitLine.lineStyle.color = this.$store.state.setting.mode == 'dark' ? 'rgb(3,42,59)' : '#fff'
         this.getData();
+        this.getList()
     },
     computed: {
         getGlobeTheme() {
@@ -153,6 +154,7 @@ export default {
     data() {
         return {
             dataList:'',
+            infolist:'', //层段合格率
             histogram: {
                 title: {
                     // text: '{a|' + value + '}{c|%}',
@@ -489,6 +491,17 @@ export default {
                 this.histogram3.series[0].data[1].value = 100 - res.data.data.wholeDeclineRate
                 this.histogram3.title.text = "{a|" + res.data.data.wholeDeclineRate + "%}{c|\n" +   "}"
             })  
+        },
+        getList(){
+            let data = {
+                endDate:"2022-12-01",
+                oilFieldId:"3FC9A818F5BC43B88270DB80BBB3018F",
+                year:"2022-12-01"
+            }
+            dividingLayerQualityRate(data).then((res)=>{
+                this.infolist = res.data.data.indicatorContent.detail
+                
+            })
         },
         //图表
         getEchartData(value, unit, valueColor, backColor, centerColor, data) {

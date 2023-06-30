@@ -53,13 +53,18 @@ export default {
               readOne:'one' 
           }
           queryRemUploadFileMinio(params).then((res) => {
-              if (res.data.code == 200) {
-                  let data =res.data.data[0].fileId
-                  this.id = res.data.data[0].fileId
-                  this.fileName = res.data.data[0].filestrId
-                  filePreview(data).then((res)=>{
-                      this.url = res.data.data
-                  })
+              if (res.data.code == 200 ) {
+                  if(Array.isArray(res.data.data) && res.data.data.length){
+                      let data =res.data.data[0].fileId
+                      this.id = res.data.data[0].fileId
+                      this.fileName = res.data.data[0].filestrId
+                      filePreview(data).then((res)=>{
+                          this.url = res.data.data
+                      })
+                  }else{
+                      // debugger
+                      this.url =''
+                  }
               }else {
                   this.$message.error("文件查询接口异常!");
               }

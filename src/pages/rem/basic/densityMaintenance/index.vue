@@ -3,7 +3,7 @@
     <div class="app-container" style="height: calc(100%);">
         <div style="display: flex;flex-direction: row; height: 100%;">
             <div style=" height: 100%">
-                <tree-multiple-selection :level = "'3'" :end="3" @childinfo = 'childinfo'  @change="layoutChange"/>
+                <tree-multiple-selection :level = "'3'" :end="3"   @change="layoutChange"/>
             </div>
             <div
                 style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
@@ -279,9 +279,6 @@ export default {
         layoutChange() {
             this.$refs.table.doLayout()
         },
-        childinfo(a,b,c){
-            // console.log(a,b,c)
-        },
         /**
          *   获取下拉框数据
          * @param orgId 作业公司id
@@ -319,7 +316,6 @@ export default {
         handleCurrentChange(val) {
             this.ids = [];
             this.ids = val;
-            console.log(this.ids);
         },
         /**
          *  编辑
@@ -334,23 +330,22 @@ export default {
         },
         // 保存
         save() {
-            let densityInfoQueryVo = this.queryParams;
-            let densityModelInfo = this.noticeList[0];
-            save({densityModelInfo, densityInfoQueryVo}).then((res) => {
-                if (res.data.code == 200) {
-                    // this.producttype = res.data.data;
-                    this.$message.success("保存成功！");
+            if(this.isDisabled.findIndex(target=>target===false)==-1){
+                this.$message.error("请先点击编辑按钮!");
+            }else {
+                let panduan = this.isDisabled.every
+                let densityInfoQueryVo = this.queryParams;
+                let densityModelInfo = this.noticeList[0];
+                save({densityModelInfo, densityInfoQueryVo}).then((res) => {
+                    if (res.data.code == 200) {
+                        // this.producttype = res.data.data;
+                        this.$message.success("保存成功！");
+                    }
+                });
+                for (let i = 0; i < 12; i++) {
+                    this.$set(this.isDisabled, i, true);
                 }
-            });
-
-            for (let i = 0; i < 12; i++) {
-                this.$set(this.isDisabled, i, true);
             }
-            // if (this.savelist) {
-            //   this.noticeList[this.savelist.index].state = '0';
-            //   this.$message.warning('修改成功');
-            //   this.savelist = [];
-            // }
         },
         inputChange(monthNum) {
             const MONTHS = {
