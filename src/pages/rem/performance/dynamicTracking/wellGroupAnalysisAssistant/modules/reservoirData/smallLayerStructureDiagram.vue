@@ -22,6 +22,9 @@
     import {fieldLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import {reservoirDataConstructureDaigramForWellGroup} from "@/api/oilDeposit/rem-01/wellgroupdynamicanalysis.js";
     import {downFile} from "@/lib/remBase64Download.js";
+    
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {filePreview} from "@/components/upload/utils/file";
     export default {
         name: "smallLayerStructureDiagram",
         props: {
@@ -43,7 +46,6 @@
             };
         },
         mounted() {
-            //初始化调用搜索
             this.doSearch();
         },
         watch: {
@@ -76,7 +78,6 @@
                                 } else {
                                     this.selectPosition = this.position[0].fieldLayerId;
                                 }
-                                console.log('this.selectPosition',this.selectPosition)
                                 this.$emit('childPara', this.selectPosition);
                             }
                         } else {
@@ -88,52 +89,27 @@
                         this.selectPosition = '';
                     }
                 });
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    fieldLayerId: this.selectPosition,
-                    wellGroupId: this.wellGroupId,
-                };
-                reservoirDataConstructureDaigramForWellGroup(request).then((res) => {
-                    console.log('zxb-res',res)
+                this.queryRemUploadFileMinioApi();
+            },
+            queryRemUploadFileMinioApi(){
+                let params ={
+                    operationId:this.wellGroupId+this.selectPosition,
+                    operationType:'WELLGROUPXCDMGZT',
+                    // readOne:'one'
+                }
+                queryRemUploadFileMinio(params).then((res) => {
+                    console.log('res123456789',res)
                     if (res.data.code == 200) {
-                        let myImageList = res.data.data.layerPics;
-                        console.log("reservoirDataConstructureDaigramForWellGroup==>", this.imageList);
-                        for (let i = 0; i < myImageList.length; i++) {
-                            if (myImageList[i].type && myImageList[i].data) {
-                                this.selectPosition = myImageList[i].layerId;
-                                break;
-                            }
-                        }
-                        let imageMess = myImageList.find((item) => item.layerId == this.selectPosition);
-                        if (!imageMess) {
-                            this.image = '';
-                            return;
-                        }
-                        this.imageList = [];
-                        if (imageMess.data && imageMess.type) {
-                            this.image = 'data:' + imageMess.type + ';base64,' + imageMess.data;
-                            this.imageList.push('data:' + imageMess.type + ';base64,' + imageMess.data);
-                        } else {
-                            this.image = '';
-                        }
-                        console.log("reservoirDataConstructureDaigramForWellGroup==>R", this.imageList);
+                        let data =res.data.data[0].fileId
+                        this.id = res.data.data[0].fileId
+                        this.fileName = res.data.data[0].filestrId
+                        filePreview(data).then((res)=>{
+                            this.url = res.data.data
+                        })
+                    }else {
+                        this.$message.error("文件查询接口异常!");
                     }
                 });
-            },
-            //切换图片
-            OnChangeImage() {
-                this.image = '';
-                let imageMess = this.imageList.find((item) => item.layerId == this.selectPosition);
-                if (!imageMess) {
-                    this.image = '';
-                    return;
-                }
-                if (imageMess.data && imageMess.type){
-                    this.image = 'data:' + imageMess.type + ';base64,' + imageMess.data;
-                }else {
-                    this.image = '';
-                }
             },
             //下载
             doDownLoad() {

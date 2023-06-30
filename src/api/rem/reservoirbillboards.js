@@ -13,9 +13,9 @@ export function monthlyProductionComparison({ date } = {}) {
     method: "get",
   });
 }
-export function productionMetricsOverview({ date } = {}) {
+export function productionMetricsOverview({ogfId,orgId, date } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/productionMetricsOverview?date=${ date || "" }`,
+    url: `${baseUrl}/reservoirBillboards/productionMetricsOverview?date=${ date || "" }&orgId=${ orgId || "" }&ogfId=${ ogfId || "" }`,
     method: "get",
     headers: {
       showLoading: false

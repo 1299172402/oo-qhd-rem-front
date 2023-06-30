@@ -473,7 +473,8 @@ export default {
         },
         getData(){
             // new Date().format('YYYY-MM')
-            productionMetricsOverview({date:'2022-01' + '-01'}).then(res=>{
+            productionMetricsOverview( { ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                orgId: "715AD1CD60484BB59E737CD18A9DE44A",date:'2022-12' + '-01'}).then(res=>{
                 this.dataList = res.data.data
                 if(!res.data.data.naturalDecline)  res.data.data.naturalDecline = 0
                 this.histogram.series[0].data[0].value = res.data.data.naturalDecline

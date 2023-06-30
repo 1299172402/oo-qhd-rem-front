@@ -1,69 +1,63 @@
 <!--井网图-->
 <template>
     <div class="image-content">
-        <el-image :src="image">
-            <div slot="error"></div>
-        </el-image>
+        <div style="width:100%;height:100%;">
+            <iframe style="height: 100%;width: 100%" :src="url"></iframe>
+        </div>
     </div>
 </template>
 
 <script>
-    import {wellNetDiagram} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
-    import {downFile} from "@/lib/remBase64Download.js";
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {filePreview} from "@/components/upload/utils/file";
     export default {
-      props: {
-        //选择油田
-        oilFeildId: {},
-        //选择平台
-        platform: {},
-        //选择井号
-        wellId: {}
-      },
-      data() {
-        return {
-          image: '',
-        };
-      },
-      mounted() {
-        this.doSearch();
-      },
-      methods: {
-        //调用图片
-        doSearch(){
-          let request={
-            ogfId: this.oilFeildId,
-            platformId: this.platform,
-            wellId: this.wellId,
-          };
-          wellNetDiagram(request).then((res)=>{
-            if(res.data.code==200){
-              let imgData = res.data.data.data;
-              let type = res.data.data.type;
-              let firstParty='data:'+type+';base64,';
-              if(imgData){
-                this.image=firstParty+imgData;
-              } else{
-                this.image = '';
-              }
-            }
-          });
+        props: {
+            //选择油田
+            oilFeildId: {},
+            //选择平台
+            platform: {},
+            //选择井号
+            wellId: {}
         },
-        //下载
-        doDownLoad(){
-          let fileName = '井网图';
-          if(this.wellName){
-            fileName = this.wellName + fileName;
-          }
-          downFile(this.image,fileName);
-        }
-      },
+        data() {
+            return {
+                id:'',
+                fileName:'',
+                url: '',
+            };
+        },
+        mounted() {
+            this.doSearch();
+        },
+        methods: {
+            doSearch() {
+                let params = {
+                    operationId: this.wellId,
+                    operationType: 'OILJWT',
+                    readOne: 'one'
+                }
+                queryRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        if(res.data.data.length){
+                            this.id = res.data.data[0].fileId;
+                            this.fileName = res.data.data[0].filestrId;
+                            filePreview(this.id).then((res) => {
+                                this.url = res.data.data
+                            })
+                        }
+                    } else {
+                        this.$message.error("文件查询接口异常!");
+                    }
+                });
+            },
+        },
     }
 </script>
 
 <style lang="scss" scoped>
-    .image-content{
-        width:100%;
-        height:calc(100% - 101px);
+    .image-content {
+        width: 100%;
+        height: calc(100% - 101px);
         overflow-y: scroll;
     }
 </style>

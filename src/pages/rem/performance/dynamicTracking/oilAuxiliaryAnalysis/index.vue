@@ -21,20 +21,14 @@
         </headerSearch>
         <pagePanelNew headerTitle="油井辅助分析" :style="{ height: this.currentModule == 'oilReport' ? 'auto' : 'calc(100% - 100px)' }" class="g-w100">
             <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
-                <el-button
-                    type="primary"  
-                    icon="el-icon-upload2"
-                    @click="ljpmUploadDialogLast"
-                    style="margin-left: auto !important"
-                    v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' "
-                >上传文档</el-button>
-                <el-upload v-else ref="upload" class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :auto-upload="false" :on-change="useUploadPic" :on-exceed="handleExceed" :file-list="fileList" :show-file-list="false" :on-success="handleSuccess" v-show="currentModule == 'wellNetworkDiagram' ||currentModule == 'completionStringDrawing' || currentModule == 'fluidProducingProfile' ||currentModule == 'saturationLog' ||currentModule == 'wellTestReport'">
-                    <el-button type="primary" icon="el-icon-download">上传文档</el-button>
-                </el-upload>
-                
-                <el-button type="primary" icon="el-icon-download" @click="ljpmUploadDialog" v-if="activeName=='staticData'&&currentModule=='connecting'">上传文档</el-button>
-                <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" v-if="currentModule == 'drillingReport' || currentModule == 'completionReport' || currentModule == 'geologicalSummary' " :disabled="downloadButton" @click="doDownLoadNew">下载</el-button>
-                <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" v-else @click="doDownLoad">下载</el-button>
+                <!-- 连井剖面上传 -->
+                <el-button v-if="activeName=='staticData'&&currentModule=='connecting'" type="primary" icon="el-icon-download" @click="ljpmUploadDialog">上传文档</el-button>
+                <!-- minIo上传 -->
+                <el-button v-else type="primary" icon="el-icon-upload2" style="margin-left: auto !important" @click="ljpmUploadDialogLast" >上传文档</el-button>
+                <!-- 连井剖面下载 -->
+                <el-button v-if="activeName=='staticData'&&currentModule=='connecting'" type="primary" icon="el-icon-download" style="margin-left:15px;" @click="doDownLoad">下载</el-button>
+                <!-- minIo下载 -->
+                <el-button v-else type="primary" icon="el-icon-download" style="margin-left:15px;" :disabled="downloadButton" @click="doDownLoadNew">下载</el-button>
             </div>
             <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
                 <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
@@ -53,9 +47,9 @@
             </el-tabs>
             <keep-alive :include="[]" :max="10">
                 <component :is="component" ref="componentCustom" :oil-feild-id="selectOilField" :platform="selectPlatform" :well-id="selectWellId" :majorEventsBrieflyValue="majorEventsBrieflyValue" @childPara="changeChildParam">
-                    
                 </component>
             </keep-alive>
+            <!-- 连井剖面上传 -->
             <el-dialog custom-class="border" title="连井剖面图上传" :visible.sync="ljpmDialog" width="50%" :before-close="ljpmDialogClose">
                 <el-form ref="form" :model="ljUploadForm" label-width="80px">
                     <el-form-item label="图片上传" style="width:88px;">
@@ -65,8 +59,7 @@
                     </el-form-item>
                     <el-form-item label="纵横方向">
                         <el-select v-model="ljUploadForm.direction" class="f2" style="width: 200px" clearable>
-                            <el-option v-for="item in directionList" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
+                            <el-option v-for="item in directionList" :key="item.value" :label="item.label" :value="item.value"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="井号">
@@ -81,35 +74,17 @@
             </el-dialog>
         </pagePanelNew>
         
-        <el-dialog
-            custom-class="border"
-            title="上传文档"
-            :visible.sync="ljpmDialogLast"
-            width="20%"
-            :before-close="ljpmDialogCloseLast"
-            :style="{ 'min-width': '1800px' }"
-        >
+        <!-- minIo上传 -->
+        <el-dialog custom-class="border" title="上传文档" :visible.sync="ljpmDialogLast" width="20%" :before-close="ljpmDialogCloseLast" :style="{ 'min-width': '1800px' }">
             <el-row>
                 <el-form ref="form" :model="ljUploadForm" label-width="40px">
-                        <el-form-item label="" style="width: 88px">
-                            <file-upload
-                                v-model="imageurl"
-                                style="width: 250px"
-                                :limit="1"
-                                :fileSize="20"
-                                :is-show-tip="false"
-                                biz-path="rem-front/text"
-                                bucket-name="zhy"
-                                :file-type="['pdf']"
-                                @change="getResData"
-                            />
-                        </el-form-item>
+                    <el-form-item label="" style="width: 88px">
+                        <file-upload v-model="imageurl" style="width: 250px" :limit="limit" :fileSize="20" :is-show-tip="false" biz-path="rem-front/text" bucket-name="zhy" :file-type="fileType" @change="getResData"/>
+                    </el-form-item>
                 </el-form>
             </el-row>
-
             <div slot="footer" class="dialog-footer" style="text-align: center">
                 <el-button @click="ljpmDialogCloseLast">关 闭</el-button>
-<!--                <el-button type="primary" @click="ljpmUploadSaveLast">确 定</el-button>-->
             </div>
         </el-dialog>
     </div>
@@ -127,16 +102,62 @@
         components: {FileUpload},
         data() {
             return {
+                //minIo
+                limit:1,
+                fileType:['pdf'],
+                imageurl:'',
+                operationTypeList:{
+                    wellNetworkDiagram:{//井网图
+                        operationType:'OILJWT',
+                        limit:1,
+                        fileType:['bmp','jpg','jpeg','png','pdf']
+                    },
+                    completionStringDrawing:{//完井管柱图
+                        operationType:'OILWJGZT',
+                        limit:1,
+                        fileType:['bmp','jpg','jpeg','png','pdf']
+                    },
+                    fluidProducingProfile:{//产液剖面
+                        operationType:'OILCYPM',
+                        limit:1,
+                        fileType:['pdf'],
+                    },
+                    saturationLog:{//饱和度测井
+                        operationType:'OILBHDCJ',
+                        limit:1,
+                        fileType:['pdf'],
+                    },
+                    wellTestReport:{//试井报告
+                        operationType:'OILSJBG',
+                        limit:1,
+                        fileType:['pdf'],
+                    },
+                    drillingReport:{//钻完井报告
+                        operationType:'YJZWJBG',
+                        limit:1,
+                        fileType:['pdf'],
+                    },
+                    completionReport:{//完井完工报告
+                        operationType:'YJWJWGBG',
+                        limit:1,
+                        fileType:['pdf'],
+                    },
+                    geologicalSummary:{//完井地质总结
+                        operationType:'YJWJDZZJ',
+                        limit:1,
+                        fileType:['pdf']
+                    },
+                },
                 //文件下载的id
                 fileId:'',
                 downloadButton: false,
+                
                 majorEventsBrieflyValue: "", //大事间要绑定值
                 majorEventsBrieflyList: [], //大事间要数据源
                 //选择油田
                 selectOilField: "",
                 //油田列表
                 oilField: [],
-                imageurl:'',
                 //选择平台
                 selectPlatform: "",
                 //平台列表
@@ -516,12 +537,33 @@
             this.initData();
         },
         methods: {
-            doDownLoadNew(){
-                const id = this.$refs.componentCustom.id
-                let fileName = this.$refs.componentCustom.fileName
-                downFile(id).then((res) => {
-                    FileSaver.saveAs(res,`${fileName}`);
-                });
+            //minIo-打开上传组件
+            ljpmUploadDialogLast(){
+                this.limit=this.operationTypeList[this.currentModule].limit;
+                this.fileType=this.operationTypeList[this.currentModule].fileType;
+                this.ljpmDialogLast = true;
+            },
+            //minIo-关闭上传组件
+            ljpmDialogCloseLast() {
+                this.ljUploadForm = {
+                    direction: "横向",
+                    chooseWell: [],
+                };
+                this.ljpmFileList = [];
+                this.ljpmDialogLast = false;
+            },
+            //minIo-监听上传
+            getResData(data){
+                let operationType=this.operationTypeList[this.currentModule].operationType;
+                let params = {
+                    fileId: data[0].id,
+                    filestrId:data[0].name,
+                    operationId:this.selectWellId,
+                    operationType,
+                    remUploadFileMinioId:'' ,
+                    uploadTime:''
+                };
+                this.uploadFile(params);
             },
             uploadFile(params){
                 this.ljpmDialogLast = false;
@@ -541,52 +583,16 @@
                     }
                 });
             },
-            getResData(data){
-                // this.fileId = data[0].id
-                if (this.currentModule =='drillingReport'){
-                    let params1 = {
-                        fileId: data[0].id,
-                        filestrId:data[0].name,
-                        operationId:this.selectWellId,
-                        operationType:'YJZWJBG',
-                        remUploadFileMinioId:'' ,
-                        uploadTime:''
-                    };
-                    this.uploadFile(params1)
-                    console.log('111111111',params1)
-                }else if(this.currentModule =='completionReport'){
-                    let params2 = {
-                        fileId: data[0].id,
-                        filestrId:data[0].name,
-                        operationId:this.selectWellId,
-                        operationType:'YJWJWGBG',
-                        remUploadFileMinioId:'' ,
-                        uploadTime:''
-                    }
-                    this.uploadFile(params2)
-                    console.log('2222222',params)
-                }else if(this.currentModule =='geologicalSummary'){
-                    let params3 = {
-                        fileId: data[0].id,
-                        filestrId:data[0].name,
-                        operationId:this.selectWellId,
-                        operationType:'YJWJDZZJ',
-                        remUploadFileMinioId:'' ,
-                        uploadTime:''
-                    }
-                    this.uploadFile(params3)
-                    console.log('333333',params)
-                }
-            },
-            ljpmUploadDialogLast() {
-                if (this.currentModule =='drillingReport'){
-                    this.ljpmDialogLast = true;
-                }else if(this.currentModule =='completionReport'){
-                    //打开弹窗
-                    this.ljpmDialogLast = true;
-                }else if(this.currentModule =='geologicalSummary'){
-                    //打开弹窗
-                    this.ljpmDialogLast = true;
+            //minIo-下载
+            doDownLoadNew(){
+                const id = this.$refs.componentCustom.id
+                let fileName = this.$refs.componentCustom.fileName
+                downFile(id).then((res) => {
+                    FileSaver.saveAs(res,`${fileName}`);
+                });
+                //如果是产液剖面||饱和度测井-则下载表格
+                if(this.currentModule=='fluidProducingProfile'||this.currentModule=='saturationLog'){
+                    this.$refs.componentCustom.doDownLoad();
                 }
             },
             //重置
@@ -629,7 +635,6 @@
             },
             //初始化数据
             async initData() {
-               
                 let oilFeildId = this.$route.params.oilField;
                 console.log(this.$route.params);
                 let wellId = this.$route.params.wellId;
@@ -964,14 +969,7 @@
                     return true;
                 }
             },
-            ljpmDialogCloseLast() {
-                this.ljUploadForm = {
-                    direction: "横向",
-                    chooseWell: [],
-                };
-                this.ljpmFileList = [];
-                this.ljpmDialogLast = false;
-            },
+            
             ljpmDialogClose() {
                 this.ljUploadForm = {
                     direction: "横向",

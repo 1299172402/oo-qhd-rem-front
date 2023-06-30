@@ -250,7 +250,7 @@
                                     </div>
                                     <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;left:-30px">
                                         <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='2010802')"
-                                                   @click="$router.push({name:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':6,evalResult:selCode }})">
+                                                   @click="$router.push({name:'attributtonAnalysis',query:{platform,wellId,searchKeys,currentDate,searchKeys,'link':6,evalResult:selCode }})">
                                             归因分析详情
                                         </el-button>
                                     </div>

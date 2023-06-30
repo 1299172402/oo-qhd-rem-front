@@ -2,7 +2,7 @@
 <template>
     <div class="z-main">
         <div class="z-left-view">
-            <iframe :src="image?(image+'#toolbar=0'):''" style="width:100%;height:100%;"></iframe>
+            <iframe style="height: 100%;width: 100%" :src="url"></iframe>
         </div>
         <div class="z-right-view">
             <info-window infoWidth="100%" infoHeight="calc(100%)" headerTitle="产液剖面解释成果表">
@@ -43,9 +43,10 @@
 </template>
 
 <script>
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {filePreview} from "@/components/upload/utils/file";
     import {outProfileLoggingInterpretation} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
     import {exportExcel} from "@/lib/exportExcel.js";
-    import {downFile} from "@/lib/remBase64Download.js";
     export default {
         filters: {
             /**
@@ -72,20 +73,36 @@
         },
         data() {
             return {
+                id:'',
+                fileName:'',
+                url:'',
                 tableData: [],
-                image: '',
             };
         },
         mounted() {
-            //初始化调用搜索
             this.doSearch();
         },
         methods: {
-            /**
-             * hwh
-             * 根据父组件传递过来的参数进行查询
-             */
             doSearch() {
+                let params = {
+                    operationId: this.wellId,
+                    operationType: 'OILCYPM',
+                    readOne: 'one'
+                }
+                queryRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        if(res.data.data.length){
+                            this.id = res.data.data[0].fileId;
+                            this.fileName = res.data.data[0].filestrId;
+                            filePreview(this.id).then((res) => {
+                                this.url = res.data.data
+                            })
+                        }
+                    } else {
+                        this.$message.error("文件查询接口异常!");
+                    }
+                });
+                //获取表格数据 
                 let request = {
                     ogfId: this.oilFeildId,
                     platformId: this.platform,
@@ -93,48 +110,17 @@
                 };
                 outProfileLoggingInterpretation(request).then((res) => {
                     if (res.data.code == 200) {
-                        let imgData = res.data.data.data;
-                        let type = res.data.data.fileType;
-                        let firstParty = 'data:' + type + ';base64,';
-                        if (imgData) {
-                            this.image = firstParty + imgData;
-                        } else {
-                            this.image = '';
-                        }
-                        //注意这里返回有水井和油井的区别
                         this.tableData = res.data.data.outProfiles;
                     }
                 });
             },
-            /**
-             * hwh
-             * 下载
-             */
+            //下载
             doDownLoad() {
                 let fileName = '产液剖面';
                 if (this.wellName) {
                     fileName = this.wellName + fileName;
                 }
-                if (this.image) {
-                    downFile(this.image, fileName);
-                }
                 exportExcel('#tableData', fileName);
-
-            },
-            /**
-             * hwh el table 表格头 标题单位样式
-             * @param h
-             * @param column
-             * @returns {*[]}
-             */
-            renderHeader(h, {
-                column
-            }) {
-                let header = column.label.split(' ');
-                return [h('p', [
-                    h('p', {}, header[0]),
-                    h('span', {}, header[1])
-                ])];
             },
         }
     };
