@@ -205,7 +205,8 @@
               <el-input
                 v-model="addform.noticeContent"
                 type="textarea"
-                :rows="2"
+                resize="none"
+                :autosize="{ minRows: 2, maxRows: 6}"
                 style="width: 300px"
                 placeholder="请输入内容"
               />

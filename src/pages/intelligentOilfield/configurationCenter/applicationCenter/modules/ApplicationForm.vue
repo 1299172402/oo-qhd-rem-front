@@ -79,17 +79,27 @@
         </el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="支持终端" prop="mobile">
-      <el-radio-group v-model="model.mobile" @change="handleMobile">
+    <el-form-item key="mobile" label="支持终端" prop="mobile">
+      <el-radio-group v-model="model.mobile">
         <el-radio v-for="item in dict.type.sys_app_teminal" :key="item.value" :label="item.value">
           {{ item.label }}
         </el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item v-if="isPC" label="网页端入口链接" prop="appPcAccessUrl">
+    <el-form-item
+      v-if="isPC"
+      key="appPcAccessUrl"
+      label="网页端入口链接"
+      prop="appPcAccessUrl"
+    >
       <el-input v-model="model.appPcAccessUrl" placeholder="请输入网页端入口链接" clearable />
     </el-form-item>
-    <el-form-item v-if="isMobile" label="选择移动端" prop="accessType">
+    <el-form-item
+      v-if="isMobile"
+      key="accessType"
+      label="选择移动端"
+      prop="accessType"
+    >
       <el-radio-group v-model="model.accessType">
         <el-radio v-for="item in dict.type.sys_app_mobile" :key="item.value" :label="item.value">
           {{ item.label }}
@@ -97,14 +107,19 @@
       </el-radio-group>
     </el-form-item>
     <template v-if="isMobile && model.accessType === '0'">
-      <el-form-item label="iOS应用Scheme" prop="appIosSchema">
+      <el-form-item key="appIosSchema" label="iOS应用Scheme" prop="appIosSchema">
         <el-input v-model="model.appIosSchema" placeholder="请输入iOS应用Scheme" clearable />
       </el-form-item>
-      <el-form-item label="Android应用Scheme" prop="appAndriodSchema">
+      <el-form-item key="appAndriodSchema" label="Android应用Scheme" prop="appAndriodSchema">
         <el-input v-model="model.appAndriodSchema" placeholder="请输入Android应用Scheme" clearable />
       </el-form-item>
     </template>
-    <el-form-item v-else-if="isMobile && model.accessType === '1'" label="移动端入口链接" prop="appMobileAccessUrl">
+    <el-form-item
+      v-else-if="isMobile && model.accessType === '1'"
+      key="appMobileAccessUrl"
+      label="移动端入口链接"
+      prop="appMobileAccessUrl"
+    >
       <el-input v-model="model.appMobileAccessUrl" placeholder="请输入移动端入口链接" clearable />
     </el-form-item>
   </el-form>
@@ -170,6 +185,14 @@ export default {
       set(val) {
         this.$emit("update:model", val);
       }
+    }
+  },
+  watch: {
+    "model.mobile": {
+      handler(val) {
+        this.handleMobile(val);
+      },
+      immediate: true
     }
   },
   methods: {

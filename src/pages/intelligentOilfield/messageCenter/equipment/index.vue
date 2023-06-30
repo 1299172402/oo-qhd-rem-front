@@ -128,10 +128,22 @@
         </el-form-item>
         <!-- 云端链路列表 -->
         <el-form-item v-show="activeName === 'fourth'" label="链路起点">
-          <el-input v-model="queryParams.startDescribe" style="width: 300px" placeholder="请输入链路起点" />
+          <el-input
+            v-model="queryParams.startDescribe"
+            clearable
+            style="width: 300px"
+            placeholder="请输入链路起点"
+            @keyup.enter.native="handleQuery"
+          />
         </el-form-item>
         <el-form-item v-show="activeName === 'fourth'" label="链路终点">
-          <el-input v-model="queryParams.endDescribe" style="width: 300px" placeholder="请输入链路终点" />
+          <el-input
+            v-model="queryParams.endDescribe"
+            clearable
+            style="width: 300px"
+            placeholder="请输入链路终点"
+            @keyup.enter.native="handleQuery"
+          />
         </el-form-item>
         <el-form-item v-show="activeName === 'fourth'" label="链路类型">
           <el-select
