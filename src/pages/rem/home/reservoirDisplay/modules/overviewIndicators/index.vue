@@ -12,7 +12,7 @@
                     <div class="grid-content bg-purple">
                         <div class="yield water">
                             <div class="box">
-                                <div>{{ dataList.dayOilProduction }}</div>
+                                <div>{{ oil1 }}</div>
                                 <div>m³</div>
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                     <div class="grid-content bg-purple">
                         <div class="yield gas">
                             <div class="box">
-                                <div>{{ dataList.annualOilProduction }}</div>
+                                <div>{{oil1two}}</div>
                                 <div>10⁴m³</div>
                             </div>
                         </div>
@@ -120,7 +120,7 @@ import {LineChart} from "echarts/charts";
 import * as echarts from "echarts/core";
 import {GridComponent, TooltipComponent, LegendComponent} from "echarts/components";
 import {CanvasRenderer} from "echarts/renderers";
-import {productionMetricsOverview} from "@/api/rem/reservoirbillboards";
+import {productionMetricsOverview,getYieldTracking} from "@/api/rem/reservoirbillboards";
 import {dividingLayerQualityRate} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import {getProductionIndex} from "@/api/monthlyReportManagement.js";
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
@@ -156,6 +156,8 @@ export default {
     data() {
         return {
             dataList:'',
+            oil1two:'',
+            oil1:'',
             infolist:'', //层段合格率
             histogram: {
                 title: {
@@ -492,7 +494,12 @@ export default {
                 this.histogram3.series[0].data[0].value = res.data.data.wholeDeclineRate
                 this.histogram3.series[0].data[1].value = 100 - res.data.data.wholeDeclineRate
                 this.histogram3.title.text = "{a|" + res.data.data.wholeDeclineRate + "%}{c|\n" +   "}"
-            })  
+            })
+            getYieldTracking({ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                orgId: "715AD1CD60484BB59E737CD18A9DE44A"}).then(res=>{
+                this.oil1two = res.data.data.annualOilProduction,
+                this.oil1 =res.data.data.dayOilProduction
+            })
         },
         getList(){
             let data = {
