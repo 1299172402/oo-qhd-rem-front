@@ -46,7 +46,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(dataList.productionEfficiency, '%', 'rgb(59,197,197)', 'rgb(59,197,197)', 'rgb(59,197,197)')"
+                            :chart-data="getEchartData(value2, '%', 'rgb(59,197,197)', 'rgb(59,197,197)', 'rgb(59,197,197)')"
                         ></Echart>
                         <div class="chartText">生产时率</div>
                     </div>
@@ -54,7 +54,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(dataList.oilWellUtilizationRate, '%', 'rgb(13,190,124)', 'rgb(1,67,78)', 'rgb(13,190,124)')"
+                            :chart-data="getEchartData(value1, '%', 'rgb(13,190,124)', 'rgb(1,67,78)', 'rgb(13,190,124)')"
                         ></Echart>
                         <div class="chartText">油井利用率</div>
                     </div>
@@ -62,7 +62,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(isNaN(((dataList.productionEfficiency * dataList.oilWellUtilizationRate)/100).toFixed(2)) ? '' : ((dataList.productionEfficiency * dataList.oilWellUtilizationRate)/100).toFixed(2), '%', 'rgb(247,181,0)', 'rgb(41,72,94)', 'rgb(247,181,0)')"></Echart>
+                            :chart-data="getEchartData(value3, '%', 'rgb(247,181,0)', 'rgb(41,72,94)', 'rgb(247,181,0)')"></Echart>
                         <div class="chartText">综合时率</div>
                     </div>
                 </el-col>
@@ -122,6 +122,7 @@ import {GridComponent, TooltipComponent, LegendComponent} from "echarts/componen
 import {CanvasRenderer} from "echarts/renderers";
 import {productionMetricsOverview} from "@/api/rem/reservoirbillboards";
 import {dividingLayerQualityRate} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+import {getProductionIndex} from "@/api/monthlyReportManagement.js";
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 let value = 0;
 let name = "";
@@ -135,7 +136,8 @@ export default {
         this.histogram2.series[1].splitLine.lineStyle.color = this.$store.state.setting.mode == 'dark' ? 'rgb(3,42,59)' : '#fff'
         this.histogram3.series[1].splitLine.lineStyle.color = this.$store.state.setting.mode == 'dark' ? 'rgb(3,42,59)' : '#fff'
         this.getData();
-        this.getList()
+        this.getinfo();
+        this.getList();
     },
     computed: {
         getGlobeTheme() {
@@ -503,6 +505,40 @@ export default {
                 
             })
         },
+        getinfo() {
+            const currentDate = new Date(); // 获取当前日期
+            const currentYear = currentDate.getFullYear(); // 获取当前年份
+            const currentMonth = currentDate.getMonth(); // 获取当前月份（注意：月份从0开始，0代表一月，11代表十二月）
+            let previousMonth, previousYear;
+            if (currentMonth === 0) { // 如果当前月份是一月（0月），则上一个月是去年的十二月（11月）
+                previousMonth = 11;
+                previousYear = currentYear - 1;
+            } else {
+                previousMonth = currentMonth - 1;
+                previousYear = currentYear;
+            }
+            const formattedPreviousMonth = (previousMonth + 1).toString().padStart(2, '0');
+
+            const previousMonthDate = `${previousYear}-${formattedPreviousMonth}`;
+            let param = {
+                month: previousMonthDate,
+                ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                orgId: "715AD1CD60484BB59E737CD18A9DE44A",
+            };
+            getProductionIndex(param).then((res) => {
+                let wellCountAll = 0,monthProdDurationCountAll = 0,monthProdDduration=0,monthProdDurationCount=0
+                res.data.data.forEach(item=>{
+                    wellCountAll += item.wellCount
+                    monthProdDurationCountAll += item.wellOpenCount
+                    monthProdDduration += item.monthProdDduration
+                    monthProdDurationCount += item.monthProdDurationCount
+                })
+                this.value1 = ((monthProdDurationCountAll/wellCountAll * 100)).toFixed(2);
+                this.value2 = ((monthProdDduration/monthProdDurationCount/res.data.data[0].days/24)*100).toFixed(2)
+                this.value3 = ((this.value1*this.value2)/100).toFixed(2)
+            });
+        },
+        
         //图表
         getEchartData(value, unit, valueColor, backColor, centerColor, data) {
             var option = {
