@@ -651,56 +651,6 @@
             doExportFile() {
                 exportExcel('#csgl', '措施管理');
             },
-            //获取当前页面的权限内容，并处理其逻辑问题
-            getPageAuthMessage() {
-                this.userInfo = {};
-                const myPath = this.$route.path;
-                // 该值可以为空
-                const areaCode = "znytglxt";
-                const loginName = this.userInfo.userName;
-                getWidgetByAreaUser({
-                    "areaCode": areaCode,
-                    "loginName": loginName
-                }).then(res => {
-                    const myList = res.data.dataList;
-                    if (myList) {
-                        const pageMes = myList.find((item) => item.resPvalue == myPath);
-                        if (pageMes) {
-                            this.myWidget = pageMes.widgetList;
-                        }
-                        if (this.myWidget) {
-                            for (const indexNum in this.myWidget) {
-                                try {
-                                    const myWidgetItem = this.myWidget[indexNum];
-                                    switch (myWidgetItem.widgetCode) {
-                                        case "addInfo":
-                                            this.canAddInfo = true;
-                                            break;
-                                        case "updateInfo":
-                                            this.canUpdateInfo = true;
-                                            break;
-                                        case "sendInfo":
-                                            this.canSendInfo = true;
-                                            break;
-                                        case "deleteInfo":
-                                            this.canDeleteInfo = true;
-                                            break;
-                                        case "download":
-                                            this.canDownload = true;
-                                            break;
-                                        case "upload":
-                                            this.canUpload = true;
-                                            break;
-                                        default:
-                                    }
-                                } catch (e) {
-                                    continue;
-                                }
-                            }
-                        }
-                    }
-                });
-            }
         },
     };
 </script>

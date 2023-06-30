@@ -19,7 +19,7 @@
                 </el-select>
                 
                 <span class="title">井组：</span>
-                <el-select  v-model="selectWellGroup" placeholder="请选择" filterable clearable style="margin-right: 15px">
+                <el-select  v-model="selectWellGroup" placeholder="请选择" filterable  style="margin-right: 15px">
                     <el-option v-for="item in newWellGroup" :key="item.wellGroupId" :label="item.wellGroupName" :value="item.wellGroupId"></el-option>
                 </el-select>
                 

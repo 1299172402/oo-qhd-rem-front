@@ -501,6 +501,7 @@
                                 height="100%"
                                 @sort-change="changeTableSort" ref="tableList"
                                 row-key="wellId"
+                                default-expand-all
                                 :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
                                 <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                 <el-table-column prop="wellId" label="井号" align="center" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>

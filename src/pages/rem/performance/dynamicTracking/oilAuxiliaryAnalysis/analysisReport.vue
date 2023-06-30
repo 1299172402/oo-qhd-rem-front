@@ -365,8 +365,9 @@
                                         <div class="name">措施推荐</div>
                                         <div class="num">
                                             <span 
+                                                :class="[item.code==selCode?'spActive':'']"
                                                 v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='地面调参'" 
-                                                @click="((val)=>{selRadioIterm(item.code,'recommendedMeasuresOptions')})">
+                                                @click="selRadioIterm(item.code,'recommendedMeasuresOptions')">
                                             {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span>
                                             </span>
                                         </div>
@@ -452,8 +453,9 @@
                                         <div class="name">措施推荐</div>
                                         <div class="num">
                                             <span 
+                                            :class="[item.code==selCode?'spActive':'']"
                                             v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='换大泵'||item.name=='加深泵挂'"
-                                            @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'recommendedMeasuresOptions')})">
+                                            @click="selRadioIterm(item.code,'recommendedMeasuresOptions')">
                                             {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span>
                                             </span>
                                         </div>
@@ -618,8 +620,9 @@
                                             <div class="name">措施推荐</div>
                                             <div class="num">
                                                 <span 
+                                                :class="[item.code==selCode?'spActive':'']"
                                                 v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"
-                                                @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'recommendedMeasuresOptions')})">
+                                                @click="selRadioIterm(item.code,'recommendedMeasuresOptions')">
                                                 {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span>
                                                 </span>
                                             </div>
@@ -635,7 +638,7 @@
                             </div>
                         </info-window>
                     </div>
-                    <div style="height:540px;">
+                    <div style="height:800px;position: relative;z-index: 3;">
                         <info-window info-width="100%" info-height="100%" header-title="油井动态分析详情列表" :is-show-max-btn="true">
                             <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                 <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
@@ -656,10 +659,17 @@
                                     
                                     <template slot-scope="scope">
                                         <span v-if="scope.row.scdt[item.code] == null">{{productionStatus(scope.row.scdt,item.code)}}</span>
+                                        
                                         <span v-else-if="item.code == 'ZC'">{{ scope.row.scdt[item.code].showLabel ? scope.row.scdt[item.code].showLabel :'-' }}</span>
+                                        
                                         <el-tooltip v-else class="item" effect="dark" :content="scope.row.scdt[item.code].value + ''" placement="top">
-                                            <span>{{ scope.row.scdt[item.code].showLabel ? scope.row.scdt[item.code].showLabel :'-' }}</span>
+                                            <span style="display: flex;align-items: center;justify-content: center;">
+                                                {{ scope.row.scdt[item.code].showLabel ? scope.row.scdt[item.code].showLabel :'-' }}
+                                                <img src="@/assets/rem/yieId/upTriangle.png" v-if="item.name.includes('上升')" style="width:20px;height:20px;">
+                                                <img src="@/assets/rem/yieId/downTriangle.png" v-if="item.name.includes('下降')"  style="width:20px;height:20px;">
+                                            </span>
                                         </el-tooltip>
+                                        
                                     </template>
                                     
                                 </el-table-column>
@@ -1815,7 +1825,7 @@
                         return retStr;
                     }
                 }else{
-                    return ''
+                    return '-'
                 }
             },
 		}
@@ -2467,5 +2477,9 @@
 
     ::v-deep .el-table thead.is-group th {
         background: transparent;
+    }
+
+    .spActive{
+        color:var(--light-blue-color);
     }
 </style>
