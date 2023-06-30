@@ -833,7 +833,7 @@
                         code: "mcyzs",
                         name: "米采液指数",
                         isTwoHeader: true,
-                        unit: "[m³/(d.MPa)]"
+                        unit: "[m³/(m.d.MPa)]"
                     }
                 ],
                 //潜力分析表头

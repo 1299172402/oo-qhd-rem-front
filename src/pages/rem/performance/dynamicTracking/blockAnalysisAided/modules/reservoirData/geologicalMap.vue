@@ -2,16 +2,13 @@
 <template>
     <div style="height:calc(100% - 100px);">
         <div class="z-search">
-            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable>
+            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable @change="selectChange">
                 <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
         </div>
         <div class="z-main">
             <div class="z-left-view">
-                <el-image :src="image">
-                    <div slot="error">
-                    </div>
-                </el-image>
+                <iframe style="height: 100%;width: 100%" :src="url"></iframe>
             </div>
             <div class="z-right-view">
                 <el-table
@@ -42,34 +39,29 @@
 <script>
     import {fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import { reservoirDataComprehensiveGeologicalMap} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
-    import {downFile} from "@/lib/remBase64Download.js";
     import {exportExcel} from "@/lib/exportExcel.js";
+    // miniIo
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {filePreview,downFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         props: {
-            oilFieldId: {
-
-            },
-            blockId: {
-
-            }
+            oilFieldId: {},
+            blockId: {}
         },
         data() {
             return {
-                radio: 1,
-                selectPosition: '',
-                //层位所选择内容信息
+                //mniIo
+                url:'',
+                id:'',
+                filestrId:'',
+                //层位数据源
                 position: [],
-                src: '../../static/img/blockAnalysisAided/reservoirData/geologicalMap.png',
+                //层位绑定值
+                selectPosition: '',
+                //表格数据
                 tableData: [],
-                image: '',
             };
-        },
-        watch: {
-            //监听层位信息，给其动态传值
-            selectPosition(val) {
-                this.$emit('childPara', this.selectPosition);
-                this.OnChangeImage();
-            }
         },
         mounted() {
             this.doSearch();
@@ -112,30 +104,36 @@
                                 }
                                 this.$emit('childPara', this.selectPosition);
                             }
+                            this.$emit('childPara', this.selectPosition);
                         } else {
                             this.position = [];
                         }
                     }
                 });
-               
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    layerId: this.selectPosition,
+                this.OnChangeImage();
+            },
+            //获取图片和table数据
+            OnChangeImage() {
+                let params ={
+                    operationId:this.blockId+'-'+this.selectPosition,
+                    operationType:'BLOCKZHDZT',
+                    readOne:'one' 
                 }
-                //获取图片组信息
-                await reservoirDataComprehensiveGeologicalMap(request).then((res) => {
+                queryRemUploadFileMinio(params).then((res) => {
                     if (res.data.code == 200) {
-                        let imageData = res.data.data;
-                        let type = imageData.type;
-                        this.image = 'data:' + type + ';base64,' + imageData.data;
-                        this.tableData = res.data.data.comGeoFormaDivisions;
+                        if(res.data.data.length){
+                            let data =res.data.data[0].fileId
+                            this.id = res.data.data[0].fileId
+                            this.filestrId = res.data.data[0].filestrId
+                            filePreview(data).then((res)=>{
+                                this.url = res.data.data
+                            })
+                        }
+                    }else {
+                        this.$message.error("文件查询接口异常!");
                     }
                 });
-            },
-            //切换图片
-            OnChangeImage() {
-                this.image = '';
+                
                 let request = {
                     oilFieldId: this.oilFieldId,
                     fieldId: this.blockId,
@@ -143,29 +141,28 @@
                 }
                 reservoirDataComprehensiveGeologicalMap(request).then((res) => {
                     if (res.data.code == 200) {
-                        let imageData = res.data.data;
-                        let type = imageData.type;
-                        this.image = 'data:' + type + ';base64,' + imageData.data;
                         this.tableData = res.data.data.comGeoFormaDivisions;
                     }
                 });
             },
-            changeRadio() {
-                this.$emit('childPara', this.selectPosition);
+            selectChange(e){
+                this.$emit('childPara', e);
                 this.OnChangeImage();
             },
-            //下载功能
+            //下载table
             doDownLoad() {
                 let fileName = '综合地质图';
                 let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
                 if (layerMess) {
-                    fileName = (layerMess.layerName ? layerMess.layerName : '') + fileName;
+                    fileName= layerMess.layerName +'-'+fileName;
                 }
-                if (this.blockName) {
-                    fileName = this.blockName + fileName;
-                }
-                downFile(this.image, fileName);
-                exportExcel('#tableData', fileName + '-地层划分表');
+                //下载表格
+                exportExcel('#tableData',fileName);
+                //下载pdf文件
+                let file_suffix=this.filestrId.split('.')[1];
+                downFile(this.id).then(res=>{
+                    FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+                })
             }
         }
     }
@@ -185,9 +182,9 @@
             height:100%;
             overflow-y: scroll;
             margin-right:30px;
-            padding-right:40px;
-            border: 1px solid #ddd;
-            border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
+            // padding-right:40px;
+            // border: 1px solid #ddd;
+            // border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
         }
         .z-right-view{
             flex:1;

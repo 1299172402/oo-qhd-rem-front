@@ -219,7 +219,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             minInterval: 1,
@@ -248,7 +248,7 @@
                             nameRotate: 360,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             minInterval: 1,
@@ -279,7 +279,7 @@
                             nameRotate: 360,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             minInterval: 1,
@@ -309,7 +309,7 @@
                             nameRotate: 360,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             minInterval: 1,
@@ -398,7 +398,7 @@
                             nameRotate: 360,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -427,7 +427,7 @@
                             nameRotate: 360,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             scale: true,
@@ -455,7 +455,7 @@
                             nameRotate: 360,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             offset: 80,

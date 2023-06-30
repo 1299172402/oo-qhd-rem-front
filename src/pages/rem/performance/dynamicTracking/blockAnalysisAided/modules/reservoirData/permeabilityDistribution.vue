@@ -29,19 +29,13 @@
             H5Chart1,
         },
         props: {
-            oilFieldId: {
-
-            },
-            blockId: {
-
-            }
+            oilFieldId: {},
+            blockId: {}
         },
         data() {
             return {
                 dialogVisible: false,
                 downFile: false,
-                radio: 1,
-                src: '../../static/img/blockAnalysisAided/reservoirData/microphaseDiagram.png',
                 url: 'static/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient.html',
                 url1: 'static/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
                 //选中层位
@@ -105,18 +99,24 @@
                         }
                     }
                 });
+                
+                this.dynamicDataDynamicLiquidLevelContourMapApi();
+                
+            },
+            dynamicDataDynamicLiquidLevelContourMapApi(){
                 let request = {
                     oilFieldId: this.oilFieldId,
                     fieldId: this.blockId,
                     layerId: this.selectPosition,
                 }
-                await dynamicDataDynamicLiquidLevelContourMap(request).then((res) => {
+                dynamicDataDynamicLiquidLevelContourMap(request).then((res) => {
                     if (res.data.code == 200) {
                         if (res.data.data.layerPics) {
                             if (res.data.data.layerPics.length > 0) {
                                 let imageData = res.data.data.layerPics[0];
-                                let type = imageData.type;
-                                this.image = 'data:' + type + ';base64,' + imageData.data;
+                                console.log(imageData,88)
+                                this.image = 'data:' + imageData.type + ';base64,' + imageData.data;
+                                console.log(this.image)
                             } else {
                                 this.image = '';
                             }
@@ -135,37 +135,7 @@
             //切换图片
             OnChangeImage() {
                 this.image = '';
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    layerId: this.selectPosition,
-                }
-                dynamicDataDynamicLiquidLevelContourMap(request).then((res) => {
-                    if (res.data.code == 200) {
-                        if (res.data.data.layerPics) {
-                            if (res.data.data.layerPics.length > 0) {
-                                let imageData = res.data.data.layerPics[0];
-                                let type = imageData.type;
-                                this.image = 'data:' + type + ';base64,' + imageData.data;
-                            } else {
-                                this.image = '';
-                            }
-                        } else {
-                            this.image = '';
-                        }
-                        if (res.data.data) {
-                            this.layerData = res.data.data;
-                            this.sjcl(res.data.data, this.$refs.H5Chart);
-                        }
-                    } else {
-                        this.image = '';
-                    }
-                });
-            },
-            //单选按钮选中改变事件
-            changeRadio() {
-                this.$emit('childPara', this.selectPosition);
-                this.OnChangeImage();
+                this.dynamicDataDynamicLiquidLevelContourMapApi();
             },
             //frame加载
             frameLoad() {
@@ -175,7 +145,6 @@
                 }
             },
             sjcl(tc, refObj) {
-                // this.$router.push({path: "/blockAnalysisAided"});
                 let obj = tc;
                 let MinXMap = obj.x2;
                 let MaxXMap = obj.x3;
