@@ -155,6 +155,9 @@ export default {
     },
     data() {
         return {
+            value1:0,
+            value2:0,
+            value3:0,
             dataList:'',
             oil1two:'',
             oil1:'',
