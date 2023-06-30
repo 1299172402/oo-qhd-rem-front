@@ -4,7 +4,7 @@
 }
 
 .el-radio__input.is-checked + .el-radio__label {
-  color: var(--light-blue-color);
+  color: var(--light-blue-color) !important;
   background-image: var(--logo-bg) !important;
   background-size: 100% 100% !important;
 }
@@ -27,4 +27,13 @@
 .el-radio-group .el-radio-button .el-radio-button__inner {
   height: 34px;
   line-height: 8px;
+}
+
+.el-radio__input.is-disabled .el-radio__inner {
+  background-color: #212738;
+  border-color: #424f5d;
+}
+
+.el-radio__input.is-disabled+span.el-radio__label {
+  color: #424f5d;
 }

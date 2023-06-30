@@ -337,6 +337,7 @@
                 style="width: 267px"
                 controls-position="right"
                 :min="0"
+                @input.native="roleSortlChange"
               />
             </el-form-item>
           </el-col>
@@ -601,18 +602,24 @@ export default {
         status: [{ required: true, message: "请选择角色状态" }]
         // isTenant: [{ required: true, message: '是否租户不能为空' }],
       },
-      disabledHandle: false
+      disabledHandle: false,
+      isActivated: true
     };
   },
   beforeCreate() {
     that = this;
   },
   created() {
+    this.isActivated = false;
     this.getAppList();
     this.getSelectOptions();
   },
   activated() {
-    this.getList();
+    if (this.isActivated) {
+      this.getList();
+    } else {
+      this.isActivated = true;
+    }
   },
   methods: {
     // 查看使用该角色的用户
@@ -952,6 +959,11 @@ export default {
         },
         `role_${new Date().getTime()}.xlsx`
       );
+    },
+    roleSortlChange(e) {
+      if (e.target.value) {
+        this.$refs.form.clearValidate("roleSort");
+      }
     }
   }
 };
