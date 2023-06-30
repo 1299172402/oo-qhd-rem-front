@@ -8,10 +8,10 @@
         :model="queryParams"
         :inline="true"
       >
-        <el-form-item label="消息主题" prop="title">
+        <el-form-item label="消息主题名称" prop="title">
           <el-input
             v-model="queryParams.title"
-            placeholder="请输入消息主题"
+            placeholder="请输入消息主题名称"
             clearable
             style="width: 240px;"
           />

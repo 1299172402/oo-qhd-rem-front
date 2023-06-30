@@ -295,17 +295,21 @@ export const ListMixins = {
         pageSize: "pageSize",
         currentSubtract: 0 // 0 表示分页从 1 开始查
       },
-      defaultLoad: true
+      defaultLoad: true,
+      isActivated: true
     };
   },
   mounted() {
     if (this.defaultLoad) {
+      this.isActivated = false;
       this.loadData();
     }
   },
   activated() {
-    if (this.defaultLoad) {
+    if (this.defaultLoad && this.isActivated) {
       this.loadData();
+    } else {
+      this.isActivated = true;
     }
   },
   methods: {

@@ -48,7 +48,7 @@
             style="width: 240px"
             value-format="yyyy-MM-dd"
             type="date"
-            placeholder="选择操作时间"
+            placeholder="请选择操作时间"
             @change="dateRange = []"
           />
         </el-form-item>
@@ -362,6 +362,7 @@ export default {
       this.queryParams.pageNum = 1;
       this.queryParams.pageSize = 10;
       this.dateRange = [];
+      this.queryParams.loginDate = undefined;
       this.resetForm("queryForm");
       this.getList();
     },
@@ -458,6 +459,7 @@ export default {
     resetQuery() {
       this.dateRange = [];
       this.resetForm("queryForm");
+      this.queryParams.loginDate = undefined;
       this.$nextTick(() => {
         this.handleQuery();
       });

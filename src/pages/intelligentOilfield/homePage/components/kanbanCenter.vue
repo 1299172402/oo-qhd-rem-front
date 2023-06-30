@@ -173,11 +173,14 @@ export default {
       item.img = new URL("../../../../assets/intelligentOilfield/bgImg.png", import.meta.url).href;
     },
     toClick(url) {
-      const a = document.createElement("a");
-      a.setAttribute("target", "_blank");
-      a.setAttribute("href", url);
-      a.click();
-      a.remove();
+      window.open(
+        this.$router.resolve({
+          name: "appIframeView",
+          query: {
+            src: url
+          }
+        }).href
+      );
     },
     // 改变数据
     // eslint-disable-next-line

@@ -68,7 +68,7 @@ function hideLoading() {
 
 const instance = axios.create({
   baseURL: API_HOST,
-  timeout: 30000,
+  timeout: 10000,
   withCredentials: true,
   headers: {
     "App-Id": proxy[env].appId
@@ -208,13 +208,15 @@ instance.interceptors.response.use(
     }
   },
   err => {
-    const { config } = err;
+    const { config, response } = err;
     // 判断当前请求是否设置了不显示Loading（不显示自然无需隐藏）
     // if(response.config.headers.showLoading !== false){
     hideLoading();
     // }
     if (!config || !config.retry) {
-      if (err.response?.data.code === 401) {
+      if (response.config.headers.unDisplayErrTip) {
+        return Promise.reject(err);
+      } if (err.response?.data.code === 401) {
         logoutBox();
       } else if (config.url.substring(0, config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && whiteListError.indexOf(config.url) === -1) {
         // 过滤掉右上角小铃铛1min轮询接口,和报警信息列表接口的报错信息

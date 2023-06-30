@@ -77,6 +77,7 @@
 import dataTransfer from "@/components/intelligentOilfield/data-transfer/index.vue";
 import bottomButton from "@/components/intelligentOilfield/bottom-button/index.vue";
 import { getListBusiness } from "@/api/intelligentOilfield/system/business";
+import { addTokenToUrl } from "@/utils/jumpSupApp.js";
 
 export default {
   dicts: ["sys_business_module"],
@@ -146,7 +147,7 @@ export default {
     },
     // 全屏展示链接, 未完不能全屏跳转！！！
     linkPage(item) {
-      this.linkUrl = `${item.businessUrl}?token=${this.$store.getters["user/token"]}`;
+      this.linkUrl = addTokenToUrl(item.businessUrl);
       this.$nextTick(() => {
         this.fullScreen();
       });

@@ -226,6 +226,7 @@
                 :options="deptOptions"
                 :normalizer="normalizer"
                 placeholder="选择上级机构"
+                @input="changeParent"
               >
                 <label
                   slot="option-label"
@@ -344,6 +345,7 @@ export default {
   components: { Treeselect },
   data() {
     return {
+      isActivated: true,
       // 遮罩层
       loading: true,
       // 显示搜索条件
@@ -396,13 +398,21 @@ export default {
     };
   },
   created() {
+    this.isActivated = false;
     this.getList();
     // this.getRoleList()
   },
   activated() {
-    this.getList();
+    if (this.isActivated) {
+      this.getList();
+    } else {
+      this.isActivated = true;
+    }
   },
   methods: {
+    changeParent() {
+      this.$refs.form.validateField("parentId");
+    },
     /** 获取角色权限列表 */
     // getRoleList() {
     //   listRole({ isTenant: '1' }).then((response) => {

@@ -68,11 +68,13 @@
 
       <el-table
         :data="dataSource"
+        row-key="userId"
         @selection-change="handleSelectionChange"
       >
         <el-table-column
           type="selection"
           :selectable="selectedTable"
+          :reserve-selection="true"
           width="55"
           align="center"
         />
