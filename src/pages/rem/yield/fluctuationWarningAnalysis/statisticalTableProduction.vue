@@ -194,8 +194,32 @@
                 max2:30,
             };
         },
+        watch: {
+            "$route.query"(){
+                if(Object.keys(this.$route.query).length){
+                    if(this.$route.query.wellIds){
+                        let wellIds=JSON.parse(this.$route.query.wellIds);
+                        if(wellIds.length){
+                            this.searchForm.wellIds=wellIds.map(el=>el.borepipeId);
+                        }
+                    }
+                }
+                //获取对比基准日期和对比日期
+                if(this.$route.query.prodDate){
+                    this.searchForm.prodDate=this.$route.query.prodDate;
+                    this.searchForm.prodDateCompare=this.$route.query.prodDateCompare;
+                }else{
+                    await getWellOutputWaveTableDate().then(res=>{
+                        if(res.data.code==200){
+                            this.searchForm.prodDate=res.data.data;
+                            this.searchForm.prodDateCompare=new Date(this.searchForm.prodDate).addDays(-1).format('yyyy-MM-dd');
+                        }
+                    })
+                }
+                await this.initData();
+            },
+        },
         async mounted() {
-            console.log('this.$route.query',this.$route.query)
             if(Object.keys(this.$route.query).length){
                 if(this.$route.query.wellIds){
                     let wellIds=JSON.parse(this.$route.query.wellIds);
@@ -203,14 +227,19 @@
                         this.searchForm.wellIds=wellIds.map(el=>el.borepipeId);
                     }
                 }
-                // this.searchForm.prodDate=this.$route.query.prodDate,
-                this.searchForm.prodDateCompare=this.$route.query.prodDateCompare
             }
-            await getWellOutputWaveTableDate().then(res=>{
-                if(res.data.code==200){
-                    this.searchForm.prodDate=res.data.data;
-                }
-            })
+            //获取对比基准日期和对比日期
+            if(this.$route.query.prodDate){
+                this.searchForm.prodDate=this.$route.query.prodDate;
+                this.searchForm.prodDateCompare=this.$route.query.prodDateCompare;
+            }else{
+                await getWellOutputWaveTableDate().then(res=>{
+                    if(res.data.code==200){
+                        this.searchForm.prodDate=res.data.data;
+                        this.searchForm.prodDateCompare=new Date(this.searchForm.prodDate).addDays(-1).format('yyyy-MM-dd');
+                    }
+                })
+            }
             await this.initData();
         },
         methods: {

@@ -907,9 +907,6 @@
                     path:'/yield/statisticalTableProduction',
                     query:{
                         wellIds:JSON.stringify(this.productAnaysisTable),
-                        // prodDate:this.selectDate[1],
-                        prodDate:new Date(this.selectDate[1]).addDays(-1).format('yyyy-MM-dd'),
-                        prodDateCompare:new Date(this.selectDate[1]).addDays(-2).format('yyyy-MM-dd'),
                     }
                 })
             },
