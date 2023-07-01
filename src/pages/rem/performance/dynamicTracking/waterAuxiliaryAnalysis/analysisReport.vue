@@ -100,8 +100,7 @@
                                 <pagePanel headerTitle="注水强度" style="margin-top:0;height:100%;">
                                     <el-row :gutter="10" style="height: 100%">
                                         <el-col v-for="(item,index) in zsqdForm" :key="index" :span="24">
-                                            <!--  @click.stop="selRadioIterm(item.code,'theGroundBecause')" -->
-                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']">
+                                            <el-button class="z-button" :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'zsqdForm')">
                                                 {{item.code}}({{item.value}})
                                             </el-button>
                                         </el-col>
@@ -136,9 +135,13 @@
                                             <td class="checkBtn">选中</td>
                                             <td class="about">相关</td>
                                             <td class="noCheckBtn">未选中</td>
-                                            <td v-if="selCode=='BD'  ||selCode=='BG' " class="noCheckBtn"><el-button type="primary"  @click="$router.push({name:'attributtonAnalysis',query:{'selectBlock':selectBlock,'platform':platform,'wellId':wellId,'link':4,'evalResult':selCode,'currentDate':currentDate}} )">
+                                            <td v-if="gyfxBtn" class="noCheckBtn">
+                                                <el-button 
+                                                    type="primary"  
+                                                    @click="$router.push({name:'attributtonAnalysis',query:{'selectBlock':selectBlock,'platform':platform,'wellId':wellId,'link':4,'evalResult':selCode,'currentDate':currentDate}} )">
                                                 归因分析详情
-                                            </el-button></td>
+                                                </el-button>
+                                            </td>
                                         </tr>
                                     </table>
                                 </el-col>
@@ -431,7 +434,13 @@
                                                 <b style="color: #FFC835; font-size: 14px;">{{item.value}}</b>
                                             </span>
                                         </div>
-
+                                        <el-button
+                                            v-if="gyfxBtn"
+                                            type="primary" 
+                                            style="position: absolute;bottom:-52px;right:0;"
+                                            @click="$router.push({name:'attributtonAnalysis',query:{'selectBlock':selectBlock,'platform':platform,'wellId':wellId,'link':4,'evalResult':selCode,'currentDate':currentDate}} )">
+                                        归因分析详情
+                                        </el-button>
                                     </div>
                                 </div>
                                 <div class="z-content-n">
@@ -452,13 +461,21 @@
                                         </div>
                                     </div>
                                     <div class="z-row-center">
-                                        <!--  @click="((val)=>{selRadioIterm(item.code,'zsqdForm')})" -->
-                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']" v-for="(item,index) in zsqdForm" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!zsqdSwitch">
+                                        <div 
+                                            class="numBtn" 
+                                            :class="[item.code==selCode?'numBtnBgActive':'']" 
+                                            v-for="(item,index) in zsqdForm" :key="index" 
+                                            v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!zsqdSwitch"  
+                                            @click.stop="selRadioIterm(item.code,'zsqdForm')">
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
-                                        <!-- @click="((val)=>{selRadioIterm(item.code,'zsqdForm')})" -->
-                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']" v-for="(item,index) in zsqdForm" :key="index" v-if="item.name=='正常'&&zsqdSwitch">
+                                        <div 
+                                            class="numBtn" 
+                                            :class="[item.code==selCode?'numBtnBgActive':'']" 
+                                            v-for="(item,index) in zsqdForm" :key="index" 
+                                            v-if="item.name=='正常'&&zsqdSwitch" 
+                                            @click.stop="selRadioIterm(item.code,'zsqdForm')">
                                             <span class="sp1">{{item.value}}</span>
                                             <span class="sp2">{{item.name}}</span>
                                         </div>
@@ -675,6 +692,7 @@ export default {
                 yczb:0,
             },
             zsqdSwitch:false,//展示异常false, 正常 true
+            gyfxBtn:false,//若点击的是注水强度偏高或偏低，则显示归因分析按钮。
             //措施推荐可用项目
             recommendedMeasuresOptions: [],
             //获取措施效果数据
@@ -1559,6 +1577,25 @@ export default {
         },
         //选中项目
         selRadioIterm(val, tag) {
+            //点击注水强度-业务初版
+            if(tag=='zsqdForm'){
+                if(this.selCode!=val){
+                    this.selCode=val;
+                    if(this.selCode.includes('注水强度变高')||this.selCode.includes('注水强度变低')){
+                        this.gyfxBtn=true;
+                        return false;
+                    }
+                    this.gyfxBtn=false;
+                    return false;
+                }else{
+                    this.gyfxBtn=false;
+                    this.doSearch();
+                    return false;
+                }
+            }else{
+                this.gyfxBtn=false;
+            }
+            
             console.log(val,888,this.selCode,999)
             let myData = []; //我的数据
             let myWellCount = {}; //计算各项目的井数
