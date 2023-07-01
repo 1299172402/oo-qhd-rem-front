@@ -1346,6 +1346,11 @@ export default {
                 objectId: this.queryData.wellGroup
             }
             if (this.link == '4') {
+                if(this.evalResult == '注水强度变高'){
+                    params.evalResult = 'BG'
+                }else{
+                    params.evalResult = 'BD'
+                }
                 queryWaterInjIntensityAttributeAnalysis(params).then(res => {
                     this.tableData = res.data.data.rows
                     this.pageTotal = res.data.data.total
