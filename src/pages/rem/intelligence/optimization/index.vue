@@ -520,6 +520,7 @@ export default {
         })
         if(this.$route.query.link == 'rem'){
             this.activeName = 'second'
+            this.setWidth()
             this.doSearch()
         }else{
             this.activeName = 'first'
