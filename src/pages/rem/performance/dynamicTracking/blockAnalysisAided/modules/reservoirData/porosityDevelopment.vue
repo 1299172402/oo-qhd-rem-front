@@ -2,13 +2,12 @@
 <template>
     <div style="height:calc(100% - 100px);">
         <div class="z-search">
-            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable>
-                <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId">
-                </el-option>
+            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable @change="selectChange">
+                <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
         </div>
         <div class="z-main">
-            <el-image :src="image">
+            <el-image :src="src">
                 <div slot="error"></div>
             </el-image>
         </div>
@@ -17,8 +16,10 @@
 
 <script>
     import {fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
-    import {reservoirDataPorosityAndFractureDevelopment} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
-    import {downFile} from "@/lib/remBase64Download.js";
+    // miniIo
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {filePreview,downFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         props: {
             oilFieldId: {},
@@ -26,28 +27,22 @@
         },
         data() {
             return {
-                radio: 1,
-                src: '../../static/img/blockAnalysisAided/reservoirData/pore.png',
-                //选中层位
+                //mniIo
+                fileId:'',
+                filestrId:'',
+                src:'',
+                //层位数据源
+                position: [],//选中层位
                 selectPosition: '',
-                //层位所选择内容信息
-                position: [],
-                image: '',
             };
         },
-        watch: {
-            //监听层位信息，给其动态传值
-            selectPosition(val) {
-                this.$emit('childPara', this.selectPosition);
-                this.OnChangeImage();
-            }
-        },
-        mounted() {
+        async mounted() {
+            await this.fieldOilLayersApi();
             this.doSearch();
         },
         methods: {
-            async doSearch() {
-                //this.$emit('childPara', '');
+            //获取层位接口
+            async fieldOilLayersApi(){
                 //初始化获取层段关系
                 await fieldOilLayers({
                     oilFieldId: this.oilFieldId,
@@ -87,75 +82,48 @@
                         } else {
                             this.position = [];
                         }
-                    }
-                });
-                
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    layerId: this.selectPosition,
-                }
-                //获取图片组信息
-                await reservoirDataPorosityAndFractureDevelopment(request).then((res) => {
-                    if (res.data.code == 200) {
-                        if (res.data.data.layerPics) {
-                            if (res.data.data.layerPics.length > 0) {
-                                let imageData = res.data.data.layerPics[0];
-                                let type = imageData.type;
-                                this.image = 'data:' + type + ';base64,' + imageData.data;
-                            } else {
-                                this.image = '';
-                            }
-                        } else {
-                            this.image = '';
-                        }
-                    } else {
-                        this.image = '';
+                        this.$emit('childPara', this.selectPosition);
                     }
                 });
             },
-            //切换图片
-            OnChangeImage() {
-                this.image = '';
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    layerId: this.selectPosition,
+            //获取图片
+            doSearch() {
+                this.imageList=[];
+                let params ={
+                    operationId:this.blockId+'-'+this.selectPosition,
+                    operationType:'BLOCKDZSXT',
+                    readOne:'one' 
                 }
-                reservoirDataPorosityAndFractureDevelopment(request).then((res) => {
+                queryRemUploadFileMinio(params).then((res) => {
                     if (res.data.code == 200) {
-                        if (res.data.data.layerPics) {
-                            if (res.data.data.layerPics.length > 0) {
-                                let imageData = res.data.data.layerPics[0];
-                                let type = imageData.type;
-                                this.image = 'data:' + type + ';base64,' + imageData.data;
-                            } else {
-                                this.image = '';
-                            }
-                        } else {
-                            this.image = '';
+                        if(res.data.data.length){
+                            this.fileId=res.data.data[0].fileId;
+                            this.filestrId=res.data.data[0].filestrId;
+                            downFile(this.fileId).then((res)=>{
+                                this.src=window.URL.createObjectURL(res);
+                            })
                         }
-                    } else {
-                        this.image = '';
+                    }else {
+                        this.$message.error("文件查询接口异常!");
                     }
                 });
             },
-            //单选按钮选中改变事件
-            changeRadio() {
-                this.$emit('childPara', this.selectPosition);
-                this.OnChangeImage();
+            //层位change
+            selectChange(e){
+                this.$emit('childPara', e);
+                this.doSearch();
             },
             //下载功能
             doDownLoad() {
-                let fileName = '孔隙度裂缝发育情况';
+                let fileName = '地震属性图';
                 let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
                 if (layerMess) {
-                    fileName = (layerMess.layerName ? layerMess.layerName : '') + fileName;
+                    fileName= layerMess.layerName +'-'+fileName;
                 }
-                if (this.blockName) {
-                    fileName = this.blockName + fileName;
-                }
-                downFile(this.image, fileName);
+                let file_suffix=this.filestrId.split('.')[1];
+                downFile(this.id).then(res=>{
+                    FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+                })
             }
         }
     }

@@ -115,7 +115,11 @@
                 <el-table id="indexscv" :data="tableData" highlight height="calc(100% - 65px)">
                     <el-table-column prop="name" label="指标" align="center"></el-table-column>
                     <el-table-column prop="real" label="实际值" align="center" :formatter="formatterNumber"></el-table-column>
-                    <el-table-column prop="chain" label="环比 (上年/上月)" align="center" :formatter="formatterNumber"></el-table-column>
+                    <el-table-column prop="chain" label="环比 (上年/上月)" align="center">
+                        <template slot-scope="scope">
+                            {{scope.row.chain}}{{scope.row.chain!==null&&scope.row.chainType==1?'(年)':(scope.row.chain!==null&&scope.row.chainType==2)?'(月)':'-'}}
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="diffRealMom" label="实际值与环比差值" align="center" :formatter="formatterNumber"></el-table-column>
                     <el-table-column prop="checkValue" label="考核" align="center" :formatter="formatterNumber"></el-table-column>
                     <el-table-column prop="diffRealCheck" label="实际值与考核差值" align="center" :formatter="formatterNumber"></el-table-column>
@@ -758,17 +762,17 @@
                     if (res.data.code == 200) {
                         this.tableData = res.data.data.injectionIndicatorManagements;
                         // TODO lv 临时
-                        this.tableData.forEach((item) => {
-                            if (item.name == "含水上升率（%）") item.real = -0.33;
-                            if (item.name == "注水井分注率（%）") item.real = 94.26;
-                            if (item.name == "分注井层段合格率（%）") item.real = 78.97;
-                            if (item.name == "年注入量（10⁴m³）") item.real = 1552;
-                            if (item.name == "自然递减率（%）") item.real = 21.13;
-                            if (item.name == "地层压力保持水平（%）") item.real = 90.47;
-                            if (item.name == "分注井测试率（%）") item.real = 95.48;
-                            if (item.name == "注水水质达标率（%）") item.real = 100;
-                            if (item.name == "动态监测完成率（%）") item.real = 99;
-                        });
+                        // this.tableData.forEach((item) => {
+                        //     if (item.name == "含水上升率（%）") item.real = -0.33;
+                        //     if (item.name == "注水井分注率（%）") item.real = 94.26;
+                        //     if (item.name == "分注井层段合格率（%）") item.real = 78.97;
+                        //     if (item.name == "年注入量（10⁴m³）") item.real = 1552;
+                        //     if (item.name == "自然递减率（%）") item.real = 21.13;
+                        //     if (item.name == "地层压力保持水平（%）") item.real = 90.47;
+                        //     if (item.name == "分注井测试率（%）") item.real = 95.48;
+                        //     if (item.name == "注水水质达标率（%）") item.real = 100;
+                        //     if (item.name == "动态监测完成率（%）") item.real = 99;
+                        // });
                     }
                 });
             },

@@ -2,14 +2,13 @@
 <template>
     <div style="height:calc(100% - 100px);">
         <div class="z-search">
-            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable>
-                <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId">
-                </el-option>
+            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable @change="selectChange">
+                <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
         </div>
         <div class="z-main">
             <div class="z-left-view">
-                <el-image :src="image">
+                <el-image :src="src">
                     <div slot="error"></div>
                 </el-image>
             </div>
@@ -33,6 +32,11 @@
 <script>
     import {fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import {reservoirDataPhasePermeabilityCurve} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
+    
+    // miniIo
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {filePreview,downFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         props: {
             oilFieldId: {},
@@ -40,27 +44,22 @@
         },
         data() {
             return {
-                radio: 1,
-                src: '../../static/img/blockAnalysisAided/reservoirData/reservoirProfile.png',
-                //选中层位
+                //mniIo
+                fileId:'',
+                filestrId:'',
+                src:'',
+                //层位数据源
+                position: [],//选中层位
                 selectPosition: '',
-                //层位所选择内容信息
-                position: [],
-                image: '',
             };
         },
-        watch: {
-            //监听层位信息，给其动态传值
-            selectPosition(val) {
-                this.$emit('childPara', this.selectPosition);
-                this.OnChangeImage();
-            }
-        },
-        mounted() {
+        async mounted() {
+            await this.fieldOilLayersApi();
             this.doSearch();
         },
         methods: {
-            async doSearch() {
+            //获取层位接口
+            async fieldOilLayersApi(){
                 //初始化获取层段关系
                 await fieldOilLayers({
                     oilFieldId: this.oilFieldId,
@@ -80,7 +79,7 @@
                                     } else {
                                         this.selectPosition = this.position[0].fieldLayerId;
                                     }
-                                } else if (this.blockId == 'F35E226D47CE4B09B497B852D774D122') {
+                                }else if (this.blockId == 'F35E226D47CE4B09B497B852D774D122') {
                                     if (this.position.find((item) => {
                                             return item.fieldLayerId == '87795A3E6BBC4469BC9AC5AE0BBE759C'
                                         })) {
@@ -94,48 +93,54 @@
                                     }
                                 } else {
                                     this.selectPosition = this.position[0].fieldLayerId;
-                                }
+                                } 
                                 this.$emit('childPara', this.selectPosition);
                             }
                         } else {
                             this.position = [];
                         }
+                        this.$emit('childPara', this.selectPosition);
                     }
                 });
-                
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    layerId: this.selectPosition,
+            },
+            //获取图片
+            doSearch() {
+                let params ={
+                    operationId:this.blockId+'-'+this.selectPosition,
+                    operationType:'BLOCKXSTLQX',
+                    readOne:'one' 
                 }
-                //获取图片组信息
-                await reservoirDataPhasePermeabilityCurve(request).then((res) => {
+                queryRemUploadFileMinio(params).then((res) => {
                     if (res.data.code == 200) {
-                        let imageData = res.data.data.layerPics[0];
-                        this.image = 'data:;base64,' + imageData.data;
+                        if(res.data.data.length){
+                            this.fileId=res.data.data[0].fileId;
+                            this.filestrId=res.data.data[0].filestrId;
+                            downFile(this.fileId).then((res)=>{
+                                this.src=window.URL.createObjectURL(res);
+                            })
+                        }
+                    }else {
+                        this.$message.error("文件查询接口异常!");
                     }
                 });
             },
-            //切换图片
-            OnChangeImage() {
-                this.image = '';
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    layerId: this.selectPosition,
+            //层位change
+            selectChange(e){
+                this.$emit('childPara', e);
+                this.doSearch();
+            },
+            //下载功能
+            doDownLoad() {
+                let fileName = '相渗透率曲线图';
+                let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
+                if (layerMess) {
+                    fileName= layerMess.layerName +'-'+fileName;
                 }
-                reservoirDataPhasePermeabilityCurve(request).then((res) => {
-                    if (res.data.code == 200) {
-                        let imageData = res.data.data.layerPics[0];
-                        this.image = 'data:;base64,' + imageData.data;
-                    }
-                });
-            },
-            //单选按钮选中改变事件
-            changeRadio() {
-                this.$emit('childPara', this.selectPosition);
-                this.OnChangeImage();
-            },
+                let file_suffix=this.filestrId.split('.')[1];
+                downFile(this.id).then(res=>{
+                    FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+                })
+            }
         }
     }
 </script>

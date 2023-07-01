@@ -19,10 +19,7 @@
                 </el-select>
                 
                 <span class="title">井组：</span>
-                <!-- <el-select v-if="currentModule != 'dynamicsInjection' &&currentModule != 'changingDynamics' &&currentModule != 'stateChange'" v-model="selectWellGroup" placeholder="请选择" filterable clearable style="margin-right: 15px">
-                    <el-option v-for="item in wellGroup" :key="item.wellGroupId" :label="item.name" :value="item.wellGroupId"></el-option>
-                </el-select> -->
-                <el-select  v-model="selectWellGroup" placeholder="请选择" filterable clearable style="margin-right: 15px">
+                <el-select  v-model="selectWellGroup" placeholder="请选择" filterable  style="margin-right: 15px">
                     <el-option v-for="item in newWellGroup" :key="item.wellGroupId" :label="item.wellGroupName" :value="item.wellGroupId"></el-option>
                 </el-select>
                 
@@ -46,7 +43,7 @@
                 </el-tab-pane>
             </el-tabs>
             
-            <keep-alive :include="[]" :max="10" v-if="wellGroup.length">
+            <keep-alive :include="[]" :max="10" v-if="newWellGroup.length">
                 <component :is="component" ref="componentCustom" :oil-field-id="selectOilField" :block-id="selectBlock" :wellCentre="wellCentre" :well-group-id="selectWellGroup" @childPara="changeChildParam"></component>
             </keep-alive>
             
@@ -55,7 +52,7 @@
         <!-- minIo上传 -->
         <el-dialog custom-class="border" title="上传文档" :visible.sync="ljpmDialogLast" width="20%" :before-close="ljpmDialogCloseLast" :style="{ 'min-width': '1800px' }">
             <el-row>
-                <el-form ref="form" :model="ljUploadForm" label-width="40px">
+                <el-form ref="form" label-width="40px">
                     <el-form-item label="" style="width: 88px">
                         <file-upload v-model="imageurl" style="width: 250px" :limit="limit" :fileSize="20" :is-show-tip="false" biz-path="rem-front/text" bucket-name="zhy" :file-type="fileType" @change="getResData"/>
                     </el-form-item>
@@ -69,18 +66,13 @@
 </template>
 
 <script>
-    import {
-        fetchOilFields,
-        fetchFields,
-        fieldLayers,
-        wellGroups,
-        uploadFile,
-        getLjpmWells,
-    } from "@/api/oilDeposit/rem-02/primaryinfo.js";
-    import {
-        wellGroupList
-    } from "@/api/rem/wellgroupinformaintenance";
+    import { fetchOilFields,fetchFields,fieldLayers, wellGroups,uploadFile,getLjpmWells,} from "@/api/oilDeposit/rem-02/primaryinfo.js";
+    import { wellGroupList} from "@/api/rem/wellgroupinformaintenance";
     import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
+    // Minio
+    import {addRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {downFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         components: {
             FileUpload,
@@ -293,8 +285,8 @@
                 },
             },
         },
-        mounted() {
-            this.initData();
+        async mounted() {
+            await this.initData();
         },
         methods: {
             //minIo-打开上传组件
@@ -305,10 +297,6 @@
             },
             //minIo-关闭上传组件
             ljpmDialogCloseLast() {
-                this.ljUploadForm = {
-                    direction: "横向",
-                    chooseWell: [],
-                };
                 this.ljpmFileList = [];
                 this.ljpmDialogLast = false;
             },
@@ -402,11 +390,7 @@
                         }
                     }
                 }
-                if(this.currentModule == "dynamicsInjection" ||this.currentModule == "changingDynamics" ||this.currentModule == "stateChange") {
-                    this.selectWellGroup = this.newWellGroup[0].wellGroupId;
-                } else {
-                    this.selectWellGroup = this.wellGroup[0].wellGroupId;
-                }
+                this.selectWellGroup = this.newWellGroup[0].wellGroupId;
             },
           
             //初始化页面
@@ -443,7 +427,7 @@
                     }],
                     wellGroupId: ""
                 }
-                wellGroupList(obj).then((res) => {
+                await wellGroupList(obj).then((res) => {
                     if (res.data.code == 200 && res.data.data && res.data.data.length) {
                         this.newWellGroup = res.data.data;
                         this.selectWellGroup = this.newWellGroup[0].wellGroupId;
@@ -454,7 +438,8 @@
             //搜索功能
             doSearch() {
                 this.$nextTick(() => {
-                    this.$refs.componentCustom.oilFeildId = this.selectOilField;
+                    console.log( this.$refs.componentCustom)  
+                    this.$refs.componentCustom.oilFieldId = this.selectOilField; 
                     this.$refs.componentCustom.platform = this.selectPlatform;
                     this.$refs.componentCustom.wellGroupId = this.selectWellGroup;
                     this.$refs.componentCustom.doSearch();

@@ -20,17 +20,14 @@
 
 <script>
     import {fieldLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
-    import {reservoirDataConstructureDaigramForWellGroup} from "@/api/oilDeposit/rem-01/wellgroupdynamicanalysis.js";
-    import {downFile} from "@/lib/remBase64Download.js";
-    
     import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
     import {filePreview} from "@/components/upload/utils/file";
     export default {
         name: "smallLayerStructureDiagram",
         props: {
             //油田id
-            oilFieldId: {},
-            //区块id
+            oilFieldId: {},  
+            //区块id   
             blockId: {},
             //井组id
             wellGroupId: {}
@@ -52,13 +49,14 @@
             //监听层位信息，给其动态传值
             selectPosition(val) {
                 this.$emit('childPara', this.selectPosition);
-                this.OnChangeImage();
+                this.queryRemUploadFileMinioApi();
             }
         },
         methods: {
             //调用图片
             async doSearch() {
-                await fieldLayers({oilFieldId:this.oilFeildId,wellGroupId:this.wellGroupId}).then((res) => {
+                console.log(this.oilFieldId,this.wellGroupId)
+                await fieldLayers({oilFieldId:this.oilFieldId,wellGroupId:this.wellGroupId}).then((res) => {
                     if (res.data.code == 200) {
                         //层段数据
                         if (res.data.data) {
@@ -91,18 +89,18 @@
                 });
                 this.queryRemUploadFileMinioApi();
             },
+            //mniIo获取图片
             queryRemUploadFileMinioApi(){
                 let params ={
                     operationId:this.wellGroupId+this.selectPosition,
                     operationType:'WELLGROUPXCDMGZT',
-                    // readOne:'one'
+                    readOne:''
                 }
                 queryRemUploadFileMinio(params).then((res) => {
-                    console.log('res123456789',res)
                     if (res.data.code == 200) {
                         let data =res.data.data[0].fileId
-                        this.id = res.data.data[0].fileId
-                        this.fileName = res.data.data[0].filestrId
+                        // this.id = res.data.data[0].fileId
+                        // this.fileName = res.data.data[0].filestrId
                         filePreview(data).then((res)=>{
                             this.url = res.data.data
                         })
@@ -111,18 +109,6 @@
                     }
                 });
             },
-            //下载
-            doDownLoad() {
-                let fileName = '小层顶面构造图';
-                let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
-                if (layerMess) {
-                    fileName = (layerMess.layerName ? layerMess.layerName : '') + fileName;
-                }
-                if (this.wellGroupName) {
-                    fileName = this.wellGroupName + fileName;
-                }
-                downFile(this.image, fileName);
-            }
         }
     }
 </script>

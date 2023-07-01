@@ -2,7 +2,7 @@
 <template>
     <div style="height:calc(100% - 100px);">
         <div class="z-search">
-            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable>
+            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable @change="selectChange">
                 <el-option v-for="(item, index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
         </div>
@@ -25,8 +25,10 @@
 
 <script>
 import { fieldOilLayers } from '@/api/oilDeposit/rem-02/primaryinfo.js';
-import { reservoirDataConstructureDaigram } from '@/api/oilDeposit/rem-01/fielddynamicanalysis.js';
-import { downFile } from '@/lib/remBase64Download.js';
+// miniIo
+import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+import {filePreview,downFile} from "@/components/upload/utils/file";
+import FileSaver from "file-saver";
 export default {
     props: {
         oilFieldId: {},
@@ -34,41 +36,21 @@ export default {
     },
     data() {
         return {
-            selectPosition: '',
-            //层位所选择内容信息
+            //mniIo文件列表
+            mniIoFiles:[],
+            //层位数据源
             position: [],
-            src: '../../static/img/blockAnalysisAided/reservoirData/structuralMap.jpg',
-            image: '',
+            //层位绑定值
+            selectPosition: '',
             imageList: [],
             fitInfo:'cover',    
         };
-    },
-    watch: {
-        //监听层位信息，给其动态传值
-        selectPosition(val) {
-            this.$emit('childPara', this.selectPosition);
-            this.OnChangeImage();
-        }
     },
     mounted() {
         this.doSearch();
     },
     methods: {
-        async initData() {
-            //初始化获取层段关系
-            await fieldOilLayers({
-                oilFieldId: this.oilFeildId,
-                fieldId: this.blockId
-            }).then((res) => {
-                if (res.data.code == 200) {
-                    //层段数据
-                    this.position = res.data.data.fieldLayers;
-                    this.selectPosition = this.position[0].fieldLayerId;
-                }
-            });
-        },
         async doSearch() {
-            //this.$emit('childPara','');
             //初始化获取层段关系
             await fieldOilLayers({
                 oilFieldId: this.oilFieldId,
@@ -110,82 +92,60 @@ export default {
                             } else {
                                 this.selectPosition = this.position[0].fieldLayerId;
                             }
-                            this.$emit('childPara', this.selectPosition);
                         }
+                        this.$emit('childPara', this.selectPosition);
                     } else {
                         this.position = [];
                     }
                 }
             });
-            //获取参数油田id 平台id 井id
-            let request = {
-                oilFieldId: this.oilFieldId,
-                fieldId: this.blockId,
-                layerId: this.selectPosition
-            };
-            //获取图片组信息
-            await reservoirDataConstructureDaigram(request).then((res) => {
-                if (res.data.code == 200) {
-                    if (res.data.data.layerPics) {
-                        this.imageList = [];
-                        if (res.data.data.layerPics.length > 0) {
-                            let imageData = res.data.data.layerPics[0];
-                            let type = imageData.type;
-                            this.image = 'data:' + type + ';base64,' + imageData.data;
-                            this.imageList.push(this.image);
-                        } else {
-                            this.image = '';
-                        }
-                    } else {
-                        this.image = '';
-                    }
-                } else {
-                    this.image = '';
-                }
-            });
+            this.OnChangeImage();
+        },
+        //层位change
+        selectChange(e){
+            this.$emit('childPara', e);
+            this.OnChangeImage();
         },
         //切换图片
         OnChangeImage() {
-            this.image = '';
-            let request = {
-                oilFieldId: this.oilFieldId,
-                fieldId: this.blockId,
-                layerId: this.selectPosition
-            };
-            reservoirDataConstructureDaigram(request).then((res) => {
+            this.imageList=[];
+            let params ={
+                operationId:this.blockId+'-'+this.selectPosition,
+                operationType:'BLOCKXCDMGZT',
+                readOne:'' 
+            }
+            queryRemUploadFileMinio(params).then((res) => {
                 if (res.data.code == 200) {
-                    if (res.data.data.layerPics) {
-                        if (res.data.data.layerPics.length > 0) {
-                            let imageData = res.data.data.layerPics[0];
-                            let type = imageData.type;
-                            this.image = 'data:' + type + ';base64,' + imageData.data;
-                        } else {
-                            this.image = '';
+                    if(res.data.data.length){
+                        this.mniIoFiles=res.data.data;
+                        for(let i=0;i<this.mniIoFiles.length;i++){
+                            let fileId = this.mniIoFiles[i].fileId;
+                            downFile(fileId).then((res)=>{
+                                let src=window.URL.createObjectURL(res);
+                                this.imageList.push(src);
+                            })
                         }
-                    } else {
-                        this.image = '';
                     }
-                } else {
-                    this.image = '';
+                }else {
+                    this.$message.error("文件查询接口异常!");
                 }
             });
         },
-        //单选按钮选中改变事件
-        changeRadio() {
-            this.$emit('childPara', this.selectPosition);
-            this.OnChangeImage();
-        },
         //下载功能
         doDownLoad() {
-            let fileName = '构造图';
+            let fileName = '小层顶面构造图';
             let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
             if (layerMess) {
-                fileName = (layerMess.layerName ? layerMess.layerName : '') + fileName;
+                fileName= layerMess.layerName +'-'+fileName;
             }
-            if (this.blockName) {
-                fileName = this.blockName + fileName;
+            for(let i=0;i<this.mniIoFiles.length;i++){
+                let fileId=this.mniIoFiles[i].fileId;
+                let filestrId = this.mniIoFiles[i].filestrId;
+                let file_suffix=filestrId.split('.')[1];
+                downFile(fileId).then((res) => {
+                    FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+                });
             }
-            downFile(this.image, fileName);
         }
     }
 };

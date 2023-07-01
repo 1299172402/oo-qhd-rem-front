@@ -233,7 +233,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             scale: true,
@@ -261,7 +261,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             offset: 80,
@@ -291,7 +291,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -322,7 +322,7 @@
                             min:0,
                             max:50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -352,7 +352,7 @@
                             nameGap: 50,
                             nameRotate: 0,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             scale: true,
@@ -410,7 +410,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             min:0,
@@ -441,7 +441,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -529,7 +529,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -675,7 +675,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             min:0,
@@ -704,7 +704,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -732,7 +732,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -761,7 +761,7 @@
                             nameGap: 50,
                             nameRotate: 0,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             axisLabel: {
@@ -788,7 +788,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -817,7 +817,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#fff",
+                                color: "#8FA4CC",
                                 fontSize: 14,
                             },
                             position: 'right',

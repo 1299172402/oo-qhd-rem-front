@@ -59,6 +59,7 @@
                       height="100%" 
                       :default-sort="{ prop: 'comparisonOilProduction', order: 'ascending' }" 
                       :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+                      <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                       <el-table-column prop="wellNo" label="井号" width="150" fixed/>
                       <el-table-column :label="searchForm.prodDate">
                         <el-table-column sortable prop="fluidProdDaily" :label="`日产液\n(m³/d)`" width="90" :formatter="formatter"/>      

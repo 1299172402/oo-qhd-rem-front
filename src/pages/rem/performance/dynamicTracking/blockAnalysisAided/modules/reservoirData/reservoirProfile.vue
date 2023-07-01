@@ -1,107 +1,70 @@
-<!--油藏剖面图-->
+<!--地震剖面图-->
 <template>
     <div style="height:calc(100% - 100px);">
         <div class="z-main">
-            <el-image :src="image">
-                <div slot="error">
-                </div>
+            <el-image :src="src">
+                <div slot="error"></div>
             </el-image>
         </div>
     </div>
 </template>
 
 <script>
-    import {reservoirDataReservoirProfile} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
-    import {downFile} from "@/lib/remBase64Download.js";
-
+    import {fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
+    // miniIo
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {filePreview,downFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         props: {
-            oilFieldId: {
-
-            },
-            blockId: {
-
-            }
+            oilFieldId: {},
+            blockId: {},
         },
         data() {
             return {
-                radio: 1,
-                src: '../../static/img/blockAnalysisAided/reservoirData/reservoirProfile.png',
-                selectPosition: '',
-                //层位所选择内容信息
-                position: [],
-                image: '',
+                //mniIo
+                fileId:'',
+                filestrId:'',
+                src:'',
             };
         },
-        watch: {
-            //监听层位信息，给其动态传值
-            selectPosition(val) {
-                this.$emit('childPara', this.selectPosition);
-                this.OnChangeImage();
-            }
-        },
-        mounted() {
+        async mounted() {
             this.doSearch();
         },
         methods: {
-            async doSearch() {
-                this.$emit('childPara', '');
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    //layerId:this.selectPosition,
+            //获取图片
+            doSearch() {
+                this.imageList=[];
+                let params ={
+                    operationId:this.blockId,
+                    operationType:'BLOCKDZPMT',
+                    readOne:'one' 
                 }
-                //获取图片组信息
-                await reservoirDataReservoirProfile(request).then((res) => {
+                queryRemUploadFileMinio(params).then((res) => {
                     if (res.data.code == 200) {
-                        let imgData = res.data.data.data;
-                        let type = res.data.data.type;
-                        let firstParty = 'data:' + type + ';base64,';
-                        if (imgData) {
-                            this.image = firstParty + imgData;
-                        } else {
-                            this.image = '';
+                        if(res.data.data.length){
+                            this.fileId=res.data.data[0].fileId;
+                            this.filestrId=res.data.data[0].filestrId;
+                            downFile(this.fileId).then((res)=>{
+                                this.src=window.URL.createObjectURL(res);
+                            })
                         }
+                    }else {
+                        this.$message.error("文件查询接口异常!");
                     }
                 });
             },
-            //切换图片
-            OnChangeImage() {
-                this.image = '';
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    //layerId:this.selectPosition,
-                }
-                reservoirDataReservoirProfile(request).then((res) => {
-                    if (res.data.code == 200) {
-                        let imgData = res.data.data.data;
-                        let type = res.data.data.type;
-                        let firstParty = 'data:' + type + ';base64,';
-                        if (imgData) {
-                            this.image = firstParty + imgData;
-                        } else {
-                            this.image = '';
-                        }
-                    }
-                });
-            },
-            //单选按钮选中改变事件
-            changeRadio() {
-                this.$emit('childPara', this.selectPosition);
-                this.OnChangeImage();
-            },
-            //下载
+            //下载功能
             doDownLoad() {
-                let fileName = '油藏剖面图';
+                let fileName = '地震剖面图';
                 let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
                 if (layerMess) {
-                    fileName = (layerMess.layerName ? layerMess.layerName : '') + fileName;
+                    fileName= layerMess.layerName +'-'+fileName;
                 }
-                if (this.blockName) {
-                    fileName = this.blockName + fileName;
-                }
-                downFile(this.image, fileName);
+                let file_suffix=this.filestrId.split('.')[1];
+                downFile(this.id).then(res=>{
+                    FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+                })
             }
         }
     }
@@ -114,5 +77,7 @@
         overflow: auto;
         border: 1px solid #ddd;
         border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
+        display: flex;
+        justify-content: center;
     }
 </style>

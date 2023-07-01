@@ -85,3 +85,9 @@ export function queryYieldTracking({ ogfId, orgId } = {}) {
     method: "get",
   });
 }
+export function getYieldTracking({ ogfId, orgId } = {}) {
+    return request({
+        url: `${baseUrl}/reservoirBillboards/getYieldTracking?ogfId=${ ogfId || "" }&orgId=${ orgId || "" }`,
+        method: "get",
+    });
+}

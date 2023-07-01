@@ -77,7 +77,9 @@ export default {
     methods:{
         getData(){
             queryMeasureEffectTrack({evaluationDate:'',oilFieldId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{
-                this.tableData = res.data.data
+                if(res.data.data){
+                    this.tableData = res.data.data                    
+                }
             })
         },
         linkroute(rname) {
