@@ -1254,7 +1254,7 @@ export default {
         } else if (this.link == '5') {
             this.title = '油井递减率归因分析'
         } else if (this.link == '6') {
-            this.queryData.month = '2023-03'
+            this.queryData.month = '2023-05'
             // this.queryData.wellGroup = 
             this.title = '井组生产动态归因分析'
         }
