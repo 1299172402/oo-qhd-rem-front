@@ -13,7 +13,6 @@
                 </el-select>
                 <el-button icon="el-icon-search" type="primary" @click="doSearch">搜索</el-button>
                 <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
-                
             </div>
         </headerSearch>
         <pagePanelNew style="height: calc(100% - 100px);" class="z-main">
@@ -120,9 +119,9 @@
                             <el-option v-for="item in oiloptions1" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
                         </el-select>
                         <span style="color: #fff">月份：</span>
-                        <el-date-picker v-model="dateFirst" type="month" placeholder="对比时间1" value-format="yyyy-MM-dd"></el-date-picker>
-                        <span>~</span>
-                        <el-date-picker v-model="dateSecond" type="month" placeholder="对比时间2" value-format="yyyy-MM-dd"></el-date-picker>
+                        <el-date-picker v-model="dateFirst" type="month" value-format="yyyy-MM"></el-date-picker>
+                        <!-- <span>~</span> -->
+                        <!-- <el-date-picker v-model="dateSecond" type="month" placeholder="对比时间2" value-format="yyyy-MM"></el-date-picker> -->
                         <el-button icon="el-icon-search" style="margin-left: 15px" type="primary" @click="doSearchDialog">搜索</el-button>
                     </div>
                     <div class="fr" style="margin-borttom: 10px">
@@ -207,7 +206,7 @@
     import Echart from '@/components/tools/Echarts/index.vue';
     import {fetchOilFields,fetchFields} from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import {exportExcel} from '@/lib/exportExcel.js';
-    import {chart,devPhaseInfos,devStatusInfos} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+    import {chart,devPhaseInfos,devStatusInfos,devStatusInfosDate} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
     export default {
         name:'developmenthistory',
         components: {
@@ -1055,21 +1054,23 @@
                 canUpload: false,
             };
         },
-        created() {
+        async created() {
             this.rq = [new Date().addDays(-30).format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
-            this.dateFirst = moment().subtract(1, 'months').startOf('months').format('YYYY-MM-DD');
-            this.dateSecond = moment().startOf('months').format('YYYY-MM-DD');
+            // this.dateFirst = moment().subtract(1, 'months').startOf('months').format('YYYY-MM-DD');
+            // this.dateSecond = moment().startOf('months').format('YYYY-MM-DD');
+            await this.devStatusInfosDateApi();
         },
         mounted() {
             this.initData();
         },
         methods: {
             //重置
-            resetting(){
+            async resetting(){
                 Object.assign(this.$data, this.$options.data())
                 this.rq = [new Date().addDays(-30).format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
-                this.dateFirst = moment().subtract(1, 'months').startOf('months').format('YYYY-MM-DD');
-                this.dateSecond = moment().startOf('months').format('YYYY-MM-DD');
+                // this.dateFirst = moment().subtract(1, 'months').startOf('months').format('YYYY-MM-DD');
+                // this.dateSecond = moment().startOf('months').format('YYYY-MM-DD');
+                await this.devStatusInfosDateApi();
                 this.initData();
             },
             configuration() {
@@ -1087,6 +1088,13 @@
                 let fieldId = this.fieldId;
                 let type = this.qh;
                 this.getDevPhaseInfos(oilFieldId, fieldId, type);
+            },
+            async devStatusInfosDateApi(){
+                await devStatusInfosDate().then(res=>{
+                    if(res.data.code==200){
+                        this.dateFirst=res.data.data;
+                    }
+                })
             },
             async initData() {
                 //油田
@@ -1147,7 +1155,7 @@
                     oilFieldId: oilFieldId,
                     fieldId: fieldId,
                     beginDate: beginDate,
-                    endDate: endDate,
+                    endDate:'',
                     unit: unit,
                 };
                 devStatusInfos(request).then((res) => {

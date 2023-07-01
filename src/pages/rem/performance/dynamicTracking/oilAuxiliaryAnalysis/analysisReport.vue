@@ -12,12 +12,12 @@
                     </el-select>
                     
                     <span style="margin-left:15px;">区块：</span>
-                    <el-select v-model="selectBlock" style="width: 180px" filterable clearable @change="queryPlatFormList">
+                    <el-select v-model="selectBlock" style="width: 180px" filterable @change="queryPlatFormList">
                         <el-option v-for="item in blocks" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                     </el-select>
                     
                     <span style="margin-left:15px;">平台：</span>
-                    <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="queryOilWellListByPid">
+                    <el-select v-model="platform" class="f2" style="width:220px" filterable @change="queryOilWellListByPid">
                         <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId" :disabled="item.disabled">
                         </el-option>
                     </el-select>
@@ -29,7 +29,7 @@
                     </el-select>
                     
                     <span style="margin-left:15px;">评价时间：</span>
-                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd" :clearable="false"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
@@ -282,12 +282,12 @@
                     </el-select>
                     
                     <span style="margin-left:15px;">区块：</span>
-                    <el-select v-model="selectBlock" style="width: 180px" filterable clearable @change="queryPlatFormList">
+                    <el-select v-model="selectBlock" style="width: 180px" filterable @change="queryPlatFormList">
                         <el-option v-for="item in blocks" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                     </el-select>
                     
                     <span style="margin-left:15px;">平台：</span>
-                    <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="queryOilWellListByPid">
+                    <el-select v-model="platform" class="f2" style="width:220px" filterable @change="queryOilWellListByPid">
                         <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId" :disabled="item.disabled">
                         </el-option>
                     </el-select>
@@ -299,7 +299,7 @@
                     </el-select>
                     
                     <span style="margin-left:15px;">评价时间：</span>
-                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd" :clearable="false"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
@@ -782,6 +782,15 @@
     export default {
         name:'oilAnalysisReport',
         mixins: [compareSort],
+        watch: {
+            "$route.query.wellNo"(){ // 监听路由变化
+                if(this.$route.query.wellNo){//判断路由是否有井号参数
+                    let wellItem=this.wellData.find(e=>e.wellName==this.$route.query.wellNo);
+                    this.wellId=wellItem.wellId;
+                    this.doSearch();
+                }
+            },
+        },
         data() {
             return {
                 isNewformat:true,//默认新版本
@@ -1709,7 +1718,7 @@
             openAnalysis(wellNumber) {
                 this.$router.push({
                     name: 'oilAuxiliaryAnalysis',
-                    params: {
+                    query: {
                         oilField: this.selYtdm,
                         wellId: wellNumber
                     }

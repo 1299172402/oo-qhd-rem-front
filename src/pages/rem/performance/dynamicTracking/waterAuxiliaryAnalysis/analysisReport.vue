@@ -10,11 +10,11 @@
                         <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId" :disabled="item.disabled"></el-option>
                     </el-select>
                     <span style="margin-left:15px;">区块：</span>
-                    <el-select v-model="selectBlock" style="width: 180px" filterable clearable @change="queryPlatFormList">
+                    <el-select v-model="selectBlock" style="width: 180px" filterable @change="queryPlatFormList">
                         <el-option v-for="item in blocks" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                     </el-select>
                     <span style="margin-left:15px;">平台：</span>
-                    <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="queryWellListByPid">
+                    <el-select v-model="platform" class="f2" style="width:220px" filterable @change="queryWellListByPid">
                         <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId" :disabled="item.disabled"></el-option>
                     </el-select>
                     <span style="margin-left:15px;">井号：</span>
@@ -22,7 +22,7 @@
                         <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled"></el-option>
                     </el-select>
                     <span style="margin-left:15px;">评价时间：</span>
-                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd" :clearable="false"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
@@ -166,11 +166,6 @@
                                     </table>
                                 </el-col>
                             </el-row>
-                            <!--                            <div  style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;">-->
-                            <!--                                <el-button type="primary"  @click="$router.push({path:'attributtonAnalysis'})">-->
-                            <!--                                    归因分析详情-->
-                            <!--                                </el-button>-->
-                            <!--                            </div>-->
                         </div>
                     </div>
                     <div style="flex:1;min-height:380px;">
@@ -185,7 +180,7 @@
                                 :default-sort="{ prop: 'date', order: 'descending' }"
                                 height="100%"
                                 @sort-change="changeTableSort" ref="tableList"
-                                row-key="wellId"
+                                row-key="id"
                                 :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
                                 <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                 <el-table-column prop="wellId" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
@@ -264,11 +259,11 @@
                         <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId" :disabled="item.disabled"></el-option>
                     </el-select>
                     <span style="margin-left:15px;">区块：</span>
-                    <el-select v-model="selectBlock" style="width: 180px" filterable clearable @change="queryPlatFormList">
+                    <el-select v-model="selectBlock" style="width: 180px" filterable @change="queryPlatFormList">
                         <el-option v-for="item in blocks" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                     </el-select>
                     <span style="margin-left:15px;">平台：</span>
-                    <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="queryWellListByPid">
+                    <el-select v-model="platform" class="f2" style="width:220px" filterable @change="queryWellListByPid">
                         <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId" :disabled="item.disabled"></el-option>
                     </el-select>
                     <span style="margin-left:15px;">井号：</span>
@@ -276,7 +271,7 @@
                         <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled"></el-option>
                     </el-select>
                     <span style="margin-left:15px;">评价时间：</span>
-                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd" :clearable="false"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
@@ -344,9 +339,10 @@
                                         <div class="name">措施推荐</div>
                                         <div class="num">
                                             <span
+                                                :class="[item.code==selCode?'spActive':'']"
                                                 v-for="(item,index) in recommendedMeasuresOptions" :key="index"
                                                 v-if="item.name=='地面提压'||item.name=='测调'"
-                                                @click="((val)=>{selRadioIterm(item.code,'recommendedMeasuresOptions')})">
+                                                @click="selRadioIterm(item.code,'recommendedMeasuresOptions')">
                                                 {{item.name}}：
                                                 <b style="color: #FFC835; font-size: 14px;">{{item.value}}</b>
                                             </span>
@@ -397,9 +393,10 @@
                                         <div class="name">措施推荐</div>
                                         <div class="num">
                                             <span
+                                                :class="[item.code==selCode?'spActive':'']"
                                                 v-for="(item,index) in recommendedMeasuresOptions" :key="index"
                                                 v-if="item.name=='检查管柱'"
-                                                @click="((val)=>{selRadioIterm(item.code,'recommendedMeasuresOptions')})">
+                                                @click="selRadioIterm(item.code,'recommendedMeasuresOptions')">
                                                 {{item.name}}：
                                                 <b style="color: #FFC835; font-size: 14px;">{{item.value}}</b>
                                             </span>
@@ -450,8 +447,9 @@
                                         <div class="name">措施推荐</div>
                                         <div class="num">
                                             <span
+                                                :class="[item.code==selCode?'spActive':'']"
                                                 v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='储层改造'||item.name=='酸化解堵'||item.name=='恢复注水'"
-                                                @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'recommendedMeasuresOptions')})">
+                                                @click="selRadioIterm(item.code,'recommendedMeasuresOptions')">
                                                 {{item.name}}：
                                                 <b style="color: #FFC835; font-size: 14px;">{{item.value}}</b>
                                             </span>
@@ -500,7 +498,7 @@
                                 :default-sort="{ prop: 'date', order: 'descending' }"
                                 height="100%"
                                 @sort-change="changeTableSort" ref="tableList"
-                                row-key="wellId"
+                                row-key="id"
                                 default-expand-all
                                 :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
                                 <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
@@ -700,6 +698,15 @@ export default {
     mounted() {
         this.getDateApi();
     },
+    watch: {
+        "$route.query.wellNo"(){ // 监听路由变化
+            if(this.$route.query.wellNo){//判断路由是否有井号参数
+                let wellItem=this.wellData.find(e=>e.wellName==this.$route.query.wellNo);
+                this.wellId=wellItem.wellId;
+                this.doSearch();
+            }
+        },
+    },
     methods: {
         //重置
         resetting(){
@@ -794,6 +801,10 @@ export default {
 
             if(this.initTypes==1){//第一次加载
                 this.initTypes=2;
+                if(this.$route.query.wellNo){//判断路由是否有井号参数
+                    let wellItem=this.wellData.find(e=>e.wellName==this.$route.query.wellNo);
+                    this.wellId=wellItem.wellId;
+                }
                 this.doSearch();
             }
         },
@@ -839,8 +850,7 @@ export default {
             await this.queryProWellDynamicAnalysisDetail(); //措施井数据
             await this.getzsqdData(); //zxp
 
-            //触发初始选中 （测试没有使用，需要异步使用，还需要）
-            // this.selRadioIterm(this.selCode, this.selTag);
+            //加载表格数据
             if(this.collectWells.length){
                 let data=[];
                 for(let i=0;i<this.collectWells.length;i++){
@@ -873,6 +883,7 @@ export default {
                         });
                         myData[i][t_data.code + 'Message'] = messData&& messData.message ? messData.message : '' ;
                         myData[i][t_data.code] = messData&&messData.itemValue ? messData.itemValue : '';
+                        myData[i].id= Math.random()  *3;
                     }
                     //选中项目不需要测试
                     if (val == t_data.code) {
@@ -904,12 +915,14 @@ export default {
                                 for(let b=0;b<children.length;b++){
                                     if(evalBasisLayers[a].layerCode == children[b].wellId){
                                         isFindOut=true;
+                                        children[b].id=Math.random()  *3;
                                         children[b][key1]=evalBasisLayers[a].message;
                                         children[b][key2]=evalBasisLayers[a].itemValue;
                                     }
                                 }
                                 if(!isFindOut){
                                     children.push({
+                                        id:Math.random()  *3,
                                         wellId:evalBasisLayers[a].layerCode,
                                         [key1]:evalBasisLayers[a].message,
                                         [key2]:evalBasisLayers[a].itemValue,
@@ -919,6 +932,7 @@ export default {
                         }else{
                             evalBasisLayers.forEach((el,i)=>{
                                 children.push({
+                                    id:Math.random()  *3,
                                     wellId:el.layerCode,
                                     [key1]:el.message,
                                     [key2]:el.itemValue
@@ -966,11 +980,13 @@ export default {
                                 for(let b=0;b<children.length;b++){
                                     if(evalBasisLayers[a].layerCode == children[b].wellId){
                                         isFindOut=true;
+                                        children[b].id=Math.random()  *3;
                                         children[b][key1]=evalBasisLayers[a].message;
                                     }
                                 }
                                 if(!isFindOut){
                                     children.push({
+                                        id:Math.random()  *3,
                                         wellId:evalBasisLayers[a].layerCode,
                                         [key1]:evalBasisLayers[a].message,
                                     })
@@ -979,6 +995,7 @@ export default {
                         }else{
                             evalBasisLayers.forEach((el,i)=>{
                                 children.push({
+                                    id:Math.random()  *3,
                                     wellId:el.layerCode,
                                     [key1]:el.message,
                                 })
@@ -1027,11 +1044,13 @@ export default {
                                 for(let b=0;b<children.length;b++){
                                     if(evalBasisLayers[a].layerCode == children[b].wellId){
                                         isFindOut=true;
+                                        children[b].id=Math.random()  *3;
                                         children[b][key1]=evalBasisLayers[a].message;
                                     }
                                 }
                                 if(!isFindOut){
                                     children.push({
+                                        id:Math.random()  *3,
                                         wellId:evalBasisLayers[a].layerCode,
                                         [key1]:evalBasisLayers[a].message,
                                     })
@@ -1040,6 +1059,7 @@ export default {
                         }else{
                             evalBasisLayers.forEach((el,i)=>{
                                 children.push({
+                                    id:Math.random()  *3,
                                     wellId:el.layerCode,
                                     [key1]:el.message,
                                 })
@@ -1088,11 +1108,13 @@ export default {
                                 for(let b=0;b<children.length;b++){
                                     if(evalBasisLayers[a].layerCode == children[b].wellId){
                                         isFindOut=true;
+                                        children[b].id=Math.random()  *3;
                                         children[b][key1]=evalBasisLayers[a].message;
                                     }
                                 }
                                 if(!isFindOut){
                                     children.push({
+                                        id:Math.random()  *3,
                                         wellId:evalBasisLayers[a].layerCode,
                                         [key1]:evalBasisLayers[a].message,
                                     })
@@ -1101,6 +1123,7 @@ export default {
                         }else{
                             evalBasisLayers.forEach((el,i)=>{
                                 children.push({
+                                    id:Math.random()  *3,
                                     wellId:el.layerCode,
                                     [key1]:el.message,
                                 })
@@ -1148,11 +1171,13 @@ export default {
                                 for(let b=0;b<children.length;b++){
                                     if(evalBasisLayers[a].layerCode == children[b].wellId){
                                         isFindOut=true;
+                                        children[b].id=Math.random()  *3;
                                         children[b][key1]=evalBasisLayers[a].message;
                                     }
                                 }
                                 if(!isFindOut){
                                     children.push({
+                                        id:Math.random()  *3,
                                         wellId:evalBasisLayers[a].layerCode,
                                         [key1]:evalBasisLayers[a].message,
                                     })
@@ -1161,6 +1186,7 @@ export default {
                         }else{
                             evalBasisLayers.forEach((el,i)=>{
                                 children.push({
+                                    id:Math.random()  *3,
                                     wellId:el.layerCode,
                                     [key1]:el.message,
                                 })
@@ -1207,11 +1233,13 @@ export default {
                                 for(let b=0;b<children.length;b++){
                                     if(evalBasisLayers[a].layerCode == children[b].wellId){
                                         isFindOut=true;
+                                        children[b].id=Math.random()  *3;
                                         children[b][key1]=evalBasisLayers[a].message;
                                     }
                                 }
                                 if(!isFindOut){
                                     children.push({
+                                        id:Math.random()  *3,
                                         wellId:evalBasisLayers[a].layerCode,
                                         [key1]:evalBasisLayers[a].message,
                                     })
@@ -1220,6 +1248,7 @@ export default {
                         }else{
                             evalBasisLayers.forEach((el,i)=>{
                                 children.push({
+                                    id:Math.random()  *3,
                                     wellId:el.layerCode,
                                     [key1]:el.message,
                                 })
@@ -1529,7 +1558,6 @@ export default {
             if(this.selCode!=val){
                 this.selCode = val; //选中项目
             }else{
-                this.selCode='';
                 this.doSearch();
                 return false;
             }
@@ -1576,10 +1604,11 @@ export default {
                         });
                         myData[i][t_data.code + 'Message'] = messData&& messData.message ? messData.message : '' ;
                         myData[i][t_data.code] = messData&&messData.itemValue ? messData.itemValue : '';
+                        myData[i].id= Math.random()  *3;
                     }
                     //选中项目不需要测试
                     if (val == t_data.code) {
-                        myData[i][t_data.code] = '是'; //默认
+                        // myData[i][t_data.code] = '是'; //默认
                     } else {
                         if (!isNaN(myWellCount[t_data.code])) {
                             t_count = myWellCount[t_data.code];
@@ -1606,12 +1635,14 @@ export default {
                                 for(let b=0;b<children.length;b++){
                                     if(evalBasisLayers[a].layerCode == children[b].wellId){
                                         isFindOut=true;
+                                        children[b].id=Math.random()  *3;
                                         children[b][key1]=evalBasisLayers[a].message;
                                         children[b][key2]=evalBasisLayers[a].itemValue;
                                     }
                                 }
                                 if(!isFindOut){
                                     children.push({
+                                        id:Math.random()  *3,
                                         wellId:evalBasisLayers[a].layerCode,
                                         [key1]:evalBasisLayers[a].message,
                                         [key2]:evalBasisLayers[a].itemValue,
@@ -1621,6 +1652,7 @@ export default {
                         }else{
                             evalBasisLayers.forEach((el,i)=>{
                                 children.push({
+                                    id:Math.random()  *3,
                                     wellId:el.layerCode,
                                     [key1]:el.message,
                                     [key2]:el.itemValue
@@ -1668,11 +1700,13 @@ export default {
                                 for(let b=0;b<children.length;b++){
                                     if(evalBasisLayers[a].layerCode == children[b].wellId){
                                         isFindOut=true;
+                                        children[b].id=Math.random()  *3;
                                         children[b][key1]=evalBasisLayers[a].message;
                                     }
                                 }
                                 if(!isFindOut){
                                     children.push({
+                                        id:Math.random()  *3,
                                         wellId:evalBasisLayers[a].layerCode,
                                         [key1]:evalBasisLayers[a].message,
                                     })
@@ -1681,6 +1715,7 @@ export default {
                         }else{
                             evalBasisLayers.forEach((el,i)=>{
                                 children.push({
+                                    id:Math.random()  *3,
                                     wellId:el.layerCode,
                                     [key1]:el.message,
                                 })
@@ -1729,11 +1764,13 @@ export default {
                                 for(let b=0;b<children.length;b++){
                                     if(evalBasisLayers[a].layerCode == children[b].wellId){
                                         isFindOut=true;
+                                        children[b].id=Math.random()  *3;
                                         children[b][key1]=evalBasisLayers[a].message;
                                     }
                                 }
                                 if(!isFindOut){
                                     children.push({
+                                        id:Math.random()  *3,
                                         wellId:evalBasisLayers[a].layerCode,
                                         [key1]:evalBasisLayers[a].message,
                                     })
@@ -1742,6 +1779,7 @@ export default {
                         }else{
                             evalBasisLayers.forEach((el,i)=>{
                                 children.push({
+                                    id:Math.random()  *3,
                                     wellId:el.layerCode,
                                     [key1]:el.message,
                                 })
@@ -1790,11 +1828,13 @@ export default {
                                 for(let b=0;b<children.length;b++){
                                     if(evalBasisLayers[a].layerCode == children[b].wellId){
                                         isFindOut=true;
+                                        children[b].id=Math.random()  *3;
                                         children[b][key1]=evalBasisLayers[a].message;
                                     }
                                 }
                                 if(!isFindOut){
                                     children.push({
+                                        id:Math.random()  *3,
                                         wellId:evalBasisLayers[a].layerCode,
                                         [key1]:evalBasisLayers[a].message,
                                     })
@@ -1803,6 +1843,7 @@ export default {
                         }else{
                             evalBasisLayers.forEach((el,i)=>{
                                 children.push({
+                                    id:Math.random()  *3,
                                     wellId:el.layerCode,
                                     [key1]:el.message,
                                 })
@@ -1850,11 +1891,13 @@ export default {
                                 for(let b=0;b<children.length;b++){
                                     if(evalBasisLayers[a].layerCode == children[b].wellId){
                                         isFindOut=true;
+                                        children[b].id=Math.random()  *3;
                                         children[b][key1]=evalBasisLayers[a].message;
                                     }
                                 }
                                 if(!isFindOut){
                                     children.push({
+                                        id:Math.random()  *3,
                                         wellId:evalBasisLayers[a].layerCode,
                                         [key1]:evalBasisLayers[a].message,
                                     })
@@ -1863,6 +1906,7 @@ export default {
                         }else{
                             evalBasisLayers.forEach((el,i)=>{
                                 children.push({
+                                    id:Math.random()  *3,
                                     wellId:el.layerCode,
                                     [key1]:el.message,
                                 })
@@ -1909,11 +1953,13 @@ export default {
                                 for(let b=0;b<children.length;b++){
                                     if(evalBasisLayers[a].layerCode == children[b].wellId){
                                         isFindOut=true;
+                                        children[b].id=Math.random()  *3;
                                         children[b][key1]=evalBasisLayers[a].message;
                                     }
                                 }
                                 if(!isFindOut){
                                     children.push({
+                                        id:Math.random()  *3,
                                         wellId:evalBasisLayers[a].layerCode,
                                         [key1]:evalBasisLayers[a].message,
                                     })
@@ -1922,6 +1968,7 @@ export default {
                         }else{
                             evalBasisLayers.forEach((el,i)=>{
                                 children.push({
+                                    id:Math.random()  *3,
                                     wellId:el.layerCode,
                                     [key1]:el.message,
                                 })
@@ -2088,23 +2135,16 @@ export default {
                 this.potentialWellNum+=Number(el.value);
             }
         },
-        //跳转到油井页面
-        goWaterWell(val) {
-            if (val == "oil") {
-                this.$router.push('/singleWellPerformance_oil')
-            }
-        },
         //跳转到分析
         openAnalysis(wellNumber) {
             this.$router.push({
                 name: 'waterAuxiliaryAnalysis',
-                params: {
+                query: {
                     oilField: this.selYtdm,
                     wellId: wellNumber
                 }
             });
         },
-
         //获得对应日期串
         getMyDate(days) {
             let date = new Date();
@@ -2252,6 +2292,7 @@ export default {
                 position: absolute;
                 left:0;
                 top:0;
+                z-index:3;
             }
             .v0{
                 padding-left:400px;
@@ -2606,5 +2647,22 @@ export default {
 ::v-deep .table_header .twoRowHeader{
     display: flex!important;
     justify-content: center;
+}
+::v-deep .doubleHeader .el-table__fixed {
+  height: 100%!important;
+}
+::v-deep .el-table__body-wrapper{
+    height:388px!important;
+}
+::v-deep .el-table__fixed-body-wrapper{
+    top:104px!important;
+    height:388px!important;
+}
+::v-deep .el-table__fixed .el-table__body-wrapper{  
+    top:104px!important;
+    height:388px!important;
+}
+.spActive{
+    color:var(--light-blue-color);
 }
 </style>

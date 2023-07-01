@@ -35,6 +35,8 @@
                 <el-button v-if="isUpdateFile" type="primary" icon="el-icon-upload2" style="margin-left: auto !important" @click="ljpmUploadDialogLast" >上传文档</el-button>
                 <!-- minIo下载 -->
                 <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" :disabled="downloadButton" @click="doDownLoadNew">下载</el-button>
+                <!-- 返回 -->
+                <el-button type="primary" v-if="$route.query.wellId" style="margin-left:15px;" @click="goBack">返回</el-button>
             </div>
             
             <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
@@ -284,6 +286,9 @@
                         });
                 },
             },
+            "$route.query.wellId"(){ // 监听路由变化
+                this.initData();
+            },
         },
         async mounted() {
             await this.initData();
@@ -408,9 +413,9 @@
                 }).then((res) => {
                     if (res.data.code == 200) {
                         this.block = res.data.data.fields;
-                        if (this.$route.params.block) {
+                        if (this.$route.query.block) {
                             //先走传参
-                            this.selectBlock = this.$route.params.block;
+                            this.selectBlock = this.$route.query.block;
                         } else {
                             this.selectBlock = this.selectOilField;
                         }
@@ -430,7 +435,13 @@
                 await wellGroupList(obj).then((res) => {
                     if (res.data.code == 200 && res.data.data && res.data.data.length) {
                         this.newWellGroup = res.data.data;
-                        this.selectWellGroup = this.newWellGroup[0].wellGroupId;
+                        if(this.$route.query.wellId){
+                            let item=this.newWellGroup.find(el=>el.wellGroupName==this.$route.query.wellId);
+                            console.log(item,88)
+                            this.selectWellGroup=item.wellGroupId;
+                        }else{
+                            this.selectWellGroup = this.newWellGroup[0].wellGroupId;
+                        }
                     }
                 });
                 this.doSearch();
@@ -509,6 +520,13 @@
                 });
                 this.$refs.componentCustom.wellGroupName = wellGroupThing ? wellGroupThing.name : '';
                 this.$refs.componentCustom.doDownLoad();
+            },
+            
+            //返回
+            goBack(){
+                this.$router.push({
+                    path:'/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport'
+                })
             },
         },
     };

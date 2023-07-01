@@ -140,7 +140,7 @@
 <script>
     import { fetchOilFields, fetchPlatforms,fetchInjectionWells, fetchInjectionWellsByPlatform,fetchProductionWells, fetchProductionWellsByPlatform} from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import { fetchMeasureInfos,nameAndCode} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
-    import { getWellOutputWaveTable } from "@/api/oilDeposit/rem-04/yieId.js"
+    import { getWellOutputWaveTable, getWellOutputWaveTableDate} from "@/api/oilDeposit/rem-04/yieId.js"
     import { exportExcel } from '@/lib/exportExcel.js';
     import * as D3 from "d3"
     export default {
@@ -194,7 +194,8 @@
                 max2:30,
             };
         },
-        mounted() {
+        async mounted() {
+            console.log('this.$route.query',this.$route.query)
             if(Object.keys(this.$route.query).length){
                 if(this.$route.query.wellIds){
                     let wellIds=JSON.parse(this.$route.query.wellIds);
@@ -202,10 +203,15 @@
                         this.searchForm.wellIds=wellIds.map(el=>el.borepipeId);
                     }
                 }
-                this.searchForm.prodDate=this.$route.query.prodDate,
+                // this.searchForm.prodDate=this.$route.query.prodDate,
                 this.searchForm.prodDateCompare=this.$route.query.prodDateCompare
             }
-            this.initData();
+            await getWellOutputWaveTableDate().then(res=>{
+                if(res.data.code==200){
+                    this.searchForm.prodDate=res.data.data;
+                }
+            })
+            await this.initData();
         },
         methods: {
             //页面初始化信息
@@ -304,7 +310,7 @@
                         if(tableData.length){
                             tableData.forEach((el,i)=>{
                                 if(el.oilProdDaily!==null){//产油对比
-                                    let comparisonOilProduction=this.numReduce(el.oilProdDaily,el.oilProdDailyCompare);
+                                    let comparisonOilProduction=this.numReduce(el.oilProdDaily,el.oilProdDailyCompare?el.oilProdDailyCompare:'0.0');
                                     tableData[i].comparisonOilProduction=comparisonOilProduction;
                                     minMax.push(Math.abs(comparisonOilProduction));
                                 }
@@ -328,6 +334,12 @@
             },
             //两数相减
             numReduce(num1, num2){
+                if(!num1){
+                    num1='0'
+                }
+                if(!num2){
+                    num2='0'
+                }
             	const num1Digits = (num1.toString().split('.')[1] || '').length;
             	const num2Digits = (num2.toString().split('.')[1] || '').length;
             	const baseNum = Math.pow(10, Math.max(num1Digits, num2Digits));
@@ -335,40 +347,8 @@
                 const rnum= num.toFixed(2);
                 return Number(rnum);
             },
-            //两数相乘
-            accMul(arg1,arg2){
-            	var m = 0,
-            		s1 = arg1.toString(),
-            		s2 = arg2.toString();
-            	try {
-            		m += s1.split(".")[1].length
-            	} catch (e) {}
-            	try {
-            		m += s2.split(".")[1].length
-            	} catch (e) {}
-            	return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
-            },
-            //两数相除
-            numExcept(a, b) {
-                a = isNaN(a) ? 0 : a
-                b = isNaN(b) ? 0 : b
-                var c, d, e = 0,
-                    f = 0;
-                try {
-                    e = a.toString().split(".")[1].length;
-                } catch (g) {
-                    g == g
-                }
-                try {
-                    f = b.toString().split(".")[1].length;
-                } catch (g) {
-                    g == g
-                }
-                return c = Number(a.toString().replace(".", "")), d = Number(b.toString().replace(".", "")), this.accMul(c / d, Math.pow(10, f - e));
-            },
             //保留两位小数
             formatter(row, column, cellValue, index){
-                console.log(row, column, cellValue, index)
                 if (cellValue) {
                     return Number(cellValue).toFixed(2);
                 } else {
