@@ -116,7 +116,7 @@ export default {
                     boxText: '剩余油分布状况分析',
                     boxBottomText: [{
                         name: '剩余油甜点分析',
-                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence/optimization'
+                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/indexHome'
                     }],
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;'

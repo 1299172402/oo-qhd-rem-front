@@ -264,7 +264,7 @@ import {
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 
 export default {
-    name:'index',
+    name:'indexHome',
     components: {
         Echart
     },

@@ -6,7 +6,7 @@
           header-title="分层注入量"
           :is-show-max-btn="true"
       >
-          <button class="detailLinkBtn" @click="linkroute('/intelligence1/index')">详细</button>
+          <button class="detailLinkBtn" @click="linkroute('/intelligence1/indexHome')">详细</button>
           <Echart :chart-data="option" width="100%" height="100%"></Echart>
       </info-window>
   </div>
