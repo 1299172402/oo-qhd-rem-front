@@ -195,7 +195,7 @@
             };
         },
         watch: {
-            "$route.query"(){
+            async "$route.query"(){
                 if(Object.keys(this.$route.query).length){
                     if(this.$route.query.wellIds){
                         let wellIds=JSON.parse(this.$route.query.wellIds);
