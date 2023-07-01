@@ -99,35 +99,12 @@
                             <el-col :span="4" style="height: 100%">
                                 <pagePanel headerTitle="注水强度" style="margin-top:0;height:100%;">
                                     <el-row :gutter="10" style="height: 100%">
-                                        <el-radio-group v-model="selCode"  style="width: 100%;">
-                                            <!-- 等模型 -->
-                                            <el-col :span="24">
-                                                <el-radio-button class="checkButton" label="0001">
-                                                    注水强度偏高{{`(` + this.zsqdForm.evaluationBiasTall + `)`}}
-                                                </el-radio-button>
-                                            </el-col>
-                                            <el-col :span="24">
-                                                <el-radio-button class="checkButton" label="0002">
-                                                    注水强度偏低{{`(` +  this.zsqdForm.evaluationBiasLow  + `)`}}
-                                                </el-radio-button>
-                                            </el-col>
-
-                                            <el-col :span="24">
-                                                <el-radio-button class="checkButton" label="BG" >
-                                                    注水强度变高{{`(` +  this.zsqdForm.evaluationChangeTall  + `)`}}
-                                                </el-radio-button>
-                                            </el-col>
-                                            <el-col :span="24">
-                                                <el-radio-button class="checkButton" label="BD">
-                                                    注水强度变低{{`(` +  this.zsqdForm.evaluationChangeLow  + `)`}}
-                                                </el-radio-button>
-                                            </el-col>
-                                            <el-col :span="24">
-                                                <el-radio-button class="checkButton">
-                                                    正常{{`(` +  this.zsqdForm.evaluationNormal  + `)`}}
-                                                </el-radio-button>
-                                            </el-col>
-                                        </el-radio-group>
+                                        <el-col v-for="(item,index) in zsqdForm" :key="index" :span="24">
+                                            <!--  @click.stop="selRadioIterm(item.code,'theGroundBecause')" -->
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']">
+                                                {{item.code}}({{item.value}})
+                                            </el-button>
+                                        </el-col>
                                     </el-row>
                                 </pagePanel>
                             </el-col>
@@ -466,20 +443,24 @@
                                         <div class="z_schedule">
                                             <span class="sp1">正常：</span>
                                             <div class="z_proess">
-                                                <span class="z_proess_sp1" style="width:0%"><b>{{isNaN(zsqdForm.evaluationNormal)?'0':zsqdForm.evaluationNormal }}</b></span>
+                                                <span class="z_proess_sp1" :style="{width:zsqdNum.zczb+'%'}">
+                                                    <b @click="zsqdSwitch=true">{{zsqdNum.zcnum}}</b>
+                                                </span>
                                                 <span class="z_proess_sp2"></span>
                                             </div>
-                                            <span class="sp2">异常：<b>{{ isNaN(Number(zsqdForm.evaluationBiasTall) +  Number(zsqdForm.evaluationBiasLow) + Number(zsqdForm.evaluationChangeTall) + Number(zsqdForm.evaluationChangeLow)) ? 0 : Number(zsqdForm.evaluationBiasTall) +  Number(zsqdForm.evaluationBiasLow) + Number(zsqdForm.evaluationChangeTall) + Number(zsqdForm.evaluationChangeLow)}}</b></span>
+                                            <span class="sp2">异常：<b @click="zsqdSwitch=false">{{zsqdNum.ycnum}}</b></span>
                                         </div>
                                     </div>
                                     <div class="z-row-center">
-                                        <div class="numBtn" @click="$router.push({name:'attributtonAnalysis',query:{'selectBlock':selectBlock,'platform':platform,'wellId':wellId,'link':4,'evalResult':selCode,'currentDate':currentDate}})" v-if="Number(zsqdForm.evaluationBiasTall)>0">
-                                            <span class="sp1">{{zsqdForm.evaluationBiasTall}}</span>
-                                            <span class="sp2">注水强度偏高</span>
+                                        <!--  @click="((val)=>{selRadioIterm(item.code,'zsqdForm')})" -->
+                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']" v-for="(item,index) in zsqdForm" :key="index" v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!zsqdSwitch">
+                                            <span class="sp1">{{item.value}}</span>
+                                            <span class="sp2">{{item.name}}</span>
                                         </div>
-                                        <div class="numBtn" @click="$router.push({name:'attributtonAnalysis',query:{'selectBlock':selectBlock,'platform':platform,'wellId':wellId,'link':4,'evalResult':selCode,'currentDate':currentDate}})" v-if="Number(zsqdForm.evaluationBiasLow)>0">
-                                            <span class="sp1">{{zsqdForm.evaluationBiasLow}}</span>
-                                            <span   class="sp2">注水强度偏低</span>
+                                        <!-- @click="((val)=>{selRadioIterm(item.code,'zsqdForm')})" -->
+                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']" v-for="(item,index) in zsqdForm" :key="index" v-if="item.name=='正常'&&zsqdSwitch">
+                                            <span class="sp1">{{item.value}}</span>
+                                            <span class="sp2">{{item.name}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -626,13 +607,13 @@ export default {
                 code: "workingCondition",
                 name: "注水工况"
             }],
-            //注水强度form菜单数据
-            zsqdForm:[],
+            
             //超欠注原因分析表头
-            overUnderInjectionAnalysisTab: [{
-                code: "theGroundBecause",
-                name: "地面原因"
-            },
+            overUnderInjectionAnalysisTab: [
+                {
+                    code: "theGroundBecause",
+                    name: "地面原因"
+                },
                 {
                     code: "wellboreReason",
                     name: "井筒原因"
@@ -658,7 +639,6 @@ export default {
                 yczb:0,
             },
             trendOfIndicatorsSwitch:false,//展示异常false, 正常 true
-            trendOfIndicatorsCode:'',//正常的code
             //井层注水工况
             workingCondition: [],
             workingCondNum:{
@@ -685,6 +665,16 @@ export default {
             formationReason: [],
             //停注恢复
             stopInjectionRecovery: [],
+            //注水强度form菜单数据
+            zsqdForm:[],
+            zsqdNum:{
+                allnum:0,
+                zcnum:0,
+                ycnum:0,
+                zczb:0,
+                yczb:0,
+            },
+            zsqdSwitch:false,//展示异常false, 正常 true
             //措施推荐可用项目
             recommendedMeasuresOptions: [],
             //获取措施效果数据
@@ -808,26 +798,7 @@ export default {
                 this.doSearch();
             }
         },
-        //获取注水强度数据
-        getzsqdData(){
-            let assetCode = this.platform,reservoirUnitId = this.selectBlock
-            if(assetCode == '3FC9A818F5BC43B88270DB80BBB3018F' ){
-                assetCode = ''
-            }
-            if(reservoirUnitId == '3FC9A818F5BC43B88270DB80BBB3018F' ){
-                reservoirUnitId = ''
-            }
-            let params = {
-                assetCode:assetCode,
-                date:this.currentDate,
-                ogfId:this.selYtdm,
-                reservoirUnitId:reservoirUnitId,
-                wellId:this.wellId
-            }
-            queryEvaluationWaterInjCount(params).then((res) =>{
-                this.zsqdForm = res.data.data[0]
-            })
-        },
+        
         //进行数据查询处理
         async doSearch() {
             //加上重新搜索清空选择 和 表格数据
@@ -848,7 +819,7 @@ export default {
             await this.queryStopInjectionRecovery(); //停注恢复
             await this.queryRecommendedMeasures(); //措施推荐
             await this.queryProWellDynamicAnalysisDetail(); //措施井数据
-            await this.getzsqdData(); //zxp
+            await this.getzsqdData(); //获取注水强度数据
 
             //加载表格数据
             if(this.collectWells.length){
@@ -1535,6 +1506,47 @@ export default {
                     this.initRecommendedMeasuresWells(); //生成井清单
                 }
             });
+        },
+        //获取注水强度数据--zxp
+        async getzsqdData(){
+            let assetCode = this.platform,reservoirUnitId = this.selectBlock
+            if(assetCode == '3FC9A818F5BC43B88270DB80BBB3018F' ){
+                assetCode = ''
+            }
+            if(reservoirUnitId == '3FC9A818F5BC43B88270DB80BBB3018F' ){
+                reservoirUnitId = ''
+            }
+            let params = {
+                assetCode:assetCode,
+                date:this.currentDate,
+                ogfId:this.selYtdm,
+                reservoirUnitId:reservoirUnitId,
+                wellId:this.wellId
+            }
+            await queryEvaluationWaterInjCount(params).then((res) =>{
+                if(res.data.code==200){
+                    let data=res.data.data;
+                    this.zsqdNum.allnum=0;
+                    this.zsqdNum.zcnum=0;
+                    this.zsqdNum.ycnum=0;
+                    data.forEach((el,i)=>{
+                        if(el.wells){
+                            let wells=el.wells.split(',');
+                            this.collectWells.push(wells);
+                        }
+                        this.zsqdNum.allnum+=Number(el.value);
+                        if(el.name=='正常'){
+                            this.zsqdNum.zcnum=Number(el.value);
+                        }else{
+                            data[i].isShow=Number(el.value)?true:false;
+                            this.zsqdNum.ycnum+=Number(el.value);
+                        }
+                    })
+                    this.zsqdNum.zczb=this.zsqdNum.zcnum/this.zsqdNum.allnum * 100;
+                    this.zsqdNum.yczb=this.zsqdNum.yczb/this.zsqdNum.allnum * 100;
+                    this.zsqdForm = data;
+                }
+            })
         },
         //初始化有措施的井清单
         initRecommendedMeasuresWells() {
