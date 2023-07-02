@@ -31,20 +31,6 @@
                     <div class="rowBox" style="margin-bottom:20px;">
                         <div class="row" style="margin-right:20px;">
                             <info-window infoWidth="100%" infoHeight="456px" :headerTitle="oilFieldName + '产量跟踪预警分析'" isShowMaxBtn style="margin-top:0;">
-                                <!-- <div style="position: absolute;bottom: 8%;left:450px;">
-                                    <div style="display:inline-block;margin: 10px">
-                                        <div style="border-radius: 50%;height: 8px;width: 7.4px;background-color: #FF5844;display:inline-block;margin-right:4px;"></div>
-                                        <span style="font-size: 14px;color: #8FA4CC">红色预警</span>
-                                    </div>
-                                    <div style="display:inline-block;margin: 10px">
-                                        <div style="border-radius: 50%;height: 8px;width: 7.4px;background-color: #1379F7;display:inline-block;margin-right:4px;"></div>
-                                        <span style="font-size: 14px;color: #8FA4CC">蓝色预警</span>
-                                    </div>
-                                    <div style="display:inline-block;margin: 10px">
-                                        <div style="border-radius: 50%;height: 8px;width: 7.4px;background-color: #F5BE43;display:inline-block;margin-right:4px;"></div>
-                                        <span style="font-size: 14px;color: #8FA4CC">黄色预警</span>
-                                    </div>
-                                </div> -->
                                 <Echart :chart-data="echartOption" height="400px" :events="['click','legendselectchanged']" @click="clickCall"></Echart>
                             </info-window>
                         </div>
@@ -921,9 +907,6 @@
                     path:'/yield/statisticalTableProduction',
                     query:{
                         wellIds:JSON.stringify(this.productAnaysisTable),
-                        // prodDate:this.selectDate[1],
-                        prodDate:new Date(this.selectDate[1]).addDays(-1).format('yyyy-MM-dd'),
-                        prodDateCompare:new Date(this.selectDate[1]).addDays(-2).format('yyyy-MM-dd'),
                     }
                 })
             },

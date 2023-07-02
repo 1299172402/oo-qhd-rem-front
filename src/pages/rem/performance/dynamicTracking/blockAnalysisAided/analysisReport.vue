@@ -12,7 +12,7 @@
                 </div>
                 <div style="margin-left: 10px;">
                     <span>区块：</span>
-                    <el-select v-model="selectBlock" style="width: 180px" filterable clearable>
+                    <el-select v-model="selectBlock" style="width: 180px" filterable>
                         <el-option v-for="item in blocks" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                     </el-select>
                 </div>
@@ -1346,6 +1346,9 @@
             },
             //点击井跳转 动态分析界面
             getBorepipeTypeApi(wellNo){
+                if(wellNo.includes('井区')){
+                    return false;
+                }
                 getBorepipeType(wellNo).then(res=>{
                     if(res.data.code==200){
                         let data=res.data.data;
@@ -1356,6 +1359,10 @@
                         }else if(data==2){//油井
                             this.$router.push({
                                 path:`/dynamicManagement/dynamicTrackingOilAuxiliary/oilAnalysisReport?wellNo=${wellNo}`
+                            })
+                        }else if(data==3){//井组
+                            this.$router.push({
+                                path:`/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport?wellId=${wellNo}`
                             })
                         }
                     }

@@ -29,6 +29,8 @@
                 <el-button v-if="activeName=='staticData'&&currentModule=='connecting'" type="primary" icon="el-icon-download" style="margin-left:15px;" @click="doDownLoad">下载</el-button>
                 <!-- minIo下载 -->
                 <el-button v-else type="primary" icon="el-icon-download" style="margin-left:15px;" :disabled="downloadButton" @click="doDownLoadNew">下载</el-button>
+                
+                <el-button type="primary" v-if="$route.query.wellId" style="margin-left:15px;" @click="goBack">返回</el-button>
             </div>
             <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
                 <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
@@ -531,6 +533,9 @@
                             this.component = () => import(`./modules/staticData/smallFloorPlan.vue`);
                         });
                 },
+            },
+            "$route.query.wellId"(){ // 监听路由变化
+                this.initData();
             },
         },
         mounted() {
@@ -1050,6 +1055,12 @@
                         param.fileList = [param.file];
                         this.$message.error("文件上传失败");
                     });
+            },
+            //返回
+            goBack(){
+                this.$router.push({
+                    path:'/dynamicManagement/dynamicTrackingOilAuxiliary/oilAnalysisReport'
+                })
             },
         },
     };

@@ -11,17 +11,17 @@
                         </el-option>
                     </el-select>
                     <span style="margin-left:15px;">区块：</span>
-                    <el-select v-model="selBlock" class="f2" style="width:180px" filterable clearable @change="queryWellGroupList">
+                    <el-select v-model="selBlock" class="f2" style="width:180px" filterable @change="queryWellGroupList">
                         <el-option v-for="item in blockData" :key="item.fieldId" :label="item.name" :value="item.fieldId">
                         </el-option>
                     </el-select>
                     <span style="margin-left:15px;">水井井组：</span>
-                    <el-select v-model="searchKeys" class="f2" style="width:180px" filterable clearable>
+                    <el-select v-model="searchKeys" class="f2" style="width:200px" filterable>
                         <el-option v-for="item in wellGroupList" :key="item.wellGroupId" :label="item.wellGroupName" :value="item.wellGroupId">
                         </el-option>
                     </el-select>
                     <span style="margin-left:15px;">年月：</span>
-                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd" :clearable='false'></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
@@ -172,17 +172,17 @@
                         </el-option>
                     </el-select>
                     <span style="margin-left:15px;">区块：</span>
-                    <el-select v-model="selBlock" class="f2" style="width:180px" filterable clearable @change="queryWellGroupList">
+                    <el-select v-model="selBlock" class="f2" style="width:180px" filterable @change="queryWellGroupList">
                         <el-option v-for="item in blockData" :key="item.fieldId" :label="item.name" :value="item.fieldId">
                         </el-option>
                     </el-select>
                     <span style="margin-left:15px;">水井井组：</span>
-                    <el-select v-model="searchKeys" class="f2" style="width:180px" filterable clearable>
+                    <el-select v-model="searchKeys" class="f2" style="width:200px" filterable>
                         <el-option v-for="item in wellGroupList" :key="item.wellGroupId" :label="item.wellGroupName" :value="item.wellGroupId">
                         </el-option>
                     </el-select>
                     <span style="margin-left:15px;">年月：</span>
-                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd" :clearable='false'></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
@@ -372,7 +372,9 @@
                                     <div class="z-row-right" style="position: relative;top: 48px;">
                                         <div class="name">措施推荐</div>
                                         <div class="num">
-                                            <span  v-for="(item,index) in recommendedMeasuresOptions" :key="index" @click="((val)=>{selRadioIterm(item.code,'recommendedMeasuresOptions')})">
+                                            <span 
+                                                :class="[item.code==selCode?'spActive':'']"
+                                                 v-for="(item,index) in recommendedMeasuresOptions" :key="index" @click.stop="selRadioIterm(item.code,'recommendedMeasuresOptions')">
                                                 {{item.name}}：
                                                 <b style="color: #FFC835; font-size: 14px;">{{item.value}}</b>
                                             </span>
@@ -556,6 +558,15 @@
         mounted() {
             this.getDateApi();
         },
+        watch: {
+            "$route.query.wellNo"(){ // 监听路由变化
+                if(this.$route.query.wellId){//判断路由是否有井号参数
+                    let wellItem=this.wellGroupList.find(e=>e.wellGroupName==this.$route.query.wellId);
+                    this.searchKeys=wellItem.wellId;
+                    this.doSearch();
+                }
+            },
+        },
         methods: {
             //重置
             resetting(){
@@ -610,6 +621,10 @@
                         this.wellGroupList.unshift({wellGroupName: '全部',wellGroupId: ''});
                     }
                     if(this.initTypes==1){
+                        if(this.$route.query.wellId){//判断路由是否有井组参数
+                            let wellItem=this.wellGroupList.find(e=>e.wellGroupName==this.$route.query.wellId);
+                            this.searchKeys=wellItem.wellGroupId;
+                        }
                         this.doSearch();
                         this.initTypes--;
                     }
@@ -1406,7 +1421,7 @@
             openAnalysis(wellNumber) {
                 this.$router.push({
                     name: 'wellGroupAnalysisAssistant',
-                    params: {
+                    query: {
                         oilField: this.selYtdm,
                         block: this.selBlock,
                         wellId: wellNumber,
@@ -2074,5 +2089,8 @@
         display: flex!important;
         justify-content: center;
     }
-
+    
+    .spActive{
+        color:var(--light-blue-color);
+    }
 </style>

@@ -6,7 +6,7 @@
           header-title="分层注入量"
           :is-show-max-btn="true"
       >
-          <button class="detailLinkBtn" @click="linkroute('/intelligence1/index')">详细</button>
+          <button class="detailLinkBtn" @click="linkroute('/intelligence1/indexHome')">详细</button>
           <Echart :chart-data="option" width="100%" height="100%"></Echart>
       </info-window>
   </div>
@@ -100,7 +100,8 @@ export default {
       queryStratifiedInjectionDetails() {
           let params = {
               blockId: 'YCFXDY8B643EDC9007F96F570600457D',
-              startTime: new Date().format('YYYY-MM'),
+              // startTime: new Date().format('YYYY-MM'),
+              startTime: '2023-05',
               timeStatus: '1',
               type: 1
           }

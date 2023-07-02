@@ -28,6 +28,8 @@
                 <el-button v-if="currentModule=='wellNetworkDiagram'||currentModule=='completionStringDrawing'||currentModule=='wellTestReport'||currentModule=='drillingReport'||currentModule=='completionReport'||currentModule=='geologicalSummary'" type="primary" icon="el-icon-upload2" style="margin-left: auto !important" @click="ljpmUploadDialogLast" >上传文档</el-button>
                 <!-- minIo下载 -->
                 <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" :disabled="downloadButton" @click="doDownLoadNew">下载</el-button>
+                
+                <el-button type="primary" v-if="$route.query.wellId" style="margin-left:15px;" @click="goBack">返回</el-button>
             </div>
             
             <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
@@ -394,7 +396,12 @@
                         console.log('走catch')
                     });
                 },
-            }
+            },
+            "$route.query.wellId"(){ // 监听路由变化 
+                console.log("id 变化了",this.$route.query.wellId);
+                this.initData();
+                this.doSearch()
+            },
         },
         mounted() {
             this.initData();
@@ -501,8 +508,8 @@
             },
             //初始化 数据
             async initData() {
-                let oilFeildId = this.$route.params.oilField;
-                let wellId = this.$route.params.wellId;
+                let oilFeildId = this.$route.query.oilField;
+                let wellId = this.$route.query.wellId;
                 console.log(oilFeildId, wellId);
                 //获得油田信息给下拉列表
                 await fetchOilFields().then((res) => {
@@ -539,7 +546,7 @@
                         this.wellData = res.data.data.injectionWell;
                     }
                 });
-                if (wellId == undefined || wellId == null) {
+                if (!wellId) {
                     if (this.wellData && this.wellData.length > 0) {
                         this.selectWellId = this.wellData[0].wellId;
                     }
@@ -627,6 +634,12 @@
             changeChildParam(val) {
                 this.childParam = val;
                 console.log(this.childParam);
+            },
+            //返回 
+            goBack(){
+                this.$router.push({
+                    path:'/dynamicManagement/dynamicTrackingWaterAuxiliary/waterAnalysisReport'
+                })
             },
         },
     };

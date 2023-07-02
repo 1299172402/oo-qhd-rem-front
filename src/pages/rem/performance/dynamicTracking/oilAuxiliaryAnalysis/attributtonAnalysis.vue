@@ -1254,7 +1254,7 @@ export default {
         } else if (this.link == '5') {
             this.title = '油井递减率归因分析'
         } else if (this.link == '6') {
-            this.queryData.month = '2023-03'
+            this.queryData.month = '2023-05'
             // this.queryData.wellGroup = 
             this.title = '井组生产动态归因分析'
         }
@@ -1346,6 +1346,11 @@ export default {
                 objectId: this.queryData.wellGroup
             }
             if (this.link == '4') {
+                if(this.evalResult == '注水强度变高'){
+                    params.evalResult = 'BG'
+                }else{
+                    params.evalResult = 'BD'
+                }
                 queryWaterInjIntensityAttributeAnalysis(params).then(res => {
                     this.tableData = res.data.data.rows
                     this.pageTotal = res.data.data.total
