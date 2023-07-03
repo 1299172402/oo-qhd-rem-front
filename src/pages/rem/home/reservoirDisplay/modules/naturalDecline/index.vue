@@ -33,17 +33,6 @@ export default {
                 start: 95,
                 type: "inside",
             },
-            // toolbox: {
-            //     show: true,
-            //     feature: {
-            //         saveAsImage: {
-            //             name: "自然递减率",
-            //             pixelRatio: 15,
-            //             //值越大分辨率越高,下载的图片越清晰
-            //             backgroundColor: "#022644",
-            //         },
-            //     },
-            // },
             xAxis: {
                 type: "category",
                 axisLabel: {
@@ -117,15 +106,7 @@ export default {
               if (res.data.code == 200) {
                   let seriesData = [];
                   let barChartData = res.data.data.chart.barDataSets[0].barDatas;
-                  /*barChartData.forEach((item, index) => {
-                let point = [];
-                let label = item.label.split('-');
-                point.push(label[0] + '-' + label[1]);
-                point.push(item.value);
-                seriesData.push(point);
-              });*/
                   seriesData = this.getBarChartSeries(barChartData);
-                  //console.log(seriesData);
                   this.naturalDeclineRate.yAxis.max = null
                   this.naturalDeclineRate.yAxis.min = null
                   this.naturalDeclineRate.series.data = seriesData;
@@ -145,11 +126,6 @@ export default {
                   barData.name = label[0] + "-" + label[1];
                   barData.label = {
                       show: false,
-                      /*normal: {
-                  position: "top",
-                  color: "#fff",
-                  fontSize: 14,
-                },*/
                   };
                   barData.itemStyle = {
                       color: "#1379F7",
@@ -163,11 +139,6 @@ export default {
                   barData.name = label[0] + "-" + label[1];
                   barData.label = {
                       show: false,
-                      /*normal: {
-                  position: "bottom",
-                  color: "#fff",
-                  fontSize: 14,
-                },*/
                   };
                   barData.itemStyle = {
                       color: "#FF7135",

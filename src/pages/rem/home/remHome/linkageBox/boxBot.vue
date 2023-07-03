@@ -44,7 +44,6 @@ export default {
     watch:{
         currentList:{
             handler(Nval){
-                console.log(Nval);
                 this.show(Nval.showFlag)
             },
             deep:true
