@@ -35,6 +35,13 @@ export default [
         component: () => import('@/pages/rem/home/reservoirDisplay/detailPage/oilEventDetail.vue'),
         meta: { title: '油田大事件详情',icon: 'icon' },
       },
+        {
+            path: 'problemWellStatistics',
+            name: 'problemWellStatistics',
+            hidden: true,
+            component: () => import('@/pages/rem/home/reservoirDisplay/table/problemWellStatistics.vue'),
+            meta: { title: '问题井详细',icon: 'icon' },
+        },
     
     ],
     

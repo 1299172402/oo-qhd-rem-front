@@ -188,6 +188,7 @@ export default {
         // this.$set(this.month, 0, this.queryData.startTime);
         // this.$set(this.month, 1, this.queryData.endTime);
         // this.startmonth = this.month
+        // 暂用
         this.queryData.startTime ='2022-01-01';
         this.queryData.endTime = '2022-12-31';
         this.month = ['2022-01-01','2022-12-31']
