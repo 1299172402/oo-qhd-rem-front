@@ -446,7 +446,7 @@
         <div class="headerinfo">
           账号
         </div>
-        <el-row type="flex" justify="start" style="margin-top: 30px">
+        <el-row type="flex" justify="start" style="margin-top: 15px">
           <el-col :span="8">
             <el-form-item label="用户名称" prop="nickName">
               <el-input
@@ -481,7 +481,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row type="flex" justify="start" style="margin: 15px 0">
+        <el-row type="flex" justify="start" style="margin: 5px 0">
           <el-col :span="8">
             <el-form-item label="账号邮箱" prop="email">
               <el-input
@@ -534,7 +534,7 @@
           </el-col>
         </el-row>
         <el-row />
-        <el-row v-if="form.userId == undefined" style="display: block;">
+        <el-row v-if="form.userId == undefined" style="display: block;margin-bottom: 5px">
           <el-col :span="8">
             <el-form-item label="用户密码" prop="password">
               <el-input
@@ -581,14 +581,13 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <div class="headerinfo" style="margin-bottom: 30px">
+        <div class="headerinfo" style="margin-bottom: 15px">
           角色与岗位信息
         </div>
         <el-form-item label="用户角色" prop="roleIds">
           <el-select
             v-model="form.roleIds"
             :disabled="form.ehr === '0' ? false : keys.includes('roleIds')"
-            style="margin-bottom: 20px"
             filterable
             class="customSelect"
             multiple
@@ -625,6 +624,7 @@
           </el-select> -->
           <el-select
             v-model="form.tempPostId"
+            style="margin-top: 5px"
             filterable
             :disabled="form.ehr === '0' ? false : keys.includes('postIds')"
             class="customSelect"

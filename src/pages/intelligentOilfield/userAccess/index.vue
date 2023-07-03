@@ -73,9 +73,9 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item v-show="activeName === 'second'" label="应用分类" prop="appCategory">
+        <el-form-item v-show="activeName === 'second'" label="应用分类" prop="apply">
           <el-select
-            v-model="queryParams.appCategory"
+            v-model="queryParams.apply"
             placeholder="请选择应用分类"
             clearable
             style="width: 240px"
@@ -336,7 +336,7 @@ export default {
         beginTime: undefined,
         endTime: undefined,
         appName: undefined,
-        appCategory: undefined,
+        apply: undefined,
         tenantId: undefined
       },
       deptSelect: [],
@@ -415,7 +415,7 @@ export default {
           pageNum: this.queryParams.pageNum,
           pageSize: this.queryParams.pageSize,
           appName: this.queryParams.appName ? this.queryParams.appName : undefined,
-          appCategory: this.queryParams.appCategory ? this.queryParams.appCategory : undefined,
+          apply: this.queryParams.apply ? this.queryParams.apply : undefined,
           tenantId: this.queryParams.tenantId ? this.queryParams.tenantId : undefined
         };
         appAccessList(param).then(response => {
