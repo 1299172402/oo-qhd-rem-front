@@ -98,7 +98,6 @@
                     <div class="boxfoot"></div>
                 </div> 
             </div>
-          
         </pagePanel>
       </div>
     </div>
