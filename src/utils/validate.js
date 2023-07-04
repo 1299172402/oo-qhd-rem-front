@@ -119,6 +119,12 @@ function getLengthLE(length, required = true, otherRuleArray = [], trigger = "ch
 }
 
 // 必填且字数少于20个
-export const requiredLengthLE20 = (msg = "") => getLengthLE(20, undefined, undefined, undefined, msg);
 export const arrayRequired = [{ type: "array", required: true, message: "必填", trigger: ["blur", "change"] }];
 export const simpleRequired = [{ required: true, message: "必填", trigger: ["blur", "change"] }];
+
+// 可自定义提示消息的验证
+export const requiredLengthLE20 = (msg = "") => getLengthLE(20, undefined, undefined, undefined, msg);
+export const customMsgRequired = (msg = "", type = "input", completeMsg, other = {}) => {
+  const message = completeMsg || `请${type === "input" ? "输入" : "选择"}${msg}`;
+  return [{ required: true, message, trigger: ["blur", "change"], ...other }];
+};

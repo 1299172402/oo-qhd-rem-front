@@ -118,15 +118,15 @@ export default Vue.extend({
       name
     } = this.$route;
 
-    if (localStorage.getItem("tabRouterList")) this.getTabRouterListCache();
+    if (sessionStorage.getItem("tabRouterList")) this.getTabRouterListCache();
     this.$store.commit("tabRouter/appendTabRouterList", { path, title, name, isAlive: true });
   },
   methods: {
     getTabRouterListCache() {
-      this.$store.commit("tabRouter/initTabRouterList", JSON.parse(localStorage.getItem("tabRouterList")));
+      this.$store.commit("tabRouter/initTabRouterList", JSON.parse(sessionStorage.getItem("tabRouterList")));
     },
     setTabRouterListCache() {
-      localStorage.setItem("tabRouterList", JSON.stringify(this.tabRouterList));
+      sessionStorage.setItem("tabRouterList", JSON.stringify(this.tabRouterList));
     }
   }
 });

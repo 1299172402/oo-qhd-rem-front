@@ -9,6 +9,7 @@
       <div
         v-if="showBtn"
         style="width: 100%;text-align: right"
+        class="maxDivBox"
       >
         <el-tooltip
           class="item"

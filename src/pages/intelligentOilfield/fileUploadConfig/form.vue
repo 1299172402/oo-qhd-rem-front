@@ -124,6 +124,7 @@
           :min="0"
           :title="model.maxSize"
           placeholder="请输入允许文件的最大大小"
+          @input.native="maxSizeChange"
         />
       </el-form-item>
       <el-form-item label="允许图片的宽度：" prop="imageWidth" class="form-layout__item-col2">
@@ -268,6 +269,11 @@ export default {
         this.model.bucketName = undefined;
         this.model.bucketType = undefined;
         this.model.allowFileExtensions = undefined;
+      }
+    },
+    maxSizeChange(e) {
+      if (e.target.value) {
+        this.$refs.Form.clearValidate("maxSize");
       }
     }
   }

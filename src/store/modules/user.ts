@@ -334,7 +334,7 @@ const actions = {
     //   if(res?.data?.code === 200) {
       // 解决重新登录系统标签页未关闭的问题
       store.commit("tabRouter/removeTabRouterList");
-      localStorage.removeItem("tabRouterList");
+      sessionStorage.removeItem("tabRouterList");
       commit("SETTENANTCODE", { value: "", state: false });
       // removeToken();
       commit("removeToken");

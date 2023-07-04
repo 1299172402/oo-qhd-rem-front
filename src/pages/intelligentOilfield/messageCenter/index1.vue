@@ -166,21 +166,17 @@
         <!-- <el-button style="position: absolute; top: -33px; left: 0" type="primary" @click="handleToPage()">
           信息维护
         </el-button> -->
-        <!-- TODO: Maybe change back -->
-        <!-- @click="openIframeDialogMethods(ifameList[0])" -->
         <el-button
           style="position: absolute; top: -33px; left: 0"
           type="primary"
-          @click="openIframeDialogLink(dict.type.hailu_link_url.find(item=>item.value === '海上链路总览URL').label, dict.type.hailu_has_token.find(item=>item.value === '海上链路总览是否带token').label)"
+          @click="openIframeDialogMethods(ifameList[0])"
         >
           {{ ifameList[0].name }}
         </el-button>
-        <!-- TODO: Maybe change back -->
-        <!-- @click="openIframeDialogMethods(ifameList[1])" -->
         <el-button
           style="position: absolute; top: -33px; left: 110px"
           type="primary"
-          @click="openIframeDialogLink(dict.type.hailu_link_url.find(item=>item.value === '云端链路总览URL').label, dict.type.hailu_has_token.find(item=>item.value === '云端链路总览是否带token').label)"
+          @click="openIframeDialogMethods(ifameList[1])"
         >
           {{ ifameList[1].name }}
         </el-button>
@@ -198,7 +194,10 @@
           <div class="topImage g-row-flex-HV" style="position: relative; margin-top: 10px">
             <div
               class="g-row-flex-HV greenBg"
-              :class="[findDataByStartAndEnd('Msg', 'Msg')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
+              :class="[
+                findDataByPoint('Msg', 'class'),
+                findDataByStartAndEnd('Msg', 'Msg')?.pointShowUrl ? 'pointerCursor' : 'autoCursor'
+              ]"
               @click="openPointsLink(findDataByStartAndEnd('Msg', 'Msg')?.pointShowUrl)"
             >
               消息中心
@@ -264,7 +263,7 @@
               class="g-row-flex-HV"
               :class="[
                 findDataByPoint('BigData_Apps', 'class'),
-                findDataByStartAndEnd('BigData_Apps', 'Alarm')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+                findDataByStartAndEnd('BigData_Apps', 'BigData_Apps')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
               ]"
               @click="openPointsLink(findDataByStartAndEnd('BigData_Apps', 'BigData_Apps')?.pointShowUrl)"
             >
@@ -280,7 +279,7 @@
                 findDataByStartAndEnd('BigData_Aggs', 'BigData_Apps')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
               ]"
               class="svgClass"
-              style="left: 335px; top: 48px"
+              style="left: 58px; top: 48px"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="100px"
@@ -294,7 +293,7 @@
               class="g-row-flex-HV"
               :class="[
                 findDataByPoint('BigData_Aggs', 'class'),
-                findDataByStartAndEnd('BigData_Aggs', 'Alarm')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+                findDataByStartAndEnd('BigData_Aggs', 'BigData_Aggs')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
               ]"
               @click="openPointsLink(findDataByStartAndEnd('BigData_Aggs', 'BigData_Aggs')?.pointShowUrl)"
             >
@@ -308,7 +307,7 @@
               :end-color="findDataByLink('BigData', 'BigData_Aggs')"
               :class="[findDataByStartAndEnd('BigData', 'BigData_Aggs')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
               class="svgClass"
-              style="left: 335px; top: 48px"
+              style="left: 58px; top: 48px"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="100px"
@@ -322,16 +321,16 @@
               class="g-row-flex-HV"
               :class="[
                 findDataByPoint('BigData', 'class'),
-                findDataByStartAndEnd('BigData', 'Alarm')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+                findDataByStartAndEnd('BigData', 'BigData')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
               ]"
               @click="openPointsLink(findDataByStartAndEnd('BigData', 'BigData')?.pointShowUrl)"
             >
               大数据处理
             </div>
-            <div class="absoultePos" style="left: 245px; top: 65px">
+            <div class="absoultePos" style="left: -20px; top: 65px">
               大数据服务(Flink)
             </div>
-            <div class="absoultePos" style="left: 400px; top: 65px">
+            <div class="absoultePos" style="left: 120px; top: 65px; width: 100%;">
               实时数据，报警数据
             </div>
             <!-- Queue -  BigData-->
@@ -342,7 +341,7 @@
               :end-color="findDataByLink('Queue', 'BigData')"
               :class="[findDataByStartAndEnd('Queue', 'BigData')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
               class="svgClass"
-              style="left: 335px; top: 48px"
+              style="left: 58px; top: 48px"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="100px"
@@ -1386,13 +1385,6 @@ export default {
     //   this.openIframeDialog = true;
       window.open(addTokenToUrl(iframeObj.url), "_blank");
     },
-    openIframeDialogLink(Url, hasToken) {
-      if (hasToken === "true") {
-        window.open(addTokenToUrl(Url), "_blank");
-      } else {
-        window.open(Url, "_blank");
-      }
-    },
     clickClouds() {
       this.openDialog = true;
     },
@@ -1512,7 +1504,7 @@ export default {
 
 .topImage1 {
   background-size: 100% 100%;
-  width: 750px;
+  /* width: 750px; */
   height: 60px;
   margin-top: 40px;
 }
