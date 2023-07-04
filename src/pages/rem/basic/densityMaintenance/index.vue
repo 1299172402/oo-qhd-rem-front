@@ -3,7 +3,7 @@
     <div class="app-container" style="height: calc(100%);">
         <div style="display: flex;flex-direction: row; height: 100%;">
             <div style=" height: 100%">
-                <tree-multiple-selection :level = "'3'" :end="3"   @change="layoutChange"/>
+                <tree-multiple-selection :level="'3'" :end="3" @change="layoutChange"/>
             </div>
             <div
                 style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
@@ -54,7 +54,6 @@
                     <el-table
                         :data="noticeList"
                         ref="table"
-                        @current-change="handleCurrentChange"
                         highlight-current-row
                         height="calc(100% - 35px)"
                         style="margin-top: 10px"
@@ -239,16 +238,11 @@ export default {
     data() {
         return {
             dialogVisible: false, //运行计算展示弹窗
-            oilfield: [],
             producttype: [],
             deptSelect: [], //作业公司
             oilFields: [],
             // 表格数据
             noticeList: [],
-            // 总条数
-            ids: [],
-            // 保存数组
-            savelist: [],
             // 查询参数
             queryParams: {
                 productTypeCode: "002001",
@@ -256,7 +250,7 @@ export default {
                 ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 orgId: "715AD1CD60484BB59E737CD18A9DE44A",
             },
-            year:'',
+            year: '',
             isDisabled: [true, true, true, true, true, true, true, true, true, true, true, true],
         };
     },
@@ -269,37 +263,14 @@ export default {
         }
         this.queryParams.year = String(y);
         this.year = String(y);
-        this.getList();
         this.getInfo();
-        
-        // this.choiceDepts(); // 获取组织机构
     },
     methods: {
         // change时间
         layoutChange() {
             this.$refs.table.doLayout()
         },
-        /**
-         *   获取下拉框数据
-         * @param orgId 作业公司id
-         * @param oilFieldId 油田id
-         * @param oilfield 油田数据数组
-         */
-        getList() {
-            //获取作业公司
-            queryOperatingCompanyDetail({}).then(res => {
-                this.deptSelect = res.data.data
-            })
-            //根据作业公司查询油田
-            queryOperatorsCheckFieldListsDetail({orgId: this.queryParams.orgId}).then(res => {
-                this.oilFields = res.data.data
-            })
-            queryProductList().then((res) => {
-                if (res.data.code == 200) {
-                    this.producttype = res.data.data;
-                }
-            });
-        },
+
         getInfo() {
             queryDensityInfo(this.queryParams).then((res) => {
                 if (res.data.code == 200) {
@@ -309,14 +280,6 @@ export default {
         },
 
         // 编辑
-        /**
-         *  选中表格事件
-         * @param ids 选中的表格单行内容，携带index与判断条件
-         */
-        handleCurrentChange(val) {
-            this.ids = [];
-            this.ids = val;
-        },
         /**
          *  编辑
          * @param noticeList 表格数据data
@@ -330,16 +293,18 @@ export default {
         },
         // 保存
         save() {
-            if(this.isDisabled.findIndex(target=>target===false)==-1){
+            if (this.isDisabled.findIndex(target => target === false) == -1) {
                 this.$message.error("请先点击编辑按钮!");
-            }else {
+            } else {
                 let panduan = this.isDisabled.every
                 let densityInfoQueryVo = this.queryParams;
                 let densityModelInfo = this.noticeList[0];
                 save({densityModelInfo, densityInfoQueryVo}).then((res) => {
-                    if (res.data.code == 200) {
+                    if (res.data.code == 200 && res.data.msg == '1') {
                         // this.producttype = res.data.data;
                         this.$message.success("保存成功！");
+                    }else{
+                        this.$message.error("系统错误请重新尝试或联系运维人员！");
                     }
                 });
                 for (let i = 0; i < 12; i++) {

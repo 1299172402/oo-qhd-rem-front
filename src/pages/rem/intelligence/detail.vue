@@ -191,23 +191,6 @@ export default {
       columnList: [],
       // 日期时间范围在一个月以内
       pickerOptions: {
-        // onPick: ({ maxDate, minDate }) => {
-        //   this.selectDate = minDate.getTime()
-        //   if (maxDate) {
-        //     this.selectDate = ''
-        //   }
-        // },
-        // disabledDate: (time) => {
-        //   if (this.selectDate !== '') {
-        //     // const one = 30 * 24 * 3600 * 1000
-        //     // const minTime = this.selectDate - one
-        //     // const maxTime = this.selectDate + one
-        //     const dateObj = new Date(this.selectDate)
-        //     const minTime = new Date(dateObj.format("yyyy-MM-01")).getTime() - 24 * 3600 * 1000
-        //     const maxTime = new Date(dateObj.getFullYear(),dateObj.getMonth() + 1, 0).getTime()
-        //     return time.getTime() < minTime || time.getTime() > maxTime
-        //   }
-        // }
         disabledDate: (time) => {
           const dateObj = new Date()
           return time.getTime() > new Date(dateObj.getFullYear(),dateObj.getMonth() - 1).getTime()
@@ -368,31 +351,6 @@ export default {
         this.tableData = []
       })
     },
-    // /**
-    // * 获取油田
-    // */
-    // queryOilFeild () {
-    //   getOgfInfo().then((res) => {
-    //     this.oilList = res.ogfId
-    //   });
-    // },
-    // //改变油田
-    // changeOil () {
-    //   this.queryData.blockId = ''
-    //   this.queryData.dateTime = ''
-    //   this.queryBlockFeild()
-    // },
-    // /**
-    // * 获取区块
-    // */
-    // queryBlockFeild () {
-    //   let param = {
-    //     ogfId: this.queryData.ogfId,
-    //   }
-    //   getblockData(param).then((res) => {
-    //     this.blockList = res.blockList;
-    //   })
-    // },
     /**
      * 改变月/年
      */

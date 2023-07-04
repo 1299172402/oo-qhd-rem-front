@@ -102,7 +102,7 @@
         :default-sort="{ prop: 'date', order: 'descending' }"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="55" align="center" />
+        <!-- <el-table-column type="selection" width="55" align="center" /> -->
         <el-table-column
           label="序号"
           type="index"
@@ -206,7 +206,13 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入备注" />
+          <el-input
+            v-model="form.remark"
+            type="textarea"
+            resize="none"
+            :autosize="{ minRows: 4, maxRows: 8}"
+            placeholder="请输入备注"
+          />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -371,7 +377,7 @@ export default {
       // this.$modal
       //   .confirm(`是否确认删除字典编号为"${dictIds}"的数据项？`)
       this.$modal
-        .confirm("是否确认删除改字典？")
+        .confirm("是否确认删除该字典？")
         .then(() => delType(dictIds))
         .then(res => {
           this.getList();
