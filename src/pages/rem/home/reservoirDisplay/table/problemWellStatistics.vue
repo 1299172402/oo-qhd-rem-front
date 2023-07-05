@@ -180,8 +180,8 @@ export default {
         },
         searchinfo(){
             queryProblemWellStatisDetails(this.queryParams).then((res)=>{
-                this.noticeList = res.data.data.rows
-                this.total = res.data.data.total
+                this.noticeList = res.data.data?.rows
+                this.total = res.data.data?.total
             })
         },
         returnrouter() {
