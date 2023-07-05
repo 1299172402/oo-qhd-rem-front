@@ -2212,16 +2212,6 @@ export default {
             let newDate = date.getFullYear() + '-' + dataMonth + '-' + today;
             return newDate;
         },
-        //el table 表格头 标题单位样式
-        renderHeader(h, {
-            column
-        }) {
-            let header = column.label.split(' ');
-            return [h('span', [
-                h('p', {}, header[0]),
-                h('span', {}, header[1])
-            ])];
-        },
         // 排序列改变返回当前需要排序的列
         changeTableSort(e) {
             //获取当前列的字段

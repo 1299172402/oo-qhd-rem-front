@@ -82,4 +82,12 @@ export function devWellTable(request) {
     data: request,
   });
 }
-
+//年度计划管理-表格下载
+export function downLoadOilProductionTable(request) {
+  return Axios({
+    url: `${baseUrl}/oilFieldManagePlanController/downLoadOilProductionTable`,
+    method: "post",
+    data: request,
+    responseType: "blob"
+  });
+}
