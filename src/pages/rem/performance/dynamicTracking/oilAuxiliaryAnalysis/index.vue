@@ -24,7 +24,7 @@
                 <!-- 连井剖面上传 -->
                 <el-button v-if="activeName=='staticData'&&currentModule=='connecting'" type="primary" icon="el-icon-download" @click="ljpmUploadDialog">上传文档</el-button>
                 <!-- minIo上传 -->
-                <el-button v-else type="primary" icon="el-icon-upload2" style="margin-left: auto !important" @click="ljpmUploadDialogLast" >上传文档</el-button>
+                <el-button v-if="isUpdateFile" type="primary" icon="el-icon-upload2" style="margin-left: auto !important" @click="ljpmUploadDialogLast" >上传文档</el-button>
                 <!-- 连井剖面下载 -->
                 <el-button v-if="activeName=='staticData'&&currentModule=='connecting'" type="primary" icon="el-icon-download" style="margin-left:15px;" @click="doDownLoad">下载</el-button>
                 <!-- minIo下载 -->
@@ -75,7 +75,6 @@
                 </span>
             </el-dialog>
         </pagePanelNew>
-        
         <!-- minIo上传 -->
         <el-dialog custom-class="border" title="上传文档" :visible.sync="ljpmDialogLast" width="20%" :before-close="ljpmDialogCloseLast" :style="{ 'min-width': '1800px' }">
             <el-row>
@@ -105,6 +104,7 @@
         data() {
             return {
                 //minIo
+                isUpdateFile:false,//是否展示minio上传按钮
                 limit:1,
                 fileType:['pdf'],
                 imageurl:'',
@@ -619,10 +619,24 @@
             handleClick(tab) {
                 this.activeName = tab.name;
                 this.currentModule = this.tabs[tab.index].modules[0].name;
+                this.isUpdateFile=false;
+                for(let key in this.operationTypeList){
+                    if(key==this.currentModule){
+                        this.isUpdateFile=true;
+                        return false;
+                    }
+                }
             },
             //点击二级
             tapTabs2(module){
                 this.currentModule = module.name;
+                this.isUpdateFile=false;
+                for(let key in this.operationTypeList){
+                    if(key==this.currentModule){
+                        this.isUpdateFile=true;
+                        return false;
+                    }
+                }
             },
             handleRemove(file, fileList) {
                 return this.$confirm(`确定移除 ${file.name}？`);

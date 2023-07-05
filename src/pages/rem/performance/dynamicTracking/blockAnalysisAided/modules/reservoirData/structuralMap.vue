@@ -125,6 +125,8 @@ export default {
                                 this.imageList.push(src);
                             })
                         }
+                    }else{
+                        this.src="";
                     }
                 }else {
                     this.$message.error("文件查询接口异常!");

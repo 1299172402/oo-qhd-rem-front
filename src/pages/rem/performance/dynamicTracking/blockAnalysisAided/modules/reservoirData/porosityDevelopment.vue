@@ -102,6 +102,8 @@
                             downFile(this.fileId).then((res)=>{
                                 this.src=window.URL.createObjectURL(res);
                             })
+                        }else{
+                            this.src="";
                         }
                     }else {
                         this.$message.error("文件查询接口异常!");
