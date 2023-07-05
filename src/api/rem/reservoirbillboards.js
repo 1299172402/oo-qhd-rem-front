@@ -91,9 +91,9 @@ export function getYieldTracking({ ogfId, orgId } = {}) {
         method: "get",
     });
 }
-export function queryProblemWellStatisDetails({ wellId, ogfId,pageSize, pageNum } = {}) {
+export function queryProblemWellStatisDetails({ wellId, ogfId,pageSize, pageNum,assetCode } = {}) {
     return request({
-        url: `${baseUrl}/reservoirBillboards/queryProblemWellStatisDetails?ogfId=${ ogfId || "" }&wellId=${ wellId || "" }&pageSize=${ pageSize || "" }&pageNum=${ pageNum || "" }`,
+        url: `${baseUrl}/reservoirBillboards/queryProblemWellStatisDetails?ogfId=${ ogfId || "" }&wellId=${ wellId || "" }&pageSize=${ pageSize || "" }&pageNum=${ pageNum || "" }&assetCode=${ assetCode || "" }`,
         method: "get",
     });
 }
