@@ -15,7 +15,7 @@
             <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
             <el-button class="commonBtn" icon="el-icon-refresh" style="margin-left:15px!important;margin-right:auto;" @click="resetting">重置</el-button>
         </div>
-        <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="油田产量影响因素" isShowMaxBtn>
+        <info-window style="margin-top:0;margin-bottom:20px;" infoWidth="100%" infoHeight="330px" headerTitle="油田产量影响因素" isShowMaxBtn>
             <div slot-name="titleContent" style="position: absolute;right:52px;top:5px;">
                 <el-button type="primary" style="height:30px;" @click="saveEditRow">保存修改</el-button>
             </div>
@@ -44,7 +44,7 @@
                 </el-table-column>
             </el-table>
         </info-window>
-        <info-window infoWidth="100%" infoHeight="400px" headerTitle="油田预测产量" isShowMaxBtn>
+        <info-window style="margin-top:0;margin-bottom:20px;" infoWidth="100%" infoHeight="120px" headerTitle="油田预测产量" isShowMaxBtn>
             <div slot-name="titleContent" style="position: absolute;right:52px;top:5px;">
                 <el-button type="primary" style="height:30px;" @click="doDownLoad(2)">下载</el-button>
             </div>
@@ -63,7 +63,7 @@
                 <el-table-column prop="work" label="作业公司" align="center"></el-table-column>
             </el-table>
         </info-window>
-        <info-window infoWidth="100%" infoHeight="400px" headerTitle="油田剩余水平" isShowMaxBtn>
+        <info-window infoWidth="100%" infoHeight="300px" headerTitle="油田剩余水平" isShowMaxBtn>
             <div slot-name="titleContent" style="position: absolute;right:52px;top:5px;">
                 <el-button type="primary" style="height:30px;" @click="doDownLoad(3)">下载</el-button>
             </div>
