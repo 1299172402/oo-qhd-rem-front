@@ -78,6 +78,7 @@ export default {
         getData(){
             queryMeasureEffectTrack({evaluationDate:'',oilFieldId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{
                 if(res.data.data){
+                  
                     this.tableData = res.data.data                    
                 }
             })
