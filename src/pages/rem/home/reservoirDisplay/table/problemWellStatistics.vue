@@ -137,13 +137,14 @@ export default {
             noticeList: [],
             platforms:[],
             wellList:[],
-            total:'',
+            total:0,
             // 查询参数
             queryParams: {
                 ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 orgId: "715AD1CD60484BB59E737CD18A9DE44A",
                 pageSize:10,
                 pageNum:1,
+                wellId:'',
                 assetCode:'',
             },
         };
