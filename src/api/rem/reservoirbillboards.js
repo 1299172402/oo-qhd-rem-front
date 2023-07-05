@@ -22,9 +22,9 @@ export function productionMetricsOverview({ogfId,orgId, date } = {}) {
     }
   });
 }
-export function queryCapacityComposition() {
+export function queryCapacityComposition({ogfId } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/queryCapacityComposition`,
+    url: `${baseUrl}/reservoirBillboards/queryCapacityComposition?ogfId=${ ogfId || "" }`,
     method: "get",
   });
 }
@@ -55,9 +55,9 @@ export function queryPlanValueDict() {
     method: "get",
   });
 }
-export function queryProblemWellStatis({ date, platformId, wellId } = {}) {
+export function queryProblemWellStatis({ date, platformId,ogfId, wellId } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/queryProblemWellStatis?date=${ date || "" }&platformId=${ platformId || "" }&wellId=${ wellId || "" }`,
+    url: `${baseUrl}/reservoirBillboards/queryProblemWellStatis?date=${ date || "" }&platformId=${ platformId || "" }&wellId=${ wellId || "" }&ogfId=${ ogfId || "" }`,
     method: "get",
   });
 }

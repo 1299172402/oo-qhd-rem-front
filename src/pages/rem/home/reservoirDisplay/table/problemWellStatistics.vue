@@ -36,6 +36,9 @@
                             <el-button size="mini" @click="reset" icon="el-icon-refresh" class="commonBtn">重置
                             </el-button>
                         </el-form-item>
+                        <el-form-item style="float: right">
+                            <el-button type="primary" @click="returnrouter">返回</el-button>
+                        </el-form-item>
                     </el-form>
                 </headerSearch>
                 <page-panel header-title="油田低产低效井原因及潜力方向" style="flex:1;overflow: hidden" :show-btn="true">
@@ -165,7 +168,9 @@ export default {
                 }
             });
         },
-      
+        returnrouter() {
+            this.$router.go(-1);
+        },
         // 重置
         reset() {
             this.queryParams.assetCode = ''

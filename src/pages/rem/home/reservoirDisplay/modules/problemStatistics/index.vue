@@ -112,7 +112,7 @@ export default {
             this.$router.push({name: rname});
         },
         getData() {
-            queryProblemWellStatis({date: new Date().format('YYYY-MM-DD')}).then(res => {
+            queryProblemWellStatis({date: new Date().format('YYYY-MM-DD'), ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",}).then(res => {
                 this.histogram.series[0].data[0].value = res.data.data[0].value
                 this.histogram.series[0].data[0].name = res.data.data[0].name
                 this.histogram.series[0].data[1].value = res.data.data[1].value
