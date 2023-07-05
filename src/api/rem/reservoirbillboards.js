@@ -91,3 +91,9 @@ export function getYieldTracking({ ogfId, orgId } = {}) {
         method: "get",
     });
 }
+export function queryProblemWellStatisDetails({ wellId, ogfId,pageSize, pageNum } = {}) {
+    return request({
+        url: `${baseUrl}/reservoirBillboards/queryProblemWellStatisDetails?ogfId=${ ogfId || "" }&wellId=${ wellId || "" }&pageSize=${ pageSize || "" }&pageNum=${ pageNum || "" }`,
+        method: "get",
+    });
+}
