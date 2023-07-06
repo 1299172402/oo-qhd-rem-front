@@ -14,7 +14,8 @@
                 <div class="pad">
                     <div>
                         <p v-show="!content" :key="index" v-for="(item,index) in currentList.boxBottomText">
-                            <span style="cursor: pointer" @click="skippage(item.url)">{{item.name}}</span>
+                            <span v-if="item.url" style="cursor: pointer" @click="skippage(item.url)">{{item.name}}</span>
+                            <span v-if="!item.url" style="pointer-events: none;color:#5a5959;font-weight:bolder">{{ item.name ? item.name : item }}</span>
                             <span v-if="currentList.boxBottomContent" class="btnContent" @click="btnContent(index)">{{currentList.boxBottomContent[index].length>0?'>>':''}}</span>
                             <span v-else class="btnBack" @click="btnBack"></span>
                         </p>
