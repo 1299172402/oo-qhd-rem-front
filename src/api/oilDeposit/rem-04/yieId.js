@@ -40,3 +40,11 @@ export function getWellOutputWaveTableDate() {
     method: "get",
   });
 }
+
+//产量变化总井数
+export function getWellOutputWaveAnalysisNum(){
+    return Axios({
+      url: `${baseUrl}/outputManagement/getWellOutputWaveAnalysisNum`,
+      method: "get",
+    });
+}

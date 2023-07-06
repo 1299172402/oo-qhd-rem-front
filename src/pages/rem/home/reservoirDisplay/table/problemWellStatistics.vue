@@ -25,16 +25,19 @@
                         </el-form-item>
                         <el-form-item label="井号:" style="margin-left:20px">
                             <el-select v-model="queryParams.wellId" clearable style="width: 170px">
-                                <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellNo"
+                                <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellName"
                                            :value="item.wellId">
                                 </el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-button size="mini"  icon="el-icon-search" type="primary">搜索
+                            <el-button size="mini" @click="searchinfo"  icon="el-icon-search" type="primary">搜索
                             </el-button>
                             <el-button size="mini" @click="reset" icon="el-icon-refresh" class="commonBtn">重置
                             </el-button>
+                        </el-form-item>
+                        <el-form-item style="float: right">
+                            <el-button type="primary" @click="returnrouter">返回</el-button>
                         </el-form-item>
                     </el-form>
                 </headerSearch>
@@ -43,7 +46,7 @@
                         :data="noticeList"
                         ref="table"
                         highlight-current-row
-                        height="calc(100% - 35px)"
+                        height="calc(100% - 65px)"
                         style="margin-top: 10px"
                         :row-style="{ height: '0px' }"
                         id="gzjtj"
@@ -53,54 +56,59 @@
                         :default-sort="{ prop: 'date', order: 'descending' }"
                     >
                         
-                        <el-table-column label="序号" width="50px" type="index" align="center">
+                        <el-table-column label="序号"  width="50px" type="index" align="center">
                          
                         </el-table-column>
-                        <el-table-column label="油田"  align="center">
+                        <el-table-column label="油田" prop="ogfNo" min-width="100px" align="center">
 
                         </el-table-column>
-                        <el-table-column label="井号"  align="center">
+                        <el-table-column label="井号" prop="wellNo" align="center">
 
                         </el-table-column>
-                        <el-table-column label="低产低效类别"  align="center">
+                        <el-table-column label="低产低效类别" prop="lowProdEffTypeCode"  align="center">
 
                         </el-table-column>
-                        <el-table-column label="生产情况"  align="center">
-                            <el-table-column :label="`日产油\n(m³/d)`"  align="center">
+                        <el-table-column label="生产情况"   align="center">
+                            <el-table-column :label="`日产油\n(m³/d)`" prop="dailyOil"   align="center">
 
                             </el-table-column>
-                            <el-table-column :label="`日产气\n(m³/d)`"  align="center">
+                            <el-table-column :label="`日产气\n(m³/d)`" prop="dailyGas" align="center">
 
                             </el-table-column>
-                            <el-table-column :label="`含水\n(%)`"  align="center">
+                            <el-table-column :label="`含水\n(%)`" prop="waterCut"  align="center">
 
                             </el-table-column>
                         </el-table-column>
                         <el-table-column label="低产低效原因"  align="center">
-                            <el-table-column label="一级原因"  align="center">
+                            <el-table-column label="一级原因"  prop="shutdownTypeFirstClass" align="center">
 
                             </el-table-column>
-                            <el-table-column label="二级原因"  align="center">
+                            <el-table-column label="二级原因" prop="shutdownTy`peSecondClass"  align="center">
 
                             </el-table-column>
                         </el-table-column>
-                        <el-table-column label="挖潜方向"  align="center">
+                        <el-table-column label="挖潜方向" prop="tappingDirection" align="center">
 
                         </el-table-column>
-                        <el-table-column label="是否纳入当年计划"  align="center">
+                        <el-table-column label="是否纳入当年计划" prop="isPlan" align="center">
 
                         </el-table-column>
-                        <el-table-column :label="`计划日产\n(m³/d)`" align="center">
+                        <el-table-column :label="`计划日产\n(m³/d)`" prop="planOil" align="center">
 
                         </el-table-column>
-                        <el-table-column label="备注"  align="center">
+                        <el-table-column label="备注" prop="remark"  align="center">
 
                         </el-table-column>
                     </el-table>
                 </page-panel>
-               
-                <!--        </pagePanel>-->
-
+                <pagination
+                    :total="total"
+                    v-show="total > 0"
+                    @pagination="searchinfo"
+                    style="position: absolute;bottom: 20px;right:35px"
+                    :page.sync="queryParams.pageNum"
+                    :limit.sync="queryParams.pageSize"
+                />
             </div>
        
 
@@ -116,8 +124,9 @@ import {
 } from "@/api/basic/master";
 import {queryPlatformQueryWellListDetail} from "@/api/rem/marster";
 
+import {queryProblemWellStatisDetails} from '@/api/rem/reservoirbillboards'
 export default {
-    name: "density",
+    name: "problemWellStatistics",
     dicts: ["sys_normal_disable"],
     components: {
     },
@@ -128,15 +137,21 @@ export default {
             noticeList: [],
             platforms:[],
             wellList:[],
+            total:0,
             // 查询参数
             queryParams: {
                 ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 orgId: "715AD1CD60484BB59E737CD18A9DE44A",
+                pageSize:10,
+                pageNum:1,
+                wellId:'',
+                assetCode:'',
             },
         };
     },
     created() {
         this.getlist();
+        this.searchinfo()
     },
     methods: {
         getlist() {
@@ -165,7 +180,15 @@ export default {
                 }
             });
         },
-      
+        searchinfo(){
+            queryProblemWellStatisDetails(this.queryParams).then((res)=>{
+                this.noticeList = res.data.data?.rows
+                this.total = res.data.data?.total
+            })
+        },
+        returnrouter() {
+            this.$router.go(-1);
+        },
         // 重置
         reset() {
             this.queryParams.assetCode = ''

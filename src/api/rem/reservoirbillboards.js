@@ -22,9 +22,9 @@ export function productionMetricsOverview({ogfId,orgId, date } = {}) {
     }
   });
 }
-export function queryCapacityComposition() {
+export function queryCapacityComposition({ogfId } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/queryCapacityComposition`,
+    url: `${baseUrl}/reservoirBillboards/queryCapacityComposition?ogfId=${ ogfId || "" }`,
     method: "get",
   });
 }
@@ -55,9 +55,9 @@ export function queryPlanValueDict() {
     method: "get",
   });
 }
-export function queryProblemWellStatis({ date, platformId, wellId } = {}) {
+export function queryProblemWellStatis({ date, platformId,ogfId, wellId } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/queryProblemWellStatis?date=${ date || "" }&platformId=${ platformId || "" }&wellId=${ wellId || "" }`,
+    url: `${baseUrl}/reservoirBillboards/queryProblemWellStatis?date=${ date || "" }&platformId=${ platformId || "" }&wellId=${ wellId || "" }&ogfId=${ ogfId || "" }`,
     method: "get",
   });
 }
@@ -88,6 +88,12 @@ export function queryYieldTracking({ ogfId, orgId } = {}) {
 export function getYieldTracking({ ogfId, orgId } = {}) {
     return request({
         url: `${baseUrl}/reservoirBillboards/getYieldTracking?ogfId=${ ogfId || "" }&orgId=${ orgId || "" }`,
+        method: "get",
+    });
+}
+export function queryProblemWellStatisDetails({ wellId, ogfId,pageSize, pageNum,assetCode } = {}) {
+    return request({
+        url: `${baseUrl}/reservoirBillboards/queryProblemWellStatisDetails?ogfId=${ ogfId || "" }&wellId=${ wellId || "" }&pageSize=${ pageSize || "" }&pageNum=${ pageNum || "" }&assetCode=${ assetCode || "" }`,
         method: "get",
     });
 }

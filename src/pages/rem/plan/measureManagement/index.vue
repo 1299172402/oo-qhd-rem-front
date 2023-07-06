@@ -370,7 +370,12 @@
                     oilFieldId: this.selectOilField
                 }).then((res) => {
                     if (res.data.code == 200) {
-                        this.platforms = res.data.data.platform;
+                        let platform=res.data.data.platform;
+                        
+                        if(platform[0].platName=='全部'){
+                            platform.splice(0,1);
+                        }
+                        this.platforms =platform;
                         this.platforms[0].platFormId=this.selectOilField;
                         this.selectPlatform = this.selectOilField;
                     }

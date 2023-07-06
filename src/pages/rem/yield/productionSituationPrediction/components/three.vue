@@ -156,7 +156,7 @@
 
 <style lang="scss" scoped>
     ::v-deep .el-table__body-wrapper{
-        height:inherit!important;
+        height:290px!important;
     }
     ::v-deep .el-table__footer-wrapper{
         .cell{

@@ -134,7 +134,7 @@
                             <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="单井产量波动分析" isShowMaxBtn>
                                 <div class="row-container">
                                     <div class="searchBox">
-                                        <span style="margin-right:10px;font-size:14px;">产量变化总井数：4口</span>
+                                        <span style="margin-right:10px;font-size:14px;">产量变化总井数：{{wellAllNum}}口</span>
                                         <el-input placeholder="产油波动值设置" style="width:140px;margin-right:10px;" size="medium" :readonly="true"></el-input>
                                         <el-input v-model="setParaValue" style="width:80px;margin-right:10px;" type="text" size="medium" oninput="value=value.replace(/[^0-9.]/g,'')"></el-input>
                                         <el-input v-model="unitValue" style="width:50px;margin-right:10px;" size="medium" :readonly="true"></el-input>
@@ -267,6 +267,7 @@
     import {fetchOilFields,fetchFields} from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import {outputTracingAnalysis,reasonAnalysis,outputTracing,platformOutputContributeAnalysis,dailyMainEvent,wellOutputWaveAnalysis} from "@/api/oilDeposit/rem-02/outputmanagement.js";
     import {getReportFroms} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js'
+    import {getWellOutputWaveAnalysisNum} from '@/api/oilDeposit/rem-04/yieId.js'
     import {exportComplexHeaderExcelFromJson} from '@/lib/exportExcel.js';
     export default {
         name: 'fluctuationWarningAnalysis',
@@ -284,6 +285,7 @@
         },
         data() {
             return {
+                wellAllNum:'',
                 //油田
                 oilField: [],
                 //油田名字
@@ -1314,6 +1316,14 @@
                         _this.barChart.yAxis.name = "产油量变化/m³";
                         _this.unitValue = "m³";
                     }
+                   
+                    getWellOutputWaveAnalysisNum().then(res=>{
+                        console.log(res)
+                        if(res.data.code==200){
+                            let data=res.data.data;
+                            this.wellAllNum=data;
+                        }
+                    })
                    
                 });
             },
