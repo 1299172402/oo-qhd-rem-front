@@ -114,7 +114,7 @@
         >
           <template slot-scope="scope">
             <span v-if="item.props === 'active'">
-              <el-tag :type="scope.row.active ? 'success' : 'info'">{{ dict.type.sys_active_type?.find((dict) => dict.value == scope.row.active)?.label }}</el-tag>
+              <el-tag :type="scope.row.active ? 'primary' : 'danger'">{{ dict.type.sys_active_type?.find((dict) => dict.value == scope.row.active)?.label }}</el-tag>
             </span>
             <span v-else>{{ columnsFormatter(scope.row, item.props) }}</span>
           </template>

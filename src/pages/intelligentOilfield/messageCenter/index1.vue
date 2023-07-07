@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <!-- 后台——消息中心首页 -->
 <template>
   <div ref="elRef" class="g-w100 g-h100" style="font-size: 16px; color: #fff">
@@ -156,6 +157,24 @@
             :value="item.value"
           />
         </el-select>
+      </div>
+      <div v-if="errorMessage" class="instructions" style="color: var(--td-text-color-primary)">
+        <el-popover
+          placement="bottom"
+          title=""
+          width="200"
+          trigger="hover"
+        >
+          <div style="font-size: 12px;margin-top: 12px;color: var(--old-red-color)" v-html="errorMessage.replace(/\n/g,'<br/>')" />
+          <div slot="reference" class="g-row-flex-HV" style="cursor: pointer;">
+            <div class="alarmPromptMessage" style="color: #fff;position: relative;left: 0;top: 0">
+              !
+            </div>
+            <div style="margin-left: 10px;font-size: 14px;color: var(--old-red-color)">
+              海上监控链路接口异常
+            </div>
+          </div>
+        </el-popover>
       </div>
       <div
         v-show="zuhuModel === '秦皇岛作业公司'"
@@ -1241,6 +1260,7 @@ export default {
   },
   data() {
     return {
+      errorMessage: "",
       zoomValue: 0,
       boxWidth: 0,
       windowWidth: 1920,
@@ -1428,6 +1448,7 @@ export default {
         differenceSecond = dayjs(res.data.data.nextCheckTime).diff(compareDateToS(nowDate), "seconds");
         this.maritimeLinkInfos = res.data.data.maritimeLinkInfos;
         this.cloudsLinkInfos = res.data.data.cloudsLinkInfos;
+        this.errorMessage = res.data.data.errorMessage;
         this.timer = window.setInterval(() => {
           setTimeout(() => {
             this.getStatus();
@@ -1440,6 +1461,16 @@ export default {
 </script>
 
 <style scoped>
+.instructions {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  width: auto;
+  height: auto;
+  padding: 20px;
+  z-index: 1;
+}
+
 .minPage {
   margin: 0;
 }

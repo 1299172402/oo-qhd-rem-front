@@ -439,6 +439,7 @@
       ref="mainTable"
       :data="tableData1"
       :border="false"
+      height="350"
       :row-style="{ height: '0px' }"
       header-cell-class-name="table_header"
       :cell-style="{ padding: '6px', 'text-align': 'center' }"

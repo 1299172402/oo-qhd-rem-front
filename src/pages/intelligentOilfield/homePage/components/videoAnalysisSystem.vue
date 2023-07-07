@@ -63,9 +63,16 @@
                 class="g-w100"
                 style="width: 100%;height: 150px"
               >
-              <div style="text-align: center;line-height: 32px">
-                {{ item.businessName }}
-              </div>
+              <el-tooltip
+                style="width: 100%;height: 100%"
+                effect="dark"
+                :content="item.businessName"
+                placement="bottom"
+              >
+                <div style="text-align: center;line-height: 32px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                  {{ item.businessName }}
+                </div>
+              </el-tooltip>
             </div>
           </el-col>
         </el-row>

@@ -51,6 +51,7 @@
           <el-button
             v-hasPermi="['system:tenant:unbind']"
             type="danger"
+            :class="multiple ? 'errorBtnplain':'errorBtn'"
             :disabled="multiple"
             @click="cancelBind(userIds, true)"
           >
@@ -89,6 +90,7 @@
               v-if="isBindUser || scope.row.isManager === '1'"
               v-hasPermi="['system:tenant:unbind']"
               type="text"
+              style="color: #ff4d4f"
               @click="cancelBind([scope.row.userId])"
             >
               {{ isBindUser ? "取消关联" : "取消绑定" }}
