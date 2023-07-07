@@ -83,32 +83,12 @@
         data() {
             return {
                 //minIo
-                isUpdateFile:true,//是否显示上传文档按钮
+                isUpdateFile:false,//是否显示上传文档按钮
                 ljpmDialogLast: false,
                 limit:1,
                 fileType:['pdf'],
                 imageurl:'',
                 operationTypeList:{
-                    smallLayerStructureDiagram:{//小层顶面构造图
-                        operationType:'WELLGROUPXCDMGZT',
-                        limit:3,
-                        fileType:['bmp','jpg','jpeg','png','pdf']
-                    },
-                    seismicAttributes:{//地震属性图
-                        operationType:'WELLGROUPDZSXT',
-                        limit:1,
-                        fileType:['bmp','jpg','jpeg','png','pdf']
-                    },
-                    thicknessOfSandLayer:{//沉积相图
-                        operationType:'WELLGROUPCJXT',
-                        limit:1,
-                        fileType:['bmp','jpg','jpeg','png','pdf']
-                    },
-                    effectiveThickness:{//有效厚层图
-                        operationType:'WELLGROUPYXHCT',
-                        limit:1,
-                        fileType:['bmp','jpg','jpeg','png','pdf']
-                    },
                     permeabilityDistribution:{//渗透率分布图
                         operationType:'WELLGROUPSTFBT',
                         limit:1,
@@ -158,32 +138,26 @@
                         name: "reservoirData",
                         modules: [
                             {
-                                isUpdateFile:true,
                                 label: "小层顶面构造图",
                                 name: "smallLayerStructureDiagram",
                             },
                             {
-                                isUpdateFile:true,
                                 label: "地震属性图",
                                 name: "seismicAttributes",
                             },
                             {
-                                isUpdateFile:true,
                                 label: "沉积相图",
                                 name: "thicknessOfSandLayer",
                             },
                             {
-                                isUpdateFile:true,
                                 label: "有效厚层图",
                                 name: "effectiveThickness",
                             },
                             {
-                                isUpdateFile:true,
                                 label: "渗透率分布图",
                                 name: "permeabilityDistribution",
                             },
                             {
-                                isUpdateFile:true,
                                 label: "井组连通图",
                                 name: "wellGroupConnection",
                             },
@@ -228,41 +202,6 @@
                             },
                         ],
                     },
-                ],
-                //文件名称对应项
-                tabsPathName: [
-                    {
-                        name: "smallLayerStructureDiagram",
-                        pathName: "STRUCTURE",
-                    }, //小层顶面构造图
-                    {
-                        name: "seismicAttributes",
-                        pathName: "SEISMIC_ATTRIBUTES",
-                    }, //地震属性图
-                    {
-                        name: "wellGroupConnection",
-                        pathName: "WELL_GROUP_CONNECTION",
-                    }, //井组连通图
-                    {
-                        name: "thicknessOfSandLayer",
-                        pathName: "THICKNESS_SAND_LAYER",
-                    }, //砂层厚度图
-                    {
-                        name: "effectiveThickness",
-                        pathName: "EFFECTIVE_THICKNESS",
-                    }, //有效厚度图
-                    {
-                        name: "permeabilityDistribution",
-                        pathName: "PERMEABILITY_DISTRIBUTION",
-                    }, //渗透率分布图
-                    {
-                        name: "permeabilityColumnar",
-                        pathName: "PERMEABILITY_COLUMNAR",
-                    }, //渗透率分布图
-                    {
-                        name: "tracer",
-                        pathName: "TRACER",
-                    }, //示踪剂
                 ],
                 //子组件返回数据
                 childParam: "",
@@ -322,7 +261,6 @@
                 };
                 this.uploadFile(params);
             },
-            
             uploadFile(params){
                 this.ljpmDialogLast = false;
                 addRemUploadFileMinio(params).then((res) => {
@@ -381,18 +319,22 @@
             handleClick(tab) {
                 this.activeName = tab.name;
                 this.currentModule = this.tabs[tab.index].modules[0].name;
-                this.isUpdateFile=this.tabs[tab.index].modules[0].isUpdateFile?true:false;
+                this.isUpdateFile=false;
+                for(let key in this.operationTypeList){
+                    if(key==this.currentModule){
+                        this.isUpdateFile=true;
+                        return false;
+                    }
+                }
             },
             //点击二级tabs
             handleTwoClicj(module) {
                 this.currentModule = module.name;
-                for(let i=0;i<this.tabs.length;i++){
-                    let modules=this.tabs[i].modules;
-                    for(let j=0;j<modules.length;j++){
-                        if(this.currentModule==modules[j].name){
-                            this.isUpdateFile=modules[j].isUpdateFile?true:false;
-                            break;
-                        }
+                this.isUpdateFile=false;
+                for(let key in this.operationTypeList){
+                    if(key==this.currentModule){
+                        this.isUpdateFile=true;
+                        return false;
                     }
                 }
                 this.selectWellGroup = this.newWellGroup[0].wellGroupId;

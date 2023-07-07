@@ -337,64 +337,6 @@
                         ],
                     },
                 ],
-                //文件名称对应项
-                tabsPathName: [{
-                        name: "smallFloorPlan",
-                        pathName: "SUBLAYER",
-                    }, //小层平面图
-                    {
-                        name: "seismicAttributeMap",
-                        pathName: "SEISMIC_ATTRIBUTES",
-                    }, //地震属性图
-                    {
-                        name: "theSedimentaryFaciesMap",
-                        pathName: "DEPOSITION",
-                    }, //沉积相图
-                    {
-                        name: "smallLayerStructureDiagram",
-                        pathName: "TOP_SUBLAYER",
-                    }, //小层顶面构造图
-                    {
-                        name: "wellLoggingCurve",
-                        pathName: "LOGGING",
-                    }, //测井曲线
-                    {
-                        name: "cementingQualityLog",
-                        pathName: "CEMENTING",
-                    }, //固井质量测井图
-                    {
-                        name: "seismicProfile",
-                        pathName: "SEISMIC_PROFILE",
-                    }, //地震剖面图
-                    {
-                        name: "whileDrillingTrajectory",
-                        pathName: "WHILE_DRILLING",
-                    }, //随钻轨迹图
-                    {
-                        name: "wellNetworkDiagram",
-                        pathName: "WELL_PATTERN",
-                    }, //井网图
-                    {
-                        name: "completionStringDrawing",
-                        pathName: "COMPLETION_PIPE",
-                    }, //完井管状图
-                    {
-                        name: "fluidProducingProfile",
-                        pathName: "PRODUCTION_PROFILE_RESULTS",
-                    }, //产液剖面
-                    {
-                        name: "saturationLog",
-                        pathName: "SATURATION_LOG",
-                    }, //饱和度测井
-                    {
-                        name: "wellTestReport",
-                        pathName: "WELL_TEST_REPORT",
-                    }, //试井报告
-                    {
-                        name: "connecting",
-                        pathName: "CONNECTING",
-                    }, // 连井剖面图
-                ],
                 //子组件返回数据
                 childParam: "",
                 
