@@ -68,19 +68,19 @@ export default {
                     boxText: '异常井监测',
                     boxBottomText: [{
                         name: '含水率变化监测',
-                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/oilAnalysisReport'
+                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/oilAnalysisReport?page=/dynamicManagement/remHome'
                     },
                         {
                             name: '递减率变化监测',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/oilAnalysisReport'
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/oilAnalysisReport?page=/dynamicManagement/remHome'
                         },
                         {
                             name: '产液量异常监测',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/oilAnalysisReport'
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/oilAnalysisReport?page=/dynamicManagement/remHome'
                         },
                         {
                             name: '井底流压监测',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingOilAuxiliary/oilAnalysisReport'
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=/dynamicManagement/remHome'
                         }],
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;',
@@ -92,17 +92,17 @@ export default {
                 {
                     style: 'position:absolute;left: 40%;top: 8%;width:20%;height:40%;',
                     boxText: '单井/井组/区块分析',
-                    boxBottomText: [{name: '水质分析'},
+                    boxBottomText: [{name: '水质分析',url: 'https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/waterInjectionProduction?page=/dynamicManagement/remHome' },
                         {
                             name: '注采比分析',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport'
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport?page=/dynamicManagement/remHome'
                         },
-                        {name: '来水方向分析',url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport'},
+                        {name: '来水方向分析',url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=/dynamicManagement/remHome'},
                         {
                             name: '储量动用情况',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentEffectEvaluation?link=reserves'
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentEffectEvaluation?link=reserves?page=/dynamicManagement/remHome'
                         }],
-                    boxBottomContent: [[], [{name:'开发效果评价',url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport'}], [], []],
+                    boxBottomContent: [[], [{name:'开发效果评价',url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport?page=/dynamicManagement/remHome'}], [], []],
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;',
                     },
@@ -131,10 +131,10 @@ export default {
                     boxText: '开发指标评价',
                     boxBottomText: [{
                         name: '开发指标分析',
-                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/devmentIndicators/waterInjectionIndexManagement'
+                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/devmentIndicators/waterInjectionIndexManagement?page=/dynamicManagement/remHome'
                     }, {
                         name: '管理指标分析',
-                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/devmentIndicators/technicalIndexManagement'
+                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/devmentIndicators/technicalIndexManagement?page=/dynamicManagement/remHome'
                     }],
                     boxBottomContent: [['开发技术指标管理', '开发效果评价'], ['注水指标管理', '措施效果评价']],
                     boxStyle: {
@@ -152,10 +152,10 @@ export default {
                         url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentEffectEvaluation?link=decreasing'
                     }, {
                         name: '产量变化趋势分析',
-                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentTrendAnalysis'
+                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentTrendAnalysis?page=/dynamicManagement/remHome'
                     }, {
                         name: '采收率分析',
-                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/recoveryEfficiency/index'
+                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/recoveryEfficiency/index?page=/dynamicManagement/remHome'
                     }],
                     boxBottomContent: [['递减预测', '开发趋势分析'], ['数据驱动的油藏开发规律动态预测', '产量构成曲线'], ['采收率预测']],
                     boxStyle: {

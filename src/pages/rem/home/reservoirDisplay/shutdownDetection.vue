@@ -32,7 +32,7 @@
                         </el-form-item>
                         <el-form-item label="井号:" style="margin-left:20px">
                             <el-select v-model="queryData.wellId" clearable style="width: 170px">
-                                <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellNo"
+                                <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellName"
                                            :value="item.wellName">
                                 </el-option>
                             </el-select>

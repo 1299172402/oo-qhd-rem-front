@@ -50,11 +50,11 @@ export default {
                         },
                         {
                             name: '劈分剖面',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/splitSection'
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/splitSection?link=ipmHome'
                         },
                         {
                             name: '劈分系数',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/DividingCoefficient'
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/DividingCoefficient?link=ipmHome'
                         }],
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;',
