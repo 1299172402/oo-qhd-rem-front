@@ -35,8 +35,8 @@
 <script>
     import Echart from '@/components/tools/Echarts/index.vue';
     import { searchGasChart} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
-    import { getGasTable } from '@/api/oilDeposit/rem-04/plan.js';
-    import { exportExcel } from '@/lib/exportExcel.js';
+    import { getGasTable ,downGetGasTable } from '@/api/oilDeposit/rem-04/plan.js';
+    import FileSaver from 'file-saver';
     export default {
         components: {
             Echart,
@@ -322,7 +322,18 @@
             },
             //导出table
             downTable() {
-                exportExcel('#tableData', this.searchForm.oilFieldName + '天然气产量跟踪表');
+                let request = {
+                    oilFieldId: this.searchForm.selectOilField,
+                    unitType: this.searchForm.selectUnitOfProduction,
+                    beginDate: this.searchForm.selectDate[0],
+                    endDate: this.searchForm.selectDate[1],
+                    planTypeCode: this.searchForm.planTypeCode,
+                    rollForecastVersion: this.searchForm.rollForecastVersion,
+                };
+                downGetGasTable(request).then(res=>{
+                    const blob = new Blob([res], { type: "application/octet-stream" });
+                    FileSaver.saveAs(blob, this.searchForm.oilFieldName + '天然气产量跟踪表.xlsx');
+                })
             },
         },
     };

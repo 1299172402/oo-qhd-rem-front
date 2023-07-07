@@ -74,7 +74,7 @@
             <pagePanelNew headerTitle="措施管理" style="height:100%;margin-top:0;">
                 <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
                     <span>秦皇岛32-6油田作业计划跟踪</span>
-                    <el-button type="primary" icon="el-icon-download" style="height:30px;" @click="doExportFile" v-show="canDownload">下载</el-button>
+                    <el-button type="primary" icon="el-icon-download" style="height:30px;" @click="doExportFile">下载</el-button>
                 </div>
                 <div class="tableBox" id="tableBox" style="height:calc(100% - 75px)">
                     <el-table id="csgl"
@@ -205,6 +205,9 @@
     import {
         exportExcel
     } from '@/lib/exportExcel.js';
+    import FileSaver from 'file-saver';
+    import * as XLSX from '@/lib/xlsx';
+    
     export default {
         name: 'measureManagement',
         components: {
@@ -654,7 +657,27 @@
             },
             //前端导出内容
             doExportFile() {
-                exportExcel('#csgl', '措施管理');
+                // exportExcel('#csgl', '措施管理');
+                let queryParams=JSON.parse(JSON.stringify(this.queryParams));
+                this.queryParams.pageSize=1000;
+                this.queryParams.page=1;
+                this.$nextTick(function () {
+                    let xlsxParam = {raw: true};
+                    let wb = XLSX.utils.table_to_book(document.querySelector("#csgl"), xlsxParam);
+                    const wbout = XLSX.write(wb, {
+                        bookType: "xlsx",
+                        bookSST: true,
+                        type: "array"
+                    });
+                    try {
+                        FileSaver.saveAs(new Blob([wbout], {type: "application/octet-stream"}), '措施管理.xlsx');
+                    } catch (e) {
+                        if (typeof console !== "undefined") console.log(e, wbout);
+                    }
+                    this.queryParams=JSON.parse(JSON.stringify(queryParams));
+                    return wbout;
+                });
+                                
             },
         },
     };
