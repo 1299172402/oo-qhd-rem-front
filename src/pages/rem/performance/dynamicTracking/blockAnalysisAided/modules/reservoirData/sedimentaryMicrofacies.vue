@@ -116,7 +116,7 @@
                 this.doSearch();
             },
             //下载功能
-            doDownLoad() {
+            doDownLoad(){
                 let fileName = '沉积相图';
                 let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
                 if (layerMess) {

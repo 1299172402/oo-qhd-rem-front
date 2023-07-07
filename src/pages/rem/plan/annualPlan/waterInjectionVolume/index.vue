@@ -36,7 +36,8 @@
 <script>
     import Echart from '@/components/tools/Echarts/index.vue';
     import { searchInjectionChart,searchInjectionTable } from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
-    import { exportExcel } from '@/lib/exportExcel.js';
+    import {dowmInjectionTable } from '@/api/oilDeposit/rem-04/plan.js';
+    import FileSaver from 'file-saver';
     export default {
         components: {
             Echart,
@@ -333,7 +334,18 @@
             },
             //导出table
             downTable() {
-                exportExcel('#tableData', this.searchForm.oilFieldName + '年度计划运行曲线表');
+                let request = {
+                        oilFieldId: this.searchForm.selectOilField,
+                        beginDate: this.searchForm.selectDate[0],
+                        endDate: this.searchForm.selectDate[1],
+                        planTypeCode: this.searchForm.planTypeCode,
+                        rollForecastVersion: this.searchForm.rollForecastVersion,
+                    };
+                    dowmInjectionTable(request).then(res=>{
+                        const blob = new Blob([res], { type: "application/octet-stream" });
+                        FileSaver.saveAs(blob, this.searchForm.oilFieldName + '注水量表.xlsx');
+                    })
+                
             },
         },
     };

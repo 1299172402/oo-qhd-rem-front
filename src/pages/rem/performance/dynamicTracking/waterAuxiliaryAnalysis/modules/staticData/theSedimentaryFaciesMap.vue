@@ -1,23 +1,25 @@
-<!--沉积相图-->
+<!--水井辅助分析-沉积相图-->
 <template>
-    <el-container class="mt-2">
-        <el-main>
-            <el-row>
-                <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable>
-                    <el-option v-for="item in position" :key="item.fieldLayerId" :label="item.layerName" :value="item.fieldLayerId"></el-option>
-                </el-select>
-            </el-row>
-            <el-row style="padding-top: 20px;height: 600px;overflow: auto;">
-                <el-image :src="image"><div slot="error"></div></el-image>
-            </el-row>
-        </el-main>
-    </el-container>
+    <div style="height:calc(100% - 100px);">
+        <div class="z-search">
+            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable @change="selectChange">
+                <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
+            </el-select>
+        </div>
+        <div class="z-main">
+            <el-image :src="src">
+                <div slot="error"></div>
+            </el-image>
+        </div>
+    </div>
 </template>
 
 <script>
-    import { depositionFaciesDiagram } from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
-    import { downFile } from '@/lib/remBase64Download.js';
-    import { fieldLayers } from '@/api/oilDeposit/rem-02/primaryinfo.js';
+    import {fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
+    // miniIo
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {filePreview,downFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         props: {
             //选择油田
@@ -25,126 +27,103 @@
             //选择平台
             platform: {},
             //选择井号
-            wellId: {}
+            wellId: {},
+            //区块id
+            blockId:{}
         },
         data() {
             return {
-                radio: 3,
-                //所选择的层位
+                //mniIo
+                fileId:'',
+                filestrId:'',
+                src:'',
+                //层位数据源
+                position: [],//选中层位
                 selectPosition: '',
-                //层位所选择内容信息
-                position: [],
-                src: '../../static/img/oilAuxiliaryAnalysis/staticData/theSedimentaryFaciesMap.jpg',
-                //图片数据
-                image: '',
-                imageList: [],
             };
         },
-        watch: {
-            //监听层位信息，给其动态传值
-            selectPosition(val) {
-                this.$emit('childPara', this.selectPosition);
-                this.OnChangeImage();
-            }
-        },
-        mounted() {
-            //初始化调用搜索
+        async mounted() {
+            await this.fieldOilLayersApi();
             this.doSearch();
         },
         methods: {
-            //调用图片
-            async doSearch() {
+            //获取层位接口
+            async fieldOilLayersApi(){
                 //初始化获取层段关系
-                await fieldLayers({
+                await fieldOilLayers({
                     oilFieldId: this.oilFeildId,
-                    wellId: this.wellId
+                    wellId: this.wellId,
                 }).then((res) => {
-                    if (res.data.code == 0) {
+                    if (res.data.code == 200) {
                         //层段数据
                         if (res.data.data) {
                             this.position = res.data.data.fieldLayers;
                             if (!this.selectPosition && this.position[0]) {
-                                if (
-                                    this.position.find((item) => {
-                                        return item.fieldLayerId == '26C4B92661D345969091868C256A7902';
-                                    })
-                                ) {
-                                    this.selectPosition = '26C4B92661D345969091868C256A7902';
-                                } else if (
-                                    this.position.find((item) => {
-                                        return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A';
-                                    })
-                                ) {
-                                    this.selectPosition = '263518079CED49AE8B6C9FE5CEBDD26A';
-                                } else if (
-                                    this.position.find((item) => {
-                                        return item.fieldLayerId == '87795A3E6BBC4469BC9AC5AE0BBE759C';
-                                    })
-                                ) {
-                                    this.selectPosition = '87795A3E6BBC4469BC9AC5AE0BBE759C';
-                                } else if (
-                                    this.position.find((item) => {
-                                        return item.fieldLayerId == '02398139A19A4F62BEFAC658E870D487';
-                                    })
-                                ) {
-                                    this.selectPosition = '02398139A19A4F62BEFAC658E870D487';
-                                } else {
-                                    this.selectPosition = this.position[0].fieldLayerId;
-                                }
-                                //this.selectPosition = '8CCB8A072D5D4677AFBDC091488A1AD7'
+                                this.selectPosition = this.position[0].fieldLayerId;
                                 this.$emit('childPara', this.selectPosition);
                             }
                         } else {
                             this.position = [];
                         }
-                    }
-                });
-
-                let request = {
-                    ogfId: this.oilFeildId,
-                    platformId: this.platform,
-                    wellId: this.wellId
-                };
-                depositionFaciesDiagram(request).then((res) => {
-                    if (res.data.code == 0) {
-                        this.imageList = res.data.data.layerPics;
-                        let imageMess = this.imageList.find((item) => item.layerId == this.selectPosition);
-                        if (!imageMess) {
-                            this.image = '';
-                            return;
-                        }
-                        if (imageMess.data && imageMess.type) this.image = 'data:' + imageMess.type + ';base64,' + imageMess.data;
-                        else {
-                            this.image = '';
-                        }
+                        this.$emit('childPara', this.selectPosition);
                     }
                 });
             },
-            //切换图片
-            OnChangeImage() {
-                this.image = '';
-                let imageMess = this.imageList.find((item) => item.layerId == this.selectPosition);
-                if (!imageMess) {
-                    this.image = '';
-                    return;
+            //获取图片
+            doSearch() {
+                this.imageList=[];
+                let params ={
+                    operationId:this.blockId+'-'+this.selectPosition,
+                    operationType:'BLOCKCJXT',
+                    readOne:'one' 
                 }
-                if (imageMess.data && imageMess.type) this.image = 'data:' + imageMess.type + ';base64,' + imageMess.data;
-                else {
-                    this.image = '';
-                }
+                queryRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        if(res.data.data.length){
+                            this.fileId=res.data.data[0].fileId;
+                            this.filestrId=res.data.data[0].filestrId;
+                            downFile(this.fileId).then((res)=>{
+                                this.src=window.URL.createObjectURL(res);
+                            })
+                        }else{
+                            this.src="";
+                        }
+                    }else {
+                        this.$message.error("文件查询接口异常!");
+                    }
+                });
             },
-            //下载
-            doDownLoad() {
+            //层位change
+            selectChange(e){
+                this.$emit('childPara', e);
+                this.doSearch();
+            },
+            //下载功能
+            doDownLoad(){
                 let fileName = '沉积相图';
                 let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
                 if (layerMess) {
-                    fileName = (layerMess.layerName ? layerMess.layerName : '') + fileName;
+                    fileName= layerMess.layerName +'-'+fileName;
                 }
-                if (this.wellName) {
-                    fileName = this.wellName + fileName;
-                }
-                downFile(this.image, fileName);
+                let file_suffix=this.filestrId.split('.')[1];
+                downFile(this.id).then(res=>{
+                    FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+                })
             }
         }
-    };
+    }
 </script>
+
+<style scoped lang="scss">
+    .z-search{
+        height:50px;
+    }
+    .z-main{
+        width: 100%;
+        height:calc(100% - 50px);
+        border: 1px solid #ddd;
+        border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
+        overflow: auto;
+    }
+</style>
+

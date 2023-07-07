@@ -69,3 +69,13 @@ export function getDate(params) {
     params,
   });
 }
+
+
+//根据井号id获取区块id
+export function getBlockWell(params) {
+  return Axios({
+    url: `${baseUrl}/primaryInfo/getBlockWell`,
+    method: "get",
+    params,
+  });
+}
