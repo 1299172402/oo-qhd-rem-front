@@ -80,7 +80,7 @@ export default {
                         },
                         {
                             name: '井底流压监测',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=/dynamicManagement/remHome'
+                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=dynamicManagement/remHome'
                         }],
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;',
