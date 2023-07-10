@@ -73,16 +73,12 @@ export default {
         //下载功能
         doDownLoad() {
             let fileName = '连井剖面图';
-            let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
-            if (layerMess) {
-                fileName= layerMess.layerName +'-'+fileName;
-            }
             for(let i=0;i<this.mniIoFiles.length;i++){
                 let fileId=this.mniIoFiles[i].fileId;
                 let filestrId = this.mniIoFiles[i].filestrId;
                 let file_suffix=filestrId.split('.')[1];
                 downFile(fileId).then((res) => {
-                    FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+                    FileSaver.saveAs(res,`${fileName}-${i+1}.${file_suffix}`);
                 });
             }
         }

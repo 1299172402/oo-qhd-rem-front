@@ -454,26 +454,10 @@
             },
             //minIo-下载
             doDownLoadNew(){
-                const id = this.$refs.componentCustom.id
-                let fileName = this.$refs.componentCustom.fileName
-                downFile(id).then((res) => {
-                    FileSaver.saveAs(res,`${fileName}`);
-                });
                 //如果是产液剖面||饱和度测井-则下载表格
-                if(this.currentModule=='fluidProducingProfile'||this.currentModule=='saturationLog'){
+                // if(this.currentModule=='fluidProducingProfile'||this.currentModule=='saturationLog'){
                     this.$refs.componentCustom.doDownLoad();
-                }
-            },
-            //原先下载
-            doDownLoad() {
-                let well = this.wellData.find((item) => {
-                    return item.wellId == this.selectWellId;
-                });
-                this.$refs.componentCustom.wellName = well.wellName;
-                if (this.childParam) {
-                    this.$refs.componentCustom.selectPosition = this.childParam;
-                }
-                this.$refs.componentCustom.doDownLoad();
+                // }
             },
             //重置
             resetting(){
