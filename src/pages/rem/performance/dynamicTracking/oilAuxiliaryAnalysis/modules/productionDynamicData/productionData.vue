@@ -23,7 +23,7 @@
                 header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
                 style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-                <el-table-column prop="prodDate" label="日期"></el-table-column>  
+                <el-table-column prop="prodDate" label="日期" width="100"></el-table-column>  
                 <el-table-column prop="prodDuration" :label="`生产时间\n (h)`" width="140"></el-table-column>
                 <el-table-column prop="fluidProdDaily" :label="`日产液\n (m³)`" width="120"></el-table-column>
                 <el-table-column prop="gasProdDaily" :label="`日产气\n (10⁴m³)`" width="130"></el-table-column>

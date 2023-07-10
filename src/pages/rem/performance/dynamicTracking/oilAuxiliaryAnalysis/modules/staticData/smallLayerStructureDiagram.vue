@@ -2,7 +2,7 @@
 <template>
     <div style="height:calc(100% - 95px);">
         <div class="z-search">
-            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable @change="selectChange">
+            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable  @change="selectChange">
                 <el-option v-for="(item, index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
         </div>

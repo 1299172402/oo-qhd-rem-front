@@ -445,15 +445,15 @@
             },
             //minIo-下载
             doDownLoadNew(){
-                const id = this.$refs.componentCustom.id
-                let fileName = this.$refs.componentCustom.fileName
-                downFile(id).then((res) => {
-                    FileSaver.saveAs(res,`${fileName}`);
-                });
+                // const id = this.$refs.componentCustom.id
+                // let fileName = this.$refs.componentCustom.fileName
+                // downFile(id).then((res) => {
+                //     FileSaver.saveAs(res,`${fileName}`);
+                // });
                 //如果是产液剖面||饱和度测井-则下载表格
-                if(this.currentModule=='fluidProducingProfile'||this.currentModule=='saturationLog'){
+                // if(this.currentModule=='fluidProducingProfile'||this.currentModule=='saturationLog'){
                     this.$refs.componentCustom.doDownLoad();
-                }
+                // }
             },
             
             //连井剖面弹框-打开

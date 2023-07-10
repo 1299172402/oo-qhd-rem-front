@@ -1,27 +1,33 @@
 <!--井组动态分析——小层顶面构造图-->
 <template>
-    <div class="z-main">
+    <div style="height:calc(100% - 95px);">
         <div class="z-search">
-            <el-select v-model="selectPosition" style="width: 220px" placeholder="请选择" filterable clearable>
-                <el-option v-for="item in position" :key="item.fieldLayerId" :label="item.layerName" :value="item.fieldLayerId"></el-option>
+            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable  @change="selectChange">
+                <el-option v-for="(item, index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
         </div>
-        <div class="z-echarts">
-            <el-carousel :interval="4000" height="100%" :autoplay="false" indicator-position="outside">
-                <el-carousel-item v-for="(item, index) in imageList" ref="imageCaeousel" :key="index" style="height: 100%; overflow-y: auto;display: block">
-                    <el-image :src="item"  style="width: 100%" :preview-src-list="imageList">
-                        <div slot="error"></div>
-                    </el-image>
-                </el-carousel-item>
-            </el-carousel>
+        <div class="z-main">
+            <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                <div class="z-container">
+                    <el-carousel :interval="4000" :autoplay="false" indicator-position="outside" arrow="hover">
+                        <el-carousel-item v-for="(item, index) in imageList" ref="imageCaeousel" :key="index" style="height: 100%; overflow-y: auto;">
+                            <el-image :src="item" :fit="fitInfo" style="width: 100%" :preview-src-list="imageList">
+                                <div slot="error"></div>
+                            </el-image>
+                        </el-carousel-item>
+                    </el-carousel>
+                </div>
+            </page-panel-new>
         </div>
     </div>
 </template>
 
 <script>
     import {fieldLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
+    // miniIo
     import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
-    import {filePreview} from "@/components/upload/utils/file";
+    import {filePreview,downFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         name: "smallLayerStructureDiagram",
         props: {
@@ -34,105 +40,129 @@
         },
         data() {
             return {
-                //所选择的层位
-                selectPosition: '',
-                //层位所选择内容信息
+                //mniIo文件列表
+                mniIoFiles:[],
+                //层位数据源
                 position: [],
-                image: '',
+                //层位绑定值
+                selectPosition: '',
                 imageList: [],
+                fitInfo:'cover',   
             };
         },
-        mounted() {
-            this.doSearch();
-        },
-        watch: {
-            //监听层位信息，给其动态传值
-            selectPosition(val) {
-                this.$emit('childPara', this.selectPosition);
-                this.queryRemUploadFileMinioApi();
-            }
+        async mounted() {
+            await this.doSearch();
         },
         methods: {
             //调用图片
-            async doSearch() {
-                console.log(this.oilFieldId,this.wellGroupId)
-                await fieldLayers({oilFieldId:this.oilFieldId,wellGroupId:this.wellGroupId}).then((res) => {
-                    if (res.data.code == 200) {
-                        //层段数据
-                        if (res.data.data) {
-                            if (!res.data.data.fieldLayers) {
-                                this.position = [];
-                                this.selectPosition = '';
-                            }else{
-                                this.position = res.data.data.fieldLayers;
-                                if (this.position.find((item) => {return item.fieldLayerId == '26C4B92661D345969091868C256A7902'})) {
-                                    this.selectPosition = '26C4B92661D345969091868C256A7902';
-                                } else if (this.position.find((item) => { return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A'})) {
-                                    this.selectPosition = '263518079CED49AE8B6C9FE5CEBDD26A';  
-                                } else if (this.position.find((item) => {return item.fieldLayerId == '87795A3E6BBC4469BC9AC5AE0BBE759C'})) {
-                                    this.selectPosition = '87795A3E6BBC4469BC9AC5AE0BBE759C';
-                                } else if (this.position.find((item) => {return item.fieldLayerId == '02398139A19A4F62BEFAC658E870D487'})) {
-                                    this.selectPosition = '02398139A19A4F62BEFAC658E870D487';
-                                } else {
-                                    this.selectPosition = this.position[0].fieldLayerId;
-                                }
-                                this.$emit('childPara', this.selectPosition);
-                            }
-                        } else {
-                            this.position = [];
-                            this.selectPosition = '';
-                        }
-                    } else {
-                        this.position = [];
-                        this.selectPosition = '';
-                    }
-                });
-                this.queryRemUploadFileMinioApi();
-            },
-            //mniIo获取图片
-            queryRemUploadFileMinioApi(){
-                let params ={
-                    operationId:this.wellGroupId+this.selectPosition,
-                    operationType:'WELLGROUPXCDMGZT',
-                    readOne:''
+            async doSearch(isBoolean=true) {
+                if(isBoolean){
+                    await this.fieldLayersApi();
                 }
-                queryRemUploadFileMinio(params).then((res) => {
+                this.imageList=[];
+                let params ={
+                    operationId:this.blockId+'-'+this.selectPosition,
+                    operationType:'BLOCKXCDMGZT',
+                    readOne:'' 
+                }
+                await queryRemUploadFileMinio(params).then((res) => {
                     if (res.data.code == 200) {
-                        let data =res.data.data[0].fileId
-                        // this.id = res.data.data[0].fileId
-                        // this.fileName = res.data.data[0].filestrId
-                        filePreview(data).then((res)=>{
-                            this.url = res.data.data
-                        })
+                        if(res.data.data.length){
+                            this.mniIoFiles=res.data.data;
+                            for(let i=0;i<this.mniIoFiles.length;i++){
+                                let fileId = this.mniIoFiles[i].fileId;
+                                downFile(fileId).then((res)=>{
+                                    let src=window.URL.createObjectURL(res);
+                                    this.imageList.push(src);
+                                })
+                            }
+                        }else{
+                            this.imageList=[];
+                        }
                     }else {
                         this.$message.error("文件查询接口异常!");
                     }
                 });
             },
+            //层位
+            async fieldLayersApi(){
+                await fieldLayers({oilFieldId:this.oilFieldId,wellGroupId:this.wellGroupId}).then((res) => {
+                    if (res.data.code == 200) {
+                        //层段数据
+                        if (res.data.data) {
+                            if (res.data.data.fieldLayers) {
+                                this.position = res.data.data.fieldLayers;
+                                for(let i=0;i<this.position.length;i++){
+                                    if(this.position[i].fieldLayerId=='26C4B92661D345969091868C256A7902'){
+                                        this.selectPosition = '26C4B92661D345969091868C256A7902';
+                                        break;
+                                    }else if(this.position[i].fieldLayerId=='263518079CED49AE8B6C9FE5CEBDD26A'){
+                                        this.selectPosition = '263518079CED49AE8B6C9FE5CEBDD26A';
+                                        break;
+                                    }else if(this.position[i].fieldLayerId=='87795A3E6BBC4469BC9AC5AE0BBE759C'){
+                                        this.selectPosition = '87795A3E6BBC4469BC9AC5AE0BBE759C';
+                                        break;
+                                    }else if(this.position[i].fieldLayerId=='02398139A19A4F62BEFAC658E870D487'){
+                                        this.selectPosition = '02398139A19A4F62BEFAC658E870D487';
+                                        break;
+                                    }else{
+                                        this.selectPosition = this.position[0].fieldLayerId;
+                                    }
+                                }
+                                this.$emit('childPara', this.selectPosition);
+                            }
+                        }
+                    } 
+                });
+            },
+            //层位change
+            selectChange(e){
+                this.$emit('childPara', e);
+                this.doSearch(false);
+            },
+            //下载功能
+            doDownLoad() {
+                let fileName = '小层顶面构造图';
+                let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
+                if (layerMess) {
+                    fileName= layerMess.layerName +'-'+fileName;
+                }
+                for(let i=0;i<this.mniIoFiles.length;i++){
+                    let fileId=this.mniIoFiles[i].fileId;
+                    let filestrId = this.mniIoFiles[i].filestrId;
+                    let file_suffix=filestrId.split('.')[1];
+                    downFile(fileId).then((res) => {
+                        FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+                    });
+                }
+            }
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    .z-main{
+    .z-search{
+        height:50px;
+    }
+    .z-main {
         width: 100%;
-        height:calc(100% - 101px);
-        display:flex;
+        height: calc(100% - 50px);
+        display: flex;
         flex-direction: column;
-        .z-search{
-            height:60px;
-            display: flex;
-            align-items: center;
-            margin-bottom:15px;
-        }
-        .z-echarts{
-            width: 100%;
-            flex:1;
-            height:0;
-            border: 1px solid #ddd;
-            border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
+        .z-container{
+            height: 100%; 
             ::v-deep .el-carousel{
                 height:100%;
+                .el-carousel__container{
+                    height:100%;
+                }
+                .el-carousel__item{
+                    overflow-x: hidden!important;
+                    overflow-y: scroll!important;
+                }
+                .el-carousel__arrow{
+                    background-color: rgba(31,45,61,.5);
+                }
             }
         }
     }
