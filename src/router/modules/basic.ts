@@ -37,12 +37,18 @@ export default [
         component: () => import('@/pages/rem/basic/customQuery/index.vue'),
         meta: { title: '自定义查询' }
       },
-        {
-            path: 'wellGroup_Maintenance',
-            name: 'wellGroup_Maintenance',
-            component: () => import('@/pages/rem/basic/wellGroup_Maintenance/index.vue'),
-            meta: { title: '井组自定义维护' }
-        },
+      {
+          path: 'wellGroup_Maintenance',
+          name: 'wellGroup_Maintenance',
+          component: () => import('@/pages/rem/basic/wellGroup_Maintenance/index.vue'),
+          meta: { title: '井组自定义维护' }
+      },
+      {
+        path: 'oilWellMainTain',
+        name: 'oilWellMainTain',
+        component: () => import('@/pages/rem/basic/prodinterval/index.vue'),
+        meta: { title: '油井/水井生产段维护' },
+      },
     ],
   },
 ];
