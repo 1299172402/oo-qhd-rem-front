@@ -28,7 +28,7 @@ export default {
         linkroute() {
             this.$router.push({
                 path: "/plan/annualPlan?page=/reservoirDisplay/oilexhibition",
-            });1
+            })
         },
     }
 };
