@@ -1,147 +1,131 @@
-<!--连井剖面图-->
+<!-- 连井剖面图 -->
 <template>
-    <div class="z-main">
-        <page-panel-new style="height:100%;margin-top:0;" show-btn>
-            <div class="z-container">
-                   <iframe style="height: 100%;width: 100%" :src="imageurl"></iframe>
-            </div>
-        </page-panel-new>
+    <div style="height:calc(100% - 95px);">
+        <div class="z-main">
+            <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                <div class="z-container">
+                            <el-button style="position: absolute;top:-6%;right:1%" size="mini" class="commonBtn" @click="doDownLoad()">下载</el-button>
+                    <el-carousel :interval="4000" :autoplay="false" indicator-position="outside" arrow="hover">
+                        <el-carousel-item v-for="(item, index) in imageList" ref="imageCaeousel" :key="index" style="height: 100%; overflow-y: auto;">
+                            <el-image :src="item" :fit="fitInfo" style="width: 100%" :preview-src-list="imageList">
+                                <div slot="error"></div>
+                            </el-image>
+                        </el-carousel-item>
+                    </el-carousel>
+                </div>
+            </page-panel-new>
+        </div>
     </div>
-    
 </template>
 
 <script>
-    import { getSectionWell} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
-    import { downFileList} from "@/lib/remBase64Download.js";
-    import {filePreview} from "@/components/upload/utils/file";
-    
-    export default {
-        props: {
-            oilFeildId: {},
-            platform: {},
-            wellId: {},
-        },
-        data() {
-            return {
-                imageList: [],
-                imageurl:''
-            };
-        },
-        mounted() {
-            //初始化调用搜索
-            this.doSearch();
-            //置为不可滚动
-            document.addEventListener(
-                "click",
-                (e) => {
-                    if (e.target.classList.contains("el-image__inner")) {
-                        var list = this.$refs.imageCaeousel;
-                        if (list != null && list.length > 0) {
-                            list.forEach((item) => {
-                                item.$el.style["overflow-y"] = "hidden";
-                            });
+import { fieldOilLayers,getinjWellByGroupId } from '@/api/oilDeposit/rem-02/primaryinfo.js';
+// miniIo
+import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+import {filePreview,downFile} from "@/components/upload/utils/file";
+import FileSaver from "file-saver";
+export default {
+    props: {
+        //油田id
+        oilFieldId: {},
+        //区块id
+        blockId: {},
+        //井组id
+        wellGroupId: {}
+    },
+    data() {
+        return {
+            //mniIo文件列表
+            mniIoFiles:[],
+            imageList: [],
+            downid:'',
+            fitInfo:'cover',
+        };
+    },
+    mounted() {
+        this.doSearch();
+    },
+    methods: {
+        async doSearch() {
+            let wellid = '',blockid = ''
+            
+            if(this.blockId = '3FC9A818F5BC43B88270DB80BBB3018F'){
+                blockid = ''
+            }else{
+                blockid = this.blockId
+            }
+            let data = {
+                blockId: blockid,
+                ogfId: this.oilFieldId,
+                wellGroupId: this.wellGroupId
+            }
+            getinjWellByGroupId(data).then((res)=>{
+                wellid = res.data.data[0].injWellId
+                this.imageList=[];
+                let params ={
+                    operationId:wellid,
+                    operationType:'REMLJPMT',
+                    readOne:''
+                }
+                queryRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        if(res.data.data.length){
+                            this.mniIoFiles=res.data.data;
+                            // this.downid = res.data?.data[0].fileId
+                            for(let i=0;i<this.mniIoFiles.length;i++){
+                                let fileId = this.mniIoFiles[i].fileId;
+                                downFile(fileId).then((res)=>{
+                                    let src=window.URL.createObjectURL(res);
+                                    this.imageList.push(src);
+                                })
+                            }
+                        }else{
+                            this.imageList=[];
                         }
+                    }else {
+                        this.$message.error("文件查询接口异常!");
                     }
-                },
-                false,
-            );
-            //重新置为可以滚动
-            document.addEventListener(
-                "click",
-                (e) => {
-                    if (e.target.classList.contains("el-icon-circle-close")) {
-                        var list = this.$refs.imageCaeousel;
-                        if (list != null && list.length > 0) {
-                            list.forEach((item) => {
-                                item.$el.style["overflow-y"] = "auto";
-                            });
-                        }             
-                    }
-                },
-                false,
-            );
+                });
+            })
+           
         },
-        methods: {
-            //调用图片
-            doSearch() {
-                let request = {
-                    ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
-                    platformId: "3FC9A818F5BC43B88270DB80BBB3018F",
-                    wellId: "09D30C16BD1D4F759D53F74941701307",
-                };
-                this.imageList = [];
-                filePreview('9c85e26a546c3bf9345da285b3e098ed').then((res)=>{
-                    this.imageurl = res.data.data
-                })
-                // getSectionWell(request).then((res) => {
-                //     if (res.data.code == 200) {
-                //         let imgData = res.data.data.data;
-                //         let type = res.data.data.type;
-                //         let firstParty = "data:" + type + ";base64,";
-                //         if (imgData) {
-                //             this.imageList.push(firstParty + imgData);
-                //         }
-                //         let wellIds = res.data.data.wellIds;
-                //         if (wellIds != null && wellIds.length > 0) {
-                //             wellIds.forEach((item, index) => {
-                //                 if (item != this.wellId) {
-                //                     console.log(item)
-                //                     var queryParam = {
-                //                         ogfId: this.oilFeildId,
-                //                         platformId: this.platform,
-                //                         wellId: item,
-                //                     };
-                //                     getSectionWell(queryParam).then((res) => {
-                //                         if (res.data.code == 200) {
-                //                             console.log(res)
-                //                             let imgDataChild = res.data.data.data;
-                //                             let typeChild = res.data.data.type;
-                //                             let firstPartyChild = "data:" + typeChild + ";base64,";
-                //                             if (imgDataChild) {
-                //                                 this.imageList.push(firstPartyChild + imgDataChild);
-                //                             }
-                //                         }
-                //                     });
-                //                 }
-                //             });
-                //         }
-                //     }
-                // });
-            },
-            //下载
-            doDownLoad() {
-                let fileName = "连井剖面图";
-                if (this.wellName) {
-                    fileName = this.wellName + fileName;
-                }
-                //批量下载
-                downFileList(this.imageList, fileName);
-            },
-        },
-    };
-</script>
-
-<style lang="scss" scoped>
-    .z-main {
-        width: 100%;
-        height: calc(100% - 101px);
-        display: flex;
-        flex-direction: column;
-        .z-container{
-            height: 100%; 
-            ::v-deep .el-carousel{
-                height:100%;
-                .el-carousel__container{
-                    height:100%;
-                }
-                .el-carousel__item{
-                    overflow-x: hidden!important;
-                    overflow-y: scroll!important;
-                }
-                .el-carousel__arrow{
-                    background-color: rgba(31,45,61,.5);
-                }
+        // 下载功能
+        doDownLoad() {
+            let fileName = '连井剖面图';
+            for(let i=0;i<this.mniIoFiles.length;i++){
+                let fileId=this.mniIoFiles[i].fileId;
+                let filestrId = this.mniIoFiles[i].filestrId;
+                let file_suffix=filestrId.split('.')[1];
+                downFile(fileId).then((res) => {
+                    FileSaver.saveAs(res,`${fileName}-${i+1}.${file_suffix}`);
+                });
             }
         }
     }
+};
+</script>
+
+<style scoped lang="scss">
+.z-main {
+    width: 100%;
+    height: calc(100%);
+    display: flex;
+    flex-direction: column;
+    .z-container{
+        height: 100%;
+        ::v-deep .el-carousel{
+            height:100%;
+            .el-carousel__container{
+                height:100%;
+            }
+            .el-carousel__item{
+                overflow-x: hidden!important;
+                overflow-y: scroll!important;
+            }
+            .el-carousel__arrow{
+                background-color: rgba(31,45,61,.5);
+            }
+        }
+    }
+}
 </style>

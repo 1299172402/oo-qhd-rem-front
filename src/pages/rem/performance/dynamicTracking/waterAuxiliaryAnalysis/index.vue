@@ -5,15 +5,15 @@
         <headerSearch style="height: 80px">
             <div class="g-row-flex-V g-w100 g-h100">
                 <span class="title">油田：</span>
-                <el-select v-model="selectOilField" placeholder="请选择" filterable clearable disabled style="margin-right: 15px">
+                <el-select v-model="selectOilField" placeholder="请选择" filterable disabled style="margin-right: 15px">
                     <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
                 </el-select>
                 <span class="title">平台：</span>
-                <el-select v-model="selectPlatform" placeholder="请选择" filterable clearable @change="doChangePT" style="width: 220px; margin-right: 15px">
+                <el-select v-model="selectPlatform" placeholder="请选择" filterable @change="doChangePT" style="width: 220px; margin-right: 15px">
                     <el-option v-for="item in platform" :key="item.platFormId" :label="item.platName" :value="item.platFormId"></el-option>
                 </el-select>
                 <span class="title">井号：</span>
-                <el-select v-model="selectWellId" class="f2" filterable clearable @change="onChangeWell" style="width: 180px;">
+                <el-select v-model="selectWellId" class="f2" filterable @change="onChangeWell" style="width: 180px;">
                     <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled"></el-option>
                 </el-select>
                 <el-button type="primary" icon="el-icon-search" style="margin-left: 15px" @click="doSearch">搜索</el-button>
@@ -25,10 +25,10 @@
             
             <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
                 <!-- minIo上传 -->
-                <el-button v-if="currentModule=='wellNetworkDiagram'||currentModule=='completionStringDrawing'||currentModule=='wellTestReport'||currentModule=='drillingReport'||currentModule=='completionReport'||currentModule=='geologicalSummary'" type="primary" icon="el-icon-upload2" style="margin-left: auto !important" @click="ljpmUploadDialogLast" >上传文档</el-button>
+                <el-button v-if="isUpdateFile" type="primary" icon="el-icon-upload2" style="margin-left: auto !important" @click="ljpmUploadDialogLast" >上传文档</el-button>
                 <!-- minIo下载 -->
                 <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" :disabled="downloadButton" @click="doDownLoadNew">下载</el-button>
-                
+                <!-- 返回 -->
                 <el-button type="primary" v-if="$route.query.wellId" style="margin-left:15px;" @click="goBack">返回</el-button>
             </div>
             
@@ -47,29 +47,36 @@
                     </div>
                 </el-tab-pane>
             </el-tabs>
-            <keep-alive :include="[]" :max="10">
-                <component :is="component" ref="componentCustom" :oil-feild-id="selectOilField" :platform="selectPlatform" :well-id="selectWellId" @childPara="changeChildParam"></component>
+            <keep-alive :include="[]" :max="10" v-if="blockId">
+                <component 
+                    :is="component" 
+                    ref="componentCustom" 
+                    :oilFeildId="selectOilField" 
+                    :platform="selectPlatform" 
+                    :wellId="selectWellId" 
+                    :blockId="blockId" 
+                    @childPara="changeChildParam">
+                </component>
             </keep-alive>
         </pagePanelNew>
+        
         <!-- minIo上传 -->
         <el-dialog custom-class="border" title="上传文档" :visible.sync="ljpmDialogLast" width="20%" :before-close="ljpmDialogCloseLast" :style="{ 'min-width': '1800px' }">
-            <el-row>
-                <el-form ref="form" :model="ljUploadForm" label-width="40px">
-                    <el-form-item label="" style="width: 88px">
-                        <file-upload v-model="imageurl" style="width: 250px" :limit="limit" :fileSize="20" :is-show-tip="false" biz-path="rem-front/text" bucket-name="zhy" :file-type="fileType" @change="getResData"/>
-                    </el-form-item>
-                </el-form>
-            </el-row>
+            <div style="display: flex;justify-content: center;">
+                <file-upload v-model="imageurl" style="width: 250px" :limit="limit" :fileSize="20" :is-show-tip="false" biz-path="rem-front/text" :file-type="fileType" @change="getResData"/>
+            </div>
             <div slot="footer" class="dialog-footer" style="text-align: center">
-                <el-button @click="ljpmDialogCloseLast">关 闭</el-button>
+                <el-button class="cancelBtn" @click="ljpmDialogCloseLast">关 闭</el-button>
             </div>
         </el-dialog>
+        
     </div>
 </template>
     
 <script>
     import { fetchOilFields,fetchPlatforms,fetchInjectionWells,fetchInjectionWellsByPlatform,uploadFile } from "@/api/oilDeposit/rem-02/primaryinfo.js";
-    import { getMajorEventsBriefly } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
+    //miniIo
+    import { getBlockWell,getMajorEventsBriefly} from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
     import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
     import {addRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
     import {downFile} from "@/components/upload/utils/file";
@@ -80,11 +87,22 @@
         data() {
             return {
                 //minIo
+                isUpdateFile:false,//是否显示上传文档按钮
                 ljpmDialogLast: false,
                 limit:1,
                 fileType:['pdf'],
                 imageurl:'',
                 operationTypeList:{
+                    wellLoggingCurve:{//测井曲线
+                        operationType:'WATERCJQX',
+                        limit:1,
+                        fileType:['bmp','jpg','jpeg','png','pdf']
+                    },
+                    whileDrillingTrajectory:{//地质探边图
+                        operationType:'WATERDZTBT',
+                        limit:1,
+                        fileType:['bmp','jpg','jpeg','png','pdf']
+                    },
                     wellNetworkDiagram:{//井网图
                         operationType:'WATERJWT',
                         limit:1,
@@ -144,58 +162,60 @@
                 platform: [],
                 //选择单井信息
                 selectWellId: "",
+                //区块id
+                blockId:'',
                 //采油井信
                 wellData: [],
                 fileList: [],
                 queryParams: {},
                 component: null,
                 activeName: "staticData",
-                currentModule: "perforationData",
+                currentModule: "smallLayerStructureDiagram",
                 tabs: [
                     {
                         label: "静态资料",
                         name: "staticData",
                         modules: [
+                            {
+                                label: '小层顶面构造图',
+                                name: 'smallLayerStructureDiagram'
+                            },
+                            {
+                                label: '地震属性图', 
+                                name: 'smallFloorPlan'
+                            },
+                            {
+                                label: '测井曲线',
+                                name: 'wellLoggingCurve'
+                            },
                             // {
-                            //     label: '小层顶面构造图',
-                            //     name: 'smallLayerStructureDiagram'
+                            //     label: "固井质量测井图",
+                            //     name: "cementingQualityLog",
                             // },
+                            {
+                                label: '地震剖面图',
+                                name: 'seismicProfile'
+                            },
+                            {
+                                label: '沉积相图',
+                                name: 'theSedimentaryFaciesMap'
+                            },
+                            {
+                                label: '地质探边图',
+                                name: 'whileDrillingTrajectory'
+                            },
+                            {
+                                label: "连井剖面图",
+                                name: "connecting",
+                            },
+                            {
+                                label: '测井解释成果',
+                                name: 'loggingInterpretationResult'
+                            },
                             // {
-                            //     label: '地震属性图', //原小层平面图
-                            //     name: 'smallFloorPlan'
+                            //     label: '小层数据',
+                            //     name: 'smallLayerData'
                             // },
-                            // {
-                            //     label: '连井剖面图', //原地震属性图
-                            //     name: 'seismicAttributeMap'
-                            // },
-                            // {
-                            //     label: '测井曲线',
-                            //     name: 'wellLoggingCurve'
-                            // },
-                            /*{
-                                                  label: "固井质量测井图",
-                                                  name: "cementingQualityLog",
-                                                },*/
-                            // {
-                            //     label: '地震剖面图',
-                            //     name: 'seismicProfile'
-                            // },
-                            // {
-                            //     label: '地质探边图',
-                            //     name: 'whileDrillingTrajectory'
-                            // },
-                            // {
-                            //     label: '沉积相图',
-                            //     name: 'theSedimentaryFaciesMap'
-                            // },
-                            // {
-                            //     label: '测井解释成果',
-                            //     name: 'loggingInterpretationResult'
-                            // },
-                            /*{
-                                            label: '小层数据',
-                                            name: 'smallLayerData'
-                                        },*/
                             {
                                 label: "射孔数据",
                                 name: "perforationData",
@@ -207,10 +227,6 @@
                             {
                                 label: "水井分析报告",
                                 name: "waterReport",
-                            },
-                            {
-                                label: "连井剖面图",
-                                name: "connecting",
                             },
                             {
                                 label: "视吸水指数",
@@ -345,24 +361,6 @@
                 ],
                 //子组件返回数据
                 childParam: "",
-                //缓存权限数据
-                myWidget: [],
-                userInfo: {},
-                //按钮权限组
-                //添加记
-                canAddInfo: false,
-                //修改数
-                canUpdateInfo: false,
-                //发布数
-                canSendInfo: false,
-                //删除数
-                canDeleteInfo: false,
-                //下载数
-                canDownload: true,
-                //上传数
-                canUpload: false,
-                aName: "",
-                ctModule: "",
             };
         },
         computed: {
@@ -456,26 +454,10 @@
             },
             //minIo-下载
             doDownLoadNew(){
-                const id = this.$refs.componentCustom.id
-                let fileName = this.$refs.componentCustom.fileName
-                downFile(id).then((res) => {
-                    FileSaver.saveAs(res,`${fileName}`);
-                });
                 //如果是产液剖面||饱和度测井-则下载表格
-                if(this.currentModule=='fluidProducingProfile'||this.currentModule=='saturationLog'){
+                // if(this.currentModule=='fluidProducingProfile'||this.currentModule=='saturationLog'){
                     this.$refs.componentCustom.doDownLoad();
-                }
-            },
-            //原先下载
-            doDownLoad() {
-                let well = this.wellData.find((item) => {
-                    return item.wellId == this.selectWellId;
-                });
-                this.$refs.componentCustom.wellName = well.wellName;
-                if (this.childParam) {
-                    this.$refs.componentCustom.selectPosition = this.childParam;
-                }
-                this.$refs.componentCustom.doDownLoad();
+                // }
             },
             //重置
             resetting(){
@@ -493,6 +475,10 @@
             handleClick(tab) {
                 this.activeName = tab.name;
                 this.currentModule = this.tabs[tab.index].modules[0].name;
+                
+                this.isUpdateFile=this.operationTypeList[this.currentModule]?true:false;
+                this.limit=this.operationTypeList[this.currentModule].limit;
+                this.fileType=this.operationTypeList[this.currentModule].fileType;
             },
             //点击二级菜单
             tabsClick(module){
@@ -504,6 +490,9 @@
                     window.open("https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge", "_blank");
                 }else{
                     this.currentModule = module.name;
+                    this.isUpdateFile=this.operationTypeList[this.currentModule]?true:false;
+                    this.limit=this.operationTypeList[this.currentModule].limit;
+                    this.fileType=this.operationTypeList[this.currentModule].fileType;
                 }
             },
             //初始化 数据
@@ -556,26 +545,39 @@
                     });
                     this.selectWellId = wellMess.wellId;
                 }
+                await this.getBlockWellApi();
                 this.doSearch();
+            },
+            //根据井号id获取区块id
+            async getBlockWellApi(){
+                await getBlockWell({wellId:this.selectWellId}).then(res=>{
+                    if(res.data.code==200){
+                        this.blockId=res.data.data.blockId;
+                    }
+                })
             },
             //搜索功能
             doSearch() {
                 this.$refs.componentCustom.wellId = this.selectWellId;
                 this.$refs.componentCustom.oilFeildId = this.selectOilField;
                 this.$refs.componentCustom.platform = this.selectPlatform;
+                if(this.$refs.componentCustom.blockId){
+                    this.$refs.componentCustom.blockId = this.blockId;
+                }
+                
                 if (this.childParam) {
                     this.$refs.componentCustom.selectPosition = this.childParam;
                 }
                 this.majorEventsBrieflyValue = "";
                 this.getMajorEventsBriefly();
-                console.log(this.currentModule);
+                
                 if (this.currentModule == "waterReport") {
                     this.$refs.componentCustom.queryAll();
                 } else {
                     this.$refs.componentCustom.doSearch();
                 }
             },
-            //搜索-平台change
+            //平台change
             doChangePT(val) {
                 this.selectWellId = "";
                 if (this.selectOilField == val) {
@@ -586,30 +588,27 @@
             },
             //查询油井信息
             getFetchProductionWells(oilFieldId) {
-                let request = {
-                    oilFieldId: oilFieldId
-                };
-                fetchInjectionWells(request).then((res) => {
+                fetchInjectionWells({oilFieldId: oilFieldId}).then((res) => {
                     if (res.data.code == 200) {
                         this.wellData = res.data.data.injectionWell;
+                        this.selectWellId = this.wellData[0].wellId;
                     }
                 });
             },
             //查询油井信息
             getFetchProductionWellsByPlatform(platformId) {
-                let request = {
-                    platformId
-                };
-                fetchInjectionWellsByPlatform(request).then((res) => {
+                fetchInjectionWellsByPlatform({platformId}).then((res) => {
                     if (res.data.code == 200) {
                         this.wellData = res.data.data.injectionWell;
+                        this.selectWellId = this.wellData[0].wellId;
                     }
                 });
             },
-            //搜索-井号-change
-            onChangeWell() {
+            //井号-change
+            onChangeWell(){
                 this.childParam = "";
                 this.$refs.componentCustom.selectPosition = this.childParam;
+                this.getBlockWellApi();
             },
             //大事简要数据源接口
             getMajorEventsBriefly() {
@@ -633,7 +632,6 @@
             //子组件传递参数
             changeChildParam(val) {
                 this.childParam = val;
-                console.log(this.childParam);
             },
             //返回 
             goBack(){

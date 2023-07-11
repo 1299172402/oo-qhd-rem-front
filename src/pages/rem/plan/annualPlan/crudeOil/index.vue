@@ -41,9 +41,7 @@
     import Echart from '@/components/tools/Echarts/index.vue';
     import { searchOilProductionChart, searchOilProductionTable} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
     import { downLoadOilProductionTable} from '@/api/oilDeposit/rem-04/plan.js';
-    import { exportExcel } from '@/lib/exportExcel.js';
     import FileSaver from 'file-saver';
-    import * as XLSX from '@/lib/xlsx'
     
     export default {
         components: {
@@ -413,25 +411,6 @@
                     const blob = new Blob([res], { type: "application/octet-stream" });
                     FileSaver.saveAs(blob, this.searchForm.oilFieldName + '年度计划运行曲线表.xlsx');
                 })
-                // let queryParams=JSON.parse(JSON.stringify(this.queryParams));
-                // this.queryParams.pageSize=1000;
-                // this.queryParams.page=1;
-                // this.$nextTick(function () {
-                //     let xlsxParam = {raw: true};
-                //     let wb = XLSX.utils.table_to_book(document.querySelector("#tableData"), xlsxParam);
-                //     const wbout = XLSX.write(wb, {
-                //         bookType: "xlsx",
-                //         bookSST: true,
-                //         type: "array"
-                //     });
-                //     try {
-                //         FileSaver.saveAs(new Blob([wbout], {type: "application/octet-stream"}), this.searchForm.oilFieldName + '年度计划运行曲线表.xlsx');
-                //     } catch (e) {
-                //         if (typeof console !== "undefined") console.log(e, wbout);
-                //     }
-                //     this.queryParams=JSON.parse(JSON.stringify(queryParams));
-                //     return wbout;
-                // });
             },
         },
     };

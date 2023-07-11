@@ -5,7 +5,7 @@
         <headerSearch style="height: 80px">
             <div class="g-row-flex-V g-w100 g-h100">
                 <span class="title">油田：</span>
-                <el-select v-model="selectOilField" placeholder="请选择" filterable clearable disabled @change="changeSelectOilField" style="margin-right: 15px">
+                <el-select v-model="selectOilField" placeholder="请选择" filterable disabled @change="changeSelectOilField" style="margin-right: 15px">
                     <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
                 </el-select>
                 <span class="title">区块：</span>
@@ -45,8 +45,8 @@
                 </el-tab-pane>
             </el-tabs>
             
-            <keep-alive :include="[]" :max="10" v-if="newWellGroup.length">
-                <component :is="component" ref="componentCustom" :oil-field-id="selectOilField" :block-id="selectBlock" :wellCentre="wellCentre" :well-group-id="selectWellGroup" @childPara="changeChildParam"></component>
+            <keep-alive :include="[]" :max="10" v-if="selectBlock">
+                <component :is="component" ref="componentCustom" :oilFieldId="selectOilField" :blockId="selectBlock" :wellCentre="wellCentre" :wellGroupId="selectWellGroup" @childPara="changeChildParam"></component>
             </keep-alive>
             
         </pagePanelNew>
@@ -83,32 +83,12 @@
         data() {
             return {
                 //minIo
-                isUpdateFile:true,//是否显示上传文档按钮
+                isUpdateFile:false,//是否显示上传文档按钮
                 ljpmDialogLast: false,
                 limit:1,
                 fileType:['pdf'],
                 imageurl:'',
                 operationTypeList:{
-                    smallLayerStructureDiagram:{//小层顶面构造图
-                        operationType:'WELLGROUPXCDMGZT',
-                        limit:3,
-                        fileType:['bmp','jpg','jpeg','png','pdf']
-                    },
-                    seismicAttributes:{//地震属性图
-                        operationType:'WELLGROUPDZSXT',
-                        limit:1,
-                        fileType:['bmp','jpg','jpeg','png','pdf']
-                    },
-                    thicknessOfSandLayer:{//沉积相图
-                        operationType:'WELLGROUPCJXT',
-                        limit:1,
-                        fileType:['bmp','jpg','jpeg','png','pdf']
-                    },
-                    effectiveThickness:{//有效厚层图
-                        operationType:'WELLGROUPYXHCT',
-                        limit:1,
-                        fileType:['bmp','jpg','jpeg','png','pdf']
-                    },
                     permeabilityDistribution:{//渗透率分布图
                         operationType:'WELLGROUPSTFBT',
                         limit:1,
@@ -158,32 +138,26 @@
                         name: "reservoirData",
                         modules: [
                             {
-                                isUpdateFile:true,
                                 label: "小层顶面构造图",
                                 name: "smallLayerStructureDiagram",
                             },
                             {
-                                isUpdateFile:true,
                                 label: "地震属性图",
                                 name: "seismicAttributes",
                             },
                             {
-                                isUpdateFile:true,
                                 label: "沉积相图",
                                 name: "thicknessOfSandLayer",
                             },
                             {
-                                isUpdateFile:true,
                                 label: "有效厚层图",
                                 name: "effectiveThickness",
                             },
                             {
-                                isUpdateFile:true,
                                 label: "渗透率分布图",
                                 name: "permeabilityDistribution",
                             },
                             {
-                                isUpdateFile:true,
                                 label: "井组连通图",
                                 name: "wellGroupConnection",
                             },
@@ -228,41 +202,6 @@
                             },
                         ],
                     },
-                ],
-                //文件名称对应项
-                tabsPathName: [
-                    {
-                        name: "smallLayerStructureDiagram",
-                        pathName: "STRUCTURE",
-                    }, //小层顶面构造图
-                    {
-                        name: "seismicAttributes",
-                        pathName: "SEISMIC_ATTRIBUTES",
-                    }, //地震属性图
-                    {
-                        name: "wellGroupConnection",
-                        pathName: "WELL_GROUP_CONNECTION",
-                    }, //井组连通图
-                    {
-                        name: "thicknessOfSandLayer",
-                        pathName: "THICKNESS_SAND_LAYER",
-                    }, //砂层厚度图
-                    {
-                        name: "effectiveThickness",
-                        pathName: "EFFECTIVE_THICKNESS",
-                    }, //有效厚度图
-                    {
-                        name: "permeabilityDistribution",
-                        pathName: "PERMEABILITY_DISTRIBUTION",
-                    }, //渗透率分布图
-                    {
-                        name: "permeabilityColumnar",
-                        pathName: "PERMEABILITY_COLUMNAR",
-                    }, //渗透率分布图
-                    {
-                        name: "tracer",
-                        pathName: "TRACER",
-                    }, //示踪剂
                 ],
                 //子组件返回数据
                 childParam: "",
@@ -322,7 +261,6 @@
                 };
                 this.uploadFile(params);
             },
-            
             uploadFile(params){
                 this.ljpmDialogLast = false;
                 addRemUploadFileMinio(params).then((res) => {
@@ -381,18 +319,22 @@
             handleClick(tab) {
                 this.activeName = tab.name;
                 this.currentModule = this.tabs[tab.index].modules[0].name;
-                this.isUpdateFile=this.tabs[tab.index].modules[0].isUpdateFile?true:false;
+                this.isUpdateFile=false;
+                for(let key in this.operationTypeList){
+                    if(key==this.currentModule){
+                        this.isUpdateFile=true;
+                        return false;
+                    }
+                }
             },
             //点击二级tabs
             handleTwoClicj(module) {
                 this.currentModule = module.name;
-                for(let i=0;i<this.tabs.length;i++){
-                    let modules=this.tabs[i].modules;
-                    for(let j=0;j<modules.length;j++){
-                        if(this.currentModule==modules[j].name){
-                            this.isUpdateFile=modules[j].isUpdateFile?true:false;
-                            break;
-                        }
+                this.isUpdateFile=false;
+                for(let key in this.operationTypeList){
+                    if(key==this.currentModule){
+                        this.isUpdateFile=true;
+                        return false;
                     }
                 }
                 this.selectWellGroup = this.newWellGroup[0].wellGroupId;
@@ -423,14 +365,8 @@
                 });
                 //井组信息初始化
                 let obj = {
+                    ogfId: this.selectOilField,
                     blockId: "YCFXDY8B643EDC9007F96F570600457D",
-                    dateTime: "",
-                    ogfId: "",
-                    wellDataDtoList: [{
-                        wellId: "",
-                        wellName: ""
-                    }],
-                    wellGroupId: ""
                 }
                 await wellGroupList(obj).then((res) => {
                     if (res.data.code == 200 && res.data.data && res.data.data.length) {
@@ -451,7 +387,7 @@
                 this.$nextTick(() => {
                     console.log( this.$refs.componentCustom)  
                     this.$refs.componentCustom.oilFieldId = this.selectOilField; 
-                    this.$refs.componentCustom.platform = this.selectPlatform;
+                    this.$refs.componentCustom.blockId = this.selectBlock
                     this.$refs.componentCustom.wellGroupId = this.selectWellGroup;
                     this.$refs.componentCustom.doSearch();
                 });
@@ -493,20 +429,19 @@
                     blockId = 'YCFXDY8B643EDC9007F96F570600457D'
                 }
                 let obj = {
+                    ogfId: this.selectOilField,
                     blockId: blockId,
-                    dateTime: "",
-                    ogfId: "",
-                    wellDataDtoList: [{
-                        wellId: "",
-                        wellName: ""
-                    }],
-                    wellGroupId: ""
                 }
                 //动态资料-井组配注变化动态||井组连通性变化动态||注采井网状态变化 调zxp这个接口
                 wellGroupList(obj).then((res) => {
-                    if (res.data.code == 200 && res.data.data && res.data.data.length) {
-                        this.newWellGroup = res.data.data;
-                        this.selectWellGroup= this.newWellGroup[0].wellGroupId
+                    if (res.data.code == 200) {
+                        if(res.data.data && res.data.data.length){
+                            this.newWellGroup = res.data.data;
+                            this.selectWellGroup= this.newWellGroup[0].wellGroupId
+                        }else{
+                            this.newWellGroup =[];
+                            this.selectWellGroup= '';
+                        }
                     }
                 });
             },

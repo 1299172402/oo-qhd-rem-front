@@ -41,7 +41,7 @@ export default {
             histogram: {
                 tooltip: {
                     trigger: "item",
-                    formatter: "{a} <br/>{b} : {c} ({d}%)",
+                    formatter: "{a} <br/>{b} : {c}口 <br/> 占比 : {d}%",
                 },
                 series: [
                     {
