@@ -12,7 +12,7 @@
                 </div>
                 <div style="margin-left: 10px;">
                     <span>区块：</span>
-                    <el-select v-model="selectBlock" style="width: 180px" filterable>
+                    <el-select v-model="selectBlock" style="width: 180px" filterable @change="blockChange">
                         <el-option v-for="item in blocks" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                     </el-select>
                 </div>
@@ -253,10 +253,17 @@
                     <div style="flex:1;margin-right:10px;height:498px;">
                         <pagePanelNew headerTitle="" style="height:100%;" showBtn>
                             <div style="height:100%;">
-                                <div style="display: flex;justify-content: flex-end;margin-bottom:10px;">
-                                    <el-button class="commonBtn" @click="switchToAnaylsis">区块分析</el-button>
+                                <div style="display: flex;margin-bottom:10px;">
+                                    <!-- 层位选择 -->
+                                    <el-select v-model="selectPosition" style="width: 220px;margin-right:20px;" placeholder="请选择" filterable clearable @change="selectChange">
+                                        <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
+                                    </el-select>
+                                    <!-- minIo上传 -->
+                                    <el-button v-if="isUpdateFile" type="primary" icon="el-icon-upload2" @click="ljpmUploadDialogLast">上传底图</el-button>
+                                    <!-- 区块分析 -->
+                                    <el-button class="commonBtn" style="margin-left:auto!important;" @click="switchToAnaylsis">区块分析</el-button>
                                 </div>
-                                <H5Chart2 ref="H5Chart2" height="calc(100% - 50px)" :url="url" width="100%"></H5Chart2>
+                                <H5Chart2 ref="H5Chart2" height="calc(100% - 50px)" :url="url" width="100%" v-if="isRefresh"></H5Chart2>
                             </div>
                         </pagePanelNew>
                     </div>
@@ -282,21 +289,49 @@
             </div>
         </pagePanelNew>
     
+        <!-- minIo上传 -->
+        <el-dialog custom-class="border" title="上传文档" :visible.sync="ljpmDialogLast" width="20%" :before-close="ljpmDialogCloseLast" :style="{ 'min-width': '1800px' }">
+            <div style="display: flex;justify-content: center;">
+                <file-upload v-model="imageurl" style="width: 250px" :limit="limit" :fileSize="20" :is-show-tip="false" biz-path="rem-front/text" :file-type="fileType" @change="getResData"/>
+            </div>
+            <div slot="footer" class="dialog-footer" style="text-align: center">
+                <el-button class="cancelBtn" @click="ljpmDialogCloseLast">关 闭</el-button>
+            </div>
+        </el-dialog>
+        
     </div>
 </template>
 
 <script>
+    import {mapState,mapMutations} from "vuex"
+    import {fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import H5Chart from "@/components/tools/H5Chart/index.vue";
     import H5Chart2 from "@/components/tools/H5Chart/index.vue";
     import { outputStatusAnalysis, areaDiagram, stableBaseAnalysis, proInjectionBalanceAnalysis, proStatusAnalysis} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
     import { fetchFields,fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import { getBorepipeType } from "@/api/oilDeposit/ipm-03/basedata.js";
     import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js"
+    // Minio
+    import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
+    import {addRemUploadFileMinio,queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {filePreview,downFile} from "@/components/upload/utils/file";
     export default {
         name:'blockAnalysisReport',
-        components: {H5Chart,H5Chart2},
+        components: {H5Chart,H5Chart2,FileUpload},
+        computed:{
+            isUpdateFile(){
+                return this.$store.state.user.userInfo.nickName=='彭红涛';
+            },
+        },
         data() {
             return {
+                isRefresh:true,
+                // Minio
+                minioImgSrc:'',
+                ljpmDialogLast: false,
+                limit:1,
+                fileType:['bmp','jpg','jpeg','png'],
+                imageurl:'',
                 //接受路由参数
                 queryLink:'',//如果为1 默认选中注采平衡分析分类中的第一个，如果为2默认选中采出状况分析下的第一个
                 //油田
@@ -307,6 +342,10 @@
                 selectBlock: "",
                 //日期
                 rq: "",
+                //层位数据源
+                position: [],
+                //层位绑定值
+                selectPosition: '',
                 //默认显示新版式
                 isNewformat:true,
                 url: '\/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient.html',
@@ -385,6 +424,91 @@
             this.getDateApi();
         },
         methods: {
+            //切换层位
+            selectChange(e){
+                this.queryRemUploadFileMinioApi(true);
+            },
+            //minIo-获取底图
+            queryRemUploadFileMinioApi(isBoolean){
+                let params ={
+                    operationId:this.selectBlock+'-'+this.selectPosition,
+                    operationType:'BLOCKCWDT',
+                    readOne:'one' 
+                }
+                queryRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        if(res.data.data.length){
+                            let data =res.data.data[0].fileId
+                            this.id = res.data.data[0].fileId
+                            this.filestrId = res.data.data[0].filestrId
+                            downFile(this.id).then((res)=>{
+                                let src=window.URL.createObjectURL(res);
+                                const image = new Image();
+                                image.src = src;
+                                image.onload = () => {
+                                  // 构建canvas节点
+                                  const canvas = document.createElement('canvas');
+                                  canvas.width = image.width;
+                                  canvas.height = image.height;
+                                  const context = canvas.getContext('2d');
+                                  context.drawImage(image, 0, 0, image.width, image.height);
+                                  // 转换
+                                  const imgBase64 = canvas.toDataURL();
+                                  console.log(imgBase64);
+                                  this.minioImgSrc=imgBase64;
+                                  if(isBoolean){
+                                    // this.clickAnalysis();
+                                    this.sjcl(data.data.data.mutiLayerPicResponse);
+                                  }
+                                };
+                            })
+                        }else{
+                            this.isRefresh=false;
+                            setTimeout(()=>{
+                                this.isRefresh=true;
+                            },1000)
+                        }
+                    }else {
+                        this.$message.error("文件查询接口异常!");
+                    }
+                });
+            },
+            //minIo-打开上传组件
+            ljpmUploadDialogLast(){
+                this.ljpmDialogLast = true;
+            },
+            //minIo-关闭上传组件
+            ljpmDialogCloseLast() {
+                this.ljpmFileList = [];
+                this.ljpmDialogLast = false;
+            },
+            //minIo-监听上传
+            getResData(data){
+                let params = {
+                    fileId: data[0].id,
+                    filestrId:data[0].name,
+                    remUploadFileMinioId:'' ,
+                    operationId:this.selectBlock+'-'+this.selectPosition,
+                    operationType:'BLOCKCWDT',
+                };
+                this.uploadFile(params);
+            },
+            uploadFile(params){
+                this.ljpmDialogLast = false;
+                addRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        this.$message.success("文件上传成功!");
+                        this.ljpmDialogLast = false;
+                        this.queryRemUploadFileMinioApi();
+                        this.imageurl = ''; // 清空已选择的文件
+                    }else {
+                        this.$message.error("文件上传失败!");
+                        this.ljpmDialog = false;
+                        this.queryRemUploadFileMinioApi();
+                        this.imageurl = ''; // 清空已选择的文件
+                    }
+                });
+            },
             //重置
             resetting(){
                 this.$nextTick(()=>{
@@ -418,6 +542,7 @@
             },
             //初始数据
             async initData() {
+                //油田
                 await fetchOilFields().then((data) => {
                     if (data != null) {
                         this.fieldsData = data.data.data.oilFields;
@@ -425,6 +550,7 @@
                         this.getFieldsData(this.selectOilField);
                     }
                 });
+                //区块
                 let fieldsPara = {
                     oilFieldId: this.selectOilField
                 }
@@ -435,6 +561,10 @@
                         this.selectBlock = this.blocks[0].fieldId;
                     }
                 });
+                //层位
+                await this.fieldOilLayersApi();
+                
+                
                 this.getProStatusAnalysis();
                 this.getStableBaseAnalysis();
                 await this.getProInjectionBalanceAnalysis();
@@ -462,7 +592,8 @@
                     }
                 });
             },
-            getProStatusAnalysis() { //0304-开采状况分析（模型计算）
+            //0304-开采状况分析（模型计算）
+            getProStatusAnalysis() { 
                 //选中油田值
                 let oilFieldId = this.selectOilField;
                 //区块
@@ -501,7 +632,8 @@
                     }
                 });
             },
-            getStableBaseAnalysis() { //稳产基础分析
+            //稳产基础分析
+            getStableBaseAnalysis() { 
                 //选中油田值
                 let oilFieldId = this.selectOilField;
                 //选中区块
@@ -540,7 +672,8 @@
                     }
                 });
             },
-            async getProInjectionBalanceAnalysis() { //注采平衡分析
+            //注采平衡分析
+            async getProInjectionBalanceAnalysis() { 
                 //选中油田值
                 let oilFieldId = this.selectOilField;
                 //选中区块
@@ -581,7 +714,8 @@
             
                 });
             },
-            async outputStatusAnalysis() { //0304-采出状况分析（模型计算）
+            //0304-采出状况分析（模型计算）
+            async outputStatusAnalysis() { 
                 //选中油田值
                 let oilFieldId = this.selectOilField;
                 //选中区块
@@ -632,6 +766,7 @@
                     evalTopic: evalTopic,
                     evalTypeId: evalTypeId,
                     fieldId: fieldId, //区块
+                    layerId:this.selectPosition,//层位id
                     fileName: 'quyutu',
                     oilFieldId: oilFieldId, //油田
                     path: "field",
@@ -665,6 +800,55 @@
                 this.getProInjectionBalanceAnalysis()
                 this.outputStatusAnalysis()
                 this.clickAnalysis();
+            },
+            
+            //监听区块
+            blockChange(){
+                this.fieldOilLayersApi();
+            },
+            
+            //初始化获取层段关系
+            async fieldOilLayersApi(){
+                await fieldOilLayers({
+                    oilFieldId: this.selectOilField,
+                    fieldId: this.selectBlock,
+                    wellId: '',
+                }).then((res) => {
+                    if (res.data.code == 200) {
+                        //层段数据
+                        if (res.data.data) {
+                            this.position = res.data.data.fieldLayers;
+                            if (!this.selectPosition && this.position[0]) {
+                                if (this.blockId == '6CD7342CA6DD418183A4B3BC38584F7C' || this.blockId == 'B440B47EE4D64C6CB56100AFE868DCA3') {
+                                    if (this.position.find((item) => {
+                                            return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A'
+                                        })) {
+                                        this.selectPosition = '263518079CED49AE8B6C9FE5CEBDD26A';
+                                    } else {
+                                        this.selectPosition = this.position[0].fieldLayerId;
+                                    }
+                                } else if (this.blockId == 'F35E226D47CE4B09B497B852D774D122') {
+                                    if (this.position.find((item) => {
+                                            return item.fieldLayerId == '87795A3E6BBC4469BC9AC5AE0BBE759C'
+                                        })) {
+                                        this.selectPosition = '87795A3E6BBC4469BC9AC5AE0BBE759C';
+                                    } else if (this.position.find((item) => {
+                                            return item.fieldLayerId == '02398139A19A4F62BEFAC658E870D487'
+                                        })) {
+                                        this.selectPosition = '02398139A19A4F62BEFAC658E870D487';
+                                    } else {
+                                        this.selectPosition = this.position[0].fieldLayerId;
+                                    }
+                                } else {
+                                    this.selectPosition = this.position[0].fieldLayerId;
+                                }
+                            }
+                        } else {
+                            this.position = [];
+                        }
+                        this.queryRemUploadFileMinioApi();
+                    }
+                });
             },
             
             //点击
@@ -966,7 +1150,9 @@
                 data.MaxXMap = MaxXMap;
                 data.MinYMap = MinYMap;
                 data.MaxYMap = MaxYMap;
-                data.PictureBase64 = "data:" + obj.layerPics[0].type + ";base64," + obj.layerPics[0].data;
+                // data.PictureBase64 = "data:" + obj.layerPics[0].type + ";base64," + obj.layerPics[0].data;
+                data.PictureBase64=this.minioImgSrc;
+                
                 data.IsShowPicture = IsShowPicture;
                 data.PicMinXMap = PicMinXMap;
                 data.PicMaxXMap = PicMaxXMap;
@@ -1374,6 +1560,9 @@
                     path:'/'+this.$route.query.page
                 })
             },
+        },
+        activated(){
+            this.resetting();
         },
     };
 </script>
