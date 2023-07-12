@@ -479,7 +479,7 @@
                         <info-window info-width="100%" info-height="100%" header-title="油藏潜力分析" :is-show-max-btn="false">
                             <div style="height:100%;overflow-y: scroll;">
                                 <div class="z-content2">
-                                    <div  style="flex:1;">
+                                    <div style="flex:1;">
                                         <div class="aaa" style="flex:1;display: flex;">
                                             <div class="z1" style="width:100%;">
                                                 <div class="z-content-n" style="flex-direction: column;">
@@ -717,7 +717,8 @@
                                 <el-table-column prop="recommendedMeasures" label="措施初选" align="center">
                                     <el-table-column prop="measuresName" label="推荐措施" align="center">
                                         <template slot-scope="scope">
-                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel ? scope.row.cscx.showLabel  :'-' }}</span>
+                                            <!-- <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel ? scope.row.cscx.showLabel  :'-' }}</span> -->
+                                            <span v-if="scope.row.cscx != null">{{ preliminarySelectioMeasures(scope.row.wellId,1) }}</span>
                                         </template>
                                     </el-table-column>
                                     <el-table-column prop="theDate" align="center"  min-width="130" label-class-name="twoRowHeader">
@@ -729,7 +730,8 @@
                                             </div>
                                         </template>
                                         <template slot-scope="scope">
-                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq ? scope.row.cscx.tjrq :'-'}}</span>
+                                            <!-- <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq ? scope.row.cscx.tjrq :'-'}}</span> -->
+                                            <span v-if="scope.row.cscx != null">{{ preliminarySelectioMeasures(scope.row.wellId,2) }}</span>
                                         </template>
                                     </el-table-column>
                                     <el-table-column label="操作" align="center">
@@ -1533,14 +1535,23 @@
                     });
                 });
             },
+            preliminarySelectioMeasures(str,type){
+                for(let i=0;i< this.recommendedMeasuresData.length;i++){
+                    if( this.recommendedMeasuresData[i].wellId==str){
+                        return type==1?this.recommendedMeasuresData[i].measuresName:this.recommendedMeasuresData[i].theDate
+                    }
+                }
+                return '-'
+            },
             //初始化有措施的井清单
             initRecommendedMeasuresWells() {
                 return new Promise((resolve, reject) => {
                     if (this.recommendedMeasuresData) {
                         for (let i = 0; i < this.recommendedMeasuresData.length; i++) {
                             let tData = this.recommendedMeasuresData[i];
-                            this.recommendedMeasuresWells[tData.wellId] = i;
+                            this.recommendedMeasuresWells[tData.wellName] = i;
                         }
+                        console.log(this.recommendedMeasuresWells);
                     }
                     resolve('success');
                 });
@@ -1605,6 +1616,7 @@
                 }
                 for (let i = 0; i < myData.length; i++) {
                     let myWellId = myData[i].wellId; //井号
+                    console.log('myData[i]',myData[i])
                     let forEachDataList=[
                         {key:'生产动态',name:'productionTrendsOptions'},
                         {key:'油井工况',name:'oilWellConditionOptions'},
@@ -1636,11 +1648,10 @@
                             }
                         }
                     }
+                    
                     //有推荐措施时，附加措施效果数据
                     let t_index = this.recommendedMeasuresWells[myWellId];
                     if (!isNaN(t_index)) { //转移措施数据
-                        /*console.log(this.recommendedMeasuresWells);
-                        debugger*/
                         let t_partData = this.recommendedMeasuresData[t_index]; //推荐措施的数据
                         myData[i].theDate = t_partData.theDate;
                         myData[i].measuresCode = t_partData.measuresCode;
@@ -1650,6 +1661,7 @@
                         myData[i].increaseVolumeC = t_partData.increaseVolumeC;
                         myData[i].increaseQualityC = t_partData.increaseQualityC;
                     }
+                    
                 }
                 
                 //3、根据每个项目的井数遍历检查表头
@@ -1713,13 +1725,14 @@
                     this.potentialWellNum+=Number(el.value);
                 }
             },
+            
+            
             //跳转到水井页面
             goWaterWell(val) {
                 if (val == "water") {
                     this.$router.push('/singleWellPerformance_water')
                 }
             },
-           
             //跳转到分析
             openAnalysis(wellNumber) {
                 this.$router.push({
