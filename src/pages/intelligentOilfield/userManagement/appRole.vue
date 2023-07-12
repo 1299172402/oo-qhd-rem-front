@@ -4,7 +4,7 @@
       <el-table
         :data="authorizedAppList"
         class="all-app"
-        height="calc(100vh - 260px)"
+        height="calc(100vh - 228px)"
         row-key="appId"
         highlight-current-row
         @row-click="row => currentAppId = row.appId"
@@ -61,6 +61,7 @@
               v-hasPermi="['system:user:appRole:remove']"
               type="text"
               icon="el-icon-delete"
+              style="color: #ff4d4f"
               @click="handleDelete(scope.row)"
             >
               删除
@@ -79,6 +80,7 @@ import { listRole } from "@/api/intelligentOilfield/system/role";
 import { getAuthRole, updateAuthRole } from "@/api/intelligentOilfield/system/user";
 
 import FormSection from "@/components/intelligentOilfield/FormSection.vue";
+import returnPaterPage from "@/utils/returnPaterPage";
 
 export default {
   name: "AppRole",
@@ -151,7 +153,7 @@ export default {
       updateAuthRole({ ...this.model, roleIds: this.pageModel.userRoles.map(v => v.roleId).toString() })
         .then(() => {
           this.$message.success("保存成功！");
-          this.$router.go(-1);
+          returnPaterPage(this.$route.path, "User");
         });
     },
     /**

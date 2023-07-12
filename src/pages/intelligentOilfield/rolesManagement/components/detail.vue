@@ -75,7 +75,7 @@
             type="danger"
             size="mini"
             :disabled="multiple"
-            :class="multiple === true ? 'commonBtn' : 'errorBtn'"
+            :class="multiple ? 'errorBtnplain' : 'errorBtn'"
             @click="cancelAuthUserAll"
           >
             取消授权
@@ -138,7 +138,7 @@
               v-hasPermi="['system:roleUser:unbind']"
               size="mini"
               type="text"
-              style="color: #a61d24"
+              style="color: #ff4d4f"
               @click="cancelAuthUser(scope.row)"
             >
               取消授权

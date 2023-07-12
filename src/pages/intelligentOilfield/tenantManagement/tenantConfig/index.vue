@@ -51,8 +51,9 @@
           <el-button
             v-hasPermi="['system:tenant:unbind']"
             type="danger"
+            :class="multiple ? 'errorBtnplain':'errorBtn'"
             :disabled="multiple"
-            @click="cancelBind(userIds)"
+            @click="cancelBind(userIds, true)"
           >
             {{ isBindUser ? "批量取消关联" : "批量取消绑定" }}
           </el-button>
@@ -67,6 +68,7 @@
       </el-row>
 
       <el-table
+        ref="table"
         :data="dataSource"
         row-key="userId"
         @selection-change="handleSelectionChange"
@@ -88,6 +90,7 @@
               v-if="isBindUser || scope.row.isManager === '1'"
               v-hasPermi="['system:tenant:unbind']"
               type="text"
+              style="color: #ff4d4f"
               @click="cancelBind([scope.row.userId])"
             >
               {{ isBindUser ? "取消关联" : "取消绑定" }}
@@ -174,10 +177,13 @@ export default {
     /**
      * 取消绑定按钮操作
      */
-    cancelBind(userIds) {
+    cancelBind(userIds, isBatch = false) {
       const fn = this.isBindUser ? unbindTenantUser : unbindTenantManager;
       this.$modal.confirm("是否取消选中用户绑定数据项？").then(() => fn({ tenantId: this.dataId, userIds: userIds })).then(() => {
         this.loadData();
+        if (isBatch) {
+          this.$refs.table.clearSelection();
+        }
         this.isBindUser ? this.$modal.msgSuccess("取消关联成功") : this.$modal.msgSuccess("取消绑定成功");
       });
     },
