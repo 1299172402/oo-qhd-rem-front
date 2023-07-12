@@ -1230,14 +1230,21 @@ export default {
     activated() {
         // 在组件被激活时执行操作
         this.getData();
+        //跳转路由中获取参数赋值给查询条件
         this.queryData.month = this.$route.query.currentDate
+        //判断url上是否有井组参数 有则赋值
         this.queryData.wellGroup = this.$route.query.searchKeys?this.$route.query.searchKeys:''
+        //平台若是等于油田ID 重置为空
         if (this.$route.query.platform == '3FC9A818F5BC43B88270DB80BBB3018F') {
             this.$route.query.platform = ''
         }
+        //赋值平台ID
         this.queryData.assetCode = this.$route.query.platform
+        //赋值井号ID
         this.queryData.well = this.$route.query.wellId
+        //赋值编码ID
         this.evalResult = this.$route.query.evalResult
+        //判断link跳转的来源
         this.link = this.$route.query.link
         this.tableData = []
         if (this.link == '4') {
@@ -1254,6 +1261,7 @@ export default {
         } else if (this.link == '5') {
             this.title = '油井递减率归因分析'
         } else if (this.link == '6') {
+            //暂时默认为五月份 数据完整后删除该行即可
             this.queryData.month = '2023-05'
             // this.queryData.wellGroup = 
             this.title = '井组生产动态归因分析'
@@ -1263,10 +1271,8 @@ export default {
     created() {
         this.link = this.$route.query.link
     },
-    mounted() {
-        
-    },
     methods: {
+        //获取查询条件中下拉列表的值
         async getData() {
             await queryOperatingCompanyDetail({}).then((res) => {
                 this.zygsSelect = res.data.data;
@@ -1309,6 +1315,7 @@ export default {
                 }
             });
         },
+        //选择后重新复制井号下拉列表
         choicewell() {
             queryPlatformQueryWellListDetail({platformId: this.queryData.assetCode}).then((res) => {
                 this.wellList = res.data.data;
@@ -1332,18 +1339,19 @@ export default {
         doSearch() {
             this.getFormData()
         },
+        //获取表格数据
         getFormData() {
             let params = {
-                date: this.queryData.month,
-                wellId: this.queryData.well,
-                assetCode: this.queryData.assetCode,
-                ogfId: this.queryData.ogfId,
-                operationZone: this.queryData.orgId,
-                evalResult: this.evalResult,
-                evalTypeId: 'ZS',
-                pageNum: this.queryData.pageNum,
-                pageSize: this.queryData.pageSize,
-                objectId: this.queryData.wellGroup
+                date: this.queryData.month,//日期
+                wellId: this.queryData.well,//井号
+                assetCode: this.queryData.assetCode,//平台
+                ogfId: this.queryData.ogfId,//油田
+                operationZone: this.queryData.orgId,//作业公司
+                evalResult: this.evalResult,//编码
+                evalTypeId: 'ZS',//判断是否为注水(仅获取注水列表需要传入该参数)
+                pageNum: this.queryData.pageNum,//分页页码
+                pageSize: this.queryData.pageSize,//每页条数
+                objectId: this.queryData.wellGroup//井组ID
             }
             if (this.link == '4') {
                 if(this.evalResult == '注水强度变高'){
@@ -1351,18 +1359,21 @@ export default {
                 }else{
                     params.evalResult = 'BD'
                 }
+                //查询注水列表接口
                 queryWaterInjIntensityAttributeAnalysis(params).then(res => {
                     this.tableData = res.data.data.rows
                     this.pageTotal = res.data.data.total
                 })
             }
             if (this.link == '6') {
+                //查询井组动态分析归因接口
                 queryProductionAnalysisList(params).then(res => {
                     this.tableData = res.data.data.rows
                     this.pageTotal = res.data.data.total
                 })
             }
             if (this.link == '1' || this.link == '2' || this.link == '3' || this.link == '5') {
+                //剩余归因分析共用接口
                 oilWellFluidQuery(params).then(res => {
                     this.tableData = res.data.data.rows
                     this.pageTotal = res.data.data.total
