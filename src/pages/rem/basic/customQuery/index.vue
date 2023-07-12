@@ -368,6 +368,7 @@ export default {
         activeTabIndex: {
             handler(Nval) {
                 this.activeTabIndexDate = 3;
+                //判断类型
                 if (Nval == 1) {
                     this.activeTabIndexData = "wellhead"; //'井口生产指标'
                     this.dataTypes = [
@@ -478,6 +479,7 @@ export default {
     },
     methods: {
         initData() {
+            //查询条件
             queryOperatorsCheckFieldListsDetail({}).then(res => {
                 if (res.data.code == 200) {
                     this.oilFields = res.data.data
@@ -501,6 +503,7 @@ export default {
             });
         },
         changeList() {
+            //切换tab
             let Nval = this.activeTabIndexData;
             this.tableRow = [];
             (this.stateValue = []),
@@ -884,6 +887,7 @@ export default {
                 }
                 this.dialogVisible = true;
                 this.tableData = [];
+                //合并数组 合并所有指标
                 let newArr = this.stateValue.concat(
                     this.productValue,
                     this.totalValue,
@@ -922,6 +926,7 @@ export default {
                         name: `${item.name}${item.unit ? "(" + item.unit + ")" : ""}`,
                     });
                 });
+                //添加固定的两个字段 井名 生产时间
                 this.headerTextLower.unshift({name: "井名", val: "name"}, {name: "生产时间(h)", val: "proddate"});
                 this.tableData = tableArr;
             }
@@ -984,9 +989,9 @@ export default {
                 timeType: this.activeTabIndexDate, //时间类型 1 年 2月 3 日
                 startTime: this.activeTabIndexDate != 1 ? this.selectDate[0] : this.selectDate, //开始时间
                 endTime: this.selectDate[1], //结束时间
-                dataId: this.activeTabIndex == 2 ? this.ogfId : this.wellId,
-                pageNum: this.page,
-                pageSize: this.pageSize,
+                dataId: this.activeTabIndex == 2 ? this.ogfId : this.wellId,//若目标类型为2油田传ogfId,若为井传wellId
+                pageNum: this.page,//分页页码
+                pageSize: this.pageSize,//每页页数
             };
             this.params = params;
             this.queryData = [];
