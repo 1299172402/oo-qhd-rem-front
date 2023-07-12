@@ -70,10 +70,10 @@
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
-            <el-form-item label="用户名" prop="nickName">
+            <el-form-item label="用户名称" prop="nickName">
               <el-input
                 v-model="queryParams.nickName"
-                placeholder="请输入用户名"
+                placeholder="请输入用户名称"
                 clearable
                 style="width: 240px"
                 @keyup.enter.native="handleQuery"
@@ -287,12 +287,17 @@
               align="center"
               width="150"
               prop="tenantName"
-              :show-overflow-tooltip="true"
             >
               <template slot-scope="scope">
                 <div v-if="scope.row.sysTenants.length > 1" style="height: auto;">
-                  <p v-for="(item,index) in scope.row.sysTenants" :key="index">
-                    {{ item.tenantName }} <br>
+                  <p
+                    v-for="(item,index) in scope.row.sysTenants"
+                    :key="index"
+                    :title="item.tenantName"
+                    style="text-overflow: ellipsis;overflow: hidden;white-space: pre"
+                  >
+                    {{ item.tenantName }}
+                    <br>
                   </p>
                 </div>
                 <div v-else>
@@ -1198,7 +1203,6 @@ export default {
     resetQuery() {
       this.dateRange = [];
       this.resetForm("queryForm");
-      this.queryParams.deptId = undefined;
       this.queryParams.tenantId = undefined;
       this.$nextTick(() => {
         this.handleQuery();

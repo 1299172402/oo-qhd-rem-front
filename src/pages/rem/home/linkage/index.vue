@@ -39,6 +39,7 @@ export default {
         },1000 * 10)
     },
     methods: {
+        //获取报警信息接口
         getWarningInfo(){
             this.currentLists.forEach((i,index)=>{
                 i.warningShowFlag = false
@@ -92,24 +93,32 @@ export default {
     },
     data(){
         return {
-            timmer:'',
-            timmerWarning:'',
-            baseUrl : env == "development"?'/src':'',
-            loopNum: 0,
-            loopImgNum: [6,4,1,10,7],
-            loopImgNumClose: [7,6,4,1,10],
-            showFlag: true,
+            timmer:'',//定时器
+            timmerWarning:'',//获取报警信息轮询
+            baseUrl : env == "development"?'/src':'',//判断是否生产环境
+            loopNum: 0,//循环显示图片的loop
+            loopImgNum: [6,4,1,10,7],//默认显示图片的顺序
+            loopImgNumClose: [7,6,4,1,10],//关闭图片显示的顺序
+            showFlag: true,//是否显示
             currentLists: [
                 {
+                    //选项卡的定位位置
                     style: 'position:absolute;left: 80%;top: 21%;width:20%;height:40%;',
+                    //悬浮按钮名称
                     boxText: '智能分采井调控测试',
+                    //悬浮按钮二级名称及路由跳转地址
                     boxBottomText: [{name:'智能配产器调控模型',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/intelligentDispensing/intelligentSubMining?page=reservoirDisplay/linkage'}, '举升设备调控模型', '智能测试模型'],
+                    //弹出框自定义样式
                     boxStyle: {
                         pWidth: 'width:11vw',
                     },
+                    //图片资源
                     imgUrl: new URL('./topBox/23.png', import.meta.url).href,
+                    //是否展示（通过定时器和组件内鼠标移入移出事件来控制该属性达到动态展示效果）
                     showFlag:false,
+                    //预警信息接口返回的编号是否属于该项
                     typeIdList:[],
+                    //是否展示预警信息（轮询预警信息接口）
                     warningShowFlag : false,
                 },
                 {

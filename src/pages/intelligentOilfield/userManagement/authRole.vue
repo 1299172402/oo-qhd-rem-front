@@ -1,5 +1,5 @@
 <template>
-  <form-section submit-text="" @save="submitForm">
+  <form-section submit-text="" :return-name="returnName" @save="submitForm">
     <div class="display-flex column" style="height: 100%;">
       <h4 class="form-header h4">
         基本信息
@@ -87,7 +87,8 @@ export default {
       // 角色信息
       roles: [],
       // 用户信息
-      form: {}
+      form: {},
+      returnName: "User"
     };
   },
   created() {

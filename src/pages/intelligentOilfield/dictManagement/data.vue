@@ -177,11 +177,11 @@
         </el-form-item>
         <el-form-item label="显示排序" prop="dictSort">
           <el-input-number
-            id="dictSort"
             ref="dictSort"
             v-model="form.dictSort"
             controls-position="right"
             :min="0"
+            @input.native="handleInput"
           />
         </el-form-item>
         <el-form-item label="回显样式" prop="listClass">
@@ -318,17 +318,11 @@ export default {
     this.getType(dictId);
   },
   methods: {
-    sortBlur() {
-      clearInterval(this.timer);
-    },
-    changeSort() {
-      this.timer = setInterval(() => {
-        this.form.dictSort = this.$refs.dictSort.$children[0].value;
-        this.$forceUpdate();
-        this.$nextTick(() => {
-          this.$refs.form.validateField("dictSort");
-        });
-      }, 1000);
+    handleInput() {
+      this.form.dictSort = this.$refs.dictSort.displayValue;
+      this.$nextTick(() => {
+        this.$refs.form.validateField("dictSort");
+      });
     },
     /** 查询字典类型详细 */
     getType(dictId) {

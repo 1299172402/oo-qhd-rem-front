@@ -553,12 +553,22 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="系统名称" prop="systemName">
-              <el-input v-model="addSysForm.systemName" style="width: 300px" placeholder="请输入系统名称" />
+              <el-input
+                v-model="addSysForm.systemName"
+                style="width: 300px"
+                placeholder="请输入系统名称"
+                clearable
+              />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="所属平台" prop="terraceId">
-              <el-select v-model="addSysForm.terraceId" placeholder="请选择所属平台" style="width: 300px">
+              <el-select
+                v-model="addSysForm.terraceId"
+                placeholder="请选择所属平台"
+                style="width: 300px"
+                clearable
+              >
                 <el-option
                   v-for="item in systemPlatformList"
                   :key="item.terraceId"
@@ -570,7 +580,12 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="系统编号" prop="systemCode">
-              <el-input v-model="addSysForm.systemCode" style="width: 300px" placeholder="请输入系统编号" />
+              <el-input
+                v-model="addSysForm.systemCode"
+                style="width: 300px"
+                placeholder="请输入系统编号"
+                clearable
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -586,13 +601,19 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="设备名称" prop="equipmentType">
-              <el-input v-model="addEquForm.equipmentType" style="width: 300px" placeholder="请输入设备名称" />
+              <el-input
+                v-model="addEquForm.equipmentType"
+                style="width: 300px"
+                placeholder="请输入设备名称"
+                clearable
+              />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="设备所属平台" prop="terraceId">
               <el-select
                 v-model="addEquForm.terraceId"
+                clearable
                 placeholder="请选择设备所属平台"
                 style="width: 300px"
                 @change="changeTerrace"
@@ -610,6 +631,7 @@
             <el-form-item label="设备所属系统" prop="systemId">
               <el-select
                 v-model="addEquForm.systemId"
+                clearable
                 placeholder="请选择设备所属系统"
                 style="width: 300px"
                 @change="changeSystem"
@@ -625,7 +647,12 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="设备编号" prop="equipmentCode">
-              <el-input v-model="addEquForm.equipmentCode" style="width: 300px" placeholder="请输入设备编号" />
+              <el-input
+                v-model="addEquForm.equipmentCode"
+                clearable
+                style="width: 300px"
+                placeholder="请输入设备编号"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -650,7 +677,12 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="平台名称" prop="terraceName">
-              <el-input v-model="addPlatformForm.terraceName" style="width: 300px" placeholder="请输入平台名称" />
+              <el-input
+                v-model="addPlatformForm.terraceName"
+                clearable
+                style="width: 300px"
+                placeholder="请输入平台名称"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -659,6 +691,7 @@
                 v-model="addPlatformForm.parentName"
                 style="width: 300px"
                 placeholder="请选择父级平台"
+                clearable
               >
                 <el-option
                   v-for="dict in dict.type.sys_parent_platform"
@@ -671,17 +704,32 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="平台编码" prop="terraceCode">
-              <el-input v-model="addPlatformForm.terraceCode" style="width: 300px" placeholder="请输入平台编码" />
+              <el-input
+                v-model="addPlatformForm.terraceCode"
+                clearable
+                style="width: 300px"
+                placeholder="请输入平台编码"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="备注">
-              <el-input v-model="addPlatformForm.remark" style="width: 300px" placeholder="请输入备注" />
+              <el-input
+                v-model="addPlatformForm.remark"
+                clearable
+                style="width: 300px"
+                placeholder="请输入备注"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="平台链接">
-              <el-input v-model="addPlatformForm.terraceUrl" style="width: 300px" placeholder="请输入平台链接" />
+            <el-form-item label="平台链接" prop="terraceUrl">
+              <el-input
+                v-model="addPlatformForm.terraceUrl"
+                clearable
+                style="width: 300px"
+                placeholder="请输入平台链接"
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -697,22 +745,22 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="链路起点" prop="startDescribe">
-              <el-input v-model="addCloudForm.startDescribe" placeholder="请输入链路起点" />
+              <el-input v-model="addCloudForm.startDescribe" clearable placeholder="请输入链路起点" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="起点编码" prop="startPoint">
-              <el-input v-model="addCloudForm.startPoint" placeholder="请输入起点编码" />
+              <el-input v-model="addCloudForm.startPoint" clearable placeholder="请输入起点编码" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="链路终点" prop="endDescribe">
-              <el-input v-model="addCloudForm.endDescribe" placeholder="请输入链路终点" />
+              <el-input v-model="addCloudForm.endDescribe" clearable placeholder="请输入链路终点" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="终点编码" prop="endPoint">
-              <el-input v-model="addCloudForm.endPoint" placeholder="请输入终点编码" />
+              <el-input v-model="addCloudForm.endPoint" clearable placeholder="请输入终点编码" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -735,12 +783,12 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="备注">
-              <el-input v-model="addCloudForm.remark" placeholder="请输入备注" />
+              <el-input v-model="addCloudForm.remark" clearable placeholder="请输入备注" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="平台链接">
-              <el-input v-model="addCloudForm.linkUrl" placeholder="请输入平台链接" />
+            <el-form-item label="平台链接" prop="linkUrl">
+              <el-input v-model="addCloudForm.linkUrl" clearable placeholder="请输入平台链接" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -836,14 +884,26 @@ export default {
       platRules: {
         terraceName: [{ required: true, message: "请输入平台名称" }],
         parentName: [{ required: true, message: "请选择父级平台" }],
-        terraceCode: [{ required: true, message: "请输入平台编码" }]
+        terraceCode: [{ required: true, message: "请输入平台编码" }],
+        terraceUrl: [
+          {
+            pattern:
+             /^(((https?|ftp|news):\/\/|\w+(\.\w+)+)(:\w+)?).*/,
+            message: "请输入正确的平台链接"
+          }]
       },
       cloudRules: {
         startDescribe: [{ required: true, message: "请输入链路起点" }],
         endDescribe: [{ required: true, message: "请输入链路终点" }],
         startPoint: [{ required: true, message: "请输入起点编码" }],
         endPoint: [{ required: true, message: "请输入终点编码" }],
-        linkType: [{ required: true, message: "请选择链路类型" }]
+        linkType: [{ required: true, message: "请选择链路类型" }],
+        linkUrl: [
+          {
+            pattern:
+             /^(((https?|ftp|news):\/\/|\w+(\.\w+)+)(:\w+)?).*/,
+            message: "请输入正确的平台链接"
+          }]
       },
       activeName: "first", // first:设备系统列表；second:设备名称列表
       systemPlatformList: [],
@@ -1160,6 +1220,7 @@ export default {
         endDescribe: undefined,
         linkType: undefined
       };
+      this.deviceSysList = [];
       this.getList();
       this.resetCurrentFields();
       if (this.activeName === "second") {
@@ -1198,6 +1259,7 @@ export default {
         endDescribe: undefined,
         linkType: undefined
       };
+      this.deviceSysList = [];
       this.$nextTick(() => {
         this.handleQuery();
       });

@@ -251,10 +251,12 @@
           <el-col :span="12">
             <el-form-item label="显示排序" prop="orderNum">
               <el-input-number
+                ref="orderNum"
                 v-model="form.orderNum"
                 controls-position="right"
                 :min="0"
                 :disabled="form.ehr === '0' ? false : keys.includes('orderNum')"
+                @input.native="handleInput"
               />
             </el-form-item>
           </el-col>
@@ -410,6 +412,12 @@ export default {
     }
   },
   methods: {
+    handleInput() {
+      this.form.orderNum = this.$refs.orderNum.displayValue;
+      this.$nextTick(() => {
+        this.$refs.form.validateField("orderNum");
+      });
+    },
     changeParent() {
       this.$refs.form.validateField("parentId");
     },

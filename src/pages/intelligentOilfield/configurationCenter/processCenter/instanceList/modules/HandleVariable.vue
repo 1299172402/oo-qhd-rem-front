@@ -4,6 +4,7 @@
     :title="`${isEdit ? '编辑' : '添加'}变量`"
     :visible.sync="visibleDialog"
     append-to-body
+    @close="close"
   >
     <el-form
       ref="ruleForm"
@@ -125,6 +126,9 @@ export default {
     change() {
       this.form.name = undefined;
       this.form.value = undefined;
+    },
+    close() {
+      this.$refs.ruleForm?.clearValidate();
     }
   }
 };

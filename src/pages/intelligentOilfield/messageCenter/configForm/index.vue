@@ -181,7 +181,7 @@ export default {
           { validator: this.validateBaseUrl, trigger: ["change", "blur"] }
         ],
         grantedTenants: [
-          { required: true, message: "请授权使用租户", trigger: ["change"] }
+          { required: true, message: "请授权使用租户", trigger: ["change", "blur"] }
         ]
       },
       type: {
@@ -250,6 +250,9 @@ export default {
     /** 显示选择的租户 */
     handleGrantedTenants(data) {
       this.form.grantedTenants = data;
+      if (this.form.grantedTenants.length) {
+        this.$refs.form.clearValidate("grantedTenants");
+      }
     },
     /** 删除租户信息 */
     handleDel(index) {

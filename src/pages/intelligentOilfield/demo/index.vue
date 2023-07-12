@@ -439,6 +439,7 @@
       ref="mainTable"
       :data="tableData1"
       :border="false"
+      height="350"
       :row-style="{ height: '0px' }"
       header-cell-class-name="table_header"
       :cell-style="{ padding: '6px', 'text-align': 'center' }"
@@ -593,6 +594,7 @@
       icon="el-icon-edit-outline"
       size="mini"
       type="primary"
+      class="buttonActive_primary"
       @click="redact"
     >
       编辑
@@ -601,6 +603,7 @@
       icon="el-icon-document-checked"
       size="mini"
       type="primary"
+      class="buttonActive_primary"
       @click="save"
     >
       保存
