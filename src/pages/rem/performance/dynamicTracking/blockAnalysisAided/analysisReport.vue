@@ -12,7 +12,7 @@
                 </div>
                 <div style="margin-left: 10px;">
                     <span>区块：</span>
-                    <el-select v-model="selectBlock" style="width: 180px" filterable @change="blockChange">
+                    <el-select v-model="selectBlock" style="width: 180px" filterable @change="fieldOilLayersApi">
                         <el-option v-for="item in blocks" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                     </el-select>
                 </div>
@@ -21,19 +21,20 @@
                     <el-date-picker v-model="rq" type="date" value-format="yyyy-MM-dd"></el-date-picker>
                 </div>
                 <div style="margin-left: 10px;">
-                    <el-button icon="el-icon-search" style="margin-left: 20px; width: 90px" type="primary" @click="searchThing">搜索</el-button>
+                    <el-button icon="el-icon-search" style="margin-left: 20px; width: 90px" type="primary" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                 </div>
             </div>
         </headerSearch>
         
         <pagePanelNew style="height: calc(100% - 100px);" class="g-w100">
+            
             <div class="btns" style="width:100%;height:50px;;display: flex;padding-left:7px;">
                 <el-button type="primary" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
                 <el-button type="primary" @click="switchVersions">切换版式</el-button>
-                
                 <el-button type="primary" style="margin-left:auto!important;" v-if="$route.query.page" @click="goBack">返回</el-button>
             </div>
+            
             <!-- 旧版 -->
             <div class="old" style="height:calc(100% - 50px);padding-bottom:8px;overflow-y: scroll;" v-if="!isNewformat">
                 <div style="margin-left:8px;margin-right:20px;">
@@ -95,13 +96,19 @@
                     </pagePanel>
                 </div>
                 <div style="margin-left:8px;margin-right:20px;">
-                    <pagePanelNew headerTitle="" style="height:398px;">
+                    <pagePanelNew headerTitle="" style="height:550px;">
                         <el-row style="height: 100%;">
-                            <el-col :span="12">
-                                <H5Chart ref="H5Chart" height="350px" :url="url" width="100%"></H5Chart>
+                            <el-col :span="14">
+                                <div style="display: flex;margin-bottom:10px;">
+                                    <!-- 层位选择 -->
+                                    <el-select v-model="selectPosition" style="width: 220px;margin-right:20px;" placeholder="请选择" filterable  @change="selectChange">
+                                        <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
+                                    </el-select>
+                                </div>
+                                <H5Chart ref="H5Chart" height="450px" :url="url" width="100%" v-if="isRefresh"></H5Chart>
                             </el-col>
-                            <el-col :span="11" style="margin-left:10px;height: 100%;">
-                                <el-col :span="20" style="height: 100%;">
+                            <el-col :span="10" style="height: 100%;">
+                                <el-col :span="20" style="height: 100%;box-sizing: border-box;padding-left:40px;">
                                     <div style="width:100%;height: 15%;overflow: auto;" v-if="tagMessage!='null'">
                                         <p>{{tagMessage}}</p>
                                     </div>
@@ -110,10 +117,8 @@
                                         <div v-for="(item,index) in myList" :key="index" style="margin-top: 4px;">{{item.well}}</div>
                                     </div>
                                 </el-col>
-                                <el-col :span="4" style="margin-top: 10px">
-                                    <span style="color: #00d6ea;font-size: 14px;float: right;color: #00d6ea;cursor: pointer;" @click="switchToAnaylsis">
-                                        区块分析
-                                    </span>
+                                <el-col :span="4" style="margin-top: 10px;display: flex;">
+                                    <el-button class="commonBtn" style="margin-left:auto!important;" @click="switchToAnaylsis">区块分析</el-button>
                                 </el-col>
                             </el-col>
                         </el-row>
@@ -249,8 +254,8 @@
                         </div>
                     </pagePanel>
                 </div>
-                <div style="margin-left:8px;margin-right:7px;height:498px;display: flex;">
-                    <div style="flex:1;margin-right:10px;height:498px;">
+                <div style="margin-left:8px;margin-right:7px;height:600px;display: flex;">
+                    <div style="flex:1;margin-right:10px;height:600px;">
                         <pagePanelNew headerTitle="" style="height:100%;" showBtn>
                             <div style="height:100%;">
                                 <div style="display: flex;margin-bottom:10px;">
@@ -325,6 +330,7 @@
         },
         data() {
             return {
+                //重新渲染H5Chart组件
                 isRefresh:true,
                 // Minio
                 minioImgSrc:'',
@@ -335,16 +341,15 @@
                 //接受路由参数
                 queryLink:'',//如果为1 默认选中注采平衡分析分类中的第一个，如果为2默认选中采出状况分析下的第一个
                 //油田
-                fieldsData: [{oilFieldId: ""}],
+                fieldsData: [],
                 selectOilField: "",
                 //区块
                 blocks: [],
                 selectBlock: "",
                 //日期
                 rq: "",
-                //层位数据源
+                //层位
                 position: [],
-                //层位绑定值
                 selectPosition: '',
                 //默认显示新版式
                 isNewformat:true,
@@ -390,7 +395,6 @@
                     yczb:0,
                 },
                 recoveryAnalysisSwitch:false,
-                
                 //相关井组
                 wellList: [],
                 tableData: [],
@@ -400,33 +404,21 @@
                 myList: [],
                 //开采现状分析
                 indexChangeTrend: "",
-                indexChangeTrendName: "",
                 //稳产基础分析
                 stabilityFoundationAnalysis: [],
-                //注采平衡
-                injectionProductionBalanceAnalysis: "",
-                //采出状况分析
-                recoveryAnalysis: "",
             };
         },
-        watch: {
-            //监听选择油田 油田改变 区块数组进行改变
-            selectOilField(val) {
-                this.blocks = [];
-                this.selectBlock = ""
-                //查询区块信息
-                this.getFieldsData(val);
-            }
-        },
-      
         mounted() {
             this.queryLink=this.$route.query.link;
             this.getDateApi();
         },
         methods: {
-            //切换层位
-            selectChange(e){
-                this.queryRemUploadFileMinioApi(true);
+            //重置
+            resetting(){
+                this.$nextTick(()=>{
+                	Object.assign(this.$data, this.$options.data());
+                	this.getDateApi();
+                })
             },
             //minIo-获取底图
             queryRemUploadFileMinioApi(isBoolean){
@@ -454,11 +446,10 @@
                                   context.drawImage(image, 0, 0, image.width, image.height);
                                   // 转换
                                   const imgBase64 = canvas.toDataURL();
-                                  console.log(imgBase64);
                                   this.minioImgSrc=imgBase64;
                                   if(isBoolean){
                                     // this.clickAnalysis();
-                                    this.sjcl(data.data.data.mutiLayerPicResponse);
+                                    this.sjcl(this.layerData.data.mutiLayerPicResponse);
                                   }
                                 };
                             })
@@ -499,22 +490,15 @@
                     if (res.data.code == 200) {
                         this.$message.success("文件上传成功!");
                         this.ljpmDialogLast = false;
-                        this.queryRemUploadFileMinioApi();
+                        this.queryRemUploadFileMinioApi(true);
                         this.imageurl = ''; // 清空已选择的文件
                     }else {
                         this.$message.error("文件上传失败!");
                         this.ljpmDialog = false;
-                        this.queryRemUploadFileMinioApi();
+                        this.queryRemUploadFileMinioApi(true);
                         this.imageurl = ''; // 清空已选择的文件
                     }
                 });
-            },
-            //重置
-            resetting(){
-                this.$nextTick(()=>{
-                	Object.assign(this.$data, this.$options.data());
-                	this.getDateApi();
-                })
             },
             //切换版式
             switchVersions(){
@@ -542,75 +526,83 @@
             },
             //初始数据
             async initData() {
-                //油田
-                await fetchOilFields().then((data) => {
-                    if (data != null) {
-                        this.fieldsData = data.data.data.oilFields;
-                        this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F'; //hwh xg 默认初始化qhd326  //this.fieldsData[0].oilFieldId;
-                        this.getFieldsData(this.selectOilField);
-                    }
-                });
-                //区块
-                let fieldsPara = {
-                    oilFieldId: this.selectOilField
-                }
-                await fetchFields(fieldsPara).then((res) => {
-                    if (res.data.data.fields.length != 0) { //获得区块信息
-                        this.blocks = res.data.data.fields;
-                        //默认选中第一个区块信息
-                        this.selectBlock = this.blocks[0].fieldId;
-                    }
-                });
-                //层位
+                //基础数据
+                await this.fetchOilFieldsApi();
+                await this.getFieldsDataApi();
                 await this.fieldOilLayersApi();
-                
-                
-                this.getProStatusAnalysis();
-                this.getStableBaseAnalysis();
-                await this.getProInjectionBalanceAnalysis();
-                await this.outputStatusAnalysis()
-                this.clickAnalysis();
-                //判断路由参数
-                if(this.queryLink==1&&this.injectionProductionBalanceAnalysisList.length){
-                    let code=this.injectionProductionBalanceAnalysisList[0].code;
-                    this.selRadioIterm(code,'injectionProductionBalanceAnalysisList');
-                }else if(this.queryLink==2&&this.recoveryAnalysisList.length){
-                    let code=this.recoveryAnalysisList[0].code;
-                    this.selRadioIterm(code,'recoveryAnalysisList');
-                }
-            },
-            //获得区块信息
-            getFieldsData(oilFieldId) {
+                //业务数据
                 let request = {
-                    oilFieldId: oilFieldId
-                };
-                fetchFields(request).then((res) => {
-                    if (res.data.data.fields.length != 0) { //获得区块信息
-                        this.blocks = res.data.data.fields;
-                        //默认选中第一个区块信息
-                        this.selectBlock = this.blocks[0].fieldId;
-                    }
-                });
-            },
-            //0304-开采状况分析（模型计算）
-            getProStatusAnalysis() { 
-                //选中油田值
-                let oilFieldId = this.selectOilField;
-                //区块
-                let fieldId = this.selectBlock;
-                //当前日期
-                let currentDate = this.rq;
-                let request = {
+                    oilFieldId: this.selectOilField, //油田
+                    fieldId: this.selectBlock, //区块
+                    yearMonth: this.rq,
                     evalTopic: "",
                     evalTypeId: "",
-                    fieldId: fieldId, //区块
                     fileName: "",
-                    oilFieldId: oilFieldId, //油田
                     path: "",
                     seasonCode: "",
-                    yearMonth: currentDate,
                 };
-                proStatusAnalysis(request).then((data) => {
+                Promise.all([
+                    this.getProStatusAnalysis(request),
+                    this.getStableBaseAnalysis(request),
+                    this.getProInjectionBalanceAnalysis(request),
+                    this.outputStatusAnalysis(request)
+                ]).then(res=>{
+                    //判断路由参数
+                    if(this.queryLink==1&&this.injectionProductionBalanceAnalysisList.length){
+                        let code=this.injectionProductionBalanceAnalysisList[0].code;
+                        this.selRadioIterm(code,'injectionProductionBalanceAnalysisList');
+                    }else if(this.queryLink==2&&this.recoveryAnalysisList.length){
+                        let code=this.recoveryAnalysisList[0].code;
+                        this.selRadioIterm(code,'recoveryAnalysisList');
+                    }else{
+                        this.clickAnalysis();
+                    }
+                }).catch(err=>{
+                    console.log('初始化接口报错!')
+                })
+            },
+            //获取油田信息
+            async fetchOilFieldsApi(){
+                await fetchOilFields().then((res) => {
+                    if(res.data.code==200){
+                        this.fieldsData = res.data.data.oilFields;
+                        this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
+                    }
+                });
+            },
+            //获取区块信息
+            async getFieldsDataApi() {
+                await fetchFields({oilFieldId: this.selectOilField}).then((res) => {
+                    if (res.data.data.fields.length != 0) { //获得区块信息
+                        this.blocks = res.data.data.fields;
+                        //默认选中北区信息
+                        this.selectBlock = this.blocks[3].fieldId;
+                    }
+                });
+            },
+            //获取层位信息
+            async fieldOilLayersApi(){
+                await fieldOilLayers({oilFieldId: this.selectOilField,fieldId: this.selectBlock,}).then((res) => {
+                    if (res.data.code == 200) {
+                        if (res.data.data) {
+                            this.position = res.data.data.fieldLayers;
+                            if (!this.selectPosition && this.position && this.position.length) {
+                                this.selectPosition = this.position[0].fieldLayerId;
+                            }
+                        } else {
+                            this.position = [];
+                        }
+                        this.queryRemUploadFileMinioApi();
+                    }
+                });
+            },
+            //层位change
+            selectChange(e){
+                this.queryRemUploadFileMinioApi(true);
+            },
+            //开采现状(地层压力)分析-模型数据
+            getProStatusAnalysis(request) { 
+                return proStatusAnalysis(request).then((data) => {
                     if (data.data.data != null) {
                         let myData=data.data.data.indicatorAnalysisDetailInfos;
                         this.indexChangeTrendNum.allnum=0;
@@ -632,25 +624,9 @@
                     }
                 });
             },
-            //稳产基础分析
-            getStableBaseAnalysis() { 
-                //选中油田值
-                let oilFieldId = this.selectOilField;
-                //选中区块
-                let fieldId = this.selectBlock;
-                //当前日期
-                let currentDate = this.rq;
-                let request = {
-                    evalTopic: "",
-                    evalTypeId: "",
-                    fieldId: fieldId, //区块
-                    fileName: "",
-                    oilFieldId: oilFieldId, //油田
-                    path: "",
-                    seasonCode: "",
-                    yearMonth: currentDate,
-                };
-                stableBaseAnalysis(request).then((data) => {
+            //开采现状(注水受效)分析-模型数据
+            getStableBaseAnalysis(request) { 
+                return stableBaseAnalysis(request).then((data) => {
                     if (data.data.data != null) {
                         let myData=data.data.data.indicatorAnalysisDetailInfos;
                         this.stabilityFoundationAnalysisNum.allnum=0;
@@ -673,24 +649,8 @@
                 });
             },
             //注采平衡分析
-            async getProInjectionBalanceAnalysis() { 
-                //选中油田值
-                let oilFieldId = this.selectOilField;
-                //选中区块
-                let fieldId = this.selectBlock;
-                //当前日期
-                let currentDate = this.rq;
-                let request = {
-                    evalTopic: "",
-                    evalTypeId: "",
-                    fieldId: fieldId, //区块
-                    fileName: "",
-                    oilFieldId: oilFieldId, //油田
-                    path: "",
-                    seasonCode: "",
-                    yearMonth: currentDate,
-                };
-                await proInjectionBalanceAnalysis(request).then((data) => {
+            getProInjectionBalanceAnalysis(request) { 
+                return proInjectionBalanceAnalysis(request).then((data) => {
                     if (data.data.data != null) {
                         let myData=data.data.data.indicatorAnalysisDetailInfos;
                         this.injectionProductionBalanceAnalysisNum.allnum=0;
@@ -714,25 +674,9 @@
             
                 });
             },
-            //0304-采出状况分析（模型计算）
-            async outputStatusAnalysis() { 
-                //选中油田值
-                let oilFieldId = this.selectOilField;
-                //选中区块
-                let fieldId = this.selectBlock;
-                //当前日期
-                let currentDate = this.rq;
-                let request = {
-                    evalTopic: "",
-                    evalTypeId: "",
-                    fieldId: fieldId, //区块
-                    fileName: "",
-                    oilFieldId: oilFieldId, //油田
-                    path: "",
-                    seasonCode: "",
-                    yearMonth: currentDate,
-                };
-                await outputStatusAnalysis(request).then((data) => {
+            //采出状况分析（模型计算）
+            outputStatusAnalysis(request){ 
+                return outputStatusAnalysis(request).then((data) => {
                     if (data.data.data != null) {
                         let myData=data.data.data.indicatorAnalysisDetailInfos;
                         this.recoveryAnalysisNum.allnum=0;
@@ -755,31 +699,27 @@
                     }
                 });
             },
-            
-            clickAnalysis(code = '', evalTopic = '') {
-                let yearMonth = this.rq;
-                let oilFieldId = this.selectOilField;
-                let fieldId = this.selectBlock;
-                let evalTypeId = code
+            //获取当前区块下的底图边界坐标和显示在底图上的油水井
+            clickAnalysis(evalTypeId = '', evalTopic = '') {
                 console.log("evalTypeId----" + evalTypeId)
                 let request = {
-                    evalTopic: evalTopic,
-                    evalTypeId: evalTypeId,
-                    fieldId: fieldId, //区块
-                    layerId:this.selectPosition,//层位id
-                    fileName: 'quyutu',
-                    oilFieldId: oilFieldId, //油田
+                    evalTopic,
+                    evalTypeId,
+                    oilFieldId:this.selectOilField,
+                    fieldId: this.selectBlock,
+                    layerId:this.selectPosition,
+                    yearMonth: this.rq,
+                    fileName:'quyutu',
                     path: "field",
                     seasonCode: "",
-                    yearMonth: yearMonth,
                 };
                 areaDiagram(request).then((data) => {
                     this.layerData = data.data;
-                    if (data.data.data.mutiLayerPicResponse) {
+                    if (this.layerData.data.mutiLayerPicResponse) {
                         if(!this.myList.length){
-                            this.sjcl(data.data.data.mutiLayerPicResponse);
+                            this.sjcl(this.layerData.data.mutiLayerPicResponse);
                         }else{
-                            this.setProminentWell(data.data.data.mutiLayerPicResponse)
+                            this.setProminentWell(this.layerData.data.mutiLayerPicResponse)
                         }
                     } else {
                         if(this.isNewformat){
@@ -791,66 +731,27 @@
                 });
             },
             //查询
-            searchThing() {
+            doSearch() {
                 this.indexChangeTrend = '';
                 this.selCode = '';
                 this.myList=[];
-                this.getProStatusAnalysis()
-                this.getStableBaseAnalysis()
-                this.getProInjectionBalanceAnalysis()
-                this.outputStatusAnalysis()
+                
+                let request = {
+                    oilFieldId: this.selectOilField, //油田
+                    fieldId: this.selectBlock, //区块
+                    yearMonth: this.rq,
+                    evalTopic: "",
+                    evalTypeId: "",
+                    fileName: "",
+                    path: "",
+                    seasonCode: "",
+                };
+                this.getProStatusAnalysis(request)
+                this.getStableBaseAnalysis(request)
+                this.getProInjectionBalanceAnalysis(request)
+                this.outputStatusAnalysis(request)
                 this.clickAnalysis();
             },
-            
-            //监听区块
-            blockChange(){
-                this.fieldOilLayersApi();
-            },
-            
-            //初始化获取层段关系
-            async fieldOilLayersApi(){
-                await fieldOilLayers({
-                    oilFieldId: this.selectOilField,
-                    fieldId: this.selectBlock,
-                    wellId: '',
-                }).then((res) => {
-                    if (res.data.code == 200) {
-                        //层段数据
-                        if (res.data.data) {
-                            this.position = res.data.data.fieldLayers;
-                            if (!this.selectPosition && this.position[0]) {
-                                if (this.blockId == '6CD7342CA6DD418183A4B3BC38584F7C' || this.blockId == 'B440B47EE4D64C6CB56100AFE868DCA3') {
-                                    if (this.position.find((item) => {
-                                            return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A'
-                                        })) {
-                                        this.selectPosition = '263518079CED49AE8B6C9FE5CEBDD26A';
-                                    } else {
-                                        this.selectPosition = this.position[0].fieldLayerId;
-                                    }
-                                } else if (this.blockId == 'F35E226D47CE4B09B497B852D774D122') {
-                                    if (this.position.find((item) => {
-                                            return item.fieldLayerId == '87795A3E6BBC4469BC9AC5AE0BBE759C'
-                                        })) {
-                                        this.selectPosition = '87795A3E6BBC4469BC9AC5AE0BBE759C';
-                                    } else if (this.position.find((item) => {
-                                            return item.fieldLayerId == '02398139A19A4F62BEFAC658E870D487'
-                                        })) {
-                                        this.selectPosition = '02398139A19A4F62BEFAC658E870D487';
-                                    } else {
-                                        this.selectPosition = this.position[0].fieldLayerId;
-                                    }
-                                } else {
-                                    this.selectPosition = this.position[0].fieldLayerId;
-                                }
-                            }
-                        } else {
-                            this.position = [];
-                        }
-                        this.queryRemUploadFileMinioApi();
-                    }
-                });
-            },
-            
             //点击
             selRadioIterm(val, tag) {
                 let myData = []; //我的数据
@@ -861,7 +762,7 @@
                     this.indexChangeTrend = val; //选中项目
                 }else{
                     this.indexChangeTrend='';
-                    this.searchThing();
+                    this.doSearch();
                     return false;
                 }
                 
@@ -1119,13 +1020,11 @@
                     this.recoveryAnalysisList[j].value = t_count; //登记条数
                 }
                 this.tableData = myData;
-                //没用
-                this.indexChangeTrendCod = 2;
-                this.clickAnalysis(indexCode, indexName);
                 
+                this.clickAnalysis(indexCode, indexName);
                 console.log('this.myList',this.myList);
             },
-            //zwm写 hwh修改复用--等值线图
+            //绘制底图和等值线
             sjcl(tc) {
                 let obj = tc;
                 let MinXMap = obj.x2;
@@ -1219,7 +1118,7 @@
                     },500)
                 }
             },
-            //突出井号
+            //底图突出井号
             setProminentWell(tc){
                 let obj = tc;
                 let data = {

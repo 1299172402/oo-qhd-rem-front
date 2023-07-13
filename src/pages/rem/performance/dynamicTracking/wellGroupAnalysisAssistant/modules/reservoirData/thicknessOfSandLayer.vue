@@ -37,7 +37,7 @@
                 position: [],
                 //层位绑定值
                 selectPosition: '',
-                imageList: [],
+                src: '',
                 fitInfo:'cover',   
             };
         },
