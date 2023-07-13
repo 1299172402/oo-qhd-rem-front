@@ -7,9 +7,9 @@ export function getYieldFluctuation() {
     method: "get",
   });
 }
-export function monthlyProductionComparison({ date } = {}) {
+export function monthlyProductionComparison({ date,ogfId } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/monthlyProductionComparison?date=${ date || "" }`,
+    url: `${baseUrl}/reservoirBillboards/monthlyProductionComparison?date=${ date || "" }&ogfId=${ ogfId || "" }`,
     method: "get",
   });
 }
