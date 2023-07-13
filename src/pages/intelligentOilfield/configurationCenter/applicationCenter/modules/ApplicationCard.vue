@@ -120,13 +120,31 @@ export default {
      */
     handleChange(pathName, pathaction) {
       if (pathaction) {
-        this.$router.push({ name: pathName, query: { action: pathaction }, params: { id: this.applicationInfo.appId }});
+        this.$router.push({
+          name: pathName,
+          query: {
+            action: pathaction,
+            pathName: this.applicationInfo.appName
+          },
+          params: { id: this.applicationInfo.appId }});
       } else {
-        this.$router.push({ name: pathName, params: { id: this.applicationInfo.appId }});
+        this.$router.push({
+          name: pathName,
+          query: {
+            pathName: this.applicationInfo.appName
+          },
+          params: { id: this.applicationInfo.appId }
+        });
       }
     },
     handleAuthorize() {
-      this.$router.push({ name: "ApplicationAuth/:id", params: { id: this.applicationInfo.appId }});
+      this.$router.push({
+        name: "ApplicationAuth/:id",
+        query: {
+          pathName: this.applicationInfo.appName
+        },
+        params: { id: this.applicationInfo.appId }
+      });
     },
     /**
      * 删除

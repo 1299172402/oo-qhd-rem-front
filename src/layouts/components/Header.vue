@@ -699,6 +699,7 @@ export default Vue.extend({
       this.form.postIds = this.form.tempPostId ? this.form.tempPostId?.split(",") : [];
       this.$refs.form.validate(valid => {
         if (valid) {
+          delete this.form.password;
           updateUseridcard(this.form).then(res => {
             if (res ? res.data.code === 200 : false) {
               this.$modal.msgSuccess("修改成功");

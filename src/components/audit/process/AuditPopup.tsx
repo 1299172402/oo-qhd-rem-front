@@ -178,6 +178,7 @@ export default Vue.extend({
          */
     closeModel() {
       this.visible = false;
+      this.$refs.auditInfo.$refs.form.reset();
       this.$emit("close", false);
       this.$nextTick(() => {
         this.tabIndex = "1";

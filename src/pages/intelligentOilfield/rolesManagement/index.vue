@@ -381,7 +381,6 @@
             show-checkbox
             node-key="id"
             :check-strictly="!form.menuCheckStrictly"
-            empty-text="加载中，请稍候"
             :props="defaultProps"
           />
         </el-form-item>
@@ -714,16 +713,18 @@ export default {
     // 角色状态修改
     handleStatusChange(row) {
       const text = row.status === "0" ? "启用" : "停用";
+      row.status = row.status === "0" ? "1" : "0";
       this.$modal
         .confirm(`确认要"${text}""${row.roleName}"角色吗？`)
-        .then(() => changeRoleStatus(row.roleId, row.status))
-        .then(res => {
-          if (res ? res.data.code === 200 : false) {
-            this.$modal.msgSuccess(`${text}成功`);
-          }
-        })
-        .catch(() => {
-          row.status = row.status === "0" ? "1" : "0";
+        .then(() => {
+          row.status = row.status === "1" ? "0" : "1";
+          changeRoleStatus(row.roleId, row.status).then(res => {
+            if (res ? res.data.code === 200 : false) {
+              this.$modal.msgSuccess(`${text}成功`);
+            }
+          }).catch(() => {
+            row.status = row.status === "0" ? "1" : "0";
+          });
         });
     },
     // 取消按钮

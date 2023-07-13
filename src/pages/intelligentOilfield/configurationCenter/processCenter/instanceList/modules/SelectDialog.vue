@@ -120,7 +120,6 @@ export default {
           });
         })
         .catch(() => {
-          this.$message.error("选项获取失败!");
           this.visibleDialog = false;
         });
     },

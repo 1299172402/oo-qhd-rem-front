@@ -190,7 +190,7 @@
         </header-search>
 
         <!-- v-loading="loading" -->
-        <page-panel-new header-title="用户管理">
+        <page-panel-new header-title="用户管理" :style="{height: showFooter ? '86%' : '88.6%'}">
           <el-row class="mbBottom">
             <el-col class="height-placeholder" :span="16">
               <el-button
@@ -1028,7 +1028,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      userInfo: "user/userInfo"
+      userInfo: "user/userInfo",
+      showFooter: "setting/showFooter"
     }),
     convertIdCard: {
       get() {
