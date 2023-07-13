@@ -1,4 +1,4 @@
-<!--液油水等值线图-->
+<!--液油含水等值线图-->
 <template>
     <div class="z-main">
         <div class="z-search">
@@ -74,7 +74,11 @@
     import H5Chart from '@/components/tools/H5Chart/index.vue';
     import H5Chart1 from '@/components/tools/H5Chart/index1.vue';
     import { downFile } from '@/lib/remBase64Download.js';
-    var _this;
+    
+    // miniIo
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {downFile as minioDownFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         components: {
             H5Chart,
@@ -120,24 +124,29 @@
                 this.getFilePathListApi();
             }
         },
-        mounted() {
-            _this = this;
-            this.doSearch();
+        async mounted() {
+            await this.doSearch();
         },
         methods: {
             async doSearch() {
-                //初始化获取层段关系
-                await fieldOilLayers({ oilFieldId: this.oilFieldId, fieldId: this.blockId, wellId: '' }).then((res) => {
+                await this.fieldOilLayersApi();
+                await this.queryRemUploadFileMinioApi();
+                this.OnChangeImage();
+                //获取上传文件列表
+                this.getFilePathListApi();
+            },
+            //初始化获取层段关系
+            async fieldOilLayersApi(){
+                await fieldOilLayers({oilFieldId: this.oilFieldId,fieldId: this.blockId,wellId: ''}).then((res) => {
                     if (res.data.code == 200) {
+                        //层段数据
                         if (res.data.data) {
                             this.position = res.data.data.fieldLayers;
                             if (!this.selectPosition && this.position[0]) {
-                                let isTrue = this.position.find((item) => {
-                                    return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A';
-                                });
-                                if (isTrue) {
-                                    this.selectPosition = '263518079CED49AE8B6C9FE5CEBDD26A'; //临时
-                                } else {
+                                let isTrue=this.position.find((item) => {return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A'})
+                                if (isTrue){
+                                    this.selectPosition = '263518079CED49AE8B6C9FE5CEBDD26A';//临时
+                                }else{
                                     this.selectPosition = this.position[0].fieldLayerId;
                                 }
                                 this.$emit('childPara', this.selectPosition, this.picType);
@@ -147,7 +156,45 @@
                         }
                     }
                 });
-                //获取参数油田id 平台id 井id
+            },
+            //获取底图
+            async queryRemUploadFileMinioApi(){
+                let params ={
+                    operationId:this.blockId,
+                    operationType:'BLOCK',
+                    readOne:'one' 
+                }
+                await queryRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        if(res.data.data.length){
+                            let fileId= res.data.data[0].fileId;
+                            minioDownFile(fileId).then((res)=>{
+                                let src=window.URL.createObjectURL(res);
+                                const image = new Image();
+                                image.src = src;
+                                image.onload = () => {
+                                  // 构建canvas节点
+                                  const canvas = document.createElement('canvas');
+                                  canvas.width = image.width;
+                                  canvas.height = image.height;
+                                  const context = canvas.getContext('2d');
+                                  context.drawImage(image, 0, 0, image.width, image.height);
+                                  // 转换
+                                  const imgBase64 = canvas.toDataURL();
+                                  this.image=imgBase64;
+                                };
+                            })
+                        }else{
+                            this.image='';
+                        }
+                    }else {
+                        this.$message.error("文件查询接口异常!");
+                    }
+                });
+            },
+            //切换图片
+            async OnChangeImage() {
+                this.intervalNum=0;
                 let request = {
                     oilFieldId: this.oilFieldId,
                     fieldId: this.blockId,
@@ -156,54 +203,7 @@
                     liquidType: this.radioType
                 };
                 await dynamicDataOilWaterContourMap(request).then((res) => {
-                    if (res&&res.data.code == 200) {
-                        if (res.data.data.layerPics) {
-                            if (res.data.data.layerPics.length > 0) {
-                                let imageData = res.data.data.layerPics[0];
-                                let type = imageData.type;
-                                this.image = 'data:' + type + ';base64,' + imageData.data;
-                            } else {
-                                this.image = '';
-                            }
-                        } else {
-                            this.image = '';
-                        }
-
-                        if (res.data.data) {
-                            this.layerData = res.data.data;
-                            this.sjcl(res.data.data, this.$refs.H5Chart);
-                        }
-                    } else {
-                        this.image = '';
-                    }
-                });
-                //获取上传文件列表
-                this.getFilePathListApi();
-            },
-            //切换图片
-            OnChangeImage() {
-                this.intervalNum=0;
-                this.image = '';
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    layerId: this.selectPosition,
-                    year: this.yearTime + '-01',
-                    liquidType: this.radioType
-                };
-                dynamicDataOilWaterContourMap(request).then((res) => {
                     if (res.data.code == 200) {
-                        if (res.data.data.layerPics) {
-                            if (res.data.data.layerPics.length > 0) {
-                                let imageData = res.data.data.layerPics[0];
-                                let type = imageData.type;
-                                this.image = 'data:' + type + ';base64,' + imageData.data;
-                            } else {
-                                this.image = '';
-                            }
-                        } else {
-                            this.image = '';
-                        }
                         if (res.data.data) {
                             if(res.data.data.areaLine){
                                 let list=res.data.data.areaLine;
@@ -214,9 +214,7 @@
                             this.layerData = res.data.data;
                             this.sjcl(res.data.data, this.$refs.H5Chart);
                         }
-                    } else {
-                        this.image = '';
-                    }
+                    } 
                 });
             },
             //两数向减
@@ -435,11 +433,11 @@
                 this.dialogVisible1 = true;
                 setTimeout(() => {
                     console.log(this.$refs.downH5Chart1);
-                    _this.sjcl(_this.layerData, _this.$refs.downH5Chart1);
+                    this.sjcl(this.layerData, this.$refs.downH5Chart1);
                     //this.sjcl(this.layerData, this.$refs.downH5Chart1)
                     this.dialogVisible1 = false;
                     setTimeout(() => {
-                        _this.$refs.downH5Chart1.downLoadAllPicture();
+                        this.$refs.downH5Chart1.downLoadAllPicture();
                     }, 2000);
                 }, 1000);
             },
@@ -592,17 +590,6 @@
                 };
                 dynamicDataOilWaterContourMap(request).then((res) => {
                     if (res.data.code == 200) {
-                        if (res.data.data.layerPics) {
-                            if (res.data.data.layerPics.length > 0) {
-                                let imageData = res.data.data.layerPics[0];
-                                let type = imageData.type;
-                                this.image = 'data:' + type + ';base64,' + imageData.data;
-                            } else {
-                                this.image = '';
-                            }
-                        } else {
-                            this.image = '';
-                        }
                         if (res.data.data) {
                             if(res.data.data.areaLine){
                                 let list=res.data.data.areaLine;
@@ -616,9 +603,7 @@
                             this.layerData = res.data.data;
                             this.sjcl(res.data.data, this.$refs.H5Chart);
                         }
-                    } else {
-                        this.image = '';
-                    }
+                    } 
                 });
             },
         }
