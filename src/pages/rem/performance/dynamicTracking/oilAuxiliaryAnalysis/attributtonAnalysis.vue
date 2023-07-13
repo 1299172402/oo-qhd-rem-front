@@ -110,6 +110,7 @@
                 style="width: 100%; height: 100%"
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
+                @cell-mouse-enter="blurReason"
             >
                 <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期">
@@ -121,7 +122,7 @@
                 <el-table-column prop="yield" min-width="150" :label="`月度产液量\n(m³)`"></el-table-column>
                 <el-table-column prop="monthlyProdEff" min-width="150" :label="`生产时率\n(%)`"></el-table-column>
                 <el-table-column prop="watCnt" min-width="150" :label="`含水率\n(%)`"></el-table-column>
-<!--                <el-table-column prop="pumpEfficiency" min-width="150" label="排量效率"></el-table-column>-->
+                <el-table-column prop="pumpEfficiency" min-width="150" :label="`排量效率\n(%)`"></el-table-column>
                 <el-table-column prop="flwPrs" min-width="150" :label="`流压\n(MPa)`"></el-table-column>
                 <el-table-column prop="attribution" min-width="250" label="归因"
                                  show-overflow-tooltip></el-table-column>
@@ -148,6 +149,7 @@
                 style="width: 100%; height: 100%"
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
+                @cell-mouse-enter="blurReason"
             >
                 <el-table-column prop="wellGroupName" min-width="250" label="井组名称"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期"></el-table-column>
@@ -183,6 +185,7 @@
                 style="height: 100%"
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
+                @cell-mouse-enter="blurReason"
             >
                 <el-table-column prop="wellNo" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="evalTime" min-width="150" label="日期">
@@ -225,6 +228,7 @@
                 style="width: 100%; height: 100%"
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
+                @cell-mouse-enter="blurReason"
             >
                 <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期">
@@ -240,7 +244,7 @@
                                  :label="`米采液指数\n(m³/mPa·d·m)`"></el-table-column>
                 <el-table-column prop="yield" min-width="150" :label="`产液量\n(m³)`"></el-table-column>
                 <el-table-column prop="monthlyProdEff" min-width="150" :label="`生产时率\n(%)`"></el-table-column>
-<!--                <el-table-column prop="pumpEfficiency" min-width="150" label="泵效"></el-table-column>-->
+                <el-table-column prop="pumpEfficiency" min-width="150" :label="`排量效率\n(%)`"></el-table-column>
                 <el-table-column prop="watCnt" min-width="150" :label="`含水率\n(%)`"></el-table-column>
                 <el-table-column prop="flwPrs" min-width="150" :label="`流压\n(MPa)`"></el-table-column>
                 <el-table-column prop="attribution" min-width="250" show-overflow-tooltip
@@ -640,7 +644,7 @@ export default {
                                                 },
                                                 {
                                                     "level": 4,
-                                                    "name": "判断分层段配注量",
+                                                    "name": "",
                                                     "children": [
                                                         {
                                                             "level": 5,
@@ -1379,6 +1383,12 @@ export default {
                     this.pageTotal = res.data.data.total
                 })
             }
+        },
+        //表格鼠标悬浮事件
+        blurReason(row, column, cell, event){
+            let reason = row.valueAttribution || row.attribution
+            console.log(reason);
+            //TODO 待开发
         }
     },
 };
