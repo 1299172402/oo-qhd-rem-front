@@ -37,7 +37,7 @@
                 position: [],
                 //层位绑定值
                 selectPosition: '',
-                imageList: [],
+                src:'',
                 fitInfo:'cover',   
             };
         },
@@ -50,7 +50,6 @@
                 if(isBoolean){
                     await this.fieldLayersApi();
                 }
-                this.imageList=[];
                 let params ={
                     operationId:this.blockId+'-'+this.selectPosition,
                     operationType:'BLOCKYXHDT',
