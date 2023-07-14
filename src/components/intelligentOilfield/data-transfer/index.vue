@@ -44,10 +44,18 @@
       <div>{{ headerNameList[0].name }}</div>
       <div class="g-row-flex itemStyle" style="height: calc(100% - 82px);">
         <div v-for="(item, index1) in currentSelectedList" :key="index1" style="margin: 0 10px 5px 0">
+          <el-tooltip v-if="item.name && item.name.length>12" :content="item.name">
+            <el-button
+              type="primary"
+            >
+              {{ item.name | btnName }}<i class="el-icon-error iconClass" @click="deleteItem(item)" />
+            </el-button>
+          </el-tooltip>
           <el-button
+            v-else
             type="primary"
           >
-            {{ item.name }}<i class="el-icon-error iconClass" @click="deleteItem(item)" />
+            {{ item.name | btnName }}<i class="el-icon-error iconClass" @click="deleteItem(item)" />
           </el-button>
         </div>
       </div>
@@ -60,8 +68,13 @@
       <div>{{ headerNameList[1].name }}</div>
       <div class="g-row-flex itemStyle">
         <div v-for="(item, index) in currentAllList" :key="index" style="margin: 0 10px 5px 0">
-          <el-button class="cancelBtn" @click="selectData(item)">
-            {{ item.name }}
+          <el-tooltip v-if="item.name && item.name.length>12" :content="item.name">
+            <el-button class="cancelBtn" @click="selectData(item)">
+              {{ item.name |btnName }}
+            </el-button>
+          </el-tooltip>
+          <el-button v-else class="cancelBtn" @click="selectData(item)">
+            {{ item.name |btnName }}
           </el-button>
         </div>
       </div>
@@ -101,6 +114,14 @@
 </template>
 <script>
 export default {
+  filters: {
+    btnName(val) {
+      if (val.length > 12) {
+        return `${val.slice(0, 12)}...`;
+      }
+      return val;
+    }
+  },
   props: {
     // 自定义快捷入口集合
     quickEntryList: {
