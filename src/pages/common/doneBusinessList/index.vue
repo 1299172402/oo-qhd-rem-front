@@ -64,15 +64,15 @@
           </el-form>
         </header-search>
         <!-- v-loading="loading" -->
-        <page-panel-new header-title="我的已办">
+        <page-panel-new header-title="我的已办" :style="{height: showFooter ? '86%' : '90%'}">
           <el-table
             :data="dataSource"
-            height="calc(100% - 46px)"
+            height="calc(100% - 66px)"
             :row-style="{ height: '0px' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
             header-cell-class-name="table_header"
             :cell-style="{ padding: '2px', 'text-align': 'center' }"
-            style="width: 100%; height: 100%"
+            style="width: 100%; height: 100%; margin-top: 20px;"
             :default-sort="{ prop: 'date', order: 'descending' }"
           >
             <el-table-column label="序号" type="index" width="50" />
@@ -159,6 +159,7 @@ import "@/assets/styles/pages/handleBusinessListStyle.less";
 import OpenOtherTab from "@/pages/common/mixins/commonMixin";
 import { getApp } from "@/api/intelligentOilfield/system/applicationCenter/applicationCenter.js";
 import jumpSupApp from "@/utils/jumpSupApp.js";
+import { mapGetters } from "vuex";
 
 export default {
   name: "DoneBusinessList",
@@ -245,6 +246,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      showFooter: "setting/showFooter"
+    }),
     // 构建查询参数
     generateQueryParam() {
       return {

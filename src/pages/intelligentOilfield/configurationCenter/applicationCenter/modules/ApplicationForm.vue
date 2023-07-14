@@ -9,7 +9,13 @@
     :disabled="onlyRead"
   >
     <el-form-item label="应用名称" prop="appName">
-      <el-input v-model="model.appName" placeholder="请输入应用名称" clearable />
+      <el-input
+        v-model="model.appName"
+        maxlength="10"
+        show-word-limit
+        placeholder="请输入应用名称"
+        clearable
+      />
     </el-form-item>
     <el-form-item label="应用描述" prop="appDesc">
       <el-input
@@ -127,6 +133,7 @@
 
 <script>
 import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
+import { looselyValidURL } from "@/utils/validate.js";
 
 export default {
   name: "ApplicationForm",
@@ -157,7 +164,10 @@ export default {
         appImg: [{ required: false, message: "请上传应用图标", trigger: ["change", "blur"] }],
         appStatus: [{ required: true, message: "请选择应用状态", trigger: ["change", "blur"] }],
         mobile: [{ required: true, message: "请选择支持终端", trigger: ["change", "blur"] }],
-        appPcAccessUrl: [{ required: true, message: "请输入网页端入口链接", trigger: ["change", "blur"] }],
+        appPcAccessUrl: [
+          { required: true, message: "请输入网页端入口链接", trigger: ["change", "blur"] },
+          { validator: this.validateBaseUrl, trigger: ["change", "blur"] }
+        ],
         accessType: [{ required: true, message: "请选择移动端", trigger: ["change", "blur"] }],
         appIosSchema: [{ required: true, message: "请输入iOS应用Scheme", trigger: ["change", "blur"] }],
         appAndriodSchema: [{ required: true, message: "请输入Android应用Scheme", trigger: ["change", "blur"] }],
@@ -202,9 +212,21 @@ export default {
     handleMobile(val) {
       this.$set(this.model, "isPc", +val ? 0 : 1);
       this.$set(this.model, "isMobile", +val ? 1 : 0);
+    },
+    /**
+     * 校验根路径格式是否正确
+     */
+    validateBaseUrl(rule, value, callback) {
+      if (!looselyValidURL(value)) {
+        callback(new Error("请输入正确的网页端入口链接"));
+      }
+      callback();
     }
   }
 };
 </script>
-<style scoped lang="scss">
+<style scoped lang="less">
+/deep/ .el-input__count-inner {
+  background: none !important;
+}
 </style>

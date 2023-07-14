@@ -48,15 +48,15 @@
           </el-form>
         </header-search>
         <!-- v-loading="loading" -->
-        <page-panel-new header-title="我的待办">
+        <page-panel-new header-title="我的待办" :style="{height: showFooter ? '86%' : '90%'}">
           <el-table
             :data="dataSource"
-            height="calc(100% - 46px)"
+            height="calc(100% - 66px)"
             :row-style="{ height: '0px' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
             header-cell-class-name="table_header"
             :cell-style="{ padding: '2px', 'text-align': 'center' }"
-            style="width: 100%; height: 100%"
+            style="width: 100%; height: 100%; margin-top: 20px;"
             :default-sort="{ prop: 'date', order: 'descending' }"
           >
             <el-table-column label="序号" type="index" width="50" />
@@ -180,6 +180,9 @@ export default {
     };
   },
   computed: {
+     ...mapGetters({
+      showFooter: "setting/showFooter"
+    }),
     ...mapGetters(["closeTabKey"]),
     // 构建查询参数
     generateQueryParam() {

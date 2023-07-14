@@ -324,9 +324,9 @@ export default Vue.extend({
       name="opinion"
     >
       <t-textarea
+        v-model={this.auditInfo.opinion}
         placeholder="请输入处理意见"
-        clearable
-        onChange={val => { this.auditInfo.opinion = val; }} />
+        clearable />
     </t-form-item>);
     // 驳回组件
     const terminateEl = (
@@ -336,9 +336,9 @@ export default Vue.extend({
         name="terminateProcessReason"
       >
         <t-textarea
+          v-model={this.auditInfo.terminateProcessReason}
           placeholder="请输入驳回意见"
-          clearable
-          onChange={val => { this.auditInfo.terminateProcessReason = val; }} />
+          clearable />
       </t-form-item>
     );
       // 处理意见元素
@@ -348,9 +348,9 @@ export default Vue.extend({
       name="opinion"
     >
       <t-textarea
+        v-model={this.auditInfo.opinion}
         placeholder="请输入处理意见"
-        clearable
-        onChange={val => { this.auditInfo.opinion = val; }} />
+        clearable />
     </t-form-item>);
     //  流程回到我
     const curFlowBackToMeModeEl = (

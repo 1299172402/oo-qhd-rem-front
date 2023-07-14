@@ -40,11 +40,13 @@
 
 // header右侧固定白线
 .el-table__fixed-right-patch {
-  width: 0 !important;
+  // width: 0 !important;
+  width: 11px !important;
+  background: #f5f5f5;
 }
 
 .el-table__fixed-right {
-  right: 10px !important;
+  // right: 10px !important;
 }
 
 // 滚动条的滑块
@@ -55,6 +57,7 @@
 
 .el-table .el-table__cell.gutter {
   background: transparent;
+  display: block !important;
 }
 
 .el-table th.el-table__cell,
@@ -264,4 +267,21 @@
   display: block !important;
   width: 17px !important;
   border: 1px solid transparent !important;
+}
+
+.el-table__body-wrapper.is-scrolling-none ~ .el-table__fixed-right {
+  right: 0 !important;
+  height: 100% !important;
+  bottom: 0 !important;
+  box-shadow: none !important;
+}
+
+// 表格只有纵向滚动条
+.el-table--scrollable-y .el-table__fixed-right {
+  right: 10px !important;
+}
+
+// 表格只有横向没有纵向
+.el-table--scrollable-x:not(.el-table--scrollable-y) .el-table__fixed-right {
+  right: 0 !important;
 }
