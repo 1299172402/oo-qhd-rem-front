@@ -7,10 +7,12 @@
             </el-select>
         </div>
         <div class="z-container">
-            <el-col :span="14" style="overflow: auto;">
-                <el-image :src="image">
-                    <div slot="error"></div>
-                </el-image>
+            <el-col :span="14">
+                <page-panel-new style="height:100%;margin-top:0;overflow: auto;" show-btn>
+                    <el-image :src="src">
+                        <div slot="error"></div>
+                    </el-image>
+                </page-panel-new>
             </el-col>
             <el-col :span="10">
                 <el-table id="tableData" highlight :data="tableData" style="width: 100%" height="100%">
@@ -27,59 +29,58 @@
 <script>
     import {fieldLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import {permeabilityDistribution} from "@/api/oilDeposit/rem-01/wellgroupdynamicanalysis.js";
-    import {downFile} from "@/lib/remBase64Download.js";
     import {exportExcel} from "@/lib/exportExcel.js";
+    // Minio
+    import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
+    import {addRemUploadFileMinio,queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {downFile} from "@/components/upload/utils/file";
     export default {
         props: {
             //油田id
             oilFieldId: {},
             //区块id
             blockId: {},
-            //层系id
-            layerId: {},
             //井组id
             wellGroupId: {}
         },
         data() {
             return {
+                //mniIo
+                fileId:'',
+                filestrId:'',
+                src:'',
                 //所选择的层位
                 selectPosition: '',
                 //层位所选择内容信息
                 position: [],
-                src:'',
-                image: '',
-                imageList: [],
+                //表格
                 tableData: [],
             };
         },
-        mounted() {
-            this.doSearch();
+        async mounted() {
+            await this.doSearch();
         },
         methods: {
             async doSearch() {
-                await fieldLayers({
-                    oilFieldId: this.oilFeildId,
-                    wellGroupId: this.wellGroupId,
-                }).then((res) => {
+                await this.fieldLayersApi();
+                this.queryRemUploadFileMinioApi();
+                this.permeabilityDistributionApi();
+            },
+            async fieldLayersApi(){
+                await fieldLayers({oilFieldId: this.oilFeildId,wellGroupId: this.wellGroupId}).then((res) => {
                     if (res.data.code == 200) {
-                        //层段数据
                         if (res.data.data) {
-                            if (!res.data.data.fieldLayers) {
-                                this.position = [];
-                                this.selectPosition = '';
-                            }
                             this.position = res.data.data.fieldLayers;
                             if (!this.selectPosition && this.position[0]) {
                                 if (this.position.find((item) => {
                                         return item.fieldLayerId == '26C4B92661D345969091868C256A7902'
                                     })) {
                                     this.selectPosition = '26C4B92661D345969091868C256A7902';
-
                                 } else if (this.position.find((item) => {
                                         return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A'
                                     })) {
                                     this.selectPosition = '263518079CED49AE8B6C9FE5CEBDD26A';
-
+                
                                 } else if (this.position.find((item) => {
                                         return item.fieldLayerId == '87795A3E6BBC4469BC9AC5AE0BBE759C'
                                     })) {
@@ -102,40 +103,50 @@
                         this.selectPosition = '';
                     }
                 });
+            },
+            //minIo-获取底图
+            queryRemUploadFileMinioApi(){
+                let params ={
+                    operationId:this.blockId+'-'+this.selectPosition,
+                    operationType:'BLOCKCWDT',
+                    readOne:'one' 
+                }
+                queryRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        if(res.data.data.length){
+                            this.fileId = res.data.data[0].fileId
+                            this.filestrId = res.data.data[0].filestrId
+                            downFile(this.fileId).then((res)=>{
+                                this.src=window.URL.createObjectURL(res);
+                            })
+                        }else{
+                           this.src='';
+                        }
+                    }else {
+                        this.$message.error("文件查询接口异常!");
+                    }
+                });
+            },
+            //获取表格数据
+            permeabilityDistributionApi(){
                 let request = {
                     oilFieldId: this.oilFieldId,
                     fieldId: this.blockId,
-                    fieldLayerId: this.layerId,
                     wellGroupId: this.wellGroupId,
                 };
                 permeabilityDistribution(request).then((res) => {
                     if (res.data.code == 200) {
                         this.tableData = res.data.data.permeabilityDetails;
-                        this.imageList = res.data.data.layerPics;
-                        let imageMess = this.imageList.find((item) => item.layerId == this.selectPosition);
-                        if (!imageMess) {
-                            this.image = '';
-                            return;
-                        }
-                        if (imageMess.data && imageMess.type)
-                            this.image = 'data:' + imageMess.type + ';base64,' + imageMess.data;
-                        else {
-                            this.image = '';
-                        }
                     }
                 });
             },
             //下载
             doDownLoad() {
                 let fileName = '渗透率分布图';
-                let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
-                if (layerMess) {
-                    fileName = (layerMess.layerName ? layerMess.layerName : '') + fileName;
-                }
-                if (this.wellGroupName) {
-                    fileName = this.wellGroupName + fileName;
-                }
-                downFile(this.image, fileName);
+                let file_suffix=this.filestrId.split('.')[1];
+                downFile(this.id).then(res=>{
+                    FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+                })
                 exportExcel('#tableData', fileName);
             },
         }

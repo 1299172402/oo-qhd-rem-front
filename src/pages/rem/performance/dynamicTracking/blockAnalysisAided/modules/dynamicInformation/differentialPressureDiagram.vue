@@ -2,7 +2,7 @@
 <template>
     <div class="z-main">
         <div class="z-search">
-            <el-select v-model="selectPosition" style="width: 220px;margin-right:20px;" placeholder="请选择" filterable clearable>
+            <el-select v-model="selectPosition" style="width: 220px;margin-right:20px;" placeholder="请选择" filterable @change="positionChange">
                 <el-option v-for="(item, index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
             <el-radio-group v-model="radioYear" style="margin-right:20px;">
@@ -15,7 +15,7 @@
             </div>
             <span>选择年份：</span>
             <el-date-picker v-model="yearTime" type="year" placeholder="选择年" value-format="yyyy" style="margin-right:20px;"></el-date-picker>
-            <el-button type="primary" @click="doYesEvent">确定</el-button>
+            <el-button type="primary" @click="OnChangeImage">确定</el-button>
         </div>
         <div class="z-echarts">
             <H5Chart ref="H5Chart" height="100%" :url="url" width="100%"></H5Chart>
@@ -32,6 +32,10 @@
     import { downFile } from '@/lib/remBase64Download.js';
     import H5Chart from '@/components/tools/H5Chart/index.vue';
     import H5Chart1 from '@/components/tools/H5Chart/index1.vue';
+    // miniIo
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {downFile as minioDownFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         components: {
             H5Chart,
@@ -61,45 +65,79 @@
                 oilWaterChartData: {}
             };
         },
-        watch: {
-            //监听层位信息，给其动态传值
-            selectPosition(val) {
-                this.$emit('childPara', this.selectPosition);
-                this.OnChangeImage();
-            }
-        },
-        mounted() {
-            //this.initData();
-            this.doSearch();
+        async mounted() {
+            await this.doSearch();
         },
         methods: {
             async doSearch() {
-                //初始化获取层段关系
-                await fieldOilLayers({
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    wellId: ''
-                }).then((res) => {
+                await this.fieldOilLayersApi();
+                await this.queryRemUploadFileMinioApi();
+                this.OnChangeImage();
+            },
+            //初始化获取层段关系
+            async fieldOilLayersApi(){
+                await fieldOilLayers({oilFieldId: this.oilFieldId,fieldId: this.blockId,wellId: ''}).then((res) => {
                     if (res.data.code == 200) {
                         //层段数据
                         if (res.data.data) {
                             this.position = res.data.data.fieldLayers;
-                            if (!this.selectPosition && this.position[0])
-                                if (
-                                    this.position.find((item) => {
-                                        return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A';
-                                    })
-                                )
-                                    //临时
-                                    this.selectPosition = '263518079CED49AE8B6C9FE5CEBDD26A';
-                                else this.selectPosition = this.position[0].fieldLayerId;
-                            this.$emit('childPara', this.selectPosition);
+                            if (!this.selectPosition && this.position[0]) {
+                                let isTrue=this.position.find((item) => {return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A'})
+                                if (isTrue){
+                                    this.selectPosition = '263518079CED49AE8B6C9FE5CEBDD26A';//临时
+                                }else{
+                                    this.selectPosition = this.position[0].fieldLayerId;
+                                }
+                                this.$emit('childPara', this.selectPosition, this.picType);
+                            }
                         } else {
                             this.position = [];
                         }
                     }
                 });
-                //获取参数油田id 平台id 井id
+            },
+            //层位change
+            positionChange(val){
+                this.$emit('childPara', this.selectPosition, this.picType);
+                this.OnChangeImage();
+            },
+            //获取底图
+            async queryRemUploadFileMinioApi(){
+                let params ={
+                    operationId:this.blockId,
+                    operationType:'BLOCK',
+                    readOne:'one' 
+                }
+                await queryRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        if(res.data.data.length){
+                            let fileId= res.data.data[0].fileId;
+                            minioDownFile(fileId).then((res)=>{
+                                let src=window.URL.createObjectURL(res);
+                                const image = new Image();
+                                image.src = src;
+                                image.onload = () => {
+                                  // 构建canvas节点
+                                  const canvas = document.createElement('canvas');
+                                  canvas.width = image.width;
+                                  canvas.height = image.height;
+                                  const context = canvas.getContext('2d');
+                                  context.drawImage(image, 0, 0, image.width, image.height);
+                                  // 转换
+                                  const imgBase64 = canvas.toDataURL();
+                                  this.image=imgBase64;
+                                };
+                            })
+                        }else{
+                            this.image='';
+                        }
+                    }else {
+                        this.$message.error("文件查询接口异常!");
+                    }
+                });
+            },
+            //切换图片
+            async OnChangeImage() {
                 let request = {
                     oilFieldId: this.oilFieldId,
                     fieldId: this.blockId,
@@ -111,95 +149,14 @@
                 //获取图片组信息
                 await dynamicDataDifferentialPressureDiagram(request).then((res) => {
                     if (res.data.code == 200) {
-                        if (res.data.data.layerPics) {
-                            if (res.data.data.layerPics.length > 0) {
-                                let imageData = res.data.data.layerPics[0];
-                                let type = imageData.type;
-                                this.image = 'data:' + type + ';base64,' + imageData.data;
-                            } else {
-                                this.image = '';
-                            }
-                        } else {
-                            this.image = '';
-                        }
                         this.oilWaterChartData = res.data.data.oilWaterChart;
                         if (this.picType == 'COLUMN') {
                             this.columnPic(this.oilWaterChartData, this.$refs.H5Chart);
                         } else if (this.picType == 'BUBBLE') {
                             this.bubblePic(this.oilWaterChartData, this.$refs.H5Chart);
                         }
-                    } else {
-                        this.image = '';
                     }
                 });
-            },
-            //切换图片
-            OnChangeImage() {
-                this.image = '';
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    layerId: this.selectPosition,
-                    year:Number(this.yearTime)-this.radioYear,
-                    endYear: this.yearTime,
-                    pictureType: this.picType,
-                };
-                dynamicDataDifferentialPressureDiagram(request).then((res) => {
-                    if (res.data.code == 200) {
-                        if (res.data.data.layerPics) {
-                            if (res.data.data.layerPics.length > 0) {
-                                let imageData = res.data.data.layerPics[0];
-                                let type = imageData.type;
-                                this.image = 'data:' + type + ';base64,' + imageData.data;
-                            } else {
-                                this.image = '';
-                            }
-                        } else {
-                            this.image = '';
-                        }
-                        this.oilWaterChartData = res.data.data.oilWaterChart
-                        if (this.picType == 'COLUMN') {
-                            this.columnPic(this.oilWaterChartData, this.$refs.H5Chart);
-                        } else if (this.picType == 'BUBBLE') {
-                            this.bubblePic(this.oilWaterChartData, this.$refs.H5Chart);
-                        }
-                    } else {
-                        this.image = '';
-                    }
-                });
-            },
-            //单选按钮选中改变事件
-            changeRadio() {
-                this.$emit('childPara', this.selectPosition);
-                this.OnChangeImage();
-            },
-            //下载功能
-            doDownLoad() {
-                /*let fileName = '生产压差图';
-          let layerMess = this.position.find((item)=>item.fieldLayerId==this.selectPosition);
-          if(layerMess){
-            fileName = (layerMess.layerName? layerMess.layerName : '' )+ fileName;
-          }
-          if(this.blockName){
-            fileName = this.blockName + fileName;
-          }
-          downFile(this.image,fileName);*/
-                //this.$refs.H5Chart.downLoadAllPicture();
-                this.dialogVisible1 = true;
-                setTimeout(() => {
-                    if (this.picType == 'COLUMN') {
-                         // this.url1 = this.zztUrl;
-                        this.columnPic(this.oilWaterChartData, this.$refs.downH5Chart1);
-                    } else if (this.picType == 'BUBBLE') {
-                        // this.url1 = this.pptUrl;
-                        this.bubblePic(this.oilWaterChartData, this.$refs.downH5Chart1);
-                    }
-                    //this.columnPic(this.oilWaterChartData, this.$refs.downH5Chart1)
-                    this.dialogVisible1 = false;
-                    setTimeout(() => {
-                        this.$refs.downH5Chart1.downLoadAllPicture();
-                    }, 2000);
-                }, 1000);
             },
             //图片类型切换
             doPicTypeSwitch(val) {
@@ -210,7 +167,7 @@
                     } else if (val == 'BUBBLE') {
                         this.url = this.pptUrl;
                     }
-                    this.doYesEvent();
+                    this.OnChangeImage();
                 }
             },
             //柱状图解析
@@ -350,43 +307,24 @@
                 h5data.Layers.push(columnLayer);
                 refObj.setSampleDate(h5data);
             },
-            //点击确定时的查询 和 初始化一致
-            doYesEvent() {
-                //获取参数油田id 平台id 井id
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    layerId: this.selectPosition,
-                    year:Number(this.yearTime)-this.radioYear,
-                    endYear: this.yearTime,
-                    pictureType: this.picType,
-                };
-                //获取图片组信息
-                dynamicDataDifferentialPressureDiagram(request).then((res) => {
-                    if (res.data.code == 200) {
-                        if (res.data.data.layerPics) {
-                            if (res.data.data.layerPics.length > 0) {
-                                let imageData = res.data.data.layerPics[0];
-                                let type = imageData.type;
-                                this.image = 'data:' + type + ';base64,' + imageData.data;
-                            } else {
-                                this.image = '';
-                            }
-                        } else {
-                            this.image = '';
-                        }
-                        //this.bubblePic(res.data.data.oilWaterChart);
-                        this.oilWaterChartData = res.data.data.oilWaterChart;
-                        if (this.picType == 'COLUMN') {
-                            this.columnPic(this.oilWaterChartData, this.$refs.H5Chart);
-                        } else if (this.picType == 'BUBBLE') {
-                            this.bubblePic(this.oilWaterChartData, this.$refs.H5Chart);
-                        }
-                    } else {
-                        this.image = '';
+            //下载功能
+            doDownLoad() {
+                this.dialogVisible1 = true;
+                setTimeout(() => {
+                    if (this.picType == 'COLUMN') {
+                         // this.url1 = this.zztUrl;
+                        this.columnPic(this.oilWaterChartData, this.$refs.downH5Chart1);
+                    } else if (this.picType == 'BUBBLE') {
+                        // this.url1 = this.pptUrl;
+                        this.bubblePic(this.oilWaterChartData, this.$refs.downH5Chart1);
                     }
-                });
-            }
+                    //this.columnPic(this.oilWaterChartData, this.$refs.downH5Chart1)
+                    this.dialogVisible1 = false;
+                    setTimeout(() => {
+                        this.$refs.downH5Chart1.downLoadAllPicture();
+                    }, 2000);
+                }, 1000);
+            },
         }
     };
 </script>

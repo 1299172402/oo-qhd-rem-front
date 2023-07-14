@@ -101,18 +101,17 @@
         methods: {
             //查询
             doSearch() {
-                this.$emit('childPara', '');
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                };
-                reservoirDataBasicReservoirData(request).then((res) => {
-                    if (res.data.code == 200) {
-                        this.resultData = res.data.data.reservoirsInfoList[0];
-                    } else {
-                        this.resultData = [];
-                    }
-                });
+                // let request = {
+                //     oilFieldId: this.oilFieldId,
+                //     fieldId: this.blockId,
+                // };
+                // reservoirDataBasicReservoirData(request).then((res) => {
+                //     if (res.data.code == 200) {
+                //         this.resultData = res.data.data.reservoirsInfoList[0];
+                //     } else {
+                //         this.resultData = [];
+                //     }
+                // });
             },
             //下载
             doDownLoad() {

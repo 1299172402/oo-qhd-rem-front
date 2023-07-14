@@ -5,7 +5,7 @@
             <div class="v1">
                 <page-panel-new style="height:100%;margin-top:0;" show-btn>
                     <div class="v1-con">
-                        <el-image :src="image">
+                        <el-image :src="src">
                             <div slot="error"></div>
                         </el-image>
                     </div>
@@ -28,22 +28,27 @@
 
 <script>
     import {conectionPlot} from "@/api/oilDeposit/rem-01/wellgroupdynamicanalysis.js";
-    import {downFile} from "@/lib/remBase64Download.js";
     import {exportExcel} from "@/lib/exportExcel.js";
+    // miniIo
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {downFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         props: {
             //油田id
             oilFieldId: {},
             //区块id
             blockId: {},
-            //层系id
-            layerId: {},
             //井组id
             wellGroupId: {}
         },
         data() {
             return {
-                image: '',
+                //mniIo
+                fileId:'',
+                filestrId:'',
+                src:'',
+                
                 tableData: [],
             };
         },
@@ -52,32 +57,53 @@
         },
         methods: {
             doSearch() {
+                this.queryRemUploadFileMinioApi();
+                this.conectionPlotApi();
+            },
+            //获取minio图片
+            async queryRemUploadFileMinioApi(){
+                let params ={
+                    operationId:this.blockId+'-'+this.wellGroupId,
+                    operationType:'WELLGROUPJZLTT',
+                    readOne:'one',
+                }
+                await queryRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        if(res.data.data.length){
+                            this.fileId=res.data.data[0].fileId;
+                            this.filestrId=res.data.data[0].filestrId;
+                            downFile(this.fileId).then((res)=>{
+                                this.src=window.URL.createObjectURL(res);
+                            })
+                        }else{
+                            this.src='';
+                        }
+                    }else {
+                        this.$message.error("文件查询接口异常!");
+                    }
+                });
+            },
+            //获取表格数据
+            conectionPlotApi(){
                 let request = {
                     oilFieldId: this.oilFieldId,
                     fieldId: this.blockId,
-                    fieldLayerId: this.layerId,
                     wellGroupId: this.wellGroupId,
                 };
                 conectionPlot(request).then((res) => {
                     if (res.data.code == 200) {
-                        let imgData = res.data.data.data;
-                        let type = res.data.data.type;
-                        let firstParty = 'data:' + type + ';base64,';
-                        if (imgData) {
-                            this.image = firstParty + imgData;
-                        } else {
-                            this.image = '';
-                        }
-                        this.tableData = res.data.data.wellGroupConnections;
+                        let data = res.data.data.data;
+                        this.tableData = data.wellGroupConnections;
                     }
                 });
             },
+            //下载功能
             doDownLoad() {
                 let fileName = '井组连通图';
-                if (this.wellGroupName) {
-                    fileName = this.wellGroupName + fileName;
-                }
-                downFile(this.image, fileName);
+                let file_suffix=this.filestrId.split('.')[1];
+                downFile(this.id).then(res=>{
+                    FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+                })
                 exportExcel('#tableData', fileName);
             }
         }

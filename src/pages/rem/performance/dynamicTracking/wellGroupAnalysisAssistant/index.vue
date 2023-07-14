@@ -53,17 +53,14 @@
         
         <!-- minIo上传 -->
         <el-dialog custom-class="border" title="上传文档" :visible.sync="ljpmDialogLast" width="20%" :before-close="ljpmDialogCloseLast" :style="{ 'min-width': '1800px' }">
-            <el-row>
-                <el-form ref="form" label-width="40px">
-                    <el-form-item label="" style="width: 88px">
-                        <file-upload v-model="imageurl" style="width: 250px" :limit="limit" :fileSize="20" :is-show-tip="false" biz-path="rem-front/text" bucket-name="zhy" :file-type="fileType" @change="getResData"/>
-                    </el-form-item>
-                </el-form>
-            </el-row>
+            <div style="display: flex;justify-content: center;">
+                <file-upload v-model="imageurl" style="width: 250px" :limit="limit" :fileSize="20" :is-show-tip="false" biz-path="rem-front/text" :file-type="fileType" @change="getResData"/>
+            </div>
             <div slot="footer" class="dialog-footer" style="text-align: center">
-                <el-button @click="ljpmDialogCloseLast">关 闭</el-button>
+                <el-button class="cancelBtn" @click="ljpmDialogCloseLast">关 闭</el-button>
             </div>
         </el-dialog>
+        
     </div>
 </template>
 
@@ -89,11 +86,6 @@
                 fileType:['pdf'],
                 imageurl:'',
                 operationTypeList:{
-                    permeabilityDistribution:{//渗透率分布图
-                        operationType:'WELLGROUPSTFBT',
-                        limit:1,
-                        fileType:['bmp','jpg','jpeg','png','pdf']
-                    },
                     wellGroupConnection:{//井组连通图
                         operationType:'WELLGROUPJZLTT',
                         limit:1,
@@ -180,7 +172,6 @@
                                 name: "injectionProductionCorresponding",
                             },
                             {
-                                isUpdateFile:true,
                                 label: "示踪剂",
                                 name: "tracer",
                             },
@@ -256,8 +247,8 @@
                     fileId: data[0].id,
                     filestrId:data[0].name,
                     remUploadFileMinioId:'' ,
-                    operationId:this.childParam+this.selectWellGroup,
-                    operationType,
+                    operationId:this.selectBlock+'-'+this.selectWellGroup,//这个值很重要，这是确定业务与图片的依赖关系。
+                    operationType,//这个值很重要，这是确定业务与图片的依赖关系。
                 };
                 this.uploadFile(params);
             },
@@ -281,28 +272,8 @@
             },
             //minIo-下载
             doDownLoadNew(){
-                const id = this.$refs.componentCustom.id
-                let fileName = this.$refs.componentCustom.fileName
-                downFile(id).then((res) => {
-                    FileSaver.saveAs(res,`${fileName}`);
-                });
-                //如果是产液剖面||饱和度测井-则下载表格
-                if(this.currentModule=='fluidProducingProfile'||this.currentModule=='saturationLog'){
-                    this.$refs.componentCustom.doDownLoad();
-                }
-            },
-            //原先下载
-            doDownLoad() {
-                let well = this.wellData.find((item) => {
-                    return item.wellId == this.selectWellId;
-                });
-                this.$refs.componentCustom.wellName = well.wellName;
-                if (this.childParam) {
-                    this.$refs.componentCustom.selectPosition = this.childParam;
-                }
                 this.$refs.componentCustom.doDownLoad();
             },
-            
             //重置
             resetting() {
                 let activeName = this.activeName;
@@ -319,25 +290,24 @@
             handleClick(tab) {
                 this.activeName = tab.name;
                 this.currentModule = this.tabs[tab.index].modules[0].name;
-                this.isUpdateFile=false;
-                for(let key in this.operationTypeList){
-                    if(key==this.currentModule){
-                        this.isUpdateFile=true;
-                        return false;
-                    }
+                //是否显示minio上传文档按钮
+                this.isUpdateFile=this.operationTypeList[this.currentModule]?true:false;
+                if(this.operationTypeList[this.currentModule]&&this.operationTypeList[this.currentModule].limit){
+                    this.limit=this.operationTypeList[this.currentModule].limit;
+                    this.fileType=this.operationTypeList[this.currentModule].fileType;
                 }
             },
             //点击二级tabs
             handleTwoClicj(module) {
                 this.currentModule = module.name;
-                this.isUpdateFile=false;
-                for(let key in this.operationTypeList){
-                    if(key==this.currentModule){
-                        this.isUpdateFile=true;
-                        return false;
-                    }
-                }
                 this.selectWellGroup = this.newWellGroup[0].wellGroupId;
+                this.childParam='';//清空层位
+                //是否显示minio上传文档按钮
+                this.isUpdateFile=this.operationTypeList[this.currentModule]?true:false;
+                if(this.operationTypeList[this.currentModule]&&this.operationTypeList[this.currentModule].limit){
+                    this.limit=this.operationTypeList[this.currentModule].limit;
+                    this.fileType=this.operationTypeList[this.currentModule].fileType;
+                }
             },
           
             //初始化页面
@@ -447,16 +417,6 @@
             },
             //改变选中井组切换内容
             changeSelectWellCentre() {},
-            
-            //下载
-            doDownLoad() {
-                let wellGroupThing = this.wellGroup.find((item) => {
-                    return item.wellGroupId == this.selectWellGroup;
-                });
-                this.$refs.componentCustom.wellGroupName = wellGroupThing ? wellGroupThing.name : '';
-                this.$refs.componentCustom.doDownLoad();
-            },
-            
             //返回
             goBack(){
                 this.$router.push({
