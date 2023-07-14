@@ -39,6 +39,7 @@ export default {
         },1000 * 10)
     },
     methods: {
+        //获取报警信息接口
         getWarningInfo(){
             this.currentLists.forEach((i,index)=>{
                 i.warningShowFlag = false
@@ -92,30 +93,38 @@ export default {
     },
     data(){
         return {
-            timmer:'',
-            timmerWarning:'',
-            baseUrl : env == "development"?'/src':'',
-            loopNum: 0,
-            loopImgNum: [6,4,1,10,7],
-            loopImgNumClose: [7,6,4,1,10],
-            showFlag: true,
+            timmer:'',//定时器
+            timmerWarning:'',//获取报警信息轮询
+            baseUrl : env == "development"?'/src':'',//判断是否生产环境
+            loopNum: 0,//循环显示图片的loop
+            loopImgNum: [6,4,1,10,7],//默认显示图片的顺序
+            loopImgNumClose: [7,6,4,1,10],//关闭图片显示的顺序
+            showFlag: true,//是否显示
             currentLists: [
                 {
+                    //选项卡的定位位置
                     style: 'position:absolute;left: 80%;top: 21%;width:20%;height:40%;',
+                    //悬浮按钮名称
                     boxText: '智能分采井调控测试',
-                    boxBottomText: [{name:'智能配产器调控模型',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/intelligentDispensing/intelligentSubMining'}, '举升设备调控模型', '智能测试模型'],
+                    //悬浮按钮二级名称及路由跳转地址
+                    boxBottomText: [{name:'智能配产器调控模型',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/intelligentDispensing/intelligentSubMining?page=reservoirDisplay/linkage'}, '举升设备调控模型', '智能测试模型'],
+                    //弹出框自定义样式
                     boxStyle: {
                         pWidth: 'width:11vw',
                     },
+                    //图片资源
                     imgUrl: new URL('./topBox/23.png', import.meta.url).href,
+                    //是否展示（通过定时器和组件内鼠标移入移出事件来控制该属性达到动态展示效果）
                     showFlag:false,
+                    //预警信息接口返回的编号是否属于该项
                     typeIdList:[],
+                    //是否展示预警信息（轮询预警信息接口）
                     warningShowFlag : false,
                 },
                 {
                     style: 'position:absolute;left: 69%;top: 26%;width:20%;height:40%;',
                     boxText: '智能分注井调控测试',
-                    boxBottomText: [{name:'智能分注井调控测试',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/intelligentDispensing?link=rem'}],
+                    boxBottomText: [{name:'智能分注井调控测试',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/intelligentDispensing?link=rem&page=reservoirDisplay/linkage'}],
                     boxBottomContent: [[{name:'智能配水器调控模型',url:''}, '智能测试模型']],
                     boxStyle: {
                         pWidth: 'width:11vw',
@@ -129,7 +138,7 @@ export default {
                 {
                     style: 'position:absolute;left: 57%;top: 60%;width:20%;height:40%;',
                     boxText: '注采调控油藏方案',
-                    boxBottomText: [{name:'分层注水优化',url:'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization'}, '产液结构优化'],
+                    boxBottomText: [{name:'分层注水优化',url:'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization?page=reservoirDisplay/linkage'}, '产液结构优化'],
                     boxBottomContent: [['智能滚动配注模型'], ['流场调控模型']],
                     boxStyle: {
                         pWidth: 'width:11vw'
@@ -143,9 +152,9 @@ export default {
                     style: 'position:absolute;left: 43%;top: 56%;width:20%;height:40%;',
                     boxText: '注采状况分析',
                     boxBottomText: [
-                        {name:'注采连通分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/basic/wellGroup_Maintenance?link=linkage'},
-                        {name:'注采平衡分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=1'},
-                        {name:'采出状况分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=2'}
+                        {name:'注采连通分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/basic/wellGroup_Maintenance?link=linkage&page=reservoirDisplay/linkage'},
+                        {name:'注采平衡分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=1&page=reservoirDisplay/linkage'},
+                        {name:'采出状况分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=2&page=reservoirDisplay/linkage'}
                     ],
                     boxBottomContent: [
                         [{name:'注采连通性评价模型',url:''}],
@@ -163,7 +172,7 @@ export default {
                 {
                     style: 'position:absolute;left: 30%;top: 60%;width:20%;height:40%;',
                     boxText: '剩余油分布',
-                    boxBottomText: [{name:'动态分析法/数模剩余油分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization?link=rem'}],
+                    boxBottomText: [{name:'动态分析法/数模剩余油分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization?link=rem&page=reservoirDisplay/linkage'}],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
@@ -175,7 +184,7 @@ export default {
                 {
                     style: 'position:absolute;left: 17%;top: 56%;width:20%;height:40%;',
                     boxText: '调整区块确定',
-                    boxBottomText: [{name:'层间/平面矛盾分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport'}],
+                    boxBottomText: [{name:'层间/平面矛盾分析',url:'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=reservoirDisplay/linkage'}],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
@@ -188,10 +197,10 @@ export default {
                     style: 'position:absolute;left: 2%;top: 60%;width:20%;height:40%;',
                     boxText: '产量运行监控',
                     boxBottomText: [
-                        {name:'年度产量运行预警',url:'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentWarningCapacity'}
+                        {name:'年度产量运行预警',url:'https://rem.tjioms-dev.tjltd.cnooc/#/developStatus/developmentWarningCapacity?page=reservoirDisplay/linkage'}
                     ],
                     boxBottomContent: [
-                        [{name:'年度产量趋势预测',url:'https://rem.tjioms-dev.tjltd.cnooc/#/modelConfiguration/modelconfig'}]
+                        [{name:'年度产量趋势预测',url:'https://rem.tjioms-dev.tjltd.cnooc/#/modelConfiguration/modelconfig?page=reservoirDisplay/linkage'}]
                     ],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
@@ -200,7 +209,8 @@ export default {
                     showFlag:false,
                     typeIdList:[],
                     warningShowFlag : true,
-                    analysisUrl:`https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?wellIds=%5B%5D&prodDate=${data2}&prodDateCompare=${data1}`
+                    // analysisUrl:`https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?wellIds=%5B%5D&prodDate=${data2}&prodDateCompare=${data1}&page=reservoirDisplay/linkage`
+                    analysisUrl:`https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?wellIds=%5B%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%22D4BEBD2817E0449F957F78ED0A685A6C%22,%22fluidProdDaily%22%3A289.56,%22oilProdDaily%22%3A6.03,%22waterRatio%22%3A0.06,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-I3H1%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%22375DB74FC89747028A9436A8E41D3991%22,%22fluidProdDaily%22%3A-4.9,%22oilProdDaily%22%3A4.47,%22waterRatio%22%3A-0.4,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-G9H1%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%226E73C512F8444CE3BAEE27FE23294144%22,%22fluidProdDaily%22%3A-3.72,%22oilProdDaily%22%3A-2.06,%22waterRatio%22%3A0.54,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-F4H3%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%2274B59F886DF1459AB58311A6159202A4%22,%22fluidProdDaily%22%3A2.23,%22oilProdDaily%22%3A-2.39,%22waterRatio%22%3A0.37,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-F5%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%22257DE61B82E94263BFB8239D02447934%22,%22fluidProdDaily%22%3A-36.88,%22oilProdDaily%22%3A-2.9,%22waterRatio%22%3A0.07,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-J14H1%22%7D%5D`
                 },
                 {
                     style: 'position:absolute;left: 20%;top: 0%;width:20%;height:40%;',
@@ -208,7 +218,7 @@ export default {
                     boxBottomText: [
                         {
                             name: '动设备健康管理模型',
-                            url: 'https://efm.tjioms-dev.tjltd.cnooc/#/equipment/mechanical'
+                            url: 'https://efm.tjioms-dev.tjltd.cnooc/#/equipment/mechanical?page=reservoirDisplay/linkage'
                         }
                     ],
                     boxStyle: {
@@ -222,7 +232,7 @@ export default {
                 {
                     style: 'position:absolute;left: 58%;top: 36%;width:20%;height:40%;',
                     boxText: '分注分采调控策略',
-                    boxBottomText: [{name:'注采调控最优化方案',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge?route=rem'}, {name:'配注微调策略',url:'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization?link=rem'}],
+                    boxBottomText: [{name:'注采调控最优化方案',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge?route=rem&page=reservoirDisplay/linkage'}, {name:'配注微调策略',url:'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization?link=rem&page=reservoirDisplay/linkage'}],
                     boxBottomContent: [['智能分注调控策略优化模型', '智能分注调控策略优化模型'], ['配注方案分析评估模型']],
                     boxStyle: {
                         pWidth: 'width:11vw'
@@ -236,12 +246,12 @@ export default {
                     style: 'position:absolute;left: 55%;top: 2%;width:20%;height:40%;',
                     boxText: '海管能力',
                     boxBottomText: [
-                        {name:'混输海管设计输量',url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/pipe'},
-                        {name:'注水海管设计输量',url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/pipe'}
+                        {name:'混输海管设计输量',url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/pipe?page=reservoirDisplay/linkage'},
+                        {name:'注水海管设计输量',url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/pipe?page=reservoirDisplay/linkage'}
                     ],
                     boxBottomContent: [
-                        [{ name:'管输动态模型', url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/pipe' }],
-                        [{ name:'管输动态模型', url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/pipe' }]
+                        [{ name:'管输动态模型', url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/pipe?page=reservoirDisplay/linkage' }],
+                        [{ name:'管输动态模型', url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/pipe?page=reservoirDisplay/linkage' }]
                     ],
                     boxStyle: {
                         pWidth: 'width:7vw'
@@ -255,12 +265,12 @@ export default {
                     style: 'position:absolute;left: 72%;top: 0%;width:20%;height:40%;',
                     boxText: '处理能力',
                     boxBottomText: [
-                        {name:'混输液处理能力',url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/plat'},
-                        {name:'生产水处理能力',url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/plat'}
+                        {name:'混输液处理能力',url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/plat?page=reservoirDisplay/linkage'},
+                        {name:'生产水处理能力',url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/plat?page=reservoirDisplay/linkage'}
                     ],
                     boxBottomContent: [
-                        [{name:'地面平衡调配-流程监控模型',url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/plat'}],
-                        [{name:'地面平衡调配-流程监控模型',url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/plat'}]
+                        [{name:'地面平衡调配-流程监控模型',url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/plat?page=reservoirDisplay/linkage'}],
+                        [{name:'地面平衡调配-流程监控模型',url:'https://prm-pom.tjioms-dev.tjltd.cnooc/#/home/plat?page=reservoirDisplay/linkage'}]
                     ],
                     boxStyle: {
                         pWidth: 'width:7vw',

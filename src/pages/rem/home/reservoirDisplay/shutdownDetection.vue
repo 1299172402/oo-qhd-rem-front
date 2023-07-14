@@ -32,7 +32,7 @@
                         </el-form-item>
                         <el-form-item label="井号:" style="margin-left:20px">
                             <el-select v-model="queryData.wellId" clearable style="width: 170px">
-                                <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellNo"
+                                <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellName"
                                            :value="item.wellName">
                                 </el-option>
                             </el-select>
@@ -105,7 +105,11 @@
                 <el-table-column prop="timeAppendixValueName" label="*时间属性"></el-table-column>
                 <el-table-column prop="beginDate" :label="`*关停开始时间\n(yyyy/mm/dd)`"></el-table-column>
                 <el-table-column prop="endDate" :label="`*关停结束时间\n(yyyy/mm/dd)`"></el-table-column>
-                <el-table-column prop="impactProdution" :label="`影响产量\n(m³)`"></el-table-column>
+                <el-table-column prop="impactProdution" :label="`影响产量\n(m³)`">
+                    <template slot-scope="scope">
+                        {{Number(scope.row.impactProdution).toFixed(2)}}
+                    </template>
+                </el-table-column>
                 <el-table-column prop="remark" show-overflow-tooltip label="备注"></el-table-column>
             </el-table>
             <pagination
@@ -179,11 +183,15 @@ export default {
             (yesday.getMonth() > 9 ? yesday.getMonth() + 1 : "0" + (yesday.getMonth() + 1)) +
             "-" +
             (yesday.getDate() > 9 ? yesday.getDate() : "0" + yesday.getDate()); //字符串拼接转格式
-        this.queryData.startTime = y + "-" + "01-01";
-        this.queryData.endTime = yesday;
-        this.$set(this.month, 0, this.queryData.startTime);
-        this.$set(this.month, 1, this.queryData.endTime);
-        this.startmonth = this.month
+        // this.queryData.startTime = y + "-" + "01-01";
+        // this.queryData.endTime = yesday;
+        // this.$set(this.month, 0, this.queryData.startTime);
+        // this.$set(this.month, 1, this.queryData.endTime);
+        // this.startmonth = this.month
+        // 暂用
+        this.queryData.startTime ='2022-01-01';
+        this.queryData.endTime = '2022-12-31';
+        this.month = ['2022-01-01','2022-12-31']
         this.queryinfo()
     },
     methods: {
@@ -247,7 +255,11 @@ export default {
             this.queryData.wellId = ''
             this.queryData.shutdownPlanTypeCode = ''
             this.queryData.injShutdownTypeCode = ''
-            this.month = this.startmonth
+            // this.month = this.startmonth
+            this.queryData.startTime ='2022-01-01';
+            this.queryData.endTime = '2022-12-31';
+            this.$set(this.month, 0, this.queryData.startTime);
+            this.$set(this.month, 1, this.queryData.endTime);
             this.queryinfo()
         },
         queryinfo() {

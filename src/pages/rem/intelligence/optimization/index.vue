@@ -7,7 +7,7 @@
                     <!-- <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> -->
                 </el-tab-pane>
             </el-tabs>
-            <el-button v-if ="activeName =='second' && this.$route.query.link " style="position: absolute;right: 20px;top:110px" type="primary" @click="gogo">返回</el-button>
+            <el-button v-if ="activeName =='second' && this.$route.query.link " style="position: absolute;z-index:20;right: 20px;top:110px" type="primary" @click="gogo">返回</el-button>
         </div>
         <header-search  style="height: auto;display: grid">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">
@@ -247,7 +247,8 @@ export default {
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
                 // blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
                 blockId: 'YCFXDY8B643EDC9007F96F570600457D',
-                dateTime: this.eeee(),
+                // dateTime: this.eeee(),
+                dateTime:'2023-05'
                 // '2022-10'
                 // new Date().format("yyyy-MM")
             },
@@ -340,8 +341,9 @@ export default {
             }
         },
         refresh() {
-            this.queryData.blockId = '6CD7342CA6DD418183A4B3BC38584F7C',
-                this.queryData.dateTime = this.eeee()
+            (this.queryData.blockId = '6CD7342CA6DD418183A4B3BC38584F7C')
+                // this.queryData.dateTime = this.eeee()
+               this.dateTime = '2023-05',
             this.doSearch()
         },
         // table表头标题样式
@@ -518,6 +520,7 @@ export default {
         })
         if(this.$route.query.link == 'rem'){
             this.activeName = 'second'
+            this.setWidth()
             this.doSearch()
         }else{
             this.activeName = 'first'

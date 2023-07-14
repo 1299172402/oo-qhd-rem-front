@@ -768,7 +768,7 @@ export default {
     //加入观察室
     addWarning() {
       let request = { id: this.$route.query.id, opinion: this.textarea };
-      proWellIndicatorWarningAssosiationAnalysisSave(request).then((res) => {
+      proWellIndicatorWarningAssosiationAnalysisToObserve(request).then((res) => {
         Message({
           showClose: true,
           message: "加入观察室成功",
@@ -780,7 +780,7 @@ export default {
     //关闭预警
     delWarning() {
       let request = { id: this.$route.query.id, opinion: this.textarea };
-      proWellIndicatorWarningAssosiationAnalysisSave(request).then((res) => {
+      proWellIndicatorWarningAssosiationAnalysisClose(request).then((res) => {
         Message({
           showClose: true,
           message: "关闭预警成功",

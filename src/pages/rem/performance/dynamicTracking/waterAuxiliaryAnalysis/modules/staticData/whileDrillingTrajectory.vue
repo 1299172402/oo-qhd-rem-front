@@ -1,17 +1,17 @@
-<!--随钻轨迹-->
+<!--地质探边图-->
 <template>
-    <el-container class="mt-2">
-        <el-main>
-            <el-row style="padding-top: 20px;height:600px;overflow: auto;">
-                <el-image :src="image"><div slot="error"></div></el-image>
-            </el-row>
-        </el-main>
-    </el-container>
+    <div class="z-main">
+        <el-image :src="src">
+            <div slot="error"></div>
+        </el-image>
+    </div>
 </template>
 
 <script>
-    import { drillingTrajectory } from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
-    import { downFile } from '@/lib/remBase64Download.js';
+    // miniIo
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {filePreview,downFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         props: {
             //选择油田
@@ -23,10 +23,7 @@
         },
         data() {
             return {
-                radio: 3,
-                src: '../../static/img/oilAuxiliaryAnalysis/staticData/whileDrillingTrajectory.jpg',
-                //图片数据
-                image: '',
+                src: '',
             };
         },
         mounted() {
@@ -34,35 +31,48 @@
             this.doSearch();
         },
         methods: {
-            //调用图片
+            //获取图片
             doSearch() {
-                //let wellId = this.wellId;
-                let request = {
-                    ogfId: this.oilFeildId,
-                    platformId: this.platform,
-                    wellId: this.wellId
-                };
-                drillingTrajectory(request).then((res) => {
-                    if (res.data.code == 0) {
-                        let imgData = res.data.data.data;
-                        let type = res.data.data.type;
-                        let firstParty = 'data:' + type + ';base64,';
-                        if (imgData) {
-                            this.image = firstParty + imgData;
-                        } else {
-                            this.image = '';
+                let params ={
+                    operationId:this.wellId,
+                    operationType:'WATERDZTBT',
+                    readOne:'one' 
+                }
+                queryRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        if(res.data.data.length){
+                            this.fileId=res.data.data[0].fileId;
+                            this.filestrId=res.data.data[0].filestrId;
+                            downFile(this.fileId).then((res)=>{
+                                this.src=window.URL.createObjectURL(res);
+                            })
+                        }else{
+                            this.src="";
                         }
+                    }else {
+                        this.$message.error("文件查询接口异常!");
                     }
                 });
             },
-            //下载
-            doDownLoad() {
+            //下载功能
+            doDownLoad(){
                 let fileName = '地质探边图';
-                if (this.wellName) {
-                    fileName = this.wellName + fileName;
-                }
-                downFile(this.image, fileName);
+                let file_suffix=this.filestrId.split('.')[1];
+                downFile(this.id).then(res=>{
+                    FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+                })
             }
-        }
-    };
+        },
+    }
 </script>
+<style scoped lang="scss">
+    .z-main{
+        width: 100%;
+        height:calc(100% - 95px);
+        overflow: auto;
+        border: 1px solid #ddd;
+        border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
+        display: flex;
+        justify-content: center;
+    }
+</style>

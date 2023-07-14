@@ -1697,7 +1697,7 @@
                 const { wellType} = this.$route.query;
                 if (wellType == '002002001' || wellType=='003002001') {
                     this.type = 0;
-                } else if (wellType == '002003001' || wellType == '002004003001' || wellType == '003003001') {               
+                } else {               
                     this.type = 1;
                 }
                 this.wellType = wellType;

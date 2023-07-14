@@ -253,7 +253,6 @@
 </template>
 <script>
 import * as echarts from 'echarts';
-// import echarts from "echarts";
 import Echart from "@/components/tools/Echarts/index.vue";
 import {
     getUltraShortShotStatistics,
@@ -264,7 +263,7 @@ import {
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 
 export default {
-    name:'index',
+    name:'indexHome',
     components: {
         Echart
     },
@@ -276,7 +275,8 @@ export default {
                 //区块
                 blockId: 'YCFXDY8B643EDC9007F96F570600457D',
                 //选择时间
-                dateTime: this.eeee(),
+                // dateTime: this.eeee(),
+                dateTime: '2023-05',
                 //油田
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'
             },
@@ -362,7 +362,6 @@ export default {
 
                 this.ResidueOilRank = res.slice(0, 10);
                 this.ResidueOilRank.sort((a, b) => a.dhFlowingPress - b.dhFlowingPress)
-                console.log(this.ResidueOilRank)
             })
         },
         //左侧区块
@@ -381,7 +380,6 @@ export default {
                 this.getEchart()
             })
         },
-
         //分层注采量
         queryStratifiedInjectionDetails() {
 
@@ -411,7 +409,6 @@ export default {
         //超欠注情况统计
         queryUltraShortShotStatistics() {
             getUltraShortShotStatistics(this.queryData).then((res) => {
-                console.log(res)
                 this.tableData = res.ultraShortShotData
             })
         },
@@ -531,8 +528,6 @@ export default {
                 ]
             };
             return option;
-
-            // option && myChart.setOption(option);
         },
 
         //图表
@@ -578,8 +573,6 @@ export default {
                 ]
             };
             return option;
-
-            // option && myChart.setOption(option);
         },
 
         //图表
@@ -665,9 +658,6 @@ export default {
     border-radius: 4px 4px 4px 4px;
     width: 100%;
     background: rgba(143, 164, 204, 0.3);
-    // overflow: hidden;
-    // text-overflow: ellipsis;
-    // white-space: nowrap;
 }
 
 .condationRow {

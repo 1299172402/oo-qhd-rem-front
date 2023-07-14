@@ -1,6 +1,6 @@
 {
   "name": "intelligent-oilfield",
-  "version": "1.1.6",
+  "version": "1.1.10",
   "private": false,
   "scripts": {
     "prepare": "husky install",
@@ -46,8 +46,8 @@
     "vuex": "^3.6.2",
     "vuex-router-sync": "^5.0.0",
     "vue-cropper": "0.5.5",
-    "vxe-table": "^3.6.9",
-    "xe-utils": "^3.5.7",
+    "vxe-table": "3.6.9",
+    "xe-utils": "3.5.7",
     "uuid": "^9.0.0",
     "sm4js": "^0.0.6",
     "d3": "^7.8.4",

@@ -11,24 +11,27 @@
         <div class="develop">
             <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
         </div>
-        <info-window infoWidth="100%" infoHeight="500px" :headerTitle="searchForm.oilFieldName + '年度计划运行曲线表'" isShowMaxBtn v-show="isDevelop">
+        <info-window infoWidth="100%" infoHeight="580px" :headerTitle="searchForm.oilFieldName + '年度计划运行曲线表'" isShowMaxBtn v-show="isDevelop">
             <div slot-name="titleContent">
                 <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downTable">下载</el-button>
             </div>
             <el-table 
                 id="tableData"
-                :data="runTimeData" :border="false" :row-style="{ height: '0px' }"
+                :data="runTimeData.slice((queryParams.page - 1) * queryParams.pageSize, queryParams.page * queryParams.pageSize)"
+                :border="false" 
+                :row-style="{ height: '0px' }"
                 header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
                 style="width:100%;" height="calc(100% - 75px)" :default-sort="{ prop: 'date', order: 'descending' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-                <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
+                <el-table-column type="index" align="center" label="序号"></el-table-column>
                 <el-table-column prop="theDate" align="center" label="时间"> </el-table-column>
                 <el-table-column prop="oilAudit" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '考核日产\n(m³/d)' : '考核日产\n(t/d)'" :formatter="numberToTwo"></el-table-column>
                 <el-table-column prop="oilReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际日产\n(m³/d)' : '实际日产\n(t/d)'" :formatter="numberToTwo"></el-table-column>
                 <el-table-column property="sumPlan" prop="sumPlan" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '计划年累产\n(10⁴m³)' : '计划年累产\n(10⁴t)'" :formatter="numberToFour"></el-table-column>
                 <el-table-column prop="sumReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际年累产\n(10⁴m³)' : '实际年累产\n(10⁴t)'" :formatter="numberToFour"></el-table-column>
             </el-table>
-            <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination"/>
+            <!-- <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination"/> -->
+            <pagination v-if="total" :pageSizes="[10, 20, 40, 100]" :total="total" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />
         </info-window>
     </div>
 </template>
@@ -37,7 +40,9 @@
     import dayjs from "dayjs";
     import Echart from '@/components/tools/Echarts/index.vue';
     import { searchOilProductionChart, searchOilProductionTable} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
-    import { exportExcel } from '@/lib/exportExcel.js';
+    import { downLoadOilProductionTable} from '@/api/oilDeposit/rem-04/plan.js';
+    import FileSaver from 'file-saver';
+    
     export default {
         components: {
             Echart,
@@ -205,9 +210,13 @@
                 },
                 isDevelop:false,//是否展示表格
                 runTimeData: [],//原油产量表格数据
-                page:1,
-                pageSize:10,
+                // page:1,
+                // pageSize:10,
                 total:0,
+                queryParams: {
+                    page: 1,
+                    pageSize: 10,
+                },
             };
         },
         mounted() {
@@ -330,8 +339,10 @@
                     endDate: this.searchForm.selectDate[1],
                     planTypeCode: this.searchForm.planTypeCode,
                     rollForecastVersion: this.searchForm.rollForecastVersion,
-                    page: this.page,
-                    pageSize: this.pageSize,
+                    // page: this.page,
+                    // pageSize: this.pageSize,
+                    page:1,
+                    pageSize:1000,
                 };
                 searchOilProductionTable(request).then((res) => {
                     if (res.data.code == 200) {
@@ -359,20 +370,18 @@
                     return '-';
                 }
             },
-            //表格自定义索引
-            tableIndex(index) {
-                index = index + 1 + (this.page - 1) * this.pageSize;
-                return index;
-            },
+            
             //分页
             pagination(obj){
-                if(this.pageSize!=obj.limit){
-                    this.page=1;
-                    this.pageSize=obj.limit;
-                }else{
-                    this.page=obj.page;
-                }
-                this.getSearchOilProductionTable();
+                // if(this.pageSize!=obj.limit){
+                //     this.page=1;
+                //     this.pageSize=obj.limit;
+                // }else{
+                //     this.page=obj.page;
+                // }
+                // this.getSearchOilProductionTable();
+                this.page = e.page;
+                this.pageSize = e.limit;
             },
             //表格-展示||隐藏
             tapDevelop(){
@@ -390,7 +399,18 @@
             },
             //导出table
             downTable() {
-                exportExcel('#tableData', this.searchForm.oilFieldName + '年度计划运行曲线表');
+                let request = {
+                    oilFieldId: this.searchForm.selectOilField,
+                    unitType: this.searchForm.selectUnitOfProduction,
+                    beginDate: this.searchForm.selectDate[0],
+                    endDate: this.searchForm.selectDate[1],
+                    planTypeCode: this.searchForm.planTypeCode,
+                    rollForecastVersion: this.searchForm.rollForecastVersion,
+                };
+                downLoadOilProductionTable(request).then(res=>{
+                    const blob = new Blob([res], { type: "application/octet-stream" });
+                    FileSaver.saveAs(blob, this.searchForm.oilFieldName + '年度计划运行曲线表.xlsx');
+                })
             },
         },
     };

@@ -6,7 +6,12 @@
     <!-- TODO: Maybe change back -->
     <!-- <div class="infoHeader g-row-flex-V" :style="{background: $store.state.setting.mode==='dark'?'linear-gradient(to right, rgba(0, 202, 255, 0.4), var(--opacity-blue-bg2))':'linear-gradient(to right, var(--only-light-blue-color), rgba(0, 96, 166, 0.2))',color:$store.state.setting.mode==='dark'?'var(--light-blue-color)':'var(--white-color)'}"> -->
     <div class="infoHeader g-row-flex-V infoHeaderBg" :style="{color:$store.state.setting.mode==='dark'?'var(--light-blue-color)':'#0075e9', background: $store.state.setting.mode==='light' ? '#0075e9'?.value : ''}">
-      <div style="width: 100%" :style="{color: headerStyle.color, color: $store.state.setting.mode==='light' ? '#0075e9' : ''}">
+      <div
+        class="headerTitle"
+        :title="headerTitle"
+        style="width: 100%"
+        :style="{color: headerStyle.color, color: $store.state.setting.mode==='light' ? '#0075e9' : ''}"
+      >
         {{ headerTitle }}
       </div>
       <el-tooltip
@@ -81,7 +86,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style scoped lang="less">
 .posBg {
   position: absolute;
   z-index: -1;
@@ -113,6 +118,12 @@ export default {
 
   /* border: 1px solid #ddd; */
   border-image: linear-gradient(to left, rgba(116, 190, 243, 0), rgba(0, 180, 255, 0.6)) 1 1;
+
+  .headerTitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .infoBody {

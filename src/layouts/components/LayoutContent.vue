@@ -26,7 +26,11 @@
             }"
           >
             <template v-if="!route.isHome">
-              {{ route.title+(route.query?.pathName?'-'+route.query?.pathName:'') }}
+              <el-tooltip :content="route.title+(route.query?.pathName?'-'+route.query?.pathName:'')">
+                <div style="max-width: 400px;text-overflow: ellipsis;overflow: hidden;white-space: pre">
+                  {{ route.title+(route.query?.pathName?'-'+route.query?.pathName:'') }}
+                </div>
+              </el-tooltip>
             </template>
             <home-icon v-else />
             <template #dropdown>
@@ -61,7 +65,7 @@
       <common-content />
     </t-content>
     <t-footer v-if="showFooter" :class="`${prefix}-footer-layout`">
-      <layout-footer />
+      <layout-footer v-if="!$store.getters['user/isGroupLogin']" />
     </t-footer>
   </t-layout>
 </template>

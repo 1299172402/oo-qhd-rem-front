@@ -6,7 +6,7 @@
             header-title="问题井统计"
             :is-show-max-btn="true"
         >
-            <button class="detailLinkBtn" @click="linkroute('oilAnalysisReport')">详细</button>
+            <button class="detailLinkBtn" @click="linkroute('problemWellStatistics')">详细</button>
             <Echart :chart-data="histogram" width="100%" height="100%"></Echart>
         </info-window>
         <!-- :style="{
@@ -41,7 +41,7 @@ export default {
             histogram: {
                 tooltip: {
                     trigger: "item",
-                    formatter: "{a} <br/>{b} : {c} ({d}%)",
+                    formatter: "{a} <br/>{b} : {c}口 <br/> 占比 : {d}%",
                 },
                 series: [
                     {
@@ -112,7 +112,7 @@ export default {
             this.$router.push({name: rname});
         },
         getData() {
-            queryProblemWellStatis({date: new Date().format('YYYY-MM-DD')}).then(res => {
+            queryProblemWellStatis({date: new Date().format('YYYY-MM-DD'), ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",}).then(res => {
                 this.histogram.series[0].data[0].value = res.data.data[0].value
                 this.histogram.series[0].data[0].name = res.data.data[0].name
                 this.histogram.series[0].data[1].value = res.data.data[1].value

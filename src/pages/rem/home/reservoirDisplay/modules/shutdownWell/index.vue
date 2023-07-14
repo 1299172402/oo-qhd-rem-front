@@ -226,7 +226,7 @@ export default {
           this.histogram.yAxis[0].min = null
           this.histogram.yAxis[0].max = null
           this.histogram.yAxis[1].min = null
-          this.histogram.yAxis[1].max = null
+          this.histogram.yAxis[1].max = Number(res.data.data.data.wellNum.sort((a, b) => b.lastedSort - a.lastedSort)[0]) * 1.2
           res.data.data.data.yearMoth.forEach((n)=>{
               this.histogram.xAxis.data.push(n)
           })

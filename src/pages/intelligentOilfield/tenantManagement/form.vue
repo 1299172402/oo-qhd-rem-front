@@ -30,6 +30,7 @@
             :options="deptOptions"
             :show-count="true"
             placeholder="请选择所属机构"
+            @input="deptIdChange"
           >
             <label
               slot="option-label"
@@ -94,16 +95,16 @@ export default {
       deptOptions: [],
       rules: {
         tenantCode: [
-          { required: true, message: "请输入租户编码", trigger: "blur" },
+          { required: true, message: "请输入租户编码", trigger: ["blur", "change"] },
           {
             pattern: /^[A-Za-z0-9_-]{1,15}$/,
             message: "仅能包含大写字母、小写字母、数字、短横线和下划线,且最长不能超过15个字符",
             trigger: "blur"
           }
         ],
-        tenantName: [{ required: true, message: "请输入租户名称", trigger: "blur" }],
-        deptId: [{ required: true, message: "请选择组织机构", trigger: "change" }],
-        status: [{ required: true, message: "请选择租户状态", trigger: "change" }]
+        tenantName: [{ required: true, message: "请输入租户名称", trigger: ["blur", "change"] }],
+        deptId: [{ required: true, message: "请选择组织机构", trigger: ["blur", "change"] }],
+        status: [{ required: true, message: "请选择租户状态", trigger: ["blur", "change"] }]
       },
       returnName: "Tenant"
     };
@@ -166,6 +167,13 @@ export default {
       treeselect().then(response => {
         this.deptOptions = response.data.data;
       });
+    },
+    deptIdChange() {
+      if (!this.model.deptId) {
+        this.$refs.Form.validateField("deptId");
+      } else {
+        this.$refs.Form.clearValidate("deptId");
+      }
     }
   }
 };

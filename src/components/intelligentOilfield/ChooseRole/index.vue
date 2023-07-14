@@ -8,12 +8,13 @@
       :visible.sync="dialogVisible"
       top="30vh"
       width="40%"
+      @close="cancel"
     >
       <el-table
         ref="table"
         class="dialog-table"
         :data="dataSource"
-        :row-key="(row) => row.roleId"
+        row-key="roleId"
         border
         @selection-change="handleSelectionChange"
       >
@@ -78,16 +79,8 @@ export default {
         current: 1,
         pageSize: 10,
         total: 0
-      },
-      roleIdList: []
-    };
-  },
-  watch: {
-    roleIds: {
-      handler(newValue) {
-        this.roleIdList = newValue;
       }
-    }
+    };
   },
   methods: {
     getList() {
@@ -109,13 +102,14 @@ export default {
      * 设置已有用户选中状态
      */
     handChangeSelection() {
-      if (this.roleIdList.length) {
-        this.dataSource.forEach(row => {
-          const index = this.roleIdList.indexOf(row.roleId);
-          if (index !== -1) {
-            this.$refs.table.toggleRowSelection(row, true);
-            this.roleIdList.splice(index, 1);
-          }
+      if (this.roleIds.length) {
+        this.$nextTick(() => {
+          this.dataSource.forEach(row => {
+            const index = this.roleIds.indexOf(row.roleId);
+            if (index !== -1) {
+              this.$refs.table.toggleRowSelection(row, true);
+            }
+          });
         });
       }
     },
@@ -127,7 +121,7 @@ export default {
      * 增加租户
      */
     addTenement() {
-      this.$emit("add-role", this.selectTenement, this.roleIdList);
+      this.$emit("add-role", this.selectTenement);
       this.$refs.table.clearSelection();
       this.dialogVisible = false;
     },
@@ -136,6 +130,9 @@ export default {
      */
     handleSelectionChange(val) {
       this.selectTenement = val;
+    },
+    cancel() {
+      this.$refs.table.clearSelection();
     }
   }
 };

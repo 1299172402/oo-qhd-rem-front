@@ -160,7 +160,7 @@ export default {
           this.reloadWindow("已在其他页面重新登录，页面将重新载入");
         } else {
           this.$store.commit("user/removeToken");
-          this.reloadWindow("已在其它页面登出", "重新登录");
+          this.reloadWindow("已在其它页面登出", "确定");
         }
       } else if (data.tokenExpired) {
         // 这个 token 已经过期

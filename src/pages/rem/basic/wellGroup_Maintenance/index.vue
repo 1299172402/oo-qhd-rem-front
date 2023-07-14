@@ -1,8 +1,6 @@
 <template>
   <!-- 井组参数配置 -->
-<!--  <el-container>-->
     <div style="height: 100%;">
-<!--    <el-header style="margin-top: 15px;">-->
       <header-search class="g-w100 g-h100" style="height: auto">
           <el-form :inline="true" label-width="40px">
               <el-form-item label="油田:">
@@ -73,14 +71,6 @@
               <i class="el-icon-s-platform el-icon--left" />
               运行计算
             </el-button>
-<!--            <el-button-->
-<!--              type="primary"-->
-<!--              @click="preserve"-->
-<!--              style="font-size: 12px;padding: 5px 10px 5px 10px; width: 85px;"-->
-<!--            >-->
-<!--              <i class="el-icon-download el-icon&#45;&#45;left" />-->
-<!--              下载-->
-<!--            </el-button>-->
               <el-button
                   type="primary"
                   @click="preserve"
@@ -228,7 +218,6 @@
 </template>
 
 <script>
-// import NormalCard from "@/components/tools/NormalCard/index.vue";
 import { exportExcel } from "@/lib/exportExcel";
 import {
   getoilfield, //油田下拉
@@ -244,9 +233,6 @@ import {
 } from "@/api/rem/r-wellConnectEvaluate.js"
 export default {
   name: "wellGroup_Maintenance",
-  components: {
-    // NormalCard
-  },
   data () {
     return {
       loading:false,

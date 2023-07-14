@@ -155,7 +155,7 @@ export default {
             this.$router.push({name: rname});
         },
         getinfo() {
-            monthlyProductionComparison({}).then(res => {
+            monthlyProductionComparison({'ogfId':'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res => {
                 this.histogram.yAxis[0].min = null
                 this.histogram.yAxis[0].max = null
                 this.histogram.series[0].data = res.data.data.monthlyPlannedOutputVo.map(item => {

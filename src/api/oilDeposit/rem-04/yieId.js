@@ -32,3 +32,19 @@ export function getWellOutputWaveTable(request) {
     data: request,
   });
 }
+
+//产量波动统计表最大时间
+export function getWellOutputWaveTableDate() {
+  return Axios({
+    url: `${baseUrl}/outputManagement/getWellOutputWaveTableDate`,
+    method: "get",
+  });
+}
+
+//产量变化总井数
+export function getWellOutputWaveAnalysisNum(){
+    return Axios({
+      url: `${baseUrl}/outputManagement/getWellOutputWaveAnalysisNum`,
+      method: "get",
+    });
+}

@@ -36,6 +36,9 @@
                 <div style="margin-right:15px;margin-bottom:10px;">
                     <el-button icon="el-icon-search" type="primary" style="margin-left:10px;" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+                    <el-button  class="commonBtn"  v-if="$route.query.page" style="position: absolute;right:2%" @click="$router.push({
+                        path:$route.query.page
+                    })">返回</el-button>
                 </div>
             </div>
         </headerSearch>

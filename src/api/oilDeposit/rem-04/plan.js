@@ -82,4 +82,32 @@ export function devWellTable(request) {
     data: request,
   });
 }
+//年度计划管理-原油产量表格下载
+export function downLoadOilProductionTable(request) {
+  return Axios({
+    url: `${baseUrl}/oilFieldManagePlanController/downLoadOilProductionTable`,
+    method: "post",
+    data: request,
+    responseType: "blob"
+  });
+}
 
+//年度计划管理-天然气产量表格下载
+export function downGetGasTable(request) {
+  return Axios({
+    url: `${baseUrl}/oilFieldManagePlanController/downGetGasTable`,
+    method: "post",
+    data: request,
+    responseType: "blob"
+  });
+}
+
+//年度计划管理-油田注水量表格下载
+export function dowmInjectionTable(request) {
+  return Axios({
+    url: `${baseUrl}/oilFieldManagePlanController/dowmInjectionTable`,
+    method: "post",
+    data: request,
+    responseType: "blob"
+  });
+}

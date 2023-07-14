@@ -226,6 +226,7 @@
                 :options="deptOptions"
                 :normalizer="normalizer"
                 placeholder="选择上级机构"
+                @input="changeParent"
               >
                 <label
                   slot="option-label"
@@ -250,10 +251,12 @@
           <el-col :span="12">
             <el-form-item label="显示排序" prop="orderNum">
               <el-input-number
+                ref="orderNum"
                 v-model="form.orderNum"
                 controls-position="right"
                 :min="0"
                 :disabled="form.ehr === '0' ? false : keys.includes('orderNum')"
+                @input.native="handleInput"
               />
             </el-form-item>
           </el-col>
@@ -344,6 +347,7 @@ export default {
   components: { Treeselect },
   data() {
     return {
+      isActivated: true,
       // 遮罩层
       loading: true,
       // 显示搜索条件
@@ -396,13 +400,27 @@ export default {
     };
   },
   created() {
+    this.isActivated = false;
     this.getList();
     // this.getRoleList()
   },
   activated() {
-    this.getList();
+    if (this.isActivated) {
+      this.getList();
+    } else {
+      this.isActivated = true;
+    }
   },
   methods: {
+    handleInput() {
+      this.form.orderNum = this.$refs.orderNum.displayValue;
+      this.$nextTick(() => {
+        this.$refs.form.validateField("orderNum");
+      });
+    },
+    changeParent() {
+      this.$refs.form.validateField("parentId");
+    },
     /** 获取角色权限列表 */
     // getRoleList() {
     //   listRole({ isTenant: '1' }).then((response) => {

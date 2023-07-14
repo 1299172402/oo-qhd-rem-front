@@ -12,12 +12,12 @@
                     </el-select>
                     
                     <span style="margin-left:15px;">区块：</span>
-                    <el-select v-model="selectBlock" style="width: 180px" filterable clearable @change="queryPlatFormList">
+                    <el-select v-model="selectBlock" style="width: 180px" filterable @change="queryPlatFormList">
                         <el-option v-for="item in blocks" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                     </el-select>
                     
                     <span style="margin-left:15px;">平台：</span>
-                    <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="queryOilWellListByPid">
+                    <el-select v-model="platform" class="f2" style="width:220px" filterable @change="queryOilWellListByPid">
                         <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId" :disabled="item.disabled">
                         </el-option>
                     </el-select>
@@ -29,9 +29,12 @@
                     </el-select>
                     
                     <span style="margin-left:15px;">评价时间：</span>
-                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd" :clearable="false"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+                    <el-button  class="commonBtn"  v-if="$route.query.page" style="position: absolute;right:2%" @click="$router.push({
+                        path:$route.query.page
+                    })">返回</el-button>
                 </div>
             </headerSearch>
             <pagePanelNew style="height: calc(100% - 100px);" class="g-w100">
@@ -282,12 +285,12 @@
                     </el-select>
                     
                     <span style="margin-left:15px;">区块：</span>
-                    <el-select v-model="selectBlock" style="width: 180px" filterable clearable @change="queryPlatFormList">
+                    <el-select v-model="selectBlock" style="width: 180px" filterable @change="queryPlatFormList">
                         <el-option v-for="item in blocks" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                     </el-select>
                     
                     <span style="margin-left:15px;">平台：</span>
-                    <el-select v-model="platform" class="f2" style="width:220px" filterable clearable @change="queryOilWellListByPid">
+                    <el-select v-model="platform" class="f2" style="width:220px" filterable @change="queryOilWellListByPid">
                         <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId" :disabled="item.disabled">
                         </el-option>
                     </el-select>
@@ -299,9 +302,12 @@
                     </el-select>
                     
                     <span style="margin-left:15px;">评价时间：</span>
-                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd" :clearable="false"></el-date-picker>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+                    <el-button  class="commonBtn"  v-if="$route.query.page" style="position: absolute;right:2%" @click="$router.push({
+                        path:$route.query.page
+                    })">返回</el-button>
                 </div>
             </headerSearch>
             <div class="app-container3">
@@ -365,8 +371,9 @@
                                         <div class="name">措施推荐</div>
                                         <div class="num">
                                             <span 
+                                                :class="[item.code==selCode?'spActive':'']"
                                                 v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='地面调参'" 
-                                                @click="((val)=>{selRadioIterm(item.code,'recommendedMeasuresOptions')})">
+                                                @click="selRadioIterm(item.code,'recommendedMeasuresOptions')">
                                             {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span>
                                             </span>
                                         </div>
@@ -452,8 +459,9 @@
                                         <div class="name">措施推荐</div>
                                         <div class="num">
                                             <span 
+                                            :class="[item.code==selCode?'spActive':'']"
                                             v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='换大泵'||item.name=='加深泵挂'"
-                                            @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'recommendedMeasuresOptions')})">
+                                            @click="selRadioIterm(item.code,'recommendedMeasuresOptions')">
                                             {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '') }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span>
                                             </span>
                                         </div>
@@ -471,7 +479,7 @@
                         <info-window info-width="100%" info-height="100%" header-title="油藏潜力分析" :is-show-max-btn="false">
                             <div style="height:100%;overflow-y: scroll;">
                                 <div class="z-content2">
-                                    <div  style="flex:1;">
+                                    <div style="flex:1;">
                                         <div class="aaa" style="flex:1;display: flex;">
                                             <div class="z1" style="width:100%;">
                                                 <div class="z-content-n" style="flex-direction: column;">
@@ -618,8 +626,9 @@
                                             <div class="name">措施推荐</div>
                                             <div class="num">
                                                 <span 
+                                                :class="[item.code==selCode?'spActive':'']"
                                                 v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='开层'||item.name=='关层'||item.name=='防砂'||item.name=='停井复产'"
-                                                @click="((val)=>{selCode=item.code;selRadioIterm(item.code,'recommendedMeasuresOptions')})">
+                                                @click="selRadioIterm(item.code,'recommendedMeasuresOptions')">
                                                 {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span>
                                                 </span>
                                             </div>
@@ -635,7 +644,7 @@
                             </div>
                         </info-window>
                     </div>
-                    <div style="height:540px;">
+                    <div style="height:800px;position: relative;z-index: 3;">
                         <info-window info-width="100%" info-height="100%" header-title="油井动态分析详情列表" :is-show-max-btn="true">
                             <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                 <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
@@ -656,10 +665,17 @@
                                     
                                     <template slot-scope="scope">
                                         <span v-if="scope.row.scdt[item.code] == null">{{productionStatus(scope.row.scdt,item.code)}}</span>
+                                        
                                         <span v-else-if="item.code == 'ZC'">{{ scope.row.scdt[item.code].showLabel ? scope.row.scdt[item.code].showLabel :'-' }}</span>
+                                        
                                         <el-tooltip v-else class="item" effect="dark" :content="scope.row.scdt[item.code].value + ''" placement="top">
-                                            <span>{{ scope.row.scdt[item.code].showLabel ? scope.row.scdt[item.code].showLabel :'-' }}</span>
+                                            <span style="display: flex;align-items: center;justify-content: center;">
+                                                {{ scope.row.scdt[item.code].showLabel ? scope.row.scdt[item.code].showLabel :'-' }}
+                                                <img src="@/assets/rem/yieId/upTriangle.png" v-if="item.name.includes('上升')" style="width:20px;height:20px;">
+                                                <img src="@/assets/rem/yieId/downTriangle.png" v-if="item.name.includes('下降')"  style="width:20px;height:20px;">
+                                            </span>
                                         </el-tooltip>
+                                        
                                     </template>
                                     
                                 </el-table-column>
@@ -701,7 +717,8 @@
                                 <el-table-column prop="recommendedMeasures" label="措施初选" align="center">
                                     <el-table-column prop="measuresName" label="推荐措施" align="center">
                                         <template slot-scope="scope">
-                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel ? scope.row.cscx.showLabel  :'-' }}</span>
+                                            <!-- <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel ? scope.row.cscx.showLabel  :'-' }}</span> -->
+                                            <span v-if="scope.row.cscx != null">{{ preliminarySelectioMeasures(scope.row.wellId,1) }}</span>
                                         </template>
                                     </el-table-column>
                                     <el-table-column prop="theDate" align="center"  min-width="130" label-class-name="twoRowHeader">
@@ -713,7 +730,8 @@
                                             </div>
                                         </template>
                                         <template slot-scope="scope">
-                                            <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq ? scope.row.cscx.tjrq :'-'}}</span>
+                                            <!-- <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq ? scope.row.cscx.tjrq :'-'}}</span> -->
+                                            <span v-if="scope.row.cscx != null">{{ preliminarySelectioMeasures(scope.row.wellId,2) }}</span>
                                         </template>
                                     </el-table-column>
                                     <el-table-column label="操作" align="center">
@@ -772,6 +790,15 @@
     export default {
         name:'oilAnalysisReport',
         mixins: [compareSort],
+        watch: {
+            "$route.query.wellNo"(){ // 监听路由变化
+                if(this.$route.query.wellNo){//判断路由是否有井号参数
+                    let wellItem=this.wellData.find(e=>e.wellName==this.$route.query.wellNo);
+                    this.wellId=wellItem.wellId;
+                    this.doSearch();
+                }
+            },
+        },
         data() {
             return {
                 isNewformat:true,//默认新版本
@@ -833,7 +860,7 @@
                         code: "mcyzs",
                         name: "米采液指数",
                         isTwoHeader: true,
-                        unit: "[m³/(d.MPa)]"
+                        unit: "[m³/(m.d.MPa)]"
                     }
                 ],
                 //潜力分析表头
@@ -1508,14 +1535,23 @@
                     });
                 });
             },
+            preliminarySelectioMeasures(str,type){
+                for(let i=0;i< this.recommendedMeasuresData.length;i++){
+                    if( this.recommendedMeasuresData[i].wellId==str){
+                        return type==1?this.recommendedMeasuresData[i].measuresName:this.recommendedMeasuresData[i].theDate
+                    }
+                }
+                return '-'
+            },
             //初始化有措施的井清单
             initRecommendedMeasuresWells() {
                 return new Promise((resolve, reject) => {
                     if (this.recommendedMeasuresData) {
                         for (let i = 0; i < this.recommendedMeasuresData.length; i++) {
                             let tData = this.recommendedMeasuresData[i];
-                            this.recommendedMeasuresWells[tData.wellId] = i;
+                            this.recommendedMeasuresWells[tData.wellName] = i;
                         }
+                        console.log(this.recommendedMeasuresWells);
                     }
                     resolve('success');
                 });
@@ -1580,6 +1616,7 @@
                 }
                 for (let i = 0; i < myData.length; i++) {
                     let myWellId = myData[i].wellId; //井号
+                    console.log('myData[i]',myData[i])
                     let forEachDataList=[
                         {key:'生产动态',name:'productionTrendsOptions'},
                         {key:'油井工况',name:'oilWellConditionOptions'},
@@ -1611,11 +1648,10 @@
                             }
                         }
                     }
+                    
                     //有推荐措施时，附加措施效果数据
                     let t_index = this.recommendedMeasuresWells[myWellId];
                     if (!isNaN(t_index)) { //转移措施数据
-                        /*console.log(this.recommendedMeasuresWells);
-                        debugger*/
                         let t_partData = this.recommendedMeasuresData[t_index]; //推荐措施的数据
                         myData[i].theDate = t_partData.theDate;
                         myData[i].measuresCode = t_partData.measuresCode;
@@ -1625,6 +1661,7 @@
                         myData[i].increaseVolumeC = t_partData.increaseVolumeC;
                         myData[i].increaseQualityC = t_partData.increaseQualityC;
                     }
+                    
                 }
                 
                 //3、根据每个项目的井数遍历检查表头
@@ -1688,18 +1725,19 @@
                     this.potentialWellNum+=Number(el.value);
                 }
             },
+            
+            
             //跳转到水井页面
             goWaterWell(val) {
                 if (val == "water") {
                     this.$router.push('/singleWellPerformance_water')
                 }
             },
-           
             //跳转到分析
             openAnalysis(wellNumber) {
                 this.$router.push({
                     name: 'oilAuxiliaryAnalysis',
-                    params: {
+                    query: {
                         oilField: this.selYtdm,
                         wellId: wellNumber
                     }
@@ -1815,7 +1853,7 @@
                         return retStr;
                     }
                 }else{
-                    return ''
+                    return '-'
                 }
             },
 		}
@@ -2467,5 +2505,9 @@
 
     ::v-deep .el-table thead.is-group th {
         background: transparent;
+    }
+
+    .spActive{
+        color:var(--light-blue-color);
     }
 </style>

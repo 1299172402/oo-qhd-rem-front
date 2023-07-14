@@ -136,10 +136,7 @@ export default {
     chooseTenement(arr) {
       this.handlerTableData(arr);
     },
-    chooseRole(arr, ids) {
-      if (ids.length) {
-        arr.push(...this.tableRoleData.filter(item => ids.includes(item.roleId)));
-      }
+    chooseRole(arr) {
       this.tableRoleData = arr;
     },
     handlerTableData(arr = []) {

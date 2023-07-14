@@ -159,3 +159,10 @@ export function fetchALLOilFields() {
     method: "get",
   });
 }
+export function getinjWellByGroupId(data) {
+    return Axios({
+        url: `${baseUrl}/wellGroupInforMaintenance/wellConnectivityEval/injWellByGroupId`,
+        method: "post",
+        data
+    });
+}

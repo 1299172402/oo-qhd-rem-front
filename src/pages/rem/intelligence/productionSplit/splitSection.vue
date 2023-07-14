@@ -205,11 +205,66 @@ export default {
     },
     mounted() {
         const params = JSON.parse(localStorage.getItem('PRODUCTION_SPLIT'))
-        if (params) {
-            this.params = {...params, ogfList: [params.ogfId], blockList: [params.blockId]}
-            this.well = params.wellId
-            this.wellId = params.wellId[0].wellId
+        if(this.$route.query.link){
+            // 获取当前日期
+            var currentDate = new Date();
+
+// 获取当前日期的上一个月份
+            var previousMonth = currentDate.getMonth() - 1;
+
+// 创建一个新的日期对象，将月份设置为上一个月
+            var previousMonthDate = new Date(currentDate.getFullYear(), previousMonth, 1);
+
+// 获取上一个月份的最后一天日期
+            var lastDayOfPreviousMonth = new Date(previousMonthDate.getFullYear(), previousMonthDate.getMonth() + 1, 0);
+
+// 格式化日期
+            var firstDay = previousMonthDate.getFullYear() + '-' + (previousMonthDate.getMonth() + 1) + '-01';
+            var lastDay = lastDayOfPreviousMonth.getFullYear() + '-' + (lastDayOfPreviousMonth.getMonth() + 1) + '-' + lastDayOfPreviousMonth.getDate();
+            this.params = {
+                "ogfId": {
+                    "value": "3FC9A818F5BC43B88270DB80BBB3018F",
+                    "label": "秦皇岛32-6"
+                },
+                "blockId": {
+                    "value": "YCFXDY8B643EDC9007F96F570600457D",
+                    "label": "秦皇岛32-6南区"
+                },
+                "wellCategory": "01",
+                "wellId": [
+                    {
+                        "wellName": "QHD32-6-C1",
+                        "wellId": "DA0269628E74490ABDE198E7D1DBF3EA"
+                    }
+                ],
+                "value": [
+                    firstDay,
+                    lastDay
+                ],
+                "ogfList": [
+                    {
+                        "value": "3FC9A818F5BC43B88270DB80BBB3018F",
+                        "label": "秦皇岛32-6"
+                    }
+                ],
+                "blockList": [
+                    {
+                        "value": "YCFXDY8B643EDC9007F96F570600457D",
+                        "label": "秦皇岛32-6南区"
+                    }
+                ]
+            }
+            this.well = this.params.wellId
+            this.wellId = this.params.wellId[0].wellId
+        }else{
+            if (params) {
+                this.params = {...params, ogfList: [params.ogfId], blockList: [params.blockId]}
+                this.well = params.wellId
+                this.wellId = params.wellId[0].wellId
+                console.log(this.params);
+            }
         }
+       
         this.queryChopSection();
     },
     methods: {

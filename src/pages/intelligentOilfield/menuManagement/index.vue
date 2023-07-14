@@ -333,6 +333,7 @@
                 style="width: 210px"
                 controls-position="right"
                 :min="0"
+                @input.native="orderNumChange"
               />
             </el-form-item>
           </el-col>
@@ -635,7 +636,7 @@ export default {
       rules: {
         menuName: [{ validator: checkName, trigger: "change" }],
         path: [{ validator: checkPath, trigger: "change" }],
-        orderNum: [{ required: true, message: "请输入菜单排序" }],
+        orderNum: [{ required: true, message: "请输入菜单排序", trigger: ["change", "blue"] }],
         component: [{ required: true, message: "请输入组件路径" }],
         link: [{ required: true, message: "请输入路由地址" }],
         parentId: [{ required: true, message: "请选择上级菜单" }]
@@ -759,7 +760,7 @@ export default {
         menuName: undefined,
         icon: undefined,
         menuType: "M",
-        orderNum: undefined,
+        orderNum: 0,
         isFrame: "1",
         isCache: "0",
         visible: "0",
@@ -779,7 +780,11 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
+      this.queryParams = {
+        menuName: undefined,
+        visible: undefined,
+        appId: this.appId
+      };
       this.$nextTick(() => {
         this.handleQuery();
       });
@@ -873,6 +878,11 @@ export default {
           }
         })
         .catch(() => {});
+    },
+    orderNumChange(e) {
+      if (e.target.value) {
+        this.$refs.form.clearValidate("orderNum");
+      }
     }
   }
 };

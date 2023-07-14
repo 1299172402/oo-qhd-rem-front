@@ -87,7 +87,10 @@ export function saveConfig(data) {
   return request({
     url: "/message-service/management/binding/bind",
     method: "post",
-    data
+    data,
+    headers: {
+      unDisplayErrTip: true
+    }
   });
 }
 // 查询租户列表信息

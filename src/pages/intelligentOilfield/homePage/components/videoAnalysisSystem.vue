@@ -63,9 +63,16 @@
                 class="g-w100"
                 style="width: 100%;height: 150px"
               >
-              <div style="text-align: center;line-height: 32px">
-                {{ item.businessName }}
-              </div>
+              <el-tooltip
+                style="width: 100%;height: 100%"
+                effect="dark"
+                :content="item.businessName"
+                placement="bottom"
+              >
+                <div style="text-align: center;line-height: 32px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                  {{ item.businessName }}
+                </div>
+              </el-tooltip>
             </div>
           </el-col>
         </el-row>
@@ -77,6 +84,7 @@
 import dataTransfer from "@/components/intelligentOilfield/data-transfer/index.vue";
 import bottomButton from "@/components/intelligentOilfield/bottom-button/index.vue";
 import { getListBusiness } from "@/api/intelligentOilfield/system/business";
+import { addTokenToUrl } from "@/utils/jumpSupApp.js";
 
 export default {
   dicts: ["sys_business_module"],
@@ -146,7 +154,7 @@ export default {
     },
     // 全屏展示链接, 未完不能全屏跳转！！！
     linkPage(item) {
-      this.linkUrl = `${item.businessUrl}?token=${this.$store.getters["user/token"]}`;
+      this.linkUrl = addTokenToUrl(item.businessUrl);
       this.$nextTick(() => {
         this.fullScreen();
       });

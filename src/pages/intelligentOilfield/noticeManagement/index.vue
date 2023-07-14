@@ -99,7 +99,7 @@
         :default-sort="{ prop: 'date', order: 'descending' }"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="55" align="center" />
+        <!-- <el-table-column type="selection" width="55" align="center" /> -->
         <el-table-column
           label="序号"
           type="index"
@@ -205,7 +205,8 @@
               <el-input
                 v-model="addform.noticeContent"
                 type="textarea"
-                :rows="2"
+                resize="none"
+                :autosize="{ minRows: 2, maxRows: 6}"
                 style="width: 300px"
                 placeholder="请输入内容"
               />

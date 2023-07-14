@@ -130,14 +130,14 @@
             <el-button v-hasPermi="['message:view']" type="text" @click="handleView(scope.row.id, scope.row)">
               查看
             </el-button>
-            <el-button
+            <!-- <el-button
               v-if="scope.row.status === 'FAILURE'"
               v-hasPermi="['message:retry']"
               type="text"
               @click="handleResend(scope.row)"
             >
               重试
-            </el-button>
+            </el-button> -->
           </template>
         </el-table-column>
       </el-table>

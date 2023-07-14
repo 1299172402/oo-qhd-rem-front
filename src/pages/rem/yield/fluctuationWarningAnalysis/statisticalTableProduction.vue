@@ -45,7 +45,7 @@
             <pagePanelNew style="height:100%;margin-top:0;">
                 <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
                     <span>秦皇岛32-6油田单井产量变化</span>
-                    <el-button type="primary" style="height:30px;" @click="$router.go(-1)">返回</el-button>
+                    <el-button type="primary" style="height:30px;" @click="goBack">返回</el-button>
                 </div>
                 <div class="tableBox" id="tableBox" style="height:calc(100% - 75px)">
                     <el-table 
@@ -59,6 +59,7 @@
                       height="100%" 
                       :default-sort="{ prop: 'comparisonOilProduction', order: 'ascending' }" 
                       :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+                      <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                       <el-table-column prop="wellNo" label="井号" width="150" fixed/>
                       <el-table-column :label="searchForm.prodDate">
                         <el-table-column sortable prop="fluidProdDaily" :label="`日产液\n(m³/d)`" width="90" :formatter="formatter"/>      
@@ -139,7 +140,7 @@
 <script>
     import { fetchOilFields, fetchPlatforms,fetchInjectionWells, fetchInjectionWellsByPlatform,fetchProductionWells, fetchProductionWellsByPlatform} from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import { fetchMeasureInfos,nameAndCode} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
-    import { getWellOutputWaveTable } from "@/api/oilDeposit/rem-04/yieId.js"
+    import { getWellOutputWaveTable, getWellOutputWaveTableDate} from "@/api/oilDeposit/rem-04/yieId.js"
     import { exportExcel } from '@/lib/exportExcel.js';
     import * as D3 from "d3"
     export default {
@@ -193,7 +194,32 @@
                 max2:30,
             };
         },
-        mounted() {
+        watch: {
+            async "$route.query"(){
+                if(Object.keys(this.$route.query).length){
+                    if(this.$route.query.wellIds){
+                        let wellIds=JSON.parse(this.$route.query.wellIds);
+                        if(wellIds.length){
+                            this.searchForm.wellIds=wellIds.map(el=>el.borepipeId);
+                        }
+                    }
+                }
+                //获取对比基准日期和对比日期
+                if(this.$route.query.prodDate){
+                    this.searchForm.prodDate=this.$route.query.prodDate;
+                    this.searchForm.prodDateCompare=this.$route.query.prodDateCompare;
+                }else{
+                    await getWellOutputWaveTableDate().then(res=>{
+                        if(res.data.code==200){
+                            this.searchForm.prodDate=res.data.data;
+                            this.searchForm.prodDateCompare=new Date(this.searchForm.prodDate).addDays(-1).format('yyyy-MM-dd');
+                        }
+                    })
+                }
+                await this.initData();
+            },
+        },
+        async mounted() {
             if(Object.keys(this.$route.query).length){
                 if(this.$route.query.wellIds){
                     let wellIds=JSON.parse(this.$route.query.wellIds);
@@ -201,10 +227,20 @@
                         this.searchForm.wellIds=wellIds.map(el=>el.borepipeId);
                     }
                 }
-                this.searchForm.prodDate=this.$route.query.prodDate,
-                this.searchForm.prodDateCompare=this.$route.query.prodDateCompare
             }
-            this.initData();
+            //获取对比基准日期和对比日期
+            if(this.$route.query.prodDate){
+                this.searchForm.prodDate=this.$route.query.prodDate;
+                this.searchForm.prodDateCompare=this.$route.query.prodDateCompare;
+            }else{
+                await getWellOutputWaveTableDate().then(res=>{
+                    if(res.data.code==200){
+                        this.searchForm.prodDate=res.data.data;
+                        this.searchForm.prodDateCompare=new Date(this.searchForm.prodDate).addDays(-1).format('yyyy-MM-dd');
+                    }
+                })
+            }
+            await this.initData();
         },
         methods: {
             //页面初始化信息
@@ -303,7 +339,7 @@
                         if(tableData.length){
                             tableData.forEach((el,i)=>{
                                 if(el.oilProdDaily!==null){//产油对比
-                                    let comparisonOilProduction=this.numReduce(el.oilProdDaily,el.oilProdDailyCompare);
+                                    let comparisonOilProduction=this.numReduce(el.oilProdDaily,el.oilProdDailyCompare?el.oilProdDailyCompare:'0.0');
                                     tableData[i].comparisonOilProduction=comparisonOilProduction;
                                     minMax.push(Math.abs(comparisonOilProduction));
                                 }
@@ -327,6 +363,12 @@
             },
             //两数相减
             numReduce(num1, num2){
+                if(!num1){
+                    num1='0'
+                }
+                if(!num2){
+                    num2='0'
+                }
             	const num1Digits = (num1.toString().split('.')[1] || '').length;
             	const num2Digits = (num2.toString().split('.')[1] || '').length;
             	const baseNum = Math.pow(10, Math.max(num1Digits, num2Digits));
@@ -334,45 +376,26 @@
                 const rnum= num.toFixed(2);
                 return Number(rnum);
             },
-            //两数相乘
-            accMul(arg1,arg2){
-            	var m = 0,
-            		s1 = arg1.toString(),
-            		s2 = arg2.toString();
-            	try {
-            		m += s1.split(".")[1].length
-            	} catch (e) {}
-            	try {
-            		m += s2.split(".")[1].length
-            	} catch (e) {}
-            	return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
-            },
-            //两数相除
-            numExcept(a, b) {
-                a = isNaN(a) ? 0 : a
-                b = isNaN(b) ? 0 : b
-                var c, d, e = 0,
-                    f = 0;
-                try {
-                    e = a.toString().split(".")[1].length;
-                } catch (g) {
-                    g == g
-                }
-                try {
-                    f = b.toString().split(".")[1].length;
-                } catch (g) {
-                    g == g
-                }
-                return c = Number(a.toString().replace(".", "")), d = Number(b.toString().replace(".", "")), this.accMul(c / d, Math.pow(10, f - e));
-            },
             //保留两位小数
             formatter(row, column, cellValue, index){
-                console.log(row, column, cellValue, index)
                 if (cellValue) {
                     return Number(cellValue).toFixed(2);
                 } else {
                     return '-';
                 }
+            },
+            //返回
+            goBack(){
+                if(this.$route.query.page){
+                    this.$router.push({
+                        path:'/'+this.$route.query.page
+                    })
+                }else{
+                    this.$router.push({
+                        path:'/yield/fluctuationWarningAnalysis'
+                    })
+                }
+                
             },
         },
     };

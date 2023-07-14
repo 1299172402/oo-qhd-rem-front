@@ -11,7 +11,7 @@
     @ok="handleSelectUser"
     @open="handleOpen"
   >
-    <div style="display: flex;">
+    <div style="display: flex; padding-top: 10px; height: 650px;">
       <el-aside width="200px">
         <el-header style="height: 50px;">
           <el-input
@@ -22,7 +22,7 @@
             style="margin-bottom: 10px;"
           />
         </el-header>
-        <el-scrollbar style="height: 500px;">
+        <el-scrollbar style="height: calc(100% - 50px);">
           <el-tree
             ref="tree"
             :data="deptOptions"
@@ -32,7 +32,13 @@
             highlight-current
             default-expand-all
             @node-click="handleNodeClick"
-          />
+          >
+            <template slot-scope="{ node }">
+              <span :title="node.label">
+                {{ node.label }}
+              </span>
+            </template>
+          </el-tree>
         </el-scrollbar>
       </el-aside>
       <el-divider direction="vertical" />
@@ -63,7 +69,7 @@
               </el-form>
             </el-header>
           </header-search>
-          <page-panel-new header-title="分配用户" style="height: calc(100% - 100px);">
+          <page-panel-new header-title="分配用户" style="height: calc(100% - 90px);">
             <el-main class="container">
               <el-table
                 ref="table"
@@ -100,8 +106,8 @@
         </div>
       </el-container>
       <el-divider direction="vertical" />
-      <el-aside direction="vertical" style="height: 510px;">
-        <el-table :data="selectedUser" height="500px">
+      <el-aside direction="vertical">
+        <el-table :data="selectedUser" height="100%">
           <el-table-column label="已选用户" prop="userName" :show-overflow-tooltip="true" />
         </el-table>
       </el-aside>
@@ -157,13 +163,18 @@ export default {
       deptName: "",
       fn: {
         list: listUser
-      }
+      },
+      defaultLoad: false
     };
   },
   watch: {
     // 根据名称筛选部门树
     deptName(val) {
       this.$refs.tree.filter(val);
+      if (!val && this.deptOptions[0]) {
+        this.deptId = this.$refs.tree.setCurrentKey(this.deptOptions[0].id);
+        this.handleNodeClick({ id: this.deptId });
+      }
     },
     dataSources: {
       handler() {
@@ -197,7 +208,8 @@ export default {
       return true;
     },
     handleOpen() {
-      this.loadData();
+      this.searchReset();
+      this.deptName = "";
     },
     /**
      * 查询部门下拉树结构
@@ -281,7 +293,7 @@ export default {
   .el-divider--vertical {
     display: inline-block;
     width: 1px;
-    height: 600px;
+    height: 100%;
     margin: 0 8px;
     vertical-align: middle;
     position: relative;
@@ -289,5 +301,11 @@ export default {
 
   ::v-deep .el-tree-node__content {
     height: 36px;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    line-height: 36px;
   }
 </style>

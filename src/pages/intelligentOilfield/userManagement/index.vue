@@ -70,10 +70,10 @@
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
-            <el-form-item label="用户名" prop="nickName">
+            <el-form-item label="用户名称" prop="nickName">
               <el-input
                 v-model="queryParams.nickName"
-                placeholder="请输入用户名"
+                placeholder="请输入用户名称"
                 clearable
                 style="width: 240px"
                 @keyup.enter.native="handleQuery"
@@ -237,7 +237,7 @@
             :default-sort="{ prop: 'date', order: 'descending' }"
             @selection-change="handleSelectionChange"
           >
-            <el-table-column type="selection" width="50" align="center" />
+            <!-- <el-table-column type="selection" width="50" align="center" /> -->
             <el-table-column label="序号" type="index" width="50" />
             <!-- <el-table-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible" /> -->
             <el-table-column
@@ -287,12 +287,17 @@
               align="center"
               width="150"
               prop="tenantName"
-              :show-overflow-tooltip="true"
             >
               <template slot-scope="scope">
                 <div v-if="scope.row.sysTenants.length > 1" style="height: auto;">
-                  <p v-for="(item,index) in scope.row.sysTenants" :key="index">
-                    {{ item.tenantName }} <br>
+                  <p
+                    v-for="(item,index) in scope.row.sysTenants"
+                    :key="index"
+                    :title="item.tenantName"
+                    style="text-overflow: ellipsis;overflow: hidden;white-space: pre"
+                  >
+                    {{ item.tenantName }}
+                    <br>
                   </p>
                 </div>
                 <div v-else>
@@ -446,7 +451,7 @@
         <div class="headerinfo">
           账号
         </div>
-        <el-row type="flex" justify="start" style="margin-top: 30px">
+        <el-row type="flex" justify="start" style="margin-top: 15px">
           <el-col :span="8">
             <el-form-item label="用户名称" prop="nickName">
               <el-input
@@ -481,7 +486,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row type="flex" justify="start" style="margin: 15px 0">
+        <el-row type="flex" justify="start" style="margin: 5px 0">
           <el-col :span="8">
             <el-form-item label="账号邮箱" prop="email">
               <el-input
@@ -534,7 +539,7 @@
           </el-col>
         </el-row>
         <el-row />
-        <el-row v-if="form.userId == undefined" style="display: block;">
+        <el-row v-if="form.userId == undefined" style="display: block;margin-bottom: 5px">
           <el-col :span="8">
             <el-form-item label="用户密码" prop="password">
               <el-input
@@ -581,14 +586,13 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <div class="headerinfo" style="margin-bottom: 30px">
+        <div class="headerinfo" style="margin-bottom: 15px">
           角色与岗位信息
         </div>
         <el-form-item label="用户角色" prop="roleIds">
           <el-select
             v-model="form.roleIds"
             :disabled="form.ehr === '0' ? false : keys.includes('roleIds')"
-            style="margin-bottom: 20px"
             filterable
             class="customSelect"
             multiple
@@ -625,6 +629,7 @@
           </el-select> -->
           <el-select
             v-model="form.tempPostId"
+            style="margin-top: 5px"
             filterable
             :disabled="form.ehr === '0' ? false : keys.includes('postIds')"
             class="customSelect"
@@ -812,7 +817,7 @@ import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import proxy from "@/config/host";
 import { getCodeImg } from "@/api/intelligentOilfield/login";
 import { encryptlogin } from "@/utils/jsencrypt";
-import { getInfoByCode } from "@/api/intelligentOilfield/system/applicationCenter/tenant.js";
+/* import { getInfoByCode } from "@/api/intelligentOilfield/system/applicationCenter/tenant.js"; */
 
 export default {
   name: "User",
@@ -1103,7 +1108,7 @@ export default {
      * 如果是租户管理员则只能看到对应部门下的数据
      */
     getDeptOptions(data) {
-      if (this.userInfo.userName !== "admin" && this.userInfo.isTenantAdmin && this.userInfo.currentTenantCode) {
+      /* if (this.userInfo.userName !== "admin" && this.userInfo.isTenantAdmin && this.userInfo.currentTenantCode) {
         return getInfoByCode(this.userInfo.currentTenantCode)
           .then(v => {
             const { deptId } = v.data.data;
@@ -1129,7 +1134,7 @@ export default {
             }
             return [];
           });
-      }
+      } */
       return Promise.resolve(data);
     },
     // 筛选节点
@@ -1198,7 +1203,6 @@ export default {
     resetQuery() {
       this.dateRange = [];
       this.resetForm("queryForm");
-      this.queryParams.deptId = undefined;
       this.queryParams.tenantId = undefined;
       this.$nextTick(() => {
         this.handleQuery();

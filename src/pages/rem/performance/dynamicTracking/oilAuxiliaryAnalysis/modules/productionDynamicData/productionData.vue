@@ -9,7 +9,9 @@
             </el-select>
         </div> 
         <div class="z-echarts" >
-            <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
+            <info-window infoWidth="100%" :infoHeight="height+'px'" headerTitle="油井生产数据曲线图" isShowMaxBtn style="margin-top:0;">
+                <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
+            </info-window>
         </div>   
         <div class="develop">
             <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
@@ -21,7 +23,7 @@
                 header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
                 style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-                <el-table-column prop="prodDate" label="日期"></el-table-column>  
+                <el-table-column prop="prodDate" label="日期" width="100"></el-table-column>  
                 <el-table-column prop="prodDuration" :label="`生产时间\n (h)`" width="140"></el-table-column>
                 <el-table-column prop="fluidProdDaily" :label="`日产液\n (m³)`" width="120"></el-table-column>
                 <el-table-column prop="gasProdDaily" :label="`日产气\n (10⁴m³)`" width="130"></el-table-column>
@@ -817,7 +819,8 @@
         
         .z-echarts{
             width:100%;
-            height:500px;
+            overflow-y: scroll;
+            padding-right:20px;
         }
         
         #tableData{

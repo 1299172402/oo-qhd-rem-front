@@ -76,16 +76,6 @@
                         itemHeight: 6,
                         itemGap: 14,
                     },
-                    // toolbox: {
-                    //     show: true,
-                    //     feature: {
-                    //         saveAsImage: {
-                    //             name: '水井曲线对比分析图',
-                    //             pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-                    //             backgroundColor: '#022644'
-                    //         }
-                    //     }
-                    // },
                     grid: [
                         { left: '14%', top: '4%', width: '74%', height: '38%' }, 
                         { left: '14%', top: '48%', width: '74%', height: '38%' }],
@@ -141,7 +131,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#fff',
+                                color: '#8FA4CC',
                                 fontSize: 14
                             },
                             max: 24,
@@ -171,7 +161,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#fff',
+                                color: '#8FA4CC',
                                 fontSize: 14
                             },
                             position: 'right',
@@ -200,7 +190,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#fff',
+                                color: '#8FA4CC',
                                 fontSize: 14
                             },
                             position: 'right',
@@ -230,7 +220,7 @@
                             nameGap: 50,
                             nameRotate: 0,
                             nameTextStyle: {
-                                color: '#fff',
+                                color: '#8FA4CC',
                                 fontSize: 14
                             },
                             // scale: true,
@@ -258,7 +248,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#fff',
+                                color: '#8FA4CC',
                                 fontSize: 14
                             },
                             position: 'left',
@@ -288,7 +278,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#fff',
+                                color: '#8FA4CC',
                                 fontSize: 14
                             },
                             position: 'right',
@@ -358,8 +348,6 @@
                 await fieldLayers({oilFieldId:this.oilFeildId,wellId:this.wellId}).then((res) => {
                     if (res.data.code == 200 && res.data.data && res.data.data.fieldLayers && res.data.data.fieldLayers.length) {
                         this.position = res.data.data.fieldLayers;
-                        this.selectPosition = this.position[0].fieldLayerId;
-                        this.$emit('childPara', this.selectPosition);
                         this.doSearch();
                     }
                 });

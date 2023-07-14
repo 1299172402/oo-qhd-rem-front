@@ -7,24 +7,24 @@ export function getYieldFluctuation() {
     method: "get",
   });
 }
-export function monthlyProductionComparison({ date } = {}) {
+export function monthlyProductionComparison({ date,ogfId } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/monthlyProductionComparison?date=${ date || "" }`,
+    url: `${baseUrl}/reservoirBillboards/monthlyProductionComparison?date=${ date || "" }&ogfId=${ ogfId || "" }`,
     method: "get",
   });
 }
-export function productionMetricsOverview({ date } = {}) {
+export function productionMetricsOverview({ogfId,orgId, date } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/productionMetricsOverview?date=${ date || "" }`,
+    url: `${baseUrl}/reservoirBillboards/productionMetricsOverview?date=${ date || "" }&orgId=${ orgId || "" }&ogfId=${ ogfId || "" }`,
     method: "get",
     headers: {
       showLoading: false
     }
   });
 }
-export function queryCapacityComposition() {
+export function queryCapacityComposition({ogfId } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/queryCapacityComposition`,
+    url: `${baseUrl}/reservoirBillboards/queryCapacityComposition?ogfId=${ ogfId || "" }`,
     method: "get",
   });
 }
@@ -55,9 +55,9 @@ export function queryPlanValueDict() {
     method: "get",
   });
 }
-export function queryProblemWellStatis({ date, platformId, wellId } = {}) {
+export function queryProblemWellStatis({ date, platformId,ogfId, wellId } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/queryProblemWellStatis?date=${ date || "" }&platformId=${ platformId || "" }&wellId=${ wellId || "" }`,
+    url: `${baseUrl}/reservoirBillboards/queryProblemWellStatis?date=${ date || "" }&platformId=${ platformId || "" }&wellId=${ wellId || "" }&ogfId=${ ogfId || "" }`,
     method: "get",
   });
 }
@@ -84,4 +84,16 @@ export function queryYieldTracking({ ogfId, orgId } = {}) {
     url: `${baseUrl}/reservoirBillboards/queryYieldTracking?ogfId=${ ogfId || "" }&orgId=${ orgId || "" }`,
     method: "get",
   });
+}
+export function getYieldTracking({ ogfId, orgId } = {}) {
+    return request({
+        url: `${baseUrl}/reservoirBillboards/getYieldTracking?ogfId=${ ogfId || "" }&orgId=${ orgId || "" }`,
+        method: "get",
+    });
+}
+export function queryProblemWellStatisDetails({ wellId, ogfId,pageSize, pageNum,assetCode } = {}) {
+    return request({
+        url: `${baseUrl}/reservoirBillboards/queryProblemWellStatisDetails?ogfId=${ ogfId || "" }&wellId=${ wellId || "" }&pageSize=${ pageSize || "" }&pageNum=${ pageNum || "" }&assetCode=${ assetCode || "" }`,
+        method: "get",
+    });
 }

@@ -4,7 +4,7 @@
     <div style="display: flex;flex-direction: row; height: 100%;">
       
       <div style=" height: 100%">
-        <tree-multiple-selection :level = "'5'" @childinfo = 'childinfo' />
+        <tree-multiple-selection :level = "'6'" @childinfo = 'childinfo' />
       </div>
       <div
         style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
@@ -26,18 +26,6 @@
                       :label="item.ogfName"
                       :value="item.ogfId"
                     ></el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="平台：" prop="pt">
-                  <el-select v-model="queryData.pt" @change="onPlatfromChange">
-                    <el-option v-for="item in platforms" :key="item.id" :label="item.platformName" :value="item.platformId">
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="井号：">
-                  <el-select v-model="queryData.wellId" >
-                    <el-option v-for="item in wells" :key="item.wellId" :label="item.wellName" :value="item.wellId">
-                    </el-option>
                   </el-select>
                 </el-form-item>
                 <el-form-item>
@@ -110,7 +98,6 @@
                     <div class="boxfoot"></div>
                 </div> 
             </div>
-          
         </pagePanel>
       </div>
     </div>
@@ -162,21 +149,8 @@ export default {
   },
   mounted() {
     this.getList();
-    this.getData();
     this.queryserch();
   },
-    watch: {
-        queryData: {
-            handler(val) {
-                    let obj = {};
-                    obj = this.wells.find((item) => {
-                        return item.wellId === val.wellId;
-                    });
-                    this.wellName = obj.wellName
-            },
-            deep: true,
-        }
-    },
   methods: {
     getList() {
         //获取作业公司
@@ -191,29 +165,6 @@ export default {
         queryListOfOilfieldQueryPlatformsDetail({ogfId:this.queryData.ogfId}).then(res=>{
             this.platforms = res.data.data
         })
-      // getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
-      //   if (res.data.code == 200) {
-      //     this.oilFields = res.data.data;
-      //   }
-      // });
-      // fetchOilFields().then((res) => {
-      //   if (res.data.code == 200) {
-      //     const requestPlat = {
-      //       oilFieldId: this.queryData.ogfId,
-      //     };
-      //     fetchPlatforms(requestPlat).then((res) => {
-      //       if (res.data.code == 200) {
-      //         this.platforms = res.data.data.platform;
-      //         this.platforms.map((n) => {
-      //           if (n.platName == "全部") {
-      //             n.platFormId = "";
-      //           }
-      //           this.queryData.pt = "";
-      //         });
-      //       }
-      //     });
-      //   }
-      // });
     },
     selectcw() {
       let adta = {
@@ -236,14 +187,6 @@ export default {
         queryOilAndGasFieldQueryPositionDetail({ogfId:this.queryData.ogfId}).then((res) => {
             this.cwOptions = res.data.data;
         });
-      // queryLayerList(this.queryData).then((res) => {
-      //   if (res.data.code == 200) {
-      //     this.cwOptions = res.data.data;
-      //   } else {
-      //     this.$message.error("系统错误请重新尝试或联系运维人员！");
-      //   }
-      //   console.log(this.tableData);
-      // });
     },
     save() {
       this.djclForm.controlArea = Number(this.djclForm.controlArea);
@@ -258,44 +201,7 @@ export default {
         }
       });
     },
-    getData() {
-        //根据平台获得井
-        queryPlatformQueryWellListDetail({ogfId:this.queryData.ogfId}).then((res) => {
-            this.wells = res.data.data
-        })
-      // let oilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
-      // const request = {
-      //   oilFieldId,
-      // };
-      // fetchProductionWells(request).then((res) => {
-      //   if (res.data.code == 200) {
-      //     let wellList = res.data.data.productionWells;
-      //     let arr = [];
-      //     wellList.map((n) => {
-      //       if (n.wellName != null) {
-      //         arr.push(n);
-      //       }
-      //     });
-      //     this.wells = [...arr];
-      //   }
-      // });
-      // fetchInjectionWells(request).then((res) => {
-      //   if (res.data.code == 200) {
-      //     const wellList = res.data.data.injectionWell;
-      //     this.wells = [...this.wells, ...wellList];
-      //   }
-      // });
-    },
-    //平台下拉-change
-    onPlatfromChange(val) {
-      // this.getFetchWells(this.queryData.ogfId, val);
-        
-        //根据平台获得井
-        queryPlatformQueryWellListDetail({platformId:val}).then((res) => {
-            this.wells = res.data.data
-            this.queryData.wellId =  this.wells[0].wellId
-        })
-    },
+
     // 重置仅重置搜索条件与下方查询内容无关
     refresh() {
       this.queryData.pt = "";
@@ -371,8 +277,8 @@ export default {
       }
     },
     childinfo(data){
-      this.queryData.pt = data[3].value
-      this.queryData.wellId = data[4].value
+      this.queryData.pt = data[3]?.value
+      this.queryData.wellId = data[4]?.value
     },
   },
 };
@@ -384,12 +290,6 @@ export default {
   position: relative;
   font-family: PingFangSC-Regular, PingFang SC;
 }
-/* .smart-energy-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100% - 80px);
-} */
 .alltitle {
   color: #fff;
   text-align: center;
@@ -399,13 +299,11 @@ export default {
 
 .boxall {
   border: 2px solid rgba(25, 186, 139, 0.17);
-  /* padding: 0 .2rem .4rem .15rem; */
   margin-left: 20px;
   background-size: 100% auto;
   position: relative;
   width: 100px;
   height: 100px;
-  /* margin-bottom: 10px; */
   z-index: 10;
 }
 
@@ -466,40 +364,4 @@ export default {
   bottom: 0;
 }
 </style>
-<style lang="scss" scoped>
-.smart-energy-item {
-  width: 1000px;
-  height: 500px;
-  // text-align: center;
-  border: 2px solid #5be4e4;
-  margin: 50px auto 30px;
-  position: relative;
-  padding-top: 70px;
-  padding-left: 80px;
 
-  &::after {
-    content: "";
-    width: calc(100% - 20px);
-    height: 100%;
-    position: absolute;
-    left: 12px;
-    top: -1px;
-    bottom: -1px;
-    border-bottom: 2px solid #0e393b;
-    border-top: 2px solid #0e393b;
-    z-index: -1;
-  }
-  &::before {
-    content: "";
-    width: 100%;
-    height: calc(100% - 20px);
-    position: absolute;
-    left: -1px;
-    right: -1px;
-    top: 12px;
-    border-left: 2px solid #0e393b;
-    border-right: 2px solid #0e393b;
-    z-index: -1;
-  }
-}
-</style>

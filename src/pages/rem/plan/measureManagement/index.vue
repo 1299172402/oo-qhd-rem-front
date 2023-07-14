@@ -74,7 +74,7 @@
             <pagePanelNew headerTitle="措施管理" style="height:100%;margin-top:0;">
                 <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
                     <span>秦皇岛32-6油田作业计划跟踪</span>
-                    <el-button type="primary" icon="el-icon-download" style="height:30px;" @click="doExportFile" v-show="canDownload">下载</el-button>
+                    <el-button type="primary" icon="el-icon-download" style="height:30px;" @click="doExportFile">下载</el-button>
                 </div>
                 <div class="tableBox" id="tableBox" style="height:calc(100% - 75px)">
                     <el-table id="csgl"
@@ -205,6 +205,9 @@
     import {
         exportExcel
     } from '@/lib/exportExcel.js';
+    import FileSaver from 'file-saver';
+    import * as XLSX from '@/lib/xlsx';
+    
     export default {
         name: 'measureManagement',
         components: {
@@ -370,7 +373,12 @@
                     oilFieldId: this.selectOilField
                 }).then((res) => {
                     if (res.data.code == 200) {
-                        this.platforms = res.data.data.platform;
+                        let platform=res.data.data.platform;
+                        
+                        if(platform[0].platName=='全部'){
+                            platform.splice(0,1);
+                        }
+                        this.platforms =platform;
                         this.platforms[0].platFormId=this.selectOilField;
                         this.selectPlatform = this.selectOilField;
                     }
@@ -649,58 +657,28 @@
             },
             //前端导出内容
             doExportFile() {
-                exportExcel('#csgl', '措施管理');
-            },
-            //获取当前页面的权限内容，并处理其逻辑问题
-            getPageAuthMessage() {
-                this.userInfo = {};
-                const myPath = this.$route.path;
-                // 该值可以为空
-                const areaCode = "znytglxt";
-                const loginName = this.userInfo.userName;
-                getWidgetByAreaUser({
-                    "areaCode": areaCode,
-                    "loginName": loginName
-                }).then(res => {
-                    const myList = res.data.dataList;
-                    if (myList) {
-                        const pageMes = myList.find((item) => item.resPvalue == myPath);
-                        if (pageMes) {
-                            this.myWidget = pageMes.widgetList;
-                        }
-                        if (this.myWidget) {
-                            for (const indexNum in this.myWidget) {
-                                try {
-                                    const myWidgetItem = this.myWidget[indexNum];
-                                    switch (myWidgetItem.widgetCode) {
-                                        case "addInfo":
-                                            this.canAddInfo = true;
-                                            break;
-                                        case "updateInfo":
-                                            this.canUpdateInfo = true;
-                                            break;
-                                        case "sendInfo":
-                                            this.canSendInfo = true;
-                                            break;
-                                        case "deleteInfo":
-                                            this.canDeleteInfo = true;
-                                            break;
-                                        case "download":
-                                            this.canDownload = true;
-                                            break;
-                                        case "upload":
-                                            this.canUpload = true;
-                                            break;
-                                        default:
-                                    }
-                                } catch (e) {
-                                    continue;
-                                }
-                            }
-                        }
+                // exportExcel('#csgl', '措施管理');
+                let queryParams=JSON.parse(JSON.stringify(this.queryParams));
+                this.queryParams.pageSize=1000;
+                this.queryParams.page=1;
+                this.$nextTick(function () {
+                    let xlsxParam = {raw: true};
+                    let wb = XLSX.utils.table_to_book(document.querySelector("#csgl"), xlsxParam);
+                    const wbout = XLSX.write(wb, {
+                        bookType: "xlsx",
+                        bookSST: true,
+                        type: "array"
+                    });
+                    try {
+                        FileSaver.saveAs(new Blob([wbout], {type: "application/octet-stream"}), '措施管理.xlsx');
+                    } catch (e) {
+                        if (typeof console !== "undefined") console.log(e, wbout);
                     }
+                    this.queryParams=JSON.parse(JSON.stringify(queryParams));
+                    return wbout;
                 });
-            }
+                                
+            },
         },
     };
 </script>

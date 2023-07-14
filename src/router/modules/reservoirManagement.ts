@@ -9,10 +9,10 @@ export default [
         meta: { title: '智能注采调配', icon: 'client', single: false },
         children: [
             {
-                path: 'index',
-                name: 'index',
+                path: 'indexHome',
+                name: 'indexHome',
                 hidden:false,
-                component: () => import('@/pages/rem/intelligence/index.vue'),
+                component: () => import('@/pages/rem/intelligence/indexHome.vue'),
                 meta: { title: '首页',icon: 'icon' },
             },
             {

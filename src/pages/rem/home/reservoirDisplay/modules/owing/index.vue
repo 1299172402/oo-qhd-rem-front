@@ -5,7 +5,7 @@
         header-title="超欠注情况统计"
         :is-show-max-btn="true"
     >
-        <button class="detailLinkBtn" @click="linkroute('/intelligence1/index')">详细</button>
+        <button class="detailLinkBtn" @click="linkroute('/intelligence1/indexHome')">详细</button>
         <el-table
             :data="tableData"
             height="100%"

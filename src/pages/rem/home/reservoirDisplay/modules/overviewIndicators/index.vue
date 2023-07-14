@@ -6,13 +6,13 @@
             header-title="秦皇岛32-6油田生产指标总览"
             :is-show-max-btn="true"
         >
-            <button class="detailLinkBtn" @click="linkroute('/intelligence1/index')">详细</button>
+            <button class="detailLinkBtn" @click="linkroute('/intelligence1/indexHome')">详细</button>
             <el-row :gutter="20" style="margin-bottom: 10px;padding: 0 20px">
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <div class="yield water">
                             <div class="box">
-                                <div>{{ dataList.dayOilProduction }}</div>
+                                <div>{{ oil1 }}</div>
                                 <div>m³</div>
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                     <div class="grid-content bg-purple">
                         <div class="yield gas">
                             <div class="box">
-                                <div>{{ dataList.annualOilProduction }}</div>
+                                <div>{{oil1two}}</div>
                                 <div>10⁴m³</div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(dataList.productionEfficiency, '%', 'rgb(59,197,197)', 'rgb(59,197,197)', 'rgb(59,197,197)')"
+                            :chart-data="getEchartData(value2, '%', 'rgb(59,197,197)', 'rgb(59,197,197)', 'rgb(59,197,197)')"
                         ></Echart>
                         <div class="chartText">生产时率</div>
                     </div>
@@ -54,7 +54,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(dataList.oilWellUtilizationRate, '%', 'rgb(13,190,124)', 'rgb(1,67,78)', 'rgb(13,190,124)')"
+                            :chart-data="getEchartData(value1, '%', 'rgb(13,190,124)', 'rgb(1,67,78)', 'rgb(13,190,124)')"
                         ></Echart>
                         <div class="chartText">油井利用率</div>
                     </div>
@@ -62,7 +62,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(isNaN(((dataList.productionEfficiency * dataList.oilWellUtilizationRate)/100).toFixed(2)) ? '' : ((dataList.productionEfficiency * dataList.oilWellUtilizationRate)/100).toFixed(2), '%', 'rgb(247,181,0)', 'rgb(41,72,94)', 'rgb(247,181,0)')"></Echart>
+                            :chart-data="getEchartData(value3, '%', 'rgb(247,181,0)', 'rgb(41,72,94)', 'rgb(247,181,0)')"></Echart>
                         <div class="chartText">综合时率</div>
                     </div>
                 </el-col>
@@ -98,7 +98,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchart(dataList.layerPassRate, '%', 'rgb(235,125,96)', 'rgba(38,43,90,0)', 'transparent')"></Echart>
+                            :chart-data="getEchart(infolist, '%', 'rgb(235,125,96)', 'rgba(38,43,90,0)', 'transparent')"></Echart>
                         <div class="chartText">层段合格率</div>
                     </div>
                 </el-col>
@@ -120,8 +120,9 @@ import {LineChart} from "echarts/charts";
 import * as echarts from "echarts/core";
 import {GridComponent, TooltipComponent, LegendComponent} from "echarts/components";
 import {CanvasRenderer} from "echarts/renderers";
-import {productionMetricsOverview} from "@/api/rem/reservoirbillboards";
-
+import {productionMetricsOverview,getYieldTracking} from "@/api/rem/reservoirbillboards";
+import {dividingLayerQualityRate} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+import {getProductionIndex} from "@/api/monthlyReportManagement.js";
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 let value = 0;
 let name = "";
@@ -135,6 +136,8 @@ export default {
         this.histogram2.series[1].splitLine.lineStyle.color = this.$store.state.setting.mode == 'dark' ? 'rgb(3,42,59)' : '#fff'
         this.histogram3.series[1].splitLine.lineStyle.color = this.$store.state.setting.mode == 'dark' ? 'rgb(3,42,59)' : '#fff'
         this.getData();
+        this.getinfo();
+        this.getList();
     },
     computed: {
         getGlobeTheme() {
@@ -152,7 +155,13 @@ export default {
     },
     data() {
         return {
+            value1:0,
+            value2:0,
+            value3:0,
             dataList:'',
+            oil1two:'',
+            oil1:'',
+            infolist:'', //层段合格率
             histogram: {
                 title: {
                     // text: '{a|' + value + '}{c|%}',
@@ -473,7 +482,8 @@ export default {
         },
         getData(){
             // new Date().format('YYYY-MM')
-            productionMetricsOverview({date:'2022-01' + '-01'}).then(res=>{
+            productionMetricsOverview( { ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                orgId: "715AD1CD60484BB59E737CD18A9DE44A",date:'2022-12' + '-01'}).then(res=>{
                 this.dataList = res.data.data
                 if(!res.data.data.naturalDecline)  res.data.data.naturalDecline = 0
                 this.histogram.series[0].data[0].value = res.data.data.naturalDecline
@@ -487,8 +497,58 @@ export default {
                 this.histogram3.series[0].data[0].value = res.data.data.wholeDeclineRate
                 this.histogram3.series[0].data[1].value = 100 - res.data.data.wholeDeclineRate
                 this.histogram3.title.text = "{a|" + res.data.data.wholeDeclineRate + "%}{c|\n" +   "}"
-            })  
+            })
+            getYieldTracking({ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                orgId: "715AD1CD60484BB59E737CD18A9DE44A"}).then(res=>{
+                this.oil1two = res.data.data.annualOilProduction,
+                this.oil1 =res.data.data.dayOilProduction
+            })
         },
+        getList(){
+            let data = {
+                endDate:"2022-12-01",
+                oilFieldId:"3FC9A818F5BC43B88270DB80BBB3018F",
+                year:"2022-12-01"
+            }
+            dividingLayerQualityRate(data).then((res)=>{
+                this.infolist = res.data.data.indicatorContent.detail
+                
+            })
+        },
+        getinfo() {
+            const currentDate = new Date(); // 获取当前日期
+            const currentYear = currentDate.getFullYear(); // 获取当前年份
+            const currentMonth = currentDate.getMonth(); // 获取当前月份（注意：月份从0开始，0代表一月，11代表十二月）
+            let previousMonth, previousYear;
+            if (currentMonth === 0) { // 如果当前月份是一月（0月），则上一个月是去年的十二月（11月）
+                previousMonth = 11;
+                previousYear = currentYear - 1;
+            } else {
+                previousMonth = currentMonth - 1;
+                previousYear = currentYear;
+            }
+            const formattedPreviousMonth = (previousMonth + 1).toString().padStart(2, '0');
+
+            const previousMonthDate = `${previousYear}-${formattedPreviousMonth}`;
+            let param = {
+                month: previousMonthDate,
+                ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                orgId: "715AD1CD60484BB59E737CD18A9DE44A",
+            };
+            getProductionIndex(param).then((res) => {
+                let wellCountAll = 0,monthProdDurationCountAll = 0,monthProdDduration=0,monthProdDurationCount=0
+                res.data.data.forEach(item=>{
+                    wellCountAll += item.wellCount
+                    monthProdDurationCountAll += item.wellOpenCount
+                    monthProdDduration += item.monthProdDduration
+                    monthProdDurationCount += item.monthProdDurationCount
+                })
+                this.value1 = ((monthProdDurationCountAll/wellCountAll * 100)).toFixed(2);
+                this.value2 = ((monthProdDduration/monthProdDurationCount/res.data.data[0].days/24)*100).toFixed(2)
+                this.value3 = ((this.value1*this.value2)/100).toFixed(2)
+            });
+        },
+        
         //图表
         getEchartData(value, unit, valueColor, backColor, centerColor, data) {
             var option = {

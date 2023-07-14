@@ -70,6 +70,14 @@ export function devStatusInfos(request) {
     data: request,
   });
 }
+
+export function devStatusInfosDate(request) {
+  return Axios({
+    url: `${baseUrl  }/oilFieldManagePlanController/devStatusInfosDate`,
+    method: "get",
+  });
+}
+
 export function devWellChart(request) {
   return Axios({
     url: `${baseUrl  }/oilFieldManagePlanController/devWellChart`,

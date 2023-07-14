@@ -2,70 +2,68 @@
 <template>
     <div class="z-main">
         <div class="z-echarts">
-            <iframe style="width: 100%;height: 100%;border: none;" :src="image?(image+'#toolbar=0'):''"></iframe>
+            <iframe style="width: 100%;height: 100%;border: none;" :src="url"></iframe>
         </div>
     </div>
 </template>
 
 <script>
-    import { developmentDataReservesReport } from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
-    import {downFile} from "@/lib/remBase64Download.js";
+    import {fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
+    // miniIo
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {filePreview,downFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         props: {
             oilFieldId: {},
-            blockId: {}
+            blockId: {},
         },
         data() {
             return {
-                radio: 1, //所选择的层位
-                selectPosition: '',
-                //层位所选择内容信息
-                position: [],
-                image: '',
+                //mniIo
+                fileId:'',
+                filestrId:'',
+                url:'',
             };
-        },
-        watch: {
-            //监听层位信息，给其动态传值
-            selectPosition(val) {
-                this.$emit('childPara', this.selectPosition);
-                this.OnChangeImage();
-            }
         },
         mounted() {
             this.doSearch();
         },
         methods: {
-            async doSearch() {
-                this.$emit('childPara', '');
-                //获取参数油田id 平台id 井id
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    //layerId:this.selectPosition,
+            //获取图片
+            doSearch() {
+                let params ={
+                    operationId:this.blockId,
+                    operationType:'BLOCKCLBG',
+                    readOne:'one' 
                 }
-                //获取图片组信息
-                await developmentDataReservesReport(request).then((res) => {
+                queryRemUploadFileMinio(params).then((res) => {
                     if (res.data.code == 200) {
-                        let imageData = res.data.data;
-                        let type = imageData.type;
-                        if (imageData.data && type) {
-                            this.image = 'data:' + type + ';base64,' + imageData.data;
-                        } else {
-                            this.image = '';
+                        if(res.data.data.length){
+                            this.fileId=res.data.data[0].fileId;
+                            this.filestrId=res.data.data[0].filestrId;
+                            filePreview(this.fileId).then((res)=>{
+                                this.url = res.data.data
+                            })
                         }
+                    }else {
+                        this.$message.error("文件查询接口异常!");
                     }
                 });
             },
-            //下载
+            //下载功能
             doDownLoad() {
                 let fileName = '储量报告';
-                if (this.blockName) {
-                    fileName = this.blockName + fileName;
+                let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
+                if (layerMess) {
+                    fileName= layerMess.layerName +'-'+fileName;
                 }
-                downFile(this.image, fileName);
+                let file_suffix=this.filestrId.split('.')[1];
+                downFile(this.id).then(res=>{
+                    FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+                })
             }
         }
-
     }
 </script>
 

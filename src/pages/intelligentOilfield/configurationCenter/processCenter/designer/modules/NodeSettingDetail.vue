@@ -16,10 +16,10 @@
         <el-divider content-position="left">
           基本信息
         </el-divider>
-        <el-form-item prop="name" label="规则名称" :rules="simpleRequired">
+        <el-form-item prop="name" label="规则名称" :rules="customMsgRequired('规则名称')">
           <el-input v-model="model.name" :clearable="true" placeholder="请输入规则名称" />
         </el-form-item>
-        <el-form-item prop="priority" label="优先级" :rules="simpleRequired">
+        <el-form-item prop="priority" label="优先级" :rules="customMsgRequired('优先级')">
           <question-info slot="label" label="优先级" tip="flow_node_designer_priority" />
           <el-input-number
             v-model="model.priority"
@@ -30,7 +30,7 @@
             placeholder="请输入规则名称"
           />
         </el-form-item>
-        <el-form-item prop="applyScopes" label="适用范围" :rules="arrayRequired">
+        <el-form-item prop="applyScopes" label="适用范围" :rules="customMsgRequired(undefined, undefined, '请添加适用范围')">
           <question-info slot="label" label="适用范围" tip="flow_node_designer_apply_scope" />
           <div
             v-for="(item, index) in model.applyScopes"
@@ -40,7 +40,7 @@
             <el-form-item
               class="flex-1"
               :prop="'applyScopes.' + index + '.applyScopeId'"
-              :rules="simpleRequired"
+              :rules="customMsgRequired('适用范围', 'change')"
             >
               <el-select
                 v-model="item.applyScopeId"
@@ -64,7 +64,7 @@
               @click="model.applyScopes.splice(index, 1)"
             />
           </div>
-          <el-button type="text" @click="model.applyScopes.push({})">
+          <el-button type="text" @click="addApplyScopes">
             添加
           </el-button>
         </el-form-item>
@@ -81,7 +81,7 @@
                 <template slot-scope="{row, $index}">
                   <el-form-item
                     :prop="'assignResources.' + $index + '.resourcePriority'"
-                    :rules="simpleRequired"
+                    :rules="customMsgRequired('优先级')"
                   >
                     <el-input-number
                       v-model="row.resourcePriority"
@@ -96,7 +96,7 @@
                 <template slot-scope="{row, $index}">
                   <el-form-item
                     :prop="'assignResources.' + $index + '.resourceType'"
-                    :rules="simpleRequired"
+                    :rules="customMsgRequired('类型', 'change')"
                   >
                     <el-select
                       v-model="row.resourceType"
@@ -121,7 +121,7 @@
                   <el-form-item
                     v-if="row.resourceType !== 'initiator'"
                     :prop="'assignResources.' + $index + '.resourceId'"
-                    :rules="simpleRequired"
+                    :rules="customMsgRequired('资源', 'change')"
                   >
                     <el-select
                       v-model="row.resourceId"
@@ -698,7 +698,7 @@
                 <template slot-scope="{row, $index}">
                   <el-form-item
                     :prop="'editableFormFields.' + $index + '.editableFormField'"
-                    :rules="simpleRequired"
+                    :rules="customMsgRequired('字段')"
                   >
                     <el-input v-model="row.editableFormField" clearable placeholder="请输入字段" />
                   </el-form-item>
@@ -817,7 +817,7 @@ import {
   relativePersonSelections
 } from "@/pages/intelligentOilfield/configurationCenter/processCenter/api/designer";
 
-import { arrayRequired, simpleRequired } from "@/utils/validate.js";
+import { customMsgRequired } from "@/utils/validate.js";
 
 export default {
   name: "NodeSettingDetail",
@@ -903,8 +903,6 @@ export default {
       rejectToKey: undefined
     };
     return {
-      simpleRequired,
-      arrayRequired,
       modelSchema,
       model: JSON.parse(JSON.stringify(modelSchema)),
       applyScopesOptions: [],
@@ -917,7 +915,8 @@ export default {
         save: data =>
           ruleSave({ ...data, processKey: data.modelKey || this.modelKey, actKey: data.actKey || this.actKey }),
         findById: ruleFindById
-      }
+      },
+      customMsgRequired
     };
   },
   watch: {
@@ -1083,6 +1082,10 @@ export default {
         this.$set(row, "resourceId", "$CUR_ACT_KEY");
         this.$set(row, "resourceName", "当前节点");
       }
+    },
+    addApplyScopes() {
+      this.model.applyScopes.push({});
+      this.$refs[this.refName].clearValidate("applyScopes");
     }
   }
 };
@@ -1128,6 +1131,10 @@ export default {
 
     .el-input__inner {
       border: 1px solid var(--light-blue-color);
+    }
+
+    .is-error {
+      margin-bottom: 20px;
     }
 
     .is-error .el-input__inner {

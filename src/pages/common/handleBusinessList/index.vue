@@ -101,7 +101,7 @@
               prop="startTime"
             >
               <template slot-scope="scope">
-                <span>{{ scope.row.startTime && dayjs(scope.row.endTime).format('YYYY-MM-DD HH:mm:ss') }}</span>
+                <span>{{ parseTime(scope.row.startTime) }}</span>
               </template>
             </el-table-column>
             <el-table-column
@@ -136,7 +136,6 @@
 </template>
 
 <script>
-import dayjs from "dayjs";
 import { postAction } from "@/api/common/manage";
 import "@/assets/styles/pages/handleBusinessListStyle.less";
 import OpenOtherTab from "@/pages/common/mixins/commonMixin";
@@ -158,7 +157,6 @@ export default {
   mixins: [OpenOtherTab],
   data() {
     return {
-      dayjs,
       description: "我的待办",
       loading: false,
       dataSource: [],

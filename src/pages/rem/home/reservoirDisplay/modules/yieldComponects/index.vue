@@ -207,7 +207,10 @@ export default {
     },
     methods: {
         getinfo(){
-            queryCapacityComposition().then((res)=>{
+            let info = {
+                ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+            }
+            queryCapacityComposition(info).then((res)=>{
                     let arr = res.data.data
                     arr.map((n)=>{
                     this.histogram.series[0].data.push(Number((n.yearLc/10000).toFixed(2)))
