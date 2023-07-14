@@ -135,57 +135,57 @@ export default {
                     fileType:['bmp','jpg','jpeg','png']
                 },
                 cumulativeOilWaterProduction:{//累产液产油现状图
-                    operationType:'BLOCKLCYCYXZT',
+                    operationType:'BLOCK',
                     limit:1,
                     fileType:['bmp','jpg','jpeg','png','pdf']
                 },
                 remainingOil:{//含油饱和度分布图
-                    operationType:'BLOCKHYBHDFBT',
+                    operationType:'BLOCK',
                     limit:1,
                     fileType:['bmp','jpg','jpeg','png','pdf']
                 },
                 oilwaterIsoline:{//液油含水等值线图
-                    operationType:'BLOCKYYHSDZXT',
+                    operationType:'BLOCK',
                     limit:1,
                     fileType:['bmp','jpg','jpeg','png','pdf']
                 },
                 liquidOilDifferenceDiagram:{//液油含水差值图
-                    operationType:'BLOCKYYHSCZT',
+                    operationType:'BLOCK',
                     limit:1,
                     fileType:['bmp','jpg','jpeg','png','pdf']
                 },
                 totalPressureDropDiagram:{//地层压力分布图
-                    operationType:'BLOCKDCYLFBT',
+                    operationType:'BLOCK',
                     limit:1,
                     fileType:['bmp','jpg','jpeg','png','pdf']
                 },
                 differentialPressureDiagram:{//生产压差图
-                    operationType:'BLOCKSCYCT',
+                    operationType:'BLOCK',
                     limit:1,
                     fileType:['bmp','jpg','jpeg','png','pdf']
                 },
                 fluidStrengthEquivalence:{//采液强度等值图
-                    operationType:'BLOCKCYQDDZT',
+                    operationType:'BLOCK',
                     limit:1,
                     fileType:['bmp','jpg','jpeg','png','pdf']
                 },
                 isogramOfWaterInjectionIntensity:{//注水强度等值图
-                    operationType:'BLOCKZSQDDZT',
+                    operationType:'BLOCK',
                     limit:1,
                     fileType:['bmp','jpg','jpeg','png','pdf']
                 },
                 cumulativeOilProductionPerMeter:{//米采指数
-                    operationType:'BLOCKMCZS',
+                    operationType:'BLOCK',
                     limit:1,
                     fileType:['bmp','jpg','jpeg','png','pdf']
                 },
                 distributionOfAccumulatedwateroilRatio:{//累积水油比分布图
-                    operationType:'BLOCKLJSYFBT',
+                    operationType:'BLOCK',
                     limit:1,
                     fileType:['bmp','jpg','jpeg','png','pdf']
                 },
                 injectionProductionRatioDistribution:{//注采比分布图
-                    operationType:'BLOCKZCBFBT',
+                    operationType:'BLOCK',
                     limit:1,
                     fileType:['bmp','jpg','jpeg','png','pdf']
                 },
@@ -325,14 +325,6 @@ export default {
                             label: '液油含水等值线图',
                             name: 'oilwaterIsoline'
                         },
-                        // {一期代码就是注释        
-                        //    label: "动液面等值图",    
-                        //    name: "dynamicLiquidLevelEquivalence",        
-                        // }, 
-                        // {一期代码就是注释       
-                        //    label: "动液面差值图",        
-                        //    name: "dynamicLiquidLevelDifference",   
-                        // },  
                         {
                             label: '液油含水差值图',
                             name: 'liquidOilDifferenceDiagram'
@@ -383,144 +375,6 @@ export default {
                         }
                     ]
                 }
-            ],
-            //文件名称对应项
-            tabsPathName: [
-                {
-                    name: 'permeabilityDistribution',
-                    pathName: 'PERMEABILITY_DISTRIBUTION'
-                },
-                //渗透率分布图    
-                {
-                    name: 'wellTieProfiles',
-                    pathName: 'WELL_GROUP_CONNECTION'
-                },
-                //连井剖面图   
-                {
-                    name: 'structuralMap',
-                    pathName: 'STRUCTURE'
-                },
-                //构造图
-                {
-                    name: 'geologicalMap',
-                    pathName: 'COMPREHENSIVE_GEOLOGY'
-                },
-                //综合地质图    
-                {
-                    name: 'sedimentaryMicrofacies',
-                    pathName: 'DEPOSITION'
-                },
-                //沉积相图  
-                {
-                    name: 'reservoirProfile',
-                    pathName: 'RESERVOIR_PROFILE'
-                },
-                //油藏剖面图
-                {
-                    name: 'sandThicknessMap',
-                    pathName: 'THICKNESS_SAND_LAYER'
-                },
-                //砂层厚度图    
-                {
-                    name: 'effectiveThicknessMap',
-                    pathName: 'EFFECTIVE_THICKNESS'
-                },
-                //有效厚度图  
-                {
-                    name: 'permeabilityCurve',
-                    pathName: 'PHASE_PERMEABILITY'
-                },
-                //相渗透率曲线图    
-                {
-                    name: 'porosityDevelopment',
-                    pathName: 'POROSITY_FRACTURE'
-                },
-                //孔隙度裂缝图   
-                {
-                    name: 'wellPattern',
-                    pathName: 'WELL_PATTERN'
-                },
-                //井网图 
-                {
-                    name: 'wellPatternImprovementChart',
-                    pathName: 'WELL_PATTERN_IMPROVEMENT'
-                },
-                //井网完善图   
-                {
-                    name: 'cumulativeOilWaterProduction',
-                    pathName: 'CUMULATIVE_OIL_WATER'
-                },
-                //累产油产水图  
-                {
-                    name: 'remainingOil',
-                    pathName: 'SURPLUS_OIL'
-                },
-                //剩余油分布图    
-                {
-                    name: 'oilwaterIsoline',
-                    pathName: 'LIQUID_OIL_WATER_EQUIVALENCE'
-                },
-                //液油水等值图   
-                {
-                    name: 'liquidOilDifferenceDiagram',
-                    pathName: 'LIQUID_OIL_WATER_DIFFERENCE'
-                },
-                //液油水差值图 
-                {
-                    name: 'totalPressureDropDiagram',
-                    pathName: 'TOTAL_PRESSURE_DROP'
-                },
-                //总压降图    
-                {
-                    name: 'differentialPressureDiagram',
-                    pathName: 'DIFFERENTIAL_PRESSURE'
-                },
-                //压差图  
-                {
-                    name: 'fluidStrengthEquivalence',
-                    pathName: 'FLUID_STRENGTH_EQUIVALENCE'
-                },
-                //采液强度等值图    
-                {
-                    name: 'isogramOfWaterInjectionIntensity',
-                    pathName: 'INJECTION_INTENSITY_EQUIVALENCE'
-                },
-                //注水强度等值图    
-                // {
-                //     name: 'yieldCompositionCurve', 
-                //     pathName: 'YIELD_COMPONENTS',
-                // },
-                //产量构成曲线
-                {
-                    name: 'reservesReport',
-                    pathName: 'RESERVE_REPORT'
-                },
-                //储量报告   
-                {
-                    name: 'developmentPlan',
-                    pathName: 'DEVELOPMENT_PROGRAM'
-                },
-                //开发方案 
-                {
-                    name: 'distributionOfAccumulatedwateroilRatio',
-                    pathName: 'CUMULATIVE_WATER_OIL_SCORE'
-                },
-                //累计水油比分布图    
-                {
-                    name: 'injectionProductionRatioDistribution',
-                    pathName: 'INJECTION_PRODUCTION_SCORE_LAYOUT'
-                },
-                //注采比分布图  
-                {
-                    name: 'developmentAdjustmentPlan',
-                    pathName: 'DEVELOP_ADJUSTMENT_PLAN'
-                },
-                //开发调整方案
-                {
-                    name: 'cumulativeOilProductionPerMeter',
-                    pathName: 'meterProIndicator'
-                },
-                //米采指数
             ],
             //子组件返回数据
             childParam: '',
@@ -577,7 +431,7 @@ export default {
                 fileId: data[0].id,
                 filestrId:data[0].name,
                 remUploadFileMinioId:'' ,
-                operationId:this.selectBlock+(this.childParam?'-'+this.childParam:''),
+                operationId: operationType=='BLOCK'? this.selectBlock : this.selectBlock+(this.childParam?'-'+this.childParam:''),
                 operationType,
             };
             this.uploadFile(params);
