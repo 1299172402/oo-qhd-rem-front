@@ -10,7 +10,7 @@
                 </el-select>
                 <!--开发构成曲线不显示 区块选择框-->
                 <span style="margin-left: 20px" v-show="!(currentModule == 'yieldCompositionCurve' || currentModule == 'developmentStatusTable')" class="title">区块：</span>
-                <el-select v-show="!(currentModule == 'yieldCompositionCurve' || currentModule == 'developmentStatusTable')" v-model="selectBlock" placeholder="请选择" filterable clearable @change="onChangeBlock">
+                <el-select v-show="!(currentModule == 'yieldCompositionCurve' || currentModule == 'developmentStatusTable')" v-model="selectBlock" placeholder="请选择" filterable>
                     <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
                 </el-select>
                 <el-button type="primary" icon="el-icon-search" style="margin-left: 20px;" @click="doSearch">搜索</el-button>
@@ -140,7 +140,7 @@ export default {
                     fileType:['bmp','jpg','jpeg','png','pdf']
                 },
                 remainingOil:{//含油饱和度分布图
-                    operationType:'BLOCK',
+                    operationType:'BLOCKHYBHDFBT',
                     limit:1,
                     fileType:['bmp','jpg','jpeg','png','pdf']
                 },
@@ -403,7 +403,7 @@ export default {
             }
         }
     },
-    async created () {
+    async created (){
         await this.initData();
     },
     methods: {
@@ -425,13 +425,17 @@ export default {
         },
         //minIo-监听上传
         getResData(data){
-            console.log('data123456789',data)
             let operationType=this.operationTypeList[this.currentModule].operationType;
+            if(this.currentModule=='cumulativeOilWaterProduction'&&this.childParamType=='BUBBLE'){//如果是累产液产油现状图并且是泡泡图
+                if(this.childParamType=='BUBBLE'){//泡泡图
+                    operationType='BLOCKLCYCYXZTBUBBLE'
+                }
+            }
             let params = {
                 fileId: data[0].id,
                 filestrId:data[0].name,
                 remUploadFileMinioId:'' ,
-                operationId: operationType=='BLOCK'? this.selectBlock : this.selectBlock+(this.childParam?'-'+this.childParam:''),
+                operationId:operationType=='BLOCK'? this.selectBlock : this.selectBlock+(this.childParam?'-'+this.childParam:''),
                 operationType,
             };
             this.uploadFile(params);
@@ -475,10 +479,12 @@ export default {
             this.activeName=tab.name;
             this.currentModule=this.tabs[index].modules[0].name;
             this.childParam='';//清空层位
-            
             this.isUpdateFile=this.operationTypeList[this.currentModule]?true:false;
-            this.limit=this.operationTypeList[this.currentModule].limit;
-            this.fileType=this.operationTypeList[this.currentModule].fileType;
+            
+            if(this.operationTypeList[this.currentModule]&&this.operationTypeList[this.currentModule].limit){
+                this.limit=this.operationTypeList[this.currentModule].limit;
+                this.fileType=this.operationTypeList[this.currentModule].fileType;
+            }
         },
         //点击二级
         tabTabs (name) {
@@ -486,10 +492,10 @@ export default {
             this.childParam='';//清空层位
             
             this.isUpdateFile=this.operationTypeList[this.currentModule]?true:false;
-            this.limit=this.operationTypeList[this.currentModule].limit;
-            this.fileType=this.operationTypeList[this.currentModule].fileType;
-            
-            console.log('this.fileType',this.fileType)
+            if(this.operationTypeList[this.currentModule]&&this.operationTypeList[this.currentModule].limit){
+                this.limit=this.operationTypeList[this.currentModule].limit;
+                this.fileType=this.operationTypeList[this.currentModule].fileType;
+            }
         },
         //初始化页面
         async initData () {
@@ -522,8 +528,8 @@ export default {
         },
         //搜索功能
         doSearch(){
-            if (this.childParam) {
-                this.$refs.componentCustom.selectPosition = this.childParam;
+            if (this.$refs.componentCustom.selectPosition) {
+                this.$refs.componentCustom.selectPosition = "";
             }
             //调用子组件的事件
             this.loader().then(() => {
@@ -533,30 +539,7 @@ export default {
                 console.log('走catch');
             });
         },
-        //切换区块
-        onChangeBlock(){
-            this.childParam = '';
-            this.$refs.componentCustom.selectPosition = this.childParam;
-        },
-        //下载
-        doDownLoad () {
-            //let feildName = ''; 临时未来可能加入
-            if (this.selectOilField == this.selectBlock) {
-                let feild = this.oilField.find((item) => {
-                    return item.oilFieldId == this.selectOilField;
-                });
-                this.$refs.componentCustom.blockName = feild.name;
-            } else {
-                let feild = this.block.find((item) => {
-                    return item.fieldId == this.selectBlock;
-                });
-                this.$refs.componentCustom.blockName = feild.name;
-            }
-            if (this.childParam) {
-                this.$refs.componentCustom.selectPosition = this.childParam;
-            }
-            this.$refs.componentCustom.doDownLoad();
-        },
+        
     }
 };
 </script>

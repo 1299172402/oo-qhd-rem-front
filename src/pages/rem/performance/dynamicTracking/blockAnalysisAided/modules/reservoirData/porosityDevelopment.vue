@@ -88,7 +88,6 @@
             },
             //获取图片
             doSearch() {
-                this.imageList=[];
                 let params ={
                     operationId:this.blockId+'-'+this.selectPosition,
                     operationType:'BLOCKDZSXT',
@@ -123,7 +122,7 @@
                     fileName= layerMess.layerName +'-'+fileName;
                 }
                 let file_suffix=this.filestrId.split('.')[1];
-                downFile(this.id).then(res=>{
+                downFile(this.fileId).then(res=>{
                     FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
                 })
             }
