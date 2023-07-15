@@ -64,7 +64,8 @@
       <layout-breadcrumb v-if="setting.showBreadcrumb" />
       <common-content />
     </t-content>
-    <t-footer v-if="showFooter" :class="`${prefix}-footer-layout`">
+    <!-- 组件样例和组件样例2不做footer展示 -->
+    <t-footer v-if="showFooter && $router.currentRoute.path !== '/DevelopmentManagement/DemoIndex' && $router.currentRoute.path !== '/DevelopmentManagement/DemoIndex2'" :class="`${prefix}-footer-layout`">
       <layout-footer v-if="!$store.getters['user/isGroupLogin']" />
     </t-footer>
   </t-layout>

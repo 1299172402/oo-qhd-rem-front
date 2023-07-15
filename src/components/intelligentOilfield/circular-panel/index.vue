@@ -21,7 +21,7 @@
         <div v-for="(item2, index) in item1" :key="index + 200" class="g-column-flex-HV">
           <!-- <div class="panelImg"></div> -->
           <div class="g-column-flex-HV panelDiv" @click="jumpLink(item2, index)" v-if="entranceType === 'UpperLower'">
-            <img :src="item2.img" alt="" style="width: 56px;height: 56px" v-if="item2.img"/>
+            <img :src="item2.img" alt="" style="width: 56px;height: 56px" v-if="item2.img" :style="{borderRadius: modelName === 'kanban' ? '28px' : '2px'}"/>
              <!-- TODO: Maybe change back -->
             <!-- <span v-else style="width:60px;height:60px" class="thumbnail">{{item2.name[0]}}</span> -->
             <!-- 看板中心-圆形图片 -->

@@ -2,7 +2,7 @@
 <template>
     <div class="z-main">
         <div class="z-search">
-            <el-select v-model="selectPosition" style="width: 220px;margin-right:20px;" placeholder="请选择" filterable clearable>
+            <el-select v-model="selectPosition" style="width: 220px;margin-right:20px;" placeholder="请选择" filterable @change="positionChange">
                 <el-option v-for="(item, index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
             <span>时间：</span>
@@ -24,6 +24,10 @@
     import { downFile } from '@/lib/remBase64Download.js';
     import H5Chart from '@/components/tools/H5Chart/index.vue';
     import H5Chart1 from '@/components/tools/H5Chart/index1.vue';
+    // miniIo
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {downFile as minioDownFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         components: {
             H5Chart,
@@ -46,113 +50,93 @@
                 yearTime: new Date().format('yyyy-MM')
             };
         },
-        watch: {
-            //监听层位信息，给其动态传值
-            selectPosition(val) {
-                this.$emit('childPara', this.selectPosition);
-                // this.OnChangeImage();
-            }
-        },
-        mounted() {
-            this.doSearch();
+        async mounted() {
+            await this.doSearch();
         },
         methods: {
             async doSearch() {
-                //初始化获取层段关系
-                await fieldOilLayers({
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    wellId: ''
-                }).then((res) => {
+                await this.fieldOilLayersApi();
+                await this.queryRemUploadFileMinioApi();
+                this.OnChangeImage();
+            },
+            //初始化获取层段关系
+            async fieldOilLayersApi(){
+                await fieldOilLayers({oilFieldId: this.oilFieldId,fieldId: this.blockId,wellId: ''}).then((res) => {
                     if (res.data.code == 200) {
                         //层段数据
                         if (res.data.data) {
                             this.position = res.data.data.fieldLayers;
                             if (!this.selectPosition && this.position[0]) {
-                                this.selectPosition = this.position[0].fieldLayerId;
-                                this.$emit('childPara', this.selectPosition);
+                                let isTrue=this.position.find((item) => {return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A'})
+                                if (isTrue){
+                                    this.selectPosition = '263518079CED49AE8B6C9FE5CEBDD26A';//临时
+                                }else{
+                                    this.selectPosition = this.position[0].fieldLayerId;
+                                }
+                                this.$emit('childPara', this.selectPosition, this.picType);
                             }
                         } else {
                             this.position = [];
                         }
                     }
                 });
-                //获取参数油田id 平台id 井id
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    layerId: this.selectPosition,
-                    year: this.yearTime
-                };
-                //获取图片组信息
-                await dynamicDataInjectionProductionRatioDistribution(request).then((res) => {
-                    if (res.data.code == 200) {
-                        if (res.data.data.layerPics) {
-                            if (res.data.data.layerPics.length > 0) {
-                                let imageData = res.data.data.layerPics[0];
-                                let type = imageData.type;
-                                this.image = 'data:' + type + ';base64,' + imageData.data;
-                            } else {
-                                this.image = '';
-                            }
-                        } else {
-                            this.image = '';
-                        }
-                        if (res.data.data) {
-                            this.layerData = res.data.data;
-                            this.sjcl(res.data.data, this.$refs.H5Chart);
-                        }
-                    } else {
-                        this.image = '';
-                    }
-                });
             },
-            //切换图片
-            OnChangeImage() {
-                this.image = '';
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    layerId: this.selectPosition,
-                    year: this.yearTime
-                };
-                dynamicDataInjectionProductionRatioDistribution(request).then((res) => {
-                    if (res.data.code == 200) {
-                        if (res.data.data.layerPics) {
-                            if (res.data.data.layerPics.length > 0) {
-                                let imageData = res.data.data.layerPics[0];
-                                let type = imageData.type;
-                                this.image = 'data:' + type + ';base64,' + imageData.data;
-                            } else {
-                                this.image = '';
-                            }
-                        } else {
-                            this.image = '';
-                        }
-                        if (res.data.data) {
-                            this.layerData = res.data.data;
-                            this.sjcl(res.data.data, this.$refs.H5Chart);
-                        }
-                    } else {
-                        this.image = '';
-                    }
-                });
-            },
-            //单选按钮选中改变事件
-            changeRadio() {
-                this.$emit('childPara', this.selectPosition);
+            //层位change
+            positionChange(val){
+                this.$emit('childPara', this.selectPosition, this.picType);
                 this.OnChangeImage();
             },
-            //下载功能
-            doDownLoad() {
-                this.dialogVisible1 = true;
-                setTimeout(() => {
-                    this.sjcl(this.layerData, this.$refs.downH5Chart1);
-                    this.dialogVisible1 = false;
-                    setTimeout(() => {
-                        this.$refs.downH5Chart1.downLoadAllPicture();
-                    }, 2000);
-                }, 1000);
+            //获取底图
+            async queryRemUploadFileMinioApi(){
+                let params ={
+                    operationId:this.blockId,
+                    operationType:'BLOCK',
+                    readOne:'one' 
+                }
+                await queryRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        if(res.data.data.length){
+                            let fileId= res.data.data[0].fileId;
+                            minioDownFile(fileId).then((res)=>{
+                                let src=window.URL.createObjectURL(res);
+                                const image = new Image();
+                                image.src = src;
+                                image.onload = () => {
+                                  // 构建canvas节点
+                                  const canvas = document.createElement('canvas');
+                                  canvas.width = image.width;
+                                  canvas.height = image.height;
+                                  const context = canvas.getContext('2d');
+                                  context.drawImage(image, 0, 0, image.width, image.height);
+                                  // 转换
+                                  const imgBase64 = canvas.toDataURL();
+                                  this.image=imgBase64;
+                                };
+                            })
+                        }else{
+                            this.image='';
+                        }
+                    }else {
+                        this.$message.error("文件查询接口异常!");
+                    }
+                });
+            },
+            //获取图层信息
+            async OnChangeImage() {
+                let request = {
+                    oilFieldId: this.oilFieldId,
+                    fieldId: this.blockId,
+                    layerId: this.selectPosition,
+                    year: this.yearTime
+                };
+                await dynamicDataInjectionProductionRatioDistribution(request).then((res) => {
+                    if (res.data.code == 200) {
+                        if (res.data.data) {
+                            this.layerData = res.data.data;
+                            this.sjcl(res.data.data, this.$refs.H5Chart);
+                        }
+                    }
+                });
             },
             //zwm写 hwh修改复用  --等值线图
             sjcl(tc, refObj) {
@@ -202,10 +186,6 @@
                         ShowDot: false,
                         Value: areaLines[i].isolineValue ? areaLines[i].isolineValue : '',
                         ViewPen: {
-                            /*PenColorA: 255,
-                PenColorR: 0,
-                PenColorG: 255,
-                PenColorB: 0,*/
                             PenColorA: parseInt(areaLines[i].fillColor[3]),
                             PenColorR: parseInt(areaLines[i].fillColor[0]),
                             PenColorG: parseInt(areaLines[i].fillColor[1]),
@@ -240,9 +220,6 @@
                         Value: areaLines[i].isolineValue ? areaLines[i].isolineValue : '',
                         ViewPen: {
                             PenColorA: 255,
-                            /*PenColorR: parseInt(areaLines[i].objects.fillColor.substr(1,3),16),
-                PenColorG:parseInt(areaLines[i].objects.fillColor.substr(3,5),16),
-                PenColorB: parseInt(areaLines[i].objects.fillColor.substr(5,7),16),*/
                             PenColorR: 0,
                             PenColorG: 255,
                             PenColorB: 0,
@@ -269,13 +246,11 @@
                         FillColor: areaLines[i].fillColor
                             ? [parseInt(areaLines[i].fillColor[3]), parseInt(areaLines[i].fillColor[0]), parseInt(areaLines[i].fillColor[1]), parseInt(areaLines[i].fillColor[2])]
                             : [155, 215, 215, 100],
-                        //FillColor: [155,215,215,100],
                         Points: areaLines[i].points
                     };
                     Objects1[i] = object1;
                 }
                 Layers_cont.Objects = Objects;
-                //Layers[0] = Layers_cont;
                 let LayerName1 = '等值线填充颜色图层';
                 let LayerType1 = 9;
                 let Active1 = true;
@@ -319,7 +294,18 @@
                 Layers[1] = layer3;
                 data.Layers = Layers;
                 refObj.setSampleDate(data);
-            }
+            },
+            //下载功能
+            doDownLoad() {
+                this.dialogVisible1 = true;
+                setTimeout(() => {
+                    this.sjcl(this.layerData, this.$refs.downH5Chart1);
+                    this.dialogVisible1 = false;
+                    setTimeout(() => {
+                        this.$refs.downH5Chart1.downLoadAllPicture();
+                    }, 2000);
+                }, 1000);
+            },
         }
     };
 </script>

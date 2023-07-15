@@ -70,7 +70,7 @@
                   :src="items.imgUrl?items.imgUrl:''"
                   alt=""
                   class="imgSetting"
-                  style="width: 56px;height: 56px"
+                  style="width: 56px;height: 56px;border-radius: 28px"
                   @error="imgError(items)"
                 >
                 <!-- 增加未上传图标显示默认图标+首字母 -->

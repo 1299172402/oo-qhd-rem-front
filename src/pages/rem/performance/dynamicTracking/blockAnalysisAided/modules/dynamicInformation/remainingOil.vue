@@ -1,13 +1,13 @@
-<!--剩余油分布图-->
+<!--含油饱和度分布图-->
 <template>
     <div class="z-main">
         <div class="z-search">
-            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable>
+            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable @change="positionChange">
                 <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
         </div> 
         <div class="z-echarts">
-            <el-image :src="image" style="width:100%;">
+            <el-image :src="src" style="width:100%;">
                 <div slot="error"></div>
             </el-image>
         </div> 
@@ -16,8 +16,10 @@
 
 <script>
     import {fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
-    import {dynamicDataRemainingOilDistribution} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
-    import {downFile} from "@/lib/remBase64Download.js";
+    // miniIo
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {filePreview,downFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     export default {
         props: {
             oilFieldId: {},
@@ -25,26 +27,45 @@
         },
         data() {
             return {
+                //mniIo
+                fileId:'',
+                filestrId:'',
+                src:'',
                 //选中层位
                 selectPosition: '',
                 //层位所选择内容信息
                 position: [],
-                image: '',
             };
         },
-        watch: {
-            //监听层位信息，给其动态传值
-            selectPosition(val) {
-                this.$emit('childPara', this.selectPosition);
-                this.OnChangeImage();
-            }
-        },
-        mounted() {
+        async mounted() {
+            await this.fieldOilLayersApi();
             this.doSearch();
         },
         methods: {
-            async doSearch() {
-                //初始化获取层段关系
+            doSearch() {
+                let params ={
+                    operationId:this.blockId+'-'+this.selectPosition,
+                    operationType:'BLOCKHYBHDFBT',
+                    readOne:'one' 
+                }
+                queryRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        if(res.data.data.length){
+                            this.fileId=res.data.data[0].fileId;
+                            this.filestrId=res.data.data[0].filestrId;
+                            downFile(this.fileId).then((res)=>{
+                                this.src=window.URL.createObjectURL(res);
+                            })
+                        }else{
+                            this.src="";
+                        }
+                    }else {
+                        this.$message.error("文件查询接口异常!");
+                    }
+                });
+            },
+            //初始化获取层数据
+            async fieldOilLayersApi(){
                 await fieldOilLayers({oilFieldId: this.oilFieldId,fieldId: this.blockId,wellId: '',}).then((res) => {
                     if (res.data.code == 200) {
                         if (res.data.data) {
@@ -63,73 +84,23 @@
                         }
                     }
                 });
-                //获取参数油田id 平台id 井id
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    layerId: this.selectPosition,
-                }
-                //获取图片组信息
-                await dynamicDataRemainingOilDistribution(request).then((res) => {
-                    if (res.data.code == 200) {
-                        if (res.data.data.layerPics) {
-                            if (res.data.data.layerPics.length > 0) {
-                                let imageData = res.data.data.layerPics[0];
-                                let type = imageData.type;
-                                this.image = 'data:' + type + ';base64,' + imageData.data;
-                            } else {
-                                this.image = '';
-                            }
-                        } else {
-                            this.image = '';
-                        }
-                    } else {
-                        this.image = '';
-                    }
-                });
             },
-            //切换图片
-            OnChangeImage() {
-                this.image = '';
-                let request = {
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    layerId: this.selectPosition,
-                }
-                dynamicDataRemainingOilDistribution(request).then((res) => {
-                    if (res.data.code == 200) {
-                        if (res.data.data.layerPics) {
-                            if (res.data.data.layerPics.length > 0) {
-                                let imageData = res.data.data.layerPics[0];
-                                let type = imageData.type;
-                                this.image = 'data:' + type + ';base64,' + imageData.data;
-                            } else {
-                                this.image = '';
-                            }
-                        } else {
-                            this.image = '';
-                        }
-                    } else {
-                        this.image = '';
-                    }
-                });
-            },
-            //单选按钮选中改变事件
-            changeRadio() {
+            //监听层位信息
+            positionChange(val) {
                 this.$emit('childPara', this.selectPosition);
-                this.OnChangeImage();
+                this.doSearch();
             },
             //下载功能
             doDownLoad() {
                 let fileName = '含油饱和度分布图';
                 let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
                 if (layerMess) {
-                    fileName = (layerMess.layerName ? layerMess.layerName : '') + fileName;
+                    fileName= layerMess.layerName +'-'+fileName;
                 }
-                if (this.blockName) {
-                    fileName = this.blockName + fileName;
-                }
-                downFile(this.image, fileName);
+                let file_suffix=this.filestrId.split('.')[1];
+                downFile(this.fileId).then(res=>{
+                    FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+                })
             }
         }
     }
