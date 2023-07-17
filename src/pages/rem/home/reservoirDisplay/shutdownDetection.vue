@@ -92,6 +92,7 @@
                 :cell-style="{ padding: '3px', 'text-align': 'center' }"
                 :data="tableData"
                 border
+                height="calc(100% - 50px)"
                 width="100%"
                 ref="reset"
                 style="width: 100%; height: calc(100% - 40px )"
