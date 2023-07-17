@@ -67,9 +67,9 @@ export function queryShutDownValueDict() {
     method: "get",
   });
 }
-export function queryShutDownWellStatisCharts({ endTime, startTime } = {}) {
+export function queryShutDownWellStatisCharts({ ogfId } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/queryShutDownWellStatisCharts?endTime=${ endTime || "" }&startTime=${ startTime || "" }`,
+    url: `${baseUrl}/reservoirBillboards/queryShutDownWellStatisCharts?ogfId=${ ogfId || "" }`,
     method: "get",
   });
 }
