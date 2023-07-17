@@ -20,7 +20,7 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="平台:" style="margin-left:20px">
-                            <el-select v-model="queryData.platformId" @change="choicewell" style="width: 220px">
+                            <el-select v-model="queryData.platformId" clearable @change="choicewell" style="width: 220px">
                                 <el-option
                                     v-for="(item, index) in platforms"
                                     :key="index"
@@ -32,8 +32,8 @@
                         </el-form-item>
                         <el-form-item label="井号:" style="margin-left:20px">
                             <el-select v-model="queryData.wellId" clearable style="width: 170px">
-                                <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellId"
-                                           :value="item.wellName">
+                                <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellName" 
+                                           :value="item.wellId">
                                 </el-option>
                             </el-select>
                         </el-form-item>
