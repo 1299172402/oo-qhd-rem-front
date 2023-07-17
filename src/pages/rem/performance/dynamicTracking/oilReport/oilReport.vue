@@ -71,7 +71,6 @@ export default {
       },
       // 油田下拉框
       oilFields: [],
-      platforms: [],
       deptSelect: [
         {
           deptId: "715AD1CD60484BB59E737CD18A9DE44A  ",
