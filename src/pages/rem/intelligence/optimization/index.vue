@@ -394,7 +394,7 @@ export default {
                 type: 'warning'
             }).then(() => {
                 
-                window.open('https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge?link=rem','_blank')
+                window.open('https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/?page=reservoirDisplay/linkage','_blank')
                 // this.$router.push({name: "schemePrediction"})
             })
         },
