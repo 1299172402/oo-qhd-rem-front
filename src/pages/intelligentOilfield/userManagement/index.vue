@@ -816,7 +816,7 @@ import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import proxy from "@/config/host";
 import { getCodeImg } from "@/api/intelligentOilfield/login";
-import { encryptlogin } from "@/utils/jsencrypt";
+import { encryptlogin, decrypt } from "@/utils/jsencrypt";
 /* import { getInfoByCode } from "@/api/intelligentOilfield/system/applicationCenter/tenant.js"; */
 
 export default {
@@ -1056,7 +1056,7 @@ export default {
       this.getPostList();
       this.getTreeselect();
       this.getConfigKey("sys.user.initPassword").then(response => {
-        this.initPassword = response.data.msg;
+        this.initPassword = decrypt(response.data.msg);
       });
     }
   },
@@ -1097,8 +1097,8 @@ export default {
       treeselect().then(response => this.getDeptOptions(response.data.data))
         .then(response => {
           this.deptOptions = response;
-          this.initDeptId = this.deptOptions[0].id;
-          this.queryParams.deptId = this.initDeptId;
+          // this.initDeptId = this.deptOptions[0].id;
+          // this.queryParams.deptId = this.initDeptId;
           this.getList();
           this.$nextTick(() => {
             this.$refs.tree.setCurrentKey(this.initDeptId);
@@ -1145,8 +1145,16 @@ export default {
     },
     // 节点单击事件
     handleNodeClick(data) {
-      this.queryParams.deptId = data.id;
       this.queryParams.pageNum = 1;
+      if (data.id === this.queryParams.deptId) {
+        this.initDeptId = null;
+        this.queryParams.deptId = null;
+        this.deptOptions = JSON.parse(JSON.stringify(this.deptOptions));
+
+        this.$forceUpdate();
+      } else {
+        this.queryParams.deptId = data.id;
+      }
       this.getList();
     },
     // 用户状态修改
