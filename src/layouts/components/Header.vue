@@ -515,10 +515,8 @@ export default Vue.extend({
       immediate: true
     },
     "$store.state.user.isGroupLogin": {
-      handler(newVal) {
-        if (newVal) {
-          this.getInitDeptds();
-        }
+      handler() {
+        this.getInitDeptds();
         this.containerWidth();
       },
       deep: true,
@@ -541,9 +539,6 @@ export default Vue.extend({
       });
     },
     getInitDeptds() {
-      // 解决无租户不显示门户的面板
-      this.$store.commit("user/SETTENANTID", "");
-      this.$store.commit("user/SETTENANTName", "");
       getTenantsByUserId(this.$store.getters["user/userDetail"].user.userId).then(response => {
         // 租户列表
         this.tenantOptions = response.data.data;
