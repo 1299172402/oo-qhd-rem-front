@@ -42,7 +42,6 @@
     import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
     import {downFile as minioDownFile} from "@/components/upload/utils/file";
     import FileSaver from "file-saver";
-    let _this;
     export default {
         components: {
             H5Chart,
@@ -57,8 +56,10 @@
             return {
                 url: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-yscl.html',
                 url1: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient1.html',
+                
                 zztUrl: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-yscl.html',
                 pptUrl: '/IsoFrameCom1/IsoFrameCom/View/eWGraphFrameShow-paopao.html',
+                
                 dialogVisible1: false,
                 dialogVisible2: false,
                 //选中层位
@@ -66,9 +67,9 @@
                 //层位所选择内容信息
                 position: [],
                 image: '',
-                //类型点
+                //类型
                 radioType: "LIQUID",
-                //图类型
+                //图类
                 picType: "COLUMN",
                 //年份
                 yearTime: new Date().format('yyyy-MM'),
@@ -81,14 +82,13 @@
         methods: {
             async doSearch() {
                 await this.fieldOilLayersApi();
-                await this.queryRemUploadFileMinioApi();
-                this.OnChangeImage();
+                await this.OnChangeImage();
             },
             //初始化获取层段关系
             async fieldOilLayersApi(){
-                await fieldOilLayers({oilFieldId: this.oilFieldId,fieldId: this.blockId,wellId: ''}).then((res) => {
+                this.selectPosition='';
+                await fieldOilLayers({oilFieldId: this.oilFieldId,fieldId: this.blockId}).then((res) => {
                     if (res.data.code == 200) {
-                        //层段数据
                         if (res.data.data) {
                             this.position = res.data.data.fieldLayers;
                             if (!this.selectPosition && this.position[0]) {
@@ -106,33 +106,22 @@
                     }
                 });
             },
-            //获取底图
+            //层位change
+            positionChange(val){
+                this.$emit('childPara', this.selectPosition, this.picType);
+            },
+            // //获取底图
             async queryRemUploadFileMinioApi(){
+                let fileId='';
                 let params ={
-                    operationId:this.blockId,
-                    operationType:'BLOCK',
+                    operationId:this.picType=='COLUMN' ? this.blockId : this.blockId+'-'+this.selectPosition,//泡泡图要跟层位绑定
+                    operationType: this.picType=='COLUMN' ?'BLOCK':'BLOCKLCYCYXZTBUBBLE',  
                     readOne:'one' 
                 }
                 await queryRemUploadFileMinio(params).then((res) => {
                     if (res.data.code == 200) {
                         if(res.data.data.length){
-                            let fileId= res.data.data[0].fileId;
-                            minioDownFile(fileId).then((res)=>{
-                                let src=window.URL.createObjectURL(res);
-                                const image = new Image();
-                                image.src = src;
-                                image.onload = () => {
-                                  // 构建canvas节点
-                                  const canvas = document.createElement('canvas');
-                                  canvas.width = image.width;
-                                  canvas.height = image.height;
-                                  const context = canvas.getContext('2d');
-                                  context.drawImage(image, 0, 0, image.width, image.height);
-                                  // 转换
-                                  const imgBase64 = canvas.toDataURL();
-                                  this.image=imgBase64;
-                                };
-                            })
+                            fileId= res.data.data[0].fileId;
                         }else{
                             this.image='';
                         }
@@ -140,9 +129,29 @@
                         this.$message.error("文件查询接口异常!");
                     }
                 });
+                if(!fileId){
+                    return false;
+                }
+                await minioDownFile(fileId).then((res)=>{
+                    let src=window.URL.createObjectURL(res);
+                    const image = new Image();
+                    image.src = src;
+                    image.onload = () => {
+                      // 构建canvas节点
+                      const canvas = document.createElement('canvas');
+                      canvas.width = image.width;
+                      canvas.height = image.height;
+                      const context = canvas.getContext('2d');
+                      context.drawImage(image, 0, 0, image.width, image.height);
+                      // 转换
+                      const imgBase64 = canvas.toDataURL();
+                      this.image=imgBase64;
+                    };
+                })
             },
             //获取图层信息
             async OnChangeImage() {
+                await this.queryRemUploadFileMinioApi();
                 let request = {
                     oilFieldId: this.oilFieldId,
                     fieldId: this.blockId,
@@ -166,14 +175,13 @@
             doPicTypeSwitch(val) {
                 if(this.picType!=val){
                     this.picType=val;
-                    if (val == 'COLUMN') {
+                    if (this.picType == 'COLUMN') {
                         this.url = this.zztUrl;
-                    } else if (val == 'BUBBLE') {
+                    } else if (this.picType == 'BUBBLE') {
                         this.url = this.pptUrl;
                     }
-                    this.OnChangeImage();
+                    this.$emit('childPara', this.selectPosition, this.picType);
                 }
-                this.$emit('childPara', this.selectPosition, this.picType);
             },
             //柱状图解析
             columnPic(oilWaterChart) {
@@ -312,17 +320,6 @@
                 h5data.Layers.push(columnLayer);
                 this.$refs.H5Chart.setSampleDate(h5data);
             },
-          
-            //层位change
-            positionChange(val){
-                this.$emit('childPara', this.selectPosition, this.picType);
-                this.OnChangeImage();
-            },
-            //单选change
-            changeRadio() {
-                this.$emit('childPara', this.selectPosition, this.picType);
-                this.OnChangeImage();
-            },
             //下载功能
             doDownLoad() {
                 if (this.picType == 'COLUMN') {
@@ -343,9 +340,9 @@
                     }
                     setTimeout(() => {
                         if (this.picType == 'COLUMN') {
-                            _this.$refs.downH5Chart1.downLoadAllPicture();
+                            this.$refs.downH5Chart1.downLoadAllPicture();
                         } else if (this.picType == 'BUBBLE') {
-                            _this.$refs.downH5Chart2.downLoadAllPicture();
+                            this.$refs.downH5Chart2.downLoadAllPicture();
                         }
                     }, 2000)
                 }, 1000)

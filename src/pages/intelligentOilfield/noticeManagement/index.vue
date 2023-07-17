@@ -90,7 +90,7 @@
       </el-row>
       <el-table
         :data="noticeList"
-        height="calc(100% - 45px)"
+        height="calc(100% - 96px)"
         :row-style="{ height: '0px' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
         header-cell-class-name="table_header"

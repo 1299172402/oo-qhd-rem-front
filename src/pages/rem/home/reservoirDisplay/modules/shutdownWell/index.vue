@@ -222,7 +222,7 @@ export default {
           // endTime:'2022-12-01',
           // startTime:'2020-12-01'
       }
-      queryShutDownWellStatisCharts(data).then((res)=>{
+      queryShutDownWellStatisCharts().then((res)=>{
           this.histogram.yAxis[0].min = null
           this.histogram.yAxis[0].max = null
           this.histogram.yAxis[1].min = null

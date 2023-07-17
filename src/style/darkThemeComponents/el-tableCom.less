@@ -5,6 +5,10 @@
   font-weight: 400;
 }
 
+.el-table__body tr.current-row>td.el-table__cell {
+  background: var(--opacity-blue-bg) !important;
+}
+
 .el-table {
   background: transparent;
 }
@@ -64,11 +68,13 @@
 
 // header右侧固定白线
 .el-table__fixed-right-patch {
-  width: 0 !important;
+  // width: 0 !important;
+  width: 11px !important;
+  background: rgba(1, 63, 107, 1);
 }
 
 .el-table__fixed-right {
-  right: 10px !important;
+  // right: 10px !important;
 }
 
 // 滚动条的滑块
@@ -83,6 +89,7 @@
 
 .el-table .el-table__cell.gutter {
   background: transparent;
+  display: block !important;
 }
 // 表头显示双行（带单位）
 .doubleHeader .el-table__header-wrapper {
@@ -139,7 +146,8 @@
 }
 
 .infoHeaderBg {
-  background: var(--logo-bg) no-repeat top right, linear-gradient(to right, rgba(0, 202, 255, 0.4), var(--opacity-blue-bg2)) !important;
+  background: var(--logo-bg) no-repeat top right,
+    linear-gradient(to right, rgba(0, 202, 255, 0.4), var(--opacity-blue-bg2)) !important;
 }
 
 .footerBox {
@@ -160,7 +168,8 @@
   border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
   // background: linear-gradient(360deg, rgba(0, 68, 115, 0.64) 0%, rgba(0, 72, 122, 0.16) 100%) !important;
   box-shadow: unset;
-  background: var(--logo-bg) no-repeat top right, linear-gradient(360deg, rgba(0, 68, 115, 0.64) 0%, rgba(0, 72, 122, 0.16) 100%) !important;
+  background: var(--logo-bg) no-repeat top right,
+    linear-gradient(360deg, rgba(0, 68, 115, 0.64) 0%, rgba(0, 72, 122, 0.16) 100%) !important;
 }
 
 .maxDivBox {
@@ -328,4 +337,21 @@
   display: block !important;
   width: 17px !important;
   border: 1px solid transparent !important;
+}
+
+.el-table__body-wrapper.is-scrolling-none ~ .el-table__fixed-right {
+  right: 0 !important;
+  height: 100% !important;
+  bottom: 0 !important;
+  box-shadow: none !important;
+}
+
+// 表格只有纵向滚动条
+.el-table--scrollable-y .el-table__fixed-right {
+  right: 10px !important;
+}
+
+// 表格只有横向没有纵向
+.el-table--scrollable-x:not(.el-table--scrollable-y) .el-table__fixed-right {
+  right: 0 !important;
 }

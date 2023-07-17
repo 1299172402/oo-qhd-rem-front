@@ -70,7 +70,17 @@
           </el-button>
         </el-col>
       </el-row>
-      <el-table :data="dataList" @selection-change="handleSelectionChange">
+      <el-table
+        :data="dataList"
+        height="calc(100% - 100px)"
+        :row-style="{ height: '0px' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        header-cell-class-name="table_header"
+        :cell-style="{ padding: '2px', 'text-align': 'center' }"
+        style="width: 100%; height: 100%; overflow: hidden;"
+        :default-sort="{ prop: 'date', order: 'descending' }"
+        @selection-change="handleSelectionChange"
+      >
         <el-table-column
           label="序号"
           type="index"
@@ -228,6 +238,7 @@
 <script>
 import { listData, getData, delData, addData, updateData } from "@/api/intelligentOilfield/system/dict/data";
 import { getType } from "@/api/intelligentOilfield/system/dict/type";
+import { Message } from "element-ui";
 
 export default {
   name: "Data",
@@ -440,6 +451,13 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
+      if (this.dataList.length === 0) {
+        Message({
+          type: "warning",
+          message: "没有可以导出的数据!"
+        });
+        return;
+      }
       this.download(
         "system/dict/data/export",
         {

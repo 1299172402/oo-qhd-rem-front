@@ -106,6 +106,10 @@ export default {
     margin-top: 20px;
   }
 
+  /deep/ .el-card {
+    transition: none !important;
+  }
+
   .form-section__view-only {
     ::v-deep .el-form-item__label::before {
       display: none;

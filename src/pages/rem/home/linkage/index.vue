@@ -32,6 +32,8 @@ export default {
     mounted(){
         //转动弹出图片循环
         // this.arrowFun()
+        const env = import.meta.env.MODE;
+        console.log(env)
         this.getWarningInfo()
         //预警信息轮询查询
         this.timmerWarning = setInterval(()=>{
@@ -209,8 +211,8 @@ export default {
                     showFlag:false,
                     typeIdList:[],
                     warningShowFlag : true,
-                    // analysisUrl:`https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?wellIds=%5B%5D&prodDate=${data2}&prodDateCompare=${data1}&page=reservoirDisplay/linkage`
-                    analysisUrl:`https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?wellIds=%5B%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%22D4BEBD2817E0449F957F78ED0A685A6C%22,%22fluidProdDaily%22%3A289.56,%22oilProdDaily%22%3A6.03,%22waterRatio%22%3A0.06,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-I3H1%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%22375DB74FC89747028A9436A8E41D3991%22,%22fluidProdDaily%22%3A-4.9,%22oilProdDaily%22%3A4.47,%22waterRatio%22%3A-0.4,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-G9H1%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%226E73C512F8444CE3BAEE27FE23294144%22,%22fluidProdDaily%22%3A-3.72,%22oilProdDaily%22%3A-2.06,%22waterRatio%22%3A0.54,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-F4H3%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%2274B59F886DF1459AB58311A6159202A4%22,%22fluidProdDaily%22%3A2.23,%22oilProdDaily%22%3A-2.39,%22waterRatio%22%3A0.37,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-F5%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%22257DE61B82E94263BFB8239D02447934%22,%22fluidProdDaily%22%3A-36.88,%22oilProdDaily%22%3A-2.9,%22waterRatio%22%3A0.07,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-J14H1%22%7D%5D`
+                    analysisUrl:`https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?wellIds=%5B%5D&prodDate=${data2}&prodDateCompare=${data1}&page=reservoirDisplay/linkage`
+                    // analysisUrl:`https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?wellIds=%5B%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%22D4BEBD2817E0449F957F78ED0A685A6C%22,%22fluidProdDaily%22%3A289.56,%22oilProdDaily%22%3A6.03,%22waterRatio%22%3A0.06,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-I3H1%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%22375DB74FC89747028A9436A8E41D3991%22,%22fluidProdDaily%22%3A-4.9,%22oilProdDaily%22%3A4.47,%22waterRatio%22%3A-0.4,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-G9H1%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%226E73C512F8444CE3BAEE27FE23294144%22,%22fluidProdDaily%22%3A-3.72,%22oilProdDaily%22%3A-2.06,%22waterRatio%22%3A0.54,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-F4H3%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%2274B59F886DF1459AB58311A6159202A4%22,%22fluidProdDaily%22%3A2.23,%22oilProdDaily%22%3A-2.39,%22waterRatio%22%3A0.37,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-F5%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%22257DE61B82E94263BFB8239D02447934%22,%22fluidProdDaily%22%3A-36.88,%22oilProdDaily%22%3A-2.9,%22waterRatio%22%3A0.07,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-J14H1%22%7D%5D`
                 },
                 {
                     style: 'position:absolute;left: 20%;top: 0%;width:20%;height:40%;',
@@ -232,7 +234,7 @@ export default {
                 {
                     style: 'position:absolute;left: 58%;top: 36%;width:20%;height:40%;',
                     boxText: '分注分采调控策略',
-                    boxBottomText: [{name:'注采调控最优化方案',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge?route=rem&page=reservoirDisplay/linkage'}, {name:'配注微调策略',url:'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization?link=rem&page=reservoirDisplay/linkage'}],
+                    boxBottomText: [{name:'注采调控最优化方案',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge?page=reservoirDisplay/linkage'}, {name:'配注微调策略',url:'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization?link=rem&page=reservoirDisplay/linkage'}],
                     boxBottomContent: [['智能分注调控策略优化模型', '智能分注调控策略优化模型'], ['配注方案分析评估模型']],
                     boxStyle: {
                         pWidth: 'width:11vw'

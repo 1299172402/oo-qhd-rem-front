@@ -205,7 +205,7 @@
             <iframe
                 style="height:100%; width:100%; border:none;"
                 v-show="activeName == 'second'"
-                src="https://dl-front-qhd32-6znyt.tj.app.cnooc/sow/"
+                src="https://intelinj.tjioms-test.tjltd.cnooc/"
             ></iframe>
 
         </pagePanelNew>

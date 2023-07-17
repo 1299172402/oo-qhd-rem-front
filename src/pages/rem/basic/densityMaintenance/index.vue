@@ -238,7 +238,16 @@ export default {
     data() {
         return {
             dialogVisible: false, //运行计算展示弹窗
-            producttype: [],
+            producttype: [
+                {
+                    appendixValueName:'原油',
+                    appendixValueCode:'002001'
+                },
+                {
+                    appendixValueName:'天然气',
+                    appendixValueCode:'002002'
+                },
+            ],
             deptSelect: [], //作业公司
             oilFields: [],
             // 表格数据
@@ -301,7 +310,6 @@ export default {
                 let densityModelInfo = this.noticeList[0];
                 save({densityModelInfo, densityInfoQueryVo}).then((res) => {
                     if (res.data.code == 200 && res.data.msg == '1') {
-                        // this.producttype = res.data.data;
                         this.$message.success("保存成功！");
                     }else{
                         this.$message.error("系统错误请重新尝试或联系运维人员！");

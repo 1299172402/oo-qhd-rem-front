@@ -10,6 +10,7 @@
       >
         <el-form-item label="菜单名称" prop="menuName">
           <input
+            id="menuNameQuery"
             v-model.lazy="queryParams.menuName"
             class="el-input__inner"
             placeholder="请输入菜单名称"
@@ -604,6 +605,9 @@ export default {
       }
     };
     return {
+      showClear1: false,
+      showClear2: false,
+      showClear3: false,
       searchOption: [],
       appSelect: [],
       isShowRadioBtn: false,
@@ -656,6 +660,21 @@ export default {
     this.getList();
   },
   methods: {
+    clear(type) {
+      if (type === 1) {
+        this.queryParams.menuName = null;
+        this.showClear1 = false;
+      } else if (type === 2) {
+        this.form.menuName = null;
+        this.showClear2 = false;
+      } else {
+        this.form.path = null;
+        this.showClear3 = false;
+      }
+    },
+    handleInput() {
+      this.showClear1 = !!document.getElementById("menuNameQuery").value;
+    },
     inputChange() {
       if (!this.form.validateField) {
         this.$refs.form.validateField("parentId");
@@ -664,9 +683,11 @@ export default {
       }
     },
     validateText() {
+      this.showClear2 = !!document.getElementById("menuName").value;
       this.$refs.form.validateField("menuName");
     },
     validateText2() {
+      this.showClear3 = !!document.getElementById("path").value;
       this.$refs.form.validateField("path");
     },
     handlePushKeyword(event) {

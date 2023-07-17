@@ -369,6 +369,7 @@
       5.1、普通表格（列固定）
     </div>
     <el-table
+      highlight-current-row
       :row-style="{ height: '0px' }"
       :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       :data="tableData"

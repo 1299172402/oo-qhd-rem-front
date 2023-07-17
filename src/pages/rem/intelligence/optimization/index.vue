@@ -238,7 +238,7 @@ export default {
         }else{
             this.queryTableData(this.form.tableData2)
         }
-        this.src = 'https://intelinj.tjioms-dev.tjltd.cnooc/'
+        this.src = 'https://intelinj.tjioms-test.tjltd.cnooc/'
     },
     data() {
         return {
@@ -394,7 +394,7 @@ export default {
                 type: 'warning'
             }).then(() => {
                 
-                window.open('https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge?link=rem','_blank')
+                window.open('https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/?page=reservoirDisplay/linkage','_blank')
                 // this.$router.push({name: "schemePrediction"})
             })
         },

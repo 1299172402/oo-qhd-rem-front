@@ -131,6 +131,8 @@ export default {
       this.selectTenement = val;
     },
     cancel() {
+      this.ipagination.pageNum = 1;
+      this.ipagination.current = 1;
       this.$refs.table.clearSelection();
     }
   }

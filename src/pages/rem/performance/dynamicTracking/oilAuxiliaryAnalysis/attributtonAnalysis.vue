@@ -89,7 +89,7 @@
             <Echart :chart-data="option" style="height: 100%"></Echart>
         </pagePanel>
         <pagePanel v-if="link==4" :headerTitle="title" style="height: 120%" :show-btn="true">
-            <Echart :chart-data="option2" style="height: 100%"></Echart>
+            <Echart id="option2" ref="chart"  :chart-data="option2" style="height: 100%"></Echart>
         </pagePanel>
         <pagePanel v-if="link==5" :headerTitle="title" style="height: 120%" :show-btn="true">
             <Echart :chart-data="option3" style="height: 100%"></Echart>
@@ -106,11 +106,12 @@
                 :cell-style="{ padding: '3px', 'text-align': 'center' }"
                 :data="tableData"
                 border
+                highlight-current-row
+                @current-change="handleCurrentChange"
                 ref="reset"
                 style="width: 100%; height: 100%"
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
-                @cell-mouse-enter="blurReason"
             >
                 <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期">
@@ -125,7 +126,16 @@
                 <el-table-column prop="pumpEfficiency" min-width="150" :label="`排量效率\n(%)`"></el-table-column>
                 <el-table-column prop="flwPrs" min-width="150" :label="`流压\n(MPa)`"></el-table-column>
                 <el-table-column prop="attribution" min-width="250" label="归因"
-                                 show-overflow-tooltip></el-table-column>
+                                 show-overflow-tooltip>
+                    <template slot-scope="scope">
+                        <el-tooltip :content='matchuptext(scope.row.measure)'   placement="top" effect="dark">
+                            <span>{{scope.row.attribution}}</span>
+                        </el-tooltip>
+                        <!--                        <el-tooltip class="item" effect="dark" :content="matchuptext(option2.series[0].data,scope.row.valueAttribution)" placement="top-start" >-->
+                        <!--                            {{scope.row.valueAttribution}}-->
+                        <!--                        </el-tooltip >-->
+                    </template>
+                </el-table-column>
                 <el-table-column prop="measure" min-width="250" label="措施" show-overflow-tooltip></el-table-column>
             </el-table>
             <pagination
@@ -145,11 +155,12 @@
                 :cell-style="{ padding: '3px', 'text-align': 'center' }"
                 :data="tableData"
                 border
+                highlight-current-row
+                @current-change="handleCurrentChange"
                 ref="reset"
                 style="width: 100%; height: 100%"
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
-                @cell-mouse-enter="blurReason"
             >
                 <el-table-column prop="wellGroupName" min-width="250" label="井组名称"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期"></el-table-column>
@@ -161,7 +172,16 @@
                 <el-table-column prop="monthlyWaterInjection" min-width="180"
                                  :label="`井组月注水量\n(m³)`"></el-table-column>
                 <el-table-column show-overflow-tooltip prop="attribution" min-width="250"
-                                 label="归因"></el-table-column>
+                                 label="归因">
+                    <template slot-scope="scope">
+                        <el-tooltip :content='matchuptext(scope.row.measure)'   placement="top" effect="dark">
+                            <span>{{scope.row.attribution}}</span>
+                        </el-tooltip>
+                        <!--                        <el-tooltip class="item" effect="dark" :content="matchuptext(option2.series[0].data,scope.row.valueAttribution)" placement="top-start" >-->
+                        <!--                            {{scope.row.valueAttribution}}-->
+                        <!--                        </el-tooltip >-->
+                    </template>
+                </el-table-column>
                 <el-table-column show-overflow-tooltip prop="measure" min-width="250"
                                  label="下步措施"></el-table-column>
             </el-table>
@@ -181,11 +201,12 @@
                 :cell-style="{ padding: '3px', 'text-align': 'center' }"
                 :data="tableData"
                 border
+                highlight-current-row
+                @current-change="handleCurrentChange"
                 ref="reset"
                 style="height: 100%"
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
-                @cell-mouse-enter="blurReason"
             >
                 <el-table-column prop="wellNo" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="evalTime" min-width="150" label="日期">
@@ -194,15 +215,24 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="layerName" min-width="200" show-overflow-tooltip label="层位"></el-table-column>
-                <el-table-column prop="itemValue" min-width="150" :label="`注水强度\n(m³/d·m)`"></el-table-column>
+                <el-table-column prop="itemValue" min-width="150"   :label="`注水强度\n(m³/d·m)`"></el-table-column>
                 <el-table-column prop="evalResult" min-width="200" show-overflow-tooltip
                                  label="评价结论"></el-table-column>
                 <el-table-column prop="injDuration" min-width="150" :label="`生产时长\n(h)`"></el-table-column>
                 <el-table-column prop="injDaily" min-width="150" :label="`注入量\n(m³)`"></el-table-column>
                 <el-table-column prop="whInjPress" min-width="150" :label="`注入压力\n(mPa)`"></el-table-column>
                 <el-table-column prop="injAllocationRate" min-width="150" :label="`配注量\n(m³/d)`"></el-table-column>
-                <el-table-column prop="valueAttribution" min-width="200" show-overflow-tooltip
-                                 label="归因"></el-table-column>
+                <el-table-column prop="valueAttribution" min-width="200"    show-overflow-tooltip
+                                 label="归因">
+                    <template slot-scope="scope">
+                        <el-tooltip :content='matchuptext(scope.row.vauleMeasure)'   placement="top" effect="dark">
+                            <span>{{scope.row.valueAttribution}}</span>
+                        </el-tooltip>
+<!--                        <el-tooltip class="item" effect="dark" :content="matchuptext(option2.series[0].data,scope.row.valueAttribution)" placement="top-start" >-->
+<!--                            {{scope.row.valueAttribution}}-->
+<!--                        </el-tooltip >-->
+                    </template>
+                </el-table-column>
                 <el-table-column prop="vauleMeasure" min-width="200" show-overflow-tooltip
                                  label="建议措施"></el-table-column>
             </el-table>
@@ -224,11 +254,12 @@
                 :cell-style="{ padding: '3px', 'text-align': 'center' }"
                 :data="tableData"
                 border
+                highlight-current-row
+                @current-change="handleCurrentChange"
                 ref="reset"
                 style="width: 100%; height: 100%"
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
-                @cell-mouse-enter="blurReason"
             >
                 <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期">
@@ -248,7 +279,16 @@
                 <el-table-column prop="watCnt" min-width="150" :label="`含水率\n(%)`"></el-table-column>
                 <el-table-column prop="flwPrs" min-width="150" :label="`流压\n(MPa)`"></el-table-column>
                 <el-table-column prop="attribution" min-width="250" show-overflow-tooltip
-                                 label="归因"></el-table-column>
+                                 label="归因">
+                    <template slot-scope="scope">
+                        <el-tooltip :content='matchuptext(scope.row.measure)'   placement="top" effect="dark">
+                            <span>{{scope.row.attribution}}</span>
+                        </el-tooltip>
+                        <!--                        <el-tooltip class="item" effect="dark" :content="matchuptext(option2.series[0].data,scope.row.valueAttribution)" placement="top-start" >-->
+                        <!--                            {{scope.row.valueAttribution}}-->
+                        <!--                        </el-tooltip >-->
+                    </template>
+                </el-table-column>
                 <el-table-column prop="measure" min-width="250" show-overflow-tooltip label="措施"></el-table-column>
             </el-table>
             <pagination
@@ -283,6 +323,7 @@ export default {
     data() {
         return {
             pageTotal: 0,
+            chart:'',
             queryData: {
                 assetCode: "",
                 month: "",
@@ -453,7 +494,7 @@ export default {
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
-                                                                            "name": "归因2：调整参数影响。\n下步措施：提高生产时率",
+                                                                            "name": "归因2：调整参数影响。\n下步措施：参数二次调整",
                                                                         }
                                                                     ]
                                                                 }
@@ -558,7 +599,6 @@ export default {
                             align: 'left'
                         }
                     },
-
                     emphasis: {
                         disabled: true,
                         focus: 'ancestor',
@@ -579,9 +619,11 @@ export default {
                 },
                 series: [{
                     type: 'tree',
+                    hoverAnimation:'true',
                     data: [
                         {
                             "level": 1,
+                            hoverAnimation:'true',
                             "name": "注水强度不合理",
                             "children": [
                                 {
@@ -634,7 +676,7 @@ export default {
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
-                                                                            "name": "归因2：调整参数影响。\n下步措施：提高生产时率",
+                                                                            "name": "归因2：调整参数影响。\n下步措施：参数二次调整",
                                                                         }
                                                                     ]
                                                                 }
@@ -712,9 +754,9 @@ export default {
                         }
                     ],
                     top: '1%',
-                    left: '7%',
+                    left: '6%',
                     bottom: '1%',
-                    right: '15%',
+                    right: '26%',
                     symbol: 'none',
                     symbolSize: 7,
                     label: {
@@ -799,7 +841,7 @@ export default {
                             align: 'left'
                         }
                     },
-
+                    
                     emphasis: {
                         disabled: true,
                         focus: 'ancestor',
@@ -816,7 +858,7 @@ export default {
             option3: {
                 tooltip: {
                     trigger: 'item',
-                    triggerOn: 'mousemove'
+                    triggerOn: 'none'
                 },
                 series: [{
                     type: 'tree',
@@ -1229,6 +1271,28 @@ export default {
                     animationDurationUpdate: 750
                 }]
             },
+            dataList:[
+                "归因1：直接关联关停记录表。\n下步措施：提高生产时率",
+                "归因2：调整参数影响。\n下步措施：参数二次调整",
+                "归因3：注采失调。\n下步措施：排查周边井组状态",
+                "归因4：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵、查管柱；②邻井排查；③上作业",
+                "归因6：地层能量不足。\n下步措施：优化注水",
+                "归因5：举升设备异常。\n下步措施：检泵",
+                "归因5：①封隔器失效；②水线突进。\n下步措施：①卡封；②产液结构优化调整",
+                "归因4：注水调配影响。\n下步措施：调整配注量",
+                "归因1：井组超注。\n下步措施：控水调配注",
+                "归因2：注采关系失调。\n下步措施：调整产液结构",
+                "归因3：层内非均质性强。\n下步措施：调剖堵水",
+                "归因4：井口压力过高。\n下步措施：建议分层酸化",
+                "归因7：地层能量不足。\n下步措施：优化注水",
+                "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                "归因4：注采失调\n下步措施：排查周边井组状态",
+                "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                "归因7：地层能量不足。\n下步措施：优化注水",
+                "归因4：注采失调\n下步措施：排查周边井组状态",
+                "归因6：①注采失调；②水线突进。\n下步措施：产液结构优化调整、优化注水",
+                "归因3：目前处于中低含水期\n下步措施：存在乳化风险",
+            ]
         };
     },
     activated() {
@@ -1274,6 +1338,41 @@ export default {
     },
     created() {
         this.link = this.$route.query.link
+    },
+    mounted(){
+        // this.chart = echarts.init(document.getElementById('option2'));
+        // this.chart.setOption(this.option2);
+        this.chart = this.$refs.chart.chart;
+        this.chart.setOption(this.option2);
+        // this.chart = echarts.init(document.getElementById('option2'));
+        // // this.chart.on('mousemove', function(params) {
+        // //     // console.log(params)
+        // // });
+        // this.chart.on('mouseover',e=>{
+        //     console.log(e.event)
+        //     this.chart.dispatchAction({
+        //         type: 'highlight ',
+        //         seriesIndex:0 ,//第几条series
+        //         dataIndex:18,
+        //         // name: '归因6：注采关系失调。\n下步措施：调整产液结构',
+        //     });
+        //     // this.chart.setOption(this.option2);
+        //
+        // })
+
+        // this.chart.on('mouseout',e=>{
+        //     this.chart.dispatchAction({
+        //         type:'highlight',
+        //         seriesIndex:e.componentIndex,
+        //         dataIndex:e.dataIndex
+        //     })
+        // })
+    //     this.chart.dispatchAction({
+    //         type:'highlight', //可选值 highlight downplay
+    //         seriesIndex:0,
+    //         dataIndex: [1,2],
+    // })
+    //     
     },
     methods: {
         //获取查询条件中下拉列表的值
@@ -1384,12 +1483,48 @@ export default {
                 })
             }
         },
-        //表格鼠标悬浮事件
-        blurReason(row, column, cell, event){
-            let reason = row.valueAttribution || row.attribution
-            console.log(reason);
-            //TODO 待开发
-        }
+        matchup(array,data,result){
+            for (let item of array) {
+                if (item.name.includes(data)) {
+                    result.push(item.name);
+                }
+                if (item.children) {
+                    this.matchup(item.children, data, result);
+                }
+            }
+        },
+        matchuptext(data) {
+          return this.dataList.map((n)=>{
+               if(n.includes(data.split(';').join(''))){
+                   return n
+               }
+           })
+        },
+        handleCurrentChange(row){
+            const targetName = "注采关系失调";
+            const result = [];
+            this.matchup(this.option2.series[0].data,targetName, result);
+            // this.chart.dispatchAction({
+            //     type:'highlight ',
+            //     seriesIndex:0 ,//第几条series
+            //     name:result,
+            //     // name: '归因6：注采关系失调。\n下步措施：调整产液结构',
+            const _this = this
+            setTimeout(function() {
+                _this.chart.dispatchAction({
+                    type: 'showTip',
+                    x:884.7999877929688,
+                    y:981.0375366210938,
+                });
+            }, 1000)
+            // });
+            // this.chart.dispatchAction({
+            //     type: 'showTip',
+            //     x:884.7999877929688,
+            //     y:981.0375366210938,
+            // });
+            // this.chart.setOption(this.option2);
+        },
     },
 };
 </script>
@@ -1430,6 +1565,13 @@ export default {
     overflow: hidden;
 }
 
+.text-container::after {
+    content: attr(title);
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    white-space: nowrap;
+}
 ::v-deep .btnStyle {
     margin-bottom: 0px;
 }

@@ -506,6 +506,9 @@ export default Vue.extend({
     //   return sessionStorage.getItem('isGroupLogin') === 'true';
     // },
   },
+  mounted(){
+      
+  },
   watch: {
     iconvisible: {
       handler() {
@@ -516,9 +519,7 @@ export default Vue.extend({
     },
     "$store.state.user.isGroupLogin": {
       handler(newVal) {
-        if (newVal) {
-          this.getInitDeptds();
-        }
+        this.getInitDeptds();
         this.containerWidth();
       },
       deep: true,
@@ -541,9 +542,6 @@ export default Vue.extend({
       });
     },
     getInitDeptds() {
-      // 解决无租户不显示门户的面板
-      this.$store.commit("user/SETTENANTID", "");
-      this.$store.commit("user/SETTENANTName", "");
       getTenantsByUserId(this.$store.getters["user/userDetail"].user.userId).then(response => {
         // 租户列表
         this.tenantOptions = response.data.data;
@@ -699,6 +697,7 @@ export default Vue.extend({
       this.form.postIds = this.form.tempPostId ? this.form.tempPostId?.split(",") : [];
       this.$refs.form.validate(valid => {
         if (valid) {
+          delete this.form.password;
           updateUseridcard(this.form).then(res => {
             if (res ? res.data.code === 200 : false) {
               this.$modal.msgSuccess("修改成功");

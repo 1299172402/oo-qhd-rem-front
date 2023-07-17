@@ -279,7 +279,7 @@
 <script>
 import {queryCustomQueryList} from "@/api/basic/basic";
 import {fetchProductionWells} from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import {queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
+import {queryOperatorsCheckFieldListsDetail, queryPlatformQueryWellListDetail} from "@/api/basic/master";
 
 export default {
     name: "customQuery",
@@ -485,20 +485,13 @@ export default {
                     this.oilFields = res.data.data
                 }
             })
-            let oilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
+            let ogfId = "3FC9A818F5BC43B88270DB80BBB3018F";
             const request = {
-                oilFieldId,
+                ogfId,
             };
-            fetchProductionWells(request).then((res) => {
+            queryPlatformQueryWellListDetail(request).then((res) => {
                 if (res.data.code == 200) {
-                    let wellList = res.data.data.productionWells;
-                    let arr = [];
-                    wellList.map((n) => {
-                        if (n.wellName != null) {
-                            arr.push(n);
-                        }
-                    });
-                    this.wellData = [...new Set(arr)];
+                    this.wellData = res.data.data;
                 }
             });
         },
