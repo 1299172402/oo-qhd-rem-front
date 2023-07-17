@@ -116,7 +116,7 @@
                 </el-table-column>
                 <el-table-column prop="impactProdution" :label="`影响产量\n(m³)`">
                     <template slot-scope="scope">
-                      <span v-if="!isNaN(Number(scope.row.impactProdution).toFixed(2))">{{Number(scope.row.impactProdution).toFixed(2)}}</span>  
+                      <span v-if="!isNaN(Number(scope.row.impactProdution).toFixed(2))">{{Number(scope.row.impactProdution * 10000).toFixed(2)}}</span>  
                         <span v-else>N/A</span>
                     </template>
                 </el-table-column>
