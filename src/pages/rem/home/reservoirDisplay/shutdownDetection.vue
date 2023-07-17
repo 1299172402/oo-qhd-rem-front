@@ -20,7 +20,7 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="平台:" style="margin-left:20px">
-                            <el-select v-model="queryData.assetCode" @change="choicewell" style="width: 220px">
+                            <el-select v-model="queryData.platformId" @change="choicewell" style="width: 220px">
                                 <el-option
                                     v-for="(item, index) in platforms"
                                     :key="index"
@@ -32,7 +32,7 @@
                         </el-form-item>
                         <el-form-item label="井号:" style="margin-left:20px">
                             <el-select v-model="queryData.wellId" clearable style="width: 170px">
-                                <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellName"
+                                <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellId"
                                            :value="item.wellName">
                                 </el-option>
                             </el-select>
@@ -154,7 +154,7 @@ export default {
     data() {
         return {
             queryData: {
-                assetCode: "",
+                platformId: "",
                 month: "",
                 pageNum: 1,
                 pageSize: 10,
@@ -232,7 +232,7 @@ export default {
                                     n.platformId = "";
                                 }
                             });
-                            this.queryData.assetCode = "";
+                            this.queryData.platformId = "";
                         }
                     });
                 }
@@ -246,7 +246,7 @@ export default {
 
         },
         choicewell() {
-            queryPlatformQueryWellListDetail({platformId: this.queryData.assetCode}).then((res) => {
+            queryPlatformQueryWellListDetail({platformId: this.queryData.platformId}).then((res) => {
                 this.wellList = res.data.data;
             });
         },
@@ -255,7 +255,7 @@ export default {
             this.$router.go(-1);
         },
         result() {
-            this.queryData.assetCode = ''
+            this.queryData.platformId = ''
             let requestPlat = {
                 ogfId: this.selectOilField,
             };
