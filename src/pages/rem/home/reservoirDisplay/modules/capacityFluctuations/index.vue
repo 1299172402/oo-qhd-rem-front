@@ -156,7 +156,7 @@ export default {
     },
     methods: {
         linkroute(rname) {
-            this.$router.push({name: rname,query:{prodDate:this.prodDate,prodDateCompare:this.prodDateCompare}});
+            this.$router.push({name: rname,query:{prodDate:this.prodDate,prodDateCompare:this.prodDateCompare,page:'reservoirDisplay/oilexhibition'}});
         },
         getinfo() {
             getYieldFluctuation().then((res) => {
