@@ -1,9 +1,11 @@
 <!--油井辅助分析——地震剖面图-->
 <template>
     <div class="z-main">
-        <el-image :src="src">
-            <div slot="error"></div>
-        </el-image>
+        <page-panel-new style="height:100%;margin-top:0;" show-btn>
+             <el-image :src="src" style="height: 100%;width: 100%;">
+                <div slot="error"></div>
+            </el-image>
+        </page-panel-new>
     </div>
 </template>
 
@@ -81,7 +83,7 @@
         width: 100%;
         height:calc(100% - 95px);
         overflow: auto;
-        border: 1px solid #ddd;
+        // border: 1px solid #ddd;
         border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
         display: flex;
         justify-content: center;
