@@ -1,7 +1,7 @@
 <!--压降测试-->
 <template>
     <div class="z-main">
-        <info-window style="margin-top:0;" infoWidth="100%" infoHeight="100%" headerTitle="压力数据" isShowMaxBtn>
+        <page-panel headerTitle="压力数据" style="height: 100%; margin-top: 0;" show-btn>
             <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;" height="calc(100% - 10px)" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column type="index" label="序号" width="80" fixed></el-table-column>
                 <el-table-column prop="borepipeName" label="井号" width="140" fixed></el-table-column>
@@ -23,7 +23,7 @@
                 <el-table-column prop="baseLevelAltitude" :label="`基准面海拔\n(m)`" width="140"></el-table-column>
                 <el-table-column prop="remark" width="240" label="备注"></el-table-column>
             </el-table>
-        </info-window>
+        </page-panel>
     </div>
 </template>
 

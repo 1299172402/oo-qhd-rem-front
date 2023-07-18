@@ -2,7 +2,7 @@
     <div class="chartsBox" ref="chartsBox" :style="{ height: height, width: width }" v-resize="resize">
         <div :class="className" :style="{ height: '100%', width: '100%' }"></div>
         <div class="chartsDownload" v-if="chartData?.toolbox?.show">
-            <el-button style="margin-left: 10px; height: 32px; padding: 0px 15px" type="primary" @click="chartDownLoad">下载</el-button>
+            <el-button style="margin-left: 10px; height: 28px; padding: 0px 15px" type="primary" @click="chartDownLoad">下载</el-button>
         </div>
     </div>
 </template>

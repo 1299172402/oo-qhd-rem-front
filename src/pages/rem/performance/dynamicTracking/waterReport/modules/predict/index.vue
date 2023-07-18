@@ -1,7 +1,7 @@
 <!-- 预测 -->
 <template>
   <div class="app-container">
-    <pagePanel headerTitle="预测">
+    <pagePanel headerTitle="预测" show-btn>
 <!--      <el-form style="padding-left: 20%" label-width="110px">-->
 <!--        <el-row :gutter="20">-->
 <!--          <el-form-item label="平台"> </el-form-item>-->

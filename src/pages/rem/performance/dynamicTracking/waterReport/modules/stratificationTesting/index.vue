@@ -1,14 +1,14 @@
 <!--压力测试-->
 <template>
-    <pagePanel headerTitle="分层调配数据">
-        <el-row>
+    <pagePanel headerTitle="分层调配数据" style="height: 600px;" show-btn>
+        <!-- <el-row> -->
 <!--            <span class="tableTitle"> 分层调配数据</span>-->
             <el-table
                 id="tableData"
                 highlight
                 :data="tableData"
                 style="width: 100%"
-                height="600"
+                height="100%"
             >
                 <el-table-column
                     type="index"
@@ -174,7 +174,7 @@
                     label="备注">
                 </el-table-column>
             </el-table>
-        </el-row>
+        <!-- </el-row> -->
     </pagePanel>
 </template>
 <style lang="scss" scoped>

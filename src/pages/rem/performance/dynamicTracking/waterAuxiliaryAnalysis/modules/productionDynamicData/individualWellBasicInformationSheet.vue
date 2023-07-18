@@ -1,23 +1,25 @@
 <!--单井基本信息表-->
 <template>
-    <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;" height="calc(100% - 101px)" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-        <el-table-column type="index" label="序号"></el-table-column>
-        <el-table-column prop="wellNo" label="井号"></el-table-column>
-        <el-table-column prop="fieldName" label="区块"></el-table-column>
-        <el-table-column prop="horizontalLength" :label="`水平段长度\n (m)`"></el-table-column>
-        <el-table-column prop="completeType" label="完井方式"></el-table-column>
-        <el-table-column prop="boreType" label="管柱类型"></el-table-column>
-        <el-table-column prop="kb" :label="`补心海拔\n (m)`"></el-table-column>
-        <el-table-column prop="baseLevelDepth" :label="`基准面深度\n (m)`"></el-table-column>
-        <el-table-column label="投注时间">
-            <template slot-scope="scope">
-                <span>{{ scope.row.productionDate | formatTime }}</span>
-            </template>
-        </el-table-column>
-        <!-- <el-table-column prop="pumpTVD" label="泵挂垂深"></el-table-column> -->
-        <!-- <el-table-column prop="displacement" label="泵排量"></el-table-column> -->
-        <!-- <el-table-column prop="pumpHead" label="泵扬程"></el-table-column> -->
-    </el-table>
+    <page-panel-new style="height:calc(100% - 101px);margin-top:0;" show-btn>
+        <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+            <el-table-column type="index" label="序号"></el-table-column>
+            <el-table-column prop="wellNo" label="井号"></el-table-column>
+            <el-table-column prop="fieldName" label="区块"></el-table-column>
+            <el-table-column prop="horizontalLength" :label="`水平段长度\n (m)`"></el-table-column>
+            <el-table-column prop="completeType" label="完井方式"></el-table-column>
+            <el-table-column prop="boreType" label="管柱类型"></el-table-column>
+            <el-table-column prop="kb" :label="`补心海拔\n (m)`"></el-table-column>
+            <el-table-column prop="baseLevelDepth" :label="`基准面深度\n (m)`"></el-table-column>
+            <el-table-column label="投注时间">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.productionDate | formatTime }}</span>
+                </template>
+            </el-table-column>
+            <!-- <el-table-column prop="pumpTVD" label="泵挂垂深"></el-table-column> -->
+            <!-- <el-table-column prop="displacement" label="泵排量"></el-table-column> -->
+            <!-- <el-table-column prop="pumpHead" label="泵扬程"></el-table-column> -->
+        </el-table>
+    </page-panel-new>
 </template>
 
 <script>

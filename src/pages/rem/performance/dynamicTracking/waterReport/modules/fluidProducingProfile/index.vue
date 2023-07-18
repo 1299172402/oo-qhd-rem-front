@@ -1,7 +1,7 @@
 <!--吸水剖面-->
 <template>
-    <page-panel header-title="吸水剖面">
-     <div class="z-main" style="height: 600px">
+    <page-panel header-title="吸水剖面" style="height: 600px;" show-btn>
+     <div class="z-main" style="height: 100%">
         <div class="z-row" style="margin-right:20px;">
             <div class="z-draw">
 

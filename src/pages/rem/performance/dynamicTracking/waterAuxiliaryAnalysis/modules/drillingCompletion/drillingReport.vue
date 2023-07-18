@@ -11,7 +11,9 @@
 <!--      style="height: 100%; margin-left: 20px;border: #022743 solid 1px"-->
 <!--      src="@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/modules/drillingCompletion/u331.png"-->
 <!--    />-->
-     <iframe style="height: 86%;width: 100%" :src="url"></iframe>
+  <page-panel-new style="height: 86%; margin-top: 0;" show-btn>
+    <iframe style="height: 100%;width: 100%" :src="url"></iframe>
+  </page-panel-new>
     <!-- </el-row> -->
   </div>
 </template>
@@ -95,7 +97,7 @@ export default {
   width: 100%;
   height: calc(100% - 101px);
   iframe {
-    border: 1px solid #ddd;
+    // border: 1px solid #ddd;
     border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
   }
 }

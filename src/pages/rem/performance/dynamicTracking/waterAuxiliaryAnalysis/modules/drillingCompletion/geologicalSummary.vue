@@ -13,9 +13,9 @@
 <!--    />-->
 <!--    &lt;!&ndash; </el-row> &ndash;&gt;-->
 <!--  </div>-->
-    <div style="height: 86%;width: 100%">
-        <iframe style="height: 100%;width: 100%" :src="url"></iframe>
-    </div>
+  <page-panel-new style="height: 86%; margin-top: 0;" show-btn>
+    <iframe style="height: 100%;width: 100%" :src="url"></iframe>
+  </page-panel-new>
 </template>
 
 <script>

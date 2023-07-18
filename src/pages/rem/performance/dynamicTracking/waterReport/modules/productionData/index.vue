@@ -16,7 +16,7 @@
             <div class="develop">
                 <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
             </div>
-            <info-window infoWidth="100%" infoHeight="500px" headerTitle="单井动态分析" v-show="isDevelop">
+            <info-window infoWidth="100%" infoHeight="500px" headerTitle="单井动态分析" v-show="isDevelop" isShowMaxBtn>
                 <el-table
                     id="tableData"
                     :data="tableData" :border="false" :row-style="{ height: '0px' }"

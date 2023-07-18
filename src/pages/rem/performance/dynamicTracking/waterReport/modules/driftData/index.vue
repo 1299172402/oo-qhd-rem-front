@@ -1,6 +1,6 @@
 <!--井斜数据-->
 <template>
-    <page-panel header-title="井斜数据" style="height: 600px">
+    <page-panel header-title="井斜数据" style="height: 600px" show-btn>
         <el-table
             id="tableData"
             :data="tableData" :border="false" :row-style="{ height: '0px' }"
