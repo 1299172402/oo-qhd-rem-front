@@ -7,7 +7,7 @@
                     <!-- <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> -->
                 </el-tab-pane>
             </el-tabs>
-            <el-button v-if ="activeName =='second' && this.$route.query.link " style="position: absolute;z-index:20;right: 20px;top:110px" type="primary" @click="gogo">返回</el-button>
+            <el-button v-if ="activeName =='second' && this.$route.query.link "  style="position: absolute;z-index:50;right: 20px;top:110px" type="primary"  @click="gogo">返回</el-button>
         </div>
         <header-search  style="height: auto;display: grid">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">
@@ -285,6 +285,9 @@ export default {
         }  
     },
     methods: {
+        gogo() {
+            this.$router.push({name: 'linkage'});
+        },
         // 合并单元格
         mergeTable({row, column, rowIndex, columnIndex}) {
             if (columnIndex === 0) {
@@ -506,9 +509,7 @@ export default {
             this.iframeWidth = this.$refs.iframe.parentNode.clientWidth;
         }
     },
-    gogo() {
-        window.open('https://rem.tjioms-dev.tjltd.cnooc/#/reservoirDisplay/linkage', "_parent");
-    },
+  
     mounted() {
         this.$nextTick(()=>{
             setTimeout(()=>{
