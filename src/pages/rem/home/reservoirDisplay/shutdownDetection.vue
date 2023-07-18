@@ -20,7 +20,7 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="平台:" style="margin-left:20px">
-                            <el-select v-model="queryData.assetCode" @change="choicewell" style="width: 220px">
+                            <el-select v-model="queryData.platformId" clearable @change="choicewell" style="width: 220px">
                                 <el-option
                                     v-for="(item, index) in platforms"
                                     :key="index"
@@ -32,8 +32,8 @@
                         </el-form-item>
                         <el-form-item label="井号:" style="margin-left:20px">
                             <el-select v-model="queryData.wellId" clearable style="width: 170px">
-                                <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellName"
-                                           :value="item.wellName">
+                                <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellName" 
+                                           :value="item.wellId">
                                 </el-option>
                             </el-select>
                         </el-form-item>
@@ -51,7 +51,7 @@
                             </el-date-picker>
                         </el-form-item>
                         <el-form-item label="关停分类:" >
-                            <el-select v-model="queryData.injShutdownTypeCode" style="width: 220px">
+                            <el-select v-model="queryData.injShutdownTypeCode" clearable style="width: 220px">
                                 <el-option
                                     v-for="(item, index) in ShutDownValueDict"
                                     :key="index"
@@ -62,7 +62,7 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="计划属性:" style="margin-left:20px">
-                            <el-select v-model="queryData.shutdownPlanTypeCode" style="width: 220px">
+                            <el-select v-model="queryData.shutdownPlanTypeCode" clearable style="width: 220px">
                                 <el-option
                                     v-for="(item, index) in PlanValueDict"
                                     :key="index"
@@ -92,6 +92,7 @@
                 :cell-style="{ padding: '3px', 'text-align': 'center' }"
                 :data="tableData"
                 border
+                height="calc(100% - 50px)"
                 width="100%"
                 ref="reset"
                 style="width: 100%; height: calc(100% - 40px )"
@@ -102,12 +103,22 @@
                 <el-table-column prop="appendixValueName" label="*关停分类"></el-table-column>
                 <el-table-column prop="reasonAppendixValueName" label="*关停原因"></el-table-column>
                 <el-table-column prop="planAppendixValueName" label="*计划属性"></el-table-column>
-                <el-table-column prop="timeAppendixValueName" label="*时间属性"></el-table-column>
-                <el-table-column prop="beginDate" :label="`*关停开始时间\n(yyyy/mm/dd)`"></el-table-column>
-                <el-table-column prop="endDate" :label="`*关停结束时间\n(yyyy/mm/dd)`"></el-table-column>
+                <el-table-column prop="beginDate" :label="`*关停开始时间\n(yyyy/mm/dd)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.beginDate">{{scope.row.beginDate}}</span>
+                        <span v-else>N/A</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="endDate" :label="`*关停结束时间\n(yyyy/mm/dd)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.endDate">{{scope.row.endDate}}</span>
+                        <span v-else>N/A</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="impactProdution" :label="`影响产量\n(m³)`">
                     <template slot-scope="scope">
-                        {{Number(scope.row.impactProdution).toFixed(2)}}
+                      <span v-if="!isNaN(Number(scope.row.impactProdution).toFixed(2))">{{Number(scope.row.impactProdution * 10000).toFixed(2)}}</span>  
+                        <span v-else>N/A</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="remark" show-overflow-tooltip label="备注"></el-table-column>
@@ -144,7 +155,7 @@ export default {
     data() {
         return {
             queryData: {
-                assetCode: "",
+                platformId: "",
                 month: "",
                 pageNum: 1,
                 pageSize: 10,
@@ -183,15 +194,15 @@ export default {
             (yesday.getMonth() > 9 ? yesday.getMonth() + 1 : "0" + (yesday.getMonth() + 1)) +
             "-" +
             (yesday.getDate() > 9 ? yesday.getDate() : "0" + yesday.getDate()); //字符串拼接转格式
-        // this.queryData.startTime = y + "-" + "01-01";
-        // this.queryData.endTime = yesday;
-        // this.$set(this.month, 0, this.queryData.startTime);
-        // this.$set(this.month, 1, this.queryData.endTime);
-        // this.startmonth = this.month
+        this.queryData.startTime = y + "-" + "01-01";
+        this.queryData.endTime = yesday;
+        this.$set(this.month, 0, this.queryData.startTime);
+        this.$set(this.month, 1, this.queryData.endTime);
+        this.startmonth = this.month
         // 暂用
-        this.queryData.startTime ='2022-01-01';
-        this.queryData.endTime = '2022-12-31';
-        this.month = ['2022-01-01','2022-12-31']
+        // this.queryData.startTime ='2022-01-01';
+        // this.queryData.endTime = '2022-12-31';
+        // this.month = ['2022-01-01','2022-12-31']
         this.queryinfo()
     },
     methods: {
@@ -222,7 +233,7 @@ export default {
                                     n.platformId = "";
                                 }
                             });
-                            this.queryData.assetCode = "";
+                            this.queryData.platformId = "";
                         }
                     });
                 }
@@ -236,7 +247,7 @@ export default {
 
         },
         choicewell() {
-            queryPlatformQueryWellListDetail({platformId: this.queryData.assetCode}).then((res) => {
+            queryPlatformQueryWellListDetail({platformId: this.queryData.platformId}).then((res) => {
                 this.wellList = res.data.data;
             });
         },
@@ -245,10 +256,21 @@ export default {
             this.$router.go(-1);
         },
         result() {
-            this.queryData.assetCode = ''
+            this.queryData.platformId = ''
             let requestPlat = {
                 ogfId: this.selectOilField,
             };
+            var data = new Date();
+            var y = data.getFullYear();
+            var time = data.getTime() - 24 * 60 * 60 * 1000;
+            var time = new Date().getTime() - 24 * 60 * 60 * 1000;
+            var yesday = new Date(time); // 获取的是前一天日期
+            yesday =
+                yesday.getFullYear() +
+                "-" +
+                (yesday.getMonth() > 9 ? yesday.getMonth() + 1 : "0" + (yesday.getMonth() + 1)) +
+                "-" +
+                (yesday.getDate() > 9 ? yesday.getDate() : "0" + yesday.getDate()); //字符串拼接转格式
             queryPlatformQueryWellListDetail(requestPlat).then((res) => {
                 this.wellList = res.data.data;
             });
@@ -256,8 +278,8 @@ export default {
             this.queryData.shutdownPlanTypeCode = ''
             this.queryData.injShutdownTypeCode = ''
             // this.month = this.startmonth
-            this.queryData.startTime ='2022-01-01';
-            this.queryData.endTime = '2022-12-31';
+            this.queryData.startTime =y + "-" + "01-01";
+            this.queryData.endTime = yesday;
             this.$set(this.month, 0, this.queryData.startTime);
             this.$set(this.month, 1, this.queryData.endTime);
             this.queryinfo()

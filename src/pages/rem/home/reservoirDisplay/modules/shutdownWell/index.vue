@@ -89,8 +89,6 @@ export default {
               color: "#a9a8a8",
               padding: [0, 0, 18, 0], // 上、右、下、左
             },
-            min:0,
-            max:1,
             nameLocation: "center",
             splitLine: {
               show: false,
@@ -121,8 +119,6 @@ export default {
               color: "#a9a8a8",
                 padding: [20, 0, 0, 0], // 上、右、下、左
             },
-            min:0,
-            max:50,
             nameLocation: "center",
             splitLine: {
               show: false,
@@ -146,8 +142,6 @@ export default {
           {
             type: "value",
             gridIndex: 0,
-            min: 50,
-            max: 100,
             splitNumber: 8,
             splitLine: {
               show: false,
@@ -221,12 +215,13 @@ export default {
       let data = {
           // endTime:'2022-12-01',
           // startTime:'2020-12-01'
+          ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'
       }
-      queryShutDownWellStatisCharts().then((res)=>{
-          this.histogram.yAxis[0].min = null
-          this.histogram.yAxis[0].max = null
-          this.histogram.yAxis[1].min = null
-          this.histogram.yAxis[1].max = Number(res.data.data.data.wellNum.sort((a, b) => b.lastedSort - a.lastedSort)[0]) * 1.2
+      queryShutDownWellStatisCharts(data).then((res)=>{
+          // this.histogram.yAxis[0].min = null
+          // this.histogram.yAxis[0].max = null
+          // this.histogram.yAxis[1].min = null
+          // this.histogram.yAxis[1].max = Number(res.data.data.data.wellNum.sort((a, b) => b.lastedSort - a.lastedSort)[0]) * 1.2
           res.data.data.data.yearMoth.forEach((n)=>{
               this.histogram.xAxis.data.push(n)
           })
