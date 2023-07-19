@@ -44,6 +44,10 @@ export default {
                     itemHeight: 10,
                     itemGap: 35,
                 },
+                dataZoom: {
+                    start: 5,
+                    type: "inside",
+                },
                 grid: {
                     left: "5%",
                     right: "4%",

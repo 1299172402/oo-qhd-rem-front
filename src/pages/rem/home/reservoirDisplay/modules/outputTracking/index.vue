@@ -81,6 +81,10 @@ export default {
                     x2: 120,
                     y2: 100,
                 },
+                dataZoom: {
+                    start: 205,
+                    type: "inside",
+                },
                 legend: {
                     data: [],
                     textStyle: {
