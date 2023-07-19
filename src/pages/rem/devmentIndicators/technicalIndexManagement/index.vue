@@ -1356,6 +1356,7 @@
                     this.getTechIndicatorStat(oilFieldId, targetOilFieldId, outputDegreeCode, reservoirsTypeCode, devPhaseCode);
                 } else if (this.currentIndex == 1) { //年产油量
                     this.doOilYear2(oilFieldId);
+                     this.doOilYear(oilFieldId);
                 } else if (this.currentIndex == 2) { //采油速度
                     this.doProSpeed(oilFieldId);
                 } else if (this.currentIndex == 3) { //综合递减率
@@ -1398,9 +1399,9 @@
                 }
                 oilYear(request).then((res) => {
                     //图表数据
-                    let legendData = [];
+                    // let legendData = [];
                     //数据数组
-                    let seriesData = [];
+                    // let seriesData = [];
                     if (res.data.code == 200) {
                         //获得相关指标信息
                         let detail = res.data.data.indicatorContent;
@@ -1412,27 +1413,28 @@
                         //同比标量
                         zb.tb = detail.moy;
                         zb.tbTag = detail.yearOnYearTag;
-                        return false;
-                        //获取折线图信息
-                        let charDataS = res.data.data.chart.linearDataSets;
-                        for (let i = 0; i < charDataS.length; i++) {
-                            //获得每一个折线数据
-                            let linearChart = charDataS[i];
-                            //向图例中添加 折线名称
-                            if (linearChart.label != '实际年产' && linearChart.label != '计划年产') {
-                                legendData.push(linearChart.label);
-                            } else if (linearChart.label == '实际年产') {
-                                legendData.push('实际年累产');
-                            } else if (linearChart.label == '计划年产') {
-                                legendData.push('计划年累产');
-                            }
-                            //向数据数组中添加 所有折线的信息
-                            seriesData.push(this.getLinearChartSeriesOilProduct(linearChart));
-                        }
-                        //图例数据
-                        this.inOilProduction.legend.data = legendData;
-                        //各线的数据
-                        this.inOilProduction.series = seriesData;
+                        // TODO lv 页面没有使用，代码检查错误先注释
+                        // return false;
+                        // //获取折线图信息
+                        // let charDataS = res.data.data.chart.linearDataSets;
+                        // for (let i = 0; i < charDataS.length; i++) {
+                        //     //获得每一个折线数据
+                        //     let linearChart = charDataS[i];
+                        //     //向图例中添加 折线名称
+                        //     if (linearChart.label != '实际年产' && linearChart.label != '计划年产') {
+                        //         legendData.push(linearChart.label);
+                        //     } else if (linearChart.label == '实际年产') {
+                        //         legendData.push('实际年累产');
+                        //     } else if (linearChart.label == '计划年产') {
+                        //         legendData.push('计划年累产');
+                        //     }
+                        //     //向数据数组中添加 所有折线的信息
+                        //     seriesData.push(this.getLinearChartSeriesOilProduct(linearChart));
+                        // }
+                        // //图例数据
+                        // this.inOilProduction.legend.data = legendData;
+                        // //各线的数据
+                        // this.inOilProduction.series = seriesData;
                     } else {
                         // //图例数据
                         // this.inOilProduction.legend.data = legendData;

@@ -710,7 +710,7 @@
                     },
                     yAxis: {
                         name: "lgWp",
-                        nameLocation: "center",
+                        // nameLocation: "center",
                         nameLocation:'middle',
                         nameGap:50,
                         nameTextStyle: {
@@ -812,7 +812,7 @@
                     xAxis: {
                         // name: "时间",
                         type: 'category',
-                        nameLocation: "center",
+                        // nameLocation: "center",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
@@ -842,7 +842,7 @@
                     yAxis: {
                         // data:[],
                         name: "日产油量/10*4m³",
-                        nameLocation: "center",
+                        // nameLocation: "center",
                         nameLocation:'middle',
                         nameTextStyle: {
                             color: "#8FA4CC",
@@ -955,7 +955,7 @@
                     },
                     yAxis: {
                         name: "综合含水率(%)",
-                        nameLocation: "center",
+                        // nameLocation: "center",
                         nameLocation:'middle',
                         nameTextStyle: {
                             color: "#8FA4CC",
