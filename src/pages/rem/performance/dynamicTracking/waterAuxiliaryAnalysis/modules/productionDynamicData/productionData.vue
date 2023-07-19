@@ -9,13 +9,13 @@
             </el-select>
             <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
         </div>
-        <div class="z-echarts" :style="{height:height+'px'}">
+        <page-panel-new :style="{height:height+'px',marginTop:0}" show-btn>
             <Echarts ref="echartDown" :chart-data="option" style="height:100%;"></Echarts>
-        </div>
+        </page-panel-new>
         <div class="develop">
             <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
         </div>
-        <info-window infoWidth="100%" infoHeight="500px" headerTitle="单井动态分析" v-show="isDevelop">
+        <page-panel  headerTitle="单井动态分析" v-show="isDevelop" style="height: 500px;" show-btn>
             <el-table
                 id="tableData" 
                 :data="tableData" :border="false" :row-style="{ height: '0px' }"
@@ -29,7 +29,7 @@
                 <el-table-column prop="injDailySum" :label="`水聚总量\n (m³)`"></el-table-column>
                 <el-table-column prop="injMonthly" :label="`日配注量\n (m³)`"></el-table-column>
             </el-table>
-        </info-window>
+        </page-panel>
     </div>
 </template>
 

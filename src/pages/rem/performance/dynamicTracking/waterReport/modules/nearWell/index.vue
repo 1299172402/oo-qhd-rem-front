@@ -1,7 +1,7 @@
 <!-- 邻井数据 -->
 <template>
   <div class="app-container">
-    <pagePanel headerTitle="邻井数据">
+    <pagePanel headerTitle="邻井数据" show-btn>
         <el-table
             id="tableData"
             :data="tableData"

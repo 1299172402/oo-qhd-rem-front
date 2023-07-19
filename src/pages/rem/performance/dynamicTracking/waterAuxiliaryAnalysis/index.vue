@@ -477,8 +477,10 @@
                 this.currentModule = this.tabs[tab.index].modules[0].name;
                 
                 this.isUpdateFile=this.operationTypeList[this.currentModule]?true:false;
-                this.limit=this.operationTypeList[this.currentModule].limit;
-                this.fileType=this.operationTypeList[this.currentModule].fileType;
+                if ( this.isUpdateFile ) {
+                    this.limit=this.operationTypeList[this.currentModule].limit;
+                    this.fileType=this.operationTypeList[this.currentModule].fileType;
+                }
             },
             //点击二级菜单
             tabsClick(module){
@@ -491,8 +493,10 @@
                 }else{
                     this.currentModule = module.name;
                     this.isUpdateFile=this.operationTypeList[this.currentModule]?true:false;
-                    this.limit=this.operationTypeList[this.currentModule].limit;
-                    this.fileType=this.operationTypeList[this.currentModule].fileType;
+                    if ( this.isUpdateFile ) {
+                        this.limit=this.operationTypeList[this.currentModule].limit;
+                        this.fileType=this.operationTypeList[this.currentModule].fileType;
+                    }
                 }
             },
             //初始化 数据

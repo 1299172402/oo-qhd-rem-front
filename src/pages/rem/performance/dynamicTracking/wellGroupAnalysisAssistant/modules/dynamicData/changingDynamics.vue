@@ -1,8 +1,8 @@
 <!--井组连通性变化动态-->
 <template>
-  <el-form label-width="90px" style="height: calc(100% - 110px)">
+  <el-form label-width="90px" style="height: calc(100% - 55px)">
     <div style="display: flex">
-      <el-form-item label="开始时间" style="height: 60px">
+      <el-form-item label="开始时间" style="height: 30px">
         <el-date-picker
           value-format="yyyy-MM"
           :clearable="false"
@@ -27,68 +27,69 @@
         </el-date-picker>
       </el-form-item>
     </div>
-    <div style="height:100%">
-    <el-table
-      highlight
-      :key="itemKey"
-      :cell-style="{ padding: '3px', 'text-align': 'center' }"
-      :data="tableData"
-      id="tableData"
-      height="90%"
-      style="margin-top: -30px"
-    >
-      <el-table-column type="index" label="序号" fixed width="50px" header-align="center"></el-table-column>
-      <el-table-column prop="waterWellName" fixed label="水井" min-width="150" header-align="center"></el-table-column>
-      <el-table-column prop="layerName" label="层位"  min-width="200" header-align="center"></el-table-column>
-      <el-table-column prop="oilWellName" label="油井" min-width="130" header-align="center"></el-table-column>
-      <el-table-column prop="effectivenessSituation" label="受效情况" header-align="center"></el-table-column>
-      <el-table-column header-align="center" min-width="500">
-        <template slot="header">
-          <div>{{ queryData.firstMonth }}注水情况</div>
-        </template>
-        <el-table-column label="连通系数"  min-width="90" prop="firstMonthInjCoeff" header-align="center"> </el-table-column>
-        <el-table-column :label="`注水劈分量\n(m³)`"  min-width="160" prop="firstMonthSplittingFluid" header-align="center"> </el-table-column>
-        <el-table-column :label="`产液劈分量\n(m³)`"  min-width="160" prop="firstMonthSplittingInjectWater" header-align="center">
+    <!-- <div style="height:100%"> -->
+    <page-panel-new style="height:calc(100% - 101px);margin-top: 0px" show-btn>
+      <el-table
+        highlight
+        :key="itemKey"
+        :cell-style="{ padding: '3px', 'text-align': 'center' }"
+        :data="tableData"
+        id="tableData"
+        height="100%"
+      >
+        <el-table-column type="index" label="序号" fixed width="50px" header-align="center"></el-table-column>
+        <el-table-column prop="waterWellName" fixed label="水井" min-width="150" header-align="center"></el-table-column>
+        <el-table-column prop="layerName" label="层位"  min-width="200" header-align="center"></el-table-column>
+        <el-table-column prop="oilWellName" label="油井" min-width="130" header-align="center"></el-table-column>
+        <el-table-column prop="effectivenessSituation" label="受效情况" header-align="center"></el-table-column>
+        <el-table-column header-align="center" min-width="500">
+          <template slot="header">
+            <div>{{ queryData.firstMonth }}注水情况</div>
+          </template>
+          <el-table-column label="连通系数"  min-width="90" prop="firstMonthInjCoeff" header-align="center"> </el-table-column>
+          <el-table-column :label="`注水劈分量\n(m³)`"  min-width="160" prop="firstMonthSplittingFluid" header-align="center"> </el-table-column>
+          <el-table-column :label="`产液劈分量\n(m³)`"  min-width="160" prop="firstMonthSplittingInjectWater" header-align="center">
+            <template slot-scope="scoped">
+              {{ (scoped.row.firstMonthSplittingInjectWater).toFixed(2) }}
+            </template>
+          </el-table-column>
+        </el-table-column>
+        <el-table-column header-align="center">
+          <template slot="header">
+            <div>{{ queryData.secondMonth }}注水情况</div>
+          </template>
+          <el-table-column label="连通系数" prop="secondMonthInjCoeff" header-align="center"> </el-table-column>
+          <el-table-column :label="`注水劈分量\n(m³)`"  min-width="130" prop="secondMonthSplittingFluid" header-align="center"> </el-table-column>
+          <el-table-column :label="`产液劈分量\n(m³)`"  min-width="130" prop="secondMonthSplittingInjectWater" header-align="center">
+            <template slot-scope="scoped">
+              {{ (scoped.row.secondMonthSplittingInjectWater).toFixed(2) }}
+            </template>
+          </el-table-column>
+        </el-table-column>
+        <el-table-column header-align="center">
+          <template slot="header">
+            <div>调整幅度</div>
+          </template>
+          <el-table-column label="连通系数" align="cnter" prop="adjustRangeInjCoeff" header-align="center">
+          </el-table-column>
+          <el-table-column :label="`注水劈分量\n(m³)`"  min-width="130" align="cnter" prop="adjustRangeSplittingInjectWater" header-align="center">
+          </el-table-column>
+          <el-table-column
+            label="产液劈分量(m³)"
+            min-width="130"
+            align="cnter"
+            prop="adjustRangeSplittingSplittingFluid"
+            header-align="center"
+          >
           <template slot-scope="scoped">
-            {{ (scoped.row.firstMonthSplittingInjectWater).toFixed(2) }}
-          </template>
+              {{ (scoped.row.adjustRangeSplittingSplittingFluid).toFixed(2) }}
+            </template>
+          </el-table-column>
         </el-table-column>
-      </el-table-column>
-      <el-table-column header-align="center">
-        <template slot="header">
-          <div>{{ queryData.secondMonth }}注水情况</div>
-        </template>
-        <el-table-column label="连通系数" prop="secondMonthInjCoeff" header-align="center"> </el-table-column>
-        <el-table-column :label="`注水劈分量\n(m³)`"  min-width="130" prop="secondMonthSplittingFluid" header-align="center"> </el-table-column>
-        <el-table-column :label="`产液劈分量\n(m³)`"  min-width="130" prop="secondMonthSplittingInjectWater" header-align="center">
-           <template slot-scope="scoped">
-            {{ (scoped.row.secondMonthSplittingInjectWater).toFixed(2) }}
-          </template>
-        </el-table-column>
-      </el-table-column>
-      <el-table-column header-align="center">
-        <template slot="header">
-          <div>调整幅度</div>
-        </template>
-        <el-table-column label="连通系数" align="cnter" prop="adjustRangeInjCoeff" header-align="center">
-        </el-table-column>
-        <el-table-column :label="`注水劈分量\n(m³)`"  min-width="130" align="cnter" prop="adjustRangeSplittingInjectWater" header-align="center">
-        </el-table-column>
-        <el-table-column
-          label="产液劈分量(m³)"
-           min-width="130"
-          align="cnter"
-          prop="adjustRangeSplittingSplittingFluid"
-          header-align="center"
-        >
-         <template slot-scope="scoped">
-            {{ (scoped.row.adjustRangeSplittingSplittingFluid).toFixed(2) }}
-          </template>
-        </el-table-column>
-      </el-table-column>
-      <el-table-column align="cnter" prop="remark" show-overflow-tooltip  min-width="130" label="备注" header-align="center"></el-table-column>
-    </el-table>
-    </div>
+        <el-table-column align="cnter" prop="remark" show-overflow-tooltip  min-width="130" label="备注" header-align="center"></el-table-column>
+      </el-table>
+    </page-panel-new>
+    <!-- </div> -->
   </el-form>
 </template>
 

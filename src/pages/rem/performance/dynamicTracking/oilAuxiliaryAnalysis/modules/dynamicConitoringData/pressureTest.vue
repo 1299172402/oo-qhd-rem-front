@@ -1,6 +1,6 @@
 <!--压力测试-->
 <template>
-    <info-window infoWidth="100%" infoHeight="calc(100% - 100px)" headerTitle="压力数据">
+    <page-panel style="width: 100%; height: calc(100% - 100px); margin-top: 0;" headerTitle="压力数据" showBtn>
         <el-table
             id="tableData" 
             :data="tableData" :border="false" :row-style="{ height: '0px' }"
@@ -28,7 +28,7 @@
             <el-table-column prop="reducePressure" label="折算压力梯度 (MPa/m)" width="120"></el-table-column>
             <el-table-column prop="remark" label="备注"></el-table-column>
         </el-table>
-    </info-window>
+    </page-panel>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 <!-- 基本信息 -->
 <template>
   <div class="app-container">
-    <pagePanel headerTitle="注采对应曲线">
+    <pagePanel headerTitle="注采对应曲线" show-btn>
     </pagePanel>
   </div>
 </template>

@@ -2,10 +2,12 @@
 <template>
     <div class="z-main">
         <div class="z-left-view">
-            <iframe style="height: 100%;width: 100%" :src="url"></iframe>
+            <page-panel-new style="width: 100%; height: 100%;margin-top: 0;" show-btn>
+                <iframe style="height: 100%;width: 100%" :src="url"></iframe>
+            </page-panel-new>
         </div>
         <div class="z-right-view">
-            <info-window infoWidth="100%" infoHeight="calc(100%)" headerTitle="产液剖面解释成果表">
+            <page-panel style="width: 100%; height: 100%;margin-top: 0;" headerTitle="产液剖面解释成果表" show-btn>
                 <el-table 
                     id="tableData"
                     :data="tableData" :border="false" :row-style="{ height: '0px' }"
@@ -37,7 +39,7 @@
                     <el-table-column prop="interceptResult" label="解释结论" width="240"></el-table-column>
                     <el-table-column prop="remark" label="备注" width="240"></el-table-column>
                 </el-table>
-            </info-window>
+            </page-panel>
         </div>
     </div>
 </template>
@@ -133,9 +135,9 @@
         display: flex;
         .z-left-view{
             width:600px;
-            padding-right:40px;
+            padding-right:20px;
             iframe{
-                border: 1px solid #ddd;
+                // border: 1px solid #ddd;
                 border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
             }
         }
