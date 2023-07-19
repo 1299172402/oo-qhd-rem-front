@@ -21,14 +21,14 @@
                 <el-button style="height:30px;" type="primary" @click="development(oilfield, block)">开发现状表</el-button>
             </div>
             
-            <pagePanel headerTitle="油田综合开发曲线" style="height: 650px;margin-bottom:20px;position: relative;">
-                <el-button type="primary" style="position:absolute;right:0;top:0;;height:30px;margin-right:0px;" @click="dialogVisible = true">选择指标信息</el-button>
+            <pagePanel headerTitle="油田综合开发曲线" style="height: 650px;margin-bottom:20px;position: relative;" show-btn>
+                <el-button type="primary" style="position:absolute;right:58px;top:0;;height:30px;margin-right:0px;" @click="dialogVisible = true">选择指标信息</el-button>
                 <div style="height:100%;">
-                    <Echart :chart-data="option" style="height: 570px"></Echart>
+                    <Echart :chart-data="option" style="height: 100%"></Echart>
                 </div>
             </pagePanel>
             
-            <pagePanel headerTitle="油田综合开发历程表" style="height: 300px;position: relative;">
+            <pagePanel headerTitle="油田综合开发历程表" style="height: 300px;position: relative;" show-btn>
                 <el-button type="primary" style="position:absolute;right:0;top:0;;height:26px;margin-right:20px;" @click="doDownExcel('#tableData', '油田综合开发历程')" v-show="canDownload">下载</el-button>
                 <div style="padding-bottom:5px;height:100%;">
                     <el-table id="tableData" :data="tableData" highlight height="100%">
