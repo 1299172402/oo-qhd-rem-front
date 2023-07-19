@@ -43,13 +43,22 @@
                 </headerSearch>
                 <page-panel header-title="密度信息维护" style="flex:1;overflow: hidden" :show-btn="true">
                     <el-row>
-                        <el-button icon="el-icon-edit-outline" size="mini" @click="redact" type="primary">编辑
-                        </el-button>
-                        <el-button icon="el-icon-document-checked" size="mini" @click="save" type="primary">保存
-                        </el-button>
-                        <el-button icon="el-icon-s-platform" size="mini" @click="dialogVisible = true" type="primary"
-                        >运行计算
-                        </el-button>
+                        <el-col :span="23">
+                            <el-button icon="el-icon-edit-outline" size="mini" @click="redact" type="primary">编辑
+                            </el-button>
+                            <el-button icon="el-icon-document-checked" size="mini" @click="save" type="primary">保存
+                            </el-button>
+                            <el-button icon="el-icon-s-platform" size="mini" @click="dialogVisible = true" type="primary"
+                            >运行计算
+                            </el-button>
+                        </el-col>
+                            <el-col :span="1">
+                                <el-button class="commonBtn" type="primary" icon="el-icon-download" @click="doDownExcel()"
+                                >下载
+                                </el-button
+                                >
+                            </el-col>
+                       
                     </el-row>
                     <el-table
                         :data="noticeList"
@@ -57,6 +66,7 @@
                         highlight-current-row
                         height="calc(100% - 35px)"
                         style="margin-top: 10px"
+                        id="mdxxwh"
                         :row-style="{ height: '0px' }"
                         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
                         header-cell-class-name="table_header"
@@ -228,7 +238,7 @@ import {queryDensityInfo, save} from "@/api/rem/density.js";
 import {mapGetters} from "vuex";
 import {queryOperatingCompanyDetail, queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
 import treeMultipleSelection from "@/components/intelligentOilfield/tree_multiple_selection/index.vue";
-
+import {exportExcel} from "@/lib/exportExcel";
 export default {
     name: "density",
     dicts: ["sys_normal_disable"],
@@ -240,12 +250,12 @@ export default {
             dialogVisible: false, //运行计算展示弹窗
             producttype: [
                 {
-                    appendixValueName:'原油',
-                    appendixValueCode:'002001'
+                    appendixValueName: '原油',
+                    appendixValueCode: '002001'
                 },
                 {
-                    appendixValueName:'天然气',
-                    appendixValueCode:'002002'
+                    appendixValueName: '天然气',
+                    appendixValueCode: '002002'
                 },
             ],
             deptSelect: [], //作业公司
@@ -311,7 +321,7 @@ export default {
                 save({densityModelInfo, densityInfoQueryVo}).then((res) => {
                     if (res.data.code == 200 && res.data.msg == '1') {
                         this.$message.success("保存成功！");
-                    }else{
+                    } else {
                         this.$message.error("系统错误请重新尝试或联系运维人员！");
                     }
                 });
@@ -399,6 +409,9 @@ export default {
                 case 11:
                     month.december = monthDen;
             }
+        },
+        doDownExcel() {
+            exportExcel("#mdxxwh", "密度信息维护");
         },
         // 重置
         reset() {

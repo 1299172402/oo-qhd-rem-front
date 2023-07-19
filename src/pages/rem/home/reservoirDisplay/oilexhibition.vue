@@ -55,7 +55,6 @@ import {GridComponent, TooltipComponent, LegendComponent} from "echarts/componen
 import chartsComponents from "@/components/intelligentOilfield/echarts-com/index.vue";
 import {CanvasRenderer} from "echarts/renderers";
 import * as echarts from "echarts/core";
-
 const moduleFiles = import.meta.globEager(`./modules/*/index.vue`);
 const moduleName = Object.entries(moduleFiles).reduce(
     (t, i) =>
