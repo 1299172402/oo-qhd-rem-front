@@ -481,7 +481,8 @@ export default {
         },
         dealChartsData(charts) {
             if (charts) {
-                let xSet = new Set();
+                // TODO lv 页面没有使用，代码检查错误先注释
+                // let xSet = new Set();
                 charts.forEach((chart, index) => {
                     if (chart.linearDataSets && chart.linearDataSets[0]) {
                         let linear = chart.linearDataSets[0];
@@ -492,7 +493,8 @@ export default {
                             jtData.forEach((point, index2) => {
                                 let pointXY = [];
                                 pointXY.push(point.label);
-                                xSet.add(point.label);
+                                // TODO lv 页面没有使用，代码检查错误先注释
+                                // xSet.add(point.label);
                                 pointXY.push(point.value);
                                 pointData.push(pointXY);
                             });

@@ -1139,10 +1139,6 @@
                             color: '#8FA4CC',
                             fontSize: 14,
                         },
-                        nameTextStyle: {
-                            color: '#8FA4CC',
-                            fontSize: 14,
-                        },
                         type: 'category',
                         data: [],
                         axisLabel: {
