@@ -53,7 +53,7 @@
                             </el-button>
                         </el-col>
                             <el-col :span="1">
-                                <el-button class="commonBtn" type="primary" icon="el-icon-download" @click="doDownExcel()"
+                                <el-button  type="primary" icon="el-icon-download" @click="doDownExcel()"
                                 >下载
                                 </el-button
                                 >

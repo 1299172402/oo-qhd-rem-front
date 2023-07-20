@@ -58,6 +58,10 @@
                 <el-col :span="6" style="height:100%">
                     <pagePanel :headerTitle="title1" :title="title1" :show-btn="true"
                                style="text-align: center;height:calc(100% - 10px)">
+                        <el-button style="float: right;margin-top: 0px" type="primary" icon="el-icon-download" @click="doDownExcel()"
+                        >下载
+                        </el-button
+                        >
                         <el-table
                             v-loading="tableData1.length>0?false:true"
                             element-loading-background="rgba(0,0,0,0.5)"
@@ -66,8 +70,8 @@
                             :data="tableData1"
                             id="indexscvFirst"
                             highlight
-                            style="margin-top: 10px"
-                            height="100%"
+                            style="margin-top: 50px"
+                            height="calc(100% - 25px)"
                         >
                             <el-table-column prop="wellNo" label="油井井号" show-overflow-tooltip align="center"
                                              min-width="160"></el-table-column>
@@ -131,7 +135,12 @@
                                 ></el-table-column>
                                 <el-table-column prop="injection" label="注采比" align="center"></el-table-column>
                                 <el-table-column prop="layerNo" min-width="200" label="层段号"
-                                                 align="center"></el-table-column>
+                                                 align="center">
+                                    <template slot-scope="scope">
+                                        <span v-if="scope.row.layerNo !== null && scope.row.layerNo !== ''">{{scope.row.layerNo}}</span>
+                                        <span v-else>N/A</span>
+                                    </template>
+                                </el-table-column>
                                 <el-table-column
                                     prop="froecastInjDaily"
                                     :render-header="renderheader"
@@ -396,8 +405,13 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                
-                window.open('https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/?page=reservoirDisplay/linkage','_blank')
+                let baseUrl = ''
+                if(window.location.origin.includes('test')){
+                    baseUrl = 'tjioms-test.tjltd.cnooc'
+                }else if (window.location.origin.includes('dev') || window.location.origin.includes('808')){
+                    baseUrl = 'tjioms-dev.tjltd.cnooc'
+                }
+                window.open(`https://ipm.${baseUrl}/#/waterflood/merge?page=reservoirDisplay/linkage`,'_blank')
                 // this.$router.push({name: "schemePrediction"})
             })
         },
@@ -484,6 +498,9 @@ export default {
                 this.form.tableData2 = arr1
                 this.getSpanArr(arr1)
             })
+        },
+        doDownExcel() {
+            exportExcel("#indexscvFirst", "月度配产计划表");
         },
         objectSpanMethod({row, column, rowIndex, columnIndex}) {
             if (row.rowSpan) {

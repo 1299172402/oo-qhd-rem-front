@@ -41,7 +41,7 @@
           <el-button style="float: right" type="primary"  @click="returnrouter">返回</el-button>
       </el-form>
     </headerSearch>
-    <div style="height: calc(100% - 92px)">
+    <div style="height: calc(100% - 100px)">
       <el-tabs v-model="activeName" class="g-pageHeader" @tab-click="selectBtn(activeName)">
         <el-tab-pane :label="item.name" :name="item.value" v-for="(item, index) in dataList" :key="index" />
       </el-tabs>
@@ -55,13 +55,7 @@ import operationplan from "./components/operationplan.vue";
 import planmessage from "./components/planmessage.vue";
 import { getOilFieldList, queryProductList } from "@/api/rem/workcompanydesignate.js";  
 import {
-  fetchOilFields,
   fetchPlatforms,
-  uploadFile,
-  ljpmImgUploadFile,
-  fetchProductionWells,
-  fetchProductionWellsByPlatform,
-  getLjpmWells,
 } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 export default {
   components: {
@@ -101,6 +95,12 @@ export default {
       (yesday.getDate() > 9 ? yesday.getDate() : "0" + yesday.getDate()); //字符串拼接转格式
     this.queryParams.endTime = yesday;
       this.date = yesday
+      if(this.$route.query.page){
+          this.activeName = 'planmessage' 
+          this.currentTab = 'planmessage'
+          this.queryParams.endTime = this.$route.query.currentDate
+          this.date = this.queryParams.endTime
+      }
     this.getserch();
   },
   methods: {

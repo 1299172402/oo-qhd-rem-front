@@ -48,8 +48,8 @@
                                     header-align="center"></el-table-column>
                     <el-table-column prop="injectionRatio01" label="注采比" min-width="100" header-align="center">
                         <template slot-scope="scoped">
-                            <div v-if="scoped.row.injectionRatio01 != '.00' ">{{ scoped.row.injectionRatio01 }}</div>
-                            <div v-else> -</div>
+                            <div v-if="scoped.row.injectionRatio01">{{ scoped.row.injectionRatio01 }}</div>
+                            <div v-else>N/A</div>
                         </template>
                     </el-table-column>
                     <el-table-column prop="injectionStrength01" min-width="160" :label="`注水强度\n(m³*d.m)`"
@@ -65,7 +65,7 @@
                     <el-table-column prop="injectionRatio02" label="注采比" min-width="100" header-align="center">
                         <template slot-scope="scoped">
                             <div v-if="scoped.row.injectionRatio02 != '.00'">{{ scoped.row.injectionRatio01 }}</div>
-                            <div v-else> -</div>
+                            <div v-else>N/A</div>
                         </template>
                     </el-table-column>
                     <el-table-column prop="injectionStrength02" min-width="160" :label="`注水强度\n(m³*d.m)`"
@@ -83,7 +83,8 @@
                     </el-table-column>
                     <el-table-column prop="injectionRatio02" min-width="140" label="注采比" header-align="center">
                         <template slot-scope="scoped">
-                            {{ (scoped.row.injectionRatio02 - scoped.row.injectionRatio01).toFixed(2) }}
+                           <span v-if="scoped.row.injectionRatio02">{{ (scoped.row.injectionRatio02 - scoped.row.injectionRatio01).toFixed(2) }}</span>
+                            <span v-else>N/A</span>
                         </template>
                     </el-table-column>
                     <el-table-column :label="`注水强度\n(m³*d.m)`" min-width="160" header-align="center">
@@ -218,7 +219,7 @@ export default {
     }
     ::v-deep .cell:empty {
         &::before {
-            content: "-";
+            content: "N/A";
         }
     }
 }
