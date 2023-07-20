@@ -94,7 +94,7 @@
                 };
                 conectionPlot(request).then((res) => {
                     if (res.data.code == 200) {
-                        let data = res.data.data.data;
+                        let data = res.data.data;
                         this.tableData = data.wellGroupConnections;
                     }
                 });
