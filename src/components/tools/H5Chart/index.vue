@@ -108,7 +108,9 @@
              */
             handlerZoomHeight() {
                 if (this.w && this.w.fView) {
-                    this.w.fView.ZoomHeight();
+                    // this.w.fView.ZoomHeight();
+                    this.w.fView.ZoomAll();//全图
+                    // this.w.fCommon.ZoomAll();//全图
                 }
             },
             /**
