@@ -59,6 +59,7 @@
                 <el-button
                     type="primary"
                     size="mini"
+                    icon="el-icon-download"
                     @click="downloadTable"
                     style="float: right"
                 >下载
@@ -85,7 +86,12 @@
                     <el-table-column prop="layerName" show-overflow-tooltip label="层位名称"
                                      align="center"></el-table-column>
                     <el-table-column prop="proWellNo" label="油井井号" show-overflow-tooltip
-                                     align="center"></el-table-column>
+                                     align="center">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.proWellNo !== null && scope.row.proWellNo !== ''">{{scope.row.proWellNo}}</span>
+                            <span v-else>N/A</span>
+                        </template>
+                    </el-table-column>
                     <el-table-column
                         prop="wellSpacing"
                         min-width="40px"
@@ -164,7 +170,12 @@
                         :render-header="renderheader"
                         show-overflow-tooltip
                         align="center"
-                    ></el-table-column>
+                    >
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.thicknessEffe !== null && scope.row.thicknessEffe !== ''">{{scope.row.thicknessEffe}}</span>
+                            <span v-else>N/A</span>
+                        </template>
+                    </el-table-column>
                     <el-table-column
                         prop="shaleContent"
                         min-width="40px"

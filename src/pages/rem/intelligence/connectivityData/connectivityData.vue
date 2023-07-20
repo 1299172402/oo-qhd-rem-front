@@ -159,17 +159,42 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="injSplitData" label="劈分注水量?m³/d" :render-header="renderheader"
-                                     show-overflow-tooltip min-width="125px" align="center"></el-table-column>
+                                     show-overflow-tooltip min-width="125px" align="center">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.injSplitData !== null && scope.row.injSplitData !== ''">{{scope.row.injSplitData}}</span>
+                            <span v-else>N/A</span>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="operationalNarration" label="连通系数?(计算)" min-width="120"
-                                     :render-header="renderheader" align="center"></el-table-column>
+                                     :render-header="renderheader" align="center">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.operationalNarration !== null && scope.row.operationalNarration !== ''">{{scope.row.operationalNarration}}</span>
+                            <span v-else>N/A</span>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="operationInjSplitData" label="劈分注水量?m³/d"
                                      :render-header="renderheader" show-overflow-tooltip min-width="120px"
-                                     align="center"></el-table-column>
+                                     align="center">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.operationInjSplitData !== null && scope.row.operationInjSplitData !== ''">{{scope.row.operationInjSplitData}}</span>
+                            <span v-else>N/A</span>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="correctionFactor" label="连通系数?(修正)" min-width="120"
-                                     :render-header="renderheader" align="center"></el-table-column>
+                                     :render-header="renderheader" align="center">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.correctionFactor !== null && scope.row.correctionFactor !== ''">{{scope.row.correctionFactor}}</span>
+                            <span v-else>N/A</span>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="reviseInjSplitData" label="劈分注水量?m³/d"
                                      :render-header="renderheader" show-overflow-tooltip min-width="120px"
-                                     align="center"></el-table-column>
+                                     align="center">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.reviseInjSplitData !== null && scope.row.reviseInjSplitData !== ''">{{scope.row.reviseInjSplitData}}</span>
+                            <span v-else>N/A</span>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="remark" min-width="150" label="备注" show-overflow-tooltip
                                      align="center">
                         <template slot-scope="scope">
