@@ -69,7 +69,7 @@ export default {
                 {
                     style: 'position:absolute;left: 69%;top: 26%;width:20%;height:40%;',
                     boxText: '智能分注井调控测试',
-                    boxBottomText: [{name:'智能分注井调控测试',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/intelligentDispensing?link=rem&page=reservoirDisplay/linkage'}],
+                    boxBottomText: [{name:'智能分注井调控测试',url:`https://ipm.${this.baseUrl}/#/intelligentDispensing?link=rem&page=reservoirDisplay/linkage`}],
                     boxBottomContent: [[{name:'智能配水器调控模型',url:''}, '智能测试模型']],
                     boxStyle: {
                         pWidth: 'width:11vw',
@@ -97,9 +97,9 @@ export default {
                     style: 'position:absolute;left: 43%;top: 56%;width:20%;height:40%;',
                     boxText: '注采状况分析',
                     boxBottomText: [
-                        {name:'注采连通分析',url:'https://rem.${this.baseUrl}/#/basic/wellGroup_Maintenance?link=linkage&page=reservoirDisplay/linkage'},
-                        {name:'注采平衡分析',url:'https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=1&page=reservoirDisplay/linkage'},
-                        {name:'采出状况分析',url:'https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=2&page=reservoirDisplay/linkage'}
+                        {name:'注采连通分析',url:`https://rem.${this.baseUrl}/#/basic/wellGroup_Maintenance?link=linkage&page=reservoirDisplay/linkage`},
+                        {name:'注采平衡分析',url:`https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=1&page=reservoirDisplay/linkage`},
+                        {name:'采出状况分析',url:`https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=2&page=reservoirDisplay/linkage`}
                     ],
                     boxBottomContent: [
                         [{name:'注采连通性评价模型',url:''}],
@@ -117,7 +117,7 @@ export default {
                 {
                     style: 'position:absolute;left: 30%;top: 60%;width:20%;height:40%;',
                     boxText: '剩余油分布',
-                    boxBottomText: [{name:'动态分析法/数模剩余油分析',url:'https://rem.${this.baseUrl}/#/intelligence1/optimization?link=rem&page=reservoirDisplay/linkage'}],
+                    boxBottomText: [{name:'动态分析法/数模剩余油分析',url:`https://rem.${this.baseUrl}/#/intelligence1/optimization?link=rem&page=reservoirDisplay/linkage`}],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
@@ -129,7 +129,7 @@ export default {
                 {
                     style: 'position:absolute;left: 17%;top: 56%;width:20%;height:40%;',
                     boxText: '调整区块确定',
-                    boxBottomText: [{name:'层间/平面矛盾分析',url:'https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=reservoirDisplay/linkage'}],
+                    boxBottomText: [{name:'层间/平面矛盾分析',url:`https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=reservoirDisplay/linkage`}],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
@@ -142,10 +142,10 @@ export default {
                     style: 'position:absolute;left: 2%;top: 60%;width:20%;height:40%;',
                     boxText: '产量运行监控',
                     boxBottomText: [
-                        {name:'年度产量运行预警',url:'https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?page=reservoirDisplay/linkage'}
+                        {name:'年度产量运行预警',url:`https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?page=reservoirDisplay/linkage`}
                     ],
                     boxBottomContent: [
-                        [{name:'年度产量趋势预测',url:'https://rem.${this.baseUrl}/#/modelConfiguration/modelconfig?page=reservoirDisplay/linkage'}]
+                        [{name:'年度产量趋势预测',url:`https://rem.${this.baseUrl}/#/modelConfiguration/modelconfig?page=reservoirDisplay/linkage`}]
                     ],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
