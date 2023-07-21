@@ -42,3 +42,11 @@ export function goNewPage() {
     method: "get"
   });
 }
+
+// 筛选统计首页样例接口
+export function systemNum(info) {
+  return request({
+    url: `statistics/userMonthlyActivityStatistics?top=${info.num}&date=${info.date}`,
+    method: "get"
+  });
+}

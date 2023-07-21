@@ -74,7 +74,7 @@
         :is-show-tip="false"
         :view-only="onlyRead"
         biz-path="portal/oo-csc-upp-system-atom"
-        bucket-name="picture-qhd326"
+        upload-type="local"
       />
     </el-form-item>
 

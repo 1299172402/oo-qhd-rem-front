@@ -62,9 +62,19 @@
       </div>
       <template #operations>
         <div class="operations-container" style="margin-left: 20px">
-          <div :style="{color: $store.state.setting.mode==='dark'? ' var(--light-blue-color)':'#fff'}" style="margin-right: 5px;font-size: 14px;font-weight: 700px;margin-left: 20px">
-            {{ $store.getters["user/tenantName"] }}
-          </div>
+          <el-tooltip
+            class="item"
+            :content="$store.getters['user/tenantName']"
+            placement="bottom"
+          >
+            <div
+              class="g-row-flex-V"
+              :style="{color: $store.state.setting.mode==='dark'? ' var(--light-blue-color)':'#fff'}"
+              style="font-size: 14px;font-weight: 700px;margin-left: 20px;height: 22px; max-width: 180px; margin-bottom: 4px; margin-right: 10px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden"
+            >
+              {{ $store.getters["user/tenantName"] }}
+            </div>
+          </el-tooltip>
           <!-- 搜索框 -->
           <!-- <search v-if="layout !== 'side'" :layout="layout" /> -->
           <audio ref="musicAudio" muted="muted" src="@/assets/messageVideo.wav" />

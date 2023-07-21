@@ -4,6 +4,7 @@
     <el-row>
       <!--部门数据-->
       <el-col
+        :style="{height: showFooter ? 'calc(100vh - 175px)' : 'calc(100vh - 141px)'}"
         :span="4"
         :xs="24"
         class="left"
@@ -49,6 +50,7 @@
       </el-col>
       <!--用户数据-->
       <el-col
+        :style="{height: showFooter ? 'calc(100vh - 171px)' : 'calc(100vh - 145px)'}"
         :span="20"
         :xs="24"
         class="right"
@@ -228,7 +230,7 @@
           </el-row>
           <el-table
             :data="userList"
-            height="calc(100% - 108px)"
+            height="calc(100% - 115px)"
             :row-style="{ height: '0px' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
             header-cell-class-name="table_header"
