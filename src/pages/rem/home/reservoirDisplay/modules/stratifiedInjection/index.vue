@@ -38,6 +38,10 @@ export default {
                     type: 'shadow'
                 }
             },
+            dataZoom: {
+                start: 0,
+                type: "inside",
+            },
             legend: {
                 textStyle: {
                     color: "#66ffff"

@@ -1,7 +1,7 @@
 <!-- 措施计划情况 -->
 <template>
   <div class="app-container" style="height: 100%">
-    <pagePanel headerTitle="措施计划情况表" style="height: 100%">
+    <pagePanel headerTitle="措施计划情况表" style="height: calc(100% - 20px)">
       <el-table
         :data="noticeList"
         highlight-current-row
@@ -10,51 +10,52 @@
         header-cell-class-name="table_header"
         :cell-style="{ 'text-align': 'center', padding: '2px' }"
         style="width: 100%; height: 100%"
+        height="calc(100% - 30px)"
         id="xczyjhb"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
-        <el-table-column label="井基本信息" prop="name" align="center">
-          <el-table-column label="井号" prop="one" align="center"></el-table-column>
-          <el-table-column label="生产层位" prop="one" align="center"></el-table-column>
-          <el-table-column label="所属区块" prop="one" align="center"></el-table-column>
-          <el-table-column :label="`油藏厚度 \n（m）`" width="130px" prop="one" align="center"></el-table-column>
-          <el-table-column :label="`水平段长度 \n（m）`" min-width="130px" prop="one" align="center"></el-table-column>
-          <el-table-column label="完井方式" prop="one" align="center"></el-table-column>
+        <el-table-column  label="井基本信息" prop="wellId" align="center">
+          <el-table-column sortable  label="井号" prop="wellNo" min-width="200px" align="center"></el-table-column>
+          <el-table-column label="生产层位" sortable prop="layerName" min-width="200px" align="center"></el-table-column>
+          <el-table-column label="所属区块" sortable prop="blockName" min-width="200px" align="center"></el-table-column>
+          <el-table-column :label="`油藏厚度 \n（m）`"  sortable width="130px" prop="reservoirThickness" align="center"></el-table-column>
+          <el-table-column :label="`水平段长度 \n（m）`" sortable min-width="130px" prop="horizonIntervalLen" align="center"></el-table-column>
+          <el-table-column label="完井方式" sortable min-width="130px" prop="completionMethod" align="center"></el-table-column>
         </el-table-column>
         <el-table-column label="生产现状" prop="name" align="center">
-          <el-table-column label="投产日期" prop="one" align="center"></el-table-column>
-          <el-table-column :label="`日产液\n（m³/d）`" min-width="130px" prop="one" align="center"></el-table-column>
-          <el-table-column :label="`日产油\n（m³/d）`" min-width="130px" prop="one" align="center"></el-table-column>
-          <el-table-column :label="`含水\n（%）`" prop="one" align="center"></el-table-column>
-          <el-table-column :label="`泵频\n（Hz）`" prop="one" align="center"></el-table-column>
-          <el-table-column :label="`累产油\n（万方）`" prop="one" align="center"></el-table-column>
-          <el-table-column label="地层压力测试时间" prop="one" min-width="140px" align="center"></el-table-column>
-          <el-table-column :label="`测试压力值\n（MPa）`" min-width="130px" prop="one" align="center"></el-table-column>
-          <el-table-column :label="`流压\n（MPa）`" min-width="130px" prop="one" align="center"></el-table-column>
-          <el-table-column :label="`生产压差\n（MPa）`" min-width="130px" prop="one" align="center"></el-table-column>
-          <el-table-column label="井控储量" prop="one" align="center"></el-table-column>
-          <el-table-column label="剩余可采储量" prop="one" min-width="130px" align="center"></el-table-column>
-          <el-table-column :label="`采液指数\n（m³/d.MPa）`" min-width="130px" prop="one" align="center"></el-table-column>
+          <el-table-column sortable label="投产日期" min-width="130px" prop="startDate" align="center"></el-table-column>
+          <el-table-column sortable :label="`日产液\n（m³/d）`" min-width="130px" prop="fluidProdDaily" align="center"></el-table-column>
+          <el-table-column sortable :label="`日产油\n（m³/d）`" min-width="130px" prop="oilProdDaily" align="center"></el-table-column>
+          <el-table-column sortable :label="`含水\n（%）`" prop="waterRatio" align="center"></el-table-column>
+          <el-table-column sortable :label="`泵频\n（Hz）`" prop="pumpFrequency" align="center"></el-table-column>
+          <el-table-column sortable :label="`累产油\n（万方）`" prop="cumOilProdYearly" align="center"></el-table-column>
+          <el-table-column sortable label="地层压力测试时间" prop="testDate" min-width="140px" align="center"></el-table-column>
+          <el-table-column sortable :label="`测试压力值\n（MPa）`" min-width="130px" prop="basalLevelStaticPress" align="center"></el-table-column>
+          <el-table-column sortable :label="`流压\n（MPa）`" min-width="130px" prop="flowPress" align="center"></el-table-column>
+          <el-table-column sortable :label="`生产压差\n（MPa）`" min-width="130px" prop="productPress" align="center"></el-table-column>
+          <el-table-column sortable min-width="100px" label="井控储量" prop="probReservesWell" align="center"></el-table-column>
+          <el-table-column sortable   label="剩余可采储量" prop="remainingRecoverableReserves" min-width="130px" align="center"></el-table-column>
+          <el-table-column sortable  :label="`采液指数\n（m³/d.MPa）`" min-width="130px" prop="fluidProductionIndex" align="center"></el-table-column>
         </el-table-column>
-        <el-table-column label="预测值" prop="name" align="center">
-          <el-table-column label="产液值" prop="one" align="center"></el-table-column>
-          <el-table-column label="含水" prop="one" align="center"></el-table-column>
-          <el-table-column label="日增油" prop="one" align="center"></el-table-column>
-          <el-table-column label="日产油" prop="one" align="center"></el-table-column>
-          <el-table-column label="生产压差" prop="one" align="center"></el-table-column>
-          <el-table-column label="流压" prop="one" align="center"></el-table-column>
+        <el-table-column   label="预测值" prop="name" align="center">
+          <el-table-column sortable min-width="100px"  label="产液值" prop="forecastFluid" align="center"></el-table-column>
+          <el-table-column sortable min-width="100px"  label="含水" prop="forecastWaterRatio" align="center"></el-table-column>
+          <el-table-column sortable min-width="100px"  label="日增油" prop="forecastOilInc" align="center"></el-table-column>
+          <el-table-column sortable min-width="100px"  label="日产油" prop="forecastOil" align="center"></el-table-column>
+          <el-table-column sortable min-width="100px"  label="生产压差" prop="forecastProductPress" align="center"></el-table-column>
+          <el-table-column sortable min-width="100px"  label="流压" prop="forecastFlowPress" align="center"></el-table-column>
         </el-table-column>
-        <el-table-column label="其他因素" prop="name" align="center">
-          <el-table-column label="排量效率" prop="one" align="center"></el-table-column>
-          <el-table-column label="历史出砂" prop="one" align="center"></el-table-column>
-          <el-table-column label="近期出砂" prop="one" align="center"></el-table-column>
-          <el-table-column label="出秒量" prop="one" align="center"></el-table-column>
-          <el-table-column label="电泵情况" prop="one" align="center"></el-table-column>
-          <el-table-column label="管柱情况" prop="one" align="center"></el-table-column>
-          <el-table-column label="海管情况" prop="one" align="center"></el-table-column>
-          <el-table-column label="泵能耗预测" min-width="130px" prop="one" align="center"></el-table-column>
-          <el-table-column label="变频器" prop="one" align="center"></el-table-column>
-          <el-table-column label="变压器" prop="one" align="center"></el-table-column>
+        <el-table-column   label="其他因素" prop="name" align="center">
+          <el-table-column sortable min-width="130px"   label="排量效率" prop="displacementEfficiency" align="center"></el-table-column>
+          <el-table-column sortable min-width="130px"  label="历史出砂" prop="historySandDay" align="center"></el-table-column>
+          <el-table-column sortable min-width="130px"   label="近期出砂" prop="sandDay" align="center"></el-table-column>
+          <el-table-column sortable min-width="130px"   label="出秒量" prop="sandValue" align="center"></el-table-column>
+          <el-table-column sortable min-width="130px"   label="电泵情况" prop="pumpCondition" align="center"></el-table-column>
+          <el-table-column sortable min-width="130px"   label="管柱情况" prop="one" align="center"></el-table-column>
+          <el-table-column sortable min-width="130px"   label="海管情况" prop="one" align="center"></el-table-column>
+          <el-table-column sortable   label="泵能耗预测" min-width="130px" prop="one" align="center"></el-table-column>
+          <el-table-column sortable min-width="130px"   label="变频器" prop="one" align="center"></el-table-column>
+          <el-table-column sortable min-width="130px"   label="变压器" prop="one" align="center"></el-table-column>
         </el-table-column>
       </el-table>
     </pagePanel>
@@ -64,6 +65,9 @@
 <script>
 import { queryMeasurePlanList } from "@/api/rem/actionplanmanagement";
 import { pumpReplaceDetail } from "@/api/rem/welldynamicanalysis";
+import {
+    measureRecommend,
+} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 export default {
   data() {
     return {
@@ -100,17 +104,36 @@ export default {
       this.getList();
     },
     getList() {
-      let data = {
-        date: "2023-05-14",
-        ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
-        platId: "3A5F370A168C4A3F9DF2CD244F9B4346",
-        wellId: "ED661145A1E74180958D1D60766C0102",
-        wellIds: [],
-        wellTypeCodes: [],
-      };
-      pumpReplaceDetail(data).then((res) => {
-        this.noticeList = res.data.data;
-      });
+        let list = 
+        {
+            oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+            selectBlock: "3FC9A818F5BC43B88270DB80BBB3018F",
+            evaluationDate: this.$route.query.currentDate, 
+            platformId: "3FC9A818F5BC43B88270DB80BBB3018F",
+            timeGranularityCode: "",
+            wellId: "",
+            showNormal: true
+        }       
+        measureRecommend(list).then((res)=>{
+            const wells = []
+            res.data?.data?.indicatorAnalysisDetailInfos.map((n)=>{
+                if(n.name == '换大泵'){
+                    n.basis.map((j)=>{
+                        wells.push(j.id)
+                    })
+                }
+            })
+            let data = {
+                date: this.$route.query.currentDate,
+                ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                platId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                wellIds:wells,
+            };
+            pumpReplaceDetail(data).then((res) => {
+                this.noticeList = res.data.data;
+            });
+        })
+      
     },
   },
 };

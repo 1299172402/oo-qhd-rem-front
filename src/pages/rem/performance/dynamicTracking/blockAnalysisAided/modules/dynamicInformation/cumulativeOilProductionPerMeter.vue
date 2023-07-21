@@ -14,7 +14,9 @@
             <el-button type="primary" @click="OnChangeImage">确认</el-button>
         </div>
         <div class="z-echarts">
-            <H5Chart ref="H5Chart" height="100%" :url="url" width="100%"></H5Chart>
+            <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                <H5Chart ref="H5Chart" height="100%" :url="url" width="100%"></H5Chart>
+            </page-panel-new>
         </div> 
         <el-dialog width="10px" max-height="10px" :visible.sync="dialogVisible1" style="margin-top: 98%; margin-right: 2%">
             <H5Chart1 style="z-index: -9999;" ref="downH5Chart1" :url="url1" width="4000px" height="4000px"></H5Chart1>

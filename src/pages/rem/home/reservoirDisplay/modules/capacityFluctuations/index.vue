@@ -44,6 +44,10 @@ export default {
                     right: 10,
                     bottom: 50,
                 },
+                dataZoom: {
+                    start: 0,
+                    type: "inside",
+                },
                 xAxis: {
                     nameTextStyle: {
                         color: "#a9a8a8",

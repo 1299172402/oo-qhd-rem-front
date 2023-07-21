@@ -468,7 +468,7 @@
                                     </div>
                                     <div style="width: 250px;display: flex;justify-content: flex-end;margin-top: 30px;">
                                         <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)"
-                                        @click="$router.push({path:'/plan/personnelMeasures',query:{platform,wellId,currentDate}})">措施推荐详情</el-button>
+                                        @click="$router.push({path:'/plan/personnelMeasures',query:{platform,wellId,currentDate,page:'oilAnalysisReport'}})">措施推荐详情</el-button>
                                     </div>
                                 </div>
                             </div>

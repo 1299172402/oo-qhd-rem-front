@@ -1257,7 +1257,8 @@
                             legendData.push(pieData[i].label);
                         }
                     }
-                    _this.pieEchart.legend.data = legendData.sort();
+                    legendData.sort();
+                    _this.pieEchart.legend.data = legendData;
                     _this.pieEchart.series.data = seriesData;
                     if (unitType == "t") {
                         _this.pieEchart.series.label.formatter = function(param) {

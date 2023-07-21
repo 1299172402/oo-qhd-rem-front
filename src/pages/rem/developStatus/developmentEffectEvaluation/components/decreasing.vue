@@ -567,7 +567,8 @@
                             point.push(item.y);
                             seriesData.push(point);
                         });
-                        this.totalDeclineRate.series[0].data = seriesData.sort();
+                        seriesData.sort()
+                        this.totalDeclineRate.series[0].data = seriesData;
                     }
                 });
             },

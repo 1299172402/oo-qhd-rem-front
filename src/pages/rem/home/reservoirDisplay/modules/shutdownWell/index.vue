@@ -35,6 +35,10 @@ export default {
           bottom: "8%",
           containLabel: true,
         },
+          dataZoom: {
+              start: 0,
+              type: "inside",
+          },
         tooltip: {
           trigger: "axis",
           axisPointer: {
