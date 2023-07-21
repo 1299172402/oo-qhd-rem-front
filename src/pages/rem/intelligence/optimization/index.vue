@@ -411,7 +411,7 @@ export default {
                 }else if (window.location.origin.includes('dev') || window.location.origin.includes('808')){
                     baseUrl = 'tjioms-dev.tjltd.cnooc'
                 }
-                window.open(`https://ipm.${baseUrl}/#/waterflood/merge?page=reservoirDisplay/linkage`,'_blank')
+                window.open(`https://ipm.${baseUrl}/#/waterflood/merge?page=optimization`,'_blank')
                 // this.$router.push({name: "schemePrediction"})
             })
         },
