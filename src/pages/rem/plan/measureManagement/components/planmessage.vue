@@ -14,6 +14,16 @@
         id="xczyjhb"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
+          <el-row>
+              <el-button
+                  style="margin-bottom: 20px"
+                  type="primary"
+                  icon="el-icon-download"
+                  @click="doDownExcel()"
+              >
+                  下载
+              </el-button> 
+          </el-row>
         <el-table-column  label="井基本信息" prop="wellId" align="center">
           <el-table-column sortable  label="井号" prop="wellNo" min-width="200px" align="center"></el-table-column>
           <el-table-column label="生产层位" sortable prop="layerName" min-width="200px" align="center"></el-table-column>
@@ -89,6 +99,7 @@ export default {
       total: 0,
       // 选中数组
       ids: [],
+        date:'',
       // 保存数组
       savelist: [],
     };
@@ -101,15 +112,55 @@ export default {
     show(data) {
       this.queryParams.ogfId = data.selectOilField;
       this.queryParams.selectPlatform = data.assetCode;
-      this.getList();
-    },
+      this.date = data.endTime
+        console.log(data)
+      this.getinfo();
+    }, 
+      getinfo(){
+        let platformId = ''
+        if(this.queryParams.selectPlatform ==''){
+            platformId = '3FC9A818F5BC43B88270DB80BBB3018F'
+        }else{
+            platformId=this.queryParams.selectPlatform
+        }
+          let list =
+              {
+                  oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                  selectBlock: "3FC9A818F5BC43B88270DB80BBB3018F",
+                  evaluationDate: this.date,
+                  platformId: platformId,
+                  timeGranularityCode: "",
+                  wellId: "",
+                  showNormal: true
+              }
+          measureRecommend(list).then((res)=>{
+              const wells = []
+              res.data?.data?.indicatorAnalysisDetailInfos.map((n)=>{
+                  if(n.name == '换大泵'){
+                      n.basis.map((j)=>{
+                          wells.push(j.id)
+                      })
+                  }
+              })
+              let data = {
+                  date: this.date,
+                  ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                  platId: platformId,
+                  wellIds:wells,
+              };
+              pumpReplaceDetail(data).then((res) => {
+                  this.noticeList = res.data.data;
+              });
+          })
+
+      },
     getList() {
         let list = 
         {
             oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
             selectBlock: "3FC9A818F5BC43B88270DB80BBB3018F",
             evaluationDate: this.$route.query.currentDate, 
-            platformId: "3FC9A818F5BC43B88270DB80BBB3018F",
+            platformId: this.$route.query.platform,
             timeGranularityCode: "",
             wellId: "",
             showNormal: true
@@ -126,7 +177,7 @@ export default {
             let data = {
                 date: this.$route.query.currentDate,
                 ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
-                platId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                platId: this.$route.query.platform,
                 wellIds:wells,
             };
             pumpReplaceDetail(data).then((res) => {
