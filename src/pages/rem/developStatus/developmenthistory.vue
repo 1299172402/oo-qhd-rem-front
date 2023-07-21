@@ -308,6 +308,14 @@
                 tableData2: [],
                 //开发曲线
                 option: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     grid: [
                         {
                             x: '160',

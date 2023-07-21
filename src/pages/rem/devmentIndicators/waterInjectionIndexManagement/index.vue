@@ -367,6 +367,14 @@
                 },
                 //含水上升率
                 rateOfWaterCutRise: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     title: {
                         text: "含水上升率",
                         textStyle: {
@@ -476,6 +484,14 @@
                 },
                 //自然递减率
                 naturalDeclineRate: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     title: {
                         text: "自然递减率",
                         textStyle: {
