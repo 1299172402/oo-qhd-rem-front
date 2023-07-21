@@ -314,6 +314,14 @@
                 },
                 //年产油量
                 inOilProduction2: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -445,6 +453,14 @@
                     series: [],
                 },
                 inOilProduction: {//原油产量折线图
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#9A72FF', '#DA835E'],
                     tooltip: {
                         trigger: 'axis',
@@ -574,6 +590,14 @@
                 },
                 //采油速度
                 productionSpeed: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -674,6 +698,14 @@
                 },
                 //综合递减率
                 comprehensiveDeclineRate: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     title: {
                         text: "综合递减率",
                         textStyle: {
@@ -786,6 +818,14 @@
                 },
                 //含水上升率
                 rateOfWaterCutRise: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     title: {
                         text: "含水上升率",
                         textStyle: {
@@ -898,6 +938,14 @@
                 },
                 //生产时率
                 whenTheProductionRate: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -994,6 +1042,14 @@
                 },
                 //油井利用率
                 wellUtilization: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -1126,6 +1182,14 @@
                 },
                 //自然递减率
                 naturalDeclineRate: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     title: {
                         text: "自然递减率",
                         textStyle: {
