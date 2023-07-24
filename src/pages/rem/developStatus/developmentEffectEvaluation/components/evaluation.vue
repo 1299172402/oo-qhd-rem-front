@@ -144,7 +144,9 @@
                                 pixelRatio: 15,
                                 //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: '#022644',
-                                iconStyle:{                                    opacity:0                                }
+                                iconStyle:{
+                                    opacity:0
+                                }
                             }
                         }
                     },
@@ -246,6 +248,14 @@
                 },
                 //采出程度
                 recoveryDegree: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     grid:{
                         top:30,
                         right:120,
@@ -340,6 +350,14 @@
                 },
                 //采出程度与含水率关系图
                 relationship: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     grid:{
                         top:30,
                         right:120,
@@ -541,6 +559,14 @@
                 },
                 //地层总压降
                 totalFormationPressureDrop: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     grid:{
                         top:10,
                         right:120,

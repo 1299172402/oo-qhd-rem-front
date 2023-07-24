@@ -609,6 +609,14 @@
                 selectRealData: [],
                 // 油井折线图内容
                 oilOption: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0, 1, 2],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -1108,6 +1116,14 @@
                 },
                 // 油井 虚拟计量曲线
                 oilOption2: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -1201,6 +1217,14 @@
                 },
                 // 水井折线图内容
                 waterOption: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0, 1],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -1509,6 +1533,14 @@
                     series: [],
                 },
                 waterRealOption: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0, 1],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -2328,6 +2360,14 @@
                 // 对x轴做排序
                 const xArray = Array.from(xSet).sort();
                 this.optionRealData = {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0, 1, 2],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     title: {},
                     tooltip: {
                         trigger: 'axis',

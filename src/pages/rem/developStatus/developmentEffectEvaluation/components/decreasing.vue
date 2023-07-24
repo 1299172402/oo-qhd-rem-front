@@ -239,6 +239,14 @@
                 },
                 //总递减率
                 totalDeclineRate: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     tooltip: {
                         trigger: "axis",
                         axisPointer: {
@@ -328,6 +336,14 @@
                 },
                 //产量标定法
                 yieldCalibrationMethod: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     tooltip: {
                         trigger: "axis",
                         axisPointer: {

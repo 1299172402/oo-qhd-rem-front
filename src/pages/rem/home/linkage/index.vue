@@ -1,6 +1,12 @@
 <template>
-    <div class="container" style="position: relative">
+    <div class="container" style="height: 100%;width: 100%;position:relative">
         <div class="topBanner">注采联动</div>
+        <video
+            autoPlay
+            loop
+            style="width: 100%;height: 100%;object-fit: cover;position: absolute;top: 10;left: 0;"
+            muted
+            src="@/pages/rem/home/linkage/join.mp4"/>
         <linkageBox @stopTimer="stopTimer" @startTimer="startTimer" :style="item.style" :showFlag="item.showFlag" :currentList="item" :key="index" v-for="(item,index) in currentLists"></linkageBox>
         <div class="studySelf">
             <div class="studySelfInside"></div>
@@ -21,8 +27,8 @@ import request from '@/utils/request'
 import linkageBox from "./linkageBox/index.vue";
 import {InjectionProdInfo} from "@/api/rem/injectionproductionlinkage";
 let curDate = new Date()
-let data1 = new Date(curDate.getTime() - 24*60*60*1000).format('YYYY-MM-DD')
-let data2 = new Date(curDate.getTime() - 24*60*60*1000*2).format('YYYY-MM-DD')
+let data1 = new Date(curDate.getTime() - 24*60*60*1000*3).format('YYYY-MM-DD')
+let data2 = new Date(curDate.getTime() - 24*60*60*1000*5).format('YYYY-MM-DD')
 export default {
     components:{
         linkageBox
@@ -69,7 +75,7 @@ export default {
                 {
                     style: 'position:absolute;left: 69%;top: 26%;width:20%;height:40%;',
                     boxText: '智能分注井调控测试',
-                    boxBottomText: [{name:'智能分注井调控测试',url:'https://ipm.tjioms-dev.tjltd.cnooc/#/intelligentDispensing?link=rem&page=reservoirDisplay/linkage'}],
+                    boxBottomText: [{name:'智能分注井调控测试',url:`https://ipm.${this.baseUrl}/#/intelligentDispensing?link=rem&page=reservoirDisplay/linkage`}],
                     boxBottomContent: [[{name:'智能配水器调控模型',url:''}, '智能测试模型']],
                     boxStyle: {
                         pWidth: 'width:11vw',
@@ -97,9 +103,9 @@ export default {
                     style: 'position:absolute;left: 43%;top: 56%;width:20%;height:40%;',
                     boxText: '注采状况分析',
                     boxBottomText: [
-                        {name:'注采连通分析',url:'https://rem.${this.baseUrl}/#/basic/wellGroup_Maintenance?link=linkage&page=reservoirDisplay/linkage'},
-                        {name:'注采平衡分析',url:'https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=1&page=reservoirDisplay/linkage'},
-                        {name:'采出状况分析',url:'https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=2&page=reservoirDisplay/linkage'}
+                        {name:'注采连通分析',url:`https://rem.${this.baseUrl}/#/basic/wellGroup_Maintenance?link=linkage&page=reservoirDisplay/linkage`},
+                        {name:'注采平衡分析',url:`https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=1&page=reservoirDisplay/linkage`},
+                        {name:'采出状况分析',url:`https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=2&page=reservoirDisplay/linkage`}
                     ],
                     boxBottomContent: [
                         [{name:'注采连通性评价模型',url:''}],
@@ -117,7 +123,7 @@ export default {
                 {
                     style: 'position:absolute;left: 30%;top: 60%;width:20%;height:40%;',
                     boxText: '剩余油分布',
-                    boxBottomText: [{name:'动态分析法/数模剩余油分析',url:'https://rem.${this.baseUrl}/#/intelligence1/optimization?link=rem&page=reservoirDisplay/linkage'}],
+                    boxBottomText: [{name:'动态分析法/数模剩余油分析',url:`https://rem.${this.baseUrl}/#/intelligence1/optimization?link=rem&page=reservoirDisplay/linkage`}],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
@@ -129,7 +135,7 @@ export default {
                 {
                     style: 'position:absolute;left: 17%;top: 56%;width:20%;height:40%;',
                     boxText: '调整区块确定',
-                    boxBottomText: [{name:'层间/平面矛盾分析',url:'https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=reservoirDisplay/linkage'}],
+                    boxBottomText: [{name:'层间/平面矛盾分析',url:`https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=reservoirDisplay/linkage`}],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
@@ -142,10 +148,10 @@ export default {
                     style: 'position:absolute;left: 2%;top: 60%;width:20%;height:40%;',
                     boxText: '产量运行监控',
                     boxBottomText: [
-                        {name:'年度产量运行预警',url:'https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?page=reservoirDisplay/linkage'}
+                        {name:'年度产量运行预警',url:`https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?page=reservoirDisplay/linkage`}
                     ],
                     boxBottomContent: [
-                        [{name:'年度产量趋势预测',url:'https://rem.${this.baseUrl}/#/modelConfiguration/modelconfig?page=reservoirDisplay/linkage'}]
+                        [{name:'年度产量趋势预测',url:`https://rem.${this.baseUrl}/#/modelConfiguration/modelconfig?page=reservoirDisplay/linkage`}]
                     ],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
@@ -154,7 +160,7 @@ export default {
                     showFlag:false,
                     typeIdList:[],
                     warningShowFlag : true,
-                    analysisUrl:`https://rem.${this.baseUrl}/#/yield/statisticalTableProduction?wellIds=%5B%5D&prodDate=${data2}&prodDateCompare=${data1}&page=reservoirDisplay/linkage`
+                    analysisUrl:`https://rem.${this.baseUrl}/#/yield/statisticalTableProduction?reservoirDisplay/linkage`
                     // analysisUrl:`https://rem.${this.baseUrl}/#/yield/statisticalTableProduction?wellIds=%5B%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%22D4BEBD2817E0449F957F78ED0A685A6C%22,%22fluidProdDaily%22%3A289.56,%22oilProdDaily%22%3A6.03,%22waterRatio%22%3A0.06,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-I3H1%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%22375DB74FC89747028A9436A8E41D3991%22,%22fluidProdDaily%22%3A-4.9,%22oilProdDaily%22%3A4.47,%22waterRatio%22%3A-0.4,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-G9H1%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%226E73C512F8444CE3BAEE27FE23294144%22,%22fluidProdDaily%22%3A-3.72,%22oilProdDaily%22%3A-2.06,%22waterRatio%22%3A0.54,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-F4H3%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%2274B59F886DF1459AB58311A6159202A4%22,%22fluidProdDaily%22%3A2.23,%22oilProdDaily%22%3A-2.39,%22waterRatio%22%3A0.37,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-F5%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%22257DE61B82E94263BFB8239D02447934%22,%22fluidProdDaily%22%3A-36.88,%22oilProdDaily%22%3A-2.9,%22waterRatio%22%3A0.07,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-J14H1%22%7D%5D`
                 },
                 {
@@ -300,9 +306,17 @@ export default {
 </script>
 
 <style lang="less" scoped>
+video {
+    position: fixed;
+    width: 100%;
+    z-index: 0;
+}
+
 .container{
     height: calc(100% - 20px);
-    background-image: url("@/assets/linkage/liandong-bg.gif");
+    
+    //D:\A项目\oo-qhd-rem-front\src\pages\rem\home\linkage\mork.mp4
+    //background-image: url("");
     background-size: 100% 100%;
     .topBanner{
         width: 100%;height: 38px;

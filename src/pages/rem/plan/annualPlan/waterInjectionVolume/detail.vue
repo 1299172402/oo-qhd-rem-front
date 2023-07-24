@@ -48,6 +48,14 @@
                 newInjectionCount: 0,
                 //老井转注 折线图1
                 oldWellLineChart: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#9A72FF', '#DA835E'],
                     tooltip: {
                         trigger: 'axis',
@@ -163,6 +171,14 @@
                 },
                 //新井投注 折线图2
                 newWellLineChart: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#9A72FF', '#DA835E'],
                     tooltip: {
                         trigger: 'axis',
