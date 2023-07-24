@@ -108,3 +108,11 @@ export function callBackLogin(data, params) {
     params
   });
 }
+
+// 修改下次登录是否显示接口
+export function updateBrowse(userId, showTips) {
+  return request({
+    url: `system/user/updateBrowse?userId=${userId}&showTips=${showTips}`,
+    method: "get"
+  });
+}

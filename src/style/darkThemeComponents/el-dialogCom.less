@@ -120,4 +120,71 @@
 
 .el-loading-mask {
   z-index: 3000 !important;
-} 
+}
+
+.portalDialog {
+  .blueDiv {
+    background: rgba(36, 222, 255, 0.15);
+
+    .contentText {
+      color: #fff;
+    }
+  }
+
+  .el-dialog {
+    background: #004575 !important;
+    border: 1px solid;
+    border-image: linear-gradient(180deg, rgba(116, 190, 243, 0.5), rgba(0, 180, 255, 1)) 1 1;
+
+    .el-dialog__header {
+      background: linear-gradient(270deg, rgba(0, 202, 255, 0.68) 0%, rgba(0, 150, 255, 0) 100%) !important;
+      border-image: linear-gradient(180deg, rgba(116, 190, 243, 0), rgba(0, 180, 255, 0.6)) 1 1;
+
+      .el-dialog__title {
+        color: #fff;
+      }
+    }
+
+    .el-dialog__body {
+      padding: 20px;
+      margin: 0;
+    }
+
+    .el-dialog__footer {
+      border-top: 1px solid rgba(0, 180, 255, 0.6);
+      padding: 13px 20px;
+
+      .dialog-footer {
+        justify-content: space-between;
+
+        .cancelBtn {
+          line-height: 0;
+        }
+      }
+    }
+  }
+
+  .el-step.is-horizontal .el-step__line {
+    left: 34px;
+    top: 14px;
+  }
+
+  .el-step__line {
+    background-color: rgba(36, 222, 255, 0.15);
+    width: 20px;
+  }
+
+  .el-step__head.is-wait .el-step__icon.is-text {
+    border: 1px solid #24deff !important;
+    color: #24deff;
+    background: transparent !important;
+  }
+
+  .el-step__head.is-success .el-step__icon.is-text {
+    background: #24deff !important;
+  }
+
+  .el-step__head.is-success .el-icon-check::before {
+    color: #fff !important;
+  }
+}

@@ -46,7 +46,7 @@
 </template>
 <script>
 import chartsComponents from "@/components/intelligentOilfield/echarts-com/index.vue";
-// import { systemNum } from "@/api/intelligentOilfield/system/layout";
+import { systemNum } from "@/api/intelligentOilfield/system/layout";
 import dayjs from "dayjs";
 
 export default {
@@ -271,15 +271,15 @@ export default {
   },
   methods: {
     changeNum() {
-    //   const res = {
-    //     num: this.currentNum,
-    //     date: this.date1
-    //   };
-    //   systemNum(res).then(response => {
-    //     this.currentInfo = response.data.data;
-    //     this.char6.yAxis.data = this.currentInfo.deptNames.sort((a, b) => a - b);
-    //     this.char6.series[0].data = this.currentInfo.deptPercentages.sort((a, b) => a - b);
-    //   });
+      const res = {
+        num: this.currentNum,
+        date: this.date1
+      };
+      systemNum(res).then(response => {
+        this.currentInfo = response.data.data;
+        this.char6.yAxis.data = this.currentInfo.deptNames.sort((a, b) => a - b);
+        this.char6.series[0].data = this.currentInfo.deptPercentages.sort((a, b) => a - b);
+      });
     }
   }
 };

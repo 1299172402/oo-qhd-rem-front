@@ -2,8 +2,7 @@
   <div class="login-wrapper">
     <div style="display: flex; align-items: center; height: 84px; padding-left: 30px;">
       <div class="logoDiv" />
-      <!-- TODO: 内网 Maybe change back -->
-      <p class="titleDiv">
+      <p v-if="!isTestEnvironment" class="titleDiv">
         天津分公司智能油田管理系统
       </p>
     </div>
@@ -30,9 +29,10 @@
         </div>
       </div>
     </div>
-    <div class="bottom-Div">
-      <!-- XXXX石油集团有限公司版权所有 -->
-      <!-- TODO: Maybe change back -->
+    <div v-if="isTestEnvironment" class="bottom-Div">
+      XXXX石油集团有限公司版权所有
+    </div>
+    <div v-else class="bottom-Div">
       中国海洋石油集团有限公司版权所有
     </div>
   </div>
@@ -42,7 +42,9 @@ import Login from "./components/components-login.vue";
 import Register from "./components/components-register.vue";
 // import LoginHeader from './components/components-header.vue'
 import TdesignSetting from "@/layouts/setting.vue";
+import proxy from "@/config/host";
 
+const env = import.meta.env.MODE || "development";
 export default {
   name: "LoginIndex",
   components: {
@@ -53,6 +55,7 @@ export default {
   },
   data() {
     return {
+      isTestEnvironment: proxy[env].IS_TEST_ENVIRONMENT,
       type: "login",
       currentModel: this.$store.state.setting.mode
     };

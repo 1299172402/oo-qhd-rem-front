@@ -71,41 +71,12 @@ export default ({ mode }) => {
       proxy: {
         "/dev-api": {
           // 用于开发环境下的转发请求
-          // 更多请参考：https://vitejs.dev/config/#server-proxy
-          // target: 'http://114.116.211.6:8080', // 旧地址
-          // target: "http://114.115.233.247:38085/prod-api", //
-          target: "http://192.168.1.18:38085/prod-api", //
-          // target: "http://10.77.79.57:8080", // 新地址
-          // target: "https://tjioms-dev.tjltd.cnooc", // 新地址
-          // target: "https://3196n899m4.zicp.fun", // zhangbin地址
+          target: "http://192.168.1.18:38085/prod-api", // 测试环境地址
+          // target: "http://10.8.8.158:8080", // 后端联调地址
+          // target: "http://10.77.79.57:8080", // 内网测试地址
           changeOrigin: true,
           rewrite: path => path.replace(/^\/dev-api/, "")
         }
-        // "/GEM_API": {
-        //   // 用于开发环境下的转发请求
-        //   // 更多请参考：https://vitejs.dev/config/#server-proxy
-        //   // target: 'http://114.116.211.6:8080', // 旧地址
-        //   target: "http://114.116.211.6:8080", // 新地址
-        //   // target: 'http://aselinceaa.natapp1.cc', // zhangbin地址
-        //   changeOrigin: true,
-        //   rewrite: path => path.replace(/^\/GEM_API/, "")
-        // }
-        // 流程平台地址-有可供测试的流程平台时放开
-        // '/biz/flow': {
-        //   // 用于开发环境下的转发请求
-        //   // 更多请参考：https://vitejs.dev/config/#server-proxy
-        //   target: '',
-        //   changeOrigin: true,
-        //   rewrite: (path) => path.replace(/^\/biz\/flow/, ''),
-        // },
-        // 文件服务地址-有可供测试的文件服务时放开
-        // '/b/upload': {
-        //   // 用于开发环境下的转发请求
-        //   // 更多请参考：https://vitejs.dev/config/#server-proxy
-        //   target: '',
-        //   changeOrigin: true,
-        //   rewrite: (path) => path.replace(/^\/b\/upload/, ''),
-        // },
       }
     }
   };

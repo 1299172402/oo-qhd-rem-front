@@ -97,81 +97,6 @@
                 />
               </el-select>
             </el-form-item>
-            <!-- TODO: Maybe change back -->
-            <!-- <el-form-item label="用户角色" prop="roleId">
-              <el-select
-                v-model="queryParams.roleId"
-                style="width: 240px"
-                placeholder="请选择用户角色"
-                clearable
-              >
-                <el-option
-                  v-for="item in roleOptions"
-                  :key="item.roleId"
-                  :label="item.roleName"
-                  :value="item.roleId"
-                  :disabled="item.status == 1"
-                />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="用户岗位" prop="postId">
-              <el-select
-                v-model="queryParams.postId"
-                style="width: 240px"
-                placeholder="请选择用户岗位"
-                collapse-tags
-                clearable
-              >
-                <el-option
-                  v-for="item in postOptions"
-                  :key="item.postId"
-                  :label="item.postName"
-                  :value="item.postId"
-                  :disabled="item.status == 1"
-                />
-              </el-select>
-            </el-form-item> -->
-            <!-- <el-form-item label="所属机构" prop="deptId">
-              <treeselect v-model="queryParams.deptId" style="width: 240px" :options="deptOptions" :show-count="true" placeholder="请选择所属机构" />
-                    </el-form-item> -->
-            <!-- <el-form-item label="手机号码" prop="phonenumber">
-            <el-input
-              v-model="queryParams.phonenumber"
-              placeholder="请输入手机号码"
-              clearable
-              size="small"
-              style="width: 240px"
-              @keyup.enter.native="handleQuery"
-            />
-          </el-form-item>
-          <el-form-item label="状态" prop="status">
-            <el-select
-              v-model="queryParams.status"
-              placeholder="用户状态"
-              clearable
-              size="small"
-              style="width: 240px"
-            >
-              <el-option
-                v-for="dict in dict.type.sys_normal_disable"
-                :key="dict.value"
-                :label="dict.label"
-                :value="dict.value"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="创建时间">
-            <el-date-picker
-              v-model="dateRange"
-              size="small"
-              style="width: 240px"
-              value-format="yyyy-MM-dd"
-              type="daterange"
-              range-separator="-"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-            ></el-date-picker>
-                  </el-form-item> -->
             <el-form-item class="buttonArea">
               <el-button
                 type="primary"
@@ -191,7 +116,6 @@
           </el-form>
         </header-search>
 
-        <!-- v-loading="loading" -->
         <page-panel-new header-title="用户管理" :style="{height: showFooter ? '86%' : '88.6%'}">
           <el-row class="mbBottom">
             <el-col class="height-placeholder" :span="16">
@@ -239,9 +163,7 @@
             :default-sort="{ prop: 'date', order: 'descending' }"
             @selection-change="handleSelectionChange"
           >
-            <!-- <el-table-column type="selection" width="50" align="center" /> -->
             <el-table-column label="序号" type="index" width="50" />
-            <!-- <el-table-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible" /> -->
             <el-table-column
               v-if="columns[0].visible"
               key="userName"
@@ -272,7 +194,6 @@
                 </div>
               </template>
             </el-table-column>
-            <!-- <el-table-column label="用户昵称" align="center" key="nickName" prop="nickName" v-if="columns[2].visible" :show-overflow-tooltip="true" /> -->
             <el-table-column
               v-if="columns[3].visible"
               key="deptName"
@@ -307,7 +228,6 @@
                 </div>
               </template>
             </el-table-column>
-            <!-- <el-table-column label="手机号码" align="center" key="phonenumber" prop="phonenumber" v-if="columns[4].visible" width="120" /> -->
             <el-table-column
               label="是否为EHR用户"
               align="center"
@@ -335,29 +255,6 @@
                 />
               </template>
             </el-table-column>
-            <!-- <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[6].visible" width="160">
-            <template slot-scope="scope">
-              <span>{{ parseTime(scope.row.createTime) }}</span>
-            </template>
-                  </el-table-column> -->
-            <!-- TODO: Maybe change back -->
-            <!-- <el-table-column
-              label="账号信息"
-              align="center"
-              width="160"
-              class-name="small-padding fixed-width"
-            >
-              <template slot-scope="scope">
-                <el-button
-                  v-hasPermi="['system:user:edit']"
-                  size="mini"
-                  type="text"
-                  @click="seeDetail(scope.row)"
-                >
-                  查看账号信息
-                </el-button>
-              </template>
-            </el-table-column> -->
             <el-table-column
               label="操作"
               align="center"
@@ -389,8 +286,6 @@
                 >
                   删除
                 </el-button>
-                <!-- TODO: Maybe change back -->
-                <!-- v-hasPermi="['system:user:resetPwd', 'system:user:roleEdit', 'system:user:appRole']" -->
                 <el-dropdown
                   style="margin-left: 20px;"
                   @command="(command) => handleCommand(command, scope.row)"
@@ -611,24 +506,6 @@
           </el-select>
         </el-form-item>
         <el-form-item label="用户岗位">
-          <!-- TODO: Maybe change back 岗位多选 -->
-          <!-- <el-select
-            v-model="form.postIds"
-            filterable
-            :disabled="form.ehr === '0' ? false : keys.includes('postIds')"
-            class="customSelect"
-            placeholder="请选择用户岗位"
-            clearable
-            @change="changePost"
-          >
-            <el-option
-              v-for="item in postOptions"
-              :key="item.postId"
-              :label="item.postName"
-              :value="item.postId"
-              :disabled="item.status == 1"
-            />
-          </el-select> -->
           <el-select
             v-model="form.tempPostId"
             style="margin-top: 5px"
@@ -716,7 +593,6 @@
         <el-button type="primary" @click="sureUpdatePwd">
           确 定
         </el-button>
-        <!-- <el-button @click="upload.open = false" class="cancelBtn">取 消</el-button> -->
       </div>
     </el-dialog>
     <!-- 用户导入对话框 -->
@@ -799,27 +675,24 @@
 
 <script>
 import { mapGetters } from "vuex";
-
 import {
-  listUser,
-  getUser,
-  delUser,
   addUser,
-  updateUser,
-  resetUserPwd,
   changeUserStatus,
+  delUser,
   getNoEditable,
+  getUser,
+  listUser,
+  resetUserPwd,
+  updateUser,
   uploadFile
 } from "@/api/intelligentOilfield/system/user";
-import { listPost, addPost } from "@/api/intelligentOilfield/system/post";
-// import { getToken } from "@/utils/auth";
+import { addPost, listPost } from "@/api/intelligentOilfield/system/post";
 import { treeselect } from "@/api/intelligentOilfield/system/dept";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import proxy from "@/config/host";
 import { getCodeImg } from "@/api/intelligentOilfield/login";
 import { encryptlogin, decrypt } from "@/utils/jsencrypt";
-/* import { getInfoByCode } from "@/api/intelligentOilfield/system/applicationCenter/tenant.js"; */
 
 export default {
   name: "User",
@@ -1556,5 +1429,51 @@ export default {
   /deep/ .el-input__inner {
     padding-right: 34px;
   }
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+/deep/ .image-container,  .el-upload--text {
+  border: unset !important;
+}
+
+.signature{
+  width: 400px;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto
+}
+
+/deep/ .signature .el-upload {
+  margin-top: 0;
+}
+
+.image {
+  width: 300px; /* 设置图片的宽度 */
+  height: auto; /* 设置图片的高度 */
+}
+
+.mask {
+  position: absolute;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 设置遮罩层的背景颜色和透明度 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.el-icon-delete {
+  color: white; /* 设置删除图标的颜色 */
+  font-size: 24px; /* 设置删除图标的大小 */
 }
 </style>
