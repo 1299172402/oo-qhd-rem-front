@@ -74,6 +74,14 @@
                 selectDate: [],
                 //油井折线图
                 oilWellOption: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0, 1, 2],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     title: {},
                     tooltip: {
                         trigger: 'axis',
@@ -556,6 +564,14 @@
                 },
                 //水井折线图
                 injectionWellOption: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0, 1],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     title: {},
                     tooltip: {
                         trigger: 'axis',
