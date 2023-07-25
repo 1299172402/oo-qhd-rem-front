@@ -1,12 +1,12 @@
 <template>
-    <div class="container" style="height: 100%;width: 100%;position:relative">
+    <div class="container" style="height: calc(100% - 20px);width: 100%;position:relative">
         <div class="topBanner">注采联动</div>
         <video
             autoPlay
             loop
             style="width: 100%;height: 100%;object-fit: cover;position: absolute;top: 10;left: 0;"
             muted
-            src="@/pages/rem/home/linkage/code.mp4"/>
+            src="@/pages/rem/home/linkage/code12.mp4"/>
         <linkageBox @stopTimer="stopTimer" @startTimer="startTimer" :style="item.style" :showFlag="item.showFlag" :currentList="item" :key="index" v-for="(item,index) in currentLists"></linkageBox>
         <div class="studySelf">
             <div class="studySelfInside"></div>
