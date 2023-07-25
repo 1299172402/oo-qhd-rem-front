@@ -14,13 +14,13 @@
           style="font-size: 20px; width: auto;caret-color: transparent"
           @click="goPage"
         >
-          <!-- <span class="logoText">{{ systemName }}</span> -->
-          <!-- TODO: 内网 Maybe change back -->
+          <span v-if="isTestEnvironment" class="logoText">{{ systemName }}</span>
           <logo-full
+            v-if="!isTestEnvironment"
             class="t-logo"
             style="width: 49px; height: 44px; margin-right: 10px;"
           />
-          <span class="logoText">{{ systemName }}</span>
+          <span v-if="!isTestEnvironment" class="logoText">天津分公司智能油田管理系统</span>
         </span>
       </template>
       <div v-show="layout !== 'side' && !$store.getters['user/isGroupLogin'] && $store.state.setting.layout === 'top' && iconvisible" class="scrollicon" style="padding-right: 10px;">
@@ -276,14 +276,13 @@
 
 <script>
 import Vue from "vue";
+import { prefix } from "@/config/global";
+import LogoFull from "@/assets/logo.svg";
 import {
   UserCircleIcon,
   PoweroffIcon,
   ChevronDownIcon
 } from "tdesign-icons-vue";
-import { prefix } from "@/config/global";
-import LogoFull from "@/assets/logo.svg";
-
 import Notice from "./Notice.vue";
 import Message from "./Message.vue";
 import proxy from "@/config/host";
@@ -346,6 +345,7 @@ export default Vue.extend({
     };
     return {
       systemName: proxy[env].SYSTEM_NAME,
+      isTestEnvironment: proxy[env].IS_TEST_ENVIRONMENT,
       prefix,
       visibleNotice: false,
       isSearchFocus: false,
