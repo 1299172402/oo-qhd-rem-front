@@ -75,6 +75,7 @@
 import VueGridLayout from "vue-grid-layout";
 import demoIndex from "@/pages/intelligentOilfield/demo/demo.vue";
 import demoIndex2 from "@/pages/intelligentOilfield/demo/demo2.vue";
+import systemAccess from "@/pages/statistical/components/systemAccess.vue";
 import { queryByPageName, savePage } from "@/api/intelligentOilfield/system/layout";
 
 export default {
@@ -236,6 +237,7 @@ export default {
         // 面板取消逻辑
         this.currentLayout = JSON.parse(JSON.stringify(this.interfaceDataStore));
         this.getWidthHeight();
+        this.$bus.$emit("cancelPanel");
         // 关闭编辑窗体
         this.isOperation = false;
       }).catch(() => { });
@@ -247,6 +249,8 @@ export default {
         case "示例组件2":
           return demoIndex2;
         // 增加所需要引入子组件
+        case "系统访问情况":
+          return systemAccess;
         default:
           break;
       }

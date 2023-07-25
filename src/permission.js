@@ -1,6 +1,5 @@
 import NProgress from "nprogress"; // progress bar
 import "nprogress/nprogress.css"; // progress bar style
-
 import store from "@/store";
 import router from "@/router";
 import { sysMenuAccess, checkAndRefreshToken } from "@/api/intelligentOilfield/system/user";

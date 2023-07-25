@@ -867,6 +867,9 @@ export default {
               this.form.icon = "build";
             }
           }
+          if (this.form.menuType === "M") { // 只要菜单类型为目录，组件路径必须置为空，否则页面会出不来
+            this.form.component = "";
+          }
           if (this.form.menuId !== undefined) {
             updateMenu(this.form).then(res => {
               if (res ? res.data.code === 200 : false) {

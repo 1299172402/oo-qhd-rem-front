@@ -246,3 +246,29 @@ export function checkAndRefreshToken(data) {
     data
   });
 }
+
+// 查询用户下的电子签名
+export function getSignatureByUsername(query) {
+  return request({
+    url: "/system/signature/getByUserName",
+    method: "get",
+    params: query
+  });
+}
+// 删除电子签名
+export function delSignatureByUsername(data) {
+  return request({
+    url: "/system/signature/deletedById",
+    method: "post",
+    params: data
+  });
+}
+
+// 修改电子签名或者增加
+export function editSignatureByUsername(data) {
+  return request({
+    url: "/system/signature/saveOrUpdate",
+    method: "post",
+    data
+  });
+}

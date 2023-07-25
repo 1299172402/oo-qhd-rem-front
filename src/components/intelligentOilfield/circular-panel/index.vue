@@ -285,7 +285,7 @@ export default {
 }
 
 .panelBg {
-  width: 196px;
+  width: 193px;
   height: 30px;
   text-align: center;
   margin: 0 10px;

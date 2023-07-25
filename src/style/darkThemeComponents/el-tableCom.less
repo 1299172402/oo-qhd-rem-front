@@ -32,8 +32,7 @@
 
 .el-table th.el-table__cell,
 .el-table th.el-table__cell.is-leaf {
-  // background: linear-gradient(to bottom, rgba(36, 222, 255, 0.3), rgba(36, 222, 255, 0.2), rgba(36, 222, 255, 0.3), rgba(36, 222, 255, 0.4)) !important;
-  background: linear-gradient(360deg, #004473 0%, rgba(0, 72, 122, 0.36) 100%) !important;
+  //   background: linear-gradient(360deg, #004473 0%, rgba(0, 72, 122, 0.36) 100%) !important;
 }
 
 .el-table td.el-table__cell,
@@ -70,7 +69,7 @@
 .el-table__fixed-right-patch {
   // width: 0 !important;
   width: 11px !important;
-  background: rgba(1, 63, 107, 1);
+  background: #02355e;
 }
 
 .el-table__fixed-right {
@@ -89,7 +88,6 @@
 
 .el-table .el-table__cell.gutter {
   background: transparent;
-  display: block !important;
 }
 // 表头显示双行（带单位）
 .doubleHeader .el-table__header-wrapper {
@@ -121,6 +119,10 @@
   background-size: unset !important;
   background-repeat: no-repeat !important;
   background-position: right top !important;
+
+  .el-table__header {
+    background: linear-gradient(360deg, #004473 0%, rgba(0, 72, 122, 0.36) 100%) !important;
+  }
 
   .cell {
     // background: var(--el-dialog-color);

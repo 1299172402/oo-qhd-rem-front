@@ -96,6 +96,7 @@
             :limit="1"
             :file-type="fileType"
             :is-show-tip="false"
+            upload-type="local"
             @change="changeFileList($event, item)"
           />
         </el-form-item>

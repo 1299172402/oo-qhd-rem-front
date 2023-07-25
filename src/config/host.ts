@@ -11,7 +11,8 @@ const config = {
   appId: "$system$",
   ALARM_URL: "https://amm.tjioms-dev.tjltd.cnooc/#/reportPolice/source?access_token=",
   WEB_TAG_NAME: "智能油田管理系统", // 网页标签名称
-  SYSTEM_NAME: "天津分公司智能油田管理系统" // 系统名称
+  SYSTEM_NAME: "天津分公司智能油田管理系统", // 系统名称
+  IS_TEST_ENVIRONMENT: false
 };
 
 export default {
@@ -25,7 +26,6 @@ export default {
     // 文件预览服务
     PREVIEW_FILE_API: "/b/upload",
     processAPI: "/dev-api/workflow",
-    appId: 'f198c1a239254b0e86529a0668cf4adb',
     // 开发环境接口请求
     API: "/dev-api",
     // API: '',
@@ -48,9 +48,9 @@ export default {
   },
   stage: {
     ...config,
-    processAPI: "http://kd.bytzdev.xyz:38880/stage-api/workflow",
+    processAPI: "",
     // 正式环境接口地址
-    API: "http://kd.bytzdev.xyz:38880/stage-api",
+    API: "",
     // 正式环境 cdn 路径
     CDN: ""
   },
@@ -65,10 +65,9 @@ export default {
     // 文件预览服务
     PREVIEW_FILE_API: "文件服务地址",
     // 正式环境接口地址
-    API: 'https://rem.tjioms-dev.tjltd.cnooc/prod-api/',
+    API: "http://10.77.78.250:80/prod-api/",
     // 正式环境 cdn 路径
-    CDN: '',
-    appId: 'f198c1a239254b0e86529a0668cf4adb',
+    CDN: "",
     LOGIN_TYPES: ["corp_oauth", "password"]
   }
 };

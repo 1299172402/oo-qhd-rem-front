@@ -20,11 +20,11 @@
       <div style="text-align: center">
         <file-upload
           v-model="imgUrl2"
+          upload-type="local"
           :limit="1"
           :is-picture-card="true"
           :is-show-tip="false"
           biz-path="portal/oo-csc-upp-system-atom"
-          bucket-name="picture-qhd326"
         />
       </div>
 

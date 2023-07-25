@@ -9,8 +9,7 @@ import proxy from "@/config/host";
 import STYLE_CONFIG from "@/config/style";
 import { LIGHT_CHART_COLORS, DARK_CHART_COLORS } from "@/config/color";
 import path from "path-browserify";
-// import { getToken, setToken, removeToken } from '@/utils/auth'
-// import { getToken, setToken, setExpiresIn, removeToken } from '@/utils/auth'
+
 const env = import.meta.env.MODE || "development";
 
 const InitUserInfo = {
@@ -140,34 +139,6 @@ const getters = {
 };
 
 const actions = {
-//   async login({ commit }, userInfo) {
-  //     // 登录接口获取token
-  //     const params = {
-  //       code: userInfo.code,
-  //       uuid: userInfo.uuid,
-  //       username: userInfo.username,
-  //       password: userInfo.password,
-  //     };
-  //     await login(params).then((res) => {
-  //       if (res.data.code === 200) {
-  //         if (userInfo.rememberMe) {
-  //           Cookies.set("username", userInfo.username, { expires: 30 });
-  //           Cookies.set("password", encrypt(userInfo.password), { expires: 30 });
-  //           Cookies.set('rememberMe', userInfo.rememberMe, { expires: 30 });
-  //         } else {
-  //           Cookies.remove("username");
-  //           Cookies.remove("password");
-  //           Cookies.remove('rememberMe');
-  //         }
-  //         commit('setToken', res.data.data.access_token);
-  //       } else {
-  //         message.error(res.data.msg);
-  //       }
-  //     })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   },
   getCodeImg() {
     return new Promise((resolve, reject) => {
       getCodeImg()
@@ -216,11 +187,7 @@ const actions = {
                 Cookies.remove("password");
                 Cookies.remove("rememberMe");
               }
-              // setToken(res.data.data.access_token)
               commit("setToken", res.data.data.access_token);
-              //   commit('setToken', res.data.data.access_token)
-              //   setExpiresIn(res.data.data.expires_in)
-              //   commit('SET_EXPIRES_IN', res.data.data.expires_in)
               if (res.data.data.tenant_role_key) {
                 await store.dispatch("permission/initRoutes", store.getters["user/roles"]);
                 dispatch("getUserInfo", "firstLogin", true);
@@ -239,37 +206,6 @@ const actions = {
     });
   },
 
-  //   async getUserInfo({ commit }) {
-  //     await getInfo().then(res => {
-  //       if (res.data.code === 200) {
-  //         console.log('获取用户角色====', res.data)
-  //         const {user} = res.data
-  //         // const avatar = user.avatar === "" ? require("@/assets/images/profile.jpg") : user.avatar;
-  //           // 判断登录门户/后台管理系统
-  //           commit('SET_LOGINBACK', res.data.loginBack)
-  //         const avatar = user.avatar === "" ? '' : user.avatar;
-  //         if (res.data.roles && res.data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-  //           commit('SET_ROLES', res.data.roles)
-  //           commit('SET_PERMISSIONS', res.data.permissions)
-  //         } else {
-  //           commit('SET_ROLES', ['ROLE_DEFAULT'])
-  //         }
-  //         commit('SET_NAME', user.userName)
-  //         commit('SET_AVATAR', avatar)
-  //       }
-  //     }).catch(error => {
-  //       console.log(error);
-  //     })
-  //     const mockRemoteUserInfo = async () =>
-  //       ({
-  //         name: 'td_dev',
-  //         roles: ['ALL_ROUTERS'],
-  //       });
-
-  //     // 登录拿到的用户角色，目的给用户配置路由
-  //     const res = await mockRemoteUserInfo();
-  //     commit('setUserInfo', res);
-  //   },
   getUserInfo({ commit }, firstLogin) {
     const { appId } = proxy[env];
     return new Promise((resolve, reject) => {
@@ -331,14 +267,11 @@ const actions = {
   },
   async logout({ commit }) {
     await logout().then(() => {
-    //   if(res?.data?.code === 200) {
       // 解决重新登录系统标签页未关闭的问题
       store.commit("tabRouter/removeTabRouterList");
       sessionStorage.removeItem("tabRouterList");
       commit("SETTENANTCODE", { value: "", state: false });
-      // removeToken();
       commit("removeToken");
-      // commit('setUserInfo', InitUserInfo);
       commit("setUserInfo", {
         roles: []
       });
