@@ -42,11 +42,11 @@
             };
         },
         async mounted() {
-            await this.fieldOilLayersApi();
-            this.doSearch();
+            await this.doSearch();
         },
         methods: {
-            doSearch() {
+            async doSearch() {
+                await this.fieldOilLayersApi();
                 let params ={
                     operationId:this.blockId+'-'+this.selectPosition,
                     operationType:'BLOCKHYBHDFBT',

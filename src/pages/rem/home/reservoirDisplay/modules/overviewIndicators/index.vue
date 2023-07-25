@@ -67,9 +67,9 @@
                     </div>
                 </el-col>
             </el-row>
-            <el-row :gutter="20" style="padding: 0 20px">
-                <el-col :span="8">
-                    <div>
+            <el-row :gutter="20" style="padding: 0 20px;">
+                <el-col :span="8" style="height: 100%">
+                    <div class="grid-content bg-purple">
                         <Echart height="100%" :chart-data="histogram"></Echart>
                         <div class="chartText">自然递减</div>
                     </div>
@@ -604,12 +604,11 @@ export default {
                 series: [
                     {
                         type: "pie",
-
                         // selectedMode: "single",
                         radius: [0, "75%"],
                         color: centerColor,
                         label: {
-                            fontSize: 15,
+                            fontSize: 18,
                         },
                         data: [
                             {value: 0, name: value, label: {color:'#29EEF3', position: "center"}},

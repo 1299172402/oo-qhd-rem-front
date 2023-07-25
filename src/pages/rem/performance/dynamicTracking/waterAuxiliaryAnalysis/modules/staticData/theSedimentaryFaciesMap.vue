@@ -47,8 +47,7 @@
             };
         },
         async mounted() {
-            await this.fieldOilLayersApi();
-            this.doSearch();
+            await this.doSearch();
         },
         methods: {
             //获取层位接口
@@ -74,7 +73,8 @@
                 });
             },
             //获取图片
-            doSearch() {
+            async doSearch() {
+                await this.fieldOilLayersApi();
                 this.imageList=[];
                 let params ={
                     operationId:this.blockId+'-'+this.selectPosition,
