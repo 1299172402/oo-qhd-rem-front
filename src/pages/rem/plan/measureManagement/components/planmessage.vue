@@ -141,7 +141,7 @@
           </el-table-column>
         </el-table-column>
         <el-table-column   label="预测值" prop="name" align="center">
-          <el-table-column sortable min-width="100px" :label="`产液值\n（m³/d）`"  prop="forecastFluid" align="center">
+          <el-table-column sortable min-width="120px" :label="`产液值\n（m³/d）`"  prop="forecastFluid" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.forecastFluid !== null && scope.row.forecastFluid !== ''">{{scope.row.forecastFluid}}</span>
                   <span v-else>N/A</span>
@@ -153,13 +153,13 @@
                   <span v-else>N/A</span>
               </template>
           </el-table-column>
-          <el-table-column sortable min-width="100px"  :label="`日增油\n（m³/d）`" prop="forecastOilInc" align="center">
+          <el-table-column sortable min-width="120px" :label="`日增油\n（m³/d）`" prop="forecastOilInc" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.forecastOilInc !== null && scope.row.forecastOilInc !== ''">{{scope.row.forecastOilInc}}</span>
                   <span v-else>N/A</span>
               </template>
           </el-table-column>
-          <el-table-column sortable min-width="100px"  :label="`日产油\n（m³/d）`" prop="forecastOil" align="center">
+          <el-table-column sortable min-width="120px"  :label="`日产油\n（m³/d）`" prop="forecastOil" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.forecastOil !== null && scope.row.forecastOil !== ''">{{scope.row.forecastOil}}</span>
                   <span v-else>N/A</span>
@@ -171,7 +171,7 @@
                   <span v-else>N/A</span>
               </template>
           </el-table-column>
-          <el-table-column sortable min-width="100px" :label="`流压\n（MPa）`"  prop="forecastFlowPress" align="center">
+          <el-table-column sortable min-width="120px" :label="`流压\n（MPa）`"  prop="forecastFlowPress" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.forecastFlowPress !== null && scope.row.forecastFlowPress !== ''">{{scope.row.forecastFlowPress}}</span>
                   <span v-else>N/A</span>
@@ -227,7 +227,7 @@
                     <span v-else>N/A</span>
                 </template>
             </el-table-column>
-            <el-table-column sortable min-width="130px"   label="实际出入量" prop="quantity" align="center">
+            <el-table-column sortable min-width="130px"   label="海管情况" prop="quantity" align="center">
                 <template slot-scope="scope">
                     <span v-if="scope.row.quantity !== null && scope.row.quantity !== ''"> {{Number(scope.row.quantity).toFixed(2)}}</span>
                     <span v-else>N/A</span>
@@ -291,7 +291,10 @@ export default {
     };
   },
   created() {
-    this.getList();
+      if(this.$route.query.platform){
+          this.getList(); 
+      }
+   
     // this.choiceDepts(); // 获取组织机构
   },
   methods: {
