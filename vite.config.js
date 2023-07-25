@@ -69,14 +69,62 @@ export default ({ mode }) => {
       port: 8080,
       open: true,
       proxy: {
-        "/dev-api": {
-          // 用于开发环境下的转发请求
-          target: "http://192.168.1.18:38085/prod-api", // 测试环境地址
-          // target: "http://10.8.8.158:8080", // 后端联调地址
-          // target: "http://10.77.79.57:8080", // 内网测试地址
+        // '/dev-api/ipm/api': {
+        //   target: 'http://10.178.118.199:8081',
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(/^\/dev-api\/ipm\/api/,'/ipm/api'),
+        // },
+        '/dev-api/zcy/api': {
+          target: 'http://10.77.79.57:8080',
           changeOrigin: true,
-          rewrite: path => path.replace(/^\/dev-api/, "")
-        }
+          rewrite: (path) => path.replace(/^\/dev-api\/zcy\/api/, ''),
+        },
+        "/dev-api/masterService/api": {
+          // 主服务转发请求
+          // 接口网关地址：http://10.77.79.57:8080
+          // 接口微服务地址：http://10.77.78.243:8003
+          // 接口微服务名称：oo-csc-csc-masterdata-atom
+          target: "http://10.77.79.57:8080",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/dev-api\/masterService\/api/, "/omc003d"),
+        },
+        // '/dev-api/rmm-01/api': {
+        //   target: 'http://10.77.79.57:8080:9209', //远程监控
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(/^\/dev-api\/rmm-01\/api/, ''),
+        // },
+        '/dev-api': {
+          // 用于开发环境下的转发请求
+          // 更多请参考：https://vitejs.dev/config/#server-proxy
+          // target: 'http://10.247.187.28:8080/dev-api/',
+          // target: 'http://114.116.211.6:8080',
+          // target: 'http://114.116.123.113:8080',
+          target: 'http://10.77.78.250',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/dev-api/, '/prod-api'),
+        },
+        // // html5静态资源代理
+        // '/html5': {
+        //   target: 'http://myrmm-back-qhd32-6znyt.tjdevapp.cnooc',
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(/^\/html5/, '/html5'),
+        // },
+        // 流程平台地址-有可供测试的流程平台时放开
+        // '/biz/flow': {
+        //   // 用于开发环境下的转发请求
+        //   // 更多请参考：https://vitejs.dev/config/#server-proxy
+        //   target: '',
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(/^\/biz\/flow/, ''),
+        // },
+        // 文件服务地址-有可供测试的文件服务时放开
+        // '/b/upload': {
+        //   // 用于开发环境下的转发请求
+        //   // 更多请参考：https://vitejs.dev/config/#server-proxy
+        //   target: '',
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(/^\/b\/upload/, ''),
+        // },
       }
     }
   };
