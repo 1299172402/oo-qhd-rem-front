@@ -1,8 +1,8 @@
 <!--井组配注变化动态-->
 <template>
     <el-form label-width="90px" style="height: calc(100% - 55px)">
-        <div style="display: flex">
-            <el-form-item label="开始时间" style="height: 60px">
+        <div style="display: flex;height: auto;">
+            <el-form-item label="开始时间" style="height: 30px">
                 <el-date-picker
                     value-format="yyyy-MM"
                     :clearable="false"
@@ -28,72 +28,74 @@
                 </el-date-picker>
             </el-form-item>
         </div>
-        <el-table
-            highlight
-            :data="tableData"
-            :cell-style="{ padding: '3px', 'text-align': 'center' }"
-            style="margin-top: -30px"
-            height="85%"
-            id="tableData"
-            :key="itemKey"
-        >
-            <el-table-column type="index" label="序号" fixed width="100" header-align="center"></el-table-column>
-            <el-table-column prop="wellNo" label="井号" fixed min-width="130" header-align="center"></el-table-column>
-            <el-table-column prop="layerName" label="层位" min-width="200" header-align="center"></el-table-column>
-            <el-table-column header-align="center">
-                <template slot="header">
-                    <div>{{ firstMonth }}注水情况</div>
-                </template>
-                <el-table-column prop="dosage01" :label="`配注量\n(m³/d)`" min-width="160"
-                                 header-align="center"></el-table-column>
-                <el-table-column prop="injectionRatio01" label="注采比" min-width="100" header-align="center">
-                    <template slot-scope="scoped">
-                        <div v-if="scoped.row.injectionRatio01 != '.00' ">{{ scoped.row.injectionRatio01 }}</div>
-                        <div v-else> -</div>
+        <page-panel-new style="height:calc(100% - 101px);margin-top: 0px" show-btn>
+            <el-table
+                highlight
+                :data="tableData"
+                :cell-style="{ padding: '3px', 'text-align': 'center' }"
+                height="100%"
+                id="tableData"
+                :key="itemKey"
+            >
+                <el-table-column type="index" label="序号" fixed width="100" header-align="center"></el-table-column>
+                <el-table-column prop="wellNo" label="井号" fixed min-width="130" header-align="center"></el-table-column>
+                <el-table-column prop="layerName" label="层位" min-width="200" header-align="center"></el-table-column>
+                <el-table-column header-align="center">
+                    <template slot="header">
+                        <div>{{ firstMonth }}注水情况</div>
                     </template>
+                    <el-table-column prop="dosage01" :label="`配注量\n(m³/d)`" min-width="160"
+                                    header-align="center"></el-table-column>
+                    <el-table-column prop="injectionRatio01" label="注采比" min-width="100" header-align="center">
+                        <template slot-scope="scoped">
+                            <div v-if="scoped.row.injectionRatio01">{{ scoped.row.injectionRatio01 }}</div>
+                            <div v-else>N/A</div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="injectionStrength01" min-width="160" :label="`注水强度\n(m³*d.m)`"
+                                    header-align="center">
+                    </el-table-column>
                 </el-table-column>
-                <el-table-column prop="injectionStrength01" min-width="160" :label="`注水强度\n(m³*d.m)`"
-                                 header-align="center">
-                </el-table-column>
-            </el-table-column>
-            <el-table-column header-align="center">
-                <template slot="header">
-                    <div>{{ secondMonth }}注水情况</div>
-                </template>
-                <el-table-column prop="dosage02" :label="`配注量\n(m³/d)`" min-width="160"
-                                 header-align="center"></el-table-column>
-                <el-table-column prop="injectionRatio02" label="注采比" min-width="100" header-align="center">
-                    <template slot-scope="scoped">
-                        <div v-if="scoped.row.injectionRatio02 != '.00'">{{ scoped.row.injectionRatio01 }}</div>
-                        <div v-else> -</div>
+                <el-table-column header-align="center">
+                    <template slot="header">
+                        <div>{{ secondMonth }}注水情况</div>
                     </template>
+                    <el-table-column prop="dosage02" :label="`配注量\n(m³/d)`" min-width="160"
+                                    header-align="center"></el-table-column>
+                    <el-table-column prop="injectionRatio02" label="注采比" min-width="100" header-align="center">
+                        <template slot-scope="scoped">
+                            <div v-if="scoped.row.injectionRatio02 != '.00'">{{ scoped.row.injectionRatio01 }}</div>
+                            <div v-else>N/A</div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="injectionStrength02" min-width="160" :label="`注水强度\n(m³*d.m)`"
+                                    header-align="center">
+                    </el-table-column>
                 </el-table-column>
-                <el-table-column prop="injectionStrength02" min-width="160" :label="`注水强度\n(m³*d.m)`"
-                                 header-align="center">
-                </el-table-column>
-            </el-table-column>
-            <el-table-column header-align="center">
-                <template slot="header">
-                    <div>调整幅度</div>
-                </template>
-                <el-table-column :label="`配注量\n(m³/d)`" min-width="120" header-align="center">
-                    <template slot-scope="scoped">
-                        {{ scoped.row.dosage02 - scoped.row.dosage01 }}
+                <el-table-column header-align="center">
+                    <template slot="header">
+                        <div>调整幅度</div>
                     </template>
+                    <el-table-column :label="`配注量\n(m³/d)`" min-width="120" header-align="center">
+                        <template slot-scope="scoped">
+                            {{ scoped.row.dosage02 - scoped.row.dosage01 }}
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="injectionRatio02" min-width="140" label="注采比" header-align="center">
+                        <template slot-scope="scoped">
+                           <span v-if="scoped.row.injectionRatio02">{{ (scoped.row.injectionRatio02 - scoped.row.injectionRatio01).toFixed(2) }}</span>
+                            <span v-else>N/A</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column :label="`注水强度\n(m³*d.m)`" min-width="160" header-align="center">
+                        <template slot-scope="scoped">
+                            {{ scoped.row.injectionStrength02 - scoped.row.injectionStrength01 }}
+                        </template>
+                    </el-table-column>
                 </el-table-column>
-                <el-table-column prop="injectionRatio02" min-width="140" label="注采比" header-align="center">
-                    <template slot-scope="scoped">
-                        {{ (scoped.row.injectionRatio02 - scoped.row.injectionRatio01).toFixed(2) }}
-                    </template>
-                </el-table-column>
-                <el-table-column :label="`注水强度\n(m³*d.m)`" min-width="160" header-align="center">
-                    <template slot-scope="scoped">
-                        {{ scoped.row.injectionStrength02 - scoped.row.injectionStrength01 }}
-                    </template>
-                </el-table-column>
-            </el-table-column>
-            <el-table-column prop="fieldName" min-width="130" label="备注" header-align="center"></el-table-column>
-        </el-table>
+                <el-table-column prop="fieldName" min-width="130" label="备注" header-align="center"></el-table-column>
+            </el-table>
+        </page-panel-new>
     </el-form>
 </template>
 
@@ -217,7 +219,7 @@ export default {
     }
     ::v-deep .cell:empty {
         &::before {
-            content: "-";
+            content: "N/A";
         }
     }
 }

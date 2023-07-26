@@ -45,6 +45,10 @@ export default {
                         fontSize: 14,
                     },
                 },
+                dataZoom: {
+                    start: 1,
+                    type: "inside",
+                },
                 grid: {
                     top: 30,
                     left: '7%',

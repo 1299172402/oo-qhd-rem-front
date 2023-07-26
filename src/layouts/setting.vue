@@ -46,95 +46,41 @@
                   </div>
                 </div>
               </t-radio-group>
-              <!-- <div class="setting-group-title">
-                主题色
-              </div>
-              <t-radio-group v-model="formData.brandTheme">
-                <div
-                  v-for="(item, index) in COLOR_OPTIONS.slice(0, COLOR_OPTIONS.length - 1)"
-                  :key="index"
-                  class="setting-layout-drawer"
-                >
-                  <t-radio-button :key="index" :value="item" class="setting-layout-color-group">
-                    <color-container :value="item" />
-                  </t-radio-button>
+              <div v-show="!$store.getters['user/isGroupLogin']">
+                <div class="setting-group-title">
+                  导航布局
                 </div>
-                <div class="setting-layout-drawer">
-                  <t-popup
-                    destroy-on-close
-                    expand-animation
-                    placement="bottom-right"
-                    trigger="click"
-                    :visible="isColoPickerDisplay"
-                    :overlay-style="{ padding: 0 }"
-                    @visible-change="onPopupVisibleChange"
-                  >
-                    <template #content>
-                      <t-color-picker-panel
-                        :on-change="changeColor"
-                        :color-modes="['monochrome']"
-                        format="HEX"
-                        :swatch-colors="[]"
-                      />
-                    </template>
-                    <t-radio-button
-                      :value="COLOR_OPTIONS[COLOR_OPTIONS.length - 1]"
-                      class="setting-layout-color-group dynamic-color-btn"
-                    >
-                      <color-container :value="COLOR_OPTIONS[COLOR_OPTIONS.length - 1]" />
+
+                <t-radio-group v-model="formData.layout">
+                  <div v-for="(item, index) in LAYOUT_OPTION" :key="index" class="setting-layout-drawer">
+                    <t-radio-button :key="index" :value="item">
+                      <thumbnail :src="getThumbnailUrl(item)" />
                     </t-radio-button>
-                  </t-popup>
+                  </div>
+                </t-radio-group>
+                <div class="setting-group-title">
+                  元素开关
                 </div>
-              </t-radio-group> -->
-              <div class="setting-group-title">
-                导航布局
+                <t-form-item v-show="formData.layout === 'side'" label="显示 Header" name="showHeader">
+                  <t-switch v-model="formData.showHeader" />
+                </t-form-item>
+                <t-form-item label="显示 Footer" name="showFooter">
+                  <t-switch v-model="formData.showFooter" />
+                </t-form-item>
+                <t-form-item v-show="formData.layout == 'mix'" label="显示左侧菜单栏" name="isUseMenu">
+                  <t-switch v-model="formData.isUseMenu" @change="isUsemenu" />
+                </t-form-item>
+                <t-form-item label="使用 多标签Tab页" name="isUseTabsRouter">
+                  <t-switch v-model="formData.isUseTabsRouter" />
+                </t-form-item>
+                <t-form-item
+                  v-show="formData.showFooter && !formData.isSidebarFixed"
+                  label="footer 内收"
+                  name="footerPosition"
+                >
+                  <t-switch v-model="formData.isFooterAside" />
+                </t-form-item>
               </div>
-
-              <t-radio-group v-model="formData.layout">
-                <div v-for="(item, index) in LAYOUT_OPTION" :key="index" class="setting-layout-drawer">
-                  <t-radio-button :key="index" :value="item">
-                    <thumbnail :src="getThumbnailUrl(item)" />
-                  </t-radio-button>
-                </div>
-              </t-radio-group>
-              <!-- TODO: Maybe change back -->
-              <!-- <t-form-item v-show="formData.layout === 'mix'" label="分割菜单（混合模式下有效）" name="splitMenu">
-            <t-switch v-model="formData.splitMenu"></t-switch>
-          </t-form-item> -->
-
-              <!-- <t-form-item v-show="formData.layout !== 'side'" label="固定 Header" name="isHeaderFixed">
-            <t-switch v-model="formData.isHeaderFixed"></t-switch>
-          </t-form-item>
-          <t-form-item v-show="formData.layout !== 'top'" label="固定 Sidebar" name="isSidebarFixed">
-            <t-switch v-model="formData.isSidebarFixed"></t-switch>
-          </t-form-item> -->
-
-              <div class="setting-group-title">
-                元素开关
-              </div>
-              <t-form-item v-show="formData.layout === 'side'" label="显示 Header" name="showHeader">
-                <t-switch v-model="formData.showHeader" />
-              </t-form-item>
-              <!-- TODO: Maybe change back -->
-              <!-- <t-form-item label="显示 Breadcrumbs" name="showBreadcrumb">
-            <t-switch v-model="formData.showBreadcrumb"></t-switch>
-          </t-form-item> -->
-              <t-form-item label="显示 Footer" name="showFooter">
-                <t-switch v-model="formData.showFooter" />
-              </t-form-item>
-              <t-form-item v-show="formData.layout == 'mix'" label="显示左侧菜单栏" name="isUseMenu">
-                <t-switch v-model="formData.isUseMenu" @change="isUsemenu" />
-              </t-form-item>
-              <t-form-item label="使用 多标签Tab页" name="isUseTabsRouter">
-                <t-switch v-model="formData.isUseTabsRouter" />
-              </t-form-item>
-              <t-form-item
-                v-show="formData.showFooter && !formData.isSidebarFixed"
-                label="footer 内收"
-                name="footerPosition"
-              >
-                <t-switch v-model="formData.isFooterAside" />
-              </t-form-item>
             </el-collapse-item>
           </el-collapse>
           <div class="settingBtn" @click="editPanel()">
@@ -164,7 +110,6 @@ import SettingDarkIcon from "@/assets/assets-setting-dark.svg";
 import SettingLightIcon from "@/assets/assets-setting-light.svg";
 import SettingAutoIcon from "@/assets/assets-setting-auto.svg";
 import { setpageConfig } from "@/api/intelligentOilfield/system/user";
-
 // const LAYOUT_OPTION = ['side', 'top', 'mix'];
 const LAYOUT_OPTION = ["top", "mix"];
 const COLOR_OPTIONS = ["default", "cyan", "green", "yellow", "orange", "red", "pink", "purple", "dynamic"];
@@ -299,20 +244,6 @@ export default {
     editPanel() {
       this.$bus.$emit("emitBus");
       this.$store.commit("setting/toggleSettingPanel", false);
-    },
-    switchRouter(type) {
-      this.$store.commit("user/SETTENANTCODE", { value: "", state: false });
-      if (type === "后台") {
-        this.$store.commit("tabRouter/removeTabRouterList");
-        this.$store.commit("user/SETISGROUPLOGIN", false);
-        this.$router.push("/");
-        this.$store.commit("setting/toggleSettingPanel", false);
-      } else {
-        this.$store.dispatch("user/getUserInfo");
-        this.$router.push("/portal/officeMode");
-        this.$store.commit("user/SETISGROUPLOGIN", true);
-        this.$store.commit("setting/toggleSettingPanel", false);
-      }
     }
   }
 };

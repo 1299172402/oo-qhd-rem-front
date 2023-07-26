@@ -2,7 +2,7 @@
 <template>
     <div class="z-main">
         <div class="z-row" style="margin-right:20px;">
-            <info-window infoWidth="100%" infoHeight="100%" headerTitle="吸水剖面测井结果图" isShowMaxBtn>
+            <page-panel  headerTitle="吸水剖面测井结果图" style="height: 100%; margin-top: 0;" show-btn>
                 <div class="z-draw">
                     <div class="z-chartHead">
                         <div class="sp1">层位</div>
@@ -49,10 +49,10 @@
                         </div>
                     </div>
                 </div>
-            </info-window>
+            </page-panel>
         </div>
         <div class="z-row">
-            <info-window infoWidth="100%" infoHeight="100%" headerTitle="吸水剖面测井结果表" isShowMaxBtn>
+            <page-panel headerTitle="吸水剖面测井结果表" style="height: 100%; margin-top: 0;" show-btn>
                 <el-table id="tableData" highlight :data="tableData" style="width: 100%" height="calc(100% - 10px)">
                     <el-table-column prop="layerName" :label="`解释层位名称`" align="center" min-width="150" fixed></el-table-column>
                     <el-table-column prop="productionInterval" label="解释井段" align="center" min-width="150" fixed></el-table-column>
@@ -63,7 +63,7 @@
                     <el-table-column prop="interpConclusion" :label="`解释结论`" align="center" min-width="80"></el-table-column>
                     <el-table-column prop="interpDate" :label="`解释日期`" align="center" min-width="130"></el-table-column>
                 </el-table>
-            </info-window>
+            </page-panel>
         </div>
     </div>
 </template>

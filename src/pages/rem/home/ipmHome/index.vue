@@ -28,33 +28,44 @@ export default {
         linkageBoxBot
     },
     mounted() {
+        if(window.location.origin.includes('test')){
+            this.baseUrl = 'tjioms-test.tjltd.cnooc'
+        }else if (window.location.origin.includes('dev') || window.location.origin.includes('808')){
+            this.baseUrl = 'tjioms-dev.tjltd.cnooc'
+        }
         this.arrowFun()
+        this.getinfo()
     },
     data() {
         return {
             timer:'',
             loopNum: 0,
             show: true,
-            currentLists: [
+            currentLists: []
+        }
+    },
+    methods: {
+        getinfo(){
+           this.currentLists = [
                 {
                     style: 'position:absolute;left: 10%;top: 8%;width:20%;height:40%;',
                     boxText: '产量劈分',
                     // boxBottomText: ['单井分层液量', '区块分层液量', '劈分剖面','劈分系数'],
                     boxBottomText: [{
                         name: '单井分层液量',
-                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/productionSplit'
+                        url: `https://rem.${this.baseUrl}/#/intelligence1/productionSplit`
                     },
                         {
                             name: '区块分层液量',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/productionSplit'
+                            url: `https://rem.${this.baseUrl}/#/intelligence1/productionSplit`
                         },
                         {
                             name: '劈分剖面',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/splitSection?link=ipmHome'
+                            url: `https://rem.${this.baseUrl}/#/intelligence1/splitSection?link=ipmHome`
                         },
                         {
                             name: '劈分系数',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/DividingCoefficient?link=ipmHome'
+                            url: `https://rem.${this.baseUrl}/#/intelligence1/DividingCoefficient?link=ipmHome`
                         }],
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;',
@@ -70,15 +81,15 @@ export default {
                     // boxBottomText: ['注采井组维护', '井间连通系数', '平面液量分流'],
                     boxBottomText: [{
                         name: '注采井组维护',
-                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/basic/wellGroup_Maintenance'
+                        url: `https://rem.${this.baseUrl}/#/basic/wellGroup_Maintenance`
                     },
                         {
                             name: '井间连通系数',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/connectivityData'
+                            url: `https://rem.${this.baseUrl}/#/intelligence1/connectivityData`
                         },
                         {
                             name: '平面液量分流',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/connectivityData'
+                            url: `https://rem.${this.baseUrl}/#/intelligence1/connectivityData`
                         },],
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;',
@@ -95,11 +106,11 @@ export default {
                     // boxBottomText: ['分层剩余油分布', '平面剩余油分布'],
                     boxBottomText: [{
                         name: '分层剩余油分布',
-                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization?link=rem'
+                        url: `https://rem.${this.baseUrl}/#/intelligence1/optimization?link=rem`
                     },
                         {
                             name: '平面剩余油分布',
-                            url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization?link=rem'
+                            url: `https://rem.${this.baseUrl}/#/intelligence1/optimization?link=rem`
                         }],
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;'
@@ -125,8 +136,8 @@ export default {
                     boxText: '区块注采方案',
                     boxBottomText: [{
                         name: '定产配注方案',
-                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimization'
-                    }, {name: '注采优化方案', url: 'https://rem.tjioms-dev.tjltd.cnooc/#/intelligence1/optimizationDetail'}],
+                        url: `https://rem.${this.baseUrl}/#/intelligence1/optimization`
+                    }, {name: '注采优化方案', url: `https://rem.${this.baseUrl}/#/intelligence1/optimizationDetail`}],
                     boxStyle: {
                         pWidth: 'width:8.5vw;margin-left: 6vw;'
                     },
@@ -139,10 +150,10 @@ export default {
                     boxText: '注采结构优化',
                     boxBottomText: [{
                         name: '注采强度判定',
-                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport'
+                        url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport`
                     }, {
                         name: '井组注采比分析',
-                        url: 'https://rem.tjioms-dev.tjltd.cnooc/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport'
+                        url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport`
                     }],
                     boxStyle: {
                         pWidth: 'width:8.5vw;margin-left: 6vw;'
@@ -151,10 +162,8 @@ export default {
                     down: true,
                     showFlag: false
                 },
-            ]
-        }
-    },
-    methods: {
+            ]  
+        },
         arrowFun() {
             this.timer = setInterval(() => {
                 if(this.loopNum == -1) this.currentLists[5].showFlag = false

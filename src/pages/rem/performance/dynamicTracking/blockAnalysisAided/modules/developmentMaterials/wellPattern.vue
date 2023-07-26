@@ -1,10 +1,19 @@
 <!--井网图-->
 <template>
     <div style="height:calc(100% - 100px);">
+        <div class="z-search">
+            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable @change="selectChange">
+                <el-option v-for="(item, index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
+            </el-select>
+        </div>
         <div class="z-main">
-            <el-image :src="src" style="width:100%;height:auto!important;">
-                <div slot="error"></div>
-            </el-image>
+            <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                <div style="overflow: auto;width: 100%; height: 100%;display: flex;justify-content: center;">  
+                    <el-image :src="src">
+                        <div slot="error"></div>
+                    </el-image>
+                </div>
+            </page-panel-new>
         </div>
     </div>
 </template>
@@ -26,17 +35,22 @@
                 fileId:'',
                 filestrId:'',
                 src:'',
+                //层位数据源
+                position: [],
+                //层位绑定值
+                selectPosition: '',
             };
         },
         async mounted() {
-            this.doSearch();
+            await this.doSearch();
         },
         methods: {
             //获取图片
-            doSearch() {
+            async doSearch() {
+                await this.fieldOilLayersApi();
                 this.imageList=[];
                 let params ={
-                    operationId:this.blockId,
+                    operationId:this.blockId+'-'+this.selectPosition,
                     operationType:'BLOCKJWT',
                     readOne:'one' 
                 }
@@ -53,6 +67,61 @@
                         this.$message.error("文件查询接口异常!");
                     }
                 });
+            },
+            async fieldOilLayersApi(){
+                //初始化获取层段关系
+                await fieldOilLayers({
+                    oilFieldId: this.oilFieldId,
+                    fieldId: this.blockId,
+                    wellId: ''
+                }).then((res) => {
+                    if (res.data.code == 200) {
+                        //层段数据
+                        if (res.data.data) {
+                            this.position = res.data.data.fieldLayers;
+                            if (!this.selectPosition && this.position[0]) {
+                                //this.selectPosition = this.position[0].fieldLayerId;
+                                if (this.blockId == '6CD7342CA6DD418183A4B3BC38584F7C' || this.blockId == 'B440B47EE4D64C6CB56100AFE868DCA3') {
+                                    if (
+                                        this.position.find((item) => {
+                                            return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A';
+                                        })
+                                    ) {
+                                        this.selectPosition = '263518079CED49AE8B6C9FE5CEBDD26A';
+                                    } else {
+                                        this.selectPosition = this.position[0].fieldLayerId;
+                                    }
+                                } else if (this.blockId == 'F35E226D47CE4B09B497B852D774D122') {
+                                    if (
+                                        this.position.find((item) => {
+                                            return item.fieldLayerId == '87795A3E6BBC4469BC9AC5AE0BBE759C';
+                                        })
+                                    ) {
+                                        this.selectPosition = '87795A3E6BBC4469BC9AC5AE0BBE759C';
+                                    } else if (
+                                        this.position.find((item) => {
+                                            return item.fieldLayerId == '02398139A19A4F62BEFAC658E870D487';
+                                        })
+                                    ) {
+                                        this.selectPosition = '02398139A19A4F62BEFAC658E870D487';
+                                    } else {
+                                        this.selectPosition = this.position[0].fieldLayerId;
+                                    }
+                                } else {
+                                    this.selectPosition = this.position[0].fieldLayerId;
+                                }
+                            }
+                            this.$emit('childPara', this.selectPosition);
+                        } else {
+                            this.position = [];
+                        }
+                    }
+                });
+            },
+             //层位change
+             selectChange(e){
+                this.$emit('childPara', e);
+                this.doSearch();
             },
             //下载功能
             doDownLoad() {
@@ -71,11 +140,14 @@
 </script>
 
 <style scoped lang="scss">
+    .z-search{
+        height:50px;
+    }
     .z-main{
         width: 100%;
-        height:calc(100%);
+        height: calc(100% - 50px);
         overflow: scroll;
-        border: 1px solid #ddd;
+        // border: 1px solid #ddd;
         border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
     }
 </style>

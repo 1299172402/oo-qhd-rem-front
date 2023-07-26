@@ -1,7 +1,7 @@
 <template>
   <result title="" tip="当前用户无该模块访问权限" type="404">
-    <t-button style="background: #409eff" @click="logoutPage">
-      返回登录页
+    <t-button style="background: #409eff" @click="reBack">
+      返回门户
     </t-button>
   </result>
 </template>
@@ -9,6 +9,7 @@
 <script>
 import result from "@/components/intelligentOilfield/result/index.vue";
 import { updateaccessPage } from "../../../../api/intelligentOilfield/system/user";
+import { goNewPage } from "@/api/intelligentOilfield/system/layout.js";
 
 export default {
   name: "Result404",
@@ -24,6 +25,13 @@ export default {
         .then(() => {
           this.$router.replace("/login");
         });
+    },
+    reBack() {
+      goNewPage().then(res => {
+        if (res.data?.data) {
+          window.location.href = res.data.data;
+        }
+      });
     }
   }
 };

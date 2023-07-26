@@ -488,7 +488,6 @@
                         let params = {
                             fileId:this.ljUploadForm.minioFiles[i].id,
                             filestrId:this.ljUploadForm.minioFiles[i].name,
-                            fileDirection:this.ljUploadForm.direction,
                             operationId,
                             operationType:'REMLJPMT',
                             fileDirection:this.ljUploadForm.direction,

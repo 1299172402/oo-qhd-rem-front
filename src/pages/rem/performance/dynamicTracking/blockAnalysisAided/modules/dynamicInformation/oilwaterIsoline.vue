@@ -27,7 +27,9 @@
             </div>
         </div>
         <div class="z-echarts">
-            <H5Chart ref="H5Chart" height="100%" :url="url" width="100%" @load="frameLoad"></H5Chart>
+            <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                <H5Chart ref="H5Chart" height="100%" :url="url" width="100%" @load="frameLoad"></H5Chart>
+            </page-panel-new>
         </div>
         <el-dialog width="10px" max-height="10px" :visible.sync="dialogVisible1" style="margin-top: 98%; margin-right: 2%">
             <H5Chart1 style="z-index: -9999;" ref="downH5Chart1" :url="url1" width="4000px" height="4000px"></H5Chart1>
@@ -372,12 +374,14 @@
                 let LayerName1 = '等值线填充颜色图层';
                 let LayerType1 = 9;
                 let Active1 = true;
+                let ClearLayer1 = true;
                 let Display1 = true;
                 let LayerIndex1 = 8;
                 let Layers_cont1 = {};
                 Layers_cont1.LayerName = LayerName1;
                 Layers_cont1.LayerType = LayerType1;
                 Layers_cont1.Active = Active1;
+                Layers_cont1.ClearLayer = ClearLayer1;
                 Layers_cont1.Display = Display1;
                 Layers_cont1.LayerIndex = LayerIndex1;
                 Layers_cont1.Objects = Objects1;

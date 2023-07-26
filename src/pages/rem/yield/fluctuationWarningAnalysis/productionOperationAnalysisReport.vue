@@ -169,7 +169,7 @@
         name:'productionOperationAnalysisReport',
         filters: {
             getFixNumberTwo(val) {
-                return val.toFixed(4);
+                return val ? val.toFixed(4) : (val === 0 ? val : "N/A");
             }
         },
         data() {
@@ -262,7 +262,8 @@
                                 legendData.push(pieData[i].label);
                             }
                         }
-                        _this.pieEchart.legend.data = legendData.sort();
+                        legendData.sort();
+                        _this.pieEchart.legend.data = legendData;
                         _this.pieEchart.series.data = seriesData;
                         if (unitType == "t") {
                             _this.pieEchart.series.label.formatter = function(param) {

@@ -89,6 +89,14 @@
                 ],
                 allocOrCalculate:'1',
                 option: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0, 1, 2],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -632,7 +640,8 @@
                 };
                 produceData(request).then((res) => {
                     let seriesData = [];
-                    let legendData = [];
+                    // TODO lv 页面没有使用，代码检查错误先注释
+                    // let legendData = [];
                     if (res.data.code == 200) {
                         let chartDataS = res.data.data.charts;
                         //获取x轴数据信息
@@ -642,8 +651,9 @@
                                 continue;
                             }
                             let chartData = chartDataS[i].linearDataSets[0];
-                            let chartDatalabel = chartData.label;
-                            legendData.push(chartDatalabel);
+                            // TODO lv 页面没有使用，代码检查错误先注释
+                            // let chartDatalabel = chartData.label;
+                            // legendData.push(chartDatalabel);
                             let series = {};
                             let lineName = chartData.label;
                             series.type = 'line';

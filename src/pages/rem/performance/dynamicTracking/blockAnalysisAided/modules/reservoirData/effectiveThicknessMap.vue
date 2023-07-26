@@ -7,9 +7,13 @@
             </el-select>
         </div>
         <div class="z-main">
-            <el-image :src="src">
-                <div slot="error"></div>
-            </el-image>
+            <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                <div style="overflow: auto;width: 100%; height: 100%;">  
+                    <el-image :src="src">
+                        <div slot="error"></div>
+                    </el-image>
+                </div>
+            </page-panel-new>
         </div>
     </div>
 </template>
@@ -37,8 +41,7 @@
             };
         },
         async mounted() {
-            await this.fieldOilLayersApi();
-            this.doSearch();
+            await this.doSearch();
         },
         methods: {
             //获取层位接口
@@ -87,7 +90,8 @@
                 });
             },
             //获取图片
-            doSearch() {
+            async doSearch() {
+                await this.fieldOilLayersApi(); 
                 let params ={
                     operationId:this.blockId+'-'+this.selectPosition,
                     operationType:'BLOCKYXHDT',

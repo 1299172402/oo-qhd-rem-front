@@ -50,6 +50,7 @@ export default {
 }
 
 .searchHeader-dark {
+  padding-top: 2px;
   border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
 }
 </style>

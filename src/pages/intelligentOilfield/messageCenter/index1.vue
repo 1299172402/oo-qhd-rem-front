@@ -181,10 +181,6 @@
         style="height: 100%; position: relative"
         class="g-column-flex-H"
       >
-        <!-- TODO: Maybe change back -->
-        <!-- <el-button style="position: absolute; top: -33px; left: 0" type="primary" @click="handleToPage()">
-          信息维护
-        </el-button> -->
         <el-button
           style="position: absolute; top: -33px; left: 0"
           type="primary"
@@ -199,11 +195,6 @@
         >
           {{ ifameList[1].name }}
         </el-button>
-        <div style="position: absolute; right: 0; color: var(--old-blue-color)">
-          <!-- TODO: Maybe change back -->
-          <!-- {{ $store.getters["user/tenantName"] }} -->
-          <!-- 秦皇岛作业公司 -->
-        </div>
         <div
           id="mainContainer"
           style="width: 100%;height: 100%;margin-right: 76px;"
@@ -221,10 +212,6 @@
             >
               消息中心
             </div>
-            <!-- TODO: Maybe change back -->
-            <!-- <div class="absoultePos" style="left: 199px; top: -10px">
-              大数据服务 (restful)
-            </div> -->
             <div class="absoultePos" style="left: 230px; top: 36px">
               监控数据
             </div>
@@ -253,10 +240,6 @@
             >
               报警中心
             </div>
-            <!-- TODO: Maybe change back -->
-            <!-- <div class="absoultePos" style="left: 529px; top: -10px">
-              大数据服务 (socket)
-            </div> -->
             <div class="absoultePos" style="left: 569px; top: 36px">
               报警数据
             </div>
@@ -515,19 +498,6 @@
               set-points="10,88 10,0 11,0"
               @click-line="openPointsLink(findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl)"
             />
-            <!-- 带!号小报警 -->
-            <!-- TODO: Maybe change back -->
-            <!-- <div v-if="findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.runningStatus === '0'">
-              <div class="alarmPromptMessage" style="left: 641px; top: 184px">
-                !
-              </div>
-              <svg style="width: 150px; height: 52px; position: absolute; left: 495px; top: 200px">
-                <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-              </svg>
-              <div class="warnText" style="left: 500px; top: 215px">
-                系统故障：{{ findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT').damageCount }}/{{ findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT').allCount }}
-              </div>
-            </div> -->
             <div class="leftSystem g-h100">
               <div class="g-w100" style="position: relative; margin-left: 72%; margin-top: 70px">
                 <!-- CEPJ -->
@@ -790,20 +760,6 @@
                 </div>
               </div>
             </div>
-            <!-- Maritime_CEPJ - Clouds_IOT -->
-            <!-- 带!号小报警 -->
-            <!-- TODO: Maybe change back -->
-            <!-- <div v-if="findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT')?.runningStatus === '0'">
-              <div class="alarmPromptMessage">
-                !
-              </div>
-              <svg style="width: 150px; height: 52px; position: absolute; left: 100px; top: 124px">
-                <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-              </svg>
-              <div class="warnText">
-                系统故障：{{ findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT').damageCount }}/{{ findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT').allCount }}
-              </div>
-            </div> -->
             <!-- 一整条线 -->
             <line-svg
               :is-flow="findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT')?.runningStatus === '1'"
@@ -909,23 +865,6 @@
               set-points="10,140 11,15 10,15"
               @click-line="openPointsLink(findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.pointShowUrl)"
             />
-            <!-- 带!号小报警 -->
-            <!-- TODO: Maybe change back -->
-            <!-- <div v-if="findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.runningStatus === '0'">
-              <div class="alarmPromptMessage" style="left: 1157px; top: 134px">
-                !
-              </div>
-              <svg
-                style="background: transparent; width: 140px; height: 52px; position: absolute; left: 1170px; top: 144px"
-              >
-                <polyline points="0,0 45,50 150,50" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
-              </svg>
-              <div class="warnText" style="left: 1218px; top: 171px; width: 200px">
-                系统故障：{{ findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT').damageCount }}/{{ findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT').allCount }}
-              </div>
-            </div> -->
-            <!-- CEPI -->
-            <!-- :style="{ height: isFullScreen ? '990px' : '530px' }" -->
             <!-- 带!号小报警 -->
             <div v-if="findDataByCode('CEPI')?.runningStatus === '0'">
               <div class="alarmPromptMessage" style="left: 1158px; top: 362px">
@@ -1399,11 +1338,14 @@ export default {
       return addTokenToUrl(url);
     },
     openIframeDialogMethods(iframeObj) {
-    // TODO: Maybe change back
-    //   this.currentIframeObj = iframeObj;
-    //   this.iframeDialogTitle = iframeObj.name;
-    //   this.openIframeDialog = true;
       window.open(addTokenToUrl(iframeObj.url), "_blank");
+    },
+    openIframeDialogLink(Url, hasToken) {
+      if (hasToken === "true") {
+        window.open(addTokenToUrl(Url), "_blank");
+      } else {
+        window.open(Url, "_blank");
+      }
     },
     clickClouds() {
       this.openDialog = true;
@@ -1535,7 +1477,6 @@ export default {
 
 .topImage1 {
   background-size: 100% 100%;
-  /* width: 750px; */
   height: 60px;
   margin-top: 40px;
 }

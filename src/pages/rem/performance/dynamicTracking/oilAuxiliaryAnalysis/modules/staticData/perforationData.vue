@@ -1,27 +1,29 @@
 <!--射孔数据-->
 <template>
-    <el-table 
-        id="tableData"
-        :data="tableData" :border="false" :row-style="{ height: '0px' }"
-        header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
-        style="width:100%;" height="calc(100% - 101px)" :default-sort="{ prop: 'date', order: 'descending' }"
-        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-        <el-table-column type="index" label="序号" fixed></el-table-column>
-        <el-table-column prop="wellNo" label="井号" width="130" fixed></el-table-column>
-        <el-table-column prop="perfLayer" label="小层" width="200" fixed></el-table-column>
-        <el-table-column prop="topDepth" :label="`井段顶斜深\n (m)`" min-width="120"></el-table-column>
-        <el-table-column prop="bottomDepth" :label="`井段底斜深\n (m)`" min-width="120"></el-table-column>
-        <el-table-column prop="accumulated" :label="`斜厚\n (m)`" min-width="120"></el-table-column>
-        <el-table-column prop="topTvd" :label="`井段顶垂深\n (m)`" min-width="120"></el-table-column>
-        <el-table-column prop="bottomTvd" :label="`井段底垂深\n (m)`" min-width="120"></el-table-column>
-        <el-table-column prop="verticalEffectThickness" :label="`垂厚\n (m)`" min-width="120"></el-table-column>
-        <el-table-column prop="sandTopDepth" :label="`防砂段顶斜深\n (m)`" min-width="120"></el-table-column>
-        <el-table-column prop="sandBottomDepth" :label="`防砂段底斜深\n (m)`" min-width="120"></el-table-column>
-        <el-table-column prop="layerName" label="生产段名称" min-width="120"></el-table-column>
-        <el-table-column prop="accumulated" :label="`射开有效斜厚\n (m)`" min-width="120"></el-table-column>
-        <el-table-column prop="openThickness" :label="`射开有效垂厚\n (m)`" min-width="120"></el-table-column>
-        <el-table-column prop="remark" label="备注" show-overflow-tooltip  min-width="150"></el-table-column>
-    </el-table>
+    <page-panel-new style="height: calc(100% - 101px); margin-top:0;" show-btn>
+        <el-table 
+            id="tableData"
+            :data="tableData" :border="false" :row-style="{ height: '0px' }"
+            header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
+            style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }"
+            :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+            <el-table-column type="index" label="序号" fixed></el-table-column>
+            <el-table-column prop="wellNo" label="井号" width="130" fixed></el-table-column>
+            <el-table-column prop="perfLayer" label="小层" width="200" fixed></el-table-column>
+            <el-table-column prop="topDepth" :label="`井段顶斜深\n (m)`" min-width="120"></el-table-column>
+            <el-table-column prop="bottomDepth" :label="`井段底斜深\n (m)`" min-width="120"></el-table-column>
+            <el-table-column prop="accumulated" :label="`斜厚\n (m)`" min-width="120"></el-table-column>
+            <el-table-column prop="topTvd" :label="`井段顶垂深\n (m)`" min-width="120"></el-table-column>
+            <el-table-column prop="bottomTvd" :label="`井段底垂深\n (m)`" min-width="120"></el-table-column>
+            <el-table-column prop="verticalEffectThickness" :label="`垂厚\n (m)`" min-width="120"></el-table-column>
+            <el-table-column prop="sandTopDepth" :label="`防砂段顶斜深\n (m)`" min-width="120"></el-table-column>
+            <el-table-column prop="sandBottomDepth" :label="`防砂段底斜深\n (m)`" min-width="120"></el-table-column>
+            <el-table-column prop="layerName" label="生产段名称" min-width="120"></el-table-column>
+            <el-table-column prop="accumulated" :label="`射开有效斜厚\n (m)`" min-width="120"></el-table-column>
+            <el-table-column prop="openThickness" :label="`射开有效垂厚\n (m)`" min-width="120"></el-table-column>
+            <el-table-column prop="remark" label="备注" show-overflow-tooltip  min-width="150"></el-table-column>
+        </el-table>
+    </page-panel-new>
 </template>
 
 <script>

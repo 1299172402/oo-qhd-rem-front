@@ -12,12 +12,12 @@
         </div>
         <div class="z-echarts">
             <div class="echartBox">
-                <pagePanel headerTitle="采液强度等值图" style="height: 100%;margin-top:0;">
+                <pagePanel headerTitle="采液强度等值图" style="height: 100%;margin-top:0;" show-btn>
                     <H5Chart ref="H5Chart1" height="100%" :url="url" width="100%"></H5Chart>
                 </pagePanel>
             </div>
             <div class="echartBox" style="margin-left:20px;" v-if="isAddComparisonChart">
-                <pagePanel headerTitle="注水强度等值图" style="height: 100%;margin-top:0;">
+                <pagePanel headerTitle="注水强度等值图" style="height: 100%;margin-top:0;" show-btn>
                     <H5Chart ref="H5Chart2" height="100%" :url="url" width="100%"></H5Chart>
                 </pagePanel>
             </div>

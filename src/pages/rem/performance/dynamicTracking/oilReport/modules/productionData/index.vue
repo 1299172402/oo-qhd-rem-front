@@ -1,6 +1,6 @@
 <!-- 生产数据 -->
 <template>
-  <pagePanel headerTitle="生产指标">
+  <pagePanel headerTitle="生产指标" style="height: 650px;" show-btn>
       <div class="z-main" ref="zMain">
           <div class="z-search">
               <span>日期：</span>
@@ -746,7 +746,7 @@ export default {
 <style lang="scss" scoped>
 .z-main {
   width: 100%;
-  height: 650px;
+  height: 100%;
   padding-top: 20px;
   display: flex;
   flex-direction: column;

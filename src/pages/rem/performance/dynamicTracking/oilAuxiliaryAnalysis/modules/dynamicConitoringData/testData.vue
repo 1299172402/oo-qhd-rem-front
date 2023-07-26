@@ -2,7 +2,7 @@
 <template>
     <div class="z-main">
         <div class="infoWindowBox" style='margin-bottom:10px;' >
-            <info-window infoWidth="100%" infoHeight="100%" headerTitle="原油分析化验数据">
+            <page-panel style="width: 100%; height: 100%;margin-top: 0;" headerTitle="原油分析化验数据" show-btn>
                 <el-table 
                     id="tableData"
                     :data="tableData" :border="false" :row-style="{ height: '0px' }"
@@ -27,10 +27,10 @@
                     <el-table-column prop="bitumen" :label="`沥青质\n (%)`" min-width="100"></el-table-column>
                     <el-table-column prop="resin" :label="`胶质\n (%)`" min-width="110"></el-table-column>
                 </el-table>
-            </info-window>
+            </page-panel>
         </div>
         <div class="infoWindowBox">
-            <info-window infoWidth="100%" infoHeight="100%" headerTitle="采出水化验数据">
+            <page-panel style="width: 100%; height: 100%;margin-top: 0;" headerTitle="采出水化验数据" show-btn>
                 <el-table 
                     id="tableData1"
                     :data="tableData1" :border="false" :row-style="{ height: '0px' }"
@@ -55,7 +55,7 @@
                     <el-table-column prop="cumHardness" label="总硬度" min-width="100"></el-table-column>
                     <el-table-column prop="resis" :label="`电阻率\n (Ωm)`" min-width="110"></el-table-column>
                 </el-table>
-            </info-window>
+            </page-panel>
         </div>
     </div>
 </template>
@@ -129,7 +129,8 @@
         display: flex;
         flex-direction: column;
         .infoWindowBox{
-            flex:1;
+            // flex:1;
+            height: 50%;
         }
     }
     #tableData,#tableData1{

@@ -1,6 +1,6 @@
 <!--井网图-->
 <template>
-    <pagePanel headerTitle="井网图">
+    <pagePanel headerTitle="井网图" show-btn>
         <div class="z-main">
             <div class="z-echarts">
                 <el-image :src="image">

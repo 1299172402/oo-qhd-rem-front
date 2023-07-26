@@ -500,6 +500,14 @@
                 },
                 //柱状图
                 barChart: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     tooltip: {
                         trigger: "axis",
                         axisPointer: {
@@ -1257,7 +1265,8 @@
                             legendData.push(pieData[i].label);
                         }
                     }
-                    _this.pieEchart.legend.data = legendData.sort();
+                    legendData.sort();
+                    _this.pieEchart.legend.data = legendData;
                     _this.pieEchart.series.data = seriesData;
                     if (unitType == "t") {
                         _this.pieEchart.series.label.formatter = function(param) {

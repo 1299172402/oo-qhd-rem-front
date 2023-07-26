@@ -2,7 +2,9 @@
 <template>
     <div class="z-main">
         <div class="z-echarts">
-            <iframe style="width: 100%;height: 100%;border: none;" :src="url"></iframe>
+            <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                <iframe style="width: 100%;height: 100%;border: none;" :src="url"></iframe>
+            </page-panel-new>
         </div>
     </div>
 </template>
@@ -78,7 +80,7 @@
             width: 100%;
             flex:1;
             // overflow-y:scroll;
-            border: 1px solid #ddd;
+            // border: 1px solid #ddd;
             border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
         }
     }

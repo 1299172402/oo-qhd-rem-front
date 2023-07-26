@@ -60,6 +60,14 @@ export default {
         return {
             radio: 1,
             option: {
+                dataZoom: [
+                    {
+                        type: "inside",
+                        xAxisIndex: [0],
+                        start: 0, //滚动条开始位置（共100等份）
+                        end: 100, //滚动条结束位置
+                    },
+                ],
                 grid: [{ x: '5%', y: '20%', width: '90%', height: '65%', containLabel: true }],
                 legend: {
                     x:'center',
@@ -253,6 +261,14 @@ export default {
                 ]
             },
             option1: {
+                dataZoom: [
+                    {
+                        type: "inside",
+                        xAxisIndex: [0],
+                        start: 0, //滚动条开始位置（共100等份）
+                        end: 100, //滚动条结束位置
+                    },
+                ],
                 grid: [{ x: '5%', y: '20%', width: '90%', height: '65%', containLabel: true }],
                 legend: {
                     x:'center',
@@ -481,7 +497,8 @@ export default {
         },
         dealChartsData(charts) {
             if (charts) {
-                let xSet = new Set();
+                // TODO lv 页面没有使用，代码检查错误先注释
+                // let xSet = new Set();
                 charts.forEach((chart, index) => {
                     if (chart.linearDataSets && chart.linearDataSets[0]) {
                         let linear = chart.linearDataSets[0];
@@ -492,7 +509,8 @@ export default {
                             jtData.forEach((point, index2) => {
                                 let pointXY = [];
                                 pointXY.push(point.label);
-                                xSet.add(point.label);
+                                // TODO lv 页面没有使用，代码检查错误先注释
+                                // xSet.add(point.label);
                                 pointXY.push(point.value);
                                 pointData.push(pointXY);
                             });

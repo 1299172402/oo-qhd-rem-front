@@ -7,7 +7,9 @@
             </el-select>
         </div>
         <div class="z-main">
-            <H5Chart ref="H5Chart" height="100%" :url="url" width="100%" @load="frameLoad"></H5Chart>
+            <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                <H5Chart ref="H5Chart" height="100%" :url="url" width="100%" @load="frameLoad"></H5Chart>
+            </page-panel-new>
         </div>
         <el-dialog width="10px" max-height="10px" :visible.sync="dialogVisible" style="margin-top: 98%; margin-right: 2%">
             <H5Chart1 style="z-index: -9999;" ref="downH5Chart" :url="url1" width="4000px" height="4000px"></H5Chart1>
@@ -330,7 +332,7 @@
         width: 100%;
         height:calc(100% - 50px);
         overflow: auto;
-        border: 1px solid #ddd;
+        // border: 1px solid #ddd;
         border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
     }
 </style>

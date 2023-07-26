@@ -44,6 +44,10 @@ export default {
                     right: 10,
                     bottom: 50,
                 },
+                dataZoom: {
+                    start: 0,
+                    type: "inside",
+                },
                 xAxis: {
                     nameTextStyle: {
                         color: "#a9a8a8",
@@ -156,7 +160,7 @@ export default {
     },
     methods: {
         linkroute(rname) {
-            this.$router.push({name: rname,query:{prodDate:this.prodDate,prodDateCompare:this.prodDateCompare}});
+            this.$router.push({name: rname,query:{prodDate:this.prodDate,prodDateCompare:this.prodDateCompare,page:'reservoirDisplay/oilexhibition'}});
         },
         getinfo() {
             getYieldFluctuation().then((res) => {

@@ -15,53 +15,53 @@ export default ({ mode }) => {
     resolve: {
       alias: {
         "~": path.resolve(__dirname, "./"),
-        "@": path.resolve(__dirname, "./src"),
-      },
+        "@": path.resolve(__dirname, "./src")
+      }
     },
 
     css: {
       preprocessorOptions: {
         less: {
-          modifyVars: {},
+          modifyVars: {}
         },
         scss: {
-          charset: false,
-        },
+          charset: false
+        }
       },
       postcss: {
         plugins: [
           {
             postcssPlugin: "internal:charset-removal",
             AtRule: {
-              charset: (atRule) => {
+              charset: atRule => {
                 if (atRule.name === "charset") {
                   atRule.remove();
                 }
-              },
-            },
-          },
-        ],
-      },
+              }
+            }
+          }
+        ]
+      }
     },
 
     plugins: [
       createVuePlugin({
-        jsx: true,
+        jsx: true
       }),
       viteMockServe({
         mockPath: "mock",
-        localEnabled: true,
+        localEnabled: true
       }),
       createSvgPlugin(),
       // svg 图标
       createSvgIconsPlugin({
         iconDirs: [path.resolve(CWD, "src/assets/icons/svg")], // svg存放路径
-        symbolId: "icon-[dir]-[name]",
-      }),
+        symbolId: "icon-[dir]-[name]"
+      })
     ],
 
     build: {
-      cssCodeSplit: false,
+      cssCodeSplit: false
     },
 
     server: {
@@ -69,65 +69,46 @@ export default ({ mode }) => {
       port: 8080,
       open: true,
       proxy: {
-        // "/dev-api/rem/api": {
-        //   // 用于开发环境下的转发请求
-        //   // 更多请参考：https://vitejs.dev/config/#server-proxy
-        //   // target: 'http://10.247.187.28:8080/dev-api/',
-        //   // target: 'http://10.178.118.181:9220',
-        //   // target: 'http://10.178.118.184:9229', //姜
-        //   target: "http://10.178.118.189:8081", //小黄
-        //   // target: 'http://10.178.118.181:9207', //飞龙
-        //   // target: 'http://10.178.118.184:8080',  
-        //   // target: 'http://10.178.118.203:9207',//台式
+        // '/dev-api/ipm/api': {
+        //   target: 'http://10.178.118.199:8081',
         //   changeOrigin: true,
-        //   rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, "/rem/api"),
+        //   rewrite: (path) => path.replace(/^\/dev-api\/ipm\/api/,'/ipm/api'),
         // },
-        // "/dev-api/ipm/api": {
-        //   target: 'http://10.178.118.203:9223',//台式
-        //   changeOrigin: true,
-        //   rewrite: (path) => path.replace(/^\/dev-api\/ipm\/api/, ""),
-        // },
-        "/dev-api/prm/api": {
-          // 用于开发环境下的转发请求
-          // 更多请参考：https://vitejs.dev/config/#server-proxy
-          // target: 'http://10.247.187.28:8080/dev-api/',
-          // target: 'http://10.178.118.181:9220',
-          target: "http://10.77.78.250:9213",
+        '/dev-api/zcy/api': {
+          target: 'http://10.77.79.57:8080',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/dev-api\/prm\/api/, ""),
-        },
-        "/dev-api/amm/api": {
-          //用于注采联动代理转发
-          target: "http://amm.tjioms-dev.tjltd.cnooc",
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/dev-api\/amm\/api/, "/prod-api"),
+          rewrite: (path) => path.replace(/^\/dev-api\/zcy\/api/, ''),
         },
         "/dev-api/masterService/api": {
           // 主服务转发请求
           // 接口网关地址：http://10.77.79.57:8080
           // 接口微服务地址：http://10.77.78.243:8003
           // 接口微服务名称：oo-csc-csc-masterdata-atom
-          target: "http://10.77.78.243:8003",
+          target: "http://10.77.79.57:8080",
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/dev-api\/masterService\/api/, ""),
+          rewrite: (path) => path.replace(/^\/dev-api\/masterService\/api/, "/omc003d"),
         },
-        "/dev-api": {
+        // '/dev-api/rmm-01/api': {
+        //   target: 'http://10.77.79.57:8080:9209', //远程监控
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(/^\/dev-api\/rmm-01\/api/, ''),
+        // },
+        '/dev-api': {
           // 用于开发环境下的转发请求
           // 更多请参考：https://vitejs.dev/config/#server-proxy
-          // target: 'http://10.77.79.57:8080/dev-api/',
-          target: "http://10.77.78.250",
+          // target: 'http://10.247.187.28:8080/dev-api/',
+          // target: 'http://114.116.211.6:8080',
+          // target: 'http://114.116.123.113:8080',
+          target: 'http://10.77.78.250',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/dev-api/, "/prod-api"),
+          rewrite: (path) => path.replace(/^\/dev-api/, '/prod-api'),
         },
-        // "/GEM_API": {
-        //   // 用于开发环境下的转发请求
-        //   // 更多请参考：https://vitejs.dev/config/#server-proxy
-        //   // target: 'http://114.116.211.6:8080', // 旧地址
-        //   target: "http://114.116.211.6:8080", // 新地址
-        //   // target: 'http://aselinceaa.natapp1.cc', // zhangbin地址
+        // // html5静态资源代理
+        // '/html5': {
+        //   target: 'http://myrmm-back-qhd32-6znyt.tjdevapp.cnooc',
         //   changeOrigin: true,
-        //   rewrite: path => path.replace(/^\/GEM_API/, "")
-        // }
+        //   rewrite: (path) => path.replace(/^\/html5/, '/html5'),
+        // },
         // 流程平台地址-有可供测试的流程平台时放开
         // '/biz/flow': {
         //   // 用于开发环境下的转发请求
@@ -144,7 +125,7 @@ export default ({ mode }) => {
         //   changeOrigin: true,
         //   rewrite: (path) => path.replace(/^\/b\/upload/, ''),
         // },
-      },
-    },
+      }
+    }
   };
 };

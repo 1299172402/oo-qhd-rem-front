@@ -8,22 +8,28 @@
         </div>
         <div class="z-main">
             <div class="z-left-view">
-                <el-image :src="src">
-                    <div slot="error"></div>
-                </el-image>
+                <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                    <div style="overflow: auto;width: 100%; height: 100%; display: flex; justify-content: center;">  
+                        <el-image :src="src">
+                            <div slot="error"></div>
+                        </el-image>
+                    </div>
+                </page-panel-new>
             </div>
             <div class="z-right-view">
-                <el-table 
-                    id="tableData"
-                    :data="tableData" :border="false" :row-style="{ height: '0px' }"
-                    header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
-                    style="width:100%;padding:0 10px;" height="calc(100% - 10px)" :default-sort="{ prop: 'date', order: 'descending' }"
-                    :header-cell-style="{ 'text-align': 'center', padding: '0px 0'}">
-                    <el-table-column label="序号" type="index" align="center"></el-table-column>
-                    <el-table-column :label="`含水饱和度\n (%)`" prop="" align="center"></el-table-column>
-                    <el-table-column label="相对渗透率Kro" prop="" align="center"></el-table-column>
-                    <el-table-column label="相对渗透率Krw" prop="" align="center"></el-table-column>
-                </el-table>
+                <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                    <el-table 
+                        id="tableData"
+                        :data="tableData" :border="false" :row-style="{ height: '0px' }"
+                        header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
+                        style="width:100%;padding:0 10px;" height="" :default-sort="{ prop: 'date', order: 'descending' }"
+                        :header-cell-style="{ 'text-align': 'center', padding: '0px 0'}">
+                        <el-table-column label="序号" type="index" align="center"></el-table-column>
+                        <el-table-column :label="`含水饱和度\n (%)`" prop="" align="center"></el-table-column>
+                        <el-table-column label="相对渗透率Kro" prop="" align="center"></el-table-column>
+                        <el-table-column label="相对渗透率Krw" prop="" align="center"></el-table-column>
+                    </el-table>
+                </page-panel-new>
             </div>
         </div>
     </div>
@@ -54,8 +60,7 @@
             };
         },
         async mounted() {
-            await this.fieldOilLayersApi();
-            this.doSearch();
+            await this.doSearch();
         },
         methods: {
             //获取层位接口
@@ -104,7 +109,8 @@
                 });
             },
             //获取图片
-            doSearch() {
+            async doSearch() {
+                await this.fieldOilLayersApi();
                 let params ={
                     operationId:this.blockId+'-'+this.selectPosition,
                     operationType:'BLOCKXSTLQX',
@@ -158,9 +164,9 @@
             width:600px;
             height:100%;
             overflow-y: scroll;
-            margin-right:30px;
-            padding-right:40px;
-            border: 1px solid #ddd;
+            margin-right:20px;
+            padding-right:0px;
+            // border: 1px solid #ddd;
             border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
         }
         .z-right-view{

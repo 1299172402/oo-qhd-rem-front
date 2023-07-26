@@ -1,7 +1,9 @@
 <!--试井报告-->
 <template>
     <div class="z-main">
-        <iframe style="height: 100%;width: 100%" :src="url"></iframe>
+        <page-panel-new style="height: 100%; margin-top: 0;" show-btn>
+            <iframe style="height: 100%;width: 100%" :src="url"></iframe>
+        </page-panel-new>
     </div>
 </template>
 
@@ -58,7 +60,7 @@
         width: 100%;
         height:calc(100% - 101px);
         iframe{
-            border: 1px solid #ddd;
+            // border: 1px solid #ddd;
             border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
         }
     }

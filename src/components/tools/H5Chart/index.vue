@@ -108,7 +108,9 @@
              */
             handlerZoomHeight() {
                 if (this.w && this.w.fView) {
-                    this.w.fView.ZoomHeight();
+                    // this.w.fView.ZoomHeight();
+                    this.w.fView.ZoomAll();//全图
+                    // this.w.fCommon.ZoomAll();//全图
                 }
             },
             /**
@@ -124,6 +126,8 @@
                 if (this.loadKey) {
                     if (this.w && this.w.fView && this.w.fView.RefreshData) {
                         console.log('setSampleDate')
+                        // this.w.fCommon.Delete()
+                        // this.w.fView.View.Delete()
                         this.w.fView.RefreshData(data, true, true);
                         // this.w.fView.View.ScrollView(this.w.fView.View.HScrollValue, this.w.fView.View.VScrollValue);
                         // this.w.fView.ZoomPicture();

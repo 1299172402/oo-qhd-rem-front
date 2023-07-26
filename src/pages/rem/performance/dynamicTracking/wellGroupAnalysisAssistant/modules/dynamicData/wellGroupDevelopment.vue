@@ -6,13 +6,13 @@
             <el-date-picker v-model="selectData" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
         </div> 
         <div class="z-echarts">
-            <info-window infoWidth="100%" :infoHeight="height+'px'" headerTitle="井组开发曲线图" isShowMaxBtn style="margin-top:0;">
+            <page-panel headerTitle="井组开发曲线图" :style="{height: height+'px',marginTop:0}" show-btn>
                 <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
-            </info-window>
+            </page-panel>
             <div class="develop">
                 <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
             </div>
-            <info-window infoWidth="100%" infoHeight="500px" headerTitle="井组开发曲线" isShowMaxBtn v-show="isDevelop">
+            <page-panel headerTitle="井组开发曲线" style="height: 500px;" show-btn v-show="isDevelop">
                 <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;"
                     height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                     <el-table-column type="index" label="序号"></el-table-column>
@@ -27,7 +27,7 @@
                     <el-table-column prop="wellStartInj" :label="`水井开井数\n(口)`"></el-table-column>
                     <el-table-column prop="injData" :label="`日注水\n(m³)`"></el-table-column>
                 </el-table>
-            </info-window>
+            </page-panel>
         </div>   
     </div>
 </template>
@@ -56,6 +56,14 @@
                 height:'',
                 selectData: [],
                 option: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0, 1, 2],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     title: {},
                     tooltip: {
                         trigger: 'axis',

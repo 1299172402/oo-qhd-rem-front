@@ -10,11 +10,29 @@ export function savePage(data) {
   });
 }
 
-// 查询接口/重置接口
+// 框架-查询接口/重置接口
 export function queryByPageName(pageName, tenantId) {
   return request({
     url: `system/page/queryByPageName?pageName=${pageName}&tenantId=${tenantId}`,
     method: "get"
+  });
+}
+
+// 门户-查询接口接口
+export function queryByPage(data) {
+  return request({
+    url: "system/page/queryByPage",
+    method: "post",
+    data
+  });
+}
+
+// 重置接口
+export function queryTenantPage(data) {
+  return request({
+    url: "system/page/queryTenantPage",
+    method: "post",
+    data
   });
 }
 
@@ -39,6 +57,14 @@ export function setDefaultPage(data) {
 export function goNewPage() {
   return request({
     url: "auth/portal/indexUrl",
+    method: "get"
+  });
+}
+
+// 筛选统计首页样例接口
+export function systemNum(info) {
+  return request({
+    url: `system/statistics/userMonthlyActivityStatistics?top=${info.num}&date=${info.date}`,
     method: "get"
   });
 }

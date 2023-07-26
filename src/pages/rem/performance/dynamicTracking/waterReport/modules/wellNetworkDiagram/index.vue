@@ -1,6 +1,6 @@
 <!--井网图-->
 <template>
-    <page-panel header-title="井网图" style="height:600px;width:100%;">
+    <page-panel header-title="井网图" style="height:600px;width:100%;" show-btn>
         <div class="image-content">
             <el-image :src="image" style="width: 100%">
                 <div slot="error"></div>

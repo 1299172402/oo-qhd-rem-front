@@ -18,7 +18,9 @@
             <el-button type="primary" @click="OnChangeImage">确认</el-button>
         </div> 
         <div class="z-echarts">
-            <H5Chart ref="H5Chart" height="100%" :url="url" width="100%"></H5Chart>
+            <page-panel-new style="height:100%;margin-top:0;" show-btn @zoom-out-com="zoomOutCom">
+                <H5Chart ref="H5Chart" height="100%" :url="url" width="100%"></H5Chart>
+            </page-panel-new>
         </div> 
         
         <el-dialog width="10px" max-height="10px" :visible.sync="dialogVisible1" style="margin-top: 98%; margin-right: 2%">
@@ -347,6 +349,12 @@
                     }, 2000)
                 }, 1000)
             },
+            // 图放大缩小时重置状态
+            zoomOutCom() {
+                setTimeout(() => {
+                    this.$refs.H5Chart.handlerZoomHeight();
+                }, 10);
+            }
         }
     }
 </script>

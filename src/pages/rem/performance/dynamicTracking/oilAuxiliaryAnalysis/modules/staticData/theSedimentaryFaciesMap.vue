@@ -7,9 +7,13 @@
             </el-select>
         </div>
         <div class="z-main">
-            <el-image :src="src">
-                <div slot="error"></div>
-            </el-image>
+            <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                <div style="overflow: auto;width: 100%; height: 100%;">   
+                    <el-image :src="src" style="width: 100%;">
+                        <div slot="error"></div>
+                    </el-image>
+                </div>
+            </page-panel-new>
         </div>
     </div>
 </template>
@@ -43,8 +47,7 @@
             };
         },
         async mounted() {
-            await this.fieldOilLayersApi();
-            this.doSearch();
+            await this.doSearch();
         },
         methods: {
             //获取层位接口
@@ -92,7 +95,8 @@
                 });
             },
             //获取图片
-            doSearch() {
+            async doSearch() {
+                await this.fieldOilLayersApi();
                 this.imageList=[];
                 let params ={
                     operationId:this.blockId+'-'+this.selectPosition,
@@ -145,7 +149,7 @@
         height:calc(100% - 50px);
         border: 1px solid #ddd;
         border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
-        overflow: auto;
+        // overflow: auto;
     }
 </style>
 

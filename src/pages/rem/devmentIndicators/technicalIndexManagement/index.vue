@@ -314,6 +314,14 @@
                 },
                 //年产油量
                 inOilProduction2: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -445,6 +453,14 @@
                     series: [],
                 },
                 inOilProduction: {//原油产量折线图
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#9A72FF', '#DA835E'],
                     tooltip: {
                         trigger: 'axis',
@@ -574,6 +590,14 @@
                 },
                 //采油速度
                 productionSpeed: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -674,6 +698,14 @@
                 },
                 //综合递减率
                 comprehensiveDeclineRate: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     title: {
                         text: "综合递减率",
                         textStyle: {
@@ -786,6 +818,14 @@
                 },
                 //含水上升率
                 rateOfWaterCutRise: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     title: {
                         text: "含水上升率",
                         textStyle: {
@@ -898,6 +938,14 @@
                 },
                 //生产时率
                 whenTheProductionRate: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -994,6 +1042,14 @@
                 },
                 //油井利用率
                 wellUtilization: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -1126,6 +1182,14 @@
                 },
                 //自然递减率
                 naturalDeclineRate: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     title: {
                         text: "自然递减率",
                         textStyle: {
@@ -1356,6 +1420,7 @@
                     this.getTechIndicatorStat(oilFieldId, targetOilFieldId, outputDegreeCode, reservoirsTypeCode, devPhaseCode);
                 } else if (this.currentIndex == 1) { //年产油量
                     this.doOilYear2(oilFieldId);
+                     this.doOilYear(oilFieldId);
                 } else if (this.currentIndex == 2) { //采油速度
                     this.doProSpeed(oilFieldId);
                 } else if (this.currentIndex == 3) { //综合递减率
@@ -1398,9 +1463,9 @@
                 }
                 oilYear(request).then((res) => {
                     //图表数据
-                    let legendData = [];
+                    // let legendData = [];
                     //数据数组
-                    let seriesData = [];
+                    // let seriesData = [];
                     if (res.data.code == 200) {
                         //获得相关指标信息
                         let detail = res.data.data.indicatorContent;
@@ -1412,27 +1477,28 @@
                         //同比标量
                         zb.tb = detail.moy;
                         zb.tbTag = detail.yearOnYearTag;
-                        return false;
-                        //获取折线图信息
-                        let charDataS = res.data.data.chart.linearDataSets;
-                        for (let i = 0; i < charDataS.length; i++) {
-                            //获得每一个折线数据
-                            let linearChart = charDataS[i];
-                            //向图例中添加 折线名称
-                            if (linearChart.label != '实际年产' && linearChart.label != '计划年产') {
-                                legendData.push(linearChart.label);
-                            } else if (linearChart.label == '实际年产') {
-                                legendData.push('实际年累产');
-                            } else if (linearChart.label == '计划年产') {
-                                legendData.push('计划年累产');
-                            }
-                            //向数据数组中添加 所有折线的信息
-                            seriesData.push(this.getLinearChartSeriesOilProduct(linearChart));
-                        }
-                        //图例数据
-                        this.inOilProduction.legend.data = legendData;
-                        //各线的数据
-                        this.inOilProduction.series = seriesData;
+                        // TODO lv 页面没有使用，代码检查错误先注释
+                        // return false;
+                        // //获取折线图信息
+                        // let charDataS = res.data.data.chart.linearDataSets;
+                        // for (let i = 0; i < charDataS.length; i++) {
+                        //     //获得每一个折线数据
+                        //     let linearChart = charDataS[i];
+                        //     //向图例中添加 折线名称
+                        //     if (linearChart.label != '实际年产' && linearChart.label != '计划年产') {
+                        //         legendData.push(linearChart.label);
+                        //     } else if (linearChart.label == '实际年产') {
+                        //         legendData.push('实际年累产');
+                        //     } else if (linearChart.label == '计划年产') {
+                        //         legendData.push('计划年累产');
+                        //     }
+                        //     //向数据数组中添加 所有折线的信息
+                        //     seriesData.push(this.getLinearChartSeriesOilProduct(linearChart));
+                        // }
+                        // //图例数据
+                        // this.inOilProduction.legend.data = legendData;
+                        // //各线的数据
+                        // this.inOilProduction.series = seriesData;
                     } else {
                         // //图例数据
                         // this.inOilProduction.legend.data = legendData;

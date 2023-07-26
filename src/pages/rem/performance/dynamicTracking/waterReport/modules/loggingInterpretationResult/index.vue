@@ -1,12 +1,12 @@
 <!--测井解释成果-->
 <template>
-  <pagePanel class="mt-2" headerTitle="测井解释成果">
+  <pagePanel class="mt-2" headerTitle="测井解释成果" style="height: 600px;" show-btn>
     <el-table
         id="tableData"
         highlight
         :data="tableData"
         style="width: 100%;"
-        height="600"
+        height="100%"
     >
       <el-table-column
           type="index"

@@ -50,13 +50,11 @@
 
 <script>
 import gridLayout from "./grid-layout/index.vue";
-
 import {LineChart} from "echarts/charts";
 import {GridComponent, TooltipComponent, LegendComponent} from "echarts/components";
 import chartsComponents from "@/components/intelligentOilfield/echarts-com/index.vue";
 import {CanvasRenderer} from "echarts/renderers";
 import * as echarts from "echarts/core";
-
 const moduleFiles = import.meta.globEager(`./modules/*/index.vue`);
 const moduleName = Object.entries(moduleFiles).reduce(
     (t, i) =>
@@ -66,10 +64,6 @@ const moduleName = Object.entries(moduleFiles).reduce(
     {},
 );
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
-const labelName = ["总值", "合格值", "测试"];
-
-const getRate = 70;
-
 // this.$store.state
 export default {
     components: {

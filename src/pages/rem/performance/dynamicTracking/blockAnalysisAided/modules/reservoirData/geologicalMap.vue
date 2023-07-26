@@ -8,29 +8,33 @@
         </div>
         <div class="z-main">
             <div class="z-left-view">
-                <iframe style="height: 100%;width: 100%" :src="url"></iframe>
+                <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                    <iframe style="height: 100%;width: 100%" :src="url"></iframe>
+                </page-panel-new>
             </div>
             <div class="z-right-view">
-                <el-table
-                    id="tableData"
-                    :data="tableData" :border="false" :row-style="{ height: '0px' }"
-                    header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
-                    style="width:100%;padding:0 10px;" height="calc(100% - 10px)" :default-sort="{ prop: 'date', order: 'descending' }"
-                    :header-cell-style="{ 'text-align': 'center', padding: '0px 0'}">
-                    <el-table-column label="序号" type="index" align="center" width="100" fixed></el-table-column>
-                    <el-table-column label="层位" prop="layer" align="center" width="140" fixed></el-table-column>
-                    <el-table-column label="井号" prop="wellbore" align="center" width="140" fixed></el-table-column>
-                    <el-table-column :label="`顶界斜深\n(m)`" prop="topMd" align="center"></el-table-column>
-                    <el-table-column :label="`底界斜深\n(m)`" prop="bottomMd" align="center"></el-table-column>
-                    <el-table-column label="斜厚" prop="mdThickness" align="center"></el-table-column>
-                    <el-table-column :label="`顶界垂深\n(m)`" prop="topTvd" align="center"></el-table-column>
-                    <el-table-column :label="`底界垂深\n(m)`" prop="bottomTvd" align="center"></el-table-column>
-                    <el-table-column label="垂厚" prop="verticalThickness" align="center"></el-table-column>
-                    <el-table-column :label="`反射时长\n(m)`" prop="reflectionDuration" align="center"></el-table-column>
-                    <el-table-column label="分层日期" prop="divDate" align="center" min-width="140"></el-table-column>
-                    <el-table-column label="层位描述" prop="layerDesc" align="center" min-width="240"></el-table-column>
-                    <el-table-column label="接触关系" prop="contectRelationCode" align="center" min-width="200"></el-table-column>
-                </el-table>
+                <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                    <el-table
+                        id="tableData"
+                        :data="tableData" :border="false" :row-style="{ height: '0px' }"
+                        header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
+                        style="width:100%;padding:0 10px;" height="calc(100% - 10px)" :default-sort="{ prop: 'date', order: 'descending' }"
+                        :header-cell-style="{ 'text-align': 'center', padding: '0px 0'}">
+                        <el-table-column label="序号" type="index" align="center" width="100" fixed></el-table-column>
+                        <el-table-column label="层位" prop="layer" align="center" width="140" fixed></el-table-column>
+                        <el-table-column label="井号" prop="wellbore" align="center" width="140" fixed></el-table-column>
+                        <el-table-column :label="`顶界斜深\n(m)`" prop="topMd" align="center"></el-table-column>
+                        <el-table-column :label="`底界斜深\n(m)`" prop="bottomMd" align="center"></el-table-column>
+                        <el-table-column label="斜厚" prop="mdThickness" align="center"></el-table-column>
+                        <el-table-column :label="`顶界垂深\n(m)`" prop="topTvd" align="center"></el-table-column>
+                        <el-table-column :label="`底界垂深\n(m)`" prop="bottomTvd" align="center"></el-table-column>
+                        <el-table-column label="垂厚" prop="verticalThickness" align="center"></el-table-column>
+                        <el-table-column :label="`反射时长\n(m)`" prop="reflectionDuration" align="center"></el-table-column>
+                        <el-table-column label="分层日期" prop="divDate" align="center" min-width="140"></el-table-column>
+                        <el-table-column label="层位描述" prop="layerDesc" align="center" min-width="240"></el-table-column>
+                        <el-table-column label="接触关系" prop="contectRelationCode" align="center" min-width="200"></el-table-column>
+                    </el-table>
+                </page-panel-new>
             </div>
         </div>
     </div>

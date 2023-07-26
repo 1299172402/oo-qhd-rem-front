@@ -58,8 +58,8 @@ export default {
                                     color: "#a9a8a8",
                                 },
                                 itemStyle: {
-                                    color: "#0733F1",
-                                    borderColor: "#0733F1",
+                                    color: "#ff7135",
+                                    borderColor: "#ff7135",
                                     show: false,
                                 },
                             },
@@ -70,8 +70,8 @@ export default {
                                     color: "#a9a8a8",
                                 },
                                 itemStyle: {
-                                    color: "#00B0E3",
-                                    borderColor: "#00B0E3",
+                                    color: "#22d6f8",
+                                    borderColor: "#22d6f8",
                                 },
                             },
                             {
@@ -81,8 +81,8 @@ export default {
                                     color: "#a9a8a8",
                                 },
                                 itemStyle: {
-                                    color: "#3D61FF",
-                                    borderColor: "#3D61FF",
+                                    color: "#35a3e7",
+                                    borderColor: "#35a3e7",
                                 },
                             },
                         ],

@@ -98,6 +98,14 @@
                 ],
                 //年注入量图表数据
                 inInjection: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     title: {
                         text: "年注入量",
                         textStyle: {

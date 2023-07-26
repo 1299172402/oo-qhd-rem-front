@@ -6,23 +6,27 @@
                 <el-option v-for="item in position" :key="item.fieldLayerId" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
         </div>
-        <div class="z-container">
+        <el-row class="z-container" :gutter="20">
             <el-col :span="14">
-                <page-panel-new style="height:100%;margin-top:0;overflow: auto;" show-btn>
-                    <el-image :src="src">
-                        <div slot="error"></div>
-                    </el-image>
+                <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                    <div style="overflow: auto;width: 100%; height: 100%; display: flex;justify-content: center;">
+                        <el-image :src="src">
+                            <div slot="error"></div>
+                        </el-image>
+                    </div>
                 </page-panel-new>
             </el-col>
             <el-col :span="10">
-                <el-table id="tableData" highlight :data="tableData" style="width: 100%" height="100%">
-                    <el-table-column type="index" label="序号"></el-table-column>
-                    <el-table-column prop="wellName" label="井号"> </el-table-column>
-                    <el-table-column prop="fieldLayer" label="层位"> </el-table-column>
-                    <el-table-column prop="permeability" label="渗透率 (%)"></el-table-column>
-                </el-table>
+                <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                    <el-table id="tableData" highlight :data="tableData" style="width: 100%" height="100%">
+                        <el-table-column type="index" label="序号"></el-table-column>
+                        <el-table-column prop="wellName" label="井号"> </el-table-column>
+                        <el-table-column prop="fieldLayer" label="层位"> </el-table-column>
+                        <el-table-column prop="permeability" label="渗透率 (%)"></el-table-column>
+                    </el-table>
+                </page-panel-new>
             </el-col>
-        </div>
+        </el-row>
     </div>
 </template>
 

@@ -162,15 +162,16 @@ export default {
       //预警信息
       tableDataOil: [],
       tableDataWater: [],
-      pickerOptions: {
-        disabledDate(time) {
-          let curDate = new Date().toString(); // 当前时间戳转为字符串
-          let curDateYear = new Date().getFullYear(); // 当前时间的年份
-          let oneYearAgoDate = curDate.replace(curDateYear, curDateYear - 1); // 字符串年份替换为一年前
-          let oneYear = new Date(oneYearAgoDate).getTime(); //一年前字符串转为时间戳
-          return time.getTime() > Date.now() || time.getTime() < oneYear;
-        },
-      },
+      // TODO lv 页面没有使用，代码检查错误先注释
+      // pickerOptions: {
+      //   disabledDate(time) {
+      //     let curDate = new Date().toString(); // 当前时间戳转为字符串
+      //     let curDateYear = new Date().getFullYear(); // 当前时间的年份
+      //     let oneYearAgoDate = curDate.replace(curDateYear, curDateYear - 1); // 字符串年份替换为一年前
+      //     let oneYear = new Date(oneYearAgoDate).getTime(); //一年前字符串转为时间戳
+      //     return time.getTime() > Date.now() || time.getTime() < oneYear;
+      //   },
+      // },
       //表格数据
       messageResult: [
         {
@@ -798,7 +799,7 @@ export default {
     //加入观察室
     addWarning() {
       let request = { id: this.$route.query.id, opinion: this.textarea };
-      proWellIndicatorWarningAssosiationAnalysisSave(request).then((res) => {
+      proWellIndicatorWarningAssosiationAnalysisToObserve(request).then((res) => {
         Message({
           showClose: true,
           message: "加入观察室成功",
@@ -810,7 +811,7 @@ export default {
     //关闭预警
     delWarning() {
       let request = { id: this.$route.query.id, opinion: this.textarea };
-      proWellIndicatorWarningAssosiationAnalysisSave(request).then((res) => {
+      proWellIndicatorWarningAssosiationAnalysisClose(request).then((res) => {
         Message({
           showClose: true,
           message: "关闭预警成功",

@@ -159,6 +159,10 @@ export default {
                   },
                   bottom: "bottom",
               },
+              dataZoom: {
+                  start: 0,
+                  type: "inside",
+              },
               tooltip: {
                   trigger: 'axis',
                   axisPointer: {

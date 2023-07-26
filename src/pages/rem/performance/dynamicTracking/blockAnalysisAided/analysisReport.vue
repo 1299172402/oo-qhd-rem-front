@@ -256,7 +256,7 @@
                 </div>
                 <div style="margin-left:8px;margin-right:7px;height:600px;display: flex;">
                     <div style="flex:1;margin-right:10px;height:600px;">
-                        <pagePanelNew headerTitle="" style="height:100%;" showBtn>
+                        <pagePanelNew headerTitle="" style="height:100%;" showBtn @zoom-out-com="zoomOutCom">
                             <div style="height:100%;">
                                 <div style="display: flex;margin-bottom:10px;">
                                     <!-- 层位选择 -->
@@ -1459,6 +1459,12 @@
                     path:'/'+this.$route.query.page
                 })
             },
+            // 新版左下角图放大缩小时重置状态
+            zoomOutCom() {
+                setTimeout(() => {
+                    this.$refs.H5Chart2.handlerZoomHeight();
+                }, 10);
+            }
         },
         activated(){
             this.resetting();

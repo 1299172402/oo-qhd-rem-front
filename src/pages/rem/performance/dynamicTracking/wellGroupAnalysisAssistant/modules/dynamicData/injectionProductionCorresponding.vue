@@ -10,14 +10,14 @@
         </div> 
         <div class="z-echarts">
             <div v-for="(chart,index) in wellOptions" :key="index" >
-                <info-window infoWidth="100%" infoHeight="600px" :headerTitle="chart.wellNo+'对应曲线图'" isShowMaxBtn style="margin-top:0;margin-bottom:10px;">
+                <page-panel :headerTitle="chart.wellNo+'对应曲线图'" style="height: 600px; margin-top:0;margin-bottom:10px;"  show-btn >
                     <Echart :ref="'echartDown'+index" :chart-data="chart.option" height="100%"></Echart>
-                </info-window>
+                </page-panel>
             </div>
             <div class="develop" v-if="wellOptions.length">
                 <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
             </div>
-            <info-window infoWidth="100%" infoHeight="450px" headerTitle="水井对应曲线表" isShowMaxBtn v-show="isDevelop" style="margin-top:10px;">
+            <page-panel headerTitle="水井对应曲线表" v-show="isDevelop" style="height: 450px; margin-top:10px;" show-btn>
                 <el-table id="tableData1" :data="wellInjCurves" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;"
                     height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                     <el-table-column type="index" label="序号"></el-table-column>
@@ -29,8 +29,8 @@
                     <el-table-column prop="juSum" :label="`水聚总量\n(m³)`"></el-table-column>
                     <el-table-column prop="injPlan" :label="`日配注量\n(m³)`"></el-table-column>
                 </el-table>
-            </info-window>
-            <info-window infoWidth="100%" infoHeight="450px" headerTitle="油井对应曲线表" isShowMaxBtn v-show="isDevelop" style="margin-top:10px;">
+            </page-panel>
+            <page-panel headerTitle="油井对应曲线表" v-show="isDevelop"  style="height: 450px; margin-top:10px;" show-btn>
                 <el-table id="tableData2" :data="wellOilCurves" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;"
                     height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                     <el-table-column type="index" label="序号"></el-table-column>
@@ -46,7 +46,7 @@
                     <el-table-column prop="gasProdDaily" :label="`日产气\n(万方)`"></el-table-column>
                     <el-table-column prop="gasOilRatio" :label="`气油比\n(m³/m³)`"></el-table-column>
                 </el-table>
-            </info-window>
+            </page-panel>
         </div>
     </div>
 </template>
@@ -74,6 +74,14 @@
                 selectDate: [],
                 //油井折线图
                 oilWellOption: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0, 1, 2],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     title: {},
                     tooltip: {
                         trigger: 'axis',
@@ -556,6 +564,14 @@
                 },
                 //水井折线图
                 injectionWellOption: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0, 1],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     title: {},
                     tooltip: {
                         trigger: 'axis',

@@ -1,7 +1,7 @@
 <!--作业井史-->
 <template>
   <div>
-    <pagePanel headerTitle="生产简史">
+    <pagePanel headerTitle="生产简史" style="height:600px" show-btn>
       <el-table
         id="tableData"
         :data="tableData"
@@ -10,7 +10,7 @@
         header-cell-class-name="table_header"
         :cell-style="{ padding: '6px', 'text-align': 'center' }"
         style="width: 100%;"
-        height="600px"
+        height="100%"
         :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       >

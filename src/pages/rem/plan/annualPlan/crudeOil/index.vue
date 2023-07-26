@@ -182,31 +182,39 @@
                         },
                     ],
                     series: [],
-                    dataZoom:{
-                        type: 'slider',
-                        realtime:true, //拖动滚动条时是否动态的更新图表数据
-                        height:10,//滚动条高度
-                        startValue:'',//滚动条开始位置
-                        endValue:'',//结束位置
-                        zoomLock:true,
-                        showDetail:false,
-                        brushSelect: false,
-                        backgroundColor:'rgba(0,0,0,0)',
-                        dataBackground:{
-                            lineStyle:{
-                              color:'rgba(0,0,0,0)'  
+                    dataZoom:[
+                        {
+                            type: 'slider',
+                            realtime:true, //拖动滚动条时是否动态的更新图表数据
+                            height:10,//滚动条高度
+                            startValue:'',//滚动条开始位置
+                            endValue:'',//结束位置
+                            zoomLock:true,
+                            showDetail:false,
+                            brushSelect: false,
+                            backgroundColor:'rgba(0,0,0,0)',
+                            dataBackground:{
+                                lineStyle:{
+                                color:'rgba(0,0,0,0)'  
+                                },
+                                areaStyle:{
+                                    color:'rgba(0,0,0,0)',
+                                    opacity:1
+                                },
                             },
-                            areaStyle:{
-                                color:'rgba(0,0,0,0)',
-                                opacity:1
+                            selectedDataBackground:{
+                                areaStyle :{
+                                    color:'rgba(0,0,0,0)'
+                                } 
                             },
                         },
-                        selectedDataBackground:{
-                            areaStyle :{
-                                color:'rgba(0,0,0,0)'
-                            } 
+                        {
+                            type: "inside",
+                            xAxisIndex: [0, 1, 2, 3],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
                         },
-                    }
+                    ]
                 },
                 isDevelop:false,//是否展示表格
                 runTimeData: [],//原油产量表格数据
@@ -232,13 +240,13 @@
             },
             //原油产量统计图
             getSearchOilProductionChart() {
-                this.productLineChart.dataZoom.startValue=this.searchForm.selectDate[0];
+                this.productLineChart.dataZoom[0].startValue=this.searchForm.selectDate[0];
                 let endValue=dayjs(this.searchForm.selectDate[0]).add(11, 'month').format('YYYY-MM-DD');
                 let a=endValue.split('-');
                 let m=a[1].includes('0')?a[1].substring(1) : a[1];
                 a[2]=new Date(a[0], m, 0).getDate();
                 endValue=a.join('-');
-                this.productLineChart.dataZoom.endValue=endValue;
+                this.productLineChart.dataZoom[0].endValue=endValue;
                 let request = {
                     oilFieldId: this.searchForm.selectOilField,
                     unitType: this.searchForm.selectUnitOfProduction,
@@ -380,8 +388,8 @@
                 //     this.page=obj.page;
                 // }
                 // this.getSearchOilProductionTable();
-                this.page = e.page;
-                this.pageSize = e.limit;
+                this.page = obj.page;
+                this.pageSize = obj.limit;
             },
             //表格-展示||隐藏
             tapDevelop(){

@@ -2,10 +2,12 @@
 <template>
     <div class="z-main">
         <div class="z-left-view">
-            <iframe style="height: 100%;width: 100%" :src="url"></iframe>
+            <page-panel-new style="width: 100%; height: 100%; margin-top: 0;" show-btn>
+                <iframe style="height: 100%;width: 100%" :src="url"></iframe>
+            </page-panel-new>
         </div>
         <div class="z-right-view">
-            <info-window infoWidth="100%" infoHeight="calc(100%)" headerTitle="饱和度测井数据">
+            <page-panel style="width: 100%; height: 100%; margin-top: 0;" headerTitle="饱和度测井数据" show-btn>
                 <el-table 
                     id="tableData"
                     :data="tableData" :border="false" :row-style="{ height: '0px' }"
@@ -33,7 +35,7 @@
                     <el-table-column prop="conclusion" label="解释结论" min-width="180"></el-table-column>
                     <el-table-column prop="remark" label="备注" min-width="180"></el-table-column>
                 </el-table>
-            </info-window>
+            </page-panel>
         </div>
     </div>
 </template>
@@ -127,9 +129,9 @@
         overflow: hidden;
         .z-left-view{
             width:600px;
-            padding-right:40px;
+            padding-right:20px;
             iframe{
-                border: 1px solid #ddd;
+                // border: 1px solid #ddd;
                 border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
             }
         }

@@ -652,6 +652,14 @@
                 paramater: {},
                 //水驱特征曲线曲线
                 option: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     grid: {
                         x: 120,
                         y: 30,
@@ -710,7 +718,7 @@
                     },
                     yAxis: {
                         name: "lgWp",
-                        nameLocation: "center",
+                        // nameLocation: "center",
                         nameLocation:'middle',
                         nameGap:50,
                         nameTextStyle: {
@@ -784,6 +792,14 @@
                     },
                 ],
                 optionTwo: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     grid: {
                         x: 120,
                         y: 30,
@@ -812,7 +828,7 @@
                     xAxis: {
                         // name: "时间",
                         type: 'category',
-                        nameLocation: "center",
+                        // nameLocation: "center",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
@@ -842,7 +858,7 @@
                     yAxis: {
                         // data:[],
                         name: "日产油量/10*4m³",
-                        nameLocation: "center",
+                        // nameLocation: "center",
                         nameLocation:'middle',
                         nameTextStyle: {
                             color: "#8FA4CC",
@@ -898,6 +914,14 @@
                     ]
                 },
                 optionThree: {
+                    dataZoom: [
+                        {
+                            type: "inside",
+                            xAxisIndex: [0],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                    ],
                     color: [],
                     grid: {
                         x: 120,
@@ -955,7 +979,7 @@
                     },
                     yAxis: {
                         name: "综合含水率(%)",
-                        nameLocation: "center",
+                        // nameLocation: "center",
                         nameLocation:'middle',
                         nameTextStyle: {
                             color: "#8FA4CC",

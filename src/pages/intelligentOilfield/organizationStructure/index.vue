@@ -17,15 +17,6 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <!-- <el-form-item label="组织机构ID" prop="deptId">
-             <el-input
-            v-model="queryParams.deptId"
-            placeholder="请输入组织机构ID"
-            clearable
-            size="small"
-            @keyup.enter.native="handleQuery"
-          />
-                                                </el-form-item> -->
         <el-form-item label="状态" prop="status">
           <el-select
             v-model="queryParams.status"
@@ -95,7 +86,6 @@
             展开/折叠
           </el-button>
         </el-col>
-        <!-- <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar> -->
       </el-row>
       <el-table
         v-if="refreshTable"
@@ -260,21 +250,6 @@
               />
             </el-form-item>
           </el-col>
-          <!-- <el-col :span="12">
-              <el-form-item label="负责人" prop="leader">
-                <el-input v-model="form.leader" placeholder="请输入负责人" maxlength="20" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="联系电话" prop="phone">
-                <el-input v-model="form.phone" placeholder="请输入联系电话" maxlength="11" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="邮箱" prop="email">
-                <el-input v-model="form.email" placeholder="请输入邮箱" maxlength="50" />
-              </el-form-item>
-                                                    </el-col> -->
           <el-col :span="12">
             <el-form-item label="机构类型" prop="type">
               <el-select
@@ -292,22 +267,6 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <!-- <el-col :span="24">
-              <el-form-item label="是否租户" prop="isTenant">
-                <el-radio-group v-model="form.isTenant">
-                  <el-radio label="0">否</el-radio>
-                  <el-radio label="1">是</el-radio>
-                </el-radio-group>
-              </el-form-item>
-                </el-col> -->
-          <!-- <el-col :span="24" v-if="form.isTenant == '1'">
-              <el-form-item label="选择角色" prop="tenantRoleId">
-                <el-select size="small" style="width: 100%" v-model="form.tenantRoleId" placeholder="请选择角色" clearable>
-                  <el-option v-for=" item in roleList" :key="item.roleId" :label="item.roleName" :value="item.roleId">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-                </el-col> -->
         </el-row>
         <el-row>
           <el-col :span="12">
@@ -337,7 +296,6 @@
 
 <script>
 import { listDept, selectDepts, getDept, delDept, addDept, updateDept, listDeptExcludeChild, delDeptsure, getNoEditable } from "@/api/intelligentOilfield/system/dept";
-// import { listRole } from '@/api/intelligentOilfield/system/role';
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
@@ -392,7 +350,6 @@ export default {
         ],
         type: [{ required: true, message: "请选择机构类型" }],
         status: [{ required: true, message: "请选择机构状态" }],
-        // isTenant: [{ required: true, message: '是否租户不能为空'}],
         tenantRoleId: [{ required: true, message: "请选择角色" }]
       },
       roleList: [],
@@ -421,12 +378,6 @@ export default {
     changeParent() {
       this.$refs.form.validateField("parentId");
     },
-    /** 获取角色权限列表 */
-    // getRoleList() {
-    //   listRole({ isTenant: '1' }).then((response) => {
-    //     this.roleList = response.data.rows;
-    //   });
-    // },
     /** 查询组织机构列表 */
     getList() {
       this.loading = true;
