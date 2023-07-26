@@ -76,16 +76,17 @@ export default {
     },
     methods: {
         show(data) {
-            this.queryParams.ogfId = data.selectOilField
-            this.queryParams.selectPlatform = data.assetCode
-            this.queryParams.month= data.endTime
-            getOnSiteWork(this.queryParams).then((res) => {
-                if (res.data.code === 200) {
-                    this.noticeList = res.data.data.rows;
-                } else {
-                    this.$message.warning('系统错误请重新尝试或联系运维人员！');
-                }
-            });
+      
+            // this.queryParams.ogfId = data.selectOilField
+            // this.queryParams.selectPlatform = data.assetCode
+            // this.queryParams.month= data.endTime
+            // getOnSiteWork(this.queryParams).then((res) => {
+            //     if (res.data.code === 200) {
+            //         this.noticeList = res.data.data.rows;
+            //     } else {
+            //         this.$message.warning('系统错误请重新尝试或联系运维人员！');
+            //     }
+            // });
         },
      
         getList() {

@@ -379,8 +379,8 @@
                             platform.splice(0,1);
                         }
                         this.platforms =platform;
-                        this.platforms[0].platFormId=this.selectOilField;
-                        this.selectPlatform = this.selectOilField;
+                        // this.platforms[0].platFormId=this.selectOilField;
+                        this.selectPlatform = platform[0].platFormId;
                     }
                 });
                 //井号

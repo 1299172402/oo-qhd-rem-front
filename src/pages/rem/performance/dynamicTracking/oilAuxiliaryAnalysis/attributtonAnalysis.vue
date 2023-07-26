@@ -834,6 +834,10 @@ export default {
                                             "name": "归因7：①注采失调；②水线突进。\n下步措施：产液结构优化调整、优化注水",
                                         },
                                         {
+                                            "level": 99,
+                                            "name": "归因8：数据问题。\n下步错书：数据查询",
+                                        },
+                                        {
                                             "level": 3,
                                             "name": "判断月度含水率",
                                             "children": [
@@ -843,7 +847,7 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "关联水井注水量分析（通过井组关系获取）",
+                                                            "name": "关联水井注水量分析",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
@@ -900,7 +904,7 @@ export default {
                                                                 },
                                                                 {
                                                                     "level": 5,
-                                                                    "name": "判断泵工况（已有成果）",
+                                                                    "name": "判断泵工况",
                                                                     "children": [
                                                                         {
                                                                             "level": 99,
@@ -1054,7 +1058,7 @@ export default {
                                                         },
                                                         {
                                                             "level": 5,
-                                                            "name": "分析示踪剂（来水方向）",
+                                                            "name": "分析示踪剂",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
@@ -1070,7 +1074,7 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 6,
-                                                            "name": "归因统计分析（一井或多井）",
+                                                            "name": "归因统计分析）",
                                                         }
                                                     ]
                                                 }
@@ -1082,7 +1086,7 @@ export default {
                                             "children": [
                                                 {
                                                     "level": 4,
-                                                    "name": "分析井组水井分层月注水量（单井加和）",
+                                                    "name": "分析井组水井分层月注水量",
                                                     "children": [
                                                         {
                                                             "level": 5,
@@ -1090,7 +1094,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 6,
-                                                                    "name": "归因统计分析（一井或多井）",
+                                                                    "name": "归因统计分析",
                                                                 }
                                                             ]
                                                         },

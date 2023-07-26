@@ -374,12 +374,14 @@
                 let LayerName1 = '等值线填充颜色图层';
                 let LayerType1 = 9;
                 let Active1 = true;
+                let ClearLayer1 = true;
                 let Display1 = true;
                 let LayerIndex1 = 8;
                 let Layers_cont1 = {};
                 Layers_cont1.LayerName = LayerName1;
                 Layers_cont1.LayerType = LayerType1;
                 Layers_cont1.Active = Active1;
+                Layers_cont1.ClearLayer = ClearLayer1;
                 Layers_cont1.Display = Display1;
                 Layers_cont1.LayerIndex = LayerIndex1;
                 Layers_cont1.Objects = Objects1;

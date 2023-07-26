@@ -14,40 +14,14 @@
           style="font-size: 20px; width: auto;caret-color: transparent"
           @click="goPage"
         >
-          <!-- <span class="logoText">{{ systemName }}</span> -->
-          <!-- TODO: 内网 Maybe change back -->
+          <span v-if="isTestEnvironment" class="logoText">{{ systemName }}</span>
           <logo-full
+            v-if="!isTestEnvironment"
             class="t-logo"
             style="width: 49px; height: 44px; margin-right: 10px;"
           />
-          <span class="logoText">{{ systemName }}</span>
+          <span v-if="!isTestEnvironment" class="logoText">天津分公司智能油田管理系统</span>
         </span>
-        <!-- TODO: Maybe change back -->
-        <!-- <div v-if="layout !== 'top' && !$store.getters['user/isGroupLogin']" class="header-operate-left">
-          <t-button theme="default" shape="square" variant="text" @click="changeCollapsed" style="background: transparent;border: 0px;">
-            <view-list-icon class="collapsed-icon" style="color: var(--white-color)" />
-          </t-button> -->
-        <!-- <search :layout="layout" /> -->
-        <!-- </div> -->
-        <!-- <div :style="{color: $store.state.setting.mode==='dark'? ' var(--light-blue-color)':'#fff'}" style="font-size: 14px;font-weight: 700px;margin-left: 20px">
-          {{ $store.getters["user/tenantName"] }}
-        </div> -->
-        <!-- <el-select
-          v-if="tenantOptions.length > 1 && $store.getters['user/isGroupLogin']"
-          v-model="valueA"
-          :disabled="!!appId"
-          placeholder="请选择所属机构"
-          class="noBgBorderTree whiteNoBorderSelect"
-          style="width: 185px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden"
-        >
-          <el-option
-            v-for="item in tenantOptions"
-            :key="item.tenantId"
-            :label="item.tenantName"
-            :value="item.tenantCode"
-            @click.native="treeselectSelect(item)"
-          />
-        </el-select> -->
       </template>
       <div v-show="layout !== 'side' && !$store.getters['user/isGroupLogin'] && $store.state.setting.layout === 'top' && iconvisible" class="scrollicon" style="padding-right: 10px;">
         <i class="el-icon-arrow-left" @mousedown="scrollrightdown()" @mouseup="scrollleftup()" />
@@ -62,25 +36,23 @@
       </div>
       <template #operations>
         <div class="operations-container" style="margin-left: 20px">
-          <div :style="{color: $store.state.setting.mode==='dark'? ' var(--light-blue-color)':'#fff'}" style="margin-right: 5px;font-size: 14px;font-weight: 700px;margin-left: 20px">
-            {{ $store.getters["user/tenantName"] }}
-          </div>
+          <el-tooltip
+            class="item"
+            :content="$store.getters['user/tenantName']"
+            placement="bottom"
+          >
+            <div
+              class="g-row-flex-V"
+              :style="{color: $store.state.setting.mode==='dark'? ' var(--light-blue-color)':'#fff'}"
+              style="font-size: 14px;font-weight: 700px;margin-left: 20px;height: 22px; max-width: 180px; margin-bottom: 4px; margin-right: 10px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden"
+            >
+              {{ $store.getters["user/tenantName"] }}
+            </div>
+          </el-tooltip>
           <!-- 搜索框 -->
-          <!-- <search v-if="layout !== 'side'" :layout="layout" /> -->
           <audio ref="musicAudio" muted="muted" src="@/assets/messageVideo.wav" />
-          <!-- 全局通知，通告 -->
           <message style="margin-top: 2px" @play-audio="playAudio" />
-          <!-- 全局通知，通告 -->
           <notice />
-          <!-- <t-button v-show="$store.getters['user/isGroupLogin']" theme="default" variant="text" @click="switchMode" style="color: var(--white-color)"
-            ><swap-icon style="color: var(--white-color)" />{{ currentMode }}</t-button
-          > -->
-          <!-- <t-button
-            theme="default"
-            variant="text"
-            @click="projectionMode"
-            style="color: var(--white-color)"
-          ><swap-icon style="color: var(--white-color);"/>进入大屏模式</t-button> -->
           <t-tooltip placement="bottom" content="系统设置" style="color: var(--white-color);margin-top: 3px;margin-right: 0">
             <t-button
               theme="default"
@@ -98,12 +70,6 @@
           <t-dropdown :min-column-width="125" trigger="click">
             <template #dropdown>
               <t-dropdown-menu>
-                <!-- <t-dropdown-item
-                  class="operations-dropdown-container-item"
-                  @click="handleNav('/user/index')"
-                >
-                  <user-circle-icon />个人中心
-                </t-dropdown-item> -->
                 <t-dropdown-item class="operations-dropdown-container-item" @click="handleUpdate()">
                   <user-circle-icon />管理账号
                 </t-dropdown-item>
@@ -124,7 +90,6 @@
                   class="panelIconClass"
                   style="margin-right: 4px"
                 />
-                <!-- <user-circle-icon class="header-user-avatar" style="color: var(--white-color)" /> -->
               </template>
               <div class="header-user-account" style="color: var(--white-color)">
                 {{ $store.state.user.userInfo.nickName }}
@@ -311,22 +276,16 @@
 
 <script>
 import Vue from "vue";
+import { prefix } from "@/config/global";
+import LogoFull from "@/assets/logo.svg";
 import {
-  //   LogoGithubIcon,
-  //   HelpCircleIcon,
   UserCircleIcon,
   PoweroffIcon,
   ChevronDownIcon
-  //   EditIcon,
-  //   SwapIcon,
 } from "tdesign-icons-vue";
-import { prefix } from "@/config/global";
-import LogoFull from "@/assets/logo.svg";
-
 import Notice from "./Notice.vue";
 import Message from "./Message.vue";
 import proxy from "@/config/host";
-// import Search from './Search.vue'
 import MenuContent from "./MenuContent.vue";
 import { updateLastLogout, getCodeImg } from "@/api/intelligentOilfield/login";
 import { updateaccessPage, getUser, updateUseridcard, updateUserPwdByUserName, getNoEditable } from "@/api/intelligentOilfield/system/user";
@@ -344,14 +303,9 @@ export default Vue.extend({
     LogoFull,
     Notice,
     Message,
-    // Search,
-    // LogoGithubIcon,
-    // HelpCircleIcon,
     UserCircleIcon,
     PoweroffIcon,
     ChevronDownIcon
-    // EditIcon,
-    // SwapIcon,
   },
   inject: ["reload"],
   props: {
@@ -391,6 +345,7 @@ export default Vue.extend({
     };
     return {
       systemName: proxy[env].SYSTEM_NAME,
+      isTestEnvironment: proxy[env].IS_TEST_ENVIRONMENT,
       prefix,
       visibleNotice: false,
       isSearchFocus: false,
@@ -502,12 +457,6 @@ export default Vue.extend({
         }
       ];
     }
-    // isGroupLogin() {
-    //   return sessionStorage.getItem('isGroupLogin') === 'true';
-    // },
-  },
-  mounted(){
-      
   },
   watch: {
     iconvisible: {
@@ -518,7 +467,7 @@ export default Vue.extend({
       immediate: true
     },
     "$store.state.user.isGroupLogin": {
-      handler(newVal) {
+      handler() {
         this.getInitDeptds();
         this.containerWidth();
       },
@@ -573,20 +522,6 @@ export default Vue.extend({
       this.$store.commit("setting/toggleSettingPanel", true);
     },
     handleLogout() {
-      // logout().then(res => {
-      //     this.$confirm('确定注销并退出系统吗？', '提示', {
-      //       confirmButtonText: '确定',
-      //       cancelButtonText: '取消',
-      //       type: 'warning'
-      //     }).then(() => {
-      //       if(res.data.code === 200) {
-      //         this.$store.dispatch('user/logout');
-      //         this.$store.dispatch('permission/restore');
-      //         this.$router.push(`/login?redirect=${this.$router.history.current.fullPath}`);
-      //       }
-      //     })
-      //   });
-      //   console.log('当前路由', this.$router.app?.$route?.path);
       let currentSystem = 0; // 0:门户，1：后台管理系统
       if (
         this.$router.app?.$route?.path === "/portal/projectionMode" ||
@@ -653,13 +588,6 @@ export default Vue.extend({
           tenantId,
           tenantName
         });
-        //  TODO: Maybe change back
-        // 页面数据刷新的逻辑
-        // if (this.$store.getters["user/isGroupLogin"]) {
-        //   this.$store.commit("user/SETTENANTCODE", { value: this.valueA, state: true }); // 用于观察租户变化
-        // } else {
-        //   this.reload();
-        // }
       });
     },
     scrollleftdown() {
@@ -857,8 +785,6 @@ export default Vue.extend({
 
 .header-logo-container {
   width: 184px;
-  //   height: 26px;
-  // TODO: 内网 Maybe change back
   height: 55px;
   align-items: center;
   display: flex;
@@ -869,9 +795,7 @@ export default Vue.extend({
   .logoText {
     width: auto;
     height: 28px;
-    // font-size: 20px;
-    // TODO: 内网 Maybe change back
-    font-size: 18px;
+    font-size: 20px;
     font-family: PingFangSC-Semibold, "PingFang SC";
     font-weight: 600;
     color: #fff;
@@ -1001,5 +925,46 @@ export default Vue.extend({
 .el-dialog__body .el-row {
   display: flex;
   justify-content: space-between;
+}
+
+.contentDiv {
+  width: 100%;
+  height: 100%;
+}
+
+.blueDiv {
+  width: 100%;
+  height: 610px;
+  padding: 23px 24px;
+  overflow: scroll;
+}
+
+.blueText {
+  font-size: 16px;
+  font-family: PingFangSC-Medium, "PingFang SC";
+  font-weight: 500;
+  color: var(--light-blue-color);
+}
+
+.blueLine {
+  width: 5px;
+  height: 16px;
+  background: var(--light-blue-color);
+  margin-right: 5px;
+}
+
+.contentText {
+  font-size: 14px;
+  font-family: PingFangSC-Regular, "PingFang SC";
+  font-weight: 400;
+  color: #606266;
+}
+
+.contentMargin {
+  margin-left: 20px;
+}
+
+.stepsDiv {
+  height: 64px;
 }
 </style>
