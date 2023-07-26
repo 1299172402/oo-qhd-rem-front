@@ -474,7 +474,7 @@ export default {
                     top: '1%',
                     left: '10%',
                     bottom: '1%',
-                    right: '20%',
+                    right: '25%',
                     symbol: 'none',
                     symbolSize: 7,
                     label: {
@@ -717,7 +717,7 @@ export default {
                     top: '1%',
                     left: '7%',
                     bottom: '1%',
-                    right: '15%',
+                    right: '28%',
                     symbol: 'none',
                     symbolSize: 7,
                     label: {
@@ -928,7 +928,7 @@ export default {
                     top: '1%',
                     left: '7%',
                     bottom: '1%',
-                    right: '22%',
+                    right: '25%',
                     symbol: 'none',
                     symbolSize: 7,
                     label: {
@@ -1135,7 +1135,7 @@ export default {
                     top: '1%',
                     left: '8%',
                     bottom: '1%',
-                    right: '22%',
+                    right: '25%',
                     symbol: 'none',
                     symbolSize: 7,
                     label: {
@@ -1284,7 +1284,6 @@ export default {
             this.mainList = this.option4.series[0].data[0].children
             this.chart.setOption(this.option4);
             //暂时默认为五月份 数据完整后删除该行即可
-            this.queryData.month = '2023-05'
             // this.queryData.wellGroup = 
             this.title = '井组生产动态归因分析'
         }
@@ -1361,10 +1360,21 @@ export default {
         doSearch() {
             this.getFormData()
         },
+        decreaseMonth(dateStr) {
+            const date = new Date(dateStr);
+            const day = date.getDate();
+            if (day <= 5) {
+                date.setMonth(date.getMonth() - 2);
+            } else {
+                date.setMonth(date.getMonth() - 1);
+            }
+            return date;
+        },
         //获取表格数据
         getFormData() {
+            const resultDate = this.decreaseMonth(this.queryData.month);
             let params = {
-                date: this.queryData.month,//日期
+                date: resultDate.toISOString().substr(0, 10),//日期
                 wellId: this.queryData.well,//井号
                 assetCode: this.queryData.assetCode,//平台
                 ogfId: this.queryData.ogfId,//油田
