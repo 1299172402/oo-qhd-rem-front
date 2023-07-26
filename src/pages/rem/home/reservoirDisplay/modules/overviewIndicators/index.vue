@@ -70,7 +70,7 @@
             <el-row :gutter="20" style="padding: 0 20px;">
                 <el-col :span="8" style="height: 100%">
                     <div class="grid-content bg-purple">
-                        <Echart height="100%" :chart-data="histogram"></Echart>
+                        <Echart height="100%"  :chart-data="getEchart(mainList[0], '%', 'rgb(0,179,225)', 'rgba(38,43,90,0)', 'transparent')"></Echart>
                         <div class="chartText">自然递减</div>
                     </div>
                 </el-col>
@@ -161,6 +161,7 @@ export default {
             dataList:'',
             oil1two:'',
             oil1:'',
+            mainList:[],
             infolist:'', //层段合格率
             histogram: {
                 title: {
@@ -485,18 +486,21 @@ export default {
             productionMetricsOverview( { ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 orgId: "715AD1CD60484BB59E737CD18A9DE44A",date:'2022-12' + '-01'}).then(res=>{
                 this.dataList = res.data.data
-                if(!res.data.data.naturalDecline)  res.data.data.naturalDecline = 0
-                this.histogram.series[0].data[0].value = res.data.data.naturalDecline
-                this.histogram.series[0].data[1].value = 100 - res.data.data.naturalDecline
-                this.histogram.title.text = "{a|" + res.data.data.naturalDecline + "%}{c|\n" +   "}"
-                if(!res.data.data.overallDecline)  res.data.data.overallDecline = 0
-                this.histogram2.series[0].data[0].value = res.data.data.overallDecline
-                this.histogram2.series[0].data[1].value = 100 - res.data.data.overallDecline
-                this.histogram2.title.text = "{a|" + res.data.data.overallDecline + "%}{c|\n" +   "}"
-                if(!res.data.data.wholeDeclineRate)  res.data.data.wholeDeclineRate = 0
-                this.histogram3.series[0].data[0].value = res.data.data.wholeDeclineRate
-                this.histogram3.series[0].data[1].value = 100 - res.data.data.wholeDeclineRate
-                this.histogram3.title.text = "{a|" + res.data.data.wholeDeclineRate + "%}{c|\n" +   "}"
+                // if(!res.data.data.naturalDecline)  res.data.data.naturalDecline = 0
+                this.mainList[0]= res.data.data.naturalDecline
+                this.mainList[1]= res.data.data.overallDecline
+                this.mainList[2]= res.data.data.wholeDeclineRate
+                // this.histogram.series[0].data[0].value = res.data.data.naturalDecline
+                // this.histogram.series[0].data[1].value = 100 - res.data.data.naturalDecline
+                // this.histogram.title.text = "{a|" + res.data.data.naturalDecline + "%}{c|\n" +   "}"
+                // if(!res.data.data.overallDecline)  res.data.data.overallDecline = 0
+                // this.histogram2.series[0].data[0].value = res.data.data.overallDecline
+                // this.histogram2.series[0].data[1].value = 100 - res.data.data.overallDecline
+                // this.histogram2.title.text = "{a|" + res.data.data.overallDecline + "%}{c|\n" +   "}"
+                // if(!res.data.data.wholeDeclineRate)  res.data.data.wholeDeclineRate = 0
+                // this.histogram3.series[0].data[0].value = res.data.data.wholeDeclineRate
+                // this.histogram3.series[0].data[1].value = 100 - res.data.data.wholeDeclineRate
+                // this.histogram3.title.text = "{a|" + res.data.data.wholeDeclineRate + "%}{c|\n" +   "}"
             })
             getYieldTracking({ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 orgId: "715AD1CD60484BB59E737CD18A9DE44A"}).then(res=>{
