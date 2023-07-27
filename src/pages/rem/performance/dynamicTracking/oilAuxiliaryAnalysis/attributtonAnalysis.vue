@@ -86,16 +86,16 @@
             </div>
         </header-search>
         <pagePanel v-if="link==1 || link==2 || link==3" :headerTitle="title" style="height: 120%" :show-btn="true">
-            <Echart :chart-data="option" style="height: 100%"></Echart>
+            <Echart id="option2" :chart-data="option" style="height: 100%"></Echart>
         </pagePanel>
         <pagePanel v-if="link==4" :headerTitle="title" style="height: 120%" :show-btn="true">
-            <Echart :chart-data="option2" style="height: 100%"></Echart>
+            <Echart id="option2" :chart-data="option2" style="height: 100%"></Echart>
         </pagePanel>
         <pagePanel v-if="link==5" :headerTitle="title" style="height: 120%" :show-btn="true">
-            <Echart :chart-data="option3" style="height: 100%"></Echart>
+            <Echart id="option2" :chart-data="option3" style="height: 100%"></Echart>
         </pagePanel>
         <pagePanel v-if="link==6" :headerTitle="title" style="height: 120%" :show-btn="true">
-            <Echart :chart-data="option4" style="height: 100%"></Echart>
+            <Echart id="option2" :chart-data="option4" style="height: 100%"></Echart>
         </pagePanel>
         <pagePanel v-if="link=='5'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
             <el-table
@@ -106,11 +106,11 @@
                 :cell-style="{ padding: '3px', 'text-align': 'center' }"
                 :data="tableData"
                 border
+                @current-change="handleCurrentChange"
                 ref="reset"
                 style="width: 100%; height: 100%"
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
-                @cell-mouse-enter="blurReason"
             >
                 <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期">
@@ -145,11 +145,11 @@
                 :cell-style="{ padding: '3px', 'text-align': 'center' }"
                 :data="tableData"
                 border
+                @current-change="handleCurrentChange"
                 ref="reset"
                 style="width: 100%; height: 100%"
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
-                @cell-mouse-enter="blurReason"
             >
                 <el-table-column prop="wellGroupName" min-width="250" label="井组名称"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期"></el-table-column>
@@ -180,12 +180,12 @@
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                 :cell-style="{ padding: '3px', 'text-align': 'center' }"
                 :data="tableData"
+                @current-change="handleCurrentChange"
                 border
                 ref="reset"
                 style="height: 100%"
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
-                @cell-mouse-enter="blurReason"
             >
                 <el-table-column prop="wellNo" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="evalTime" min-width="150" label="日期">
@@ -223,12 +223,12 @@
                 header-cell-class-name="table_header"
                 :cell-style="{ padding: '3px', 'text-align': 'center' }"
                 :data="tableData"
+                @current-change="handleCurrentChange"
                 border
                 ref="reset"
                 style="width: 100%; height: 100%"
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
-                @cell-mouse-enter="blurReason"
             >
                 <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期">
@@ -269,6 +269,7 @@ import {
     queryOperatingCompanyDetail,
     queryPlatformQueryWellListDetail,
 } from "@/api/rem/marster.js";
+import * as echarts from "echarts/core";
 import {queryWaterInjIntensityAttributeAnalysis} from "@/api/rem/waterinjintensityattributeanalysis.js"
 import {analyzeOilWellFluidAttributionQuery} from "@/api/rem/wellmonthlyanalysis";
 import {oilWellFluidQuery} from "@/api/rem/oilwellfluid";
@@ -283,6 +284,8 @@ export default {
     data() {
         return {
             pageTotal: 0,
+            chart:'',
+            mainList:[],
             queryData: {
                 assetCode: "",
                 month: "",
@@ -471,7 +474,7 @@ export default {
                     top: '1%',
                     left: '10%',
                     bottom: '1%',
-                    right: '20%',
+                    right: '25%',
                     symbol: 'none',
                     symbolSize: 7,
                     label: {
@@ -714,7 +717,7 @@ export default {
                     top: '1%',
                     left: '7%',
                     bottom: '1%',
-                    right: '15%',
+                    right: '28%',
                     symbol: 'none',
                     symbolSize: 7,
                     label: {
@@ -799,9 +802,7 @@ export default {
                             align: 'left'
                         }
                     },
-
                     emphasis: {
-                        disabled: true,
                         focus: 'ancestor',
                     },
                     select: {
@@ -835,7 +836,7 @@ export default {
                                         },
                                         {
                                             "level": 99,
-                                            "name": "归因8：数据问题。\n下步错书：数据查询",
+                                            "name": "归因8：数据问题。\n下步措施：数据排查",
                                         },
                                         {
                                             "level": 3,
@@ -927,7 +928,7 @@ export default {
                     top: '1%',
                     left: '7%',
                     bottom: '1%',
-                    right: '22%',
+                    right: '25%',
                     symbol: 'none',
                     symbolSize: 7,
                     label: {
@@ -1134,7 +1135,7 @@ export default {
                     top: '1%',
                     left: '8%',
                     bottom: '1%',
-                    right: '22%',
+                    right: '25%',
                     symbol: 'none',
                     symbolSize: 7,
                     label: {
@@ -1255,22 +1256,34 @@ export default {
         //判断link跳转的来源
         this.link = this.$route.query.link
         this.tableData = []
+        this.chart = echarts.init(document.getElementById('option2'));
         if (this.link == '4') {
+            this.mainList = this.option2.series[0].data[0].children
+            this.chart.setOption(this.option2);
             this.title = '注水强度归因分析'
         } else if (this.link == '1') {
+            this.mainList = this.option.series[0].data[0].children
             this.option.series[0].data[0].name = '油井采液强度不合理'
+            this.chart.setOption(this.option);
             this.title = '油井采液强度归因分析'
         } else if (this.link == '2') {
+            this.mainList = this.option.series[0].data[0].children
             this.option.series[0].data[0].name = '油井采液指数不合理'
+            this.chart.setOption(this.option);
             this.title = '油井采液指数归因分析'
         } else if (this.link == '3') {
+            this.mainList = this.option.series[0].data[0].children
             this.option.series[0].data[0].name = '油井米采液指数不合理'
+            this.chart.setOption(this.option);
             this.title = '油井米采液指数归因分析'
         } else if (this.link == '5') {
+            this.mainList = this.option3.series[0].data[0].children
+            this.chart.setOption(this.option3);
             this.title = '油井递减率归因分析'
         } else if (this.link == '6') {
+            this.mainList = this.option4.series[0].data[0].children
+            this.chart.setOption(this.option4);
             //暂时默认为五月份 数据完整后删除该行即可
-            this.queryData.month = '2023-05'
             // this.queryData.wellGroup = 
             this.title = '井组生产动态归因分析'
         }
@@ -1347,10 +1360,21 @@ export default {
         doSearch() {
             this.getFormData()
         },
+        decreaseMonth(dateStr) {
+            const date = new Date(dateStr);
+            const day = date.getDate();
+            if (day <= 5) {
+                date.setMonth(date.getMonth() - 2);
+            } else {
+                date.setMonth(date.getMonth() - 1);
+            }
+            return date;
+        },
         //获取表格数据
         getFormData() {
+            const resultDate = this.decreaseMonth(this.queryData.month);
             let params = {
-                date: this.queryData.month,//日期
+                date: resultDate.toISOString().substr(0, 10),//日期
                 wellId: this.queryData.well,//井号
                 assetCode: this.queryData.assetCode,//平台
                 ogfId: this.queryData.ogfId,//油田
@@ -1388,12 +1412,31 @@ export default {
                 })
             }
         },
+        getTreeName(list,name){
+            let _this=this
+            for (let i = 0; i < list.length; i++) {
+                let a = list[i]
+                if(a.name.includes(name)){
+                    return a.name
+                }else{
+                    if(a.children && a.children.length>0){
+                        let res=_this.getTreeName(a.children,name)
+                        if(res){
+                            return res
+                        }
+                    }
+                }
+            }
+        },
         //表格鼠标悬浮事件
-        blurReason(row, column, cell, event){
-            let reason = row.valueAttribution || row.attribution
-            console.log(reason);
-            //TODO 待开发
-        }
+        handleCurrentChange(row){
+            const targetName = row.measure?.split(';').join('');
+                this.chart.dispatchAction({
+                    type:'highlight',
+                    seriesIndex:0,
+                    name:this.getTreeName(this.mainList,targetName)
+                })
+        },
     },
 };
 </script>
