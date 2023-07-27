@@ -620,7 +620,7 @@ export default {
                         radius: [0, "75%"],
                         color: centerColor,
                         label: {
-                            fontSize: 18,
+                            fontSize: 16,
                         },
                         data: [
                             {value: 0, name: value, label: {color:'#29EEF3', position: "center"}},

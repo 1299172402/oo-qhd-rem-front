@@ -190,11 +190,34 @@
             v-else-if="activeEchart"
             style="height: calc(100% - 112px); padding-bottom: 60px"
         >
+            <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
+                       style="float: right;margin-bottom: 10px">下载
+            </el-button>
             <el-table
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                 :data="queryData"
+                height="calc(100% - 30px)"
+                header-cell-class-name="table_header"
+                :cell-style="{ padding: '6px', 'text-align': 'center' }"
+                style="margin: 20px 0; height: calc(100% - 125px)"
+                :default-sort="{ prop: 'date', order: 'descending' }"
+            >
+                <el-table-column
+                    :key="index"
+                    :prop="item.val"
+                    :label="item.name"
+                    min-width="160"
+                    v-for="(item, index) in headerTextLower"
+                ></el-table-column>
+            </el-table>
+            <el-table
+                :row-style="{ height: '0px' }"
+                :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                :data="dowload"
                 height="100%"
+                id="zdycx"
+                v-show="false"
                 header-cell-class-name="table_header"
                 :cell-style="{ padding: '6px', 'text-align': 'center' }"
                 style="margin: 20px 0; height: calc(100% - 125px)"
@@ -280,7 +303,7 @@
 import {queryCustomQueryList} from "@/api/basic/basic";
 import {fetchProductionWells} from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import {queryOperatorsCheckFieldListsDetail, queryPlatformQueryWellListDetail} from "@/api/basic/master";
-
+import {exportExcel} from "@/lib/exportExcel";
 export default {
     name: "customQuery",
     mounted() {
@@ -295,6 +318,7 @@ export default {
             page: 1,
             pageSize: 15,
             queryData: [],
+            dowload:[],
             typeVal: 0,
             selectDate: [], //时间选择
             activeEchart: false,
@@ -992,6 +1016,69 @@ export default {
                 this.queryData = res.data.data.rows;
                 this.pageTotal = res.data.data.total;
             });
+        },
+        downexcel(){
+            let sqlStrAnd = "",
+                sqlStrOr = "";
+            this.tableRow.forEach((item) => {
+                if (item.type && item.name && item.model && item.val) {
+                    if (item.type == "AND") {
+                        sqlStrAnd += `${item.type} ${item.name} ${item.model} ${item.val} `;
+                    } else {
+                        sqlStrOr += `${item.type} ${item.name} ${item.model} ${item.val} `;
+                    }
+                }
+            });
+            let sqlObj = [];
+            this.tableRow.forEach((item) => {
+                if (item.type && item.name && item.model && item.val) {
+                    sqlObj.push({
+                        link: item.type,
+                        index: item.name,
+                        condition: item.model,
+                        value: item.val,
+                    });
+                }
+            });
+            let sqlStr = sqlStrAnd + sqlStrOr;
+            if (sqlStrOr) {
+                sqlStr = sqlStr.slice(0, sqlStr.lastIndexOf("AND")) + "( " + sqlStr.slice(sqlStr.lastIndexOf("AND")) + ")";
+            } else {
+                sqlStr = sqlStrAnd;
+            }
+            let condList = this.stateValue.concat(
+                this.productValue,
+                this.totalValue,
+                this.injectValue,
+                this.managerValue,
+                this.storeValue,
+            );
+            let condListFormat = [];
+            condList.forEach((item) => {
+                condListFormat.push(item.toLowerCase().replace(/_/g, ""));
+            });
+            let params = {
+                condList: condListFormat, //字段名字
+                // sqlSent:sqlStr,//拼接sql
+                sqlSent: sqlObj, //拼接sql
+                targetType: this.activeTabIndex, //目标类型 井：1  油田 ：2
+                dataType: this.activeTabIndexData, //数据类型 （井口指标，计量指标等）
+                timeType: this.activeTabIndexDate, //时间类型 1 年 2月 3 日
+                startTime: this.activeTabIndexDate != 1 ? this.selectDate[0] : this.selectDate, //开始时间
+                endTime: this.selectDate[1], //结束时间
+                dataId: this.activeTabIndex == 2 ? this.ogfId : this.wellId,//若目标类型为2油田传ogfId,若为井传wellId
+                pageNum: 1,//分页页码
+                pageSize: 99999,//每页页数
+            };
+            this.params = params;
+            this.dowload = [];
+            queryCustomQueryList(params).then((res) => {
+                this.dowload = res.data.data.rows;
+            }).then(()=>{
+                this.$nextTick(()=>{
+                    exportExcel("#zdycx", "自定义查询");
+                })
+            })
         },
         addRow(val) {
             this.tableRow.push({});
