@@ -390,6 +390,10 @@
                     this.$router.push({
                         path:'/'+this.$route.query.page
                     })
+                }else if(this.$route.query.name){
+                    this.$router.push({
+                        name: this.$route.query.name
+                    })
                 }else{
                     this.$router.push({
                         path:'/yield/fluctuationWarningAnalysis'

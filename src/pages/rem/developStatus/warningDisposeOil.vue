@@ -143,6 +143,14 @@ export default {
       // },
       //折线图
       lineTable: {
+        dataZoom: [
+          {
+            type: "inside",
+            xAxisIndex: [0,1,2,3,4],
+            start: 80, //滚动条开始位置（共100等份）
+            end: 100, //滚动条结束位置
+          },
+        ],
         tooltip: {
           trigger: "axis",
           //限定tooltip在折线图范围内
