@@ -6,7 +6,7 @@
             loop
             style="width: 100%;height: 100%;object-fit: cover;position: absolute;top: 10;left: 0;"
             muted
-            src="@/pages/rem/home/linkage/code12.mp4"/>
+            src="@/pages/rem/home/linkage/liandong-bg.mp4"/>
         <linkageBox @stopTimer="stopTimer" @startTimer="startTimer" :style="item.style" :showFlag="item.showFlag" :currentList="item" :key="index" v-for="(item,index) in currentLists"></linkageBox>
         <div class="studySelf">
             <div class="studySelfInside"></div>
@@ -314,10 +314,10 @@ video {
 
 .container{
     height: calc(100% - 20px);
-    
+    //background-image: url("@/assets/linkage/liandong-bg.gif");
+    //background-size: 100% 100%;
     //D:\A项目\oo-qhd-rem-front\src\pages\rem\home\linkage\mork.mp4
     //background-image: url("");
-    background-size: 100% 100%;
     .topBanner{
         width: 100%;height: 38px;
         background: url('@/assets/linkage/topBanner.svg');

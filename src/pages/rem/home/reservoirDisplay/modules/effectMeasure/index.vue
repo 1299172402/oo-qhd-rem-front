@@ -23,9 +23,9 @@
                 header-cell-class-name="table_header"
                 :cell-style="{ 'text-align': 'center', padding: '0px' }"
                 :default-sort="{ prop: 'date', order: 'descending' }"
-                style="width: 100%;position: absolute;top:45px"
+               
             >
-                <el-table-column width="50px">
+                <el-table-column width="50px">1
                     <template slot="header">
                         <div style="color: #1ec5e6">序号</div>
                     </template>

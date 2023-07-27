@@ -86,6 +86,7 @@ export default {
                     min:0,
                     max:100,
                     nameLocation: "center",
+                    nameGap: 30,
                     nameTextStyle: {
                         color: "#a9a8a8",
                         padding: [0, 0, 30, 0],
