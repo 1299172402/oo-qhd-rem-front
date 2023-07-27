@@ -45,7 +45,10 @@
             <pagePanelNew style="height:100%;margin-top:0;">
                 <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
                     <span>秦皇岛32-6油田单井产量变化</span>
-                    <el-button type="primary" style="height:30px;" @click="goBack">返回</el-button>
+                    <div>
+                        <el-button type="primary" style="height:30px;" @click="doDownIndex">下载</el-button>
+                        <el-button type="primary" style="height:30px;" @click="goBack">返回</el-button>
+                    </div>
                 </div>
                 <div class="tableBox" id="tableBox" style="height:calc(100% - 75px)">
                     <el-table 
@@ -400,6 +403,10 @@
                     })
                 }
                 
+            },
+            //下载导出csv文件
+            doDownIndex() {
+                exportExcel("#tableData", "秦皇岛32-6油田单井产量变化");
             },
         },
     };
