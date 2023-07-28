@@ -148,10 +148,10 @@ export default {
                     style: 'position:absolute;left: 2%;top: 60%;width:20%;height:40%;',
                     boxText: '产量运行监控',
                     boxBottomText: [
-                        {name:'年度产量运行预警',url:`https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?page=reservoirDisplay/linkage`}
+                        {name:'年度产量运行预警',url:`https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?name=linkage`}
                     ],
                     boxBottomContent: [
-                        [{name:'年度产量趋势预测',url:`https://rem.${this.baseUrl}/#/modelConfiguration/modelconfig?page=reservoirDisplay/linkage`}]
+                        [{name:'年度产量趋势预测',url:`https://rem.${this.baseUrl}/#/modelConfiguration/modelconfig?name=linkage`}]
                     ],
                     boxStyle: {
                         pWidth: 'width:8.5vw'

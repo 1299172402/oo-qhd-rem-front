@@ -44,6 +44,9 @@
                 >搜索
                 </el-button>
                 <el-button class="commonBtn" @click="refresh" icon="el-icon-refresh"> 重置</el-button>
+                <el-button  type="primary" v-if="$route.query.page" style="position: absolute;right:2%;top:110px" @click="$router.push({
+                        path:$route.query.page
+                    })">返回</el-button>
                 <span class="fangan">
             <span style="color: #00b4ff;">{{ queryData.dateTime }}月配产配注方案</span>
             <el-button type="primary" @click="viewDetail">
