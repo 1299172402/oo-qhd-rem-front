@@ -283,7 +283,31 @@ export default {
             clearInterval(this.timmer)
         },
         startTimer(){
-            this.arrowFun()
+            this.currentLists.forEach((i,index)=>{
+                i.warningShowFlag = false
+            })
+            request({
+                url: `/gem001b/queryAlcAlarm`,
+                method: "get",
+                headers: {
+                    showLoading: false
+                }
+            }).then(res=>{
+                let isConditionMet = false; // 标志变量，初始值为false
+                res.data.data.forEach(item=>{
+                    this.currentLists.forEach((i,index)=>{
+                        if(i.typeIdList.indexOf(item.typeId) != -1){
+                            this.currentLists[index].warningShowFlag = true
+                            isConditionMet = true; // 设置标志变量为true
+                        }
+                    })
+                })
+                if (!isConditionMet) {
+                    // this.arrowFun()
+                }else{
+                    clearInterval(this.timmer)
+                }
+            })
         }
     },
     data(){

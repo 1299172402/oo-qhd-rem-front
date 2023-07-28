@@ -200,7 +200,11 @@
                 <el-table-column prop="injDuration" min-width="150" :label="`生产时长\n(h)`"></el-table-column>
                 <el-table-column prop="injDaily" min-width="150" :label="`注入量\n(m³)`"></el-table-column>
                 <el-table-column prop="whInjPress" min-width="150" :label="`注入压力\n(mPa)`"></el-table-column>
-                <el-table-column prop="injAllocationRate" min-width="150" :label="`配注量\n(m³/d)`"></el-table-column>
+                <el-table-column prop="injAllocationRate" min-width="150" :label="`配注量\n(m³/d)`">
+                    <template slot-scope="scope">
+                        {{Number(scope.row.injAllocationRate),toFixed(2)}}
+                    </template>
+                </el-table-column>
                 <el-table-column prop="valueAttribution" min-width="200" show-overflow-tooltip
                                  label="归因"></el-table-column>
                 <el-table-column prop="vauleMeasure" min-width="200" show-overflow-tooltip
@@ -275,6 +279,7 @@ import {analyzeOilWellFluidAttributionQuery} from "@/api/rem/wellmonthlyanalysis
 import {oilWellFluidQuery} from "@/api/rem/oilwellfluid";
 import {selectWellGroup} from "@/api/oilDeposit/rem-02/primaryinfo";
 import {queryProductionAnalysisList} from "@/api/rem/productionanalysis";
+import toFixed from "xe-utils/toFixed";
 
 export default {
     name:'a',
@@ -637,7 +642,7 @@ export default {
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
-                                                                            "name": "归因2：调整参数影响。\n下步措施：提高生产时率",
+                                                                            "name": "归因2：该井/层段/层位已超注。\n下步措施：控水调配注",
                                                                         }
                                                                     ]
                                                                 }
@@ -717,7 +722,7 @@ export default {
                     top: '1%',
                     left: '7%',
                     bottom: '1%',
-                    right: '28%',
+                    right: '29%',
                     symbol: 'none',
                     symbolSize: 7,
                     label: {
@@ -1293,6 +1298,7 @@ export default {
         this.link = this.$route.query.link
     },
     methods: {
+        toFixed,
         //获取查询条件中下拉列表的值
         async getData() {
             await queryOperatingCompanyDetail({}).then((res) => {
@@ -1372,9 +1378,15 @@ export default {
         },
         //获取表格数据
         getFormData() {
-            const resultDate = this.decreaseMonth(this.queryData.month);
+            let resultDate = ''
+            if(this.link==4){
+                resultDate = this.queryData.month
+            }else{
+                resultDate = this.decreaseMonth(this.queryData.month);
+                resultDate = resultDate.toISOString().substr(0, 10)//日期
+            }
             let params = {
-                date: resultDate.toISOString().substr(0, 10),//日期
+                date: resultDate,
                 wellId: this.queryData.well,//井号
                 assetCode: this.queryData.assetCode,//平台
                 ogfId: this.queryData.ogfId,//油田
@@ -1430,7 +1442,8 @@ export default {
         },
         //表格鼠标悬浮事件
         handleCurrentChange(row){
-            const targetName = row.measure?.split(';').join('');
+            console.log(row)
+            const targetName = row.measure?row.measure.split(';').join(''):row.vauleMeasure.split(';').join('')
                 this.chart.dispatchAction({
                     type:'highlight',
                     seriesIndex:0,

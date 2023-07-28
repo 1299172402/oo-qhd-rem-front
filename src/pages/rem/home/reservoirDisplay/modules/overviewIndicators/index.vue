@@ -46,7 +46,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(value2, '%', 'rgb(59,197,197)', 'rgb(59,197,197)', 'rgb(59,197,197)')"
+                            :chart-data="getEchartData(value2, '%', 'rgb(59,197,197)', 'rgb(1,67,78)', 'rgb(59,197,197)')"
                         ></Echart>
                         <div class="chartText">生产时率</div>
                     </div>
@@ -68,45 +68,52 @@
                 </el-col>
             </el-row>
             <el-row :gutter="20" style="padding: 0 20px;">
-                <el-col :span="8" style="height: 100%">
+                <el-col :span="8">
                     <div class="grid-content bg-purple">
-                        <Echart height="100%"  :chart-data="getEchart(mainList[0], '%', 'rgb(0,179,225)', 'rgba(38,43,90,0)', 'transparent')"></Echart>
+                        <Echart
+                            :chart-data="getEchartData(mainList[0], '%', 'rgb(0, 220, 187)', 'rgb(1,67,78)', 'rgb(0, 220, 187)')"
+                        ></Echart>
                         <div class="chartText">自然递减</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
-                    <div>
-                        <Echart height="100%" :chart-data="histogram2"></Echart>
+                    <div class="grid-content bg-purple">
+                        <Echart
+                            :chart-data="getEchartData(mainList[1], '%', 'rgb(0, 150, 215)', 'rgb(1,67,78)', 'rgb(0, 150, 215)')"
+                        ></Echart>
                         <div class="chartText">综合递减</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
-                    <div>
-                        <Echart height="100%" :chart-data="histogram3"></Echart>
+                    <div class="grid-content bg-purple">
+                        <Echart
+                            :chart-data="getEchartData(mainList[2], '%', 'rgb(209, 74, 202)', 'rgb(1,67,78)', 'rgb(209, 74, 202)')"
+                        ></Echart>
                         <div class="chartText">总递减</div>
                     </div>
                 </el-col>
+             
             </el-row>
             <el-row :gutter="20" style="padding: 0 20px">
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
                             :chart-data="getEchart(dataList.waterInjectionWellInjection, '%', 'rgb(0,179,225)', 'rgba(38,43,90,0)', 'transparent')"></Echart>
-                        <div class="chartText">分注井分注率</div>
+                        <div class="chartText" style="margin-top: -40px">分注井分注率</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
                             :chart-data="getEchart(infolist, '%', 'rgb(235,125,96)', 'rgba(38,43,90,0)', 'transparent')"></Echart>
-                        <div class="chartText">层段合格率</div>
+                        <div class="chartText" style="margin-top: -40px">层段合格率</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
                             :chart-data="getEchart(dataList.waterCutIncreaseRate, '%', 'rgb(164,227,77)', 'rgba(38,43,90,0)', 'transparent')"></Echart>
-                        <div class="chartText">含水上升率</div>
+                        <div class="chartText" style="margin-top: -40px">含水上升率</div>
                     </div>
                 </el-col>
             </el-row>
@@ -161,7 +168,7 @@ export default {
             dataList:'',
             oil1two:'',
             oil1:'',
-            mainList:[],
+            mainList:[0,0,0],
             infolist:'', //层段合格率
             histogram: {
                 title: {
@@ -554,7 +561,8 @@ export default {
         },
         
         //图表
-        getEchartData(value, unit, valueColor, backColor, centerColor, data) {
+        getEchartData(value, unit, valueColor, backColor, centerColor) {
+            console.info(value, unit, valueColor, backColor, centerColor)
             var option = {
                 tooltip: {
                     trigger: value,
@@ -589,7 +597,7 @@ export default {
                         },
                         data: [
                             {value: value, name: "Direct"},
-                            {value: 100 - value, name: "Others"},
+                            {value: 100 - Number(value),},
                         ],
                     },
                 ],
@@ -612,7 +620,7 @@ export default {
                         radius: [0, "75%"],
                         color: centerColor,
                         label: {
-                            fontSize: 18,
+                            fontSize: 16,
                         },
                         data: [
                             {value: 0, name: value, label: {color:'#29EEF3', position: "center"}},
