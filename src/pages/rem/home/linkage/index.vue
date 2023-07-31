@@ -148,10 +148,10 @@ export default {
                     style: 'position:absolute;left: 2%;top: 60%;width:20%;height:40%;',
                     boxText: '产量运行监控',
                     boxBottomText: [
-                        {name:'年度产量运行预警',url:`https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?page=reservoirDisplay/linkage`}
+                        {name:'年度产量运行预警',url:`https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?name=linkage`}
                     ],
                     boxBottomContent: [
-                        [{name:'年度产量趋势预测',url:`https://rem.${this.baseUrl}/#/modelConfiguration/modelconfig?page=reservoirDisplay/linkage`}]
+                        [{name:'年度产量趋势预测',url:`https://rem.${this.baseUrl}/#/modelConfiguration/modelconfig?name=linkage`}]
                     ],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
@@ -283,7 +283,31 @@ export default {
             clearInterval(this.timmer)
         },
         startTimer(){
-            this.arrowFun()
+            this.currentLists.forEach((i,index)=>{
+                i.warningShowFlag = false
+            })
+            request({
+                url: `/gem001b/queryAlcAlarm`,
+                method: "get",
+                headers: {
+                    showLoading: false
+                }
+            }).then(res=>{
+                let isConditionMet = false; // 标志变量，初始值为false
+                res.data.data.forEach(item=>{
+                    this.currentLists.forEach((i,index)=>{
+                        if(i.typeIdList.indexOf(item.typeId) != -1){
+                            this.currentLists[index].warningShowFlag = true
+                            isConditionMet = true; // 设置标志变量为true
+                        }
+                    })
+                })
+                if (!isConditionMet) {
+                    // this.arrowFun()
+                }else{
+                    clearInterval(this.timmer)
+                }
+            })
         }
     },
     data(){

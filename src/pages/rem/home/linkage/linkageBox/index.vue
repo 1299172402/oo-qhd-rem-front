@@ -101,6 +101,7 @@ export default {
         },
         confirm(){
             this.warningShowFlag = false
+            this.$emit('startTimer')
         },
         mouseenter(){
             this.show = true

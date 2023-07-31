@@ -545,7 +545,7 @@
                 targetChart(request).then((res) =>{
                     if (res.data.code == 200) {
                         let seriesData = [];
-                        let lineChart = res.data.data.chart.linearDataSets[0].linearData;
+                        let lineChart = res.data.data.chart?.linearDataSets[0].linearData || [];
                         lineChart.forEach((item, index) =>{
                             let point = [];
                             point.push(item.label);
