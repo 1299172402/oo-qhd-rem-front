@@ -66,6 +66,12 @@ export default {
       type: Number,
       default: 0
     },
+    "arrayData":{
+      type:Array,  
+    },
+      "type":{
+          default: 0
+      }
   },
   data() {
     return {
@@ -77,9 +83,6 @@ export default {
     this.getTreeData();
   },
   methods: {
-    changeTree(node) {
-      console.log(node);
-    },
     normalizer(node) {
       if (node.children && !node.children.length) {
         delete node.children;
@@ -150,10 +153,16 @@ export default {
     },
     getTreeData() {
       const params = { level: this.level, orgId: "715AD1CD60484BB59E737CD18A9DE44A" };
-      getYczcTree(params).then((res)=>{
-        this.deptOptions = res.data.data;
-        this.setDisabledRecursive( this.deptOptions, this.start, this.end)
-      })
+      if(this.type==1){
+            this.deptOptions = this.arrayData;
+            this.deptOptions
+            this.setDisabledRecursive(this.deptOptions, this.start, this.end)
+      }else if (this.type==0){
+          getYczcTree(params).then((res)=>{
+              this.deptOptions = res.data.data;
+              this.setDisabledRecursive( this.deptOptions, this.start, this.end)
+          })  
+      }
      
     },
     setDisabledRecursive(options, minLevel = 0, maxLevel = Number.MAX_SAFE_INTEGER) {
@@ -168,6 +177,7 @@ export default {
       })
     },
     handleCheckChange(data, checked) {
+        console.log(1234)
       this.resetChecked(data, checked)
     },
     resetChecked(data, checked) {

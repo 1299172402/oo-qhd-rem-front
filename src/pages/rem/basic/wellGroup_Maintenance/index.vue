@@ -1,156 +1,159 @@
 <template>
   <!-- 井组参数配置 -->
-    <div style="height: 100%;">
-      <header-search class="g-w100 g-h100" style="height: auto">
-          <el-form :inline="true" label-width="40px">
-              <el-form-item label="油田:">
-                  <el-select v-model="query.selectField" style="margin-left: 20px"  class="f2" @change="changeOilfield" disabled>
-                      <el-option
-                          v-for="item in options"
-                          :key="item.ogfId"
-                          :value="item.ogfId"
-                          :label="item.ogfName"
-                      ></el-option>
-                  </el-select>
-              </el-form-item>
-              <el-form-item label="区块:">
-                  <el-select v-model="query.selectBlock" style="margin-left: 20px" placeholder="请选择" class="f2" ref="elselect1">
-                      <el-option
-                          v-for="item in blanks"
-                          :key="item.blockId"
-                          :label="item.blockName"
-                          :value="item.blockId"
-                      ></el-option>
-                  </el-select>
-              </el-form-item>
-              <el-form-item label="时间:">
-                  <el-date-picker
-                      v-model="query.value2"
-                      type="month"
-                      placeholder="请选择"
-                      style="margin-left: 20px"
-                      value-format="yyyy-MM"
-                      :picker-options="pickerOptions"
-                  ></el-date-picker>
-              </el-form-item>
-              <el-button style="margin-left: 20px" type="primary" size="mini" icon="el-icon-search" class="confirmBut" @click="tableOilfield" :disabled="isDisabled">搜索</el-button>
-              <el-button class="commonBtn" @click="reset" icon="el-icon-refresh"> 重置 </el-button>
-              <el-button type="primary"  v-if="this.$route.query.link == 'linkage'" style="float: right"  @click="goBack" > 返回 </el-button>
-          </el-form>
-        
-      </header-search>
-<!--    </el-header>-->
-<!--    <el-main>-->
-      <pagePanel headerTitle="井组自定义" style="height: calc(100% - 100px);width: 100%" :show-btn="true">
-        <div style="">
-          <span></span>
-          <div>
-            <el-button
-              type="primary"
-              style="font-size: 12px;padding: 5px 10px 5px 10px; width: 85px;"
-              :disabled="isDisabled"
-              @click="saveBut"
-            >
-              <i class="el-icon-plus el-icon--left" />
-              保存
-            </el-button>
-            <el-button
-              type="primary"
-              style="font-size: 12px;padding: 5px 10px 5px 10px; width: 85px;"
-              :disabled="isDisabled"
-              @click="editBut"
-            >
-              <i class="el-icon-edit el-icon--left" />
-              更改
-            </el-button>
-            <el-button
-              type="primary"
-              :loading="loading"
-              @click="calculate"
-            >
-              <i class="el-icon-s-platform el-icon--left" />
-              运行计算
-            </el-button>
-              <el-button
-                  type="primary"
-                  @click="preserve"
-                  style="font-size: 12px; padding: 5px 10px 5px 10px; width: 85px;float: right"
-              >
-                  <i class="el-icon-download el-icon--left" />
-                  下载
-              </el-button>
-          </div>
+    <div style="height: 100%;display: flex;flex-direction: row;" >
+        <div style=" height: 100%">
+            <tree-multiple-selection :arrayData="listdata" type="1"  @childinfo='childinfo' :key="key" :level="'5'"/>
         </div>
-        <div style="display: flex;justify-content: space-around;margin-top: 15px;height:100%;width: 100%">
-          <div style=" margin-right: 20px;width: 30%">
-            <el-table
-              :data="tableData"
-              highlight
-              style="margin-top:10px;width: 100%"
-              height="calc(100% - 80px)"
-              :header-cell-style="wipeborder"
-            >
-              <el-table-column label="井组关系" align="center">
-                <el-table-column prop="injWellNo" show-overflow-tooltip label="水井" sortable align="center"></el-table-column>
-                <el-table-column prop="proWellNo" label="油井" show-overflow-tooltip sortable align="center"></el-table-column>
-              </el-table-column>
-            </el-table>
-          </div>
-          <div style="width: 70%;height: 100%">
-            <el-table
-              :data="tableData"
-              id="indexscv"
-              highlight
-              border
-              style="margin-top:10px;width: 100%;"
-              height="calc(100% - 80px)"
-              :header-cell-style="wipeborder"
-              :span-method="mergeTable"
-            >
-              <el-table-column label="小层井组定义" align="center">
-                <el-table-column
-                  prop="wellGroupName"
-                  show-overflow-tooltip
-                  label="井组名称"
-                  align="center"
-                ></el-table-column>
-                <el-table-column prop="injWellNo" label="水井" show-overflow-tooltip align="center"></el-table-column>
-                <el-table-column prop="layerName" label="层位名称" show-overflow-tooltip align="center"></el-table-column>
-                <el-table-column prop="proWellNo" label="油井" show-overflow-tooltip align="center"></el-table-column>
-                <el-table-column label="操作" show-overflow-tooltip align="center">
-                  <template slot-scope="scope">
-                    <el-button type="text" @click="deleteWellGroup(scope.row)" :disabled="disabledBtn || isDisabled">删除井组</el-button>
-                  </template>
-                </el-table-column>
-              </el-table-column>
-            </el-table>
-          </div>
-          <div style="width: 25%; display: none;">
-            <el-col class="dataCount" style="padding: 20px;">
-              <div>
-                <span class="border"></span>
-                <span class="border"></span>
-                <span class="border"></span>
-                <span class="border"></span>
-              </div>
-              <div style="width: 100%;">
-                <div style="font-size: 20px;margin: 20px auto;">本月措施情况:</div>
-                <ul style="margin-left: 35px;text-align: left;">
-                  <li>C4井转注,请新增井组;</li>
-                  <li>C4井关P3,请更改井组;</li>
-                  <li>H1H侧钻,请更改井组;</li>
-                  <li>H1H1调整井,请修改井组;</li>
-                </ul>
-                <div style="display: flex;justify-content: space-between;">
-                  <span></span>
-                  <el-button type="primary" style="margin-top: 15px;">确认</el-button>
+        <div  style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
+            <header-search class="g-w100 g-h100" style="height: auto">
+                <el-form :inline="true" label-width="40px">
+                    <el-form-item label="油田:">
+                        <el-select v-model="query.selectField" style="margin-left: 20px"  class="f2" @change="changeOilfield" disabled>
+                            <el-option
+                                v-for="item in options"
+                                :key="item.ogfId"
+                                :value="item.ogfId"
+                                :label="item.ogfName"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="区块:">
+                        <el-select v-model="query.selectBlock" style="margin-left: 20px" placeholder="请选择" class="f2" ref="elselect1">
+                            <el-option
+                                v-for="item in blanks"
+                                :key="item.blockId"
+                                :label="item.blockName"
+                                :value="item.blockId"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="时间:">
+                        <el-date-picker
+                            v-model="query.value2"
+                            type="month"
+                            placeholder="请选择"
+                            style="margin-left: 20px"
+                            value-format="yyyy-MM"
+                            :picker-options="pickerOptions"
+                        ></el-date-picker>
+                    </el-form-item>
+                    <el-button style="margin-left: 20px" type="primary" size="mini" icon="el-icon-search" class="confirmBut" @click="tableOilfield" :disabled="isDisabled">搜索</el-button>
+                    <el-button class="commonBtn" @click="reset" icon="el-icon-refresh"> 重置 </el-button>
+                    <el-button type="primary"  v-if="this.$route.query.link == 'linkage'" style="float: right"  @click="goBack" > 返回 </el-button>
+                </el-form>
+
+            </header-search>
+            <pagePanel headerTitle="井组自定义" style="height: calc(100% - 100px);width: 100%" :show-btn="true">
+                <div style="">
+                    <span></span>
+                    <div>
+                        <el-button
+                            type="primary"
+                            style="font-size: 12px;padding: 5px 10px 5px 10px; width: 85px;"
+                            :disabled="isDisabled"
+                            @click="saveBut"
+                        >
+                            <i class="el-icon-plus el-icon--left" />
+                            保存
+                        </el-button>
+                        <el-button
+                            type="primary"
+                            style="font-size: 12px;padding: 5px 10px 5px 10px; width: 85px;"
+                            :disabled="isDisabled"
+                            @click="editBut"
+                        >
+                            <i class="el-icon-edit el-icon--left" />
+                            更改
+                        </el-button>
+                        <el-button
+                            type="primary"
+                            :loading="loading"
+                            @click="calculate"
+                        >
+                            <i class="el-icon-s-platform el-icon--left" />
+                            运行计算
+                        </el-button>
+                        <el-button
+                            type="primary"
+                            @click="preserve"
+                            style="font-size: 12px; padding: 5px 10px 5px 10px; width: 85px;float: right"
+                        >
+                            <i class="el-icon-download el-icon--left" />
+                            下载
+                        </el-button>
+                    </div>
                 </div>
-              </div>
-            </el-col>
-          </div>
+                <div style="display: flex;justify-content: space-around;margin-top: 15px;height:100%;width: 100%">
+                    <div style=" margin-right: 20px;width: 30%">
+                        <el-table
+                            :data="tableData"
+                            highlight
+                            style="margin-top:10px;width: 100%"
+                            height="calc(100% - 80px)"
+                            :header-cell-style="wipeborder"
+                        >
+                            <el-table-column label="井组关系" align="center">
+                                <el-table-column prop="injWellNo" show-overflow-tooltip label="水井" sortable align="center"></el-table-column>
+                                <el-table-column prop="proWellNo" label="油井" show-overflow-tooltip sortable align="center"></el-table-column>
+                            </el-table-column>
+                        </el-table>
+                    </div>
+                    <div style="width: 70%;height: 100%">
+                        <el-table
+                            :data="tableData"
+                            id="indexscv"
+                            highlight
+                            border
+                            style="margin-top:10px;width: 100%;"
+                            height="calc(100% - 80px)"
+                            :header-cell-style="wipeborder"
+                            :span-method="mergeTable"
+                        >
+                            <el-table-column label="小层井组定义" align="center">
+                                <el-table-column
+                                    prop="wellGroupName"
+                                    show-overflow-tooltip
+                                    label="井组名称"
+                                    align="center"
+                                ></el-table-column>
+                                <el-table-column prop="injWellNo" label="水井" show-overflow-tooltip align="center"></el-table-column>
+                                <el-table-column prop="layerName" label="层位名称" show-overflow-tooltip align="center"></el-table-column>
+                                <el-table-column prop="proWellNo" label="油井" show-overflow-tooltip align="center"></el-table-column>
+                                <el-table-column label="操作" show-overflow-tooltip align="center">
+                                    <template slot-scope="scope">
+                                        <el-button type="text" @click="deleteWellGroup(scope.row)" :disabled="disabledBtn || isDisabled">删除井组</el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table-column>
+                        </el-table>
+                    </div>
+                    <div style="width: 25%; display: none;">
+                        <el-col class="dataCount" style="padding: 20px;">
+                            <div>
+                                <span class="border"></span>
+                                <span class="border"></span>
+                                <span class="border"></span>
+                                <span class="border"></span>
+                            </div>
+                            <div style="width: 100%;">
+                                <div style="font-size: 20px;margin: 20px auto;">本月措施情况:</div>
+                                <ul style="margin-left: 35px;text-align: left;">
+                                    <li>C4井转注,请新增井组;</li>
+                                    <li>C4井关P3,请更改井组;</li>
+                                    <li>H1H侧钻,请更改井组;</li>
+                                    <li>H1H1调整井,请修改井组;</li>
+                                </ul>
+                                <div style="display: flex;justify-content: space-between;">
+                                    <span></span>
+                                    <el-button type="primary" style="margin-top: 15px;">确认</el-button>
+                                </div>
+                            </div>
+                        </el-col>
+                    </div>
+                </div>
+            </pagePanel>
         </div>
-      </pagePanel>
-<!--    </el-main>-->
+     
     <el-dialog title="井组自定义" :visible.sync="dialogVisible" class="dalog" width="60%">
       <div style="display: flex;align-items: center;">
         <span>时间：{{ query.value2 }}</span>
@@ -231,13 +234,17 @@ import {
   getlayerListByWaterWellId,
   postsaveAndupdateWellGroup, delectByWellGroupId, saveAllWellGroup
 } from "@/api/rem/r-wellConnectEvaluate.js"
+import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 export default {
   name: "wellGroup_Maintenance",
+    components: {treeMultipleSelection},
   data () {
     return {
       loading:false,
       options: [],
       transferData: [],
+        listdata: [
+        ], //树形数组
       query: {
         selectField: "3FC9A818F5BC43B88270DB80BBB3018F",
         value2: '',
@@ -252,6 +259,7 @@ export default {
         injWellName: ""
       },
       blanks: [],
+        key:0,
       waterList: [],
       ogfList: [],
       layerList: [],
@@ -521,11 +529,44 @@ export default {
     },
     // 获取区块数据
     selectblock () {
+        this.listdata = [
+            {
+                label: "有限天津分公司",
+                value: "3DC1B33E1B5B431E99FA163BF9E86E6A",
+                level: "1",
+                children: [
+                    {
+                        label: "秦皇岛32-6作业公司",
+                        value: "715AD1CD60484BB59E737CD18A9DE44A",
+                        level: "2",
+                        children: [
+                            {
+                                label: "QHD32-6",
+                                value: "3FC9A818F5BC43B88270DB80BBB3018F",
+                                level: "3",
+                                children: []
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
       if (!this.query.selectField) return
       getblock({
         ogfId: this.query.selectField
       }).then(({ blockList }) => {
         this.blanks = blockList
+          let data = []
+          blockList.map((n) => {
+              data.push({
+                  label: n.blockName,
+                  level: "4",
+                  value: n.blockId,
+                  children: []
+              })
+          })
+          this.listdata[0].children[0].children[0].children.push(...data)
+          this.key++
       });
     },
     // 油田下拉点击事件
@@ -561,6 +602,14 @@ export default {
         }
       });
     },
+      childinfo(val) {
+          console.log(val)
+          if (val.length > 3) {
+              this.wellId = val[3].value
+          }else{
+              this.wellId = ''
+          }
+      },
       goBack() {
           this.$router.go(-1);
       },
