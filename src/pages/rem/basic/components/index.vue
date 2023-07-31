@@ -163,7 +163,17 @@ export default {
               this.setDisabledRecursive( this.deptOptions, this.start, this.end)
           })  
       }
-     
+      else if (this.type==3){
+          this.deptOptions = this.arrayData;
+          this.deptOptions
+          this.setDisabledRecursive(this.deptOptions, this.start, this.end)
+          this.$nextTick(()=>{
+              this.$refs.tree.setCheckedNodes([{
+                  value: "YCFXDY8B643EDC9007F96F570600457D",
+                  label: '秦皇岛32-6南区'
+              }]);
+          })
+      }
     },
     setDisabledRecursive(options, minLevel = 0, maxLevel = Number.MAX_SAFE_INTEGER) {
       options.forEach((option) => {
@@ -177,7 +187,6 @@ export default {
       })
     },
     handleCheckChange(data, checked) {
-        console.log(1234)
       this.resetChecked(data, checked)
     },
     resetChecked(data, checked) {

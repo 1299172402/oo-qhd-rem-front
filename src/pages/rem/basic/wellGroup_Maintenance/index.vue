@@ -2,7 +2,7 @@
   <!-- 井组参数配置 -->
     <div style="height: 100%;display: flex;flex-direction: row;" >
         <div style=" height: 100%">
-            <tree-multiple-selection :arrayData="listdata" type="1"  @childinfo='childinfo' :key="key" :level="'5'"/>
+            <tree-multiple-selection :arrayData="listdata" type="3"  @childinfo='childinfo' :key="key" :level="'5'"/>
         </div>
         <div  style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
             <header-search class="g-w100 g-h100" style="height: auto">
@@ -605,9 +605,7 @@ export default {
       childinfo(val) {
           console.log(val)
           if (val.length > 3) {
-              this.wellId = val[3].value
-          }else{
-              this.wellId = ''
+              this.query.selectBlock = val[3].value
           }
       },
       goBack() {
