@@ -688,10 +688,13 @@
                     xAxis: {
                         boundaryGap: false,
                         splitNumber: 10,
-                        name: "Np 10^4m3",
-                        nameLocation: "center",
+                        name: "10⁴m³",
+                        nameGap: 25,
+                        // nameLocation: "center",
                         nameTextStyle: {
-                            color: "#8FA4CC"
+                            color: "#8FA4CC",
+                            fontSize: 14,
+
                         },
                         nameGap: 25,
                         type: "value",
@@ -1304,7 +1307,7 @@
                             let dd = [ent.x, ent.y];
                             seriesData1.push(dd);
                         })
-                        this.option.xAxis.name = (this.radioType == 'A' ? 'Np' : this.radioType == 'B' ? 'Np' : this.radioType == 'C' ? 'Lp' : this.radioType == 'D' ? 'Wp' : this.radioType == 'YUQITAI' ? 'lg(Lp/Wp)' : 'x');
+                        // this.option.xAxis.name = (this.radioType == 'A' ? 'Np' : this.radioType == 'B' ? 'Np' : this.radioType == 'C' ? 'Lp' : this.radioType == 'D' ? 'Wp' : this.radioType == 'YUQITAI' ? 'lg(Lp/Wp)' : 'x');
                         this.option.yAxis.name = (this.radioType == 'A' ? 'lgWp' : this.radioType == 'B' ? 'lgLp' : this.radioType == 'C' ? 'Lp/Np' : this.radioType == 'D' ? 'Lp/Np' : this.radioType == 'YUQITAI' ? 'logNp' : 'y');
                         this.option.series[1].data = seriesData1;
                     } else {
