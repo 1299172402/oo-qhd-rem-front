@@ -1,75 +1,96 @@
 <!-- 水井辅助分析 -->
 <template>
-    <div class="app-container">
-        
-        <headerSearch style="height: 80px">
-            <div class="g-row-flex-V g-w100 g-h100">
-                <span class="title">油田：</span>
-                <el-select v-model="selectOilField" placeholder="请选择" filterable disabled style="margin-right: 15px">
-                    <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
-                </el-select>
-                <span class="title">平台：</span>
-                <el-select v-model="selectPlatform" placeholder="请选择" filterable @change="doChangePT" style="width: 220px; margin-right: 15px">
-                    <el-option v-for="item in platform" :key="item.platFormId" :label="item.platName" :value="item.platFormId"></el-option>
-                </el-select>
-                <span class="title">井号：</span>
-                <el-select v-model="selectWellId" class="f2" filterable @change="onChangeWell" style="width: 180px;">
-                    <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled"></el-option>
-                </el-select>
-                <el-button type="primary" icon="el-icon-search" style="margin-left: 15px" @click="doSearch">搜索</el-button>
-                <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
-            </div>
-        </headerSearch>
-        
-        <pagePanelNew :style="{ height: currentModule == 'waterReport' ? 'auto' : 'calc(100% - 100px)' }" class="g-w100">
+    <div style="display: flex; flex-direction: row; height: calc(100%)">
+        <div style="height: 100%">
+            <treeSelection
+                ref="treeSelection"
+                level="5"
+                wellType="注水井"
+                :defaultCheckedKeys="defaultCheckedKeys"
+                @getSelectItems="getSelectItems"
+            />
+        </div>
+        <div
+        class="app-container"
+        style="
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex: 1;
+            right: 0;
+            overflow: hidden;
+            margin-left: 20px;
+        "
+        >
+            <headerSearch style="height: 80px">
+                <div class="g-row-flex-V g-w100 g-h100">
+                    <span class="title">油田：</span>
+                    <el-select v-model="selectOilField" placeholder="请选择" filterable disabled style="margin-right: 15px">
+                        <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
+                    </el-select>
+                    <span class="title">平台：</span>
+                    <el-select v-model="selectPlatform" placeholder="请选择" filterable @change="doChangePT" style="width: 220px; margin-right: 15px">
+                        <el-option v-for="item in platform" :key="item.platFormId" :label="item.platName" :value="item.platFormId"></el-option>
+                    </el-select>
+                    <span class="title">井号：</span>
+                    <el-select v-model="selectWellId" class="f2" filterable @change="onChangeWell" style="width: 180px;">
+                        <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled"></el-option>
+                    </el-select>
+                    <el-button type="primary" icon="el-icon-search" style="margin-left: 15px" @click="doSearch">搜索</el-button>
+                    <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+                </div>
+            </headerSearch>
             
-            <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
-                <!-- minIo上传 -->
-                <el-button v-if="isUpdateFile" type="primary" icon="el-icon-upload2" style="margin-left: auto !important" @click="ljpmUploadDialogLast" >上传文档</el-button>
-                <!-- minIo下载 -->
-                <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" :disabled="downloadButton" @click="doDownLoadNew">下载</el-button>
-                <!-- 返回 -->
-                <el-button type="primary" v-if="$route.query.wellId" style="margin-left:15px;" @click="goBack">返回</el-button>
-            </div>
-            
-            <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
-                <el-tab-pane style="height: auto" v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
-                    <div class="tab-view">
-                        <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="tabsClick(module)">
-                            {{ module.label }}
-                        </el-button>
-                        <div class="select-view" v-if="currentModule == 'homeworkWellHistory'">
-                            <span class="title" style="margin-left: 20px">大事简要：</span>
-                            <el-select v-model="majorEventsBrieflyValue" placeholder="请选择" filterable clearable @change="majorEventsBrieflyChange">
-                                <el-option v-for="(item, index) in majorEventsBrieflyList" :key="index" :label="item.chronicle" :value="item.chronicle"></el-option>
-                            </el-select>
+            <pagePanelNew :style="{ height: currentModule == 'waterReport' ? 'auto' : 'calc(100% - 100px)' }" class="g-w100">
+                
+                <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
+                    <!-- minIo上传 -->
+                    <el-button v-if="isUpdateFile" type="primary" icon="el-icon-upload2" style="margin-left: auto !important" @click="ljpmUploadDialogLast" >上传文档</el-button>
+                    <!-- minIo下载 -->
+                    <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" :disabled="downloadButton" @click="doDownLoadNew">下载</el-button>
+                    <!-- 返回 -->
+                    <el-button type="primary" v-if="$route.query.wellId" style="margin-left:15px;" @click="goBack">返回</el-button>
+                </div>
+                
+                <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
+                    <el-tab-pane style="height: auto" v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
+                        <div class="tab-view">
+                            <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="tabsClick(module)">
+                                {{ module.label }}
+                            </el-button>
+                            <div class="select-view" v-if="currentModule == 'homeworkWellHistory'">
+                                <span class="title" style="margin-left: 20px">大事简要：</span>
+                                <el-select v-model="majorEventsBrieflyValue" placeholder="请选择" filterable clearable @change="majorEventsBrieflyChange">
+                                    <el-option v-for="(item, index) in majorEventsBrieflyList" :key="index" :label="item.chronicle" :value="item.chronicle"></el-option>
+                                </el-select>
+                            </div>
                         </div>
-                    </div>
-                </el-tab-pane>
-            </el-tabs>
-            <keep-alive :include="[]" :max="10" v-if="blockId">
-                <component 
-                    :is="component" 
-                    ref="componentCustom" 
-                    :oilFeildId="selectOilField" 
-                    :platform="selectPlatform" 
-                    :wellId="selectWellId" 
-                    :blockId="blockId" 
-                    @childPara="changeChildParam">
-                </component>
-            </keep-alive>
-        </pagePanelNew>
-        
-        <!-- minIo上传 -->
-        <el-dialog custom-class="border" title="上传文档" :visible.sync="ljpmDialogLast" width="20%" :before-close="ljpmDialogCloseLast" :style="{ 'min-width': '1800px' }">
-            <div style="display: flex;justify-content: center;">
-                <file-upload v-model="imageurl" style="width: 250px" :limit="limit" :fileSize="20" :is-show-tip="false" biz-path="rem-front/text" :file-type="fileType" @change="getResData"/>
-            </div>
-            <div slot="footer" class="dialog-footer" style="text-align: center">
-                <el-button class="cancelBtn" @click="ljpmDialogCloseLast">关 闭</el-button>
-            </div>
-        </el-dialog>
-        
+                    </el-tab-pane>
+                </el-tabs>
+                <keep-alive :include="[]" :max="10" v-if="blockId">
+                    <component 
+                        :is="component" 
+                        ref="componentCustom" 
+                        :oilFeildId="selectOilField" 
+                        :platform="selectPlatform" 
+                        :wellId="selectWellId" 
+                        :blockId="blockId" 
+                        @childPara="changeChildParam">
+                    </component>
+                </keep-alive>
+            </pagePanelNew>
+            
+            <!-- minIo上传 -->
+            <el-dialog custom-class="border" title="上传文档" :visible.sync="ljpmDialogLast" width="20%" :before-close="ljpmDialogCloseLast" :style="{ 'min-width': '1800px' }">
+                <div style="display: flex;justify-content: center;">
+                    <file-upload v-model="imageurl" style="width: 250px" :limit="limit" :fileSize="20" :is-show-tip="false" biz-path="rem-front/text" :file-type="fileType" @change="getResData"/>
+                </div>
+                <div slot="footer" class="dialog-footer" style="text-align: center">
+                    <el-button class="cancelBtn" @click="ljpmDialogCloseLast">关 闭</el-button>
+                </div>
+            </el-dialog>
+            
+        </div>
     </div>
 </template>
     
@@ -81,11 +102,14 @@
     import {addRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
     import {downFile} from "@/components/upload/utils/file";
     import FileSaver from "file-saver";
+    import treeSelection from "@/pages/rem/basic/components/treeSelection.vue";
     export default {
         name: "WaterAuxiliaryAnalysis",
-        components: {FileUpload},
+        components: {FileUpload, treeSelection},
         data() {
             return {
+                // 主数据树结构默认选中的值
+                defaultCheckedKeys: [],
                 //minIo
                 isUpdateFile:false,//是否显示上传文档按钮
                 ljpmDialogLast: false,
@@ -596,6 +620,7 @@
                     if (res.data.code == 200) {
                         this.wellData = res.data.data.injectionWell;
                         this.selectWellId = this.wellData[0].wellId;
+                        this.$refs.treeSelection.setCheckedKeys([this.selectPlatform, this.selectWellId]);
                     }
                 });
             },
@@ -605,6 +630,7 @@
                     if (res.data.code == 200) {
                         this.wellData = res.data.data.injectionWell;
                         this.selectWellId = this.wellData[0].wellId;
+                        this.$refs.treeSelection.setCheckedKeys([this.selectPlatform, this.selectWellId]);
                     }
                 });
             },
@@ -612,7 +638,36 @@
             onChangeWell(){
                 this.childParam = "";
                 this.$refs.componentCustom.selectPosition = this.childParam;
+                this.$refs.treeSelection.setCheckedKeys([this.selectPlatform, this.selectWellId]);
                 this.getBlockWellApi();
+            },
+             // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
+             getSelectItems(selectList, selectData) {
+                //作业公司选中数据
+                // this.queryParams.companyId = selectList.orgId;
+                // 油田选中数据
+                // this.selectOilField = selectList.ogfId;
+                //平台选中数据
+                this.selectPlatform = selectList.platformIds;
+                // 井号选中数据
+                this.selectWellId = selectList.wellIds;
+                // 判断如果没有wellList没有当前井号，调取井号接口根据平台获取井号数据
+                let isUpdata = this.wellData.map((item) => item.borepipeId).includes(selectList.wellIds);
+                if (!isUpdata) {
+                    if (this.selectOilField == this.selectPlatform) {
+                        fetchInjectionWells({oilFieldId: this.selectOilField}).then((res) => {
+                            if (res.data.code == 200) {
+                                this.wellData = res.data.data.injectionWell;
+                            }
+                        });
+                    } else {
+                        fetchInjectionWellsByPlatform({platformId: this.selectPlatform}).then((res) => {
+                            if (res.data.code == 200) {
+                                this.wellData = res.data.data.injectionWell;
+                            }
+                        });
+                    }
+                }
             },
             //大事简要数据源接口
             getMajorEventsBriefly() {

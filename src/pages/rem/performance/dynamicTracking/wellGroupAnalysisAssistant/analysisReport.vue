@@ -1,484 +1,506 @@
 <!-- 井组动态分析报告 -->
 <template>
-    <div class="z_app_container">
-        <!-- 旧版本 -->
-        <div class="app-container" v-if="!isNewformat">
-            <headerSearch style="height:80px;">
-                <div class="g-row-flex-V g-w100 g-h100">
-                    <span>油田：</span>
-                    <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="queryBlockList">
-                        <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId">
-                        </el-option>
-                    </el-select>
-                    <span style="margin-left:15px;">区块：</span>
-                    <el-select v-model="selBlock" class="f2" style="width:180px" filterable @change="queryWellGroupList">
-                        <el-option v-for="item in blockData" :key="item.fieldId" :label="item.name" :value="item.fieldId">
-                        </el-option>
-                    </el-select>
-                    <span style="margin-left:15px;">水井井组：</span>
-                    <el-select v-model="searchKeys" class="f2" style="width:200px" filterable>
-                        <el-option v-for="item in wellGroupList" :key="item.wellGroupId" :label="item.wellGroupName" :value="item.wellGroupId">
-                        </el-option>
-                    </el-select>
-                    <span style="margin-left:15px;">年月：</span>
-                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd" :clearable='false'></el-date-picker>
-                    <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
-                    <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
-                </div>
-            </headerSearch>
-            <pagePanelNew style="height: calc(100% - 100px);" class="g-w100">
-                <div class="btns" style="height:50px;display: flex;padding-left:7px;">
-                    <el-button type="primary" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
-                    <el-button type="primary" @click="isNewformat=!isNewformat;">切换版式</el-button>
-                </div>
-                <div style="height:calc(100% - 50px);overflow-y: scroll;overflow-x: hidden;padding-left:8px;padding-right:7px;display: flex;flex-direction: column;">
-                    <el-row style="height:auto" :gutter="15" class="cont">
-                        <el-col :span="19" style="height: 100%">
-                            <pagePanel headerTitle="开发生产问题监测" style="margin-top:0;height:100%;">
-                                <el-row :gutter="10">
-                                    <el-col :span="9">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">动态变化趋势</el-button>
-                                        <el-col v-for="(item,index) in trendOfIndicators" :key="index" :span="12">
-                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'trendOfIndicators')">
-                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                            </el-button>
-                                        </el-col>   
-                                    </el-col>
-                                    <el-col :span="5">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">注水受效分析</el-button>
-                                        <el-col v-for="(item,index) in injectionResponseAnalysis" :key="index" :span="24">
-                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'injectionResponseAnalysis')">
-                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                            </el-button>
-                                        </el-col>   
-                                    </el-col>
-                                    <el-col :span="5">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">注采平衡</el-button>
-                                        <el-col v-for="(item,index) in injectionProductionBalance" :key="index" :span="24">
-                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'injectionProductionBalance')">
-                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                            </el-button>
-                                        </el-col>   
-                                    </el-col>
-                                    <el-col :span="5">
-                                        <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">压力保持</el-button>
-                                        <el-col v-for="(item,index) in thePressureToKeep" :key="index" :span="24">
-                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'thePressureToKeep')">
-                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                            </el-button>
-                                        </el-col>   
-                                    </el-col>
-                                </el-row>
-                            </pagePanel>
-                        </el-col>
-                        <el-col :span="5" style="height: 100%">
-                            <pagePanel headerTitle="措施推荐" style="margin-top:0;height:100%;">
-                                <el-row :gutter="10" style="height: 100%">
-                                    <el-col v-for="(item,index) in recommendedMeasuresOptions" :key="index" :span="24">
-                                        <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'recommendedMeasuresOptions')">
-                                            {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
-                                        </el-button>
-                                    </el-col>  
-                                </el-row>
-                            </pagePanel>
-                        </el-col>
-                    </el-row>
-                    <div style="margin-top:5px;margin-bottom:10px;">
-                        <el-row>
-                            <el-col :span="24">
-                                <table class="condationRow" style="float: right">
-                                    <tr>
-                                        <td style="padding-right:10px">图例：</td>
-                                        <td class="checkBtn">选中</td>
-                                        <td class="about">相关</td>
-                                        <td class="noCheckBtn">未选中</td>
-                                    </tr>
-                                </table>
-                            </el-col>
-                            <el-button type="primary" style="position: relative;right:-93%" v-if="selCode&&(selCode=='2010802')"
-                                       @click="$router.push({name:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':6,evalResult:selCode }})">
-                                归因分析详情
-                            </el-button>
-                        </el-row>
-                    </div>
-                    <div style="flex:1;min-height:380px;">
-                        <pagePanel headerTitle="井组动态分析详情列表" style="margin-top:0;height:100%;">
-                            <el-table
-                                highlight 
-                                :data="tableData" 
-                                height="100%" 
-                                @sort-change="changeTableSort" 
-                                ref="tableList" 
-                                class="doubleHeader"
-                                row-key="id"
-                                default-expand-all
-                                :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-                                <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
-                                <el-table-column prop="wellId" align="center" label="井组" width="200px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
-                                <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code"  align="center" min-width="170" sortable="custom" label-class-name="twoRowHeader">
-                                    <template #header>
-                                        <div class="headerSortRow1">
-                                            <span>{{ item.name}}</span>
-                                            <br />
-                                            <span>{{ item.unit}}</span>
-                                        </div>
-                                    </template>
-                                    <template slot-scope="{row}">
-                                        <span style="display: flex;align-items: center;justify-content: center;">
-                                            <span v-if="row[item.code+'Message']==''">{{row[item.code]?row[item.code]:'-'}}</span>
-                                            <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
-                                                <span>{{row[item.code]?row[item.code]:'-'}}</span>
-                                            </el-tooltip>
-                                            <img src="@/assets/rem/yieId/upTriangle.png" v-if="row[item.code+'Message']&&row[item.code+'Message'].includes('高')" style="width:20px;height:20px;">
-                                            <img src="@/assets/rem/yieId/downTriangle.png" v-if="row[item.code+'Message']&&row[item.code+'Message'].includes('低')"  style="width:20px;height:20px;">
-                                        </span>
-                                    </template>
-                                  </el-table-column>
-                                <el-table-column prop="injectionResponseAnalysis" align="center" label="注水受效" min-width="140">
-                                      <template slot-scope="{row}">
-                                          <span v-if="row['injectionResponseAnalysisMessage']==''">{{row['injectionResponseAnalysis']?row['injectionResponseAnalysis']:'-'}}</span>
-                                          <el-tooltip v-else class="item" effect="dark" :content="row['injectionResponseAnalysisMessage']" placement="top">
-                                              <span>{{row['injectionResponseAnalysis']?row['injectionResponseAnalysis']:'-'}}</span>
-                                          </el-tooltip>
-                                      </template>
-                                  </el-table-column>
-                                <el-table-column prop="injectionProductionBalance" align="center" label="注水平衡" min-width="140">
-                                      <template slot-scope="{row}">
-                                          <span v-if="row['injectionProductionBalanceMessage']==''">{{row['injectionProductionBalance']?row['injectionProductionBalance']:'-'}}</span>
-                                          <el-tooltip v-else class="item" effect="dark" :content="row['injectionProductionBalanceMessage']" placement="top">
-                                              <span>{{row['injectionProductionBalance']?row['injectionProductionBalance']:'-'}}</span>
-                                          </el-tooltip>
-                                      </template>
-                                  </el-table-column>
-                                <el-table-column prop="thePressureToKeep" align="center" label="压力保持" min-width="140">
-                                      <template slot-scope="{row}">
-                                          <span v-if="row['thePressureToKeepMessage']==''">{{row['thePressureToKeep']?row['thePressureToKeep']:'-'}}</span>
-                                          <el-tooltip v-else class="item" effect="dark" :content="row['thePressureToKeepMessage']" placement="top">
-                                              <span>{{row['thePressureToKeep']?row['thePressureToKeep']:'-'}}</span>
-                                          </el-tooltip>
-                                      </template>
-                                  </el-table-column>
-                                <el-table-column align="center" label="措施初选">
-                                    <el-table-column prop="measuresName" align="center" label="推荐措施" min-width="140">
-                                        <template slot-scope="{row}">
-                                             <span>{{row.measuresName?row.measuresName:'-'}}</span>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column prop="theDate" min-width="140px" align="center" label="推荐日期">
-                                        <template slot-scope="{row}">
-                                             <span>{{row.theDate?row.theDate:'-'}}</span>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column prop="address" align="center" label="操作" min-width="140">
-                                        <template slot-scope="scope">
-                                            <el-button type="text" size="small" @click="openAnalysis(scope.row.wellId)">分析</el-button>
-                                        </template>
-                                    </el-table-column>
-                                </el-table-column>
-                            </el-table>
-                        </pagePanel>
-                    </div>
-                </div>
-            </pagePanelNew>
+    <div style="display: flex; flex-direction: row; height: calc(100%)">
+        <div style="height: 100%">
+        <treeSelectionCustom
+            ref="treeSelectionCustom"
+            level="5"
+            :treeType="3"
+            :defaultCheckedKeys="defaultCheckedKeys"
+            @getSelectItems="getSelectItems"
+        />
         </div>
-        <!-- 新版本 -->
-        <div class="app-container2" v-if="isNewformat">
-            <headerSearch style="height:80px;">
-                <div class="g-row-flex-V g-w100 g-h100">
-                    <span>油田：</span>
-                    <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="queryBlockList">
-                        <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId">
-                        </el-option>
-                    </el-select>
-                    <span style="margin-left:15px;">区块：</span>
-                    <el-select v-model="selBlock" class="f2" style="width:180px" filterable @change="queryWellGroupList">
-                        <el-option v-for="item in blockData" :key="item.fieldId" :label="item.name" :value="item.fieldId">
-                        </el-option>
-                    </el-select>
-                    <span style="margin-left:15px;">水井井组：</span>
-                    <el-select v-model="searchKeys" class="f2" style="width:200px" filterable>
-                        <el-option v-for="item in wellGroupList" :key="item.wellGroupId" :label="item.wellGroupName" :value="item.wellGroupId">
-                        </el-option>
-                    </el-select>
-                    <span style="margin-left:15px;">年月：</span>
-                    <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd" :clearable='false'></el-date-picker>
-                    <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
-                    <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
-                </div>
-            </headerSearch>
-            <div class="app-container3">
-                <div class="leftBox">
-                    <img src="@/assets/rem/performance/bg.gif" alt="" class="img1">
-                    <img src="@/assets/rem/performance/jing-small.png" alt="" class="img2">
-                    <img src="@/assets/rem/performance/shui-donghua.gif" alt="" class="img3">
-                    <img src="@/assets/rem/performance/di.png" alt="" class="img4">
-                    <img src="@/assets/rem/performance/01cai.gif" alt="" class="img6">
-                    <img src="@/assets/rem/performance/01zhu.gif" alt="" class="img5">
-                    <img src="@/assets/rem/performance/01cai.gif" alt="" class="img7">
-                    <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode=='dark'">
-                    <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else>
-                </div>
-                <div class="rightBox">
-                    <div class="v1">
-                        <img src="@/assets/rem/performance/bgline1.png" alt="" class="bgline1">
-                        <div class="btns" style="height:40px;display: flex;">
-                            <el-button type="primary" style="margin-left:auto;" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
-                            <el-button type="primary" @click="isNewformat=!isNewformat;">切换版式</el-button>
-                        </div>
-                        <div class="btns0">
-                            <img src="@/assets/rem/performance/help.png" alt="" class="helpImg">
-                            <span>{{potentialWellNum}}</span>
-                            <b>潜力井组</b>
-                        </div>
+        <div
+        class="z_app_container"
+        style="
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex: 1;
+            right: 0;
+            overflow: hidden;
+            margin-left: 20px;
+        "
+        >
+            <!-- 旧版本 -->
+            <div class="app-container" v-if="!isNewformat">
+                <headerSearch style="height:80px;">
+                    <div class="g-row-flex-V g-w100 g-h100">
+                        <span>油田：</span>
+                        <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="queryBlockList">
+                            <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId">
+                            </el-option>
+                        </el-select>
+                        <span style="margin-left:15px;">区块：</span>
+                        <el-select v-model="selBlock" class="f2" style="width:180px" filterable @change="changeBlock">
+                            <el-option v-for="item in blockData" :key="item.fieldId" :label="item.name" :value="item.fieldId">
+                            </el-option>
+                        </el-select>
+                        <span style="margin-left:15px;">水井井组：</span>
+                        <el-select v-model="searchKeys" class="f2" style="width:200px" filterable @change="changeWellGroup">
+                            <el-option v-for="item in wellGroupList" :key="item.wellGroupId" :label="item.wellGroupName" :value="item.wellGroupId">
+                            </el-option>
+                        </el-select>
+                        <span style="margin-left:15px;">年月：</span>
+                        <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd" :clearable='false'></el-date-picker>
+                        <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
+                        <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
                     </div>
-                    <div class="v2">
-                        <info-window info-width="100%"  info-height="100%"  header-title="井组变化趋势分析" :is-show-max-btn="false">
-                            <div class="z-content" style="height:100%;overflow-y: scroll;">
-                                <div class="z-content-n">
-                                    <div class="z-row-left">
-                                        <div class="z_title">
-                                            <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                            <span>动态变化趋势</span>
-                                        </div>
-                                        <div class="z_schedule">
-                                            <span class="sp1">正常：</span>
-                                            <div class="z_proess">
-                                                <span class="z_proess_sp1" :style="{width:trendOfIndicatorsNum.zczb+'%'}">
-                                                    <b style="cursor: pointer;" @click="trendOfIndicatorsSwitch=true">{{trendOfIndicatorsNum.zcnum}}</b>
-                                                </span>
-                                                <span class="z_proess_sp2"></span>
-                                            </div>
-                                            <span class="sp2">异常：<b style="cursor: pointer;" @click="trendOfIndicatorsSwitch=false">{{trendOfIndicatorsNum.ycnum}}</b></span>
-                                        </div>
-                                    </div>  
-                                    <div class="z-row-center">
-                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
-                                            v-for="(item,index) in trendOfIndicators" :key="index" 
-                                            v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!trendOfIndicatorsSwitch"
-                                            @click="((val)=>{selRadioIterm(item.code,'trendOfIndicators')})">
-                                            <span class="sp1">{{item.value}}</span>
-                                            <span class="sp2">{{item.name}}</span>
-                                        </div>
-                                        <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
-                                            v-for="(item,index) in trendOfIndicators" :key="index" 
-                                            v-if="item.name=='正常'&&trendOfIndicatorsSwitch"
-                                            @click="((val)=>{selRadioIterm(item.code,'trendOfIndicators')})">
-                                            <span class="sp1">{{item.value}}</span>
-                                            <span class="sp2">{{item.name}}</span>
-                                        </div>
-                                    </div>
-                                    <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;left:-30px">
-                                        <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='2010802')"
-                                                   @click="$router.push({name:'attributtonAnalysis',query:{platform,wellId,searchKeys,currentDate,searchKeys,'link':6,evalResult:selCode }})">
-                                            归因分析详情
-                                        </el-button>
-                                    </div>
-                                </div>
-                            </div>
-                        </info-window>
+                </headerSearch>
+                <pagePanelNew style="height: calc(100% - 100px);" class="g-w100">
+                    <div class="btns" style="height:50px;display: flex;padding-left:7px;">
+                        <el-button type="primary" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
+                        <el-button type="primary" @click="isNewformat=!isNewformat;">切换版式</el-button>
                     </div>
-                    <div class="v2 v3">
-                        <img src="@/assets/rem/performance/bgline2.png" alt="" class="bgline2">
-                        <info-window info-width="100%"  info-height="100%"  header-title="开发生产问题监测" :is-show-max-btn="false">
-                            <div class="z-content2" style="height:100%;overflow-y: scroll;">
-                                <div class="z1">
-                                    <div class="z-content-n">
-                                        <div class="z-row-left">
-                                            <div class="z_title">
-                                                <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                                <span>注采平衡</span>
+                    <div style="height:calc(100% - 50px);overflow-y: scroll;overflow-x: hidden;padding-left:8px;padding-right:7px;display: flex;flex-direction: column;">
+                        <el-row style="height:auto" :gutter="15" class="cont">
+                            <el-col :span="19" style="height: 100%">
+                                <pagePanel headerTitle="开发生产问题监测" style="margin-top:0;height:100%;">
+                                    <el-row :gutter="10">
+                                        <el-col :span="9">
+                                            <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">动态变化趋势</el-button>
+                                            <el-col v-for="(item,index) in trendOfIndicators" :key="index" :span="12">
+                                                <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'trendOfIndicators')">
+                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                                </el-button>
+                                            </el-col>   
+                                        </el-col>
+                                        <el-col :span="5">
+                                            <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">注水受效分析</el-button>
+                                            <el-col v-for="(item,index) in injectionResponseAnalysis" :key="index" :span="24">
+                                                <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'injectionResponseAnalysis')">
+                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                                </el-button>
+                                            </el-col>   
+                                        </el-col>
+                                        <el-col :span="5">
+                                            <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">注采平衡</el-button>
+                                            <el-col v-for="(item,index) in injectionProductionBalance" :key="index" :span="24">
+                                                <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'injectionProductionBalance')">
+                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                                </el-button>
+                                            </el-col>   
+                                        </el-col>
+                                        <el-col :span="5">
+                                            <el-button class="commonBtn" style="width:100%;cursor: inherit;margin-bottom:10px;">压力保持</el-button>
+                                            <el-col v-for="(item,index) in thePressureToKeep" :key="index" :span="24">
+                                                <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'thePressureToKeep')">
+                                                    {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                                </el-button>
+                                            </el-col>   
+                                        </el-col>
+                                    </el-row>
+                                </pagePanel>
+                            </el-col>
+                            <el-col :span="5" style="height: 100%">
+                                <pagePanel headerTitle="措施推荐" style="margin-top:0;height:100%;">
+                                    <el-row :gutter="10" style="height: 100%">
+                                        <el-col v-for="(item,index) in recommendedMeasuresOptions" :key="index" :span="24">
+                                            <el-button class="z-button"  :class="[item.value>0?'about1':'',item.code==selCode?'selectButton':'']" @click.stop="selRadioIterm(item.code,'recommendedMeasuresOptions')">
+                                                {{ item.name + (item.value > 0 ? '(' + item.value + ')' : '(0)') }}
+                                            </el-button>
+                                        </el-col>  
+                                    </el-row>
+                                </pagePanel>
+                            </el-col>
+                        </el-row>
+                        <div style="margin-top:5px;margin-bottom:10px;">
+                            <el-row>
+                                <el-col :span="24">
+                                    <table class="condationRow" style="float: right">
+                                        <tr>
+                                            <td style="padding-right:10px">图例：</td>
+                                            <td class="checkBtn">选中</td>
+                                            <td class="about">相关</td>
+                                            <td class="noCheckBtn">未选中</td>
+                                        </tr>
+                                    </table>
+                                </el-col>
+                                <el-button type="primary" style="position: relative;right:-93%" v-if="selCode&&(selCode=='2010802')"
+                                        @click="$router.push({name:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':6,evalResult:selCode }})">
+                                    归因分析详情
+                                </el-button>
+                            </el-row>
+                        </div>
+                        <div style="flex:1;min-height:380px;">
+                            <pagePanel headerTitle="井组动态分析详情列表" style="margin-top:0;height:100%;">
+                                <el-table
+                                    highlight 
+                                    :data="tableData" 
+                                    height="100%" 
+                                    @sort-change="changeTableSort" 
+                                    ref="tableList" 
+                                    class="doubleHeader"
+                                    row-key="id"
+                                    default-expand-all
+                                    :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+                                    <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
+                                    <el-table-column prop="wellId" align="center" label="井组" width="200px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
+                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code"  align="center" min-width="170" sortable="custom" label-class-name="twoRowHeader">
+                                        <template #header>
+                                            <div class="headerSortRow1">
+                                                <span>{{ item.name}}</span>
+                                                <br />
+                                                <span>{{ item.unit}}</span>
                                             </div>
-                                            <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
-                                                <div class="z_proess">
-                                                    <span class="z_proess_sp1" :style="{width:injectionProductionBalanceNum.zczb+'%'}">
-                                                        <b style="cursor: pointer;" @click="injectionProductionBalanceSwitch=true">{{injectionProductionBalanceNum.zcnum}}</b>
-                                                    </span>
-                                                    <span class="z_proess_sp2"></span>
-                                                </div>
-                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="injectionProductionBalanceSwitch=false">{{injectionProductionBalanceNum.ycnum}}</b></span>
-                                            </div>
-                                        </div>  
-                                        <div class="z-row-center">
-                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
-                                                v-for="(item,index) in injectionProductionBalance" :key="index" 
-                                                v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!injectionProductionBalanceSwitch"
-                                                @click="((val)=>{selRadioIterm(item.code,'injectionProductionBalance')})">
-                                                <span class="sp1">{{item.value}}</span>
-                                                <span class="sp2">{{item.name}}</span>
-                                            </div>
-                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
-                                                v-for="(item,index) in injectionProductionBalance" :key="index" 
-                                                v-if="item.name=='正常'&&injectionProductionBalanceSwitch"
-                                                @click="((val)=>{selRadioIterm(item.code,'injectionProductionBalance')})">
-                                                <span class="sp1">{{item.value}}</span>
-                                                <span class="sp2">{{item.name}}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="z-content-n">
-                                        <div class="z-row-left">
-                                            <div class="z_title">
-                                                <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                                <span>注水受效分析</span>
-                                            </div>
-                                            <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
-                                                <div class="z_proess">
-                                                    <span class="z_proess_sp1" :style="{width:injectionResponseAnalysisNum.zczb+'%'}">
-                                                        <b style="cursor: pointer;" @click="injectionResponseAnalysisSwitch=true">{{injectionResponseAnalysisNum.zcnum}}</b>
-                                                    </span>
-                                                    <span class="z_proess_sp2"></span>
-                                                </div>
-                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="injectionResponseAnalysisSwitch=false">{{injectionResponseAnalysisNum.ycnum}}</b></span>
-                                            </div>
-                                        </div>  
-                                        <div class="z-row-center">
-                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
-                                                v-for="(item,index) in injectionResponseAnalysis" :key="index" 
-                                                v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!injectionResponseAnalysisSwitch"
-                                                @click="((val)=>{selRadioIterm(item.code,'injectionResponseAnalysis')})">
-                                                <span class="sp1">{{item.value}}</span>
-                                                <span class="sp2">{{item.name}}</span>
-                                            </div>
-                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
-                                                v-for="(item,index) in injectionResponseAnalysis" :key="index" 
-                                                v-if="item.name=='正常'&&injectionResponseAnalysisSwitch"
-                                                @click="((val)=>{selRadioIterm(item.code,'injectionResponseAnalysis')})">
-                                                <span class="sp1">{{item.value}}</span>
-                                                <span class="sp2">{{item.name}}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="z2">
-                                    <div class="z-content-n" style="flex-direction: column;">
-                                        <div class="z-row-left" style="margin-bottom:16px;">
-                                            <div class="z_title">
-                                                <img src="@/assets/rem/performance/z_sb.png" alt="">
-                                                <span>压力保持</span>
-                                            </div>
-                                            <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
-                                                <div class="z_proess">
-                                                    <span class="z_proess_sp1" :style="{width:thePressureToKeepNum.zczb+'%'}">
-                                                        <b style="cursor: pointer;" @click="thePressureToKeepSwitch=true">{{thePressureToKeepNum.zcnum}}</b>
-                                                    </span>
-                                                    <span class="z_proess_sp2"></span>
-                                                </div>
-                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="thePressureToKeepSwitch=false">{{thePressureToKeepNum.ycnum}}</b></span>
-                                            </div>
-                                        </div>  
-                                        <div class="z-row-center">
-                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
-                                                v-for="(item,index) in thePressureToKeep" :key="index" 
-                                                v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!thePressureToKeepSwitch"
-                                                @click="((val)=>{selRadioIterm(item.code,'thePressureToKeep')})">
-                                                <span class="sp1">{{item.value}}</span>
-                                                <span class="sp2">{{item.name}}</span>
-                                            </div>
-                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
-                                                v-for="(item,index) in thePressureToKeep" :key="index" 
-                                                v-if="item.name=='正常'&&thePressureToKeepSwitch"
-                                                @click="((val)=>{selRadioIterm(item.code,'thePressureToKeep')})">
-                                                <span class="sp1">{{item.value}}</span>
-                                                <span class="sp2">{{item.name}}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="z3">
-                                    <div class="z-row-right" style="position: relative;top: 48px;">
-                                        <div class="name">措施推荐</div>
-                                        <div class="num">
-                                            <span 
-                                                :class="[item.code==selCode?'spActive':'']"
-                                                 v-for="(item,index) in recommendedMeasuresOptions" :key="index" @click.stop="selRadioIterm(item.code,'recommendedMeasuresOptions')">
-                                                {{item.name}}：
-                                                <b style="color: #FFC835; font-size: 14px;">{{item.value}}</b>
+                                        </template>
+                                        <template slot-scope="{row}">
+                                            <span style="display: flex;align-items: center;justify-content: center;">
+                                                <span v-if="row[item.code+'Message']==''">{{row[item.code]?row[item.code]:'-'}}</span>
+                                                <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
+                                                    <span>{{row[item.code]?row[item.code]:'-'}}</span>
+                                                </el-tooltip>
+                                                <img src="@/assets/rem/yieId/upTriangle.png" v-if="row[item.code+'Message']&&row[item.code+'Message'].includes('高')" style="width:20px;height:20px;">
+                                                <img src="@/assets/rem/yieId/downTriangle.png" v-if="row[item.code+'Message']&&row[item.code+'Message'].includes('低')"  style="width:20px;height:20px;">
                                             </span>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="injectionResponseAnalysis" align="center" label="注水受效" min-width="140">
+                                        <template slot-scope="{row}">
+                                            <span v-if="row['injectionResponseAnalysisMessage']==''">{{row['injectionResponseAnalysis']?row['injectionResponseAnalysis']:'-'}}</span>
+                                            <el-tooltip v-else class="item" effect="dark" :content="row['injectionResponseAnalysisMessage']" placement="top">
+                                                <span>{{row['injectionResponseAnalysis']?row['injectionResponseAnalysis']:'-'}}</span>
+                                            </el-tooltip>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="injectionProductionBalance" align="center" label="注水平衡" min-width="140">
+                                        <template slot-scope="{row}">
+                                            <span v-if="row['injectionProductionBalanceMessage']==''">{{row['injectionProductionBalance']?row['injectionProductionBalance']:'-'}}</span>
+                                            <el-tooltip v-else class="item" effect="dark" :content="row['injectionProductionBalanceMessage']" placement="top">
+                                                <span>{{row['injectionProductionBalance']?row['injectionProductionBalance']:'-'}}</span>
+                                            </el-tooltip>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="thePressureToKeep" align="center" label="压力保持" min-width="140">
+                                        <template slot-scope="{row}">
+                                            <span v-if="row['thePressureToKeepMessage']==''">{{row['thePressureToKeep']?row['thePressureToKeep']:'-'}}</span>
+                                            <el-tooltip v-else class="item" effect="dark" :content="row['thePressureToKeepMessage']" placement="top">
+                                                <span>{{row['thePressureToKeep']?row['thePressureToKeep']:'-'}}</span>
+                                            </el-tooltip>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column align="center" label="措施初选">
+                                        <el-table-column prop="measuresName" align="center" label="推荐措施" min-width="140">
+                                            <template slot-scope="{row}">
+                                                <span>{{row.measuresName?row.measuresName:'-'}}</span>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column prop="theDate" min-width="140px" align="center" label="推荐日期">
+                                            <template slot-scope="{row}">
+                                                <span>{{row.theDate?row.theDate:'-'}}</span>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column prop="address" align="center" label="操作" min-width="140">
+                                            <template slot-scope="scope">
+                                                <el-button type="text" size="small" @click="openAnalysis(scope.row.wellId)">分析</el-button>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table-column>
+                                </el-table>
+                            </pagePanel>
+                        </div>
+                    </div>
+                </pagePanelNew>
+            </div>
+            <!-- 新版本 -->
+            <div class="app-container2" v-if="isNewformat">
+                <headerSearch style="height:80px;">
+                    <div class="g-row-flex-V g-w100 g-h100">
+                        <span>油田：</span>
+                        <el-select v-model="selYtdm" class="f2" style="width:180px" filterable clearable disabled @change="queryBlockList">
+                            <el-option v-for="item in ytData" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId">
+                            </el-option>
+                        </el-select>
+                        <span style="margin-left:15px;">区块：</span>
+                        <el-select v-model="selBlock" class="f2" style="width:180px" filterable @change="changeBlock">
+                            <el-option v-for="item in blockData" :key="item.fieldId" :label="item.name" :value="item.fieldId">
+                            </el-option>
+                        </el-select>
+                        <span style="margin-left:15px;">水井井组：</span>
+                        <el-select v-model="searchKeys" class="f2" style="width:200px" filterable  @change="changeWellGroup">
+                            <el-option v-for="item in wellGroupList" :key="item.wellGroupId" :label="item.wellGroupName" :value="item.wellGroupId">
+                            </el-option>
+                        </el-select>
+                        <span style="margin-left:15px;">年月：</span>
+                        <el-date-picker v-model="currentDate" type="date" value-format="yyyy-MM-dd" :clearable='false'></el-date-picker>
+                        <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
+                        <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+                    </div>
+                </headerSearch>
+                <div class="app-container3">
+                    <div class="leftBox">
+                        <img src="@/assets/rem/performance/bg.gif" alt="" class="img1">
+                        <img src="@/assets/rem/performance/jing-small.png" alt="" class="img2">
+                        <img src="@/assets/rem/performance/shui-donghua.gif" alt="" class="img3">
+                        <img src="@/assets/rem/performance/di.png" alt="" class="img4">
+                        <img src="@/assets/rem/performance/01cai.gif" alt="" class="img6">
+                        <img src="@/assets/rem/performance/01zhu.gif" alt="" class="img5">
+                        <img src="@/assets/rem/performance/01cai.gif" alt="" class="img7">
+                        <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode=='dark'">
+                        <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else>
+                    </div>
+                    <div class="rightBox">
+                        <div class="v1">
+                            <img src="@/assets/rem/performance/bgline1.png" alt="" class="bgline1">
+                            <div class="btns" style="height:40px;display: flex;">
+                                <el-button type="primary" style="margin-left:auto;" @click="$router.push({path:'/modelConfiguration/modelconfig'})">模型配置</el-button>
+                                <el-button type="primary" @click="isNewformat=!isNewformat;">切换版式</el-button>
+                            </div>
+                            <div class="btns0">
+                                <img src="@/assets/rem/performance/help.png" alt="" class="helpImg">
+                                <span>{{potentialWellNum}}</span>
+                                <b>潜力井组</b>
+                            </div>
+                        </div>
+                        <div class="v2">
+                            <info-window info-width="100%"  info-height="100%"  header-title="井组变化趋势分析" :is-show-max-btn="false">
+                                <div class="z-content" style="height:100%;overflow-y: scroll;">
+                                    <div class="z-content-n">
+                                        <div class="z-row-left">
+                                            <div class="z_title">
+                                                <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                                <span>动态变化趋势</span>
+                                            </div>
+                                            <div class="z_schedule">
+                                                <span class="sp1">正常：</span>
+                                                <div class="z_proess">
+                                                    <span class="z_proess_sp1" :style="{width:trendOfIndicatorsNum.zczb+'%'}">
+                                                        <b style="cursor: pointer;" @click="trendOfIndicatorsSwitch=true">{{trendOfIndicatorsNum.zcnum}}</b>
+                                                    </span>
+                                                    <span class="z_proess_sp2"></span>
+                                                </div>
+                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="trendOfIndicatorsSwitch=false">{{trendOfIndicatorsNum.ycnum}}</b></span>
+                                            </div>
+                                        </div>  
+                                        <div class="z-row-center">
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                v-for="(item,index) in trendOfIndicators" :key="index" 
+                                                v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!trendOfIndicatorsSwitch"
+                                                @click="((val)=>{selRadioIterm(item.code,'trendOfIndicators')})">
+                                                <span class="sp1">{{item.value}}</span>
+                                                <span class="sp2">{{item.name}}</span>
+                                            </div>
+                                            <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                v-for="(item,index) in trendOfIndicators" :key="index" 
+                                                v-if="item.name=='正常'&&trendOfIndicatorsSwitch"
+                                                @click="((val)=>{selRadioIterm(item.code,'trendOfIndicators')})">
+                                                <span class="sp1">{{item.value}}</span>
+                                                <span class="sp2">{{item.name}}</span>
+                                            </div>
+                                        </div>
+                                        <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;left:-30px">
+                                            <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='2010802')"
+                                                    @click="$router.push({name:'attributtonAnalysis',query:{platform,wellId,searchKeys,currentDate,searchKeys,'link':6,evalResult:selCode }})">
+                                                归因分析详情
+                                            </el-button>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </info-window>
-                    </div>
-                    <div style="height:680px;">
-                        <info-window info-width="100%"  info-height="100%"  header-title="井组动态分析详情列表" :is-show-max-btn="false">
-                            <el-table 
-                                highlight 
-                                :data="tableData" 
-                                height="100%" 
-                                @sort-change="changeTableSort" 
-                                ref="tableList" 
-                                class="doubleHeader"
-                                row-key="id"
-                                default-expand-all
-                                :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-                                <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
-                                <el-table-column prop="wellId" align="center" label="井组" width="200px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
-                                <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code"  align="center" min-width="170" sortable="custom" label-class-name="twoRowHeader">
-                                    <template #header>
-                                        <div class="headerSortRow1">
-                                            <span>{{ item.name}}</span>
-                                            <br />
-                                            <span>{{ item.unit}}</span>
+                            </info-window>
+                        </div>
+                        <div class="v2 v3">
+                            <img src="@/assets/rem/performance/bgline2.png" alt="" class="bgline2">
+                            <info-window info-width="100%"  info-height="100%"  header-title="开发生产问题监测" :is-show-max-btn="false">
+                                <div class="z-content2" style="height:100%;overflow-y: scroll;">
+                                    <div class="z1">
+                                        <div class="z-content-n">
+                                            <div class="z-row-left">
+                                                <div class="z_title">
+                                                    <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                                    <span>注采平衡</span>
+                                                </div>
+                                                <div class="z_schedule">
+                                                    <span class="sp1">正常：</span>
+                                                    <div class="z_proess">
+                                                        <span class="z_proess_sp1" :style="{width:injectionProductionBalanceNum.zczb+'%'}">
+                                                            <b style="cursor: pointer;" @click="injectionProductionBalanceSwitch=true">{{injectionProductionBalanceNum.zcnum}}</b>
+                                                        </span>
+                                                        <span class="z_proess_sp2"></span>
+                                                    </div>
+                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="injectionProductionBalanceSwitch=false">{{injectionProductionBalanceNum.ycnum}}</b></span>
+                                                </div>
+                                            </div>  
+                                            <div class="z-row-center">
+                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                    v-for="(item,index) in injectionProductionBalance" :key="index" 
+                                                    v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!injectionProductionBalanceSwitch"
+                                                    @click="((val)=>{selRadioIterm(item.code,'injectionProductionBalance')})">
+                                                    <span class="sp1">{{item.value}}</span>
+                                                    <span class="sp2">{{item.name}}</span>
+                                                </div>
+                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                    v-for="(item,index) in injectionProductionBalance" :key="index" 
+                                                    v-if="item.name=='正常'&&injectionProductionBalanceSwitch"
+                                                    @click="((val)=>{selRadioIterm(item.code,'injectionProductionBalance')})">
+                                                    <span class="sp1">{{item.value}}</span>
+                                                    <span class="sp2">{{item.name}}</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </template>
-                                    <template slot-scope="{row}">
-                                        <span style="display: flex;align-items: center;justify-content: center;">
-                                            <span v-if="row[item.code+'Message']==''">{{row[item.code]?row[item.code]:'-'}}</span>
-                                            <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
-                                                <span>{{row[item.code]?row[item.code]:'-'}}</span>
+                                        <div class="z-content-n">
+                                            <div class="z-row-left">
+                                                <div class="z_title">
+                                                    <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                                    <span>注水受效分析</span>
+                                                </div>
+                                                <div class="z_schedule">
+                                                    <span class="sp1">正常：</span>
+                                                    <div class="z_proess">
+                                                        <span class="z_proess_sp1" :style="{width:injectionResponseAnalysisNum.zczb+'%'}">
+                                                            <b style="cursor: pointer;" @click="injectionResponseAnalysisSwitch=true">{{injectionResponseAnalysisNum.zcnum}}</b>
+                                                        </span>
+                                                        <span class="z_proess_sp2"></span>
+                                                    </div>
+                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="injectionResponseAnalysisSwitch=false">{{injectionResponseAnalysisNum.ycnum}}</b></span>
+                                                </div>
+                                            </div>  
+                                            <div class="z-row-center">
+                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                    v-for="(item,index) in injectionResponseAnalysis" :key="index" 
+                                                    v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!injectionResponseAnalysisSwitch"
+                                                    @click="((val)=>{selRadioIterm(item.code,'injectionResponseAnalysis')})">
+                                                    <span class="sp1">{{item.value}}</span>
+                                                    <span class="sp2">{{item.name}}</span>
+                                                </div>
+                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                    v-for="(item,index) in injectionResponseAnalysis" :key="index" 
+                                                    v-if="item.name=='正常'&&injectionResponseAnalysisSwitch"
+                                                    @click="((val)=>{selRadioIterm(item.code,'injectionResponseAnalysis')})">
+                                                    <span class="sp1">{{item.value}}</span>
+                                                    <span class="sp2">{{item.name}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="z2">
+                                        <div class="z-content-n" style="flex-direction: column;">
+                                            <div class="z-row-left" style="margin-bottom:16px;">
+                                                <div class="z_title">
+                                                    <img src="@/assets/rem/performance/z_sb.png" alt="">
+                                                    <span>压力保持</span>
+                                                </div>
+                                                <div class="z_schedule">
+                                                    <span class="sp1">正常：</span>
+                                                    <div class="z_proess">
+                                                        <span class="z_proess_sp1" :style="{width:thePressureToKeepNum.zczb+'%'}">
+                                                            <b style="cursor: pointer;" @click="thePressureToKeepSwitch=true">{{thePressureToKeepNum.zcnum}}</b>
+                                                        </span>
+                                                        <span class="z_proess_sp2"></span>
+                                                    </div>
+                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="thePressureToKeepSwitch=false">{{thePressureToKeepNum.ycnum}}</b></span>
+                                                </div>
+                                            </div>  
+                                            <div class="z-row-center">
+                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                    v-for="(item,index) in thePressureToKeep" :key="index" 
+                                                    v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!thePressureToKeepSwitch"
+                                                    @click="((val)=>{selRadioIterm(item.code,'thePressureToKeep')})">
+                                                    <span class="sp1">{{item.value}}</span>
+                                                    <span class="sp2">{{item.name}}</span>
+                                                </div>
+                                                <div class="numBtn" :class="[item.code==selCode?'numBtnBgActive':'']"
+                                                    v-for="(item,index) in thePressureToKeep" :key="index" 
+                                                    v-if="item.name=='正常'&&thePressureToKeepSwitch"
+                                                    @click="((val)=>{selRadioIterm(item.code,'thePressureToKeep')})">
+                                                    <span class="sp1">{{item.value}}</span>
+                                                    <span class="sp2">{{item.name}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="z3">
+                                        <div class="z-row-right" style="position: relative;top: 48px;">
+                                            <div class="name">措施推荐</div>
+                                            <div class="num">
+                                                <span 
+                                                    :class="[item.code==selCode?'spActive':'']"
+                                                    v-for="(item,index) in recommendedMeasuresOptions" :key="index" @click.stop="selRadioIterm(item.code,'recommendedMeasuresOptions')">
+                                                    {{item.name}}：
+                                                    <b style="color: #FFC835; font-size: 14px;">{{item.value}}</b>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </info-window>
+                        </div>
+                        <div style="height:680px;">
+                            <info-window info-width="100%"  info-height="100%"  header-title="井组动态分析详情列表" :is-show-max-btn="false">
+                                <el-table 
+                                    highlight 
+                                    :data="tableData" 
+                                    height="100%" 
+                                    @sort-change="changeTableSort" 
+                                    ref="tableList" 
+                                    class="doubleHeader"
+                                    row-key="id"
+                                    default-expand-all
+                                    :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+                                    <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
+                                    <el-table-column prop="wellId" align="center" label="井组" width="200px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
+                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code"  align="center" min-width="170" sortable="custom" label-class-name="twoRowHeader">
+                                        <template #header>
+                                            <div class="headerSortRow1">
+                                                <span>{{ item.name}}</span>
+                                                <br />
+                                                <span>{{ item.unit}}</span>
+                                            </div>
+                                        </template>
+                                        <template slot-scope="{row}">
+                                            <span style="display: flex;align-items: center;justify-content: center;">
+                                                <span v-if="row[item.code+'Message']==''">{{row[item.code]?row[item.code]:'-'}}</span>
+                                                <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
+                                                    <span>{{row[item.code]?row[item.code]:'-'}}</span>
+                                                </el-tooltip>
+                                                <img src="@/assets/rem/yieId/upTriangle.png" v-if="row[item.code+'Message']&&row[item.code+'Message'].includes('高')" style="width:20px;height:20px;">
+                                                <img src="@/assets/rem/yieId/downTriangle.png" v-if="row[item.code+'Message']&&row[item.code+'Message'].includes('低')"  style="width:20px;height:20px;">
+                                            </span>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="injectionResponseAnalysis" align="center" label="注水受效" min-width="140">
+                                        <template slot-scope="{row}">
+                                            <span v-if="row['injectionResponseAnalysisMessage']==''">{{row['injectionResponseAnalysis']?row['injectionResponseAnalysis']:'-'}}</span>
+                                            <el-tooltip v-else class="item" effect="dark" :content="row['injectionResponseAnalysisMessage']" placement="top">
+                                                <span>{{row['injectionResponseAnalysis']?row['injectionResponseAnalysis']:'-'}}</span>
                                             </el-tooltip>
-                                            <img src="@/assets/rem/yieId/upTriangle.png" v-if="row[item.code+'Message']&&row[item.code+'Message'].includes('高')" style="width:20px;height:20px;">
-                                            <img src="@/assets/rem/yieId/downTriangle.png" v-if="row[item.code+'Message']&&row[item.code+'Message'].includes('低')"  style="width:20px;height:20px;">
-                                        </span>
-                                    </template>
-                                  </el-table-column>
-                                <el-table-column prop="injectionResponseAnalysis" align="center" label="注水受效" min-width="140">
-                                      <template slot-scope="{row}">
-                                          <span v-if="row['injectionResponseAnalysisMessage']==''">{{row['injectionResponseAnalysis']?row['injectionResponseAnalysis']:'-'}}</span>
-                                          <el-tooltip v-else class="item" effect="dark" :content="row['injectionResponseAnalysisMessage']" placement="top">
-                                              <span>{{row['injectionResponseAnalysis']?row['injectionResponseAnalysis']:'-'}}</span>
-                                          </el-tooltip>
-                                      </template>
-                                  </el-table-column>
-                                <el-table-column prop="injectionProductionBalance" align="center" label="注水平衡" min-width="140">
-                                      <template slot-scope="{row}">
-                                          <span v-if="row['injectionProductionBalanceMessage']==''">{{row['injectionProductionBalance']?row['injectionProductionBalance']:'-'}}</span>
-                                          <el-tooltip v-else class="item" effect="dark" :content="row['injectionProductionBalanceMessage']" placement="top">
-                                              <span>{{row['injectionProductionBalance']?row['injectionProductionBalance']:'-'}}</span>
-                                          </el-tooltip>
-                                      </template>
-                                  </el-table-column>
-                                <el-table-column prop="thePressureToKeep" align="center" label="压力保持" min-width="140">
-                                      <template slot-scope="{row}">
-                                          <span v-if="row['thePressureToKeepMessage']==''">{{row['thePressureToKeep']?row['thePressureToKeep']:'-'}}</span>
-                                          <el-tooltip v-else class="item" effect="dark" :content="row['thePressureToKeepMessage']" placement="top">
-                                              <span>{{row['thePressureToKeep']?row['thePressureToKeep']:'-'}}</span>
-                                          </el-tooltip>
-                                      </template>
-                                  </el-table-column>
-                                <el-table-column align="center" label="措施初选">
-                                    <el-table-column prop="measuresName" align="center" label="推荐措施" min-width="140">
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column prop="injectionProductionBalance" align="center" label="注水平衡" min-width="140">
                                         <template slot-scope="{row}">
-                                             <span>{{row.measuresName?row.measuresName:'-'}}</span>
+                                            <span v-if="row['injectionProductionBalanceMessage']==''">{{row['injectionProductionBalance']?row['injectionProductionBalance']:'-'}}</span>
+                                            <el-tooltip v-else class="item" effect="dark" :content="row['injectionProductionBalanceMessage']" placement="top">
+                                                <span>{{row['injectionProductionBalance']?row['injectionProductionBalance']:'-'}}</span>
+                                            </el-tooltip>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="theDate" min-width="140px" align="center" label="推荐日期">
+                                    <el-table-column prop="thePressureToKeep" align="center" label="压力保持" min-width="140">
                                         <template slot-scope="{row}">
-                                             <span>{{row.theDate?row.theDate:'-'}}</span>
+                                            <span v-if="row['thePressureToKeepMessage']==''">{{row['thePressureToKeep']?row['thePressureToKeep']:'-'}}</span>
+                                            <el-tooltip v-else class="item" effect="dark" :content="row['thePressureToKeepMessage']" placement="top">
+                                                <span>{{row['thePressureToKeep']?row['thePressureToKeep']:'-'}}</span>
+                                            </el-tooltip>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="address" align="center" label="操作" min-width="140">
-                                        <template slot-scope="scope">
-                                            <el-button type="text" size="small" @click="openAnalysis(scope.row.wellId)">分析</el-button>
-                                        </template>
+                                    <el-table-column align="center" label="措施初选">
+                                        <el-table-column prop="measuresName" align="center" label="推荐措施" min-width="140">
+                                            <template slot-scope="{row}">
+                                                <span>{{row.measuresName?row.measuresName:'-'}}</span>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column prop="theDate" min-width="140px" align="center" label="推荐日期">
+                                            <template slot-scope="{row}">
+                                                <span>{{row.theDate?row.theDate:'-'}}</span>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column prop="address" align="center" label="操作" min-width="140">
+                                            <template slot-scope="scope">
+                                                <el-button type="text" size="small" @click="openAnalysis(scope.row.wellId)">分析</el-button>
+                                            </template>
+                                        </el-table-column>
                                     </el-table-column>
-                                </el-table-column>
-                            </el-table>
-                        </info-window>
+                                </el-table>
+                            </info-window>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -503,11 +525,17 @@
     } from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js"
     import compareSort from "@/lib/compareSort.js";
+    import treeSelectionCustom from "@/pages/rem/basic/components/treeSelectionCustom.vue";
     export default {
         name:'wellGroupAnalysisReport',
         mixins: [compareSort],
+        components: {
+            treeSelectionCustom
+        },
         data() {
             return {
+                // 主数据树结构默认选中的值
+                defaultCheckedKeys: [],
                 collectWells:[],//收集井
                 isNewformat:true,//默认新版本
                 potentialWellNum:0,//潜力井
@@ -657,6 +685,33 @@
                         this.initTypes--;
                     }
                 });
+            },
+            // 区块切换事件
+            changeBlock() {
+                this.$refs.treeSelectionCustom.setCheckedKeys([this.selBlock, this.searchKeys]);
+                this.queryWellGroupList();
+            },
+            changeWellGroup() {
+                this.$refs.treeSelectionCustom.setCheckedKeys([this.selBlock, this.searchKeys]);
+            },
+            // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
+            getSelectItems(selectList, selectData) {
+                // 油田选中数据
+                // this.selYtdm = selectList.ogfId;
+                // 区块选中数据
+                this.selBlock = selectList.blockId;
+                // 井组选中数据
+                this.searchKeys = selectList.wellGroupId;
+                // 判断如果没有wellGroupList没有当前井组，调取井组接口根据区块获取井号数据
+                let isUpdata = this.wellGroupList.map((item) => item.wellId).includes(selectList.wellGroupId);
+                if (!isUpdata || selectList.blockId != this.selBlock) {
+                    selectWellGroup({ogfId: this.selYtdm, blockId: this.selBlock, dateTime: new Date().format('yyyy-MM-dd')}).then((res) => {
+                    if (res.data.code == 200) {
+                        this.wellGroupList = res.data.data;
+                        this.wellGroupList.unshift({wellGroupName: '全部',wellGroupId: ''});
+                    }
+                });
+                }
             },
             //进行数据查询处理
             doSearch() {
