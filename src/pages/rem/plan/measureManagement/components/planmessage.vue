@@ -15,6 +15,7 @@
       <el-table
         :data="noticeList"
         highlight-current-row
+        :span-method="objectSpanMethod"
         :row-style="{ height: '0px' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
         header-cell-class-name="table_header"
@@ -27,7 +28,6 @@
        
         <el-table-column  label="井基本信息" prop="wellId" align="center">
           <el-table-column sortable  label="井号" prop="wellNo" min-width="200px" align="center">
-              
           </el-table-column>
           <el-table-column label="生产层位" sortable prop="layerName" min-width="200px" align="center">
               <template slot-scope="scope">
@@ -382,6 +382,89 @@ export default {
         })
       
     },
+      objectSpanMethod({row, column, rowIndex, columnIndex}) {
+          const concatList = [
+              {col: 0, colName: 'wellNo'},
+              {col: 1, colName: 'layerName'},
+              {col: 2, colName: 'blockName'},
+              {col: 3, colName: 'reservoirThickness'},
+              {col: 4, colName: 'horizonIntervalLen'},
+              {col: 5, colName: 'completionMethod'},
+              {col: 6, colName: 'startDate'},
+              {col: 7, colName: 'fluidProdDaily'},
+              {col: 8, colName: 'oilProdDaily'},
+              {col: 9, colName: 'waterRatio'},
+              {col: 10, colName: 'pumpFrequency'},
+              {col: 11, colName: 'cumOilProdYearly'},
+              {col: 12, colName: 'testDate'},
+              {col: 13, colName: 'basalLevelStaticPress'},
+              {col: 14, colName: 'flowPress'},
+              {col: 15, colName: 'productPress'},
+              {col: 16, colName: 'probReservesWell'},
+              {col: 17, colName: 'remainingRecoverableReserves'},
+              {col: 18, colName: 'fluidProductionIndex'},
+              {col: 19, colName: 'forecastFluid'},
+              {col: 20, colName: 'forecastOilInc'},
+              {col: 21, colName: 'forecastOil'},
+              {col: 22, colName: 'forecastProductPress'},
+              {col: 23, colName: 'forecastFlowPress'},
+              {col: 24, colName: 'displacementEfficiency'},
+              {col: 25, colName: 'historySandDay'},
+              {col: 26, colName: 'sandDay'},
+              {col: 27, colName: 'sandValue'},
+              {col: 28, colName: 'pumpCondition'},
+              {col: 29, colName: 'tubularColumnCondition'},
+              
+          ]
+          for (let i = 0; i < concatList.length; i++) {
+              if (concatList[i].col == columnIndex) {
+                  const _row = this.filterData(this.noticeList, concatList[i].colName, concatList).one[rowIndex];
+                  const _col = _row > 0 ? 1 : 0;
+                  return {
+                      rowspan: _row,
+                      colspan: _col,
+                  };
+              }
+          }
+      },
+      filterData(arr, colName, concatList) {
+          let spanOneArr = [];
+          let concatOne = 0;
+          arr.forEach((item, index) => {
+              if (index === 0) {
+                  spanOneArr.push(1);
+              } else {
+                  if (item[colName] === arr[index - 1][colName]) {
+                      let col = []
+                      for (let j = 0; j < concatList.length; j++) {
+                          if (concatList[j].colName == colName && colName != concatList[0].colName) {
+                              col = concatList.slice(0, j)
+                          }
+                      }
+                      let flag = true
+                      for (let k = 0; k < col.length; k++) {
+                          if (item[col[k].colName] != arr[index - 1][col[k].colName]) {
+                              flag = !flag
+                              break
+                          }
+                      }
+                      if (flag) {
+                          spanOneArr[concatOne] += 1;
+                          spanOneArr.push(0);
+                      } else {
+                          spanOneArr.push(1);
+                          concatOne = index;
+                      }
+                  } else {
+                      spanOneArr.push(1);
+                      concatOne = index;
+                  }
+              }
+          });
+          return {
+              one: spanOneArr,
+          };
+      },
   },
 };
 </script>

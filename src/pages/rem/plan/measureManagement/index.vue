@@ -1,185 +1,207 @@
 <!-- 规范计划管理-措施管理界面 -->
 <template>
-    <div class="app-container">
-        <headerSearch class="g-w100 g-h100" style="height:auto;padding-top:18px;padding-bottom:8px;margin-bottom:20px;">
-            <div style="display: flex;align-items: center;flex-wrap:wrap;">
-                <div style="margin-right:15px;margin-bottom:10px;">
-                    <span>油田：</span>
-                    <el-select v-model="selectOilField" disabled @change="onFieldChange" style="width:165px;">
-                        <el-option v-for="(item, index) in oilFields" :key="index" :label="item.name"
-                            :value="item.oilFieldId"></el-option>
-                    </el-select>
-                </div>
-                <div style="margin-right:15px;margin-bottom:10px;">
-                    <span>平台：</span>
-                    <el-select v-model="selectPlatform" @change="onPlatfromChange" style="width: 220px;">
-                        <el-option v-for="(item, index) in platforms" :key="index" :label="item.platName"
-                            :value="item.platFormId"></el-option>
-                    </el-select>
-                </div>
-                <div style="margin-right:15px;margin-bottom:10px;">
-                    <span>井号：</span>
-                    <el-select v-model="wellId" filterable @change="getMeasureNameAndCode" style="width:170px;">
-                        <el-option v-for="(item, index) in wells" :key="index" :label="item.wellName"
-                            :value="item.wellId"></el-option>
-                    </el-select>
-                </div>
-                <div style="margin-right:15px;margin-bottom:10px;">
-                    <span>措施属性：</span>
-                    <el-select v-model="stimClassCode" filterable style="width:170px;" @change="getMeasureNameAndCode">
-                        <el-option v-for="(item, index) in stimClassCodeSelect" :key="index" :label="item.name"
-                            :value="item.code"></el-option>
-                    </el-select>
-                </div>
-                <div style="margin-right:15px;margin-bottom:10px;">
-                    <span>措施类型：</span>
-                    <el-select v-model="measureId" style="width:170px;">
-                        <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name"
-                            :value="item.code"></el-option>
-                    </el-select>
-                </div>
-                <div style="margin-right:15px;margin-bottom:10px;">
-                    <span>计划/预测版本：</span>
-                    <el-select filterable v-model="measureVersion" style="width:170px;">
-                        <el-option v-for="(item, index) in measureVersionSelect" :key="index" :label="item.label"
-                            :value="item.value"></el-option>
-                    </el-select>
-                </div>
-                <div style="margin-right:15px;margin-bottom:10px;">
-                    <span>年份:</span>
-                    <el-date-picker v-model="dateTime" style="width:160px;margin-left:10px" type="year"
-                        placeholder="选择年" value-format="yyyy" :clearable="false"></el-date-picker>
-                </div>
-                <div style="margin-right:15px;margin-bottom:10px;">
-                    <span>开始月份：</span>
-                    <el-select v-model="beginMonth" style="width:100px;" placeholder="选择开始月">
-                        <el-option v-for="(item, index) in 12" :key="index" :label="(index+1)+'月'" :value="index+1"></el-option>
-                    </el-select>
-                </div>
-                <div style="margin-right:15px;margin-bottom:10px;">
-                    <span>结束月份：</span>
-                    <el-select v-model="endMonth" style="width:100px;" placeholder="选择结束月">
-                        <el-option v-for="(item, index) in 12" :key="index" :label="(index+1)+'月'" :value="index+1"></el-option>
-                    </el-select>
-                </div>
-                <div style="margin-right:15px;margin-bottom:10px;">
-                    <el-button type="primary" icon="el-icon-search" @click="getFetchMeasureInfos">搜索</el-button>
-                </div>
-                <div style="margin-right:15px;margin-bottom:10px;">
-                    <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
-                </div>
-            </div>
-        </headerSearch>
-        <div class="z-container">
-            <pagePanelNew headerTitle="措施管理" style="height:100%;margin-top:0;">
-                <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
-                    <span>秦皇岛32-6油田作业计划跟踪</span>
-                    <el-button type="primary" icon="el-icon-download" style="height:30px;" @click="doExportFile">下载</el-button>
-                </div>
-                <div class="tableBox" id="tableBox" style="height:calc(100% - 75px)">
-                    <el-table id="csgl"
-                        :data="tableData.slice((queryParams.page - 1) * queryParams.pageSize, queryParams.page * queryParams.pageSize)"
-                        height="calc(100% - 44px)" :row-style="{ height: '0px' }"
-                        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-                        header-cell-class-name="table_header" :cell-style="{ padding: '2px', 'text-align': 'center' }"
-                        style="width: 100%;overflow-x: hidden;"
-                        >
-                        <el-table-column prop="wellNo" label="井号" width="140" sortable></el-table-column>
-                        <el-table-column prop="measureName" label="作业类型" width="80"></el-table-column>
-                        <el-table-column prop="measureName3" label="措施作业天数(计划/实际)" width="110">
-                            <template slot-scope="scope">
-                                <span v-if="scope.row.planMeasuresDayNum||scope.row.realityMeasuresDayNum">
-                                    {{scope.row.planMeasuresDayNum?scope.row.planMeasuresDayNum:0}}/{{scope.row.realityMeasuresDayNum}}
-                                </span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="status" label="措施是否达标" width="80"></el-table-column>
-                        <el-table-column label="类别" width="100">
-                            <template slot-scope="scope">
-                                <div style="line-height: 18px;">{{(measureVersion=='002003'||measureVersion=='001003'||measureVersion=='002002'||measureVersion=='001002')?'计划':'滚动预测'}}<br />实际</div>
-                            </template>
-                        </el-table-column>
-                        <el-table-column :width="width +'px'">
-                            <template slot="header" slot-scope="scope">
-                                <div class="header-titlts">
-                                    <div class="icon0">
-                                        <b class="b0"></b>
-                                        <span>实际</span>
-                                    </div>
-                                    <div class="icon0">
-                                        <b class="b1"></b>
-                                        <span>{{(measureVersion=='002003'||measureVersion=='001003'||measureVersion=='002002'||measureVersion=='001002')?'计划':'滚动预测'}}</span>   
-                                    </div>
-                                    <div class="icon0">
-                                        <b class="b2"></b>
-                                        <span>未开始计划</span>
-                                    </div>
-                                    <div class="icon1">
-                                        <img src="@/assets/rem/plan/i0.png" alt="">
-                                        <span>增产性措施</span>
-                                    </div>
-                                    <div class="icon1">
-                                        <img src="@/assets/rem/plan/i1.png" alt="">
-                                        <span>增注性措施</span>
-                                    </div>
-                                    <div class="icon1" style="margin-right: 0;">
-                                        <img src="@/assets/rem/plan/i2.png" alt="">
-                                        <span>维护性措施</span>
-                                    </div>
-                                </div>
-                            </template>
-                            <template slot-scope="scope">
-                                <div class="vv" v-if="scope.row.type!='date'"
-                                    :style="{marginLeft:scope.row.mgleftwidth}"
-                                    @click="switchToMeasures(scope.row.ogfId, scope.row.prodPlatformId, scope.row.wellId, scope.row.measuresTypeCode, scope.row.yearMonthDay,  scope.row.wellTypeCode, scope.row.wellNameNano, scope.row.wellBoreName,scope.$index)">
-                                    <div class="vv-left">
-                                        <img src="@/assets/rem/plan/i0.png" alt="" v-if="scope.row.stimClassCode=='003'"
-                                            :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 增产性措施`">
-                                        <img src="@/assets/rem/plan/i1.png" alt="" v-if="scope.row.stimClassCode=='004'"
-                                            :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 增注性措施`">
-                                        <img src="@/assets/rem/plan/i2.png" alt="" v-else
-                                            :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 维护性措施`">
-                                    </div>
-                                    <div class="vv-right">
-                                        <!-- 计划 -->
-                                        <div class="vv-line">
-                                            <div class="line" :style="{width:scope.row.jhwidth}"
-                                                v-if="Number(scope.row.planMeasuresDayNum)">
-                                                <el-progress class="progress2" type="line" :percentage="100"
-                                                    :show-text="false"></el-progress>
-                                            </div>
-                                            <div class="day" v-if="Number(scope.row.planMeasuresDayNum)">
-                                                {{scope.row.planMeasuresDayNum}}天</div>
-                                        </div>
-                                        <!-- 实际 -->
-                                        <div class="vv-line">
-                                            <div class="line" :style="{width:scope.row.sjwidth}"
-                                                v-if="Number(scope.row.realityMeasuresDayNum)">
-                                                <el-progress
-                                                    :class="[scope.$index==1&&dateTime=='2023'?'progress3':'progress1']"
-                                                    type="line" :percentage="100" :show-text="false"></el-progress>
-                                            </div>
-                                            <div class="day" :class="[scope.$index==1&&dateTime=='2023'?'day3':'']"
-                                                v-if="Number(scope.row.realityMeasuresDayNum)">
-                                                {{scope.row.realityMeasuresDayNum}}天</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                    <div class="z-date-box">
-                        <div class="z-date">
-                            <div class="day" :style="{marginRight:spacing+'px'}" v-for="(item,index) in days" :key="index">{{item}}</div>
-                        </div>
-                    </div>
-                    <div class="mcBox" :style="{width:mcWidth,height:'calc(100% - 110px)',left:mcMgLeft}" v-if="isShowMC"></div>
-                </div>
-                <pagination v-if="pageTotal" :pageSizes="[15, 20, 40, 100]" :total="pageTotal" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />
-            </pagePanelNew>
+    <!-- <div class="app-container"> -->
+    <div style="display: flex; flex-direction: row; height: calc(100%)">
+        <div style="height: 100%">
+        <treeSelectionAll
+            ref="treeSelectionAll"
+            level="5"
+            :defaultCheckedKeys="defaultCheckedKeys"
+            @getSelectItems="getSelectItems"
+        />
         </div>
-        <!-- 现场作业进度表-弹框 -->
-        <fieldOperations :dialogVisible="fieldOperationsShow" @close="fieldOperationsShow=false;"></fieldOperations>
+        <div
+        class="app-container"
+        style="
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex: 1;
+            right: 0;
+            overflow: hidden;
+            margin-left: 20px;
+        "
+        >
+            <headerSearch class="g-w100 g-h100" style="height:auto;padding-top:18px;padding-bottom:8px;margin-bottom:20px;">
+                <div style="display: flex;align-items: center;flex-wrap:wrap;">
+                    <div style="margin-right:15px;margin-bottom:10px;">
+                        <span>油田：</span>
+                        <el-select v-model="selectOilField" disabled @change="onFieldChange" style="width:165px;">
+                            <el-option v-for="(item, index) in oilFields" :key="index" :label="item.name"
+                                :value="item.oilFieldId"></el-option>
+                        </el-select>
+                    </div>
+                    <div style="margin-right:15px;margin-bottom:10px;">
+                        <span>平台：</span>
+                        <el-select v-model="selectPlatform" @change="onPlatfromChange" style="width: 220px;">
+                            <el-option v-for="(item, index) in platforms" :key="index" :label="item.platName"
+                                :value="item.platFormId"></el-option>
+                        </el-select>
+                    </div>
+                    <div style="margin-right:15px;margin-bottom:10px;">
+                        <span>井号：</span>
+                        <el-select v-model="wellId" filterable @change="changeWell" style="width:170px;">
+                            <el-option v-for="(item, index) in wells" :key="index" :label="item.wellName"
+                                :value="item.wellId"></el-option>
+                        </el-select>
+                    </div>
+                    <div style="margin-right:15px;margin-bottom:10px;">
+                        <span>措施属性：</span>
+                        <el-select v-model="stimClassCode" filterable style="width:170px;" @change="getMeasureNameAndCode">
+                            <el-option v-for="(item, index) in stimClassCodeSelect" :key="index" :label="item.name"
+                                :value="item.code"></el-option>
+                        </el-select>
+                    </div>
+                    <div style="margin-right:15px;margin-bottom:10px;">
+                        <span>措施类型：</span>
+                        <el-select v-model="measureId" style="width:170px;">
+                            <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name"
+                                :value="item.code"></el-option>
+                        </el-select>
+                    </div>
+                    <div style="margin-right:15px;margin-bottom:10px;">
+                        <span>计划/预测版本：</span>
+                        <el-select filterable v-model="measureVersion" style="width:170px;">
+                            <el-option v-for="(item, index) in measureVersionSelect" :key="index" :label="item.label"
+                                :value="item.value"></el-option>
+                        </el-select>
+                    </div>
+                    <div style="margin-right:15px;margin-bottom:10px;">
+                        <span>年份:</span>
+                        <el-date-picker v-model="dateTime" style="width:160px;margin-left:10px" type="year"
+                            placeholder="选择年" value-format="yyyy" :clearable="false"></el-date-picker>
+                    </div>
+                    <div style="margin-right:15px;margin-bottom:10px;">
+                        <span>开始月份：</span>
+                        <el-select v-model="beginMonth" style="width:100px;" placeholder="选择开始月">
+                            <el-option v-for="(item, index) in 12" :key="index" :label="(index+1)+'月'" :value="index+1"></el-option>
+                        </el-select>
+                    </div>
+                    <div style="margin-right:15px;margin-bottom:10px;">
+                        <span>结束月份：</span>
+                        <el-select v-model="endMonth" style="width:100px;" placeholder="选择结束月">
+                            <el-option v-for="(item, index) in 12" :key="index" :label="(index+1)+'月'" :value="index+1"></el-option>
+                        </el-select>
+                    </div>
+                    <div style="margin-right:15px;margin-bottom:10px;">
+                        <el-button type="primary" icon="el-icon-search" @click="getFetchMeasureInfos">搜索</el-button>
+                    </div>
+                    <div style="margin-right:15px;margin-bottom:10px;">
+                        <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+                    </div>
+                </div>
+            </headerSearch>
+            <div class="z-container">
+                <pagePanelNew headerTitle="措施管理" style="height:100%;margin-top:0;">
+                    <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
+                        <span>秦皇岛32-6油田作业计划跟踪</span>
+                        <el-button type="primary" icon="el-icon-download" style="height:30px;" @click="doExportFile">下载</el-button>
+                    </div>
+                    <div class="tableBox" id="tableBox" style="height:calc(100% - 75px)">
+                        <el-table id="csgl"
+                            :data="tableData.slice((queryParams.page - 1) * queryParams.pageSize, queryParams.page * queryParams.pageSize)"
+                            height="calc(100% - 44px)" :row-style="{ height: '0px' }"
+                            :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                            header-cell-class-name="table_header" :cell-style="{ padding: '2px', 'text-align': 'center' }"
+                            style="width: 100%;overflow-x: hidden;"
+                            >
+                            <el-table-column prop="wellNo" label="井号" width="140" sortable></el-table-column>
+                            <el-table-column prop="measureName" label="作业类型" width="80"></el-table-column>
+                            <el-table-column prop="measureName3" label="措施作业天数(计划/实际)" width="110">
+                                <template slot-scope="scope">
+                                    <span v-if="scope.row.planMeasuresDayNum||scope.row.realityMeasuresDayNum">
+                                        {{scope.row.planMeasuresDayNum?scope.row.planMeasuresDayNum:0}}/{{scope.row.realityMeasuresDayNum}}
+                                    </span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="status" label="措施是否达标" width="80"></el-table-column>
+                            <el-table-column label="类别" width="100">
+                                <template slot-scope="scope">
+                                    <div style="line-height: 18px;">{{(measureVersion=='002003'||measureVersion=='001003'||measureVersion=='002002'||measureVersion=='001002')?'计划':'滚动预测'}}<br />实际</div>
+                                </template>
+                            </el-table-column>
+                            <el-table-column :width="width +'px'">
+                                <template slot="header" slot-scope="scope">
+                                    <div class="header-titlts">
+                                        <div class="icon0">
+                                            <b class="b0"></b>
+                                            <span>实际</span>
+                                        </div>
+                                        <div class="icon0">
+                                            <b class="b1"></b>
+                                            <span>{{(measureVersion=='002003'||measureVersion=='001003'||measureVersion=='002002'||measureVersion=='001002')?'计划':'滚动预测'}}</span>   
+                                        </div>
+                                        <div class="icon0">
+                                            <b class="b2"></b>
+                                            <span>未开始计划</span>
+                                        </div>
+                                        <div class="icon1">
+                                            <img src="@/assets/rem/plan/i0.png" alt="">
+                                            <span>增产性措施</span>
+                                        </div>
+                                        <div class="icon1">
+                                            <img src="@/assets/rem/plan/i1.png" alt="">
+                                            <span>增注性措施</span>
+                                        </div>
+                                        <div class="icon1" style="margin-right: 0;">
+                                            <img src="@/assets/rem/plan/i2.png" alt="">
+                                            <span>维护性措施</span>
+                                        </div>
+                                    </div>
+                                </template>
+                                <template slot-scope="scope">
+                                    <div class="vv" v-if="scope.row.type!='date'"
+                                        :style="{marginLeft:scope.row.mgleftwidth}"
+                                        @click="switchToMeasures(scope.row.ogfId, scope.row.prodPlatformId, scope.row.wellId, scope.row.measuresTypeCode, scope.row.yearMonthDay,  scope.row.wellTypeCode, scope.row.wellNameNano, scope.row.wellBoreName,scope.$index)">
+                                        <div class="vv-left">
+                                            <img src="@/assets/rem/plan/i0.png" alt="" v-if="scope.row.stimClassCode=='003'"
+                                                :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 增产性措施`">
+                                            <img src="@/assets/rem/plan/i1.png" alt="" v-if="scope.row.stimClassCode=='004'"
+                                                :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 增注性措施`">
+                                            <img src="@/assets/rem/plan/i2.png" alt="" v-else
+                                                :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 维护性措施`">
+                                        </div>
+                                        <div class="vv-right">
+                                            <!-- 计划 -->
+                                            <div class="vv-line">
+                                                <div class="line" :style="{width:scope.row.jhwidth}"
+                                                    v-if="Number(scope.row.planMeasuresDayNum)">
+                                                    <el-progress class="progress2" type="line" :percentage="100"
+                                                        :show-text="false"></el-progress>
+                                                </div>
+                                                <div class="day" v-if="Number(scope.row.planMeasuresDayNum)">
+                                                    {{scope.row.planMeasuresDayNum}}天</div>
+                                            </div>
+                                            <!-- 实际 -->
+                                            <div class="vv-line">
+                                                <div class="line" :style="{width:scope.row.sjwidth}"
+                                                    v-if="Number(scope.row.realityMeasuresDayNum)">
+                                                    <el-progress
+                                                        :class="[scope.$index==1&&dateTime=='2023'?'progress3':'progress1']"
+                                                        type="line" :percentage="100" :show-text="false"></el-progress>
+                                                </div>
+                                                <div class="day" :class="[scope.$index==1&&dateTime=='2023'?'day3':'']"
+                                                    v-if="Number(scope.row.realityMeasuresDayNum)">
+                                                    {{scope.row.realityMeasuresDayNum}}天</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                        <div class="z-date-box">
+                            <div class="z-date">
+                                <div class="day" :style="{marginRight:spacing+'px'}" v-for="(item,index) in days" :key="index">{{item}}</div>
+                            </div>
+                        </div>
+                        <div class="mcBox" :style="{width:mcWidth,height:'calc(100% - 110px)',left:mcMgLeft}" v-if="isShowMC"></div>
+                    </div>
+                    <pagination v-if="pageTotal" :pageSizes="[15, 20, 40, 100]" :total="pageTotal" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />
+                </pagePanelNew>
+            </div>
+            <!-- 现场作业进度表-弹框 -->
+            <fieldOperations :dialogVisible="fieldOperationsShow" @close="fieldOperationsShow=false;"></fieldOperations>
+        </div>
     </div>
 </template>
 
@@ -207,14 +229,17 @@
     } from '@/lib/exportExcel.js';
     import FileSaver from 'file-saver';
     import * as XLSX from '@/lib/xlsx';
-    
+    import treeSelectionAll from "@/pages/rem/basic/components/treeSelectionAll.vue";
     export default {
         name: 'measureManagement',
         components: {
-            fieldOperations
+            fieldOperations,
+            treeSelectionAll
         },
         data() {
             return {
+                // 主数据树结构默认选中的值
+                defaultCheckedKeys: [],
                 screenWidth: '', //界面宽度
                 width: '', //table最后一列的宽度
                 spacing: '', //日期间距
@@ -222,8 +247,8 @@
                 mcMgLeft: '',
                 basicDays:['年01月','年02月','年03月','年04月','年05月','年06月','年07月','年08月','年09月','年10月','年11月','年12月'],
                 days: [],
-                // dateTime: new Date().format('yyyy'), //时间
-                dateTime:'2022',
+                dateTime: new Date().format('yyyy'), //时间
+                // dateTime:'2022',
                 beginMonth:1,//开始月份
                 endMonth:12,//结束月份
                 queryParams: {
@@ -384,8 +409,8 @@
                     }
                 });
                 //井号
-                await fetchProductionWells({
-                    oilFieldId: this.selectOilField
+                await fetchProductionWellsByPlatform({
+                    platformId:  this.selectPlatform
                 }).then((res) => {
                     if (res.data.code == 200) {
                         const wellData = res.data.data.productionWells;
@@ -393,8 +418,8 @@
                         this.wells = [...this.wells,...wellList];
                     }
                 });
-                await fetchInjectionWells({
-                    oilFieldId: this.selectOilField
+                await fetchInjectionWellsByPlatform({
+                    platformId:  this.selectPlatform
                 }).then((res) => {
                     if (res.data.code == 200) {
                         const wellData = res.data.data.injectionWell;
@@ -407,6 +432,8 @@
                     wellName: '全部'
                 });
                 this.wellId = '';
+                let wellId = this.wellId == "" ? this.wells.map(item=>item.wellId) : [this.wellId];
+                this.defaultCheckedKeys =[this.selectPlatform, ...wellId];
                 //措施类型
                 this.getMeasureNameAndCode();
                 //措施列表数据
@@ -467,14 +494,14 @@
                         this.basicDays.forEach((el, i) => {
                             this.days.push(this.dateTime.split('-')[0] + el);
                         })
-                        if (this.dateTime.split('-')[0] == '2023') {
-                            this.tableData[1].planMeasuresDayNum = '';
-                            this.tableData[1].planMeasuresEndTime = '';
-                            this.tableData[1].planMeasuresStartTime = '';
-                            this.tableData[1].realityMeasuresDayNum = '60'
-                            this.tableData[1].realityMeasuresEndTime = '2023-08-01';
-                            this.tableData[1].realityMeasuresStartTime = '2023-06-01';
-                        }
+                        // if (this.dateTime.split('-')[0] == '2023') {
+                            // this.tableData[1].planMeasuresDayNum = '';
+                            // this.tableData[1].planMeasuresEndTime = '';
+                            // this.tableData[1].planMeasuresStartTime = '';
+                            // this.tableData[1].realityMeasuresDayNum = '60'
+                            // this.tableData[1].realityMeasuresEndTime = '2023-08-01';
+                            // this.tableData[1].realityMeasuresStartTime = '2023-06-01';
+                        // }
                         this.pageTotal = this.tableData.length;
                         this.initData2();
                         this.mcMarginLeft();
@@ -579,6 +606,33 @@
             onPlatfromChange(val) {
                 this.getFetchWells(this.selectOilField, val);
                 this.getMeasureNameAndCode();
+            },
+            changeWell(val) {
+                let wellId = this.wellId == "" ? this.wells.map(item=>item.wellId) : [this.wellId];
+                this.$refs.treeSelectionAll.setCheckedKeys([this.selectPlatform, ...wellId]);
+                //措施类型
+                this.getMeasureNameAndCode();
+            },
+            // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
+            getSelectItems(selectList, selectData) {
+                // 判断如果没有wellList没有当前井号，调取井号接口根据平台获取井号数据
+                // let isUpdata = this.wells.map((item) => item.wellId).includes(selectList.wellIds);
+                // if (!isUpdata || selectList.platformIds !=  this.selectPlatform) {
+                //     this.getFetchWells(this.selectOilField, selectList.platformIds);
+                // }
+                //作业公司选中数据
+                // this.queryParams.companyId = selectList.orgId;
+                // 油田选中数据
+                // this.queryParams.ogfId = selectList.ogfId;
+                //平台选中数据
+                this.selectPlatform = selectList.platformIds;
+                // 井号选中数据
+                if(selectData.level == 4) {
+                    this.wellId = "";
+                } else {
+                    this.wellId = selectList.wellIds;
+
+                }               
             },
             //通过油田 或 平台 获得井
             getFetchWells(oilFieldId, platformId) {

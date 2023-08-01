@@ -4,7 +4,7 @@
     <div style="display: flex;flex-direction: row; height: 100%;">
       
       <div style=" height: 100%">
-        <tree-multiple-selection :level = "'6'" @childinfo = 'childinfo' />
+        <tree-multiple-selection :level = "'3'" @childinfo = 'childinfo' />
       </div>
       <div
         style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">

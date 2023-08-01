@@ -4,10 +4,10 @@
 <!--&lt;!&ndash;            投产时间：2001-10&ndash;&gt;-->
 <!--        </div>-->
 <!--        <Echart :chart-data="histogram" width="100%" height="65%"></Echart>-->
-        <Echart :chart-data="productLineChart" width="100%" height="75%"></Echart>
+        <Echart :chart-data="productLineChart" width="100%" height="80%"></Echart>
         <el-row :gutter="20">
             <el-col :span="7">
-                <div style="display: flex;position: relative;bottom: 30px">
+                <div style="display: flex;position: relative;bottom: 45px">
                     <div style="width: 50%">
                         <Echart :chart-data="option"></Echart>
                         <div style="position:absolute;bottom:20%;left:2%;font-size: 10px;text-align: center">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </el-col>
-            <el-col :span="17" style="margin-top: 15px">
+            <el-col :span="17" style="margin-top: 0px">
                 <el-row :gutter="20">
                     <el-col :span="8" v-for="(item, index) in data" :key="index">
                         <div style="float: left; width: 60px; height: 60px">
@@ -75,11 +75,11 @@ export default {
                         type: 'shadow',
                     },
                 },
-                grid:{
-                    x: 120,
-                    y: 30,
-                    x2: 120,
-                    y2: 100,
+                grid: {
+                    top: "8%",
+                    left: "10%",
+                    right: "10%",
+                    bottom: "22%",
                 },
                 dataZoom: {
                     start: 205,
