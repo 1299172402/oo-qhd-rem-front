@@ -4,6 +4,11 @@
         <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
             <el-table-column prop="wellNo" label="井号"></el-table-column>
             <el-table-column prop="fieldName" label="区块"></el-table-column>
+            <el-table-column prop="coordX" label="井坐标位置" min-width="250px">
+                <template slot-scope="scope">
+                    <span>{{ 'X：' + scope.row.coordX + ' , Y：' + scope.row.coordY }}</span>
+                </template>
+            </el-table-column>
             <el-table-column prop="horizontalLength" label="水平段长度 (m)"></el-table-column>
             <el-table-column prop="completeType" label="完井方式"></el-table-column>
             <el-table-column prop="boreType" label="管柱类型"></el-table-column>
@@ -20,6 +25,7 @@
 <script>
     import { wellBaseInfo } from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
     import { exportExcel } from '@/lib/exportExcel.js';
+    import {queryBasicData} from "@/api/rem/oilanalysisreport";
     export default {
         filters: {
             formatTime(val) {
@@ -73,17 +79,20 @@
         },
         methods: {
             //根据父组件传递过来的参数进行查询
-            doSearch(params) {
-                // let request = {
-                //     ogfId: this.oilFeildId,
-                //     platformId: this.platform,
-                //     wellId: this.wellId
-                // };
-                wellBaseInfo(params).then((res) => {
-                    if (res.data.code == 200) {
-                        this.tableData = res.data.data.wellBaseInfo;
-                    }
-                });
+            async doSearch() {
+                const request = {
+                    ogfId: this.oilFeildId,
+                    platformId: this.platform,
+                    wellId: this.wellId,
+                };
+
+                try {
+                    const [basicData, wellInfo] = await Promise.all([queryBasicData(request), wellBaseInfo(request)]);
+                    this.tableData = [Object.assign(wellInfo.data.data.wellBaseInfo[0], basicData.data.data[0])]
+                } catch (error) {
+                    // 异常处理
+                    console.error(error);
+                }
             },
             //下载
             doDownLoad() {
