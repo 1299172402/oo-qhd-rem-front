@@ -256,7 +256,13 @@
                 for (let i = 0; i < lineData.length; i++) {
                     let point = [];
                     point.push(lineData[i].label);
-                    point.push(lineData[i].value);
+                    if (labelName == '产气量') {
+                        point.push(parseFloat(Number(lineData[i].value).toFixed(2)));
+                    } else if (labelName == '油当量（折算）') {
+                        point.push(parseFloat(Number(lineData[i].value).toFixed(4)));
+                    }else {
+                        point.push(lineData[i].value);
+                    }
                     seriesData.push(point);
                 }
                 series.data = seriesData;

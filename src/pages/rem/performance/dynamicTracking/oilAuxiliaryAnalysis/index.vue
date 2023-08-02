@@ -41,7 +41,7 @@
                 </div>
             </headerSearch>
             
-            <pagePanelNew headerTitle="油井辅助分析" :style="{ height: this.currentModule == 'oilReport' ? 'auto' : 'calc(100% - 100px)' }" class="g-w100">
+            <pagePanelNew headerTitle="油井辅助分析" :style="{ height: this.currentModule == 'oilReport' ? 'auto' : 'calc(100% - 100px)', overflowY: 'auto' }" class="g-w100">
                 
                 <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
                     <!-- 连井剖面上传 -->

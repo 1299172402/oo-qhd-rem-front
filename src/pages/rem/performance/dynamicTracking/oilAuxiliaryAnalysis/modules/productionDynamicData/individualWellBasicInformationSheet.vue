@@ -13,7 +13,7 @@
             :default-sort="{ prop: 'date', order: 'descending' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         >
-            <el-table-column type="index" label="序号"></el-table-column> 
+            <el-table-column type="index" label="序号" width="60"></el-table-column> 
             <el-table-column prop="wellNo" label="井号" width="130"></el-table-column>
             <el-table-column prop="fieldName" label="区块"></el-table-column>
             <el-table-column prop="horizontalLength" :label="`水平段长度\n (m)`"></el-table-column>
