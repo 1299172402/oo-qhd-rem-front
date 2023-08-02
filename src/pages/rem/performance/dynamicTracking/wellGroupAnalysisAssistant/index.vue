@@ -1,66 +1,86 @@
 <!-- 井组辅助分析 -->
 <template>
-    <div class="app-container">
-        
-        <headerSearch style="height: 80px">
-            <div class="g-row-flex-V g-w100 g-h100">
-                <span class="title">油田：</span>
-                <el-select v-model="selectOilField" placeholder="请选择" filterable disabled @change="changeSelectOilField" style="margin-right: 15px">
-                    <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
-                </el-select>
-                <span class="title">区块：</span>
-                <el-select v-model="selectBlock" placeholder="请选择" filterable @change="changeSelectBlock" style="margin-right: 15px">
-                    <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
-                </el-select>
-                <span class="title" v-if="currentModule == 'wellGroupDevelopment' || currentModule == 'injectionProductionCorresponding'">井组切换：</span>
-                <el-select v-model="wellCentre" placeholder="请选择" @change="changeSelectWellCentre" style="margin-right: 15px" v-if="currentModule == 'wellGroupDevelopment' || currentModule == 'injectionProductionCorresponding'">
-                    <el-option label="以水井为中心" value="WATERCENTRE"></el-option>
-                    <el-option label="以油井为中心" value="OILCENTRE"></el-option>
-                </el-select>
+        <div style="display: flex; flex-direction: row; height: calc(100%)">
+        <div style="height: 100%">
+        <treeSelectionCustom
+            ref="treeSelectionCustom"
+            level="5"
+            :treeType="4"
+            :defaultCheckedKeys="defaultCheckedKeys"
+            @getSelectItems="getSelectItems"
+        />
+        </div>
+        <div
+        class="app-container"
+        style="
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex: 1;
+            right: 0;
+            overflow: hidden;
+            margin-left: 20px;
+        "
+        >
+            <headerSearch style="height: 80px">
+                <div class="g-row-flex-V g-w100 g-h100">
+                    <span class="title">油田：</span>
+                    <el-select v-model="selectOilField" placeholder="请选择" filterable disabled @change="changeSelectOilField" style="margin-right: 15px">
+                        <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
+                    </el-select>
+                    <span class="title">区块：</span>
+                    <el-select v-model="selectBlock" placeholder="请选择" filterable @change="changeSelectBlock" style="margin-right: 15px">
+                        <el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option>
+                    </el-select>
+                    <span class="title" v-if="currentModule == 'wellGroupDevelopment' || currentModule == 'injectionProductionCorresponding'">井组切换：</span>
+                    <el-select v-model="wellCentre" placeholder="请选择" @change="changeSelectWellCentre" style="margin-right: 15px" v-if="currentModule == 'wellGroupDevelopment' || currentModule == 'injectionProductionCorresponding'">
+                        <el-option label="以水井为中心" value="WATERCENTRE"></el-option>
+                        <el-option label="以油井为中心" value="OILCENTRE"></el-option>
+                    </el-select>
+                    
+                    <span class="title">井组：</span>
+                    <el-select  v-model="selectWellGroup" placeholder="请选择" filterable  style="margin-right: 15px" @change="changeWellGroup">
+                        <el-option v-for="item in newWellGroup" :key="item.wellGroupId" :label="item.wellGroupName" :value="item.wellGroupId"></el-option>
+                    </el-select>
+                    
+                    <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索 </el-button>
+                    <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+                </div>
+            </headerSearch>
+            
+            <pagePanelNew style="height: calc(100% - 100px)" class="g-w100">
                 
-                <span class="title">井组：</span>
-                <el-select  v-model="selectWellGroup" placeholder="请选择" filterable  style="margin-right: 15px">
-                    <el-option v-for="item in newWellGroup" :key="item.wellGroupId" :label="item.wellGroupName" :value="item.wellGroupId"></el-option>
-                </el-select>
+                <div class="pagepanel-btns" v-if="isUpdateFile" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
+                    <!-- minIo上传 -->
+                    <el-button v-if="isUpdateFile" type="primary" icon="el-icon-upload2" style="margin-left: auto !important" @click="ljpmUploadDialogLast" >上传文档</el-button>
+                    <!-- minIo下载 -->
+                    <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" :disabled="downloadButton" @click="doDownLoadNew">下载</el-button>
+                    <!-- 返回 -->
+                    <el-button type="primary" v-if="$route.query.wellId" style="margin-left:15px;" @click="goBack">返回</el-button>
+                </div>
                 
-                <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索 </el-button>
-                <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
-            </div>
-        </headerSearch>
-        
-        <pagePanelNew style="height: calc(100% - 100px)" class="g-w100">
+                <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
+                    <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
+                        <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="handleTwoClicj(module)">{{ module.label }}</el-button>
+                    </el-tab-pane>
+                </el-tabs>
+                
+                <keep-alive :include="[]" :max="10" v-if="selectBlock">
+                    <component :is="component" ref="componentCustom" :oilFieldId="selectOilField" :blockId="selectBlock" :wellCentre="wellCentre" :wellGroupId="selectWellGroup" @childPara="changeChildParam"></component>
+                </keep-alive>
+                
+            </pagePanelNew>
             
-            <div class="pagepanel-btns" v-if="isUpdateFile" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
-                <!-- minIo上传 -->
-                <el-button v-if="isUpdateFile" type="primary" icon="el-icon-upload2" style="margin-left: auto !important" @click="ljpmUploadDialogLast" >上传文档</el-button>
-                <!-- minIo下载 -->
-                <el-button type="primary" icon="el-icon-download" style="margin-left:15px;" :disabled="downloadButton" @click="doDownLoadNew">下载</el-button>
-                <!-- 返回 -->
-                <el-button type="primary" v-if="$route.query.wellId" style="margin-left:15px;" @click="goBack">返回</el-button>
-            </div>
-            
-            <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
-                <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
-                    <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="handleTwoClicj(module)">{{ module.label }}</el-button>
-                </el-tab-pane>
-            </el-tabs>
-            
-            <keep-alive :include="[]" :max="10" v-if="selectBlock">
-                <component :is="component" ref="componentCustom" :oilFieldId="selectOilField" :blockId="selectBlock" :wellCentre="wellCentre" :wellGroupId="selectWellGroup" @childPara="changeChildParam"></component>
-            </keep-alive>
-            
-        </pagePanelNew>
-        
-        <!-- minIo上传 -->
-        <el-dialog custom-class="border" title="上传文档" :visible.sync="ljpmDialogLast" width="20%" :before-close="ljpmDialogCloseLast" :style="{ 'min-width': '1800px' }">
-            <div style="display: flex;justify-content: center;">
-                <file-upload v-model="imageurl" style="width: 250px" :limit="limit" :fileSize="20" :is-show-tip="false" biz-path="rem-front/text" :file-type="fileType" @change="getResData"/>
-            </div>
-            <div slot="footer" class="dialog-footer" style="text-align: center">
-                <el-button class="cancelBtn" @click="ljpmDialogCloseLast">关 闭</el-button>
-            </div>
-        </el-dialog>
-        
+            <!-- minIo上传 -->
+            <el-dialog custom-class="border" title="上传文档" :visible.sync="ljpmDialogLast" width="20%" :before-close="ljpmDialogCloseLast" :style="{ 'min-width': '1800px' }">
+                <div style="display: flex;justify-content: center;">
+                    <file-upload v-model="imageurl" style="width: 250px" :limit="limit" :fileSize="20" :is-show-tip="false" biz-path="rem-front/text" :file-type="fileType" @change="getResData"/>
+                </div>
+                <div slot="footer" class="dialog-footer" style="text-align: center">
+                    <el-button class="cancelBtn" @click="ljpmDialogCloseLast">关 闭</el-button>
+                </div>
+            </el-dialog>
+        </div>
     </div>
 </template>
 
@@ -72,13 +92,17 @@
     import {addRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
     import {downFile} from "@/components/upload/utils/file";
     import FileSaver from "file-saver";
+    import treeSelectionCustom from "@/pages/rem/basic/components/treeSelectionCustom.vue";
     export default {
         components: {
             FileUpload,
+            treeSelectionCustom
         },
         name: "WellGroupAnalysisAssistant",
         data() {
             return {
+                // 主数据树结构默认选中的值
+                defaultCheckedKeys: [],
                 //minIo
                 isUpdateFile:false,//是否显示上传文档按钮
                 ljpmDialogLast: false,
@@ -352,6 +376,28 @@
                 });
                 this.doSearch();
             },
+            // 井组切换事件
+            changeWellGroup() {
+                this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.selectWellGroup]);
+            },
+            // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
+            getSelectItems(selectList, selectData) {
+                // 油田选中数据
+                // this.selYtdm = selectList.ogfId;
+                // 区块选中数据
+                this.selectBlock = selectList.blockId;
+                // 井组选中数据
+                this.selectWellGroup = selectList.wellGroupId;
+                // 判断如果没有wellGroupList没有当前井组，调取井组接口根据区块获取井号数据
+                let isUpdata = this.newWellGroup.map((item) => item.wellId).includes(selectList.selectWellGroup);
+                if (!isUpdata || selectList.blockId != this.selectBlock) {
+                    wellGroupList({ogfId: this.selYtdm, blockId: this.selectBlock}).then((res) => {
+                    if (res.data.code == 200) {
+                        this.newWellGroup = res.data.data;
+                    }
+                });
+                }
+            },
             //搜索功能
             doSearch() {
                 this.$nextTick(() => {
@@ -414,6 +460,7 @@
                             this.newWellGroup =[];
                             this.selectWellGroup= '';
                         }
+                        this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.selectWellGroup]);
                     }
                 });
             },

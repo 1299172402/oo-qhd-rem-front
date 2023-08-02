@@ -105,13 +105,13 @@
                 <el-table-column prop="planAppendixValueName" label="*计划属性"></el-table-column>
                 <el-table-column prop="beginDate" :label="`*关停开始时间\n(yyyy/mm/dd)`">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.beginDate">{{scope.row.beginDate}}</span>
+                        <span v-if="scope.row.beginDate">{{scope.row.beginDate.substring(0,19)}}</span>
                         <span v-else>N/A</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="endDate" :label="`*关停结束时间\n(yyyy/mm/dd)`">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.endDate">{{scope.row.endDate}}</span>
+                        <span v-if="scope.row.endDate">{{scope.row.endDate.substring(0,19)}}</span>
                         <span v-else>N/A</span>
                     </template>
                 </el-table-column>

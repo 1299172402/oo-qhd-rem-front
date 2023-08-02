@@ -275,8 +275,8 @@ export default {
                 //区块
                 blockId: 'YCFXDY8B643EDC9007F96F570600457D',
                 //选择时间
-                // dateTime: this.eeee(),
-                dateTime: '2023-05',
+                dateTime: this.eeee(),
+                // dateTime: '2023-05',
                 //油田
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'
             },
@@ -318,9 +318,9 @@ export default {
         eeee() {
             let data = new Date()
             if (data.getMonth() < 10) {
-                return data.getFullYear() + '-0' + (data.getMonth() + 1)
+                return data.getFullYear() + '-0' + (data.getMonth() )
             } else {
-                return data.getFullYear() + '-' + (data.getMonth() + 1)
+                return data.getFullYear() + '-' + (data.getMonth() )
             }
         },
         headerColor({row, column, rowIndex, columnIndex}) {
