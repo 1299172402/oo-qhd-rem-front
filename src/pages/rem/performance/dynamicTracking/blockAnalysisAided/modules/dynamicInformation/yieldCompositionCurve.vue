@@ -521,7 +521,7 @@ export default {
                             this.option.series[1].data = pointData;
                         } else if (labelName == '开发新井') {
                             this.option.series[2].data = pointData;
-                        } else if (labelName == '措施产量') {
+                        } else if (labelName == '措施增产量') {
                             this.option.series[3].data = pointData;
                         } else if (labelName == '酸化日增产油量') {
                             this.option1.series[0].data = pointData;
