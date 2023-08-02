@@ -39,69 +39,87 @@ export default {
         return {
             currentModel: this.$store.state.setting.mode,
             histogram: {
+                color: [
+                    new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                        {
+                            offset: 0,
+                            color: "#35caff",
+                        },
+                        {
+                            offset: 1,
+                            color: "#1988fd",
+                        },
+                    ]),
+                    new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                        {
+                            offset: 0,
+                            color: "#00f2c4",
+                        },
+                        {
+                            offset: 1,
+                            color: "#00c086",
+                        },
+                    ]),
+                    new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                        {
+                            offset: 0,
+                            color: "#ff863e",
+                        },
+                        {
+                            offset: 1,
+                            color: "#ffba52",
+                        },
+                    ])],
+                title: {
+                    text: "",
+                    bottom: 10,
+                    left: "center",
+                    textStyle: {
+                        fontSize: 16,
+                    },
+                },
                 tooltip: {
                     trigger: "item",
-                    formatter: "{a} <br/>{b} : {c}口 <br/> 占比 : {d}%",
+                    formatter: " 问题井统计 <br/>{b} : {c}口 <br/> 占比 : {d}% ",
                 },
                 series: [
                     {
-                        name: "问题井统计",
                         type: "pie",
-                        radius: ["30%", "60%"],
+                        radius: ["30%", "48%"],
                         center: ["50%", "50%"],
-                        // roseType: "radius",
+                        label: {
+                            formatter: function (e) {
+                                let {
+                                    data: {value, name, percent},
+                                } = e;
+                                return `{x|}{a|${name}}\n{b|${value}口}`;
+                            },
+                            minMargin: 5,
+                            lineHeight: 15,
+                            rich: {
+                                x: {width: 10, height: 10, backgroundColor: 'inherit', borderRadius: 0},
+                                a: {fontSize: 14, color: '#989898', padding: [0, 0, 0, 2]},
+                                b: {fontSize: 12, align: 'left', color: '#989898', padding: [8, 0, 0, 18]},
+                                c: {fontSize: 12, align: 'left', color: '#666666', padding: [8, 0, 0, 8]},
+                            },
+                        },
                         data: [
                             {
-                                value: 0,
-                                name: "出砂井",
-                                label: {
-                                    color: "#a9a8a8",
-                                },
-                                itemStyle: {
-                                    color: "#ff7135",
-                                    borderColor: "#ff7135",
-                                    show: false,
-                                },
+                                value: "",
+                                name: "",
                             },
                             {
-                                value: 0,
-                                name: "限液井",
-                                label: {
-                                    color: "#a9a8a8",
-                                },
-                                itemStyle: {
-                                    color: "#22d6f8",
-                                    borderColor: "#22d6f8",
-                                },
+                                value: "",
+                                name: "",
                             },
                             {
-                                value: 0,
-                                name: "长停井",
-                                label: {
-                                    color: "#a9a8a8",
-                                },
-                                itemStyle: {
-                                    color: "#35a3e7",
-                                    borderColor: "#35a3e7",
-                                },
+                                value: "",
+                                name: "",
                             },
                         ],
-                        label: {
-                            show: false,
-                            normal: {
-                                formatter: "{b}\n{c}口",
-                                show: true,
-                                position: "",
-                            },
-                        },
-                        labelLine: {
-                            normal: {
-                                show: false,
-                            },
-                        },
                     },
                 ],
-            },
+            }
         };
     },
     mounted() {
@@ -112,7 +130,10 @@ export default {
             this.$router.push({name: rname});
         },
         getData() {
-            queryProblemWellStatis({date: new Date().format('YYYY-MM-DD'), ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",}).then(res => {
+            queryProblemWellStatis({
+                date: new Date().format('YYYY-MM-DD'),
+                ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+            }).then(res => {
                 this.histogram.series[0].data[0].value = res.data.data[0].value
                 this.histogram.series[0].data[0].name = res.data.data[0].name
                 this.histogram.series[0].data[1].value = res.data.data[1].value

@@ -50,9 +50,9 @@ export default {
             let wellid = '',blockid = ''
             
             if(this.blockId = '3FC9A818F5BC43B88270DB80BBB3018F'){
-                blockid = ''
+                blockid = '';
             }else{
-                blockid = this.blockId
+                blockid = this.blockId;
             }
             let data = {
                 blockId: blockid,

@@ -236,63 +236,60 @@ export default {
                 },
             ]  
         },
-        matchAndOutput(array1, array2) {
+        async matchAndOutput(array1, array2) {
             const set = new Set(array1.map(item => item.alarmPageCode));
             const result = array2.filter(item => set.has(item.alarmPageCode));
             return result;
         },
+
         findIndex(array, obj) {
             return array.indexOf(obj);
         },
-        //获取报警信息接口
-        getWarningInfo(){
-            this.currentLists.forEach((i,index)=>{
-                i.warningShowFlag = false
-            })
+
+// 获取报警信息接口
+        async getWarningInfo() {
+            this.currentLists.forEach((i, index) => {
+                i.warningShowFlag = false;
+            });
             const data = {
-                authorizedPersonnel:this.$store.getters["user/name"],
-                alarmTime:new Date().format('YYYY-MM-dd')
-            }
-            const promise1 = queryLinkageAlarmInfo(data).then((res) => {
-                return res.data.data
-            });
-            const promise2 = request({
-                url: `/gem001b/queryAlcAlarm`,
-                method: "get",
-                headers: {
-                    showLoading: false
-                }
-            }).then(res => {
-                return res.data.data
-            });
-            Promise.all([promise1, promise2]).then((res) => {
-                let isConditionMet = false; // 标志变量，初始值为false
-                let obj = this.matchAndOutput(res[0],this.currentLists)
-                let index = []
-                for (let i = 0; i < obj.length; i++) {
-                    index.push(this.findIndex(this.currentLists,obj[i]))
-                }
-                for (let i = 0; i < index.length; i++) {
-                    this.currentLists[index[i]].warningShowFlag = true
-                    isConditionMet = true; // 设置标志变量为true
-                }
-                res[1].forEach(item=>{
-                    this.currentLists.forEach((i,index)=>{
-                        if(i.typeIdList.indexOf(item.typeId) != -1){
-                            this.currentLists[index].warningShowFlag = true
-                            isConditionMet = true; // 设置标志变量为true
+                authorizedPersonnel: this.$store.getters["user/name"],
+                alarmTime: new Date().format('YYYY-MM-dd')
+            };
+            try {
+                const [res1, res2] = await Promise.all([
+                    queryLinkageAlarmInfo(data),
+                    request({
+                        url: `/gem001b/queryAlcAlarm`,
+                        method: "get",
+                        headers: {
+                            showLoading: false
                         }
                     })
-                })
-                    if (!isConditionMet) {
-                        this.arrowFun()
-                    }else{
-                        clearInterval(this.timmer)
-                    }
-            }).catch(error => {
-                // 错误处理 
+                ]);
+                let isConditionMet = false;
+                const obj = await this.matchAndOutput(res1.data.data, this.currentLists);
+                const index = obj.map(item => this.findIndex(this.currentLists, item));
+                for (let i = 0; i < index.length; i++) {
+                    this.currentLists[index[i]].warningShowFlag = true;
+                    isConditionMet = true;
+                }
+                res2.data.data.forEach(item => {
+                    this.currentLists.forEach((i, index) => {
+                        if (i.typeIdList.includes(item.typeId)) {
+                            this.currentLists[index].warningShowFlag = true;
+                            isConditionMet = true;
+                        }
+                    });
+                });
+                if (isConditionMet == false) {
+                    this.arrowFun();
+                } else {
+                    clearInterval(this.timmer);
+                }
+            } catch (error) {
+                // 错误处理
                 this.$message.error('系统错误请重新尝试或联系运维人员！');
-            });
+            }
         },
         arrowFun(){
             this.timmer = setInterval(()=>{
@@ -315,31 +312,19 @@ export default {
             clearInterval(this.timmer)
         },
         startTimer(){
+            let warningShowFlag = false
             this.currentLists.forEach((i,index)=>{
-                i.warningShowFlag = false
-            })
-            request({
-                url: `/gem001b/queryAlcAlarm`,
-                method: "get",
-                headers: {
-                    showLoading: false
-                }
-            }).then(res=>{
-                let isConditionMet = false; // 标志变量，初始值为false
-                res.data.data.forEach(item=>{
-                    this.currentLists.forEach((i,index)=>{
-                        if(i.typeIdList.indexOf(item.typeId) != -1){
-                            this.currentLists[index].warningShowFlag = true
-                            isConditionMet = true; // 设置标志变量为true
-                        }
-                    })
-                })
-                if (!isConditionMet) {
-                    // this.arrowFun()
+                if( i.warningShowFlag == true){
+                    warningShowFlag = true
                 }else{
-                    clearInterval(this.timmer)
+                    return
                 }
             })
+            if (warningShowFlag == true) {
+                this.arrowFun()
+            }else{
+                clearInterval(this.timmer)
+            }
         }
     },
     data(){

@@ -104,6 +104,7 @@ export default {
                 alarmPageCode:currentList?.alarmPageCode
             }
             addLinkageAlarmInfo(data).then(()=>{
+                this.warningShowFlag = false
             }).then(()=>{
                 if (!url) return
                 window.open(url, '_parent');
