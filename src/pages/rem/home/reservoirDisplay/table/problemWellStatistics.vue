@@ -55,49 +55,35 @@
                         :cell-style="{ 'text-align': 'center', padding: '2px' }"
                         :default-sort="{ prop: 'date', order: 'descending' }"
                     >
-                        
                         <el-table-column label="序号"  width="50px" type="index" align="center">
-                         
                         </el-table-column>
                         <el-table-column label="油田" prop="ogfNo" min-width="100px" align="center">
-
                         </el-table-column>
                         <el-table-column label="井号" prop="wellNo" align="center">
-
                         </el-table-column>
                         <el-table-column label="低产低效类别" prop="lowProdEffTypeCode"  align="center">
-
                         </el-table-column>
                         <el-table-column label="生产情况"   align="center">
                             <el-table-column :label="`日产油\n(m³/d)`" prop="dailyOil"   align="center">
-
                             </el-table-column>
                             <el-table-column :label="`日产气\n(m³/d)`" prop="dailyGas" align="center">
-
                             </el-table-column>
                             <el-table-column :label="`含水\n(%)`" prop="waterCut"  align="center">
-
                             </el-table-column>
                         </el-table-column>
                         <el-table-column label="低产低效原因"  align="center">
                             <el-table-column label="一级原因"  prop="shutdownTypeFirstClass" align="center">
-
                             </el-table-column>
                             <el-table-column label="二级原因" prop="shutdownTy`peSecondClass"  align="center">
-
                             </el-table-column>
                         </el-table-column>
                         <el-table-column label="挖潜方向" prop="tappingDirection" align="center">
-
                         </el-table-column>
-                        <el-table-column label="是否纳入当年计划" prop="isPlan" align="center">
-
+                        <el-table-column label="是否纳入当年计划" min-width="100px" prop="isPlan" align="center">
                         </el-table-column>
                         <el-table-column :label="`计划日产\n(m³/d)`" prop="planOil" align="center">
-
                         </el-table-column>
                         <el-table-column label="备注" prop="remark"  align="center">
-
                         </el-table-column>
                     </el-table>
                 </page-panel>

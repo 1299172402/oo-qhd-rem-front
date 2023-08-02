@@ -2,7 +2,7 @@
 <template>
     <page-panel-new style="height:calc(100% - 101px);margin-top:0;" show-btn>
         <el-table id="tableData" highlight :data="tableData" style="width: 100%;" height="100%">
-            <el-table-column type="index" label="序号" align="center"></el-table-column>
+            <el-table-column type="index" label="序号" align="center" width="60"></el-table-column>
             <el-table-column prop="wellName" label="井号" align="center" width="180"></el-table-column>
             <el-table-column prop="layerName" label="层号" align="center" min-width="120"></el-table-column>
             <el-table-column prop="topMd" :render-header="renderHeader" label="顶界斜深 (m)" align="center" min-width="100"></el-table-column>
@@ -54,7 +54,7 @@
                     wellId: this.wellId
                 };
                 loggingInterpretation(request).then((res) => {
-                    if (res.data.code == 0) {
+                    if (res.data.code == 200) {
                         this.tableData = res.data.data.loggingInterceptResult;
                     }
                 });

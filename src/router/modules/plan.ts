@@ -47,7 +47,7 @@ export default [
                 path: "personnelMeasures",
                 name: "personnelMeasures",
                 component: () => import("@/pages/rem/plan/measureManagement/personnelMeasures.vue"),
-                meta: { title: "人员措施",icon: "icon"},
+                meta: { title: "措施计划",icon: "icon"},
             },
             {
                 path: "twoIncreasesOneDecrease",

@@ -98,22 +98,25 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchart(dataList.waterInjectionWellInjection, '%', 'rgb(0,179,225)', 'rgba(38,43,90,0)', 'transparent')"></Echart>
-                        <div class="chartText" style="margin-top: -40px">分注井分注率</div>
+                            :chart-data="getEchartData(dataList.waterInjectionWellInjection, '%', 'rgb(0, 150, 215)', 'rgb(1,67,78)', 'rgb(0, 150, 215)')"
+                        ></Echart>
+                        <div class="chartText" style="margin-top: 10px">分注井分注率</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchart(infolist, '%', 'rgb(235,125,96)', 'rgba(38,43,90,0)', 'transparent')"></Echart>
-                        <div class="chartText" style="margin-top: -40px">层段合格率</div>
+                            :chart-data="getEchartData(infolist, '%', 'rgb(227, 123, 93)', 'rgb(1,67,78)', 'rgb(227, 123, 93)')"
+                        ></Echart>
+                        <div class="chartText" style="margin-top: 10px">层段合格率</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchart(dataList.waterCutIncreaseRate, '%', 'rgb(164,227,77)', 'rgba(38,43,90,0)', 'transparent')"></Echart>
-                        <div class="chartText" style="margin-top: -40px">含水上升率</div>
+                            :chart-data="getEchartData(dataList.waterCutIncreaseRate, '%', 'rgb(167, 228, 77)', 'rgb(1,67,78)', 'rgb(66, 144, 34)')"
+                        ></Echart>
+                        <div class="chartText" style="margin-top: 10px">含水上升率</div>
                     </div>
                 </el-col>
             </el-row>
@@ -169,7 +172,7 @@ export default {
             oil1two:'',
             oil1:'',
             mainList:[0,0,0],
-            infolist:'', //层段合格率
+            infolist:0, //层段合格率
             histogram: {
                 title: {
                     // text: '{a|' + value + '}{c|%}',
