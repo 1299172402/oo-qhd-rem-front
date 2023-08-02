@@ -57,7 +57,7 @@
                         if (res.data.data) {
                             this.position = res.data.data.fieldLayers;
                             if (!this.selectPosition && this.position[0]) {
-                                if (this.blockId == '6CD7342CA6DD418183A4B3BC38584F7C' || this.blockId == 'B440B47EE4D64C6CB56100AFE868DCA3') {
+                                if (this.blockId == 'YCFXDY8B643EDC9007F96F570600457D' || this.blockId == 'YCFXDY8B643EDC9007F96F570600456D') {
                                     if (this.position.find((item) => {
                                             return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A'
                                         })) {
@@ -65,7 +65,7 @@
                                     } else {
                                         this.selectPosition = this.position[0].fieldLayerId;
                                     }
-                                }else if (this.blockId == 'F35E226D47CE4B09B497B852D774D122') {
+                                }else if (this.blockId == 'YCFXDY8B643EDC9007F96F570600458D') {
                                     if (this.position.find((item) => {
                                             return item.fieldLayerId == '87795A3E6BBC4469BC9AC5AE0BBE759C'
                                         })) {

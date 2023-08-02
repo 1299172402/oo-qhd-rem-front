@@ -25,7 +25,7 @@
 <script>
 import request from '@/utils/request'
 import linkageBox from "./linkageBox/index.vue";
-import {InjectionProdInfo} from "@/api/rem/injectionproductionlinkage";
+import {InjectionProdInfo,queryLinkageAlarmInfo} from "@/api/rem/injectionproductionlinkage";
 let curDate = new Date()
 let data1 = new Date(curDate.getTime() - 24*60*60*1000*3).format('YYYY-MM-DD')
 let data2 = new Date(curDate.getTime() - 24*60*60*1000*5).format('YYYY-MM-DD')
@@ -94,10 +94,12 @@ export default {
                     boxStyle: {
                         pWidth: 'width:11vw'
                     },
+                    alarmPageCode:'MIPFSW',
                     imgUrl: new URL('./topBox/24.png', import.meta.url).href,
                     showFlag:false,
                     typeIdList:[],
                     warningShowFlag : false,
+                    analysisUrl:`https://rem.${this.baseUrl}/#/intelligence1/optimization?page=reservoirDisplay/linkage`
                 },
                 {
                     style: 'position:absolute;left: 43%;top: 56%;width:20%;height:40%;',
@@ -148,19 +150,20 @@ export default {
                     style: 'position:absolute;left: 2%;top: 60%;width:20%;height:40%;',
                     boxText: '产量运行监控',
                     boxBottomText: [
-                        {name:'年度产量运行预警',url:`https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?page=reservoirDisplay/linkage`}
+                        {name:'年度产量运行预警',url:`https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?name=linkage`}
                     ],
                     boxBottomContent: [
-                        [{name:'年度产量趋势预测',url:`https://rem.${this.baseUrl}/#/modelConfiguration/modelconfig?page=reservoirDisplay/linkage`}]
+                        [{name:'年度产量趋势预测',url:`https://rem.${this.baseUrl}/#/modelConfiguration/modelconfig?name=linkage`}]
                     ],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
+                    alarmPageCode:'OSTOPF',
                     imgUrl: new URL('./topBox/21.png', import.meta.url).href,
                     showFlag:false,
                     typeIdList:[],
-                    warningShowFlag : true,
-                    analysisUrl:`https://rem.${this.baseUrl}/#/yield/statisticalTableProduction?reservoirDisplay/linkage`
+                    warningShowFlag : false,
+                    analysisUrl:`https://rem.${this.baseUrl}/#/yield/statisticalTableProduction?page=reservoirDisplay/linkage`
                     // analysisUrl:`https://rem.${this.baseUrl}/#/yield/statisticalTableProduction?wellIds=%5B%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%22D4BEBD2817E0449F957F78ED0A685A6C%22,%22fluidProdDaily%22%3A289.56,%22oilProdDaily%22%3A6.03,%22waterRatio%22%3A0.06,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-I3H1%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%22375DB74FC89747028A9436A8E41D3991%22,%22fluidProdDaily%22%3A-4.9,%22oilProdDaily%22%3A4.47,%22waterRatio%22%3A-0.4,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-G9H1%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%226E73C512F8444CE3BAEE27FE23294144%22,%22fluidProdDaily%22%3A-3.72,%22oilProdDaily%22%3A-2.06,%22waterRatio%22%3A0.54,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-F4H3%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%2274B59F886DF1459AB58311A6159202A4%22,%22fluidProdDaily%22%3A2.23,%22oilProdDaily%22%3A-2.39,%22waterRatio%22%3A0.37,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-F5%22%7D,%7B%22wellAllocDailyId%22%3Anull,%22borepipeId%22%3A%22257DE61B82E94263BFB8239D02447934%22,%22fluidProdDaily%22%3A-36.88,%22oilProdDaily%22%3A-2.9,%22waterRatio%22%3A0.07,%22prodDate%22%3A%222023-06-26%22,%22borepipeNo%22%3A%22QHD32-6-J14H1%22%7D%5D`
                 },
                 {
@@ -183,7 +186,7 @@ export default {
                 {
                     style: 'position:absolute;left: 58%;top: 36%;width:20%;height:40%;',
                     boxText: '分注分采调控策略',
-                    boxBottomText: [{name:'注采调控最优化方案',url:`https://ipm.${this.baseUrl}/#/waterflood/merge?page=reservoirDisplay/linkage`}, {name:'配注微调策略',url:'https://rem.${this.baseUrl}/#/intelligence1/optimization?link=rem&page=reservoirDisplay/linkage'}],
+                    boxBottomText: [{name:'注采调控最优化方案',url:`https://ipm.${this.baseUrl}/#/waterflood/merge?page=reservoirDisplay/linkage`}, {name:'配注微调策略',url:`https://rem.${this.baseUrl}/#/intelligence1/optimization?link=rem&page=reservoirDisplay/linkage`}],
                     boxBottomContent: [['智能分注调控策略优化模型', '智能分注调控策略优化模型'], ['配注方案分析评估模型']],
                     boxStyle: {
                         pWidth: 'width:11vw'
@@ -233,34 +236,60 @@ export default {
                 },
             ]  
         },
-    
-        //获取报警信息接口
-        getWarningInfo(){
-            this.currentLists.forEach((i,index)=>{
-                i.warningShowFlag = false
-            })
-            request({
-                url: `/gem001b/queryAlcAlarm`,
-                method: "get",
-                headers: {
-                    showLoading: false
-                }
-            }).then(res=>{
-                let isConditionMet = false; // 标志变量，初始值为false
-                res.data.data.forEach(item=>{
-                    this.currentLists.forEach((i,index)=>{
-                        if(i.typeIdList.indexOf(item.typeId) != -1){
-                            this.currentLists[index].warningShowFlag = true
-                            isConditionMet = true; // 设置标志变量为true
+        async matchAndOutput(array1, array2) {
+            const set = new Set(array1.map(item => item.alarmPageCode));
+            const result = array2.filter(item => set.has(item.alarmPageCode));
+            return result;
+        },
+
+        findIndex(array, obj) {
+            return array.indexOf(obj);
+        },
+
+// 获取报警信息接口
+        async getWarningInfo() {
+            this.currentLists.forEach((i, index) => {
+                i.warningShowFlag = false;
+            });
+            const data = {
+                authorizedPersonnel: this.$store.getters["user/name"],
+                alarmTime: new Date().format('YYYY-MM-dd')
+            };
+            try {
+                const [res1, res2] = await Promise.all([
+                    queryLinkageAlarmInfo(data),
+                    request({
+                        url: `/gem001b/queryAlcAlarm`,
+                        method: "get",
+                        headers: {
+                            showLoading: false
                         }
                     })
-                })
-                if (!isConditionMet) {
-                    // this.arrowFun()
-                }else{
-                    clearInterval(this.timmer)
+                ]);
+                let isConditionMet = false;
+                const obj = await this.matchAndOutput(res1.data.data, this.currentLists);
+                const index = obj.map(item => this.findIndex(this.currentLists, item));
+                for (let i = 0; i < index.length; i++) {
+                    this.currentLists[index[i]].warningShowFlag = true;
+                    isConditionMet = true;
                 }
-            })
+                res2.data.data.forEach(item => {
+                    this.currentLists.forEach((i, index) => {
+                        if (i.typeIdList.includes(item.typeId)) {
+                            this.currentLists[index].warningShowFlag = true;
+                            isConditionMet = true;
+                        }
+                    });
+                });
+                if (isConditionMet == false) {
+                    this.arrowFun();
+                } else {
+                    clearInterval(this.timmer);
+                }
+            } catch (error) {
+                // 错误处理
+                this.$message.error('系统错误请重新尝试或联系运维人员！');
+            }
         },
         arrowFun(){
             this.timmer = setInterval(()=>{
@@ -283,7 +312,19 @@ export default {
             clearInterval(this.timmer)
         },
         startTimer(){
-            this.arrowFun()
+            let warningShowFlag = false
+            this.currentLists.forEach((i,index)=>{
+                if( i.warningShowFlag == true){
+                    warningShowFlag = true
+                }else{
+                    return
+                }
+            })
+            if (warningShowFlag == true) {
+                this.arrowFun()
+            }else{
+                clearInterval(this.timmer)
+            }
         }
     },
     data(){

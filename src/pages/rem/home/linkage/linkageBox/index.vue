@@ -6,12 +6,11 @@
                 <div class="transition-box">
                     <div class="transition-box-content" :style="{'background-image':`url(${currentList.imgUrl})` }">
                         <div v-show="warningShowFlag" class="mcBox" style="">
-
                         </div>
                     </div>
                     <div v-if="warningShowFlag">
-                        <button class="detailLinkBtn" @click="confirm()">确认</button>
-                        <button class="detailLinkBtn" @click="linkTo(currentList.analysisUrl)">分析</button>
+                        <button class="detailLinkBtn" @click="confirm(currentList)">确认</button>
+                        <button class="detailLinkBtn" @click="linkTopage(currentList.analysisUrl,currentList)">分析</button>
                     </div>
                 </div>
             </div>
@@ -24,10 +23,10 @@
             <div v-show="show || showFlag || warningShowFlag" :style="currentList.boxStyle.bottomMargin">
                 <div class="transition-box-bottom">
                     <div class="pad">
-                        <div>
+                        <div >
                             <p v-show="!content" :key="index" v-for="(item,index) in currentList.boxBottomText">
-                                <span v-if="item.url" style="cursor: pointer" @click="linkTo(item.url)">{{ item.name ? item.name : item }}</span>
-                                <span v-if="!item.url" style="pointer-events: none;color:#5a5959;font-weight:bolder">{{ item.name ? item.name : item }}</span>
+                                <span v-if="item.url" :class= "currentList.warningShowFlag==true?'blink':'' " style="cursor: pointer" @click="linkTo(item.url)">{{ item.name ? item.name : item }}</span>
+                                <span v-if="!item.url"  style="pointer-events: none;color:#5a5959;font-weight:bolder">{{ item.name ? item.name : item }}</span>
                                 <span v-if="currentList.boxBottomContent" class="btnContent" @click="btnContent(index)">{{ currentList.boxBottomContent[index].length > 0 ? '>>' : '' }}</span>
                                 <span v-else class="btnBack" @click="btnBack"></span>
                             </p>
@@ -46,8 +45,7 @@
 </template>
 
 <script>
-
-
+import {addLinkageAlarmInfo} from "@/api/rem/injectionproductionlinkage";
 export default {
     props: {
         currentList: {
@@ -99,8 +97,30 @@ export default {
             if (!url) return
             window.open(url, '_parent');
         },
-        confirm(){
-            this.warningShowFlag = false
+        linkTopage: function (url,currentList) {
+            const data = {
+                authorizedPersonnel:this.$store.getters["user/name"],
+                alarmTime:new Date().format('YYYY-MM-dd'),
+                alarmPageCode:currentList?.alarmPageCode
+            }
+            addLinkageAlarmInfo(data).then(()=>{
+                this.warningShowFlag = false
+            }).then(()=>{
+                if (!url) return
+                window.open(url, '_parent');
+            })
+        },
+        confirm(currentList){
+            const data = {
+                authorizedPersonnel:this.$store.getters["user/name"],
+                alarmTime:new Date().format('YYYY-MM-dd'),
+                alarmPageCode:currentList?.alarmPageCode
+            }
+            addLinkageAlarmInfo(data).then(()=>{
+            }).then(()=>{
+                this.warningShowFlag = false
+                this.$emit('startTimer')
+            })
         },
         mouseenter(){
             this.show = true
@@ -115,6 +135,40 @@ export default {
 </script>
 
 <style lang="less" scoped>
+/* 定义keyframe动画，命名为blink */
+@keyframes blink{
+    0%{opacity: 1;}
+
+    100%{opacity: 0;}
+}
+/* 添加兼容性前缀 */
+@-webkit-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-moz-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-ms-keyframes blink {
+    0% {opacity: 1; }
+    100% { opacity: 0;}
+}
+@-o-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+/* 定义blink类*/
+.blink{
+    color: rgb(212, 12, 92);
+    font-size:16px;
+    animation: blink 1s linear infinite;
+    /* 其它浏览器兼容性前缀 */
+    -webkit-animation: blink 1s linear infinite;
+    -moz-animation: blink 1s linear infinite;
+    -ms-animation: blink 1s linear infinite;
+    -o-animation: blink 1s linear infinite;
+}
 .box {
     color: #e6d6d6;
     width: 100%;
@@ -148,7 +202,7 @@ export default {
         position: absolute;
         top: 9vw;
         text-align: center;
-        line-height: 1.8vw;
+        line-height: 1.7vw;
         border-radius: 20px;
         font-size: 0.8vw;
         margin-left: 2vw;
@@ -161,7 +215,7 @@ export default {
             height: 1.4vw;
             display: block;
             position: absolute;
-            top: 0.15vw;
+            top: 0.12vw;
             right: 0.3vw;
             cursor: pointer;
         }
@@ -178,7 +232,6 @@ export default {
 
         .pad {
             padding: 1.5vw 0 0.7vw 0;
-
             p {
                 margin: 0.4vw 0;
             }

@@ -3,32 +3,18 @@
     <!--隐藏菜单-->
     <div class="ensconce" style="cursor: pointer">
       <h2>
-        <img v-if="$store.state.setting.mode === 'dark'" src="@/assets/treeSelectDark2.png" alt="">
-        <img v-else src="@/assets/treeSelectWhite2.png" alt="">
-        <div class="navClass">
-          目标导航
-        </div>
+        <img v-if="$store.state.setting.mode === 'dark'" src="@/assets/treeSelectDark2.png" alt="" />
+        <img v-else src="@/assets/treeSelectWhite2.png" alt="" />
+        <div class="navClass">目标导航</div>
       </h2>
     </div>
     <!--显示菜单-->
     <div class="open openColor" :class="$store.state.setting.mode === 'dark' ? 'open' : 'open-white'">
       <div class="navH navHColor" style="cursor: pointer">
-        <div style="font-size: 14px;font-weight: 500;">
-          目标导航
-        </div>
+        <div style="font-size: 14px; font-weight: 500">目标导航</div>
         <span>
-          <img
-            v-if="$store.state.setting.mode === 'dark'"
-            class="obscure"
-            src="@/assets/treeSelectDark1.png"
-            alt=""
-          >
-          <img
-            v-else
-            class="obscure"
-            src="@/assets/treeSelectWhite1.png"
-            alt=""
-          >
+          <img v-if="$store.state.setting.mode === 'dark'" class="obscure" src="@/assets/treeSelectDark1.png" alt="" />
+          <img v-else class="obscure" src="@/assets/treeSelectWhite1.png" alt="" />
         </span>
       </div>
       <div class="navBox">
@@ -40,9 +26,9 @@
           accordion
           :expand-on-click-node="false"
           :default-expand-all="false"
-          :check-strictly="false"
-          :default-checked-keys="['715AD1CD60484BB59E737CD18A9DE44A','3FC9A818F5BC43B88270DB80BBB3018F']"
-          @check="handleCheckChange"
+          :check-strictly="true"
+          :default-checked-keys="defaultCheckedKeys"
+          @check="handleCheck"
         />
       </div>
     </div>
@@ -50,49 +36,54 @@
 </template>
 
 <script>
-import {getYczcTree} from "@/api/rem/marster.js";
+import { getYczcTree } from "@/api/rem/marster.js";
+import { keys } from "lodash";
 
 export default {
   props: {
-    "level": {
+    level: {
       type: String,
-      default: "5"
+      default: "5",
     },
-    "start": {
+    orgId: {
+      type: String,
+      default: "715AD1CD60484BB59E737CD18A9DE44A",
+    },
+    wellType: {
+      type: String,
+      default: undefined, //井类型，“注水井”，“采油井”
+    },
+    start: {
       type: Number,
-      default: 0
+      default: 4,
     },
-    "end": {
+    end: {
       type: Number,
-      default: 0
+      default: 5,
     },
-    "arrayData":{
-      type:Array,  
+    // 默认选中数据
+    defaultCheckedKeys: {
+      type: Array,
+      default: () => ["715AD1CD60484BB59E737CD18A9DE44A", "3FC9A818F5BC43B88270DB80BBB3018F"],
     },
-      "type":{
-          default: 0
-      }
   },
   data() {
     return {
-      deptOptions:[]
+      deptOptions: [],
+      selectKeys: [], // 所有选中的数据集合
     };
+  },
+  watch: {
+    defaultCheckedKeys() {
+      this.setCheckedKeys([...this.defaultCheckedKeys]);
+    },
   },
   mounted() {
     this.init();
     this.getTreeData();
   },
   methods: {
-    normalizer(node) {
-      if (node.children && !node.children.length) {
-        delete node.children;
-      }
-      return {
-        id: node.value,
-        label: node.label,
-        children: node.children,
-      }
-    },
+    // 初始化方法
     init() {
       // 隐藏菜单
       const obscure = document.querySelector(".navH");
@@ -104,8 +95,8 @@ export default {
         setTimeout(() => {
           ensconce.style.display = "block";
           that.$nextTick(() => {
-            that.$emit('change')
-          })
+            that.$emit("change");
+          });
         }, 350);
       };
       // 显示菜单
@@ -115,8 +106,8 @@ export default {
         setTimeout(() => {
           ensconce.style.display = "none";
           that.$nextTick(() => {
-            that.$emit('change')
-          })
+            that.$emit("change");
+          });
         }, 100);
       };
       obscure.onclick();
@@ -132,7 +123,7 @@ export default {
       } else if (width < 320) {
         width = 320;
       }
-      const fontSize = 100 / 1080 * width;
+      const fontSize = (100 / 1080) * width;
       /* 设置fontsize */
 
       html.style.fontSize = `${fontSize}px`;
@@ -146,58 +137,119 @@ export default {
           width = 320;
         }
         /* 640 100  320 50 */
-        const fontSize = 100 / 1080 * width;
+        const fontSize = (100 / 1080) * width;
         /* 设置fontsize */
         html.style.fontSize = `${fontSize}px`;
       };
     },
+    // 获取树结构数据
     getTreeData() {
-      const params = { level: this.level, orgId: "715AD1CD60484BB59E737CD18A9DE44A" };
-      if(this.type==1){
-            this.deptOptions = this.arrayData;
-            this.deptOptions
-            this.setDisabledRecursive(this.deptOptions, this.start, this.end)
-      }else if (this.type==0){
-          getYczcTree(params).then((res)=>{
-              this.deptOptions = res.data.data;
-              this.setDisabledRecursive( this.deptOptions, this.start, this.end)
-          })  
-      }
-      else if (this.type==3){
-          this.deptOptions = this.arrayData;
-          this.deptOptions
-          this.setDisabledRecursive(this.deptOptions, this.start, this.end)
-          this.$nextTick(()=>{
-              this.$refs.tree.setCheckedNodes([{
-                  value: "YCFXDY8B643EDC9007F96F570600457D",
-                  label: '秦皇岛32-6南区'
-              }]);
-          })
-      }
+      const params = { level: this.level, orgId: this.orgId, wellType: this.wellType };
+      getYczcTree(params).then((res) => {
+        this.deptOptions = res.data.data;
+        this.setDisabledRecursive(this.deptOptions, this.start, this.end);
+      });
     },
+    // 树结构数据处理
     setDisabledRecursive(options, minLevel = 0, maxLevel = Number.MAX_SAFE_INTEGER) {
       options.forEach((option) => {
         if (option.level < minLevel || option.level > maxLevel) {
-          return
+          option.disabled = true;
         }
-        option.disabled = true
         if (option.children) {
-          this.setDisabledRecursive(option.children, minLevel, maxLevel)
+          this.setDisabledRecursive(option.children, minLevel, maxLevel);
         }
-      })
+      });
     },
-    handleCheckChange(data, checked) {
-      this.resetChecked(data, checked)
+    // 获取当前元素的所有父级
+    getParentId(list, name, value) {
+      for (let i in list) {
+        if (list[i][name] == value) {
+          return [list[i]];
+        }
+        if (list[i].children) {
+          let node = this.getParentId(list[i].children, name, value);
+          if (node !== undefined) {
+            return node.concat(list[i]);
+          }
+        }
+      }
     },
+    // 节点被点击时的回调事件
+    handleCheck(data, checked) {
+      // 处理tree交互选中逻辑
+      if (data.level == 4) {
+        // 平台级选中
+        let childrenIds = data.children.map((item) => item.value);
+        // if (this.selectKeys.includes(data.value)) {
+        //   let parentList = this.getParentId(this.deptOptions, "value", data.value);
+        //   let parentIds = parentList.filter((item) => item.level < 4).map((item) => item.value);
+        //   this.$refs.tree.setCheckedKeys(parentIds);
+        // } else {
+          this.$refs.tree.setCheckedKeys([data.value, ...childrenIds]);
+        // }
+      } else if (data.level == 5) {
+        // if (this.selectKeys.includes(data.value)) {
+        //   let parentList = this.getParentId(this.deptOptions, "value", data.value);
+        //   let parentIds = parentList.map((item) => item.value);
+        //   let filterSelect = parentIds.filter((item) => item != data.value);
+        //   this.$refs.tree.setCheckedKeys(filterSelect);
+        // } else {
+          let parentList = this.getParentId(this.deptOptions, "value", data.value);
+          let parentIds = parentList.map((item) => item.value);
+          this.$refs.tree.setCheckedKeys(parentIds);
+        // }
+      }
+
+      // 处理tree数据逻辑
+      this.resetChecked(data, checked);
+    },
+    // 节点被点击时数据处理
     resetChecked(data, checked) {
-      let obj = checked.halfCheckedNodes.concat([data])
-      this.$emit('childinfo', obj)
-      this.$refs.tree.setCheckedNodes([{
-        value: data.value,
-        label: data.label
-      }]);
-    }
-  }
+      console.log(
+        "选中数据",
+        this.$refs.tree.getCheckedKeys(false, true),
+        this.$refs.tree.getCheckedNodes(false, true),
+      );
+      this.selectKeys = this.$refs.tree.getCheckedKeys(false, true);
+      let selectList = {
+        orgId: null,
+        ogfId: null,
+        platformIds: this.isMultiple ? [] : "",
+        wellIds: this.isMultiple ? [] : "",
+      };
+      // checked.checkedNodes.map((item) => {
+      this.$refs.tree.getCheckedNodes(false, true).map((item) => {
+        if (item.level == 2) {
+          // 作业公司
+          selectList.orgId = item.value;
+        } else if (item.level == 3) {
+          // 油田
+          selectList.ogfId = item.value;
+        } else if (item.level == 4) {
+          // 平台
+          if (this.isMultiple) {
+            selectList.platformIds.push(item.value);
+          } else {
+            selectList.platformIds = item.value;
+          }
+        } else if (item.level == 5) {
+          // 井号
+          if (this.isMultiple) {
+            selectList.wellIds.push(item.value);
+          } else {
+            selectList.wellIds = item.value;
+          }
+        }
+      });
+      this.$emit("getSelectItems", selectList, data);
+    },
+    // 通过 keys 设置目前勾选的节点
+    setCheckedKeys(keys) {
+      this.selectKeys = keys;
+      this.$refs.tree.setCheckedKeys(keys);
+    },
+  },
 };
 </script>
 
@@ -365,5 +417,7 @@ export default {
 /deep/ .el-tree > .el-tree-node > .el-tree-node__content .el-checkbox {
   display: none;
 }
-
+::v-deep .el-checkbox.is-disabled {
+  display: none;
+}
 </style>

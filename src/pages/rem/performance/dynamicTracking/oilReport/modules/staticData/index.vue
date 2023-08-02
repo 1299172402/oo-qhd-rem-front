@@ -17,6 +17,11 @@
             <el-table-column type="index" label="序号"></el-table-column>
             <el-table-column prop="wellNo" label="井号" width="130"></el-table-column>
             <el-table-column prop="fieldName" label="区块"></el-table-column>
+            <el-table-column prop="coordX" label="井坐标位置">
+                <template slot-scope="scope">
+                    <span>{{ 'X：' + scope.row.coordX + ' , Y：' + scope.row.coordY }}</span>
+                </template>
+            </el-table-column>
             <el-table-column prop="horizontalLength" :label="`水平段长度\n (m)`"></el-table-column>
             <el-table-column prop="completeType" label="完井方式"></el-table-column>
             <el-table-column prop="boreType" label="管柱类型"></el-table-column>
@@ -38,6 +43,7 @@
 <script>
 import { wellBaseInfo } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 import { exportExcel } from "@/lib/exportExcel.js";
+import {queryBasicData} from "@/api/rem/oilanalysisreport";
 export default {
   filters: {
     formatTime(val) {
@@ -75,11 +81,17 @@ export default {
         platformId: this.platform,
         wellId: this.wellId,
       };
-      wellBaseInfo(request).then((res) => {
-        if (res.data.code == 200) {
-          this.tableData = res.data.data.wellBaseInfo;
-        }
-      });
+      let a = []
+        queryBasicData(request).then((res)=>{
+            let a = res.data.data
+            wellBaseInfo(request).then((res) => {
+                if (res.data.code == 200) {
+                    this.tableData = [...res.data.data,...a]
+        
+                }
+            });
+        })
+      
     },
     //下载
     doDownLoad() {

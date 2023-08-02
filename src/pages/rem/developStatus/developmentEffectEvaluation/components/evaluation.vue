@@ -721,7 +721,7 @@
                 };
                 outputSpeed(request).then((res) => {
                     if (res.data.code == 200) {
-                        let lineChart = res.data.data.chart.linearDataSets;
+                        let lineChart = res.data.data.chart?.linearDataSets || [];
                         let legendData = [];
                         let seriesData = [];
                         lineChart.forEach((item, index) => {
@@ -771,7 +771,7 @@
                 outputDegree(request).then((res) => {
                     if (res.data.code == 200) {
                         let seriesData = [];
-                        let lineChart = res.data.data.chart.lineChartDataSets;
+                        let lineChart = res.data.data.chart?.lineChartDataSets || [];
                         lineChart.forEach((item, index) => {
                             seriesData.push(this.outputDegreeLine(item));
                         });
@@ -814,7 +814,7 @@
                 let seriesData = [];
                 outputDegree(request).then((res) => {
                     if (res.data.code == 200) {
-                        let lineChart = res.data.data.chart.lineChartDataSets;
+                        let lineChart = res.data.data.chart?.lineChartDataSets || [];
                         lineChart.forEach((item, index) => {
                             legendData.push(item.label);
                             seriesData.push(this.outputDegreeLine(item));
@@ -827,7 +827,7 @@
 
                 outputDegreeTongChart(request).then((res) => {
                     if (res.data.code == 200) {
-                        let lineChart = res.data.data.chart.lineChartDataSets;
+                        let lineChart = res.data.data.chart?.lineChartDataSets || [];
                         lineChart.forEach((item, index) => {
                             legendData.push('Rm=' + item.label);
                             seriesData.push(this.outputDegreeTongChart(item));
@@ -867,7 +867,7 @@
                 };
                 injectionProRate(request).then((res) => {
                     if (res.data.code == 200) {
-                        let linearChart = res.data.data.chart.linearDataSets[0].linearData;
+                        let linearChart = res.data.data.chart?.linearDataSets[0].linearData || [];
                         let seriesData = [];
                         linearChart.forEach((item, index) => {
                             let point = [];
@@ -893,7 +893,7 @@
                 };
                 generalPressure(request).then((res) => {
                     if (res.data.code == 200) {
-                        let barChart = res.data.data.chart.barDataSets[0].barDatas;
+                        let barChart = res.data.data.chart?.barDataSets[0].barDatas || [];
                         let seriesData = [];
                         barChart.forEach((item, index) => {
                             let point = [];

@@ -670,15 +670,15 @@
                 searchDevTrendAnalysis(queryParams).then((data) => {
                     if (data.status == 200) {
                         //综合递减
-                        let declineChart = data.data.data.declineChart.linearDataSets;
+                        let declineChart = data.data.data?.declineChart?.linearDataSets;
                         //产液率
-                        let liquidChart = data.data.data.liquidChart.linearDataSets;
+                        let liquidChart = data.data.data?.liquidChart?.linearDataSets;
                         //产油率
-                        let oilChart = data.data.data.oilChart.linearDataSets;
+                        let oilChart = data.data.data?.oilChart?.linearDataSets;
                         //含水上升
-                        let waterContainRaiseChart = data.data.data.waterContainRaiseChart.linearDataSets;
+                        let waterContainRaiseChart = data.data.data?.waterContainRaiseChart?.linearDataSets;
                         //含水率
-                        let waterCutChart = data.data.data.waterCutChart.linearDataSets;
+                        let waterCutChart = data.data.data?.waterCutChart?.linearDataSets;
                         //描述
                         let MeDate = data.data.data.datas;
                         this.messageResult = MeDate;

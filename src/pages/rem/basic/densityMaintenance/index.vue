@@ -235,7 +235,6 @@
 <script>
 import {queryProductList} from "@/api/rem/workcompanydesignate";
 import {queryDensityInfo, save} from "@/api/rem/density.js";
-import {mapGetters} from "vuex";
 import {queryOperatingCompanyDetail, queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
 import treeMultipleSelection from "@/components/intelligentOilfield/tree_multiple_selection/index.vue";
 import {exportExcel} from "@/lib/exportExcel";

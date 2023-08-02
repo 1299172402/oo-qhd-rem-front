@@ -878,6 +878,8 @@
             },
             //油井总井数和油井开井数
             getProWellCountChart(chart) {
+                // 如果没有曲线数据直接返回
+                if(!chart?.linearDataSets) return
                 let xData = [];
                 let seriesDataAll = [];
                 let seriesDataOpen = [];
@@ -908,6 +910,8 @@
             },
             //水井总井数和水井开井数
             getInjWellCountChart(chart) {
+                // 如果没有曲线数据直接返回
+                if(!chart?.linearDataSets) return
                 let xData = [];
                 let seriesDataAll = [];
                 let seriesDataOpen = [];
@@ -938,6 +942,8 @@
             },
             //单元日产液和单元日产油
             getProUnitLiquidAndOilChart(chart) {
+                // 如果没有曲线数据直接返回
+                if(!chart?.linearDataSets) return
                 let xData = [];
                 let seriesDataLiq = [];
                 let seriesDataOil = [];
@@ -968,6 +974,8 @@
             },
             //平均单井日产液和平均单井日产油
             getSingleProUnitLiquidAndOilChart(chart) {
+                // 如果没有曲线数据直接返回
+                if(!chart?.linearDataSets) return
                 let xData = [];
                 let seriesDataLiq = [];
                 let seriesDataOil = [];
@@ -998,6 +1006,8 @@
             },
             //含水率
             getWaterCutChart(chart) {
+                // 如果没有曲线数据直接返回
+                if(!chart?.linearDataSets) return
                 let xData = [];
                 let seriesData = [];
                 let linearData = chart.linearDataSets[0].linearData;
@@ -1014,6 +1024,8 @@
             },
             //气油比
             getGasOilRateChart(chart) {
+                // 如果没有曲线数据直接返回
+                if(!chart?.linearDataSets) return
                 let xData = [];
                 let seriesData = [];
                 let linearData = chart.linearDataSets[0].linearData;
@@ -1030,6 +1042,8 @@
             },
             //日注水
             getInjectionDailyChart(chart) {
+                // 如果没有曲线数据直接返回
+                if(!chart?.linearDataSets) return
                 let xData = [];
                 let seriesData = [];
                 let linearData = chart.linearDataSets[0].linearData;
@@ -1046,6 +1060,8 @@
             },
             //地层压降
             getLayerPressureChart(chart) {
+                // 如果没有曲线数据直接返回
+                if(!chart?.linearDataSets) return
                 let xData = [];
                 let seriesData = [];
                 let linearData = chart.linearDataSets[0].linearData;
@@ -1062,6 +1078,8 @@
             },
             //月注采比
             getProInjectMonthChart(chart) {
+                // 如果没有曲线数据直接返回
+                if(!chart?.linearDataSets) return
                 let xData = [];
                 let seriesData = [];
                 let linearData = chart.linearDataSets[0].linearData;
@@ -1078,6 +1096,8 @@
             },
             //年产油
             getOilYearChart(chart) {
+                // 如果没有曲线数据直接返回
+                if(!chart?.linearDataSets) return
                 let xData = [];
                 let seriesData = [];
                 let linearData = chart.linearDataSets[0].linearData;
