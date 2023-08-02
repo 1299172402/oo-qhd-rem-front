@@ -17,7 +17,7 @@
             <el-table-column type="index" label="序号"></el-table-column>
             <el-table-column prop="wellNo" label="井号" width="130"></el-table-column>
             <el-table-column prop="fieldName" label="区块"></el-table-column>
-            <el-table-column prop="coordX" label="井坐标位置">
+            <el-table-column prop="coordX" label="井坐标位置" min-width="250px">
                 <template slot-scope="scope">
                     <span>{{ 'X：' + scope.row.coordX + ' , Y：' + scope.row.coordY }}</span>
                 </template>
@@ -75,24 +75,23 @@ export default {
       this.doSearch();
     },
     //根据父组件传递过来的参数进行查询
-    doSearch() {
-      let request = {
-        ogfId: this.oilFeildId,
-        platformId: this.platform,
-        wellId: this.wellId,
-      };
-      let a = []
-        queryBasicData(request).then((res)=>{
-            let a = res.data.data
-            wellBaseInfo(request).then((res) => {
-                if (res.data.code == 200) {
-                    this.tableData = [...res.data.data,...a]
-        
-                }
-            });
-        })
-      
-    },
+      async doSearch() {
+          const request = {
+              ogfId: this.oilFeildId,
+              platformId: this.platform,
+              wellId: this.wellId,
+          };
+
+          try {
+              const [basicData, wellInfo] = await Promise.all([queryBasicData(request), wellBaseInfo(request)]);
+             
+                  this.tableData = [Object.assign(wellInfo.data.data.wellBaseInfo[0], basicData.data.data[0])]
+            
+          } catch (error) {
+              // 异常处理
+              console.error(error);
+          }
+      },
     //下载
     doDownLoad() {
       let fileName = "单井基本信息表";
