@@ -20,7 +20,7 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="平台:">
-                            <el-select v-model="queryData.assetCode" @change="choicewell" clearable disabled
+                            <el-select v-model="queryData.assetCode" @change="choicewell" clearable 
                                        style="width: 220px">
                                 <el-option
                                     clearable
@@ -41,7 +41,7 @@
                         </el-form-item>
                         <el-form-item v-if="link == 1 || link == 2 || link == 3 || link == 4 || link == 5 "
                                       label="井号:">
-                            <el-select v-model="queryData.well" clearable style="width: 170px" disabled>
+                            <el-select v-model="queryData.well" clearable style="width: 170px" >
                                 <el-option v-for="(item, index) in wellList" :key="index" :label="item.wellName"
                                            :value="item.wellId">
                                 </el-option>
@@ -50,7 +50,6 @@
                         <el-form-item label="日期:">
                             <el-date-picker
                                 v-if="link == 4"
-                                disabled
                                 value-format="yyyy-MM-dd"
                                 clearable
                                 v-model="queryData.month"

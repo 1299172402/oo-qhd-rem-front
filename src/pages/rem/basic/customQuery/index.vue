@@ -1205,7 +1205,7 @@ export default {
                 endTime: this.selectDate[1], //结束时间
                 dataId: this.activeTabIndex == 2 ? this.ogfId : this.wellId,//若目标类型为2油田传ogfId,若为井传wellId
                 pageNum: 1,//分页页码
-                pageSize: 99999,//暂用此下载方法
+                pageSize: 10000,//暂用此下载方法
             };
             this.params = params;
             this.dowload = [];
