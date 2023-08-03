@@ -58,7 +58,7 @@ export default {
                     //悬浮按钮名称
                     boxText: '智能分采井调控测试',
                     //悬浮按钮二级名称及路由跳转地址
-                    boxBottomText: [{name:'智能配产器调控模型', alarmPageCode:'OISAAE',url:`https://ipm.${this.baseUrl}/#/intelligentDispensing/intelligentSubMining?page=reservoirDisplay/linkage`}, '举升设备调控模型', '智能测试模型'],
+                    boxBottomText: [{name:'智能配产器调控模型',url:`https://ipm.${this.baseUrl}/#/intelligentDispensing/intelligentSubMining?page=reservoirDisplay/linkage`}, '举升设备调控模型', '智能测试模型'],
                     //弹出框自定义样式
                     boxStyle: {
                         pWidth: 'width:11vw',
