@@ -7,7 +7,7 @@
             :is-show-max-btn="true"
         >
             <button class="detailLinkBtn" @click="linkroute('/intelligence1/indexHome')">详细</button>
-            <el-row :gutter="20" style="margin-bottom: 10px;padding: 0 20px">
+            <el-row :gutter="20" style="margin-top: 20px;padding: 0 20px">
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <div class="yield water">

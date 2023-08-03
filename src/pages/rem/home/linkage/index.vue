@@ -58,7 +58,7 @@ export default {
                     //悬浮按钮名称
                     boxText: '智能分采井调控测试',
                     //悬浮按钮二级名称及路由跳转地址
-                    boxBottomText: [{name:'智能配产器调控模型',url:`https://ipm.${this.baseUrl}/#/intelligentDispensing/intelligentSubMining?page=reservoirDisplay/linkage`}, '举升设备调控模型', '智能测试模型'],
+                    boxBottomText: [{name:'智能配产器调控模型', alarmPageCode:'OISAAE',url:`https://ipm.${this.baseUrl}/#/intelligentDispensing/intelligentSubMining?page=reservoirDisplay/linkage`}, '举升设备调控模型', '智能测试模型'],
                     //弹出框自定义样式
                     boxStyle: {
                         pWidth: 'width:11vw',
@@ -186,14 +186,13 @@ export default {
                 {
                     style: 'position:absolute;left: 58%;top: 36%;width:20%;height:40%;',
                     boxText: '分注分采调控策略',
-                    boxBottomText: [{name:'注采调控最优化方案',url:`https://ipm.${this.baseUrl}/#/waterflood/merge?page=reservoirDisplay/linkage`}, {name:'配注微调策略',url:`https://rem.${this.baseUrl}/#/intelligence1/optimization?link=rem&page=reservoirDisplay/linkage`}],
+                    boxBottomText: [{name:'注采调控最优化方案', alarmPageCode:'OISAAE',url:`https://ipm.${this.baseUrl}/#/waterflood/merge?page=reservoirDisplay/linkage`}, {name:'配注微调策略',url:`https://rem.${this.baseUrl}/#/intelligence1/optimization?link=rem&page=reservoirDisplay/linkage`}],
                     boxBottomContent: [['智能分注调控策略优化模型', '智能分注调控策略优化模型'], ['配注方案分析评估模型']],
                     boxStyle: {
                         pWidth: 'width:11vw'
                     },
                     imgUrl: new URL('./topBox/26.png', import.meta.url).href,
                     showFlag:false,
-                    alarmPageCode:'OISAAE',
                     typeIdList:[],
                     warningShowFlag : false,
                 },
@@ -237,12 +236,18 @@ export default {
                 },
             ]  
         },
+        filterchild(array1, array2) {
+            return  array1.filter(function(item) {
+                return item.boxBottomText.some(val => array2.has(val.alarmPageCode));
+            });
+        },
         async matchAndOutput(array1, array2) {
             const set = new Set(array1.map(item => item.alarmPageCode));
             const result = array2.filter(item => set.has(item.alarmPageCode));
+            const filteredChild = this.filterchild(this.currentLists, set);
+            console.log(filteredChild);
             return result;
         },
-
         findIndex(array, obj) {
             return array.indexOf(obj);
         },
