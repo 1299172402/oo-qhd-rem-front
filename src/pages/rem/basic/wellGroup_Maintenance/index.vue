@@ -293,7 +293,7 @@ export default {
   methods: {
       reset() {
           this.query.selectBlock = this.blanks[0].fieldId;
-          this.getDate(),
+          this.getDate();
           this.tableOilfield();
       },
     getDate () {
@@ -311,13 +311,6 @@ export default {
         blockId: this.query.selectBlock
       }).then(({ wellGroup }) => {
         let data = [];
-        // this.cities.push(...wellGroup);
-        // this.cities.forEach((city, index) => {
-        //   data.push({
-        //     label: city.proWellNo,
-        //     key: city.proWellId,
-        //   });
-        // });
         if(Array.isArray(wellGroup) && wellGroup.length){
           wellGroup.forEach(item => {
             data.push({

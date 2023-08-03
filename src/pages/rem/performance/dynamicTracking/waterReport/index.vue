@@ -26,9 +26,9 @@
           <predict :queryData="queryData"></predict>
       </el-row>
 <!--      基础数据-->
-      <el-row :gutter="20">
-          <fundamentalData :queryData="queryData"></fundamentalData>
-      </el-row>
+<!--      <el-row :gutter="20">-->
+<!--          <fundamentalData :queryData="queryData"></fundamentalData>-->
+<!--      </el-row>-->
 <!--      临井数据-->
       <el-row :gutter="20">
           <nearWell :queryData="queryData"></nearWell>

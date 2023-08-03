@@ -525,6 +525,8 @@
                 console.log('this.mcMgLeft', this.mcMgLeft)
             },
             initData2() {
+                console.log('没执行吗？', this.tableData)
+
                 if (this.tableData.length) {
                     this.tableData.forEach((el, i) => {
                         if (el.realityMeasuresStartTime) {
@@ -534,7 +536,6 @@
 
                             let day = this.dateDiff(this.dateTime + '-01-01', el.realityMeasuresStartTime);
                             let diffObject = this.leftDiff(el.realityMeasuresStartTime);
-
                             this.tableData[i].mgleftwidth = (diffObject.month * 78) + (diffObject.month * this
                                 .spacing) + (78 / 30 * diffObject.day) - 4 + 'px';
                             let sjwidth = (78 / 30 * Number(el.realityMeasuresDayNum)) + (this.diffMonth(el
@@ -546,7 +547,24 @@
                                     .planMeasuresStartTime, el.planMeasuresEndTime) * 17.5);
                                 this.tableData[i].jhwidth = Math.floor(jhwidth) + 'px';
                             }
-                            // console.log(this.tableData[i]);
+                        } else if (el.planMeasuresStartTime) {
+                            // if (el.realityMeasuresStartTime < this.dateTime + '-01-01') {
+                            //     el.realityMeasuresStartTime = this.dateTime + '-01-01';
+                            // }
+                            let diffObject = this.leftDiff(el.planMeasuresStartTime);
+                            this.tableData[i].mgleftwidth = (diffObject.month * 78) + (diffObject.month * this
+                                .spacing) + (78 / 30 * diffObject.day) - 4 + 'px';
+                            if (el.realityMeasuresStartTime &&el.realityMeasuresEndTime) {
+                                let sjwidth = (78 / 30 * Number(el.realityMeasuresDayNum)) + (this.diffMonth(el
+                                    .realityMeasuresStartTime, el.realityMeasuresEndTime) * 17.5);
+                                this.tableData[i].sjwidth = Math.floor(sjwidth) + 'px';
+                            }
+
+                            if (el.planMeasuresStartTime && el.planMeasuresEndTime) {
+                                let jhwidth = (78 / 30 * Number(el.planMeasuresDayNum)) + (this.diffMonth(el
+                                    .planMeasuresStartTime, el.planMeasuresEndTime) * 17.5);
+                                this.tableData[i].jhwidth = Math.floor(jhwidth) + 'px';
+                            }
                         }
                     })
                 }

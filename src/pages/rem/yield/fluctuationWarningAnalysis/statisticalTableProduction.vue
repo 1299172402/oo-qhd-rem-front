@@ -417,16 +417,12 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-
         .z-container {
             flex: 1;
             height: 0;
         }
-        
-        
-      
-        
         #tableData{
+            ::v-deep .el-table__fixed-header-wrapper,
             ::v-deep .el-table__header-wrapper{
                 .el-table__header{
                     thead {

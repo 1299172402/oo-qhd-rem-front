@@ -357,8 +357,8 @@ export default {
         },
         refresh() {
             (this.queryData.blockId = '6CD7342CA6DD418183A4B3BC38584F7C')
-                // this.queryData.dateTime = this.eeee()
-               this.dateTime = '2023-05',
+                this.queryData.dateTime = this.eeee()
+               // this.dateTime = '2023-05',
             this.doSearch()
         },
         // table表头标题样式

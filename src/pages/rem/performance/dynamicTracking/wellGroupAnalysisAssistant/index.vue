@@ -199,10 +199,10 @@
                                 label: "示踪剂",
                                 name: "tracer",
                             },
-                            {
-                                label: "调驱/调剖",
-                                name: "effectOfMeasures",
-                            },
+                            // {
+                            //     label: "调驱/调剖",
+                            //     name: "effectOfMeasures",
+                            // },
                             {
                                 label: "井组配注变化动态",
                                 name: "dynamicsInjection",

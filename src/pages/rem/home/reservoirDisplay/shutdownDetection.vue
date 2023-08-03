@@ -103,13 +103,13 @@
                 <el-table-column prop="appendixValueName" label="*关停分类"></el-table-column>
                 <el-table-column prop="reasonAppendixValueName" label="*关停原因"></el-table-column>
                 <el-table-column prop="planAppendixValueName" label="*计划属性"></el-table-column>
-                <el-table-column prop="beginDate" :label="`*关停开始时间\n(yyyy/mm/dd)`">
+                <el-table-column prop="beginDate" sortable :label="`*关停开始时间\n(yyyy/mm/dd)`">
                     <template slot-scope="scope">
                         <span v-if="scope.row.beginDate">{{scope.row.beginDate.substring(0,19)}}</span>
                         <span v-else>N/A</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="endDate" :label="`*关停结束时间\n(yyyy/mm/dd)`">
+                <el-table-column prop="endDate" sortable :label="`*关停结束时间\n(yyyy/mm/dd)`">
                     <template slot-scope="scope">
                         <span v-if="scope.row.endDate">{{scope.row.endDate.substring(0,19)}}</span>
                         <span v-else>N/A</span>
@@ -199,10 +199,6 @@ export default {
         this.$set(this.month, 0, this.queryData.startTime);
         this.$set(this.month, 1, this.queryData.endTime);
         this.startmonth = this.month
-        // 暂用
-        // this.queryData.startTime ='2022-01-01';
-        // this.queryData.endTime = '2022-12-31';
-        // this.month = ['2022-01-01','2022-12-31']
         this.queryinfo()
     },
     methods: {
