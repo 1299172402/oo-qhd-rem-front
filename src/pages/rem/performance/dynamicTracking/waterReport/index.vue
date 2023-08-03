@@ -11,7 +11,7 @@
       </el-row>
 <!--      分层调配-->
       <el-row :gutter="20">
-          <stratificationTesting></stratificationTesting>
+          <stratificationTesting :queryData="queryData"></stratificationTesting>
       </el-row>
 <!--      生产指标-->
       <el-row :gutter="20">

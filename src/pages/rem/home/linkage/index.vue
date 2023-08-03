@@ -150,7 +150,7 @@ export default {
                     style: 'position:absolute;left: 2%;top: 60%;width:20%;height:40%;',
                     boxText: '产量运行监控',
                     boxBottomText: [
-                        {name:'年度产量运行预警',url:`https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?name=linkage`}
+                        {name:'年度产量运行预警',alarmPageCode:'QOIWTT',url:`https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?name=linkage`}
                     ],
                     boxBottomContent: [
                         [{name:'年度产量趋势预测',url:`https://rem.${this.baseUrl}/#/modelConfiguration/modelconfig?name=linkage`}]
@@ -193,6 +193,7 @@ export default {
                     },
                     imgUrl: new URL('./topBox/26.png', import.meta.url).href,
                     showFlag:false,
+                    alarmPageCode:'OISAAE',
                     typeIdList:[],
                     warningShowFlag : false,
                 },
@@ -287,23 +288,24 @@ export default {
                     clearInterval(this.timmer);
                 }
             } catch (error) {
+                console.error(error)
                 // 错误处理
                 this.$message.error('系统错误请重新尝试或联系运维人员！');
             }
         },
         arrowFun(){
-            this.timmer = setInterval(()=>{
-                if(this.loopNum!= -1 && this.loopNum < 5) this.currentLists[this.loopImgNum[this.loopNum ]].showFlag = true
-                if(this.loopNum!= -1 && this.loopNum < 5) this.currentLists[this.loopImgNumClose[this.loopNum ]].showFlag = false
-                this.loopNum ++                
-                for(let i=0;i<7;i++){
-                    this.$el.querySelectorAll('img')[i].style.display = 'none'
-                }
-                this.$el.querySelectorAll('img')[this.loopNum].style.display = 'block'
-                if(this.loopNum == 6){
-                   this.loopNum = -1
-                }
-            },2000)
+            // this.timmer = setInterval(()=>{
+            //     if(this.loopNum!= -1 && this.loopNum < 5) this.currentLists[this.loopImgNum[this.loopNum ]].showFlag = true
+            //     if(this.loopNum!= -1 && this.loopNum < 5) this.currentLists[this.loopImgNumClose[this.loopNum ]].showFlag = false
+            //     this.loopNum ++                
+            //     for(let i=0;i<7;i++){
+            //         this.$el.querySelectorAll('img')[i].style.display = 'none'
+            //     }
+            //     this.$el.querySelectorAll('img')[this.loopNum].style.display = 'block'
+            //     if(this.loopNum == 6){
+            //        this.loopNum = -1
+            //     }
+            // },2000)
         },
         stopTimer(){
             this.currentLists.forEach(item=>{

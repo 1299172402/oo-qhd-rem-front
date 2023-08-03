@@ -144,7 +144,7 @@
                         <el-col :span="6">
                             <div class="grid-content bg-purple">
                                 <Echart
-                                    :chart-data="getEchart(groupBlock.openOilNUm, '口', 'rgb(0,179,225)', 'rgb(38,43,90)', 'transparent')"
+                                    :chart-data="getEchartData(groupBlock.openOilNUm, '口', 'rgb(36,151,194)', 'rgb(7,59,90)', 'rgb(36,151,194)')"
                                 ></Echart>
                                 <div class="chartText">油井开井数</div>
                             </div>
@@ -152,7 +152,7 @@
                         <el-col :span="6">
                             <div class="grid-content bg-purple">
                                 <Echart
-                                    :chart-data="getEchart(groupBlock.openWaterNum, '口', 'rgb(235,125,96)', 'rgb(38,43,90)', 'transparent')"
+                                    :chart-data="getEchartData(groupBlock.openWaterNum, '口', 'rgb(235, 125, 96)', 'rgb(7,59,90)', 'rgb(235, 125, 96)')"
                                 ></Echart>
                                 <div class="chartText">水井开井数</div>
                             </div>
@@ -160,7 +160,7 @@
                         <el-col :span="6">
                             <div class="grid-content bg-purple">
                                 <Echart
-                                    :chart-data="getEchart(groupBlock.injRatio, '', 'rgb(164,227,77)', 'rgb(38,43,90)', 'transparent')"
+                                    :chart-data="getEchartData(groupBlock.injRatio, '口', 'rgb(164, 227, 77)', 'rgb(7,59,90)', 'rgb(164, 227, 77)')"
                                 ></Echart>
                                 <div class="chartText">注采比</div>
                             </div>
@@ -168,7 +168,7 @@
                         <el-col :span="6">
                             <div class="grid-content bg-purple">
                                 <Echart
-                                    :chart-data="getEchart(groupBlock.haveWater, '%', 'rgb(185,75,215)', 'rgb(38,43,90)', 'transparent')"
+                                    :chart-data="getEchartData(groupBlock.haveWater, '口', 'rgb(185, 75, 215)', 'rgb(7,59,90)', 'rgb(185, 75, 215)')"
                                 ></Echart>
                                 <div class="chartText">含水</div>
                             </div>
@@ -360,7 +360,9 @@ export default {
                 } catch (e) {
                 }
 
-                this.ResidueOilRank = res.slice(0, 10);
+                
+                const newArray = res.filter(obj => obj.dhFlowingPress !='' && obj.fluidProdDaily !='');
+                this.ResidueOilRank = newArray.slice(0, 10);
                 this.ResidueOilRank.sort((a, b) => a.dhFlowingPress - b.dhFlowingPress)
             })
         },
@@ -439,7 +441,10 @@ export default {
                         color: '#a9a8a8'
                     },
                     axisLine:{
-                        show:true
+                        show:false
+                    },
+                    splitLine:{
+                        show:false
                     },
                     interval: 400,
                     axisLabel: {
@@ -452,7 +457,13 @@ export default {
                         color: '#a9a8a8'
                     },
                     axisLine:{
-                        show:true
+                        show:false
+                    },
+                    axisTick:{
+                        show:false
+                    },
+                    splitLine:{
+                        show:false
                     },
                     axisLabel: {
                         color: '#a9a8a8'
