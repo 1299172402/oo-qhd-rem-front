@@ -150,7 +150,7 @@ export default {
                     style: 'position:absolute;left: 2%;top: 60%;width:20%;height:40%;',
                     boxText: '产量运行监控',
                     boxBottomText: [
-                        {name:'年度产量运行预警',url:`https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?name=linkage`}
+                        {name:'年度产量运行预警',alarmPageCode:'QOIWTT',url:`https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?name=linkage`}
                     ],
                     boxBottomContent: [
                         [{name:'年度产量趋势预测',url:`https://rem.${this.baseUrl}/#/modelConfiguration/modelconfig?name=linkage`}]
@@ -186,7 +186,7 @@ export default {
                 {
                     style: 'position:absolute;left: 58%;top: 36%;width:20%;height:40%;',
                     boxText: '分注分采调控策略',
-                    boxBottomText: [{name:'注采调控最优化方案',url:`https://ipm.${this.baseUrl}/#/waterflood/merge?page=reservoirDisplay/linkage`}, {name:'配注微调策略',url:`https://rem.${this.baseUrl}/#/intelligence1/optimization?link=rem&page=reservoirDisplay/linkage`}],
+                    boxBottomText: [{name:'注采调控最优化方案', alarmPageCode:'OISAAE',url:`https://ipm.${this.baseUrl}/#/waterflood/merge?page=reservoirDisplay/linkage`}, {name:'配注微调策略',url:`https://rem.${this.baseUrl}/#/intelligence1/optimization?link=rem&page=reservoirDisplay/linkage`}],
                     boxBottomContent: [['智能分注调控策略优化模型', '智能分注调控策略优化模型'], ['配注方案分析评估模型']],
                     boxStyle: {
                         pWidth: 'width:11vw'
@@ -236,12 +236,18 @@ export default {
                 },
             ]  
         },
+        filterchild(array1, array2) {
+            return  array1.filter(function(item) {
+                return item.boxBottomText.some(val => array2.has(val.alarmPageCode));
+            });
+        },
         async matchAndOutput(array1, array2) {
             const set = new Set(array1.map(item => item.alarmPageCode));
             const result = array2.filter(item => set.has(item.alarmPageCode));
+            const filteredChild = this.filterchild(this.currentLists, set);
+            console.log(filteredChild);
             return result;
         },
-
         findIndex(array, obj) {
             return array.indexOf(obj);
         },
@@ -287,23 +293,24 @@ export default {
                     clearInterval(this.timmer);
                 }
             } catch (error) {
+                console.error(error)
                 // 错误处理
                 this.$message.error('系统错误请重新尝试或联系运维人员！');
             }
         },
         arrowFun(){
-            this.timmer = setInterval(()=>{
-                if(this.loopNum!= -1 && this.loopNum < 5) this.currentLists[this.loopImgNum[this.loopNum ]].showFlag = true
-                if(this.loopNum!= -1 && this.loopNum < 5) this.currentLists[this.loopImgNumClose[this.loopNum ]].showFlag = false
-                this.loopNum ++                
-                for(let i=0;i<7;i++){
-                    this.$el.querySelectorAll('img')[i].style.display = 'none'
-                }
-                this.$el.querySelectorAll('img')[this.loopNum].style.display = 'block'
-                if(this.loopNum == 6){
-                   this.loopNum = -1
-                }
-            },2000)
+            // this.timmer = setInterval(()=>{
+            //     if(this.loopNum!= -1 && this.loopNum < 5) this.currentLists[this.loopImgNum[this.loopNum ]].showFlag = true
+            //     if(this.loopNum!= -1 && this.loopNum < 5) this.currentLists[this.loopImgNumClose[this.loopNum ]].showFlag = false
+            //     this.loopNum ++                
+            //     for(let i=0;i<7;i++){
+            //         this.$el.querySelectorAll('img')[i].style.display = 'none'
+            //     }
+            //     this.$el.querySelectorAll('img')[this.loopNum].style.display = 'block'
+            //     if(this.loopNum == 6){
+            //        this.loopNum = -1
+            //     }
+            // },2000)
         },
         stopTimer(){
             this.currentLists.forEach(item=>{

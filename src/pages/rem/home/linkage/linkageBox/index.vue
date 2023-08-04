@@ -25,6 +25,7 @@
                     <div class="pad">
                         <div >
                             <p v-show="!content" :key="index" v-for="(item,index) in currentList.boxBottomText">
+<!--                                <span>{{sclc(item)}}</span>-->
                                 <span v-if="item.url" :class= "currentList.warningShowFlag==true?'blink':'' " style="cursor: pointer" @click="linkTo(item.url)">{{ item.name ? item.name : item }}</span>
                                 <span v-if="!item.url"  style="pointer-events: none;color:#5a5959;font-weight:bolder">{{ item.name ? item.name : item }}</span>
                                 <span v-if="currentList.boxBottomContent" class="btnContent" @click="btnContent(index)">{{ currentList.boxBottomContent[index].length > 0 ? '>>' : '' }}</span>
@@ -110,6 +111,9 @@ export default {
                 window.open(url, '_parent');
             })
         },
+        // sclc(item){
+        //     console.log(item)  
+        // },
         confirm(currentList){
             const data = {
                 authorizedPersonnel:this.$store.getters["user/name"],
