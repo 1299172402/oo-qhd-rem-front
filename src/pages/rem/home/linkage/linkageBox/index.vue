@@ -25,8 +25,7 @@
                     <div class="pad">
                         <div >
                             <p v-show="!content" :key="index" v-for="(item,index) in currentList.boxBottomText">
-<!--                                <span>{{sclc(item)}}</span>-->
-                                <span v-if="item.url" :class= "currentList.warningShowFlag==true?'blink':'' " style="cursor: pointer" @click="linkTo(item.url)">{{ item.name ? item.name : item }}</span>
+                                <span v-if="item.url" :class= "item.warningShowFlag == true?'blink':'' " style="cursor: pointer" @click="linkTo(item.url)">{{ item.name ? item.name : item }}</span>
                                 <span v-if="!item.url"  style="pointer-events: none;color:#5a5959;font-weight:bolder">{{ item.name ? item.name : item }}</span>
                                 <span v-if="currentList.boxBottomContent" class="btnContent" @click="btnContent(index)">{{ currentList.boxBottomContent[index].length > 0 ? '>>' : '' }}</span>
                                 <span v-else class="btnBack" @click="btnBack"></span>
@@ -111,20 +110,28 @@ export default {
                 window.open(url, '_parent');
             })
         },
-        // sclc(item){
-        //     console.log(item)  
-        // },
+        sclc(item){
+            console.log(item)  
+            debugger
+        },
         confirm(currentList){
+            let alarmPageCode = ''
+            currentList.boxBottomText.map((m)=>{
+                if(m.warningShowFlag ==true){
+                    alarmPageCode = m.alarmPageCode
+                }
+            })
             const data = {
                 authorizedPersonnel:this.$store.getters["user/name"],
                 alarmTime:new Date().format('YYYY-MM-dd'),
-                alarmPageCode:currentList?.alarmPageCode
+                alarmPageCode:alarmPageCode
             }
-            addLinkageAlarmInfo(data).then(()=>{
-            }).then(()=>{
-                this.warningShowFlag = false
-                this.$emit('startTimer')
-            })
+            this.warningShowFlag = false
+            this.$emit('startTimer')
+            // addLinkageAlarmInfo(data).then(()=>{
+            // }).then(()=>{
+            //    
+            // })
         },
         mouseenter(){
             this.show = true

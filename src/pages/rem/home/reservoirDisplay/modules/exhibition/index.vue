@@ -157,7 +157,7 @@ export default {
                   textStyle: {
                       color: "#66ffff",
                   },
-                  bottom: "bottom",
+                  bottom: "10",
               },
               dataZoom: {
                   start: 0,
@@ -170,10 +170,10 @@ export default {
                   }
               },
               grid: {
-                  left: '10%',
-                  right: '18%',
-                  bottom: '11%',
-                  top:'10%',
+                  left: '5%',
+                  right: '15%',
+                  bottom: '5%',
+                  top:'5%',
                   containLabel: true
               },
               xAxis: [{
@@ -183,7 +183,13 @@ export default {
                       color: '#a9a8a8'
                   },
                   axisLine:{
-                      show:true
+                      show:false
+                  },
+                  axisTick:{
+                      show:false
+                  },
+                  splitLine:{
+                      show:false
                   },
                   interval: 400,
                   axisLabel: {
@@ -196,7 +202,13 @@ export default {
                       color: '#a9a8a8'
                   },
                   axisLine:{
-                      show:true
+                      show:false
+                  },
+                  axisTick:{
+                      show:false
+                  },
+                  splitLine:{
+                      show:false
                   },
                   interval: 400,
                   axisLabel: {
@@ -235,18 +247,11 @@ export default {
           return option
       },
       getData(){
-          let dateTime = ''
-              let data = new Date()
-          if (data.getMonth() < 10) {
-              dateTime = data.getFullYear() + '-0' + (data.getMonth() + 1)
-          } else {
-              dateTime = data.getFullYear() + '-' + (data.getMonth() + 1)
-          }
           let params = {
               blockId: 'YCFXDY8B643EDC9007F96F570600457D',
-              // yearMonth: dateTime,
+              yearMonth: new Date().getFullYear() + '-' + (new Date().getMonth()),
               //修改取数的日期为5月
-              yearMonth: '2023-05',
+              // yearMonth: '2023-05',
           }
           getResidueOilCondotion(params).then(res => {
               try {
@@ -257,8 +262,8 @@ export default {
                   });
               } catch (e) {
               }
-
-              this.ResidueOilRank = res.slice(0, 10);
+              const newArray = res.filter(obj => obj.dhFlowingPress !='' && obj.fluidProdDaily !='');
+              this.ResidueOilRank = newArray.slice(0, 10);
               this.ResidueOilRank.sort((a, b) => a.dhFlowingPress - b.dhFlowingPress)
           })  
       },

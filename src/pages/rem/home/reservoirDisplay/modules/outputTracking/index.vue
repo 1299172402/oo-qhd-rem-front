@@ -939,13 +939,14 @@ export default {
         this.getSearchOilProductionChart();
     },
     methods: {
+        
         //原油产量统计图
         getSearchOilProductionChart() {
             let request = {
                 oilFieldId: '3FC9A818F5BC43B88270DB80BBB3018F',
                 unitType: 'm',
-                beginDate: '2023-01-01',
-                endDate: '2023-12-31',
+                beginDate: new Date().getFullYear() + '-' +'01-01',
+                endDate: new Date().getFullYear() + '-' +'12-31',
                 planTypeCode: '002003',
                 rollForecastVersion: '202301',
             };

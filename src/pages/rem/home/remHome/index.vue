@@ -75,7 +75,7 @@ export default {
                         {name: '来水方向分析',url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=/dynamicManagement/remHome`},
                         {
                             name: '储量动用情况',
-                            url: `https://rem.${this.baseUrl}/#/developStatus/developmentEffectEvaluation?link=reserves?page=/dynamicManagement/remHome`
+                            url: `https://rem.${this.baseUrl}/#/developStatus/developmentEffectEvaluation?link=reserves&page=/dynamicManagement/remHome`
                         }],
                     boxBottomContent: [[], [{name:'开发效果评价',url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport?page=/dynamicManagement/remHome`}], [], []],
                     boxStyle: {
