@@ -359,8 +359,6 @@ export default {
                     });
                 } catch (e) {
                 }
-
-                
                 const newArray = res.filter(obj => obj.dhFlowingPress !='' && obj.fluidProdDaily !='');
                 this.ResidueOilRank = newArray.slice(0, 10);
                 this.ResidueOilRank.sort((a, b) => a.dhFlowingPress - b.dhFlowingPress)
@@ -429,9 +427,10 @@ export default {
                     }
                 },
                 grid: {
-                    left: '10%',
+                    left: '5%',
                     right: '15%',
-                    bottom: '15%',
+                    bottom: '5%',
+                    top:'5%',
                     containLabel: true
                 },
                 xAxis: [{

@@ -519,10 +519,11 @@ export default {
             })
         },
         getList(){
+            let date = new Date().format('yyyy-MM-dd')
             let data = {
-                endDate:"2022-12-01",
+                endDate:date,
                 oilFieldId:"3FC9A818F5BC43B88270DB80BBB3018F",
-                year:"2022-12-01"
+                year:date
             }
             dividingLayerQualityRate(data).then((res)=>{
                 this.infolist = res.data.data.indicatorContent.detail
