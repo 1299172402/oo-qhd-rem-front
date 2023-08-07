@@ -10,7 +10,7 @@
                 style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
                 <header-search class="g-w100 g-h100" style="height: auto">
                     <div class="g-row-flex-V g-w100 g-h100">
-                        <div style="margin-top: 20px">
+                        <div >
                             <el-form :inline="true">
                                 <el-form-item label="作业公司：">
                                     <el-select v-model="queryData.orgId" disabled>
@@ -49,7 +49,7 @@
                     </div>
                 </header-search>
 
-                <pagePanel headerTitle="单井储量信息维护界面" style="height: calc(100% - 100px)" class="g-w100" :show-btn="true">
+                <pagePanel headerTitle="单井储量信息维护界面" style="height: calc(100% - 80px)" class="g-w100" :show-btn="true">
                     <div style="margin-top: 5%">
                         <div class="alltitle">{{ wellName }}</div>
                         <div class="boxall" style="height: 500px; width: 900px; margin: auto">

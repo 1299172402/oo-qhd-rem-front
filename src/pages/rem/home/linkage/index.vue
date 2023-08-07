@@ -127,11 +127,13 @@ export default {
                         {
                             name: '注采平衡分析',
                             warningShowFlag: false,
+                            alarmPageCode: 'TTOBAR',
                             url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=1&page=reservoirDisplay/linkage`
                         },
                         {
                             name: '采出状况分析',
                             warningShowFlag: false,
+                            alarmPageCode: 'TTOBAR',
                             url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=2&page=reservoirDisplay/linkage`
                         }
                     ],
@@ -170,6 +172,7 @@ export default {
                     boxBottomText: [{
                         name: '层间/平面矛盾分析',
                         warningShowFlag: false,
+                        alarmPageCode: 'TTOBAR',
                         url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=reservoirDisplay/linkage`
                     }],
                     boxStyle: {

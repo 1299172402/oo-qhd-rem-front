@@ -706,7 +706,7 @@
                 console.log(1111, selectWellId)
                 if (this.dateTime == '2023' && index == 1) {
                     this.$router.push({
-                        path: '/plan/personnelMeasures',
+                        path: '/plan/personnelMeasures?page=measureManagement',
                     });
                     return false
                 }

@@ -35,7 +35,6 @@ export default {
                 },
                 legend: {
                     data: ["当年累计产量", "滚动预测", "分公司奋斗", "分公司考核"],
-                    align: "right",
                     bottom: 'bottom',
                     textStyle: {
                         color: "",
