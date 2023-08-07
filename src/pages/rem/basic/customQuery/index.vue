@@ -56,7 +56,7 @@
                     </el-row>
                 </header-search>
                 <page-panel-new :show-btn="true" v-if="!activeEchart"
-                                style="min-height: calc(100% - 100px);height: auto">
+                                style="min-height: calc(100% - 100px);height: 100%;overflow-y: scroll">
                     <el-row>
                         <div style="display: inline-block; float: right">
                             <el-button
