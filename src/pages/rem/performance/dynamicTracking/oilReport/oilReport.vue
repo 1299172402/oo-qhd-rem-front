@@ -19,21 +19,21 @@
       <waterInjection ref="toolchild4"></waterInjection>
       <!-- 注采对应曲线 -->
     </el-row>
+<!--    <el-row :gutter="20">-->
+<!--      <fundamentalData ref="toolchild5"></fundamentalData>-->
+<!--    </el-row>-->
     <el-row :gutter="20">
-      <fundamentalData ref="toolchild5"></fundamentalData>
+      <driftData ref="toolchild5"></driftData>
     </el-row>
     <el-row :gutter="20">
-      <driftData ref="toolchild6"></driftData>
+      <perforationData ref="toolchild6"></perforationData>
     </el-row>
     <el-row :gutter="20">
-      <perforationData ref="toolchild7"></perforationData>
-    </el-row>
-    <el-row :gutter="20">
-      <loggingInterpretationResult ref="toolchild8"></loggingInterpretationResult
+      <loggingInterpretationResult ref="toolchild7"></loggingInterpretationResult
       ><!-- 测井 -->
     </el-row>
     <el-row :gutter="20">
-      <wellPattern ref="toolchild9"></wellPattern>
+      <wellPattern ref="toolchild8"></wellPattern>
     </el-row>
   </div>
 </template>
@@ -96,14 +96,14 @@ export default {
       (this.queryData.ogfId = this.oilFeildId),
         (this.queryData.assetCode = this.platform),
         (this.queryData.selectWellId = this.wellId);
-      for (let i = 0, j = 9; i <= j; i++) {
+      for (let i = 0, j = 8; i <= j; i++) {
         const child = this.$refs[`toolchild${i}`];
         child.passValue(this.queryData);
       }
     },
     queryInfo(val) {
       this.queryData = val;
-      for (let i = 0, j = 9; i <= j; i++) {
+      for (let i = 0, j = 8; i <= j; i++) {
         const child = this.$refs[`toolchild${i}`];
         child.passValue(this.queryData);
       }

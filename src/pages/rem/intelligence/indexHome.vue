@@ -144,7 +144,7 @@
                         <el-col :span="6">
                             <div class="grid-content bg-purple">
                                 <Echart
-                                    :chart-data="getEchart(groupBlock.openOilNUm, '口', 'rgb(0,179,225)', 'rgb(38,43,90)', 'transparent')"
+                                    :chart-data="getEchartData(groupBlock.openOilNUm, '口', 'rgb(36,151,194)', 'rgb(7,59,90)', 'rgb(36,151,194)')"
                                 ></Echart>
                                 <div class="chartText">油井开井数</div>
                             </div>
@@ -152,7 +152,7 @@
                         <el-col :span="6">
                             <div class="grid-content bg-purple">
                                 <Echart
-                                    :chart-data="getEchart(groupBlock.openWaterNum, '口', 'rgb(235,125,96)', 'rgb(38,43,90)', 'transparent')"
+                                    :chart-data="getEchartData(groupBlock.openWaterNum, '口', 'rgb(235, 125, 96)', 'rgb(7,59,90)', 'rgb(235, 125, 96)')"
                                 ></Echart>
                                 <div class="chartText">水井开井数</div>
                             </div>
@@ -160,7 +160,7 @@
                         <el-col :span="6">
                             <div class="grid-content bg-purple">
                                 <Echart
-                                    :chart-data="getEchart(groupBlock.injRatio, '', 'rgb(164,227,77)', 'rgb(38,43,90)', 'transparent')"
+                                    :chart-data="getEchartData(groupBlock.injRatio, '口', 'rgb(164, 227, 77)', 'rgb(7,59,90)', 'rgb(164, 227, 77)')"
                                 ></Echart>
                                 <div class="chartText">注采比</div>
                             </div>
@@ -168,7 +168,7 @@
                         <el-col :span="6">
                             <div class="grid-content bg-purple">
                                 <Echart
-                                    :chart-data="getEchart(groupBlock.haveWater, '%', 'rgb(185,75,215)', 'rgb(38,43,90)', 'transparent')"
+                                    :chart-data="getEchartData(groupBlock.haveWater, '口', 'rgb(185, 75, 215)', 'rgb(7,59,90)', 'rgb(185, 75, 215)')"
                                 ></Echart>
                                 <div class="chartText">含水</div>
                             </div>
@@ -359,8 +359,8 @@ export default {
                     });
                 } catch (e) {
                 }
-
-                this.ResidueOilRank = res.slice(0, 10);
+                const newArray = res.filter(obj => obj.dhFlowingPress !='' && obj.fluidProdDaily !='');
+                this.ResidueOilRank = newArray.slice(0, 10);
                 this.ResidueOilRank.sort((a, b) => a.dhFlowingPress - b.dhFlowingPress)
             })
         },
@@ -427,9 +427,10 @@ export default {
                     }
                 },
                 grid: {
-                    left: '10%',
+                    left: '5%',
                     right: '15%',
-                    bottom: '15%',
+                    bottom: '5%',
+                    top:'5%',
                     containLabel: true
                 },
                 xAxis: [{
@@ -439,7 +440,10 @@ export default {
                         color: '#a9a8a8'
                     },
                     axisLine:{
-                        show:true
+                        show:false
+                    },
+                    splitLine:{
+                        show:false
                     },
                     interval: 400,
                     axisLabel: {
@@ -452,7 +456,13 @@ export default {
                         color: '#a9a8a8'
                     },
                     axisLine:{
-                        show:true
+                        show:false
+                    },
+                    axisTick:{
+                        show:false
+                    },
+                    splitLine:{
+                        show:false
                     },
                     axisLabel: {
                         color: '#a9a8a8'
@@ -503,7 +513,7 @@ export default {
                         radius: [0, '75%'],
                         color: centerColor,
                         label: {
-                            fontSize: 10,
+                            fontSize: 14,
                         },
                         data: [
                             {value: 0, name: value, label: {color: 'white', position: 'center'}},
@@ -518,6 +528,7 @@ export default {
                             length: 30
                         },
                         label: {
+                            fontSize: 12,
                             show: false
                         },
                         data: [
@@ -540,12 +551,11 @@ export default {
                 series: [
                     {
                         type: 'pie',
-
                         selectedMode: 'single',
                         radius: [0, '75%'],
                         color: centerColor,
                         label: {
-                            fontSize: 10,
+                            fontSize: 15,
                         },
                         data: [
                             {value: 0, name: value, label: {color: '#a9a8a8', position: 'center'}},

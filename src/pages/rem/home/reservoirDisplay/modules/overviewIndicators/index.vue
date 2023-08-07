@@ -7,7 +7,7 @@
             :is-show-max-btn="true"
         >
             <button class="detailLinkBtn" @click="linkroute('/intelligence1/indexHome')">详细</button>
-            <el-row :gutter="20" style="margin-bottom: 10px;padding: 0 20px">
+            <el-row :gutter="20" style="margin-top: 20px;padding: 0 20px">
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <div class="yield water">
@@ -519,10 +519,11 @@ export default {
             })
         },
         getList(){
+            let date = new Date().format('yyyy-MM-dd')
             let data = {
-                endDate:"2022-12-01",
+                endDate:date,
                 oilFieldId:"3FC9A818F5BC43B88270DB80BBB3018F",
-                year:"2022-12-01"
+                year:date
             }
             dividingLayerQualityRate(data).then((res)=>{
                 this.infolist = res.data.data.indicatorContent.detail

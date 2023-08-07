@@ -711,7 +711,8 @@
                     this.$router.push({
                         path: '/plan/personnelMeasures',
                         query: {
-                            tabValue: 'planmessage'
+                            routeName: 'measureManagement',
+                            tabValue: 'personnelplan'
                         }
                     });
                     return false

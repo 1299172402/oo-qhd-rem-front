@@ -307,8 +307,7 @@ export default {
             queryData: {
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
                 blockId: 'YCFXDY8B643EDC9007F96F570600457D',
-                // dateTime: this.eeee(),
-                dateTime: '2023-03',
+                dateTime: this.eeee(),
             },
             //   new Date().format("yyyy-MM")
             form: {
@@ -606,6 +605,7 @@ export default {
                             // }).then((res) => {
                             //     this.tableWater = res;
                             // }); 
+                            // 接口404,接手代码。未知原因
                             this.$message.success("保存成功")
                         } else {
                             this.$message.error("保存失败")
