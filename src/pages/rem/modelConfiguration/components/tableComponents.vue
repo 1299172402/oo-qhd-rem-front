@@ -55,6 +55,17 @@
                         </div>
                     </template>
                 </el-table-column>
+                <el-table-column prop="configUnit" label="对齐方式" width="150">
+                    <template slot-scope="scope">
+                        <div>
+                            <el-select v-model="scope.row.contrastMode" v-if="scope.row.state!=3">
+                                <el-option label="相对值" value="相对值"></el-option>=
+                                <el-option label="绝对值" value="绝对值"></el-option>
+                            </el-select>
+                            <span v-else>{{scope.row.contrastMode}}</span>
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column label="操作" width="150">
                     <template slot-scope="scope">
                         <el-button type="text" @click="saveTableRow(scope.row,scope.$index)" v-if="scope.row.state==1">保存</el-button>
@@ -147,9 +158,12 @@
             modelOptionChange(e,index){
                 console.log(e,index)
                 this.$set(this.tableData[index],'modelId',e);
+                this.$set(this.tableData[index],'modelName',this.modeSelectList.find(item=>item.modelId === e).modelName);
+
             },
             //新增
             addTableRow(){
+                
                 this.tableData.unshift({state:1,modelName:'',modelId:'',configDescribe:'',configId:'',configValue:'',configUnit:''})
             },
             //保存
@@ -159,7 +173,7 @@
                   cancelButtonText: '取消',
                   type: 'warning'
                 }).then(() => {
-                    addGeneralConfig({...this.queryData,...row}).then(res=>{
+                    addGeneralConfig({...this.queryData,...this.searchForm,...row,selectType: this.selectType.replace('按', '')}).then(res=>{
                        this.$message.success('保存成功！')
                        this.$set(this.tableData[index],'state',3);
                     })

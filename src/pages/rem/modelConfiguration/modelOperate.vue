@@ -31,19 +31,19 @@
                     
                     <div class="tableHeight" v-if="selectType=='按区块配置'" >
                         <div class="block-view" v-for="(item,index) in tableList" :key="index">
-                            <tableComponents :ref="'tableComponents'+index" :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList" style="height:300px;"></tableComponents>
+                            <tableComponents :ref="'tableComponents'+index" :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList" style="height:500px;"></tableComponents>
                         </div>
                     </div>
                     
                     <div class="tableHeight" v-if="selectType=='按井型配置'" >
                         <div class="block-view" v-for="(item,index) in tableList" :key="index">
-                            <tableComponents :ref="'tableComponents'+index" :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList" style="height:300px;"></tableComponents>
+                            <tableComponents :ref="'tableComponents'+index" :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList" style="height:500px;"></tableComponents>
                         </div>
                     </div>
                     
                     <div class="tableHeight" v-if="selectType=='按井配置'" >
                         <div class="block-view" v-for="(item,index) in tableList" :key="index">
-                            <tableComponents :ref="'tableComponents'+index" :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList" style="height:300px;"></tableComponents>
+                            <tableComponents :ref="'tableComponents'+index" :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList" style="height:500px;"></tableComponents>
                         </div>
                     </div>
                     
@@ -339,7 +339,7 @@
                         overflow-y: scroll;
                         overflow-x: hidden;
                         .block-view{
-                            height:350px;
+                            height: 500px;
                             
                         }
                     }
