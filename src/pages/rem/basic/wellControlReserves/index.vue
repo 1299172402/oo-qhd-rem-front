@@ -10,7 +10,7 @@
                 style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
                 <header-search class="g-w100 g-h100" style="height: auto">
                     <div class="g-row-flex-V g-w100 g-h100">
-                        <div style="margin-top: 20px">
+                        <div >
                             <el-form :inline="true">
                                 <el-form-item label="作业公司：">
                                     <el-select v-model="queryData.orgId" disabled>
@@ -49,7 +49,7 @@
                     </div>
                 </header-search>
 
-                <pagePanel headerTitle="单井储量信息维护界面" style="height: calc(100% - 100px)" class="g-w100" :show-btn="true">
+                <pagePanel headerTitle="单井储量信息维护界面" style="height: calc(100% - 80px)" class="g-w100" :show-btn="true">
                     <div style="margin-top: 5%">
                         <div class="alltitle">{{ wellName }}</div>
                         <div class="boxall" style="height: 500px; width: 900px; margin: auto">
@@ -83,13 +83,13 @@
                                         </el-col>
                                     </el-row>
                                     <el-row>
-                                        <el-col :span="10">
+                                        <el-col :span="10" style="padding-top:30px">
                                             <el-form-item label="控制储量" prop="kzcl">
                                                 <el-input v-model="djclForm.probReservesWell" :disabled="edit"> <i slot="suffix">m³</i></el-input>
                                             </el-form-item>
                                         </el-col>
                                         <el-col :span="2">&nbsp;</el-col>
-                                        <el-col :span="10">
+                                        <el-col :span="10"  style="padding-top:30px">
                                             <el-form-item label="控制面积" prop="kzmj">
                                                 <el-input v-model="djclForm.controlArea" :disabled="edit">
                                                     <i slot="suffix">m²</i>
@@ -99,7 +99,7 @@
                                         <!-- <el-col :span="2">㎡</el-col> -->
                                     </el-row>
                                     <el-row>
-                                        <el-col :span="24" align="right" style="padding-top: 20px">
+                                        <el-col :span="24" align="right" style="padding-top: 85px;padding-right: 68px">
                                             <el-button type="primary" @click="redact" icon="el-icon-edit">编辑</el-button>
                                             <el-button type="primary" @click="save">保存</el-button>
                                             <el-button type="primary" icon="el-icon-search">运行计算</el-button>

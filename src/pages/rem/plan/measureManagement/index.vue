@@ -152,7 +152,8 @@
                                 <template slot-scope="scope">
                                     <div class="vv" v-if="scope.row.type!='date'"
                                         :style="{marginLeft:scope.row.mgleftwidth}"
-                                        @click="switchToMeasures(scope.row.ogfId, scope.row.prodPlatformId, scope.row.wellId, scope.row.measuresTypeCode, scope.row.yearMonthDay,  scope.row.wellTypeCode, scope.row.wellNameNano, scope.row.wellBoreName,scope.$index)">
+                                        :class="{'vvColor': scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))}"
+                                        @click="switchToMeasures(scope.row.ogfId, scope.row.prodPlatformId, scope.row.wellId, scope.row.measuresTypeCode, scope.row.yearMonthDay,  scope.row.wellTypeCode, scope.row.wellNameNano, scope.row.wellBoreName,scope.$index, scope.row.planMeasuresStartTime)">
                                         <div class="vv-left">
                                             <img src="@/assets/rem/plan/i0.png" alt="" v-if="scope.row.stimClassCode=='003'"
                                                 :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 增产性措施`">
@@ -177,10 +178,10 @@
                                                 <div class="line" :style="{width:scope.row.sjwidth}"
                                                     v-if="Number(scope.row.realityMeasuresDayNum)">
                                                     <el-progress
-                                                        :class="[scope.$index==1&&dateTime=='2023'?'progress3':'progress1']"
+                                                        class="progress1"
                                                         type="line" :percentage="100" :show-text="false"></el-progress>
                                                 </div>
-                                                <div class="day" :class="[scope.$index==1&&dateTime=='2023'?'day3':'']"
+                                                <div class="day"
                                                     v-if="Number(scope.row.realityMeasuresDayNum)">
                                                     {{scope.row.realityMeasuresDayNum}}天</div>
                                             </div>
@@ -238,6 +239,7 @@
         },
         data() {
             return {
+                moment: moment,
                 // 主数据树结构默认选中的值
                 defaultCheckedKeys: [],
                 screenWidth: '', //界面宽度
@@ -700,13 +702,18 @@
                 });
                 this.wellId = '';
             },
-            //跳转详情界面-oilFieldId 油田id platformId 平台id selectWellId 选择井号 yearMonthDay 时间  wellType 井类型
+            //跳转详情界面-oilFieldId 油田id platformId 平台id selectWellId 选择井号 yearMonthDay 时间  wellType 井类型 planMeasuresStartTime 计划开始书剑
             switchToMeasures(oilFieldId, platformId, selectWellId, selectMeasuresId, yearMonthDay, wellType,
-                wellNameNano, wellBoreName, index) {
+                wellNameNano, wellBoreName, index, planMeasuresStartTime) {
                 console.log(1111, selectWellId)
-                if (this.dateTime == '2023' && index == 1) {
+                // if (this.dateTime == '2023' && index == 1) {
+                if ( planMeasuresStartTime && moment().isBefore(moment(planMeasuresStartTime))) {
                     this.$router.push({
                         path: '/plan/personnelMeasures',
+                        query: {
+                            routeName: 'measureManagement',
+                            tabValue: 'personnelplan'
+                        }
                     });
                     return false
                 }
@@ -847,7 +854,7 @@
                 width: 18px;
                 height: 18px;
                 margin-right: 10px;
-                background-image: linear-gradient(0deg, #13B1EB 0%, #37C9FF 100%);
+                background-color: #999;
                 border-radius: 1px;
             }
         }
@@ -921,6 +928,34 @@
                         color: #999;
                     }
 
+                }
+            }
+        }
+        .vvColor {
+            width: 100%;
+            display: flex;
+            position: relative;
+            z-index: 1000;
+            .vv-right {
+                .vv-line {
+                    .line {
+                        .progress1 {
+                            ::v-deep .el-progress-bar__inner {
+                                background: #999;
+                                // box-shadow: 4px 0px 4px -8px rgba(0, 24, 148, 0.8);
+                            }
+                        }
+
+                        .progress2 {
+                            ::v-deep .el-progress-bar__inner {
+                                background: #999;
+                            }
+                        }
+                    }
+
+                    .day {
+                        color: #999;
+                    }
                 }
             }
         }

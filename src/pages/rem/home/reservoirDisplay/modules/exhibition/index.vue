@@ -193,7 +193,10 @@ export default {
                   },
                   interval: 400,
                   axisLabel: {
-                      color: '#a9a8a8'
+                      color: '#a9a8a8',
+                      textStyle:{
+                          color: '#a9a8a8',
+                      }
                   }
               }, {
                   type: 'value',
@@ -212,14 +215,20 @@ export default {
                   },
                   interval: 400,
                   axisLabel: {
-                      color: '#a9a8a8'
+                      color: '#a9a8a8',
+                      textStyle:{
+                          color: '#a9a8a8',
+                      }
                   }
               }],
               yAxis: {
                   type: 'category',
                   data: [],
                   axisLabel: {
-                      color: '#fff'
+                      color: '#a9a8a8',
+                      textStyle:{
+                          color: '#a9a8a8',
+                      }
                   }
               }
           };

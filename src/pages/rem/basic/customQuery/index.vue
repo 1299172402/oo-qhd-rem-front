@@ -52,7 +52,12 @@
                                 :disabled="activeEchart"
                             />
                         </div>
-
+                        
+                    </el-row>
+                </header-search>
+                <page-panel-new :show-btn="true" v-if="!activeEchart"
+                                style="min-height: calc(100% - 100px);height: 100%;overflow-y: scroll">
+                    <el-row>
                         <div style="display: inline-block; float: right">
                             <el-button
                                 icon="el-icon-search"
@@ -64,9 +69,7 @@
                             </el-button>
                         </div>
                     </el-row>
-                </header-search>
-                <page-panel-new :show-btn="true" v-if="!activeEchart"
-                                style="min-height: calc(100% - 90px);height: auto">
+                   
                     <el-row>
                         <el-col :span="6" style="margin-left: 20px; margin-right: 20px">
                             <page-panel :show-btn="true" headerTitle="目标类型">

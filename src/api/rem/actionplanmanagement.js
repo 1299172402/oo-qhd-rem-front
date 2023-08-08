@@ -14,3 +14,10 @@ export function queryMeasurePlanList(data) {
     data
   });
 }
+export function queryPlatformPob(data) {
+    return request({
+        url: `/prm01/api/prm/rc/queryPlatformPob`,
+        method: "post",
+        data
+    });
+}

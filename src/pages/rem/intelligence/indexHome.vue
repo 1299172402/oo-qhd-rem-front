@@ -513,7 +513,7 @@ export default {
                         radius: [0, '75%'],
                         color: centerColor,
                         label: {
-                            fontSize: 10,
+                            fontSize: 14,
                         },
                         data: [
                             {value: 0, name: value, label: {color: 'white', position: 'center'}},
@@ -528,6 +528,7 @@ export default {
                             length: 30
                         },
                         label: {
+                            fontSize: 12,
                             show: false
                         },
                         data: [
@@ -550,12 +551,11 @@ export default {
                 series: [
                     {
                         type: 'pie',
-
                         selectedMode: 'single',
                         radius: [0, '75%'],
                         color: centerColor,
                         label: {
-                            fontSize: 10,
+                            fontSize: 15,
                         },
                         data: [
                             {value: 0, name: value, label: {color: '#a9a8a8', position: 'center'}},

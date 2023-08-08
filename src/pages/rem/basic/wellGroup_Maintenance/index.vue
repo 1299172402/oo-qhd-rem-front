@@ -174,7 +174,7 @@
           </el-select>
         </div>
       </div>
-      <div style="display: flex;flex-direction: column;align-items: flex-start;">
+      <div >
         <div class="f1">
           <span>水井：</span>
           <el-select v-model="select.waterBlock" placeholder="请选择" class="f2" @change="waterBut" filterable>
