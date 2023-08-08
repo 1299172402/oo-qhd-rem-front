@@ -186,7 +186,7 @@
                             归因分析详情
                             </el-button>
                             <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)" 
-                            @click="$router.push({path:'/plan/personnelMeasures',query:{platform,wellId,currentDate}})">措施推荐详情</el-button>
+                            @click="$router.push({name:'planmessage',query:{platform,wellId,currentDate}})">措施推荐详情</el-button>
                         </div>
                         <div style="flex:1;min-height:540px;">
                             <pagePanel headerTitle="油井动态分析详情列表" style="margin-top:0;height:100%;">
@@ -489,7 +489,7 @@
                                         </div>
                                         <div style="width: 250px;display: flex;justify-content: flex-end;margin-top: 30px;">
                                             <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)"
-                                            @click="$router.push({path:'/plan/personnelMeasures',query:{platform,wellId,currentDate,page:'oilAnalysisReport'}})">措施推荐详情</el-button>
+                                            @click="$router.push({name:'planmessage',query:{platform,wellId,currentDate,page:'oilAnalysisReport'}})">措施推荐详情</el-button>
                                         </div>
                                     </div>
                                 </div>

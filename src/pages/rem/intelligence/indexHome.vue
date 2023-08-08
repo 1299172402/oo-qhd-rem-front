@@ -63,7 +63,7 @@
                             <div class="grid-content bg-purple">
                                 <div class="yield water">
                                     <div class="box">
-                                        <div>{{ groupBlock.waterProd }}</div>
+                                        <div >{{ groupBlock.waterProd }}</div>
                                         <div>10⁴m³</div>
                                     </div>
                                 </div>
@@ -784,6 +784,7 @@ export default {
 
     .box {
         margin-top: 40px;
+        font-size: 17px;
     }
 }
 
