@@ -2,6 +2,10 @@
 <template>
     <div class="z-main" style="height:100%;">
         <div style="display: flex;align-items: center;margin-bottom:15px;">
+            <span>滚动预测：</span>
+            <el-select v-model="searchForm.rollingForecastDate" placeholder="请选择" style="width:200px;margin-right:15px;">
+                <el-option v-for="item in rollingForecastDateList" :key="item.source_ID" :label="item.source_NAME" :value="item.source_ID"></el-option>
+            </el-select>
             <span>日期：</span>
             <!-- :picker-options="pickerOptions"  -->
             <el-date-picker v-model="searchForm.date" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" style="margin-right:15px;"></el-date-picker>
@@ -95,10 +99,12 @@
 </template>
 
 <script>
-    import {getReportFroms} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+    import {getReportFroms, getForecastDate} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
     export default {
         data() {
             return {
+                //滚动预测数据源
+                rollingForecastDateList:[],
                 oilFieldData: ['QHD32-6', 'QHD33-1', 'NB35-2', 'QHD33-1S', 'CFD6-4', 'BZ3-2'],
                 unitTypeList: [{label: "m³",value: "m",},{label: "t",value: "t",}],
                 searchForm:{
@@ -178,26 +184,38 @@
                 ],
             };
         },
-        mounted() {
+        async mounted() {
+            await this.getForecastDate();
             this.doSearch();
         },
         methods: {
             //重置
             resetting(){
-            	this.$nextTick(()=>{
+            	this.$nextTick( async ()=>{
             		Object.assign(this.$data, this.$options.data());
+                    await this.getForecastDate();
             		this.doSearch();
             	})
             },
             doSearch() {
                 this.getReportFromsApi();
             },
+            //获取滚动预测下拉框数据源
+            async getForecastDate() {
+                await getForecastDate().then((res) => {
+                    if (res.data.code==200) {
+                        this.rollingForecastDateList = res.data.data;
+                        this.searchForm.rollingForecastDate = this.rollingForecastDateList[0].source_ID;
+                    }
+                    this.doSearch();
+                });
+            },
             getReportFromsApi() {
-                let queryParams = {
-                    date: this.searchForm.date,
-                    unitType: this.searchForm.unitType,
-                };
-                getReportFroms(queryParams).then(res=> {
+                // let queryParams = {
+                //     date: this.searchForm.date,
+                //     unitType: this.searchForm.unitType,
+                // };
+                getReportFroms(this.searchForm).then(res=> {
                     console.log(res,888)
                     if (res.data.code == '200') {
                         this.tableData = this.dealOutputTrackingData(res.data.data);

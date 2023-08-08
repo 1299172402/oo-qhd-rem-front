@@ -152,8 +152,8 @@
                                 <template slot-scope="scope">
                                     <div class="vv" v-if="scope.row.type!='date'"
                                         :style="{marginLeft:scope.row.mgleftwidth}"
-                                        :class="{'vvColor': scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))}"
-                                        @click="switchToMeasures(scope.row.ogfId, scope.row.prodPlatformId, scope.row.wellId, scope.row.measuresTypeCode, scope.row.yearMonthDay,  scope.row.wellTypeCode, scope.row.wellNameNano, scope.row.wellBoreName,scope.$index, scope.row.planMeasuresStartTime)">
+                                        :class="{'vvColor': !scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))}"
+                                        @click="switchToMeasures(scope.row.ogfId, scope.row.prodPlatformId, scope.row.wellId, scope.row.measuresTypeCode, scope.row.yearMonthDay,  scope.row.wellTypeCode, scope.row.wellNameNano, scope.row.wellBoreName,scope.$index, scope.row.planMeasuresStartTime, scope.row.realityMeasuresEndTime)">
                                         <div class="vv-left">
                                             <img src="@/assets/rem/plan/i0.png" alt="" v-if="scope.row.stimClassCode=='003'"
                                                 :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 增产性措施`">
@@ -248,7 +248,7 @@
                 mcWidth: '0px',
                 mcMgLeft: '',
                 basicDays:['年01月','年02月','年03月','年04月','年05月','年06月','年07月','年08月','年09月','年10月','年11月','年12月'],
-                days: [],
+                days: ['01月','02月','03月','04月','05月','06月','07月','08月','09月','10月','11月','12月'],
                 dateTime: new Date().format('yyyy'), //时间
                 // dateTime:'2022',
                 beginMonth:1,//开始月份
@@ -492,10 +492,11 @@
                         //措施事件
                         this.getMeasureNameAndCode();
                         this.tableData = res.data.data.measuresInfoList;
-                        this.days = [];
-                        this.basicDays.forEach((el, i) => {
-                            this.days.push(this.dateTime.split('-')[0] + el);
-                        })
+                        //  不展示年份，只显示月份
+                        // this.days = [];
+                        // this.basicDays.forEach((el, i) => {
+                        //     this.days.push(this.dateTime.split('-')[0] + el);
+                        // })
                         // if (this.dateTime.split('-')[0] == '2023') {
                             // this.tableData[1].planMeasuresDayNum = '';
                             // this.tableData[1].planMeasuresEndTime = '';
@@ -704,10 +705,10 @@
             },
             //跳转详情界面-oilFieldId 油田id platformId 平台id selectWellId 选择井号 yearMonthDay 时间  wellType 井类型 planMeasuresStartTime 计划开始书剑
             switchToMeasures(oilFieldId, platformId, selectWellId, selectMeasuresId, yearMonthDay, wellType,
-                wellNameNano, wellBoreName, index, planMeasuresStartTime) {
+                wellNameNano, wellBoreName, index, planMeasuresStartTime, realityMeasuresEndTime) {
                 console.log(1111, selectWellId)
                 // if (this.dateTime == '2023' && index == 1) {
-                if ( planMeasuresStartTime && moment().isBefore(moment(planMeasuresStartTime))) {
+                if (!realityMeasuresEndTime && planMeasuresStartTime && moment().isBefore(moment(planMeasuresStartTime))) {
                     this.$router.push({
                         path: '/plan/personnelMeasures',
                         query: {
