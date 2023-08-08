@@ -17,7 +17,6 @@
           <el-select
             v-model="currentNum"
             placeholder="请选择条数"
-            clearable
             style="width: 135px; margin-right: 10px;"
             @change="changeNum"
           >
@@ -34,6 +33,7 @@
             type="date"
             placeholder="选择日期"
             style="width: 135px;"
+            :clearable="false"
             @change="changeNum"
           />
         </div>
@@ -65,90 +65,6 @@ export default {
         { label: "5条", value: 5 },
         { label: "10条", value: 10 }
       ],
-      char5: {
-        backgroundColor: "transparent",
-        "color": [
-          "#1c9a4c"
-        ],
-        "grid": {
-          top: "5%",
-          left: "17%",
-          right: "13%",
-          bottom: "15%"
-        },
-        legend: {
-          x: "center", // 可设定图例在左、右、居中
-          y: "bottom", // 可设定图例在上、下、居中
-          padding: [2, 0, 10, 0], // 可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
-          textStyle: {
-            color: getComputedStyle(document.documentElement).getPropertyValue("--text1"),
-            fontSize: 14
-          }
-        },
-        "yAxis": {
-          "data": [
-            "用户撞车",
-            "SQL注入检测",
-            "机器人登录",
-            "账号盗用",
-            "web高频攻击",
-            "端口扫描",
-            "内网连接…",
-            "邮件外发"
-          ],
-          "axisTick": {
-            "show": false
-          },
-          axisLabel: {
-            color: "#8FA4CC",
-            fontSize: 14
-          }
-        },
-        "xAxis": [
-          {
-            "axisTick": {
-              "show": false
-            },
-            splitLine: {
-              show: false
-            },
-            "type": "value",
-            "splitNumber": 5,
-            "axisLabel": {
-              "formatter": "{value}%",
-              color: "#8FA4CC",
-              fontSize: 14
-            }
-          }
-        ],
-        "series": [
-          {
-            "name": "销量",
-            "type": "bar",
-            "barWidth": "55%",
-            "label": {
-              "normal": {
-                "show": true,
-                "position": "right",
-                "formatter": "{c}%",
-                "textStyle": {
-                  "color": "#8FA4CC"
-                }
-              }
-            },
-            "data": [
-              "23.61",
-              "4.29",
-              "7.73",
-              "2.15",
-              "10.73",
-              "17.17",
-              "21.46",
-              "12.88"
-            ]
-          }
-        ]
-      },
       char6: {
         backgroundColor: "transparent",
         "color": [
@@ -277,7 +193,7 @@ export default {
       };
       systemNum(res).then(response => {
         this.currentInfo = response.data.data;
-        this.char6.yAxis.data = this.currentInfo.deptNames.sort((a, b) => a - b);
+        this.char6.yAxis.data = this.currentInfo.deptNames.reverse();
         this.char6.series[0].data = this.currentInfo.deptPercentages.sort((a, b) => a - b);
       });
     }
