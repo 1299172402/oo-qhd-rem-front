@@ -2024,7 +2024,7 @@
                 };
                 produceData(request).then((res) => {
                     const seriesData = [];
-                    const legendData = [];
+                    // const legendData = [];
                     if (res.data.code == 200) {
                         const chartDataS = res.data.data.charts;
                         // 获取x轴数据信息
@@ -2035,7 +2035,7 @@
                             }
                             const chartData = chartDataS[i].linearDataSets[0];
                             const chartDatalabel = chartData.label;
-                            legendData.push(chartDatalabel);
+                            // legendData.push(chartDatalabel);
                             const series = {};
                             const lineName = chartData.label;
                             series.type = 'line';
@@ -2195,7 +2195,7 @@
                     this.waterOption.xAxis[0].data = xData;
                     this.waterOption.xAxis[1].data = xData;
                     this.waterOption.series = seriesData;
-                    this.waterOption.legend.data=legendData;
+                    this.waterOption.legend.data = legendData;
                     console.log('this.waterOption', this.waterOption)
                 });
             },

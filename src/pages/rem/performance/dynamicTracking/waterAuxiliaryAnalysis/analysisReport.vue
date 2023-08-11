@@ -301,7 +301,7 @@
                             </div>
                         </div>
                         <div class="v2" style="z-index: 5;">
-                            <info-window info-width="100%" info-height="100%" header-title="生产动态监测" :is-show-max-btn="false">
+                            <pagePanel header-title="生产动态监测" style="height: 100%;">
                                 <div class="z-content" style="height:calc(100% - 55px);">
                                     <div class="z-content-n">
                                         <div class="z-row-left">
@@ -351,11 +351,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                         <div class="v2" style="z-index: 4;">
                             <img src="@/assets/rem/performance/bgline0.png" alt="" class="bgline0">
-                            <info-window info-width="100%" info-height="100%" header-title="水井工况诊断" :is-show-max-btn="false">
+                            <pagePanel header-title="水井工况诊断" style="height: 100%;">
                                 <div class="z-content" style="height:calc(100% - 55px);">
                                     <div class="z-content-n">
                                         <div class="z-row-left">
@@ -405,11 +405,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                         <div class="v2 v3">
                             <img src="@/assets/rem/performance/bgline2.png" alt="" class="bgline2">
-                            <info-window info-width="100%"  info-height="100%"  header-title="潜力分析" :is-show-max-btn="false">
+                            <pagePanel header-title="潜力分析" style="height: 100%;">
                                 <div class="z-content" style="height:calc(100% - 55px);">
                                     <div class="z-content-n">
                                         <div class="z-row-left">
@@ -503,10 +503,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                         <div style="height:540px;">
-                            <info-window info-width="100%"  info-height="100%"  header-title="水井动态分析详情列表" :is-show-max-btn="false">
+                            <pagePanel header-title="水井动态分析详情列表" style="height: 100%;">
                                 <el-table
                                     class="doubleHeader"
                                     :row-style="{ height: '0px' }"
@@ -587,7 +587,7 @@
                                         </el-table-column>
                                     </el-table-column>
                                 </el-table>
-                            </info-window>
+                            </pagePanel>
                         </div>
                     </div>
                 </div>
@@ -2595,6 +2595,7 @@ export default {
                     display: flex;
                     align-items: center;
                     position: relative;
+                    right: 77px;
                     .helpImg{
                         width:52px;
                         height:52px;

@@ -155,11 +155,11 @@
                                         :class="{'vvColor': !scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))}"
                                         @click="switchToMeasures(scope.row.ogfId, scope.row.prodPlatformId, scope.row.wellId, scope.row.measuresTypeCode, scope.row.yearMonthDay,  scope.row.wellTypeCode, scope.row.wellNameNano, scope.row.wellBoreName,scope.$index, scope.row.planMeasuresStartTime, scope.row.realityMeasuresEndTime)">
                                         <div class="vv-left">
-                                            <img src="@/assets/rem/plan/i0.png" alt="" v-if="scope.row.stimClassCode=='003'"
+                                            <img :src="!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))?'@/assets/rem/plan/i0.png': '@/assets/rem/plan/i3.png'" alt="" v-if="scope.row.stimClassCode=='003'"
                                                 :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 增产性措施`">
-                                            <img src="@/assets/rem/plan/i1.png" alt="" v-if="scope.row.stimClassCode=='004'"
+                                            <img :src="!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))?'@/assets/rem/plan/i1.png': '@/assets/rem/plan/i4.png'" alt="" v-if="scope.row.stimClassCode=='004'"
                                                 :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 增注性措施`">
-                                            <img src="@/assets/rem/plan/i2.png" alt="" v-else
+                                            <img :src="!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))?'@/assets/rem/plan/i2.png': '@/assets/rem/plan/i5.png'" alt="" v-else
                                                 :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 维护性措施`">
                                         </div>
                                         <div class="vv-right">
@@ -855,7 +855,7 @@
                 width: 18px;
                 height: 18px;
                 margin-right: 10px;
-                background-color: #999;
+                background-color: #8f9396;
                 border-radius: 1px;
             }
         }
@@ -914,7 +914,7 @@
 
                         .progress3 {
                             ::v-deep .el-progress-bar__inner {
-                                background: #999;
+                                background: #8f9396;
                             }
                         }
 
@@ -926,7 +926,7 @@
                     }
 
                     .day3 {
-                        color: #999;
+                        color: #8f9396;
                     }
 
                 }
@@ -942,20 +942,20 @@
                     .line {
                         .progress1 {
                             ::v-deep .el-progress-bar__inner {
-                                background: #999;
+                                background: #8f9396;
                                 // box-shadow: 4px 0px 4px -8px rgba(0, 24, 148, 0.8);
                             }
                         }
 
                         .progress2 {
                             ::v-deep .el-progress-bar__inner {
-                                background: #999;
+                                background: #8f9396;
                             }
                         }
                     }
 
                     .day {
-                        color: #999;
+                        color: #8f9396;
                     }
                 }
             }

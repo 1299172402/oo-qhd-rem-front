@@ -355,7 +355,7 @@
                             </div>
                         </div>
                         <div class="v2" style="height:206px;">
-                            <info-window info-width="100%"  info-height="100%"  header-title="生产动态监测" :is-show-max-btn="false">
+                            <pagePanel header-title="生产动态监测" style="height: 100%;">
                                 <div class="z-content" style="height:calc(100%);overflow-y: scroll;">
                                     <div class="z-content-n">
                                         <div class="z-row-left">
@@ -401,11 +401,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                         <div class="v2 v3" style="height: 234px;">
                             <img src="@/assets/rem/performance/bgline0.png" alt="" class="bgline0">
-                            <info-window info-width="100%"  info-height="100%"  header-title="油井工况诊断" :is-show-max-btn="false">
+                            <pagePanel header-title="油井工况诊断" style="height: 100%;">
                                 <div class="z-content2" style="height:100%;overflow-y: scroll;">
                                     <div class="z1" style="flex:1;">
                                         <div class="z-content-n" style="flex-direction: column;">
@@ -493,11 +493,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                         <div class="v2 v3">
                             <img src="@/assets/rem/performance/bgline2.png" alt="" class="bgline2">
-                            <info-window info-width="100%" info-height="100%" header-title="油藏潜力分析" :is-show-max-btn="false">
+                            <pagePanel header-title="油藏潜力分析"  style="height: 100%;">
                                 <div style="height:100%;overflow-y: scroll;">
                                     <div class="z-content2">
                                         <div style="flex:1;">
@@ -663,10 +663,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                         <div style="height:800px;position: relative;z-index: 3;">
-                            <info-window info-width="100%" info-height="100%" header-title="油井动态分析详情列表" :is-show-max-btn="true">
+                            <pagePanel header-title="油井动态分析详情列表"  style="height: 100%;">
                                 <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
@@ -776,7 +776,7 @@
                                         </template>
                                     </el-table-column>
                                 </el-table>
-                            </info-window>
+                            </pagePanel>
                         </div>
                     </div>
                 </div>
@@ -2023,7 +2023,7 @@
                         z-index: -1;
                     }
                     .btns0{
-                        min-width:224px;
+                        min-width:250px;
                         height:70px;
                         padding-left:20px;
                         border: 1px solid;
@@ -2031,6 +2031,7 @@
                         background-image: var(--logo-bg) !important;
                         display: flex;
                         align-items: center;
+                        margin-right: 44px;
                         .helpImg{
                             width:52px;
                             height:52px;

@@ -55,9 +55,10 @@
                 <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
                     <el-tab-pane style="height: auto" v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
                         <div class="tab-view">
-                            <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="tabsClick(module)">
+                            <!-- <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="tabsClick(module)">
                                 {{ module.label }}
-                            </el-button>
+                            </el-button> -->
+                            <sliderTabs :tabs="item.modules" :currentModule="currentModule" @tabTabs="tabsClick"></sliderTabs>
                             <div class="select-view" v-if="currentModule == 'homeworkWellHistory'">
                                 <span class="title" style="margin-left: 20px">大事简要：</span>
                                 <el-select v-model="majorEventsBrieflyValue" placeholder="请选择" filterable clearable @change="majorEventsBrieflyChange">
@@ -103,9 +104,11 @@
     import {downFile} from "@/components/upload/utils/file";
     import FileSaver from "file-saver";
     import treeSelection from "@/pages/rem/basic/components/treeSelection.vue";
+    import sliderTabs from './components/slider-tabs.vue';
+
     export default {
         name: "WaterAuxiliaryAnalysis",
-        components: {FileUpload, treeSelection},
+        components: {FileUpload, treeSelection, sliderTabs},
         data() {
             return {
                 // 主数据树结构默认选中的值
@@ -507,15 +510,15 @@
                 }
             },
             //点击二级菜单
-            tabsClick(module){
-                if(module.name=='stratificationTesting'){//分层调配
+            tabsClick(name){
+                if(name=='stratificationTesting'){//分层调配
                     let url=`https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge`;
                     window.open(url,'_blank');
                 }
-                else if (module.name == "injectivityIndex") {
+                else if (name == "injectivityIndex") {
                     window.open("https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge", "_blank");
                 }else{
-                    this.currentModule = module.name;
+                    this.currentModule = name;
                     this.isUpdateFile=this.operationTypeList[this.currentModule]?true:false;
                     if ( this.isUpdateFile ) {
                         this.limit=this.operationTypeList[this.currentModule].limit;

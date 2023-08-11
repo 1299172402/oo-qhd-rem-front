@@ -696,7 +696,6 @@
                             fontSize: 14,
 
                         },
-                        nameGap: 25,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",

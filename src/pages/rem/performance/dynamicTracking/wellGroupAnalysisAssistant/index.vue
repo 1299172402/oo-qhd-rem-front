@@ -61,7 +61,8 @@
                 
                 <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
                     <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
-                        <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="handleTwoClicj(module)">{{ module.label }}</el-button>
+                        <!-- <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="handleTwoClicj(module)">{{ module.label }}</el-button> -->
+                        <sliderTabs :tabs="item.modules" :currentModule="currentModule" @tabTabs="handleTwoClicj"></sliderTabs>
                     </el-tab-pane>
                 </el-tabs>
                 
@@ -93,10 +94,13 @@
     import {downFile} from "@/components/upload/utils/file";
     import FileSaver from "file-saver";
     import treeSelectionCustom from "@/pages/rem/basic/components/treeSelectionCustom.vue";
+    import sliderTabs from './components/slider-tabs.vue';
+
     export default {
         components: {
             FileUpload,
-            treeSelectionCustom
+            treeSelectionCustom,
+            sliderTabs
         },
         name: "WellGroupAnalysisAssistant",
         data() {
@@ -322,8 +326,8 @@
                 }
             },
             //点击二级tabs
-            handleTwoClicj(module) {
-                this.currentModule = module.name;
+            handleTwoClicj(name) {
+                this.currentModule = name;
                 this.selectWellGroup = this.newWellGroup[0].wellGroupId;
                 this.childParam='';//清空层位
                 //是否显示minio上传文档按钮

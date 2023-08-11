@@ -253,7 +253,7 @@
                             </div>
                         </div>
                         <div class="v2">
-                            <info-window info-width="100%"  info-height="100%"  header-title="井组变化趋势分析" :is-show-max-btn="false">
+                            <pagePanel header-title="井组变化趋势分析" style="height: 100%;">
                                 <div class="z-content" style="height:100%;overflow-y: scroll;">
                                     <div class="z-content-n">
                                         <div class="z-row-left">
@@ -296,11 +296,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                         <div class="v2 v3">
                             <img src="@/assets/rem/performance/bgline2.png" alt="" class="bgline2">
-                            <info-window info-width="100%"  info-height="100%"  header-title="开发生产问题监测" :is-show-max-btn="false">
+                            <pagePanel header-title="开发生产问题监测" style="height: 100%;">
                                 <div class="z-content2" style="height:100%;overflow-y: scroll;">
                                     <div class="z1">
                                         <div class="z-content-n">
@@ -422,10 +422,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                         <div style="height:680px;">
-                            <info-window info-width="100%"  info-height="100%"  header-title="井组动态分析详情列表" :is-show-max-btn="false">
+                            <pagePanel header-title="井组动态分析详情列表" style="height: 100%;">
                                 <el-table 
                                     highlight 
                                     :data="tableData" 
@@ -499,7 +499,7 @@
                                         </el-table-column>
                                     </el-table-column>
                                 </el-table>
-                            </info-window>
+                            </pagePanel>
                         </div>
                     </div>
                 </div>
@@ -1539,7 +1539,7 @@
                         z-index: -1;
                     }
                     .btns0{
-                        min-width:224px;
+                        min-width:250px;
                         height:70px;
                         padding-left:20px;
                         border: 1px solid;
@@ -1547,6 +1547,7 @@
                         background-image: var(--logo-bg) !important;
                         display: flex;
                         align-items: center;
+                        margin-right: 24px;
                         .helpImg{
                             width:52px;
                             height:52px;

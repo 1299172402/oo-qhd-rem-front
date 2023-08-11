@@ -3,46 +3,45 @@
     <div class="z-main">
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
-                <!-- <pagePanel headerTitle="采油速度" style="height: 370px;margin-top:0;" show-btn></pagePanel> -->
-                <info-window infoWidth="100%" infoHeight="370px" headerTitle="采油速度" isShowMaxBtn>
+                <pagePanel headerTitle="采油速度"  style="height: 370px;margin-top:0;" show-btn>
                     <Echart :chart-data="productionSpeed" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="370px" headerTitle="采出程度" isShowMaxBtn>
+                <pagePanel headerTitle="采出程度"  style="height: 370px;margin-top:0;" show-btn>
                     <Echart :chart-data="recoveryDegree" style="height: 100%;"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
         </div>
         <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="采出程度与含水率关系图" isShowMaxBtn>
+                <pagePanel headerTitle="采出程度与含水率关系图"  style="height: 380px;" show-btn>
                     <Echart :chart-data="relationship" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="注采比" isShowMaxBtn>
+                <pagePanel headerTitle="注采比"  style="height: 380px;" show-btn>
                     <div class="search">
                         <span>合理注采比：</span>
                         <el-input-number v-model="lineStandOne" :controls="false" style="width: 180px;margin-right:15px;" @change="setFirstLine"></el-input-number>
                         <el-input-number v-model="lineStandTwo" :controls="false" style="width: 180px" @change="setSecondLine"></el-input-number>
                     </div>
                     <Echart :chart-data="injectionProductionRatio" style="height:calc(100% - 45px)"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
         </div>
         <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="360px" headerTitle="地层总压降" isShowMaxBtn>
+                <pagePanel headerTitle="地层总压降"  style="height: 360px;" show-btn>
                     <div class="search">
                         <span>合理地层压力：</span>
                         <el-input-number v-model="lineStandThree" :controls="false" style="width: 180px" @change="setThirdLine"></el-input-number>
                     </div>
                     <Echart :chart-data="totalFormationPressureDrop" style="height:calc(100% - 45px);"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="360px" headerTitle="指标评价结果表" isShowMaxBtn>
+                <pagePanel headerTitle="指标评价结果表"  style="height: 360px;" show-btn>
                     <div class="search">
                         <span>对标油田：</span>
                         <el-select v-model="fields" style="width:180px;height:30px;margin-right:15px;" disabled>
@@ -73,7 +72,7 @@
                         <el-table-column prop="diffSimilarOilField" label="与同类型油田比较" align="center" width="80"></el-table-column>
                         <el-table-column prop="result" label="结论" align="center" width="80"></el-table-column>
                     </el-table>
-                </info-window>
+                </pagePanel>
             </div>
         </div>
     </div>
@@ -174,9 +173,6 @@
                                 width: 1,
                                 type: 'solid'
                             }
-                        },
-                        axisTick: {
-                            show: false
                         },
                         splitLine:{
                             show:false,

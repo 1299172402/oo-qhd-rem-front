@@ -67,7 +67,7 @@
                     </pagePanel>
                 </el-col>
             </el-row>
-            <info-window v-if="currentIndex == 0" infoWidth="100%" infoHeight="500px" headerTitle="技术指标管理" isShowMaxBtn style="margin-top:0;">
+            <pagePanel v-if="currentIndex == 0" headerTitle="技术指标管理" show-btn style="height: 500px;margin-top:0;">
                 <div style="display:flex;align-items: center;height:40px;padding-top:10px;">
                     <span>对标油田：</span>
                     <el-select v-model="selectTargetOilFieldId" disabled>
@@ -88,14 +88,14 @@
                         <el-table-column prop="realCompareOilField" label="实际值与对标差值" align="center"></el-table-column>
                     </el-table>
                 </div>
-            </info-window>
-            <info-window v-if="currentIndex == 1" infoWidth="100%" infoHeight="500px" headerTitle="年产油量" isShowMaxBtn style="margin-top:0;">
+            </pagePanel>
+            <pagePanel v-if="currentIndex == 1" headerTitle="年产油量" show-btn style="height: 500px;margin-top:0;">
                 <Echart :chart-data="inOilProduction" style="height: 100%"></Echart>
-            </info-window>
-            <info-window v-if="currentIndex == 2" infoWidth="100%" infoHeight="500px" headerTitle="采油速度" isShowMaxBtn style="margin-top:0;">
+            </pagePanel>
+            <pagePanel v-if="currentIndex == 2" headerTitle="采油速度" show-btn style="height: 500px;margin-top:0;">
                 <Echart :chart-data="productionSpeed" style="height: 100%"></Echart>
-            </info-window>
-            <info-window v-if="currentIndex == 3" infoWidth="100%" infoHeight="500px" headerTitle="综合递减率" isShowMaxBtn style="margin-top:0;">
+            </pagePanel>
+            <pagePanel v-if="currentIndex == 3" headerTitle="综合递减率" show-btn style="height: 500px;margin-top:0;">
                 <div style="height:100%">
                     <div style="display:flex;align-items: center;height:40px;padding-top:10px;">
                         <span>油藏分析单元：</span>
@@ -109,8 +109,8 @@
                     </div>
                     <Echart :chart-data="comprehensiveDeclineRate" style="height:calc(100% - 50px)"></Echart>
                 </div>
-            </info-window>
-            <info-window v-if="currentIndex == 4" infoWidth="100%" infoHeight="500px" headerTitle="含水上升率" isShowMaxBtn style="margin-top:0;">
+            </pagePanel>
+            <pagePanel v-if="currentIndex == 4" headerTitle="含水上升率" show-btn style="height: 500px;margin-top:0;">
                 <div style="height:100%">
                     <div style="display:flex;align-items: center;height:40px;padding-top:10px;">
                         <span>油藏分析单元：</span>
@@ -123,14 +123,14 @@
                     </div>
                     <Echart :chart-data="rateOfWaterCutRise" style="height:calc(100% - 50px)"></Echart>
                 </div>
-            </info-window>
-            <info-window v-if="currentIndex == 5" infoWidth="100%" infoHeight="500px" headerTitle="生产时率" isShowMaxBtn style="margin-top:0;">
+            </pagePanel>
+            <pagePanel v-if="currentIndex == 5" headerTitle="生产时率" show-btn style="height: 500px;margin-top:0;">
                 <Echart :chart-data="whenTheProductionRate" style="height: 100%"></Echart>
-            </info-window>
-            <info-window v-if="currentIndex == 6" infoWidth="100%" infoHeight="500px" headerTitle="油井利用率" isShowMaxBtn style="margin-top:0;">
+            </pagePanel>
+            <pagePanel v-if="currentIndex == 6" headerTitle="油井利用率" show-btn style="height: 500px;margin-top:0;">
                 <Echart :chart-data="wellUtilization" style="height: 100%"></Echart>
-            </info-window>
-            <info-window v-if="currentIndex == 7" infoWidth="100%" infoHeight="500px" headerTitle="自然递减率" isShowMaxBtn style="margin-top:0;">
+            </pagePanel>
+            <pagePanel v-if="currentIndex == 7" headerTitle="自然递减率" show-btn style="height: 500px;margin-top:0;">
                 <div style="height:100%">
                     <div style="display:flex;align-items: center;height:40px;padding-top:10px;">
                         <span>油藏分析单元：</span>
@@ -144,7 +144,7 @@
                     </div>
                     <Echart :chart-data="naturalDeclineRate" style="height:calc(100% - 50px)"></Echart>
                 </div>
-            </info-window>
+            </pagePanel>
         </page-panel-new>
         
     </div>

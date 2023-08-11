@@ -6,7 +6,7 @@
                 <el-tab-pane v-for="(item, index) in dataList" :key="index" :label="item.name" :name="item.key"></el-tab-pane>
             </el-tabs>
             <div class='table-container' 
-                :style="{height:(activeName == 'Schedule11'|| activeName == 'Schedule12')?'650px':(activeName == 'Schedule14')?'700px':'450px'}">
+                style="height: calc(100% - 66px)">
                 <schedule1 v-if="activeName == 'schedule1'"></schedule1>
                 <schedule-2-1 v-if="activeName == 'schedule21'"></schedule-2-1>
                 <schedule-2-2 v-if="activeName == 'schedule22'"></schedule-2-2>
