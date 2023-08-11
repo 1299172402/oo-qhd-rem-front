@@ -50,6 +50,13 @@ export default [
                 meta: { title: "措施计划",icon: "icon"},
             },
             {
+                hidden: false,
+                path: "planmessage",
+                name: "planmessage",
+                component: () => import("@/pages/rem/plan/measureManagement/components/planmessage.vue"),
+                meta: { title: "措施计划情况表",icon: "icon"},
+            },
+            {
                 path: "twoIncreasesOneDecrease",
                 name: "twoIncreasesOneDecrease",
                 component: () => import("@/pages/rem/plan/twoIncreasesOneDecrease/index.vue"),

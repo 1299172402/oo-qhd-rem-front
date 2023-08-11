@@ -124,14 +124,14 @@ export default {
             const data = {
                 authorizedPersonnel:this.$store.getters["user/name"],
                 alarmTime:new Date().format('YYYY-MM-dd'),
-                alarmPageCode:alarmPageCode
+                alarmPageCode:[alarmPageCode]
             }
             this.warningShowFlag = false
             this.$emit('startTimer')
-            // addLinkageAlarmInfo(data).then(()=>{
-            // }).then(()=>{
-            //    
-            // })
+            addLinkageAlarmInfo(data).then(()=>{
+            }).then(()=>{
+
+            })
         },
         mouseenter(){
             this.show = true

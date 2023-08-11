@@ -292,8 +292,6 @@ export default {
                     return waterUp;
                 case "秦皇岛32-6油田生产指标总览":
                     return overviewIndicators;
-
-
                     // 增加所需要引入子组件
                 default:
                     break;

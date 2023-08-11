@@ -41,11 +41,11 @@
           <el-button style="float: right" type="primary"  @click="returnrouter">返回</el-button>
       </el-form>
     </headerSearch>
-    <div style="height: calc(100% - 100px)">
+    <div style="height: calc(100% - 100px);">
       <el-tabs v-model="activeName" class="g-pageHeader" @tab-click="selectBtn(activeName)">
         <el-tab-pane :label="item.name" :name="item.value" v-for="(item, index) in dataList" :key="index" />
       </el-tabs>
-      <components ref="modal" style="margin-top: -15px; height: 100%" :infodata="1" :is="currentTab" />
+      <components ref="modal" style="margin-top: -23px; height: 100%" :infodata="1" :is="currentTab" />
     </div>
   </div>
 </template>
@@ -53,7 +53,6 @@
 import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 import operationplan from "./components/operationplan.vue";
 import personnelplan from "./components/personnelplan.vue";
-import planmessage from "./components/planmessage.vue";
 import { getOilFieldList, queryProductList } from "@/api/rem/workcompanydesignate.js";  
 import {
   fetchPlatforms,
@@ -62,18 +61,18 @@ export default {
   components: {
     verticalSwitchButton,
     operationplan,personnelplan,
-    planmessage,
   },
   data() {
     return {
       dataList: [
           { name: "人员计划", value: "personnelplan", isChecked: false },
         { name: "现场作业计划", value: "operationplan", isChecked: false },
-        { name: "措施计划情况", value: "planmessage", isChecked: false },
       ],
       currentTab: "operationplan",
       infodata: this.queryParams,
-      queryParams: { endTime: "", 
+      queryParams: 
+       { 
+      endTime: "", 
       selectPlatform: '',
       selectOilField:"3FC9A818F5BC43B88270DB80BBB3018F"},
       oilFields: [],
@@ -81,7 +80,7 @@ export default {
       platform:[],
       activeName: "operationplan",
         date:'',
-    };
+    }
   },
   mounted() {
     var data = new Date();
@@ -102,6 +101,9 @@ export default {
           this.currentTab = 'planmessage'
           this.queryParams.endTime = this.$route.query.currentDate
           this.date = this.queryParams.endTime
+      }else if(this.$route.query.routeName){
+          this.activeName = 'personnelplan'
+          this.currentTab = 'personnelplan'
       }
     this.getserch();
   },

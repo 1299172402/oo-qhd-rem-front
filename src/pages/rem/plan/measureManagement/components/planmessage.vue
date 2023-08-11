@@ -1,6 +1,50 @@
 <!-- 措施计划情况 -->
 <template>
-  <div class="app-container" style="height: 100%">
+  <div class="app-container" style="height:calc(100% - 60px)">
+      <headerSearch class="g-w100 g-h100" style="width: 100%">
+          <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 18px">
+
+              <el-form-item label="油田：">
+                  <el-select v-model="queryParams.selectOilField" disabled>
+                      <el-option
+                          v-for="item in oilFields"
+                          :key="item.oilFieldId"
+                          :label="item.oilFieldName"
+                          :value="item.oilFieldId"
+                      >
+                      </el-option>
+                  </el-select>
+              </el-form-item>
+              <el-form-item label="平台：">
+                  <el-select
+                      v-model="queryParams.selectPlatform"
+                      style="width: 220px"
+                      placeholder="请选择"
+                      filterable
+                      clearable
+                  >
+                      <el-option
+                          v-for="item in platform"
+                          :key="item.platFormId"
+                          :label="item.platName"
+                          :value="item.platFormId"
+                      ></el-option>
+                  </el-select>
+              </el-form-item>
+              <el-form-item label="日期：">
+                  <el-date-picker v-model="queryParams.endTime" value-format="yyyy-MM-dd" type="date" placeholder="年/月/日">
+                  </el-date-picker>
+              </el-form-item>
+              <el-button size="medium" type="primary" @click="retrieval" icon="el-icon-search" style="margin-left: 10px"
+              >搜索</el-button
+              >
+              <el-button class="commonBtn" @click="reset" icon="el-icon-refresh"> 重置</el-button>
+              <el-button style="float: right" type="primary"  @click="returnrouter">返回</el-button>
+          </el-form>
+      </headerSearch>
+      
+      
+      
     <pagePanel headerTitle="措施计划情况表" style="height: calc(100% - 20px)">
         <el-row>
             <el-button
@@ -41,15 +85,15 @@
                   <span v-else>N/A</span>
               </template>
           </el-table-column>
-          <el-table-column :label="`油藏厚度 \n（m）`"  sortable width="130px" prop="reservoirThickness" align="center">
+          <el-table-column :label="`油层厚度 \n（m）`"  sortable width="130px" prop="reservoirThickness" align="center">
               <template slot-scope="scope">
-                  <span v-if="scope.row.reservoirThickness !== null && scope.row.reservoirThickness !== ''">{{scope.row.reservoirThickness}}</span>
+                  <span v-if="scope.row.reservoirThickness !== null && scope.row.reservoirThickness !== ''">{{scope.row.reservoirThickness.toFixed(2)}}</span>
                   <span v-else>N/A</span>
               </template>
           </el-table-column>
           <el-table-column :label="`水平段长度 \n（m）`" sortable min-width="130px" prop="horizonIntervalLen" align="center">
               <template slot-scope="scope">
-                  <span v-if="scope.row.horizonIntervalLen !== null && scope.row.horizonIntervalLen !== ''">{{scope.row.horizonIntervalLen}}</span>
+                  <span v-if="scope.row.horizonIntervalLen !== null && scope.row.horizonIntervalLen !== ''">{{scope.row.horizonIntervalLen.toFixed(2)}}</span>
                   <span v-else>N/A</span>
               </template>
           </el-table-column>
@@ -93,7 +137,7 @@
           </el-table-column>
           <el-table-column sortable :label="`累产油\n（万方）`"  min-width="130px" prop="cumOilProdYearly" align="center">
               <template slot-scope="scope">
-                  <span v-if="scope.row.cumOilProdYearly !== null && scope.row.cumOilProdYearly !== ''">{{Number(scope.row.cumOilProdYearly).toFixed(2)}}</span>
+                  <span v-if="scope.row.cumOilProdYearly !== null && scope.row.cumOilProdYearly !== ''">{{Number(scope.row.cumOilProdYearly/10000).toFixed(2)}}</span>
                   <span v-else>N/A</span>
               </template>
           </el-table-column>
@@ -264,6 +308,10 @@ import {
     measureRecommend,
 } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 import {exportExcel} from "@/lib/exportExcel";
+import { getOilFieldList, queryProductList } from "@/api/rem/workcompanydesignate.js";
+import {
+    fetchPlatforms,
+} from "@/api/oilDeposit/rem-02/primaryinfo.js";
 export default {
   data() {
     return {
@@ -275,7 +323,6 @@ export default {
       deptSelect: [],
       // 表格数据
       noticeList: [],
-      queryParams: { actionEvent: "", assetCode: "", month: "", ogfId: "", wellNo: "",selectPlatform:'' },
       // 是否展开，默认全部展开
       isExpandAll: true,
       deptList: [],
@@ -288,32 +335,60 @@ export default {
         date:'',
       // 保存数组
       savelist: [],
+        oilFields: [],
+        platforms: [],
+        platform:[],
+        queryParams: {
+            endTime: "",
+            selectPlatform: '',
+            selectOilField:"3FC9A818F5BC43B88270DB80BBB3018F"},
     };
   },
   created() {
       if(this.$route.query.platform){
           this.getList(); 
       }
-   
+      this.getserch()
     // this.choiceDepts(); // 获取组织机构
   },
   methods: {
-    show(data) {
-      this.queryParams.ogfId = data.selectOilField;
-      this.queryParams.selectPlatform = data.selectPlatform;
-      this.date = data.endTime
-      this.getinfo();
-    }, 
-      getinfo(){
+      getserch() {
+          getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
+              if (res.data.code == 200) {
+                  this.oilFields = res.data.data;
+                  let paraPlatForm = {
+                      oilFieldId: this.queryParams.selectOilField,
+                  };
+                  fetchPlatforms(paraPlatForm).then((res) => {
+                      if (res.data.code == 200) {
+                          this.platform = res.data.data.platform;
+                          this.platform.map((n)=>{
+                              if(n.platName =='全部'){
+                                  n.platFormId = ''
+                              }
+                          })
+                          this.queryParams.selectPlatform = '';
+                      }
+                  });
+              } else {
+                  this.$message.error("系统错误请重新尝试或联系运维人员！");
+                  this.queryParams.selectPlatform = '';
+              }
+          });
+      },
+      retrieval(){
+          let selectPlatform = ''
         if(this.queryParams.selectPlatform == ''){
-            this.queryParams.selectPlatform = '3FC9A818F5BC43B88270DB80BBB3018F'
+            selectPlatform = '3FC9A818F5BC43B88270DB80BBB3018F'
+        }else{
+            selectPlatform = this.queryParams.selectPlatform
         }
           let list =
               {
                   oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
                   selectBlock: "3FC9A818F5BC43B88270DB80BBB3018F",
-                  evaluationDate: this.date,
-                  platformId:this.queryParams.selectPlatform,
+                  evaluationDate: this.queryParams.endTime,
+                  platformId:selectPlatform,
                   timeGranularityCode: "",
                   wellId: "",
                   showNormal: true
@@ -322,24 +397,27 @@ export default {
               const wells = []
               res.data?.data?.indicatorAnalysisDetailInfos.map((n)=>{
                   if(n.name == '换大泵'){
-                      n.basis.map((j)=>{
+                      n?.basis?.map((j)=>{
                           wells.push(j.id)
                       })
                   }
               })
-              let data = {
-                  date: this.date,
-                  ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
-                  platId: this.queryParams.selectPlatform,
-                  wellIds:wells,
-              };
-              pumpReplaceDetail(data).then((res) => {
-                  if(res.data.code == 200){
-                      this.noticeList = res.data.data;
-                  }else{
-                      this.noticeList = []
-                  }
-              });
+              if(wells.length > 0){
+                  let data = {
+                      date: this.queryParams.endTime,
+                      ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                      platId: selectPlatform,
+                      wellIds:wells,
+                  };
+                  pumpReplaceDetail(data).then((res) => {
+                      if(res.data.code == 200){
+                          this.noticeList = res.data.data;
+                      }else{
+                          this.noticeList = []
+                      }
+                  });
+              }
+             
           })
 
       },
@@ -356,7 +434,8 @@ export default {
             timeGranularityCode: "",
             wellId: "",
             showNormal: true
-        }       
+        }     
+        this.queryParams.endTime = this.$route.query.currentDate
         measureRecommend(list).then((res)=>{
             const wells = []
             res.data?.data?.indicatorAnalysisDetailInfos.map((n)=>{
@@ -426,6 +505,12 @@ export default {
                   };
               }
           }
+      },
+      returnrouter() {
+          this.$router.go(-1);
+      },
+      reset(){
+          
       },
       filterData(arr, colName, concatList) {
           let spanOneArr = [];

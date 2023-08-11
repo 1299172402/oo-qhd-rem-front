@@ -161,7 +161,7 @@
 </template>
 
 <script>
-import { getStratifiedInjectionDetailsComp, getOgfInfo, getblockData } from '@/api/rem/r-intelligentIPA.js';
+import { getStratifiedInjectionDetailsComp } from '@/api/rem/r-intelligentIPA.js';
 import { exportExcel } from '@/lib/exportExcel';
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 

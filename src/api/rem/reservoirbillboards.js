@@ -5,6 +5,9 @@ export function getYieldFluctuation() {
   return request({
     url: `${baseUrl}/reservoirBillboards/getYieldFluctuation`,
     method: "get",
+      headers: {
+          showLoading: false
+      }
   });
 }
 export function monthlyProductionComparison({ date,ogfId } = {}) {
@@ -59,6 +62,9 @@ export function queryProblemWellStatis({ date, platformId,ogfId, wellId } = {}) 
   return request({
     url: `${baseUrl}/reservoirBillboards/queryProblemWellStatis?date=${ date || "" }&platformId=${ platformId || "" }&wellId=${ wellId || "" }&ogfId=${ ogfId || "" }`,
     method: "get",
+      headers: {
+          showLoading: false
+      }
   });
 }
 export function queryShutDownValueDict() {

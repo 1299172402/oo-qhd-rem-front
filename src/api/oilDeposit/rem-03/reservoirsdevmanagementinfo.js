@@ -530,6 +530,9 @@ export function waterContainRaiseChart(request) {
     url: `${baseUrl}/reservoirsDevManagementInfo/waterContainRaiseChart`,
     method: "post",
     data: request,
+      headers: {
+          showLoading: false
+      }
   });
 }
 
