@@ -46,7 +46,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(value2, '%', 'rgb(59,197,197)', 'rgb(1,67,78)', 'rgb(59,197,197)')"
+                            :chart-data="getEchartData(value2, '%', 'rgb(59,197,197)',$store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(59,197,197)')"
                         ></Echart>
                         <div class="chartText">生产时率</div>
                     </div>
@@ -54,7 +54,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(value1, '%', 'rgb(13,190,124)', 'rgb(1,67,78)', 'rgb(13,190,124)')"
+                            :chart-data="getEchartData(value1, '%', 'rgb(13,190,124)', $store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(13,190,124)')"
                         ></Echart>
                         <div class="chartText">油井利用率</div>
                     </div>
@@ -62,7 +62,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(value3, '%', 'rgb(247,181,0)', 'rgb(41,72,94)', 'rgb(247,181,0)')"></Echart>
+                            :chart-data="getEchartData(value3, '%', 'rgb(247,181,0)', $store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(247,181,0)')"></Echart>
                         <div class="chartText">综合时率</div>
                     </div>
                 </el-col>
@@ -71,7 +71,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(mainList[0], '%', 'rgb(0, 220, 187)', 'rgb(1,67,78)', 'rgb(0, 220, 187)')"
+                            :chart-data="getEchartData(mainList[0], '%', 'rgb(0, 220, 187)', $store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(0, 220, 187)')"
                         ></Echart>
                         <div class="chartText">自然递减</div>
                     </div>
@@ -79,7 +79,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(mainList[1], '%', 'rgb(0, 150, 215)', 'rgb(1,67,78)', 'rgb(0, 150, 215)')"
+                            :chart-data="getEchartData(mainList[1], '%', 'rgb(0, 150, 215)', $store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(0, 150, 215)')"
                         ></Echart>
                         <div class="chartText">综合递减</div>
                     </div>
@@ -87,7 +87,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(mainList[2], '%', 'rgb(209, 74, 202)', 'rgb(1,67,78)', 'rgb(209, 74, 202)')"
+                            :chart-data="getEchartData(mainList[2], '%', 'rgb(209, 74, 202)',$store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(209, 74, 202)')"
                         ></Echart>
                         <div class="chartText">总递减</div>
                     </div>
@@ -98,7 +98,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(dataList.waterInjectionWellInjection, '%', 'rgb(0, 150, 215)', 'rgb(1,67,78)', 'rgb(0, 150, 215)')"
+                            :chart-data="getEchartData(dataList.waterInjectionWellInjection, '%', 'rgb(0, 150, 215)',$store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(0, 150, 215)')"
                         ></Echart>
                         <div class="chartText" style="margin-top: 10px">分注井分注率</div>
                     </div>
@@ -106,7 +106,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(infolist, '%', 'rgb(227, 123, 93)', 'rgb(1,67,78)', 'rgb(227, 123, 93)')"
+                            :chart-data="getEchartData(infolist, '%', 'rgb(227, 123, 93)', $store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(227, 123, 93)')"
                         ></Echart>
                         <div class="chartText" style="margin-top: 10px">层段合格率</div>
                     </div>
@@ -114,7 +114,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(dataList.waterCutIncreaseRate, '%', 'rgb(167, 228, 77)', 'rgb(1,67,78)', 'rgb(66, 144, 34)')"
+                            :chart-data="getEchartData(dataList.waterCutIncreaseRate, '%', 'rgb(167, 228, 77)',$store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(66, 144, 34)')"
                         ></Echart>
                         <div class="chartText" style="margin-top: 10px">含水上升率</div>
                     </div>

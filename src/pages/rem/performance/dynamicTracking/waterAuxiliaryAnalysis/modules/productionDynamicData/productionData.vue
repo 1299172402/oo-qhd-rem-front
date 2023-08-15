@@ -376,7 +376,7 @@
                         this.tableData=res.data.data.proDatas?res.data.data.proDatas:[];    
                         if(res.data.data.charts){
                             let seriesData = [];
-                            let legendData = [];
+                            // let legendData = [];
                             //获取x轴数据信息
                             let xSet = new Set();
                             let chartDataS = res.data.data.charts;
@@ -390,7 +390,7 @@
                                 let lineName = chartData.label;
                                 series.type = 'line';
                                 series.name = lineName;
-                                legendData.push(series.name);
+                                // legendData.push(series.name);
                                 //数据所属图像
                                 if (chartDatalabel == '套压') {
                                     series.xAxisIndex = 0;

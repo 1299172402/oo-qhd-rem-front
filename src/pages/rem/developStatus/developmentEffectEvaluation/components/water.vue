@@ -3,26 +3,25 @@
     <div class="z-main">
         <div class="rowBox">
             <div class="row" style="margin-right: 20px">
-                <!-- <pagePanel headerTitle="含水上升率" style="height: 380px;margin-top:0;" show-btn></pagePanel> -->
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="含水上升率" isShowMaxBtn>
+                <pagePanel headerTitle="含水上升率"  style="height: 380px;margin-top:0;" show-btn>
                     <Echart :chart-data="rateOfWaterCutRise" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
             <div class="row" style="margin-right: 20px">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="水驱指数" isShowMaxBtn>
+                <pagePanel  headerTitle="水驱指数" style="height: 380px;margin-top:0;" show-btn>
                     <Echart :chart-data="recoveryDegree" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
         </div>
         <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right: 20px">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="存水率" isShowMaxBtn>
+                <pagePanel  headerTitle="存水率" style="height: 380px;" show-btn>
                     <Echart :chart-data="waterRate" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
             <!--含水类表格 -->
             <div class="row" style="margin-right: 20px">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="指标评价结果表" isShowMaxBtn>
+                <pagePanel headerTitle="指标评价结果表" style="height: 380px;" show-btn>
                     <el-table :data="tableData" highlight height="100%">
                         <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
                         <el-table-column prop="evaluationResult" label="评价结果" align="center">
@@ -54,7 +53,7 @@
                         </el-table-column>
                         <el-table-column prop="result" label="结论" align="center"></el-table-column>
                     </el-table>
-                </info-window>
+                </pagePanel>
             </div>
         </div>
     </div>
@@ -621,8 +620,8 @@
 
 <style lang="scss" scoped>
     .z-main {
-        padding-top:8px;
-        padding-bottom: 8px;
+        // padding-top:8px;
+        // padding-bottom: 8px;
 
         .rowBox {
             padding-left: 8px;

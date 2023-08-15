@@ -1,6 +1,5 @@
 import FileSaver from 'file-saver'
-import * as XLSX from './xlsx'
-console.log('XLSX',XLSX)
+// import * as XLSX from './modules/xlsx/xlsx/xlsx.js';
 
 /**
  *  hwh
@@ -12,17 +11,19 @@ console.log('XLSX',XLSX)
 function exportExcel (tableId,fileName) {
     //使表格中数据原样输出
     let xlsxParam = { raw: true };
-    let fix = document.querySelector('.el-table__fixed');
+    let fix = document.querySelector(tableId).querySelector('.el-table__fixed');
     let wb;
+    console.log(fix, tableId)
     if(fix){
         wb = XLSX.utils.table_to_book(document.querySelector(tableId).removeChild(fix),xlsxParam);
         document.querySelector(tableId).appendChild(fix);
     }else{
         wb = XLSX.utils.table_to_book(document.querySelector(tableId),xlsxParam) // 这个id是表格的id
     }
-    let wbout = XLSX.write(wb, { bookType: 'csv', bookSST: true, type: 'array' })
+    let wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
+    console.log(wbout, wb)
     try {
-        FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), fileName+'.csv')
+        FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), fileName+'.xlsx')
     } catch (e) {
         if (typeof console !== 'undefined') console.log(e, wbout)
     }
@@ -32,10 +33,34 @@ function exportExcel (tableId,fileName) {
 /**
  * hwh
  * 根据json数据导出文件内容
- * @param jsonData json数据 需要默认第一行绑定表头
+ * @param headTitle 第一行绑定表头
+ * @param dataList  数据集合
  * @param fileName 导出文件名称
  */
-function exportExcelFromJson(jsonData,fileName) {
+function exportExcelFromJson(headTitle, dataList ,fileName) {
+    if(!headTitle) {return}
+    // 表格表头及数据处理
+    let headTitleDisplay = {};
+    headTitle.map((item) => {
+      if (item.label && item.prop) {
+        headTitleDisplay[item.prop] = item.label;
+      }
+    });
+    let listData = dataList
+      ? dataList.map((item, i) => {
+          let obj = {};
+          Object.keys(headTitleDisplay).map((item1) => {
+            if (item1 === "index") {
+              obj[item1] = i + 1;
+            } else {
+              obj[item1] = item[item1];
+            }
+          });
+          return obj;
+        })
+      : [];
+    let jsonData = [headTitleDisplay, ...listData];
+    // 下载配置处理
     let wopts = {
         bookType: 'xlsx',
         bookSST: false,

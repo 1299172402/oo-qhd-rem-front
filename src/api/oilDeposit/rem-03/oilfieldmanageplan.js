@@ -97,6 +97,9 @@ export function dividingLayerQualityRate(request) {
     url: `${baseUrl  }/oilFieldManagePlanController/dividingLayerQualityRate`,
     method: "post",
     data: request,
+      headers: {
+          showLoading: false
+      }
   });
 }
 
@@ -264,6 +267,9 @@ export function natureDeclineChart(request) {
     url: `${baseUrl  }/oilFieldManagePlanController/natureDeclineChart`,
     method: "post",
     data: request,
+      headers: {
+          showLoading: false
+      }
   });
 }
 
@@ -387,6 +393,9 @@ export function outputDegree(request) {
     url: `${baseUrl  }/oilFieldManagePlanController/outputDegree`,
     method: "post",
     data: request,
+      headers: {
+          showLoading: false
+      }
   });
 }
 export function outputDegreeTongChart(request) {
@@ -394,6 +403,9 @@ export function outputDegreeTongChart(request) {
     url: `${baseUrl  }/oilFieldManagePlanController/outputDegreeTongChart`,
     method: "post",
     data: request,
+      headers: {
+          showLoading: false
+      }
   });
 }
 /**
@@ -407,6 +419,9 @@ export function outputSpeed(request) {
     url: `${baseUrl  }/oilFieldManagePlanController/outputSpeed`,
     method: "post",
     data: request,
+      headers: {
+          showLoading: false
+      }
   });
 }
 
@@ -614,6 +629,9 @@ export function waterContainRaiseChart(request) {
     url: `${baseUrl  }/oilFieldManagePlanController/waterContainRaiseChart`,
     method: "post",
     data: request,
+      headers: {
+          showLoading: false
+      }
   });
 }
 /**

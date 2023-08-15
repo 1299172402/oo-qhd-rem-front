@@ -4,31 +4,31 @@
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
                 <!-- <pagePanel headerTitle="自然递减率" style="height: 380px;margin-top:0;" show-btn></pagePanel> -->
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="自然递减率" isShowMaxBtn>
+                <pagePanel headerTitle="自然递减率" style="height: 380px;margin-top:0;" show-btn>
                     <Echart :chart-data="naturalDeclineRate" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="综合递减率" isShowMaxBtn>
+                <pagePanel headerTitle="综合递减率" style="height: 380px;margin-top:0;" show-btn>
                     <Echart :chart-data="comprehensiveDeclineRate" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
         </div>
         <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="总递减率" isShowMaxBtn>
+                <pagePanel headerTitle="总递减率" style="height: 380px;" show-btn>
                     <Echart :chart-data="totalDeclineRate" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="产量标定法" isShowMaxBtn>
+                <pagePanel headerTitle="产量标定法" style="height: 380px;" show-btn>
                     <Echart :chart-data="yieldCalibrationMethod" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
         </div>
         <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="指标评价结果表" isShowMaxBtn>
+                <pagePanel headerTitle="指标评价结果表" style="height: 380px;" show-btn>
                     <el-table :data="tableData" highlight height="100%">
                         <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
                         <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
@@ -36,7 +36,7 @@
                         <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center"></el-table-column>
                         <el-table-column prop="result" label="结论" align="center"></el-table-column>
                     </el-table>
-                </info-window>
+                </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;"></div>
         </div>
@@ -381,6 +381,12 @@
                         },
                     },
                     yAxis: {
+                        name: "产量标定法 (%)",
+                        nameLocation: "center",
+                        nameTextStyle: {
+                            color: "#8FA4CC",
+                        },
+                        nameGap: 35,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",

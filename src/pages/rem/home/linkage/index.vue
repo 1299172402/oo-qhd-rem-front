@@ -122,6 +122,7 @@ export default {
                         {
                             name: '注采连通分析',
                             warningShowFlag: false,
+                            alarmPageCode: 'LOWGPC',
                             url: `https://rem.${this.baseUrl}/#/basic/wellGroup_Maintenance?link=linkage&page=reservoirDisplay/linkage`
                         },
                         {
@@ -338,6 +339,11 @@ export default {
         async getWarningInfo() {
             this.currentLists.forEach((i, index) => {
                 i.warningShowFlag = false;
+                if(i.boxBottomText){
+                    i.boxBottomText.forEach((j)=>{
+                        j.warningShowFlag = false;
+                    })
+                }
             });
             const data = {
                 authorizedPersonnel: this.$store.getters["user/name"],

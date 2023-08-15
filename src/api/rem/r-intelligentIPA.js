@@ -36,6 +36,9 @@ export function getStratifiedInjectionDetails(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/stratifiedInjectionDetails`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         params
     }).then((res) => {
         // if(res.data.code === 0 && res.data.data)
@@ -58,6 +61,9 @@ export function getStratifiedInjectionDetailsComp(data) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/stratifiedInjectionDetailsComp`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         data
     }).then((res) => {
         return res.data
@@ -72,7 +78,10 @@ export function getResidueOilCondotion(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/residueOilCondition`,
         method: "get",
-        params
+        params,
+        headers: {
+            showLoading: false
+        }
     }).then((res) => {
         return res.data
     });
@@ -88,7 +97,10 @@ export function getUltraShortShotStatistics(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/ultraShotStatistics`,
         method: "post",
-        params
+        params,
+        headers: {
+            showLoading: false
+        }
     }).then((res) => {
         // if(res.data.code === 0 && res.data.data)
         return res.data
@@ -113,6 +125,9 @@ export function downloadStratifiedInjectionDetails(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/stratifiedInjectionDetails/download`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         params
     }).then((res) => {
         if (res.data.code === 0 && res.data.data)
