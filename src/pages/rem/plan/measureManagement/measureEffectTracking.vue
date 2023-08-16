@@ -140,17 +140,17 @@
                 </el-row>
                 <el-row class="main-row2" v-if="type == 0">
                     <div class="svg" v-if="oilTabType == '0'">
-                        <div class="search-date">
+                        <div class="search-date" style="position: absolute; top: 0; left: 20px; ">
                             <span>日期：</span>
                             <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
                             <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">搜索</el-button>
                         </div>
                         <div class="echarts-view">
-                            <echarts :chart-data="oilOption" height="580px"></echarts>
+                            <echarts :chart-data="oilOption" height="100%"></echarts>
                         </div>
                     </div>
                     <div class="svg" v-else-if="oilTabType == '1'">
-                        <div class="search-date">
+                        <div class="search-date" style="position: absolute; top: 0; left: 20px; ">
                             <span>日期：</span>
                             <el-date-picker v-model="dateDetail" type="datetimerange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"  @change="createChange"></el-date-picker>
                             <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doSearchCharts">搜索</el-button>
@@ -168,7 +168,7 @@
                         </div>
                     </div>
                     <div class="svg" v-else-if="oilTabType == '2'">
-                        <div class="search-date">
+                        <div class="search-date" style="position: absolute; top: 0; left: 20px; ">
                             <span>日期：</span>
                             <el-date-picker v-model="selectDateTime" type="datetime" placeholder="选择日期时间" format="yyyy-MM-dd hh:mm"></el-date-picker>
                             <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doWellFluxLastDayHour">搜索</el-button>
@@ -179,7 +179,10 @@
                     </div>
                     <div class="svg" v-else-if="oilTabType == '3'">
                         <div class="table-view">
-                            <el-table :data="chemicalTableData" highlight style="width: 100%" height="446px"
+                            <div style="display: flex; justify-content: flex-end;">
+                                <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table2', '化验数据')" v-show="canDownload">下载</el-button>
+                            </div>
+                            <el-table id="table2" :data="chemicalTableData" highlight style="width: 100%" height="calc(100% - 55px)"
                                 :row-style="{ height: '0px' }"
                                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                                 header-cell-class-name="table_header"
@@ -193,11 +196,11 @@
                         </div>
                     </div>
                     <div class="svg" v-else-if="oilTabType == '4'">
-                            <info-window infoWidth="100%" infoHeight="100%" headerTitle="现场作业进度表">
-                                <div slot-name="titleContent">
-                                    <el-button type="primary" style="position: absolute;right:0px;top:6px;height:30px;" @click="downTable">下载</el-button>
+                            <pagePanel headerTitle="现场作业进度表" style="height: 100%; margin-top:0;" show-btn>
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="downloadFile" v-show="canDownload">下载</el-button>
                                 </div>
-                                <el-table id="tableData"  :data="getWorkProgressData" highlight height="calc( 100% - 75px)"
+                                <el-table ref="table3" :data="getWorkProgressData" highlight height="calc( 100% - 130px)"
                                     :row-style="{ height: '0px' }"
                                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                                     header-cell-class-name="table_header"
@@ -208,7 +211,7 @@
                                     <el-table-column label="当前作业内容" prop="workContent"></el-table-column>
                                 </el-table>
                                 <pagination v-show="pageTotal2 > 0" :pageSizes="[15, 20, 40]" :total="pageTotal2" :page.sync="queryParams2.page" :limit.sync="queryParams2.pageSize" @pagination="pagination" />
-                            </info-window>
+                            </pagePanel>
                     </div>
                 </el-row>
             </div>
@@ -248,7 +251,7 @@
 <script>
     import fileSaver from 'file-saver';
     import verticalSwitchButton from '@/components/intelligentOilfield/vertical-switch-button/index.vue';
-    import Echarts from '@/components/rem/tools/Echarts/index.vue';
+    import Echarts from '@/components/tools/Echarts/index.vue';
     import {fetchMeasureStatInfos} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
     import {uploadFile} from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import {produceData} from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
@@ -260,7 +263,7 @@
     import {fetchOilFields,fetchPlatforms,fetchInjectionWells,fetchInjectionWellsByPlatform,fetchProductionWells,fetchProductionWellsByPlatform} from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import {nameAndCode} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
     import {getWorkProgress} from '@/api/oilDeposit/rem-04/plan.js';
-    import { exportExcel } from '@/lib/exportExcel.js';
+    import { exportExcel, exportExcelFromJson } from '@/lib/exportExcel.js';
     export default {
         // name: 'measureEffectTracking',
         components: {
@@ -609,6 +612,19 @@
                 selectRealData: [],
                 // 油井折线图内容
                 oilOption: {
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name: "油井日度曲线",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
+                            },
+                        },
+                    },
                     dataZoom: [
                         {
                             type: "inside",
@@ -638,21 +654,21 @@
                     grid: [
                         {
                             left: '14%',
-                            top: '4%',
+                            top:  '55',
                             width: '74%',
-                            height: '30%',
+                            height: '23%',
                         },
                         {
                             left: '14%',
                             top: '38%',
                             width: '74%',
-                            height: '25%',
+                            height: '23%',
                         },
                         {
                             left: '14%',
                             top: '66%',
                             width: '74%',
-                            height: '25%',
+                            height: '23%',
                         },
                     ],
                     xAxis: [
@@ -786,7 +802,7 @@
                         },
                         {
                             gridIndex: 0,
-                            name: '折\n算\n基\n准\n面\n流\n压\n︵\nM\nP\na\n︶',
+                            name: '折\n算\n基\n准\n面\n流\n压\nMPa',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
@@ -1116,6 +1132,19 @@
                 },
                 // 油井 虚拟计量曲线
                 oilOption2: {
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name: "油井日度曲线",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
+                            },
+                        },
+                    },
                     dataZoom: [
                         {
                             type: "inside",
@@ -1132,7 +1161,7 @@
                     },
                     grid:{
                         x: 120,
-                        y: 30,
+                        y: 50,
                         x2: 120,
                         y2: 80,
                     },
@@ -2382,8 +2411,8 @@
                         .map((item, index) => {
                             if (this.chartDataType == 'real') {
                                 return {
-                                    top: `${4 + 30 * index + index}%`,
-                                    height: '28%',
+                                    top:  index == 0  ? '50' : `${4 + 30 * index + index}%`,
+                                    height: '25%',
                                     left: '20%',
                                     right: '20%',
                                     width: '60%',
@@ -2551,7 +2580,7 @@
                             },
                         },
                     };
-                    // this.optionRealData.toolbox = toolBox;
+                    this.optionRealData.toolbox = toolBox;
                 }
             },
             //根据井号id转换对应实时数据的井名信息
@@ -2698,9 +2727,31 @@
                         this.oilOption2.series[3].data = seriesData4;
                     });
             },
-            //导出table
-            downTable() {
-                exportExcel('#tableData', this.searchForm.oilFieldName + '年度计划运行曲线表');
+             //下载导出文件 tableId tableName
+             doDownExcel(tableId, tableName) {
+                exportExcel(tableId, tableName);
+            },
+              /**
+             * hwh
+             * 下载表格信息
+             */
+             downloadFile() {
+                const request = {
+                    ogfId:this.selectOilField,
+                    prodPlatformId:this.selectPlatform==this.selectOilField?'':this.selectPlatform,
+                    wellId:this.selectWellId,
+                    year:this.dateTime,
+                    pageNum:this.queryParams.page,
+                    pageSize:this.queryParams.pageSize,
+                };
+                getWorkProgress(request).then((data) => {
+                    let code = data.data.code;
+                    if (code == 200) {
+                        let list =  data.data.rows;
+                        let headTitle = this.$refs.table3.$children.length ? this.$refs.table3.$children : null;
+                        exportExcelFromJson(headTitle, list, '现场作业进度表');
+                    }
+                });
             },
         },
     };
@@ -2713,7 +2764,8 @@
         flex-direction: column;
         .pagePanelNew{
             flex:1;
-            height:0;
+            // height:0;
+            min-height: 500px;
         }
         .main {
             // flex:1;
@@ -2740,12 +2792,13 @@
                 .echarts-view {
                     // height:700px;
                     flex: 1;
-                    overflow-y:scroll;
+                    overflow: hidden;
                 }
         
                 .table-view {
                     flex: 1;
                     height:0;
+                    overflow-y:auto;
                 }
         
             }

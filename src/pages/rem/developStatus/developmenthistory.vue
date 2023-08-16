@@ -18,19 +18,22 @@
         <pagePanelNew style="height: calc(100% - 100px);" class="z-main">
             
             <div class="pagepanel-btns" style="padding-top:20px;height:40px;display: flex;justify-content: flex-end;">
-                <el-button style="height:30px;" type="primary" @click="development(oilfield, block)">开发现状表</el-button>
+                <el-button type="primary" @click="development(oilfield, block)">开发现状表</el-button>
+                <el-button type="primary" @click="dialogVisible = true">选择指标信息</el-button>
             </div>
             
-            <pagePanel headerTitle="油田综合开发曲线" style="height: 650px;margin-bottom:20px;position: relative;" show-btn>
-                <el-button type="primary" style="position:absolute;right:58px;top:0;;height:30px;margin-right:0px;" @click="dialogVisible = true">选择指标信息</el-button>
-                <div style="height:100%;">
-                    <Echart :chart-data="option" style="height: 100%"></Echart>
+            <pagePanel headerTitle="油田综合开发曲线" style="height: 750px;margin-bottom:20px;position: relative;" show-btn>
+                <div style="display: flex; justify-content: flex-end">
+                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="downEchart">下载</el-button>
+                </div>
+                <div style="height:calc(100% - 55px);">
+                    <Echart ref="echartChart" :chart-data="option" style="height: 100%"></Echart>
                 </div>
             </pagePanel>
             
             <pagePanel headerTitle="油田综合开发历程表" style="height: 350px;position: relative;" show-btn>
                 <div style="display: flex; justify-content: flex-end;">
-                    <el-button type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#tableData', '油田综合开发历程')" v-show="canDownload">下载</el-button>
+                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#tableData', '油田综合开发历程')" v-show="canDownload">下载</el-button>
                 </div>
                 <div style="padding-bottom:5px;height:calc(100% - 55px);">
                     <el-table id="tableData" :data="tableData" highlight height="100%">
@@ -128,7 +131,7 @@
                     </div>
                     <div class="fr" style="margin-borttom: 10px">
                         <el-button type="primary" class="qhuan" @click="doSwitchUnit"> 单位切换{{ currentUnit == 'm' ? 't' : 'm³' }}</el-button>
-                        <el-button style="margin-right: 10px" type="primary" @click="doDownExcel('#kfxz', '开发现状')" v-show="canDownload">下载</el-button>
+                        <el-button style="margin-right: 10px" icon="el-icon-download" type="primary" @click="doDownExcel('#kfxz', '开发现状')" v-show="canDownload">下载</el-button>
                     </div>
                 </div>
                 <el-table id="kfxz" :data="tableData2" highlight height="400px">
@@ -308,6 +311,16 @@
                 tableData2: [],
                 //开发曲线
                 option: {
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            saveAsImage: {
+                                name: "油田综合开发曲线",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: '#022644',
+                            },
+                        },
+                    },
                     dataZoom: [
                         {
                             type: "inside",
@@ -1551,6 +1564,10 @@
             //下载导出文件 tableId tableName
             doDownExcel(tableId, tableName) {
                 exportExcel(tableId, tableName);
+            },
+            //下载echarts
+            downEchart() {
+                this.$refs.echartChart.chartDownLoad();
             },
             //油田改变操作 val
             onFieldChange(val) {

@@ -15,14 +15,17 @@
         </div>
         <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right: 20px">
-                <pagePanel  headerTitle="存水率" style="height: 380px;" show-btn>
+                <pagePanel  headerTitle="存水率" style="height: 380px; margin-top:0;" show-btn>
                     <Echart :chart-data="waterRate" style="height: 100%"></Echart>
                 </pagePanel>
             </div>
             <!--含水类表格 -->
             <div class="row" style="margin-right: 20px">
-                <pagePanel headerTitle="指标评价结果表" style="height: 380px;" show-btn>
-                    <el-table :data="tableData" highlight height="100%">
+                <pagePanel headerTitle="指标评价结果表" style="height: 380px; margin-top:0;" show-btn>
+                    <div style="display: flex; justify-content: flex-end;">
+                        <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '指标评价结果表')">下载</el-button>
+                    </div>
+                    <el-table id="table1" :data="tableData" highlight height="calc(100% - 55px)">
                         <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
                         <el-table-column prop="evaluationResult" label="评价结果" align="center">
                             <template slot-scope="scope">
@@ -63,6 +66,8 @@
     import Echart from "@/components/tools/Echarts/index.vue";
     import { fetchFields, fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo";
     import { waterContainRaiseChart, waterIndicatorChart, waterSotreRateChart, indicatorResult } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+    import {exportExcel} from '@/lib/exportExcel.js';
+
     export default {
         components: {
             Echart,
@@ -613,6 +618,10 @@
                 this.rateOfWaterCutRise.toolbox.show = flag;
                 this.recoveryDegree.toolbox.show = flag;
                 this.waterRate.toolbox.show = flag;
+            },
+            //下载导出文件 tableId tableName
+            doDownExcel(tableId, tableName) {
+                exportExcel(tableId, tableName);
             },
         },
     }

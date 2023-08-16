@@ -1,20 +1,23 @@
 <!-- 作业公司产量跟踪 -->
 <template>
     <div class="z-main" style="height:100%;">
-        <div style="display: flex;align-items: center;margin-bottom:15px;">
-            <span>滚动预测：</span>
-            <el-select v-model="searchForm.rollingForecastDate" placeholder="请选择" style="width:200px;margin-right:15px;">
-                <el-option v-for="item in rollingForecastDateList" :key="item.source_ID" :label="item.source_NAME" :value="item.source_ID"></el-option>
-            </el-select>
-            <span>日期：</span>
-            <!-- :picker-options="pickerOptions"  -->
-            <el-date-picker v-model="searchForm.date" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" style="margin-right:15px;"></el-date-picker>
-            <span>产量单位选择：</span>
-            <el-select v-model="searchForm.unitType" placeholder="请选择" style="width:100px;margin-right:15px;">
-                <el-option v-for="item in unitTypeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
-            </el-select>
-            <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
-            <el-button class="commonBtn" icon="el-icon-refresh" style="margin-left:15px!important;margin-right:auto;" @click="resetting">重置</el-button>
+        <div style="display: flex;justify-content: space-between;align-items: center;margin-bottom:15px;">
+           <div>
+                <span>滚动预测：</span>
+                <el-select v-model="searchForm.rollingForecastDate" placeholder="请选择" style="width:200px;margin-right:15px;">
+                    <el-option v-for="item in rollingForecastDateList" :key="item.source_ID" :label="item.source_NAME" :value="item.source_ID"></el-option>
+                </el-select>
+                <span>日期：</span>
+                <!-- :picker-options="pickerOptions"  -->
+                <el-date-picker v-model="searchForm.date" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" style="margin-right:15px;"></el-date-picker>
+                <span>产量单位选择：</span>
+                <el-select v-model="searchForm.unitType" placeholder="请选择" style="width:100px;margin-right:15px;">
+                    <el-option v-for="item in unitTypeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                </el-select>
+                <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
+                <el-button class="commonBtn" icon="el-icon-refresh" style="margin-left:15px!important;margin-right:auto;" @click="resetting">重置</el-button>
+           </div>
+           <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#tableData', '作业公司产量跟踪')">下载</el-button>
         </div>
         <el-table id="tableData" :data="tableData" highlight style="width:100%;" height="calc(100% - 58px)">
             <el-table-column fixed style="overflow-x:hidden;" prop="type" :label="outputTrackingTableDate" align="center" width="300"></el-table-column>
@@ -100,6 +103,8 @@
 
 <script>
     import {getReportFroms, getForecastDate} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+    import {exportExcel} from '@/lib/exportExcel.js';
+
     export default {
         data() {
             return {
@@ -513,6 +518,10 @@
                         break;
                 }
                 return lineTitle;
+            },
+            //下载导出文件 tableId tableName
+            doDownExcel(tableId, tableName) {
+                exportExcel(tableId, tableName);
             },
         },
     };

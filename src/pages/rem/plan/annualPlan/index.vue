@@ -48,7 +48,7 @@
                     <el-tab-pane label="原油产量" name="原油产量">
                         <crudeOil v-if="pageType=='原油产量'&&searchForm.theYieldComponentsValue==1" :searchForm="searchForm" ref="childComponent">
                             <template v-slot:downBtn>
-                                <div style="margin-left:10px;margin-top:10px;">
+                                <div style="position: absolute; top: 52px; right: 111px; z-index: 99;">
                                     <span>单位选择：</span>
                                     <el-select v-model="searchForm.selectUnitOfProduction" placeholder="请选择" style="width: 100px;" @change="doSearch">
                                         <el-option v-for="(item,index) in unitOfProduction" :key="index" :label="item.label" :value="item.value"></el-option>

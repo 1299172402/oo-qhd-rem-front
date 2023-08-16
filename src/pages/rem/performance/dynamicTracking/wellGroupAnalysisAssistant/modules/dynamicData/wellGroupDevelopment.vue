@@ -84,7 +84,7 @@
                         itemGap: 14,
                     },
                     toolbox: {
-                        show: true,
+                        show: false,
                         feature: {
                             saveAsImage: {
                                 pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
@@ -666,6 +666,7 @@
                     fileName = this.wellGroupName + fileName;
                 }
                 FileSaver.saveAs(res, fileName);
+                this.doDownTable();
             },
             //表格-展示||隐藏
             tapDevelop(){
@@ -679,7 +680,7 @@
             },
             //表格导出
             doDownTable() {
-                exportExcel('#tableData', '原油产量');
+                exportExcel('#tableData', '井组开发曲线');
             },
         },
     };

@@ -13,8 +13,8 @@
         </header-search>
         
         <page-panel-new class="app-content">
-            <el-row style="height:390px;" :gutter="20">
-                <el-col v-for="(item, index) in zbData" :key="index" :span="6" style="margin-bottom: 10px" :class="{ active: currentIndex == index }">
+            <el-row style="height:380px;" :gutter="20">
+                <el-col v-for="(item, index) in zbData" :key="index" :span="6" :class="{ active: currentIndex == index }">
                     <pagePanel v-if="item.title == '技术指标总览'" class="fl" style="height: 156px!important;" :headerTitle="item.title" @click.native="cardClick(item, index)">
                         <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center">
                         	<span style="font-size: 30px; vertical-align: middle; color: rgb(143, 164, 204)">
@@ -22,8 +22,8 @@
                         	</span>
                         </div>
                     </pagePanel>
-                    <pagePanel v-else class="fl" style="height: 160px" :headerTitle="item.title">
-                        <el-button style="position: absolute; z-index: 9; right: 10px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click.native="cardClick(item, index)">详情</el-button>
+                    <pagePanel v-else class="fl" style="height: 160px;" :headerTitle="item.title">
+                        <el-button style="position: absolute; z-index: 9; right: 10px; top: 0; height: 26px; margin-top: 3px; padding: 0 16px;" type="primary" @click.native="cardClick(item, index)">详情</el-button>
                         <div style="display:flex;margin-left: 10px;height:82px;">
                             <div style="width: 42%">
                                 <span style="vertical-align: middle">

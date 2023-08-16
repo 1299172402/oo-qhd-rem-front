@@ -16,7 +16,7 @@
         </div>
         <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="水驱控制程度" style="height: 380px;" show-btn>
+                <pagePanel headerTitle="水驱控制程度" style="height: 380px; margin-top:0;" show-btn>
                     <Echart :chart-data="waterDriveControlDegree" style="height: 100%"></Echart>
                 </pagePanel>
             </div>

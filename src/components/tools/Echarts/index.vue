@@ -227,7 +227,9 @@
                     pixelRatio: 1.5,
                     backgroundColor: "#022644",
                 });
-                FileSaver.saveAs(res, fileName);
+                let name =  typeof(fileName)  == 'string' ? fileName : this.chartData.toolbox.feature.saveAsImage.name;
+                console.log(typeof(fileName)  == 'string', fileName)
+                FileSaver.saveAs(res, name);
             },
         },
         beforeDestroy() {

@@ -171,7 +171,11 @@
                         </div>
                         <div style="flex:1;min-height:380px;">
                             <pagePanel headerTitle="水井动态分析详情列表" style="margin-top:0;height:100%;">
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '水井动态分析详情列表')">下载</el-button>
+                                </div>
                                 <el-table
+                                    id="table1"
                                     class="doubleHeader"
                                     :row-style="{ height: '0px' }"
                                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
@@ -179,7 +183,7 @@
                                     header-cell-class-name="table_header"
                                     :cell-style="{ padding: '6px', 'text-align': 'center' }"
                                     :default-sort="{ prop: 'date', order: 'descending' }"
-                                    height="100%"
+                                    height="calc(100% - 55px)"
                                     @sort-change="changeTableSort" ref="tableList"
                                     row-key="id"
                                     default-expand-all
@@ -507,7 +511,11 @@
                         </div>
                         <div style="height:540px;">
                             <pagePanel header-title="水井动态分析详情列表" style="height: 100%;">
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table2', '水井动态分析详情列表')">下载</el-button>
+                                </div>
                                 <el-table
+                                    id="table2"
                                     class="doubleHeader"
                                     :row-style="{ height: '0px' }"
                                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
@@ -515,7 +523,7 @@
                                     header-cell-class-name="table_header"
                                     :cell-style="{ padding: '6px', 'text-align': 'center' }"
                                     :default-sort="{ prop: 'date', order: 'descending' }"
-                                    height="100%"
+                                    height="calc(100% - 55px)"
                                     @sort-change="changeTableSort" ref="tableList"
                                     row-key="id"
                                     default-expand-all
@@ -617,6 +625,8 @@ import {
 } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js"
 import treeSelectionCustom from "@/pages/rem/basic/components/treeSelectionCustom.vue";
+import {exportExcel} from '@/lib/exportExcel.js';
+
 export default {
     name:'waterAnalysisReport',
     components: {
@@ -2478,6 +2488,10 @@ export default {
             let wellB = ob.wellId;
             return this.wellNoSort(wellA, wellB);
         },
+        //下载导出文件 tableId tableName
+        doDownExcel(tableId, tableName) {
+            exportExcel(tableId, tableName);
+        },
     }
 }
 </script>
@@ -2595,7 +2609,7 @@ export default {
                     display: flex;
                     align-items: center;
                     position: relative;
-                    right: 77px;
+                    right: 99px;
                     .helpImg{
                         width:52px;
                         height:52px;

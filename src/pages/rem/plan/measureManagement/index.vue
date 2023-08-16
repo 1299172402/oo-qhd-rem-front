@@ -153,14 +153,14 @@
                                     <div class="vv" v-if="scope.row.type!='date'"
                                         :style="{marginLeft:scope.row.mgleftwidth}"
                                         :class="{'vvColor': !scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))}"
-                                        @click="switchToMeasures(scope.row.ogfId, scope.row.prodPlatformId, scope.row.wellId, scope.row.measuresTypeCode, scope.row.yearMonthDay,  scope.row.wellTypeCode, scope.row.wellNameNano, scope.row.wellBoreName,scope.$index, scope.row.planMeasuresStartTime, scope.row.realityMeasuresEndTime)">
+                                        @click="switchToMeasures(scope.row.ogfId, scope.row.prodPlatformId, scope.row.wellId, scope.row.measuresTypeCode, scope.row.yearMonthDay,  scope.row.wellTypeCode, scope.row.wellNameNano, scope.row.wellBoreName,scope.$index, scope.row.planMeasuresStartTime, scope.row.planMeasuresEndTime, scope.row.realityMeasuresEndTime)">
                                         <div class="vv-left">
-                                            <img :src="!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))?'@/assets/rem/plan/i0.png': '@/assets/rem/plan/i3.png'" alt="" v-if="scope.row.stimClassCode=='003'"
-                                                :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 增产性措施`">
-                                            <img :src="!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))?'@/assets/rem/plan/i1.png': '@/assets/rem/plan/i4.png'" alt="" v-if="scope.row.stimClassCode=='004'"
-                                                :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 增注性措施`">
-                                            <img :src="!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))?'@/assets/rem/plan/i2.png': '@/assets/rem/plan/i5.png'" alt="" v-else
-                                                :title="`${scope.row.wellNo}${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n ${scope.row.realityMeasuresEndTime} 维护性措施`">
+                                            <img :src="(!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))) ? require('@/assets/rem/plan/i3.png') : require('@/assets/rem/plan/i0.png')" alt="" v-if="scope.row.stimClassCode=='003'"
+                                                :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n${scope.row.realityMeasuresEndTime || '-'} 增产性措施`">
+                                            <img :src="(!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))) ? require('@/assets/rem/plan/i4.png') : require('@/assets/rem/plan/i1.png')" alt="" v-if="scope.row.stimClassCode=='004'"
+                                                :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n${scope.row.realityMeasuresEndTime || '-'} 增注性措施`">
+                                            <img :src="(!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))) ? require('@/assets/rem/plan/i5.png') : require('@/assets/rem/plan/i2.png')" alt="" v-else
+                                                :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n${scope.row.realityMeasuresEndTime || '-'} 维护性措施`">
                                         </div>
                                         <div class="vv-right">
                                             <!-- 计划 -->
@@ -703,9 +703,9 @@
                 });
                 this.wellId = '';
             },
-            //跳转详情界面-oilFieldId 油田id platformId 平台id selectWellId 选择井号 yearMonthDay 时间  wellType 井类型 planMeasuresStartTime 计划开始书剑
+            //跳转详情界面-oilFieldId 油田id platformId 平台id selectWellId 选择井号 yearMonthDay 时间  wellType 井类型 planMeasuresStartTime 计划开始时间 planMeasuresEndTime 计划结束时间 realityMeasuresEndTime 实际结束时间
             switchToMeasures(oilFieldId, platformId, selectWellId, selectMeasuresId, yearMonthDay, wellType,
-                wellNameNano, wellBoreName, index, planMeasuresStartTime, realityMeasuresEndTime) {
+                wellNameNano, wellBoreName, index, planMeasuresStartTime, planMeasuresEndTime, realityMeasuresEndTime) {
                 console.log(1111, selectWellId)
                 // if (this.dateTime == '2023' && index == 1) {
                 if (!realityMeasuresEndTime && planMeasuresStartTime && moment().isBefore(moment(planMeasuresStartTime))) {
@@ -713,7 +713,9 @@
                         path: '/plan/personnelMeasures',
                         query: {
                             routeName: 'measureManagement',
-                            tabValue: 'personnelplan'
+                            tabValue: 'personnelplan',
+                            startTime: planMeasuresStartTime,
+                            endTime: planMeasuresEndTime,
                         }
                     });
                     return false
