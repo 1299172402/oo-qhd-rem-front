@@ -188,9 +188,12 @@
                             <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)" 
                             @click="$router.push({name:'planmessage',query:{platform,wellId,currentDate}})">措施推荐详情</el-button>
                         </div>
-                        <div style="flex:1;min-height:540px;">
+                        <div style="flex:1;min-height:600px;">
                             <pagePanel headerTitle="油井动态分析详情列表" style="margin-top:0;height:100%;">
-                                <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '油井动态分析详情列表')">下载</el-button>
+                                </div>
+                                <el-table id="table1" highlight :data="tableData" height="calc(100% - 55px)" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                     <!--生产动态项目-->
@@ -667,7 +670,10 @@
                         </div>
                         <div style="height:800px;position: relative;z-index: 3;">
                             <pagePanel header-title="油井动态分析详情列表"  style="height: 100%;">
-                                <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table2', '油井动态分析详情列表')">下载</el-button>
+                                </div>
+                                <el-table id="table2" highlight :data="tableData" height="calc(100% - 55px)" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                     <!--生产动态项目-->
@@ -810,6 +816,8 @@
     import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js"
     import compareSort from "@/lib/compareSort.js";
     import treeSelectionCustom from "@/pages/rem/basic/components/treeSelectionCustom.vue";
+    import {exportExcel} from '@/lib/exportExcel.js';
+
     export default {
         name:'oilAnalysisReport',
         mixins: [compareSort],
@@ -1917,6 +1925,10 @@
                     return '-'
                 }
             },
+            //下载导出文件 tableId tableName
+            doDownExcel(tableId, tableName) {
+                exportExcel(tableId, tableName);
+            },
 		}
     }
 </script>
@@ -2031,7 +2043,7 @@
                         background-image: var(--logo-bg) !important;
                         display: flex;
                         align-items: center;
-                        margin-right: 44px;
+                        margin-right: 66px;
                         .helpImg{
                             width:52px;
                             height:52px;

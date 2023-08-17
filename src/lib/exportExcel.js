@@ -1,4 +1,5 @@
 import FileSaver from 'file-saver'
+import * as XLSX from './xlsx'
 // import * as XLSX from './modules/xlsx/xlsx/xlsx.js';
 
 /**

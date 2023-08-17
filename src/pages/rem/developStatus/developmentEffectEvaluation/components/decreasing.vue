@@ -16,20 +16,23 @@
         </div>
         <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="总递减率" style="height: 380px;" show-btn>
+                <pagePanel headerTitle="总递减率" style="height: 380px; margin-top:0;" show-btn>
                     <Echart :chart-data="totalDeclineRate" style="height: 100%"></Echart>
                 </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="产量标定法" style="height: 380px;" show-btn>
+                <pagePanel headerTitle="产量标定法" style="height: 380px; margin-top:0;" show-btn>
                     <Echart :chart-data="yieldCalibrationMethod" style="height: 100%"></Echart>
                 </pagePanel>
             </div>
         </div>
         <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="指标评价结果表" style="height: 380px;" show-btn>
-                    <el-table :data="tableData" highlight height="100%">
+                <pagePanel headerTitle="指标评价结果表" style="height: 380px; margin-top:0;" show-btn>
+                    <div style="display: flex; justify-content: flex-end;">
+                        <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '指标评价结果表')">下载</el-button>
+                    </div>
+                    <el-table id="table1" :data="tableData" highlight height="calc(100% - 55px)">
                         <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
                         <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
                         <el-table-column prop="lastPhaseValue" label="上阶段值" align="center"></el-table-column>
@@ -48,6 +51,8 @@
     import Echart from "@/components/tools/Echarts/index.vue";
     import { fetchFields, fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo";
     import { natureDeclineChart,composiveDeclineChart,targetChart,declineIndicatorEveluationResult,generalDeclineChart } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+    import {exportExcel} from '@/lib/exportExcel.js';
+
     export default {
         components: {
             Echart
@@ -600,6 +605,10 @@
                 this.comprehensiveDeclineRate.toolbox.show = flag;
                 this.totalDeclineRate.toolbox.show = flag;
                 this.yieldCalibrationMethod.toolbox.show = flag;
+            },
+            //下载导出文件 tableId tableName
+            doDownExcel(tableId, tableName) {
+                exportExcel(tableId, tableName);
             },
         },
     };

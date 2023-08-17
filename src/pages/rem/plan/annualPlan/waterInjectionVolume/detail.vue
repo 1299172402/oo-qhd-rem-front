@@ -6,24 +6,18 @@
             <el-button type="primary" style="height:30px;" @click="switchToBack">返回</el-button>
         </div>
         <div class="z-main">
-            <div class="rowBox">
-                <div class="row" style="margin-right:20px;">
-                    <info-window style="margin-top:0;" infoWidth="100%" infoHeight="500px" :headerTitle="'老井转注 井次：' +(oldWellCount ? oldWellCount : 0) +'口 注入量：' +(oldInjectionCount ? oldInjectionCount : 0) + 'm³' " isShowMaxBtn>
-                        <div slot-name="titleContent">
-                            <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downEchart(1)">下载</el-button>
-                        </div>
-                        <Echart ref="echartChart1" :chart-data="oldWellLineChart" height="100%"></Echart>
-                    </info-window>
-                </div>
-                <div class="row">
-                    <info-window style="margin-top:0;" infoWidth="100%" infoHeight="500px" :headerTitle="'新井投注 新井：' +(newWellCount ? newWellCount : 0) +'口 注入量：' +(newInjectionCount ? newInjectionCount : 0) +'m³'" isShowMaxBtn>
-                        <div slot-name="titleContent">
-                            <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downEchart(2)">下载</el-button>
-                        </div>
-                        <Echart ref="echartChart2" :chart-data="newWellLineChart" height="100%"></Echart>
-                    </info-window>
-                </div>
-            </div>
+            <pagePanel :headerTitle="'老井转注 井次：' +(oldWellCount ? oldWellCount : 0) +'口 注入量：' +(oldInjectionCount ? oldInjectionCount : 0) + 'm³' " style="height:calc(50% - 10px);margin-top:0;" show-btn>
+                <!-- <div slot-name="titleContent">
+                    <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downEchart(1)">下载</el-button>
+                </div> -->
+                <Echart ref="echartChart1" :chart-data="oldWellLineChart" height="100%"></Echart>
+            </pagePanel>
+            <pagePanel :headerTitle="'新井投注 新井：' +(newWellCount ? newWellCount : 0) +'口 注入量：' +(newInjectionCount ? newInjectionCount : 0) +'m³'"  style="height: calc(50% - 10px);"  show-btn>
+                <!-- <div slot-name="titleContent">
+                    <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downEchart(2)">下载</el-button>
+                </div> -->
+                <Echart ref="echartChart2" :chart-data="newWellLineChart" height="100%"></Echart>
+            </pagePanel>
         </div>
     </page-panel-new>
 </template>
@@ -48,6 +42,19 @@
                 newInjectionCount: 0,
                 //老井转注 折线图1
                 oldWellLineChart: {
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name: '老井转注 井次：' +(this.oldWellCount ? this.oldWellCount : 0) +'口 注入量：' +(this.oldInjectionCount ? this.oldInjectionCount : 0) + 'm³',
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
+                            },
+                        },
+                    },
                     dataZoom: [
                         {
                             type: "inside",
@@ -65,9 +72,9 @@
                     },
                     grid:{
                         x: 120,
-                        y: 30,
+                        y: 50,
                         x2: 120,
-                        y2: 100,
+                        y2: 50,
                     },
                     legend: {
                         data: [],
@@ -171,6 +178,19 @@
                 },
                 //新井投注 折线图2
                 newWellLineChart: {
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name: '新井投注 新井：' +(this.newWellCount ? this.newWellCount : 0) +'口 注入量：' +(this.newInjectionCount ? this.newInjectionCount : 0) +'m³',
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
+                            },
+                        },
+                    },
                     dataZoom: [
                         {
                             type: "inside",
@@ -188,9 +208,9 @@
                     },
                     grid:{
                         x: 120,
-                        y: 30,
+                        y: 50,
                         x2: 120,
-                        y2: 100,
+                        y2: 50,
                     },
                     legend: {
                         data: [],
@@ -435,6 +455,8 @@
 <style lang="scss" scoped>
     .z-main {
         width:100%;
+        height: calc(100% - 42px);
+        
         .rowBox {
             display: flex;
             align-items: center;

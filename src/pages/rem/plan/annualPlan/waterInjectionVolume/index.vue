@@ -1,25 +1,24 @@
 <!-- 注水量 -->
 <template>
     <div class="tab-container">
-        <info-window infoWidth="100%" :infoHeight="height+'px'" :headerTitle="searchForm.oilFieldName + '年度计划运行曲线图'" isShowMaxBtn style="margin-top:0;">
+        <pagePanel :headerTitle="searchForm.oilFieldName + '年度计划运行曲线图'" :style="{marginTop:0, height: height+'px'}" show-btn>
             <div slot-name="titleContent">
-                <el-button type="primary" style="position: absolute;right:120px;top:6px;height:30px;" @click="switchToOilfieldWater">详情</el-button>
-                <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downEchart">下载</el-button>
+                <el-button type="primary" style="position: absolute;right:56px;top:3px;height:26px; padding: 0 10px;" @click="switchToOilfieldWater">详情</el-button>
             </div>
             <Echart ref="echartChart" :chart-data="OilYearLineChart" height="100%"></Echart>
-        </info-window>
+        </pagePanel>
         <div class="develop">
             <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
         </div>
-        <info-window infoWidth="100%" infoHeight="500px" :headerTitle="searchForm.oilFieldName + '年度计划运行曲线表'" isShowMaxBtn v-show="isDevelop">
-            <div slot-name="titleContent">
-                <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downTable">下载</el-button>
+        <pagePanel :headerTitle="searchForm.oilFieldName + '年度计划运行曲线表'" style="height: 580px;" show-btn v-show="isDevelop">
+            <div slot-name="titleContent" style="display: flex; justify-content: flex-end;">
+                <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="downTable">下载</el-button>
             </div>
             <el-table 
                 id="tableData"
                 :data="oilYearData" :border="false" :row-style="{ height: '0px' }"
                 header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
-                style="width:100%;" height="calc(100% - 75px)" :default-sort="{ prop: 'date', order: 'descending' }"
+                style="width:100%;" height="calc(100% - 130px)" :default-sort="{ prop: 'date', order: 'descending' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
                 <el-table-column prop="theDate" align="center" label="时间"> </el-table-column>
@@ -29,7 +28,7 @@
                 <el-table-column prop="injectionSumPlan" align="center" :label="`计划年累注\n(10⁴m³)`" :formatter="numberToFour"></el-table-column>
             </el-table>
             <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination"/>
-        </info-window>
+        </pagePanel>
     </div>
 </template>
 
@@ -61,6 +60,19 @@
             return {
                 height:'',
                 OilYearLineChart: {//注水量折线图
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name:  (this.searchForm.oilFieldName ? this.searchForm.oilFieldName : '') + "年度计划运行曲线图",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
+                            },
+                        },
+                    },
                     dataZoom: [
                         {
                             type: "inside",
@@ -78,7 +90,7 @@
                     },
                     grid:{
                         x: 120,
-                        y: 30,
+                        y: 50,
                         x2: 120,
                         y2: 100,
                     },

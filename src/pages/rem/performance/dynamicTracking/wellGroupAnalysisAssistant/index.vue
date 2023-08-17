@@ -49,8 +49,8 @@
             </headerSearch>
             
             <pagePanelNew style="height: calc(100% - 100px)" class="g-w100">
-                
-                <div class="pagepanel-btns" v-if="isUpdateFile" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
+                <!-- v-if="isUpdateFile"  -->
+                <div class="pagepanel-btns" style="height:34px;margin-bottom:10px;display: flex;justify-content: flex-end;position: absolute;right:20px;top:16px;z-index: 2;">
                     <!-- minIo上传 -->
                     <el-button v-if="isUpdateFile" type="primary" icon="el-icon-upload2" style="margin-left: auto !important" @click="ljpmUploadDialogLast" >上传文档</el-button>
                     <!-- minIo下载 -->

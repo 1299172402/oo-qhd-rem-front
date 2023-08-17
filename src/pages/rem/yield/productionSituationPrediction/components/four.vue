@@ -22,11 +22,14 @@
             <el-button type="primary" icon="el-icon-search" @click="searchDataFromServer">搜索</el-button>
             <el-button class="commonBtn" icon="el-icon-refresh" style="margin-left:15px!important;margin-right:auto;" @click="resetting">重置</el-button>
         </div>
-        <div style="height:50px;display: flex;align-items: center;">
-            <el-button type="primary" icon="el-icon-add" @click="save">保存</el-button>
-            <el-button type="primary" @click="showAddDialog">添加</el-button>
+        <div style="display: flex; justify-content: space-between;margin-bottom: 20px">
+            <div>
+                <el-button type="primary" icon="el-icon-add" @click="save">保存</el-button>
+                <el-button type="primary" @click="showAddDialog">添加</el-button>
+            </div>
+            <el-button icon="el-icon-download" type="primary" @click="doDownExcel('#table1', '单井产量预测')">下载</el-button>
         </div>
-        <el-table :data="tableData" height="calc(100% - 58px - 50px)">
+        <el-table id="table1" :data="tableData" height="calc(100% - 58px - 55px)">
             <el-table-column type="index" width="50"></el-table-column>
             <el-table-column align="left" label="当前作业井名" prop="wellNo" width="150"></el-table-column>
             <el-table-column align="center" label="当前作业措施" prop="measureTypeName" width="150"></el-table-column>
@@ -80,8 +83,9 @@
     import {fetchALLOilFields,getLjpmWells } from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import { getForecastDate } from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
     import {getWellDailyMeasureInfo,insertWellDailyMeasureInfo,deleteWellDailyMeasureInfoByIds, calcSingleWellMeasureStatInfos } from "@/api/oilDeposit/rem-03/WellDailyMeasureImprove.js";
-    
+    import {exportExcel} from '@/lib/exportExcel.js';
     import fourAdd from '../popups/fourAdd.vue'
+
     export default {
         components: {
             fourAdd
@@ -258,7 +262,11 @@
             //关闭添加框
             handleDialogClose() {
                 this.AddDialogFlag = false
-            }
+            },
+            //下载导出文件 tableId tableName
+            doDownExcel(tableId, tableName) {
+                exportExcel(tableId, tableName);
+            },
         }
     }
 </script>

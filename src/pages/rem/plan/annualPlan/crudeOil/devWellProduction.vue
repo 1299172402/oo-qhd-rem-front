@@ -1,21 +1,21 @@
 <!-- 开发井产量 -->
 <template>
     <div class="tab-container">
-        <info-window infoWidth="100%" :infoHeight="height+'px'" :headerTitle="searchForm.oilFieldName + '开发井产量图'" isShowMaxBtn style="margin-top:0;">
-            <div slot-name="titleContent">
+        <pagePanel :headerTitle="searchForm.oilFieldName + '开发井产量图'" :style="{marginTop:0, height: height+'px'}" show-btn>
+            <!-- <div slot-name="titleContent">
                 <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downEchart">下载</el-button>
-            </div>
+            </div> -->
             <Echart ref="echartChart" :chart-data="devWellLineChart" height="100%"></Echart>
-        </info-window>
+        </pagePanel>
         <div class="develop">
             <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
         </div>
-        <info-window infoWidth="100%" infoHeight="500px" :headerTitle="searchForm.oilFieldName + '开发井产量表'" isShowMaxBtn v-show="isDevelop">
-            <div slot-name="titleContent">
-                <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downTable">下载</el-button>
+        <pagePanel :headerTitle="searchForm.oilFieldName + '开发井产量表'" style="height: 580px;" show-btn v-show="isDevelop">
+            <div slot-name="titleContent" style="display: flex; justify-content: flex-end;">
+                <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="downTable">下载</el-button>
             </div>
             <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;"
-                height="calc(100% - 75px)" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+                height="calc(100% - 130px)" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
                 <el-table-column prop="prodDate" align="center" label="时间"> </el-table-column>
                 <el-table-column prop="measureWellNumReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际措施井次\n(次)' : '实际措施井次\n(次)'"></el-table-column>
@@ -25,7 +25,7 @@
                 <!-- <el-table-column prop="oilprodRollForecast" align="center" label="滚动预测"></el-table-column> -->
             </el-table>
             <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination" />
-        </info-window>
+        </pagePanel>
     </div>
 </template>
 
@@ -57,6 +57,19 @@
             return {
                 height: '',
                 devWellLineChart: {
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name:  (this.searchForm.oilFieldName ? this.searchForm.oilFieldName : '') + "开发井产量图",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
+                            },
+                        },
+                    },
                     dataZoom: [
                         {
                             type: "inside",
@@ -74,7 +87,7 @@
                     },
                     grid:{
                         x: 120,
-                        y: 30,
+                        y: 50,
                         x2: 120,
                         y2: 100,
                     },

@@ -1,24 +1,24 @@
 <!-- 天然气 -->
 <template>
     <div class="tab-container">
-        <info-window infoWidth="100%" :infoHeight="height+'px'" style="margin-top: 0;" :headerTitle="searchForm.oilFieldName + '天然气产量跟踪图'" isShowMaxBtn>
-            <div slot-name="titleContent">
+        <pagePanel :headerTitle="searchForm.oilFieldName + '天然气产量跟踪图'" :style="{marginTop:0, height: height+'px'}" show-btn>
+            <!-- <div slot-name="titleContent">
                 <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downEchart">下载</el-button>
-            </div>
+            </div> -->
             <Echart ref="echartChart" :chart-data="GasProLineChart" height="100%"></Echart>
-        </info-window>
+        </pagePanel>
         <div class="develop">
             <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
         </div>
-        <info-window infoWidth="100%" infoHeight="500px" :headerTitle="searchForm.oilFieldName + '天然气产量跟踪表'" isShowMaxBtn v-show="isDevelop">
-            <div slot-name="titleContent">
-                <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downTable">下载</el-button>
+        <pagePanel :headerTitle="searchForm.oilFieldName + '天然气产量跟踪表'" style="height: 580px;" show-btn v-show="isDevelop">
+            <div slot-name="titleContent" style="display: flex; justify-content: flex-end;">
+                <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="downTable">下载</el-button>
             </div>
             <el-table 
                 id="tableData"
                 :data="tableData" :border="false" :row-style="{ height: '0px' }"
                 header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
-                style="width:100%;" height="calc(100% - 101px)" :default-sort="{ prop: 'date', order: 'descending' }"
+                style="width:100%;" height="calc(100% - 130px)" :default-sort="{ prop: 'date', order: 'descending' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
                 <el-table-column prop="prodDate" align="center" label="时间"> </el-table-column>
@@ -28,7 +28,7 @@
                 <el-table-column prop="gasProdRollFocecast" align="center" :label="`滚动预测产气量\n(10⁴m³)`" :formatter="numberToFour"></el-table-column>
             </el-table>
             <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination"/>
-        </info-window>
+        </pagePanel>
     </div>
 </template>
 
@@ -60,6 +60,19 @@
             return {
                 height:'',
                 GasProLineChart: {//天然气产量折线图
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name:  (this.searchForm.oilFieldName ? this.searchForm.oilFieldName : '') + "天然气产量跟踪图",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
+                            },
+                        },
+                    },
                     dataZoom: [
                         {
                             type: "inside",

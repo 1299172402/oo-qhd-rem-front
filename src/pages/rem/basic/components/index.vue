@@ -155,7 +155,6 @@ export default {
       const params = { level: this.level, orgId: "715AD1CD60484BB59E737CD18A9DE44A" };
       if(this.type==1){
             this.deptOptions = this.arrayData;
-            this.deptOptions
             this.setDisabledRecursive(this.deptOptions, this.start, this.end)
       }else if (this.type==0){
           getYczcTree(params).then((res)=>{

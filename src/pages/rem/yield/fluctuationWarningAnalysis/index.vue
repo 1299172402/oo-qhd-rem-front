@@ -132,25 +132,28 @@
                     <div class="rowBox" v-if="!isShowTable">
                         <div class="row" style="margin-right:20px;">
                             <pagePanel headerTitle="单井产量波动分析" style="height: 400px; margin-top: 0;" show-btn>
-                                <div class="row-container">
-                                    <div class="searchBox">
+                                <!-- <div class="row-container"> -->
+                                    <div style="position: absolute; top: 52px; right: 111px; z-index: 99;">
                                         <span style="margin-right:10px;font-size:14px;">产量变化总井数：{{wellAllNum}}口</span>
                                         <el-input placeholder="产油波动值设置" style="width:140px;margin-right:10px;" size="medium" :readonly="true"></el-input>
                                         <el-input v-model="setParaValue" style="width:80px;margin-right:10px;" type="text" size="medium" oninput="value=value.replace(/[^0-9.]/g,'')"></el-input>
                                         <el-input v-model="unitValue" style="width:50px;margin-right:10px;" size="medium" :readonly="true"></el-input>
-                                        <el-button type="primary" style="height:36px;" @click="searchWellOutputWave">搜索</el-button>
-                                        <el-button type="primary" style="height:36px;margin-left:auto!important;" @click="jumpMore">更多</el-button>
+                                        <el-button type="primary" @click="searchWellOutputWave">搜索</el-button>
+                                        <el-button type="primary" @click="jumpMore">更多</el-button>
                                     </div>
                                     <!-- <div class="echartBox"> -->
-                                        <Echart :chart-data="barChart" height="calc(100% - 55px)"></Echart>
+                                        <Echart :chart-data="barChart" height="100%"></Echart>
                                     <!-- </div> -->
-                                </div>
+                                <!-- </div> -->
                             </pagePanel>
                         </div>
                         <div class="row" style="margin-right:20px;">
                             <pagePanel headerTitle="当日关键事件" style="height: 400px; margin-top: 0;" show-btn>
                                 <div class="row-container">
-                                    <el-table highlight :data="eventData" style="width: 100%" height="100%" empty-text="当日无大事件">
+                                    <div style="display: flex; justify-content: flex-end;">
+                                        <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '当日关键事件')">下载</el-button>
+                                    </div>
+                                    <el-table id="table1" highlight :data="eventData" style="width: 100%" height="100%" empty-text="当日无大事件">
                                         <el-table-column prop="eventType" label="事件类型" align="center" width="180"></el-table-column>
                                         <el-table-column prop="content" label="井号" align="center"></el-table-column>
                                     </el-table>
@@ -269,6 +272,8 @@
     import {getReportFroms} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js'
     import {getWellOutputWaveAnalysisNum} from '@/api/oilDeposit/rem-04/yieId.js'
     import {exportComplexHeaderExcelFromJson} from '@/lib/exportExcel.js';
+    import {exportExcel} from '@/lib/exportExcel.js';
+
     export default {
         name: 'fluctuationWarningAnalysis',
         components: {
@@ -516,9 +521,10 @@
                         },
                     },
                     grid: {
-                        top: 50,
-                        left: 90,
-                        bottom: 80,
+                        x: 50,
+                        y: 100,
+                        x2: 50,
+                        y2: 30,
                     },
                     toolbox: {
                         show: true,
@@ -1896,6 +1902,10 @@
                     })
                     exportComplexHeaderExcelFromJson(header, merges, resData, this.outputTrackingTableDate + '作业公司产量跟踪');
                 })
+            },
+            //下载导出文件 tableId tableName
+            doDownExcel(tableId, tableName) {
+                exportExcel(tableId, tableName);
             },
             //根据查询条件进行
             searchThing() {

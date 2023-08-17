@@ -15,34 +15,34 @@
         </div>
         <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="采出程度与含水率关系图"  style="height: 380px;" show-btn>
+                <pagePanel headerTitle="采出程度与含水率关系图"  style="height: 380px; margin-top:0;" show-btn>
                     <Echart :chart-data="relationship" style="height: 100%"></Echart>
                 </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="注采比"  style="height: 380px;" show-btn>
+                <pagePanel headerTitle="注采比"  style="height: 380px; margin-top:0;" show-btn>
                     <div class="search">
                         <span>合理注采比：</span>
                         <el-input-number v-model="lineStandOne" :controls="false" style="width: 180px;margin-right:15px;" @change="setFirstLine"></el-input-number>
                         <el-input-number v-model="lineStandTwo" :controls="false" style="width: 180px" @change="setSecondLine"></el-input-number>
                     </div>
-                    <Echart :chart-data="injectionProductionRatio" style="height:calc(100% - 45px)"></Echart>
+                    <Echart :chart-data="injectionProductionRatio" style="height: 100%"></Echart>
                 </pagePanel>
             </div>
         </div>
         <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="地层总压降"  style="height: 360px;" show-btn>
+                <pagePanel headerTitle="地层总压降"  style="height: 360px; margin-top:0;" show-btn>
                     <div class="search">
                         <span>合理地层压力：</span>
                         <el-input-number v-model="lineStandThree" :controls="false" style="width: 180px" @change="setThirdLine"></el-input-number>
                     </div>
-                    <Echart :chart-data="totalFormationPressureDrop" style="height:calc(100% - 45px);"></Echart>
+                    <Echart :chart-data="totalFormationPressureDrop" style="height: 100%;"></Echart>
                 </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="指标评价结果表"  style="height: 360px;" show-btn>
-                    <div class="search">
+                <pagePanel headerTitle="指标评价结果表"  style="height: 360px; margin-top:0;" show-btn>
+                    <!-- <div class="search">
                         <span>对标油田：</span>
                         <el-select v-model="fields" style="width:180px;height:30px;margin-right:15px;" disabled>
                             <el-option v-for="item in fieldsData" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
@@ -53,8 +53,11 @@
                         </el-select>
                         <el-button type="primary" style="min-width: 65px;height:30px;">搜索</el-button>
                         <el-button type="primary" style="min-width: 65px;height:30px;">查看</el-button>
+                    </div> -->
+                    <div style="display: flex; justify-content: flex-end;">
+                        <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '指标评价结果表')">下载</el-button>
                     </div>
-                    <el-table :data="tableData" highlight height="calc(100% - 45px)">
+                    <el-table id="table1" :data="tableData" highlight height="calc(100% - 55px)">
                         <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
                         <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
                         <el-table-column prop="lastPhaseValue" label="上阶段值" align="center"></el-table-column>
@@ -83,6 +86,8 @@
     import Echart from '@/components/tools/Echarts/index.vue';
     import { fetchOilFields, fetchFields } from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import { outputSpeed, outputDegree, outputDegreeTongChart, injectionProRate, generalPressure, indicatorEveluationResults } from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+    import {exportExcel} from '@/lib/exportExcel.js';
+
     export default {
         components: {
             Echart,
@@ -121,7 +126,7 @@
                 productionSpeed: {
                     grid:{
                         x: 120,
-                        y: 30,
+                        y: 50,
                         x2: 120,
                         y2: 70,
                     },
@@ -253,7 +258,7 @@
                         },
                     ],
                     grid:{
-                        top:30,
+                        top:50,
                         right:120,
                         bottom: 90,
                         left:120,
@@ -355,7 +360,7 @@
                         },
                     ],
                     grid:{
-                        top:30,
+                        top:50,
                         right:120,
                         bottom: 100,
                         left:120,
@@ -451,9 +456,9 @@
                 //注采比
                 injectionProductionRatio: {
                     grid:{
-                        top:10,
+                        top:50,
                         right:120,
-                        bottom: 80,
+                        bottom: 50,
                         left:120,
                     },
                     tooltip: {
@@ -564,9 +569,9 @@
                         },
                     ],
                     grid:{
-                        top:10,
+                        top:50,
                         right:120,
-                        bottom: 80,
+                        bottom: 60,
                         left:120,
                     },
                     tooltip: {
@@ -578,7 +583,7 @@
                     legend: {
                         data: ['合理地层压力', '压力保持水平'],
                         x:'center',
-                        bottom:30,
+                        bottom:0,
                         textStyle: {
                             color: '#8FA4CC'
                         }
@@ -926,7 +931,11 @@
                 this.relationship.toolbox.show = flag;
                 this.injectionProductionRatio.toolbox.show = flag;
                 this.totalFormationPressureDrop.toolbox.show = flag;
-            }
+            },
+            //下载导出文件 tableId tableName
+            doDownExcel(tableId, tableName) {
+                exportExcel(tableId, tableName);
+            },
         }
     };
 </script>
@@ -943,10 +952,13 @@
                 flex:1;
                 width:0;
                 .search {
-                    padding-left:20px;
-                    padding-top:10px;
-                    height:40px;
-                    margin-bottom:15px;
+                    // padding-left:20px;
+                    // padding-top:10px;
+                    // height:40px;
+                    // margin-bottom:15px;
+                    position: absolute;
+                    top: 53px;
+                    right: 111px;
                     ::v-deep .el-select{
                         .el-input__inner{
                            height:30px;

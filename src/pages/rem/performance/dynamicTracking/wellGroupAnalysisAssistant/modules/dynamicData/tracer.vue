@@ -125,7 +125,7 @@
             doDownLoad(){
                 if (this.imageFirst) downFile(this.imageFirst, fileName + '示踪剂结果');
                 if (this.imageSecond) downFile(this.imageSecond, fileName + '示踪剂报告');
-                // if (this.imageThird) downFile(this.imageThird, fileName + '示踪剂信息');
+                if (this.imageThird) downFile(this.imageThird, fileName + '示踪剂信息');
             }
         }
     };

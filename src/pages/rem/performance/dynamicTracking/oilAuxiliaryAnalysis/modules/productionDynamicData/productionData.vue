@@ -9,14 +9,14 @@
             </el-select>
         </div> 
         <div class="z-echarts" >
-            <info-window infoWidth="100%" :infoHeight="height+'px'" headerTitle="油井生产数据曲线图" isShowMaxBtn style="margin-top:0;">
+            <pagePanel headerTitle="油井生产数据曲线图" :style="{height:height+'px', marginTop:0,}" show-btn>
                 <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
-            </info-window>
+            </pagePanel>
         </div>   
         <div class="develop">
             <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
         </div>
-        <info-window infoWidth="100%" infoHeight="500px" headerTitle="单井动态分析" v-show="isDevelop">
+        <pagePanel headerTitle="单井动态分析" style="height: 500px;" v-show="isDevelop">
             <el-table
                 id="tableData" 
                 :data="tableData" :border="false" :row-style="{ height: '0px' }"
@@ -57,7 +57,7 @@
                 <el-table-column prop="closePlan" label="关停计划" width="180"></el-table-column>
                 <el-table-column prop="remark" label="备注" width="180"></el-table-column>
             </el-table>
-        </info-window>
+        </pagePanel>
     </div>
 </template>
 
