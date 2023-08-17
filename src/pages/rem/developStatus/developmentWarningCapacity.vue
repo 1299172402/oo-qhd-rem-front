@@ -275,7 +275,7 @@
                         <div class="g-row-flex-V" style="flex-wrap: wrap">
                             <div style="margin: 10px 20px 10px 0px">
                                 日期：
-                                <el-date-picker v-model="historyDateTimeSec" type="datetimerange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd">
+                                <el-date-picker v-model="historyDateTimeSec" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd">
                                 </el-date-picker>
                             </div>
                             <div style="margin: 10px 20px 10px 0px">

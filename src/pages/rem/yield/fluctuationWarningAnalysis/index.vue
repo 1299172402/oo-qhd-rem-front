@@ -148,7 +148,7 @@
                             </pagePanel>
                         </div>
                         <div class="row" style="margin-right:20px;">
-                            <pagePanel headerTitle="当日关键事件" style="height: 400px; margin-top: 0;" show-btn>
+                            <pagePanel :headerTitle="`当日关键事件 ${eventData[0] ? eventData[0].startDate : '' }`" style="height: 400px; margin-top: 0;" show-btn>
                                 <div class="row-container">
                                     <div style="display: flex; justify-content: flex-end;">
                                         <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '当日关键事件')">下载</el-button>
@@ -163,7 +163,7 @@
                     </div>
                     <div class="rowBox" v-if="isShowTable">
                         <div class="row" style="margin-right:20px;">
-                            <pagePanel headerTitle="当日关键事件" style="height: 400px; margin-top: 0;" show-btn>
+                            <pagePanel :headerTitle="`当日关键事件 ${reasonAnalysises[0] ? reasonAnalysises[0].startTime : '' }` style="height: 400px; margin-top: 0;" show-btn>
                                 <div class="row-container">
                                     <el-table class="z-table" highlight :data="reasonAnalysises" border :span-method="objectSpanMethod" style="width: 100%;align:center;" height="100%">
                                       <el-table-column prop="platformName" label="各平台产量下降情况" align="center" width="250"></el-table-column>
