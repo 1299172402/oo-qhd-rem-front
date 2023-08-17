@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
-export function getOnSiteWork({ actionEvent, assetCode, month, ogfId, pageNum, pageSize, wellNo } = {}) {
+export function getOnSiteWork({ ogfId, asseCode, wellId, measureTypeCode, yeartime, pageNum, pageSize } = {}) {
   return request({
-    url: `${baseUrl}/actionPlanManagement/onSiteWork?actionEvent=${ actionEvent || "" }&assetCode=${ assetCode || "" }&month=${ month || "" }&ogfId=${ ogfId || "" }&pageNum=${ pageNum || "" }&pageSize=${ pageSize || "" }&wellNo=${ wellNo || "" }`,
+    url: `${baseUrl}/actionPlanManagement/onSiteWork?ogfId=${ ogfId || "" }&asseCode=${ asseCode || "" }&wellId=${ wellId || "" }&measureTypeCode=${ measureTypeCode || "" }&pageNum=${ pageNum || "" }&pageSize=${ pageSize || "" }&yeartime=${ yeartime || "" }`,
     method: "get",
   });
 }
@@ -19,5 +19,11 @@ export function queryPlatformPob(data) {
         url: `/prm01/api/prm/rc/queryPlatformPob`,
         method: "post",
         data
+    });
+}
+export function onSiteWorkActionEvent() {
+    return request({
+        url: `${baseUrl}/actionPlanManagement/onSiteWorkActionEvent`,
+        method: "get",
     });
 }

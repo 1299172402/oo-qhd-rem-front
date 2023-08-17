@@ -46,9 +46,9 @@ export default {
         }
         this.getWarningInfo()
         //预警信息轮询查询
-        this.timmerWarning = setInterval(() => {
-            this.getWarningInfo()
-        }, 1000 * 10)
+        // this.timmerWarning = setInterval(() => {
+        //     this.getWarningInfo()
+        // }, 1000 * 10)
         this.getinfo()
     },
     methods: {
@@ -64,7 +64,8 @@ export default {
                         name: '智能配产器调控模型',
                         warningShowFlag: false,
                         url: `https://ipm.${this.baseUrl}/#/intelligentDispensing/intelligentSubMining?page=reservoirDisplay/linkage`
-                    }, '举升设备调控模型', '智能测试模型'],
+                    },{name:'举升设备调控模型', warningShowFlag: false,} ,
+                        {name:'智能测试模型',warningShowFlag: false,}],
                     //弹出框自定义样式
                     boxStyle: {
                         pWidth: 'width:11vw',
@@ -104,7 +105,10 @@ export default {
                         warningShowFlag: false,
                         alarmPageCode: 'MIPFSW',
                         url: `https://rem.${this.baseUrl}/#/intelligence1/optimization?page=reservoirDisplay/linkage`
-                    }, '产液结构优化'],
+                    },
+                        {
+                            name:'产液结构优化', warningShowFlag: false,
+                    }],
                     boxBottomContent: [['智能滚动配注模型'], ['流场调控模型']],
                     boxStyle: {
                         pWidth: 'width:11vw'
@@ -116,7 +120,7 @@ export default {
                     analysisUrl: `https://rem.${this.baseUrl}/#/intelligence1/optimization?page=reservoirDisplay/linkage`
                 },
                 {
-                    style: 'position:absolute;left: 43%;top: 56%;width:20%;height:40%;',
+                    style: 'position:absolute;left: 42%;top: 56%;width:18%;height:40%;',
                     boxText: '注采状况分析',
                     boxBottomText: [
                         {
@@ -128,7 +132,7 @@ export default {
                         {
                             name: '注采平衡分析',
                             warningShowFlag: false,
-                            alarmPageCode: 'TTOBAR',
+                            alarmPageCode: 'BTOBAR',
                             url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=1&page=reservoirDisplay/linkage`
                         },
                         {
@@ -152,7 +156,7 @@ export default {
                     warningShowFlag: false,
                 },
                 {
-                    style: 'position:absolute;left: 30%;top: 60%;width:20%;height:40%;',
+                    style: 'position:absolute;left: 30%;top: 60%;width:18%;height:40%;',
                     boxText: '剩余油分布',
                     boxBottomText: [{
                         name: '动态分析法/数模剩余油分析',
@@ -323,7 +327,6 @@ export default {
         filterchild(array1, array2) {
             return array1.filter(item => item.boxBottomText.some(val => array2.has(val.alarmPageCode)));
         },
-
         async matchAndOutput(array1, array2) {
             const set = new Set(array1.map(item => item.alarmPageCode));
             const result = array2.filter(item => set.has(item.alarmPageCode));
@@ -340,13 +343,14 @@ export default {
             this.currentLists.forEach((i, index) => {
                 i.warningShowFlag = false;
                 if(i.boxBottomText){
-                    i.boxBottomText.forEach((j)=>{
+                    i?.boxBottomText.forEach((j)=>{
                         j.warningShowFlag = false;
                     })
                 }
             });
             const data = {
                 authorizedPersonnel: this.$store.getters["user/name"],
+                // alarmTime:'2023-08-15'
                 alarmTime: new Date().format('YYYY-MM-dd')
             };
             try {
@@ -361,6 +365,7 @@ export default {
                     })
                 ]);
                 let isConditionMet = false;
+                // 获取含有标识的对象
                 const {result, filteredChild} = await this.matchAndOutput(res1.data.data, this.currentLists);
                 const index = result.map(item => this.findIndex(this.currentLists, item));
                 const childindex = filteredChild.map(item => this.findIndex(this.currentLists, item));
@@ -368,7 +373,13 @@ export default {
                     let a = this.currentLists[childindex[i]].boxBottomText
                     const {result: childResult} = await this.matchAndOutput(res1.data.data, a);
                     const number = childResult.map(item => this.findIndex(a, item));
-                    this.currentLists[childindex[i]].boxBottomText[number].warningShowFlag = true
+                    if(number.length>1){
+                        number.forEach((n,index)=>{
+                            this.currentLists[childindex[i]].boxBottomText[n].warningShowFlag = true
+                        })
+                    }else{
+                        this.currentLists[childindex[i]].boxBottomText[number[0]].warningShowFlag = true
+                    }
                     this.currentLists[childindex[i]].warningShowFlag = true
                     isConditionMet = true;
                 }
@@ -429,7 +440,19 @@ export default {
             })
             clearInterval(this.timmer)
         },
-        startTimer() {
+        closewin(val){
+         let log = this.currentLists.find((n,index)=>{
+              if(n==val){
+                  return index
+              }
+          })
+            console.log(log)
+        },
+        startTimer(url) {
+            if(url){
+                let index = this.findIndex(this.currentLists, url)
+                console.log(this.currentLists[this.findIndex(this.currentLists, url)])
+            }
             const result = this.checkWarningFlag(this.currentLists);
             if (result == true) {
                 this.arrowFun()

@@ -179,7 +179,12 @@
 
             <div style="flex:4; height: 118%; margin-right: 15px;">
                 <page-panel header-title="分层注采量" style="height: 100%;position: relative; " :show-btn="true">
-                    <button class="detailLinkBtn" @click="getDetail">详细</button>
+                    <el-button
+                        type="primary"
+                        class="buttonActive_primary detailLinkBtn"
+                        @click="getDetail">详细
+                    </el-button
+                    >
                     <div id="main" style="width: 100%; height: 100%"></div>
                 </page-panel>
             </div>
@@ -187,7 +192,12 @@
             <div style="width: 33%;height: 118%;display:flex;flex-direction: column;justify-content: space-between;">
                 <div style="height:calc(60% - 15px);margin-bottom: 15px;">
                     <page-panel header-title="单井井底流压" style="height: 100%;" :show-btn="true">
-                        <button class="detailLinkBtn" @click="detailed = true">详细</button>
+                        <el-button
+                            type="primary"
+                            class="buttonActive_primary detailLinkBtn"
+                            @click="detailed = true">详细
+                        </el-button
+                        >
                         <Echart
                             :chart-data="getResidueOilChart()"
                             height="100%"
@@ -831,16 +841,14 @@ export default {
 }
 .detailLinkBtn {
     position: absolute;
-    right: 60px;
+    right: 45px;
     top: 5px;
     width: 50px;
-    height: 20px;
-    background: linear-gradient(90deg, #0751b0, #50a6ec);
-    text-align: center;
-    font-size: smaller;
-    border: 0;
-    cursor: pointer;
-    color: #ffffff;
+    line-height: 25px;
+    padding: 0px !important;
+    height: 20px !important;
+    font-size: smaller !important;
+    text-align: center !important;
 }
 </style>
 

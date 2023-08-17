@@ -33,22 +33,22 @@
                         {{ scope.$index + 1 }}
                     </template>
                 </el-table-column>
-                <el-table-column prop="tjrq" width="100px" label="">
+                <el-table-column prop="evalTime" width="100px" label="">
                     <template slot="header">
                         <div style="color: #1ec5e6">推荐日期</div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="wellId" label="">
+                <el-table-column prop="wellName" label="">
                     <template slot="header">
                         <div style="color: #1ec5e6">井号</div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="showLabel" label="">
+                <el-table-column prop="evalEvidence" label="">
                     <template slot="header">
                         <div style="color: #1ec5e6">推荐措施</div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="showMvalue" label="">
+                <el-table-column prop="itemValue" label="">
                     <template slot="header">
                         <div style="color: #1ec5e6">
                             预计增油量 <br/>

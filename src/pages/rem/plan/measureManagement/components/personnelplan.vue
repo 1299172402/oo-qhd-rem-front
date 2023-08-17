@@ -1,7 +1,39 @@
 <!-- 现场作业计划 -->
 <template>
     <div class="app-container" style="height: 100%">
-        <pagePanel headerTitle="人员计划" style="height: 100%">
+        <headerSearch class="g-w100 g-h100" style="width: 100%;margin-top: 12px">
+            <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 18px">
+                <el-form-item label="油田：">
+                    <el-select v-model="queryParams.selectOilField" disabled>
+                        <el-option
+                            v-for="(item, index) in oilFields"
+                            :key="index"
+                            :label="item.ogfName"
+                            :value="item.ogfId"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="平台："  >
+                    <el-select  clearable v-model="queryParams.asseCode">
+                        <el-option v-for="item in platforms" :key="item.id" :label="item.platformName" :value="item.platformId">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="日期：">
+                    <el-date-picker v-model="queryParams.endTime" value-format="yyyy-MM-dd" type="date"
+                                    placeholder="年/月/日">
+                    </el-date-picker>
+                </el-form-item>
+                <el-button size="medium" type="primary" @click="retrieval" icon="el-icon-search"
+                           style="margin-left: 10px"
+                >搜索
+                </el-button
+                >
+                <el-button class="commonBtn" @click="reset" icon="el-icon-refresh"> 重置</el-button>
+                <el-button style="float: right" type="primary" @click="returnrouter">返回</el-button>
+            </el-form>
+        </headerSearch>
+        <pagePanel headerTitle="人员计划" style="height: calc(100% - 20px)">
             <pagePanel headerTitle="平台人数对比" style="height: calc(50% - 20px)">
                 <Echart :chart-data="histogram" height="100%"></Echart>
             </pagePanel>
@@ -93,13 +125,15 @@
 </template>
 
 <script>
-import {getOnSiteWork,queryPlatformPob} from '@/api/rem/actionplanmanagement';
+import {getOnSiteWork, queryPlatformPob} from '@/api/rem/actionplanmanagement';
 import Echart from "@/components/tools/Echarts/index.vue";
 import {LineChart} from "echarts/charts";
 import * as echarts from "echarts/core";
 import {GridComponent, TooltipComponent, LegendComponent} from "echarts/components";
 import {CanvasRenderer} from "echarts/renderers";
 import {queryCapacityComposition} from "@/api/rem/reservoirbillboards";
+import {queryListOfOilfieldQueryPlatformsDetail, queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
+
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 export default {
     components: {
@@ -111,9 +145,11 @@ export default {
             dialogVisible: false, //运行计算展示弹窗
             title: '', // 弹窗标题
             company: [],
-            tableData2:[],
+            tableData2: [],
             oilfield: [],
             deptSelect: [],
+            platforms:[],
+            oilFields:[],
             addform: {
                 noticeContent: '',
                 noticeType: '',
@@ -121,6 +157,12 @@ export default {
                 sendTime: '',
                 deptIds: [],
             },
+            queryParams:
+                {
+                    endTime: new Date().format("yyyy-MM-dd"),
+                    selectPlatform: '',
+                    selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F"
+                },
             // 表格数据
             noticeList: [],
             // 是否展开，默认全部展开
@@ -240,21 +282,33 @@ export default {
     created() {
         let data = {
             endTime: new Date().format('YYYY-MM-DD'),
-            platformId:""
+            platformId: ""
         }
         this.selectPlatformPob(data)
+        queryOperatorsCheckFieldListsDetail({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then(res=>{
+            this.oilFields = res.data.data
+        })
+        queryListOfOilfieldQueryPlatformsDetail({ogfId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{
+            this.platforms = res.data.data
+        })
         // this.choiceDepts(); // 获取组织机构
     },
     methods: {
-        show(data) {
+        retrieval(){
             let queryParams = {
-            platformId:data.selectPlatform,
-            endTime: data.endTime
+                platformId: this.queryParams.selectPlatform,
+                endTime: this.queryParams.endTime
             }
             this.selectPlatformPob(queryParams)
         },
+        returnrouter(){
+            this.$router.go(-1);
+        },
+        reset(){
+            
+        },
         getSummaries(param) {
-            const { columns, data } = param;
+            const {columns, data} = param;
             const sums = [];
             columns.forEach((column, index) => {
                 if (index === 0) {
@@ -279,26 +333,26 @@ export default {
             });
             return sums;
         },
-        selectPlatformPob(queryParams){
-            queryPlatformPob(queryParams).then((data)=>{
-                data=data.data
-                this.tableData2=data;
+        selectPlatformPob(queryParams) {
+            queryPlatformPob(queryParams).then((data) => {
+                data = data.data
+                this.tableData2 = data;
                 // this.total=data.total;
                 let list;
                 list = data;
-                let x=[];
-                let y=[];
-                let y1=[];
-                for(let i in list){
-                    if(list.hasOwnProperty(i)){
-                        if(list[i].prodPlatFormName==='渤海世纪'){
+                let x = [];
+                let y = [];
+                let y1 = [];
+                for (let i in list) {
+                    if (list.hasOwnProperty(i)) {
+                        if (list[i].prodPlatFormName === '渤海世纪') {
                             //折线图
                             x.push('FPSO');
                             y.push(list[i].mineStaff);//waterTimeRate
                             y1.push(list[i].littleSum);
-                        }else{
+                        } else {
                             //折线图
-                            x.push(list[i].prodPlatFormName.substr(7,4));
+                            x.push(list[i].prodPlatFormName.substr(7, 4));
                             y.push(list[i].mineStaff);//waterTimeRate
                             y1.push(list[i].littleSum);
                         }
@@ -306,9 +360,9 @@ export default {
                 }
 
                 //柱图
-                this.histogram.series[0].data=y;
-                this.histogram.series[1].data=y1;
-                this.histogram.xAxis[0].data=x;
+                this.histogram.series[0].data = y;
+                this.histogram.series[1].data = y1;
+                this.histogram.xAxis[0].data = x;
             })
         },
 
