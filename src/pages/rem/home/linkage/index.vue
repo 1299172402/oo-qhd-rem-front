@@ -36,20 +36,23 @@ export default {
         linkageBox
     },
     mounted() {
-        //转动弹出图片循环
-        // this.arrowFun()
+        this.getinfo()
         const env = import.meta.env.MODE;
         if (window.location.origin.includes('test')) {
             this.baseUrl = 'tjioms-test.tjltd.cnooc'
         } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
             this.baseUrl = 'tjioms-dev.tjltd.cnooc'
         }
+        this.arrowFun()
         this.getWarningInfo()
+        //转动弹出图片循环
+        this.timmer = setInterval(() => {
+         this.arrowFun()
+        }, 100 * 20)
         //预警信息轮询查询
-        // this.timmerWarning = setInterval(() => {
-        //     this.getWarningInfo()
-        // }, 1000 * 10)
-        this.getinfo()
+        this.timmerWarning = setInterval(() => {
+            this.getWarningInfo()
+        }, 1000 * 20)
     },
     methods: {
         getinfo() {
@@ -395,8 +398,9 @@ export default {
                         }
                     });
                 });
+                console.log(isConditionMet)
                 if (isConditionMet === false) {
-                    this.arrowFun();
+                    this.timmer = setInterval(this.arrowFun(),2000)
                 } else {
                     clearInterval(this.timmer);
                 }
@@ -407,18 +411,16 @@ export default {
             }
         },
         arrowFun() {
-            this.timmer = setInterval(() => {
-                if (this.loopNum != -1 && this.loopNum < 5) this.currentLists[this.loopImgNum[this.loopNum]].showFlag = true
-                if (this.loopNum != -1 && this.loopNum < 5) this.currentLists[this.loopImgNumClose[this.loopNum]].showFlag = false
-                this.loopNum++
-                for (let i = 0; i < 7; i++) {
-                    this.$el.querySelectorAll('img')[i].style.display = 'none'
-                }
-                this.$el.querySelectorAll('img')[this.loopNum].style.display = 'block'
-                if (this.loopNum == 6) {
-                    this.loopNum = -1
-                }
-            }, 2000)
+            if (this.loopNum != -1 && this.loopNum < 5) this.currentLists[this.loopImgNum[this.loopNum]].showFlag = true
+            if (this.loopNum != -1 && this.loopNum < 5) this.currentLists[this.loopImgNumClose[this.loopNum]].showFlag = false
+            this.loopNum++
+            for (let i = 0; i < 7; i++) {
+                this.$el.querySelectorAll('img')[i].style.display = 'none'
+            }
+            this.$el.querySelectorAll('img')[this.loopNum].style.display = 'block'
+            if (this.loopNum == 6) {
+                this.loopNum = -1
+            }
         },
         checkWarningFlag(array) {
             for (let i = 0; i < array.length; i++) {
@@ -440,24 +442,21 @@ export default {
             })
             clearInterval(this.timmer)
         },
-        closewin(val){
-         let log = this.currentLists.find((n,index)=>{
-              if(n==val){
-                  return index
-              }
-          })
-            console.log(log)
-        },
         startTimer(url) {
             if(url){
-                let index = this.findIndex(this.currentLists, url)
-                console.log(this.currentLists[this.findIndex(this.currentLists, url)])
-            }
-            const result = this.checkWarningFlag(this.currentLists);
-            if (result == true) {
-                this.arrowFun()
-            } else {
-                clearInterval(this.timmer)
+                const hasTrueValue = this.currentLists.some(item => {
+                    if (Array.isArray(item.boxBottomText)) {
+                        return item.boxBottomText.some(subItem => subItem.warningShowFlag === true);
+                    } else {
+                        return item.warningShowFlag === true;
+                    }
+                });
+                if (hasTrueValue == true) {
+                    clearInterval(this.timmer)
+                } else {
+                    this.timmer = setInterval(this.arrowFun(),2000)
+                    // this.timmer = setInterval( 2000);
+                }
             }
         }
     },
