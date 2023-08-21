@@ -426,7 +426,7 @@ export default {
             let option = {
                 legend: {
                     textStyle: {
-                        color: "#66ffff"
+                        color: "#42f2f2"
                     },
                     bottom: "bottom",
                 },

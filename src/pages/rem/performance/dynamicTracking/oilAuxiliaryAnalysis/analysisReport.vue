@@ -186,7 +186,7 @@
                             归因分析详情
                             </el-button>
                             <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)" 
-                            @click="$router.push({name:'planmessage',query:{platform,wellId,currentDate}})">措施推荐详情</el-button>
+                            @click="$router.push({name:'planmessage',query:{platform,wellId,currentDate,measureCode:selCode}})">措施推荐详情</el-button>
                         </div>
                         <div style="flex:1;min-height:600px;">
                             <pagePanel headerTitle="油井动态分析详情列表" style="margin-top:0;height:100%;">
@@ -399,9 +399,13 @@
                                                 <span 
                                                     :class="[item.code==selCode?'spActive':'']"
                                                     v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='地面调参'" 
-                                                    @click="selRadioIterm(item.code,'recommendedMeasuresOptions')">
+                                                    @click="selRadioIterm(item.code,'recommendedMeasuresOptions',item)">
                                                 {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span>
                                                 </span>
+                                            </div>
+                                            <div style="width: 250px;display: flex;justify-content: flex-end;margin-top: 40px;padding-right: 26px">
+                                                <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode== '0100111')"
+                                                           @click="$router.push({name:'planmessage',query:{platform,wellId,currentDate,page:'oilAnalysisReport',measureCode:selCode}})">措施推荐详情</el-button>
                                             </div>
                                         </div>
                                     </div>
@@ -493,8 +497,8 @@
                                             </div>
                                         </div>
                                         <div style="width: 250px;display: flex;justify-content: flex-end;margin-top: 30px;">
-                                            <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)"
-                                            @click="$router.push({name:'planmessage',query:{platform,wellId,currentDate,page:'oilAnalysisReport'}})">措施推荐详情</el-button>
+                                            <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode ||selCode== '0100112')"
+                                            @click="$router.push({name:'planmessage',query:{platform,wellId,currentDate,page:'oilAnalysisReport',measureCode:selCode}})">措施推荐详情</el-button>
                                         </div>
                                     </div>
                                 </div>
@@ -657,6 +661,10 @@
                                                     @click="selRadioIterm(item.code,'recommendedMeasuresOptions')">
                                                     {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span>
                                                     </span>
+                                                </div>
+                                                <div style="width: 250px;display: flex;justify-content: flex-end;margin-top: 45px;padding-right: 28px">
+                                                    <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='0100102'||selCode=='0100103'||selCode=='0100106'||selCode=='0100114')"
+                                                               @click="$router.push({name:'planmessage',query:{platform,wellId,currentDate,page:'oilAnalysisReport',measureCode:selCode}})">措施推荐详情</el-button>
                                                 </div>
                                                 <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;">
                                                     <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='0050102'||selCode=='0050101' || selCode=='0060101' || selCode=='0060102'|| selCode=='0070101'|| selCode=='0070102'|| selCode=='0040101')"
@@ -1628,8 +1636,8 @@
                 });
             },
             //选中项目
-            selRadioIterm(val, tag) {
-                console.log(val,this.selCode,888)
+            selRadioIterm(val, tag,item) {
+                console.log(item)
                 this.scrollFlag = false;
                 let myData = []; //我的数据
                 let myWellCount = {}; //计算各项目的井数

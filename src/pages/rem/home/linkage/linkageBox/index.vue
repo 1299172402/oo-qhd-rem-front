@@ -105,6 +105,19 @@ export default {
             })
         },
         linkTopage: function (url,currentList) {
+            if(currentList.alarmPageCode =='OSTOPF'){
+                const data = {
+                    authorizedPersonnel:this.$store.getters["user/name"],
+                    alarmTime:new Date().format('YYYY-MM-dd'),
+                    alarmPageCode:[OSTOPF]
+                }
+                addLinkageAlarmInfo(data).then(()=>{
+                    this.warningShowFlag = false
+                }).then(()=>{
+                    if (!url) return
+                    window.open('https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?page=reservoirDisplay/linkage', '_parent');
+                })
+            }
             let linkurl = currentList.boxBottomText.find((n)=>{
                 if(n.warningShowFlag == true){
                     return n
@@ -115,6 +128,7 @@ export default {
                 alarmTime:new Date().format('YYYY-MM-dd'),
                 alarmPageCode:[linkurl?.alarmPageCode]
             }
+            console.log(data)
             // addLinkageAlarmInfo(data).then(()=>{
             //     this.warningShowFlag = false
             // }).then(()=>{
@@ -130,7 +144,9 @@ export default {
                     alarmPageCode.push(m.alarmPageCode)
                 }
             })
-            console.log(currentList)
+            if(currentList.alarmPageCode){
+                alarmPageCode.push(currentList.alarmPageCode)
+            }
             const data = {
                 authorizedPersonnel:this.$store.getters["user/name"],
                 alarmTime:new Date().format('YYYY-MM-dd'),
@@ -140,7 +156,7 @@ export default {
             this.true = false
             this.$emit('startTimer',currentList)
             addLinkageAlarmInfo(data).then(()=>{
-            }).then(()=>{
+            }).then(()=>{    
             })
         },
         mouseenter(){
