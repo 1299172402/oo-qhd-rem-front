@@ -1,7 +1,58 @@
 <!-- 现场作业计划 -->
 <template>
-    <div class="app-container" style="height: calc(100% - 1000px)">
-        <pagePanel headerTitle="现场作业计划表" style="height: 100%">
+    <div class="app-container" style="height: 100%">
+        <headerSearch class="g-w100 g-h100"  style="width: 100%;margin-top: 12px;padding: 5px">
+            <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 18px;height:auto">
+                <el-form-item label="油田：">
+                    <el-select v-model="queryParams.selectOilField" disabled>
+                        <el-option
+                            v-for="(item, index) in oilFields"
+                            :key="index"
+                            :label="item.ogfName"
+                            :value="item.ogfId"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="平台："  >
+                    <el-select @change="onPlatfromChange" clearable v-model="queryParams.asseCode">
+                        <el-option v-for="item in platforms" :key="item.id" :label="item.platformName" :value="item.platformId">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="井号：">
+                    <el-select clearable v-model="queryParams.wellId" >
+                        <el-option v-for="item in wells" :key="item.wellId" :label="item.wellName" :value="item.wellId">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="措施事件：">
+                    <el-select
+                        v-model="queryParams.measureTypeCode"
+                        style="width: 150px"
+                        placeholder="请选择"
+                        filterable
+                        clearable
+                    >
+                        <el-option
+                            v-for="item in measures"
+                            :key="item.currentJobContent"
+                            :label="item.currentJobContent"
+                            :value="item.measureTypeCode"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="日期：">
+                    <el-date-picker style="width: 150px" v-model="queryParams.yeartime" value-format="yyyy" type="year" placeholder="年">
+                    </el-date-picker>
+                </el-form-item>
+                <el-button size="medium" type="primary" @click="retrieval" icon="el-icon-search" style="margin-left: 10px"
+                >搜索</el-button
+                >
+                <el-button class="commonBtn" @click="reset" icon="el-icon-refresh"> 重置</el-button>
+                <el-button style="float: right" type="primary"  @click="returnrouter">返回</el-button>
+            </el-form>
+        </headerSearch>
+        <pagePanel headerTitle="现场作业计划表" style="height: calc(100% - 50px)">
             <el-table
                 :data="noticeList"
                 highlight-current-row
@@ -10,97 +61,131 @@
                 header-cell-class-name="table_header"
                 :cell-style="{ 'text-align': 'center', padding: '2px' }"
                 style="width: 100%"
-                height="100%"
+                height="calc(100% - 50px)"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column label="*日期" prop="date" align="center"></el-table-column>
+                <el-table-column label="*日期" prop="theDate" align="center"></el-table-column>
                 <el-table-column label="*生产单元" prop="prodectionUnit" align="center"></el-table-column>
                 <el-table-column label="修井机状态" prop="workvoerRigStatus" align="center"></el-table-column>
-                <el-table-column label="当前作业内容" prop="CurrentJobContent" align="center"></el-table-column>
-                <el-table-column label="作业井号" prop="JobWellNo" align="center"></el-table-column>
-                <el-table-column label="是否动管柱" prop="moveString" align="center"></el-table-column>
-                <el-table-column label="开始时间" prop="startTime" align="center"></el-table-column>
-                <el-table-column label="预计结束时间" prop="predictedEndTime" align="center"></el-table-column>
-                <el-table-column label="当日作业内容简述" prop="oprgDesc" align="center"></el-table-column>
-                <el-table-column label="下步作业内容" prop="nextJobContent" align="center"></el-table-column>
-                <el-table-column label="作业井号" prop="nextJobWellNo" align="center"></el-table-column>
-                <el-table-column label="是否动管柱" prop="moveString01" align="center"></el-table-column>
-                <el-table-column label="预计作业时间" prop="predictedJobTime" align="center"></el-table-column>
-                <el-table-column label="备注" prop="note" align="center"></el-table-column>
+                <el-table-column label="当前作业内容" prop="currentJobContent" align="center"></el-table-column>
+                <el-table-column label="作业井号" min-width="100px" prop="jobWellNo" align="center"></el-table-column>
+                <el-table-column label="是否动管柱" prop="isMovingPipePresent" align="center"></el-table-column>
+                <el-table-column label="开始时间" min-width="100px" prop="startDate" align="center"></el-table-column>
+                <el-table-column label="预计结束时间" min-width="100px" prop="endDate" align="center"></el-table-column>
+                <el-table-column label="当日作业内容简述" min-width="100px" show-overflow-tooltip prop="operationInfo" align="center"></el-table-column>
+                <el-table-column label="下步作业内容" min-width="100px" prop="nextJobContent" align="center"></el-table-column>
+                <el-table-column label="作业井号" min-width="100px" prop="nextJobWellNo" align="center"></el-table-column>
+                <el-table-column label="是否动管柱" prop="isMovingPipePresent" align="center"></el-table-column>
+                <el-table-column label="预计作业时间" prop="planStartDate" align="center"></el-table-column>
+                <el-table-column label="备注" prop="remark" align="center"></el-table-column>
             </el-table>
+            <pagination
+                :total="total"
+                v-show="total > 0"
+                @pagination="changepage"
+                style="position: absolute;bottom: 0;right:0"
+                :page.sync="pageNum"
+                :limit.sync="pageSize"
+            />
         </pagePanel>
     </div>
 </template>
 
 <script>
-import {getOnSiteWork} from '@/api/rem/actionplanmanagement';
+import {getOnSiteWork,onSiteWorkActionEvent} from '@/api/rem/actionplanmanagement';
+import {
+    queryListOfOilfieldQueryPlatformsDetail,
+    queryOperatorsCheckFieldListsDetail,
+    queryPlatformQueryWellListDetail
+} from "@/api/basic/master";
 
 export default {
     data() {
         return {
-            open: false, // 新增弹框
-            dialogVisible: false, //运行计算展示弹窗
-            title: '', // 弹窗标题
-            company: [],
             oilfield: [],
             deptSelect: [],
-            addform: {
-                noticeContent: '',
-                noticeType: '',
-                radio: '',
-                sendTime: '',
-                deptIds: [],
-            },
+            measures:[],
+            oilFields:[],
+            platforms:[],
+            wells:[],
             // 表格数据
             noticeList: [],
-            // 是否展开，默认全部展开
-            isExpandAll: true,
-            deptList: [],
+            queryParams:{
+                measureTypeCode:'',
+                asseCode:'',
+                wellId:'',
+                selectOilField:'3FC9A818F5BC43B88270DB80BBB3018F',
+                yeartime:new Date().format('YYYY')
+            },
             // 总条数
             total: 0,
+            pageNum: 1,
+            pageSize: 10,
             // 查询参数
-            queryParams: {
-                actionEvent: '',
-                assetCode: '',
-                month: this.$route.query.currentDate.substr(0,7),
-                ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
-                wellNo: '',
-                pageNum: 1,
-                pageSize: 10,
-            },
         };
     },
     created() {
-        this.getList();
-        // this.choiceDepts(); // 获取组织机构
+        this.retrieval();
+        queryOperatorsCheckFieldListsDetail({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then(res=>{
+            this.oilFields = res.data.data
+        })
+        onSiteWorkActionEvent().then((res)=>{
+            this.measures =res.data.data
+         })
+        queryListOfOilfieldQueryPlatformsDetail({ogfId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{
+            this.platforms = res.data.data
+        })
+        queryPlatformQueryWellListDetail({ogfId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then((res) => {
+            this.wells = res.data.data
+        })
     },
     methods: {
         show(data) {
-      
-            // this.queryParams.ogfId = data.selectOilField
-            // this.queryParams.selectPlatform = data.assetCode
-            // this.queryParams.month= data.endTime
-            // getOnSiteWork(this.queryParams).then((res) => {
-            //     if (res.data.code === 200) {
-            //         this.noticeList = res.data.data.rows;
-            //     } else {
-            //         this.$message.warning('系统错误请重新尝试或联系运维人员！');
-            //     }
-            // });
+        this.getList()
         },
-     
-        getList() {
-            this.queryParams.assetCode = this.$route.query.platform
-            if(this.queryParams.assetCode == '3FC9A818F5BC43B88270DB80BBB3018F'){
-                this.queryParams.assetCode =''
+        //平台下拉-change
+        onPlatfromChange(val) {
+            //根据平台获得井
+            queryPlatformQueryWellListDetail({platformId:val}).then((res) => {
+                this.wells = res.data.data
+                this.queryParams.wellId =  this.wells[0].wellId
+            })
+        },
+        returnrouter(){
+            this.$router.go(-1);
+        },
+        retrieval(){
+            let data = {
+                ogfId:this.queryParams.ogfId,
+                asseCode:this.queryParams.asseCode,
+                wellId:this.queryParams.wellId,
+                measureTypeCode:this.queryParams.measureTypeCode,
+                yeartime:this.queryParams.yeartime,
+                pageNum:this.pageNum,
+                pageSize:this.pageSize
             }
-            getOnSiteWork(this.queryParams).then((res) => {
+            getOnSiteWork(data).then((res) => {
                 if (res.data.code === 200) {
                     this.noticeList = res.data.data.rows;
+                    this.total = res.data.data.total
                 } else {
                     this.$message.warning('系统错误请重新尝试或联系运维人员！');
                 }
             });
+        },  
+        
+        reset(){
+            queryListOfOilfieldQueryPlatformsDetail({ogfId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{
+                this.platforms = res.data.data
+            })
+            queryPlatformQueryWellListDetail({ogfId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then((res) => {
+                this.wells = res.data.data
+            })
+            this.queryParams.asseCode=''
+            this.queryParams.wellId=''
+        },
+        changepage(){
+            this.retrieval()
         },
        
     },

@@ -43,22 +43,19 @@
                 </headerSearch>
                 <page-panel header-title="密度信息维护" style="flex:1;overflow: hidden" :show-btn="true">
                     <el-row>
-                        <el-col :span="23">
+                        
                             <el-button icon="el-icon-edit-outline" size="mini" @click="redact" type="primary">编辑
                             </el-button>
                             <el-button icon="el-icon-document-checked" size="mini" @click="save" type="primary">保存
                             </el-button>
-                            <el-button icon="el-icon-s-platform" size="mini" @click="dialogVisible = true" type="primary"
+                            <el-button icon="el-icon-s-platform" size="mini" @click="dialogVisible = true"
+                                       type="primary"
                             >运行计算
                             </el-button>
-                        </el-col>
-                            <el-col :span="1">
-                                <el-button  type="primary" icon="el-icon-download" @click="doDownExcel()"
-                                >下载
-                                </el-button
-                                >
-                            </el-col>
-                       
+                            <el-button style="float: right" type="primary" icon="el-icon-download" @click="doDownExcel()"
+                            >下载
+                            </el-button
+                            >
                     </el-row>
                     <el-table
                         :data="noticeList"
@@ -238,6 +235,7 @@ import {queryDensityInfo, save} from "@/api/rem/density.js";
 import {queryOperatingCompanyDetail, queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
 import treeMultipleSelection from "@/components/intelligentOilfield/tree_multiple_selection/index.vue";
 import {exportExcel} from "@/lib/exportExcel";
+
 export default {
     name: "density",
     dicts: ["sys_normal_disable"],

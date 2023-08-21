@@ -257,7 +257,8 @@
                                     <el-table-column prop="recommendedMeasures" label="措施初选" align="center">
                                         <el-table-column prop="measuresName" label="推荐措施" align="center">
                                             <template slot-scope="scope">
-                                                <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel ? scope.row.cscx.showLabel  :'-' }}</span>
+                                                <!-- <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel ? scope.row.cscx.showLabel  :'-' }}</span> -->
+                                                <span v-if="scope.row.cscx != null">{{ preliminarySelectioMeasures(scope.row.wellId,1) }}</span>
                                             </template>
                                         </el-table-column>
                                         <el-table-column prop="theDate" align="center"  min-width="130" label-class-name="twoRowHeader">
@@ -269,7 +270,8 @@
                                                 </div>
                                             </template>
                                             <template slot-scope="scope">
-                                                <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq ? scope.row.cscx.tjrq :'-'}}</span>
+                                                <!-- <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq ? scope.row.cscx.tjrq :'-'}}</span> -->
+                                                <span v-if="scope.row.cscx != null">{{ preliminarySelectioMeasures(scope.row.wellId,2) }}</span>
                                             </template>
                                         </el-table-column>
                                         <el-table-column label="操作" align="center">

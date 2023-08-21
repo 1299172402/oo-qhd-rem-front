@@ -110,9 +110,7 @@ export default {
                 { x: 6, y: 70, w: 6, h: 10, i: "16", name: "含水上升", show: true },
                 { x: 0, y: 80, w: 6, h: 10, i: "15", name: "采出程度与含水率关系图", show: true },
                 { x: 6, y: 80, w: 6, h: 10, i: "14", name: "采油速度", show: true },
-               
                 
-               
             ]
         };
     },
