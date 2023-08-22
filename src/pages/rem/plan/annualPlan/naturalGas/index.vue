@@ -304,8 +304,7 @@
             },
             //保留两位小数
             toPrecise2(row, column, cellValue, index) {
-                if (cellValue) {
-                    if (
+                if (
                     (row[column.property] || parseFloat(row[column.property]) === 0) &&
                     typeof parseFloat(row[column.property]) === "number"
                 ) {
