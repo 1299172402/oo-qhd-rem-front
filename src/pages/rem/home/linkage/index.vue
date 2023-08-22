@@ -43,16 +43,17 @@ export default {
         } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
             this.baseUrl = 'tjioms-dev.tjltd.cnooc'
         }
-        this.arrowFun()
         this.getWarningInfo()
-        //转动弹出图片循环
-        this.timmer = setInterval(() => {
-         this.arrowFun()
-        }, 100 * 20)
+    
         //预警信息轮询查询
         this.timmerWarning = setInterval(() => {
             this.getWarningInfo()
-        }, 1000 * 20)
+        }, 1000 * 30)
+        this.arrowFun()
+        //转动弹出图片循环
+        this.timmer = setInterval(() => {
+            this.arrowFun()
+        }, 100 * 20)
     },
     methods: {
         getinfo() {
@@ -107,7 +108,7 @@ export default {
                         name: '分层注水优化',
                         warningShowFlag: false,
                         alarmPageCode: 'MIPFSW',
-                        url: `https://rem.${this.baseUrl}/#/intelligence1/optimization?page=reservoirDisplay/linkage`
+                        url: `https://rem.${this.baseUrl}/#/injection/optimization?page=reservoirDisplay/linkage`
                     },
                         {
                             name:'产液结构优化', warningShowFlag: false,
@@ -120,7 +121,7 @@ export default {
                     showFlag: false,
                     typeIdList: [],
                     warningShowFlag: false,
-                    analysisUrl: `https://rem.${this.baseUrl}/#/intelligence1/optimization?page=reservoirDisplay/linkage`
+                    analysisUrl: `https://rem.${this.baseUrl}/#/injection/optimization?page=reservoirDisplay/linkage`
                 },
                 {
                     style: 'position:absolute;left: 42%;top: 56%;width:18%;height:40%;',
@@ -164,7 +165,7 @@ export default {
                     boxBottomText: [{
                         name: '动态分析法/数模剩余油分析',
                         warningShowFlag: false,
-                        url: `https://rem.${this.baseUrl}/#/intelligence1/optimization?link=rem&page=reservoirDisplay/linkage`
+                        url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem&page=reservoirDisplay/linkage`
                     }],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
@@ -247,7 +248,7 @@ export default {
                         url: `https://ipm.${this.baseUrl}/#/waterflood/merge?page=reservoirDisplay/linkage`
                     }, {
                         name: '配注微调策略',
-                        url: `https://rem.${this.baseUrl}/#/intelligence1/optimization?link=rem&page=reservoirDisplay/linkage`
+                        url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem&page=reservoirDisplay/linkage`
                     }],
                     boxBottomContent: [['智能分注调控策略优化模型', '智能分注调控策略优化模型'], ['配注方案分析评估模型']],
                     boxStyle: {
@@ -369,8 +370,10 @@ export default {
                 let isConditionMet = false;
                 // 获取含有标识的对象
                 const {result, filteredChild} = await this.matchAndOutput(res1.data.data, this.currentLists);
+                // 获取在数组的下标
                 const index = result.map(item => this.findIndex(this.currentLists, item));
                 const childindex = filteredChild.map(item => this.findIndex(this.currentLists, item));
+                // 匹配数组中的标识设置为true
                 for (let i = 0; i < childindex.length; i++) {
                     let a = this.currentLists[childindex[i]].boxBottomText
                     const {result: childResult} = await this.matchAndOutput(res1.data.data, a);
@@ -397,6 +400,7 @@ export default {
                         }
                     });
                 });
+                // 如果无报警开启定时器，有报警关闭定时器和箭头图片
                 if (isConditionMet === false) {
                     this.timmer = setInterval(() => {
                         this.arrowFun()
@@ -411,7 +415,6 @@ export default {
                     }
                 }
             } catch (error) {
-                console.error(error)
                 // 错误处理
                 this.$message.error('系统错误请重新尝试或联系运维人员！');
             }
@@ -427,19 +430,6 @@ export default {
             if (this.loopNum == 6) {
                 this.loopNum = -1
             }
-        },
-        checkWarningFlag(array) {
-            for (let i = 0; i < array.length; i++) {
-                if (array[i]?.warningShowFlag === true) {
-                    return false;
-                }
-                for (let j = 0; j < array[i]?.boxBottomText.length; j++) {
-                    if (array[i]?.boxBottomText[j]?.warningShowFlag === true) {
-                        return false;
-                    }
-                }
-            }
-            return true;
         },
         stopTimer() {
             this.currentLists.forEach(item => {

@@ -6,7 +6,7 @@
           header-title="单井井底流压"
           :is-show-max-btn="true"
       >
-        <button class="detailLinkBtn" @click="linkroute('/intelligence1/indexHome')">详细</button>
+        <button class="detailLinkBtn" @click="linkroute('/injection/indexHome')">详细</button>
 <!--        <el-row :gutter="20" style="margin-bottom: 10px">-->
 <!--          <el-col :span="12">-->
 <!--            <div class="grid-content bg-purple">-->

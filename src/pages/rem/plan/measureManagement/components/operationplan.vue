@@ -160,7 +160,7 @@ export default {
                 asseCode:this.queryParams.asseCode,
                 wellId:this.queryParams.wellId,
                 measureTypeCode:this.queryParams.measureTypeCode,
-                yeartime:this.queryParams.yeartime,
+                yearTime:this.queryParams.yeartime,
                 pageNum:this.pageNum,
                 pageSize:this.pageSize
             }
@@ -183,6 +183,8 @@ export default {
             })
             this.queryParams.asseCode=''
             this.queryParams.wellId=''
+            this.queryParams.measureTypeCode = ''
+            this.retrieval()
         },
         changepage(){
             this.retrieval()

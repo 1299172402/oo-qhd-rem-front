@@ -221,10 +221,15 @@
                 </div>
                 <div style="height:40%">
                     <page-panel header-title="超欠注情况统计" style="height: 100%;" :show-btn="true">
+                        <el-button  type="primary" style="float: right;margin-top: -15px" icon="el-icon-download" @click="doDownExcel()"
+                        >下载
+                        </el-button
+                        >
                         <el-table
                             :data="tableData"
-                            height="100%"
+                            height="calc(100% - 20px)"
                             style="width: 100%"
+                            id="tabledow"
                             :header-cell-style="headerColor"
                         >
                             <el-table-column prop="date" label="序号" align="center" width="50">
@@ -271,7 +276,7 @@ import {
     getResidueOilCondotion
 } from "@/api/rem/r-intelligentIPA.js";
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
-
+import { exportExcel } from '@/lib/exportExcel.js';
 export default {
     name:'indexHome',
     components: {
@@ -317,6 +322,9 @@ export default {
     methods: {
         returnBack(){
             this.$router.go(-1)
+        },
+        doDownExcel(){
+            exportExcel('#tabledow', '超欠注情况统计');
         },
         renderheader(h, {column, $index}) {
             return h('span', {}, [
