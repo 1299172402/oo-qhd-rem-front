@@ -53,7 +53,7 @@ export default {
         //转动弹出图片循环
         this.timmer = setInterval(() => {
             this.arrowFun()
-        }, 100 * 20)
+        }, 100 * 50)
     },
     methods: {
         getinfo() {
@@ -404,7 +404,7 @@ export default {
                 if (isConditionMet === false) {
                     this.timmer = setInterval(() => {
                         this.arrowFun()
-                    }, 100 * 20)
+                    }, 100 * 50)
                 } else {
                     clearInterval(this.timmer);
                     this.currentLists.forEach(item => {
@@ -455,7 +455,7 @@ export default {
                     clearInterval(this.timmer)
                     this.timmer = setInterval(() => {
                         this.arrowFun()
-                    }, 2000)
+                    }, 5000)
                 }
         }
     },

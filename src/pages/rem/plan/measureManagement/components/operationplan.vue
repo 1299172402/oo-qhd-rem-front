@@ -67,12 +67,12 @@
                 <el-table-column label="*日期" prop="theDate" align="center"></el-table-column>
                 <el-table-column label="*生产单元" prop="prodectionUnit" align="center"></el-table-column>
                 <el-table-column label="修井机状态" prop="workvoerRigStatus" align="center"></el-table-column>
-                <el-table-column label="当前作业内容" prop="currentJobContent" align="center"></el-table-column>
+                <el-table-column label="当前作业内容" min-width="90px" prop="currentJobContent" align="center"></el-table-column>
                 <el-table-column label="作业井号" min-width="100px" prop="jobWellNo" align="center"></el-table-column>
                 <el-table-column label="是否动管柱" prop="isMovingPipePresent" align="center"></el-table-column>
                 <el-table-column label="开始时间" min-width="100px" prop="startDate" align="center"></el-table-column>
                 <el-table-column label="预计结束时间" min-width="100px" prop="endDate" align="center"></el-table-column>
-                <el-table-column label="当日作业内容简述" min-width="100px" show-overflow-tooltip prop="operationInfo" align="center"></el-table-column>
+                <el-table-column label="当日作业内容简述"  min-width="110px" show-overflow-tooltip prop="operationInfo" align="center"></el-table-column>
                 <el-table-column label="下步作业内容" min-width="100px" prop="nextJobContent" align="center"></el-table-column>
                 <el-table-column label="作业井号" min-width="100px" prop="nextJobWellNo" align="center"></el-table-column>
                 <el-table-column label="是否动管柱" prop="isMovingPipePresent" align="center"></el-table-column>
