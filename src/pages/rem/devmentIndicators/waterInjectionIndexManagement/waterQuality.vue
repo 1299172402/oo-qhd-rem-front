@@ -60,9 +60,9 @@
                         <el-table-column prop="qualityFb" :label="`铁细菌`" align="center" min-width="70"></el-table-column>
                         <el-table-column prop="qualityCorrosionRate" :label="`腐蚀率`" align="center" min-width="70"></el-table-column>
                     </el-table-column>
-                    <el-table-column prop="wellQualityRate" :label="`水质\n达标率\n(%)`" align="center" show-overflow-tooltip></el-table-column>
-                    <el-table-column prop="wellQualityNumber" :label="`水质达标率\n考核指标\n(%)`" align="center" min-width="100"></el-table-column>
-                    <el-table-column prop="wellPlanNumber" :label="`水质达标率\n奋斗指标\n(%)`" align="center" min-width="100"></el-table-column>
+                    <el-table-column prop="wellQualityRate" :label="`水质\n达标率\n(%)`" align="center" show-overflow-tooltip :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="wellQualityNumber" :label="`水质达标率\n考核指标\n(%)`" align="center" min-width="100" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="wellPlanNumber" :label="`水质达标率\n奋斗指标\n(%)`" align="center" min-width="100" :formatter="toPrecise2"></el-table-column>
                 </el-table>
             </pagePanel>
             <div style="padding-bottom:20px;">
@@ -72,13 +72,13 @@
                     </div>
                     <el-table id="zsszkzzb" :data="tableData2" highlight height="calc(100% - 55px)">
                         <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
-                        <el-table-column prop="oilContent" :label="`含油量\n(mg/l)`" align="center"></el-table-column>
-                        <el-table-column prop="totalSs" :label="`悬浮物\n(mg/l)`" align="center"></el-table-column>
-                        <el-table-column prop="medianSize" :label="`粒径中值\n(μm)`" align="center"></el-table-column>
-                        <el-table-column prop="srb" :label="`SRB\n(个/ml)`" align="center"></el-table-column>
-                        <el-table-column prop="tgb" :label="`TGB\n(个/ml)`" align="center"></el-table-column>
-                        <el-table-column prop="fb" :label="`铁细菌\n(个/ml)`" align="center"></el-table-column>
-                        <el-table-column prop="corrosionRate" :label="`腐蚀率\n(mm/a)`" align="center"></el-table-column>
+                        <el-table-column prop="oilContent" :label="`含油量\n(mg/l)`" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="totalSs" :label="`悬浮物\n(mg/l)`" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="medianSize" :label="`粒径中值\n(μm)`" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="srb" :label="`SRB\n(个/ml)`" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="tgb" :label="`TGB\n(个/ml)`" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="fb" :label="`铁细菌\n(个/ml)`" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="corrosionRate" :label="`腐蚀率\n(mm/a)`" align="center" :formatter="toPrecise2"></el-table-column>
                     </el-table>
                 </pagePanel>
             </div>
@@ -407,6 +407,19 @@
             //表格id表格名称
             doDownExcel(tableId, tableName) {
                 exportExcel(tableId, tableName);
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         },
     };

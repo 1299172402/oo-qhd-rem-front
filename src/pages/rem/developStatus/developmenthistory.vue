@@ -43,8 +43,8 @@
                         <el-table-column prop="interval" :label="`阶段历程时间\n (天)`" align="center" width="160px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="pwellsTotal" :label="`阶段末油井总井数\n (口)`" align="center" width="180px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="pwellsOpen" :label="`阶段末油井开井数\n (口)`" align="center" width="190px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="liquidDaily" :label="`阶段末日产液\n (m³/d)`" align="center" width="180px" show-overflow-tooltip :formatter="toPrecise3"></el-table-column>
-                        <el-table-column prop="oilDaily" :label="`阶段末日产油量\n (m³/d)`" align="center" width="190px" show-overflow-tooltip :formatter="toPrecise3"></el-table-column>
+                        <el-table-column prop="liquidDaily" :label="`阶段末日产液\n (m³/d)`" align="center" width="180px" show-overflow-tooltip :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="oilDaily" :label="`阶段末日产油量\n (m³/d)`" align="center" width="190px" show-overflow-tooltip :formatter="toPrecise2"></el-table-column>
                         <el-table-column prop="waterCut" :label="`阶段末综合含水\n (%)`" align="center" width="170px" show-overflow-tooltip :formatter="toPrecise2"></el-table-column>
                         <el-table-column prop="injectionTotal" :label="`阶段末水井总井数\n (口)`" align="center" width="180px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="injectionOpen" :label="`阶段末水井开井数\n (口)`" align="center" width="190px" show-overflow-tooltip></el-table-column>
@@ -146,45 +146,45 @@
                         <el-table-column prop="proWellOpen" label="开井" align="center" show-overflow-tooltip min-width="120"></el-table-column>
                     </el-table-column>
                     <el-table-column :label="'月均日产水平' + (currentUnit == 'm' ? '（m³/d）' : '（t/d）')" align="center">
-                        <el-table-column prop="liquidDailySum" label="液量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-                        <el-table-column prop="oilDailySum" label="油量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+                        <el-table-column prop="liquidDailySum" label="液量" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="oilDailySum" label="油量" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                     <el-table-column :label="'平均单井日产' + (currentUnit == 'm' ? '（m³/d）' : '（t/d）')" align="center">
-                        <el-table-column prop="liquidDailyAvg" label="液量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-                        <el-table-column prop="oilDailyAvg" label="油量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+                        <el-table-column prop="liquidDailyAvg" label="液量" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="oilDailyAvg" label="油量" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                     <el-table-column label="注水井（口）" align="center">
                         <el-table-column prop="injectionWellCount" label="总井" align="center" show-overflow-tooltip min-width="120"></el-table-column>
                         <el-table-column prop="injectionWellOpen" label="开井" align="center" show-overflow-tooltip min-width="120"></el-table-column>
                     </el-table-column>
                     <el-table-column label="日注水（m³/d）" align="center">
-                        <el-table-column prop="injectionDailySum" label="合计" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-                        <el-table-column prop="injectionDailyAvg" label="平均单井" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+                        <el-table-column prop="injectionDailySum" label="合计" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="injectionDailyAvg" label="平均单井" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                     <el-table-column prop="compressiveWaterCut" label="综合含水(%)" align="center" show-overflow-tooltip></el-table-column>
-                    <el-table-column prop="cumOilProdYearly" :label="'截止当月年产油' + (currentUnit == 'm' ? '（m³）' : '（t）')" align="center" min-width="140" show-overflow-tooltip></el-table-column>
+                    <el-table-column prop="cumOilProdYearly" :label="'截止当月年产油' + (currentUnit == 'm' ? '（m³）' : '（t）')" align="center" min-width="140" show-overflow-tooltip :formatter="toPrecise2"></el-table-column>
                     <el-table-column label="注采比" align="center">
-                        <el-table-column prop="injectionProduceRateMonth" label="月" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-                        <el-table-column prop="injectionProduceRateSum" label="累计" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+                        <el-table-column prop="injectionProduceRateMonth" label="月" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="injectionProduceRateSum" label="累计" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                     <el-table-column label="采油速度（%）" align="center">
-                        <el-table-column prop="reservoirsProduceSpeed" label="地质储量" align="center"  show-overflow-tooltip min-width="120"></el-table-column>
-                        <el-table-column prop="reservoirsProduceSpeedAvaliable" label="可采储量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+                        <el-table-column prop="reservoirsProduceSpeed" label="地质储量" align="center"  show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="reservoirsProduceSpeedAvaliable" label="可采储量" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                     <el-table-column :label="'累计产量' + (currentUnit == 'm' ? '（×10⁴m³）' : '（×10⁴t）')" align="center">
-                        <el-table-column prop="oilSum" label="油量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-                        <el-table-column prop="waterSum" label="水量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+                        <el-table-column prop="oilSum" label="油量" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise4"></el-table-column>
+                        <el-table-column prop="waterSum" label="水量" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise4"></el-table-column>
                     </el-table-column>
                     <el-table-column label="采出程度（%）" align="center">
-                        <el-table-column prop="reservoirsProduceDegree" label="地质储量" align="center"  show-overflow-tooltip min-width="120"></el-table-column>
-                        <el-table-column prop="reservoirsProduceDegreeAvaliable" label="可采储量" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+                        <el-table-column prop="reservoirsProduceDegree" label="地质储量" align="center"  show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="reservoirsProduceDegreeAvaliable" label="可采储量" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                     <el-table-column label="递减率（%）" align="center">
-                        <el-table-column prop="natureDeclineRate" label="自然递减率" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-                        <el-table-column prop="compressveDeclineRate" label="综合递减率" align="center"  show-overflow-tooltip min-width="120"></el-table-column>
+                        <el-table-column prop="natureDeclineRate" label="自然递减率" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="compressveDeclineRate" label="综合递减率" align="center"  show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
-                    <el-table-column prop="waterContainRaiseRate" label="含水上升率" align="center" show-overflow-tooltip min-width="120"></el-table-column>
-                    <el-table-column prop="waterOilRateSum" label="累计水油比" align="center" show-overflow-tooltip min-width="120"></el-table-column>
+                    <el-table-column prop="waterContainRaiseRate" label="含水上升率" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="waterOilRateSum" label="累计水油比" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                 </el-table>
             </el-dialog>
             
@@ -1637,19 +1637,6 @@
                 ) {
                     return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
                     ? parseFloat(row[column.property]).toFixed(2)
-                    : "0";
-                } else {
-                    return row[column.property] ? row[column.property] : "-";
-                }
-            },
-             // 表格格式化方法 - 数值只保留三位小数
-             toPrecise3(row, column) {
-                if (
-                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
-                    typeof parseFloat(row[column.property]) === "number"
-                ) {
-                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
-                    ? parseFloat(row[column.property]).toFixed(3)
                     : "0";
                 } else {
                     return row[column.property] ? row[column.property] : "-";

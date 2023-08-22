@@ -18,8 +18,8 @@
                 height="calc(100% - 130px)" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column type="index" label="序号" :index="tableIndex"></el-table-column>
                 <el-table-column prop="prodDate" label="时间"> </el-table-column>
-                <el-table-column prop="oilprodReal" :label="searchForm.selectUnitOfProduction == 'm' ? '实际产量\n(m³)' : '实际产量\n(t)'" :formatter="toPrecise3"></el-table-column>
-                <el-table-column prop="oilprodPlan" :label="searchForm.selectUnitOfProduction == 'm' ? '计划产量\n(m³)' : '计划产量\n(t)'" :formatter="toPrecise3"></el-table-column>
+                <el-table-column prop="oilprodReal" :label="searchForm.selectUnitOfProduction == 'm' ? '实际产量\n(m³)' : '实际产量\n(t)'" :formatter="toPrecise2"></el-table-column>
+                <el-table-column prop="oilprodPlan" :label="searchForm.selectUnitOfProduction == 'm' ? '计划产量\n(m³)' : '计划产量\n(t)'" :formatter="toPrecise2"></el-table-column>
                 <!-- <el-table-column prop="oilprodRollForecast" :label="searchForm.selectUnitOfProduction == 'm' ? '滚动预测\n(10⁴m³)' : '滚动预测\n(10⁴t)'"></el-table-column> -->
             </el-table>
             <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination" />
@@ -267,13 +267,13 @@
                 });
             },
             //保留两位小数
-            toPrecise3(row, column, cellValue, index) {
+            toPrecise2(row, column, cellValue, index) {
                 if (
                     (row[column.property] || parseFloat(row[column.property]) === 0) &&
                     typeof parseFloat(row[column.property]) === "number"
                 ) {
                     return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
-                    ? parseFloat(row[column.property]).toFixed(3)
+                    ? parseFloat(row[column.property]).toFixed(2)
                     : "0";
                 } else {
                     return row[column.property] ? row[column.property] : "-";

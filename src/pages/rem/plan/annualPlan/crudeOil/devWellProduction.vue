@@ -53,13 +53,13 @@
           prop="oilprodReal"
           align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '实际月产油量\n(m³/d)' : '实际月产油量\n(t/d)'"
-          :formatter="toPrecise3"
+          :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           prop="oilprodPlan"
           align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '计划月产油量\n(m³/d)' : '计划月产油量\n(t/d)'"
-          :formatter="toPrecise3"
+          :formatter="toPrecise2"
         ></el-table-column>
         <!-- <el-table-column prop="oilprodRollForecast" align="center" label="滚动预测"></el-table-column> -->
       </el-table>
@@ -405,14 +405,14 @@
                     }
                 });
             },
-            //保留三位小数
-            toPrecise3(row, column, cellValue, index) {
+            //保留两位小数
+            toPrecise2(row, column, cellValue, index) {
                 if (
                     (row[column.property] || parseFloat(row[column.property]) === 0) &&
                     typeof parseFloat(row[column.property]) === "number"
                 ) {
                     return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
-                    ? parseFloat(row[column.property]).toFixed(3)
+                    ? parseFloat(row[column.property]).toFixed(2)
                     : "0";
                 } else {
                     return row[column.property] ? row[column.property] : "-";

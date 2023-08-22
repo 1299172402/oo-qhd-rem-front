@@ -74,16 +74,16 @@
                         <el-table-column prop="totalNumber" label="合计" align="center"></el-table-column>
                     </el-table-column>
                     <el-table-column :label="`动态监测完成率\n(%)`" align="center">
-                        <el-table-column prop="rateY" label="压力监测" align="center"></el-table-column>
-                        <el-table-column prop="rateC" label="产出剖面" align="center"></el-table-column>
-                        <el-table-column prop="rateX" label="吸水剖面" align="center"></el-table-column>
-                        <el-table-column prop="rateTotal" label="合计" align="center"></el-table-column>
+                        <el-table-column prop="rateC" label="产出剖面" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="rateY" label="压力监测" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="rateX" label="吸水剖面" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="rateTotal" label="合计" align="center" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                     <el-table-column :label="`动态监测完成率考核指标\n(%)`" align="center">
-                        <el-table-column prop="checkNumberY" label="压力监测" align="center"></el-table-column>
-                        <el-table-column prop="checkNumberC" label="产出剖面" align="center"></el-table-column>
-                        <el-table-column prop="checkNumberX" label="吸水剖面" align="center"></el-table-column>
-                        <el-table-column prop="checkNumberTotal" label="合计" align="center"></el-table-column>
+                        <el-table-column prop="checkNumberY" label="压力监测" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="checkNumberC" label="产出剖面" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="checkNumberX" label="吸水剖面" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="checkNumberTotal" label="合计" align="center" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                 </el-table>
             </pagePanel>
@@ -463,6 +463,19 @@
             //表格id 表格名称
             doDownExcel(tableId, tableName) {
                 exportExcel(tableId, tableName);
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         },
     };

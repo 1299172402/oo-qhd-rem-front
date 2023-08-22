@@ -183,7 +183,7 @@
         name:'productionOperationAnalysisReport',
         filters: {
             getFixNumberTwo(val) {
-                return val ? val.toFixed(4) : (val === 0 ? val : "N/A");
+                return val ? val.toFixed(2) : (val === 0 ? val : "N/A");
             }
         },
         data() {
@@ -352,16 +352,16 @@
             },
             // 表格格式化方法 - 数值只保留两位小数
             toPrecise2(row, column) {
-            if (
-                (row[column.property] || parseFloat(row[column.property]) === 0) &&
-                typeof parseFloat(row[column.property]) === "number"
-            ) {
-                return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
-                ? parseFloat(row[column.property]).toFixed(2)
-                : "0";
-            } else {
-                return row[column.property] ? row[column.property] : "-";
-            }
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
             // 表格格式化方法 - 数值只保留四位位小数
             toPrecise4(row, column) {

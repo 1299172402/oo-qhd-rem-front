@@ -15,17 +15,17 @@
                     <span>{{scope.row.interpDate | dateTimeFormat}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="midMD" label="油层中部斜深 (m)" width="120"></el-table-column>
-            <el-table-column prop="midTVD" label="油层中部垂深 (m)" width="120"></el-table-column>
-            <el-table-column prop="midTemperature" label="油层中部温度 (℃)" width="120"></el-table-column>
-            <el-table-column prop="midFlowPressure" label="油层中部流压 (MPa)" width="120"></el-table-column>
-            <el-table-column prop="midStaticPressure" label="油层中部静压 (MPa)" width="120"></el-table-column>
-            <el-table-column prop="baseLevelAltitude" label="基准面海拔 (m)" width="110"></el-table-column>
-            <el-table-column prop="baseLevelTemperature" label="基准面温度 (℃)" width="110"></el-table-column>
-            <el-table-column prop="baseStaticPressure" label="基准面静压 (MPa)" width="110"></el-table-column>
-            <el-table-column prop="baseFlowPressure" label="基准面流压 (MPa)" width="110"></el-table-column>
-            <el-table-column prop="reduceTemperature" label="折算温度梯度 (℃/m)" width="120"></el-table-column>
-            <el-table-column prop="reducePressure" label="折算压力梯度 (MPa/m)" width="120"></el-table-column>
+            <el-table-column prop="midMD" label="油层中部斜深 (m)" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="midTVD" label="油层中部垂深 (m)" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="midTemperature" label="油层中部温度 (℃)" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="midFlowPressure" label="油层中部流压 (MPa)" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="midStaticPressure" label="油层中部静压 (MPa)" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="baseLevelAltitude" label="基准面海拔 (m)" width="110" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="baseLevelTemperature" label="基准面温度 (℃)" width="110" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="baseStaticPressure" label="基准面静压 (MPa)" width="110" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="baseFlowPressure" label="基准面流压 (MPa)" width="110" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="reduceTemperature" label="折算温度梯度 (℃/m)" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="reducePressure" label="折算压力梯度 (MPa/m)" width="120" :formatter="toPrecise2"></el-table-column>
             <el-table-column prop="remark" label="备注"></el-table-column>
         </el-table>
     </page-panel>
@@ -82,6 +82,19 @@
                     fileName = this.wellName + fileName;
                 }
                 exportExcel('#tableData',fileName);
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         }
     }

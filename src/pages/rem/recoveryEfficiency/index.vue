@@ -63,7 +63,7 @@
                                     </div>
                                 </template>
                                 <template slot-scope="scoped">
-                                    <span>{{ scoped.row.geologyReservoirs!=null ? scoped.row.geologyReservoirs :'-'}}</span>
+                                    <span>{{ scoped.row.geologyReservoirs | toFixedFour}}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column label-class-name="twoRowHeader">
@@ -75,7 +75,7 @@
                                     </div>
                                 </template>
                                 <template slot-scope="scoped">
-                                    <span>{{ scoped.row.recoverableReserves!= null ? scoped.row.recoverableReserves :'-'}}</span>
+                                    <span>{{ scoped.row.recoverableReserves | toFixedFour}}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column label-class-name="twoRowHeader">
@@ -99,7 +99,7 @@
                                     </div>
                                 </template>
                                 <template slot-scope="scoped">
-                                    <span>{{ scoped.row.oilSum | toFixedTwo}}</span>
+                                    <span>{{ scoped.row.oilSum | toFixedFour}}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column label-class-name="twoRowHeader">
@@ -111,7 +111,7 @@
                                     </div>
                                 </template>
                                 <template slot-scope="scoped">
-                                    <span>{{ scoped.row.remainCurrent | toFixedTwo }}</span>
+                                    <span>{{ scoped.row.remainCurrent | toFixedFour }}</span>
                                 </template>
                             </el-table-column>
                         </el-table-column>
@@ -192,8 +192,8 @@
                                                 </div>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column align="center" prop="x" :label="radioType=='A'?'Np':radioType=='B'?'Np':radioType=='C'?'Lp':radioType=='D'?'Wp':radioType=='YUQITAI'?'lg(Lp/Wp)':'x'" :formatter="toPrecise"></el-table-column>
-                                        <el-table-column align="center" prop="y" :label="radioType=='A'?'lgWp':radioType=='B'?'lgLp':radioType=='C'?'Lp/Np':radioType=='D'?'Lp/Np':radioType=='YUQITAI'?'logNp':'y'" :formatter="toPrecise"></el-table-column>
+                                        <el-table-column align="center" prop="x" :label="radioType=='A'?'Np':radioType=='B'?'Np':radioType=='C'?'Lp':radioType=='D'?'Wp':radioType=='YUQITAI'?'lg(Lp/Wp)':'x'" :formatter="toPrecise4"></el-table-column>
+                                        <el-table-column align="center" prop="y" :label="radioType=='A'?'lgWp':radioType=='B'?'lgLp':radioType=='C'?'Lp/Np':radioType=='D'?'Lp/Np':radioType=='YUQITAI'?'logNp':'y'" :formatter="toPrecise4"></el-table-column>
                                     </el-table>
                                 </template>
                             </pagePanel>
@@ -209,7 +209,7 @@
                                 </el-col>
                                 <el-col :span="12">
                                     <el-row>
-                                        <el-col><span style="font-size:30px;color:#24DEFF">{{ sqreservoirsAvailable | toFixedTwo }}</span></el-col>
+                                        <el-col><span style="font-size:30px;color:#24DEFF">{{ sqreservoirsAvailable | toFixedFour }}</span></el-col>
                                         <el-col><span style="font-size:12px;color:#24DEFF">可采储量(10⁴m³)</span></el-col>
                                     </el-row>
                                 </el-col>
@@ -277,8 +277,8 @@
                                                         </div>
                                                     </template>
                                                 </el-table-column>
-                                                <el-table-column align="center" prop="x" label="x" :formatter="toPrecise"></el-table-column>
-                                                <el-table-column align="center" prop="y" label-class-name="twoRowHeader" :formatter="toPrecise">
+                                                <el-table-column align="center" prop="x" label="x" :formatter="toPrecise4"></el-table-column>
+                                                <el-table-column align="center" prop="y" label-class-name="twoRowHeader" :formatter="toPrecise4">
                                                     <template slot="header">
                                                         <div>
                                                             <span>y</span>
@@ -304,7 +304,7 @@
                                     </el-col>
                                     <el-col :span="12">
                                         <el-row>
-                                            <el-col><span style="font-size:30px;color:#24DEFF">{{ djreservoirsAvailable | toFixedTwo }}</span></el-col>
+                                            <el-col><span style="font-size:30px;color:#24DEFF">{{ djreservoirsAvailable | toFixedFour }}</span></el-col>
                                             <el-col><span style="font-size:12px;color:#24DEFF">可采储量(10⁴m³)</span></el-col>
                                         </el-row>
                                     </el-col>
@@ -374,7 +374,7 @@
                                                         </div>
                                                     </template>
                                                 </el-table-column>
-                                                <el-table-column align="center" prop="x" :formatter="toPrecise" label-class-name="twoRowHeader">
+                                                <el-table-column align="center" prop="x" :formatter="toPrecise4" label-class-name="twoRowHeader">
                                                     <template slot="header">
                                                         <div>
                                                             <span>x</span>
@@ -383,7 +383,7 @@
                                                         </div>
                                                     </template>
                                                 </el-table-column>
-                                                <el-table-column align="center" prop="y" :formatter="toPrecise" label-class-name="twoRowHeader">
+                                                <el-table-column align="center" prop="y" :formatter="toPrecise4" label-class-name="twoRowHeader">
                                                     <template slot="header">
                                                         <div>
                                                             <span>y</span>
@@ -408,7 +408,7 @@
                                     </el-col>
                                     <el-col :span="12">
                                         <el-row>
-                                            <el-col><span style="font-size:30px;color:#24DEFF">{{ tsreservoirsAvailable | toFixedTwo }}</span></el-col>
+                                            <el-col><span style="font-size:30px;color:#24DEFF">{{ tsreservoirsAvailable | toFixedFour }}</span></el-col>
                                             <el-col><span style="font-size:12px;color:#24DEFF">可采储量(10⁴m³)</span></el-col>
                                         </el-row>
                                     </el-col>
@@ -556,7 +556,7 @@
                                 </div>
                                 <el-table id="table1" height="calc(100% - 55px)" :data="computingData" highlight class="doubleHeader">
                                     <el-table-column align="center" prop="formulaName" label="采收率计算方法"></el-table-column>
-                                    <el-table-column align="center" prop="recoveryRatio" label-class-name="twoRowHeader">
+                                    <el-table-column align="center" prop="recoveryRatio" label-class-name="twoRowHeader" :formatter="toPrecise2">
                                         <template slot="header">
                                             <div>
                                                 <span>采收率</span>
@@ -565,7 +565,7 @@
                                             </div>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column align="center" prop="recoverableReserves" label-class-name="twoRowHeader">
+                                    <el-table-column align="center" prop="recoverableReserves" label-class-name="twoRowHeader" :formatter="toPrecise4">
                                         <template slot="header">
                                             <div>
                                                 <span>可采储量</span>
@@ -606,16 +606,16 @@
         filters: {
             //保留4位小数
             toFixedFour(val) {
-                if (val) {
-                    return parseFloat(Number(val).toFixed(4));
+                if (val || val == 0) {
+                    return parseFloat(val).toFixed(4);
                 } else {
                     return '-';
                 }
             },
             //保留2位小数
             toFixedTwo(val) {
-                if (val) {
-                    return parseFloat(Number(val).toFixed(2));
+                if (val || val == 0) {
+                    return parseFloat(val).toFixed(2);
                 } else {
                     return '-';
                 }
@@ -1552,12 +1552,29 @@
                 this.getFieldOilLayers();
             },
             // 表格格式化方法 - 数值只保留四位小数
-            toPrecise(row, column) {
-                console.log(typeof row[column.property] == "number");
-                if (typeof row[column.property] == "number") {
-                    return row[column.property] ? parseFloat(row[column.property]).toFixed(4) : "";
+            toPrecise4(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(4)
+                    : "0";
                 } else {
-                    return row[column.property] ? row[column.property] : "";
+                    return row[column.property] ? row[column.property] : "-";
+                }
+            },
+            // 表格格式化方法 - 数值只保留两位位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
                 }
             },
             //下载导出文件 tableId tableName

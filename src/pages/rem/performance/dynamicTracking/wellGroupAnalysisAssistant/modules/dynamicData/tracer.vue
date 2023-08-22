@@ -30,12 +30,12 @@
                             <el-table-column type="index" label="序号" width="100"></el-table-column>
                             <el-table-column prop="wellNo" label="井号"></el-table-column>
                             <el-table-column prop="days" :label="`见剂时间\n(d)`"></el-table-column>
-                            <el-table-column prop="wellKm" :label="`井距\n(m)`"></el-table-column>
-                            <el-table-column prop="tracerSpeed" :label="`见剂速度\n(m/d)`"></el-table-column>
-                            <el-table-column prop="summitThickness" :label="`峰值浓度\n(ug/L)`"></el-table-column>
-                            <el-table-column prop="peakWidth" :label="`峰值宽度\n(d)`"></el-table-column>
-                            <el-table-column prop="recoveryRatio" :label="`回采率\n(%)`"></el-table-column>
-                            <el-table-column prop="recoveryRat" :label="`回采率比例\n(%)`"></el-table-column>
+                            <el-table-column prop="wellKm" :label="`井距\n(m)`" :formatter="toPrecise2"></el-table-column>
+                            <el-table-column prop="tracerSpeed" :label="`见剂速度\n(m/d)`" :formatter="toPrecise2"></el-table-column>
+                            <el-table-column prop="summitThickness" :label="`峰值浓度\n(ug/L)`" :formatter="toPrecise4"></el-table-column>
+                            <el-table-column prop="peakWidth" :label="`峰值宽度\n(d)`" :formatter="toPrecise2"></el-table-column>
+                            <el-table-column prop="recoveryRatio" :label="`回采率\n(%)`" :formatter="toPrecise2"></el-table-column>
+                            <el-table-column prop="recoveryRat" :label="`回采率比例\n(%)`" :formatter="toPrecise2"></el-table-column>
                         </el-table>
                     </page-panel>
                 </div>
@@ -126,7 +126,33 @@
                 if (this.imageFirst) downFile(this.imageFirst, fileName + '示踪剂结果');
                 if (this.imageSecond) downFile(this.imageSecond, fileName + '示踪剂报告');
                 if (this.imageThird) downFile(this.imageThird, fileName + '示踪剂信息');
-            }
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
+            },
+            // 表格格式化方法 - 数值只保留四位小数
+            toPrecise4(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(4)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
+            },
         }
     };
 </script>

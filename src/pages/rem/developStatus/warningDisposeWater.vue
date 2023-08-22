@@ -45,12 +45,8 @@
                   <el-table-column type="index" label="序号" width="60px" align="center"></el-table-column>
                   <el-table-column prop="borepipeId" label="井号" min-width="120px" align="center"></el-table-column>
                   <el-table-column prop="injDaysMonthly" :label="`月注入天数\n(d)`" align="center"></el-table-column>
-                  <el-table-column prop="injMonthly" :label="`月注入变化量\n(10⁴m³)`" align="center"></el-table-column>
-                  <el-table-column prop="whInjPress" :label="`井口注入压力\n(MPa)`" align="center">
-                    <template slot-scope="scope">
-                      <span>{{ scope.row.whInjPress | isNullTableNumber }}</span>
-                    </template>
-                  </el-table-column>
+                  <el-table-column prop="injMonthly" :label="`月注入变化量\n(10⁴m³)`" align="center" :formatter="toPrecise4"></el-table-column>
+                  <el-table-column prop="whInjPress" :label="`井口注入压力\n(MPa)`" align="center" :formatter="toPrecise2"></el-table-column>
                 </el-table>
               </el-row>
             </page-panel-new>
@@ -825,6 +821,32 @@ export default {
      */
     switchToBack() {
       this.$router.go(-1);
+    },
+    // 表格格式化方法 - 数值只保留两位小数
+    toPrecise2(row, column) {
+      if (
+          (row[column.property] || parseFloat(row[column.property]) === 0) &&
+          typeof parseFloat(row[column.property]) === "number"
+      ) {
+          return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+          ? parseFloat(row[column.property]).toFixed(2)
+          : "0";
+      } else {
+          return row[column.property] ? row[column.property] : "-";
+      }
+    },
+    // 表格格式化方法 - 数值只保留四位小数
+    toPrecise4(row, column) {
+      if (
+          (row[column.property] || parseFloat(row[column.property]) === 0) &&
+          typeof parseFloat(row[column.property]) === "number"
+      ) {
+          return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+          ? parseFloat(row[column.property]).toFixed(4)
+          : "0";
+      } else {
+          return row[column.property] ? row[column.property] : "-";
+      }
     },
   },
 };

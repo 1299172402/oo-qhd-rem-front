@@ -22,12 +22,12 @@
                     height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                     <el-table-column type="index" label="序号"></el-table-column>
                     <el-table-column prop="time" label="时间"> </el-table-column>
-                    <el-table-column prop="injDaily" :label="`日注水量\n(m³)`"></el-table-column>
-                    <el-table-column prop="cgsPress" :label="`套压\n(Mpa)`"></el-table-column>
-                    <el-table-column prop="whInjPress" :label="`井口压力\n(Mpa)`"></el-table-column>
+                    <el-table-column prop="injDaily" :label="`日注水量\n(m³)`" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="cgsPress" :label="`套压\n(Mpa)`" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="whInjPress" :label="`井口压力\n(Mpa)`" :formatter="toPrecise2"></el-table-column>
                     <el-table-column prop="injDuration" :label="`注入时间\n(h)`"></el-table-column>
-                    <el-table-column prop="juSum" :label="`水聚总量\n(m³)`"></el-table-column>
-                    <el-table-column prop="injPlan" :label="`日配注量\n(m³)`"></el-table-column>
+                    <el-table-column prop="juSum" :label="`水聚总量\n(m³)`" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="injPlan" :label="`日配注量\n(m³)`" :formatter="toPrecise2"></el-table-column>
                 </el-table>
             </page-panel>
             <page-panel headerTitle="油井对应曲线表" v-show="isDevelop"  style="height: 450px; margin-top:10px;" show-btn>
@@ -35,16 +35,16 @@
                     height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                     <el-table-column type="index" label="序号"></el-table-column>
                     <el-table-column prop="time" label="时间"> </el-table-column>
-                    <el-table-column prop="flowingPress" :label="`流压\n(Mpa)`"></el-table-column>
-                    <el-table-column prop="oilPress" :label="`油压\n(Mpa)`"></el-table-column>
-                    <el-table-column prop="pumpFreq" :label="`泵频率\n(Hz)`"></el-table-column>
-                    <el-table-column prop="whTemp" :label="`井口温度\n(℃)`"></el-table-column>
+                    <el-table-column prop="flowingPress" :label="`流压\n(Mpa)`" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="oilPress" :label="`油压\n(Mpa)`" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="pumpFreq" :label="`泵频率\n(Hz)`" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="whTemp" :label="`井口温度\n(℃)`" :formatter="toPrecise2"></el-table-column>
                     <el-table-column prop="prodDuration" :label="`生产时间\n(h)`"></el-table-column>
-                    <el-table-column prop="waterRatio" :label="`含水\n(%)`"></el-table-column>
-                    <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`"></el-table-column>
-                    <el-table-column prop="oilProdDaily" :label="`日产油\n(m³)`"></el-table-column>
-                    <el-table-column prop="gasProdDaily" :label="`日产气\n(万方)`"></el-table-column>
-                    <el-table-column prop="gasOilRatio" :label="`气油比\n(m³/m³)`"></el-table-column>
+                    <el-table-column prop="waterRatio" :label="`含水\n(%)`" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="oilProdDaily" :label="`日产油\n(m³)`" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="gasProdDaily" :label="`日产气\n(万方)`" :formatter="toPrecise4"></el-table-column>
+                    <el-table-column prop="gasOilRatio" :label="`气油比\n(m³/m³)`" :formatter="toPrecise2"></el-table-column>
                 </el-table>
             </page-panel>
         </div>
@@ -1167,6 +1167,32 @@
                 if(isDevelop){
                     exportExcel('#tableData1', '水井对应曲线表');
                     exportExcel('#tableData2', '油井对应曲线表');
+                }
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
+            },
+            // 表格格式化方法 - 数值只保留四位小数
+            toPrecise4(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(4)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
                 }
             },
         },

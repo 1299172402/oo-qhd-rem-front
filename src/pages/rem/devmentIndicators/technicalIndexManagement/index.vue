@@ -83,9 +83,9 @@
                 <div style="margin-top: 10px;height:calc(100% - 50px);">
                     <el-table id="indexscv" :data="tableData" highlight height="100%">
                         <el-table-column prop="name" label="指标" align="center"></el-table-column>
-                        <el-table-column prop="real" label="实际值" align="center"></el-table-column>
-                        <el-table-column prop="compareOilField" label="对标油田(羊三木)" align="center"></el-table-column>
-                        <el-table-column prop="realCompareOilField" label="实际值与对标差值" align="center"></el-table-column>
+                        <el-table-column prop="real" label="实际值" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="compareOilField" label="对标油田(羊三木)" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="realCompareOilField" label="实际值与对标差值" align="center" :formatter="toPrecise2"></el-table-column>
                     </el-table>
                 </div>
             </pagePanel>
@@ -1947,6 +1947,19 @@
             //导出excel表
             doDownIndex() {
                 exportExcel('#indexscv', '技术指标总览');
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         }
     };

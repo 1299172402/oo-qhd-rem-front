@@ -60,17 +60,17 @@
                     <el-table-column prop="ogfNo" label="油田" align="center"></el-table-column>
                     <el-table-column prop="layerName" label="层位/油组" align="center"></el-table-column>
                     <el-table-column label="原始参数" align="center">
-                        <el-table-column prop="originalLayerPressureYear" :label="`原始地层压力\n(MPa)\n(校正到基准面)`" align="center"></el-table-column>
+                        <el-table-column prop="originalLayerPressureYear" :label="`原始地层压力\n(MPa)\n(校正到基准面)`" align="center" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                     <el-table-column label="原始参数" align="center">
-                        <el-table-column prop="datum_Depth" :label="`基准面垂深\n(m)`" align="center"></el-table-column>
+                        <el-table-column prop="datum_Depth" :label="`基准面垂深\n(m)`" align="center" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                     <el-table-column label="2023年" align="center">
-                        <el-table-column prop="originalReservesOil" :label="`动用地质储量\n(10⁴m³)`" align="center"></el-table-column>
-                        <el-table-column prop="layerPressureYear" :label="`地层压力\n(MPa)`" align="center"></el-table-column>
-                        <el-table-column prop="layerPressureLevelYear" :label="`原始地层压力保持水平\n(%)`" align="center" width="200"></el-table-column>
-                        <el-table-column prop="avgWellPressure" :label="`实际单井静压平均值\n(MPa)\n(校正到基准面)`" align="center"></el-table-column>
-                        <el-table-column prop="pressureLevel" :label="`目前压力保持水平\n(%)`" align="center"></el-table-column>
+                        <el-table-column prop="originalReservesOil" :label="`动用地质储量\n(10⁴m³)`" align="center" :formatter="toPrecise4"></el-table-column>
+                        <el-table-column prop="layerPressureYear" :label="`地层压力\n(MPa)`" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="layerPressureLevelYear" :label="`原始地层压力保持水平\n(%)`" align="center" width="200" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="avgWellPressure" :label="`实际单井静压平均值\n(MPa)\n(校正到基准面)`" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="pressureLevel" :label="`目前压力保持水平\n(%)`" align="center" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                 </el-table>
             </pagePanel>
@@ -85,9 +85,9 @@
                         <el-table-column prop="layerName" label="层位/油组" align="center"></el-table-column>
                         <el-table-column prop="wellNo" label="井号" align="center"></el-table-column>
                         <el-table-column prop="measureTime" :label="`测试日期\n(yyyy/mm/dd)`" align="center"></el-table-column>
-                        <el-table-column prop="basalLevelStaticPress" :label="`基准面压力\n(MPa)`" align="center"></el-table-column>
-                        <el-table-column prop="midOillayerStaticPress" :label="`油层中部压力\n(MPa)`" align="center"></el-table-column>
-                        <el-table-column prop="measurePointPress" :label="`最大垂深测点压力\n(10⁴m³)`" align="center"></el-table-column>
+                        <el-table-column prop="basalLevelStaticPress" :label="`基准面压力\n(MPa)`" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="midOillayerStaticPress" :label="`油层中部压力\n(MPa)`" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="measurePointPress" :label="`最大垂深测点压力\n(10⁴m³)`" align="center" :formatter="toPrecise4"></el-table-column>
                     </el-table>
                 </pagePanel>
             </div>
@@ -466,6 +466,32 @@
             //表格id表格名称
             doDownExcel(tableId, tableName) {
                 exportExcel(tableId, tableName);
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
+            },
+            // 表格格式化方法 - 数值只保留四位小数
+            toPrecise4(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(4)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         },
     };
