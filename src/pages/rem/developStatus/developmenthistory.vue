@@ -43,18 +43,18 @@
                         <el-table-column prop="interval" :label="`阶段历程时间\n (天)`" align="center" width="160px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="pwellsTotal" :label="`阶段末油井总井数\n (口)`" align="center" width="180px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="pwellsOpen" :label="`阶段末油井开井数\n (口)`" align="center" width="190px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="liquidDaily" :label="`阶段末日产液\n (m³/d)`" align="center" width="180px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="oilDaily" :label="`阶段末日产油量\n (m³/d)`" align="center" width="190px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="waterCut" :label="`阶段末综合含水\n (%)`" align="center" width="170px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="liquidDaily" :label="`阶段末日产液\n (m³/d)`" align="center" width="180px" show-overflow-tooltip :formatter="toPrecise3"></el-table-column>
+                        <el-table-column prop="oilDaily" :label="`阶段末日产油量\n (m³/d)`" align="center" width="190px" show-overflow-tooltip :formatter="toPrecise3"></el-table-column>
+                        <el-table-column prop="waterCut" :label="`阶段末综合含水\n (%)`" align="center" width="170px" show-overflow-tooltip :formatter="toPrecise2"></el-table-column>
                         <el-table-column prop="injectionTotal" :label="`阶段末水井总井数\n (口)`" align="center" width="180px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="injectionOpen" :label="`阶段末水井开井数\n (口)`" align="center" width="190px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="injection" :label="`阶段末注水量\n (10⁴m³)`" align="center" min-width="200px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="proInjectionRate" label="阶段末注采比" align="center" width="180px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="proInjectionRateSum" label="累计注采比" align="center" width="140px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="produceDegress" :label="`阶段采出程度\n (%)`" align="center" width="160px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="oilSum" :label="`阶段累计产油\n (10⁴m³)`" align="center" min-width="200px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="liquidSum" :label="`阶段累计产液\n (10⁴m³)`" align="center" min-width="200px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="waterSum" :label="`阶段累注水\n (10⁴m³)`" align="center" min-width="170px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="injection" :label="`阶段末注水量\n (10⁴m³)`" align="center" min-width="200px" show-overflow-tooltip :formatter="toPrecise4"></el-table-column>
+                        <el-table-column prop="proInjectionRate" label="阶段末注采比" align="center" width="180px" show-overflow-tooltip :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="proInjectionRateSum" label="累计注采比" align="center" width="140px" show-overflow-tooltip :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="produceDegress" :label="`阶段采出程度\n (%)`" align="center" width="160px" show-overflow-tooltip :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="oilSum" :label="`阶段累计产油\n (10⁴m³)`" align="center" min-width="200px" show-overflow-tooltip :formatter="toPrecise4"></el-table-column>
+                        <el-table-column prop="liquidSum" :label="`阶段累计产液\n (10⁴m³)`" align="center" min-width="200px" show-overflow-tooltip :formatter="toPrecise4"></el-table-column>
+                        <el-table-column prop="waterSum" :label="`阶段累注水\n (10⁴m³)`" align="center" min-width="170px" show-overflow-tooltip :formatter="toPrecise4"></el-table-column>
                     </el-table>
                 </div>
             </pagePanel>
@@ -1628,6 +1628,45 @@
                 }
                 this.option.grid = grid;
                 this.dialogVisible = false;
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
+            },
+             // 表格格式化方法 - 数值只保留三位小数
+             toPrecise3(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(3)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
+            },
+            // 表格格式化方法 - 数值只保留四位小数
+            toPrecise4(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(4)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         },
     };

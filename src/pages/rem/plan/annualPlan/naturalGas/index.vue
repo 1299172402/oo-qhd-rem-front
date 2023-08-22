@@ -22,10 +22,10 @@
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
                 <el-table-column prop="prodDate" align="center" label="时间"> </el-table-column>
-                <el-table-column property="gasProdPlan" align="center" :label="`计划产气量\n(10⁴m³)`" :formatter="numberToFour"></el-table-column>
-                <el-table-column property="gasProdDaily" align="center" :label="`产气量\n(10⁴m³)`" :formatter="numberToFour"></el-table-column>
-                <el-table-column prop="oilEquivalent" align="center" :label="`油当量\n(m³/d)`" :formatter="numberToTwo"></el-table-column>
-                <el-table-column prop="gasProdRollFocecast" align="center" :label="`滚动预测产气量\n(10⁴m³)`" :formatter="numberToFour"></el-table-column>
+                <el-table-column property="gasProdPlan" align="center" :label="`计划产气量\n(10⁴m³)`" :formatter="toPrecise4"></el-table-column>
+                <el-table-column property="gasProdDaily" align="center" :label="`产气量\n(10⁴m³)`" :formatter="toPrecise4"></el-table-column>
+                <el-table-column prop="oilEquivalent" align="center" :label="`油当量\n(m³/d)`" :formatter="toPrecise2"></el-table-column>
+                <el-table-column prop="gasProdRollFocecast" align="center" :label="`滚动预测产气量\n(10⁴m³)`" :formatter="toPrecise4"></el-table-column>
             </el-table>
             <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination"/>
         </pagePanel>
@@ -303,19 +303,30 @@
                 });
             },
             //保留两位小数
-            numberToTwo(row, column, cellValue, index) {
+            toPrecise2(row, column, cellValue, index) {
                 if (cellValue) {
-                    return Number(cellValue).toFixed(2);
+                    if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
                 } else {
-                    return '-';
+                    return row[column.property] ? row[column.property] : "-";
                 }
             },
             //保留四位小数
-            numberToFour(row, column, cellValue, index) {
-                if (cellValue) {
-                    return Number(cellValue).toFixed(4);
+            toPrecise4(row, column, cellValue, index) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(4)
+                    : "0";
                 } else {
-                    return '-';
+                    return row[column.property] ? row[column.property] : "-";
                 }
             },
             //表格索引

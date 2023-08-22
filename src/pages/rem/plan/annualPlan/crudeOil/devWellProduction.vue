@@ -53,13 +53,13 @@
           prop="oilprodReal"
           align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '实际月产油量\n(m³/d)' : '实际月产油量\n(t/d)'"
-          :formatter="numberToTwo"
+          :formatter="toPrecise3"
         ></el-table-column>
         <el-table-column
           prop="oilprodPlan"
           align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '计划月产油量\n(m³/d)' : '计划月产油量\n(t/d)'"
-          :formatter="numberToTwo"
+          :formatter="toPrecise3"
         ></el-table-column>
         <!-- <el-table-column prop="oilprodRollForecast" align="center" label="滚动预测"></el-table-column> -->
       </el-table>
@@ -405,20 +405,17 @@
                     }
                 });
             },
-            //保留两位小数
-            numberToTwo(row, column, cellValue, index) {
-                if (cellValue) {
-                    return Number(cellValue).toFixed(2);
+            //保留三位小数
+            toPrecise3(row, column, cellValue, index) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(3)
+                    : "0";
                 } else {
-                    return '-';
-                }
-            },
-            //保留四位小数
-            numberToFour(row, column, cellValue, index) {
-                if (cellValue) {
-                    return Number(cellValue).toFixed(4);
-                } else {
-                    return '-';
+                    return row[column.property] ? row[column.property] : "-";
                 }
             },
             //表格自定义索引

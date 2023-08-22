@@ -19,8 +19,8 @@
                 <el-table-column prop="prodDate" align="center" label="时间"> </el-table-column>
                 <el-table-column prop="measureWellNumReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际措施井次\n(次)' : '实际措施井次\n(次)'"></el-table-column>
                 <el-table-column prop="measureWellNumPlan" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '计划措施井次\n(次)' : '计划措施井次\n(次)'"></el-table-column>
-                <el-table-column prop="oilprodReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际产量\n(m³/d)' : '实际产量\n(t/d)'" :formatter="numberToTwo"></el-table-column>
-                <el-table-column prop="oilprodPlan" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '计划产量\n(m³/d)' : '计划产量\n(t/d)'" :formatter="numberToTwo"></el-table-column>
+                <el-table-column prop="oilprodReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际产量\n(m³/d)' : '实际产量\n(t/d)'" :formatter="toPrecise3"></el-table-column>
+                <el-table-column prop="oilprodPlan" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '计划产量\n(m³/d)' : '计划产量\n(t/d)'" :formatter="toPrecise3"></el-table-column>
                 <!-- <el-table-column prop="oilprodRollForecast" align="center" label="滚动预测"></el-table-column> -->
             </el-table>
             <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination" />
@@ -311,19 +311,16 @@
                 });
             },
             //保留两位小数
-            numberToTwo(row, column, cellValue, index) {
-                if (cellValue) {
-                    return Number(cellValue).toFixed(2);
+            toPrecise3(row, column, cellValue, index) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(3)
+                    : "0";
                 } else {
-                    return '-';
-                }
-            },
-            //保留四位小数
-            numberToFour(row, column, cellValue, index) {
-                if (cellValue) {
-                    return Number(cellValue).toFixed(4);
-                } else {
-                    return '-';
+                    return row[column.property] ? row[column.property] : "-";
                 }
             },
             //表格自定义索引

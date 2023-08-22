@@ -122,30 +122,30 @@
                                     <el-table-column prop="wellNo" label="井号" width="120" fixed></el-table-column>
                                     <el-table-column prop="prodDate" label="日期" width="120"></el-table-column>
                                     <el-table-column prop="prodDuration" :label="`生产时间\n(h)`" width=""></el-table-column>
-                                    <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`" width=""></el-table-column>
-                                    <el-table-column prop="gasProdDaily" :label="`日产气\n(10⁴/m³)`" width="130"></el-table-column>
-                                    <el-table-column prop="oilProdDaily" :label="`日产油\n(m³)`" width=""></el-table-column>
-                                    <el-table-column prop="waterRatio" :label="`含水\n(%)`" width=""></el-table-column>
-                                    <el-table-column prop="waterProdDaily" :label="`日产水\n(m³)`" width=""></el-table-column>
-                                    <el-table-column prop="gasOilRatio" :label="`气油比\n(m³/m³)`" width="130"></el-table-column>
-                                    <el-table-column prop="airliftGasCont" :label="`气举量\n(10⁴/m³)`" width="130"></el-table-column>
-                                    <el-table-column prop="pfl" :label="`动液面\n(m)`" width=""></el-table-column>
-                                    <el-table-column prop="pumpFrequency" :label="`泵频率\n(Hz)`" width=""></el-table-column>
-                                    <el-table-column prop="pumpCurrent" :label="`泵电流\n(A)`" width=""></el-table-column>
-                                    <el-table-column prop="nozzleDiameter" :label="`油嘴\n(mm)`" width=""></el-table-column>
-                                    <el-table-column prop="oilPress" :label="`油压\n(MPa)`" width=""></el-table-column>
-                                    <el-table-column prop="drawdownPress" :label="`压差\n(MPa)`" width=""></el-table-column>
-                                    <el-table-column prop="dhFlowingPress" :label="`流压\n(MPa)`" width=""></el-table-column>
-                                    <el-table-column prop="datumPessure" :label="`基准面流压\n(MPa)`" width="130"></el-table-column>
-                                    <el-table-column prop="backPress" :label="`回压\n(MPa)`" width=""></el-table-column>
-                                    <el-table-column prop="pumpInletPress" :label="`泵入口压力\n(MPa)`" width="130"></el-table-column>
-                                    <el-table-column prop="pumpOutletPress" :label="`泵出口压力\n(MPa)`" width="130"></el-table-column>
-                                    <el-table-column prop="csgPress" :label="`套压\n(MPa)`" width=""></el-table-column>
-                                    <el-table-column prop="techCsgPress" :label="`技术套压\n(MPa)`" width=""></el-table-column>
-                                    <el-table-column prop="surfaceCsgPress" :label="`表层套压\n(MPa)`" width=""></el-table-column>
-                                    <el-table-column prop="pumpMotorTemp" :label="`马达温度\n(℃)`" width=""></el-table-column>
-                                    <el-table-column prop="whTemp" :label="`井口温度\n(℃)`" width=""></el-table-column>
-                                    <el-table-column prop="dhFlowingTemp" :label="`流温\n(℃)`" width=""></el-table-column>
+                                    <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="gasProdDaily" :label="`日产气\n(10⁴/m³)`" width="130" :formatter="toPrecise4"></el-table-column>
+                                    <el-table-column prop="oilProdDaily" :label="`日产油\n(m³)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="waterRatio" :label="`含水\n(%)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="waterProdDaily" :label="`日产水\n(m³)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="gasOilRatio" :label="`气油比\n(m³/m³)`" width="130" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="airliftGasCont" :label="`气举量\n(10⁴/m³)`" width="130" :formatter="toPrecise4"></el-table-column>
+                                    <el-table-column prop="pfl" :label="`动液面\n(m)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="pumpFrequency" :label="`泵频率\n(Hz)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="pumpCurrent" :label="`泵电流\n(A)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="nozzleDiameter" :label="`油嘴\n(mm)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="oilPress" :label="`油压\n(MPa)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="drawdownPress" :label="`压差\n(MPa)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="dhFlowingPress" :label="`流压\n(MPa)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="datumPessure" :label="`基准面流压\n(MPa)`" width="130" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="backPress" :label="`回压\n(MPa)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="pumpInletPress" :label="`泵入口压力\n(MPa)`" width="130" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="pumpOutletPress" :label="`泵出口压力\n(MPa)`" width="130" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="csgPress" :label="`套压\n(MPa)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="techCsgPress" :label="`技术套压\n(MPa)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="surfaceCsgPress" :label="`表层套压\n(MPa)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="pumpMotorTemp" :label="`马达温度\n(℃)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="whTemp" :label="`井口温度\n(℃)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="dhFlowingTemp" :label="`流温\n(℃)`" width="" :formatter="toPrecise2"></el-table-column>
                                     <el-table-column prop="remark" label="备注" width=""></el-table-column>
                                 </el-table>
                             </pagePanel>
@@ -349,6 +349,32 @@
             //下载导出文件 tableId tableName
             doDownExcel(tableId, tableName) {
                 exportExcel(tableId, tableName);
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+            if (
+                (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                typeof parseFloat(row[column.property]) === "number"
+            ) {
+                return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                ? parseFloat(row[column.property]).toFixed(2)
+                : "0";
+            } else {
+                return row[column.property] ? row[column.property] : "-";
+            }
+            },
+            // 表格格式化方法 - 数值只保留四位位小数
+            toPrecise4(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(4)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         }
     };

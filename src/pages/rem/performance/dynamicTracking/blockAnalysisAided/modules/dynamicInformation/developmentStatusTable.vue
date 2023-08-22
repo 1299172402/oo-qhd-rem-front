@@ -69,13 +69,6 @@ export default {
         blockId: {}
     },
     filters: {
-        numberToTwo(val) {
-            if (val) {
-                return parseFloat(Number(val).toFixed(2));
-            } else {
-                return '-';
-            }
-        },
         dateFormat(val) {
             if (val) {
                 return new Date(val).format('yyyy-MM');
