@@ -159,9 +159,10 @@ export default {
             },
             queryParams:
                 {
-                    endTime: new Date().format("yyyy-MM-dd"),
+                    endTime: '',
                     selectPlatform: '',
-                    selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F"
+                    selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F",
+                    asseCode:'',
                 },
             // 表格数据
             noticeList: [],
@@ -280,9 +281,10 @@ export default {
         };
     },
     created() {
+        this.queryParams.endTime = this.$route.query.endTime?this.$route.query.endTime:new Date().format("yyyy-MM-dd")
         let data = {
-            endTime: new Date().format('YYYY-MM-DD'),
-            platformId: ""
+            endTime: this.queryParams.endTime,
+            platformId:this.queryParams.asseCode
         }
         this.selectPlatformPob(data)
         queryOperatorsCheckFieldListsDetail({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then(res=>{
@@ -305,7 +307,9 @@ export default {
             this.$router.go(-1);
         },
         reset(){
-            
+            this.queryParams.endTime = this.$route.query.endTime?this.$route.query.endTime:new Date().format("yyyy-MM-dd")
+            this.queryParams.selectPlatform = ''
+            this.selectPlatformPob(this.queryParams)
         },
         getSummaries(param) {
             const {columns, data} = param;

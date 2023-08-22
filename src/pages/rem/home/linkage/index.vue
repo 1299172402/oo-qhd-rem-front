@@ -343,17 +343,16 @@ export default {
 
 // 获取报警信息接口
         async getWarningInfo() {
-            this.currentLists.forEach((i, index) => {
+            this.currentLists.map((i, index) => {
                 i.warningShowFlag = false;
                 if(i.boxBottomText){
-                    i?.boxBottomText.forEach((j)=>{
+                    i?.boxBottomText.map((j)=>{
                         j.warningShowFlag = false;
                     })
                 }
             });
             const data = {
                 authorizedPersonnel: this.$store.getters["user/name"],
-                // alarmTime:'2023-08-15'
                 alarmTime: new Date().format('YYYY-MM-dd')
             };
             try {
@@ -377,7 +376,7 @@ export default {
                     const {result: childResult} = await this.matchAndOutput(res1.data.data, a);
                     const number = childResult.map(item => this.findIndex(a, item));
                     if(number.length>1){
-                        number.forEach((n,index)=>{
+                        number.map((n,index)=>{
                             this.currentLists[childindex[i]].boxBottomText[n].warningShowFlag = true
                         })
                     }else{
@@ -390,7 +389,7 @@ export default {
                     this.currentLists[index[i]].warningShowFlag = true;
                     isConditionMet = true;
                 }
-                res2.data.data.forEach(item => {
+                res2?.data.data.forEach(item => {
                     this.currentLists.forEach((i, index) => {
                         if (i.typeIdList.includes(item.typeId)) {
                             this.currentLists[index].warningShowFlag = true;
@@ -398,11 +397,18 @@ export default {
                         }
                     });
                 });
-                console.log(isConditionMet)
                 if (isConditionMet === false) {
-                    this.timmer = setInterval(this.arrowFun(),2000)
+                    this.timmer = setInterval(() => {
+                        this.arrowFun()
+                    }, 100 * 20)
                 } else {
                     clearInterval(this.timmer);
+                    this.currentLists.forEach(item => {
+                        item.showFlag = false
+                    })
+                    for (let i = 0; i < 7; i++) {
+                        this.$el.querySelectorAll('img')[i].style.display = 'none'
+                    }
                 }
             } catch (error) {
                 console.error(error)
@@ -435,7 +441,6 @@ export default {
             }
             return true;
         },
-        
         stopTimer() {
             this.currentLists.forEach(item => {
                 item.showFlag = false
@@ -443,7 +448,6 @@ export default {
             clearInterval(this.timmer)
         },
         startTimer(url) {
-            if(url){
                 const hasTrueValue = this.currentLists.some(item => {
                     if (Array.isArray(item.boxBottomText)) {
                         return item.boxBottomText.some(subItem => subItem.warningShowFlag === true);
@@ -451,13 +455,18 @@ export default {
                         return item.warningShowFlag === true;
                     }
                 });
+                if(url){
+                    let index = this.findIndex(this.currentLists,url)
+                    this.currentLists[index].warningShowFlag = false
+                }
                 if (hasTrueValue == true) {
                     clearInterval(this.timmer)
                 } else {
-                    this.timmer = setInterval(this.arrowFun(),2000)
-                    // this.timmer = setInterval( 2000);
+                    clearInterval(this.timmer)
+                    this.timmer = setInterval(() => {
+                        this.arrowFun()
+                    }, 2000)
                 }
-            }
         }
     },
     data() {
@@ -488,10 +497,6 @@ video {
 
 .container {
     height: calc(100% - 20px);
-    //background-image: url("@/assets/linkage/liandong-bg.gif");
-    //background-size: 100% 100%;
-    //D:\A项目\oo-qhd-rem-front\src\pages\rem\home\linkage\mork.mp4
-    //background-image: url("");
     .topBanner {
         width: 100%;
         height: 38px;

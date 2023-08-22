@@ -152,7 +152,7 @@
             pagination(e) {
                 this.page.currentPage = e.page;
                 this.page.pageSize = e.limit;
-                this.queryTableDate();
+                this.queryTableDate(this.queryData);
             },
             //change模型名称
             modelOptionChange(e,index){

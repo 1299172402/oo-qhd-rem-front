@@ -185,7 +185,7 @@
                             @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':linkdata(),evalResult:selCode }})">
                             归因分析详情
                             </el-button>
-                            <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)" 
+                            <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='0100101'||selCode=='0100102' || selCode=='0100103' || selCode=='0100106'|| selCode=='0100110'|| selCode=='0100111'|| selCode=='0100112'|| selCode=='0100114')" 
                             @click="$router.push({name:'planmessage',query:{platform,wellId,currentDate,measureCode:selCode}})">措施推荐详情</el-button>
                         </div>
                         <div style="flex:1;min-height:600px;">

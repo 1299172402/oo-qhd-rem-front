@@ -58,8 +58,6 @@ export default {
             default: false
         }
     },
-    created() {
-    },
     computed:{
         getWarningShowFlag(){
             return this.currentList.warningShowFlag
@@ -68,7 +66,7 @@ export default {
     watch:{
         getWarningShowFlag:{
             handler(Nval){
-                this.warningShowFlag = true
+                this.warningShowFlag = Nval
             }
         }
     },
@@ -128,13 +126,12 @@ export default {
                 alarmTime:new Date().format('YYYY-MM-dd'),
                 alarmPageCode:[linkurl?.alarmPageCode]
             }
-            console.log(data)
-            // addLinkageAlarmInfo(data).then(()=>{
-            //     this.warningShowFlag = false
-            // }).then(()=>{
-            //     if (!url) return
-            //     window.open(linkurl.url, '_parent');
-            // })
+            addLinkageAlarmInfo(data).then(()=>{
+                this.warningShowFlag = false
+            }).then(()=>{
+                if (!url) return
+                window.open(linkurl.url, '_parent');
+            })
         },
         confirm(currentList){
             let alarmPageCode = []
