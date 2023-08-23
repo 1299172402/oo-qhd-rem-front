@@ -22,79 +22,79 @@
         <el-table id="tableData" :data="tableData" highlight style="width:100%;" height="calc(100% - 58px)">
             <el-table-column fixed style="overflow-x:hidden;" prop="type" :label="outputTrackingTableDate" align="center" width="300"></el-table-column>
             <el-table-column label="作业公司" align="center">
-                <el-table-column prop="zygsjc" label="基础" align="center" width="100">
+                <el-table-column prop="zygsjc" label="基础" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="zygscs" label="措施" align="center" width="100">
+                <el-table-column prop="zygscs" label="措施" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="zygstz" label="调整井" align="center" width="100">
+                <el-table-column prop="zygstz" label="调整井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="zygskf" label="开发井" align="center" width="100">
+                <el-table-column prop="zygskf" label="开发井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="zygshj" label="合计" align="center" width="100">
+                <el-table-column prop="zygshj" label="合计" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
             </el-table-column>
             <!-- QHD32-6 -->
             <el-table-column label="QHD32-6" align="center">
-                <el-table-column prop="qhd326jc" label="基础" align="center" width="100">
+                <el-table-column prop="qhd326jc" label="基础" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd326cs" label="措施" align="center" width="100">
+                <el-table-column prop="qhd326cs" label="措施" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd326tz" label="调整井" align="center" width="100">
+                <el-table-column prop="qhd326tz" label="调整井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd326hj" label="合计" align="center" width="100">
+                <el-table-column prop="qhd326hj" label="合计" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
             </el-table-column>
             <el-table-column label="CFD6-4" align="center">
-                <el-table-column prop="cfd64jc" label="基础" align="center" width="100">
+                <el-table-column prop="cfd64jc" label="基础" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="cfd64cs" label="措施" align="center" width="100">
+                <el-table-column prop="cfd64cs" label="措施" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="cfd64tz" label="调整井" align="center" width="100">
+                <el-table-column prop="cfd64tz" label="调整井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="cfd64hj" label="合计" align="center" width="100">
+                <el-table-column prop="cfd64hj" label="合计" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
             </el-table-column>
             <!-- NB35-2 -->
             <el-table-column label="NB35-2" align="center">
-                <el-table-column prop="nb352jc" label="基础" align="center" width="100">
+                <el-table-column prop="nb352jc" label="基础" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="nb352cs" label="措施" align="center" width="100">
+                <el-table-column prop="nb352cs" label="措施" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="nb352tz" label="调整井" align="center" width="100">
+                <el-table-column prop="nb352tz" label="调整井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="nb352hj" label="合计" align="center" width="100">
+                <el-table-column prop="nb352hj" label="合计" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
             </el-table-column>
             <el-table-column label="BZ3-2" align="center">
-                <el-table-column prop="bz32jc" label="基础" align="center" width="100">
+                <el-table-column prop="bz32jc" label="基础" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="bz32cs" label="措施" align="center" width="100">
+                <el-table-column prop="bz32cs" label="措施" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="bz32tz" label="调整井" align="center" width="100">
+                <el-table-column prop="bz32tz" label="调整井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="bz32hj" label="合计" align="center" width="100">
+                <el-table-column prop="bz32hj" label="合计" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
             </el-table-column>
             <el-table-column label="QHD33-1" align="center">
-                <el-table-column prop="qhd331jc" label="基础" align="center" width="100">
+                <el-table-column prop="qhd331jc" label="基础" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd331cs" label="措施" align="center" width="100">
+                <el-table-column prop="qhd331cs" label="措施" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd331tz" label="调整井" align="center" width="100">
+                <el-table-column prop="qhd331tz" label="调整井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd331kf" label="开发井" align="center" width="100">
+                <el-table-column prop="qhd331kf" label="开发井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd331hj" label="合计" align="center" width="100">
+                <el-table-column prop="qhd331hj" label="合计" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
             </el-table-column>
             <el-table-column label="QHD33-1S" align="center">
-                <el-table-column prop="qhd331sjc" label="基础" align="center" width="100">
+                <el-table-column prop="qhd331sjc" label="基础" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd331scs" label="措施" align="center" width="100">
+                <el-table-column prop="qhd331scs" label="措施" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd331stj" label="调整井" align="center" width="100">
+                <el-table-column prop="qhd331stj" label="调整井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd331shj" label="合计" align="center" width="100">
+                <el-table-column prop="qhd331shj" label="合计" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
             </el-table-column>
         </el-table>
@@ -522,6 +522,19 @@
             //下载导出文件 tableId tableName
             doDownExcel(tableId, tableName) {
                 exportExcel(tableId, tableName);
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         },
     };

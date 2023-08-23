@@ -27,11 +27,11 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="layerName" label="解释层位" width="140"></el-table-column>
-                    <el-table-column prop="topDepth" :label="`顶界深度\n (m)`" width="140"></el-table-column>
-                    <el-table-column prop="bottomDepth" :label="`底界深度\n (m)`" width="140"></el-table-column>
-                    <el-table-column prop="originalWaterSaturation" :label="`含水饱和度\n (%)`" width="140"></el-table-column>
-                    <el-table-column prop="waterSaturation" :label="`含油饱和度\n (%)`" width="140"></el-table-column>
-                    <el-table-column prop="waterVeriation" :label="`含气饱和度\n (%)`" width="140"></el-table-column>
+                    <el-table-column prop="topDepth" :label="`顶界深度\n (m)`" width="140" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="bottomDepth" :label="`底界深度\n (m)`" width="140" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="originalWaterSaturation" :label="`含水饱和度\n (%)`" width="140" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="waterSaturation" :label="`含油饱和度\n (%)`" width="140" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="waterVeriation" :label="`含气饱和度\n (%)`" width="140" :formatter="toPrecise2"></el-table-column>
                     <el-table-column prop="conclusion" label="解释结论" min-width="180"></el-table-column>
                     <el-table-column prop="remark" label="备注" min-width="180"></el-table-column>
                 </el-table>
@@ -116,6 +116,19 @@
                     downFile(this.image,fileName);
                 }
                 exportExcel('#tableData',fileName);
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         }
     }

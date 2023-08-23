@@ -370,39 +370,7 @@
                         let xData = [];
                         let xSet = new Set();
                         let resData = res.data.data;
-                        // TODO lv 临时
-                        // let barCharts = resData?.chart?.linearDataSets;
-                        let barCharts = [{
-                                label: "实际值",
-                                color: null,
-                                linearData: [{
-                                        label: "2023-01",
-                                        value: 90.68,
-                                        description: null,
-                                    },
-                                    {
-                                        label: "2023-02",
-                                        value: 84.13,
-                                        description: null,
-                                    },
-                                    {
-                                        label: "2023-03",
-                                        value: 83.91,
-                                        description: null,
-                                    },
-                                    {
-                                        label: "2023-04",
-                                        value: 0,
-                                        description: null,
-                                    },
-                                ],
-                            },
-                            {
-                                label: "今年考核值",
-                                color: null,
-                                linearData: [],
-                            },
-                        ];
+                        let barCharts = resData?.chart?.linearDataSets;
                         this.tableData1 = resData.tableList && resData.tableList[0] ? resData.tableList[0] : [];
                         this.tableData2 = resData.tableList && resData.tableList[1] ? resData.tableList[1] : [];
                         if (barCharts) {

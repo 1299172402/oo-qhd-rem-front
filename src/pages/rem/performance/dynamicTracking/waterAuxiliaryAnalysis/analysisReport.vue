@@ -306,7 +306,7 @@
                         </div>
                         <div class="v2" style="z-index: 5;">
                             <pagePanel header-title="生产动态监测" style="height: 100%;">
-                                <div class="z-content" style="height:calc(100% - 55px);">
+                                <div class="z-content" style="height:calc(100%); overflow-y: auto;">
                                     <div class="z-content-n">
                                         <div class="z-row-left">
                                             <div class="z_title">
@@ -360,7 +360,7 @@
                         <div class="v2" style="z-index: 4;">
                             <img src="@/assets/rem/performance/bgline0.png" alt="" class="bgline0">
                             <pagePanel header-title="水井工况诊断" style="height: 100%;">
-                                <div class="z-content" style="height:calc(100% - 55px);">
+                                <div class="z-content" style="height:calc(100%); overflow-y: auto;">
                                     <div class="z-content-n">
                                         <div class="z-row-left">
                                             <div class="z_title">
@@ -414,7 +414,7 @@
                         <div class="v2 v3">
                             <img src="@/assets/rem/performance/bgline2.png" alt="" class="bgline2">
                             <pagePanel header-title="潜力分析" style="height: 100%;">
-                                <div class="z-content" style="height:calc(100% - 55px);">
+                                <div class="z-content" style="height:calc(100%);  overflow-y: auto;">
                                     <div class="z-content-n">
                                         <div class="z-row-left">
                                             <div class="z_title">

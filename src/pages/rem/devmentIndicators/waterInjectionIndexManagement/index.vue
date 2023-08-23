@@ -116,8 +116,9 @@
                     <el-table-column prop="name" label="指标" align="center"></el-table-column>
                     <el-table-column prop="real" label="实际值" align="center" :formatter="formatterNumber"></el-table-column>
                     <el-table-column prop="chain" label="环比 (上年/上月)" align="center">
-                        <template slot-scope="scope">
-                            {{scope.row.chain}}{{scope.row.chain!==null&&scope.row.chainType==1?'(年)':(scope.row.chain!==null&&scope.row.chainType==2)?'(月)':'-'}}
+                        <template slot-scope="scope" v-if="scope.row.chain">
+                            <span v-if="scope.row.name == '年注入量（10⁴m³）'">{{ scope.row.chainType === 1 ? `${parseFloat(scope.row.chain).toFixed(4)} (年)` : `${parseFloat(scope.row.chain).toFixed(4)} (月)` }}</span>
+                            <span v-else>{{ scope.row.chainType === 1 ? `${parseFloat(scope.row.chain).toFixed(2)} (年)` : `${parseFloat(scope.row.chain).toFixed(2)} (月)` }}</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="diffRealMom" label="实际值与环比差值" align="center" :formatter="formatterNumber"></el-table-column>
@@ -1232,7 +1233,11 @@
             },
             //表格格式化方法 - 数值只保留四位小数
             formatterNumber(row, column) {
-                return Number(row[column.property]) ? parseFloat(Number(row[column.property]).toFixed(4)) : "";
+                if (row.name == '年注入量（10⁴m³）') {
+                    return Number(row[column.property]) ? parseFloat(row[column.property]).toFixed(4) : "";
+                } else {
+                    return Number(row[column.property]) ? parseFloat(row[column.property]).toFixed(2) : "";
+                }
             },
         },
     };

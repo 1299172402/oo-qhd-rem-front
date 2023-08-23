@@ -22,10 +22,10 @@
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
                 <el-table-column prop="theDate" align="center" label="时间"> </el-table-column>
-                <el-table-column prop="injectionDailyReal" align="center" :label="`实际日注入量\n(m³/d)`" :formatter="numberToTwo"></el-table-column>
-                <el-table-column prop="injectionDailyPlan" align="center" :label="`计划日注入量\n(m³/d)`" :formatter="numberToTwo"></el-table-column>
-                <el-table-column property="injectionSumReal" align="center" :label="`实际年累注\n(10⁴m³)`" :formatter="numberToFour"></el-table-column>
-                <el-table-column prop="injectionSumPlan" align="center" :label="`计划年累注\n(10⁴m³)`" :formatter="numberToFour"></el-table-column>
+                <el-table-column prop="injectionDailyReal" align="center" :label="`实际日注入量\n(m³/d)`" :formatter="toPrecise2"></el-table-column>
+                <el-table-column prop="injectionDailyPlan" align="center" :label="`计划日注入量\n(m³/d)`" :formatter="toPrecise2"></el-table-column>
+                <el-table-column property="injectionSumReal" align="center" :label="`实际年累注\n(10⁴m³)`" :formatter="toPrecise4"></el-table-column>
+                <el-table-column prop="injectionSumPlan" align="center" :label="`计划年累注\n(10⁴m³)`" :formatter="toPrecise2"></el-table-column>
             </el-table>
             <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination"/>
         </pagePanel>
@@ -333,19 +333,29 @@
               });
             },
             //保留两位小数
-            numberToTwo(row, column, cellValue, index) {
-                if (cellValue) {
-                    return Number(cellValue).toFixed(2);
+            toPrecise2(row, column, cellValue, index) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
                 } else {
-                    return '-';
+                    return row[column.property] ? row[column.property] : "-";
                 }
             },
             //保留四位小数
-            numberToFour(row, column, cellValue, index) {
-                if (cellValue) {
-                    return Number(cellValue).toFixed(4);
+            toPrecise4(row, column, cellValue, index) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(4)
+                    : "0";
                 } else {
-                    return '-';
+                    return row[column.property] ? row[column.property] : "-";
                 }
             },
             //下载echarts

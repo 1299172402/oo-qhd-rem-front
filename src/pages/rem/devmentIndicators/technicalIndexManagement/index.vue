@@ -4,11 +4,17 @@
         
         <header-search style="width:100%;height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
-                <span>油田：</span>
-                <el-select v-model="selectOilFieldId" disabled>
-                    <el-option v-for="item in oilFieldList" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
-                </el-select>
-                <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
+                <div style="margin: 10px 20px 10px 0px">
+                    <span>油田：</span>
+                    <el-select v-model="selectOilFieldId" disabled>
+                        <el-option v-for="item in oilFieldList" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
+                    </el-select>
+                </div>
+                <div style="margin: 10px 20px 10px 0px">
+                    年度：
+                    <el-date-picker v-model="year" type="year" placeholder="选择年" value-format="yyyy-12-31"></el-date-picker>
+                </div>
+                <el-button icon="el-icon-search" type="primary" @click="doSearch">搜索</el-button>
             </div>
         </header-search>
         
@@ -83,9 +89,9 @@
                 <div style="margin-top: 10px;height:calc(100% - 50px);">
                     <el-table id="indexscv" :data="tableData" highlight height="100%">
                         <el-table-column prop="name" label="指标" align="center"></el-table-column>
-                        <el-table-column prop="real" label="实际值" align="center"></el-table-column>
-                        <el-table-column prop="compareOilField" label="对标油田(羊三木)" align="center"></el-table-column>
-                        <el-table-column prop="realCompareOilField" label="实际值与对标差值" align="center"></el-table-column>
+                        <el-table-column prop="real" label="实际值" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="compareOilField" label="对标油田(羊三木)" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="realCompareOilField" label="实际值与对标差值" align="center" :formatter="toPrecise2"></el-table-column>
                     </el-table>
                 </div>
             </pagePanel>
@@ -157,6 +163,7 @@
     import { fetchOilFields,fetchFields, fetchPlatforms } from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import { oilYear,compositeDeclineRate,proTimeRate,proWellUsageRate,natureDeclineRateForTech,waterCutRaiseRate,proSpeed,techIndicatorStat,} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
     import { searchOilProductionChart} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+    import dayjs from "dayjs";
 
     export default {
         name:'technicalIndexManagement',
@@ -180,6 +187,8 @@
                 queryParams: {},
                 //选中油田
                 selectOilFieldId: '',
+                // 年度
+                year: dayjs().format("YYYY-12-31"),
                 //选中对标油田
                 selectTargetOilFieldId: '',
                 page: 1,
@@ -1448,6 +1457,7 @@
                     outputDegreeCode: outputDegreeCode,
                     reservoirsTypeCode: reservoirsTypeCode,
                     devPhaseCode: devPhaseCode,
+                    year: this.year,
                 }
                 this.tableData = [];
                 techIndicatorStat(request).then((res) => {
@@ -1459,7 +1469,8 @@
             //技术指标管理-年产油量
             doOilYear2(oilFieldId) {//原来用的是这个
                 let request = {
-                    oilFieldId: oilFieldId
+                    oilFieldId: oilFieldId,
+                    year: this.year,
                 }
                 oilYear(request).then((res) => {
                     //图表数据
@@ -1515,6 +1526,7 @@
                     planTypeCode: "002003",
                     rollForecastVersion: "202301",
                     unitType: "m",
+                    year: this.year,
                 };
                 searchOilProductionChart(request).then((res) => {
                     //图表数据
@@ -1603,6 +1615,7 @@
             doProSpeed(oilFieldId) {
                 let request = {
                     oilFieldId: oilFieldId,
+                    year: this.year,
                 }
                 proSpeed(request).then((res) => {
                     if (res.data.code == 200) {
@@ -1647,6 +1660,7 @@
                 let request = {
                     oilFieldId: oilFieldId,
                     fileId: blockId,
+                    year: this.year,
                 }
                 compositeDeclineRate(request).then((res) => {
                     if (res.data.code == 200) {
@@ -1712,6 +1726,7 @@
                 let request = {
                     oilFieldId: oilFieldId,
                     fileId: blockId,
+                    year: this.year,
                 }
                 waterCutRaiseRate(request).then((res) => {
                     if (res.data.code == 200) {
@@ -1774,6 +1789,7 @@
                 let request = {
                     oilFieldId: oilFieldId,
                     fileId: blockId,
+                    year: this.year,
                 }
                 natureDeclineRateForTech(request).then((res) => {
                     if (res.data.code == 200) {
@@ -1834,6 +1850,7 @@
             doProTimeRate(oilFieldId) {
                 let request = {
                     oilFieldId: oilFieldId,
+                    year: this.year,
                 }
                 proTimeRate(request).then((res) => {
                     if (res.data.code == 200) {
@@ -1891,6 +1908,7 @@
             doProWellUsageRate(oilFieldId) {
                 let request = {
                     oilFieldId: oilFieldId,
+                    year: this.year,
                 }
                 proWellUsageRate(request).then((res) => {
                     if (res.data.code == 200) {
@@ -1947,6 +1965,19 @@
             //导出excel表
             doDownIndex() {
                 exportExcel('#indexscv', '技术指标总览');
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         }
     };

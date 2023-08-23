@@ -91,7 +91,7 @@ export default {
             name: "关停影响产量(10⁴m³)",
             nameTextStyle: {
               color: "#a9a8a8",
-              padding: [0, 0, 18, 0], // 上、右、下、左
+              padding: [0, 0, 10, 0], // 上、右、下、左
             },
             nameLocation: "center",
             splitLine: {

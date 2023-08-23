@@ -44,16 +44,16 @@
                     <!-- :index="formatIndex"  -->
                     <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
                     <el-table-column prop="platFormName" label="平台" align="center"></el-table-column>
-                    <el-table-column prop="null" :label="`考核指标\n分注率\n(%)`" align="center" min-width="70"></el-table-column>
+                    <el-table-column prop="null" :label="`考核指标\n分注率\n(%)`" align="center" min-width="70" :formatter="toPrecise2"></el-table-column>
                     <el-table-column label="计划指标" align="center">
                         <el-table-column prop="planTotalWellCount" :label="`总注水井数\n(口)`" align="center" min-width="70"></el-table-column>
                         <el-table-column prop="planSplitRatioWellCount" :label="`分注井数\n(口)`" align="center" min-width="70"></el-table-column>
-                        <el-table-column prop="planSplitRatioRate" :label="`分注率\n(%)`" align="center" min-width="70"></el-table-column>
+                        <el-table-column prop="planSplitRatioRate" :label="`分注率\n(%)`" align="center" min-width="70" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                     <el-table-column label="实际指标" align="center">
                         <el-table-column prop="totalWellCount" :label="`总注水井数\n(口)`" align="center" min-width="70"></el-table-column>
                         <el-table-column prop="splitRatioWellCount" :label="`分注井数\n(口)`" align="center" min-width="70"></el-table-column>
-                        <el-table-column prop="splitRatioRate" :label="`分注率\n(%)`" align="center" min-width="70"></el-table-column>
+                        <el-table-column prop="splitRatioRate" :label="`分注率\n(%)`" align="center" min-width="70" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                 </el-table>
             </pagePanel>
@@ -379,6 +379,19 @@
             //表格id 表格名称
             doDownExcel(tableId, tableName) {
                 exportExcel(tableId, tableName);
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         },
     };

@@ -39,10 +39,10 @@
             </el-table-column>
             <el-table-column label="电量" align="center">
                 <el-table-column label="设计" align="center">
-                    <el-table-column prop="dlsj" label="(KW)" align="center" width="120"></el-table-column>
+                    <el-table-column prop="dlsj" label="(kW)" align="center" width="120"></el-table-column>
                 </el-table-column>
                 <el-table-column label="当前" align="center">
-                    <el-table-column prop="dldq" label="(KW)" align="center" width="120"></el-table-column>
+                    <el-table-column prop="dldq" label="(kW)" align="center" width="120"></el-table-column>
                 </el-table-column>
             </el-table-column>
             <el-table-column prop="qksm" :label="`海管等其他设施情况说明\n（可合并单元格）`" align="center" width="800"></el-table-column>

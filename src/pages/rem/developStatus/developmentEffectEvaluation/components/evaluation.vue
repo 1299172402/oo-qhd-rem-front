@@ -60,8 +60,8 @@
                     <el-table id="table1" :data="tableData" highlight height="calc(100% - 55px)">
                         <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
                         <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
-                        <el-table-column prop="lastPhaseValue" label="上阶段值" align="center"></el-table-column>
-                        <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center"></el-table-column>
+                        <el-table-column prop="lastPhaseValue" label="上阶段值" align="center" :formatter="toPrecise4"></el-table-column>
+                        <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center" :formatter="toPrecise4"></el-table-column>
                         <el-table-column label="理论值" align="center">
                             <template slot-scope="scope">
                                 <el-input-number v-model="scope.row.theoryValue" :controls="false" class="el-input-number" style="width: 70px"></el-input-number>
@@ -935,6 +935,19 @@
             //下载导出文件 tableId tableName
             doDownExcel(tableId, tableName) {
                 exportExcel(tableId, tableName);
+            },
+            // 表格格式化方法 - 数值只保留四位小数
+            toPrecise4(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(4)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         }
     };

@@ -25,10 +25,10 @@
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column type="index" align="center" label="序号"></el-table-column>
                 <el-table-column prop="theDate" align="center" label="时间"> </el-table-column>
-                <el-table-column prop="oilAudit" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '考核日产\n(m³/d)' : '考核日产\n(t/d)'" :formatter="numberToTwo"></el-table-column>
-                <el-table-column prop="oilReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际日产\n(m³/d)' : '实际日产\n(t/d)'" :formatter="numberToTwo"></el-table-column>
-                <el-table-column property="sumPlan" prop="sumPlan" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '计划年累产\n(10⁴m³)' : '计划年累产\n(10⁴t)'" :formatter="numberToFour"></el-table-column>
-                <el-table-column prop="sumReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际年累产\n(10⁴m³)' : '实际年累产\n(10⁴t)'" :formatter="numberToFour"></el-table-column>
+                <el-table-column prop="oilAudit" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '考核日产\n(m³/d)' : '考核日产\n(t/d)'" :formatter="toPrecise2"></el-table-column>
+                <el-table-column prop="oilReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际日产\n(m³/d)' : '实际日产\n(t/d)'" :formatter="toPrecise2"></el-table-column>
+                <el-table-column property="sumPlan" prop="sumPlan" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '计划年累产\n(10⁴m³)' : '计划年累产\n(10⁴t)'" :formatter="toPrecise4"></el-table-column>
+                <el-table-column prop="sumReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际年累产\n(10⁴m³)' : '实际年累产\n(10⁴t)'" :formatter="toPrecise4"></el-table-column>
             </el-table>
             <!-- <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination"/> -->
             <pagination v-if="total" :pageSizes="[10, 20, 40, 100]" :total="total" :page.sync="queryParams.page" :limit.sync="queryParams.pageSize" @pagination="pagination" />
@@ -90,7 +90,7 @@
                         x: 120,
                         y: 50,
                         x2: 120,
-                        y2: 100,
+                        y2: 120,
                     },
                     legend: {
                         data: [],
@@ -99,7 +99,7 @@
                             fontSize: 14,
                         },
                         x:'center',
-                        bottom:60,
+                        bottom:40,
                         icon: 'rect',
                         itemWidth: 12,
                         itemHeight: 6,
@@ -197,11 +197,17 @@
                     series: [],
                     dataZoom:[
                         {
+                            type: "inside",
+                            xAxisIndex: [0, 1, 2, 3],
+                            start: 0, //滚动条开始位置（共100等份）
+                            end: 100, //滚动条结束位置
+                        },
+                        {
                             type: 'slider',
                             realtime:true, //拖动滚动条时是否动态的更新图表数据
                             height:10,//滚动条高度
-                            startValue:'',//滚动条开始位置
-                            endValue:'',//结束位置
+                            startValue: 0,//滚动条开始位置
+                            endValue: 100,//结束位置
                             zoomLock:true,
                             showDetail:false,
                             brushSelect: false,
@@ -221,12 +227,7 @@
                                 } 
                             },
                         },
-                        {
-                            type: "inside",
-                            xAxisIndex: [0, 1, 2, 3],
-                            start: 0, //滚动条开始位置（共100等份）
-                            end: 100, //滚动条结束位置
-                        },
+                       
                     ]
                 },
                 isDevelop:false,//是否展示表格
@@ -376,22 +377,31 @@
                 });
             },
             //保留两位小数
-            numberToTwo(row, column, cellValue, index) {
-                if (cellValue) {
-                    return Number(cellValue).toFixed(2);
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
                 } else {
-                    return '-';
+                    return row[column.property] ? row[column.property] : "-";
                 }
             },
             //保留四位小数
-            numberToFour(row, column, cellValue, index) {
-                if (cellValue) {
-                    return Number(cellValue).toFixed(4);
+            toPrecise4(row, column, cellValue, index) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(4)
+                    : "0";
                 } else {
-                    return '-';
+                    return row[column.property] ? row[column.property] : "-";
                 }
             },
-            
             //分页
             pagination(obj){
                 // if(this.pageSize!=obj.limit){

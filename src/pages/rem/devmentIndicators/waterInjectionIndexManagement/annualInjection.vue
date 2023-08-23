@@ -42,9 +42,9 @@
                 <el-table id="ptnzrl" :data="tableData" highlight height="calc(100% - 55px)">
                     <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
                     <el-table-column prop="platform_name" label="平台" align="center"></el-table-column>
-                    <el-table-column prop="dailycount2" :label="`油藏需求注入量\n(10⁴m³)`" align="center"></el-table-column>
-                    <el-table-column prop="dailycount3" :label="`年考核注入量\n(10⁴m³)`" align="center"></el-table-column>
-                    <el-table-column prop="dailycount1" :label="`年实际注入量\n(10⁴m³)`" align="center"></el-table-column>
+                    <el-table-column prop="dailycount2" :label="`油藏需求注入量\n(10⁴m³)`" align="center" :formatter="toPrecise4"></el-table-column>
+                    <el-table-column prop="dailycount3" :label="`年考核注入量\n(10⁴m³)`" align="center" :formatter="toPrecise4"></el-table-column>
+                    <el-table-column prop="dailycount1" :label="`年实际注入量\n(10⁴m³)`" align="center" :formatter="toPrecise4"></el-table-column>
                 </el-table>
             </pagePanel>
         </page-panel-new>
@@ -386,6 +386,19 @@
             //表格id 表格名称
             doDownExcel(tableId, tableName) {
                 exportExcel(tableId, tableName);
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise4(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(4)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         },
     };

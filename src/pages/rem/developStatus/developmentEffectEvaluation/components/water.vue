@@ -41,7 +41,13 @@
                                 }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center"></el-table-column>
+                        <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center">
+                            <template slot-scope="scope">
+                                <span>{{
+                                  Number(scope.row.diffLastPhaseValue) | toFixNumberFour
+                                }}</span>
+                            </template>
+                        </el-table-column>
                         <el-table-column label="理论值" align="center">
                             <template slot-scope="scope">
                                 <el-input-number v-model="scope.row.theoryValue" :controls="false" class="el-input-number"></el-input-number>
@@ -67,6 +73,7 @@
     import { fetchFields, fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo";
     import { waterContainRaiseChart, waterIndicatorChart, waterSotreRateChart, indicatorResult } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
     import {exportExcel} from '@/lib/exportExcel.js';
+import { number } from 'echarts';
 
     export default {
         components: {
@@ -84,7 +91,7 @@
         },
         filters: {
             toFixNumberFour(val) {
-                return val.toFixed(4);
+                return Number(val).toFixed(4);
             },
         },
         data() {

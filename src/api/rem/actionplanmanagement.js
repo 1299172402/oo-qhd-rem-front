@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
-export function getOnSiteWork({ ogfId, asseCode, wellId, measureTypeCode, yeartime, pageNum, pageSize } = {}) {
+export function getOnSiteWork({ ogfId, asseCode, wellId, measureTypeCode, yearTime, pageNum, pageSize } = {}) {
   return request({
-    url: `${baseUrl}/actionPlanManagement/onSiteWork?ogfId=${ ogfId || "" }&asseCode=${ asseCode || "" }&wellId=${ wellId || "" }&measureTypeCode=${ measureTypeCode || "" }&pageNum=${ pageNum || "" }&pageSize=${ pageSize || "" }&yeartime=${ yeartime || "" }`,
+    url: `${baseUrl}/actionPlanManagement/onSiteWork?ogfId=${ ogfId || "" }&asseCode=${ asseCode || "" }&wellId=${ wellId || "" }&measureTypeCode=${ measureTypeCode || "" }&pageNum=${ pageNum || "" }&pageSize=${ pageSize || "" }&yearTime=${ yearTime || "" }`,
     method: "get",
   });
 }
