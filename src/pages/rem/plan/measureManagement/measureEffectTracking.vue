@@ -150,7 +150,7 @@
                         </div>
                     </div>
                     <div class="svg" v-else-if="oilTabType == '1'">
-                        <div class="search-date" style="position: absolute; top: 0; left: 20px; ">
+                        <div class="search-date">
                             <span>日期：</span>
                             <el-date-picker v-model="dateDetail" type="datetimerange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"  @change="createChange"></el-date-picker>
                             <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doSearchCharts">搜索</el-button>
@@ -2411,8 +2411,8 @@
                         .map((item, index) => {
                             if (this.chartDataType == 'real') {
                                 return {
-                                    top:  index == 0  ? '50' : `${4 + 30 * index + index}%`,
-                                    height: '25%',
+                                    top: `${4 + 30 * index + index}%`,
+                                    height: '28%',
                                     left: '20%',
                                     right: '20%',
                                     width: '60%',
