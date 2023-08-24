@@ -373,6 +373,7 @@ export default {
                     this.saveLoad = true
                     this.modify = false
                     wellAvgFluidProdAllocUpdateNew({
+                        blockId:this.queryData.blockId,
                         injWellMonthDtos: this.form.tableData2,
                         dateTime: this.queryData.dateTime
                     }).then((bool) => {
