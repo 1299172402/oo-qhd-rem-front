@@ -53,6 +53,7 @@
             </el-form>
         </headerSearch>
         <pagePanel headerTitle="现场作业计划表" style="height: calc(100% - 50px)">
+            <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;float: right" @click="doDownExcel()">下载</el-button>
             <el-table
                 :data="noticeList"
                 highlight-current-row
@@ -61,7 +62,7 @@
                 header-cell-class-name="table_header"
                 :cell-style="{ 'text-align': 'center', padding: '2px' }"
                 style="width: 100%"
-                height="calc(100% - 50px)"
+                height="calc(100% - 90px)"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
                 <el-table-column label="*日期" prop="theDate" align="center"></el-table-column>
@@ -77,9 +78,9 @@
                 <el-table-column label="作业井号" min-width="100px" prop="nextJobWellNo" align="center"></el-table-column>
                 <el-table-column label="是否动管柱" prop="isMovingPipePresent" align="center"></el-table-column>
                 <el-table-column label="预计作业时间" prop="planStartDate" align="center"></el-table-column>
-                <el-table-column label="备注" prop="remark" align="center"></el-table-column>
+                <el-table-column label="备注" prop="remark" show-overflow-tooltip align="center"></el-table-column>
             </el-table>
-            <pagination
+            <pagination 
                 :total="total"
                 v-show="total > 0"
                 @pagination="changepage"
@@ -92,13 +93,13 @@
 </template>
 
 <script>
-import {getOnSiteWork,onSiteWorkActionEvent} from '@/api/rem/actionplanmanagement';
+import {getOnSiteWork,onSiteWorkActionEvent,onSiteWorkDownloadFile} from '@/api/rem/actionplanmanagement';
 import {
     queryListOfOilfieldQueryPlatformsDetail,
     queryOperatorsCheckFieldListsDetail,
     queryPlatformQueryWellListDetail
 } from "@/api/basic/master";
-
+import FileSaver from 'file-saver'
 export default {
     data() {
         return {
@@ -172,8 +173,22 @@ export default {
                     this.$message.warning('系统错误请重新尝试或联系运维人员！');
                 }
             });
-        },  
-        
+        },
+        doDownExcel(){
+            let data = {
+                ogfId:this.queryParams.ogfId,
+                asseCode:this.queryParams.asseCode,
+                wellId:this.queryParams.wellId,
+                measureTypeCode:this.queryParams.measureTypeCode,
+                yearTime:this.queryParams.yeartime,
+                pageNum:this.pageNum,
+                pageSize:this.pageSize
+            }
+            onSiteWorkDownloadFile(data).then((res)=>{
+                const aBlob = new Blob([res]);
+                FileSaver.saveAs(aBlob, `现场作业计划表.xls` );
+            })
+        },
         reset(){
             queryListOfOilfieldQueryPlatformsDetail({ogfId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{
                 this.platforms = res.data.data

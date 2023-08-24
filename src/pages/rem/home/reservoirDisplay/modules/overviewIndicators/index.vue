@@ -569,9 +569,10 @@ export default {
             console.info(value, unit, valueColor, backColor, centerColor)
             var option = {
                 tooltip: {
-                    trigger: value,
-                    formatter: unit,
-                    position:'top',
+                    position: 'top',
+                    formatter: function (value) {
+                        return value.percent
+                    },
                 },
                 series: [
                     {
@@ -582,6 +583,7 @@ export default {
                         color: centerColor,
                         label: {
                             fontSize: 16,
+                            position: 'outside', // 将位置设置为 'outside'
                         },
                         data: [
                             {value: 0, name: value, label: {color: "white", position: "center"}},

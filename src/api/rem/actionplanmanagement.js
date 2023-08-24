@@ -7,6 +7,13 @@ export function getOnSiteWork({ ogfId, asseCode, wellId, measureTypeCode, yearTi
     method: "get",
   });
 }
+export function onSiteWorkDownloadFile({ ogfId, asseCode, wellId, measureTypeCode, yearTime, pageNum, pageSize } = {}) {
+    return request({
+        url: `${baseUrl}/actionPlanManagement/onSiteWorkDownloadFile?ogfId=${ ogfId || "" }&asseCode=${ asseCode || "" }&wellId=${ wellId || "" }&measureTypeCode=${ measureTypeCode || "" }&pageNum=${ pageNum || "" }&pageSize=${ pageSize || "" }&yearTime=${ yearTime || "" }`,
+        method: "get",
+        responseType:'blob',
+    });
+}
 export function queryMeasurePlanList(data) {
   return request({
     url: `${baseUrl}/actionPlanManagement/queryMeasurePlanList`,

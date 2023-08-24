@@ -7,11 +7,9 @@
             :is-show-max-btn="true"
         >
             <button class="detailLinkBtn" @click="linkroute('problemWellStatistics')">详细</button>
-            <Echart :chart-data="histogram" width="100%" height="100%"></Echart>
+            <el-button size="mini" type="primary" style="position: absolute;right:0px;z-index:20" @click="downEcharts">下载</el-button>
+            <Echart ref="echartChart" :chart-data="histogram" width="100%" height="100%"></Echart>
         </info-window>
-        <!-- :style="{
-              background: currentModel == 'dark' ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0)',
-            }" -->
     </div>
 </template>
 <script>
@@ -128,6 +126,9 @@ export default {
     methods: {
         linkroute(rname) {
             this.$router.push({name: rname});
+        },
+        downEcharts(){
+            this.$refs.echartChart.chartDownLoad( '问题井统计'); 
         },
         getData() {
             queryProblemWellStatis({

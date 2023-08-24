@@ -6,9 +6,11 @@
         :is-show-max-btn="true"
     >
         <button class="detailLinkBtn" @click="linkroute('/injection/indexHome')">详细</button>
+        <el-button size="mini" type="primary" style="z-index:20;float:right" @click="downTable">下载</el-button>
         <el-table
             :data="tableData"
             height="100%"
+            id="tabledata"
             style="width: 100%"
         >
             <el-table-column prop="date" label="序号" align="center" width="50">
@@ -28,7 +30,7 @@
             </el-table-column>
             <el-table-column prop="overflowInj" align="center" width="90">
                 <template slot="header">
-                    超/欠注量</br>(m³/d)
+                    超/欠注量
                 </template>
                 <template slot-scope="scope">
                     <span>{{ scope.row.overflowInj }}</span>
@@ -46,7 +48,7 @@
 
 <script>
 import {getUltraShortShotStatistics} from "@/api/rem/r-intelligentIPA";
-
+import {exportExcel} from "@/lib/exportExcel";
 export default {
     data() {
         return {
@@ -67,6 +69,9 @@ export default {
                 h('span', {}, column.label.split('?')[1])
             ]);
         },
+        downTable(){
+            exportExcel("#tabledata", "超欠注情况统计");
+        },
         //超欠注情况统计
         queryUltraShortShotStatistics() {
             let queryData = {
@@ -76,6 +81,7 @@ export default {
                 // dateTime: new Date().format('YYYY-MM') ,
                 //修改取数的日期为5月
                 dateTime: new Date().getFullYear() + '-' + (new Date().getMonth()),
+                // dateTime:'2023-02',
                 //油田
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'
             }

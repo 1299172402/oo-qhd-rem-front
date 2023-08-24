@@ -7,6 +7,7 @@
           :is-show-max-btn="true"
       >
         <button class="detailLinkBtn" @click="linkroute('/injection/indexHome')">详细</button>
+          <el-button size="mini" type="primary" style="position: absolute;right:0px;z-index:20" @click="downEcharts">下载</el-button>
 <!--        <el-row :gutter="20" style="margin-bottom: 10px">-->
 <!--          <el-col :span="12">-->
 <!--            <div class="grid-content bg-purple">-->
@@ -114,6 +115,7 @@
           <Echart
               :chart-data="getResidueOilChart()"
               height="100%"
+              ref="echartChart"
               style="height: 100%!important;"
           >
           </Echart>
@@ -254,6 +256,9 @@ export default {
               ]
           }
           return option
+      },
+      downEcharts(){
+          this.$refs.echartChart.chartDownLoad( '单井井底流压');
       },
       getData(){
           let params = {

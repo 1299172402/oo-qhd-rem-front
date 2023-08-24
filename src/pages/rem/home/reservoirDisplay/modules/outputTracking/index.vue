@@ -1,10 +1,7 @@
 <template>
     <div class="app-container" style="width: 100%; height: 100%">
-<!--        <div style="width: 15%; height: 10%; margin-left: 5%; text-align: center; padding: 5px 0">-->
-<!--&lt;!&ndash;            投产时间：2001-10&ndash;&gt;-->
-<!--        </div>-->
-<!--        <Echart :chart-data="histogram" width="100%" height="65%"></Echart>-->
-        <Echart :chart-data="productLineChart" width="100%" height="80%"></Echart>
+        <el-button size="mini" type="primary" style="position: absolute;right:0px;z-index:20" @click="downEcharts">下载</el-button>
+        <Echart ref="echartChart" :chart-data="productLineChart" width="100%" height="80%"></Echart>
         <el-row :gutter="20">
             <el-col :span="7">
                 <div style="display: flex;position: relative;bottom: 45px">
@@ -1032,6 +1029,9 @@ export default {
             }
             series.data = seriesData;
             return series;
+        },
+        downEcharts(){
+                this.$refs.echartChart.chartDownLoad( '油田日度产量跟踪');
         },
         getData() {
             queryYieldTracking({

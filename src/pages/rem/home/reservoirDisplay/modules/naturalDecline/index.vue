@@ -6,7 +6,8 @@
         :is-show-max-btn="true"
     >
         <button class="detailLinkBtn" @click="linkroute('/developStatus/developmentEffectEvaluation')">详细</button>
-        <Echart :chart-data="naturalDeclineRate" width="100%" height="100%"></Echart>
+        <el-button size="mini" type="primary" style="position: absolute;right:0px;z-index:20" @click="downEcharts">下载</el-button>
+        <Echart ref="echartChart" :chart-data="naturalDeclineRate" width="100%" height="100%"></Echart>
     </info-window>
 </template>
 <script>
@@ -112,6 +113,9 @@ export default {
                   this.naturalDeclineRate.series.data = seriesData;
               }
           });
+      },
+      downEcharts(){
+          this.$refs.echartChart.chartDownLoad( '自然递减率');
       },
       //柱状图
       getBarChartSeries(barChart) {

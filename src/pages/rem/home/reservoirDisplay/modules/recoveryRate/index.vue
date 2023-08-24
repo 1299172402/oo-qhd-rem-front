@@ -6,7 +6,8 @@
         :is-show-max-btn="true"
     >
         <button class="detailLinkBtn" @click="linkroute('/developStatus/developmentEffectEvaluation')">详细</button>
-        <Echart :chart-data="productionSpeed" width="100%" height="100%"></Echart>
+        <el-button size="mini" type="primary" style="position: absolute;right:0px;z-index:20" @click="downEcharts">下载</el-button>
+        <Echart ref="echartChart" :chart-data="productionSpeed" width="100%" height="100%"></Echart>
     </info-window>
 </template>
 <script>
@@ -186,6 +187,9 @@ export default {
                   this.productionSpeed.series = seriesData;
               }
           });
+      },
+      downEcharts(){
+          this.$refs.echartChart.chartDownLoad( '采油速度');
       },
       //采出速度 折线解析
       outputSpeedLine(linearChart) {

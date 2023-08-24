@@ -1,5 +1,6 @@
 <template>
     <div class="app-container" style="width: 100%; height: 100%">
+        
         <info-window
             info-width="100%"
             info-height="100%"
@@ -7,7 +8,8 @@
             :is-show-max-btn="true"
         >
             <button class="detailLinkBtn" @click="linkroute('annualPlan')">详细</button>
-            <Echart :chart-data="histogram" style="height: 100%"></Echart>
+            <el-button size="mini" type="primary" style="position: absolute;right:0px;z-index:20" @click="downEcharts">下载</el-button>
+            <Echart ref="echartChart" :chart-data="histogram" style="height: 100%"></Echart>
         </info-window>
     </div>
 </template>
@@ -157,6 +159,9 @@ export default {
     methods: {
         linkroute(rname) {
             this.$router.push({name: rname});
+        },
+        downEcharts(){
+            this.$refs.echartChart.chartDownLoad( '油田月度产量对比');
         },
         getinfo() {
             monthlyProductionComparison({'ogfId':'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res => {

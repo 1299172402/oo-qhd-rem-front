@@ -6,7 +6,8 @@
         :is-show-max-btn="true"
     >
         <button class="detailLinkBtn" @click="linkroute('/developStatus/developmentEffectEvaluation')">详细</button>
-        <Echart :chart-data="relationship" width="100%" height="100%"></Echart>
+        <el-button size="mini" type="primary" style="position: absolute;right:0px;z-index:20" @click="downEcharts">下载</el-button>
+        <Echart ref="echartChart" :chart-data="relationship" width="100%" height="100%"></Echart>
     </info-window>
 </template>
 <script>
@@ -134,6 +135,9 @@ export default {
               path: name,
               query:{ link:'evaluation' }
           });
+      },
+      downEcharts(){
+          this.$refs.echartChart.chartDownLoad( '采出程度与含水率关系图');
       },
       //采出程度与含水率关系图
       getOutputDegreeTongChart(oilFieldId, fieldId) {

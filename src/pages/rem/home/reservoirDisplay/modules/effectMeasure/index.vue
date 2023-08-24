@@ -7,17 +7,12 @@
             :is-show-max-btn="true"
         >
             <button class="detailLinkBtn" @click="linkroute('oilAnalysisReport')">详细</button>
-<!--            <span-->
-<!--                style="font-size:14px;color: #1ec5e6; position: relative; top: -31px; left: 150px">措施潜力井统计表</span>-->
-<!--            <span style="font-size:14px;color: #1ec5e6; position: relative; top: -31px; left: 160px"-->
-<!--            >增油量值设置-->
-<!--                <div class="inputstyle"><el-input></el-input></div>-->
-<!--              </span>-->
+            <el-button size="mini" type="primary" style="float: right" @click="downtable">下载</el-button>
             <el-table
                 :data="tableData"
                 highlight-current-row
                 height="calc(100% - 50px)"
-                id="tableData"
+                id="tablecsxg"
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px', color: '' }"
                 header-cell-class-name="table_header"
@@ -51,8 +46,7 @@
                 <el-table-column prop="itemValue" label="">
                     <template slot="header">
                         <div style="color: #1ec5e6">
-                            预计增油量 <br/>
-                            (m³/d)
+                            预计增油量(m³/d)
                         </div>
                     </template>
                 </el-table-column>
@@ -64,7 +58,7 @@
 
 <script>
 import {queryMeasureEffectTrack} from "@/api/rem/reservoirbillboards";
-
+import {exportExcel} from "@/lib/exportExcel";
 export default {
     data() {
         return {
@@ -82,6 +76,9 @@ export default {
                     this.tableData = res.data.data                    
                 }
             })
+        },
+        downtable(){
+                exportExcel("#tablecsxg", "措施效果跟踪表");
         },
         linkroute(rname) {
             this.$router.push({name: rname});

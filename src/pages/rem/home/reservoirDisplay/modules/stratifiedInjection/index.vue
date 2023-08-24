@@ -7,7 +7,8 @@
           :is-show-max-btn="true"
       >
           <button class="detailLinkBtn" @click="linkroute('/injection/indexHome')">详细</button>
-          <Echart :chart-data="option" width="100%" height="100%"></Echart>
+          <el-button size="mini" type="primary" style="position: absolute;right:0px;z-index:20" @click="downEcharts">下载</el-button>
+          <Echart ref="echartChart" :chart-data="option" width="100%" height="100%"></Echart>
       </info-window>
   </div>
 </template>
@@ -99,6 +100,9 @@ export default {
   methods: {
       linkroute(rname) {
           this.$router.push({path: rname,query: {link:'remHome'}});
+      },
+      downEcharts(){
+          this.$refs.echartChart.chartDownLoad( '分层注入量');
       },
       //分层注采量
       queryStratifiedInjectionDetails() {
