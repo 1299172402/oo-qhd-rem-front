@@ -568,12 +568,6 @@ export default {
         getEchartData(value, unit, valueColor, backColor, centerColor) {
             console.info(value, unit, valueColor, backColor, centerColor)
             var option = {
-                tooltip: {
-                    position: 'top',
-                    formatter: function (value) {
-                        return value.percent
-                    },
-                },
                 series: [
                     {
                         type: "pie",
@@ -585,6 +579,8 @@ export default {
                             fontSize: 16,
                             position: 'outside', // 将位置设置为 'outside'
                         },
+                        animation: false,   //去掉动画效果
+                        silent: true,    //不响应和触发鼠标事件，默认为 false，即响应和触发鼠标事件
                         data: [
                             {value: 0, name: value, label: {color: "white", position: "center"}},
                             {value: 1, name: unit, label: {color: "white", position: "inner"}},
