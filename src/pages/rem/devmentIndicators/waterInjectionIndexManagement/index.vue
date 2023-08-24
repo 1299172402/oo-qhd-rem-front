@@ -30,15 +30,15 @@
         <page-panel-new class="app-content">
             <el-row style="height: 400px;" :gutter="20">
             	<el-col v-for="(item, index) in zbData" :key="index" :span="4">
-            		<info-window v-if="item.title == '注水指标总览'" class="fl" :headerTitle="item.title" info-width="100%" info-height="180px" style="margin-top: 20px;" @click.native="cardClick(item, index)">
+            		<pagePanel v-if="item.title == '注水指标总览'" class="fl" :headerTitle="item.title"  style="height: 180px; margin-top: 20px;" @click.native="cardClick(item, index)">
             			<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center">
             				<span style="font-size: 30px; vertical-align: middle; color: rgb(143, 164, 204)">
             					{{ item.title }}
             				</span>
             			</div>
-            		</info-window>
-            		<info-window v-else class="fl" :headerTitle="item.title" info-width="100%" info-height="180px" style="margin-top: 20px;">
-            			<el-button style="position: absolute; z-index: 9; right: 10px; top: 0; height: 32px; margin-top: 3px;line-height: 8px;" type="primary" @click.native="cardClick(item, index)">详情</el-button>
+            		</pagePanel>
+            		<pagePanel v-else class="fl" :headerTitle="item.title" style="height: 180px; margin-top: 20px;">
+            			<el-button style="position: absolute; z-index: 9; right: 10px; top: 0px; height: 26px; margin-top: 3px; padding: 0 16px;" type="primary" @click.native="cardClick(item, index)">详情</el-button>
             			<el-row style="padding-top: 20px;">
             				<el-col :span="14">
             					<div style="vertical-align: middle; text-align: center">
@@ -82,11 +82,11 @@
             					<Echart :chart-data="option" height="100%" width="100%"></Echart>
             				</el-col>
             			</el-row>
-            		</info-window>
+            		</pagePanel>
             	</el-col>
             </el-row>
-            <info-window headerTitle="注水指标管理" v-if="currentIndex == 0" info-width="100%" info-height="500px" is-show-max-btn>
-                <div class="g-row-flex-V" style="justify-content: space-between; margin: 20px 0;">
+            <pagePanel headerTitle="注水指标管理" v-if="currentIndex == 0" style="height: 500px;" show-btn>
+                <div class="g-row-flex-V" style="justify-content: space-between;margin-bottom: 20px;">
                     <div class="g-row-flex-V" style="flex-wrap: wrap">
                         <div style="margin-right: 20px">
                             对标油田：
@@ -112,12 +112,13 @@
                         </div>
                     </div>
                 </div>
-                <el-table id="indexscv" :data="tableData" highlight height="calc(100% - 65px)">
+                <el-table id="indexscv" :data="tableData" highlight height="calc(100% - 55px)">
                     <el-table-column prop="name" label="指标" align="center"></el-table-column>
                     <el-table-column prop="real" label="实际值" align="center" :formatter="formatterNumber"></el-table-column>
                     <el-table-column prop="chain" label="环比 (上年/上月)" align="center">
-                        <template slot-scope="scope">
-                            {{scope.row.chain}}{{scope.row.chain!==null&&scope.row.chainType==1?'(年)':(scope.row.chain!==null&&scope.row.chainType==2)?'(月)':'-'}}
+                        <template slot-scope="scope" v-if="scope.row.chain">
+                            <span v-if="scope.row.name == '年注入量（10⁴m³）'">{{ scope.row.chainType === 1 ? `${parseFloat(scope.row.chain).toFixed(4)} (年)` : `${parseFloat(scope.row.chain).toFixed(4)} (月)` }}</span>
+                            <span v-else>{{ scope.row.chainType === 1 ? `${parseFloat(scope.row.chain).toFixed(2)} (年)` : `${parseFloat(scope.row.chain).toFixed(2)} (月)` }}</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="diffRealMom" label="实际值与环比差值" align="center" :formatter="formatterNumber"></el-table-column>
@@ -126,8 +127,8 @@
                     <el-table-column prop="compareOilField" label="对标 (羊三木)" align="center" :formatter="formatterNumber"></el-table-column>
                     <el-table-column prop="realCompareOilField" label="实际值与对标差值" align="center" :formatter="formatterNumber"></el-table-column>
                 </el-table>
-            </info-window>
-            <info-window headerTitle="含水上升率" v-if="currentIndex == 5" info-width="100%" info-height="500px" is-show-max-btn>
+            </pagePanel>
+            <pagePanel headerTitle="含水上升率" v-if="currentIndex == 5" style="height: 500px;" show-btn>
                 <div class="g-row-flex-V" style="justify-content: space-between; margin: 20px 0;">
                     <div class="g-row-flex-V" style="flex-wrap: wrap">
                         <span>油藏分析单元：</span>
@@ -141,8 +142,8 @@
                     </div>
                 </div>
                 <Echart :chart-data="rateOfWaterCutRise" height="calc(100% - 75px)"></Echart>
-            </info-window>
-            <info-window headerTitle="自然递减率" v-if="currentIndex == 9" info-width="100%" info-height="500px" is-show-max-btn>
+            </pagePanel>
+            <pagePanel headerTitle="自然递减率" v-if="currentIndex == 9" style="height: 500px;" show-btn>
                 <div class="g-row-flex-V" style="justify-content: space-between; margin: 20px 0;">
                     <div class="g-row-flex-V" style="flex-wrap: wrap">
                         <span>油藏分析单元：</span>
@@ -156,7 +157,7 @@
                     </div>
                 </div>
                 <Echart :chart-data="naturalDeclineRate" height="calc(100% - 75px)"></Echart>
-            </info-window>
+            </pagePanel>
         </page-panel-new>
         
     </div>
@@ -1232,7 +1233,11 @@
             },
             //表格格式化方法 - 数值只保留四位小数
             formatterNumber(row, column) {
-                return Number(row[column.property]) ? parseFloat(Number(row[column.property]).toFixed(4)) : "";
+                if (row.name == '年注入量（10⁴m³）') {
+                    return Number(row[column.property]) ? parseFloat(row[column.property]).toFixed(4) : "";
+                } else {
+                    return Number(row[column.property]) ? parseFloat(row[column.property]).toFixed(2) : "";
+                }
             },
         },
     };

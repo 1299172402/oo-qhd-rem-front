@@ -15,74 +15,77 @@
             <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
             <el-button class="commonBtn" icon="el-icon-refresh" style="margin-left:15px!important;margin-right:auto;" @click="resetting">重置</el-button>
         </div>
-        <info-window style="margin-top:0;margin-bottom:20px;" infoWidth="100%" infoHeight="330px" headerTitle="油田产量影响因素" isShowMaxBtn>
-            <div slot-name="titleContent" style="position: absolute;right:52px;top:5px;">
-                <el-button type="primary" style="height:30px;" @click="saveEditRow">保存修改</el-button>
-            </div>
-            <el-table :data="tableData" highlight height="100%" :cell-style="{padding:'10px'}">
-                <el-table-column v-if="show" prop="ogfId"></el-table-column>
-                <el-table-column prop="ogfNo" label="油田" align="center"></el-table-column>
-                <el-table-column prop="queryInitialProd" label="日产量(m³)" align="center">
-                    <template slot-scope="scope">
-                        {{scope.row.queryInitialProd}}
-                    </template>
-                </el-table-column>
-                <el-table-column prop="initialProd" label="修正日产量(m³)" align="center">
-                    <template slot-scope="scope">
-                        <el-input-number v-model="scope.row.initialProd" :min="0" :precision="4"></el-input-number>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="degressionOfYear" label="年递减率(%)" align="center">
-                    <template slot-scope="scope">
-                        <el-input-number v-model="scope.row.degressionOfYear" :min="-100" :max="100" :precision="4"></el-input-number>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="rateOfHour" label="生产时率(%)" align="center">
-                    <template slot-scope="scope">
-                        <el-input-number v-model="scope.row.rateOfHour" :min="0" :max="100" :precision="4"></el-input-number>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </info-window>
-        <info-window style="margin-top:0;margin-bottom:20px;" infoWidth="100%" infoHeight="120px" headerTitle="油田预测产量" isShowMaxBtn>
-            <div slot-name="titleContent" style="position: absolute;right:52px;top:5px;">
-                <el-button type="primary" style="height:30px;" @click="doDownLoad(2)">下载</el-button>
-            </div>
-            <el-table id="ForecastProductionTable" :data="tableData1" highlight style="font-size:15px;font-weight:500" :cell-style="{padding:'25px'}">
-                <el-table-column label="油田" align="center">
-                    <template>
-                        <span>预测年产量(10⁴{{unitName}})</span>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="qhd326" label="QHD32-6" align="center"></el-table-column>
-                <el-table-column prop="cfd64" label="CFD6-4" align="center"></el-table-column>
-                <el-table-column prop="nb352" label="NB35-2" align="center"></el-table-column>
-                <el-table-column prop="bz32" label="BZ3-2" align="center"></el-table-column>
-                <el-table-column prop="qhd331" label="QHD33-1" align="center"></el-table-column>
-                <el-table-column prop="qhd331s" label="QHD33-1S" align="center"></el-table-column>
-                <el-table-column prop="work" label="作业公司" align="center"></el-table-column>
-            </el-table>
-        </info-window>
-        <info-window infoWidth="100%" infoHeight="300px" headerTitle="油田剩余水平" isShowMaxBtn>
-            <div slot-name="titleContent" style="position: absolute;right:52px;top:5px;">
-                <el-button type="primary" style="height:30px;" @click="doDownLoad(3)">下载</el-button>
-            </div>
-            <el-table id="ResidualLevelTable" :data="tableData2" highlight style="width:100%;font-size:15px;font-weight:500" :cell-style="{padding:'25px'}">
-                <el-table-column label="油田" align="center" min-width="150">
-                    <template slot-scope="scope">
-                        <span v-show="scope.$index==0">分公司奋斗，后续需日产({{unitName}})</span>
-                        <span v-show="scope.$index==1">分公司考核，后续需日产({{unitName}})</span>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="qhd326" label="QHD32-6" align="center"></el-table-column>
-                <el-table-column prop="cfd64" label="CFD6-4" align="center"></el-table-column>
-                <el-table-column prop="nb352" label="NB35-2" align="center"></el-table-column>
-                <el-table-column prop="bz32" label="BZ3-2" align="center"></el-table-column>
-                <el-table-column prop="qhd331" label="QHD33-1" align="center"></el-table-column>
-                <el-table-column prop="qhd331s" label="QHD33-1S" align="center"></el-table-column>
-                <el-table-column prop="work" label="作业公司" align="center"></el-table-column>
-            </el-table>
-        </info-window>
+        <div style="height: calc(100% - 90px)">
+            <pagePanel headerTitle="油田产量影响因素" style="height:39%; min-height: 300px;" show-btn>
+                <div style="display: flex; justify-content: space-between;">   
+                    <el-button type="primary" style="margin-bottom: 20px;" @click="saveEditRow">保存修改</el-button>
+                    <el-button type="primary" style="margin-bottom: 20px;" @click="doDownLoad(1)">下载</el-button>
+                </div>
+                <el-table id="table1" :data="tableData" highlight height="calc(100% - 55px)" :cell-style="{padding:'10px'}">
+                    <el-table-column v-if="show" prop="ogfId"></el-table-column>
+                    <el-table-column prop="ogfNo" label="油田" align="center"></el-table-column>
+                    <el-table-column prop="queryInitialProd" label="日产量(m³)" align="center">
+                        <template slot-scope="scope">
+                            {{scope.row.queryInitialProd}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="initialProd" label="修正日产量(m³)" align="center">
+                        <template slot-scope="scope">
+                            <el-input-number v-model="scope.row.initialProd" :min="0" :precision="4"></el-input-number>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="degressionOfYear" label="年递减率(%)" align="center">
+                        <template slot-scope="scope">
+                            <el-input-number v-model="scope.row.degressionOfYear" :min="-100" :max="100" :precision="4"></el-input-number>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="rateOfHour" label="生产时率(%)" align="center">
+                        <template slot-scope="scope">
+                            <el-input-number v-model="scope.row.rateOfHour" :min="0" :max="100" :precision="4"></el-input-number>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </pagePanel>
+            <pagePanel headerTitle="油田预测产量" style="height:27%; min-height: 210px;" show-btn>
+                <div style="display: flex; justify-content: flex-end;"> 
+                    <el-button type="primary" style="margin-bottom: 20px;" @click="doDownLoad(2)">下载</el-button>
+                </div>
+                <el-table id="ForecastProductionTable" :data="tableData1" highlight height="calc(100% - 55px)" style="font-size:15px;font-weight:500" :cell-style="{padding:'25px'}">
+                    <el-table-column label="油田" align="center">
+                        <template>
+                            <span>预测年产量(10⁴{{unitName}})</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="qhd326" label="QHD32-6" align="center"></el-table-column>
+                    <el-table-column prop="cfd64" label="CFD6-4" align="center"></el-table-column>
+                    <el-table-column prop="nb352" label="NB35-2" align="center"></el-table-column>
+                    <el-table-column prop="bz32" label="BZ3-2" align="center"></el-table-column>
+                    <el-table-column prop="qhd331" label="QHD33-1" align="center"></el-table-column>
+                    <el-table-column prop="qhd331s" label="QHD33-1S" align="center"></el-table-column>
+                    <el-table-column prop="work" label="作业公司" align="center"></el-table-column>
+                </el-table>
+            </pagePanel>
+            <pagePanel headerTitle="油田剩余水平" style="height:33%; min-height: 250px;" show-btn>
+                <div style="display: flex; justify-content: flex-end;">   
+                    <el-button type="primary" style="margin-bottom: 20px;" @click="doDownLoad(3)">下载</el-button>
+                </div>
+                <el-table id="ResidualLevelTable" :data="tableData2" highlight height="calc(100% - 55px)" style="width:100%;font-size:15px;font-weight:500" :cell-style="{padding:'25px'}">
+                    <el-table-column label="油田" align="center" min-width="150">
+                        <template slot-scope="scope">
+                            <span v-show="scope.$index==0">分公司奋斗，后续需日产({{unitName}})</span>
+                            <span v-show="scope.$index==1">分公司考核，后续需日产({{unitName}})</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="qhd326" label="QHD32-6" align="center"></el-table-column>
+                    <el-table-column prop="cfd64" label="CFD6-4" align="center"></el-table-column>
+                    <el-table-column prop="nb352" label="NB35-2" align="center"></el-table-column>
+                    <el-table-column prop="bz32" label="BZ3-2" align="center"></el-table-column>
+                    <el-table-column prop="qhd331" label="QHD33-1" align="center"></el-table-column>
+                    <el-table-column prop="qhd331s" label="QHD33-1S" align="center"></el-table-column>
+                    <el-table-column prop="work" label="作业公司" align="center"></el-table-column>
+                </el-table>
+            </pagePanel>
+        </div>
     </div>
 </template>
 
@@ -292,6 +295,10 @@
             },
             //下载
             doDownLoad(index) {
+                if (index === 1) {
+                    let fileName = '油田产量影响因素';
+                    exportExcel('#table1', fileName);
+                }
                 if (index === 2) {
                     let fileName = '油田预测产量';
                     exportExcel('#ForecastProductionTable', fileName);

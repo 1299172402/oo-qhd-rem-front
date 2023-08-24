@@ -1,32 +1,71 @@
 <!-- 开发井产量 -->
 <template>
-    <div class="tab-container">
-        <info-window infoWidth="100%" :infoHeight="height+'px'" :headerTitle="searchForm.oilFieldName + '开发井产量图'" isShowMaxBtn style="margin-top:0;">
-            <div slot-name="titleContent">
+  <div class="tab-container">
+    <pagePanel
+      :headerTitle="searchForm.oilFieldName + '开发井产量图'"
+      :style="{ marginTop: 0, height: height + 'px' }"
+      show-btn
+    >
+      <!-- <div slot-name="titleContent">
                 <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downEchart">下载</el-button>
-            </div>
-            <Echart ref="echartChart" :chart-data="devWellLineChart" height="100%"></Echart>
-        </info-window>
-        <div class="develop">
-            <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
-        </div>
-        <info-window infoWidth="100%" infoHeight="500px" :headerTitle="searchForm.oilFieldName + '开发井产量表'" isShowMaxBtn v-show="isDevelop">
-            <div slot-name="titleContent">
-                <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downTable">下载</el-button>
-            </div>
-            <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;"
-                height="calc(100% - 75px)" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-                <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
-                <el-table-column prop="prodDate" align="center" label="时间"> </el-table-column>
-                <el-table-column prop="measureWellNumReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际措施井次\n(次)' : '实际措施井次\n(次)'"></el-table-column>
-                <el-table-column prop="measureWellNumPlan" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '计划措施井次\n(次)' : '计划措施井次\n(次)'"></el-table-column>
-                <el-table-column prop="oilprodReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际月产油量\n(m³/d)' : '实际月产油量\n(t/d)'" :formatter="numberToTwo"></el-table-column>
-                <el-table-column prop="oilprodPlan" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '计划月产油量\n(m³/d)' : '计划月产油量\n(t/d)'" :formatter="numberToTwo"></el-table-column>
-                <!-- <el-table-column prop="oilprodRollForecast" align="center" label="滚动预测"></el-table-column> -->
-            </el-table>
-            <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination" />
-        </info-window>
+            </div> -->
+      <Echart ref="echartChart" :chart-data="devWellLineChart" height="100%"></Echart>
+    </pagePanel>
+    <div class="develop">
+      <span :class="[isDevelop ? 'top-span' : 'active-span']" @click="tapDevelop"></span>
     </div>
+    <pagePanel
+      :headerTitle="searchForm.oilFieldName + '开发井产量表'"
+      style="height: 580px"
+      show-btn
+      v-show="isDevelop"
+    >
+      <div slot-name="titleContent" style="display: flex; justify-content: flex-end">
+        <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px" @click="downTable"
+          >下载</el-button
+        >
+      </div>
+      <el-table
+        id="tableData"
+        :data="tableData"
+        :border="false"
+        :row-style="{ height: '0px' }"
+        header-cell-class-name="table_header"
+        :cell-style="{ padding: '6px', 'text-align': 'center' }"
+        style="width: 100%"
+        height="calc(100% - 130px)"
+        :default-sort="{ prop: 'date', order: 'descending' }"
+        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+      >
+        <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
+        <el-table-column prop="prodDate" align="center" label="时间"> </el-table-column>
+        <el-table-column
+          prop="measureWellNumReal"
+          align="center"
+          :label="searchForm.selectUnitOfProduction == 'm' ? '实际措施井次\n(次)' : '实际措施井次\n(次)'"
+        ></el-table-column>
+        <el-table-column
+          prop="measureWellNumPlan"
+          align="center"
+          :label="searchForm.selectUnitOfProduction == 'm' ? '计划措施井次\n(次)' : '计划措施井次\n(次)'"
+        ></el-table-column>
+        <el-table-column
+          prop="oilprodReal"
+          align="center"
+          :label="searchForm.selectUnitOfProduction == 'm' ? '实际月产油量\n(m³/d)' : '实际月产油量\n(t/d)'"
+          :formatter="toPrecise2"
+        ></el-table-column>
+        <el-table-column
+          prop="oilprodPlan"
+          align="center"
+          :label="searchForm.selectUnitOfProduction == 'm' ? '计划月产油量\n(m³/d)' : '计划月产油量\n(t/d)'"
+          :formatter="toPrecise2"
+        ></el-table-column>
+        <!-- <el-table-column prop="oilprodRollForecast" align="center" label="滚动预测"></el-table-column> -->
+      </el-table>
+      <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination" />
+    </pagePanel>
+  </div>
 </template>
 
 <script>
@@ -57,6 +96,19 @@
             return {
                 height: '',
                 devWellLineChart: {
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name:  (this.searchForm.oilFieldName ? this.searchForm.oilFieldName : '') + "开发井产量图",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
+                            },
+                        },
+                    },
                     dataZoom: [
                         {
                             type: "inside",
@@ -74,7 +126,7 @@
                     },
                     grid:{
                         x: 120,
-                        y: 30,
+                        y: 50,
                         x2: 120,
                         y2: 100,
                     },
@@ -233,12 +285,74 @@
                         //图例数据
                         this.devWellLineChart.legend.data = legendData;
                         this.devWellLineChart.series = seriesData;
+                        this.devWellLineChart.xAxis.data = this.getDay(this.searchForm.selectDate[0] || '2023-01-01', this.searchForm.selectDate[1] || '2023-12-31');
                         //井口次
                         this.devWellCount = res.data.data.times;
                         //增油量
                         this.devOilCount = res.data.data.injection;
                     }
                 });
+            },
+            /**
+             * 获取日期范围内天的数组
+             * @param startDate
+             * @param endDate
+             * @returns {any[]}
+             */
+            getDay(startDate, endDate) {
+                var result = new Array();
+                var ab = startDate.split("-");
+                var ae = endDate.split("-");
+                var db = new Date();
+                db.setUTCFullYear(ab[0], ab[1] - 1, ab[2]);
+                var de = new Date();
+                de.setUTCFullYear(ae[0], ae[1] - 1, ae[2]);
+                var unixDb = db.getTime();
+                var unixDe = de.getTime();
+                for (var k = unixDb; k <= unixDe; ) {
+                    result.push(this.formatDate(new Date(parseInt(k)), "yyyy-MM-dd"));
+                    k = k + 24 * 60 * 60 * 1000;
+                }
+                console.log(result);
+                return result;
+            },
+
+            /**
+             * 格式化
+             * @param date
+             * @param fmt
+             * @returns {string|null}
+             */
+            formatDate(date, fmt) {
+                if (date === "" || date === null || date === undefined) {
+                    return null;
+                }
+                if (fmt === "" || fmt === null || fmt === undefined) {
+                    fmt = "yyyy-MM";
+                }
+                date = new Date(date);
+                var o = {
+                    "M+": date.getMonth() + 1, // 月份
+                    "d+": date.getDate(), // 日
+                    "h+": date.getHours(), // 小时
+                    "m+": date.getMinutes(), // 分
+                    "s+": date.getSeconds(), // 秒
+                    "q+": Math.floor((date.getMonth() + 3) / 3), // 季度
+                    S: date.getMilliseconds(), // 毫秒
+                };
+                if (/(y+)/.test(fmt))
+                    fmt = fmt.replace(
+                    RegExp.$1,
+                    (date.getFullYear() + "").substr(4 - RegExp.$1.length)
+                    );
+                for (var k in o) {
+                    if (new RegExp("(" + k + ")").test(fmt))
+                    fmt = fmt.replace(
+                        RegExp.$1,
+                        RegExp.$1.length === 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length)
+                    );
+                }
+                return fmt;
             },
             //特殊双y轴特例拼写 series
             getLinearSeriesDoubleIndex(linearChart) {
@@ -292,19 +406,16 @@
                 });
             },
             //保留两位小数
-            numberToTwo(row, column, cellValue, index) {
-                if (cellValue) {
-                    return Number(cellValue).toFixed(2);
+            toPrecise2(row, column, cellValue, index) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
                 } else {
-                    return '-';
-                }
-            },
-            //保留四位小数
-            numberToFour(row, column, cellValue, index) {
-                if (cellValue) {
-                    return Number(cellValue).toFixed(4);
-                } else {
-                    return '-';
+                    return row[column.property] ? row[column.property] : "-";
                 }
             },
             //表格自定义索引
@@ -345,26 +456,26 @@
 </script>
 
 <style lang="scss" scoped>
-    .tab-container {
-        height: 100%;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        padding-top:7px;
-        padding-left:7px;
-        padding-right:15px;
-        padding-bottom:15px;
-        #tableData {
-            ::v-deep .el-table__header-wrapper .cell {
-                height: auto;
-                line-height: 18px;
-                white-space: pre;
-            }
-        
-            ::v-deep .cell:empty {
-                &::before {
-                    content: '-';
-                }
-            }
-        }
+.tab-container {
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-top: 7px;
+  padding-left: 7px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+  #tableData {
+    ::v-deep .el-table__header-wrapper .cell {
+      height: auto;
+      line-height: 18px;
+      white-space: pre;
     }
+
+    ::v-deep .cell:empty {
+      &::before {
+        content: "-";
+      }
+    }
+  }
+}
 </style>

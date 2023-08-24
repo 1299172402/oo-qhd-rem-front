@@ -5,6 +5,9 @@ export function getYieldFluctuation() {
   return request({
     url: `${baseUrl}/reservoirBillboards/getYieldFluctuation`,
     method: "get",
+      headers: {
+          showLoading: false
+      }
   });
 }
 export function monthlyProductionComparison({ date,ogfId } = {}) {
@@ -26,6 +29,9 @@ export function queryCapacityComposition({ogfId } = {}) {
   return request({
     url: `${baseUrl}/reservoirBillboards/queryCapacityComposition?ogfId=${ ogfId || "" }`,
     method: "get",
+      headers: {
+          showLoading: false
+      }
   });
 }
 export function queryMeasureEffectTrack({ evaluationDate, oilFieldId, platformId, showNormal, timeGranularityCode } = {}) {
@@ -59,6 +65,9 @@ export function queryProblemWellStatis({ date, platformId,ogfId, wellId } = {}) 
   return request({
     url: `${baseUrl}/reservoirBillboards/queryProblemWellStatis?date=${ date || "" }&platformId=${ platformId || "" }&wellId=${ wellId || "" }&ogfId=${ ogfId || "" }`,
     method: "get",
+      headers: {
+          showLoading: false
+      }
   });
 }
 export function queryShutDownValueDict() {
@@ -83,17 +92,23 @@ export function queryYieldTracking({ ogfId, orgId } = {}) {
   return request({
     url: `${baseUrl}/reservoirBillboards/queryYieldTracking?ogfId=${ ogfId || "" }&orgId=${ orgId || "" }`,
     method: "get",
+      headers: {
+          showLoading: false
+      }
   });
 }
 export function getYieldTracking({ ogfId, orgId } = {}) {
     return request({
         url: `${baseUrl}/reservoirBillboards/getYieldTracking?ogfId=${ ogfId || "" }&orgId=${ orgId || "" }`,
         method: "get",
+        headers: {
+            showLoading: false
+        }
     });
 }
-export function queryProblemWellStatisDetails({ wellId, ogfId,pageSize, pageNum,assetCode } = {}) {
+export function queryProblemWellStatisDetails({ wellId, ogfId,pageSize, pageNum,assetCode,yearDate } = {}) {
     return request({
-        url: `${baseUrl}/reservoirBillboards/queryProblemWellStatisDetails?ogfId=${ ogfId || "" }&wellId=${ wellId || "" }&pageSize=${ pageSize || "" }&pageNum=${ pageNum || "" }&assetCode=${ assetCode || "" }`,
+        url: `${baseUrl}/reservoirBillboards/queryProblemWellStatisDetails?ogfId=${ ogfId || "" }&wellId=${ wellId || "" }&pageSize=${ pageSize || "" }&pageNum=${ pageNum || "" }&assetCode=${ assetCode || "" }&yearDate=${ yearDate || "" }`,
         method: "get",
     });
 }

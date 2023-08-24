@@ -57,9 +57,10 @@
                 <el-tabs class="g-pageHeader" style="margin-bottom: 15px" v-model="activeName" topline @tab-click="handleClick">
                     <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
                         <div class="tab-view">
-                            <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="tapTabs2(module)">
+                            <!-- <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="tapTabs2(module)">
                                 {{ module.label }}
-                            </el-button>
+                            </el-button> -->
+                            <sliderTabs :tabs="item.modules" :currentModule="currentModule" @tabTabs="tapTabs2"></sliderTabs>
                             <div class="select-view" v-if="currentModule == 'homeworkWellHistory'">
                                 <span class="title" style="margin-left: 20px">大事简要：</span>
                                 <el-select v-model="majorEventsBrieflyValue" placeholder="请选择" filterable clearable @change="majorEventsBrieflyChange">
@@ -141,9 +142,10 @@
     import {downFile} from "@/components/upload/utils/file";
     import FileSaver from "file-saver";
     import treeSelection from "@/pages/rem/basic/components/treeSelection.vue";
+    import sliderTabs from './components/slider-tabs.vue';
     export default {
         name: "OilAuxiliaryAnalysis",
-        components: {FileUpload, treeSelection},
+        components: {FileUpload, treeSelection, sliderTabs},
         data() {
             return {
                 // 主数据树结构默认选中的值
@@ -561,8 +563,8 @@
                 }
             },
             //点击二级
-            tapTabs2(module){
-                this.currentModule = module.name;
+            tapTabs2(name){
+                this.currentModule = name;
                 this.isUpdateFile=false;
                 for(let key in this.operationTypeList){
                     if(key==this.currentModule){

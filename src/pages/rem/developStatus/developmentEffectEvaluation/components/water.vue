@@ -3,27 +3,29 @@
     <div class="z-main">
         <div class="rowBox">
             <div class="row" style="margin-right: 20px">
-                <!-- <pagePanel headerTitle="含水上升率" style="height: 380px;margin-top:0;" show-btn></pagePanel> -->
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="含水上升率" isShowMaxBtn>
+                <pagePanel headerTitle="含水上升率"  style="height: 380px;margin-top:0;" show-btn>
                     <Echart :chart-data="rateOfWaterCutRise" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
             <div class="row" style="margin-right: 20px">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="水驱指数" isShowMaxBtn>
+                <pagePanel  headerTitle="水驱指数" style="height: 380px;margin-top:0;" show-btn>
                     <Echart :chart-data="recoveryDegree" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
         </div>
         <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right: 20px">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="存水率" isShowMaxBtn>
+                <pagePanel  headerTitle="存水率" style="height: 380px; margin-top:0;" show-btn>
                     <Echart :chart-data="waterRate" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
             <!--含水类表格 -->
             <div class="row" style="margin-right: 20px">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="指标评价结果表" isShowMaxBtn>
-                    <el-table :data="tableData" highlight height="100%">
+                <pagePanel headerTitle="指标评价结果表" style="height: 380px; margin-top:0;" show-btn>
+                    <div style="display: flex; justify-content: flex-end;">
+                        <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '指标评价结果表')">下载</el-button>
+                    </div>
+                    <el-table id="table1" :data="tableData" highlight height="calc(100% - 55px)">
                         <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
                         <el-table-column prop="evaluationResult" label="评价结果" align="center">
                             <template slot-scope="scope">
@@ -39,7 +41,13 @@
                                 }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center"></el-table-column>
+                        <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center">
+                            <template slot-scope="scope">
+                                <span>{{
+                                  Number(scope.row.diffLastPhaseValue) | toFixNumberFour
+                                }}</span>
+                            </template>
+                        </el-table-column>
                         <el-table-column label="理论值" align="center">
                             <template slot-scope="scope">
                                 <el-input-number v-model="scope.row.theoryValue" :controls="false" class="el-input-number"></el-input-number>
@@ -54,7 +62,7 @@
                         </el-table-column>
                         <el-table-column prop="result" label="结论" align="center"></el-table-column>
                     </el-table>
-                </info-window>
+                </pagePanel>
             </div>
         </div>
     </div>
@@ -64,6 +72,9 @@
     import Echart from "@/components/tools/Echarts/index.vue";
     import { fetchFields, fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo";
     import { waterContainRaiseChart, waterIndicatorChart, waterSotreRateChart, indicatorResult } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+    import {exportExcel} from '@/lib/exportExcel.js';
+import { number } from 'echarts';
+
     export default {
         components: {
             Echart,
@@ -80,7 +91,7 @@
         },
         filters: {
             toFixNumberFour(val) {
-                return val.toFixed(4);
+                return Number(val).toFixed(4);
             },
         },
         data() {
@@ -615,14 +626,18 @@
                 this.recoveryDegree.toolbox.show = flag;
                 this.waterRate.toolbox.show = flag;
             },
+            //下载导出文件 tableId tableName
+            doDownExcel(tableId, tableName) {
+                exportExcel(tableId, tableName);
+            },
         },
     }
 </script>
 
 <style lang="scss" scoped>
     .z-main {
-        padding-top:8px;
-        padding-bottom: 8px;
+        // padding-top:8px;
+        // padding-bottom: 8px;
 
         .rowBox {
             padding-left: 8px;

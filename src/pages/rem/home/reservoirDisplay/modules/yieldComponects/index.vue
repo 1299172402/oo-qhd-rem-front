@@ -7,7 +7,8 @@
             :is-show-max-btn="true"
         >
             <button class="detailLinkBtn" @click="linkroute">详细</button>
-            <Echart :chart-data="histogram" width="100%" height="100%"></Echart>
+            <button class="detailLinkBtn"  style="right:110px"  @click="downEcharts">下载</button>
+            <Echart ref="echartChart" :chart-data="histogram" width="100%" height="100%"></Echart>
         </info-window>
     </div>
 </template>
@@ -35,7 +36,6 @@ export default {
                 },
                 legend: {
                     data: ["当年累计产量", "滚动预测", "分公司奋斗", "分公司考核"],
-                    align: "right",
                     bottom: 'bottom',
                     textStyle: {
                         color: "",
@@ -223,6 +223,9 @@ export default {
                     this.histogram.series[3].data.push(Number((n.fgskh/10000).toFixed(2)))
                 })
             })
+        },
+        downEcharts(){
+            this.$refs.echartChart.chartDownLoad( '产量构成详情');
         },
         linkroute() {
             this.$router.push({

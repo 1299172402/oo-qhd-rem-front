@@ -62,7 +62,6 @@
                             <el-date-picker
                                 v-if="link == 1 || link == 2 || link == 3 || link == 5 || link == 6"
                                 value-format="yyyy-MM"
-                                disabled
                                 clearable
                                 v-model="queryData.month"
                                 type="month"
@@ -201,7 +200,7 @@
                 <el-table-column prop="whInjPress" min-width="150" :label="`注入压力\n(mPa)`"></el-table-column>
                 <el-table-column prop="injAllocationRate" min-width="150" :label="`配注量\n(m³/d)`">
                     <template slot-scope="scope">
-                        {{Number(scope.row.injAllocationRate),toFixed(2)}}
+                        {{Number(scope.row.injAllocationRate).toFixed(2)}}
                     </template>
                 </el-table-column>
                 <el-table-column prop="valueAttribution" min-width="200" show-overflow-tooltip

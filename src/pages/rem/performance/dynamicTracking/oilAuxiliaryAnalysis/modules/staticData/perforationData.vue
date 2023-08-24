@@ -10,17 +10,17 @@
             <el-table-column type="index" label="序号" fixed></el-table-column>
             <el-table-column prop="wellNo" label="井号" width="130" fixed></el-table-column>
             <el-table-column prop="perfLayer" label="小层" width="200" fixed></el-table-column>
-            <el-table-column prop="topDepth" :label="`井段顶斜深\n (m)`" min-width="120"></el-table-column>
-            <el-table-column prop="bottomDepth" :label="`井段底斜深\n (m)`" min-width="120"></el-table-column>
-            <el-table-column prop="accumulated" :label="`斜厚\n (m)`" min-width="120"></el-table-column>
-            <el-table-column prop="topTvd" :label="`井段顶垂深\n (m)`" min-width="120"></el-table-column>
-            <el-table-column prop="bottomTvd" :label="`井段底垂深\n (m)`" min-width="120"></el-table-column>
-            <el-table-column prop="verticalEffectThickness" :label="`垂厚\n (m)`" min-width="120"></el-table-column>
-            <el-table-column prop="sandTopDepth" :label="`防砂段顶斜深\n (m)`" min-width="120"></el-table-column>
-            <el-table-column prop="sandBottomDepth" :label="`防砂段底斜深\n (m)`" min-width="120"></el-table-column>
+            <el-table-column prop="topDepth" :label="`井段顶斜深\n (m)`" min-width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="bottomDepth" :label="`井段底斜深\n (m)`" min-width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="accumulated" :label="`斜厚\n (m)`" min-width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="topTvd" :label="`井段顶垂深\n (m)`" min-width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="bottomTvd" :label="`井段底垂深\n (m)`" min-width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="verticalEffectThickness" :label="`垂厚\n (m)`" min-width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="sandTopDepth" :label="`防砂段顶斜深\n (m)`" min-width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="sandBottomDepth" :label="`防砂段底斜深\n (m)`" min-width="120" :formatter="toPrecise2"></el-table-column>
             <el-table-column prop="layerName" label="生产段名称" min-width="120"></el-table-column>
-            <el-table-column prop="accumulated" :label="`射开有效斜厚\n (m)`" min-width="120"></el-table-column>
-            <el-table-column prop="openThickness" :label="`射开有效垂厚\n (m)`" min-width="120"></el-table-column>
+            <el-table-column prop="accumulated" :label="`射开有效斜厚\n (m)`" min-width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="openThickness" :label="`射开有效垂厚\n (m)`" min-width="120" :formatter="toPrecise2"></el-table-column>
             <el-table-column prop="remark" label="备注" show-overflow-tooltip  min-width="150"></el-table-column>
         </el-table>
     </page-panel-new>
@@ -67,6 +67,19 @@
                     fileName = this.wellName + fileName;
                 }
                 exportExcel('#tableData',fileName);
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         },
     }

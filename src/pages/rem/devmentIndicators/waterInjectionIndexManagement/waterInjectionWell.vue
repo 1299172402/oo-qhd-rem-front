@@ -31,30 +31,32 @@
         </header-search>
         
         <page-panel-new class="app-content">
-            <info-window headerTitle="注水井分注率" info-width="100%" info-height="500px" is-show-max-btn>
+            <pagePanel headerTitle="注水井分注率" style="height: 500px;" show-btn>
                 <Echart :chart-data="waterInjectionRate" height="100%"></Echart>
-            </info-window>
-            <info-window :headerTitle="`${oilFieldName || ''}注水井分注率明细`" info-width="100%" info-height="500px" is-show-max-btn>
-                <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 32px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#zhjfzlmx', `${oilFieldName || ''}注水井分注率明细`)">
-                    下载
-                </el-button>
-                <el-table id="zhjfzlmx" :data="tableData" highlight height="100%">
+            </pagePanel>
+            <pagePanel :headerTitle="`${oilFieldName || ''}注水井分注率明细`" style="height: 550px;" show-btn>
+                <div style="display: flex; justify-content: flex-end">
+                    <el-button style="margin-bottom: 20px"  type="primary" @click="doDownExcel('#zhjfzlmx', `${oilFieldName || ''}注水井分注率明细`)">
+                        下载
+                    </el-button>
+                </div>
+                <el-table id="zhjfzlmx" :data="tableData" highlight height="calc(100% - 55px)">
                     <!-- :index="formatIndex"  -->
                     <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
                     <el-table-column prop="platFormName" label="平台" align="center"></el-table-column>
-                    <el-table-column prop="null" :label="`考核指标\n分注率\n(%)`" align="center" min-width="70"></el-table-column>
+                    <el-table-column prop="null" :label="`考核指标\n分注率\n(%)`" align="center" min-width="70" :formatter="toPrecise2"></el-table-column>
                     <el-table-column label="计划指标" align="center">
                         <el-table-column prop="planTotalWellCount" :label="`总注水井数\n(口)`" align="center" min-width="70"></el-table-column>
                         <el-table-column prop="planSplitRatioWellCount" :label="`分注井数\n(口)`" align="center" min-width="70"></el-table-column>
-                        <el-table-column prop="planSplitRatioRate" :label="`分注率\n(%)`" align="center" min-width="70"></el-table-column>
+                        <el-table-column prop="planSplitRatioRate" :label="`分注率\n(%)`" align="center" min-width="70" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                     <el-table-column label="实际指标" align="center">
                         <el-table-column prop="totalWellCount" :label="`总注水井数\n(口)`" align="center" min-width="70"></el-table-column>
                         <el-table-column prop="splitRatioWellCount" :label="`分注井数\n(口)`" align="center" min-width="70"></el-table-column>
-                        <el-table-column prop="splitRatioRate" :label="`分注率\n(%)`" align="center" min-width="70"></el-table-column>
+                        <el-table-column prop="splitRatioRate" :label="`分注率\n(%)`" align="center" min-width="70" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                 </el-table>
-            </info-window>
+            </pagePanel>
         </page-panel-new>
         
     </div>
@@ -377,6 +379,19 @@
             //表格id 表格名称
             doDownExcel(tableId, tableName) {
                 exportExcel(tableId, tableName);
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         },
     };

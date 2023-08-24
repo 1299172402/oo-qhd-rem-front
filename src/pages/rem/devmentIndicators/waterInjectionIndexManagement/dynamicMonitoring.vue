@@ -32,8 +32,8 @@
         </header-search>
         
         <page-panel-new class="app-content">
-            <info-window headerTitle="动态监测完成率*" info-width="100%" info-height="500px" is-show-max-btn>
-                <div class="g-row-flex-V" style="margin: 20px 0;">
+            <pagePanel headerTitle="动态监测完成率" style="height: 500px;" show-btn>
+                <div class="g-row-flex-V" style="margin-bottom: 20px;">
                     <div style="margin-right: 20px">
                         区块：
                         <el-select v-model="queryParams.fileId">
@@ -50,13 +50,15 @@
                         <el-button icon="el-icon-search" type="primary" @click="doSearch">确定</el-button>
                     </div>
                 </div>
-                <Echart :chart-data="dynamicDetectionCompletionRate" height="calc(100% - 75px)"></Echart>
-            </info-window>
-            <info-window :headerTitle="`${oilFieldName}动态监测完成率*`" info-width="100%" info-height="500px" is-show-max-btn>
-                <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 32px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#dtjcwcl', `${oilFieldName || ''}动态监测完成率`)">
-                    下载
-                </el-button>
-                <el-table id="dtjcwcl" :data="tableData" highlight height="100%">
+                <Echart :chart-data="dynamicDetectionCompletionRate" height="calc(100% - 55px)"></Echart>
+            </pagePanel>
+            <pagePanel :headerTitle="`${oilFieldName}动态监测完成率`" style="height: 500px;" show-btn>
+                <div style="display: flex; justify-content: flex-end">
+                    <el-button style="margin-bottom: 20px" type="primary" @click="doDownExcel('#dtjcwcl', `${oilFieldName || ''}动态监测完成率`)">
+                        下载
+                    </el-button>
+                </div>
+                <el-table id="dtjcwcl" :data="tableData" highlight height="calc(100% - 55px)">
                     <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
                     <el-table-column prop="ogfName" label="油田" align="center"></el-table-column>
                     <el-table-column :label="`动态监测计划\n(井次)`" align="center">
@@ -72,19 +74,19 @@
                         <el-table-column prop="totalNumber" label="合计" align="center"></el-table-column>
                     </el-table-column>
                     <el-table-column :label="`动态监测完成率\n(%)`" align="center">
-                        <el-table-column prop="rateY" label="压力监测" align="center"></el-table-column>
-                        <el-table-column prop="rateC" label="产出剖面" align="center"></el-table-column>
-                        <el-table-column prop="rateX" label="吸水剖面" align="center"></el-table-column>
-                        <el-table-column prop="rateTotal" label="合计" align="center"></el-table-column>
+                        <el-table-column prop="rateC" label="产出剖面" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="rateY" label="压力监测" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="rateX" label="吸水剖面" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="rateTotal" label="合计" align="center" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                     <el-table-column :label="`动态监测完成率考核指标\n(%)`" align="center">
-                        <el-table-column prop="checkNumberY" label="压力监测" align="center"></el-table-column>
-                        <el-table-column prop="checkNumberC" label="产出剖面" align="center"></el-table-column>
-                        <el-table-column prop="checkNumberX" label="吸水剖面" align="center"></el-table-column>
-                        <el-table-column prop="checkNumberTotal" label="合计" align="center"></el-table-column>
+                        <el-table-column prop="checkNumberY" label="压力监测" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="checkNumberC" label="产出剖面" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="checkNumberX" label="吸水剖面" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="checkNumberTotal" label="合计" align="center" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                 </el-table>
-            </info-window>
+            </pagePanel>
         </page-panel-new>
         
     </div>
@@ -461,6 +463,19 @@
             //表格id 表格名称
             doDownExcel(tableId, tableName) {
                 exportExcel(tableId, tableName);
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         },
     };

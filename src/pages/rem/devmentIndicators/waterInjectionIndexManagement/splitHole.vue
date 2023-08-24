@@ -32,8 +32,8 @@
         </header-search>
         
         <page-panel-new class="app-content">
-            <info-window headerTitle="分注井层段合格率*" info-width="100%" info-height="500px" is-show-max-btn>
-                <div class="g-row-flex-V" style="margin: 20px 0;">
+            <pagePanel headerTitle="分注井层段合格率" style="height: 500px;" show-btn>
+                <div class="g-row-flex-V" style="margin-bottom: 20px;">
                     <div style="margin-right: 20px">
                         平台：
                         <el-select v-model="queryParams.platFormId" style="width: 220px">
@@ -44,21 +44,22 @@
                         <el-button icon="el-icon-search" type="primary" @click="doSearch">确定</el-button>
                     </div>
                 </div>
-                <Echart :chart-data="sectionPassRate" height="calc(100% - 75px)"></Echart>
-            </info-window>
-            <el-row :gutter="20" style="padding-bottom:20px; margin-top: 20px;">
+                <Echart :chart-data="sectionPassRate" height="calc(100% - 55px)"></Echart>
+            </pagePanel>
+            <el-row :gutter="20" style="padding-bottom:20px;">
                 <el-col :span="12">
-                    <info-window :headerTitle="`${oilFieldName || ''}分注井层段合格率明细*`" info-width="100%" info-height="500px" is-show-max-btn>
-                        <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 32px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#fzjcdhglmx', `${oilFieldName || ''}分注井层段合格率明细`)">
-                            下载
-                        </el-button>
-                        <div class="g-row-flex-V" style="margin: 20px 0;">
+                    <pagePanel :headerTitle="`${oilFieldName || ''}分注井层段合格率明细`" style="height: 550px;" show-btn>
+                        
+                        <div style="display: flex; justify-content: space-between;">
                             <div style="margin-right: 20px">
                                 日期选择：
                                 <el-date-picker v-model="queryParams.month" type="month" placeholder="选择月" value-format="yyyy-MM" @change="doSearch"></el-date-picker>
                             </div>
+                            <el-button style="margin-bottom: 20px" type="primary" @click="doDownExcel('#fzjcdhglmx', `${oilFieldName || ''}分注井层段合格率明细`)">
+                                下载
+                            </el-button>
                         </div>
-                        <el-table id="fzjcdhglmx" :data="tableData1" highlight height="calc(100% - 75px)">
+                        <el-table id="fzjcdhglmx" :data="tableData1" highlight height="calc(100% - 55px)">
                             <!-- :index="formatIndex"  -->
                             <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
                             <el-table-column prop="ogfName" label="油田" align="center"></el-table-column>
@@ -67,20 +68,20 @@
                             <el-table-column prop="statisticsDate" label="年月" align="center"></el-table-column>
                             <el-table-column prop="isUnqualified" label="是否合格" :formatter="formatterBoolean1" align="center"></el-table-column>
                         </el-table>
-                    </info-window>
+                    </pagePanel>
                 </el-col>
                 <el-col :span="12">
-                    <info-window :headerTitle="`${oilFieldName || ''}单井层段合格明细*`" info-width="100%" info-height="500px" is-show-max-btn>
-                        <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 32px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#djcdhgmx', `${oilFieldName || ''}单井层段合格明细`)">
-                            下载
-                        </el-button>
-                        <div class="g-row-flex-V" style="margin: 20px 0;">
-                            <div style="margin-right: 20px">
+                    <pagePanel :headerTitle="`${oilFieldName || ''}单井层段合格明细`" style="height: 550px;" show-btn>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div style="margin-right: 20px; margin-bottom:">
                                 日期选择：
                                 <el-date-picker v-model="queryParams.date" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" @change="doSearch"></el-date-picker>
                             </div>
+                            <el-button style="margin-bottom: 20px" type="primary" @click="doDownExcel('#djcdhgmx', `${oilFieldName || ''}单井层段合格明细`)">
+                                下载
+                            </el-button>
                         </div>
-                        <el-table id="djcdhgmx" :data="tableData2" highlight height="calc(100% - 75px)">
+                        <el-table id="djcdhgmx" :data="tableData2" highlight height="calc(100% - 55px)">
                             <!-- :index="formatIndex"  -->
                             <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
                             <el-table-column prop="wellNo" label="井号" align="center"></el-table-column>
@@ -90,7 +91,7 @@
                             <el-table-column prop="effectLayers" label="有效层段数" align="center"></el-table-column>
                             <el-table-column prop="qualifieLayers" label="合格层段数" align="center"></el-table-column>
                         </el-table>
-                    </info-window>
+                    </pagePanel>
                 </el-col>
             </el-row>
         </page-panel-new>
@@ -369,39 +370,7 @@
                         let xData = [];
                         let xSet = new Set();
                         let resData = res.data.data;
-                        // TODO lv 临时
-                        // let barCharts = resData?.chart?.linearDataSets;
-                        let barCharts = [{
-                                label: "实际值",
-                                color: null,
-                                linearData: [{
-                                        label: "2023-01",
-                                        value: 90.68,
-                                        description: null,
-                                    },
-                                    {
-                                        label: "2023-02",
-                                        value: 84.13,
-                                        description: null,
-                                    },
-                                    {
-                                        label: "2023-03",
-                                        value: 83.91,
-                                        description: null,
-                                    },
-                                    {
-                                        label: "2023-04",
-                                        value: 0,
-                                        description: null,
-                                    },
-                                ],
-                            },
-                            {
-                                label: "今年考核值",
-                                color: null,
-                                linearData: [],
-                            },
-                        ];
+                        let barCharts = resData?.chart?.linearDataSets;
                         this.tableData1 = resData.tableList && resData.tableList[0] ? resData.tableList[0] : [];
                         this.tableData2 = resData.tableList && resData.tableList[1] ? resData.tableList[1] : [];
                         if (barCharts) {

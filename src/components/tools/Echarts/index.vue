@@ -2,7 +2,10 @@
     <div class="chartsBox" ref="chartsBox" :style="{ height: height, width: width }" v-resize="resize">
         <div :class="className" :style="{ height: '100%', width: '100%' }"></div>
         <div class="chartsDownload" v-if="chartData?.toolbox?.show">
-            <el-button style="margin-left: 10px; height: 28px; padding: 0px 15px" type="primary" @click="chartDownLoad">下载</el-button>
+            <!-- <el-button style="margin-left: 10px; height: 24px; padding: 0px 15px" type="primary" @click="chartDownLoad">下载</el-button> -->
+            <el-button icon="el-icon-download" style="margin-left: 10px; padding: 0px 10px;" type="primary" @click="chartDownLoad">
+                下载
+            </el-button>
         </div>
     </div>
 </template>
@@ -224,7 +227,9 @@
                     pixelRatio: 1.5,
                     backgroundColor: "#022644",
                 });
-                FileSaver.saveAs(res, fileName);
+                let name =  typeof(fileName)  == 'string' ? fileName : this.chartData.toolbox.feature.saveAsImage.name;
+                console.log(typeof(fileName)  == 'string', fileName)
+                FileSaver.saveAs(res, name);
             },
         },
         beforeDestroy() {
@@ -240,11 +245,13 @@
 <style lang="scss" scoped>
     .chartsBox {
         // height: auto;
-        // position: relative;
+        position: relative;
         .chartsDownload {
             position: absolute;
-            top: 4px;
-            right: 56px;
+            // top: 4px;
+            // right: 56px;
+            top: 0;
+            right: 0;
             z-index: 99;
         }
     }

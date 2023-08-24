@@ -141,7 +141,7 @@
                                                  align="center">
                                     <template slot-scope="scope">
                                         <span v-if="scope.row.layerNo !== null && scope.row.layerNo !== ''">{{scope.row.layerNo}}</span>
-                                        <span v-else>N/A</span>
+                                        <span v-else>-</span>
                                     </template>
                                 </el-table-column>
                                 <el-table-column
@@ -356,10 +356,10 @@ export default {
             }
         },
         refresh() {
-            (this.queryData.blockId = '6CD7342CA6DD418183A4B3BC38584F7C')
-                this.queryData.dateTime = this.eeee()
+            this.queryData.blockId = '6CD7342CA6DD418183A4B3BC38584F7C';
+                this.queryData.dateTime = this.eeee();
                // this.dateTime = '2023-05',
-            this.doSearch()
+            this.doSearch();
         },
         // table表头标题样式
         tableColorone({row, column, rowIndex, columnIndex}) {

@@ -106,7 +106,7 @@
                 <el-table-column prop="beginDate" sortable :label="`*关停开始时间\n(yyyy/mm/dd)`">
                     <template slot-scope="scope">
                         <span v-if="scope.row.beginDate">{{scope.row.beginDate.substring(0,19)}}</span>
-                        <span v-else>N/A</span>
+                        <span v-else>-</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="endDate" sortable :label="`*关停结束时间\n(yyyy/mm/dd)`">
@@ -118,7 +118,7 @@
                 <el-table-column prop="impactProdution" :label="`影响产量\n(m³)`">
                     <template slot-scope="scope">
                       <span v-if="!isNaN(Number(scope.row.impactProdution).toFixed(2))">{{Number(scope.row.impactProdution * 10000).toFixed(2)}}</span>  
-                        <span v-else>N/A</span>
+                        <span v-else>-</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="remark" show-overflow-tooltip label="备注"></el-table-column>
@@ -299,28 +299,12 @@ export default {
     font-family: PingFangSC-Regular, PingFang SC;
 }
 
-.topSearchDiv {
-    display: flex;
+::v-deep .el-table .caret-wrapper {
+   top:-8px;right:-10px
 }
-
-.btnPosition {
-    margin: 0 0 20px 0;
-    justify-content: flex-end;
-}
-
-::v-deep .el-table__footer-wrapper td.el-table__cell {
-    text-align: center;
-}
-
-::v-deep.el-table .el-table__footer-wrapper .cell {
-    color: rgb(174, 178, 179);
-    font-weight: bolder;
-}
-
-::v-deep .el-table--border th.gutter:last-of-type {
-    display: block !important;
-    width: 17px !important;
-}
+//::v-deep .has-gutter.caret-wrapper{
+//    
+//}
 </style>
 <style lang="scss" scoped>
 ::v-deep .el-main {

@@ -173,7 +173,7 @@
                     >
                         <template slot-scope="scope">
                             <span v-if="scope.row.thicknessEffe !== null && scope.row.thicknessEffe !== ''">{{scope.row.thicknessEffe}}</span>
-                            <span v-else>N/A</span>
+                            <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column

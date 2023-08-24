@@ -124,10 +124,14 @@
                         </div>
                         <div style="flex:1;min-height:380px;">
                             <pagePanel headerTitle="井组动态分析详情列表" style="margin-top:0;height:100%;">
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '井组动态分析详情列表')">下载</el-button>
+                                </div>
                                 <el-table
+                                    id="table1"
                                     highlight 
                                     :data="tableData" 
-                                    height="100%" 
+                                    height="calc(100% - 55px)" 
                                     @sort-change="changeTableSort" 
                                     ref="tableList" 
                                     class="doubleHeader"
@@ -253,7 +257,7 @@
                             </div>
                         </div>
                         <div class="v2">
-                            <info-window info-width="100%"  info-height="100%"  header-title="井组变化趋势分析" :is-show-max-btn="false">
+                            <pagePanel header-title="井组变化趋势分析" style="height: 100%;">
                                 <div class="z-content" style="height:100%;overflow-y: scroll;">
                                     <div class="z-content-n">
                                         <div class="z-row-left">
@@ -296,11 +300,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                         <div class="v2 v3">
                             <img src="@/assets/rem/performance/bgline2.png" alt="" class="bgline2">
-                            <info-window info-width="100%"  info-height="100%"  header-title="开发生产问题监测" :is-show-max-btn="false">
+                            <pagePanel header-title="开发生产问题监测" style="height: 100%;">
                                 <div class="z-content2" style="height:100%;overflow-y: scroll;">
                                     <div class="z1">
                                         <div class="z-content-n">
@@ -422,14 +426,18 @@
                                         </div>
                                     </div>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                         <div style="height:680px;">
-                            <info-window info-width="100%"  info-height="100%"  header-title="井组动态分析详情列表" :is-show-max-btn="false">
-                                <el-table 
+                            <pagePanel header-title="井组动态分析详情列表" style="height: 100%;">
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table2', '井组动态分析详情列表')">下载</el-button>
+                                </div>
+                                <el-table
+                                    id="table2"
                                     highlight 
                                     :data="tableData" 
-                                    height="100%" 
+                                    height="calc(100% - 55px)" 
                                     @sort-change="changeTableSort" 
                                     ref="tableList" 
                                     class="doubleHeader"
@@ -499,7 +507,7 @@
                                         </el-table-column>
                                     </el-table-column>
                                 </el-table>
-                            </info-window>
+                            </pagePanel>
                         </div>
                     </div>
                 </div>
@@ -526,6 +534,8 @@
     import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js"
     import compareSort from "@/lib/compareSort.js";
     import treeSelectionCustom from "@/pages/rem/basic/components/treeSelectionCustom.vue";
+    import {exportExcel} from '@/lib/exportExcel.js';
+
     export default {
         name:'wellGroupAnalysisReport',
         mixins: [compareSort],
@@ -1418,6 +1428,10 @@
                 let wellB = ob.wellId;
                 return this.wellNoSort(wellA, wellB);
             },
+            //下载导出文件 tableId tableName
+            doDownExcel(tableId, tableName) {
+                exportExcel(tableId, tableName);
+            },
         }
     }
 </script>
@@ -1539,7 +1553,7 @@
                         z-index: -1;
                     }
                     .btns0{
-                        min-width:224px;
+                        min-width:250px;
                         height:70px;
                         padding-left:20px;
                         border: 1px solid;
@@ -1547,6 +1561,7 @@
                         background-image: var(--logo-bg) !important;
                         display: flex;
                         align-items: center;
+                        margin-right: 46px;
                         .helpImg{
                             width:52px;
                             height:52px;

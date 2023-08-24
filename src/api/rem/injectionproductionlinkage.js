@@ -20,6 +20,9 @@ export function addLinkageAlarmInfo(data) {
     return request({
         url: `${baseUrl}/linkageAlarmInfo/addLinkageAlarmInfo`,
         method: "post",
-        data
+        data,
+        headers: {
+            showLoading: false
+        }
     });
 }

@@ -4,21 +4,21 @@
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
                 <!-- <pagePanel headerTitle="剩余储采比" style="height: 380px;margin-top:0;" show-btn></pagePanel> -->
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="剩余储采比" isShowMaxBtn>
+                <pagePanel headerTitle="剩余储采比" style="height: 380px;margin-top:0;" show-btn>
                     <Echart :chart-data="reserveProductionRatio" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="水驱动用程度" isShowMaxBtn>
+                <pagePanel headerTitle="水驱动用程度" style="height: 380px;margin-top:0;" show-btn>
                     <Echart :chart-data="degreeOfWaterDrive" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
         </div>
         <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="水驱控制程度" isShowMaxBtn>
+                <pagePanel headerTitle="水驱控制程度" style="height: 380px; margin-top:0;" show-btn>
                     <Echart :chart-data="waterDriveControlDegree" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;"></div>
         </div>
@@ -699,8 +699,8 @@
 
 <style lang="scss" scoped>
     .z-main {
-        padding-top:8px;
-        padding-bottom: 8px;
+        // padding-top:8px;
+        // padding-bottom: 8px;
         .rowBox {
             padding-left:8px;
             display: flex;

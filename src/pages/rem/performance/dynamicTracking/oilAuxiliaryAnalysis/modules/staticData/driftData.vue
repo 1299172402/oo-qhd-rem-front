@@ -9,16 +9,16 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
       <el-table-column type="index" label="序号"></el-table-column>
       <el-table-column prop="wellName" label="井号"></el-table-column>
-      <el-table-column prop="measureDepth" :label="`测点斜深\n (m)`"></el-table-column>
-      <el-table-column prop="measureVerticalDepth" :label="`测点垂深\n (m)`"></el-table-column>
-      <el-table-column prop="deviationAngle" :label="`井斜角\n (°)`"></el-table-column>
-      <el-table-column prop="azinuthAngle" :label="`方位角\n (°)`"></el-table-column>
-      <el-table-column prop="displacement" :label="`位移\n (m)`"></el-table-column>
-      <el-table-column prop="closureAzimuth" :label="`闭合方位\n (°)`"></el-table-column>
-      <el-table-column prop="closureDistance" :label="`闭合距\n (m)`"></el-table-column>
-      <el-table-column prop="NSIncrement" :label="`坐标北南增量\n (m)`"></el-table-column>
-      <el-table-column prop="EWIncrement" :label="`坐标东西增量\n (m)`"></el-table-column>
-      <el-table-column prop="curvature" :label="`狗腿度（曲度）\n (°/30m)`"></el-table-column>
+      <el-table-column prop="measureDepth" :label="`测点斜深\n (m)`" :formatter="toPrecise2"></el-table-column>
+      <el-table-column prop="measureVerticalDepth" :label="`测点垂深\n (m)`" :formatter="toPrecise2"></el-table-column>
+      <el-table-column prop="deviationAngle" :label="`井斜角\n (°)`" :formatter="toPrecise2"></el-table-column>
+      <el-table-column prop="azinuthAngle" :label="`方位角\n (°)`" :formatter="toPrecise2"></el-table-column>
+      <el-table-column prop="displacement" :label="`位移\n (m)`" :formatter="toPrecise2"></el-table-column>
+      <el-table-column prop="closureAzimuth" :label="`闭合方位\n (°)`" :formatter="toPrecise2"></el-table-column>
+      <el-table-column prop="closureDistance" :label="`闭合距\n (m)`" :formatter="toPrecise2"></el-table-column>
+      <el-table-column prop="NSIncrement" :label="`坐标北南增量\n (m)`" :formatter="toPrecise2"></el-table-column>
+      <el-table-column prop="EWIncrement" :label="`坐标东西增量\n (m)`" :formatter="toPrecise2"></el-table-column>
+      <el-table-column prop="curvature" :label="`狗腿度（曲度）\n (°/30m)`" :formatter="toPrecise2"></el-table-column>
       <el-table-column prop="remark" label="备注"></el-table-column>
     </el-table>
   </page-panel-new>
@@ -65,6 +65,19 @@ export default {
         fileName = this.wellName + fileName;
       }
       exportExcel('#tableData',fileName);
+    },
+    // 表格格式化方法 - 数值只保留两位小数
+    toPrecise2(row, column) {
+      if (
+        (row[column.property] || parseFloat(row[column.property]) === 0) &&
+        typeof parseFloat(row[column.property]) === "number"
+      ) {
+        return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+        ? parseFloat(row[column.property]).toFixed(2)
+        : "0";
+      } else {
+        return row[column.property] ? row[column.property] : "-";
+      }
     },
   },
 }

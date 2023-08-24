@@ -9,9 +9,12 @@
                         <el-button type="primary" style="height:30px;" @click="$router.go(-1)">返回</el-button>
                     </div>
                     <div class="rowBox">
-                        <div class="row" style="margin-right:20px;">
-                            <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="" isShowMaxBtn>
-                                <el-table id="tableData0" header-cell-class-name="table_header"  :data="tableDataPtOne" highlight height="100%">
+                        <div class="row" style="margin-right:10px;">
+                            <pagePanel headerTitle="" style="margin-top:0; height: 400px;" show-btn>
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#tableData0', '产量分析报告-数据一')">下载</el-button>
+                                </div>
+                                <el-table id="tableData0" header-cell-class-name="table_header"  :data="tableDataPtOne" highlight height="calc(100% - 55px)">
                                     <el-table-column prop="platformName" label="平台" align="center" min-width="140" fixed></el-table-column>
                                     <el-table-column prop="dayOutput" :label="'当日\n'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="140">
                                         <template slot-scope="{ row }">
@@ -50,11 +53,14 @@
                                         </template>
                                     </el-table-column>
                                 </el-table>
-                            </info-window>
+                            </pagePanel>
                         </div>
-                        <div class="row" style="margin-right:20px;">
-                            <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="" isShowMaxBtn>
-                                <el-table id="tableData1" header-cell-class-name="table_header"  :data="tableDataPtTwo" highlight height="100%">
+                        <div class="row" style="margin-left:10px;">
+                            <pagePanel headerTitle="" style="margin-top:0; height: 400px;" show-btn>
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#tableData1', '产量分析报告-数据二')">下载</el-button>
+                                </div>
+                                <el-table id="tableData1" header-cell-class-name="table_header"  :data="tableDataPtTwo" highlight height="calc(100% - 55px)">
                                     <el-table-column prop="platformName" label="平台" align="center" min-width="140" fixed></el-table-column>
                                     <el-table-column prop="dayOutput" :label="'当日\n'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="140">
                                         <template slot-scope="{ row }">
@@ -93,12 +99,15 @@
                                         </template>
                                     </el-table-column>
                                 </el-table>
-                            </info-window>
+                            </pagePanel>
                         </div>
                     </div>
                     <div class="rowBox">
-                        <div class="row" style="margin-right:20px;">
-                            <info-window style="margin-top:0;" infoWidth="100%" infoHeight="440px" headerTitle="" isShowMaxBtn>
+                        <div class="row">
+                            <pagePanel headerTitle="" style="margin-top:0; height: 440px;" show-btn>
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#tableData', '产量分析报告-数据三')">下载</el-button>
+                                </div>
                                 <el-table 
                                     id="tableData"
                                     :data="tableDataThree" 
@@ -107,50 +116,53 @@
                                     header-cell-class-name="table_header" 
                                     :cell-style="{ padding: '6px', 'text-align': 'center' }"
                                     style="width: 100%;" 
-                                    height="100%" 
+                                    height="calc(100% - 55px)" 
                                     :default-sort="{ prop: 'date', order: 'descending' }" 
                                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                                     <el-table-column prop="wellNo" label="井号" width="120" fixed></el-table-column>
                                     <el-table-column prop="prodDate" label="日期" width="120"></el-table-column>
                                     <el-table-column prop="prodDuration" :label="`生产时间\n(h)`" width=""></el-table-column>
-                                    <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`" width=""></el-table-column>
-                                    <el-table-column prop="gasProdDaily" :label="`日产气\n(10⁴/m³)`" width="130"></el-table-column>
-                                    <el-table-column prop="oilProdDaily" :label="`日产油\n(m³)`" width=""></el-table-column>
-                                    <el-table-column prop="waterRatio" :label="`含水\n(%)`" width=""></el-table-column>
-                                    <el-table-column prop="waterProdDaily" :label="`日产水\n(m³)`" width=""></el-table-column>
-                                    <el-table-column prop="gasOilRatio" :label="`气油比\n(m³/m³)`" width="130"></el-table-column>
-                                    <el-table-column prop="airliftGasCont" :label="`气举量\n(10⁴/m³)`" width="130"></el-table-column>
-                                    <el-table-column prop="pfl" :label="`动液面\n(m)`" width=""></el-table-column>
-                                    <el-table-column prop="pumpFrequency" :label="`泵频率\n(Hz)`" width=""></el-table-column>
-                                    <el-table-column prop="pumpCurrent" :label="`泵电流\n(A)`" width=""></el-table-column>
-                                    <el-table-column prop="nozzleDiameter" :label="`油嘴\n(mm)`" width=""></el-table-column>
-                                    <el-table-column prop="oilPress" :label="`油压\n(MPa)`" width=""></el-table-column>
-                                    <el-table-column prop="drawdownPress" :label="`压差\n(MPa)`" width=""></el-table-column>
-                                    <el-table-column prop="dhFlowingPress" :label="`流压\n(MPa)`" width=""></el-table-column>
-                                    <el-table-column prop="datumPessure" :label="`基准面流压\n(MPa)`" width="130"></el-table-column>
-                                    <el-table-column prop="backPress" :label="`回压\n(MPa)`" width=""></el-table-column>
-                                    <el-table-column prop="pumpInletPress" :label="`泵入口压力\n(MPa)`" width="130"></el-table-column>
-                                    <el-table-column prop="pumpOutletPress" :label="`泵出口压力\n(MPa)`" width="130"></el-table-column>
-                                    <el-table-column prop="csgPress" :label="`套压\n(MPa)`" width=""></el-table-column>
-                                    <el-table-column prop="techCsgPress" :label="`技术套压\n(MPa)`" width=""></el-table-column>
-                                    <el-table-column prop="surfaceCsgPress" :label="`表层套压\n(MPa)`" width=""></el-table-column>
-                                    <el-table-column prop="pumpMotorTemp" :label="`马达温度\n(℃)`" width=""></el-table-column>
-                                    <el-table-column prop="whTemp" :label="`井口温度\n(℃)`" width=""></el-table-column>
-                                    <el-table-column prop="dhFlowingTemp" :label="`流温\n(℃)`" width=""></el-table-column>
+                                    <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="gasProdDaily" :label="`日产气\n(10⁴/m³)`" width="130" :formatter="toPrecise4"></el-table-column>
+                                    <el-table-column prop="oilProdDaily" :label="`日产油\n(m³)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="waterRatio" :label="`含水\n(%)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="waterProdDaily" :label="`日产水\n(m³)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="gasOilRatio" :label="`气油比\n(m³/m³)`" width="130" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="airliftGasCont" :label="`气举量\n(10⁴/m³)`" width="130" :formatter="toPrecise4"></el-table-column>
+                                    <el-table-column prop="pfl" :label="`动液面\n(m)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="pumpFrequency" :label="`泵频率\n(Hz)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="pumpCurrent" :label="`泵电流\n(A)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="nozzleDiameter" :label="`油嘴\n(mm)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="oilPress" :label="`油压\n(MPa)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="drawdownPress" :label="`压差\n(MPa)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="dhFlowingPress" :label="`流压\n(MPa)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="datumPessure" :label="`基准面流压\n(MPa)`" width="130" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="backPress" :label="`回压\n(MPa)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="pumpInletPress" :label="`泵入口压力\n(MPa)`" width="130" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="pumpOutletPress" :label="`泵出口压力\n(MPa)`" width="130" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="csgPress" :label="`套压\n(MPa)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="techCsgPress" :label="`技术套压\n(MPa)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="surfaceCsgPress" :label="`表层套压\n(MPa)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="pumpMotorTemp" :label="`马达温度\n(℃)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="whTemp" :label="`井口温度\n(℃)`" width="" :formatter="toPrecise2"></el-table-column>
+                                    <el-table-column prop="dhFlowingTemp" :label="`流温\n(℃)`" width="" :formatter="toPrecise2"></el-table-column>
                                     <el-table-column prop="remark" label="备注" width=""></el-table-column>
                                 </el-table>
-                            </info-window>
+                            </pagePanel>
                         </div>
                     </div>
                     <div class="rowBox">
-                        <div class="row" style="margin-right:20px;">
-                            <info-window style="margin-top:0;" infoWidth="100%" infoHeight="440px" headerTitle="" isShowMaxBtn>
-                                <el-table :data="eventData" highlight height="100%" empty-text="当日无大事件">
+                        <div class="row">
+                            <pagePanel headerTitle="" style="margin-top:0; height: 440px;" show-btn>
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table4', '产量分析报告-数据四')">下载</el-button>
+                                </div>
+                                <el-table id="table4" :data="eventData" highlight height="calc(100% - 55px)" empty-text="当日无大事件">
                                     <el-table-column prop="eventType" label="事件类型" align="center" width="180"></el-table-column>
                                     <el-table-column prop="wellNum" label="井数" align="center" width="160"></el-table-column>
                                     <el-table-column prop="content" align="center" label="井名"></el-table-column>
                                 </el-table>
-                            </info-window>
+                            </pagePanel>
                         </div>
                     </div>
                 </div>
@@ -165,11 +177,13 @@
     import { outputTracingAnalysis, outputTracing, platformOutputContributeAnalysis,dailyMainEvent, wellOutputWaveAnalysis } from "@/api/oilDeposit/rem-02/outputmanagement.js";
     import { getProdDailyTable } from "@/api/oilDeposit/rem-04/yieId.js"
     import FileSaver from 'file-saver';
+    import {exportExcel} from '@/lib/exportExcel.js';
+
     export default {
         name:'productionOperationAnalysisReport',
         filters: {
             getFixNumberTwo(val) {
-                return val ? val.toFixed(4) : (val === 0 ? val : "N/A");
+                return val ? val.toFixed(2) : (val === 0 ? val : "-");
             }
         },
         data() {
@@ -331,6 +345,36 @@
                     let data = res.data.data;
                     _this.eventData = data.dailyMainEvents;
                 });
+            },
+            //下载导出文件 tableId tableName
+            doDownExcel(tableId, tableName) {
+                exportExcel(tableId, tableName);
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
+            },
+            // 表格格式化方法 - 数值只保留四位位小数
+            toPrecise4(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(4)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         }
     };

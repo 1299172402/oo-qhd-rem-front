@@ -33,8 +33,8 @@
         
         <page-panel-new class="app-content">
             
-            <info-window headerTitle="分注井测试率" info-width="100%" info-height="500px" is-show-max-btn>
-                <div class="g-row-flex-V" style="margin: 20px 0;">
+            <pagePanel headerTitle="分注井测试率" style="height: 500px;" show-btn>
+                <div class="g-row-flex-V" style="margin-bottom: 20px;">
                     <div style="margin-right: 20px">
                         平台：
                         <el-select v-model="queryParams.platFormId" style="width: 220px">
@@ -45,14 +45,16 @@
                         <el-button icon="el-icon-search" type="primary" @click="doSearch">确定</el-button>
                     </div>
                 </div>
-                <Echart :chart-data="separateInjectionWellTestRate" height="calc(100% - 75px)"></Echart>
-            </info-window>
+                <Echart :chart-data="separateInjectionWellTestRate" height="calc(100% - 55px)"></Echart>
+            </pagePanel>
 
-            <info-window :headerTitle="`${oilFieldName || ''}分注井测试明细`" info-width="100%" info-height="500px" is-show-max-btn>
-                <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 32px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#fzjcsmx', `${oilFieldName || ''}分注井测试明细`)">
-                    下载
-                </el-button>
-                <el-table id="fzjcsmx" :data="tableData" highlight height="100%">
+            <pagePanel :headerTitle="`${oilFieldName || ''}分注井测试明细`" style="height: 550px;" show-btn>
+                <div style="display: flex; justify-content: flex-end">
+                    <el-button style="margin-bottom: 20px" type="primary" @click="doDownExcel('#fzjcsmx', `${oilFieldName || ''}分注井测试明细`)">
+                        下载
+                    </el-button>
+                </div>
+                <el-table id="fzjcsmx" :data="tableData" highlight height="calc(100% - 55px)">
                     <!-- :index="formatIndex"  -->
                     <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
                     <el-table-column prop="ogfName" label="油田" align="center"></el-table-column>
@@ -60,7 +62,7 @@
                     <el-table-column prop="injSeparateTypeName" label="分注类型" align="center"></el-table-column>
                     <el-table-column prop="prodDate" :label="`调配日期\n(yyyy/mm/dd)`" :formatter="formatTime" align="center"></el-table-column>
                 </el-table>
-            </info-window>
+            </pagePanel>
         </page-panel-new>
         
     </div>

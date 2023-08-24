@@ -2,10 +2,10 @@ import Layout from '@/layouts/index.vue';
 const env = import.meta.env.MODE;
 export default [
     {
-        path: '/intelligence1',
-        name: 'intelligence1',
-        hidden:true,
+        path: '/injection',
+        name: 'injection',
         component: Layout,
+        hidden:true,
         meta: { title: '智能注采调配', icon: 'client', single: false },
         children: [
             {

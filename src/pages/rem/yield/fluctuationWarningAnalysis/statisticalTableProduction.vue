@@ -381,10 +381,15 @@
             },
             //保留两位小数
             formatter(row, column, cellValue, index){
-                if (cellValue) {
-                    return Number(cellValue).toFixed(2);
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
                 } else {
-                    return '-';
+                    return row[column.property] ? row[column.property] : "-";
                 }
             },
             //返回

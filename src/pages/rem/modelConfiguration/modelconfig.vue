@@ -92,7 +92,6 @@
                     <el-form-item label="配置项值" prop="configValue">
                         <el-input size="mini" v-model="editForm.configValue"></el-input>
                     </el-form-item>
-                </el-row>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="editConfigValue()">确 定</el-button>
@@ -140,7 +139,15 @@
 </template>
 
 <script>
-    import {queryTableData,editModelConfigValue,getAllModelName,rangeSelDayApi,selMonthRangeApi,getModelInstructionManual} from '@/api/modelConfiguration/config/modelConfigAPI.js';
+import {
+    queryTableData,
+    editModelConfigValue,
+    getAllModelName,
+    rangeSelDayApi,
+    selMonthRangeApi,
+    getModelInstructionManual,
+    queryModelConfigurationByCode
+} from '@/api/modelConfiguration/config/modelConfigAPI.js';
     import {getOgfList,getBlockList,getProdDailyTable,getWellList,getWell} from '@/api/oilDeposit/rem-04/modelConfiguration.js';
     import { saveAs } from "file-saver";
     export default {
@@ -452,9 +459,16 @@
                             }
                         }
                     }
+                           
                 }).catch(() => {
                     this.tableLoading = false;
                 });
+                let data = {
+                    configurationModelCode:'ZSQDPJ'
+                }
+                queryModelConfigurationByCode(data).then((res)=>{
+                    console.log(res)
+                })
             },
             //切换分页
             pagination(e) {

@@ -162,14 +162,14 @@
                                      show-overflow-tooltip min-width="125px" align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.injSplitData !== null && scope.row.injSplitData !== ''">{{scope.row.injSplitData}}</span>
-                            <span v-else>N/A</span>
+                            <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="operationalNarration" label="连通系数?(计算)" min-width="120"
                                      :render-header="renderheader" align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.operationalNarration !== null && scope.row.operationalNarration !== ''">{{scope.row.operationalNarration}}</span>
-                            <span v-else>N/A</span>
+                            <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="operationInjSplitData" label="劈分注水量?m³/d"
@@ -177,14 +177,14 @@
                                      align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.operationInjSplitData !== null && scope.row.operationInjSplitData !== ''">{{scope.row.operationInjSplitData}}</span>
-                            <span v-else>N/A</span>
+                            <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="correctionFactor" label="连通系数?(修正)" min-width="120"
                                      :render-header="renderheader" align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.correctionFactor !== null && scope.row.correctionFactor !== ''">{{scope.row.correctionFactor}}</span>
-                            <span v-else>N/A</span>
+                            <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="reviseInjSplitData" label="劈分注水量?m³/d"
@@ -192,7 +192,7 @@
                                      align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.reviseInjSplitData !== null && scope.row.reviseInjSplitData !== ''">{{scope.row.reviseInjSplitData}}</span>
-                            <span v-else>N/A</span>
+                            <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="remark" min-width="150" label="备注" show-overflow-tooltip
@@ -307,8 +307,7 @@ export default {
             queryData: {
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
                 blockId: 'YCFXDY8B643EDC9007F96F570600457D',
-                // dateTime: this.eeee(),
-                dateTime: '2023-03',
+                dateTime: this.eeee(),
             },
             //   new Date().format("yyyy-MM")
             form: {
@@ -606,6 +605,7 @@ export default {
                             // }).then((res) => {
                             //     this.tableWater = res;
                             // }); 
+                            // 接口404,接手代码。未知原因
                             this.$message.success("保存成功")
                         } else {
                             this.$message.error("保存失败")
