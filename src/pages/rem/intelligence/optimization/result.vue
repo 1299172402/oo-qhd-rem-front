@@ -376,7 +376,7 @@ export default {
                         blockId:this.queryData.blockId,
                         injWellMonthDtos: this.form.tableData2,
                         dateTime: this.queryData.dateTime
-                    }).then((bool) => {
+                    }).then(() => {
                         this.$message.success("保存成功")
                     }).finally(() => {
                         this.saveLoad = false
