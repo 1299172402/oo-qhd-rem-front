@@ -222,8 +222,10 @@
                 </div>
                 <div style="height:40%">
                     <page-panel header-title="超欠注情况统计" style="height: 100%;" :show-btn="true">
-                        <el-button  type="primary" style="float: right;margin-top: -15px" icon="el-icon-download" @click="doDownExcel()"
-                        >下载
+                        <el-button
+                            type="primary"
+                            class="buttonActive_primary detailLinkBtn"
+                            @click="doDownExcel()">下载
                         </el-button
                         >
                         <el-table
