@@ -540,6 +540,8 @@ export default {
                         label: {
                             fontSize: 14,
                         },
+                        animation: false,   //去掉动画效果
+                        silent: true,    //不响应和触发鼠标事件，默认为 false，即响应和触发鼠标事件
                         hoverAnimation:false,
                         clickable:false,
                         axisPointer: {
@@ -592,6 +594,8 @@ export default {
                         label: {
                             fontSize: 15,
                         },
+                        animation: false,   //去掉动画效果
+                        silent: true,    //不响应和触发鼠标事件，默认为 false，即响应和触发鼠标事件
                         data: [
                             {value: 0, name: value, label: {color: '#a9a8a8', position: 'center'}},
                             {value: 1, name: unit, label: {color: '#a9a8a8', position: 'inner'}},
