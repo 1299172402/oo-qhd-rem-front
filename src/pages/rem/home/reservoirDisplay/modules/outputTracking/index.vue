@@ -1,6 +1,6 @@
 <template>
     <div class="app-container" style="width: 100%; height: 100%">
-        <el-button size="mini" type="primary" style="position: absolute;right:0px;z-index:20" @click="downEcharts">下载</el-button>
+        <button class="detailLinkBtn"   @click="downEcharts">下载</button>
         <Echart ref="echartChart" :chart-data="productLineChart" width="100%" height="80%"></Echart>
         <el-row :gutter="20">
             <el-col :span="7">
@@ -1105,9 +1105,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-// .f1 {
-//   margin: 10px;
-// }
 .cont {
     & > div {
         margin-top: 20px;
@@ -1130,7 +1127,19 @@ export default {
     line-height: 42px;
     box-shadow: 0px 0px 15px #66ffff inset;
 }
-
+.detailLinkBtn {
+    position: absolute;
+    right: 120px;
+    top: 10px;
+    width: 50px;
+    height: 20px;
+    background: linear-gradient(90deg, #0751b0, #50a6ec);
+    text-align: center;
+    font-size: smaller;
+    border: 0;
+    cursor: pointer;
+    color: #ffffff;
+}
 .xbox {
     display: flex;
     align-items: center;

@@ -2,6 +2,7 @@
  * @Description: 模型配置
  */
 import Axios from '@/utils/request'
+import request from "@/utils/request";
 const baseUrl = process.env.NODE_ENV == "production" ? "/model/config" : "/model/config"
 
 export function getAllModelName(){
@@ -51,5 +52,11 @@ export function getModelInstructionManual(){
         method: "get",
 		responseType:'blob',
         params:{}
+    });
+}
+export function queryModelConfigurationByCode({ configurationModelCode} = {}) {
+    return request({
+        url: `injation/api/configurationModel/queryModelConfigurationByCode?configurationModelCode=${ configurationModelCode || "" }`,
+        method: "get",
     });
 }

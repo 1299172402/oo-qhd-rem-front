@@ -36,7 +36,6 @@ export default {
         linkageBox
     },
     mounted() {
-        this.getinfo()
         const env = import.meta.env.MODE;
         if (window.location.origin.includes('test')) {
             this.baseUrl = 'tjioms-test.tjltd.cnooc'
@@ -44,7 +43,7 @@ export default {
             this.baseUrl = 'tjioms-dev.tjltd.cnooc'
         }
         this.getWarningInfo()
-    
+        this.getinfo()
         //预警信息轮询查询
         this.timmerWarning = setInterval(() => {
             this.getWarningInfo()

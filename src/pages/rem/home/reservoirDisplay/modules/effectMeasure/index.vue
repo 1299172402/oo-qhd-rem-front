@@ -7,7 +7,7 @@
             :is-show-max-btn="true"
         >
             <button class="detailLinkBtn" @click="linkroute('oilAnalysisReport')">详细</button>
-            <el-button size="mini" type="primary" style="float: right" @click="downtable">下载</el-button>
+            <button class="detailLinkBtn"  style="right:110px"  @click="downtable">下载</button>
             <el-table
                 :data="tableData"
                 highlight-current-row
