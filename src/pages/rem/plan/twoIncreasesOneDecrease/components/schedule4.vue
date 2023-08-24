@@ -1,7 +1,7 @@
 <template>
     <info-window infoWidth="100%" infoHeight="100%" headerTitle="附表4 秦皇岛32-6/渤中作业公司年自然递减率主控因素分析" :isShowMaxBtn="true">
         
-        <el-table class="doubleHeader" :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }" :data="tableData" header-cell-class-name="table_header"
+        <el-table id="tableData" class="doubleHeader" :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }" :data="tableData" header-cell-class-name="table_header"
             :cell-style="{ padding: '6px', 'text-align': 'center' }" height="calc(100% - 40px)">
             
             <el-table-column type="index" label="序号" width="50px" fixed></el-table-column>
@@ -126,5 +126,16 @@
     ::v-deep .el-table__fixed-header-wrapper .cell {
         line-height: 45px !important;
         height: 45px !important;
+    }
+    #tableData {
+      ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        white-space: pre;
+      }
+      ::v-deep .cell:empty {
+        &::before {
+          content: "-";
+        }
+      }
     }
 </style>
