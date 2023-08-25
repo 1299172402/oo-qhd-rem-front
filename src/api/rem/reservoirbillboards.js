@@ -112,3 +112,10 @@ export function queryProblemWellStatisDetails({ wellId, ogfId,pageSize, pageNum,
         method: "get",
     });
 }
+export function queryProblemWellStatisDetailsDownloadFile({ wellId, ogfId,pageSize, pageNum,assetCode,yearDate } = {}) {
+    return request({
+        url: `${baseUrl}/reservoirBillboards/queryProblemWellStatisDetailsDownloadFile?ogfId=${ ogfId || "" }&wellId=${ wellId || "" }&pageSize=${ pageSize || "" }&pageNum=${ pageNum || "" }&assetCode=${ assetCode || "" }&yearDate=${ yearDate || "" }`,
+        method: "get",
+        responseType: "blob",
+    });
+}

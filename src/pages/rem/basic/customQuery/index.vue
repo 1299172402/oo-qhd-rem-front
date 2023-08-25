@@ -238,7 +238,7 @@
                     </el-table>
                     <el-table
                         :row-style="{ height: '0px' }"
-                        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"       
                         :data="dowload"
                         height="100%"
                         id="zdycx"
@@ -254,7 +254,8 @@
                             :label="item.name"
                             min-width="160"
                             v-for="(item, index) in headerTextLower"
-                        ></el-table-column>
+                        >
+                        </el-table-column>
                     </el-table>
                     <pagination
                         v-if="pageTotal"
@@ -1088,7 +1089,7 @@ export default {
                 this.headerTextLower = [];
                 this.headerText.forEach((item) => {
                     this.headerTextLower.push({
-                        val: item.val.toLowerCase().replace(/_/g, ""),
+                        val: isNaN(item.val.toLowerCase().replace(/_/g, ""))?item.val.toLowerCase().replace(/_/g, ""):(item.val.toLowerCase().replace(/_/g, "")).toFixed(2) ,
                         name: `${item.name}${item.unit ? "(" + item.unit + ")" : ""}`,
                     });
                 });
