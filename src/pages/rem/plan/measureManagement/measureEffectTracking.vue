@@ -140,7 +140,7 @@
                 </el-row>
                 <el-row class="main-row2" v-if="type == 0">
                     <div class="svg" v-if="oilTabType == '0'">
-                        <div class="search-date" style="position: absolute; top: 0; left: 20px; ">
+                        <div class="search-date" style="position: absolute; top: 0; left: 20px; z-index: 99;">
                             <span>日期：</span>
                             <el-date-picker v-model="selectData" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd"></el-date-picker>
                             <el-button type="primary" icon="el-icon-search" style="margin-left:10px;" @click="doSearchCharts">搜索</el-button>
@@ -168,7 +168,7 @@
                         </div>
                     </div>
                     <div class="svg" v-else-if="oilTabType == '2'">
-                        <div class="search-date" style="position: absolute; top: 0; left: 20px; ">
+                        <div class="search-date" style="position: absolute; top: 0; left: 20px; z-index: 99;">
                             <span>日期：</span>
                             <el-date-picker v-model="selectDateTime" type="datetime" placeholder="选择日期时间" format="yyyy-MM-dd hh:mm"></el-date-picker>
                             <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doWellFluxLastDayHour">搜索</el-button>
