@@ -164,7 +164,6 @@ export default {
       }
       else if (this.type==3){
           this.deptOptions = this.arrayData;
-          this.deptOptions
           this.setDisabledRecursive(this.deptOptions, this.start, this.end)
           this.$nextTick(()=>{
               this.$refs.tree.setCheckedNodes([{

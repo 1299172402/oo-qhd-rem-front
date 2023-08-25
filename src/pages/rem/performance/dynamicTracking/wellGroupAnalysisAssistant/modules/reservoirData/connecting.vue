@@ -47,7 +47,8 @@ export default {
     },
     methods: {
         async doSearch() {
-            let wellid = '',blockid = ''
+            let wellid = ''
+            let blockid = ''
             if(this.blockId = '3FC9A818F5BC43B88270DB80BBB3018F'){
                 blockid = '';
             }else{
