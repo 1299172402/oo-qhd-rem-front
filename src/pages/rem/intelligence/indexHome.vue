@@ -391,14 +391,14 @@ export default {
         //左侧区块
         queryWellGroupBlock() {
             getWellGroupBlock(this.queryData).then((res) => {
-                res.injRatio = Number(res.injRatio).toFixed(1)
-                res.haveWater = Number(res.haveWater).toFixed(1)
-                res.waterProd =  Number(res.waterProd).toFixed(4)
-                res.oilProd = Number(res.oilProd).toFixed(4)
-                res.gasProd = Number(res.gasProd).toFixed(4)
-                res.fluidProd = Number(res.fluidProd).toFixed(4)
-                res.injAlloc = Number(res.injAlloc).toFixed(4)
-                res.inj = Number(res.inj).toFixed(4)
+                res.injRatio = res.injRatio == null ? '':Number(res.injRatio).toFixed(1)
+                res.haveWater = res.haveWater == null? '': Number(res.haveWater).toFixed(1)
+                res.waterProd = res.waterProd == null ? '' : Number(res.waterProd).toFixed(4)
+                res.oilProd = res.oilProd == null ? '':Number(res.oilProd).toFixed(4)
+                res.gasProd = res.gasProd == null? '' :Number(res.gasProd).toFixed(4)
+                res.fluidProd = res.fluidProd == null? '':Number(res.fluidProd).toFixed(4)
+                res.injAlloc = res.injAlloc == null? '':Number(res.injAlloc).toFixed(4)
+                res.inj = res.inj == null? '':Number(res.inj).toFixed(4)
                 this.groupBlock = res
                 this.getEchartData()
                 this.getEchart()
