@@ -74,10 +74,20 @@ export default ({ mode }) => {
           // 更多请参考：https://vitejs.dev/config/#server-proxy
           // target: 'http://10.247.187.28:8080/dev-api/',
           // target: 'http://10.178.118.181:9220',
-          target: 'http://10.178.118.189:8081',
+          target: 'http://localhost:8081',
           // target: "http://10.77.78.250:9213",
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, "/rem/api"),
+        },
+        "/dev-api/ipm/api": {
+          // 用于开发环境下的转发请求
+          // 更多请参考：https://vitejs.dev/config/#server-proxy
+          // target: 'http://10.247.187.28:8080/dev-api/',
+          // target: 'http://10.178.118.181:9220',
+          target: 'http://192.168.2.242:22033',
+          // target: "http://10.77.78.250:9213",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/dev-api\/ipm\/api/, "/"),
         },
         // "/dev-api/masterService/api": {
         //   // 主服务转发请求
@@ -93,8 +103,10 @@ export default ({ mode }) => {
           // 更多请参考：https://vitejs.dev/config/#server-proxy
           // target: 'http://10.77.79.57:8080/dev-api/',
           target: "http://10.77.78.250",
+          // target: "http://192.168.1.20:8080",
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api/, "/prod-api"),
+          // rewrite: (path) => path.replace(/^\/dev-api/, ""),
         },
         // "/GEM_API": {
         //   // 用于开发环境下的转发请求
