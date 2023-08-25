@@ -106,7 +106,7 @@
                 <el-table-column prop="beginDate" sortable :label="`*关停开始时间\n(yyyy/mm/dd)`">
                     <template slot-scope="scope">
                         <span v-if="scope.row.beginDate">{{scope.row.beginDate.substring(0,19)}}</span>
-                        <span v-else>N/A</span>
+                        <span v-else>-</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="endDate" sortable :label="`*关停结束时间\n(yyyy/mm/dd)`">
@@ -118,7 +118,7 @@
                 <el-table-column prop="impactProdution" :label="`影响产量\n(m³)`">
                     <template slot-scope="scope">
                       <span v-if="!isNaN(Number(scope.row.impactProdution).toFixed(2))">{{Number(scope.row.impactProdution * 10000).toFixed(2)}}</span>  
-                        <span v-else>N/A</span>
+                        <span v-else>-</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="remark" show-overflow-tooltip label="备注"></el-table-column>

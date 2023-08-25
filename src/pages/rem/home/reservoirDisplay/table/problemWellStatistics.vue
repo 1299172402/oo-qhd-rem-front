@@ -30,6 +30,14 @@
                                 </el-option>
                             </el-select>
                         </el-form-item>
+                        <el-form-item label="年份:" style="margin-left:20px">
+                            <el-date-picker
+                                type="year"
+                                placeholder="选择年份"
+                                value-format="yyyy"
+                                v-model="queryParams.yearDate"
+                            ></el-date-picker>
+                        </el-form-item>
                         <el-form-item>
                             <el-button size="mini" @click="searchinfo"  icon="el-icon-search" type="primary">搜索
                             </el-button>
@@ -131,6 +139,7 @@ export default {
                 pageSize:10,
                 pageNum:1,
                 wellId:'',
+                yearDate:new Date().format('YYYY'),
                 assetCode:'',
             },
         };

@@ -141,7 +141,7 @@
                                                  align="center">
                                     <template slot-scope="scope">
                                         <span v-if="scope.row.layerNo !== null && scope.row.layerNo !== ''">{{scope.row.layerNo}}</span>
-                                        <span v-else>N/A</span>
+                                        <span v-else>-</span>
                                     </template>
                                 </el-table-column>
                                 <el-table-column

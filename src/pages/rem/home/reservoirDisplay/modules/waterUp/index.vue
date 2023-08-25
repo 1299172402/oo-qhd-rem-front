@@ -7,7 +7,8 @@
             :is-show-max-btn="true"
         >
             <button class="detailLinkBtn" @click="linkroute('/developStatus/developmentEffectEvaluation')">详细</button>
-            <Echart :chart-data="rateOfWaterCutRise" width="100%" height="100%"></Echart>
+            <button class="detailLinkBtn"  style="right:110px"  @click="downEcharts">下载</button>
+            <Echart ref="echartChart" :chart-data="rateOfWaterCutRise" width="100%" height="100%"></Echart>
         </info-window>
     </div>
 </template>
@@ -138,6 +139,9 @@ export default {
               path: name,
               query:{ link:'decreasing' }
           });
+      },
+      downEcharts(){
+          this.$refs.echartChart.chartDownLoad( '含水上升');
       },
       //含水上升率
       getWaterContainRaiseChart(oilFieldId, fieldId) {

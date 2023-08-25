@@ -183,7 +183,7 @@
         name:'productionOperationAnalysisReport',
         filters: {
             getFixNumberTwo(val) {
-                return val ? val.toFixed(2) : (val === 0 ? val : "N/A");
+                return val ? val.toFixed(2) : (val === 0 ? val : "-");
             }
         },
         data() {

@@ -16,7 +16,7 @@
                                  min-width="120">
                     <template slot-scope="scope">
                         <p v-if="scope.row.layerName">{{scope.row.layerName}}</p>
-                        <p v-else>N/A</p>
+                        <p v-else>-</p>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -27,7 +27,7 @@
                     align="center"
                 > <template slot-scope="scope">
                     <p v-if="scope.row.injSeparateTypeCode">{{scope.row.injSeparateTypeCode}}</p>
-                    <p v-else>N/A</p>
+                    <p v-else>-</p>
                 </template>
                 </el-table-column>
                 <el-table-column label="最近一次吸水指数测试情况" prop="almostYearAvgAbsorp" align="center">
@@ -40,7 +40,7 @@
                     >
                         <template slot-scope="scope">
                             <span v-if="scope.row.absorpTestDate">{{ scope.row.absorpTestDate?scope.row.absorpTestDate.split(' ')[0]:'-' }}</span>
-                            <span v-else>N/A</span>
+                            <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column
@@ -53,7 +53,7 @@
                     >
                         <template slot-scope="scope">
                             <span  v-if="scope.row.absorpIndex" :class="`bj_col${scope.row.typeFlag}`">{{ scope.row.absorpIndex }}</span>
-                            <span v-else>N/A</span>
+                            <span v-else>-</span>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -74,7 +74,7 @@
                     >
                         <template slot-scope="scope">
                             <span v-if="scope.row.almostYearAvgMonthAbsorpList[index].absorpAvgMonth">{{ scope.row.almostYearAvgMonthAbsorpList[index].absorpAvgMonth }}</span>
-                            <span v-else>N/A</span>
+                            <span v-else>-</span>
                         </template>
                     </el-table-column>
                 </el-table-column>
@@ -88,7 +88,7 @@
                 >
                     <template slot-scope="scope">
                         <span v-if="scope.row.absorpPredictIndex" :class="`bj_col${scope.row.typeFlag}`">{{ scope.row.absorpPredictIndex }}</span>
-                        <span v-else>N/A</span>
+                        <span v-else>-</span>
                     </template>
                 </el-table-column>
             </el-table>

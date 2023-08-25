@@ -1,7 +1,7 @@
 <template>
     <info-window infoWidth="100%" infoHeight="100%" headerTitle="附表9 秦皇岛32-6/渤中作业公司年自然递减率生产运行因素分解" :isShowMaxBtn="true">
         
-        <el-table class="doubleHeader" :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }" :data="tableData" header-cell-class-name="table_header"
+        <el-table id="tableData" class="doubleHeader" :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }" :data="tableData" header-cell-class-name="table_header"
         :cell-style="{ padding: '6px', 'text-align': 'center' }" height="calc(100% - 40px)">
         
             <el-table-column type="index" label="序号" align="center" width="50px" fixed></el-table-column>
