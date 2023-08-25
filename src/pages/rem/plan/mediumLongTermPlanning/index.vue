@@ -386,7 +386,7 @@ export default {
     // 表格格式化方法 - 数值只保留两位小数
     toPrecise4(row, column) {
       if (
-        (row[column.property] || parseFloat(row[column.property]) === 0) &&
+        (parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0) &&
         typeof parseFloat(row[column.property]) === "number"
       ) {
         return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
