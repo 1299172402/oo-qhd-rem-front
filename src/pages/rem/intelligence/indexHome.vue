@@ -161,7 +161,7 @@
                             <div class="grid-content bg-purple">
                                 <Echart
                                     id="chart"
-                                    :chart-data="getEchartData(groupBlock.injRatio, '口', 'rgb(164, 227, 77)', 'rgb(7,59,90)', 'rgb(164, 227, 77)')"
+                                    :chart-data="getEchartData(groupBlock.injRatio, '', 'rgb(164, 227, 77)', 'rgb(7,59,90)', 'rgb(164, 227, 77)')"
                                 ></Echart>
                                 <div class="chartText">注采比</div>
                             </div>
@@ -169,7 +169,7 @@
                         <el-col :span="6">
                             <div class="grid-content bg-purple">
                                 <Echart
-                                    :chart-data="getEchartData(groupBlock.haveWater, '口', 'rgb(185, 75, 215)', 'rgb(7,59,90)', 'rgb(185, 75, 215)')"
+                                    :chart-data="getEchartData(groupBlock.haveWater, '%', 'rgb(185, 75, 215)', 'rgb(7,59,90)', 'rgb(185, 75, 215)')"
                                 ></Echart>
                                 <div class="chartText">含水</div>
                             </div>

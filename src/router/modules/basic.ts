@@ -22,7 +22,7 @@ export default [
         path: 'reserves',
         name: 'reserves',
         component: () => import('@/pages/rem/basic/wellControlReserves/index.vue'),
-        meta: { title: '井控储量数据页面' },
+        meta: { title: '井控储量数据维护' },
       },
       // {
       //   path: 'maintenance',
