@@ -60,3 +60,10 @@ export function queryModelConfigurationByCode({ configurationModelCode} = {}) {
         method: "get",
     });
 }
+export function updateModelConfigurationByCode(date){
+    return Axios({
+        url: `injation/api/configurationModel/updateModelConfigurationByCode`,
+        method: "post",
+        data:date
+    });
+}
