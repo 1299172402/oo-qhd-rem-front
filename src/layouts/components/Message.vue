@@ -152,7 +152,7 @@ export default Vue.extend({
   },
   destroyed() {
     window.clearInterval(this.timer);
-    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("scroll", this.handleScroll, true);
   },
   methods: {
     handleScroll(e) {

@@ -284,6 +284,11 @@
   right: 10px !important;
 }
 
+// 表格只有纵向滚动条
+.el-table__fixed-right::before {
+  background-color: transparent !important;
+}
+
 // 表格只有横向没有纵向
 .el-table--scrollable-x:not(.el-table--scrollable-y) .el-table__fixed-right {
   right: 0 !important;
