@@ -33,7 +33,7 @@
           <el-date-picker
             v-model="queryData.startTime"
             type="monthrange"
-            range-separator="至"
+            range-separator="-"
             start-placeholder="开始月份"
             end-placeholder="结束月份"
             value-format="yyyy-MM"
@@ -45,23 +45,24 @@
               v-if="queryData.timeStatus"
               v-model="queryData.endTime"
               type="monthrange"
-              range-separator="至"
+              range-separator="-"
               start-placeholder="对比开始月份"
               end-placeholder="对比结束月份"
               value-format="yyyy-MM"
               :picker-options="pickerOptions"
             ></el-date-picker>
           </template>
-          <el-button class="confirmBut" type="primary" @click="queryBut">确认</el-button>
-          <el-checkbox v-model="queryData.timeStatus" @change="queryData.endTime = []" label="对比" border></el-checkbox>
+            <el-checkbox style="margin-left: 20px" v-model="queryData.timeStatus" @change="queryData.endTime = []" label="对比" border></el-checkbox>
+          <el-button icon="el-icon-search" style="margin-left: 20px" class="confirmBut" type="primary" @click="queryBut">搜索</el-button>
+            <el-button icon="el-icon-refresh" style="margin-left: 20px" class="commonBtn" @click="refresh">重置</el-button>
         </div>
-        <div class="flex-right">
-          <el-button @click="doExportFile" icon="el-icon-download" type="primary">下载</el-button>
+        <div style="margin-top: auto;margin-bottom: auto">
           <el-button @click="returnBut" type="primary">返回</el-button>
         </div>
       </div>
     </header-search>
-    <page-panel header-title="分层注采详情" style="height:calc(100% - 80px);text-align: center; ">
+    <page-panel header-title="分层注采详情" style="height:calc(100% - 80px);">
+        <el-button style="float: right;margin-top:-5px " @click="doExportFile" icon="el-icon-download" type="primary">下载</el-button>
           <el-table v-show="!isTableComp" id="export1" :data="tableData" style="width: 100%;" height="100%" highlight>
             <el-table-column prop="date" label="层位" align="center">
               <template slot-scope="scope">
@@ -161,7 +162,7 @@
 </template>
 
 <script>
-import { getStratifiedInjectionDetailsComp, getOgfInfo, getblockData } from '@/api/rem/r-intelligentIPA.js';
+import { getStratifiedInjectionDetailsComp } from '@/api/rem/r-intelligentIPA.js';
 import { exportExcel } from '@/lib/exportExcel';
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 
@@ -222,6 +223,15 @@ export default {
     queryBut () {
       this.queryStratifiedInjectionDetails()
     },
+    // 重置按钮
+    refresh(){
+        this.queryData.blockId = 'YCFXDY8B643EDC9007F96F570600457D';
+        let timeNew = new Date((new Date()).getFullYear(),(new Date()).getMonth(), 0);
+        this.queryData.startTime = [timeNew.format('YYYY-MM'), timeNew.format('YYYY-MM')]
+        this.queryData.timeStatus = false
+        this.queryData.endTime = []
+        this.queryStratifiedInjectionDetails()
+      },
     queryStratifiedInjectionDetails () {
       if(!this.queryData.startTime){
         this.$message.error('请选择日期!')

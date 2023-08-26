@@ -19,8 +19,8 @@
                 <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
             </div>
         </headerSearch>
-        <pagePanelNew style="height: calc(100% - 100px);" class="z-main">
-            <div style="padding-top:20px;">
+        <pagePanelNew style="height: calc(100% - 180px);" class="z-main" show-btn>
+            <div style="position: absolute; top: 31px; right: 111px; z-index: 99;">
                 <span style="margin-left:auto;">单位选择：</span>
                 <el-select v-model="selectUnitOfProduction" placeholder="请选择" style="width: 100px;margin-right:20px">
                     <el-option v-for="item in unitOfProduction" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -32,16 +32,12 @@
                     <Echart :chart-data="lineTable" height="570px"></Echart>
                 </div>
             </pagePanelNew> -->
-            <Echart :chart-data="lineTable" height="600px" style="margin-bottom:20px;"></Echart>
-            
-            
-            <div style="height: 300px;">
-                <div style="padding-bottom:5px;height:100%;">
-                    <el-table :data="messageResult" highlight style="width: 100%">
-                       <el-table-column prop="message" label="根据历史数据，拟合预测各生产数据后三个月的趋势"> </el-table-column>
-                    </el-table>
-                </div>
-            </div>
+            <Echart :chart-data="lineTable" height="100%" style="margin-bottom:20px;"></Echart>
+        </pagePanelNew>
+        <pagePanelNew style="height: 300px;" class="z-main" show-btn>
+            <el-table :data="messageResult" highlight height="100%" style="width: 100%">
+                <el-table-column prop="message" label="根据历史数据，拟合预测各生产数据后三个月的趋势"> </el-table-column>
+            </el-table>
         </pagePanelNew>
     </div>
 </template>
@@ -124,6 +120,19 @@
                 yData5: [],
                 //折线图
                 lineTable: {
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name: "开发趋势分析",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
+                            },
+                        },
+                    },
                     dataZoom: [
                         {
                             type: "inside",
@@ -163,33 +172,33 @@
                     grid: [
                         {
                             x: '8%',
-                            y: '4%',
+                            y: '8%',
                             width: '90%',
-                            height: '15%'
+                            height: '14%'
                         },
                         {
                             x: '8%',
-                            y: '22%',
+                            y: '26%',
                             width: '90%',
-                            height: '15%'
+                            height: '14%'
                         },
                         {
                             x: '8%',
-                            y: '40%',
+                            y: '44%',
                             width: '90%',
-                            height: '15%'
+                            height: '14%'
                         },
                         {
                             x: '8%',
-                            y: '58%',
+                            y: '62%',
                             width: '90%',
-                            height: '15%'
+                            height: '14%'
                         },
                         {
                             x: '8%',
-                            y: '76%',
+                            y: '80%',
                             width: '90%',
-                            height: '15%'
+                            height: '14%'
                         },
                     ],
                     axisPointer: {
@@ -280,7 +289,7 @@
                                 textStyle: {
                                     fontSize: 13,
                                 },
-                                rotate: 10,
+                                // rotate: 10,
                                 verticalAlign:'top'
                             },
                             axisTick: {

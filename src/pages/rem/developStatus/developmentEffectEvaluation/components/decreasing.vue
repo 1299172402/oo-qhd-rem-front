@@ -4,39 +4,42 @@
         <div class="rowBox">
             <div class="row" style="margin-right:20px;">
                 <!-- <pagePanel headerTitle="自然递减率" style="height: 380px;margin-top:0;" show-btn></pagePanel> -->
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="自然递减率" isShowMaxBtn>
+                <pagePanel headerTitle="自然递减率" style="height: 380px;margin-top:0;" show-btn>
                     <Echart :chart-data="naturalDeclineRate" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="综合递减率" isShowMaxBtn>
+                <pagePanel headerTitle="综合递减率" style="height: 380px;margin-top:0;" show-btn>
                     <Echart :chart-data="comprehensiveDeclineRate" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
         </div>
         <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="总递减率" isShowMaxBtn>
+                <pagePanel headerTitle="总递减率" style="height: 380px; margin-top:0;" show-btn>
                     <Echart :chart-data="totalDeclineRate" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="产量标定法" isShowMaxBtn>
+                <pagePanel headerTitle="产量标定法" style="height: 380px; margin-top:0;" show-btn>
                     <Echart :chart-data="yieldCalibrationMethod" style="height: 100%"></Echart>
-                </info-window>
+                </pagePanel>
             </div>
         </div>
         <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <info-window infoWidth="100%" infoHeight="380px" headerTitle="指标评价结果表" isShowMaxBtn>
-                    <el-table :data="tableData" highlight height="100%">
+                <pagePanel headerTitle="指标评价结果表" style="height: 380px; margin-top:0;" show-btn>
+                    <div style="display: flex; justify-content: flex-end;">
+                        <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '指标评价结果表')">下载</el-button>
+                    </div>
+                    <el-table id="table1" :data="tableData" highlight height="calc(100% - 55px)">
                         <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
-                        <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
-                        <el-table-column prop="lastPhaseValue" label="上阶段值" align="center"></el-table-column>
-                        <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center"></el-table-column>
+                        <el-table-column prop="evaluationResult" label="评价结果" align="center" :formatter="toPrecise4"></el-table-column>
+                        <el-table-column prop="lastPhaseValue" label="上阶段值" align="center" :formatter="toPrecise4"></el-table-column>
+                        <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center" :formatter="toPrecise4"></el-table-column>
                         <el-table-column prop="result" label="结论" align="center"></el-table-column>
                     </el-table>
-                </info-window>
+                </pagePanel>
             </div>
             <div class="row" style="margin-right:20px;"></div>
         </div>
@@ -48,6 +51,8 @@
     import Echart from "@/components/tools/Echarts/index.vue";
     import { fetchFields, fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo";
     import { natureDeclineChart,composiveDeclineChart,targetChart,declineIndicatorEveluationResult,generalDeclineChart } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+    import {exportExcel} from '@/lib/exportExcel.js';
+
     export default {
         components: {
             Echart
@@ -381,6 +386,12 @@
                         },
                     },
                     yAxis: {
+                        name: "产量标定法 (%)",
+                        nameLocation: "center",
+                        nameTextStyle: {
+                            color: "#8FA4CC",
+                        },
+                        nameGap: 35,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",
@@ -594,6 +605,23 @@
                 this.comprehensiveDeclineRate.toolbox.show = flag;
                 this.totalDeclineRate.toolbox.show = flag;
                 this.yieldCalibrationMethod.toolbox.show = flag;
+            },
+            //下载导出文件 tableId tableName
+            doDownExcel(tableId, tableName) {
+                exportExcel(tableId, tableName);
+            },
+            // 表格格式化方法 - 数值只保留四位小数
+            toPrecise4(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(4)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         },
     };

@@ -1,93 +1,100 @@
 <!-- 作业公司产量跟踪 -->
 <template>
     <div class="z-main" style="height:100%;">
-        <div style="display: flex;align-items: center;margin-bottom:15px;">
-            <span>日期：</span>
-            <!-- :picker-options="pickerOptions"  -->
-            <el-date-picker v-model="searchForm.date" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" style="margin-right:15px;"></el-date-picker>
-            <span>产量单位选择：</span>
-            <el-select v-model="searchForm.unitType" placeholder="请选择" style="width:100px;margin-right:15px;">
-                <el-option v-for="item in unitTypeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
-            </el-select>
-            <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
-            <el-button class="commonBtn" icon="el-icon-refresh" style="margin-left:15px!important;margin-right:auto;" @click="resetting">重置</el-button>
+        <div style="display: flex;justify-content: space-between;align-items: center;margin-bottom:15px;">
+           <div>
+                <span>滚动预测：</span>
+                <el-select v-model="searchForm.rollingForecastDate" placeholder="请选择" style="width:200px;margin-right:15px;">
+                    <el-option v-for="item in rollingForecastDateList" :key="item.source_ID" :label="item.source_NAME" :value="item.source_ID"></el-option>
+                </el-select>
+                <span>日期：</span>
+                <!-- :picker-options="pickerOptions"  -->
+                <el-date-picker v-model="searchForm.date" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" style="margin-right:15px;"></el-date-picker>
+                <span>产量单位选择：</span>
+                <el-select v-model="searchForm.unitType" placeholder="请选择" style="width:100px;margin-right:15px;">
+                    <el-option v-for="item in unitTypeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                </el-select>
+                <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
+                <el-button class="commonBtn" icon="el-icon-refresh" style="margin-left:15px!important;margin-right:auto;" @click="resetting">重置</el-button>
+           </div>
+           <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#tableData', '作业公司产量跟踪')">下载</el-button>
         </div>
         <el-table id="tableData" :data="tableData" highlight style="width:100%;" height="calc(100% - 58px)">
             <el-table-column fixed style="overflow-x:hidden;" prop="type" :label="outputTrackingTableDate" align="center" width="300"></el-table-column>
             <el-table-column label="作业公司" align="center">
-                <el-table-column prop="zygsjc" label="基础" align="center" width="100">
+                <el-table-column prop="zygsjc" label="基础" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="zygscs" label="措施" align="center" width="100">
+                <el-table-column prop="zygscs" label="措施" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="zygstz" label="调整井" align="center" width="100">
+                <el-table-column prop="zygstz" label="调整井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="zygskf" label="开发井" align="center" width="100">
+                <el-table-column prop="zygskf" label="开发井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="zygshj" label="合计" align="center" width="100">
+                <el-table-column prop="zygshj" label="合计" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
             </el-table-column>
             <!-- QHD32-6 -->
             <el-table-column label="QHD32-6" align="center">
-                <el-table-column prop="qhd326jc" label="基础" align="center" width="100">
+                <el-table-column prop="qhd326jc" label="基础" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd326cs" label="措施" align="center" width="100">
+                <el-table-column prop="qhd326cs" label="措施" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd326tz" label="调整井" align="center" width="100">
+                <el-table-column prop="qhd326tz" label="调整井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd326hj" label="合计" align="center" width="100">
+                <el-table-column prop="qhd326hj" label="合计" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
             </el-table-column>
             <el-table-column label="CFD6-4" align="center">
-                <el-table-column prop="cfd64jc" label="基础" align="center" width="100">
+                <el-table-column prop="cfd64jc" label="基础" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="cfd64cs" label="措施" align="center" width="100">
+                <el-table-column prop="cfd64cs" label="措施" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="cfd64tz" label="调整井" align="center" width="100">
+                <el-table-column prop="cfd64tz" label="调整井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="cfd64hj" label="合计" align="center" width="100">
+                <el-table-column prop="cfd64hj" label="合计" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
             </el-table-column>
             <!-- NB35-2 -->
             <el-table-column label="NB35-2" align="center">
-                <el-table-column prop="nb352jc" label="基础" align="center" width="100">
+                <el-table-column prop="nb352jc" label="基础" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="nb352cs" label="措施" align="center" width="100">
+                <el-table-column prop="nb352cs" label="措施" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="nb352tz" label="调整井" align="center" width="100">
+                <el-table-column prop="nb352tz" label="调整井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="nb352hj" label="合计" align="center" width="100">
+                <el-table-column prop="nb352hj" label="合计" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
             </el-table-column>
             <el-table-column label="BZ3-2" align="center">
-                <el-table-column prop="bz32jc" label="基础" align="center" width="100">
+                <el-table-column prop="bz32jc" label="基础" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="bz32cs" label="措施" align="center" width="100">
+                <el-table-column prop="bz32cs" label="措施" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="bz32tz" label="调整井" align="center" width="100">
+                <el-table-column prop="bz32tz" label="调整井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="bz32hj" label="合计" align="center" width="100">
+                <el-table-column prop="bz32hj" label="合计" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
             </el-table-column>
             <el-table-column label="QHD33-1" align="center">
-                <el-table-column prop="qhd331jc" label="基础" align="center" width="100">
+                <el-table-column prop="qhd331jc" label="基础" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd331cs" label="措施" align="center" width="100">
+                <el-table-column prop="qhd331cs" label="措施" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd331tz" label="调整井" align="center" width="100">
+                <el-table-column prop="qhd331tz" label="调整井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd331kf" label="开发井" align="center" width="100">
+                <el-table-column prop="qhd331kf" label="开发井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd331hj" label="合计" align="center" width="100">
+                <el-table-column prop="qhd331hj" label="合计" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
             </el-table-column>
             <el-table-column label="QHD33-1S" align="center">
-                <el-table-column prop="qhd331sjc" label="基础" align="center" width="100">
+                <el-table-column prop="qhd331sjc" label="基础" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd331scs" label="措施" align="center" width="100">
+                <el-table-column prop="qhd331scs" label="措施" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd331stj" label="调整井" align="center" width="100">
+                <el-table-column prop="qhd331stj" label="调整井" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
-                <el-table-column prop="qhd331shj" label="合计" align="center" width="100">
+                <el-table-column prop="qhd331shj" label="合计" align="center" width="100" :formatter="toPrecise2">
                 </el-table-column>
             </el-table-column>
         </el-table>
@@ -95,10 +102,14 @@
 </template>
 
 <script>
-    import {getReportFroms} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+    import {getReportFroms, getForecastDate} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+    import {exportExcel} from '@/lib/exportExcel.js';
+
     export default {
         data() {
             return {
+                //滚动预测数据源
+                rollingForecastDateList:[],
                 oilFieldData: ['QHD32-6', 'QHD33-1', 'NB35-2', 'QHD33-1S', 'CFD6-4', 'BZ3-2'],
                 unitTypeList: [{label: "m³",value: "m",},{label: "t",value: "t",}],
                 searchForm:{
@@ -178,26 +189,38 @@
                 ],
             };
         },
-        mounted() {
+        async mounted() {
+            await this.getForecastDate();
             this.doSearch();
         },
         methods: {
             //重置
             resetting(){
-            	this.$nextTick(()=>{
+            	this.$nextTick( async ()=>{
             		Object.assign(this.$data, this.$options.data());
+                    await this.getForecastDate();
             		this.doSearch();
             	})
             },
             doSearch() {
                 this.getReportFromsApi();
             },
+            //获取滚动预测下拉框数据源
+            async getForecastDate() {
+                await getForecastDate().then((res) => {
+                    if (res.data.code==200) {
+                        this.rollingForecastDateList = res.data.data;
+                        this.searchForm.rollingForecastDate = this.rollingForecastDateList[0].source_ID;
+                    }
+                    this.doSearch();
+                });
+            },
             getReportFromsApi() {
-                let queryParams = {
-                    date: this.searchForm.date,
-                    unitType: this.searchForm.unitType,
-                };
-                getReportFroms(queryParams).then(res=> {
+                // let queryParams = {
+                //     date: this.searchForm.date,
+                //     unitType: this.searchForm.unitType,
+                // };
+                getReportFroms(this.searchForm).then(res=> {
                     console.log(res,888)
                     if (res.data.code == '200') {
                         this.tableData = this.dealOutputTrackingData(res.data.data);
@@ -495,6 +518,23 @@
                         break;
                 }
                 return lineTitle;
+            },
+            //下载导出文件 tableId tableName
+            doDownExcel(tableId, tableName) {
+                exportExcel(tableId, tableName);
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         },
     };

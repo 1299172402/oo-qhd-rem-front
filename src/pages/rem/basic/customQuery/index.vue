@@ -52,21 +52,33 @@
                                 :disabled="activeEchart"
                             />
                         </div>
-
                         <div style="display: inline-block; float: right">
                             <el-button
                                 icon="el-icon-search"
                                 style="margin-right: 30px"
                                 type="primary"
                                 @click="doSearch"
-                                v-text="activeEchart ? '返回' : '指标查询'"
-                            >
+                                v-if="activeEchart == true"
+                            >返回
                             </el-button>
                         </div>
                     </el-row>
                 </header-search>
                 <page-panel-new :show-btn="true" v-if="!activeEchart"
-                                style="min-height: calc(100% - 90px);height: auto">
+                                style="min-height: calc(100% - 100px);height: 100%;overflow-y: scroll">
+                    <el-row>
+                        <div style="display: inline-block; float: right">
+                            <el-button
+                                icon="el-icon-search"
+                                style="margin-right: 30px"
+                                type="primary"
+                                @click="doSearch"
+                                v-if="activeEchart == false"
+                            > 指标查询
+                            </el-button>
+                        </div>
+                    </el-row>
+                   
                     <el-row>
                         <el-col :span="6" style="margin-left: 20px; margin-right: 20px">
                             <page-panel :show-btn="true" headerTitle="目标类型">

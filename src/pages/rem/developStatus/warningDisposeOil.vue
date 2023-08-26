@@ -43,18 +43,10 @@
                       <span>{{ scope.row.yearMonth.substr(0, 7) }}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="fluidMonthly" :label="`月产液变化量\n(10⁴m³)`" align="center" min-width="120"></el-table-column>
-                  <el-table-column prop="oilMonthly" :label="`月产油变化量\n(10⁴m³)`" align="center" min-width="120"></el-table-column>
-                  <el-table-column prop="waterRatio" :label="`含水率变化量\n(%)`" align="center" min-width="120">
-                    <template slot-scope="scope">
-                      <span>{{ scope.row.waterRatio | isNullTableNumber }}</span>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="flowingPress" width="100px" :label="`流压\n(MPa)`" align="center">
-                    <template slot-scope="scope">
-                      <span>{{ scope.row.flowingPress | isNullTableNumber }}</span>
-                    </template>
-                  </el-table-column>
+                  <el-table-column prop="fluidMonthly" :label="`月产液变化量\n(10⁴m³)`" align="center" min-width="120" :formatter="toPrecise4"></el-table-column>
+                  <el-table-column prop="oilMonthly" :label="`月产油变化量\n(10⁴m³)`" align="center" min-width="120" :formatter="toPrecise4"></el-table-column>
+                  <el-table-column prop="waterRatio" :label="`含水率变化量\n(%)`" align="center" min-width="120" :formatter="toPrecise2"></el-table-column>
+                  <el-table-column prop="flowingPress" width="100px" :label="`流压\n(MPa)`" align="center" :formatter="toPrecise2"></el-table-column>
                 </el-table>
               </el-row>
             </page-panel-new>
@@ -803,6 +795,31 @@ export default {
      */
     switchToBack() {
       this.$router.go(-1);
+    },
+    // 表格格式化方法 - 数值只保留两位小数
+    toPrecise2(row, column) {
+      if (
+          (row[column.property] || parseFloat(row[column.property]) === 0) &&
+          typeof parseFloat(row[column.property]) === "number"
+      ) {
+          return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+          ? parseFloat(row[column.property]).toFixed(2)
+          : "0";
+      } else {
+          return row[column.property] ? row[column.property] : "-";
+      }
+    },
+    toPrecise4(row, column) {
+      if (
+          (row[column.property] || parseFloat(row[column.property]) === 0) &&
+          typeof parseFloat(row[column.property]) === "number"
+      ) {
+          return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+          ? parseFloat(row[column.property]).toFixed(4)
+          : "0";
+      } else {
+          return row[column.property] ? row[column.property] : "-";
+      }
     },
   },
 };

@@ -25,7 +25,7 @@
                     <div class="pad">
                         <div >
                             <p v-show="!content" :key="index" v-for="(item,index) in currentList.boxBottomText">
-                                <span v-if="item.url" :class= "currentList.warningShowFlag==true?'blink':'' " style="cursor: pointer" @click="linkTo(item.url)">{{ item.name ? item.name : item }}</span>
+                                <span v-if="item.url" :class= "item.warningShowFlag == true?'blink':'' " style="cursor: pointer" @click="linkTo(item.url,item)">{{ item.name ? item.name : item }}</span>
                                 <span v-if="!item.url"  style="pointer-events: none;color:#5a5959;font-weight:bolder">{{ item.name ? item.name : item }}</span>
                                 <span v-if="currentList.boxBottomContent" class="btnContent" @click="btnContent(index)">{{ currentList.boxBottomContent[index].length > 0 ? '>>' : '' }}</span>
                                 <span v-else class="btnBack" @click="btnBack"></span>
@@ -58,8 +58,6 @@ export default {
             default: false
         }
     },
-    created() {
-    },
     computed:{
         getWarningShowFlag(){
             return this.currentList.warningShowFlag
@@ -68,7 +66,7 @@ export default {
     watch:{
         getWarningShowFlag:{
             handler(Nval){
-                this.warningShowFlag = true
+                this.warningShowFlag = Nval
             }
         }
     },
@@ -93,33 +91,69 @@ export default {
             this.selectIndex = index
             this.content = !this.content
         },
-        linkTo: function (url) {
+        linkTo: function (url,item) {
             if (!url) return
-            window.open(url, '_parent');
-        },
-        linkTopage: function (url,currentList) {
             const data = {
                 authorizedPersonnel:this.$store.getters["user/name"],
                 alarmTime:new Date().format('YYYY-MM-dd'),
-                alarmPageCode:currentList?.alarmPageCode
+                alarmPageCode:[item?.alarmPageCode]
+            }
+            window.open(url, '_parent');
+            addLinkageAlarmInfo(data).then(()=>{
+            })
+        },
+        linkTopage: function (url,currentList) {
+            if(currentList.alarmPageCode =='OSTOPF'){
+                const data = {
+                    authorizedPersonnel:this.$store.getters["user/name"],
+                    alarmTime:new Date().format('YYYY-MM-dd'),
+                    alarmPageCode:[OSTOPF]
+                }
+                addLinkageAlarmInfo(data).then(()=>{
+                    this.warningShowFlag = false
+                }).then(()=>{
+                    if (!url) return
+                    window.open('https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?page=reservoirDisplay/linkage', '_parent');
+                })
+            }
+            let linkurl = currentList.boxBottomText.find((n)=>{
+                if(n.warningShowFlag == true){
+                    return n
+                }
+            })
+            const data = {
+                authorizedPersonnel:this.$store.getters["user/name"],
+                alarmTime:new Date().format('YYYY-MM-dd'),
+                alarmPageCode:[linkurl?.alarmPageCode]
             }
             addLinkageAlarmInfo(data).then(()=>{
                 this.warningShowFlag = false
             }).then(()=>{
                 if (!url) return
-                window.open(url, '_parent');
+                window.open(linkurl.url, '_parent');
             })
         },
         confirm(currentList){
+            let alarmPageCode = []
+            currentList.boxBottomText.map((m)=>{
+                if(m.warningShowFlag == true){
+                    m.warningShowFlag = false
+                    alarmPageCode.push(m.alarmPageCode)
+                }
+            })
+            if(currentList.alarmPageCode){
+                alarmPageCode.push(currentList.alarmPageCode)
+            }
             const data = {
                 authorizedPersonnel:this.$store.getters["user/name"],
                 alarmTime:new Date().format('YYYY-MM-dd'),
-                alarmPageCode:currentList?.alarmPageCode
+                alarmPageCode:alarmPageCode
             }
+            this.warningShowFlag = false
+            this.true = false
+            this.$emit('startTimer',currentList)
             addLinkageAlarmInfo(data).then(()=>{
-            }).then(()=>{
-                this.warningShowFlag = false
-                this.$emit('startTimer')
+            }).then(()=>{    
             })
         },
         mouseenter(){

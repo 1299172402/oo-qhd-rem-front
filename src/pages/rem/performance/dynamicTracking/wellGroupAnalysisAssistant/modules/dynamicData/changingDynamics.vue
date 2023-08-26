@@ -46,33 +46,25 @@
           <template slot="header">
             <div>{{ queryData.firstMonth }}注水情况</div>
           </template>
-          <el-table-column label="连通系数"  min-width="90" prop="firstMonthInjCoeff" header-align="center"> </el-table-column>
-          <el-table-column :label="`注水劈分量\n(m³)`"  min-width="160" prop="firstMonthSplittingFluid" header-align="center"> </el-table-column>
-          <el-table-column :label="`产液劈分量\n(m³)`"  min-width="160" prop="firstMonthSplittingInjectWater" header-align="center">
-            <template slot-scope="scoped">
-              {{ (scoped.row.firstMonthSplittingInjectWater).toFixed(2) }}
-            </template>
-          </el-table-column>
+          <el-table-column label="连通系数"  min-width="90" prop="firstMonthInjCoeff" header-align="center" :formatter="toPrecise2"> </el-table-column>
+          <el-table-column :label="`注水劈分量\n(m³)`"  min-width="160" prop="firstMonthSplittingFluid" header-align="center" :formatter="toPrecise2"> </el-table-column>
+          <el-table-column :label="`产液劈分量\n(m³)`"  min-width="160" prop="firstMonthSplittingInjectWater" header-align="center" :formatter="toPrecise2"></el-table-column>
         </el-table-column>
         <el-table-column header-align="center">
           <template slot="header">
             <div>{{ queryData.secondMonth }}注水情况</div>
           </template>
-          <el-table-column label="连通系数" prop="secondMonthInjCoeff" header-align="center"> </el-table-column>
-          <el-table-column :label="`注水劈分量\n(m³)`"  min-width="130" prop="secondMonthSplittingFluid" header-align="center"> </el-table-column>
-          <el-table-column :label="`产液劈分量\n(m³)`"  min-width="130" prop="secondMonthSplittingInjectWater" header-align="center">
-            <template slot-scope="scoped">
-              {{ (scoped.row.secondMonthSplittingInjectWater).toFixed(2) }}
-            </template>
-          </el-table-column>
+          <el-table-column label="连通系数" prop="secondMonthInjCoeff" header-align="center" :formatter="toPrecise2"> </el-table-column>
+          <el-table-column :label="`注水劈分量\n(m³)`"  min-width="130" prop="secondMonthSplittingFluid" header-align="center" :formatter="toPrecise2"> </el-table-column>
+          <el-table-column :label="`产液劈分量\n(m³)`"  min-width="130" prop="secondMonthSplittingInjectWater" header-align="center" :formatter="toPrecise2"> </el-table-column>
         </el-table-column>
         <el-table-column header-align="center">
           <template slot="header">
             <div>调整幅度</div>
           </template>
-          <el-table-column label="连通系数" align="cnter" prop="adjustRangeInjCoeff" header-align="center">
+          <el-table-column label="连通系数" align="cnter" prop="adjustRangeInjCoeff" header-align="center" :formatter="toPrecise2">
           </el-table-column>
-          <el-table-column :label="`注水劈分量\n(m³)`"  min-width="130" align="cnter" prop="adjustRangeSplittingInjectWater" header-align="center">
+          <el-table-column :label="`注水劈分量\n(m³)`"  min-width="130" align="cnter" prop="adjustRangeSplittingInjectWater" header-align="center" :formatter="toPrecise2">
           </el-table-column>
           <el-table-column
             label="产液劈分量(m³)"
@@ -80,10 +72,8 @@
             align="cnter"
             prop="adjustRangeSplittingSplittingFluid"
             header-align="center"
+            :formatter="toPrecise2"
           >
-          <template slot-scope="scoped">
-              {{ (scoped.row.adjustRangeSplittingSplittingFluid).toFixed(2) }}
-            </template>
           </el-table-column>
         </el-table-column>
         <el-table-column align="cnter" prop="remark" show-overflow-tooltip  min-width="130" label="备注" header-align="center"></el-table-column>
@@ -182,6 +172,19 @@ export default {
     doDownLoad() {
       let fileName = "井组连通性变化动态";
       exportExcel("#tableData", fileName);
+    },
+    // 表格格式化方法 - 数值只保留两位小数
+    toPrecise2(row, column) {
+      if (
+        (row[column.property] || parseFloat(row[column.property]) === 0) &&
+        typeof parseFloat(row[column.property]) === "number"
+      ) {
+        return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+        ? parseFloat(row[column.property]).toFixed(2)
+        : "0";
+      } else {
+        return row[column.property] ? row[column.property] : "-";
+      }
     },
   },
 };

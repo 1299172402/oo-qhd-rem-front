@@ -51,10 +51,10 @@
         </el-table-column>
         <el-table-column label="电量" align="center">
           <el-table-column label="设计" align="center">
-            <el-table-column prop="dlsj" label="KW" align="center" width="120"></el-table-column>
+            <el-table-column prop="dlsj" label="kW" align="center" width="120"></el-table-column>
           </el-table-column>
           <el-table-column label="当前" align="center">
-            <el-table-column prop="dldq" label="KW" align="center" width="120"></el-table-column>
+            <el-table-column prop="dldq" label="kW" align="center" width="120"></el-table-column>
           </el-table-column>
         </el-table-column>
         <el-table-column

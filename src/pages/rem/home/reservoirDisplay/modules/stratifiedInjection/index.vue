@@ -6,8 +6,9 @@
           header-title="分层注入量"
           :is-show-max-btn="true"
       >
-          <button class="detailLinkBtn" @click="linkroute('/intelligence1/indexHome')">详细</button>
-          <Echart :chart-data="option" width="100%" height="100%"></Echart>
+          <button class="detailLinkBtn" @click="linkroute('/injection/indexHome')">详细</button>
+          <button class="detailLinkBtn"  style="right:110px"  @click="downEcharts">下载</button>
+          <Echart ref="echartChart" :chart-data="option" width="100%" height="100%"></Echart>
       </info-window>
   </div>
 </template>
@@ -100,12 +101,15 @@ export default {
       linkroute(rname) {
           this.$router.push({path: rname,query: {link:'remHome'}});
       },
+      downEcharts(){
+          this.$refs.echartChart.chartDownLoad( '分层注入量');
+      },
       //分层注采量
       queryStratifiedInjectionDetails() {
           let params = {
               blockId: 'YCFXDY8B643EDC9007F96F570600457D',
-              // startTime: new Date().format('YYYY-MM'),
-              startTime: '2023-05',
+              startTime: new Date().getFullYear() + '-' + (new Date().getMonth()),
+              // startTime: '2023-05',
               timeStatus: '1',
               type: 1
           }

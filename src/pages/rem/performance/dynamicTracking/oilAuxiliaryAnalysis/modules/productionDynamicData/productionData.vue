@@ -9,14 +9,14 @@
             </el-select>
         </div> 
         <div class="z-echarts" >
-            <info-window infoWidth="100%" :infoHeight="height+'px'" headerTitle="油井生产数据曲线图" isShowMaxBtn style="margin-top:0;">
+            <pagePanel headerTitle="油井生产数据曲线图" :style="{height:height+'px', marginTop:0,}" show-btn>
                 <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
-            </info-window>
+            </pagePanel>
         </div>   
         <div class="develop">
             <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
         </div>
-        <info-window infoWidth="100%" infoHeight="500px" headerTitle="单井动态分析" v-show="isDevelop">
+        <pagePanel headerTitle="单井动态分析" style="height: 500px;" v-show="isDevelop">
             <el-table
                 id="tableData" 
                 :data="tableData" :border="false" :row-style="{ height: '0px' }"
@@ -49,15 +49,15 @@
                 <el-table-column prop="pumpMotorTemp" :label="`马达温度\n (℃)`" width="140"></el-table-column>
                 <el-table-column prop="whTemp" :label="`井口温度\n (℃)`" width="140"></el-table-column>
                 <el-table-column prop="dhFlowingTemp" :label="`流温\n (℃)`"></el-table-column>
-                <el-table-column prop="cumOilProd" :label="`累产油\n (10m³)`" width="140" :formatter="numberToFour"></el-table-column>
-                <el-table-column prop="cumFluidProd" :label="`累产液\n (10⁴m³)`" width="140" :formatter="numberToFour"></el-table-column>
-                <el-table-column prop="cumGasProd" :label="`累产气\n (10⁴m³)`" width="140" :formatter="numberToFour"></el-table-column>
+                <el-table-column prop="cumOilProd" :label="`累产油\n (10m³)`" width="140" :formatter="toPrecise4"></el-table-column>
+                <el-table-column prop="cumFluidProd" :label="`累产液\n (10⁴m³)`" width="140" :formatter="toPrecise4"></el-table-column>
+                <el-table-column prop="cumGasProd" :label="`累产气\n (10⁴m³)`" width="140" :formatter="toPrecise4"></el-table-column>
                 <el-table-column prop="closeReason" label="关停原因" width="180"></el-table-column>
                 <el-table-column prop="closeDate" label="关停时间"></el-table-column>
                 <el-table-column prop="closePlan" label="关停计划" width="180"></el-table-column>
                 <el-table-column prop="remark" label="备注" width="180"></el-table-column>
             </el-table>
-        </info-window>
+        </pagePanel>
     </div>
 </template>
 
@@ -806,11 +806,16 @@
                 }
             },
             //保留四位小数
-            numberToFour(row, column, cellValue, index) {
-                if (cellValue) {
-                    return Number(cellValue).toFixed(4);
+            toPrecise4(row, column, cellValue, index) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(4)
+                    : "0";
                 } else {
-                    return '-';
+                    return row[column.property] ? row[column.property] : "-";
                 }
             },
         }

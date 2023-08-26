@@ -10,8 +10,19 @@
         <el-main>
             <div v-if="radioValue == '油田指标预警' && switchNumber == '1'" style="height: 100%">
                 <pagePanelNew style="margin-top: 0px; height: 100%" showBtn>
-                    <el-table :data="tableData" highlight :row-class-name="tableRowClassName" height="calc(100% - 75px)">
-                        <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
+                    <div style="display: flex; justify-content: end">
+                        <el-button
+                            v-show="canDownload"
+                            style="margin-bottom: 20px"
+                            icon="el-icon-download"
+                            type="primary"
+                            @click="downloadFile1"
+                        >
+                            下载
+                        </el-button>
+                    </div>
+                    <el-table ref="table1" :data="tableData" highlight :row-class-name="tableRowClassName" height="calc(100% - 130px)">
+                        <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
                         <el-table-column prop="theDate" label="预警时间" align="center"></el-table-column>
                         <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
                         <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -48,8 +59,19 @@
             </div>
             <div v-if="radioValue == '油田指标预警' && switchNumber == '2'" style="height: 100%">
                 <pagePanelNew style="margin-top: 0px; height: 100%" showBtn>
-                    <el-table :data="tableData" highlight height="calc(100% - 75px)">
-                        <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
+                    <div style="display: flex; justify-content: end">
+                        <el-button
+                            v-show="canDownload"
+                            style="margin-bottom: 20px"
+                            icon="el-icon-download"
+                            type="primary"
+                            @click="downloadFile1"
+                        >
+                            下载
+                        </el-button>
+                    </div>
+                    <el-table ref="table2" :data="tableData" highlight height="calc(100% - 130px)">
+                        <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
                         <el-table-column prop="theDate" label="预警时间" align="center"></el-table-column>
                         <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
                         <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -90,11 +112,11 @@
             </div>
             <div v-if="radioValue == '油田指标预警' && switchNumber == '3'" style="height: 100%">
                 <pagePanelNew style="margin-top: 0px; height: 100%" showBtn>
-                    <div class="g-row-flex-V" style="justify-content: space-between; margin-bottom: 20px">
+                    <div class="g-row-flex-V" style="justify-content: space-between; margin-bottom: 10px">
                         <div class="g-row-flex-V" style="flex-wrap: wrap">
                             <div style="margin: 10px 20px 10px 0px">
                                 日期：
-                                <el-date-picker v-model="historyDateTime" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" :clearable="false"></el-date-picker>
+                                <el-date-picker v-model="historyDateTime" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" :clearable="false"></el-date-picker>
                             </div>
                             <div style="margin: 10px 20px 10px 0px">
                                 预警：
@@ -107,8 +129,20 @@
                                 <el-button icon="el-icon-refresh" class="commonBtn" @click="resettingQuery">重置</el-button>
                             </div>
                         </div>
+                        <div class="g-row-flex-V" style="flex-wrap: wrap;align-self: flex-end;">
+                            <div style="margin: 10px 0px 10px 20px">
+                                <el-button
+                                    v-show="canDownload"
+                                    icon="el-icon-download"
+                                    type="primary"
+                                    @click="downloadFile1"
+                                >
+                                    下载
+                                </el-button>
+                            </div>
+                        </div>
                     </div>
-                    <el-table :data="tableData" highlight height="calc(100% - 150px)">
+                    <el-table ref="table3" :data="tableData" highlight height="calc(100% - 130px)">
                         <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
                         <el-table-column prop="theDate" label="预警时间" align="center"></el-table-column>
                         <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
@@ -135,8 +169,19 @@
             </div>
             <div v-if="radioValue == '区块指标预警' && switchNumber == '1'" style="height: 100%">
                 <pagePanelNew style="margin-top: 0px; height: 100%" showBtn>
-                    <el-table :data="tableData" highlight :row-class-name="tableRowClassName" height="calc(100% - 75px)">
-                        <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
+                    <div style="display: flex; justify-content: end">
+                        <el-button
+                            v-show="canDownload"
+                            style="margin-bottom: 20px"
+                            icon="el-icon-download"
+                            type="primary"
+                            @click="downloadFile2"
+                        >
+                            下载
+                        </el-button>
+                    </div>
+                    <el-table ref="table4" :data="tableData" highlight :row-class-name="tableRowClassName" height="calc(100% - 130px)">
+                        <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
                         <el-table-column prop="theDate" label="预警时间" align="center"></el-table-column>
                         <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
                         <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -173,8 +218,19 @@
             </div>
             <div v-if="radioValue == '区块指标预警' && switchNumber == '2'" style="height: 100%">
                 <pagePanelNew style="margin-top: 0px; height: 100%" showBtn>
-                    <el-table :data="tableData" highlight height="calc(100% - 75px)">
-                        <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
+                    <div style="display: flex; justify-content: end">
+                        <el-button
+                            v-show="canDownload"
+                            style="margin-bottom: 20px"
+                            icon="el-icon-download"
+                            type="primary"
+                            @click="downloadFile2"
+                        >
+                            下载
+                        </el-button>
+                    </div>
+                    <el-table ref="table5" :data="tableData" highlight height="calc(100% - 130px)">
+                        <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
                         <el-table-column prop="theDate" label="预警时间" align="center"> </el-table-column>
                         <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
                         <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -215,11 +271,11 @@
             </div>
             <div v-if="radioValue == '区块指标预警' && switchNumber == '3'" style="height: 100%">
                 <pagePanelNew style="margin-top: 0px; height: 100%" showBtn>
-                    <div class="g-row-flex-V" style="justify-content: space-between; margin-bottom: 20px">
+                    <div class="g-row-flex-V" style="justify-content: space-between; margin-bottom: 10px">
                         <div class="g-row-flex-V" style="flex-wrap: wrap">
                             <div style="margin: 10px 20px 10px 0px">
                                 日期：
-                                <el-date-picker v-model="historyDateTimeSec" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd">
+                                <el-date-picker v-model="historyDateTimeSec" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd">
                                 </el-date-picker>
                             </div>
                             <div style="margin: 10px 20px 10px 0px">
@@ -234,9 +290,21 @@
                                 <el-button icon="el-icon-refresh" class="commonBtn" @click="resettingQuery">重置</el-button>
                             </div>
                         </div>
+                        <div class="g-row-flex-V" style="flex-wrap: wrap;align-self: flex-end;">
+                            <div style="margin: 10px 0px 10px 20px">
+                                <el-button
+                                    v-show="canDownload"
+                                    icon="el-icon-download"
+                                    type="primary"
+                                    @click="downloadFile2"
+                                >
+                                    下载
+                                </el-button>
+                            </div>
+                        </div>
                     </div>
-                    <el-table :data="tableData" highlight height="calc(100% - 150px)">
-                        <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
+                    <el-table ref="table6" :data="tableData" highlight height="calc(100% - 130px)">
+                        <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
                         <el-table-column prop="theDate" label="预警时间" align="center"></el-table-column>
                         <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
                         <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -277,6 +345,8 @@
     } from "@/api/oilDeposit/rmm-01/rmm01";
     import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
     import {getWarningsDate} from '@/api/oilDeposit/rem-04/developStatus.js';
+    import {exportExcelFromJson} from '@/lib/exportExcel.js';
+
     export default {
         name: "developmentWarningCapacity",
         components: {
@@ -406,7 +476,7 @@
                 //删除数据
                 canDeleteInfo: false,
                 //下载数据
-                canDownload: false,
+                canDownload: true,
                 //上传数据
                 canUpload: false,
                 //特殊管理权限
@@ -729,6 +799,96 @@
                 this.$router.push({
                     path:'/'+this.$route.query.page
                 })
+            },
+            /**
+             * hwh
+             * 下载表格信息
+             */
+            downloadFile1() {
+                let queryParams = {
+                    beginDate: '',
+                    endDate: '',
+                    fieldId: this.oilFieldId,
+                    page: 1,
+                    pageSize: 99999,
+                    warningCode: '',
+                    warningTypeCode: this.warningTypeCode,
+                };
+                if (this.radioValue == "油田指标预警" && this.switchNumber == "1") {
+                    this.queryParams.beginDate = this.dateTime[0];
+                    this.queryParams.endDate =  this.dateTime[1];
+                    this.queryParams.warningCode = "WARNING";
+                } else if (this.radioValue == "油田指标预警" && this.switchNumber == "2") {
+                    this.queryParams.beginDate = this.dateTime[0];
+                    this.queryParams.endDate =  this.dateTime[1];
+                    this.queryParams.warningCode = "OBSERVE";
+                } else if (this.radioValue == "油田指标预警" && this.switchNumber == "3") {
+                    this.queryParams.beginDate = this.historyDateTime[0];
+                    this.queryParams.endDate =  this.historyDateTime[1];
+                    this.queryParams.warningCode = "HIS";
+                }
+                oilFieldDevWarnings(queryParams).then((data) => {
+                    let code = data.data.code;
+                    if (code == 200) {
+                        let list =  [];
+                        let headTitle = null;
+                        let fileName = "";
+                        if (this.radioValue == "油田指标预警" && this.switchNumber == "1") {
+                            headTitle = this.$refs.table1.$children.length ? this.$refs.table1.$children : null;
+                            fileName = "油田指标预警-新预警";
+                        } else if (this.radioValue == "油田指标预警" && this.switchNumber == "2") {
+                            headTitle = this.$refs.table2.$children.length ? this.$refs.table2.$children : null;
+                            fileName = "油田指标预警-观察";
+                        } else if (this.radioValue == "油田指标预警" && this.switchNumber == "3") {
+                            headTitle = this.$refs.table3.$children.length ? this.$refs.table3.$children : null;
+                            fileName = "油田指标预警-历史预警";
+                        } 
+                        exportExcelFromJson(headTitle, list, fileName);
+                    }
+                });
+            },
+            downloadFile2() {
+                let queryParams = {
+                    beginDate: '',
+                    endDate: '',
+                    fieldId: this.oilFieldId,
+                    page: 1,
+                    pageSize: 99999,
+                    warningCode: '',
+                    warningTypeCode: this.warningTypeCode,
+                };
+                if (this.radioValue == "区块指标预警" && this.switchNumber == "1") {
+                    this.queryParams.beginDate = this.dateTime[0];
+                    this.queryParams.endDate =  this.dateTime[1];
+                    this.queryParams.warningCode = "WARNING";
+                } else if (this.radioValue == "区块指标预警" && this.switchNumber == "2") {
+                    this.queryParams.beginDate = this.dateTime[0];
+                    this.queryParams.endDate =  this.dateTime[1];
+                    this.queryParams.warningCode = "OBSERVE";
+                } else if (this.radioValue == "区块指标预警" && this.switchNumber == "3") {
+                    this.queryParams.beginDate = this.historyDateTimeSec[0];
+                    this.queryParams.endDate =  this.historyDateTimeSec[1];
+                    this.queryParams.warningCode = "HIS";
+                }
+                fieldDevWarnings(queryParams).then((data) => {
+                    let code = data.data.code;
+                    if (code == 200) {
+                        let list =  [];
+                        let headTitle = null;
+                        let fileName = "";
+                        if (this.radioValue == "区块指标预警" && this.switchNumber == "1") {
+                            headTitle = this.$refs.table4.$children.length ? this.$refs.table4.$children : null;
+                            fileName = "区块指标预警-新预警";
+                        } else if (this.radioValue == "区块指标预警" && this.switchNumber == "2") {
+                            headTitle = this.$refs.table5.$children.length ? this.$refs.table5.$children : null;
+                            fileName = "区块指标预警-观察";
+                        } else if (this.radioValue == "区块指标预警" && this.switchNumber == "3") {
+                            headTitle = this.$refs.table6.$children.length ? this.$refs.table6.$children : null;
+                            fileName = "区块指标预警-历史预警";
+                        } 
+                        exportExcelFromJson(headTitle, list, fileName);
+                    }
+                });
             },
         },
     };

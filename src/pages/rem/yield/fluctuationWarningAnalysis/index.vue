@@ -30,9 +30,9 @@
                     </div> -->
                     <div class="rowBox" style="margin-bottom:20px;">
                         <div class="row" style="margin-right:20px;">
-                            <info-window infoWidth="100%" infoHeight="456px" :headerTitle="oilFieldName + '产量跟踪预警分析'" isShowMaxBtn style="margin-top:0;">
+                            <pagePanel :headerTitle="oilFieldName + '产量跟踪预警分析'" style="height: 456px; margin-top: 0;" show-btn >
                                 <Echart :chart-data="echartOption" height="400px" :events="['click','legendselectchanged']" @click="clickCall"></Echart>
-                            </info-window>
+                            </pagePanel>
                         </div>
                     </div>
                     <div style="margin-right:20px;margin-bottom:20px;">
@@ -48,7 +48,7 @@
                     </div>
                     <div class="rowBox" style="margin-bottom:20px;" v-if="!isShowTable">
                         <div class="row" style="margin-right:20px;">
-                            <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="产量跟踪分析" isShowMaxBtn>
+                            <pagePanel headerTitle="产量跟踪分析" style="height: 400px; margin-top: 0;" show-btn>
                                 <div class="row-container">
                                     <el-row style="height: 25%;">
                                         <el-col :span="12" style="height: 100%;">
@@ -119,48 +119,51 @@
                                         </el-col>
                                     </el-row>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                         <div class="row" style="margin-right:20px;">
-                            <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="平台产量组成" isShowMaxBtn>
+                            <pagePanel headerTitle="平台产量组成" style="height: 400px; margin-top: 0;" show-btn>
                                 <div class="row-container">
                                     <Echart :chart-data="pieEchart" height="100%"></Echart>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                     </div>
                     <div class="rowBox" v-if="!isShowTable">
                         <div class="row" style="margin-right:20px;">
-                            <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="单井产量波动分析" isShowMaxBtn>
-                                <div class="row-container">
-                                    <div class="searchBox">
+                            <pagePanel headerTitle="单井产量波动分析" style="height: 400px; margin-top: 0;" show-btn>
+                                <!-- <div class="row-container"> -->
+                                    <div style="position: absolute; top: 52px; right: 111px; z-index: 99;">
                                         <span style="margin-right:10px;font-size:14px;">产量变化总井数：{{wellAllNum}}口</span>
                                         <el-input placeholder="产油波动值设置" style="width:140px;margin-right:10px;" size="medium" :readonly="true"></el-input>
                                         <el-input v-model="setParaValue" style="width:80px;margin-right:10px;" type="text" size="medium" oninput="value=value.replace(/[^0-9.]/g,'')"></el-input>
                                         <el-input v-model="unitValue" style="width:50px;margin-right:10px;" size="medium" :readonly="true"></el-input>
-                                        <el-button type="primary" style="height:36px;" @click="searchWellOutputWave">查询</el-button>
-                                        <el-button type="primary" style="height:36px;margin-left:auto!important;" @click="jumpMore">更多</el-button>
+                                        <el-button type="primary" @click="searchWellOutputWave">搜索</el-button>
+                                        <el-button type="primary" @click="jumpMore">更多</el-button>
                                     </div>
-                                    <div class="echartBox">
-                                        <Echart :chart-data="barChart" height="300px"></Echart>
-                                    </div>
-                                </div>
-                            </info-window>
+                                    <!-- <div class="echartBox"> -->
+                                        <Echart :chart-data="barChart" height="100%"></Echart>
+                                    <!-- </div> -->
+                                <!-- </div> -->
+                            </pagePanel>
                         </div>
                         <div class="row" style="margin-right:20px;">
-                            <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="当日关键事件" isShowMaxBtn>
+                            <pagePanel :headerTitle="`当日关键事件 ${eventData[0] ? eventData[0].startDate : '' }`" style="height: 400px; margin-top: 0;" show-btn>
                                 <div class="row-container">
-                                    <el-table highlight :data="eventData" style="width: 100%" height="100%" empty-text="当日无大事件">
+                                    <div style="display: flex; justify-content: flex-end;">
+                                        <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '当日关键事件')">下载</el-button>
+                                    </div>
+                                    <el-table id="table1" highlight :data="eventData" style="width: 100%" height="100%" empty-text="当日无大事件">
                                         <el-table-column prop="eventType" label="事件类型" align="center" width="180"></el-table-column>
                                         <el-table-column prop="content" label="井号" align="center"></el-table-column>
                                     </el-table>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                     </div>
                     <div class="rowBox" v-if="isShowTable">
                         <div class="row" style="margin-right:20px;">
-                            <info-window style="margin-top:0;" infoWidth="100%" infoHeight="400px" headerTitle="当日关键事件" isShowMaxBtn>
+                            <pagePanel :headerTitle="`当日关键事件 ${reasonAnalysises[0] ? reasonAnalysises[0].startTime : '' }` style="height: 400px; margin-top: 0;" show-btn>
                                 <div class="row-container">
                                     <el-table class="z-table" highlight :data="reasonAnalysises" border :span-method="objectSpanMethod" style="width: 100%;align:center;" height="100%">
                                       <el-table-column prop="platformName" label="各平台产量下降情况" align="center" width="250"></el-table-column>
@@ -168,7 +171,7 @@
                                       <el-table-column prop="content" label="异常井情况" align="center"></el-table-column>
                                     </el-table>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                     </div>
                 </div>
@@ -269,6 +272,8 @@
     import {getReportFroms} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js'
     import {getWellOutputWaveAnalysisNum} from '@/api/oilDeposit/rem-04/yieId.js'
     import {exportComplexHeaderExcelFromJson} from '@/lib/exportExcel.js';
+    import {exportExcel} from '@/lib/exportExcel.js';
+
     export default {
         name: 'fluctuationWarningAnalysis',
         components: {
@@ -516,9 +521,10 @@
                         },
                     },
                     grid: {
-                        top: 50,
-                        left: 90,
-                        bottom: 80,
+                        x: 50,
+                        y: 100,
+                        x2: 50,
+                        y2: 80,
                     },
                     toolbox: {
                         show: true,
@@ -1897,6 +1903,10 @@
                     exportComplexHeaderExcelFromJson(header, merges, resData, this.outputTrackingTableDate + '作业公司产量跟踪');
                 })
             },
+            //下载导出文件 tableId tableName
+            doDownExcel(tableId, tableName) {
+                exportExcel(tableId, tableName);
+            },
             //根据查询条件进行
             searchThing() {
                 //选中区块值
@@ -1994,7 +2004,7 @@
                                 flex-direction: column;
                                 height:100%;
                                 .searchBox{
-                                    padding:10px;
+                                    margin-bottom:20px;
                                     display: flex;
                                     align-items: center;
                                     // justify-content: flex-end;

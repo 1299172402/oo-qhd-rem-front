@@ -171,7 +171,7 @@
                 property="injectionSumReal"
                 align="center"
                 label="实际年累注(10⁴m³)"
-                :formatter="numberToTwo"
+                :formatter="toPrecise2"
               >
               </el-table-column>
               <el-table-column prop="injectionSumPlan" align="center" label="计划年累注(10⁴m³)"> </el-table-column>
@@ -205,21 +205,6 @@ export default {
   components: {
     verticalSwitchButton,
     Echart,
-  },
-  filters: {
-    /**
-     *
-     * hwh
-     * 转换单位为两位
-     *
-     */
-    switchNumberToTwo(val) {
-      if (val) {
-        return parseFloat(Number(val).toFixed(2));
-      } else {
-        return "";
-      }
-    },
   },
   data() {
     return {
@@ -1216,11 +1201,16 @@ export default {
       this.GasProLineChart.toolbox.show = flag;
       this.OilYearLineChart.toolbox.show = flag;
     },
-    numberToTwo(row, column, cellValue, index) {
-      if (cellValue) {
-        return parseFloat(Number(cellValue).toFixed(2));
+    toPrecise2(row, column, cellValue, index) {
+      if (
+          (row[column.property] || parseFloat(row[column.property]) === 0) &&
+          typeof parseFloat(row[column.property]) === "number"
+      ) {
+          return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+          ? parseFloat(row[column.property]).toFixed(2)
+          : "0";
       } else {
-        return "-";
+          return row[column.property] ? row[column.property] : "-";
       }
     },
   },

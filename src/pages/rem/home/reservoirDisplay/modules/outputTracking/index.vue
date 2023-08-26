@@ -1,10 +1,7 @@
 <template>
     <div class="app-container" style="width: 100%; height: 100%">
-<!--        <div style="width: 15%; height: 10%; margin-left: 5%; text-align: center; padding: 5px 0">-->
-<!--&lt;!&ndash;            投产时间：2001-10&ndash;&gt;-->
-<!--        </div>-->
-<!--        <Echart :chart-data="histogram" width="100%" height="65%"></Echart>-->
-        <Echart :chart-data="productLineChart" width="100%" height="80%"></Echart>
+        <button class="detailLinkBtn"   @click="downEcharts">下载</button>
+        <Echart ref="echartChart" :chart-data="productLineChart" width="100%" height="80%"></Echart>
         <el-row :gutter="20">
             <el-col :span="7">
                 <div style="display: flex;position: relative;bottom: 45px">
@@ -939,13 +936,14 @@ export default {
         this.getSearchOilProductionChart();
     },
     methods: {
+        
         //原油产量统计图
         getSearchOilProductionChart() {
             let request = {
                 oilFieldId: '3FC9A818F5BC43B88270DB80BBB3018F',
                 unitType: 'm',
-                beginDate: '2023-01-01',
-                endDate: '2023-12-31',
+                beginDate: new Date().getFullYear() + '-' +'01-01',
+                endDate: new Date().getFullYear() + '-' +'12-31',
                 planTypeCode: '002003',
                 rollForecastVersion: '202301',
             };
@@ -1032,6 +1030,9 @@ export default {
             series.data = seriesData;
             return series;
         },
+        downEcharts(){
+                this.$refs.echartChart.chartDownLoad( '油田日度产量跟踪');
+        },
         getData() {
             queryYieldTracking({
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
@@ -1104,9 +1105,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-// .f1 {
-//   margin: 10px;
-// }
 .cont {
     & > div {
         margin-top: 20px;
@@ -1129,7 +1127,19 @@ export default {
     line-height: 42px;
     box-shadow: 0px 0px 15px #66ffff inset;
 }
-
+.detailLinkBtn {
+    position: absolute;
+    right: 120px;
+    top: 10px;
+    width: 50px;
+    height: 20px;
+    background: linear-gradient(90deg, #0751b0, #50a6ec);
+    text-align: center;
+    font-size: smaller;
+    border: 0;
+    cursor: pointer;
+    color: #ffffff;
+}
 .xbox {
     display: flex;
     align-items: center;

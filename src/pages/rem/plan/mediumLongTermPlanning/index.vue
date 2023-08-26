@@ -12,22 +12,56 @@
             :value="item.oilFieldId"
           ></el-option>
         </el-select>
-        <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="searchForOilField">搜索</el-button>
+        <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="searchForOilField"
+          >搜索</el-button
+        >
         <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
       </div>
     </header-search>
     <page-panel-new class="tablebox" :show-btn="true">
       <div class="tableTitle">{{ oilFieldName }} 中长期计划表</div>
+      <el-button
+        icon="el-icon-download"
+        type="primary"
+        style="position: absolute; right: 20px; top: 30px"
+        @click="doDownExcel('#tableData', `${oilFieldName || ''} 中长期计划表`)"
+        >下载</el-button
+      >
       <el-table :data="tableData2" id="tableData" height="calc(100% - 40px)" highlight style="width: 100%">
         <el-table-column prop="theYear" align="center" label="年份"></el-table-column>
-        <el-table-column prop="baseProduct" align="center" :label="`基础产量\n(10⁴m³)`"></el-table-column>
+        <el-table-column
+          prop="baseProduct"
+          align="center"
+          :label="`基础产量\n(10⁴m³)`"
+          :formatter="toPrecise4"
+        ></el-table-column>
         <el-table-column prop="newJustWellNum" align="center" :label="`新增调整井井数\n(口)`"></el-table-column>
-        <el-table-column prop="oldWellProduct" align="center" :label="`调整井滚动产量\n(10⁴m³)`"></el-table-column>
+        <el-table-column
+          prop="oldWellProduct"
+          align="center"
+          :label="`调整井滚动产量\n(10⁴m³)`"
+          :formatter="toPrecise4"
+        ></el-table-column>
         <el-table-column prop="oilWellIncNum" align="center" :label="`油井增产措施井次\n(口)`"></el-table-column>
-        <el-table-column prop="measureProduct" align="center" :label="`措施产量\n(10⁴m³)`"></el-table-column>
+        <el-table-column
+          prop="measureProduct"
+          align="center"
+          :label="`措施产量\n(10⁴m³)`"
+          :formatter="toPrecise4"
+        ></el-table-column>
         <el-table-column prop="chemicalWellNum" align="center" :label="`化学驱井次\n(口)`"></el-table-column>
-        <el-table-column prop="chemicalProduct" align="center" :label="`化学驱产量\n(10⁴m³)`"></el-table-column>
-        <el-table-column prop="productAll" align="center" :label="`产量合计\n(10⁴m³)`"></el-table-column>
+        <el-table-column
+          prop="chemicalProduct"
+          align="center"
+          :label="`化学驱产量\n(10⁴m³)`"
+          :formatter="toPrecise4"
+        ></el-table-column>
+        <el-table-column
+          prop="productAll"
+          align="center"
+          :label="`产量合计\n(10⁴m³)`"
+          :formatter="toPrecise4"
+        ></el-table-column>
       </el-table>
     </page-panel-new>
   </div>
@@ -35,8 +69,10 @@
 <script>
 import { fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { searchLongTermPlan } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+import { exportExcel } from "@/lib/exportExcel.js";
+
 export default {
-  name:'mediumLongTermPlanning',
+  name: "mediumLongTermPlanning",
   data() {
     return {
       //选择油田
@@ -222,11 +258,11 @@ export default {
   },
   methods: {
     //重置
-    resetting(){
-    	this.$nextTick(()=>{
-    		Object.assign(this.$data, this.$options.data());
-    		this.initData();
-    	})
+    resetting() {
+      this.$nextTick(() => {
+        Object.assign(this.$data, this.$options.data());
+        this.initData();
+      });
     },
     //初始化
     async initData() {
@@ -342,6 +378,23 @@ export default {
           }
         }
       });
+    },
+    //下载导出文件 tableId tableName
+    doDownExcel(tableId, tableName) {
+      exportExcel(tableId, tableName);
+    },
+    // 表格格式化方法 - 数值只保留两位小数
+    toPrecise4(row, column) {
+      if (
+        (parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0) &&
+        typeof parseFloat(row[column.property]) === "number"
+      ) {
+        return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+          ? parseFloat(row[column.property]).toFixed(4)
+          : "0";
+      } else {
+        return row[column.property] ? row[column.property] : "-";
+      }
     },
   },
 };

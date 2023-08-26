@@ -63,7 +63,7 @@
                             <div class="grid-content bg-purple">
                                 <div class="yield water">
                                     <div class="box">
-                                        <div>{{ groupBlock.waterProd }}</div>
+                                        <div >{{ groupBlock.waterProd }}</div>
                                         <div>10⁴m³</div>
                                     </div>
                                 </div>
@@ -144,7 +144,7 @@
                         <el-col :span="6">
                             <div class="grid-content bg-purple">
                                 <Echart
-                                    :chart-data="getEchart(groupBlock.openOilNUm, '口', 'rgb(0,179,225)', 'rgb(38,43,90)', 'transparent')"
+                                    :chart-data="getEchartData(groupBlock.openOilNUm, '口', 'rgb(36,151,194)', 'rgb(7,59,90)', 'rgb(36,151,194)')"
                                 ></Echart>
                                 <div class="chartText">油井开井数</div>
                             </div>
@@ -152,7 +152,7 @@
                         <el-col :span="6">
                             <div class="grid-content bg-purple">
                                 <Echart
-                                    :chart-data="getEchart(groupBlock.openWaterNum, '口', 'rgb(235,125,96)', 'rgb(38,43,90)', 'transparent')"
+                                    :chart-data="getEchartData(groupBlock.openWaterNum, '口', 'rgb(235, 125, 96)', 'rgb(7,59,90)', 'rgb(235, 125, 96)')"
                                 ></Echart>
                                 <div class="chartText">水井开井数</div>
                             </div>
@@ -160,7 +160,8 @@
                         <el-col :span="6">
                             <div class="grid-content bg-purple">
                                 <Echart
-                                    :chart-data="getEchart(groupBlock.injRatio, '', 'rgb(164,227,77)', 'rgb(38,43,90)', 'transparent')"
+                                    id="chart"
+                                    :chart-data="getEchartData(groupBlock.injRatio, '', 'rgb(164, 227, 77)', 'rgb(7,59,90)', 'rgb(164, 227, 77)')"
                                 ></Echart>
                                 <div class="chartText">注采比</div>
                             </div>
@@ -168,7 +169,7 @@
                         <el-col :span="6">
                             <div class="grid-content bg-purple">
                                 <Echart
-                                    :chart-data="getEchart(groupBlock.haveWater, '%', 'rgb(185,75,215)', 'rgb(38,43,90)', 'transparent')"
+                                    :chart-data="getEchartData(groupBlock.haveWater, '%', 'rgb(185, 75, 215)', 'rgb(7,59,90)', 'rgb(185, 75, 215)')"
                                 ></Echart>
                                 <div class="chartText">含水</div>
                             </div>
@@ -179,7 +180,12 @@
 
             <div style="flex:4; height: 118%; margin-right: 15px;">
                 <page-panel header-title="分层注采量" style="height: 100%;position: relative; " :show-btn="true">
-                    <button class="detailLinkBtn" @click="getDetail">详细</button>
+                    <el-button
+                        type="primary"
+                        class="buttonActive_primary detailLinkBtn"
+                        @click="getDetail">详细
+                    </el-button
+                    >
                     <div id="main" style="width: 100%; height: 100%"></div>
                 </page-panel>
             </div>
@@ -187,7 +193,12 @@
             <div style="width: 33%;height: 118%;display:flex;flex-direction: column;justify-content: space-between;">
                 <div style="height:calc(60% - 15px);margin-bottom: 15px;">
                     <page-panel header-title="单井井底流压" style="height: 100%;" :show-btn="true">
-                        <button class="detailLinkBtn" @click="detailed = true">详细</button>
+                        <el-button
+                            type="primary"
+                            class="buttonActive_primary detailLinkBtn"
+                            @click="detailed = true">详细
+                        </el-button
+                        >
                         <Echart
                             :chart-data="getResidueOilChart()"
                             height="100%"
@@ -211,10 +222,17 @@
                 </div>
                 <div style="height:40%">
                     <page-panel header-title="超欠注情况统计" style="height: 100%;" :show-btn="true">
+                        <el-button
+                            type="primary"
+                            class="buttonActive_primary detailLinkBtn"
+                            @click="doDownExcel()">下载
+                        </el-button
+                        >
                         <el-table
                             :data="tableData"
-                            height="100%"
+                            height="calc(100% - 20px)"
                             style="width: 100%"
+                            id="tabledow"
                             :header-cell-style="headerColor"
                         >
                             <el-table-column prop="date" label="序号" align="center" width="50">
@@ -261,7 +279,7 @@ import {
     getResidueOilCondotion
 } from "@/api/rem/r-intelligentIPA.js";
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
-
+import { exportExcel } from '@/lib/exportExcel.js';
 export default {
     name:'indexHome',
     components: {
@@ -303,10 +321,18 @@ export default {
     },
     mounted() {
         this.searchList()
+        // const myChart = echarts.init(document.getElementById('chart'));
+        // myChart.off('mousemove');
+        // myChart.off('mouseover');
+        // myChart.off('mouseenter');
+        
     },
     methods: {
         returnBack(){
             this.$router.go(-1)
+        },
+        doDownExcel(){
+            exportExcel('#tabledow', '超欠注情况统计');
         },
         renderheader(h, {column, $index}) {
             return h('span', {}, [
@@ -359,8 +385,8 @@ export default {
                     });
                 } catch (e) {
                 }
-
-                this.ResidueOilRank = res.slice(0, 10);
+                const newArray = res.filter(obj => obj.dhFlowingPress !='' && obj.fluidProdDaily !='');
+                this.ResidueOilRank = newArray.slice(0, 10);
                 this.ResidueOilRank.sort((a, b) => a.dhFlowingPress - b.dhFlowingPress)
             })
         },
@@ -369,12 +395,12 @@ export default {
             getWellGroupBlock(this.queryData).then((res) => {
                 res.injRatio = Number(res.injRatio).toFixed(1)
                 res.haveWater = Number(res.haveWater).toFixed(1)
-                res.waterProd = Number(res.waterProd).toFixed(2)
-                res.oilProd = Number(res.oilProd).toFixed(2)
-                res.gasProd = Number(res.gasProd).toFixed(2)
-                res.fluidProd = Number(res.fluidProd).toFixed(2)
-                res.injAlloc = Number(res.injAlloc).toFixed(2)
-                res.inj = Number(res.inj).toFixed(2)
+                res.waterProd =  Number(res.waterProd).toFixed(4)
+                res.oilProd = Number(res.oilProd).toFixed(4)
+                res.gasProd = Number(res.gasProd).toFixed(4)
+                res.fluidProd = Number(res.fluidProd).toFixed(4)
+                res.injAlloc = Number(res.injAlloc).toFixed(4)
+                res.inj = Number(res.inj).toFixed(4)
                 this.groupBlock = res
                 this.getEchartData()
                 this.getEchart()
@@ -416,7 +442,7 @@ export default {
             let option = {
                 legend: {
                     textStyle: {
-                        color: "#66ffff"
+                        color: "#42f2f2"
                     },
                     bottom: "bottom",
                 },
@@ -427,9 +453,10 @@ export default {
                     }
                 },
                 grid: {
-                    left: '10%',
+                    left: '5%',
                     right: '15%',
-                    bottom: '15%',
+                    bottom: '5%',
+                    top:'5%',
                     containLabel: true
                 },
                 xAxis: [{
@@ -439,7 +466,10 @@ export default {
                         color: '#a9a8a8'
                     },
                     axisLine:{
-                        show:true
+                        show:false
+                    },
+                    splitLine:{
+                        show:false
                     },
                     interval: 400,
                     axisLabel: {
@@ -452,7 +482,13 @@ export default {
                         color: '#a9a8a8'
                     },
                     axisLine:{
-                        show:true
+                        show:false
+                    },
+                    axisTick:{
+                        show:false
+                    },
+                    splitLine:{
+                        show:false
                     },
                     axisLabel: {
                         color: '#a9a8a8'
@@ -493,6 +529,7 @@ export default {
         getEchartData(value, unit, valueColor, backColor, centerColor, data) {
             var option = {
                 tooltip: {
+                    show: false, // 取消提示框的显示
                     trigger: value,
                     formatter: unit,
                 },
@@ -503,7 +540,14 @@ export default {
                         radius: [0, '75%'],
                         color: centerColor,
                         label: {
-                            fontSize: 10,
+                            fontSize: 14,
+                        },
+                        animation: false,   //去掉动画效果
+                        silent: true,    //不响应和触发鼠标事件，默认为 false，即响应和触发鼠标事件
+                        hoverAnimation:false,
+                        clickable:false,
+                        axisPointer: {
+                            show: false, // 取消坐标轴指示器的显示
                         },
                         data: [
                             {value: 0, name: value, label: {color: 'white', position: 'center'}},
@@ -517,7 +561,13 @@ export default {
                         labelLine: {
                             length: 30
                         },
+                        clickable:false,
+                        hoverAnimation:false,
+                        axisPointer: {
+                            show: false, // 取消坐标轴指示器的显示
+                        },
                         label: {
+                            fontSize: 12,
                             show: false
                         },
                         data: [
@@ -540,13 +590,14 @@ export default {
                 series: [
                     {
                         type: 'pie',
-
                         selectedMode: 'single',
                         radius: [0, '75%'],
                         color: centerColor,
                         label: {
-                            fontSize: 10,
+                            fontSize: 15,
                         },
+                        animation: false,   //去掉动画效果
+                        silent: true,    //不响应和触发鼠标事件，默认为 false，即响应和触发鼠标事件
                         data: [
                             {value: 0, name: value, label: {color: '#a9a8a8', position: 'center'}},
                             {value: 1, name: unit, label: {color: '#a9a8a8', position: 'inner'}},
@@ -774,6 +825,7 @@ export default {
 
     .box {
         margin-top: 40px;
+        font-size: 17px;
     }
 }
 
@@ -820,16 +872,14 @@ export default {
 }
 .detailLinkBtn {
     position: absolute;
-    right: 60px;
+    right: 45px;
     top: 5px;
     width: 50px;
-    height: 20px;
-    background: linear-gradient(90deg, #0751b0, #50a6ec);
-    text-align: center;
-    font-size: smaller;
-    border: 0;
-    cursor: pointer;
-    color: #ffffff;
+    line-height: 25px;
+    padding: 0px !important;
+    height: 20px !important;
+    font-size: smaller !important;
+    text-align: center !important;
 }
 </style>
 

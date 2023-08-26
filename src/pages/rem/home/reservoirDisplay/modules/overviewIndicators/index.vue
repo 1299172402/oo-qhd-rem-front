@@ -1,13 +1,14 @@
 <template>
-    <div class="app-container" style="height: 100%">
+    <div class="app-container" id="overviewIndicators" style="height: 100%">
         <info-window
             info-width="100%"
             info-height="100%"
             header-title="秦皇岛32-6油田生产指标总览"
             :is-show-max-btn="true"
         >
-            <button class="detailLinkBtn" @click="linkroute('/intelligence1/indexHome')">详细</button>
-            <el-row :gutter="20" style="margin-bottom: 10px;padding: 0 20px">
+            <button class="detailLinkBtn" @click="linkroute('/injection/indexHome')">详细</button>
+            <button class="detailLinkBtn"  style="right:110px"  @click="downlist">下载</button>
+            <el-row :gutter="20" style="margin-top: 20px;padding: 0 20px">
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <div class="yield water">
@@ -46,7 +47,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(value2, '%', 'rgb(59,197,197)', 'rgb(1,67,78)', 'rgb(59,197,197)')"
+                            :chart-data="getEchartData(value2, '%', 'rgb(59,197,197)',$store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(59,197,197)')"
                         ></Echart>
                         <div class="chartText">生产时率</div>
                     </div>
@@ -54,7 +55,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(value1, '%', 'rgb(13,190,124)', 'rgb(1,67,78)', 'rgb(13,190,124)')"
+                            :chart-data="getEchartData(value1, '%', 'rgb(13,190,124)', $store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(13,190,124)')"
                         ></Echart>
                         <div class="chartText">油井利用率</div>
                     </div>
@@ -62,7 +63,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(value3, '%', 'rgb(247,181,0)', 'rgb(41,72,94)', 'rgb(247,181,0)')"></Echart>
+                            :chart-data="getEchartData(value3, '%', 'rgb(247,181,0)', $store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(247,181,0)')"></Echart>
                         <div class="chartText">综合时率</div>
                     </div>
                 </el-col>
@@ -71,7 +72,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(mainList[0], '%', 'rgb(0, 220, 187)', 'rgb(1,67,78)', 'rgb(0, 220, 187)')"
+                            :chart-data="getEchartData(mainList[0], '%', 'rgb(0, 220, 187)', $store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(0, 220, 187)')"
                         ></Echart>
                         <div class="chartText">自然递减</div>
                     </div>
@@ -79,7 +80,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(mainList[1], '%', 'rgb(0, 150, 215)', 'rgb(1,67,78)', 'rgb(0, 150, 215)')"
+                            :chart-data="getEchartData(mainList[1], '%', 'rgb(0, 150, 215)', $store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(0, 150, 215)')"
                         ></Echart>
                         <div class="chartText">综合递减</div>
                     </div>
@@ -87,7 +88,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(mainList[2], '%', 'rgb(209, 74, 202)', 'rgb(1,67,78)', 'rgb(209, 74, 202)')"
+                            :chart-data="getEchartData(mainList[2], '%', 'rgb(209, 74, 202)',$store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(209, 74, 202)')"
                         ></Echart>
                         <div class="chartText">总递减</div>
                     </div>
@@ -98,7 +99,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(dataList.waterInjectionWellInjection, '%', 'rgb(0, 150, 215)', 'rgb(1,67,78)', 'rgb(0, 150, 215)')"
+                            :chart-data="getEchartData(dataList.waterInjectionWellInjection, '%', 'rgb(0, 150, 215)',$store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(0, 150, 215)')"
                         ></Echart>
                         <div class="chartText" style="margin-top: 10px">分注井分注率</div>
                     </div>
@@ -106,7 +107,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(infolist, '%', 'rgb(227, 123, 93)', 'rgb(1,67,78)', 'rgb(227, 123, 93)')"
+                            :chart-data="getEchartData(infolist, '%', 'rgb(227, 123, 93)', $store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(227, 123, 93)')"
                         ></Echart>
                         <div class="chartText" style="margin-top: 10px">层段合格率</div>
                     </div>
@@ -114,7 +115,7 @@
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <Echart
-                            :chart-data="getEchartData(dataList.waterCutIncreaseRate, '%', 'rgb(167, 228, 77)', 'rgb(1,67,78)', 'rgb(66, 144, 34)')"
+                            :chart-data="getEchartData(dataList.waterCutIncreaseRate, '%', 'rgb(167, 228, 77)',$store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(66, 144, 34)')"
                         ></Echart>
                         <div class="chartText" style="margin-top: 10px">含水上升率</div>
                     </div>
@@ -134,6 +135,7 @@ import {productionMetricsOverview,getYieldTracking} from "@/api/rem/reservoirbil
 import {dividingLayerQualityRate} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import {getProductionIndex} from "@/api/monthlyReportManagement.js";
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
+import html2canvas from "html2canvas";
 let value = 0;
 let name = "";
 export default {
@@ -491,6 +493,34 @@ export default {
         linkroute(rname) {
             this.$router.push({path: rname,query: {link:'remHome'}});
         },
+        downlist(){
+                const screenEl = document.getElementById('overviewIndicators');
+                if(this.$store.state.setting.mode === 'dark'){
+                    screenEl.classList.add('dark-mode');
+                }
+                this.$nextTick(()=>{
+                    html2canvas(screenEl, {
+                        useCORS: true,
+                        dpi:150,
+                        scale:2,
+                        height: screenEl.scrollHeight,
+                        windowHeight: screenEl.scrollHeight,
+                    }).then((canvas) => {
+                        canvas.toBlob(blob => {
+                            const href = window.URL.createObjectURL(new Blob([blob]))
+                            const link = document.createElement('a')
+                            link.href = href
+                            link.download =  '秦皇岛32-6油田生产指标总览.png'
+                            document.body.appendChild(link)
+                            link.click()
+                            document.body.removeChild(link)
+                        }, 'image/png')
+                        if(this.$store.state.setting.mode === 'dark'){
+                            screenEl.classList.remove('dark-mode');
+                        }
+                    })
+                })
+        },
         getData(){
             // new Date().format('YYYY-MM')
             productionMetricsOverview( { ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
@@ -519,13 +549,14 @@ export default {
             })
         },
         getList(){
+            let date = new Date().format('yyyy-MM-dd')
             let data = {
-                endDate:"2022-12-01",
+                endDate:date,
                 oilFieldId:"3FC9A818F5BC43B88270DB80BBB3018F",
-                year:"2022-12-01"
+                year:date
             }
             dividingLayerQualityRate(data).then((res)=>{
-                this.infolist = res.data.data.indicatorContent.detail
+                this.infolist = res?.data.data.indicatorContent.detail
                 
             })
         },
@@ -565,13 +596,7 @@ export default {
         
         //图表
         getEchartData(value, unit, valueColor, backColor, centerColor) {
-            console.info(value, unit, valueColor, backColor, centerColor)
             var option = {
-                tooltip: {
-                    trigger: value,
-                    formatter: unit,
-                    position:'top',
-                },
                 series: [
                     {
                         type: "pie",
@@ -581,7 +606,10 @@ export default {
                         color: centerColor,
                         label: {
                             fontSize: 16,
+                            position: 'outside', // 将位置设置为 'outside'
                         },
+                        animation: false,   //去掉动画效果
+                        silent: true,    //不响应和触发鼠标事件，默认为 false，即响应和触发鼠标事件
                         data: [
                             {value: 0, name: value, label: {color: "white", position: "center"}},
                             {value: 1, name: unit, label: {color: "white", position: "inner"}},
@@ -821,7 +849,9 @@ export default {
     line-height: 42px;
     box-shadow: 0px 0px 15px #66ffff inset;
 }
-
+.dark-mode {
+    background-color: #02213a;
+}
 .chart {
     // margin-top: 10px;
     height: 120px !important;

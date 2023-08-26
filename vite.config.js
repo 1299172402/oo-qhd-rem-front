@@ -69,24 +69,41 @@ export default ({ mode }) => {
       port: 8080,
       open: true,
       proxy: {
-        // '/dev-api/ipm/api': {
-        //   target: 'http://10.178.118.199:8081',
-        //   changeOrigin: true,
-        //   rewrite: (path) => path.replace(/^\/dev-api\/ipm\/api/,'/ipm/api'),
-        // },
-        '/dev-api/zcy/api': {
-          target: 'http://10.77.79.57:8080',
+        "/dev-api/rem/api": {
+          // 用于开发环境下的转发请求
+          // target: 'http://10.178.118.184:9229', //姜
+          // target: "http://192.168.137.59:8088",
+          target: "http://192.168.1.107:8080",
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/dev-api\/zcy\/api/, ''),
+          rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, "/rem/api"),
         },
-        "/dev-api/masterService/api": {
+        '/dev-api/ipm/api': {
+          target: "http://192.168.1.107:8080",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/dev-api\/ipm\/api/,'/ipm/api'),
+        },
+        // '/dev-api/zcy/api': {
+        //   target: 'http://10.77.79.57:8080',
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(/^\/dev-api\/zcy\/api/, ''),
+        // },
+        "/dev-api/omc003d": {
           // 主服务转发请求
           // 接口网关地址：http://10.77.79.57:8080
           // 接口微服务地址：http://10.77.78.243:8003
           // 接口微服务名称：oo-csc-csc-masterdata-atom
-          target: "http://10.77.79.57:8080",
+          target: 'http://192.168.1.20:8080',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/dev-api\/masterService\/api/, "/omc003d"),
+          rewrite: (path) => path.replace(/^\/dev-api\/omc003d/, "omc003d"),
+        },
+        "/dev-api/prm01/api": {
+          // 主服务转发请求
+          // 接口网关地址：http://10.77.79.57:8080
+          // 接口微服务地址：http://10.77.78.243:8003
+          // 接口微服务名称：oo-csc-csc-masterdata-atom
+          target: 'http://192.168.1.111:8080',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/dev-api\/prm01\/api/, "/ipm/api"),
         },
         // '/dev-api/rmm-01/api': {
         //   target: 'http://10.77.79.57:8080:9209', //远程监控
@@ -99,9 +116,9 @@ export default ({ mode }) => {
           // target: 'http://10.247.187.28:8080/dev-api/',
           // target: 'http://114.116.211.6:8080',
           // target: 'http://114.116.123.113:8080',
-          target: 'http://10.77.78.250',
+          target: 'http://192.168.1.20:8080',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/dev-api/, '/prod-api'),
+          rewrite: (path) => path.replace(/^\/dev-api/, ''),
         },
         // // html5静态资源代理
         // '/html5': {

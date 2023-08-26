@@ -23,13 +23,13 @@
                         <el-table-column label="序号" type="index" align="center" width="100" fixed></el-table-column>
                         <el-table-column label="层位" prop="layer" align="center" width="140" fixed></el-table-column>
                         <el-table-column label="井号" prop="wellbore" align="center" width="140" fixed></el-table-column>
-                        <el-table-column :label="`顶界斜深\n(m)`" prop="topMd" align="center"></el-table-column>
-                        <el-table-column :label="`底界斜深\n(m)`" prop="bottomMd" align="center"></el-table-column>
-                        <el-table-column label="斜厚" prop="mdThickness" align="center"></el-table-column>
-                        <el-table-column :label="`顶界垂深\n(m)`" prop="topTvd" align="center"></el-table-column>
-                        <el-table-column :label="`底界垂深\n(m)`" prop="bottomTvd" align="center"></el-table-column>
-                        <el-table-column label="垂厚" prop="verticalThickness" align="center"></el-table-column>
-                        <el-table-column :label="`反射时长\n(m)`" prop="reflectionDuration" align="center"></el-table-column>
+                        <el-table-column :label="`顶界斜深\n(m)`" prop="topMd" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column :label="`底界斜深\n(m)`" prop="bottomMd" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column label="斜厚" prop="mdThickness" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column :label="`顶界垂深\n(m)`" prop="topTvd" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column :label="`底界垂深\n(m)`" prop="bottomTvd" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column label="垂厚" prop="verticalThickness" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column :label="`反射时长\n(m)`" prop="reflectionDuration" align="center" :formatter="toPrecise2"></el-table-column>
                         <el-table-column label="分层日期" prop="divDate" align="center" min-width="140"></el-table-column>
                         <el-table-column label="层位描述" prop="layerDesc" align="center" min-width="240"></el-table-column>
                         <el-table-column label="接触关系" prop="contectRelationCode" align="center" min-width="200"></el-table-column>
@@ -167,7 +167,20 @@
                 downFile(this.id).then(res=>{
                     FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
                 })
-            }
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
+            },
         }
     }
 </script>

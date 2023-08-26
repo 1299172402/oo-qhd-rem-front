@@ -33,14 +33,16 @@
         <page-panel-new style="height: calc(100% - 100px);">
             <div style="height:100%">
                 <el-row style="height:200px;margin-bottom:20px;">
-                    <div style="height:50px;">
+                    <div style="height:50px; display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
                         <span>单位切换：</span>
                         <el-select v-model="unitType" placeholder="请选择" style="width:100px;" @change="oilFieldRecoveryRatioApi">
                             <el-option label="10⁴m³" value="10⁴m³"></el-option>
                             <el-option label="10⁴t" value="10⁴t"></el-option>
                         </el-select>
+                        <el-button icon="el-icon-download" type="primary" style="margin-left: 20px;" @click="doDownExcel('#table4', '经验公式法')">下载</el-button>
                     </div>
                     <el-table 
+                        id="table4"
                         :data="wellPerformanceAnalysis"
                         style="width:100%;"
                         height="150px" 
@@ -61,7 +63,7 @@
                                     </div>
                                 </template>
                                 <template slot-scope="scoped">
-                                    <span>{{ scoped.row.geologyReservoirs!=null ? scoped.row.geologyReservoirs :'-'}}</span>
+                                    <span>{{ scoped.row.geologyReservoirs | toFixedFour}}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column label-class-name="twoRowHeader">
@@ -73,7 +75,7 @@
                                     </div>
                                 </template>
                                 <template slot-scope="scoped">
-                                    <span>{{ scoped.row.recoverableReserves!= null ? scoped.row.recoverableReserves :'-'}}</span>
+                                    <span>{{ scoped.row.recoverableReserves | toFixedFour}}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column label-class-name="twoRowHeader">
@@ -97,7 +99,7 @@
                                     </div>
                                 </template>
                                 <template slot-scope="scoped">
-                                    <span>{{ scoped.row.oilSum | toFixedTwo}}</span>
+                                    <span>{{ scoped.row.oilSum | toFixedFour}}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column label-class-name="twoRowHeader">
@@ -109,7 +111,7 @@
                                     </div>
                                 </template>
                                 <template slot-scope="scoped">
-                                    <span>{{ scoped.row.remainCurrent | toFixedTwo }}</span>
+                                    <span>{{ scoped.row.remainCurrent | toFixedFour }}</span>
                                 </template>
                             </el-table-column>
                         </el-table-column>
@@ -171,25 +173,30 @@
                     </div>
                     <el-row style="height:100%" :gutter="20">
                         <el-col :span="14" style="height:100%">
-                            <info-window style="margin-top:0;" infoWidth="100%" infoHeight="340px" headerTitle="水驱特征曲线法" isShowMaxBtn>
+                            <pagePanel headerTitle="水驱特征曲线法" style="height: 350px;margin-top:0;" show-btn>
                                 <div style="height:100%" v-if="radio1=='图表'">
                                     <Echart :chart-data="option" height="100%"></Echart>
                                 </div>
-                                <el-table highlight :data="sjtableDate" height="100%" v-if="radio1=='数据'" class="doubleHeader">
-                                    <el-table-column align="center" type="index" label="序号"></el-table-column>
-                                    <el-table-column align="center" prop="theDate" show-overflow-tooltip label-class-name="twoRowHeader">
-                                        <template slot="header">
-                                            <div>
-                                                <span>日期</span>
-                                                <br />
-                                                <span>(yyyy/mm/dd)</span>
-                                            </div>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column align="center" prop="x" :label="radioType=='A'?'Np':radioType=='B'?'Np':radioType=='C'?'Lp':radioType=='D'?'Wp':radioType=='YUQITAI'?'lg(Lp/Wp)':'x'" :formatter="toPrecise"></el-table-column>
-                                    <el-table-column align="center" prop="y" :label="radioType=='A'?'lgWp':radioType=='B'?'lgLp':radioType=='C'?'Lp/Np':radioType=='D'?'Lp/Np':radioType=='YUQITAI'?'logNp':'y'" :formatter="toPrecise"></el-table-column>
-                                </el-table>
-                            </info-window>
+                                <template v-if="radio1=='数据'">
+                                    <div style="display: flex; justify-content: flex-end;">
+                                        <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '水驱特征曲线法')">下载</el-button>
+                                    </div>
+                                    <el-table id="table1" highlight :data="sjtableDate" height="calc(100% - 55px)" class="doubleHeader">
+                                        <el-table-column align="center" type="index" label="序号"></el-table-column>
+                                        <el-table-column align="center" prop="theDate" show-overflow-tooltip label-class-name="twoRowHeader">
+                                            <template slot="header">
+                                                <div>
+                                                    <span>日期</span>
+                                                    <br />
+                                                    <span>(yyyy/mm/dd)</span>
+                                                </div>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column align="center" prop="x" :label="radioType=='A'?'Np':radioType=='B'?'Np':radioType=='C'?'Lp':radioType=='D'?'Wp':radioType=='YUQITAI'?'lg(Lp/Wp)':'x'" :formatter="toPrecise4"></el-table-column>
+                                        <el-table-column align="center" prop="y" :label="radioType=='A'?'lgWp':radioType=='B'?'lgLp':radioType=='C'?'Lp/Np':radioType=='D'?'Lp/Np':radioType=='YUQITAI'?'logNp':'y'" :formatter="toPrecise4"></el-table-column>
+                                    </el-table>
+                                </template>
+                            </pagePanel>
                             <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-top:20px;margin-bottom:20px;margin-left: 0;">
                                 <span>计算结果</span>
                             </div>
@@ -202,7 +209,7 @@
                                 </el-col>
                                 <el-col :span="12">
                                     <el-row>
-                                        <el-col><span style="font-size:30px;color:#24DEFF">{{ sqreservoirsAvailable | toFixedTwo }}</span></el-col>
+                                        <el-col><span style="font-size:30px;color:#24DEFF">{{ sqreservoirsAvailable | toFixedFour }}</span></el-col>
                                         <el-col><span style="font-size:12px;color:#24DEFF">可采储量(10⁴m³)</span></el-col>
                                     </el-row>
                                 </el-col>
@@ -210,7 +217,7 @@
                         </el-col>
                         <el-col :span="10" style="height:100%">
                             <el-row style="height:100%">
-                                <info-window style="margin-top:0;" infoWidth="100%" infoHeight="340px" headerTitle="驱替类型" isShowMaxBtn>
+                                <pagePanel headerTitle="驱替类型" style="height: 350px;margin-top:0;" show-btn>
                                     <div class="z-radioBox">
                                         <el-radio v-model="radioType" label="A" @change="sqtzChart">甲型---lgWp=a+bNp</el-radio>
                                         <el-radio v-model="radioType" label="B" @change="sqtzChart">乙型---lgLp=a+bNp</el-radio>
@@ -218,7 +225,7 @@
                                         <el-radio v-model="radioType" label="D" @change="sqtzChart">丁型---Lp/Np=a+bWp</el-radio>
                                         <div class="remark">注：Np累产油. Wp累产水. Lp累产液. NR.可动用油储量. q水驱特征参数</div>
                                     </div>
-                                </info-window>
+                                </pagePanel>
                             </el-row>
                         </el-col>
                     </el-row>
@@ -249,14 +256,17 @@
                                     </el-radio-group>
                                 </el-row>
                                 <el-row v-if="radio2=='图表'">
-                                    <info-window style="margin-top:0;" infoWidth="100%" infoHeight="300px" headerTitle="递减曲线法" isShowMaxBtn>
+                                    <pagePanel headerTitle="递减曲线法" style="height: 350px;margin-top:0;" show-btn>
                                         <Echart :chart-data="optionTwo" height="100%"></Echart>
-                                    </info-window>
+                                    </pagePanel>
                                 </el-row>
                                 <el-row v-if="radio2=='数据'">
                                     <div style="height:300px">
-                                        <info-window style="margin-top:0;" infoWidth="100%" infoHeight="300px" headerTitle="递减曲线法" isShowMaxBtn>
-                                            <el-table highlight :data="djtableDate" height="100%" class="doubleHeader">
+                                        <pagePanel headerTitle="递减曲线法" style="height: 350px;margin-top:0;" show-btn>
+                                            <div style="display: flex; justify-content: flex-end;">
+                                                <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table2', '递减曲线法')">下载</el-button>
+                                            </div>
+                                            <el-table id="table2" highlight :data="djtableDate" height="calc(100% - 55px)" class="doubleHeader">
                                                 <el-table-column align="center" type="index" label="序号"></el-table-column>
                                                 <el-table-column align="center" prop="theDate" show-overflow-tooltip label-class-name="twoRowHeader">
                                                     <template slot="header">
@@ -267,8 +277,8 @@
                                                         </div>
                                                     </template>
                                                 </el-table-column>
-                                                <el-table-column align="center" prop="x" label="x" :formatter="toPrecise"></el-table-column>
-                                                <el-table-column align="center" prop="y" label-class-name="twoRowHeader" :formatter="toPrecise">
+                                                <el-table-column align="center" prop="x" label="x" :formatter="toPrecise4"></el-table-column>
+                                                <el-table-column align="center" prop="y" label-class-name="twoRowHeader" :formatter="toPrecise4">
                                                     <template slot="header">
                                                         <div>
                                                             <span>y</span>
@@ -278,7 +288,7 @@
                                                     </template>
                                                 </el-table-column>
                                             </el-table>
-                                        </info-window>
+                                        </pagePanel>
                                     </div>
                                 </el-row>
                                 
@@ -294,7 +304,7 @@
                                     </el-col>
                                     <el-col :span="12">
                                         <el-row>
-                                            <el-col><span style="font-size:30px;color:#24DEFF">{{ djreservoirsAvailable | toFixedTwo }}</span></el-col>
+                                            <el-col><span style="font-size:30px;color:#24DEFF">{{ djreservoirsAvailable | toFixedFour }}</span></el-col>
                                             <el-col><span style="font-size:12px;color:#24DEFF">可采储量(10⁴m³)</span></el-col>
                                         </el-row>
                                     </el-col>
@@ -343,14 +353,17 @@
                                     </div>  
                                 </el-row>
                                 <el-row v-if="radio4 == '图表'">
-                                    <info-window style="margin-top:0;" infoWidth="100%" infoHeight="300px" headerTitle="童氏图版法" isShowMaxBtn>
+                                    <pagePanel headerTitle="童氏图版法" style="height: 350px;margin-top:0;" show-btn>
                                         <Echart :chart-data="optionThree" height="100%"></Echart>
-                                    </info-window>
+                                    </pagePanel>
                                 </el-row>
                                 <el-row v-if="radio4 == '数据'">
-                                    <div style="height:300px">
-                                        <info-window style="margin-top:0;" infoWidth="100%" infoHeight="300px" headerTitle="童氏图版法" isShowMaxBtn>
-                                            <el-table highlight :data="tstableDate" height="100%" class="doubleHeader">
+                                    <div style="height:350px">
+                                        <pagePanel headerTitle="童氏图版法" style="height: 350px;margin-top:0;" show-btn>
+                                            <div style="display: flex; justify-content: flex-end;">
+                                                <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table3', '童氏图版法')">下载</el-button>
+                                            </div>
+                                            <el-table id="table3" highlight :data="tstableDate" height="calc(100% - 55px)" class="doubleHeader">
                                                 <el-table-column align="center" type="index" label="序号"></el-table-column>
                                                 <el-table-column align="center" prop="theDate" show-overflow-tooltip label-class-name="twoRowHeader">
                                                     <template slot="header">
@@ -361,7 +374,7 @@
                                                         </div>
                                                     </template>
                                                 </el-table-column>
-                                                <el-table-column align="center" prop="x" :formatter="toPrecise" label-class-name="twoRowHeader">
+                                                <el-table-column align="center" prop="x" :formatter="toPrecise4" label-class-name="twoRowHeader">
                                                     <template slot="header">
                                                         <div>
                                                             <span>x</span>
@@ -370,7 +383,7 @@
                                                         </div>
                                                     </template>
                                                 </el-table-column>
-                                                <el-table-column align="center" prop="y" :formatter="toPrecise" label-class-name="twoRowHeader">
+                                                <el-table-column align="center" prop="y" :formatter="toPrecise4" label-class-name="twoRowHeader">
                                                     <template slot="header">
                                                         <div>
                                                             <span>y</span>
@@ -380,7 +393,7 @@
                                                     </template>
                                                 </el-table-column>
                                             </el-table>
-                                        </info-window>
+                                        </pagePanel>
                                     </div>
                                 </el-row>
                                 <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-top:20px;margin-bottom:20px;margin-left: 0;">
@@ -395,7 +408,7 @@
                                     </el-col>
                                     <el-col :span="12">
                                         <el-row>
-                                            <el-col><span style="font-size:30px;color:#24DEFF">{{ tsreservoirsAvailable | toFixedTwo }}</span></el-col>
+                                            <el-col><span style="font-size:30px;color:#24DEFF">{{ tsreservoirsAvailable | toFixedFour }}</span></el-col>
                                             <el-col><span style="font-size:12px;color:#24DEFF">可采储量(10⁴m³)</span></el-col>
                                         </el-row>
                                     </el-col>
@@ -538,9 +551,12 @@
                         <!---右下-->
                         <el-col :span="12" style="height:100%">
                             <pagePanelNew style="height: 830px;margin-top: 2px;">
-                                <el-table height="100%" :data="computingData" highlight class="doubleHeader">
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '经验公式法数据')">下载</el-button>
+                                </div>
+                                <el-table id="table1" height="calc(100% - 55px)" :data="computingData" highlight class="doubleHeader">
                                     <el-table-column align="center" prop="formulaName" label="采收率计算方法"></el-table-column>
-                                    <el-table-column align="center" prop="recoveryRatio" label-class-name="twoRowHeader">
+                                    <el-table-column align="center" prop="recoveryRatio" label-class-name="twoRowHeader" :formatter="toPrecise2">
                                         <template slot="header">
                                             <div>
                                                 <span>采收率</span>
@@ -549,7 +565,7 @@
                                             </div>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column align="center" prop="recoverableReserves" label-class-name="twoRowHeader">
+                                    <el-table-column align="center" prop="recoverableReserves" label-class-name="twoRowHeader" :formatter="toPrecise4">
                                         <template slot="header">
                                             <div>
                                                 <span>可采储量</span>
@@ -573,6 +589,7 @@
     import Echart from "@/components/tools/Echarts/index.vue";
     import {fetchOilFields,fetchFields,fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import {oilFieldRecoveryRatio, waterDriveChartData,  declineChartData, tongChartData, experienceFormulaCalResult,experienceFormulaParameter} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+    import {exportExcel} from '@/lib/exportExcel.js';
     export default {
         name:'recoveryEfficiency',
         computed:{
@@ -589,16 +606,16 @@
         filters: {
             //保留4位小数
             toFixedFour(val) {
-                if (val) {
-                    return parseFloat(Number(val).toFixed(4));
+                if (val || val == 0) {
+                    return parseFloat(val).toFixed(4);
                 } else {
                     return '-';
                 }
             },
             //保留2位小数
             toFixedTwo(val) {
-                if (val) {
-                    return parseFloat(Number(val).toFixed(2));
+                if (val || val == 0) {
+                    return parseFloat(val).toFixed(2);
                 } else {
                     return '-';
                 }
@@ -652,6 +669,19 @@
                 paramater: {},
                 //水驱特征曲线曲线
                 option: {
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name: "水驱特征曲线法",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
+                            },
+                        },
+                    },
                     dataZoom: [
                         {
                             type: "inside",
@@ -696,7 +726,6 @@
                             fontSize: 14,
 
                         },
-                        nameGap: 25,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",
@@ -795,6 +824,19 @@
                     },
                 ],
                 optionTwo: {
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name: "递减曲线法",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
+                            },
+                        },
+                    },
                     dataZoom: [
                         {
                             type: "inside",
@@ -917,6 +959,19 @@
                     ]
                 },
                 optionThree: {
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {
+                                name: "童氏图版法",
+                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+                                backgroundColor: '#022644',
+                                iconStyle:{
+                                    opacity:0
+                                }
+                            },
+                        },
+                    },
                     dataZoom: [
                         {
                             type: "inside",
@@ -1497,13 +1552,34 @@
                 this.getFieldOilLayers();
             },
             // 表格格式化方法 - 数值只保留四位小数
-            toPrecise(row, column) {
-                console.log(typeof row[column.property] == "number");
-                if (typeof row[column.property] == "number") {
-                    return row[column.property] ? parseFloat(row[column.property]).toFixed(4) : "";
+            toPrecise4(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(4)
+                    : "0";
                 } else {
-                    return row[column.property] ? row[column.property] : "";
+                    return row[column.property] ? row[column.property] : "-";
                 }
+            },
+            // 表格格式化方法 - 数值只保留两位位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
+            },
+            //下载导出文件 tableId tableName
+            doDownExcel(tableId, tableName) {
+                exportExcel(tableId, tableName);
             },
         }
     }

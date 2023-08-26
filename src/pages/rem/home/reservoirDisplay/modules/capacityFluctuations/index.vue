@@ -7,7 +7,8 @@
             :is-show-max-btn="true"
         >
             <button class="detailLinkBtn" @click="linkroute('statisticalTableProduction')">详细</button>
-            <Echart :chart-data="histogram" height="100%"></Echart>
+            <button class="detailLinkBtn"  style="right:110px"  @click="downEcharts">下载</button>
+            <Echart ref="echartChart" :chart-data="histogram" height="100%"></Echart>
         </info-window>
     </div>
 </template>
@@ -162,6 +163,9 @@ export default {
     methods: {
         linkroute(rname) {
             this.$router.push({name: rname,query:{prodDate:this.prodDate,prodDateCompare:this.prodDateCompare,page:'reservoirDisplay/oilexhibition'}});
+        },
+        downEcharts(){
+            this.$refs.echartChart.chartDownLoad( '产能波动');
         },
         getinfo() {
             getYieldFluctuation().then((res) => {

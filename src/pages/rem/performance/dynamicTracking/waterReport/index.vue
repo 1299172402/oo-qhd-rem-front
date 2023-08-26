@@ -11,7 +11,7 @@
       </el-row>
 <!--      分层调配-->
       <el-row :gutter="20">
-          <stratificationTesting></stratificationTesting>
+          <stratificationTesting :queryData="queryData"></stratificationTesting>
       </el-row>
 <!--      生产指标-->
       <el-row :gutter="20">
@@ -26,9 +26,9 @@
           <predict :queryData="queryData"></predict>
       </el-row>
 <!--      基础数据-->
-      <el-row :gutter="20">
-          <fundamentalData :queryData="queryData"></fundamentalData>
-      </el-row>
+<!--      <el-row :gutter="20">-->
+<!--          <fundamentalData :queryData="queryData"></fundamentalData>-->
+<!--      </el-row>-->
 <!--      临井数据-->
       <el-row :gutter="20">
           <nearWell :queryData="queryData"></nearWell>

@@ -4,17 +4,23 @@
         
         <header-search style="width:100%;height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
-                <span>油田：</span>
-                <el-select v-model="selectOilFieldId" disabled>
-                    <el-option v-for="item in oilFieldList" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
-                </el-select>
-                <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
+                <div style="margin: 10px 20px 10px 0px">
+                    <span>油田：</span>
+                    <el-select v-model="selectOilFieldId" disabled>
+                        <el-option v-for="item in oilFieldList" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
+                    </el-select>
+                </div>
+                <!-- <div style="margin: 10px 20px 10px 0px">
+                    年度：
+                    <el-date-picker v-model="year" type="year" placeholder="选择年" value-format="yyyy-12-31"></el-date-picker>
+                </div> -->
+                <el-button icon="el-icon-search" type="primary" @click="doSearch">搜索</el-button>
             </div>
         </header-search>
         
         <page-panel-new class="app-content">
-            <el-row style="height:390px;" :gutter="20">
-                <el-col v-for="(item, index) in zbData" :key="index" :span="6" style="margin-bottom: 10px" :class="{ active: currentIndex == index }">
+            <el-row style="height:380px;" :gutter="20">
+                <el-col v-for="(item, index) in zbData" :key="index" :span="6" :class="{ active: currentIndex == index }">
                     <pagePanel v-if="item.title == '技术指标总览'" class="fl" style="height: 156px!important;" :headerTitle="item.title" @click.native="cardClick(item, index)">
                         <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center">
                         	<span style="font-size: 30px; vertical-align: middle; color: rgb(143, 164, 204)">
@@ -22,8 +28,8 @@
                         	</span>
                         </div>
                     </pagePanel>
-                    <pagePanel v-else class="fl" style="height: 160px" :headerTitle="item.title">
-                        <el-button style="position: absolute; z-index: 9; right: 10px; top: 0; height: 26px; margin-top: 3px;line-height: 8px;" type="primary" @click.native="cardClick(item, index)">详情</el-button>
+                    <pagePanel v-else class="fl" style="height: 160px;" :headerTitle="item.title">
+                        <el-button style="position: absolute; z-index: 9; right: 10px; top: 0; height: 26px; margin-top: 3px; padding: 0 16px;" type="primary" @click.native="cardClick(item, index)">详情</el-button>
                         <div style="display:flex;margin-left: 10px;height:82px;">
                             <div style="width: 42%">
                                 <span style="vertical-align: middle">
@@ -67,7 +73,7 @@
                     </pagePanel>
                 </el-col>
             </el-row>
-            <info-window v-if="currentIndex == 0" infoWidth="100%" infoHeight="500px" headerTitle="技术指标管理" isShowMaxBtn style="margin-top:0;">
+            <pagePanel v-if="currentIndex == 0" headerTitle="技术指标管理" show-btn style="height: 500px;margin-top:0;">
                 <div style="display:flex;align-items: center;height:40px;padding-top:10px;">
                     <span>对标油田：</span>
                     <el-select v-model="selectTargetOilFieldId" disabled>
@@ -83,19 +89,19 @@
                 <div style="margin-top: 10px;height:calc(100% - 50px);">
                     <el-table id="indexscv" :data="tableData" highlight height="100%">
                         <el-table-column prop="name" label="指标" align="center"></el-table-column>
-                        <el-table-column prop="real" label="实际值" align="center"></el-table-column>
-                        <el-table-column prop="compareOilField" label="对标油田(羊三木)" align="center"></el-table-column>
-                        <el-table-column prop="realCompareOilField" label="实际值与对标差值" align="center"></el-table-column>
+                        <el-table-column prop="real" label="实际值" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="compareOilField" label="对标油田(羊三木)" align="center" :formatter="toPrecise2"></el-table-column>
+                        <el-table-column prop="realCompareOilField" label="实际值与对标差值" align="center" :formatter="toPrecise2"></el-table-column>
                     </el-table>
                 </div>
-            </info-window>
-            <info-window v-if="currentIndex == 1" infoWidth="100%" infoHeight="500px" headerTitle="年产油量" isShowMaxBtn style="margin-top:0;">
+            </pagePanel>
+            <pagePanel v-if="currentIndex == 1" headerTitle="年产油量" show-btn style="height: 500px;margin-top:0;">
                 <Echart :chart-data="inOilProduction" style="height: 100%"></Echart>
-            </info-window>
-            <info-window v-if="currentIndex == 2" infoWidth="100%" infoHeight="500px" headerTitle="采油速度" isShowMaxBtn style="margin-top:0;">
+            </pagePanel>
+            <pagePanel v-if="currentIndex == 2" headerTitle="采油速度" show-btn style="height: 500px;margin-top:0;">
                 <Echart :chart-data="productionSpeed" style="height: 100%"></Echart>
-            </info-window>
-            <info-window v-if="currentIndex == 3" infoWidth="100%" infoHeight="500px" headerTitle="综合递减率" isShowMaxBtn style="margin-top:0;">
+            </pagePanel>
+            <pagePanel v-if="currentIndex == 3" headerTitle="综合递减率" show-btn style="height: 500px;margin-top:0;">
                 <div style="height:100%">
                     <div style="display:flex;align-items: center;height:40px;padding-top:10px;">
                         <span>油藏分析单元：</span>
@@ -109,8 +115,8 @@
                     </div>
                     <Echart :chart-data="comprehensiveDeclineRate" style="height:calc(100% - 50px)"></Echart>
                 </div>
-            </info-window>
-            <info-window v-if="currentIndex == 4" infoWidth="100%" infoHeight="500px" headerTitle="含水上升率" isShowMaxBtn style="margin-top:0;">
+            </pagePanel>
+            <pagePanel v-if="currentIndex == 4" headerTitle="含水上升率" show-btn style="height: 500px;margin-top:0;">
                 <div style="height:100%">
                     <div style="display:flex;align-items: center;height:40px;padding-top:10px;">
                         <span>油藏分析单元：</span>
@@ -123,14 +129,14 @@
                     </div>
                     <Echart :chart-data="rateOfWaterCutRise" style="height:calc(100% - 50px)"></Echart>
                 </div>
-            </info-window>
-            <info-window v-if="currentIndex == 5" infoWidth="100%" infoHeight="500px" headerTitle="生产时率" isShowMaxBtn style="margin-top:0;">
+            </pagePanel>
+            <pagePanel v-if="currentIndex == 5" headerTitle="生产时率" show-btn style="height: 500px;margin-top:0;">
                 <Echart :chart-data="whenTheProductionRate" style="height: 100%"></Echart>
-            </info-window>
-            <info-window v-if="currentIndex == 6" infoWidth="100%" infoHeight="500px" headerTitle="油井利用率" isShowMaxBtn style="margin-top:0;">
+            </pagePanel>
+            <pagePanel v-if="currentIndex == 6" headerTitle="油井利用率" show-btn style="height: 500px;margin-top:0;">
                 <Echart :chart-data="wellUtilization" style="height: 100%"></Echart>
-            </info-window>
-            <info-window v-if="currentIndex == 7" infoWidth="100%" infoHeight="500px" headerTitle="自然递减率" isShowMaxBtn style="margin-top:0;">
+            </pagePanel>
+            <pagePanel v-if="currentIndex == 7" headerTitle="自然递减率" show-btn style="height: 500px;margin-top:0;">
                 <div style="height:100%">
                     <div style="display:flex;align-items: center;height:40px;padding-top:10px;">
                         <span>油藏分析单元：</span>
@@ -144,7 +150,7 @@
                     </div>
                     <Echart :chart-data="naturalDeclineRate" style="height:calc(100% - 50px)"></Echart>
                 </div>
-            </info-window>
+            </pagePanel>
         </page-panel-new>
         
     </div>
@@ -157,6 +163,7 @@
     import { fetchOilFields,fetchFields, fetchPlatforms } from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import { oilYear,compositeDeclineRate,proTimeRate,proWellUsageRate,natureDeclineRateForTech,waterCutRaiseRate,proSpeed,techIndicatorStat,} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
     import { searchOilProductionChart} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+    import dayjs from "dayjs";
 
     export default {
         name:'technicalIndexManagement',
@@ -180,6 +187,8 @@
                 queryParams: {},
                 //选中油田
                 selectOilFieldId: '',
+                // 年度
+                year: dayjs().format("YYYY-12-31"),
                 //选中对标油田
                 selectTargetOilFieldId: '',
                 page: 1,
@@ -1448,6 +1457,7 @@
                     outputDegreeCode: outputDegreeCode,
                     reservoirsTypeCode: reservoirsTypeCode,
                     devPhaseCode: devPhaseCode,
+                    year: this.year,
                 }
                 this.tableData = [];
                 techIndicatorStat(request).then((res) => {
@@ -1459,7 +1469,8 @@
             //技术指标管理-年产油量
             doOilYear2(oilFieldId) {//原来用的是这个
                 let request = {
-                    oilFieldId: oilFieldId
+                    oilFieldId: oilFieldId,
+                    year: this.year,
                 }
                 oilYear(request).then((res) => {
                     //图表数据
@@ -1515,6 +1526,7 @@
                     planTypeCode: "002003",
                     rollForecastVersion: "202301",
                     unitType: "m",
+                    year: this.year,
                 };
                 searchOilProductionChart(request).then((res) => {
                     //图表数据
@@ -1603,6 +1615,7 @@
             doProSpeed(oilFieldId) {
                 let request = {
                     oilFieldId: oilFieldId,
+                    year: this.year,
                 }
                 proSpeed(request).then((res) => {
                     if (res.data.code == 200) {
@@ -1647,6 +1660,7 @@
                 let request = {
                     oilFieldId: oilFieldId,
                     fileId: blockId,
+                    year: this.year,
                 }
                 compositeDeclineRate(request).then((res) => {
                     if (res.data.code == 200) {
@@ -1712,6 +1726,7 @@
                 let request = {
                     oilFieldId: oilFieldId,
                     fileId: blockId,
+                    year: this.year,
                 }
                 waterCutRaiseRate(request).then((res) => {
                     if (res.data.code == 200) {
@@ -1774,6 +1789,7 @@
                 let request = {
                     oilFieldId: oilFieldId,
                     fileId: blockId,
+                    year: this.year,
                 }
                 natureDeclineRateForTech(request).then((res) => {
                     if (res.data.code == 200) {
@@ -1834,6 +1850,7 @@
             doProTimeRate(oilFieldId) {
                 let request = {
                     oilFieldId: oilFieldId,
+                    year: this.year,
                 }
                 proTimeRate(request).then((res) => {
                     if (res.data.code == 200) {
@@ -1891,6 +1908,7 @@
             doProWellUsageRate(oilFieldId) {
                 let request = {
                     oilFieldId: oilFieldId,
+                    year: this.year,
                 }
                 proWellUsageRate(request).then((res) => {
                     if (res.data.code == 200) {
@@ -1947,6 +1965,19 @@
             //导出excel表
             doDownIndex() {
                 exportExcel('#indexscv', '技术指标总览');
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise2(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(2)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         }
     };

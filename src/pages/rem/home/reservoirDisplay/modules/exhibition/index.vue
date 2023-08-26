@@ -6,114 +6,12 @@
           header-title="单井井底流压"
           :is-show-max-btn="true"
       >
-        <button class="detailLinkBtn" @click="linkroute('/intelligence1/indexHome')">详细</button>
-<!--        <el-row :gutter="20" style="margin-bottom: 10px">-->
-<!--          <el-col :span="12">-->
-<!--            <div class="grid-content bg-purple">-->
-<!--              <div class="yield water">-->
-<!--                <div class="box">-->
-<!--                  <div>{{ 12 }}</div>-->
-<!--                  <div>10⁴m³</div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="text">产水量</div>-->
-<!--            </div>-->
-<!--          </el-col>-->
-<!--          <el-col :span="12">-->
-<!--            <div class="grid-content bg-purple">-->
-<!--              <div class="yield oil">-->
-<!--                <div class="box">-->
-<!--                  <div>{{ 13 }}</div>-->
-<!--                  <div>10⁴m³</div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="text">产油量</div>-->
-<!--            </div>-->
-<!--          </el-col>-->
-<!--        </el-row>-->
-<!--        <el-row :gutter="20">-->
-<!--          <el-col :span="12">-->
-<!--            <div class="grid-content bg-purple">-->
-<!--              <div class="yield gas">-->
-<!--                <div class="box">-->
-<!--                  <div>{{ 12 }}</div>-->
-<!--                  <div>10⁴m³</div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="text">产气量</div>-->
-<!--            </div>-->
-<!--          </el-col>-->
-<!--          <el-col :span="12">-->
-<!--            <div class="grid-content bg-purple">-->
-<!--              <div class="yield liquid">-->
-<!--                <div class="box">-->
-<!--                  <div>{{ 23 }}</div>-->
-<!--                  <div>10⁴m³</div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="text">产液量</div>-->
-<!--            </div>-->
-<!--          </el-col>-->
-<!--        </el-row>-->
-<!--        <el-row :gutter="20">-->
-<!--          <el-col :span="6">-->
-<!--            <div class="grid-content bg-purple">-->
-<!--              <Echart-->
-<!--                :chart-data="getEchartData(21, '10⁴m³', 'rgb(59,197,197)', 'rgb(59,197,197)', 'rgb(59,197,197)')"-->
-<!--              ></Echart>-->
-<!--              <div class="chartText">配注量</div>-->
-<!--            </div>-->
-<!--          </el-col>-->
-<!--          <el-col :span="6">-->
-<!--            <div class="grid-content bg-purple">-->
-<!--              <Echart-->
-<!--                :chart-data="getEchartData(12, '10⁴m³', 'rgb(13,190,124)', 'rgb(1,67,78)', 'rgb(13,190,124)')"-->
-<!--              ></Echart>-->
-<!--              <div class="chartText">注水量</div>-->
-<!--            </div>-->
-<!--          </el-col>-->
-<!--          <el-col :span="6">-->
-<!--            <div class="grid-content bg-purple">-->
-<!--              <Echart :chart-data="getEchartData(12, '口', 'rgb(247,181,0)', 'rgb(41,72,94)', 'rgb(247,181,0)')"></Echart>-->
-<!--              <div class="chartText">油井总井数</div>-->
-<!--            </div>-->
-<!--          </el-col>-->
-<!--          <el-col :span="6">-->
-<!--            <div class="grid-content bg-purple">-->
-<!--              <Echart :chart-data="getEchartData(12, '口', 'rgb(36,151,194)', 'rgb(7,59,90)', 'rgb(36,151,194)')"></Echart>-->
-<!--              <div class="chartText">水井总井数</div>-->
-<!--            </div>-->
-<!--          </el-col>-->
-<!--        </el-row>-->
-<!--        <el-row :gutter="20">-->
-<!--          <el-col :span="6">-->
-<!--            <div class="grid-content bg-purple">-->
-<!--              <Echart :chart-data="getEchart(12, '口', 'rgb(0,179,225)', 'rgb(38,43,90)', 'transparent')"></Echart>-->
-<!--              <div class="chartText">油井开井数</div>-->
-<!--            </div>-->
-<!--          </el-col>-->
-<!--          <el-col :span="6">-->
-<!--            <div class="grid-content bg-purple">-->
-<!--              <Echart :chart-data="getEchart(12, '口', 'rgb(235,125,96)', 'rgb(38,43,90)', 'transparent')"></Echart>-->
-<!--              <div class="chartText">水井开井数</div>-->
-<!--            </div>-->
-<!--          </el-col>-->
-<!--          <el-col :span="6">-->
-<!--            <div class="grid-content bg-purple">-->
-<!--              <Echart :chart-data="getEchart(12, '', 'rgb(164,227,77)', 'rgb(38,43,90)', 'transparent')"></Echart>-->
-<!--              <div class="chartText">注采比</div>-->
-<!--            </div>-->
-<!--          </el-col>-->
-<!--          <el-col :span="6">-->
-<!--            <div class="grid-content bg-purple">-->
-<!--              <Echart :chart-data="getEchart(12, '%', 'rgb(185,75,215)', 'rgb(38,43,90)', 'transparent')"></Echart>-->
-<!--              <div class="chartText">含水</div>-->
-<!--            </div>-->
-<!--          </el-col>-->
-<!--        </el-row>-->
+        <button class="detailLinkBtn" @click="linkroute('/injection/indexHome')">详细</button>
+          <button class="detailLinkBtn"  style="right:110px"  @click="downEcharts">下载</button>
           <Echart
               :chart-data="getResidueOilChart()"
               height="100%"
+              ref="echartChart"
               style="height: 100%!important;"
           >
           </Echart>
@@ -157,7 +55,7 @@ export default {
                   textStyle: {
                       color: "#66ffff",
                   },
-                  bottom: "bottom",
+                  bottom: "10",
               },
               dataZoom: {
                   start: 0,
@@ -170,10 +68,10 @@ export default {
                   }
               },
               grid: {
-                  left: '10%',
-                  right: '18%',
-                  bottom: '11%',
-                  top:'10%',
+                  left: '5%',
+                  right: '15%',
+                  bottom: '5%',
+                  top:'5%',
                   containLabel: true
               },
               xAxis: [{
@@ -183,11 +81,20 @@ export default {
                       color: '#a9a8a8'
                   },
                   axisLine:{
-                      show:true
+                      show:false
+                  },
+                  axisTick:{
+                      show:false
+                  },
+                  splitLine:{
+                      show:false
                   },
                   interval: 400,
                   axisLabel: {
-                      color: '#a9a8a8'
+                      color: '#a9a8a8',
+                      textStyle:{
+                          color: '#a9a8a8',
+                      }
                   }
               }, {
                   type: 'value',
@@ -196,18 +103,30 @@ export default {
                       color: '#a9a8a8'
                   },
                   axisLine:{
-                      show:true
+                      show:false
+                  },
+                  axisTick:{
+                      show:false
+                  },
+                  splitLine:{
+                      show:false
                   },
                   interval: 400,
                   axisLabel: {
-                      color: '#a9a8a8'
+                      color: '#a9a8a8',
+                      textStyle:{
+                          color: '#a9a8a8',
+                      }
                   }
               }],
               yAxis: {
                   type: 'category',
                   data: [],
                   axisLabel: {
-                      color: '#fff'
+                      color: '#a9a8a8',
+                      textStyle:{
+                          color: '#a9a8a8',
+                      }
                   }
               }
           };
@@ -234,19 +153,15 @@ export default {
           }
           return option
       },
+      downEcharts(){
+          this.$refs.echartChart.chartDownLoad( '单井井底流压');
+      },
       getData(){
-          let dateTime = ''
-              let data = new Date()
-          if (data.getMonth() < 10) {
-              dateTime = data.getFullYear() + '-0' + (data.getMonth() + 1)
-          } else {
-              dateTime = data.getFullYear() + '-' + (data.getMonth() + 1)
-          }
           let params = {
               blockId: 'YCFXDY8B643EDC9007F96F570600457D',
-              // yearMonth: dateTime,
+              yearMonth: new Date().getFullYear() + '-' + (new Date().getMonth()),
               //修改取数的日期为5月
-              yearMonth: '2023-05',
+              // yearMonth: '2023-05',
           }
           getResidueOilCondotion(params).then(res => {
               try {
@@ -257,8 +172,8 @@ export default {
                   });
               } catch (e) {
               }
-
-              this.ResidueOilRank = res.slice(0, 10);
+              const newArray = res.filter(obj => obj.dhFlowingPress !='' && obj.fluidProdDaily !='');
+              this.ResidueOilRank = newArray.slice(0, 10);
               this.ResidueOilRank.sort((a, b) => a.dhFlowingPress - b.dhFlowingPress)
           })  
       },

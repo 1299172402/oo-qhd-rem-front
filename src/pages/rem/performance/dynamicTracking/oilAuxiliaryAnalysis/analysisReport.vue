@@ -185,12 +185,15 @@
                             @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':linkdata(),evalResult:selCode }})">
                             归因分析详情
                             </el-button>
-                            <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)" 
-                            @click="$router.push({path:'/plan/personnelMeasures',query:{platform,wellId,currentDate}})">措施推荐详情</el-button>
+                            <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='0100101'||selCode=='0100102' || selCode=='0100103' || selCode=='0100106'|| selCode=='0100110'|| selCode=='0100111'|| selCode=='0100112'|| selCode=='0100114')" 
+                            @click="$router.push({name:'planmessage',query:{platform,wellId,currentDate,measureCode:selCode}})">措施推荐详情</el-button>
                         </div>
-                        <div style="flex:1;min-height:540px;">
+                        <div style="flex:1;min-height:600px;">
                             <pagePanel headerTitle="油井动态分析详情列表" style="margin-top:0;height:100%;">
-                                <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '油井动态分析详情列表')">下载</el-button>
+                                </div>
+                                <el-table id="table1" highlight :data="tableData" height="calc(100% - 55px)" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                     <!--生产动态项目-->
@@ -254,7 +257,8 @@
                                     <el-table-column prop="recommendedMeasures" label="措施初选" align="center">
                                         <el-table-column prop="measuresName" label="推荐措施" align="center">
                                             <template slot-scope="scope">
-                                                <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel ? scope.row.cscx.showLabel  :'-' }}</span>
+                                                <!-- <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel ? scope.row.cscx.showLabel  :'-' }}</span> -->
+                                                <span v-if="scope.row.cscx != null">{{ preliminarySelectioMeasures(scope.row.wellId,1) }}</span>
                                             </template>
                                         </el-table-column>
                                         <el-table-column prop="theDate" align="center"  min-width="130" label-class-name="twoRowHeader">
@@ -266,7 +270,8 @@
                                                 </div>
                                             </template>
                                             <template slot-scope="scope">
-                                                <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq ? scope.row.cscx.tjrq :'-'}}</span>
+                                                <!-- <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq ? scope.row.cscx.tjrq :'-'}}</span> -->
+                                                <span v-if="scope.row.cscx != null">{{ preliminarySelectioMeasures(scope.row.wellId,2) }}</span>
                                             </template>
                                         </el-table-column>
                                         <el-table-column label="操作" align="center">
@@ -355,7 +360,7 @@
                             </div>
                         </div>
                         <div class="v2" style="height:206px;">
-                            <info-window info-width="100%"  info-height="100%"  header-title="生产动态监测" :is-show-max-btn="false">
+                            <pagePanel header-title="生产动态监测" style="height: 100%;">
                                 <div class="z-content" style="height:calc(100%);overflow-y: scroll;">
                                     <div class="z-content-n">
                                         <div class="z-row-left">
@@ -394,18 +399,22 @@
                                                 <span 
                                                     :class="[item.code==selCode?'spActive':'']"
                                                     v-for="(item,index) in recommendedMeasuresOptions" :key="index" v-if="item.name=='地面调参'" 
-                                                    @click="selRadioIterm(item.code,'recommendedMeasuresOptions')">
+                                                    @click="selRadioIterm(item.code,'recommendedMeasuresOptions',item)">
                                                 {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span>
                                                 </span>
+                                            </div>
+                                            <div style="width: 250px;display: flex;justify-content: flex-end;margin-top: 40px;padding-right: 26px">
+                                                <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode== '0100111')"
+                                                           @click="$router.push({name:'planmessage',query:{platform,wellId,currentDate,page:'oilAnalysisReport',measureCode:selCode}})">措施推荐详情</el-button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                         <div class="v2 v3" style="height: 234px;">
                             <img src="@/assets/rem/performance/bgline0.png" alt="" class="bgline0">
-                            <info-window info-width="100%"  info-height="100%"  header-title="油井工况诊断" :is-show-max-btn="false">
+                            <pagePanel header-title="油井工况诊断" style="height: 100%;">
                                 <div class="z-content2" style="height:100%;overflow-y: scroll;">
                                     <div class="z1" style="flex:1;">
                                         <div class="z-content-n" style="flex-direction: column;">
@@ -488,16 +497,16 @@
                                             </div>
                                         </div>
                                         <div style="width: 250px;display: flex;justify-content: flex-end;margin-top: 30px;">
-                                            <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode)"
-                                            @click="$router.push({path:'/plan/personnelMeasures',query:{platform,wellId,currentDate,page:'oilAnalysisReport'}})">措施推荐详情</el-button>
+                                            <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode==hdbSelCode ||selCode== '0100112')"
+                                            @click="$router.push({name:'planmessage',query:{platform,wellId,currentDate,page:'oilAnalysisReport',measureCode:selCode}})">措施推荐详情</el-button>
                                         </div>
                                     </div>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                         <div class="v2 v3">
                             <img src="@/assets/rem/performance/bgline2.png" alt="" class="bgline2">
-                            <info-window info-width="100%" info-height="100%" header-title="油藏潜力分析" :is-show-max-btn="false">
+                            <pagePanel header-title="油藏潜力分析"  style="height: 100%;">
                                 <div style="height:100%;overflow-y: scroll;">
                                     <div class="z-content2">
                                         <div style="flex:1;">
@@ -653,6 +662,10 @@
                                                     {{ item.name + (item.increase > 0 ? '/' + item.increase + 't' : '')  }}：<span style="color: #FFC835; font-size: 14px;">{{ (item.value > 0 ? item.value : '0') }}</span>
                                                     </span>
                                                 </div>
+                                                <div style="width: 250px;display: flex;justify-content: flex-end;margin-top: 45px;padding-right: 28px">
+                                                    <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='0100102'||selCode=='0100103'||selCode=='0100106'||selCode=='0100114')"
+                                                               @click="$router.push({name:'planmessage',query:{platform,wellId,currentDate,page:'oilAnalysisReport',measureCode:selCode}})">措施推荐详情</el-button>
+                                                </div>
                                                 <div style="width: 250px;display: flex;justify-content: flex-end;position: relative;top:40px;">
                                                     <el-button type="primary" style="margin-left: 20px" v-if="selCode&&(selCode=='0050102'||selCode=='0050101' || selCode=='0060101' || selCode=='0060102'|| selCode=='0070101'|| selCode=='0070102'|| selCode=='0040101')"
                                                             @click="$router.push({path:'attributtonAnalysis',query:{platform,wellId,currentDate,'link':linkdata(),evalResult:selCode }})">
@@ -663,11 +676,14 @@
                                         </div>
                                     </div>
                                 </div>
-                            </info-window>
+                            </pagePanel>
                         </div>
                         <div style="height:800px;position: relative;z-index: 3;">
-                            <info-window info-width="100%" info-height="100%" header-title="油井动态分析详情列表" :is-show-max-btn="true">
-                                <el-table highlight :data="tableData" height="100%" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
+                            <pagePanel header-title="油井动态分析详情列表"  style="height: 100%;">
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table2', '油井动态分析详情列表')">下载</el-button>
+                                </div>
+                                <el-table id="table2" highlight :data="tableData" height="calc(100% - 55px)" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                     <!--生产动态项目-->
@@ -776,7 +792,7 @@
                                         </template>
                                     </el-table-column>
                                 </el-table>
-                            </info-window>
+                            </pagePanel>
                         </div>
                     </div>
                 </div>
@@ -810,6 +826,8 @@
     import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js"
     import compareSort from "@/lib/compareSort.js";
     import treeSelectionCustom from "@/pages/rem/basic/components/treeSelectionCustom.vue";
+    import {exportExcel} from '@/lib/exportExcel.js';
+
     export default {
         name:'oilAnalysisReport',
         mixins: [compareSort],
@@ -1618,8 +1636,8 @@
                 });
             },
             //选中项目
-            selRadioIterm(val, tag) {
-                console.log(val,this.selCode,888)
+            selRadioIterm(val, tag,item) {
+                console.log(item)
                 this.scrollFlag = false;
                 let myData = []; //我的数据
                 let myWellCount = {}; //计算各项目的井数
@@ -1917,6 +1935,10 @@
                     return '-'
                 }
             },
+            //下载导出文件 tableId tableName
+            doDownExcel(tableId, tableName) {
+                exportExcel(tableId, tableName);
+            },
 		}
     }
 </script>
@@ -2023,7 +2045,7 @@
                         z-index: -1;
                     }
                     .btns0{
-                        min-width:224px;
+                        min-width:250px;
                         height:70px;
                         padding-left:20px;
                         border: 1px solid;
@@ -2031,6 +2053,7 @@
                         background-image: var(--logo-bg) !important;
                         display: flex;
                         align-items: center;
+                        margin-right: 66px;
                         .helpImg{
                             width:52px;
                             height:52px;

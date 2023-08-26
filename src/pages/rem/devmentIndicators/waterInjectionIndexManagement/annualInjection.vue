@@ -2,7 +2,7 @@
 <template>
     <div class="app-container">
         
-        <header-search style="width:100%;height:80px;margin:0 7px;">
+        <header-search style="width:100%;height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
                 <div style="margin: 10px 20px 10px 0px;">
                     作业公司：
@@ -32,19 +32,21 @@
         </header-search>
         
         <page-panel-new class="app-content">
-            <info-window headerTitle="年注入量" info-width="100%" info-height="500px" is-show-max-btn>
+            <pagePanel headerTitle="年注入量" style="height: 500px;" show-btn>
                 <Echart :chart-data="inInjection" height="100%"></Echart>   
-            </info-window>
-            <info-window :headerTitle="`${oilFieldName || ''}平台注入量`" info-width="100%" info-height="500px" is-show-max-btn>
-                <el-button style="position: absolute; z-index: 9; right: 56px; top: 0; height: 32px; margin-top: 3px;line-height: 8px;" type="primary" @click="doDownExcel('#ptnzrl', `${oilFieldName || ''}平台注入量`)">下载</el-button>
-                <el-table id="ptnzrl" :data="tableData" highlight height="100%">
+            </pagePanel>
+            <pagePanel :headerTitle="`${oilFieldName || ''}平台注入量`" style="height: 550px;" show-btn>
+                <div style="display: flex; justify-content: flex-end">
+                    <el-button style="margin-bottom: 20px" type="primary" @click="doDownExcel('#ptnzrl', `${oilFieldName || ''}平台注入量`)">下载</el-button>
+                </div>
+                <el-table id="ptnzrl" :data="tableData" highlight height="calc(100% - 55px)">
                     <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
                     <el-table-column prop="platform_name" label="平台" align="center"></el-table-column>
-                    <el-table-column prop="dailycount2" :label="`油藏需求注入量\n(10⁴m³)`" align="center"></el-table-column>
-                    <el-table-column prop="dailycount3" :label="`年考核注入量\n(10⁴m³)`" align="center"></el-table-column>
-                    <el-table-column prop="dailycount1" :label="`年实际注入量\n(10⁴m³)`" align="center"></el-table-column>
+                    <el-table-column prop="dailycount2" :label="`油藏需求注入量\n(10⁴m³)`" align="center" :formatter="toPrecise4"></el-table-column>
+                    <el-table-column prop="dailycount3" :label="`年考核注入量\n(10⁴m³)`" align="center" :formatter="toPrecise4"></el-table-column>
+                    <el-table-column prop="dailycount1" :label="`年实际注入量\n(10⁴m³)`" align="center" :formatter="toPrecise4"></el-table-column>
                 </el-table>
-            </info-window>
+            </pagePanel>
         </page-panel-new>
     </div>
 </template>
@@ -384,6 +386,19 @@
             //表格id 表格名称
             doDownExcel(tableId, tableName) {
                 exportExcel(tableId, tableName);
+            },
+            // 表格格式化方法 - 数值只保留两位小数
+            toPrecise4(row, column) {
+                if (
+                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
+                    typeof parseFloat(row[column.property]) === "number"
+                ) {
+                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+                    ? parseFloat(row[column.property]).toFixed(4)
+                    : "0";
+                } else {
+                    return row[column.property] ? row[column.property] : "-";
+                }
             },
         },
     };
