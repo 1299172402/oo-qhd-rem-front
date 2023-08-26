@@ -82,7 +82,7 @@
                         <el-table-column sortable prop="fluidProdDaily" :label="`产液对比\n(m³/d)`" width="120">
                             <template slot-scope="{ row }">
                                 <span style="display: flex;align-items: center;justify-content: center;">
-                                    {{ row.fluidProdDaily!==null?numReduce(row.fluidProdDaily,row.fluidProdDailyCompare):'-' }}
+                                    {{ row.fluidProdDaily!==null?numReduce(row.fluidProdDaily,row.fluidProdDailyCompare).toFixed(2):'-' }}
                                     <img src="@/assets/rem/yieId/upTriangle.png" alt="" v-if="row.fluidProdDaily!==null&&numReduce(row.fluidProdDaily,row.fluidProdDailyCompare)>0" style="width:20px;height:20px;">
                                     <span v-if="row.fluidProdDaily!==null&&numReduce(row.fluidProdDaily,row.fluidProdDailyCompare)===0"  style="width:12px;height:3px;background-color: #ffe706;margin-left:8px;"></span>
                                     <img src="@/assets/rem/yieId/downTriangle.png" alt="" v-if="row.fluidProdDaily!==null&&numReduce(row.fluidProdDaily,row.fluidProdDailyCompare)<0" style="width:20px;height:20px;">
@@ -92,7 +92,7 @@
                         <el-table-column sortable prop="comparisonOilProduction" :label="`产油对比\n(m³/d)`" width="160">
                             <template slot-scope="{row,$index}">
                                 <span style="display: flex;align-items: center;justify-content: center;">
-                                    <span style="width:60px;text-align: right;margin-right:10px;">{{row.oilProdDaily!==null?row.comparisonOilProduction:'-'}}</span>
+                                    <span style="width:60px;text-align: right;margin-right:10px;">{{row.oilProdDaily!==null?parseFloat(row.comparisonOilProduction).toFixed(2):'-'}}</span>
                                     <span style="width:30px;display:flex;justify-content:flex-end;">
                                         <span style="height:13px;display:flex;" v-if="row.comparisonOilWidth!==0 && row.comparisonOilProduction < 0">
                                             <span v-if="row.oilProdDaily!==null" :style="{width:row.comparisonOilWidth+'px',height:'13px',backgroundColor:'red'}"></span>
@@ -109,7 +109,7 @@
                         <el-table-column sortable prop="waterRatio" :label="`含水对比\n(%)`" width="120">
                             <template slot-scope="{ row }">
                                 <span style="display: flex;align-items: center;justify-content: center;">
-                                    {{ row.waterRatio!==null?numReduce(row.waterRatio,row.waterRatioCompare):'-' }}
+                                    {{ row.waterRatio!==null?numReduce(row.waterRatio,row.waterRatioCompare).toFixed(2):'-' }}
                                     <img src="@/assets/rem/yieId/UP.png" alt="" v-if="row.waterRatio!==null&&numReduce(row.waterRatio,row.waterRatioCompare)>0" style="width:20px;height:20px;">
                                     <img src="@/assets/rem/yieId/equation.png" alt="" v-if="row.waterRatio!==null&&numReduce(row.waterRatio,row.waterRatioCompare)==0" style="width:20px;height:20px;margin-left:8px;">
                                     <img src="@/assets/rem/yieId/DOWN.png" alt="" v-if="row.waterRatio!==null&&numReduce(row.waterRatio,row.waterRatioCompare)<0" style="width:20px;height:20px;">
@@ -118,13 +118,13 @@
                         </el-table-column>
                         <el-table-column sortable prop="dhFlowingPress" :label="`井底流压对比\n(MPa)`" width="130">
                             <template slot-scope="scope">
-                                {{scope.row.dhFlowingPress!==null?numReduce(scope.row.dhFlowingPress,scope.row.dhFlowingPressCompare):'-'}}
+                                {{scope.row.dhFlowingPress!==null?numReduce(scope.row.dhFlowingPress,scope.row.dhFlowingPressCompare).toFixed(2):'-'}}
                             </template>
                         </el-table-column>
                         <el-table-column sortable prop="pumpFrequency" :label="`泵频率对比\n(Hz)`" width="120">
                             <template slot-scope="{ row }">
                                 <span style="display: flex;align-items: center;justify-content: center;">
-                                    {{ row.pumpFrequency!==null?numReduce(row.pumpFrequency,row.pumpFrequencyCompare):'-' }}
+                                    {{ row.pumpFrequency!==null?numReduce(row.pumpFrequency,row.pumpFrequencyCompare).toFixed(2):'-' }}
                                     <img src="@/assets/rem/yieId/UP.png" alt="" v-if="row.pumpFrequency!==null&&numReduce(row.pumpFrequency,row.pumpFrequencyCompare)>0" style="width:20px;height:20px;">
                                     <img src="@/assets/rem/yieId/equation.png" alt="" v-if="row.pumpFrequency!==null&&numReduce(row.pumpFrequency,row.pumpFrequencyCompare)==0" style="width:20px;height:20px;margin-left:8px;">
                                     <img src="@/assets/rem/yieId/DOWN.png" alt="" v-if="row.pumpFrequency!==null&&numReduce(row.pumpFrequency,row.pumpFrequencyCompare)<0" style="width:20px;height:20px;">

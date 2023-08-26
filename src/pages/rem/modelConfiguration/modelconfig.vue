@@ -146,7 +146,7 @@ import {
     rangeSelDayApi,
     selMonthRangeApi,
     getModelInstructionManual,
-    queryModelConfigurationByCode
+    queryModelConfigurationByCode,updateModelConfigurationByCode
 } from '@/api/modelConfiguration/config/modelConfigAPI.js';
     import {getOgfList,getBlockList,getProdDailyTable,getWellList,getWell} from '@/api/oilDeposit/rem-04/modelConfiguration.js';
     import { saveAs } from "file-saver";
@@ -437,6 +437,7 @@ import {
             //查询列表数据
             queryTableDate() {
                 this.tableLoading = true;
+                this.tableData = []
                 queryTableData(Object.assign({current: this.page.currentPage,size: this.page.pageSize},this.searchForm)).then(response => {
                     this.tableData = response.data.data.records;
                     this.page.total = response.data.data.total;
@@ -464,10 +465,26 @@ import {
                     this.tableLoading = false;
                 });
                 let data = {
+                    configurationModelName:'',
                     configurationModelCode:'ZSQDPJ'
                 }
                 queryModelConfigurationByCode(data).then((res)=>{
-                    console.log(res)
+                    res.data.data.map((n)=>{
+                        let obj = {
+                            modelName:n.configurationModelName,
+                            configId:n.configurationModelItemCode,
+                            configDescribe:n.configurationModelItemName,
+                            configValue:n.configurationModelParam,
+                            configUnit:n.configurationModelParamUnit,
+                            contrastMode:n.configurationModelParamType,
+                            selectType:n.configurationModelType,
+                            modelId:n.configurationModelId,
+                            configurationModelCode:n.configurationModelCode,
+                            id:0,
+                        }
+                        this.tableData.push(obj)
+                    })
+                   
                 })
             },
             //切换分页
@@ -491,14 +508,39 @@ import {
             editConfigValue() {
                 this.$refs['editForm'].validate(valid => {
                     if (valid) {
-                        editModelConfigValue(this.editForm).then(response => {
-                            if (response.data.code == 0) {
-                                this.queryTableDate();
-                                this.dialogVisible = false;
-                            } else {
-                                this.$message.error(response.data.msg);
+                        console.log(this.editForm)
+                        if(this.editForm.id==0){
+                            let obj = {
+                                configurationModelName :this.editForm.modelName,
+                                configurationModelItemCode : this.editForm.configId,
+                                configDescribe : this.editForm.configDescribe,
+                                configurationModelParam : this.editForm.configValue,
+                                configurationModelParamUnit : this.editForm.configUnit,
+                                configurationModelParamType : this.editForm.contrastMode,
+                                configurationModelType : this.editForm. selectType,
+                                configurationModelId :this.editForm.modelId,
+                                configurationModelCode:this.editForm.configurationModelCode,
+                                id:0,
                             }
-                        })
+                            updateModelConfigurationByCode(obj).then((res)=>{
+                                if (res.data.code == 200) {
+                                    this.queryTableDate();
+                                    this.dialogVisible = false;
+                                } else {
+                                    this.$message.error(res.data.msg);
+                                }
+                            })
+                        }else{
+                            editModelConfigValue(this.editForm).then(response => {
+                                if (response.data.code == 0) {
+                                    this.queryTableDate();
+                                    this.dialogVisible = false;
+                                } else {
+                                    this.$message.error(response.data.msg);
+                                }
+                            })
+                        }
+                      
                     } else {
                         return false;
                     }

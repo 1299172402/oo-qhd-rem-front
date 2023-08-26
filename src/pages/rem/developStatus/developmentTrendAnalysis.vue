@@ -289,7 +289,7 @@
                                 textStyle: {
                                     fontSize: 13,
                                 },
-                                rotate: 10,
+                                // rotate: 10,
                                 verticalAlign:'top'
                             },
                             axisTick: {

@@ -180,7 +180,7 @@ export default {
                     boxBottomText: [{
                         name: '层间/平面矛盾分析',
                         warningShowFlag: false,
-                        alarmPageCode: 'TTOBAR',
+                        alarmPageCode: 'TYOBAR',
                         url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=reservoirDisplay/linkage`
                     }],
                     boxStyle: {
@@ -225,7 +225,8 @@ export default {
                     boxText: '注水设备能力',
                     boxBottomText: [
                         {
-                            name: '动设备健康管理模型', warningShowFlag: false,
+                            name: '动设备健康管理模型',
+                            warningShowFlag: false,
                             url: `https://efm.${this.baseUrl}/#/equipment/mechanical?page=reservoirDisplay/linkage`
                         }
                     ],
