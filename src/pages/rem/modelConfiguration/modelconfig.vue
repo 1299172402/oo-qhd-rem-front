@@ -532,7 +532,7 @@ import {
                             })
                         }else{
                             editModelConfigValue(this.editForm).then(response => {
-                                if (response.data.code == 0) {
+                                if (response.data.code == 200) {
                                     this.queryTableDate();
                                     this.dialogVisible = false;
                                 } else {
@@ -555,7 +555,7 @@ import {
                             delete query.beginMonth;
                             delete query.endMonth;
                             rangeSelDayApi(query).then(response => {
-                                if (response.data.code == 0) {
+                                if (response.data.code == 200) {
                                     this.moduleDialogCancel();
                                 } else {
                                     this.$message.error(response.data.msg);
@@ -568,7 +568,7 @@ import {
                             delete query.beginDate;
                             delete query.endDate;
                             selMonthRangeApi(query).then(response => {
-                                if (response.data.code == 0) {
+                                if (response.data.code == 200) {
                                     this.moduleDialogCancel();
                                 } else {
                                     this.$message.error(response.data.msg);

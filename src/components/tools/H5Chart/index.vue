@@ -107,10 +107,11 @@
              * @Date: 2020-04-01 14:25:00
              */
             handlerZoomHeight() {
+                console.log("全图刷新",this.w, this.w.fView)
                 if (this.w && this.w.fView) {
-                    // this.w.fView.ZoomHeight();
+                    this.w.fView.ZoomHeight();
                     this.w.fView.ZoomAll();//全图
-                    // this.w.fCommon.ZoomAll();//全图
+                    this.w.fCommon.ZoomAll();//全图
                 }
             },
             /**
