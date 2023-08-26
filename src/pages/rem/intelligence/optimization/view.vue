@@ -278,7 +278,6 @@ import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {arrayFindAll} from "@/lib/arrayFind";
 
 export default {
-    name:'optimizationDetail',
     components: {
         Echart
     },

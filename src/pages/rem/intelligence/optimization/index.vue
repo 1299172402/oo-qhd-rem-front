@@ -238,7 +238,6 @@ import {getWellMonthAllocation, getWellMonthInj, wellAvgFluidProdAllocUpdate} fr
 import {exportExcel} from '@/lib/exportExcel';
 
 export default {
-    name:'optimization',
     components: {
         // Iframe
     },
