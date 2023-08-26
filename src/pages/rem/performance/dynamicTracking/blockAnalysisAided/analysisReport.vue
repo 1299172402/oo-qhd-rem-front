@@ -1467,7 +1467,7 @@
             // 新版左下角图放大缩小时重置状态
             zoomOutCom() {
                 setTimeout(() => {
-                    this.$refs.H5Chart2.handlerZoomHeight();
+                    this.$refs.H5Chart2.handlerZoomHeight1();
                 }, 10);
             }
         },
