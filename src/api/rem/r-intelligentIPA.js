@@ -274,7 +274,8 @@ export function getWellMonthInj(params) {
     return Axios({
         url: `${baseUrl}/injDeployOptimize/wellMonthInj`,
         method: "post",
-        params: params
+        params: params,
+        timeout: 180000
     }).then((res) => {
         return res.data
     })
