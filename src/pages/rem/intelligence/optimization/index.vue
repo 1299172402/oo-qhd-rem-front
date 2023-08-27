@@ -9,7 +9,7 @@
             </el-tabs>
             <el-button v-if ="activeName =='second' && this.$route.query.link "  style="position: absolute;z-index:50;right: 20px;top:110px" type="primary"  @click="gogo">返回</el-button>
         </div>
-        <header-search  style="height: auto;display: grid">
+        <header-search v-if="activeName=='first'" style="height: auto;display: grid">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">
                 <span>油田：</span>
                 <el-select v-model="queryData.ogfId" filterable clearable disabled style="width:180px;">
