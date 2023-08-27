@@ -6,7 +6,7 @@
         :is-show-max-btn="true"
     >
         <button class="detailLinkBtn" @click="linkroute('/injection/indexHome')">详细</button>
-        <el-button size="mini" type="primary" style="z-index:20;float:right" @click="downTable">下载</el-button>
+        <button class="detailLinkBtn"  style="right:110px"  @click="downTable">下载</button>
         <el-table
             :data="tableData"
             height="100%"

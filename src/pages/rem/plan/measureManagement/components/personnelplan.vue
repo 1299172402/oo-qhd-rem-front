@@ -34,15 +34,17 @@
             </el-form>
         </headerSearch>
         <pagePanel headerTitle="人员计划" style="height: calc(100% - 20px)">
-            <pagePanel headerTitle="平台人数对比" style="height: calc(50% - 20px)">
+            <pagePanel headerTitle="平台人数对比" style="margin-top:0px;height: calc(50% - 20px)">
                 <Echart :chart-data="histogram" height="100%"></Echart>
             </pagePanel>
-            <pagePanel headerTitle="人员类型概况" style="height: calc(50% - 20px);overflow-y: hidden">
+            <pagePanel headerTitle="人员类型概况" style="height: 51%;overflow-y: hidden">
+                <el-button icon="el-icon-download"  type="primary" style="float:right" @click="downtable">下载</el-button>
                 <el-table
                     highlight
                     :data="tableData2"
                     style="width: 100%"
                     height="100%"
+                    id="peisontable"
                     :summary-method="getSummaries"
                     show-summary
                 >
@@ -135,6 +137,7 @@ import {queryCapacityComposition} from "@/api/rem/reservoirbillboards";
 import {queryListOfOilfieldQueryPlatformsDetail, queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
+import {exportExcel} from "@/lib/exportExcel";
 export default {
     components: {
         Echart,
@@ -296,6 +299,9 @@ export default {
         // this.choiceDepts(); // 获取组织机构
     },
     methods: {
+        downtable(){
+            exportExcel("#peisontable", "人员类型概况");
+        },
         retrieval(){
             let queryParams = {
                 platformId: this.queryParams.selectPlatform,
@@ -330,7 +336,6 @@ export default {
                         }
                     }, 0);
                     sums[index] = Number(sums[index]);
-                    sums[index];
                 } else {
                     sums[index] = '';
                 }
@@ -375,6 +380,10 @@ export default {
 </script>
 <style lang="less" scoped>
 
+::v-deep.el-table .el-table__footer-wrapper .cell {
+    color: rgb(174, 178, 179);
+    font-weight: bolder;
+}
 
 .pertable thead .el-table-column--selection .cell {
     display: none;

@@ -22,7 +22,7 @@ export default [
         path: 'reserves',
         name: 'reserves',
         component: () => import('@/pages/rem/basic/wellControlReserves/index.vue'),
-        meta: { title: '井控储量数据页面' },
+        meta: { title: '井控储量数据维护' },
       },
       // {
       //   path: 'maintenance',
@@ -42,12 +42,6 @@ export default [
           name: 'wellGroup_Maintenance',
           component: () => import('@/pages/rem/basic/wellGroup_Maintenance/index.vue'),
           meta: { title: '井组自定义维护' }
-      },
-      {
-        path: 'oilWellMainTain',
-        name: 'oilWellMainTain',
-        component: () => import('@/pages/rem/basic/prodinterval/index.vue'),
-        meta: { title: '油井/水井生产段维护' },
       },
     ],
   },

@@ -972,6 +972,7 @@
                     position: absolute;
                     top: 53px;
                     right: 111px;
+                    z-index: 99;
                     ::v-deep .el-select{
                         .el-input__inner{
                            height:30px;

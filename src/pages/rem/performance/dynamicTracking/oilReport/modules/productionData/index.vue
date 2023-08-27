@@ -587,7 +587,6 @@ export default {
           };
           produceData(request).then((res) => {
               let seriesData = [];
-              let legendData = [];
               if (res.data.code == 200) {
                   let chartDataS = res.data.data.charts;
                   //获取x轴数据信息
@@ -598,7 +597,6 @@ export default {
                       }
                       let chartData = chartDataS[i].linearDataSets[0];
                       let chartDatalabel = chartData.label;
-                      legendData.push(chartDatalabel);
                       let series = {};
                       let lineName = chartData.label;
                       series.type = 'line';

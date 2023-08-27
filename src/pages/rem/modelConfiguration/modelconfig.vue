@@ -92,7 +92,6 @@
                     <el-form-item label="配置项值" prop="configValue">
                         <el-input size="mini" v-model="editForm.configValue"></el-input>
                     </el-form-item>
-                </el-row>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="editConfigValue()">确 定</el-button>
@@ -140,7 +139,15 @@
 </template>
 
 <script>
-    import {queryTableData,editModelConfigValue,getAllModelName,rangeSelDayApi,selMonthRangeApi,getModelInstructionManual} from '@/api/modelConfiguration/config/modelConfigAPI.js';
+import {
+    queryTableData,
+    editModelConfigValue,
+    getAllModelName,
+    rangeSelDayApi,
+    selMonthRangeApi,
+    getModelInstructionManual,
+    queryModelConfigurationByCode,updateModelConfigurationByCode
+} from '@/api/modelConfiguration/config/modelConfigAPI.js';
     import {getOgfList,getBlockList,getProdDailyTable,getWellList,getWell} from '@/api/oilDeposit/rem-04/modelConfiguration.js';
     import { saveAs } from "file-saver";
     export default {
@@ -430,6 +437,7 @@
             //查询列表数据
             queryTableDate() {
                 this.tableLoading = true;
+                this.tableData = []
                 queryTableData(Object.assign({current: this.page.currentPage,size: this.page.pageSize},this.searchForm)).then(response => {
                     this.tableData = response.data.data.records;
                     this.page.total = response.data.data.total;
@@ -452,9 +460,32 @@
                             }
                         }
                     }
+                           
                 }).catch(() => {
                     this.tableLoading = false;
                 });
+                let data = {
+                    configurationModelName:'',
+                    configurationModelCode:'ZSQDPJ'
+                }
+                queryModelConfigurationByCode(data).then((res)=>{
+                    res.data.data.map((n)=>{
+                        let obj = {
+                            modelName:n.configurationModelName,
+                            configId:n.configurationModelItemCode,
+                            configDescribe:n.configurationModelItemName,
+                            configValue:n.configurationModelParam,
+                            configUnit:n.configurationModelParamUnit,
+                            contrastMode:n.configurationModelParamType,
+                            selectType:n.configurationModelType,
+                            modelId:n.configurationModelId,
+                            configurationModelCode:n.configurationModelCode,
+                            id:0,
+                        }
+                        this.tableData.push(obj)
+                    })
+                   
+                })
             },
             //切换分页
             pagination(e) {
@@ -477,14 +508,39 @@
             editConfigValue() {
                 this.$refs['editForm'].validate(valid => {
                     if (valid) {
-                        editModelConfigValue(this.editForm).then(response => {
-                            if (response.data.code == 0) {
-                                this.queryTableDate();
-                                this.dialogVisible = false;
-                            } else {
-                                this.$message.error(response.data.msg);
+                        console.log(this.editForm)
+                        if(this.editForm.id==0){
+                            let obj = {
+                                configurationModelName :this.editForm.modelName,
+                                configurationModelItemCode : this.editForm.configId,
+                                configDescribe : this.editForm.configDescribe,
+                                configurationModelParam : this.editForm.configValue,
+                                configurationModelParamUnit : this.editForm.configUnit,
+                                configurationModelParamType : this.editForm.contrastMode,
+                                configurationModelType : this.editForm. selectType,
+                                configurationModelId :this.editForm.modelId,
+                                configurationModelCode:this.editForm.configurationModelCode,
+                                id:0,
                             }
-                        })
+                            updateModelConfigurationByCode(obj).then((res)=>{
+                                if (res.data.code == 200) {
+                                    this.queryTableDate();
+                                    this.dialogVisible = false;
+                                } else {
+                                    this.$message.error(res.data.msg);
+                                }
+                            })
+                        }else{
+                            editModelConfigValue(this.editForm).then(response => {
+                                if (response.data.code == 200) {
+                                    this.queryTableDate();
+                                    this.dialogVisible = false;
+                                } else {
+                                    this.$message.error(response.data.msg);
+                                }
+                            })
+                        }
+                      
                     } else {
                         return false;
                     }
@@ -499,7 +555,7 @@
                             delete query.beginMonth;
                             delete query.endMonth;
                             rangeSelDayApi(query).then(response => {
-                                if (response.data.code == 0) {
+                                if (response.data.code == 200) {
                                     this.moduleDialogCancel();
                                 } else {
                                     this.$message.error(response.data.msg);
@@ -512,7 +568,7 @@
                             delete query.beginDate;
                             delete query.endDate;
                             selMonthRangeApi(query).then(response => {
-                                if (response.data.code == 0) {
+                                if (response.data.code == 200) {
                                     this.moduleDialogCancel();
                                 } else {
                                     this.$message.error(response.data.msg);

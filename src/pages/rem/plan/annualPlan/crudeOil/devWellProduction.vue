@@ -69,390 +69,387 @@
 </template>
 
 <script>
-    import Echart from '@/components/tools/Echarts/index.vue';
-    import {devWellChart} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
-    import {devWellTable} from '@/api/oilDeposit/rem-04/plan.js';
-    import {exportExcel} from '@/lib/exportExcel.js';
-    export default {
-        components: {
-            Echart,
-        },
-        props: {
-            searchForm: {
-                type: Object,
-                default: () => {
-                    return {
-                        selectOilField: '',
-                        oilFieldName: '',
-                        selectDate: [],
-                        planTypeCode: '',
-                        rollForecastVersion: '',
-                        selectUnitOfProduction: '',
-                    }
-                }
-            }
-        },
-        data() {
-            return {
-                height: '',
-                devWellLineChart: {
-                    toolbox: {
-                        show: true,
-                        feature: {
-                            saveAsImage: {
-                                name:  (this.searchForm.oilFieldName ? this.searchForm.oilFieldName : '') + "开发井产量图",
-                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-                                backgroundColor: '#022644',
-                                iconStyle:{
-                                    opacity:0
-                                }
-                            },
-                        },
-                    },
-                    dataZoom: [
-                        {
-                            type: "inside",
-                            xAxisIndex: [0],
-                            start: 0, //滚动条开始位置（共100等份）
-                            end: 100, //滚动条结束位置
-                        },
-                    ],
-                    color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#9A72FF', '#DA835E'],
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {
-                            type: 'shadow',
-                        },
-                    },
-                    grid:{
-                        x: 120,
-                        y: 50,
-                        x2: 120,
-                        y2: 100,
-                    },
-                    legend: {
-                        data: [],
-                        textStyle: {
-                            color: '#8FA4CC',
-                            fontSize: 14,
-                        },
-                        x:'center',
-                        bottom:30,
-                        icon: 'rect',
-                        itemWidth: 12,
-                        itemHeight: 6,
-                        itemGap: 14,
-                    },
-                    xAxis: {
-                        // name: '时间/日',
-                        // nameTextStyle: {
-                        //     color: '#8FA4CC',
-                        //     fontSize: 14,
-                        // },
-                        // nameLocation: 'center',
-                        // nameGap: 30,
-                        type: 'category',
-                        axisLabel: {
-                            color: '#8FA4CC',
-                            padding:[10,0,0,0],
-                            fontSize: 14,
-                            interval: function(index, val) {
-                                if (val.substr(-2) == '01') {
-                                    return true;
-                                } else {
-                                    return false;
-                                }
-                            },
-                            // rotate: 20,
-                        },
-                        axisTick: {
-                            show: false,
-                        },
-                        axisLine: {
-                            lineStyle: {
-                                color: '#8FA4CC',
-                            },
-                        },
-                    },
-                    yAxis: [
-                        {
-                            type: 'value',
-                            name: '措施井次/口',
-                            nameTextStyle: {
-                                color: '#8FA4CC',
-                                fontSize: 14,
-                            },
-                            nameLocation: 'center',
-                            nameGap:70,
-                            axisLabel: {
-                                color: '#8FA4CC',
-                                fontSize: 14,
-                            },
-                            axisTick: {
-                                show: false,
-                            },
-                            axisLine: {
-                                show: true,
-                                lineStyle: {
-                                    color: '#8FA4CC',
-                                },
-                            },
-                            splitLine: {
-                                show: false,
-                                lineStyle: {
-                                    color: '#8FA4CC',
-                                },
-                            },
-                        },
-                        {
-                            type: 'value',
-                            name: '注入量/10⁴m³',
-                            nameTextStyle: {
-                                color: '#8FA4CC',
-                                fontSize: 14,
-                            },
-                            nameLocation: 'center',
-                            nameGap:70,
-                            axisLabel: {
-                                color: '#8FA4CC',
-                                fontSize: 14,
-                            },
-                            axisTick: {
-                                show: false,
-                            },
-                            axisLine: {
-                                show: true,
-                                lineStyle: {
-                                    color: '#8FA4CC',
-                                },
-                            },
-                            splitLine: {
-                                show: false,
-                                lineStyle: {
-                                    color: '#8FA4CC',
-                                },
-                            },
-                        },
-                    ],
-                    series: [],
-                },
-                isDevelop:false,//是否展示表格
-                tableData: [],
-                page: 1,
-                pageSize: 10,
-                total: 0,
-            };
-        },
-        mounted() {
-            this.height=document.getElementById('pagePanelNew').scrollHeight-40-46-50-7-15;
-            this.initData();
-        },
-        methods: {
-            async initData() {
-                this.$nextTick(() => {
-                    this.getDevWellChart();
-                    this.getDevWellTable();
-                })
+import Echart from "@/components/tools/Echarts/index.vue";
+import { devWellChart } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+import { devWellTable } from "@/api/oilDeposit/rem-04/plan.js";
+import { exportExcel } from "@/lib/exportExcel.js";
+export default {
+  components: {
+    Echart,
+  },
+  props: {
+    searchForm: {
+      type: Object,
+      default: () => {
+        return {
+          selectOilField: "",
+          oilFieldName: "",
+          selectDate: [],
+          planTypeCode: "",
+          rollForecastVersion: "",
+          selectUnitOfProduction: "",
+        };
+      },
+    },
+  },
+  data() {
+    return {
+      height: "",
+      devWellLineChart: {
+        toolbox: {
+          show: true,
+          feature: {
+            saveAsImage: {
+              name: (this.searchForm.oilFieldName ? this.searchForm.oilFieldName : "") + "开发井产量图",
+              pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+              backgroundColor: "#022644",
+              iconStyle: {
+                opacity: 0,
+              },
             },
-            //echart数据获取
-            getDevWellChart() {
-                let request = {
-                    oilFieldId: this.searchForm.selectOilField,
-                    unitType: this.searchForm.selectUnitOfProduction,
-                    beginDate: this.searchForm.selectDate[0],
-                    endDate: this.searchForm.selectDate[1],
-                    planTypeCode: this.searchForm.planTypeCode,
-                    rollForecastVersion: this.searchForm.rollForecastVersion,
-                };
-                devWellChart(request).then((res) => {
-                    if (res.data.code == 200) {
-                        //图例数据
-                        let legendData = [];
-                        //数据数据
-                        let seriesData = [];
-                        //获得调数据
-                        let chartDataS = res.data.data.chart.linearDataSets;
-                        for (let i = 0; i < chartDataS.length; i++) {
-                            legendData.push(chartDataS[i].label);
-                            //调用生成相关折线图数据
-                            seriesData.push(this.getLinearSeriesDoubleIndex(chartDataS[i]));
-                        }
-                        if (this.searchForm.selectUnitOfProduction == 't') {
-                            this.devWellLineChart.yAxis[1].name = '注入量/10⁴t';
-                        } else if (this.searchForm.selectUnitOfProduction == 'm') {
-                            this.devWellLineChart.yAxis[1].name = '注入量/10⁴m³';
-                        }
-                        //图例数据
-                        this.devWellLineChart.legend.data = legendData;
-                        this.devWellLineChart.series = seriesData;
-                        this.devWellLineChart.xAxis.data = this.getDay(this.searchForm.selectDate[0] || '2023-01-01', this.searchForm.selectDate[1] || '2023-12-31');
-                        //井口次
-                        this.devWellCount = res.data.data.times;
-                        //增油量
-                        this.devOilCount = res.data.data.injection;
-                    }
-                });
-            },
-            /**
-             * 获取日期范围内天的数组
-             * @param startDate
-             * @param endDate
-             * @returns {any[]}
-             */
-            getDay(startDate, endDate) {
-                var result = new Array();
-                var ab = startDate.split("-");
-                var ae = endDate.split("-");
-                var db = new Date();
-                db.setUTCFullYear(ab[0], ab[1] - 1, ab[2]);
-                var de = new Date();
-                de.setUTCFullYear(ae[0], ae[1] - 1, ae[2]);
-                var unixDb = db.getTime();
-                var unixDe = de.getTime();
-                for (var k = unixDb; k <= unixDe; ) {
-                    result.push(this.formatDate(new Date(parseInt(k)), "yyyy-MM-dd"));
-                    k = k + 24 * 60 * 60 * 1000;
-                }
-                console.log(result);
-                return result;
-            },
-
-            /**
-             * 格式化
-             * @param date
-             * @param fmt
-             * @returns {string|null}
-             */
-            formatDate(date, fmt) {
-                if (date === "" || date === null || date === undefined) {
-                    return null;
-                }
-                if (fmt === "" || fmt === null || fmt === undefined) {
-                    fmt = "yyyy-MM";
-                }
-                date = new Date(date);
-                var o = {
-                    "M+": date.getMonth() + 1, // 月份
-                    "d+": date.getDate(), // 日
-                    "h+": date.getHours(), // 小时
-                    "m+": date.getMinutes(), // 分
-                    "s+": date.getSeconds(), // 秒
-                    "q+": Math.floor((date.getMonth() + 3) / 3), // 季度
-                    S: date.getMilliseconds(), // 毫秒
-                };
-                if (/(y+)/.test(fmt))
-                    fmt = fmt.replace(
-                    RegExp.$1,
-                    (date.getFullYear() + "").substr(4 - RegExp.$1.length)
-                    );
-                for (var k in o) {
-                    if (new RegExp("(" + k + ")").test(fmt))
-                    fmt = fmt.replace(
-                        RegExp.$1,
-                        RegExp.$1.length === 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length)
-                    );
-                }
-                return fmt;
-            },
-            //特殊双y轴特例拼写 series
-            getLinearSeriesDoubleIndex(linearChart) {
-              let series = {};
-              series.name = linearChart.label;
-              series.type = 'line';
-              series.symbol='none';
-              let name = linearChart.label;
-              if (name == '实际措施井次') {
-                series.yAxisIndex = 0;
-              } else if (name == '计划措施井次') {
-                series.yAxisIndex = 0;
-              } else if (name == '实际日注入量') {
-                series.yAxisIndex = 1;
-              } else if (name == '计划注入量') {
-                series.yAxisIndex = 1;
-              } else if (name == '滚动预测') {
-                series.yAxisIndex = 1;
+          },
+        },
+        dataZoom: [
+          {
+            type: "inside",
+            xAxisIndex: [0],
+            start: 0, //滚动条开始位置（共100等份）
+            end: 100, //滚动条结束位置
+          },
+        ],
+        color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#9A72FF", "#DA835E"],
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow",
+          },
+        },
+        grid: {
+          x: 120,
+          y: 50,
+          x2: 120,
+          y2: 100,
+        },
+        legend: {
+          data: [],
+          textStyle: {
+            color: "#8FA4CC",
+            fontSize: 14,
+          },
+          x: "center",
+          bottom: 30,
+          icon: "rect",
+          itemWidth: 12,
+          itemHeight: 6,
+          itemGap: 14,
+        },
+        xAxis: {
+          // name: '时间/日',
+          // nameTextStyle: {
+          //     color: '#8FA4CC',
+          //     fontSize: 14,
+          // },
+          // nameLocation: 'center',
+          // nameGap: 30,
+          type: "category",
+          axisLabel: {
+            color: "#8FA4CC",
+            padding: [10, 0, 0, 0],
+            fontSize: 14,
+            interval: function (index, val) {
+              if (val.substr(-2) == "01") {
+                return true;
+              } else {
+                return false;
               }
-              let seriesData = [];
-              let linearData = linearChart.linearData;
-              for (let i = 0; i < linearData.length; i++) {
-                let point = [];
-                point.push(linearData[i].label);
-                point.push(linearData[i].value);
-                seriesData.push(point);
-              }
-              series.data = seriesData;
-              return series;
             },
-            //表格数据获取
-            getDevWellTable() {
-                let request = {
-                    oilFieldId: this.searchForm.selectOilField,
-                    unitType: this.searchForm.selectUnitOfProduction,
-                    beginDate: this.searchForm.selectDate[0],
-                    endDate: this.searchForm.selectDate[1],
-                    planTypeCode: this.searchForm.planTypeCode,
-                    rollForecastVersion: this.searchForm.rollForecastVersion,
-                    pageNum: this.page,
-                    pageSize: this.pageSize,
-                };
-                devWellTable(request).then((res) => {
-                    if (res.data.code == 200) {
-                        this.tableData = res.data.rows;
-                        this.total = res.data.total;
-                    } else {
-                        this.tableData = [];
-                        this.total = 0;
-                    }
-                });
+            // rotate: 20,
+          },
+          axisTick: {
+            show: false,
+          },
+          axisLine: {
+            lineStyle: {
+              color: "#8FA4CC",
             },
-            //保留两位小数
-            toPrecise2(row, column, cellValue, index) {
-                if (
-                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
-                    typeof parseFloat(row[column.property]) === "number"
-                ) {
-                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
-                    ? parseFloat(row[column.property]).toFixed(2)
-                    : "0";
-                } else {
-                    return row[column.property] ? row[column.property] : "-";
-                }
+          },
+        },
+        yAxis: [
+          {
+            type: "value",
+            name: "措施井次/口",
+            nameTextStyle: {
+              color: "#8FA4CC",
+              fontSize: 14,
             },
-            //表格自定义索引
-            tableIndex(index) {
-                index = index + 1 + (this.page - 1) * this.pageSize;
-                return index;
+            nameLocation: "center",
+            nameGap: 70,
+            axisLabel: {
+              color: "#8FA4CC",
+              fontSize: 14,
             },
-            //分页
-            pagination(obj) {
-                if (this.pageSize != obj.limit) {
-                    this.page = 1;
-                    this.pageSize = obj.limit;
-                } else {
-                    this.page = obj.page;
-                }
-                this.getDevWellTable();
+            axisTick: {
+              show: false,
             },
-            //表格-展示||隐藏
-            tapDevelop(){
-                this.isDevelop=!this.isDevelop;
-                if(this.isDevelop){
-                    this.$nextTick(()=>{
-                        let parentDom=document.getElementsByClassName('tab-container')[0];
-                        parentDom.scrollBy({top: this.height,behavior: 'smooth'});
-                    })
-                }
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: "#8FA4CC",
+              },
             },
-            //下载echarts
-            downEchart() {
-                this.$refs.echartChart.chartDownLoad(this.searchForm.oilFieldName +'开发井产量图');
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: "#8FA4CC",
+              },
             },
-            //导出table
-            downTable() {
-                exportExcel('#tableData', this.searchForm.oilFieldName + '开发井产量表');
+          },
+          {
+            type: "value",
+            name: "注入量/10⁴m³",
+            nameTextStyle: {
+              color: "#8FA4CC",
+              fontSize: 14,
             },
-        }
+            nameLocation: "center",
+            nameGap: 70,
+            axisLabel: {
+              color: "#8FA4CC",
+              fontSize: 14,
+            },
+            axisTick: {
+              show: false,
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: "#8FA4CC",
+              },
+            },
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: "#8FA4CC",
+              },
+            },
+          },
+        ],
+        series: [],
+      },
+      isDevelop: false, //是否展示表格
+      tableData: [],
+      page: 1,
+      pageSize: 10,
+      total: 0,
     };
+  },
+  mounted() {
+    this.height = document.getElementById("pagePanelNew").scrollHeight - 40 - 46 - 50 - 7 - 15;
+    this.initData();
+  },
+  methods: {
+    async initData() {
+      this.$nextTick(() => {
+        this.getDevWellChart();
+        this.getDevWellTable();
+      });
+    },
+    //echart数据获取
+    getDevWellChart() {
+      let request = {
+        oilFieldId: this.searchForm.selectOilField,
+        unitType: this.searchForm.selectUnitOfProduction,
+        beginDate: this.searchForm.selectDate[0],
+        endDate: this.searchForm.selectDate[1],
+        planTypeCode: this.searchForm.planTypeCode,
+        rollForecastVersion: this.searchForm.rollForecastVersion,
+      };
+      devWellChart(request).then((res) => {
+        if (res.data.code == 200) {
+          //图例数据
+          let legendData = [];
+          //数据数据
+          let seriesData = [];
+          //获得调数据
+          let chartDataS = res.data.data.chart.linearDataSets;
+          for (let i = 0; i < chartDataS.length; i++) {
+            legendData.push(chartDataS[i].label);
+            //调用生成相关折线图数据
+            seriesData.push(this.getLinearSeriesDoubleIndex(chartDataS[i]));
+          }
+          if (this.searchForm.selectUnitOfProduction == "t") {
+            this.devWellLineChart.yAxis[1].name = "注入量/10⁴t";
+          } else if (this.searchForm.selectUnitOfProduction == "m") {
+            this.devWellLineChart.yAxis[1].name = "注入量/10⁴m³";
+          }
+          //图例数据
+          this.devWellLineChart.legend.data = legendData;
+          this.devWellLineChart.series = seriesData;
+          this.devWellLineChart.xAxis.data = this.getDay(
+            this.searchForm.selectDate[0] || "2023-01-01",
+            this.searchForm.selectDate[1] || "2023-12-31",
+          );
+          //井口次
+          this.devWellCount = res.data.data.times;
+          //增油量
+          this.devOilCount = res.data.data.injection;
+        }
+      });
+    },
+    /**
+     * 获取日期范围内天的数组
+     * @param startDate
+     * @param endDate
+     * @returns {any[]}
+     */
+    getDay(startDate, endDate) {
+      var result = new Array();
+      var ab = startDate.split("-");
+      var ae = endDate.split("-");
+      var db = new Date();
+      db.setUTCFullYear(ab[0], ab[1] - 1, ab[2]);
+      var de = new Date();
+      de.setUTCFullYear(ae[0], ae[1] - 1, ae[2]);
+      var unixDb = db.getTime();
+      var unixDe = de.getTime();
+      for (var k = unixDb; k <= unixDe; ) {
+        result.push(this.formatDate(new Date(parseInt(k)), "yyyy-MM-dd"));
+        k = k + 24 * 60 * 60 * 1000;
+      }
+      console.log(result);
+      return result;
+    },
+
+    /**
+     * 格式化
+     * @param date
+     * @param fmt
+     * @returns {string|null}
+     */
+    formatDate(date, fmt) {
+      if (date === "" || date === null || date === undefined) {
+        return null;
+      }
+      if (fmt === "" || fmt === null || fmt === undefined) {
+        fmt = "yyyy-MM";
+      }
+      date = new Date(date);
+      var o = {
+        "M+": date.getMonth() + 1, // 月份
+        "d+": date.getDate(), // 日
+        "h+": date.getHours(), // 小时
+        "m+": date.getMinutes(), // 分
+        "s+": date.getSeconds(), // 秒
+        "q+": Math.floor((date.getMonth() + 3) / 3), // 季度
+        S: date.getMilliseconds(), // 毫秒
+      };
+      if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+      for (var k in o) {
+        if (new RegExp("(" + k + ")").test(fmt)) {
+          fmt = fmt.replace(RegExp.$1, RegExp.$1.length === 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+        }
+      }
+      return fmt;
+    },
+    //特殊双y轴特例拼写 series
+    getLinearSeriesDoubleIndex(linearChart) {
+      let series = {};
+      series.name = linearChart.label;
+      series.type = "line";
+      series.symbol = "none";
+      let name = linearChart.label;
+      if (name == "实际措施井次") {
+        series.yAxisIndex = 0;
+      } else if (name == "计划措施井次") {
+        series.yAxisIndex = 0;
+      } else if (name == "实际日注入量") {
+        series.yAxisIndex = 1;
+      } else if (name == "计划注入量") {
+        series.yAxisIndex = 1;
+      } else if (name == "滚动预测") {
+        series.yAxisIndex = 1;
+      }
+      let seriesData = [];
+      let linearData = linearChart.linearData;
+      for (let i = 0; i < linearData.length; i++) {
+        let point = [];
+        point.push(linearData[i].label);
+        point.push(linearData[i].value);
+        seriesData.push(point);
+      }
+      series.data = seriesData;
+      return series;
+    },
+    //表格数据获取
+    getDevWellTable() {
+      let request = {
+        oilFieldId: this.searchForm.selectOilField,
+        unitType: this.searchForm.selectUnitOfProduction,
+        beginDate: this.searchForm.selectDate[0],
+        endDate: this.searchForm.selectDate[1],
+        planTypeCode: this.searchForm.planTypeCode,
+        rollForecastVersion: this.searchForm.rollForecastVersion,
+        pageNum: this.page,
+        pageSize: this.pageSize,
+      };
+      devWellTable(request).then((res) => {
+        if (res.data.code == 200) {
+          this.tableData = res.data.rows;
+          this.total = res.data.total;
+        } else {
+          this.tableData = [];
+          this.total = 0;
+        }
+      });
+    },
+    //保留两位小数
+    toPrecise2(row, column, cellValue, index) {
+      if (
+        (row[column.property] || parseFloat(row[column.property]) === 0) &&
+        typeof parseFloat(row[column.property]) === "number"
+      ) {
+        return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+          ? parseFloat(row[column.property]).toFixed(2)
+          : "0";
+      } else {
+        return row[column.property] ? row[column.property] : "-";
+      }
+    },
+    //表格自定义索引
+    tableIndex(index) {
+      index = index + 1 + (this.page - 1) * this.pageSize;
+      return index;
+    },
+    //分页
+    pagination(obj) {
+      if (this.pageSize != obj.limit) {
+        this.page = 1;
+        this.pageSize = obj.limit;
+      } else {
+        this.page = obj.page;
+      }
+      this.getDevWellTable();
+    },
+    //表格-展示||隐藏
+    tapDevelop() {
+      this.isDevelop = !this.isDevelop;
+      if (this.isDevelop) {
+        this.$nextTick(() => {
+          let parentDom = document.getElementsByClassName("tab-container")[0];
+          parentDom.scrollBy({ top: this.height, behavior: "smooth" });
+        });
+      }
+    },
+    //下载echarts
+    downEchart() {
+      this.$refs.echartChart.chartDownLoad(this.searchForm.oilFieldName + "开发井产量图");
+    },
+    //导出table
+    downTable() {
+      exportExcel("#tableData", this.searchForm.oilFieldName + "开发井产量表");
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

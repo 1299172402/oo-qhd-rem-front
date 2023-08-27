@@ -1,5 +1,5 @@
 <template>
-    <div class="app-container" style="height: 100%">
+    <div class="app-container" id="overviewIndicators" style="height: 100%">
         <info-window
             info-width="100%"
             info-height="100%"
@@ -7,6 +7,7 @@
             :is-show-max-btn="true"
         >
             <button class="detailLinkBtn" @click="linkroute('/injection/indexHome')">详细</button>
+            <button class="detailLinkBtn"  style="right:110px"  @click="downlist">下载</button>
             <el-row :gutter="20" style="margin-top: 20px;padding: 0 20px">
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
@@ -134,6 +135,7 @@ import {productionMetricsOverview,getYieldTracking} from "@/api/rem/reservoirbil
 import {dividingLayerQualityRate} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import {getProductionIndex} from "@/api/monthlyReportManagement.js";
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
+import html2canvas from "html2canvas";
 let value = 0;
 let name = "";
 export default {
@@ -491,6 +493,34 @@ export default {
         linkroute(rname) {
             this.$router.push({path: rname,query: {link:'remHome'}});
         },
+        downlist(){
+                const screenEl = document.getElementById('overviewIndicators');
+                if(this.$store.state.setting.mode === 'dark'){
+                    screenEl.classList.add('dark-mode');
+                }
+                this.$nextTick(()=>{
+                    html2canvas(screenEl, {
+                        useCORS: true,
+                        dpi:150,
+                        scale:2,
+                        height: screenEl.scrollHeight,
+                        windowHeight: screenEl.scrollHeight,
+                    }).then((canvas) => {
+                        canvas.toBlob(blob => {
+                            const href = window.URL.createObjectURL(new Blob([blob]))
+                            const link = document.createElement('a')
+                            link.href = href
+                            link.download =  '秦皇岛32-6油田生产指标总览.png'
+                            document.body.appendChild(link)
+                            link.click()
+                            document.body.removeChild(link)
+                        }, 'image/png')
+                        if(this.$store.state.setting.mode === 'dark'){
+                            screenEl.classList.remove('dark-mode');
+                        }
+                    })
+                })
+        },
         getData(){
             // new Date().format('YYYY-MM')
             productionMetricsOverview( { ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
@@ -526,7 +556,7 @@ export default {
                 year:date
             }
             dividingLayerQualityRate(data).then((res)=>{
-                this.infolist = res.data.data.indicatorContent.detail
+                this.infolist = res?.data.data.indicatorContent.detail
                 
             })
         },
@@ -566,14 +596,7 @@ export default {
         
         //图表
         getEchartData(value, unit, valueColor, backColor, centerColor) {
-            console.info(value, unit, valueColor, backColor, centerColor)
             var option = {
-                tooltip: {
-                    position: 'top',
-                    formatter: function (value) {
-                        return value.percent
-                    },
-                },
                 series: [
                     {
                         type: "pie",
@@ -585,6 +608,8 @@ export default {
                             fontSize: 16,
                             position: 'outside', // 将位置设置为 'outside'
                         },
+                        animation: false,   //去掉动画效果
+                        silent: true,    //不响应和触发鼠标事件，默认为 false，即响应和触发鼠标事件
                         data: [
                             {value: 0, name: value, label: {color: "white", position: "center"}},
                             {value: 1, name: unit, label: {color: "white", position: "inner"}},
@@ -824,7 +849,9 @@ export default {
     line-height: 42px;
     box-shadow: 0px 0px 15px #66ffff inset;
 }
-
+.dark-mode {
+    background-color: #02213a;
+}
 .chart {
     // margin-top: 10px;
     height: 120px !important;

@@ -10,10 +10,10 @@
                         <el-option v-for="item in oilFieldList" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
                     </el-select>
                 </div>
-                <div style="margin: 10px 20px 10px 0px">
+                <!-- <div style="margin: 10px 20px 10px 0px">
                     年度：
                     <el-date-picker v-model="year" type="year" placeholder="选择年" value-format="yyyy-12-31"></el-date-picker>
-                </div>
+                </div> -->
                 <el-button icon="el-icon-search" type="primary" @click="doSearch">搜索</el-button>
             </div>
         </header-search>

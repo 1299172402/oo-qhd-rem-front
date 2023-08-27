@@ -5,6 +5,7 @@ export default [
         path: '/injection',
         name: 'injection',
         component: Layout,
+        hidden:true,
         meta: { title: '智能注采调配', icon: 'client', single: false },
         children: [
             {

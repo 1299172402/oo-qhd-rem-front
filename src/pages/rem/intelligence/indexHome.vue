@@ -161,7 +161,7 @@
                             <div class="grid-content bg-purple">
                                 <Echart
                                     id="chart"
-                                    :chart-data="getEchartData(groupBlock.injRatio, '口', 'rgb(164, 227, 77)', 'rgb(7,59,90)', 'rgb(164, 227, 77)')"
+                                    :chart-data="getEchartData(groupBlock.injRatio, '', 'rgb(164, 227, 77)', 'rgb(7,59,90)', 'rgb(164, 227, 77)')"
                                 ></Echart>
                                 <div class="chartText">注采比</div>
                             </div>
@@ -169,7 +169,7 @@
                         <el-col :span="6">
                             <div class="grid-content bg-purple">
                                 <Echart
-                                    :chart-data="getEchartData(groupBlock.haveWater, '口', 'rgb(185, 75, 215)', 'rgb(7,59,90)', 'rgb(185, 75, 215)')"
+                                    :chart-data="getEchartData(groupBlock.haveWater, '%', 'rgb(185, 75, 215)', 'rgb(7,59,90)', 'rgb(185, 75, 215)')"
                                 ></Echart>
                                 <div class="chartText">含水</div>
                             </div>
@@ -222,8 +222,10 @@
                 </div>
                 <div style="height:40%">
                     <page-panel header-title="超欠注情况统计" style="height: 100%;" :show-btn="true">
-                        <el-button  type="primary" style="float: right;margin-top: -15px" icon="el-icon-download" @click="doDownExcel()"
-                        >下载
+                        <el-button
+                            type="primary"
+                            class="buttonActive_primary detailLinkBtn"
+                            @click="doDownExcel()">下载
                         </el-button
                         >
                         <el-table
@@ -391,14 +393,14 @@ export default {
         //左侧区块
         queryWellGroupBlock() {
             getWellGroupBlock(this.queryData).then((res) => {
-                res.injRatio = Number(res.injRatio).toFixed(1)
-                res.haveWater = Number(res.haveWater).toFixed(1)
-                res.waterProd =  Number(res.waterProd).toFixed(4)
-                res.oilProd = Number(res.oilProd).toFixed(4)
-                res.gasProd = Number(res.gasProd).toFixed(4)
-                res.fluidProd = Number(res.fluidProd).toFixed(4)
-                res.injAlloc = Number(res.injAlloc).toFixed(4)
-                res.inj = Number(res.inj).toFixed(4)
+                res.injRatio = res.injRatio == null ? '':Number(res.injRatio).toFixed(1)
+                res.haveWater = res.haveWater == null? '': Number(res.haveWater).toFixed(1)
+                res.waterProd = res.waterProd == null ? '' : Number(res.waterProd).toFixed(4)
+                res.oilProd = res.oilProd == null ? '':Number(res.oilProd).toFixed(4)
+                res.gasProd = res.gasProd == null? '' :Number(res.gasProd).toFixed(4)
+                res.fluidProd = res.fluidProd == null? '':Number(res.fluidProd).toFixed(4)
+                res.injAlloc = res.injAlloc == null? '':Number(res.injAlloc).toFixed(4)
+                res.inj = res.inj == null? '':Number(res.inj).toFixed(4)
                 this.groupBlock = res
                 this.getEchartData()
                 this.getEchart()
@@ -540,6 +542,8 @@ export default {
                         label: {
                             fontSize: 14,
                         },
+                        animation: false,   //去掉动画效果
+                        silent: true,    //不响应和触发鼠标事件，默认为 false，即响应和触发鼠标事件
                         hoverAnimation:false,
                         clickable:false,
                         axisPointer: {
@@ -592,6 +596,8 @@ export default {
                         label: {
                             fontSize: 15,
                         },
+                        animation: false,   //去掉动画效果
+                        silent: true,    //不响应和触发鼠标事件，默认为 false，即响应和触发鼠标事件
                         data: [
                             {value: 0, name: value, label: {color: '#a9a8a8', position: 'center'}},
                             {value: 1, name: unit, label: {color: '#a9a8a8', position: 'inner'}},
