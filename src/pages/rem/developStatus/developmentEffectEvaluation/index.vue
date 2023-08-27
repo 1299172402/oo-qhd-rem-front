@@ -52,7 +52,6 @@ import reserves from "./components/reserves.vue";
 import water from "./components/water.vue";
 import decreasing from "./components/decreasing.vue";
 export default {
-  name:'developmentEffectEvaluation',
   components: {
     Echart,
     evaluation,

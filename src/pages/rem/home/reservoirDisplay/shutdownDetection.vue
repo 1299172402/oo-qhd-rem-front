@@ -112,7 +112,7 @@
                 <el-table-column prop="endDate" sortable :label="`*关停结束时间\n(yyyy/mm/dd)`">
                     <template slot-scope="scope">
                         <span v-if="scope.row.endDate">{{scope.row.endDate.substring(0,19)}}</span>
-                        <span v-else>N/A</span>
+                        <span v-else>-</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="impactProdution" :label="`影响产量\n(m³)`">

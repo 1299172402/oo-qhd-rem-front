@@ -186,7 +186,8 @@ export default {
                 pageSize:10,
                 pageNum:1,
                 wellId:'',
-                yearDate:new Date().format('YYYY'),
+                // yearDate:new Date().format('YYYY'),
+                yearDate:'2022',
                 assetCode:'',
             },
         };
@@ -241,6 +242,7 @@ export default {
         reset() {
             this.queryParams.assetCode = ''
             this.queryParams.wellId = ''
+            this.queryParams.yearDate = '2022'
             this.getlist()
             // this.getInfo()
         },
