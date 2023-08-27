@@ -65,7 +65,7 @@
                 height="calc(100% - 90px)"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column label="*日期" prop="theDate" align="center">
+                <el-table-column label="日期" prop="theDate" align="center">
                     <template slot-scope="scope">
                         <span v-if="scope.row.theDate !== null && scope.row.theDate !== ''">{{scope.row.theDate}}</span>
                         <span v-else>-</span>

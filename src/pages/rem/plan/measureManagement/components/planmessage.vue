@@ -165,13 +165,13 @@
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable min-width="120px" label="井控储量"  prop="probReservesWell" align="center">
+          <el-table-column sortable min-width="120px" :label="`井控储量\n(万方)`"  prop="probReservesWell" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.probReservesWell !== null && scope.row.probReservesWell !== ''">{{scope.row.probReservesWell}}</span>
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable   label="剩余可采储量" prop="remainingRecoverableReserves" min-width="130px" align="center">
+          <el-table-column sortable   :label="`剩余可采储量\n(万方)`" prop="remainingRecoverableReserves" min-width="130px" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.remainingRecoverableReserves !== null && scope.row.remainingRecoverableReserves !== ''">{{scope.row.remainingRecoverableReserves}}</span>
                   <span v-else>-</span>
