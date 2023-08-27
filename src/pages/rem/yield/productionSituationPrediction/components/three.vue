@@ -8,7 +8,8 @@
                     <el-option v-for="item in rollingForecastDateList" :key="item.source_ID" :label="item.source_NAME" :value="item.source_ID"></el-option>
                 </el-select>
                 <span>日期：</span>
-                <el-date-picker v-model="searchForm.date" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" :picker-options="pickerOptions" style="margin-right:15px;"></el-date-picker>
+                <!-- :picker-options="pickerOptions"  -->
+                <el-date-picker v-model="searchForm.date" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" style="margin-right:15px;"></el-date-picker>
                 <span>产量单位选择：</span>
                 <el-select v-model="searchForm.unitType" placeholder="请选择" style="width:100px;margin-right:15px;">
                     <el-option v-for="item in unitTypeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
