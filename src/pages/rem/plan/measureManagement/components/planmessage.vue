@@ -135,7 +135,7 @@
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable :label="`累产油\n（万方）`"  min-width="130px" prop="cumOilProdYearly" align="center">
+          <el-table-column sortable :label="`累产油\n（10⁴m³）`"  min-width="130px" prop="cumOilProdYearly" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.cumOilProdYearly !== null && scope.row.cumOilProdYearly !== ''">{{Number(scope.row.cumOilProdYearly/10000).toFixed(2)}}</span>
                   <span v-else>-</span>
@@ -165,13 +165,13 @@
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable min-width="120px" :label="`井控储量\n(万方)`"  prop="probReservesWell" align="center">
+          <el-table-column sortable min-width="120px" :label="`井控储量\n(10⁴m³)`"  prop="probReservesWell" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.probReservesWell !== null && scope.row.probReservesWell !== ''">{{scope.row.probReservesWell}}</span>
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable   :label="`剩余可采储量\n(万方)`" prop="remainingRecoverableReserves" min-width="130px" align="center">
+          <el-table-column sortable   :label="`剩余可采储量\n(10⁴m³)`" prop="remainingRecoverableReserves" min-width="130px" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.remainingRecoverableReserves !== null && scope.row.remainingRecoverableReserves !== ''">{{scope.row.remainingRecoverableReserves}}</span>
                   <span v-else>-</span>
@@ -229,13 +229,13 @@
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable min-width="130px"  :label="`历史出砂(天)`" prop="historySandDay" align="center">
+          <el-table-column sortable min-width="130px"  :label="`历史出砂(d)`" prop="historySandDay" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.historySandDay !== null && scope.row.historySandDay !== ''">{{scope.row.historySandDay}}</span>
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable min-width="130px"   :label="`近期出砂(天)`" prop="sandDay" align="center">
+          <el-table-column sortable min-width="130px"   :label="`近期出砂(d)`" prop="sandDay" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.sandDay !== null && scope.row.sandDay !== ''">{{scope.row.sandDay}}</span>
                   <span v-else>-</span>

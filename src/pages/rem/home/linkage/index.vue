@@ -405,14 +405,14 @@ export default {
                     this.currentLists[index[i]].warningShowFlag = true;
                     isConditionMet = true;
                 }
-                res2?.data.data.forEach(item => {
-                    this.currentLists.forEach((i, index) => {
-                        if (i.typeIdList.includes(item.typeId)) {
-                            this.currentLists[index].warningShowFlag = true;
-                            isConditionMet = true;
-                        }
-                    });
-                });
+                // res2?.data.data.forEach(item => {
+                //     this.currentLists.forEach((i, index) => {
+                //         if (i.typeIdList.includes(item.typeId)) {
+                //             this.currentLists[index].warningShowFlag = true;
+                //             isConditionMet = true;
+                //         }
+                //     });
+                // });
                 // 如果无报警开启定时器，有报警关闭定时器和箭头图片
                 if (isConditionMet === false) {
                     this.timmer = setInterval(() => {
