@@ -77,6 +77,10 @@
                 await this.queryRemUploadFileMinioApi();
                 this.OnChangeImage();
             },
+            //层位change
+            positionChange(val){
+                this.$emit('childPara', this.selectPosition, this.picType);
+            },
             //初始化获取层段关系
             async fieldOilLayersApi(){
                 await fieldOilLayers({oilFieldId: this.oilFieldId,fieldId: this.blockId,wellId: ''}).then((res) => {
