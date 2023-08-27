@@ -22,7 +22,7 @@
             >
                 <el-table-column width="50px">1
                     <template slot="header">
-                        <div style="color: #1ec5e6">序号</div>
+                        <div >序号</div>
                     </template>
                     <template slot-scope="scope">
                         {{ scope.$index + 1 }}
@@ -30,22 +30,22 @@
                 </el-table-column>
                 <el-table-column prop="evalTime" width="100px" label="">
                     <template slot="header">
-                        <div style="color: #1ec5e6">推荐日期</div>
+                        <div >推荐日期</div>
                     </template>
                 </el-table-column>
                 <el-table-column prop="wellName" label="">
                     <template slot="header">
-                        <div style="color: #1ec5e6">井号</div>
+                        <div >井号</div>
                     </template>
                 </el-table-column>
                 <el-table-column prop="evalEvidence" label="">
                     <template slot="header">
-                        <div style="color: #1ec5e6">推荐措施</div>
+                        <div >推荐措施</div>
                     </template>
                 </el-table-column>
                 <el-table-column prop="itemValue" label="">
                     <template slot="header">
-                        <div style="color: #1ec5e6">
+                        <div >
                             预计增油量(m³/d)
                         </div>
                     </template>
