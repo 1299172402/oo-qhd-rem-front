@@ -1,16 +1,28 @@
 import request from '@/utils/request'
 const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
-export function getControlledReserves({ layerId, wellId } = {}) {
+export function queryWellControlReserves({ layerId, wellId } = {}) {
   return request({
-    url: `${baseUrl}/wellDetailedEvaluationResult/getControlledReserves?layerId=${ layerId || "" }&wellId=${ wellId || "" }`,
+    url: `${baseUrl}/wellControlReservesData/queryWellControlReserves?layerId=${ layerId || "" }&wellId=${ wellId || "" }`,
     method: "get",
   });
 }
-export function saveControlledReserves(data) {
+export function addWellControlReserves(data) {
   return request({
-    url: `${baseUrl}/wellDetailedEvaluationResult/saveControlledReserves`,
+    url: `${baseUrl}/wellControlReservesData/addWellControlReserves`,
     method: "post",
     data
   });
+}
+export function queryWellControlReservesWell({assetCode,ogfId } = {}) {
+    return request({
+        url: `${baseUrl}/wellControlReservesData/queryWellControlReservesWell?assetCode=${ assetCode || "" }&ogfId=${ ogfId || "" }`,
+        method: "get",
+    });
+}
+export function queryWellControlReservesLayer({wellId } = {}) {
+    return request({
+        url: `${baseUrl}/wellControlReservesData/queryWellControlReservesLayer?wellId=${ wellId || "" }`,
+        method: "get",
+    });
 }

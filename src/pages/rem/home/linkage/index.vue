@@ -66,6 +66,7 @@ export default {
                     boxBottomText: [{
                         name: '智能配产器调控模型',
                         warningShowFlag: false,
+                        alarmTime:"",
                         url: `https://ipm.${this.baseUrl}/#/intelligentDispensing/intelligentSubMining?page=reservoirDisplay/linkage`
                     },{name:'举升设备调控模型', warningShowFlag: false,} ,
                         {name:'智能测试模型',warningShowFlag: false,}],
@@ -87,7 +88,7 @@ export default {
                     boxText: '智能分注井调控测试',
                     boxBottomText: [{
                         name: '智能分注井调控测试',
-                        warningShowFlag: false,
+                        warningShowFlag: false, alarmTime:"",
                         url: `https://ipm.${this.baseUrl}/#/intelligentDispensing?link=rem&page=reservoirDisplay/linkage`
                     }],
                     boxBottomContent: [[{name: '智能配水器调控模型', warningShowFlag: false, url: ''}, '智能测试模型']],
@@ -106,7 +107,7 @@ export default {
                     boxBottomText: [{
                         name: '分层注水优化',
                         warningShowFlag: false,
-                        alarmPageCode: 'MIPFSW',
+                        alarmPageCode: 'MIPFSW', alarmTime:"",
                         url: `https://rem.${this.baseUrl}/#/injection/optimization?page=reservoirDisplay/linkage`
                     },
                         {
@@ -129,19 +130,19 @@ export default {
                         {
                             name: '注采连通分析',
                             warningShowFlag: false,
-                            alarmPageCode: 'LOWGPC',
+                            alarmPageCode: 'LOWGPC', alarmTime:"",
                             url: `https://rem.${this.baseUrl}/#/basic/wellGroup_Maintenance?link=linkage&page=reservoirDisplay/linkage`
                         },
                         {
                             name: '注采平衡分析',
                             warningShowFlag: false,
-                            alarmPageCode: 'BTOBAR',
+                            alarmPageCode: 'BTOBAR', alarmTime:"",
                             url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=1&page=reservoirDisplay/linkage`
                         },
                         {
                             name: '采出状况分析',
                             warningShowFlag: false,
-                            alarmPageCode: 'TTOBAR',
+                            alarmPageCode: 'TTOBAR', alarmTime:"",
                             url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=2&page=reservoirDisplay/linkage`
                         }
                     ],
@@ -163,7 +164,7 @@ export default {
                     boxText: '剩余油分布',
                     boxBottomText: [{
                         name: '动态分析法/数模剩余油分析',
-                        warningShowFlag: false,
+                        warningShowFlag: false, alarmTime:"",
                         url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem&page=reservoirDisplay/linkage`
                     }],
                     boxStyle: {
@@ -180,7 +181,7 @@ export default {
                     boxBottomText: [{
                         name: '层间/平面矛盾分析',
                         warningShowFlag: false,
-                        alarmPageCode: 'TYOBAR',
+                        alarmPageCode: 'TYOBAR', alarmTime:"",
                         url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=reservoirDisplay/linkage`
                     }],
                     boxStyle: {
@@ -198,14 +199,14 @@ export default {
                         {
                             name: '年度产量运行预警',
                             warningShowFlag: false,
-                            alarmPageCode: 'QOIWTT',
+                            alarmPageCode: 'QOIWTT', alarmTime:"",
                             url: `https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?name=linkage`
                         }
                     ],
                     boxBottomContent: [
                         [{
                             name: '年度产量趋势预测',
-                            warningShowFlag: false,
+                            warningShowFlag: false, alarmTime:"",
                             url: `https://rem.${this.baseUrl}/#/modelConfiguration/modelconfig?name=linkage`
                         }]
                     ],
@@ -226,7 +227,7 @@ export default {
                     boxBottomText: [
                         {
                             name: '动设备健康管理模型',
-                            warningShowFlag: false,
+                            warningShowFlag: false, alarmTime:"",
                             url: `https://efm.${this.baseUrl}/#/equipment/mechanical?page=reservoirDisplay/linkage`
                         }
                     ],
@@ -244,10 +245,10 @@ export default {
                     boxBottomText: [{
                         name: '注采调控最优化方案',
                         warningShowFlag: false,
-                        alarmPageCode: 'OISAAE',
+                        alarmPageCode: 'OISAAE', alarmTime:"",
                         url: `https://ipm.${this.baseUrl}/#/waterflood/merge?page=reservoirDisplay/linkage`
                     }, {
-                        name: '配注微调策略',
+                        name: '配注微调策略', alarmTime:"",
                         url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem&page=reservoirDisplay/linkage`
                     }],
                     boxBottomContent: [['智能分注调控策略优化模型', '智能分注调控策略优化模型'], ['配注方案分析评估模型']],
@@ -265,23 +266,23 @@ export default {
                     boxBottomText: [
                         {
                             name: '混输海管设计输量',
-                            warningShowFlag: false,
+                            warningShowFlag: false, alarmTime:"",
                             url: `https://prm-pom.${this.baseUrl}/#/home/pipe?page=reservoirDisplay/linkage`
                         },
                         {
-                            name: '注水海管设计输量',
+                            name: '注水海管设计输量', alarmTime:"",
                             url: `https://prm-pom.${this.baseUrl}/#/home/pipe?page=reservoirDisplay/linkage`
                         }
                     ],
                     boxBottomContent: [
                         [{
                             name: '管输动态模型',
-                            warningShowFlag: false,
+                            warningShowFlag: false, alarmTime:"",
                             url: `https://prm-pom.${this.baseUrl}/#/home/pipe?page=reservoirDisplay/linkage`
                         }],
                         [{
                             name: '管输动态模型',
-                            warningShowFlag: false,
+                            warningShowFlag: false, alarmTime:"",
                             url: `https://prm-pom.${this.baseUrl}/#/home/pipe?page=reservoirDisplay/linkage`
                         }]
                     ],
@@ -299,22 +300,22 @@ export default {
                     boxBottomText: [
                         {
                             name: '混输液处理能力',
-                            warningShowFlag: false,
+                            warningShowFlag: false, alarmTime:"",
                             url: `https://prm-pom.${this.baseUrl}/#/home/plat?page=reservoirDisplay/linkage`
                         },
                         {
                             name: '生产水处理能力',
-                            warningShowFlag: false,
+                            warningShowFlag: false, alarmTime:"",
                             url: `https://prm-pom.${this.baseUrl}/#/home/plat?page=reservoirDisplay/linkage`
                         }
                     ],
                     boxBottomContent: [
                         [{
-                            name: '地面平衡调配-流程监控模型',
+                            name: '地面平衡调配-流程监控模型', alarmTime:"",
                             url: `https://prm-pom.${this.baseUrl}/#/home/plat?page=reservoirDisplay/linkage`
                         }],
                         [{
-                            name: '地面平衡调配-流程监控模型',
+                            name: '地面平衡调配-流程监控模型', alarmTime:"",
                             url: `https://prm-pom.${this.baseUrl}/#/home/plat?page=reservoirDisplay/linkage`
                         }]
                     ],
@@ -346,9 +347,11 @@ export default {
         async getWarningInfo() {
             this.currentLists.map((i, index) => {
                 i.warningShowFlag = false;
+                i.alarmTime = ''
                 if(i.boxBottomText){
                     i?.boxBottomText.map((j)=>{
                         j.warningShowFlag = false;
+                        j.alarmTime = ''
                     })
                 }
             });
@@ -381,9 +384,19 @@ export default {
                     if(number.length>1){
                         number.map((n,index)=>{
                             this.currentLists[childindex[i]].boxBottomText[n].warningShowFlag = true
+                            res1.data.data.map((j)=>{
+                                if(j.alarmPageCode == this.currentLists[childindex[i]].boxBottomText[n].alarmPageCode){
+                                    this.currentLists[childindex[i]].boxBottomText[n].alarmTime = j.alarmTime
+                                }
+                            })
                         })
                     }else{
                         this.currentLists[childindex[i]].boxBottomText[number[0]].warningShowFlag = true
+                        res1.data.data.map((j)=>{
+                            if(j.alarmPageCode ==this.currentLists[childindex[i]].boxBottomText[number[0]].alarmPageCode){
+                                this.currentLists[childindex[i]].boxBottomText[number[0]].alarmTime = j.alarmTime
+                            }
+                        })
                     }
                     this.currentLists[childindex[i]].warningShowFlag = true
                     isConditionMet = true;
