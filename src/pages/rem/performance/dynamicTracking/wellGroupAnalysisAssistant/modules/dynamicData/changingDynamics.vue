@@ -35,9 +35,9 @@
         :cell-style="{ padding: '3px', 'text-align': 'center' }"
         :data="tableData"
         id="tableData"
+        :span-method="objectSpanMethod"
         height="100%"
       >
-        <el-table-column type="index" label="序号" fixed width="50px" header-align="center"></el-table-column>
         <el-table-column prop="waterWellName" fixed label="水井" min-width="150" header-align="center"></el-table-column>
         <el-table-column prop="layerName" label="层位"  min-width="200" header-align="center"></el-table-column>
         <el-table-column prop="oilWellName" label="油井" min-width="130" header-align="center"></el-table-column>
@@ -138,6 +138,39 @@ export default {
     this.doSearch();
   },
   methods: {
+      objectSpanMethod({row, column, rowIndex, columnIndex}) {
+          if (columnIndex === 0) {
+              // this.tableData  修改
+              const _row = this.flitterData(this.tableData).one[rowIndex];
+              const _col = _row > 0 ? 1 : 0;
+              return {
+                  rowspan: _row,
+                  colspan: _col,
+              };
+          }
+      },
+      flitterData(arr) {
+          let spanOneArr = [];
+          let concatOne = 0;
+          arr.forEach((item, index) => {
+              if (index === 0) {
+                  spanOneArr.push(1);
+              } else {
+                  //cityName 修改
+                  if (item.waterWellName === arr[index - 1].waterWellName) {
+                      //第一列需合并相同内容的判断条件
+                      spanOneArr[concatOne] += 1;
+                      spanOneArr.push(0);
+                  } else {
+                      spanOneArr.push(1);
+                      concatOne = index;
+                  }
+              }
+          });
+          return {
+              one: spanOneArr,
+          };
+      },
     doSearch() {
       this.secondMonth = this.queryData.secondMonth;
       this.firstMonth = this.queryData.firstMonth;
