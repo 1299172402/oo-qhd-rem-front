@@ -209,7 +209,6 @@ import HelpHint from "@/pages/rem/intelligence/connectivityData/tooltig.vue"
 import FileSaver from "file-saver";
 
 export default {
-    name:'coefficientCalculates',
     components: {
         HelpHint
     },
@@ -281,6 +280,17 @@ export default {
 
         this.selectData();
         this.changeBlock(0)
+    },
+    actived(){
+        //获取井组下拉数据
+        const params = JSON.parse(localStorage.getItem('CONNECTIVITY_DATA'))
+        if (params && params.blockId) {
+            this.Select.block = params.blockId
+            this.Select.blockName = params.blockName
+            this.Select.ogf = params.ogfId
+            this.Select.ogfName = params.ogfName
+            this.Select.dateTime = params.dateTime
+        }
     },
     methods: {
         mergeTable({row, column, rowIndex, columnIndex}) {

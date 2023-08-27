@@ -47,14 +47,9 @@ export default {
     },
     methods: {
         async doSearch() {
-            let wellid = '',blockid = ''
-            if(this.blockId = '3FC9A818F5BC43B88270DB80BBB3018F'){
-                blockid = ''
-            }else{
-                blockid = this.blockId;
-            }
+            let wellid = ''
             let data = {
-                blockId: blockid,
+                blockId: this.blockId = '3FC9A818F5BC43B88270DB80BBB3018F' ? '':this.blockId,
                 ogfId: this.oilFieldId,
                 wellGroupId: this.wellGroupId
             }

@@ -238,7 +238,6 @@ import {getWellMonthAllocation, getWellMonthInj, wellAvgFluidProdAllocUpdate} fr
 import {exportExcel} from '@/lib/exportExcel';
 
 export default {
-    name:'optimization',
     components: {
         // Iframe
     },
@@ -462,11 +461,14 @@ export default {
                 blockId: this.queryData.blockId,
                 dateTime: this.queryData.dateTime,
             }
+            
             getWellMonthAllocation(params).then((res) => {
                 res.forEach(item => {
                     item.fluidProdDaily = Math.floor(item.fluidProdDaily)
                 })
                 this.tableData1 = res
+            }).catch(()=>{
+                this.tableData1 = []
             })
         },
         //单井月度配注计划表
@@ -475,6 +477,7 @@ export default {
                 blockId: this.queryData.blockId,
                 dateTime: this.queryData.dateTime,
             }
+            
             getWellMonthInj(params).then((res) => {
                 let arr1 = []
                 res.forEach(item => {
@@ -500,6 +503,8 @@ export default {
                 })
                 this.form.tableData2 = arr1
                 this.getSpanArr(arr1)
+            }).catch(()=>{
+                this.form.tableData2 = []
             })
         },
         doDownExcel() {

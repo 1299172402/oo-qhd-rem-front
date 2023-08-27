@@ -482,37 +482,43 @@ export default {
             };
             let existsList = []
             getCorrectionOperation(params).then((res) => {
-                this.form.tableData.forEach((el) => {
-                    for (const item of res) {
-                        if (item.wellGroupId === el.wellGroupId && item.injWellId === el.injWellId && item.oilWellId === el.oilWellId) {
-                            existsList.push(item.oilWellId)
-                            el.injDividingCoeff = Number(item.injDividingCoeff).toFixed(2)
-                            if (type === 1) {
-                                el.operationalNarration = item.operationalNarration
-                                el.operationInjSplitData = item.operationInjSplitData
-                            } else if (type === 2) {
-                                el.correctionFactor = item.correctionFactor
-                                el.reviseInjSplitData = item.reviseInjSplitData
+                if(Array.isArray(this.form.tableData) && this.form.tableData.length){
+                    this.form.tableData.forEach((el) => {
+                        for (const item of res) {
+                            if (item.wellGroupId === el.wellGroupId && item.injWellId === el.injWellId && item.oilWellId === el.oilWellId) {
+                                existsList.push(item.oilWellId)
+                                el.injDividingCoeff = Number(item.injDividingCoeff).toFixed(2)
+                                if (type === 1) {
+                                    el.operationalNarration = item.operationalNarration
+                                    el.operationInjSplitData = item.operationInjSplitData
+                                } else if (type === 2) {
+                                    el.correctionFactor = item.correctionFactor
+                                    el.reviseInjSplitData = item.reviseInjSplitData
+                                }
+                                break;
                             }
-                            break;
                         }
-                    }
-                })
+                    })
 
-                // 补充没有井组处理
-                this.form.tableData.forEach(elItme => {
-                    if (!existsList.includes(elItme.oilWellId)) {
-                        if (type === 1) {
-                            elItme.operationalNarration = 0
-                            elItme.operationInjSplitData = 0
-                        } else if (type === 2) {
-                            elItme.correctionFactor = 0
-                            elItme.reviseInjSplitData = 0
+                    // 补充没有井组处理
+                    this.form.tableData.forEach(elItme => {
+                        if (!existsList.includes(elItme.oilWellId)) {
+                            if (type === 1) {
+                                elItme.operationalNarration = 0
+                                elItme.operationInjSplitData = 0
+                            } else if (type === 2) {
+                                elItme.correctionFactor = 0
+                                elItme.reviseInjSplitData = 0
+                            }
                         }
-                    }
-                })
+                    })
+                } else{
+                    this.form.tableData = res
+                }
 
                 this.$set(this.form, 'tableData', this.form.tableData)
+                this.getSpanArr(this.form.tableData)
+                
                 if (type === 1) {
                     this.isComputed = true
                 } else if (type === 2) {
