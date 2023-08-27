@@ -28,13 +28,13 @@
                                 <span v-if="item.url" :class= "item.warningShowFlag == true?'blink':'' " style="cursor: pointer" @click="linkTo(item.url,item)">{{ item.name ? item.name : item }}</span>
                                 <span v-if="!item.url"  style="pointer-events: none;color:#5a5959;font-weight:bolder">{{ item.name ? item.name : item }}</span>
                                 <span v-if="currentList.boxBottomContent" class="btnContent" @click="btnContent(index)">{{ currentList.boxBottomContent[index].length > 0 ? '>>' : '' }}</span>
-                                <span v-else class="btnBack" @click="btnBack"></span>
+                                <span  v-else-if="currentList.boxBottomContent" class="btnBack" @click="btnBack"></span>
                             </p>
                         </div>
                         <div>
                             <p v-show="content" :key="index" v-for="(item,index) in selectObj[selectIndex]">
                                 <span style="cursor: pointer" @click="linkTo(item.url)">{{ item.name ? item.name : item }}</span>
-                                <span class="btnBack" @click="btnBack"></span>
+                                <span v-if="currentList.boxBottomContent" class="btnBack" @click="btnBack"></span>
                             </p>
                         </div>
                     </div>
@@ -79,6 +79,9 @@ export default {
             selectObj: this.currentList.boxBottomContent ? this.currentList.boxBottomContent : []
         }
     },
+    mounted() {
+        console.log(this.currentList.boxBottomContent)
+    },
     methods: {
         btnBack: function () {
             if (this.currentList.boxBottomContent) {
@@ -98,7 +101,7 @@ export default {
                 alarmTime:new Date().format('YYYY-MM-dd'),
                 alarmPageCode:[item?.alarmPageCode]
             }
-            window.open(url, '_parent');
+            window.open(url+ '?alarmTime=' + item.alarmTime, '_parent');
             addLinkageAlarmInfo(data).then(()=>{
             })
         },

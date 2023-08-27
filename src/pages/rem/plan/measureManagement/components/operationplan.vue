@@ -71,7 +71,7 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="*生产单元" prop="prodectionUnit" align="center">
+                <el-table-column label="*生产单元" min-width="130px" prop="prodectionUnit" align="center">
                     <template slot-scope="scope">
                         <span v-if="scope.row.prodectionUnit !== null && scope.row.prodectionUnit !== ''">{{scope.row.prodectionUnit}}</span>
                         <span v-else>-</span>
@@ -227,7 +227,7 @@ export default {
         },
         retrieval(){
             let data = {
-                ogfId:this.queryParams.ogfId,
+                ogfId:this.queryParams.selectOilField,
                 asseCode:this.queryParams.asseCode,
                 wellId:this.queryParams.wellId,
                 measureTypeCode:this.queryParams.measureTypeCode,
@@ -246,7 +246,7 @@ export default {
         },
         doDownExcel(){
             let data = {
-                ogfId:this.queryParams.ogfId,
+                ogfId:this.queryParams.selectOilField,
                 asseCode:this.queryParams.asseCode,
                 wellId:this.queryParams.wellId,
                 measureTypeCode:this.queryParams.measureTypeCode,

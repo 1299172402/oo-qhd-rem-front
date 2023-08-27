@@ -53,7 +53,7 @@ export default {
           let option = {
               legend: {
                   textStyle: {
-                      color: "#66ffff",
+                      color: "#a8a8a8",
                   },
                   bottom: "10",
               },

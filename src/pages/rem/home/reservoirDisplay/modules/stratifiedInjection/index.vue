@@ -45,7 +45,7 @@ export default {
             },
             legend: {
                 textStyle: {
-                    color: "#66ffff"
+                    color: "#989898"
                 },
                 bottom: "bottom",
             },

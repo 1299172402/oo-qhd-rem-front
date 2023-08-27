@@ -482,3 +482,16 @@ export function downloadGroupParamDTO(data) {
       data
     })
   }
+export function getMonthlyActionStatus (params) {
+    return request({
+        url: `${baseUrl}/wellGroupCustomMaintenance/getMonthlyActionStatus`,
+        method: "get",
+        params
+    }).then((res) => {
+        if (res.data) {
+            return res.data;
+        } else {
+            return [];
+        }
+    });
+}
