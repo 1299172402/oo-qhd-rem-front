@@ -139,19 +139,19 @@
                             left: "14%",
                             top: "5%",
                             width: "74%",
-                            height: "26%"
+                            height: "25%"
                         },
                         {
                             left: "14%",
-                            top: "33%",
+                            top: "34%",
                             width: "74%",
-                            height: "26%"
+                            height: "25%"
                         },
                         {
                             left: "14%",
                             top: "64%",
                             width: "74%",
-                            height: "26%"
+                            height: "25%"
                         },
                     ],
                     xAxis: [
@@ -285,7 +285,7 @@
                         },
                         {
                             gridIndex: 0,
-                            name: "折\n算\n基\n准\n面\n流\n压\n︵\nM\nP\na\n︶",
+                            name: "折\n算\n基\n准\n面\n流\n压\n(MPa)",
                             nameLocation: "center",
                             nameRotate: 0,
                             nameGap: 50,
@@ -404,7 +404,7 @@
                         },
                         {
                             gridIndex: 1,
-                            name: "气\n油\n比\n︵\n方\n/\n方\n︶",
+                            name: "气\n油\n比\n︵\nm³\n/\nm³\n︶",
                             nameLocation: "center",
                             nameRotate: 0,
                             nameGap: 50,
@@ -495,7 +495,7 @@
                         },
                         {
                             gridIndex: 2,
-                            name: "日\n产\n油\n︵\n方\n︶",
+                            name: "日\n产\n油\n︵\nm³\n︶",
                             nameLocation: "center",
                             nameRotate: 0,
                             nameGap: 50,
@@ -523,7 +523,7 @@
                         },
                         {
                             gridIndex: 2,
-                            name: "日\n产\n液\n︵\n方\n︶",
+                            name: "日\n产\n液\n︵\nm³\n︶",
                             nameLocation: "center",
                             nameRotate: 0,
                             nameGap: 50,
@@ -553,7 +553,7 @@
                         },
                         {
                             gridIndex: 2,
-                            name: "日\n产\n气\n︵\n万\n方\n︶",
+                            name: "日\n产\n气\n(10⁴m³)",
                             nameLocation: "center",
                             nameRotate: 0,
                             nameGap: 50,

@@ -2,7 +2,7 @@
 <template>
     <div class="app-container">
         <div class="z-container">
-            <pagePanelNew class="pagePanelNew">
+            <pagePanelNewNew class="pagePanelNewNew">
                 <div class="pagePane-container">
                     <div class="pageHeader" style="width:100%;display: flex;align-items: center;justify-content: space-between;margin-bottom:10px;margin-left: 0;">
                         <span>{{ oilFieldName }}产量分析报告</span>
@@ -10,7 +10,7 @@
                     </div>
                     <div class="rowBox">
                         <div class="row" style="margin-right:10px;">
-                            <pagePanel headerTitle="" style="margin-top:0; height: 400px;" show-btn>
+                            <pagePanelNew headerTitle="" style="margin-top:0; height: 400px;" show-btn>
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#tableData0', '产量分析报告-数据一')">下载</el-button>
                                 </div>
@@ -53,10 +53,10 @@
                                         </template>
                                     </el-table-column>
                                 </el-table>
-                            </pagePanel>
+                            </pagePanelNew>
                         </div>
                         <div class="row" style="margin-left:10px;">
-                            <pagePanel headerTitle="" style="margin-top:0; height: 400px;" show-btn>
+                            <pagePanelNew headerTitle="" style="margin-top:0; height: 400px;" show-btn>
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#tableData1', '产量分析报告-数据二')">下载</el-button>
                                 </div>
@@ -99,12 +99,12 @@
                                         </template>
                                     </el-table-column>
                                 </el-table>
-                            </pagePanel>
+                            </pagePanelNew>
                         </div>
                     </div>
                     <div class="rowBox">
                         <div class="row">
-                            <pagePanel headerTitle="" style="margin-top:0; height: 440px;" show-btn>
+                            <pagePanelNew headerTitle="" style="margin-top:0; height: 440px;" show-btn>
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#tableData', '产量分析报告-数据三')">下载</el-button>
                                 </div>
@@ -148,12 +148,12 @@
                                     <el-table-column prop="dhFlowingTemp" :label="`流温\n(℃)`" width="" :formatter="toPrecise2"></el-table-column>
                                     <el-table-column prop="remark" label="备注" width=""></el-table-column>
                                 </el-table>
-                            </pagePanel>
+                            </pagePanelNew>
                         </div>
                     </div>
                     <div class="rowBox">
                         <div class="row">
-                            <pagePanel headerTitle="" style="margin-top:0; height: 440px;" show-btn>
+                            <pagePanelNew headerTitle="" style="margin-top:0; height: 440px;" show-btn>
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table4', '产量分析报告-数据四')">下载</el-button>
                                 </div>
@@ -162,11 +162,11 @@
                                     <el-table-column prop="wellNum" label="井数" align="center" width="160"></el-table-column>
                                     <el-table-column prop="content" align="center" label="井名"></el-table-column>
                                 </el-table>
-                            </pagePanel>
+                            </pagePanelNew>
                         </div>
                     </div>
                 </div>
-            </pagePanelNew>
+            </pagePanelNewNew>
         </div>
     </div>
 </template>
@@ -388,7 +388,7 @@
         .z-container{
             flex:1;
             height:0;
-            .pagePanelNew{
+            .pagePanelNewNew{
                 height:100%;
                 margin-top:0;
                 .pagePane-container{

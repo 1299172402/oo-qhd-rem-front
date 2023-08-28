@@ -122,6 +122,7 @@
                     // endDate: dayjs().format("YYYY-MM-DD"), // 结束时间
                     // pageNum: 1,
                     // pageSize: 9999,
+                    isDesc: 1,
                 },
                 // 油田名称
                 oilFieldName: "",
