@@ -157,7 +157,7 @@
                                         <div class="vv-left">
                                             <img :src="(!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))) ? require('@/assets/rem/plan/i3.png') : require('@/assets/rem/plan/i0.png')" alt="" v-if="scope.row.stimClassCode=='003'"
                                                 :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n${scope.row.realityMeasuresEndTime || '-'} 增产性措施`">
-                                            <img :src="(!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))) ? require('@/assets/rem/plan/i4.png') : require('@/assets/rem/plan/i1.png')" alt="" v-if="scope.row.stimClassCode=='004'"
+                                            <img :src="(!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))) ? require('@/assets/rem/plan/i4.png') : require('@/assets/rem/plan/i1.png')" alt="" v-else-if="scope.row.stimClassCode=='004'"
                                                 :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n${scope.row.realityMeasuresEndTime || '-'} 增注性措施`">
                                             <img :src="(!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))) ? require('@/assets/rem/plan/i5.png') : require('@/assets/rem/plan/i2.png')" alt="" v-else
                                                 :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n${scope.row.realityMeasuresEndTime || '-'} 维护性措施`">
@@ -879,10 +879,12 @@
                 width: 40px;
                 height: 40px;
                 margin-right: 4px;
-
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 img {
                     width: 40px;
-                    height: 40px;
+                    height: auto;
                 }
             }
 

@@ -248,6 +248,7 @@
                                 dd.Value = point.value;
                                 dd.Color = point.argbColor;
                                 dd.ShowText = false; //point.showText;
+                                dd.HintText = `${point.showTime || '-'}：${point.value || '-'} 10⁴m³`;
                                 return dd;
                             })
                         }
