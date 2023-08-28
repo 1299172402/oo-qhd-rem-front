@@ -142,15 +142,19 @@
                         </el-table>
                     </div>
                     <div style="width: 20%;margin-left: 20px">
-                        <div class="boxall" style="height:calc(100% - 65px);min-height: 500px; width: 100%; margin: auto;overflow-y:scroll ">
-                            <div style="margin:20px;">
-                            <h2 style="text-align: center">本月措施情况</h2>
-                            <ul style="margin-top: 15px" v-for="(item, index) in measure" :key="index" >
-                                {{item.measureStartDate}} {{item.wellName}}井，{{item.layerName}}{{item.measureTypeName}},请更改井组
-                            </ul>
-                            <div class="boxfoot"></div>
-                        </div>
-                           
+                        <div class="boxall"
+                             style="height:calc(100% - 65px);min-height: 500px; width: 100%; margin: auto; ">
+                            <div style="margin:20px;height: 100%">
+                                <h2 style="text-align: center">本月措施情况</h2>
+                                <div style="height: calc(100% - 45px);overflow: auto">
+                                    <ul style="margin-top: 15px" v-for="(item, index) in measure" :key="index">
+                                        {{ item.measureStartDate }}
+                                        {{ item.wellName }}井，{{ item.layerName }}{{ item.measureTypeName }},请更改井组
+                                    </ul>
+                                </div>
+                                <div class="boxfoot"></div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -244,7 +248,7 @@ import {
     postselectProWellByGroup,
     getwaterWellAndLayerData,
     getlayerListByWaterWellId,
-    postsaveAndupdateWellGroup, delectByWellGroupId, saveAllWellGroup,getMonthlyActionStatus
+    postsaveAndupdateWellGroup, delectByWellGroupId, saveAllWellGroup, getMonthlyActionStatus
 } from "@/api/rem/r-wellConnectEvaluate.js"
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 
@@ -270,7 +274,119 @@ export default {
                 layerName: "",
                 injWellName: ""
             },
-            measure:[],
+            measure: [{
+                "wellId": "FB937097C7A04856894D19C16B54D4B7",
+                "wellName": "QHD32-6-C13",
+                "measureStartDate": "2023-06-03",
+                "measureTypeCode": "004001008",
+                "measureTypeName": "开关层",
+                "layerId": null,
+                "layerName": "明化镇组下段0油组"
+            }, {
+                "wellId": "FB937097C7A04856894D19C16B54D4B7",
+                "wellName": "QHD32-6-C13",
+                "measureStartDate": "2023-06-03",
+                "measureTypeCode": "004001008",
+                "measureTypeName": "开关层",
+                "layerId": null,
+                "layerName": "明化镇组下段0油组"
+            }, {
+                "wellId": "FB937097C7A04856894D19C16B54D4B7",
+                "wellName": "QHD32-6-C13",
+                "measureStartDate": "2023-06-03",
+                "measureTypeCode": "004001008",
+                "measureTypeName": "开关层",
+                "layerId": null,
+                "layerName": "明化镇组下段0油组"
+            }, {
+                "wellId": "FB937097C7A04856894D19C16B54D4B7",
+                "wellName": "QHD32-6-C13",
+                "measureStartDate": "2023-06-03",
+                "measureTypeCode": "004001008",
+                "measureTypeName": "开关层",
+                "layerId": null,
+                "layerName": "明化镇组下段0油组"
+            }, {
+                "wellId": "FB937097C7A04856894D19C16B54D4B7",
+                "wellName": "QHD32-6-C13",
+                "measureStartDate": "2023-06-03",
+                "measureTypeCode": "004001008",
+                "measureTypeName": "开关层",
+                "layerId": null,
+                "layerName": "明化镇组下段0油组"
+            }, {
+                "wellId": "FB937097C7A04856894D19C16B54D4B7",
+                "wellName": "QHD32-6-C13",
+                "measureStartDate": "2023-06-03",
+                "measureTypeCode": "004001008",
+                "measureTypeName": "开关层",
+                "layerId": null,
+                "layerName": "明化镇组下段0油组"
+            }, {
+                "wellId": "FB937097C7A04856894D19C16B54D4B7",
+                "wellName": "QHD32-6-C13",
+                "measureStartDate": "2023-06-03",
+                "measureTypeCode": "004001008",
+                "measureTypeName": "开关层",
+                "layerId": null,
+                "layerName": "明化镇组下段0油组"
+            }, {
+                "wellId": "FB937097C7A04856894D19C16B54D4B7",
+                "wellName": "QHD32-6-C13",
+                "measureStartDate": "2023-06-03",
+                "measureTypeCode": "004001008",
+                "measureTypeName": "开关层",
+                "layerId": null,
+                "layerName": "明化镇组下段0油组"
+            }, {
+                "wellId": "FB937097C7A04856894D19C16B54D4B7",
+                "wellName": "QHD32-6-C13",
+                "measureStartDate": "2023-06-03",
+                "measureTypeCode": "004001008",
+                "measureTypeName": "开关层",
+                "layerId": null,
+                "layerName": "明化镇组下段0油组"
+            }, {
+                "wellId": "FB937097C7A04856894D19C16B54D4B7",
+                "wellName": "QHD32-6-C13",
+                "measureStartDate": "2023-06-03",
+                "measureTypeCode": "004001008",
+                "measureTypeName": "开关层",
+                "layerId": null,
+                "layerName": "明化镇组下段0油组"
+            }, {
+                "wellId": "FB937097C7A04856894D19C16B54D4B7",
+                "wellName": "QHD32-6-C13",
+                "measureStartDate": "2023-06-03",
+                "measureTypeCode": "004001008",
+                "measureTypeName": "开关层",
+                "layerId": null,
+                "layerName": "明化镇组下段0油组"
+            }, {
+                "wellId": "FB937097C7A04856894D19C16B54D4B7",
+                "wellName": "QHD32-6-C13",
+                "measureStartDate": "2023-06-03",
+                "measureTypeCode": "004001008",
+                "measureTypeName": "开关层",
+                "layerId": null,
+                "layerName": "明化镇组下段0油组"
+            }, {
+                "wellId": "FB937097C7A04856894D19C16B54D4B7",
+                "wellName": "QHD32-6-C13",
+                "measureStartDate": "2023-06-03",
+                "measureTypeCode": "004001008",
+                "measureTypeName": "开关层",
+                "layerId": null,
+                "layerName": "明化镇组下段0油组"
+            }, {
+                "wellId": "FB937097C7A04856894D19C16B54D4B7",
+                "wellName": "QHD32-6-C13",
+                "measureStartDate": "2023-06-03",
+                "measureTypeCode": "004001008",
+                "measureTypeName": "开关层",
+                "layerId": null,
+                "layerName": "明化镇组下段0油组"
+            },],
             blanks: [],
             key: 0,
             waterList: [],
@@ -589,13 +705,13 @@ export default {
             }
             let params = {
                 ogfId: this.query.selectField,
-                blockId:this.query.selectBlock,
-                orgId:'715AD1CD60484BB59E737CD18A9DE44A',
+                blockId: this.query.selectBlock,
+                orgId: '715AD1CD60484BB59E737CD18A9DE44A',
                 date: this.query.value2,
             }
-            
-            getMonthlyActionStatus(params).then((res)=>{
-                this.measure = res.data
+
+            getMonthlyActionStatus(params).then((res) => {
+                // this.measure = res.data
             })
             postCoefficientconnectivityList(data).then((res) => {
                 if (res && res.length > 0) {
@@ -780,13 +896,13 @@ export default {
 
 .boxall:before,
 .boxfoot:before {
-    border-left: 10px solid rgb(0,183,255);
+    border-left: 10px solid rgb(0, 183, 255);
     left: 0;
 }
 
 .boxall:after,
 .boxfoot:after {
-    border-right: 10px solid rgb(0,183,255);
+    border-right: 10px solid rgb(0, 183, 255);
     right: 0;
 }
 
@@ -809,19 +925,19 @@ export default {
     width: 50px;
     height: 50px;
     content: "";
-    border-top: 4px solid rgb(0,183,255);
+    border-top: 4px solid rgb(0, 183, 255);
     top: 0;
 }
 
 .boxall:before,
 .boxfoot:before {
-    border-left: 4px solid rgb(0,183,255);
+    border-left: 4px solid rgb(0, 183, 255);
     left: 0;
 }
 
 .boxall:after,
 .boxfoot:after {
-    border-right: 4px solid rgb(0,183,255);
+    border-right: 4px solid rgb(0, 183, 255);
     right: 0;
 }
 
@@ -831,7 +947,7 @@ export default {
     width: 50px;
     height: 50px;
     content: "";
-    border-bottom: 4px solid rgb(0,183,255);
+    border-bottom: 4px solid rgb(0, 183, 255);
     bottom: 0;
 }
 </style>

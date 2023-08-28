@@ -553,7 +553,8 @@ export default {
             let data = {
                 endDate:date,
                 oilFieldId:"3FC9A818F5BC43B88270DB80BBB3018F",
-                year:date
+                year:date,
+                platFormId:''
             }
             dividingLayerQualityRate(data).then((res)=>{
                 this.infolist = res?.data.data.indicatorContent.detail
