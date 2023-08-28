@@ -55,9 +55,15 @@
                 </el-button>
             </div>
         </header-search>
-        <div style="display: flex;justify-content: space-around; height: 100%;">
-            <div style="flex:4; height: 118%; margin-right: 15px;">
+        <div style="display: flex;justify-content: space-around; height: 100%;"  >
+            <div id="scope" style="flex:4; height: 118%; margin-right: 15px;">
                 <page-panel :header-title="title" style=" height: 100% " :show-btn="true">
+                    <el-button
+                        type="primary"
+                        class="buttonActive_primary detailLinkBtn"
+                        @click="downdata()">下载
+                    </el-button
+                    >
                     <el-row :gutter="20" style="margin-bottom: 10px;">
                         <el-col :span="12">
                             <div class="grid-content bg-purple">
@@ -186,7 +192,14 @@
                         @click="getDetail">详细
                     </el-button
                     >
-                    <div id="main" style="width: 100%; height: 100%"></div>
+                    <el-button
+                        type="primary"
+                        style="right:100px"
+                        class="buttonActive_primary detailLinkBtn"
+                        @click="downEcharts('chartDom','分层注采量')">下载
+                    </el-button
+                    >
+                    <div id="main"  style="width: 100%; height: 100%"></div>
                 </page-panel>
             </div>
 
@@ -199,9 +212,17 @@
                             @click="detailed = true">详细
                         </el-button
                         >
+                        <el-button
+                            type="primary"
+                            style="right:100px"
+                            class="buttonActive_primary detailLinkBtn"
+                            @click="downEchartssec()">下载
+                        </el-button
+                        >
                         <Echart
                             :chart-data="getResidueOilChart()"
                             height="100%"
+                            ref="echartChart"
                             style="height: 100%!important;"
                         >
                         </Echart>
@@ -278,8 +299,10 @@ import {
     getStratifiedInjectionDetails,
     getResidueOilCondotion
 } from "@/api/rem/r-intelligentIPA.js";
+import FileSaver from 'file-saver'
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import { exportExcel } from '@/lib/exportExcel.js';
+import html2canvas from "html2canvas";
 export default {
     name:'indexHome',
     components: {
@@ -298,6 +321,7 @@ export default {
                 //油田
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'
             },
+            chartDom:'',
             title: '',
             //左侧数据
             groupBlock: {},
@@ -321,15 +345,38 @@ export default {
     },
     mounted() {
         this.searchList()
-        // const myChart = echarts.init(document.getElementById('chart'));
-        // myChart.off('mousemove');
-        // myChart.off('mouseover');
-        // myChart.off('mouseenter');
-        
     },
     methods: {
         returnBack(){
             this.$router.go(-1)
+        },
+        downdata(){
+            const screenEl = document.getElementById('scope');
+            if(this.$store.state.setting.mode === 'dark'){
+                screenEl.classList.add('dark-mode');
+            }
+            this.$nextTick(()=>{
+                html2canvas(screenEl, {
+                    useCORS: true,
+                    dpi:150,
+                    scale:2,
+                    height: screenEl.scrollHeight,
+                    windowHeight: screenEl.scrollHeight,
+                }).then((canvas) => {
+                    canvas.toBlob(blob => {
+                        const href = window.URL.createObjectURL(new Blob([blob]))
+                        const link = document.createElement('a')
+                        link.href = href
+                        link.download = this.title + '.png'
+                        document.body.appendChild(link)
+                        link.click()
+                        document.body.removeChild(link)
+                    }, 'image/png')
+                    if(this.$store.state.setting.mode === 'dark'){
+                        screenEl.classList.remove('dark-mode');
+                    }
+                })
+            })
         },
         doDownExcel(){
             exportExcel('#tabledow', '超欠注情况统计');
@@ -408,7 +455,6 @@ export default {
         },
         //分层注采量
         queryStratifiedInjectionDetails() {
-
             let params = {
                 blockId: this.queryData.blockId,
                 startTime: this.queryData.dateTime,
@@ -631,7 +677,7 @@ export default {
             let chartDom = document.getElementById('main');
             let myChart = echarts.init(chartDom);
             let option;
-
+            this.chartDom = echarts.init(document.getElementById("main"));
             option = {
                 title: {
                     text: ''
@@ -694,7 +740,18 @@ export default {
             option && myChart.setOption(option);
 
         },
-
+        downEcharts(dom,fileName){
+            let res = this.dom.getDataURL({
+                type: "png",
+                pixelRatio: 1.5,
+                backgroundColor: "#022644",
+            });
+            let name =  typeof(fileName)  == 'string' ? fileName : this.chartData.toolbox.feature.saveAsImage.name;
+            FileSaver.saveAs(res, name);
+        },
+        downEchartssec(){
+            this.$refs.echartChart.chartDownLoad( '单井井底流压');  
+        },
         //分层注采量详情
         getDetail() {
             localStorage.setItem('INTELLIGENCE', JSON.stringify(this.queryData))
@@ -880,6 +937,22 @@ export default {
     height: 20px !important;
     font-size: smaller !important;
     text-align: center !important;
+}
+.downBtn {
+    position: absolute;
+    right: 50px;
+    top: 10px;
+    width: 50px;
+    height: 20px;
+    background: linear-gradient(90deg, #0751b0, #50a6ec);
+    text-align: center;
+    font-size: smaller;
+    border: 0;
+    cursor: pointer;
+    color: #ffffff;
+}
+.dark-mode {
+    background-color: #02213a;
 }
 </style>
 

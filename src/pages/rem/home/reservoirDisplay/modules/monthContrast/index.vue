@@ -176,6 +176,24 @@ export default {
             })
         }
     },
+    computed: {
+        getGlobeTheme(val) {
+            return this.$store.state.setting.mode;
+        },
+    },
+    watch: {
+        getGlobeTheme: {
+            immediate: true,
+            handler(Nval) {
+                if (Nval == "dark") {
+                    this.histogram.legend.textStyle.color = "#ffffff";
+                } else {
+                    this.histogram.legend.textStyle.color = "#000000";
+                }
+            },
+            deep: true,
+        },
+    },
 };
 </script>
 <style lang="scss" scoped>

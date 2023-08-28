@@ -119,10 +119,13 @@ export default {
     };
   },
   mounted() {
-    if(this.$route.query.link){
-        this.tabsValue=this.$route.query.link;
-    }
-    this.initData();
+     this.initData();
+      if(this.$route.query.link){
+          this.tabsValue = this.$route.query.link;
+          setTimeout(()=>{
+              this.$refs.childComponents.doSearch();
+          },1000)
+      }
   },
   methods: {
     //重置
