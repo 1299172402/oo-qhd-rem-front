@@ -274,119 +274,7 @@ export default {
                 layerName: "",
                 injWellName: ""
             },
-            measure: [{
-                "wellId": "FB937097C7A04856894D19C16B54D4B7",
-                "wellName": "QHD32-6-C13",
-                "measureStartDate": "2023-06-03",
-                "measureTypeCode": "004001008",
-                "measureTypeName": "开关层",
-                "layerId": null,
-                "layerName": "明化镇组下段0油组"
-            }, {
-                "wellId": "FB937097C7A04856894D19C16B54D4B7",
-                "wellName": "QHD32-6-C13",
-                "measureStartDate": "2023-06-03",
-                "measureTypeCode": "004001008",
-                "measureTypeName": "开关层",
-                "layerId": null,
-                "layerName": "明化镇组下段0油组"
-            }, {
-                "wellId": "FB937097C7A04856894D19C16B54D4B7",
-                "wellName": "QHD32-6-C13",
-                "measureStartDate": "2023-06-03",
-                "measureTypeCode": "004001008",
-                "measureTypeName": "开关层",
-                "layerId": null,
-                "layerName": "明化镇组下段0油组"
-            }, {
-                "wellId": "FB937097C7A04856894D19C16B54D4B7",
-                "wellName": "QHD32-6-C13",
-                "measureStartDate": "2023-06-03",
-                "measureTypeCode": "004001008",
-                "measureTypeName": "开关层",
-                "layerId": null,
-                "layerName": "明化镇组下段0油组"
-            }, {
-                "wellId": "FB937097C7A04856894D19C16B54D4B7",
-                "wellName": "QHD32-6-C13",
-                "measureStartDate": "2023-06-03",
-                "measureTypeCode": "004001008",
-                "measureTypeName": "开关层",
-                "layerId": null,
-                "layerName": "明化镇组下段0油组"
-            }, {
-                "wellId": "FB937097C7A04856894D19C16B54D4B7",
-                "wellName": "QHD32-6-C13",
-                "measureStartDate": "2023-06-03",
-                "measureTypeCode": "004001008",
-                "measureTypeName": "开关层",
-                "layerId": null,
-                "layerName": "明化镇组下段0油组"
-            }, {
-                "wellId": "FB937097C7A04856894D19C16B54D4B7",
-                "wellName": "QHD32-6-C13",
-                "measureStartDate": "2023-06-03",
-                "measureTypeCode": "004001008",
-                "measureTypeName": "开关层",
-                "layerId": null,
-                "layerName": "明化镇组下段0油组"
-            }, {
-                "wellId": "FB937097C7A04856894D19C16B54D4B7",
-                "wellName": "QHD32-6-C13",
-                "measureStartDate": "2023-06-03",
-                "measureTypeCode": "004001008",
-                "measureTypeName": "开关层",
-                "layerId": null,
-                "layerName": "明化镇组下段0油组"
-            }, {
-                "wellId": "FB937097C7A04856894D19C16B54D4B7",
-                "wellName": "QHD32-6-C13",
-                "measureStartDate": "2023-06-03",
-                "measureTypeCode": "004001008",
-                "measureTypeName": "开关层",
-                "layerId": null,
-                "layerName": "明化镇组下段0油组"
-            }, {
-                "wellId": "FB937097C7A04856894D19C16B54D4B7",
-                "wellName": "QHD32-6-C13",
-                "measureStartDate": "2023-06-03",
-                "measureTypeCode": "004001008",
-                "measureTypeName": "开关层",
-                "layerId": null,
-                "layerName": "明化镇组下段0油组"
-            }, {
-                "wellId": "FB937097C7A04856894D19C16B54D4B7",
-                "wellName": "QHD32-6-C13",
-                "measureStartDate": "2023-06-03",
-                "measureTypeCode": "004001008",
-                "measureTypeName": "开关层",
-                "layerId": null,
-                "layerName": "明化镇组下段0油组"
-            }, {
-                "wellId": "FB937097C7A04856894D19C16B54D4B7",
-                "wellName": "QHD32-6-C13",
-                "measureStartDate": "2023-06-03",
-                "measureTypeCode": "004001008",
-                "measureTypeName": "开关层",
-                "layerId": null,
-                "layerName": "明化镇组下段0油组"
-            }, {
-                "wellId": "FB937097C7A04856894D19C16B54D4B7",
-                "wellName": "QHD32-6-C13",
-                "measureStartDate": "2023-06-03",
-                "measureTypeCode": "004001008",
-                "measureTypeName": "开关层",
-                "layerId": null,
-                "layerName": "明化镇组下段0油组"
-            }, {
-                "wellId": "FB937097C7A04856894D19C16B54D4B7",
-                "wellName": "QHD32-6-C13",
-                "measureStartDate": "2023-06-03",
-                "measureTypeCode": "004001008",
-                "measureTypeName": "开关层",
-                "layerId": null,
-                "layerName": "明化镇组下段0油组"
-            },],
+            measure: [],
             blanks: [],
             key: 0,
             waterList: [],
@@ -711,7 +599,7 @@ export default {
             }
 
             getMonthlyActionStatus(params).then((res) => {
-                // this.measure = res.data
+                this.measure = res.data
             })
             postCoefficientconnectivityList(data).then((res) => {
                 if (res && res.length > 0) {

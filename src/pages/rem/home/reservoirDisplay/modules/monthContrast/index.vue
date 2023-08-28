@@ -158,7 +158,7 @@ export default {
     },
     methods: {
         linkroute(rname) {
-            this.$router.push({name: rname});
+            this.$router.push({name: rname,query: {page:'/reservoirDisplay/oilexhibition'}});
         },
         downEcharts(){
             this.$refs.echartChart.chartDownLoad( '油田月度产量对比');
