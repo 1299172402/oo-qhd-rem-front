@@ -51,7 +51,7 @@
 
             </header-search>
             <pagePanel headerTitle="井组自定义" style="height: calc(100% - 100px);width: 100%" :show-btn="true">
-                <div style="">
+                <div>
                     <span></span>
                     <div>
                         <el-button
@@ -90,8 +90,8 @@
                         </el-button>
                     </div>
                 </div>
-                <div style="display: flex;justify-content: space-around;margin-top: 15px;height:100%;width: 100%">
-                    <div style=" margin-right: 20px;width: 30%">
+                <div style="display: flex;margin-top: 15px;height:100%;width: 100%">
+                    <div style="width: 30%">
                         <el-table
                             :data="tableData"
                             highlight
@@ -107,7 +107,7 @@
                             </el-table-column>
                         </el-table>
                     </div>
-                    <div style="width: 70%;height: 100%">
+                    <div style="width: 50%;height: 100%;margin-left: 20px">
                         <el-table
                             :data="tableData"
                             id="indexscv"
@@ -129,9 +129,9 @@
                                                  align="center"></el-table-column>
                                 <el-table-column prop="layerName" label="层位名称" show-overflow-tooltip
                                                  align="center"></el-table-column>
-                                <el-table-column prop="proWellNo" label="油井" show-overflow-tooltip
+                                <el-table-column prop="proWellNo" min-width="70px" label="油井" show-overflow-tooltip
                                                  align="center"></el-table-column>
-                                <el-table-column label="操作" show-overflow-tooltip align="center">
+                                <el-table-column label="操作" min-width="45px" show-overflow-tooltip align="center">
                                     <template slot-scope="scope">
                                         <el-button type="text" @click="deleteWellGroup(scope.row)"
                                                    :disabled="disabledBtn || isDisabled">删除井组
@@ -141,28 +141,17 @@
                             </el-table-column>
                         </el-table>
                     </div>
-                    <div style="width: 25%; display: none;">
-                        <el-col class="dataCount" style="padding: 20px;">
-                            <div>
-                                <span class="border"></span>
-                                <span class="border"></span>
-                                <span class="border"></span>
-                                <span class="border"></span>
-                            </div>
-                            <div style="width: 100%;">
-                                <div style="font-size: 20px;margin: 20px auto;">本月措施情况:</div>
-                                <ul style="margin-left: 35px;text-align: left;">
-                                    <li>C4井转注,请新增井组;</li>
-                                    <li>C4井关P3,请更改井组;</li>
-                                    <li>H1H侧钻,请更改井组;</li>
-                                    <li>H1H1调整井,请修改井组;</li>
-                                </ul>
-                                <div style="display: flex;justify-content: space-between;">
-                                    <span></span>
-                                    <el-button type="primary" style="margin-top: 15px;">确认</el-button>
-                                </div>
-                            </div>
-                        </el-col>
+                    <div style="width: 20%;margin-left: 20px">
+                        <div class="boxall" style="height:calc(100% - 65px);min-height: 500px; width: 100%; margin: auto;overflow-y:scroll ">
+                            <div style="margin:20px;">
+                            <h2 style="text-align: center">本月措施情况</h2>
+                            <ul style="margin-top: 15px" v-for="(item, index) in measure" :key="index" >
+                                {{item.measureStartDate}} {{item.wellName}}井，{{item.layerName}}{{item.measureTypeName}},请更改井组
+                            </ul>
+                            <div class="boxfoot"></div>
+                        </div>
+                           
+                        </div>
                     </div>
                 </div>
             </pagePanel>
@@ -255,7 +244,7 @@ import {
     postselectProWellByGroup,
     getwaterWellAndLayerData,
     getlayerListByWaterWellId,
-    postsaveAndupdateWellGroup, delectByWellGroupId, saveAllWellGroup
+    postsaveAndupdateWellGroup, delectByWellGroupId, saveAllWellGroup,getMonthlyActionStatus
 } from "@/api/rem/r-wellConnectEvaluate.js"
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 
@@ -281,6 +270,7 @@ export default {
                 layerName: "",
                 injWellName: ""
             },
+            measure:[],
             blanks: [],
             key: 0,
             waterList: [],
@@ -597,6 +587,16 @@ export default {
                 dateTime: this.query.value2,
                 apifoxApild: "48248204"
             }
+            let params = {
+                ogfId: this.query.selectField,
+                blockId:this.query.selectBlock,
+                orgId:'715AD1CD60484BB59E737CD18A9DE44A',
+                date: this.query.value2,
+            }
+            
+            getMonthlyActionStatus(params).then((res)=>{
+                this.measure = res.data
+            })
             postCoefficientconnectivityList(data).then((res) => {
                 if (res && res.length > 0) {
                     let index = 0;
@@ -764,5 +764,74 @@ export default {
 
 ::v-deep .el-input {
     margin-top: none !important;
+}
+
+.boxall {
+    border: 2px solid rgba(25, 186, 139, 0.17);
+    /* padding: 0 .2rem .4rem .15rem; */
+    margin-left: 20px;
+    background-size: 100% auto;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    /* margin-bottom: 10px; */
+    z-index: 10;
+}
+
+.boxall:before,
+.boxfoot:before {
+    border-left: 10px solid rgb(0,183,255);
+    left: 0;
+}
+
+.boxall:after,
+.boxfoot:after {
+    border-right: 10px solid rgb(0,183,255);
+    right: 0;
+}
+
+.alltitle {
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+}
+
+.boxfoot {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+}
+
+.boxall:before,
+.boxall:after {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    content: "";
+    border-top: 4px solid rgb(0,183,255);
+    top: 0;
+}
+
+.boxall:before,
+.boxfoot:before {
+    border-left: 4px solid rgb(0,183,255);
+    left: 0;
+}
+
+.boxall:after,
+.boxfoot:after {
+    border-right: 4px solid rgb(0,183,255);
+    right: 0;
+}
+
+.boxfoot:before,
+.boxfoot:after {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    content: "";
+    border-bottom: 4px solid rgb(0,183,255);
+    bottom: 0;
 }
 </style>

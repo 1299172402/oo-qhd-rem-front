@@ -284,7 +284,19 @@ export default {
         };
     },
     created() {
-        this.queryParams.endTime = this.$route.query.endTime?this.$route.query.endTime:new Date().format("yyyy-MM-dd")
+        let currentDate = new Date();
+
+// 使用 setDate() 方法设置日期为当前日期减去一天
+        currentDate.setDate(currentDate.getDate() - 1);
+
+// 获取前一天的年、月、日
+        let year = currentDate.getFullYear();
+        let month = currentDate.getMonth() + 1; // 月份从 0 开始，需要加 1
+        let day = currentDate.getDate();
+
+// 格式化为字符串，如果月份和日期小于 10，前面补零
+        let formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+        this.queryParams.endTime = formattedDate
         let data = {
             endTime: this.queryParams.endTime,
             platformId:this.queryParams.asseCode
@@ -313,7 +325,19 @@ export default {
             this.$router.go(-1);
         },
         reset(){
-            this.queryParams.endTime = this.$route.query.endTime?this.$route.query.endTime:new Date().format("yyyy-MM-dd")
+            let currentDate = new Date();
+
+// 使用 setDate() 方法设置日期为当前日期减去一天
+            currentDate.setDate(currentDate.getDate() - 1);
+
+// 获取前一天的年、月、日
+            let year = currentDate.getFullYear();
+            let month = currentDate.getMonth() + 1; // 月份从 0 开始，需要加 1
+            let day = currentDate.getDate();
+
+// 格式化为字符串，如果月份和日期小于 10，前面补零
+            let formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+            this.queryParams.endTime = formattedDate
             this.queryParams.selectPlatform = ''
             this.selectPlatformPob(this.queryParams)
         },

@@ -137,7 +137,7 @@ export default {
       linkroute(name) {
           this.$router.push({
               path: name,
-              query:{ link:'decreasing' }
+              query:{ link:'water' }
           });
       },
       downEcharts(){
