@@ -101,7 +101,6 @@ export default Vue.extend({
       depts: [],
       myRoleCode: this.roleCode,
       dataMap: {},
-      loading: true,
       selectedDepts: [],
       initData: [],
       startSearchUser: false,
@@ -256,18 +255,12 @@ export default Vue.extend({
      */
     handleDataOk() {
       allLoading.dept = false;
-      (this as any).loading = !(!allLoading.user && !allLoading.dept);
     },
     /**
      * 同步用户组件传出的loading状态，需要判断部门组件与用户组件都加载完成loading才为false
      */
     handleUserTableLoading(val) {
       allLoading.user = val;
-      if (!(this as any).showDept) {
-        (this as any).loading = val;
-      } else {
-        (this as any).loading = !(!allLoading.user && !allLoading.dept);
-      }
     },
     /**
      * 关闭当前弹窗
@@ -411,74 +404,72 @@ export default Vue.extend({
         class={perfixCls}
         closeOnOverlayClick={false}
       >
-        <t-loading loading={this.loading} class={`${perfixCls}__spin`}>
-          <div class={`${perfixCls}__container`}>
-            {
-              this.showTree
-                ? <div class={treeContainerCls}>
-                  <DeptTree
-                    showTag={true}
-                    depts={this.depts}
-                    swOrganType={this.swOrganType}
-                    multiple={this.deptMultiple}
-                    onOk={this.handleDataOk}
-                    onChange={this.handleDeptCheckChange}
-                  />
-                  <OpenClose
-                    style={`display: ${!this.loading ? "inline-block" : "none"}`}
-                    iconClass={{ toLeft: "chevron-left-double", toRight: "chevron-right-double" }}
-                    defaultIsOpen={this.defaultIsOpenDept}
-                    marginLeft={{ left: ["calc(50% - 25px)", "0"] }}
-                    onClick={val => { this.defaultIsOpenDept = val; }}
-                  />
+        <div class={`${perfixCls}__container`}>
+          {
+            this.showTree
+              ? <div class={treeContainerCls}>
+                <DeptTree
+                  showTag={true}
+                  depts={this.depts}
+                  swOrganType={this.swOrganType}
+                  multiple={this.deptMultiple}
+                  onOk={this.handleDataOk}
+                  onChange={this.handleDeptCheckChange}
+                />
+                <OpenClose
+                  style={"display: \"inline-block\""}
+                  iconClass={{ toLeft: "chevron-left-double", toRight: "chevron-right-double" }}
+                  defaultIsOpen={this.defaultIsOpenDept}
+                  marginLeft={{ left: ["calc(50% - 25px)", "0"] }}
+                  onClick={val => { this.defaultIsOpenDept = val; }}
+                />
+              </div> : null
+          }
+          <div class={`${perfixCls}__container__center`}>
+            <UserTable
+              ref="userTable"
+              showRoleSelect={this.showTree}
+              setDefault={this.setDefault}
+              deleteId={this.deleteId}
+              initData={this.initData}
+              needDeptBeforeChoose={this.needDeptBeforeChoose}
+              params={this.userTableQueryParams}
+              multiple={this.userMutiple}
+              startSearch={this.startSearchUser}
+              onLoading={this.handleUserTableLoading}
+              onChange={this.handleSelectedUserChange}
+              {...this.$attrs}
+            />
+          </div>
+          <div class={`${perfixCls}_container__right`} style={this.rightWidth}>
+            <div class={`${perfixCls}__container__right__right-label`} readOnly >已选用户</div>
+            <div class={`${perfixCls}__container__right__right-table-container`}>
+              <t-table
+                columns={this.columns}
+                data={this.selectedUsers}
+                class={`${perfixCls}__container__right-table`}
+                pagination={null}
+                size="medium"
+                bordered
+                rowKey="userId"
+                style="margin-bottom: 10px"
+              >
+              </t-table>
+              {
+                this.allowAdd ? <div class="custom-div">
+                  {
+                    this.customtags.map((item, index) => (
+                      <t-tag key={`tag_${index}`} closable={true} onClose={() => { this.customtags = this.customtags.filter(v => v !== item); }}>
+                        {item}
+                      </t-tag>
+                    ))
+                  }
+                  {inputOrtagEl}
                 </div> : null
-            }
-            <div class={`${perfixCls}__container__center`}>
-              <UserTable
-                ref="userTable"
-                showRoleSelect={this.showTree}
-                setDefault={this.setDefault}
-                deleteId={this.deleteId}
-                initData={this.initData}
-                needDeptBeforeChoose={this.needDeptBeforeChoose}
-                params={this.userTableQueryParams}
-                multiple={this.userMutiple}
-                startSearch={this.startSearchUser}
-                onLoading={this.handleUserTableLoading}
-                onChange={this.handleSelectedUserChange}
-                {...this.$attrs}
-              />
-            </div>
-            <div class={`${perfixCls}_container__right`} style={this.rightWidth}>
-              <div class={`${perfixCls}__container__right__right-label`} readOnly >已选用户</div>
-              <div class={`${perfixCls}__container__right__right-table-container`}>
-                <t-table
-                  columns={this.columns}
-                  data={this.selectedUsers}
-                  class={`${perfixCls}__container__right-table`}
-                  pagination={null}
-                  size="medium"
-                  bordered
-                  rowKey="userId"
-                  style="margin-bottom: 10px"
-                >
-                </t-table>
-                {
-                  this.allowAdd ? <div class="custom-div">
-                    {
-                      this.customtags.map((item, index) => (
-                        <t-tag key={`tag_${index}`} closable={true} onClose={() => { this.customtags = this.customtags.filter(v => v !== item); }}>
-                          {item}
-                        </t-tag>
-                      ))
-                    }
-                    {inputOrtagEl}
-                  </div> : null
-                }
-              </div>
+              }
             </div>
           </div>
-        </t-loading>
+        </div>
       </t-dialog>
     );
   }
