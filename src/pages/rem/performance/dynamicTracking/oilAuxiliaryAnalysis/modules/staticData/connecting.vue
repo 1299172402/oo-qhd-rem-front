@@ -3,6 +3,7 @@
     <div style="height:calc(100% - 95px);">
         <div class="z-main">
             <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                <div v-if="uploadTime" style="position: absolute; left: 20px; top: 5px;">上传时间：{{ uploadTime }}</div>
                 <div class="z-container">
                     <el-carousel :interval="4000" :autoplay="false" indicator-position="outside" arrow="hover">
                         <el-carousel-item v-for="(item, index) in imageList" ref="imageCaeousel" :key="index" style="height: 100%; overflow-y: auto;">
@@ -38,6 +39,7 @@ export default {
             mniIoFiles:[],
             imageList: [],
             fitInfo:'cover',    
+            uploadTime: "", // 图上产传时间
         };
     },
     mounted() {
@@ -55,6 +57,7 @@ export default {
                 if (res.data.code == 200) {
                     if(res.data.data.length){
                         this.mniIoFiles=res.data.data;
+                        this.uploadTime=res.data.data[0].uploadTime || "";
                         for(let i=0;i<this.mniIoFiles.length;i++){
                             let fileId = this.mniIoFiles[i].fileId;
                             downFile(fileId).then((res)=>{

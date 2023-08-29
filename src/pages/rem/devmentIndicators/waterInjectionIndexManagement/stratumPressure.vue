@@ -100,7 +100,7 @@
     import Echart from "@/components/tools/Echarts/index.vue";
     import { layerPressureLevelRate } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
     import { getOrgInfo, getOgfInfo } from "@/api/oilDeposit/ipm-03/basedata.js";
-    import {fetchOilFields,fetchFields,fieldLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
+    import {fetchOilFields,fetchFields,fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import { exportExcel} from "@/lib/exportExcel.js";
     import dayjs from "dayjs";
     
@@ -332,7 +332,7 @@
             },
             //获得层位信息
             getFieldLayers() {
-                fieldLayers(this.queryParams).then((res) => {
+                fieldOilLayers(this.queryParams).then((res) => {
                     if (res.data.code == 200) {
                         this.layer = res.data.data.fieldLayers;
                     }

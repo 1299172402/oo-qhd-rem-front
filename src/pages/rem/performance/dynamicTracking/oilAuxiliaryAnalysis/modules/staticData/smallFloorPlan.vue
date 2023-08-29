@@ -143,9 +143,9 @@
 
 <style scoped lang="scss">
     .z-search{
-        height:50px;
         display: flex;
         align-items: center;
+        margin-bottom: 15px;
     }
     .z-main{
         width: 100%;

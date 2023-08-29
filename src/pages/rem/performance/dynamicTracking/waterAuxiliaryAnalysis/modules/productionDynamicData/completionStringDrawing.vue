@@ -7,6 +7,7 @@
     </div> -->
     <div class="z-main">
         <page-panel-new style="height:100%;margin-top:0;" show-btn>
+            <div v-if="uploadTime" style="position: absolute; left: 20px; top: 5px;">上传时间：{{ uploadTime }}</div>
             <div style="overflow: auto;width: 100%; height: 100%;display: flex;justify-content: center;">   
                 <el-image :src="src">
                     <div slot="error"></div>
@@ -34,6 +35,7 @@
                 fileId:'',
                 filestrId:'',
                 src:'',
+                uploadTime: "", // 图上产传时间
             };
         },
         mounted() {
@@ -51,6 +53,7 @@
                         if(res.data.data.length){
                             this.fileId=res.data.data[0].fileId;
                             this.filestrId=res.data.data[0].filestrId;
+                            this.uploadTime=res.data.data[0].uploadTime || "";
                             downFile(this.fileId).then((res)=>{
                                 this.src=window.URL.createObjectURL(res);
                             })
