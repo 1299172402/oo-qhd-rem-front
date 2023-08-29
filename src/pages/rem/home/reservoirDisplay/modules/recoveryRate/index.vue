@@ -22,7 +22,6 @@ export default {
   },
   data() {
     return {
-      currentModel: this.$store.state.setting.mode,
         //采油速度
         productionSpeed: {
             tooltip: {
@@ -50,7 +49,7 @@ export default {
                 data: [],
                 bottom: 0,
                 textStyle: {
-                    color: '#24DEFF'
+                    color: ''
                 }
             },
             grid:{
@@ -215,7 +214,26 @@ export default {
           series.symbol = 'none';
           return series;
       },
+     
   },
+    computed: {
+        getGlobeTheme(val) {
+            return this.$store.state.setting.mode;
+        },
+    },
+    watch: {
+        getGlobeTheme: {
+            handler(Nval) {
+                if (Nval == "dark") {
+                    this.productionSpeed.legend.textStyle.color = "#fff";
+                } else {
+                    this.productionSpeed.legend.textStyle.color = "#000000";
+                }
+            },
+            deep: true,
+            immediate:true
+        },
+    },
 };
 </script>
 <style lang="scss" scoped>

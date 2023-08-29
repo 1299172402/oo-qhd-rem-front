@@ -923,9 +923,9 @@ export default {
             immediate: true,
             handler(Nval) {
                 if (Nval == "dark") {
-                    this.histogram.legend.textStyle.color = "#ffffff";
+                    this.productLineChart.legend.textStyle.color = "#ffffff";
                 } else {
-                    this.histogram.legend.textStyle.color = "#000000";
+                    this.productLineChart.legend.textStyle.color = "#000000";
                 }
             },
             deep: true,
@@ -1102,6 +1102,7 @@ export default {
             })
         }
     },
+    
 };
 </script>
 <style lang="scss" scoped>

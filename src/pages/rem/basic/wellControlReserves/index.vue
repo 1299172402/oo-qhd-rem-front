@@ -219,29 +219,6 @@ export default {
             queryListOfOilfieldQueryPlatformsDetail({ogfId: this.queryData.ogfId}).then(res => {
                 this.platforms = res.data.data
             })
-            // getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
-            //   if (res.data.code == 200) {
-            //     this.oilFields = res.data.data;
-            //   }
-            // });
-            // fetchOilFields().then((res) => {
-            //   if (res.data.code == 200) {
-            //     const requestPlat = {
-            //       oilFieldId: this.queryData.ogfId,
-            //     };
-            //     fetchPlatforms(requestPlat).then((res) => {
-            //       if (res.data.code == 200) {
-            //         this.platforms = res.data.data.platform;
-            //         this.platforms.map((n) => {
-            //           if (n.platName == "全部") {
-            //             n.platFormId = "";
-            //           }
-            //           this.queryData.pt = "";
-            //         });
-            //       }
-            //     });
-            //   }
-            // });
         },
         selectcw() {
             let adta = {
@@ -303,26 +280,10 @@ export default {
         // 重置仅重置搜索条件与下方查询内容无关
         refresh() {
             this.queryData.pt = "";
-            let oilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
-            const request = {
-                oilFieldId,
-            };
-            fetchProductionWells(request).then((res) => {
+            queryWellControlReservesWell({ogfId: this.queryData.ogfId}).then((res) => {
                 if (res.data.code == 200) {
-                    let wellList = res.data.data.productionWells;
-                    let arr = [];
-                    wellList.map((n) => {
-                        if (n.wellName != null) {
-                            arr.push(n);
-                        }
-                    });
-
-                    this.wells = [...arr];
-                    this.wells.unshift({
-                        wellId: "",
-                        wellName: "全部",
-                    });
-                    this.queryData.wellId = "";
+                    this.wells = res.data.data
+                    this.queryData.wellId = this.wells[0].wellId
                 }
             });
         },

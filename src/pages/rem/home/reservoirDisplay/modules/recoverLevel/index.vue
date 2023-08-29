@@ -53,17 +53,6 @@ export default {
                 ],
                 itemGap: 5
             },
-            // toolbox: {
-            //     show: true,
-            //     feature: {
-            //         saveAsImage: {
-            //             name: '采出程度与含水率关系',
-            //             pixelRatio: 15,
-            //             //值越大分辨率越高,下载的图片越清晰
-            //             backgroundColor: '#022644'
-            //         }
-            //     }
-            // },
             xAxis: {
                 name: '地质储量采出程度(%)',
                 nameLocation: 'center',
@@ -220,6 +209,24 @@ export default {
           return series;
       },
   },
+    computed: {
+        getGlobeTheme(val) {
+            return this.$store.state.setting.mode;
+        },
+    },
+    watch: {
+        getGlobeTheme: {
+            handler(Nval) {
+                if (Nval == "dark") {
+                    this.relationship.legend.textStyle.color = "#fff";
+                } else {
+                    this.relationship.legend.textStyle.color = "#000000";
+                }
+            },
+            deep: true,
+            immediate: true
+        },
+    },
 };
 </script>
 <style lang="scss" scoped>
