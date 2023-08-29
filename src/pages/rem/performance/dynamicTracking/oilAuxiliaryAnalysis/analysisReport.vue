@@ -718,7 +718,7 @@
                                     </el-table-column>
                                     <!--生产问题监测项目-->
                                     <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
-                                        <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="100" :key="index" :prop="item.code" :label="item.name" align="center" width="180px" label-class-name="twoRowHeader">
+                                        <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="100" :key="index" :prop="item.code" :label="item.name" align="center" width="260px" label-class-name="twoRowHeader">
                                             <template #header>
                                                 <div v-if="item.isTwoHeader">
                                                     <span>{{item.name}}</span>
@@ -733,6 +733,7 @@
                                                 <span class="1" v-if="scope.row[item.code] == null"></span>
                                                 <span class="2" v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel?scope.row[item.code].showLabel:'-' }}</span>
                                                 <span class="3" v-else style="display: flex;align-items: center;justify-content: center;">
+                                                {{scope.row[item.code].average ? `平均 ${scope.row[item.code].average} /` : '' }}
                                                 {{replaceStr(scope.row[item.code].showLabel)}}
                                                 {{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2): !replaceStr(scope.row[item.code].showLabel)?'-':''}}
                                                     <img src="@/assets/rem/yieId/upTriangle.png" v-if="replaceStr(scope.row[item.code].showLabel)=='偏高'" style="width:20px;height:20px;">

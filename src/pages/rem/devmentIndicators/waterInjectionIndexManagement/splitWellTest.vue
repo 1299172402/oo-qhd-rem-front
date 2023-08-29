@@ -54,14 +54,23 @@
                         下载
                     </el-button>
                 </div>
-                <el-table id="fzjcsmx" :data="tableData" highlight height="calc(100% - 55px)">
+                <el-table id="fzjcsmx" :data="tableData" highlight height="calc(100% - 130px)">
                     <!-- :index="formatIndex"  -->
-                    <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
+                    <el-table-column label="序号" header-align="center" align="center" type="index" width="60" :index="formatIndex"></el-table-column>
                     <el-table-column prop="ogfName" label="油田" align="center"></el-table-column>
                     <el-table-column prop="wellNo" label="注水井号" align="center"></el-table-column>
                     <el-table-column prop="injSeparateTypeName" label="分注类型" align="center"></el-table-column>
                     <el-table-column prop="prodDate" :label="`调配日期\n(yyyy/mm/dd)`" :formatter="formatTime" align="center"></el-table-column>
                 </el-table>
+                <pagination
+                    :total="total"
+                    :page.sync="queryParams.page"
+                    :limit.sync="queryParams.pageSize"
+                    :page-sizes="[10, 20, 50, 100]"
+                    :pager-count="5"
+                    layout="prev, pager, next, sizes, total"
+                    @pagination="handleTableChange"
+                />
             </pagePanel>
         </page-panel-new>
         
@@ -91,9 +100,11 @@
                     // beginDate: dayjs().subtract(7, "day").format("YYYY-MM-DD"), // 开始时间
                     // endDate: dayjs().format("YYYY-MM-DD"), // 结束时间
                     year: dayjs().subtract(1, "day").format("YYYY-MM-DD"), // 开始时间
-                    // pageNum: 1,
-                    // pageSize: 9999,
+                    page: 1,
+                    pageSize: 10,
+                    isDesc: 1,
                 },
+                total: 0, //  表格分页总数
                 // 日期选择禁选配置
                 pickerOptions: {
                     disabledDate: (time) => {
@@ -266,7 +277,7 @@
             },
             //表格序号
             formatIndex(index) {
-                return (this.queryParams.pageNum - 1) * this.queryParams.pageSize + index + 1;
+                return (this.queryParams.page - 1) * this.queryParams.pageSize + index + 1;
             },
             //返回按钮
             close() {
@@ -329,6 +340,15 @@
             changeOgf() {
                 this.getFetchPlatforms();
             },
+            /**
+             *  监听表格分页变化
+             * @param pagination 分页数据对象
+             */
+            handleTableChange(pagination) {
+                this.queryParams.page = pagination.page;
+                this.queryParams.pageSize = pagination.limit;
+                this.doDividingTestRate();
+            },
             //时间范围切换
             createChange(dates) {
                 if (dates && dates.length == 2) {
@@ -353,7 +373,8 @@
                         let xData = [];
                         let xSet = new Set();
                         let resData = res.data.data;
-                        this.tableData = resData.tableList ? resData.tableList[0][0] : [];
+                        this.tableData = resData.tableList ? resData.tableList[0][0]?.rows : [];
+                        this.total = resData.tableList ? resData.tableList[0][0]?.total : 0;
                         if (resData.chart) {
                             let barCharts = resData.chart.linearDataSets;
 

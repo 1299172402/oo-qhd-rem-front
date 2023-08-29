@@ -156,7 +156,7 @@ export default {
       linkroute(name) {
           this.$router.push({
               path: name,
-              query:{ link:'evaluation' }
+              query:{ link:'evaluation',page:'/reservoirDisplay/oilexhibition' }
           });
       },
       //产能类 采油速度
