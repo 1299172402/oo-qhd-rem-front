@@ -155,12 +155,12 @@
                         textStyle: {
                             color: "#8FA4CC",
                         },
-                        top: 10,
+                        top: 0,
                         left: "center"
                     },
                     grid: {
                         x: 120,
-                        y: 60,
+                        y: 80,
                         x2: 40,
                         y2: 60,
                     },

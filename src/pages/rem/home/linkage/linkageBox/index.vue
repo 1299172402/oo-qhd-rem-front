@@ -110,7 +110,7 @@ export default {
                 const data = {
                     authorizedPersonnel:this.$store.getters["user/name"],
                     alarmTime:new Date().format('YYYY-MM-dd'),
-                    alarmPageCode:[OSTOPF]
+                    alarmPageCode:['OSTOPF']
                 }
                 addLinkageAlarmInfo(data).then(()=>{
                     this.warningShowFlag = false

@@ -96,7 +96,7 @@
     import Echart from "@/components/tools/Echarts/index.vue";
     import {dynamicMoniterFinshRate} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
     import {getOrgInfo,getOgfInfo} from "@/api/oilDeposit/ipm-03/basedata.js";
-    import {fetchOilFields,fetchFields,fieldLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
+    import {fetchOilFields,fetchFields,fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import {exportExcel} from "@/lib/exportExcel.js";
     import dayjs from "dayjs";
     export default {
@@ -165,7 +165,7 @@
                     },
                     grid: {
                         x: 120,
-                        y: 60,
+                        y: 80,
                         x2: 40,
                         y2: 60,
                     },
@@ -323,7 +323,7 @@
             },
             //获得层位信息
             getFieldLayers() {
-                fieldLayers(this.queryParams).then((res) => {
+                fieldOilLayers(this.queryParams).then((res) => {
                     if (res.data.code == 200) {
                         this.layer = res.data.data.fieldLayers;
                     }
@@ -369,38 +369,10 @@
                         let legendData = [];
                         let seriesData = [];
                         let xData = [];
-                        // TODO lv 临时
-                        // let xSet = new Set();
-                        let xSet = [];
+                        let xSet = new Set();
 
                         let resData = res.data.data;
-                        // TODO lv 临时
-                        // let barCharts = resData?.chart?.linearDataSets;
-                        let barCharts = [{
-                            label: "",
-                            color: null,
-                            linearData: [{
-                                    label: "2020",
-                                    value: 34.85,
-                                    description: null,
-                                },
-                                {
-                                    label: "2021",
-                                    value: 80.09,
-                                    description: null,
-                                },
-                                {
-                                    label: "2022",
-                                    value: 100,
-                                    description: null,
-                                },
-                                {
-                                    label: "2023",
-                                    value: 96.55,
-                                    description: null,
-                                },
-                            ],
-                        }, ];
+                        let barCharts = resData?.chart?.linearDataSets;
                         this.tableData = resData.tableList ? resData.tableList[0] : [];
                         barCharts.forEach((item, index) => {
                             legendData.push(item.label);
@@ -435,19 +407,15 @@
                             barData.forEach((dot, index) => {
                                 let point = [];
                                 point.push(dot.label.substring(0, 7));
-                                // TODO lv 临时
-                                // xSet.add(dot.label);
-                                xSet.push(dot.label.substring(0, 7));
+                                xSet.add(dot.label);
                                 point.push(dot.value);
                                 seriesMess.push(point);
                             });
                             series.data = seriesMess;
                             seriesData.push(series);
                         });
-                        // TODO lv 临时
-                        // xData = Array.from(xSet).sort();
-                        // this.formationPressureRemainsLevel.xAxis.data = xData;
-                        this.dynamicDetectionCompletionRate.xAxis.data = xSet;
+                        xData = Array.from(xSet).sort();
+                        this.dynamicDetectionCompletionRate.xAxis.data = xData;
                         this.dynamicDetectionCompletionRate.legend.data = legendData;
                         this.dynamicDetectionCompletionRate.series = seriesData;
                         this.dynamicDetectionCompletionRate.title.text =
