@@ -22,6 +22,24 @@ export default [
         component: () => import('@/pages/rem/home/reservoirDisplay/oilexhibition.vue'),
         meta: { title: '油藏看板',icon: 'icon' },
       },
+        {
+            path: 'worker',
+            name: 'worker',
+            component: () => import('@/pages/rem/home/reservoirDisplay/worker.vue'),
+            meta: { title: '油藏工程师看板',icon: 'icon' },
+        },
+        {
+            path: 'director',
+            name: 'director',
+            component: () => import('@/pages/rem/home/reservoirDisplay/director.vue'),
+            meta: { title: '主任工程师看板',icon: 'icon' },
+        },
+        {
+            path: 'leader',
+            name: 'leader',
+            component: () => import('@/pages/rem/home/reservoirDisplay/leader.vue'),
+            meta: { title: '分公司领导看板',icon: 'icon' },
+        },
       {
         path: 'shutdownDetection',
         name: 'shutdownDetection',
