@@ -863,12 +863,12 @@ export default {
         },
         // 区块切换事件
         changeBlock() {
-            this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.platform, this.wellId]);
+            this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock]);
             this.queryPlatFormList();
         },
         // 平台切换事件
         changePlatform() {
-            this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.platform, this.wellId]);
+            this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.platform]);
             this.queryWellListByPid();
         },
         // 井号切换事件
@@ -883,14 +883,36 @@ export default {
             // 区块选中数据
             this.selectBlock = selectList.blockId;
             // 平台选中数据
-            this.platform = selectList.platformIds;
+            this.platform = selectList.platformId;
             // 井号选中数据
             this.wellId = selectList.wellId;
-            if (selectData.level === 1) {
-                this.queryPlatFormList()
-            } else if (selectData.level === 2) {
-                this.queryWellListByPid()
-            }
+            this.paramMap.oilFieldId = this.selYtdm; //油田
+            this.paramMap.selectBlock=this.selectBlock;//区块
+            this.ptData=[];
+            this.wellData=[];
+            fetchPlatforms(this.paramMap).then((res) => {
+                let msg = res.data.msg;
+                if (msg == "success") {
+                    this.ptData = res.data?.data?.platform || [];
+                    if (this.platform == this.selYtdm) {
+                        this.paramMap.oilFieldId = this.selYtdm; //登记油田代码
+                        fetchInjectionWells(this.paramMap).then((res) => {
+                            let msg = res.data.msg;
+                            if (msg == "success") {
+                                this.wellData = res.data?.data?.injectionWell || [];
+                            }
+                        });
+                    } else {
+                        this.paramMap.platformId = this.platform?this.platform:this.ptData[0].oilFieldId; //登记平台代码
+                        fetchInjectionWellsByPlatform(this.paramMap).then((res) => {
+                            let msg = res.data.msg;
+                            if (msg == "success") {
+                                this.wellData = res.data?.data?.injectionWell || [];
+                            }
+                        });
+                    }
+                }
+            });
         },
         //进行数据查询处理
         async doSearch() {

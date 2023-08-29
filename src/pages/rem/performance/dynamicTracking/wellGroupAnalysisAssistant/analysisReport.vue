@@ -706,6 +706,7 @@
             },
             // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
             getSelectItems(selectList, selectData) {
+                // console.log('测试', selectData)
                 // 油田选中数据
                 // this.selYtdm = selectList.ogfId;
                 // 区块选中数据

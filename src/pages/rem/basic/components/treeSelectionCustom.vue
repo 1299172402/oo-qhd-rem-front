@@ -182,7 +182,7 @@ export default {
           let code = res.data.code;
           if (code == 200) {
             res.data.data.fields.map((item) => {
-              // if (item.fieldId != "3FC9A818F5BC43B88270DB80BBB3018F") {
+              if (item.fieldId != "3FC9A818F5BC43B88270DB80BBB3018F") {
               arr.push({
                 ...item,
                 label: item.name,
@@ -190,7 +190,7 @@ export default {
                 level: 1,
                 parent: node,
               });
-              // }
+              }
             });
           }
         });
@@ -207,7 +207,7 @@ export default {
             let code = res.data.code;
             if (code == 200) {
               res.data.data.map((item) => {
-                // if (item.platName != "全部") {
+                if (item.platName != "全部") {
                 arr.push({
                   ...item,
                   label: item.wellGroupName,
@@ -216,7 +216,7 @@ export default {
                   parent: node,
                   isLeaf: true,
                 });
-                // }
+                }
               });
             }
           });
@@ -229,7 +229,7 @@ export default {
             let code = res.data.code;
             if (code == 200) {
               res.data.data.map((item) => {
-                // if (item.platName != "全部") {
+                if (item.platName != "全部") {
                 arr.push({
                   ...item,
                   label: item.wellGroupName,
@@ -238,7 +238,7 @@ export default {
                   parent: node,
                   isLeaf: true,
                 });
-                // }
+                }
               });
             }
           });
@@ -247,7 +247,7 @@ export default {
             let code = res.data.code;
             if (code == 200) {
               res.data.data.platform.map((item) => {
-                // if (item.platName != "全部") {
+                if (item.platName != "全部") {
                 arr.push({
                   ...item,
                   label: item.platName,
@@ -255,7 +255,7 @@ export default {
                   level: 2,
                   parent: node,
                 });
-                // }
+                }
               });
             }
           });
