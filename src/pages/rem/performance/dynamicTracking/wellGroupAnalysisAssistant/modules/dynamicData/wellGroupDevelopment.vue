@@ -704,7 +704,9 @@
         width: 100%;
         height:calc(100% - 101px);
         .z-search{
-            height:60px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
         }
         .z-echarts{
             width:100%;
