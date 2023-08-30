@@ -96,14 +96,19 @@ export default {
         },
         linkTo: function (url,item) {
             if (!url) return
-            const data = {
-                authorizedPersonnel:this.$store.getters["user/name"],
-                alarmTime:new Date().format('YYYY-MM-dd'),
-                alarmPageCode:[item?.alarmPageCode]
+            if(item.alarmPageCode){
+                const data = {
+                    authorizedPersonnel:this.$store.getters["user/name"],
+                    alarmTime:new Date().format('YYYY-MM-dd'),
+                    alarmPageCode:[item.alarmPageCode]
+                }
+                addLinkageAlarmInfo(data).then(()=>{
+                })
+                window.open(url+ '?alarmTime=' + item.alarmTime, '_parent');
+            }else{
+                window.open(url, '_parent');
             }
-            window.open(url+ '?alarmTime=' + item.alarmTime, '_parent');
-            addLinkageAlarmInfo(data).then(()=>{
-            })
+           
         },
         linkTopage: function (url,currentList) {
             if(currentList.alarmPageCode =='OSTOPF'){
@@ -118,23 +123,25 @@ export default {
                     if (!url) return
                     window.open('https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?page=reservoirDisplay/linkage', '_parent');
                 })
-            }
-            let linkurl = currentList.boxBottomText.find((n)=>{
-                if(n.warningShowFlag == true){
-                    return n
+            }else{
+                let linkurl = currentList.boxBottomText.find((n)=>{
+                    if(n.warningShowFlag == true){
+                        return n
+                    }
+                })
+                const data = {
+                    authorizedPersonnel:this.$store.getters["user/name"],
+                    alarmTime:new Date().format('YYYY-MM-dd'),
+                    alarmPageCode:[linkurl?.alarmPageCode]
                 }
-            })
-            const data = {
-                authorizedPersonnel:this.$store.getters["user/name"],
-                alarmTime:new Date().format('YYYY-MM-dd'),
-                alarmPageCode:[linkurl?.alarmPageCode]
+                addLinkageAlarmInfo(data).then(()=>{
+                    this.warningShowFlag = false
+                }).then(()=>{
+                    if (!url) return
+                    window.open(linkurl.url, '_parent');
+                })
             }
-            addLinkageAlarmInfo(data).then(()=>{
-                this.warningShowFlag = false
-            }).then(()=>{
-                if (!url) return
-                window.open(linkurl.url, '_parent');
-            })
+           
         },
         confirm(currentList){
             let alarmPageCode = []
