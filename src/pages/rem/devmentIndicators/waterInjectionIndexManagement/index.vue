@@ -39,7 +39,7 @@
             		</pagePanel>
             		<pagePanel v-else class="fl" :headerTitle="item.title" style="height: 180px; margin-top: 20px;">
             			<el-button style="position: absolute; z-index: 9; right: 10px; top: 0px; height: 26px; margin-top: 3px; padding: 0 16px;" type="primary" @click.native="cardClick(item, index)">详情</el-button>
-            			<el-row style="padding-top: 20px;">
+            			<el-row>
             				<el-col :span="14">
             					<div style="vertical-align: middle; text-align: center">
             						<span style="font-size: 26px">{{ item.sz }}</span>
@@ -381,12 +381,12 @@
                         textStyle: {
                             color: "#8FA4CC",
                         },
-                        top: 10,
+                        top: 0,
                         left: "center",
                     },
                     grid: {
                         x: 120,
-                        y: 30,
+                        y: 80,
                         x2: 120,
                         y2: 60,
                     },
@@ -498,12 +498,12 @@
                         textStyle: {
                             color: "#8FA4CC",
                         },
-                        top: 10,
+                        top: 0,
                         left: "center",
                     },
                     grid: {
                         x: 120,
-                        y: 30,
+                        y: 80,
                         x2: 120,
                         y2: 60,
                     },

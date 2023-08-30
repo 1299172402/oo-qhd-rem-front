@@ -236,6 +236,7 @@
                                                 <span class="1" v-if="scope.row[item.code] == null"></span>
                                                 <span class="2" v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel?scope.row[item.code].showLabel:'-' }}</span>
                                                 <span class="3" v-else style="display: flex;align-items: center;justify-content: center;">
+                                                {{scope.row[item.code].average ? `平均 ${!isNaN(parseFloat(scope.row[item.code].average)) && typeof parseFloat(scope.row[item.code].average) === "number" ? parseFloat(scope.row[item.code].average).toFixed(2) : ''} /` : '' }}
                                                 {{replaceStr(scope.row[item.code].showLabel)}}
                                                 {{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2): !replaceStr(scope.row[item.code].showLabel)?'-':''}}
                                                     <img src="@/assets/rem/yieId/upTriangle.png" v-if="replaceStr(scope.row[item.code].showLabel)=='偏高'" style="width:20px;height:20px;">
@@ -733,7 +734,7 @@
                                                 <span class="1" v-if="scope.row[item.code] == null"></span>
                                                 <span class="2" v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel?scope.row[item.code].showLabel:'-' }}</span>
                                                 <span class="3" v-else style="display: flex;align-items: center;justify-content: center;">
-                                                {{scope.row[item.code].average ? `平均 ${scope.row[item.code].average} /` : '' }}
+                                                {{scope.row[item.code].average ? `平均 ${!isNaN(parseFloat(scope.row[item.code].average)) && typeof parseFloat(scope.row[item.code].average) === "number" ? parseFloat(scope.row[item.code].average).toFixed(2) : ''} /` : '' }}
                                                 {{replaceStr(scope.row[item.code].showLabel)}}
                                                 {{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2): !replaceStr(scope.row[item.code].showLabel)?'-':''}}
                                                     <img src="@/assets/rem/yieId/upTriangle.png" v-if="replaceStr(scope.row[item.code].showLabel)=='偏高'" style="width:20px;height:20px;">
@@ -1121,12 +1122,12 @@
             },
             // 区块切换事件
             changeBlock() {
-                this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.platform, this.wellId]);
+                this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock]);
                 this.queryPlatFormList();
             },
             // 平台切换事件
             changePlatform() {
-                this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.platform, this.wellId]);
+                this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.platform]);
                 this.queryOilWellListByPid();
             },
             // 井号切换事件
@@ -1136,19 +1137,61 @@
             },
             // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
             getSelectItems(selectList, selectData) {
+                // console.log(selectList, '测试')
                 // 油田选中数据
                 // this.selYtdm = selectList.ogfId;
                 // 区块选中数据
                 this.selectBlock = selectList.blockId;
                 // 平台选中数据
-                this.platform = selectList.platformIds;
+                this.platform = selectList.platformId;
                 // 井号选中数据
                 this.wellId = selectList.wellId;
-                if (selectData.level === 1) {
-                    this.queryPlatFormList()
-                } else if (selectData.level === 2) {
-                    this.queryOilWellListByPid()
-                }
+                // if (selectData.level === 1) {
+                this.paramMap.oilFieldId = this.selYtdm; //油田
+                this.paramMap.selectBlock=this.selectBlock;//区块
+                fetchPlatforms(this.paramMap).then((res) => {
+                    let msg = res.data.msg;
+                    if (msg == "success") {
+                        let myData = res.data.data.platform;
+                        this.ptData = myData;
+                        if (this.platform == this.selYtdm) {
+                            this.paramMap.oilFieldId = this.selYtdm; //登记油田代码
+                            fetchProductionWells(this.paramMap).then((res) => {
+                                let msg = res.data.msg;
+                                if (msg == "success") {
+                                    this.wellData = res.data?.data?.productionWells || [];
+                                }
+                            });
+                        } else {
+                            this.paramMap.platformId = this.platform?this.platform:this.ptData[0].oilFieldId; //登记平台代码
+                            fetchProductionWellsByPlatform(this.paramMap).then((res) => {
+                                let msg = res.data.msg;
+                                if (msg == "success") {
+                                    this.wellData = res.data?.data?.productionWells || [];
+                                }
+                            });
+                        }
+                    }
+                });
+                // } else if (selectData.level === 2) {
+                //     if (this.platform == this.selYtdm) {
+                //         this.paramMap.oilFieldId = this.selYtdm; //登记油田代码
+                //         fetchProductionWells(this.paramMap).then((res) => {
+                //             let msg = res.data.msg;
+                //             if (msg == "success") {
+                //                 this.wellData = res.data?.data?.productionWells || [];
+                //             }
+                //         });
+                //     } else {
+                //         this.paramMap.platformId = this.platform?this.platform:this.ptData[0].oilFieldId; //登记平台代码
+                //         fetchProductionWellsByPlatform(this.paramMap).then((res) => {
+                //             let msg = res.data.msg;
+                //             if (msg == "success") {
+                //                 this.wellData = res.data?.data?.productionWells || [];
+                //             }
+                //         });
+                //     }
+                // }
             },
             //进行数据查询处理
             doSearch() {

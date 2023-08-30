@@ -262,6 +262,7 @@ export default {
         }
       },
       deep: true,
+        
     },
   },
 };

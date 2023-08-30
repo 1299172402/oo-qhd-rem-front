@@ -102,9 +102,9 @@
                 //产量计划类型数据
                 planTypeSelect:[
                     {label:'分公司考核',value:'002003'},
-                    {label:'分公司奋斗',value:'001003'},
-                    {label:'有限考核',value:'002002'},
-                    {label:'有限奋斗',value:'001002'},
+                    {label:'分公司奋斗',value:'001'},
+                    {label:'有限考核',value:'002'},
+                    {label:'有限奋斗',value:'004002'},
                 ],
                 //产量构成数据
                 theYieldComponentsSelect:[

@@ -5,6 +5,7 @@
             <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable  @change="selectChange">
                 <el-option v-for="(item, index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
+            <div v-if="uploadTime" style="margin-left: 20px;">上传时间：{{ uploadTime }}</div>
         </div>
         <div class="z-main">
             <page-panel-new style="height:100%;margin-top:0;" show-btn>
@@ -49,6 +50,7 @@ export default {
             selectPosition: '',
             imageList: [],
             fitInfo:'cover',    
+            uploadTime: "", // 图上产传时间
         };
     },
     mounted() {
@@ -122,6 +124,7 @@ export default {
                 if (res.data.code == 200) {
                     if(res.data.data.length){
                         this.mniIoFiles=res.data.data;
+                        this.uploadTime=res.data.data[0].uploadTime || "";
                         for(let i=0;i<this.mniIoFiles.length;i++){
                             let fileId = this.mniIoFiles[i].fileId;
                             downFile(fileId).then((res)=>{
@@ -159,7 +162,9 @@ export default {
 
 <style scoped lang="scss">
     .z-search{
-        height:50px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
     }
     .z-main {
         width: 100%;

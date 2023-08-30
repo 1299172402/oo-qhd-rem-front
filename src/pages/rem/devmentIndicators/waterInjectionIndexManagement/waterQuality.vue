@@ -151,7 +151,7 @@
                         textStyle: {
                             color: "#8FA4CC",
                         },
-                        top: 10,
+                        top: 0,
                         left: "center"
                     },
                     grid: {

@@ -3,6 +3,7 @@
     <div style="height:calc(100% - 95px);">
         <div class="z-main">
             <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                <div v-if="uploadTime" style="position: absolute; left: 20px; top: 5px;">上传时间：{{ uploadTime }}</div>
                 <div class="z-container">
                     <el-button style="position: absolute; height: 22px; padding: 0 16px; top: 5px;right:36px;" size="mini" class="commonBtn" @click="doDownLoad()">下载</el-button>
                     <el-carousel :interval="4000" :autoplay="false" indicator-position="outside" arrow="hover">
@@ -40,6 +41,7 @@ export default {
             imageList: [],
             downid:'',
             fitInfo:'cover',
+            uploadTime: "", // 图上产传时间
         };
     },
     mounted() {
@@ -65,6 +67,7 @@ export default {
                     if (res.data.code == 200) {
                         if(res.data.data.length){
                             this.mniIoFiles=res.data.data;
+                            this.uploadTime=res.data.data[0].uploadTime || "";
                             // this.downid = res.data?.data[0].fileId
                             for(let i=0;i<this.mniIoFiles.length;i++){
                                 let fileId = this.mniIoFiles[i].fileId;
