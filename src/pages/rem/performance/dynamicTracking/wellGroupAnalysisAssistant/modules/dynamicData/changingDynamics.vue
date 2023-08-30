@@ -1,8 +1,8 @@
 <!--井组连通性变化动态-->
 <template>
   <el-form label-width="90px" style="height: calc(100% - 55px)">
-    <div style="display: flex">
-      <el-form-item label="开始时间" style="height: 30px">
+    <div style="display: flex; align-items: center; margin-bottom: 15px;">
+      <el-form-item label="开始时间" style="margin-bottom: 0;">
         <el-date-picker
           value-format="yyyy-MM"
           :clearable="false"
@@ -14,7 +14,7 @@
         </el-date-picker>
       </el-form-item>
 
-      <el-form-item label="对比时间">
+      <el-form-item label="对比时间" style="margin-bottom: 0;">
         <el-date-picker
           value-format="yyyy-MM"
           :clearable="false"
