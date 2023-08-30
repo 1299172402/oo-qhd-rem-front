@@ -14,14 +14,14 @@
 <!--    &lt;!&ndash; </el-row> &ndash;&gt;-->
 <!--  </div>-->
   <page-panel-new style="height: 86%; margin-top: 0;" show-btn>
+    <div v-if="uploadTime" style="position: absolute; left: 20px; top: 5px;">上传时间：{{ uploadTime }}</div>
     <iframe style="height: 100%;width: 100%" :src="url"></iframe>
   </page-panel-new>
 </template>
 
 <script>
-import { testWellReport } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
-import { downFile } from "@/lib/remBase64Download.js";
-import {filePreview} from "@/components/upload/utils/file";
+import {filePreview, downFile} from "@/components/upload/utils/file";
+import FileSaver from "file-saver";
 import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
 export default {
   props: {
@@ -38,6 +38,7 @@ export default {
           url:'',
           id:'',
           fileName:'',
+          uploadTime: "", // 文件上传时间
       };
   },
   mounted() {
@@ -54,39 +55,36 @@ export default {
           queryRemUploadFileMinio(params).then((res) => {
               if (res.data.code == 200 ) {
                   if(Array.isArray(res.data.data) && res.data.data.length){
-                      let data =res.data.data[0].fileId
-                      this.id = res.data.data[0].fileId
-                      this.fileName = res.data.data[0].filestrId
+                      let data =res.data.data[0].fileId;
+                      this.id = res.data.data[0].fileId;
+                      this.fileName = res.data.data[0].filestrId;
+                      // this.uploadTime=res.data.data[0].uploadTime || "";
                       filePreview(data).then((res)=>{
                           this.url = res.data.data
                       })
                   }else{
-                      // debugger
+                      this.id="";
+                      this.fileName="";
+                      this.uploadTime="";
                       this.url =''
                   }
               }else {
                   this.$message.error("文件查询接口异常!");
               }
-              // if (res.data.code == 200) {
-              //     let data =res.data.data[0].fileId
-              //     this.id = res.data.data[0].fileId
-              //     this.fileName = res.data.data[0].filestrId
-              //     filePreview(data).then((res)=>{
-              //         this.url = res.data.data
-              //     })
-              // }else {
-              //     this.$message.error("文件查询接口异常!");
-              // }
           });
 
       },
     //下载
     doDownLoad() {
-      let fileName = "试井报告";
-      if (this.wellName) {
-        fileName = this.wellName + fileName;
+      if(!this.id) {
+          this.$message.error('无可下载内容')
+          return
       }
-      downFile(this.image, fileName);
+      let fileName = '完井地质总结';
+      let file_suffix=this.fileName.split('.')[1];
+      downFile(this.id).then(res=>{
+        FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+      })
     },
   },
 };

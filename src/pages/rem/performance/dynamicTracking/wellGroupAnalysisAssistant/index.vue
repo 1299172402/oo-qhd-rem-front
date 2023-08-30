@@ -438,14 +438,13 @@
             getWellGroups() {
                 // TODO lv 页面没有使用，代码检查错误先注释
                 // let oilFieldId = [];
-                if (this.selectOilField == this.selectBlock) {
-                    this.block.forEach((item, index) => {
-                        oilFieldId.push(item.fieldId);
-                    });
-                } else {
-                    // TODO lv 页面没有使用，代码检查错误先注释
+                // if (this.selectOilField == this.selectBlock) {
+                //     this.block.forEach((item, index) => {
+                        // oilFieldId.push(item.fieldId);
+                    // });
+                // } else {
                     // oilFieldId.push(this.selectBlock);
-                }
+                // }
                 let blockId = this.selectBlock
                 if (blockId == '3FC9A818F5BC43B88270DB80BBB3018F') {
                     blockId = 'YCFXDY8B643EDC9007F96F570600457D'

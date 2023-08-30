@@ -35,7 +35,7 @@
                 fileId:'',
                 filestrId:'',
                 src:'',
-                uploadTime: "", // 图上产传时间
+                uploadTime: "", // 文件上传时间
             };
         },
         mounted() {

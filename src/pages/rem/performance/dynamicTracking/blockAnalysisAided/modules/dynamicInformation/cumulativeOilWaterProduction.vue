@@ -368,12 +368,11 @@
         flex-direction: column;
         padding-bottom:15px;
         .z-search{
-            height:60px;
             display: flex;
             align-items: center;
+            margin-bottom: 15px;
         }
         .z-echarts{
-            padding-top:15px;
             width: 100%;
             flex:1;
         }

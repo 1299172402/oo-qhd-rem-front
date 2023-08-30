@@ -60,7 +60,7 @@
                 position: [],
                 //表格
                 tableData: [],
-                uploadTime: "", // 图上产传时间
+                uploadTime: "", // 文件上传时间
             };
         },
         async mounted() {
@@ -127,6 +127,9 @@
                                 this.src=window.URL.createObjectURL(res);
                             })
                         }else{
+                            this.fileId="";
+                            this.filestrId="";
+                            this.uploadTime="";
                            this.src='';
                         }
                     }else {
@@ -150,11 +153,16 @@
             //下载
             doDownLoad() {
                 let fileName = '渗透率分布图';
+                exportExcel('#tableData', fileName);
+
+                if(!this.fileId) {
+                    this.$message.error('无可下载内容')
+                    return
+                }
                 let file_suffix=this.filestrId.split('.')[1];
                 downFile(this.id).then(res=>{
                     FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
                 })
-                exportExcel('#tableData', fileName);
             },
         }
     };

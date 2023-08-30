@@ -1,7 +1,7 @@
 <!--综合开发曲线-->
 <template>
     <div class="z-main">  
-        <pagePanel style="height:100%;" headerTitle="综合开发曲线" show-btn>
+        <pagePanel style="height:100%; margin-top: 0;" headerTitle="综合开发曲线" show-btn>
             <div class="positionBtn">
                 <el-button type="primary" style="height:30px;" size="mini" @click="dialogVisible = true">选择指标信息</el-button>
             </div>

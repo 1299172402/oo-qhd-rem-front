@@ -39,7 +39,7 @@
                 //层位数据源
                 position: [],//选中层位
                 selectPosition: '',
-                uploadTime: "", // 图上产传时间
+                uploadTime: "", // 文件上传时间
             };
         },
         async mounted() {
@@ -110,6 +110,9 @@
                                 this.src=window.URL.createObjectURL(res);
                             })
                         }else{
+                            this.fileId="";
+                            this.filestrId="";
+                            this.uploadTime="";
                             this.src="";
                         }
                     }else {
@@ -124,6 +127,10 @@
             },
             //下载功能
             doDownLoad(){
+                if(!this.fileId) {
+                    this.$message.error('无可下载内容')
+                    return
+                }
                 let fileName = '沉积相图';
                 let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
                 if (layerMess) {
