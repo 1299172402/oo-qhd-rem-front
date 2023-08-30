@@ -3,6 +3,7 @@
     <div class="z-main">
         <div class="z-left-view">
             <page-panel-new style="width: 100%; height: 100%; margin-top: 0;" show-btn>
+                <div v-if="uploadTime" style="position: absolute; left: 20px; top: 5px;">上传时间：{{ uploadTime }}</div>
                 <iframe style="height: 100%;width: 100%" :src="url"></iframe>
             </page-panel-new>
         </div>
@@ -42,7 +43,8 @@
 
 <script>
     import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
-    import {filePreview} from "@/components/upload/utils/file";
+    import {filePreview, downFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
     import {saturationLoggingInterpretation} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
     import {exportExcel} from "@/lib/exportExcel.js";
     export default {
@@ -69,6 +71,7 @@
                 fileName:'',
                 url:'',
                 tableData: [],
+                uploadTime: "", // 文件上传时间
             };
         },
         mounted() {
@@ -86,9 +89,15 @@
                         if(res.data.data.length){
                             this.id = res.data.data[0].fileId;
                             this.fileName = res.data.data[0].filestrId;
+                            // this.uploadTime=res.data.data[0].uploadTime || "";
                             filePreview(this.id).then((res) => {
                                 this.url = res.data.data
                             })
+                        } else {
+                            this.id="";
+                            this.fileName="";
+                            this.uploadTime="";
+                            this.url="";
                         }
                     } else {
                         this.$message.error("文件查询接口异常!");
@@ -116,6 +125,14 @@
                     downFile(this.image,fileName);
                 }
                 exportExcel('#tableData',fileName);
+                if(!this.id) {
+                    this.$message.error('无可下载内容')
+                    return
+                }
+                let file_suffix=this.fileName.split('.')[1];
+                downFile(this.id).then(res=>{
+                    FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+                })
             },
             // 表格格式化方法 - 数值只保留两位小数
             toPrecise2(row, column) {

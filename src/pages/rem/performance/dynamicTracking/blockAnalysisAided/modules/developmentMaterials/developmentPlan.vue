@@ -3,6 +3,7 @@
     <div class="z-main">
         <div class="z-echarts">
             <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                <div v-if="uploadTime" style="position: absolute; left: 20px; top: 5px;">上传时间：{{ uploadTime }}</div>
                 <iframe style="width: 100%;height: 100%;border: none;" :src="url"></iframe>
             </page-panel-new>
         </div>
@@ -26,6 +27,7 @@
                 fileId:'',
                 filestrId:'',
                 url:'',
+                uploadTime: "", // 文件上传时间
             };
         },
         mounted() {
@@ -44,9 +46,15 @@
                         if(res.data.data.length){
                             this.fileId=res.data.data[0].fileId;
                             this.filestrId=res.data.data[0].filestrId;
+                            // this.uploadTime=res.data.data[0].uploadTime || "";
                             filePreview(this.fileId).then((res)=>{
                                 this.url = res.data.data
                             })
+                        } else {
+                            this.fileId="";
+                            this.filestrId="";
+                            this.uploadTime="";
+                            this.url="";
                         }
                     }else {
                         this.$message.error("文件查询接口异常!");
@@ -55,11 +63,11 @@
             },
             //下载功能
             doDownLoad() {
-                let fileName = '开发方案';
-                let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
-                if (layerMess) {
-                    fileName= layerMess.layerName +'-'+fileName;
+                if(!this.fileId) {
+                    this.$message.error('无可下载内容')
+                    return
                 }
+                let fileName = '开发方案';
                 let file_suffix=this.filestrId.split('.')[1];
                 downFile(this.id).then(res=>{
                     FileSaver.saveAs(res,`${fileName}.${file_suffix}`);

@@ -5,6 +5,7 @@
             <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable @change="selectChange">
                 <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
+            <div v-if="uploadTime" style="margin-left: 20px;">上传时间：{{ uploadTime }}</div>
         </div>
         <div class="z-main">
             <div class="z-left-view">
@@ -65,6 +66,7 @@
                 selectPosition: '',
                 //表格数据
                 tableData: [],
+                uploadTime: "", // 文件上传时间
             };
         },
         mounted() {
@@ -126,12 +128,18 @@
                 queryRemUploadFileMinio(params).then((res) => {
                     if (res.data.code == 200) {
                         if(res.data.data.length){
-                            let data =res.data.data[0].fileId
-                            this.id = res.data.data[0].fileId
-                            this.filestrId = res.data.data[0].filestrId
+                            let data =res.data.data[0].fileId;
+                            this.id = res.data.data[0].fileId;
+                            this.filestrId = res.data.data[0].filestrId;
+                            this.uploadTime=res.data.data[0].uploadTime || "";
                             filePreview(data).then((res)=>{
                                 this.url = res.data.data
                             })
+                        } else {
+                            this.fileId="";
+                            this.filestrId="";
+                            this.uploadTime="";
+                            this.url="";
                         }
                     }else {
                         this.$message.error("文件查询接口异常!");
@@ -162,7 +170,12 @@
                 }
                 //下载表格
                 exportExcel('#tableData',fileName);
+
                 //下载pdf文件
+                if(!this.fileId) {
+                    this.$message.error('无可下载内容')
+                    return
+                }
                 let file_suffix=this.filestrId.split('.')[1];
                 downFile(this.id).then(res=>{
                     FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
@@ -187,7 +200,9 @@
 
 <style scoped lang="scss">
     .z-search{
-        height:50px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
     }
     .z-main{
         width: 100%;
