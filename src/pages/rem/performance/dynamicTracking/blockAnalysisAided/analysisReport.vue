@@ -415,10 +415,12 @@
         methods: {
             //重置
             resetting(){
-                this.$nextTick(()=>{
-                	Object.assign(this.$data, this.$options.data());
-                	this.getDateApi();
-                })
+                // this.$nextTick(()=>{
+                let isNewformat = this.isNewformat;
+                Object.assign(this.$data, this.$options.data());
+                this.isNewformat = isNewformat;
+                this.getDateApi(); //初始化油田
+                // })
             },
             //minIo-获取底图
             queryRemUploadFileMinioApi(isBoolean){

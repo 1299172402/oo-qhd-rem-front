@@ -761,10 +761,12 @@ export default {
     methods: {
         //重置
         resetting(){
-            this.$nextTick(()=>{
+            // this.$nextTick(()=>{
+                let isNewformat = this.isNewformat;
                 Object.assign(this.$data, this.$options.data());
-                this.queryOilFeildList(); //初始化油田
-            })
+                this.isNewformat = isNewformat;
+                this.getDateApi(); //初始化油田
+            // })
         },
         //本接口获取最后一次模型计算出来的结果，返回最后一次跑模型的日期。
         getDateApi(){
