@@ -10,7 +10,7 @@
         <div class="z-main">
             <page-panel-new style="height:100%;margin-top:0;" show-btn>
                 <div class="z-container">
-                    <el-carousel :interval="4000" :autoplay="false" indicator-position="outside" arrow="hover" @change="carouselChange"
+                    <el-carousel :interval="4000" :autoplay="false" indicator-position="outside" arrow="hover" @change="carouselChange">
                         <el-carousel-item v-for="(item, index) in imageList" ref="imageCaeousel" :key="index" style="height: 100%; overflow-y: auto;">
                             <el-image :src="item" :fit="fitInfo" style="width: 100%" :preview-src-list="imageList">
                                 <div slot="error"></div>

@@ -778,18 +778,6 @@
                 injectionIndicatorStat(this.queryParams).then((res) => {
                     if (res.data.code == 200) {
                         this.tableData = res.data.data.injectionIndicatorManagements;
-                        // TODO lv 临时
-                        // this.tableData.forEach((item) => {
-                        //     if (item.name == "含水上升率（%）") item.real = -0.33;
-                        //     if (item.name == "注水井分注率（%）") item.real = 94.26;
-                        //     if (item.name == "分注井层段合格率（%）") item.real = 78.97;
-                        //     if (item.name == "年注入量（10⁴m³）") item.real = 1552;
-                        //     if (item.name == "自然递减率（%）") item.real = 21.13;
-                        //     if (item.name == "地层压力保持水平（%）") item.real = 90.47;
-                        //     if (item.name == "分注井测试率（%）") item.real = 95.48;
-                        //     if (item.name == "注水水质达标率（%）") item.real = 100;
-                        //     if (item.name == "动态监测完成率（%）") item.real = 99;
-                        // });
                     }
                 });
             },
@@ -804,8 +792,6 @@
                         });
                         //指标详情
                         zb.sz = detail.detail;
-                        // TODO lv 临时
-                        // zb.sz = "*" + 1552;
                         //环比
                         zb.hb = detail.mom;
                         zb.hbTag = detail.chainTag;
@@ -828,7 +814,7 @@
                             return item.title == "地层压力保持水平";
                         });
                         //指标详情 // TODO lv 临时
-                        zb.sz = detail.detail ||  90.47;
+                        zb.sz = detail.detail ||  90.30;
                         //环比
                         zb.hb = detail.mom;
                         zb.hbTag = detail.chainTag;
@@ -890,12 +876,6 @@
                         //考核
                         zb.kh = detail.compareCheck;
                         zb.khTag = detail.auditTag;
-                    } else {
-                        // TODO lv 临时
-                        let zb = this.zbData.find((item) => {
-                            return item.title == "分注井层段合格率";
-                        });
-                        zb.sz = 78.97;
                     }
                 });
             },
@@ -910,8 +890,8 @@
                         let zb = this.zbData.find((item) => {
                             return item.title == "含水上升率";
                         });
-                        //指标详情 // TODO lv 临时
-                        zb.sz = detail.detail || "-0.33";
+                         //指标详情 // TODO lv 临时
+                         zb.sz = detail.detail || "-0.33";
                         //环比
                         zb.hb = detail.mom;
                         zb.hbTag = detail.chainTag;
@@ -1022,12 +1002,6 @@
                         this.rateOfWaterCutRise.legend.data = legendData;
                         this.rateOfWaterCutRise.series = seriesData;
                         this.rateOfWaterCutRise.title.text = `${this.oilFieldName || ""}含水上升率`;
-                    } else {
-                        // TODO lv 临时
-                        let zb = this.zbData.find((item) => {
-                            return item.title == "含水上升率";
-                        });
-                        zb.sz = "-0.33";
                     }
                 });
             },
@@ -1041,8 +1015,8 @@
                             return item.title == "注水井分注率";
                         });
                         if (detail) {
-                            //指标详情 // TODO lv 临时
-                            zb.sz = detail.detail || 94.26;
+                            //指标详情
+                            zb.sz = detail.detail;
                             //环比
                             zb.hb = detail.mom;
                             zb.hbTag = detail.chainTag;
@@ -1066,7 +1040,7 @@
                             return item.title == "动态监测完成率";
                         });
                         //指标详情 // TODO lv 临时
-                        zb.sz = detail.detail || 99;
+                        zb.sz = detail.detail || 96.55;
                         //环比
                         zb.hb = detail.mom;
                         zb.hbTag = detail.chainTag;
@@ -1076,12 +1050,6 @@
                         //考核
                         zb.kh = detail.compareCheck;
                         zb.khTag = detail.auditTag;
-                    } else {
-                        // TODO lv 临时
-                        let zb = this.zbData.find((item) => {
-                            return item.title == "动态监测完成率";
-                        });
-                        zb.sz = 99;
                     }
                 });
             },

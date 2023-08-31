@@ -65,12 +65,24 @@
                         <div v-if="scope.row.geoDesg" class="chicked">
                             <el-button type="text" @click="switchToPlan(scope.row.geoDesg, scope.row.geoDesgSl)" :disabled="!canDownload">方案查看</el-button>
                         </div>
+                        <!-- TODO 临时 -->
+                        <div v-else-if="scope.row.wellName == 'QHD32-6-I1H'" class="chicked">
+                            <el-button type="text" @click="switchToPlan(scope.row.geoDesg, scope.row.geoDesgSl)" :disabled="!canDownload">方案查看</el-button>
+                        </div>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="工艺设计" align="center">
                     <template slot-scope="scope">
+                        <!-- TODO 临时 -->
                         <div v-if="scope.row.oprgProcDesg" class="chicked">
+                            <el-button type="text"
+                                @click="switchToPlan(scope.row.oprgProcDesg, scope.row.oprgProcDesgSl)"
+                                :disabled="!canDownload">方案查看
+                            </el-button>
+                        </div>
+                        <!-- TODO 临时 -->
+                        <div v-else-if="scope.row.wellName == 'QHD32-6-I1H'" class="chicked">
                             <el-button type="text"
                                 @click="switchToPlan(scope.row.oprgProcDesg, scope.row.oprgProcDesgSl)"
                                 :disabled="!canDownload">方案查看
@@ -82,6 +94,13 @@
                 <el-table-column label="施工设计" align="center">
                     <template slot-scope="scope">
                         <div v-if="scope.row.oprgDesg" class="chicked">
+                            <el-button type="text"
+                                @click="switchToPlan(scope.row.oprgDesg, scope.row.oprgDesgSl)"
+                                :disabled="!canDownload">方案查看
+                            </el-button>
+                        </div>
+                        <!-- TODO 临时 -->
+                        <div v-else-if="scope.row.wellName == 'QHD32-6-I1H'" class="chicked">
                             <el-button type="text"
                                 @click="switchToPlan(scope.row.oprgDesg, scope.row.oprgDesgSl)"
                                 :disabled="!canDownload">方案查看
@@ -2301,6 +2320,16 @@
             },
             //下载文档 跳转至方案查看
             switchToPlan(filePath, fileType) {
+                this.$modal
+                .confirm("是否确认下载？")
+                .then(() => {
+                    // this.$message.success("下载成功！");
+                    // return this.loadData();
+                })
+                .catch(() => {
+                // this.$message.warning("已取消下载");
+                });
+                return
                 const fp = encodeURI(filePath);
                 const ft = fileType;
                 const request = {
