@@ -72,14 +72,14 @@
                             <i class="el-icon-edit el-icon--left"/>
                             更改
                         </el-button>
-                        <el-button
-                            type="primary"
-                            :loading="loading"
-                            @click="calculate"
-                        >
-                            <i class="el-icon-s-platform el-icon--left"/>
-                            运行计算
-                        </el-button>
+<!--                        <el-button-->
+<!--                            type="primary"-->
+<!--                            :loading="loading"-->
+<!--                            @click="calculate"-->
+<!--                        >-->
+<!--                            <i class="el-icon-s-platform el-icon&#45;&#45;left"/>-->
+<!--                            运行计算-->
+<!--                        </el-button>-->
                         <el-button
                             type="primary"
                             @click="preserve"

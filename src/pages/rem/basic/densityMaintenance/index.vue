@@ -48,10 +48,10 @@
                             </el-button>
                             <el-button icon="el-icon-document-checked" size="mini" @click="save" type="primary">保存
                             </el-button>
-                            <el-button icon="el-icon-s-platform" size="mini" @click="dialogVisible = true"
-                                       type="primary"
-                            >运行计算
-                            </el-button>
+<!--                            <el-button icon="el-icon-s-platform" size="mini" @click="dialogVisible = true"-->
+<!--                                       type="primary"-->
+<!--                            >运行计算-->
+<!--                            </el-button>-->
                             <el-button style="float: right" type="primary" icon="el-icon-download" @click="doDownExcel()"
                             >下载
                             </el-button
