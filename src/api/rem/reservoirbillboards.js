@@ -88,6 +88,13 @@ export function queryShutDownWellStatisDetails({ endTime, injShutdownTypeCode, o
     method: "get",
   });
 }
+export function queryShutDownWellStatisDetailsDownloadFile({ endTime, injShutdownTypeCode, ogfId, pageNum, pageSize, platformId, shutdownPlanTypeCode, startTime, wellId } = {}) {
+    return request({
+        url: `${baseUrl}/reservoirBillboards/queryShutDownWellStatisDetailsDownloadFile?endTime=${ endTime || "" }&injShutdownTypeCode=${ injShutdownTypeCode || "" }&ogfId=${ ogfId || "" }&pageNum=${ pageNum || "" }&pageSize=${ pageSize || "" }&platformId=${ platformId || "" }&shutdownPlanTypeCode=${ shutdownPlanTypeCode || "" }&startTime=${ startTime || "" }&wellId=${ wellId || "" }`,
+        method: "get",
+        responseType: 'blob',
+    });
+}
 export function queryYieldTracking({ ogfId, orgId } = {}) {
   return request({
     url: `${baseUrl}/reservoirBillboards/queryYieldTracking?ogfId=${ ogfId || "" }&orgId=${ orgId || "" }`,
