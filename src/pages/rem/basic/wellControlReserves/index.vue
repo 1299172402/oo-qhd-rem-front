@@ -119,7 +119,7 @@
                                             <el-button type="primary" @click="redact" icon="el-icon-edit">编辑
                                             </el-button>
                                             <el-button type="primary" @click="save">保存</el-button>
-                                            <el-button type="primary" icon="el-icon-search">运行计算</el-button>
+<!--                                            <el-button type="primary" icon="el-icon-search">运行计算</el-button>-->
                                         </el-col>
                                     </el-row>
                                 </el-form>
