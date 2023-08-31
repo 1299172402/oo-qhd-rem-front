@@ -2676,7 +2676,7 @@ export default {
                 .z-content{
                     padding-left:36px;
                     .z-content-n{
-                        margin-top:16px;
+                        // margin-top:16px;
                         display: flex;
                         .z-row-left{
                             margin-right:60px;

@@ -199,7 +199,7 @@
                         @click="downEcharts('chartDom','分层注采量')">下载
                     </el-button
                     >
-                    <div id="main"  style="width: 100%; height: 100%"></div>
+                    <Echart ref="echartfc" :chart-data="optionfczc" width="100%" height="100%"></Echart>
                 </page-panel>
             </div>
 
@@ -341,6 +341,69 @@ export default {
             },
             residueOil: [],
             ResidueOilRank: [],
+            optionfczc:{
+                title: {
+                    text: ''
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                dataZoom: {
+                    start: 0,
+                    type: "inside",
+                },
+                legend: {
+                    textStyle: {
+                        color: "#989898"
+                    },
+                    bottom: "bottom",
+                },
+                grid: {
+                    left: '10%',
+                    right: '10%',
+                    top: '5%',
+                    bottom: '5%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'value',
+                    boundaryGap: [0, 1],
+                    axisLabel: {
+                        color: '#a9a8a8'
+                    },
+                },
+                yAxis: {
+                    type: 'category',
+                    data: '',
+                    axisLabel: {
+                        color: '#a9a8a8'
+                    }
+                },
+                series: [
+                    {
+                        name: '月注水量(10⁴m³)',
+                        type: 'bar',
+                        color: 'rgb(9,141,234)',
+                        data: '',
+                    },
+                    {
+                        name: '月配注量(10⁴m³)',
+                        type: 'bar',
+                        color: 'rgb(4,182,131)',
+                        data: ''
+                    },
+                    {
+                        name: '月产液量(10⁴m³)',
+                        type: 'bar',
+                        color: 'rgb(255,156,70)',
+                        data: ''
+                    }
+                ]
+            }
+
         }
     },
     mounted() {
@@ -462,19 +525,19 @@ export default {
                 type: 1
             }
             getStratifiedInjectionDetails(params).then((res) => {
-                this.dataList = []
-                this.injList = []
-                this.injAllocList = []
-                this.fluidProdList = []
+                let productionIntervalNo=[],inj=[],injAlloc=[],fluidProd=[]
                 res.forEach((item) => {
                     if(item.productionIntervalNo){
-                        this.dataList.push(String(item.productionIntervalNo))
-                        this.injList.push(Number(item.inj).toFixed(2))
-                        this.injAllocList.push(Number(item.injAlloc).toFixed(2))
-                        this.fluidProdList.push(Number(item.fluidProd).toFixed(2))
+                        productionIntervalNo.push(String(item.productionIntervalNo))
+                        inj.push(Number(item.inj).toFixed(2))
+                        injAlloc.push(Number(item.injAlloc).toFixed(2))
+                        fluidProd.push(Number(item.fluidProd).toFixed(2))
                     }
                 })
-                this.getMainEchart()
+                this.optionfczc.yAxis.data = productionIntervalNo
+                this.optionfczc.series[0].data = inj
+                this.optionfczc.series[1].data = injAlloc
+                this.optionfczc.series[2].data = fluidProd
             })
         },
 
@@ -488,7 +551,7 @@ export default {
             let option = {
                 legend: {
                     textStyle: {
-                        color: "#42f2f2"
+                        color: this.$store.state.setting.mode == 'dark'? '#ffffff' : "#000000"
                     },
                     bottom: "bottom",
                 },
@@ -671,83 +734,8 @@ export default {
             };
             return option;
         },
-
-        //图表
-        getMainEchart() {
-            let chartDom = document.getElementById('main');
-            let myChart = echarts.init(chartDom);
-            let option;
-            this.chartDom = echarts.init(document.getElementById("main"));
-            option = {
-                title: {
-                    text: ''
-                },
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'shadow'
-                    }
-                },
-                legend: {
-                    textStyle: {
-                        color: "#66ffff"
-                    },
-                    bottom: "bottom",
-                },
-                grid: {
-                    left: '10%',
-                    right: '10%',
-                    top: '5%',
-                    bottom: '5%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'value',
-                    boundaryGap: [0, 1],
-                    axisLabel: {
-                        color: '#a9a8a8'
-                    }
-                },
-                yAxis: {
-                    type: 'category',
-                    data: this.dataList,
-                    axisLabel: {
-                        color: '#a9a8a8'
-                    }
-                },
-                series: [
-                    {
-                        name: '月注水量(10⁴m³)',
-                        type: 'bar',
-                        color: 'rgb(9,141,234)',
-                        data: this.injList,
-                    },
-                    {
-                        name: '月配注量(10⁴m³)',
-                        type: 'bar',
-                        color: 'rgb(4,182,131)',
-                        data: this.injAllocList
-                    },
-                    {
-                        name: '月产液量(10⁴m³)',
-                        type: 'bar',
-                        color: 'rgb(255,156,70)',
-                        data: this.fluidProdList
-                    }
-                ]
-            };
-
-            option && myChart.setOption(option);
-
-        },
         downEcharts(dom,fileName){
-            let res = this.dom.getDataURL({
-                type: "png",
-                pixelRatio: 1.5,
-                backgroundColor: "#022644",
-            });
-            let name =  typeof(fileName)  == 'string' ? fileName : this.chartData.toolbox.feature.saveAsImage.name;
-            FileSaver.saveAs(res, name);
+            this.$refs.echartfc.chartDownLoad( '分层注采量');
         },
         downEchartssec(){
             this.$refs.echartChart.chartDownLoad( '单井井底流压');  
@@ -757,7 +745,25 @@ export default {
             localStorage.setItem('INTELLIGENCE', JSON.stringify(this.queryData))
             this.$router.push({name: 'intelligenceDetail', params: this.queryData})
         }
-    }
+    },
+    computed: {
+        getGlobeTheme(val) {
+            return this.$store.state.setting.mode;
+        },
+    },
+    watch: {
+        getGlobeTheme: {
+            handler(Nval) {
+                if (Nval == "dark") {
+                    this.optionfczc.legend.textStyle.color = "#fff";
+                } else {
+                    this.optionfczc.legend.textStyle.color = "#000000";
+                }
+            },
+            deep: true,
+            immediate:true
+        },
+    },
 }
 </script>
 <style lang="scss" scoped>

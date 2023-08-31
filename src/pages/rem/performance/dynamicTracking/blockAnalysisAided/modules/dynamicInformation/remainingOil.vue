@@ -5,6 +5,7 @@
             <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable @change="positionChange">
                 <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
+            <div v-if="uploadTime" style="margin-left: 20px;">上传时间：{{ uploadTime }}</div>
         </div> 
         <div class="z-echarts">
             <page-panel-new style="height:100%;margin-top:0;" show-btn>
@@ -39,6 +40,7 @@
                 selectPosition: '',
                 //层位所选择内容信息
                 position: [],
+                uploadTime: "", // 文件上传时间
             };
         },
         async mounted() {
@@ -57,10 +59,14 @@
                         if(res.data.data.length){
                             this.fileId=res.data.data[0].fileId;
                             this.filestrId=res.data.data[0].filestrId;
+                            this.uploadTime=res.data.data[0].uploadTime || "";
                             downFile(this.fileId).then((res)=>{
                                 this.src=window.URL.createObjectURL(res);
                             })
                         }else{
+                            this.fileId="";
+                            this.filestrId="";
+                            this.uploadTime="";
                             this.src="";
                         }
                     }else {
@@ -96,6 +102,10 @@
             },
             //下载功能
             doDownLoad() {
+                if(!this.fileId) {
+                    this.$message.error('无可下载内容')
+                    return
+                }
                 let fileName = '含油饱和度分布图';
                 let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
                 if (layerMess) {
@@ -118,10 +128,9 @@
         flex-direction: column;
         padding-bottom:15px;
         .z-search{
-            height:60px;
             display: flex;
             align-items: center;
-            margin-bottom:15px;
+            margin-bottom: 15px;
         }
         .z-echarts{
             width: 100%;

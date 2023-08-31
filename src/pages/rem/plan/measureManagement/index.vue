@@ -647,13 +647,61 @@
                 // this.queryParams.ogfId = selectList.ogfId;
                 //平台选中数据
                 this.selectPlatform = selectList.platformIds;
+                // 判断如果没有wellList没有当前井号，调取井号接口根据平台获取井号数据
+                let isUpdate = false;
                 // 井号选中数据
                 if(selectData.level == 4) {
                     this.wellId = "";
                 } else {
                     this.wellId = selectList.wellIds;
-
-                }               
+                    isUpdate = this.wells.map((item) => item.wellId).includes(selectList.wellIds);
+                }
+                if (!isUpdate) {
+                    this.wells = [];
+                    if (this.selectOilField ==  this.selectPlatform) {
+                        const request = {
+                            oilFieldId: this.selectOilField,
+                        };
+                        fetchProductionWells(request).then((res) => {
+                            if (res.data.code == 200) {
+                                let wellData = res.data.data.productionWells || [];
+                                if (wellData.length) {
+                                    const wellList = wellData.filter(el => el.wellName);
+                                    this.wells = this.wells.concat(wellList);
+                                }
+                            }
+                        });
+                        fetchInjectionWells(request).then((res) => {
+                            if (res.data.code == 200) {
+                                const waterWellList = res.data.data.injectionWell || [];
+                                this.wells = this.wells.concat(waterWellList);
+                            }
+                        });
+                    } else {
+                        const request = {
+                            platformId: this.selectPlatform,
+                        };
+                        fetchProductionWellsByPlatform(request).then((res) => {
+                            if (res.data.code == 200) {
+                                let wellData = res.data.data.productionWells || [];
+                                if (wellData.length) {
+                                    const wellList = wellData.filter(el => el.wellName);
+                                    this.wells = this.wells.concat(wellList);
+                                }
+                            }
+                        });
+                        fetchInjectionWellsByPlatform(request).then((res) => {
+                            if (res.data.code == 200) {
+                                const waterWellList = res.data.data.injectionWell || [];
+                                this.wells = this.wells.concat(waterWellList);
+                            }
+                        });
+                    }
+                    this.wells.unshift({
+                        wellId: '',
+                        wellName: '全部'
+                    });
+                }
             },
             //通过油田 或 平台 获得井
             getFetchWells(oilFieldId, platformId) {
