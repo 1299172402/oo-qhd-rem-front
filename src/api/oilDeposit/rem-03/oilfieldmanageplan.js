@@ -737,7 +737,19 @@ export function experienceFormulaParameter(request){
     data: request,
   });
 }
-
+/**
+ *  hwh
+ *  0502-10-注水指标管理-注水指标考核录入
+ * @param params
+ * @returns {paramsPromise}
+ */
+export function injectionAuditUpdate(params){
+  return Axios({
+    url: `${baseUrl  }/oilFieldManagePlanController/injectionAuditUpdate`,
+    method: "post",
+    data: params,
+  });
+}
 /**
  * hwh
  * 0501-08-技术指标管理-技术指标统计列表
