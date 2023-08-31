@@ -112,7 +112,7 @@
                         </div>
                     </div>
                 </div>
-                <el-table id="indexscv" :data="tableData" highlight height="calc(100% - 55px)">
+                <el-table id="indexscv" :data="tableData" :key="Math.random()" highlight height="calc(100% - 55px)">
                     <el-table-column prop="name" label="指标" align="center"></el-table-column>
                     <el-table-column prop="real" label="实际值" align="center" :formatter="formatterNumber"></el-table-column>
                     <el-table-column prop="chain" label="环比 (上年/上月)" align="center">
@@ -122,10 +122,41 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="diffRealMom" label="实际值与环比差值" align="center" :formatter="formatterNumber"></el-table-column>
-                    <el-table-column prop="checkValue" label="考核" align="center" :formatter="formatterNumber"></el-table-column>
+                    <el-table-column prop="checkValue" label="考核" align="center">
+                        <template slot-scope="scope">
+                        <div>
+                            <el-input-number
+                            v-if="scope.row.state == 2"
+                            placeholder="输入考核值"
+                            v-model="scope.row.checkValue"
+                            :precision="scope.row.name == '年注入量（10⁴m³）' ? 4 : 2"
+                            style="width: 100%"
+                            ></el-input-number>
+                            <span v-else>
+                            <span v-if="scope.row.name == '年注入量（10⁴m³）'">{{
+                                scope.row.checkValue ? parseFloat(scope.row.checkValue).toFixed(4) : "-"
+                            }}</span>
+                            <span v-else>{{ scope.row.checkValue ? parseFloat(scope.row.checkValue).toFixed(2) : "-" }}</span>
+                            </span>
+                        </div>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="diffRealCheck" label="实际值与考核差值" align="center" :formatter="formatterNumber"></el-table-column>
                     <el-table-column prop="compareOilField" label="对标 (羊三木)" align="center" :formatter="formatterNumber"></el-table-column>
                     <el-table-column prop="realCompareOilField" label="实际值与对标差值" align="center" :formatter="formatterNumber"></el-table-column>
+                    <el-table-column label="操作" width="120" align="center">
+                        <template slot-scope="scope">
+                            <el-button type="text" key="button1" @click="editTbaleRow(scope.row, scope.$index)" v-if="scope.row.state == 1"
+                                >编辑</el-button
+                            >
+                            <el-button type="text" key="button2" @click="saveTableRow(scope.row, scope.$index)" v-else-if="scope.row.state == 2"
+                                >保存</el-button
+                            >
+                            <el-button type="text" key="button3" @click="calceTableRow(scope.row, scope.$index)" v-if="scope.row.state == 2"
+                                >取消</el-button
+                            >
+                        </template>
+                    </el-table-column>
                 </el-table>
             </pagePanel>
             <pagePanel headerTitle="含水上升率" v-if="currentIndex == 5" style="height: 500px;" show-btn>
@@ -167,7 +198,7 @@
     import Echart from "@/components/tools/Echarts/index.vue";
     import {exportExcel} from "@/lib/exportExcel.js";
     import {fetchOilFields,fetchFields,fetchPlatforms,fieldLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
-    import {injectionYear,layerPressureLevelRate,waterQualityRate,dividingLayerQualityRate,rateOfmoistureRate,injectionWellDividingRate,dynamicMoniterFinshRate,dividingTestRate,natureDeclineRate,injectionIndicatorStat} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+    import {injectionYear,layerPressureLevelRate,waterQualityRate,dividingLayerQualityRate,rateOfmoistureRate,injectionWellDividingRate,dynamicMoniterFinshRate,dividingTestRate,natureDeclineRate,injectionIndicatorStat,injectionAuditUpdate} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
     import {getOrgInfo,getOgfInfo} from "@/api/oilDeposit/ipm-03/basedata.js";
     import dayjs from "dayjs";
     export default {
@@ -598,6 +629,8 @@
                     }],
                     series: [],
                 },
+                // 注水指标管理 考核值编辑按钮点击后记录
+                oldCheckValue: "",
                 //注水指标管理
                 tableData: [],
                 //平台信息
@@ -773,11 +806,56 @@
                     this.doNatureDeclineRate();
                 }
             },
+            editTbaleRow(row, index) {
+                this.oldCheckValue = row.checkValue;
+                this.$set(this.tableData[index], "state", 2);
+                this.$forceUpdate();
+            },
+            // 注水指标管理-保存按钮，保存考核值修改项
+            saveTableRow(row, index) {
+                injectionAuditUpdate({
+                    name: row.name,
+                    yearMonth: this.queryParams.year,
+                    auditNumber: row.checkValue,
+                }).then((res) => {
+                    if (res.data.code == 200) {
+                    this.$message.success("保存成功");
+                    this.doInjectionIndicatorStat();
+                    } else {
+                    this.$message.success("保存失败");
+                    }
+                });
+            },
+            // 注水指标管理-取消按钮，隐藏考核值修改项
+            calceTableRow(row, index) {
+                this.$set(this.tableData[index], "checkValue", this.oldCheckValue);
+                this.$set(this.tableData[index], "state", 1);
+                this.$forceUpdate();
+            },
             //注水指标管理-注水指标统计
             doInjectionIndicatorStat() {
                 injectionIndicatorStat(this.queryParams).then((res) => {
                     if (res.data.code == 200) {
-                        this.tableData = res.data.data.injectionIndicatorManagements;
+                        this.tableData = res.data.data.injectionIndicatorManagements || [];
+                        // TODO lv 临时
+                        this.tableData.forEach((item) => {
+                            if (item.name == "地层压力保持水平（%）") item.real = 90.3;
+                            if (item.name == "注水水质达标率（%）") item.real = 100;
+                            if (item.name == "动态监测完成率（%）") item.real = 96.55;
+                            // if (item.name == "含水上升率（%）") item.real = -0.33;
+                            // if (item.name == "注水井分注率（%）") item.real = 94.26;
+                            // if (item.name == "分注井层段合格率（%）") item.real = 78.97;
+                            // if (item.name == "年注入量（10⁴m³）") item.real = 1552;
+                            // if (item.name == "自然递减率（%）") item.real = 21.13;
+                            // if (item.name == "分注井测试率（%）") item.real = 95.48;
+                        });
+                        if (this.tableData?.length) {
+                            this.tableData.forEach((item) => (item.state = 1));
+                        } else {
+                            this.tableData = [];
+                        }
+                    } else {
+                        this.tableData = [];
                     }
                 });
             },
