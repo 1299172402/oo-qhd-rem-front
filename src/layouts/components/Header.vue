@@ -5,13 +5,13 @@
       :theme="theme"
       expand-type="popup"
       :value="active"
-      style="background: var(--bottom-light); margin-right: 0"
+      style="background: var(--bottom-light); margin-right: 0;"
     >
       <template #logo>
         <span
           v-if="showLogo"
           class="header-logo-container"
-          style="font-size: 20px; width: auto;caret-color: transparent"
+          style="font-size: 20px; width: auto;caret-color: transparent;"
           @click="goPage"
         >
           <span v-if="isTestEnvironment" class="logoText">{{ systemName }}</span>
@@ -35,7 +35,7 @@
         <i class="el-icon-arrow-right" @mousedown="scrollleftdown()" @mouseup="scrollleftup()" />
       </div>
       <template #operations>
-        <div class="operations-container" style="margin-left: 20px">
+        <div class="operations-container" style="margin-left: 20px;">
           <el-tooltip
             class="item"
             :content="$store.getters['user/tenantName']"
@@ -44,16 +44,19 @@
             <div
               class="g-row-flex-V"
               :style="{color: $store.state.setting.mode==='dark'? ' var(--light-blue-color)':'#fff'}"
-              style="font-size: 14px;font-weight: 700px;margin-left: 20px;height: 22px; max-width: 180px; margin-bottom: 4px; margin-right: 10px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden"
+              style="font-size: 14px;font-weight: 700px;
+              margin-left: 20px;height: 22px; max-width: 180px;
+              margin-bottom: 4px; margin-right: 10px;
+              white-space: nowrap; text-overflow: ellipsis; overflow: hidden;"
             >
               {{ $store.getters["user/tenantName"] }}
             </div>
           </el-tooltip>
           <!-- 搜索框 -->
           <audio ref="musicAudio" muted="muted" src="@/assets/messageVideo.wav" />
-          <message style="margin-top: 2px" @play-audio="playAudio" />
+          <message style="margin-top: 2px;" @play-audio="playAudio" />
           <notice />
-          <t-tooltip placement="bottom" content="系统设置" style="color: var(--white-color);margin-top: 3px;margin-right: 0">
+          <t-tooltip placement="bottom" content="系统设置" style="color: var(--white-color);margin-top: 3px;margin-right: 0;">
             <t-button
               theme="default"
               shape="square"
@@ -82,16 +85,16 @@
               class="header-user-btn"
               theme="default"
               variant="text"
-              style="margin: 0 0 1px -2px"
+              style="margin: 0 0 1px -2px;"
             >
               <template #icon>
                 <svg-icon
                   :icon-class="$store.state.setting.mode==='light'?'person-new':'person-new-dark'"
                   class="panelIconClass"
-                  style="margin-right: 4px"
+                  style="margin-right: 4px;"
                 />
               </template>
-              <div class="header-user-account" style="color: var(--white-color)">
+              <div class="header-user-account" style="color: var(--white-color);">
                 {{ $store.state.user.userInfo.nickName }}
                 <chevron-down-icon />
               </div>

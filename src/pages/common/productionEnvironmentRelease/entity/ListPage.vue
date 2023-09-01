@@ -99,7 +99,7 @@
               v-if="row.canEdit"
               type="text"
               size="small"
-              style="color: #f56c6c"
+              style="color: #f56c6c;"
               @click="handleDelete(row.id)"
             >
               删除

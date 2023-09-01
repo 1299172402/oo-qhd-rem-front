@@ -17,7 +17,7 @@
         </span>
         <span
           v-if="!collapsed && showLogo"
-          style="font-size: 16px"
+          style="font-size: 16px;"
           :style="{ color: formData.mode == 'light' ? '#000' : '#fff' }"
         >智能油田管理系统</span>
       </template>

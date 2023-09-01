@@ -14,22 +14,22 @@
         v-for="(item1, index) in panelList"
         :key="index"
         class="g-row-flex"
-        style="flex-wrap: wrap"
+        style="flex-wrap: wrap;"
         :style="entranceType === 'UpperLower'?'':'align-content: flex-start;'"
       >
         <!-- eslint-disable -->
         <div v-for="(item2, index) in item1" :key="index + 200" class="g-column-flex-HV">
           <!-- <div class="panelImg"></div> -->
           <div class="g-column-flex-HV panelDiv" @click="jumpLink(item2, index)" v-if="entranceType === 'UpperLower'">
-            <img :src="item2.img" alt="" style="width: 56px;height: 56px" v-if="item2.img" :style="{borderRadius: modelName === 'kanban' ? '28px' : '2px'}"/>
+            <img :src="item2.img" alt="" style="width: 56px;height: 56px;" v-if="item2.img" :style="{borderRadius: modelName === 'kanban' ? '28px' : '2px'}"/>
              <!-- TODO: Maybe change back -->
             <!-- <span v-else style="width:60px;height:60px" class="thumbnail">{{item2.name[0]}}</span> -->
             <!-- 看板中心-圆形图片 -->
-            <div v-if="!item2.img && modelName === 'kanban'" class="circleImage g-row-flex-HV" style="width: 56px;height: 56px">
+            <div v-if="!item2.img && modelName === 'kanban'" class="circleImage g-row-flex-HV" style="width: 56px;height: 56px;">
                 {{ item2.name[0] }}
             </div>
             <!-- 应用中心-方形图片 -->
-            <div v-if="!item2.img && modelName === 'application'" class="squareImage g-row-flex-HV" style="width: 56px;height: 56px">
+            <div v-if="!item2.img && modelName === 'application'" class="squareImage g-row-flex-HV" style="width: 56px;height: 56px;">
                 {{ item2.name[0] }}
             </div>
             <div style="width: 68px;text-align: center;max-width: 68px;text-overflow: ellipsis;overflow: hidden;white-space: pre;" :title="item2.name" :style="{color:$store.state.setting.mode==='dark'?'#FFFFFF':'#606266'}">
@@ -48,19 +48,19 @@
       </el-carousel-item>
     </el-carousel>
     <!-- 全屏展示 -->
-    <div v-else class="g-w100 g-row-flex" style="flex-wrap: wrap;height: auto">
-        <div v-for="(item, index) in panels" :key="'fullScreen_'+index" class="g-column-flex" style="margin-top: 5px">
+    <div v-else class="g-w100 g-row-flex" style="flex-wrap: wrap;height: auto;">
+        <div v-for="(item, index) in panels" :key="'fullScreen_'+index" class="g-column-flex" style="margin-top: 5px;">
             <div class="g-column-flex-H panelDiv" @click="jumpLink(item, index)" v-if="entranceType === 'UpperLower'">
-                <img :src="item.img" alt="" style="width: 56px;height: 56px" v-if="item.img"/>
+                <img :src="item.img" alt="" style="width: 56px;height: 56px;" v-if="item.img"/>
                 <!-- <div v-else class="bgImage g-row-flex-HV" style="width: 56px;height: 56px">
                     {{ item.name[0] }}
                 </div> -->
                 <!-- 看板中心-圆形图片 -->
-                <div v-if="!item.img && modelName === 'kanban'" class="circleImage g-row-flex-HV" style="width: 56px;height: 56px">
+                <div v-if="!item.img && modelName === 'kanban'" class="circleImage g-row-flex-HV" style="width: 56px;height: 56px;">
                     {{ item.name[0] }}
                 </div>
                 <!-- 应用中心-方形图片 -->
-                <div v-if="!item.img && modelName === 'application'" class="squareImage g-row-flex-HV" style="width: 56px;height: 56px">
+                <div v-if="!item.img && modelName === 'application'" class="squareImage g-row-flex-HV" style="width: 56px;height: 56px;">
                     {{ item.name[0] }}
                 </div>
                     <div style="width: 68px;text-align: center;max-width: 68px;text-overflow: ellipsis;overflow: hidden;white-space: pre;" :title="item.name" :style="{color:$store.state.setting.mode==='dark'?'#FFFFFF':'#606266'}">

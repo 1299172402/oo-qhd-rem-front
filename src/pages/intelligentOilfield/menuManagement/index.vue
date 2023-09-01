@@ -20,7 +20,7 @@
         <el-form-item v-if="showAppSearch" label="所属应用" prop="appId">
           <el-select
             v-model="queryParams.appId"
-            style="width: 240px"
+            style="width: 240px;"
             placeholder="请选择所属应用"
             clearable
             filterable
@@ -38,7 +38,7 @@
             v-model="queryParams.status"
             placeholder="请选择状态"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="dict in dict.type.sys_normal_disable"
@@ -103,7 +103,7 @@
         header-cell-class-name="table_header"
         :cell-style="{ padding: '2px' }"
         :cell-class-name="cellClassName"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column
@@ -306,7 +306,7 @@
                     slot="prefix"
                     :icon-class="form.icon"
                     class="el-input__icon"
-                    style="height: 32px; width: 16px"
+                    style="height: 32px; width: 16px;"
                   />
                   <i v-else slot="prefix" class="el-icon-search el-input__icon" />
                 </el-input>
@@ -331,7 +331,7 @@
             <el-form-item label="菜单排序" prop="orderNum">
               <el-input-number
                 v-model="form.orderNum"
-                style="width: 210px"
+                style="width: 210px;"
                 controls-position="right"
                 :min="0"
                 @input.native="orderNumChange"
@@ -912,11 +912,11 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-::v-deep .indentationClass .cell{
+::v-deep .indentationClass .cell {
   margin-left: 24px;
 }
 
-::v-deep textarea{
+::v-deep textarea {
   resize: none;
   font: var(--td-font-body-medium);
   height: 34px;
@@ -924,7 +924,7 @@ export default {
   font-size: 14px;
   overflow: hidden;
   white-space: nowrap;
-  padding-right: 10px
+  padding-right: 10px;
 }
 
 .app-container {

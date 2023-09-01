@@ -7,7 +7,7 @@
         ref="queryForm"
         :model="queryParams"
         :inline="true"
-        style="margin-top: 18px"
+        style="margin-top: 18px;"
       >
         <el-form-item label="指标名称" prop="indexName">
           <el-input
@@ -15,7 +15,7 @@
             placeholder="请输入指标名称"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -26,7 +26,7 @@
           </el-select> -->
           <el-select
             v-model="queryParams.indexModule"
-            style="width: 240px"
+            style="width: 240px;"
             placeholder="请选择"
             clearable
             size="small"
@@ -59,14 +59,14 @@
         </el-form-item>
       </el-form>
     </header-search>
-    <page-panel-new header-title="数据指标列表" style="height: calc(100% - 100px)">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
+    <page-panel-new header-title="数据指标列表" style="height: calc(100% - 100px);">
+      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px;">
         <el-col :span="1.5">
           <el-button
             v-hasPermi="['system:index:add']"
             type="primary"
             size="mini"
-            style="height: 40px"
+            style="height: 40px;"
             @click="handleAdd"
           >
             新增
@@ -80,7 +80,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '2px', 'text-align': 'center' }"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column label="序号" type="index" width="120" />
@@ -196,7 +196,7 @@
             </el-select> -->
           <el-select
             v-model="addform.indexModule"
-            style="width: 100%"
+            style="width: 100%;"
             placeholder="请选择"
             clearable
             size="small"
@@ -279,7 +279,7 @@
             </el-select> -->
           <el-select
             v-model="form.indexModule"
-            style="width: 100%"
+            style="width: 100%;"
             placeholder="请选择"
             clearable
             size="small"

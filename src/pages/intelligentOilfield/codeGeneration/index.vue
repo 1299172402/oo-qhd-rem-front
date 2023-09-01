@@ -30,7 +30,7 @@
         <el-date-picker
           v-model="dateRange"
           size="small"
-          style="width: 240px"
+          style="width: 240px;"
           value-format="yyyy-MM-dd"
           type="daterange"
           range-separator="-"
@@ -98,7 +98,7 @@
         </el-button>
       </el-col>
     </el-row>
-    <page-panel header-title="代码生成" style="height: 600px">
+    <page-panel header-title="代码生成" style="height: 600px;">
       <el-table
         v-loading="loading"
         :data="tableList"

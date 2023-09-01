@@ -6,7 +6,7 @@
       <el-form
         v-show="showSearch"
         ref="queryForm"
-        style="margin-top: 18px"
+        style="margin-top: 18px;"
         :model="queryParams"
         :inline="true"
       >
@@ -51,7 +51,7 @@
         <el-col :span="1.5">
           <el-button
             v-hasPermi="['system:role:add']"
-            style="margin-bottom: 20px"
+            style="margin-bottom: 20px;"
             type="primary"
             plain
             size="mini"

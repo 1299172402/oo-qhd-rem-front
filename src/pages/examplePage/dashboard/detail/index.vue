@@ -28,14 +28,14 @@
         <t-card :class="{ 'dashboard-detail-card': true }" title="采购商品申请趋势" subtitle="(件)">
           <template #actions>
             <t-date-range-picker
-              style="width: 250px"
+              style="width: 250px;"
               :default-value="LAST_7_DAYS"
               theme="primary"
               mode="date"
               @change="onMaterialChange"
             />
           </template>
-          <div id="lineContainer" ref="lineContainer" style="width: 100%; height: 410px" />
+          <div id="lineContainer" ref="lineContainer" style="width: 100%; height: 410px;" />
         </t-card>
       </t-col>
       <t-col :xs="12" :xl="3">
@@ -50,7 +50,7 @@
     <t-card :class="{ 'dashboard-detail-card': true }" title="采购商品满意度分布" class="row-margin">
       <template #actions>
         <t-date-range-picker
-          style="display: inline-block; margin-right: 8px; width: 250px"
+          style="display: inline-block; margin-right: 8px; width: 250px;"
           :default-value="LAST_7_DAYS"
           theme="primary"
           mode="date"
@@ -58,7 +58,7 @@
         />
         <t-button>导出数据</t-button>
       </template>
-      <div id="scatterContainer" style="width: 100%; height: 374px" />
+      <div id="scatterContainer" style="width: 100%; height: 374px;" />
     </t-card>
   </div>
 </template>

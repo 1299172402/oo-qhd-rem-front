@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; height: 100%" class="pageBox">
+  <div style="width: 100%; height: 100%;" class="pageBox">
     <header-search class="g-w100 g-h100 colon">
       <el-form
         ref="queryForm"
@@ -42,7 +42,7 @@
             新增
           </el-button>
         </el-col>
-        <el-col :span="4" style="text-align: right">
+        <el-col :span="4" style="text-align: right;">
           <el-button
             v-hasPermi="['system:logininfor:export']"
             type="primary"
@@ -58,7 +58,7 @@
         header-cell-class-name="table_header"
         :cell-style="{ padding: '3px', 'text-align': 'center' }"
         :data="tableData"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column type="index" label="序号" width="100" />
@@ -75,7 +75,7 @@
           <el-button type="text">
             禁用
           </el-button>
-          <el-button type="text" style="color: #f56c6c">
+          <el-button type="text" style="color: #f56c6c;">
             删除
           </el-button>
         </el-table-column>

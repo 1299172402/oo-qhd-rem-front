@@ -24,23 +24,29 @@
   width: 100%;
   height: 100%;
   z-index: 100000;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0, 0, 0, 0.45);
 
   .m-modal {
     width: 420px;
     margin: 0 auto;
-    color: rgba(0,0,0,0.65);
+    color: rgba(0, 0, 0, 0.65);
     font-size: 14px;
     line-height: 1.5;
 
     .m-modal-content {
       position: relative;
       border-radius: 4px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      clip-path: polygon(20px 0, calc(100% - 20px) 0,
-      100% 0, 100% calc(100% - 20px),
-      calc(100% - 20px) 100%, 20px 100%,
-      0 calc(100%), 0 20px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      clip-path: polygon(
+        20px 0,
+        calc(100% - 20px) 0,
+        100% 0,
+        100% calc(100% - 20px),
+        calc(100% - 20px) 100%,
+        20px 100%,
+        0 calc(100%),
+        0 20px
+      );
 
       .m-spin-dot { // 绝对定位，并设置水平垂直居中
         position: absolute;
@@ -55,7 +61,7 @@
         transform: rotate(45deg); /* Opera */
         animation: rotate 1.2s linear infinite;
         @keyframes rotate {
-          100% {transform: rotate(405deg);}
+          100% { transform: rotate(405deg); }
         }
 
         .u-dot-item { // 单个圆点样式
@@ -67,7 +73,7 @@
           opacity: 0.3;
           animation: spin-move 1s linear infinite alternate;
           @keyframes spin-move {
-            100% {opacity: 1;}
+            100% { opacity: 1; }
           }
         }
 
@@ -151,7 +157,7 @@
             .u-title {
               font-size: 16px;
               font-weight: 500;
-              color: rgba(0,0,0,0.85);
+              color: rgba(0, 0, 0, 0.85);
               line-height: 24px;
               width: calc(100% - 40px);
             }
@@ -160,7 +166,7 @@
           .u-content {
             margin-left: 40px;
             margin-top: 8px;
-            color: rgba(0,0,0,0.65);
+            color: rgba(0, 0, 0, 0.65);
             font-size: 14px;
           }
         }
@@ -175,11 +181,11 @@
             padding: 0 15px;
             font-size: 14px;
             border-radius: 4px;
-            color: rgba(0,0,0,0.65);
+            color: rgba(0, 0, 0, 0.65);
             background: #fff;
             border: 1px solid #d9d9d9;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.645,0.045,0.355,1);
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 
             &:hover {
               color: #40a9ff;
@@ -195,7 +201,7 @@
             font-size: 14px;
             border-radius: 4px;
             color: #fff;
-            transition: all 0.3s cubic-bezier(0.645,0.045,0.355,1);
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
             cursor: pointer;
           }
 

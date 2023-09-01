@@ -5,10 +5,10 @@
     :class="isMax ? 'maxPage' : 'minPage'"
     :style="{background: $store.state.setting.mode === 'dark' ? isMax ? '#032a3b !important' : 'transparent' : '#FFFFFF'}"
   >
-    <div style="width: 100%;height: 100%" :class="isMax ? $store.state.setting.mode === 'dark' ? 'maxDetail' : '' : ''">
+    <div style="width: 100%;height: 100%;" :class="isMax ? $store.state.setting.mode === 'dark' ? 'maxDetail' : '' : ''">
       <div
         v-if="showBtn"
-        style="width: 100%;text-align: right"
+        style="width: 100%;text-align: right;"
         class="maxDivBox"
       >
         <el-tooltip
@@ -75,8 +75,8 @@ export default {
   margin: 0;
 }
 
-.maxDetail{
-  background-image: linear-gradient(360deg, rgba(0, 68, 115, 0.64) 0%, rgba(0, 72, 122, 0.16) 100%), url('/src/assets/backgroundImg.png');
+.maxDetail {
+  background-image: linear-gradient(360deg, rgba(0, 68, 115, 0.64) 0%, rgba(0, 72, 122, 0.16) 100%), url("/src/assets/backgroundImg.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

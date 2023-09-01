@@ -61,7 +61,7 @@
               v-hasPermi="['system:user:appRole:remove']"
               type="text"
               icon="el-icon-delete"
-              style="color: #ff4d4f"
+              style="color: #ff4d4f;"
               @click="handleDelete(scope.row)"
             >
               删除

@@ -24,7 +24,7 @@
         <div
           v-if="tableData.length > 0"
           ref="listDiv"
-          style="height: 400px; overflow-y: scroll"
+          style="height: 400px; overflow-y: scroll;"
           class="narrow-scrollbar"
           :split="true"
         >
@@ -88,7 +88,7 @@
         theme="default"
         shape="square"
         variant="text"
-        style="background: transparent; border: 0"
+        style="background: transparent; border: 0;"
         @click="updateData"
       >
         <!-- <notification-icon style="color: var(--white-color);"/> -->
@@ -386,7 +386,7 @@ export default Vue.extend({
 </script>
 
 <style>
-.t-badge--circle{
+.t-badge--circle {
   color: transparent;
   width: 10px;
   height: 11px;

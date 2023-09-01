@@ -79,7 +79,7 @@
             配置
           </el-button>
         </el-col>
-        <el-col :span="4" style="text-align: right">
+        <el-col :span="4" style="text-align: right;">
           <el-button
             v-hasPermi="['message:export']"
             type="primary"
@@ -96,7 +96,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '2px', 'text-align': 'center' }"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column

@@ -1,5 +1,5 @@
 <template>
-  <page-panel header-title="生产环境发布申请单填写" style="height: calc(100% - 40px)">
+  <page-panel header-title="生产环境发布申请单填写" style="height: calc(100% - 40px);">
     <edit-model
       :is-audit="isAudit"
       @cancel="handleReturn"
@@ -39,7 +39,7 @@
             </template>
           </el-input>
         </el-form-item>
-        <div style="width: 100%">
+        <div style="width: 100%;">
           <div>申请表信息</div>
           <hr>
         </div>

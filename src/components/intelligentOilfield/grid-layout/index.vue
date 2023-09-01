@@ -58,12 +58,12 @@
           <svg-icon
             v-show="isOperation"
             icon-class="dark-operate"
-            style="position: absolute;bottom: 0; right: 0; opacity: 1; fill: green; font-size: 22px"
+            style="position: absolute;bottom: 0; right: 0; opacity: 1; fill: green; font-size: 22px;"
           />
         </div>
         <div style="position: relative;z-index: 1;">
           <div class="operateBtn g-row-flex">
-            <i v-show="isOperation" class="el-icon-rank vue-draggable-handle" style="margin: 0 0 0 10px" />
+            <i v-show="isOperation" class="el-icon-rank vue-draggable-handle" style="margin: 0 0 0 10px;" />
           </div>
         </div>
         <component :is="getContent(item.name)" :current-resize-list="currentResizeList" class="no-drag" />

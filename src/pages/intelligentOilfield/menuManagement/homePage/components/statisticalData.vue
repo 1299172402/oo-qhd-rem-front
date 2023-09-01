@@ -1,6 +1,6 @@
 <!-- 统计数据组件 -->
 <template>
-  <div style="font-size: 20px" class="g-w100 g-h100">
+  <div style="font-size: 20px;" class="g-w100 g-h100">
     <el-dialog
       title="内容设置-统计数据"
       :visible.sync="openDialog"
@@ -23,8 +23,8 @@
     </el-dialog>
     <info-window info-width="100%" info-height="100%" header-title="统计数据">
       <template #titleContent>
-        <div style="width: 100px;cursor: pointer" @click="editContent">
-          <i class="el-icon-edit" style="font-size: 14px"><span>编辑内容</span></i>
+        <div style="width: 100px;cursor: pointer;" @click="editContent">
+          <i class="el-icon-edit" style="font-size: 14px;"><span>编辑内容</span></i>
         </div>
       </template>
       <!-- <div
@@ -47,7 +47,7 @@
           }" -->
       <div
         id="myBox"
-        style="padding: 20px; justify-content: space-between; overflow: scroll; flex-wrap: wrap"
+        style="padding: 20px; justify-content: space-between; overflow: scroll; flex-wrap: wrap;"
         class="g-row-flex g-h100 divBox"
         :style="{ flexWrap: echartsList.length > 5 ? (newWPx <= 938 && newWPx !== 0 ? 'wrap' : 'nowrap') : 'wrap' }"
       >
@@ -55,7 +55,7 @@
           v-for="(item, index) in echartsList"
           :key="index"
           class="indexCenter"
-          style="font-size: 0"
+          style="font-size: 0;"
           :style="{
             margin:
               newWPx <= 938 && newWPx !== 0

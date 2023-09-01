@@ -62,7 +62,8 @@
                 v-for="(items, index1) in item"
                 :key="index1"
                 class="g-column-flex-H"
-                style="position: relative; justify-content: center; align-items: center; flex-wrap: wrap; cursor: pointer; width: 6.7%; height: 102px;min-width: 6.6%"
+                style="position: relative; justify-content: center; align-items: center; flex-wrap: wrap; cursor: pointer;
+                width: 6.7%; height: 102px;min-width: 6.6%;"
                 @click="toClick(items.boardUrl)"
               >
                 <img
@@ -70,14 +71,14 @@
                   :src="items.imgUrl?items.imgUrl:''"
                   alt=""
                   class="imgSetting"
-                  style="width: 56px;height: 56px;border-radius: 28px"
+                  style="width: 56px;height: 56px;border-radius: 28px;"
                   @error="imgError(items)"
                 >
                 <!-- 增加未上传图标显示默认图标+首字母 -->
                 <!-- <div v-else class="bgImage g-row-flex-HV" style="width: 40px;height: 40px">
                   {{ items.boardName[0] }}
                 </div> -->
-                <div v-else class="circleImage g-row-flex-HV" style="width: 56px;height: 56px">
+                <div v-else class="circleImage g-row-flex-HV" style="width: 56px;height: 56px;">
                   {{ items.boardName[0] }}
                 </div>
                 <el-tooltip

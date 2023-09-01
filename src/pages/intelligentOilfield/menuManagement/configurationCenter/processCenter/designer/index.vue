@@ -4,7 +4,7 @@
     <header-search class="g-w100 g-h100">
       <el-form
         v-show="showSearch"
-        style="margin-top: 18px"
+        style="margin-top: 18px;"
         :model="queryParams"
         :inline="true"
         @keyup.enter.native="searchQuery"
@@ -49,7 +49,7 @@
       </el-form>
     </header-search>
 
-    <page-panel-new header-title="流程设计" style="height: calc(100% - 100px)">
+    <page-panel-new header-title="流程设计" style="height: calc(100% - 100px);">
       <el-row :gutter="10" class="mb8">
         <el-col :span="1.5">
           <template v-if="$route.query.identify">
@@ -75,7 +75,7 @@
           />
         </el-col>
       </el-row>
-      <div class="footer-box" style="border: none;height: calc(100% - 120px)">
+      <div class="footer-box" style="border: none;height: calc(100% - 120px);">
         <ul class="flow-list list-height">
           <li
             v-for="item in dataSource"
@@ -199,7 +199,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-.app-container .pagination-container{
+.app-container .pagination-container {
   position: relative;
 }
 

@@ -20,7 +20,7 @@
           <div
             id="stokeContainer"
             ref="stokeContainer"
-            style="width: 100%; height: 351px"
+            style="width: 100%; height: 351px;"
             class="dashboard-chart-container"
           />
         </t-card>

@@ -32,7 +32,7 @@
         >
           <template #icon>
             <!-- 只要不是一级路由就占位儿 -->
-            <span style="color: transparent">{{ item.meta.hasOwnProperty("single") ? "" : "##" }}</span>
+            <span style="color: transparent;">{{ item.meta.hasOwnProperty("single") ? "" : "##" }}</span>
             <svg-icon v-if="typeof item.icon === 'string' && item.icon && item.icon !== '#'" class="svgIconClass" :icon-class="item.icon" />
             <!-- <t-icon v-if="typeof item.icon === 'string' && item.icon" :name="item.icon" /> -->
             <render-fn-icon :item="item" />
@@ -49,9 +49,9 @@
         >
           <template #icon>
             <!-- 只要不是一级路由就占位儿 -->
-            <span style="color: transparent">{{ item.meta.hasOwnProperty("single") ? "" : "##" }}</span>
+            <span style="color: transparent;">{{ item.meta.hasOwnProperty("single") ? "" : "##" }}</span>
             <!-- 三级路由最后一项占位儿 -->
-            <span v-if="item.isThirdRouter" style="color: transparent">##</span>
+            <span v-if="item.isThirdRouter" style="color: transparent;">##</span>
             <svg-icon
               v-if="typeof item.icon === 'string' && item.icon && item.icon !== '#'"
               class="svgIconClass"
@@ -81,7 +81,7 @@
             :icon-class="item.icon"
           />
           <!-- 二级路由且不带图标占位儿 -->
-          <span v-else style="color: transparent">##</span>
+          <span v-else style="color: transparent;">##</span>
           <render-fn-icon :item="item" />
         </template>
         <template #title v-else>
@@ -91,7 +91,7 @@
             :icon-class="item.icon"
           />
           <!-- 二级路由且不带图标占位儿 -->
-          <span v-else style="color: transparent">##</span>
+          <span v-else style="color: transparent;">##</span>
           <!-- <t-icon v-if="typeof item.icon === 'string' && item.icon&&item.icon!=='#'" :name="item.icon" /> -->
           <render-fn-icon :item="item" />
           {{ item.title }}
@@ -114,7 +114,7 @@
             <div :class="{ secondTitle: true, secondDefault: items.children.length > 0 }" @click="secondMenu(items)">
               {{ items.title }}
             </div>
-            <div style="display: flex; flex-wrap: wrap">
+            <div style="display: flex; flex-wrap: wrap;">
               <template v-if="items.children">
                 <div class="thirdmenu" v-for="itemss in items.children">
                   <router-link :to="{ path: itemss.path }">

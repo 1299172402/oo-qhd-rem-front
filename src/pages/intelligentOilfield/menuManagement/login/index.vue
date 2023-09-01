@@ -3,7 +3,7 @@
     <div class="logoDiv" />
     <div class="login-Bg">
       <div
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :style="{
           background: currentModel == 'dark' ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0)',
         }"

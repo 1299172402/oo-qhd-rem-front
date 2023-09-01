@@ -6,7 +6,7 @@
       <el-form
         v-show="showSearch"
         ref="queryForm"
-        style="margin-top: 18px"
+        style="margin-top: 18px;"
         :model="queryParams"
         :inline="true"
         label-width="68px"

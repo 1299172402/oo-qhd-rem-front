@@ -2,14 +2,14 @@
 <template>
   <div :style="{width: infoWidth,height:infoHeight,boxShadow: $store.state.setting.mode==='dark'?'': '0px 0px 10px 0px rgba(144,147,153,0.3)'}" class="g-w100" :class="isFull? 'maxPage':'minPage'">
     <div v-if="isFull" class="t-layout g-w100 g-h100 posBg" />
-    <div class="g-w100 g-h100" style="background: white; position: absolute;z-index: -1" :style="{background: $store.state.setting.mode==='dark'?'transparent':'#fff'}" />
+    <div class="g-w100 g-h100" style="background: white; position: absolute;z-index: -1;" :style="{background: $store.state.setting.mode==='dark'?'transparent':'#fff'}" />
     <!-- TODO: Maybe change back -->
     <!-- <div class="infoHeader g-row-flex-V" :style="{background: $store.state.setting.mode==='dark'?'linear-gradient(to right, rgba(0, 202, 255, 0.4), var(--opacity-blue-bg2))':'linear-gradient(to right, var(--only-light-blue-color), rgba(0, 96, 166, 0.2))',color:$store.state.setting.mode==='dark'?'var(--light-blue-color)':'var(--white-color)'}"> -->
     <div class="infoHeader g-row-flex-V infoHeaderBg" :style="{color:$store.state.setting.mode==='dark'?'var(--light-blue-color)':'#0075e9', background: $store.state.setting.mode==='light' ? '#0075e9'?.value : ''}">
       <div
         class="headerTitle"
         :title="headerTitle"
-        style="width: 100%"
+        style="width: 100%;"
         :style="{color: headerStyle.color, color: $store.state.setting.mode==='light' ? '#0075e9' : ''}"
       >
         {{ headerTitle }}
@@ -151,7 +151,7 @@ export default {
   /* border: 1px solid #ddd; */
 
   /* border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3; */
-  background: linear-gradient(360deg, rgba(0,68,115,0.64), rgba(0,72,122,0.16) 100%);
+  background: linear-gradient(360deg, rgba(0, 68, 115, 0.64), rgba(0, 72, 122, 0.16) 100%);
 }
 
 .titleStyle {
