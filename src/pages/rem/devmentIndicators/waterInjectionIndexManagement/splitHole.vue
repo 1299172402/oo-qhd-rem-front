@@ -118,16 +118,11 @@
                     companyId: "715AD1CD60484BB59E737CD18A9DE44A", // 作业公司
                     oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F", // 油田
                     platFormId: "", // 平台
-                    dates: [dayjs().format("YYYY-01-01"), dayjs().format("YYYY-MM-DD")], // 时间范围集合
+                    dates: [dayjs().format("YYYY-01-01"), dayjs().subtract(1, "day").format("YYYY-MM-DD")], // 时间范围集合
                     beginDate: dayjs().format("YYYY-01-01"), // 开始时间
-                    endDate: dayjs().format("YYYY-MM-DD"), // 结束时间
-                    // TODO lv 默认
-                    // month: dayjs().format("YYYY-MM"), // 分注井层段合格率明细 日期选择
-                    // date: dayjs().format("YYYY-MM-DD"), // 单井层段合格明细 日期选择
-                    month: "2023-07", // 分注井层段合格率明细 日期选择
-                    date: "2023-07-31", // 单井层段合格明细 日期选择
-                    // pageNum: 1,
-                    // pageSize: 9999,
+                    endDate: dayjs().subtract(1, "day").format("YYYY-MM-DD"), // 结束时间
+                    month: dayjs().subtract(1, "day").format("YYYY-MM"), // 分注井层段合格率明细 日期选择
+                    date: dayjs().subtract(1, "day").format("YYYY-MM-DD"), // 单井层段合格明细 日期选择
                     isDesc: 1,
                 },
                 // 油田名称
