@@ -34,10 +34,10 @@
             </el-form>
         </headerSearch>
         <pagePanel headerTitle="人员计划" style="height: calc(100% - 20px)">
-            <pagePanel headerTitle="平台人数对比" style="margin-top:0px;height: calc(50% - 20px)">
+            <pagePanel headerTitle="平台人数对比" style="margin-top:0px;height: calc(40% - 20px)">
                 <Echart :chart-data="histogram" height="100%"></Echart>
             </pagePanel>
-            <pagePanel headerTitle="人员类型概况" style="height: 51%;overflow-y: hidden">
+            <pagePanel headerTitle="人员类型概况" style="height: 61%;overflow-y: hidden">
                 <el-button icon="el-icon-download"  type="primary" style="float:right" @click="downtable">下载</el-button>
                 <el-table
                     highlight
@@ -178,7 +178,7 @@ export default {
                     show: true
                 },
                 legend: {
-                    left: 'left',
+                    bottom: '-4%',
                     padding: [5, 100],
                     icon: 'rect',
                     itemWidth: 12,
@@ -191,10 +191,10 @@ export default {
                     }
                 },
                 grid: {
-                    top: 30,
+                    top: 10,
                     left: 40,
                     right: 10,
-                    bottom: 30
+                    bottom: 35
                 },
                 xAxis: [
                     {
@@ -203,10 +203,12 @@ export default {
                         axisLabel: {
                             color: '#8FA4CC',
                             fontSize: 14,
+                            interval: 0, 
                         },
                         axisTick: {
                             show: false
                         },
+                        
                         axisLine: {
                             lineStyle: {
                                 //color: '#979797'
@@ -378,9 +380,9 @@ export default {
                 let y1 = [];
                 for (let i in list) {
                     if (list.hasOwnProperty(i)) {
-                        if (list[i].prodPlatFormName === '渤海世纪') {
+                        if (list[i].prodPlatFormName === '海洋石油109(渤海世纪)') {
                             //折线图
-                            x.push('FPSO');
+                            x.push('海洋石油109(渤海世纪)');
                             y.push(list[i].mineStaff);//waterTimeRate
                             y1.push(list[i].littleSum);
                         } else {
