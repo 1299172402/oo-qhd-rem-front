@@ -369,10 +369,40 @@
                         let legendData = [];
                         let seriesData = [];
                         let xData = [];
-                        let xSet = new Set();
-
+                        // TODO lv 临时
+                        // let xSet = new Set();
+                        let xSet = [];
                         let resData = res.data.data;
-                        let barCharts = resData?.chart?.linearDataSets;
+                        // TODO lv 临时
+                        // let barCharts = resData?.chart?.linearDataSets;
+                        let barCharts = [
+                            {
+                            label: "",
+                            color: null,
+                            linearData: [
+                                {
+                                label: "2020",
+                                value: 34.85,
+                                description: null,
+                                },
+                                {
+                                label: "2021",
+                                value: 80.09,
+                                description: null,
+                                },
+                                {
+                                label: "2022",
+                                value: 100,
+                                description: null,
+                                },
+                                {
+                                label: "2023",
+                                value: 96.55,
+                                description: null,
+                                },
+                            ],
+                            },
+                        ];
                         this.tableData = resData.tableList ? resData.tableList[0] : [];
                         barCharts.forEach((item, index) => {
                             legendData.push(item.label);
@@ -407,15 +437,19 @@
                             barData.forEach((dot, index) => {
                                 let point = [];
                                 point.push(dot.label.substring(0, 7));
-                                xSet.add(dot.label);
+                                // TODO lv 临时
+                                // xSet.add(dot.label);
+                                xSet.push(dot.label.substring(0, 7));
                                 point.push(dot.value);
                                 seriesMess.push(point);
                             });
                             series.data = seriesMess;
                             seriesData.push(series);
                         });
-                        xData = Array.from(xSet).sort();
-                        this.dynamicDetectionCompletionRate.xAxis.data = xData;
+                        // TODO lv 临时
+                        // xData = Array.from(xSet).sort();
+                        // this.formationPressureRemainsLevel.xAxis.data = xData;
+                        this.dynamicDetectionCompletionRate.xAxis.data = xSet;
                         this.dynamicDetectionCompletionRate.legend.data = legendData;
                         this.dynamicDetectionCompletionRate.series = seriesData;
                         this.dynamicDetectionCompletionRate.title.text =

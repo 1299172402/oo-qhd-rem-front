@@ -296,9 +296,9 @@
                 measureVersionSelect: [
                     // {label: '全部',value: ''},
                     {label:'分公司考核',value:'002003'},
-                    {label:'分公司奋斗',value:'001003'},
-                    {label:'有限考核',value:'002002'},
-                    {label:'有限奋斗',value:'001002'},
+                    {label:'分公司奋斗',value:'001'},
+                    {label:'有限考核',value:'002'},
+                    {label:'有限奋斗',value:'004002'},
                     {label:'1+11', value:'003003001'},
                     {label:'2+10',value:'003003002'},
                     {label:'3+9', value:'003003003'},

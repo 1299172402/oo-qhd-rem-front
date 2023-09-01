@@ -378,7 +378,7 @@ export default {
                 let y1 = [];
                 for (let i in list) {
                     if (list.hasOwnProperty(i)) {
-                        if (list[i].prodPlatFormName === '渤海世纪') {
+                        if (list[i].prodPlatFormName === '海洋石油109(渤海世纪)') {
                             //折线图
                             x.push('FPSO');
                             y.push(list[i].mineStaff);//waterTimeRate
