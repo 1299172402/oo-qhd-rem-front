@@ -1,7 +1,7 @@
 <!--化验数据-->
 <template>
   <div class="z-main">
-    <page-panel style="width: 100%; height: 100%; margin-top: 0" headerTitle="原油分析化验数据" show-btn>
+    <page-panel style="width: 100%; height: 100%; margin-top: 0" headerTitle="采出水化验数据" show-btn>
       <el-table
         id="tableData"
         :data="tableData"
@@ -15,13 +15,18 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       >
         <el-table-column type="index" label="序号" width="80"></el-table-column>
-        <el-table-column prop="borepipeNo" label="井号"></el-table-column>
-        <el-table-column prop="oilAnalyResultId" label="样品深度" :formatter="toPrecise2"></el-table-column>
-        <el-table-column prop="testItemId" :label="`蜡含量\n (%)`" :formatter="toPrecise2"></el-table-column>
-        <el-table-column prop="datasetClass" :label="`原油密度\n (g/cm³)`" :formatter="toPrecise2"></el-table-column>
-        <el-table-column prop="sampleId" :label="`粘度\n (mPa.s)`" :formatter="toPrecise2"></el-table-column>
-        <el-table-column prop="remark" label="备注"></el-table-column>
-        <!-- <el-table-column prop="date" label="日期" width="100">
+        <el-table-column prop="well_name" label="井号" align="center"></el-table-column>
+        <el-table-column prop="sample_depth" :label="`样品深度`" align="center" min-width="130"></el-table-column>
+        <el-table-column prop="ca" :label="`钙离子`" align="center" min-width="130"></el-table-column>
+        <el-table-column prop="hco3" :label="`镁离子`" align="center" min-width="130"></el-table-column>
+        <el-table-column
+          prop="total_mineralization"
+          :label="`样品总矿化度`"
+          align="center"
+          min-width="130"
+        ></el-table-column>
+        <!-- 
+                    <el-table-column prop="date" label="日期" width="100">
                         <template slot-scope="scope">
                           <span>{{scope.row.date | dateTimeFormat}}</span>
                         </template>
@@ -42,7 +47,7 @@
 </template>
 
 <script>
-import { testReport } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
+import { getWellAssay } from "@/api/oilDeposit/ipm-02/injectsinglewell.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 export default {
   filters: {
@@ -75,26 +80,28 @@ export default {
     doSearch() {
       let request = {
         ogfId: this.oilFeildId,
-        platformId: this.platform,
-        wellId: this.wellId,
+        platId: this.platform,
+        borepipeId: this.wellId,
+        page: 1,
+        pageSize: 99999,
       };
-      testReport(request).then((res) => {
-        if (res.data.code == 200) {
-          this.tableData = res.data.data.oilResults;
-          this.tableData1 = res.data.data.results;
+      getWellAssay(request).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.tableData = data.data.data.rows;
         } else {
           this.tableData = [];
-          this.tableData1 = [];
         }
       });
-    },
-    // 表格格式化方法 - 数值只保留两位小数
-    toPrecise2(row, column) {
-      if (!isNaN(parseFloat(row[column.property])) && typeof parseFloat(row[column.property]) === "number") {
-        return parseFloat(row[column.property]).toFixed(2);
-      } else {
-        return row[column.property] ? row[column.property] : "";
-      }
+    //   testReport(request).then((res) => {
+    //     if (res.data.code == 200) {
+    //       this.tableData = res.data.data.oilResults;
+    //       this.tableData1 = res.data.data.results;
+    //     } else {
+    //       this.tableData = [];
+    //       this.tableData1 = [];
+    //     }
+    //   });
     },
     //下载
     doDownLoad() {
@@ -102,8 +109,8 @@ export default {
       if (this.wellName) {
         fileName = this.wellName + fileName;
       }
-      exportExcel("#tableData", fileName + "原油分析");
-      //   exportExcel("#tableData1", fileName + "采出水");
+    //   exportExcel("#tableData", fileName + "原油分析");
+      exportExcel("#tableData", fileName + "采出水");
     },
   },
 };
@@ -115,16 +122,12 @@ export default {
   height: calc(100% - 100px);
   display: flex;
   flex-direction: column;
-  .infoWindowBox {
-    // flex:1;
-    height: 100%;
-  }
 }
 #tableData,
 #tableData1 {
   ::v-deep .el-table__header-wrapper .cell {
-    height: auto;
-    line-height: 1.5;
+    height: auto !important;
+    line-height: 36px !important;
     white-space: pre;
   }
   ::v-deep .cell:empty {

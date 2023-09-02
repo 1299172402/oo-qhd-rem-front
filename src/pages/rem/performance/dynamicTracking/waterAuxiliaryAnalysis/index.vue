@@ -307,6 +307,10 @@
                                 name: 'wellTestReport'
                             },
                             {
+                                label: "化验数据",
+                                name: "testData",
+                            },
+                            {
                                 label: '分层调配数据',
                                 name: 'stratificationTesting'
                             },
