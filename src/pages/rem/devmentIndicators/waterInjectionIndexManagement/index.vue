@@ -28,7 +28,7 @@
         </header-search>
         
         <page-panel-new class="app-content">
-            <el-row style="height: auto;" :gutter="20">
+            <el-row style="height: auto; display: flex; flex-wrap: wrap;" :gutter="20">
             	<el-col v-for="(item, index) in zbData" :key="index" :span="4">
             		<pagePanel v-if="item.title == '注水指标总览'" class="fl" :headerTitle="item.title"  style="height: 180px; margin-top: 20px;" @click.native="cardClick(item, index)">
             			<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center">
@@ -40,7 +40,7 @@
             		<pagePanel v-else class="fl" :headerTitle="item.title" style="height: 180px; margin-top: 20px;">
             			<el-button style="position: absolute; z-index: 9; right: 10px; top: 0px; height: 26px; margin-top: 3px; padding: 0 16px;" type="primary" @click.native="cardClick(item, index)">详情</el-button>
             			<el-row>
-            				<el-col :span="14">
+            				<el-col :span="15">
             					<div style="vertical-align: middle; text-align: center">
             						<span style="font-size: 26px">{{ item.sz }}</span>
             						<sub style="color: #8fa4cc; font-size: 15px">
@@ -48,28 +48,28 @@
             						</sub>
             					</div>
             					<div style="margin-top: 10px">
-            						<el-row v-if="item.title == '分注井层段合格率' || item.title == '含水上升率' || item.title == '自然递减率'" :gutter="12" style="line-height: 20px; text-align: center">
-            							<el-col :span="14" style="color: #8fa4cc">环比上月</el-col>
-            							<el-col :span="10">
+            						<el-row v-if="item.title == '分注井层段合格率' || item.title == '含水上升率' || item.title == '自然递减率'" :gutter="6" style="line-height: 20px; text-align: center">
+            							<el-col :span="13" style="color: #8fa4cc">环比上月</el-col>
+            							<el-col :span="11">
             								<span v-if="item.hbTag == 'up'" style="color: #00c39f">{{ item.hb | numberFormat }}% ↑</span>
             								<span v-if="item.hbTag == 'down'" style="color: #cd3d00">{{ item.hb | numberFormat }}% ↓</span>
             							</el-col>
             						</el-row>
-            						<el-row v-if="item.title == '年注入量' || item.title == '地层压力保持水平' || item.title == '注水井分注率' || item.title == '动态监测完成率' || item.title == '分注井测试率'" :gutter="12" style="line-height: 20px; text-align: center">
-            							<el-col :span="14" style="color: #8fa4cc">环比上年</el-col>
-            							<el-col :span="10">
+            						<el-row v-if="item.title == '年注入量' || item.title == '地层压力保持水平' || item.title == '注水井分注率' || item.title == '动态监测完成率' || item.title == '分注井测试率'" :gutter="6" style="line-height: 20px; text-align: center">
+            							<el-col :span="13" style="color: #8fa4cc">环比上年</el-col>
+            							<el-col :span="11">
             								<span v-if="item.hbTag == 'up'" style="color: #00c39f">{{ item.hb | numberFormat }}% ↑</span>
             								<span v-if="item.hbTag == 'down'" style="color: #cd3d00">{{ item.hb | numberFormat }}% ↓</span>
             							</el-col>
             						</el-row>
-            						<el-row v-if="item.title == '注水水质达标率' ||item.title == '分注井层段合格率' ||item.title == '含水上升率' ||item.title == '自然递减率'" :gutter="12" style="line-height: 20px; text-align: center">
-            							<el-col :span="14" style="color: #8fa4cc">同比去年</el-col>
-            							<el-col :span="10">
+            						<el-row v-if="item.title == '注水水质达标率' ||item.title == '分注井层段合格率' ||item.title == '含水上升率' ||item.title == '自然递减率'" :gutter="6" style="line-height: 20px; text-align: center">
+            							<el-col :span="13" style="color: #8fa4cc">同比去年</el-col>
+            							<el-col :span="11">
             								<span v-if="item.tbTag == 'up'" style="color: #00c39f">{{ item.tb | numberFormat }}% ↑</span>
             								<span v-if="item.tbTag == 'down'" style="color: #cd3d00">{{ item.tb | numberFormat }}% ↓</span>
             							</el-col>
             						</el-row>
-            						<el-row :gutter="12" style="line-height: 20px; text-align: center">
+            						<el-row :gutter="6" style="line-height: 20px; text-align: center">
             							<el-col :span="14" style="color: #8fa4cc">与考核相比</el-col>
             							<el-col :span="10">
             								<span v-if="item.khTag == 'up'" style="color: #00c39f">{{ item.kh | numberFormat }}% ↑</span>
@@ -78,7 +78,7 @@
             						</el-row>
             					</div>
             				</el-col>
-            				<el-col :span="10">
+            				<el-col :span="9">
             					<Echart :chart-data="option" height="100%" width="100%"></Echart>
             				</el-col>
             			</el-row>
@@ -841,8 +841,8 @@
                         this.tableData.forEach((item) => {
                             if (item.name == "地层压力保持水平（%）") item.real = 90.30;
                             // if (item.name == "注水水质达标率（%）") item.real = 100;
-                            if (item.name == "动态监测完成率（%）") item.real = 96.55;
-                            if (item.name == "动态监测完成率（%）") item.chain = 0.34;
+                            if (item.name == "动态监测完成率（%）") item.real = 65.52;
+                            if (item.name == "动态监测完成率（%）") item.chain = 34.48;
                             // if (item.name == "含水上升率（%）") item.real = -0.33;
                             // if (item.name == "注水井分注率（%）") item.real = 94.26;
                             // if (item.name == "分注井层段合格率（%）") item.real = 78.97;
@@ -1119,10 +1119,10 @@
                             return item.title == "动态监测完成率";
                         });
                         //指标详情 // TODO lv 临时
-                        zb.sz = detail.detail || 96.55;
+                        zb.sz = detail.detail || 65.52;
                         //环比
                         // zb.hb = detail.mom;// TODO lv 临时
-                        zb.hb = detail.mom || 0.34;
+                        zb.hb = detail.mom || 34.48;
                         zb.hbTag = detail.chainTag;
                         /*//同比
                         zb.tb=detail.moy;

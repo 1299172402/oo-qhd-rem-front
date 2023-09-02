@@ -397,7 +397,7 @@
                                 },
                                 {
                                 label: "2023",
-                                value: 96.55,
+                                value: 65.52,
                                 description: null,
                                 },
                             ],
