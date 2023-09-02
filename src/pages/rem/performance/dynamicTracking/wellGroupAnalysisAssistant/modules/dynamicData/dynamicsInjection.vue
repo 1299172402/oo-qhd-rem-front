@@ -83,19 +83,19 @@
                     </template>
                     <el-table-column :label="`配注量\n(m³/d)`" min-width="120" header-align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.dosage02 !== null && scope.row.dosage02 !== ''">{{scope.row.dosage02}}</span>
+                            <span v-if="scope.row.dosage02 !== null && scope.row.dosage02 !== ''">{{scope.row.dosage02-scope.row.dosage01}}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="injectionRatio02" min-width="140" label="注采比" header-align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.injectionRatio02 !== null && scope.row.injectionRatio02 !== ''">{{(scoped.row.injectionRatio02 - scoped.row.injectionRatio01).toFixed(2)}}</span>
+                            <span v-if="scope.row.injectionRatio02 !== null && scope.row.injectionRatio02 !== ''">{{(scope.row.injectionRatio02 - scope.row.injectionRatio01).toFixed(2)}}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column :label="`注水强度\n(m³*d.m)`" min-width="160" header-align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.injectionStrength02 !== null && scope.row.injectionStrength02 !== ''">{{ scoped.row.injectionStrength02 - scoped.row.injectionStrength01}}</span>
+                            <span v-if="scope.row.injectionStrength02 !== null && scope.row.injectionStrength02 !== ''">{{ scope.row.injectionStrength02 - scope.row.injectionStrength01}}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
@@ -107,15 +107,15 @@
 </template>
 
 <script>
-import {getWellGroupInjectionDynamic} from "@/api/rem/oilwellauxiliaryanalysis.js";
+import {getWellGroupInjectionDynamic,queryWellGroupInjDynamicData} from "@/api/rem/oilwellauxiliaryanalysis.js";
 import {exportExcel} from "@/lib/exportExcel.js";
+import {queryLinkageAlarmInfo} from "@/api/rem/injectionproductionlinkage";
+import request from "@/utils/request";
 
 export default {
     props: {
         //油田id
         oilFieldId: {},
-        //区块id
-        blockId: {},
         //层系id
         layerId: {},
         //井组id
@@ -170,28 +170,54 @@ export default {
         this.doSearch();
     },
     methods: {
-        doSearch() {
+        doSearch(){
+            this.getdata()
+        },
+        async getdata() {
+            console.log(123)
             this.secondMonth = this.queryData.secondMonth;
             this.firstMonth = this.queryData.firstMonth;
             this.itemKey++;
-            if(this.blockId == '3FC9A818F5BC43B88270DB80BBB3018F'){
-                this.blockId = ''
+            if (this.blockId == '3FC9A818F5BC43B88270DB80BBB3018F') {
+                this.blockId = '';
             }
-            let request = {
+
+            let firstMonth = {
                 ogfId: this.oilFieldId,
                 fieldLayerId: this.layerId,
-                blockId: this.blockId,
-                wellGroupId: this.wellGroupId,
-                secondMonth: this.queryData.secondMonth,
-                firstMonth: this.queryData.firstMonth,
+                wellGroupId:this.wellGroupId,
+                month: this.queryData.firstMonth + '-01',
             };
-            getWellGroupInjectionDynamic(request).then((res) => {
-                if (res.data.code == 200) {
-                    this.tableData = res.data.data.data;
-                } else {
-                    this.$message.error("系统错误请重新尝试或联系运维人员！");
-                }
-            });
+
+            let secondMonth = {
+                ogfId: this.oilFieldId,
+                fieldLayerId: this.layerId,
+                wellGroupId: this.wellGroupId,
+                month: this.queryData.secondMonth + '-01',
+            };
+            try {
+                const [res1, res2] = await Promise.all([
+                    queryWellGroupInjDynamicData(firstMonth),
+                    queryWellGroupInjDynamicData(secondMonth)
+                ]);
+                let data = [
+                    {
+                        wellNo:res1.data.data[0].wellNo,
+                        layerName:res1.data.data[0].layerName,
+                        dosage01:res1.data.data[0].injectionAmount,
+                        injectionRatio01:res1.data.data[0].iocRatio,
+                        injectionStrength01:res1.data.data[0].waterInjectionIntensity,
+                        dosage02:res2.data.data[0].injectionAmount,
+                        injectionRatio02:res2.data.data[0].iocRatio,
+                        injectionStrength02:res2.data.data[0].waterInjectionIntensity,
+                    }
+                ]
+                this.tableData = data
+                // 继续其他操作...
+            } catch (error) {
+                // 处理错误
+                console.error(error);
+            }
         },
         choiceendtime() {
             if (new Date(this.queryData.secondMonth) <= new Date(this.queryData.firstMonth)) {
