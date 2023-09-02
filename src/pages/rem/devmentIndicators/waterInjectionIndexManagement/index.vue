@@ -28,7 +28,7 @@
         </header-search>
         
         <page-panel-new class="app-content">
-            <el-row style="height: 400px;" :gutter="20">
+            <el-row style="height: auto;" :gutter="20">
             	<el-col v-for="(item, index) in zbData" :key="index" :span="4">
             		<pagePanel v-if="item.title == '注水指标总览'" class="fl" :headerTitle="item.title"  style="height: 180px; margin-top: 20px;" @click.native="cardClick(item, index)">
             			<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center">
@@ -145,7 +145,7 @@
                     <el-table-column prop="compareOilField" label="对标 (羊三木)" align="center" :formatter="formatterNumber"></el-table-column>
                     <el-table-column prop="realCompareOilField" label="实际值与对标差值" align="center" :formatter="formatterNumber"></el-table-column>
                     <el-table-column label="操作" width="120" align="center">
-                        <template slot-scope="scope">
+                        <template slot-scope="scope" v-if="scope.row.name !== '年注入量（10⁴m³）'">
                             <el-button type="text" key="button1" @click="editTbaleRow(scope.row, scope.$index)" v-if="scope.row.state == 1"
                                 >编辑</el-button
                             >
@@ -839,9 +839,10 @@
                         this.tableData = res.data.data.injectionIndicatorManagements || [];
                         // TODO lv 临时
                         this.tableData.forEach((item) => {
-                            if (item.name == "地层压力保持水平（%）") item.real = 90.3;
-                            if (item.name == "注水水质达标率（%）") item.real = 100;
+                            if (item.name == "地层压力保持水平（%）") item.real = 90.30;
+                            // if (item.name == "注水水质达标率（%）") item.real = 100;
                             if (item.name == "动态监测完成率（%）") item.real = 96.55;
+                            if (item.name == "动态监测完成率（%）") item.chain = 0.34;
                             // if (item.name == "含水上升率（%）") item.real = -0.33;
                             // if (item.name == "注水井分注率（%）") item.real = 94.26;
                             // if (item.name == "分注井层段合格率（%）") item.real = 78.97;
@@ -1120,7 +1121,8 @@
                         //指标详情 // TODO lv 临时
                         zb.sz = detail.detail || 96.55;
                         //环比
-                        zb.hb = detail.mom;
+                        // zb.hb = detail.mom;// TODO lv 临时
+                        zb.hb = detail.mom || 0.34;
                         zb.hbTag = detail.chainTag;
                         /*//同比
                         zb.tb=detail.moy;
@@ -1141,7 +1143,7 @@
                             return item.title == "分注井测试率";
                         });
                         //指标详情 // TODO lv 临时
-                        zb.sz = detail.detail ||  95.48;
+                        zb.sz = detail.detail || 95.48;
                         //环比
                         zb.hb = detail.mom;
                         zb.hbTag = detail.chainTag;
@@ -1279,10 +1281,10 @@
             },
             //表格格式化方法 - 数值只保留四位小数
             formatterNumber(row, column) {
-                if (row.name == '年注入量（10⁴m³）') {
-                    return Number(row[column.property]) ? parseFloat(row[column.property]).toFixed(4) : "";
+                if (row.name == "年注入量（10⁴m³）") {
+                    return !isNaN(parseFloat(row[column.property])) ? parseFloat(row[column.property]).toFixed(4) : "";
                 } else {
-                    return Number(row[column.property]) ? parseFloat(row[column.property]).toFixed(2) : "";
+                    return !isNaN(parseFloat(row[column.property])) ? parseFloat(row[column.property]).toFixed(2) : "";
                 }
             },
         },

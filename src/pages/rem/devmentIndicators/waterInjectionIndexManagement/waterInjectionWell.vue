@@ -71,7 +71,7 @@
     import dayjs from "dayjs";
 
     export default {
-        name: "waterQuality",
+        // name: "waterQuality",
         components: {
             Echart,
         },

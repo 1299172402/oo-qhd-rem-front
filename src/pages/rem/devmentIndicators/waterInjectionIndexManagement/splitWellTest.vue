@@ -86,7 +86,7 @@
     import {exportExcel} from "@/lib/exportExcel.js";
     import dayjs from "dayjs";
     export default {
-        name: "splitWellTest",
+        // name: "splitWellTest",
         components: {
             Echart,
         },

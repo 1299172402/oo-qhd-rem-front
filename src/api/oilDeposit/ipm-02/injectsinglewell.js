@@ -106,3 +106,16 @@ export function getWellTrajectory(data){
     data
   })
 }
+/**
+ * hwh
+ * 查询分析化验信息
+ * @param data
+ * @returns {requestPromise}
+ */
+export function getWellAssay(data){
+  return Axios({
+    url: `${baseUrl}/injectSingleWellIpm/getWellAssay`,
+    method: "post",
+    data
+  })
+}

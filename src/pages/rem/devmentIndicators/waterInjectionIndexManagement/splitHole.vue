@@ -108,7 +108,7 @@
     import dayjs from "dayjs";
 
     export default {
-        name: "splitHole",
+        // name: "splitHole",
         components: {
             Echart,
         },
@@ -350,6 +350,13 @@
                 if (dates && dates.length == 2) {
                     this.queryParams.beginDate = dates[0];
                     this.queryParams.endDate = dates[1];
+                    if (dayjs(dates[1]).format("YYYY-MM") === dayjs().format("YYYY-MM")){
+                        this.queryParams.month = dayjs().format("YYYY-MM");
+                        this.queryParams.date = dayjs().format("YYYY-MM-DD");
+                    } else {
+                        this.queryParams.month = dayjs(dates[1]).endOf("month").format("YYYY-MM");
+                        this.queryParams.date = dayjs(dates[1]).endOf("month").format("YYYY-MM-DD");
+                    }
                 } else {
                     this.queryParams.beginDate = "";
                     this.queryParams.endDate = "";
