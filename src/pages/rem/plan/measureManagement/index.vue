@@ -117,7 +117,11 @@
                             <el-table-column prop="status" label="措施是否达标" width="80"></el-table-column>
                             <el-table-column label="类别" width="100">
                                 <template slot-scope="scope">
-                                    <div style="line-height: 18px;">{{(measureVersion=='002003'||measureVersion=='001003'||measureVersion=='002002'||measureVersion=='001002')?'计划':'滚动预测'}}<br />实际</div>
+                                    <div style="line-height: 18px;" v-if="measureVersion=='002003'">分公司考核 <br />实际</div>
+                                    <div style="line-height: 18px;" v-else-if="measureVersion=='001'">分公司奋斗 <br />实际</div>
+                                    <div style="line-height: 18px;" v-else-if="measureVersion=='002'">有限考核 <br />实际</div>
+                                    <div style="line-height: 18px;" v-else-if="measureVersion=='004002'">有限奋斗 <br />实际</div>
+                                    <div style="line-height: 18px;" v-else>滚动预测<br />实际</div>
                                 </template>
                             </el-table-column>
                             <el-table-column :width="width +'px'">
@@ -129,7 +133,7 @@
                                         </div>
                                         <div class="icon0">
                                             <b class="b1"></b>
-                                            <span>{{(measureVersion=='002003'||measureVersion=='001003'||measureVersion=='002002'||measureVersion=='001002')?'计划':'滚动预测'}}</span>   
+                                            <span>{{(measureVersion=='002003'||measureVersion=='001'||measureVersion=='002'||measureVersion=='004002')?'计划':'滚动预测'}}</span>   
                                         </div>
                                         <div class="icon0">
                                             <b class="b2"></b>
