@@ -239,7 +239,8 @@
                         .then(() => {
                             this.component = () => this.loader();
                         })
-                        .catch(() => {
+                        .catch((error) => {
+                            console.error(error);
                             console.log("走catch");
                         });
                 },
@@ -405,7 +406,6 @@
             //搜索功能
             doSearch() {
                 this.$nextTick(() => {
-                    console.log( this.$refs.componentCustom)  
                     this.$refs.componentCustom.oilFieldId = this.selectOilField; 
                     this.$refs.componentCustom.blockId = this.selectBlock
                     this.$refs.componentCustom.wellGroupId = this.selectWellGroup;

@@ -105,7 +105,7 @@
     import dayjs from "dayjs";
     
     export default {
-        name: "stratumPressure",
+        // name: "stratumPressure",
         components: {
             Echart,
         },

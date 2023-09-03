@@ -60,7 +60,7 @@
     import dayjs from "dayjs";
 
     export default {
-        name: "annualInjection",
+        // name: "annualInjection",
         components: {
             Echart,
         },

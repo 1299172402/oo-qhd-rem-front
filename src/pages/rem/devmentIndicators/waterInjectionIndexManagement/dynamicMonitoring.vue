@@ -100,7 +100,7 @@
     import {exportExcel} from "@/lib/exportExcel.js";
     import dayjs from "dayjs";
     export default {
-        name: "dynamicMonitoring",
+        // name: "dynamicMonitoring",
         components: {
             Echart
         },
@@ -397,7 +397,7 @@
                                 },
                                 {
                                 label: "2023",
-                                value: 96.55,
+                                value: 65.52,
                                 description: null,
                                 },
                             ],

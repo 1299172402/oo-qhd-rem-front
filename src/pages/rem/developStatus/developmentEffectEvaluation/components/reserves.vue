@@ -238,6 +238,12 @@
                 },
                 //剩余储采比
                 reserveProductionRatio: {
+                    grid:{
+                        // top:50,
+                        // right:120,
+                        // bottom: 90,
+                        left:100,
+                    },
                     dataZoom: [
                         {
                             type: "inside",
@@ -299,7 +305,7 @@
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
-                        nameGap: 45,
+                        nameGap: 65,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",
