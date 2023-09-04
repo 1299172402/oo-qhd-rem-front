@@ -25,8 +25,8 @@
                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                     <el-table-column prop="injDuration" label="注入时间"></el-table-column>
                     <el-table-column prop="injDaily" :label="`日注水量\n (m³)`"></el-table-column>
-                    <el-table-column prop="csgPress" :label="`套压\n (Mpa)`"></el-table-column>
-                    <el-table-column prop="whInjPress" :label="`井口压力\n (Mpa)`"></el-table-column>
+                    <el-table-column prop="csgPress" :label="`套压\n (MPa)`"></el-table-column>
+                    <el-table-column prop="whInjPress" :label="`井口压力\n (MPa)`"></el-table-column>
                     <el-table-column prop="injDailySum" :label="`水聚总量\n (m³)`"></el-table-column>
                     <el-table-column prop="injMonthly" :label="`日配注量\n (m³)`"></el-table-column>
                 </el-table>
